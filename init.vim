@@ -179,7 +179,7 @@ Plug 'https://tildegit.org/sloum/gemini-vim-syntax.git'
 
 "sdsd
 
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+" Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 "Plug 'https://github.com/vim-python/python-syntax'
 "Plug 'jeetsukumaran/vim-pythonsense' "Moving functions
 
@@ -722,14 +722,14 @@ endif
 hi Normal ctermfg=252 ctermbg=none
 
 
-
+syntax enable
 set termguicolors
 
 "lua require('night-owl')
 
-"lua require'boo-colorscheme'.use{}
+lua require'boo-colorscheme'.use{}
 
-colorscheme dracula_pro_van_helsing
+"colorscheme dracula_pro_van_helsing
 "colorscheme felipec
 
 autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
@@ -744,36 +744,36 @@ autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
   hi GitGutterChange guifg=#8be9fd
   hi GitGutterDelete guifg=#ff5555
 
-function MyCustomHighlights()
+" function MyCustomHighlights()
 
 
-    hi semshiLocal           ctermfg=209 guifg=#FFB86C
-    hi semshiGlobal          ctermfg=214 guifg=#BD93F9
+"     hi semshiLocal           ctermfg=209 guifg=#FFB86C
+"     hi semshiGlobal          ctermfg=214 guifg=#BD93F9
 
-    hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
+"     hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
 
-    hi semshiParameter       ctermfg=75  guifg=#A4FFFF
-    hi semshiParameterUnused ctermfg=117 guifg=#8BE9FD cterm=underline gui=underline
-    hi semshiFree            ctermfg=218 guifg=#FF79C6
-    hi semshiBuiltin         ctermfg=207 guifg=#ff5fff
-    hi semshiAttribute       ctermfg=49  guifg=#50FA7B
-    hi semshiSelf            ctermfg=249 guifg=#b2b2b2
-    hi semshiUnresolved      ctermfg=226 guifg=#F1FA8C cterm=underline gui=underline
-
-
-
-    hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=161 guibg=#d7005f
-
-    hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
-    hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
-    sign define semshiError text=E> texthl=semshiErrorSign
+"     hi semshiParameter       ctermfg=75  guifg=#A4FFFF
+"     hi semshiParameterUnused ctermfg=117 guifg=#8BE9FD cterm=underline gui=underline
+"     hi semshiFree            ctermfg=218 guifg=#FF79C6
+"     hi semshiBuiltin         ctermfg=207 guifg=#ff5fff
+"     hi semshiAttribute       ctermfg=49  guifg=#50FA7B
+"     hi semshiSelf            ctermfg=249 guifg=#b2b2b2
+"     hi semshiUnresolved      ctermfg=226 guifg=#F1FA8C cterm=underline gui=underline
 
 
 
+"     hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=161 guibg=#d7005f
 
-endfunction
+"     hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+"     hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+"     sign define semshiError text=E> texthl=semshiErrorSign
 
-autocmd FileType python call MyCustomHighlights()
+
+
+
+" endfunction
+
+" autocmd FileType python call MyCustomHighlights()
 
 
 
@@ -1233,16 +1233,11 @@ au BufLeave * silent! wall
 
 
 
-
-autocmd! User GoyoEnter call <SID>goyo_enter()
-autocmd! User GoyoLeave call <SID>goyo_leave
-
-let s:goyo_entered = 0
 function! s:goyo_enter()
-    silent !tmux set status off
     let s:goyo_entered = 1
     set noshowmode
     set noshowcmd
+
     set scrolloff=999
     set wrap
     setlocal textwidth=0
@@ -1250,16 +1245,19 @@ function! s:goyo_enter()
 endfunction
 
 function! s:goyo_leave()
-    silent !tmux set status on
+
     let s:goyo_entered = 0
     set showmode
     set showcmd
+
     set scrolloff=5
     set textwidth=120
     set wrapmargin=8
 endfunction
 
 
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave
 
 
 
@@ -1280,15 +1278,15 @@ nnoremap <leader>l <cmd>call setqflist([])<cr>
 " nmap <silent> <leader>ee :Semshi error<CR>
 " nmap <silent> <leader>ge :Semshi goto error<CR>
 
-autocmd! BufReadPre,BufReadCmd,FileReadCmd,SourceCmd *.class call LoadJavaContent(expand("<amatch>"))<CR>
 
-" function! LoadJavaContent(uri)
-"     setfiletype java
-"     let content = CocRequest('java', 'java/classFileContents', {'uri': 'jdt:/' . a:uri})
-"     call setline(1, split(content, "\n"))
-"     setl nomod
-"     setl readonly
-" endfunction
+function! LoadJavaContent(uri)
+     setfiletype java
+     let content = CocRequest('java', 'java/classFileContents', {'uri': 'jdt:/' . a:uri})
+     call setline(1, split(content, "\n"))
+     setl nomod
+     setl readonly
+endfunction
+autocmd! BufReadPre,BufReadCmd,FileReadCmd,SourceCmd *.class call LoadJavaContent(expand("<amatch>"))<CR>
 
 
 
@@ -1449,6 +1447,8 @@ EOF
 lua <<EOF
   require('telescope').load_extension('dap')
   require('dap-python').setup('/usr/bin/python3')
+  require('dap-python').test_runner = 'pytest'
+
 EOF
 
 
@@ -1573,7 +1573,7 @@ nnoremap <silent>    <S-c> :BufferClose<CR>
 
 
 
-let bufferline = {}
+let bufferline = get(g:, 'bufferline', {})
 
 " Enable/disable animations
 let bufferline.animation = v:true
@@ -1581,6 +1581,9 @@ let bufferline.animation = v:true
 " Enable/disable auto-hiding the tab bar when there is a single buffer
 let bufferline.auto_hide = v:false
 
+" Enable/disable icons
+" if set to 'numbers', will show buffer index in the tabline
+" if set to 'both', will show buffer index and icons in the tabline
 let bufferline.icons = v:true
 
 let bufferline.icon_separator_active = '▎'
@@ -1615,4 +1618,4 @@ let bufferline.maximum_padding = 4
 "Add this in the future 
 "lua require('indent_guides').setup()
 
-
+call bufferline#highlight#setup()
