@@ -1,4 +1,28 @@
 local bufferline = require('bufferline')
+local colors = {
+    bg='#232629',
+    line_bg='#31363b',
+    fg='#eff0f1',
+    yellow = '#f67400',
+  cyan = '#1abc9c',
+  darkblue = '#1d99f3',
+  green = '#afd700',
+  orange = '#FF8800',
+  purple = '#5d4d7a',
+  magenta = '#c678dd',
+  blue = '#3daee9';
+  red = '#ec5f67'
+}
+
+
+
+require('nvim-web-devicons').setup{
+ -- your personnal icons can go here (to override)
+ -- DevIcon will be appended to `name`
+ -- globally enable default icons (default to false)
+ -- will get overriden by `get_icons` option
+ default = true;
+}
 
 require('bufferline').setup{
   options = {
