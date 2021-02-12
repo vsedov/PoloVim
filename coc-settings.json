@@ -1,0 +1,125 @@
+{
+   "coc.preferences.snippets.enable": true,
+   "coc.preferences.formatOnType":true,
+   "diagnostic.errorSign":"✘",
+   "diagnostic.infoSign":"ℹ",
+   "diagnostic.hintSign":"➤",
+   "diagnostic.enableHighlightLineNumber":true,
+   "codeLens.enable":true,
+   "signature.enable":true,
+   "suggest.enablePreview":true,
+   "coc.preferences.colorSupport":true,
+   "highlight.colors.enable":true,
+   "jedi.enable":true,
+   "preload":{
+      "enabled":true
+   },
+     // coc setting
+  "coc.preferences.silentAutoupdate": true,
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "coc.preferences.snippetStatusText": "",
+  "coc.preferences.formatOnType": false,
+
+  "diagnostic.infoSign":            "ღ",
+  "diagnostic.hintSign":            "ஐ",
+  "diagnostic.warningSign":         "»",
+  "diagnostic.errorSign":           "×",
+  "diagnostic.enable":              true,
+  "diagnostic.highlightOffset":     9999999,
+  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.separateRelatedInformationAsDiagnostics": true,
+   "tabnine.priority":99,
+
+     // coc-yank
+  "yank.priority": 10,
+  "yank.highlight.enable": false, // use neovim's built-in instead
+  "yank.highlight.duration": 200,
+  "yank.limit": 2,
+  "yank.list.maxsize": 100,
+  "yank.enableCompletion": false,
+
+
+   "coc.source.omni.filetypes":["py",".py"],
+   "diagnostic.refreshAfterSave":true,
+   "suggest.removeDuplicateItems":false,
+   "coc.source.ultisnips.enable":false,
+   "coc.source.neco.shortcut":"VIM",
+   "python.trace.server":"messages",
+   "coc.preferences.useQuickfixForLocations":true,
+   "jedi.startupMessage":true,
+   "jedi.trace.server":true,
+   "jedi.jediSettings.autoImportModules":[
+      "numpy",
+      "torch",
+      "torchvision"
+   ],
+   "jedi.executable.command":"jedi-language-server",
+   "jedi.completion.disableSnippets":false,
+   "jedi.diagnostics.enable":true,
+   "jedi.diagnostics.didOpen":true,
+   "jedi.diagnostics.didChange":true,
+   "jedi.diagnostics.didSave":true,
+
+
+  "session.directory": "~/.vimbackupfile",
+
+
+
+   "diagnostic-languageserver.formatFiletypes":{
+      "python":[
+         "black",
+         "isort",
+      ]
+   },
+   "diagnostic-languageserver.formatters":{
+      "black":{
+         "command":"black",
+         "args":[
+            "black",
+            "-q",
+            "-"
+         ]
+      },
+      "isort":{
+         "command":"isort",
+         "args":[
+            "-q",
+            "-"
+         ]
+      }
+
+   },
+   "java.configuration.runtimes":[
+      {
+         "name":"JavaSE-15",
+         "path":"/usr/lib/jvm/java-15-openjdk",
+         "default":true
+      }
+   ],
+   "gitignore.enable":{
+      "type":"boolean",
+      "default":true,
+      "description":"Is enable gitignore"
+   },
+   "gitignore.templates.patch":{
+      "type":"object",
+      "default":{
+         
+      },
+      "additionalProperties":{
+         "type":"string"
+      },
+      "description":"gitignore patch for exists templates (key and value format)"
+   },
+   "gitignore.templates.replace":{
+      "type":"object",
+      "default":{
+         
+      },
+      "additionalProperties":{
+         "type":"string"
+      },
+      "description":"gitignore completely replace the exists templates (key and value format)"
+  },
+
+}
