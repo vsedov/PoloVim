@@ -60,6 +60,7 @@ Plug 'fneu/breezy'  " Exactly like breeze theme for ktexteditor
 
 Plug 'sainnhe/edge'
 
+Plug 'honza/vim-snippets'
 
 Plug 'https://github.com/felipec/vim-felipec'
 "LSP stuff
@@ -89,8 +90,8 @@ Plug 'ryanoasis/vim-devicons' " vimscript
 
 "Bugger
 
-"Plug 'romgrk/barbar.nvim'
-Plug 'akinsho/nvim-bufferline.lua'
+Plug 'romgrk/barbar.nvim'
+"Plug 'akinsho/nvim-bufferline.lua'
 Plug 'liuchengxu/vim-clap'
 
 
@@ -141,7 +142,12 @@ Plug 'psliwka/vim-smoothie'
 Plug 'auxiliary/vim-layout'     " i3 like layout
 
 Plug 'https://github.com/tpope/vim-fugitive'
+
+"Better float?
 Plug 'voldikss/vim-floaterm'
+
+
+
 Plug 'jdhao/better-escape.vim'
 Plug '/home/viv/.vim/plugged/dracula_pro/'
 
@@ -201,7 +207,8 @@ Plug 'pappasam/nvim-repl'
 Plug 'glepnir/dashboard-nvim'
 
 
-Plug 'Yggdroot/indentLine'
+"Plug 'https://github.com/glepnir/indent-guides.nvim'
+"Plug 'Yggdroot/indentLine'
 "Lua Plugin for Indent Line
 "Plug 'https://github.com/lukas-reineke/indent-blankline.nvim.git',{'branch': 'lua'}
 
@@ -1225,29 +1232,32 @@ let g:run_split = 'right'
 au BufLeave * silent! wall
 
 
-function! s:goyo_enter()
 
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-
-function! s:goyo_leave()
-  " Quit Vim if this is the only remaining buffer
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
-  endif
-endfunction
 
 autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave
 
+let s:goyo_entered = 0
+function! s:goyo_enter()
+    silent !tmux set status off
+    let s:goyo_entered = 1
+    set noshowmode
+    set noshowcmd
+    set scrolloff=999
+    set wrap
+    setlocal textwidth=0
+    setlocal wrapmargin=0
+endfunction
 
+function! s:goyo_leave()
+    silent !tmux set status on
+    let s:goyo_entered = 0
+    set showmode
+    set showcmd
+    set scrolloff=5
+    set textwidth=120
+    set wrapmargin=8
+endfunction
 
 
 
@@ -1313,7 +1323,6 @@ lua << EOF
   require('plugins.telescope')
   require('galaxy')
   require('lsp')
-  require('nvim-bufferline')
 EOF
 
 
@@ -1603,7 +1612,7 @@ let bufferline.letters =
 let bufferline.maximum_padding = 4
 
 
-
-
+"Add this in the future 
+"lua require('indent_guides').setup()
 
 

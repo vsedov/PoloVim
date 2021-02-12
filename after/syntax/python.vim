@@ -19,13 +19,14 @@ syntax match pyFancyOperator "\( \|\)\*\*\( \|\)n\>" conceal cchar=ⁿ
 syntax keyword pyFancyStatement int conceal cchar=ℤ
 syntax keyword pyFancyStatement float conceal cchar=ℝ
 syntax keyword pyFancyStatement complex conceal cchar=ℂ
-syntax keyword pyFancyBuiltin len conceal cchar=#
 syntax keyword pyFancyStatement lambda conceal cchar=λ
 syntax keyword pyFancyOperator in conceal cchar=∈
 syntax keyword pyFancyOperator or conceal cchar=∨
 syntax keyword pyFancyOperator and conceal cchar=∧
 syntax keyword pyFancySpecial True  conceal cchar=𝐓
 syntax keyword pyFancySpecial False conceal cchar=𝐅
+syntax keyword pyFancySpecial bool conceal cchar=𝔹
+
 syntax keyword pyFancyOperator sum conceal cchar=∑
 syntax keyword pyFancyBuiltin all conceal cchar=∀
 syntax keyword pyFancyBuiltin any conceal cchar=∃
