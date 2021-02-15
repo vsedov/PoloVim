@@ -4,6 +4,7 @@ if exists('g:no_vim_fancy_text') || !has('conceal') || &enc != 'utf-8'
   finish
 endif
 
+syntax match pyFancyOperator "=\@<!===\@!" conceal cchar=≡
 syntax match pyFancyOperator "<=" conceal cchar=≤
 syntax match pyFancyOperator ">=" conceal cchar=≥
 syntax match pyFancyOperator "\<\%(\%(math\|np\|numpy\)\.\)\?sqrt\>" conceal cchar=√
@@ -30,7 +31,7 @@ syntax keyword pyFancySpecial bool conceal cchar=𝔹
 syntax keyword pyFancyOperator sum conceal cchar=∑
 syntax keyword pyFancyBuiltin all conceal cchar=∀
 syntax keyword pyFancyBuiltin any conceal cchar=∃
-syntax keyword pyFancyBuiltin not conceal cchar=∄
+syntax keyword pyFancyBuiltin not conceal cchar=¬
 
 hi link pyFancyStatement Statement
 hi link pyFancyKeyword Keyword

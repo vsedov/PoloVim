@@ -1,6 +1,6 @@
 
 local lspconfig = require('lspconfig')
-local util = require('lspconfig/util')
+
 local lsp_status = require('lsp-status')
 
 local api = vim.api
@@ -60,7 +60,7 @@ require'lspconfig'.texlab.setup{
 -- lspconfig.jedi_language_server.setup{
 -- 	on_attach = custom_on_attach,
 -- 	cmd = { "jedi-language-server" },
---     filetypes = { "python" },
+-- 	filetypes = { "python" },
 
 -- }
 
@@ -70,6 +70,7 @@ lspconfig.pyls.setup{
     	pycodestyle =  { enabled = false },
      	pylint =  { enabled = false },
      	black = {enabled = true},
+     	pyflakes = {enabled = true}
      } ,
  	} ,
   },

@@ -1244,9 +1244,6 @@ augroup END
 let g:run_split = 'right'
 
 
-au BufLeave * silent! wall
-
-
 function! s:goyo_enter()
   let b:quitting = 0
   let b:quitting_bang = 0

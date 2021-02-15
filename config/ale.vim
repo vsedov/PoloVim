@@ -67,22 +67,22 @@ let g:ale_disable_lsp = 0
 let g:ale_completion_enabled=0
 set omnifunc=coc#completion#OmniFunc
 
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
+"function! LinterStatus() abort
+  "let l:counts = ale#statusline#Count(bufnr(''))
 
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
+ "" let l:all_errors = l:counts.error + l:counts.style_error
+"et l:all_non_errors = l:counts.total - l:all_errors
 
-  return l:counts.total == 0 ? '✨ all good ✨' : printf(
-        \   '😞 %dW %dE',
-        \   all_non_errors,
-        \   all_errors
-        \)
-endfunction
+  "return l:counts.total == 0 ? '✨ all good ✨' : printf(
+ ""       \   '😞 %dW %dE',
+ ""       \   all_non_errors,
+""        \   all_errors
+""        \)
+"endfunction
 
 set statusline=
 set statusline+=%m
 set statusline+=\ %f
 set statusline+=%=
-set statusline+=\ %{LinterStatus()}
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"set statusline+=\ %{LinterStatus()}
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}

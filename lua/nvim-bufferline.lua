@@ -34,14 +34,14 @@ require('bufferline').setup{
     left_trunc_marker = '',
     right_trunc_marker = '',
     max_name_length = 18,
-    tab_size = 18,
+    tab_size = 15,
     show_buffer_close_icons = false,
     -- can also be a table containing 2 custom separators
     -- [focused and unfocused]. eg: { '|', '|' }
-    separator_style = { '', '' },
+    separator_style = { '', ''},
     -- enforce_regular_tabs = false | true,
     always_show_bufferline = true,
-    diagnostics = "nvim_lsp",
+    diagnostics = false,
 
     diagnostics_indicator = function(count, level)
       local icon = level:match("error") and " " or ""
@@ -59,7 +59,7 @@ require('bufferline').setup{
             guibg = "none",
         },
         modified_selected = {
-            guifg = 'ff5555',
+            guifg = '#ff5555',
             guibg = '#ffb86c'
         }
 

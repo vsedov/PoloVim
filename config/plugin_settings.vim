@@ -89,7 +89,8 @@ nnoremap <leader>l <cmd>call setqflist([])<cr>
 
 "I Dont know what this does , but if i remove it , it breaks the code ...
 let g:run_split = 'right'
-au BufLeave * silent! wall
+
+
 
 
 "Lens
@@ -189,3 +190,11 @@ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)+g:sandwich#recipes
 let g:doge_doc_standard_python = 'google'
 let g:nayvy_import_config_path = '$HOME/nayvy.py'
 let g:nayvy_coc_enabled =1
+
+
+"Indent Line 
+let g:indentLine_fileType = ["tex",".tex"]
+let g:indentLine_fileTypeExclude= [".py","py"]
+let g:indentLine_faster = 1
+
+

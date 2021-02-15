@@ -1,4 +1,3 @@
-
 function! s:goyo_enter()
     let s:goyo_entered = 1
     set noshowmode
@@ -16,7 +15,7 @@ function! s:goyo_leave()
     set showmode
     set showcmd
 
-    set scrolloff=5
+    set scrolloff=3
     set textwidth=120
     set wrapmargin=8
 endfunction

@@ -1,12 +1,15 @@
 {
    "coc.preferences.snippets.enable": true,
-   "coc.preferences.formatOnType":true,
+   "coc.preferences.formatOnType":false,
+
    "diagnostic.errorSign":"✘",
    "diagnostic.infoSign":"ℹ",
    "diagnostic.hintSign":"➤",
+
    "diagnostic.enableHighlightLineNumber":true,
    "codeLens.enable":true,
    "signature.enable":true,
+
    "suggest.enablePreview":true,
    "coc.preferences.colorSupport":true,
    "highlight.colors.enable":true,
@@ -20,13 +23,8 @@
   "coc.preferences.snippetStatusText": "",
   "coc.preferences.formatOnType": false,
 
-  "diagnostic.infoSign":            "ღ",
-  "diagnostic.hintSign":            "ஐ",
-  "diagnostic.warningSign":         "»",
-  "diagnostic.errorSign":           "×",
-  "diagnostic.enable":              true,
-  "diagnostic.highlightOffset":     9999999,
-  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.enable":              false,
+
   "diagnostic.separateRelatedInformationAsDiagnostics": true,
    "tabnine.priority":99,
 
@@ -34,7 +32,6 @@
   "yank.priority": 10,
   "yank.highlight.enable": false, // use neovim's built-in instead
   "yank.highlight.duration": 200,
-  "yank.limit": 2,
   "yank.list.maxsize": 100,
   "yank.enableCompletion": false,
 

@@ -5,7 +5,7 @@ Plug 'meain/vim-printer'
 
 
 "Tree
-"Plug 'scrooloose/nerdtree'  " file list
+Plug 'scrooloose/nerdtree'  " file list
 Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jiangmiao/auto-pairs'
 
@@ -13,7 +13,11 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'liuchengxu/vista.vim'
 Plug 'https://github.com/vwxyutarooo/nerdtree-devicons-syntax'
 Plug 'Konfekt/FastFold'
-"Plug 'Vimjas/vim-python-pep8-indent'  "better indenting for python
+
+
+Plug 'Vimjas/vim-python-pep8-indent'  "better indenting for python
+
+
 Plug 'kien/ctrlp.vim'  " fuzzy search files
 
 Plug 'justinmk/vim-sneak'
@@ -26,34 +30,35 @@ Plug 'szymonmaszke/vimpyter' "vim-plug
 "Color
 Plug 'wadackel/vim-dogrun'
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'bluz71/vim-moonfly-colors'
+"Plug 'bluz71/vim-moonfly-colors'
 Plug 'bluz71/vim-nightfly-guicolors'
 Plug 'tjdevries/colorbuddy.nvim'
 Plug 'Julpikar/night-owl.nvim'
 Plug 'rockerBOO/boo-colorscheme-nvim'
-Plug 'fneu/breezy'  " Exactly like breeze theme for ktexteditor
+Plug 'glepnir/zephyr-nvim'
 
-Plug 'sainnhe/edge'
+"Plug 'fneu/breezy'  " Exactly like breeze theme for ktexteditor
+"Plug 'sainnhe/edge'
+"Plug 'https://github.com/felipec/vim-felipec'
 
-Plug 'honza/vim-snippets'
-
-Plug 'https://github.com/felipec/vim-felipec'
 "LSP stuff
 " Neovim's builtin LSP and treesitter impl. make it a very lightweight IDE
 
+
 Plug 'neovim/nvim-lspconfig' " The most important plugin
 Plug 'nvim-lua/lsp-status.nvim'  " lsp items in the statusbar
-Plug 'nvim-treesitter/nvim-treesitter' " tree-sitter support
 Plug 'nvim-lua/lsp_extensions.nvim'
-
+Plug 'nvim-treesitter/nvim-treesitter' " tree-sitter support
 Plug 'nvim-treesitter/playground'
 Plug 'romgrk/nvim-treesitter-context'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
+Plug 'https://github.com/p00f/nvim-ts-rainbow'
 " Plug 'wellle/context.vim'
 "Yank memorizer 
+Plug 'honza/vim-snippets'
 
-Plug 'https://github.com/p00f/nvim-ts-rainbow'
+"Plug 'https://github.com/p00f/nvim-ts-rainbow'
 Plug 'gennaro-tedesco/nvim-peekup'
 
 
@@ -65,8 +70,8 @@ Plug 'ryanoasis/vim-devicons' " vimscript
 
 "Bugger
 
-Plug 'romgrk/barbar.nvim'
-"Plug 'akinsho/nvim-bufferline.lua'
+"Plug 'romgrk/barbar.nvim'
+Plug 'akinsho/nvim-bufferline.lua'
 Plug 'liuchengxu/vim-clap'
 
 
@@ -101,6 +106,8 @@ Plug 'lervag/vimtex'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'pwntester/octo.nvim'
+
 Plug 'glepnir/lspsaga.nvim'
 
 "Debugging
@@ -160,8 +167,9 @@ Plug 'https://tildegit.org/sloum/gemini-vim-syntax.git'
 " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 "Plug 'https://github.com/vim-python/python-syntax'
 "Plug 'jeetsukumaran/vim-pythonsense' "Moving functions
-
 " (Optional) Multi-entry selection UI.
+
+
 "Plug 'junegunn/fzf'
 Plug 'Chiel92/vim-autoformat'
 Plug 'patstockwell/vim-monokai-tasty'
@@ -192,7 +200,7 @@ Plug 'Yggdroot/indentLine'
 
 
 Plug 'ryanoasis/vim-devicons'
-Plug 'myusuf3/numbers.vim'
+" Plug 'myusuf3/numbers.vim'
 
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 

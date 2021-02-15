@@ -1,22 +1,26 @@
 
 "ColorScheme
-if !has('gui_running')
-  " Use terminal emulator's background
-  hi Normal guibg=NONE
-endif
-
 
 "hi Normal guibg=NONE ctermbg=NONE
 hi Normal ctermfg=252 ctermbg=none
 hi Comment gui=italic
 
+
 syntax enable
 set termguicolors
 "lua require('night-owl')
+"
+"lua require('night-owl')
+
+
+" colorscheme dogrun
+
 lua require'boo-colorscheme'.use{}
 "colorscheme dracula_pro_van_helsing
-"colorscheme felipec
-autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
+
+
+"colorscheme palenight
+"autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
 " General misc colors
 "hi LineNr       guibg=#282a36 guifg=#44475a
 hi CursorLineNr guifg=#50fa7b
@@ -39,8 +43,12 @@ nnoremap tl :tablast<CR>
 " mapping Esc
 imap <F13> <Esc>
 cnoremap <Esc> <C-c>
+
 inoremap <c-c> <ESC>
-nnoremap <C-z> <Esc>  " disable terminal ctrl-z
+nnoremap <C-z> <Esc>  
+
+
+" disable terminal ctrl-z
 
 " map S to replace current word with pasteboard
 nnoremap S diw"0P
@@ -75,3 +83,5 @@ nnoremap <silent> <expr> 0 ScreenMovement("0")
 nnoremap <silent> <expr> ^ ScreenMovement("^")
 nnoremap <silent> <expr> $ ScreenMovement("$")
 
+
+map <F1> :DogeGenerate<CR>

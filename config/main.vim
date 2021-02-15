@@ -2,10 +2,10 @@
 set nocompatible
 set encoding=utf-8
 set title
-set backspace=indent,eol,start
+
 set wildoptions+=pum
 set lazyredraw
-set regexpengine=2
+
 set shell=zsh
 set signcolumn=yes
 
@@ -68,7 +68,7 @@ set splitbelow
 
 set hlsearch  " highlight search and search while typing
 set incsearch
-set cpoptions+=x  " stay at seach item when <esc>
+"set cpoptions+=x  " stay at seach item when <esc>
 
 set noerrorbells  " remove bells (i think this is default in neovim)
 set visualbell

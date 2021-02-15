@@ -2,7 +2,7 @@ runtime config/main.vim
 runtime config/plugins.vim
 runtime config/most_mappings.vim
 runtime config/plugin_settings.vim
-runtime config/ale.vim
+"runtime config/ale.vim
 runtime config/dashboard.vim
 runtime config/floatterm.vim
 runtime config/markdow_multicurse.vim
@@ -31,37 +31,12 @@ let g:python_host_prog = '/usr/bin/python2'
 
 
 
-"ColorScheme
-"let g:dracula_bold = 1
-"let g:dracula_bold = 1
-"let g:dracula_underline = 1
-"let g:dracula_undercurl = 1
-"let g:dracula_inverse = 1
-"let g:dracula_colorterm = 1
 
-hi Comment gui=italic
-
-"if has('transparency')
-""  set transparency=10
-"endif
-
-"hi Normal guibg=NONE ctermbg=NONE
-hi Normal ctermfg=252 ctermbg=none
-syntax enable
-set termguicolors
-
-"lua require('night-owl')
-lua require'boo-colorscheme'.use{}
-"colorscheme dracula_pro_van_helsing
-"colorscheme felipec
-autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
-
-" General misc colors
-"hi LineNr       guibg=#282a36 guifg=#44475a
-hi CursorLineNr guifg=#50fa7b
-
-
-
+augroup AutoRelativeLineNums
+  autocmd!
+  au InsertEnter * set norelativenumber
+  au InsertLeave * set relativenumber
+augroup END
 
 "~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -129,8 +104,8 @@ highlight self ctermfg=239
 
 autocmd BufRead *.py set wrap
 autocmd BufRead *.py set splitbelow
-autocmd BufRead *.py set go+=b
-
+"autocmd BufRead *.py set go+=b
+"
 " Remove all trailing whitespace by pressing C-S
 nnoremap <C-S> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
@@ -220,6 +195,78 @@ command! What echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 
 
 
+"Ale Configs
+let g:ale_completion_enabled = 0
+let g:ale_python_pylint_options = '--rcfile ~/.config/pylintrc'
+let g:ale_list_window_size =  3
+let g:ale_sign_column_always = 1
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 0 
+
+let g:ale_lint_on_save = 1
+
+let g:ale_sign_error = '‼'
+let g:ale_sign_warning = '∙'
+let g:ale_lint_on_text_changed = 'never'
+
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_enter = 0
+
+nmap <silent> <C-M> <Plug>(ale_previous_wrap)
+nmap <silent> <C-m> <Plug>(ale_next_wrap)
+
+let g:ale_linters = {
+  \   'markdown': ['mdl'],
+  \   'dockerfile': ['dockerfile_lint'],
+  \   'bib': ['bibclean'],
+  \   'go': ['gofmt', 'golint', 'go vet', 'golangserver'],
+  \   'tex': ['proselint', 'chktex', 'lacheck','texlab','latexindent','textlint'],
+  \   'plaintex': ['proselint', 'chktex', 'lacheck','texlab'],
+  \   'help': [],
+  \   'python': ['black','pylint','pyright'],
+  \   'ruby': ['solargraph', 'rubocop', 'ruby'],
+  \   'groovy': ['android'],
+  \   'xml': ['android'],
+  \   'java': ['javalsp'],
+  \   'kotlin': ['ktlint', 'languageserver'],
+  \   'javascript': ['eslint'],
+  \   'text': ['proselint', 'write-good'],
+  \   'vim': ['vint'],
+  \   'yaml': ['yamllint'],
+  \   'openapi': ['yamllint', 'ibm-validator'],
+  \   'mail': ['proselint', 'write-good']
+\}
+
+let g:ale_fixers = {
+      \ 'python': ['nayvy#ale_fixer', 'black', 'isort'],
+      \'java':['google_java_format'],
+      \ 'tex':['textlint']
+      \ }
+
+
+let g:ale_fix_on_save = 1
+let g:ale_fix_on_insert_leave = 0
+let g:ale_fix_on_text_changed = 'never'
+
+nmap <F2> :ALEFix<CR>
+
+let g:ale_set_balloons = 1
+let g:ale_hover_cursor = 1
+let g:ale_hover_to_preview = 1
+let g:ale_float_preview = 1
+let g:ale_virtualtext_cursor = 1
+
+"This has to be set to zero for this to work 
+let g:ale_disable_lsp = 1
+
+let g:ale_completion_enabled=0
+set omnifunc=coc#completion#OmniFunc
+
+
+set statusline=
+set statusline+=%m
+set statusline+=\ %f
+set statusline+=%=
 
 
 
@@ -255,6 +302,8 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 " endfunction
 
 " Highlight the symbol and its references when holding the cursor.
+
+
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming Keep this 
@@ -423,14 +472,21 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 " let g:indentLine_faster = 1 
 " let g:is_pythonsense_alternate_motion_keymaps = 1
 
-
+"When coding in python there is a puse or breaks down not sure why "
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 lua << EOF
-  require('treesitter')
-  require('plugins.telescope')
   require('galaxy')
   require('lsp')
+  require('nvim-bufferline')
+  require('plugins.telescope')
+  require('telescope').load_extension('octo')
 EOF
+"require('treesitter')
+
+
+"Till i figure out how tf i do this , without making python scripting lag
+"Like  a MF , i will be hardcoding using lua << EOF , as that seemed like the best method 
+"require('treesitter')
 
 
 " Find files using Telescope command-line sugar.
@@ -446,64 +502,34 @@ nnoremap <leader>fl <cmd>Telescope git_files<cr>
 " geometry configuration
 lua require('nvim-peekup.config').geometry["height"] = 0.8
 lua require('nvim-peekup.config').geometry["title"] = 'An awesome window title'
-" behaviour of the peekup window on keystroke
+
+
+"behaviour of the peekup window on keystroke
 lua require('nvim-peekup.config').on_keystroke["delay"] = '300ms'
+"
 lua require('nvim-peekup.config').on_keystroke["autoclose"] = false
-
 let g:peekup_open = '<leader>"'
-
 
 
 "<C-j>, <C-k> to scroll with this its yank history rather nice jk"
 "Tree sitter stufff  
-lua <<EOF
- playground = {
-    enable = true,
-    disable = {},
-    updatetime = 5, -- Debounced time for highlighting nodes in the playground from source code
-    persist_queries = false 
-}
 
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+  },
+}
 EOF
 
-lua << EOF
+lua <<EOF
 require'nvim-treesitter.configs'.setup {
   rainbow = {
     enable = true
   }
 }
 EOF
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  refactor = {
-    smart_rename = {
-      enable = true,
-      keymaps = {
-        smart_rename = "grr",
-      },
-    },
-  },
-}
-EOF
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  refactor = {
-    navigation = {
-      enable = true,
-      keymaps = {
-        goto_definition = "gnd",
-        list_definitions = "gnD",
-        list_definitions_toc = "gO",
-        goto_next_usage = "<a-*>",
-        goto_previous_usage = "<a-#>",
-      },
-    },
-  },
-}
-EOF
-
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -516,6 +542,7 @@ require'nvim-treesitter.configs'.setup {
         ["if"] = "@function.inner",
         ["ac"] = "@class.outer",
         ["ic"] = "@class.inner",
+
       },
     },
   },
@@ -548,8 +575,28 @@ lua <<EOF
 }
 EOF
 
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   indent = {
+"     enable = true
+"   }
+" }
+" EOF
 
+" lua <<EOF
+"   require'nvim-treesitter.configs'.setup {
+"     incremental_selection = {
+"         enable = true,
+"         keymaps = {
+"             init_selection      = "gi",
+"             node_incremental    = "n",
+"             node_decremental    = "N",
+"             scope_incremental   = "b",
+"         },
+"     },
+"   }
 
+" EOF
 
 "Repl and Debug Configs
 
@@ -561,25 +608,17 @@ lua <<EOF
 EOF
 
 
-
-
-
-
-nnoremap <silent> <F4> :lua require'telescope'.extensions.dap.commands{}<CR>
+"" leader dd is nice for running files .
 nnoremap <silent> <leader>dd :lua require('dap').continue()<CR>
 
-
-
-
-
+nnoremap <silent> <F4> :lua require'telescope'.extensions.dap.commands{}<CR>
 nnoremap <silent> <leader>bb :lua require'telescope'.extensions.dap.list_breakpoints{}<CR>
 nnoremap <silent> <leader>v :lua require'telescope'.extensions.dap.variables{}<CR>
 
 "Need to figure out what i want to do with this 
-nnoremap <silent> <leader>, :lua require'dap'.step_over()<CR>
-nnoremap <silent> <leader>. :lua require'dap'.step_into()<CR>
-nnoremap <silent> <leader>.. :lua require'dap'.step_out()<CR>
-
+nnoremap <silent> <leader>do :lua require'dap'.step_over()<CR>
+nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
+nnoremap <silent> <leader>dO :lua require'dap'.step_out()<CR>
 
 
 nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
@@ -633,33 +672,21 @@ hi TelescopePromptPrefix   guifg=#bd93f9
 
 "-- or use command LspSagaFinder
 nnoremap <silent> gh :Lspsaga lsp_finder<CR>
-
-
 "-- code action
 nnoremap <silent><leader>ca :Lspsaga code_action<CR>
 vnoremap <silent><leader>ca :<C-U>Lspsaga range_code_action<CR>
-
-
 "-- show hover doc
 nnoremap <silent>K :Lspsaga hover_doc<CR>
-
 "-- scroll down hover doc
 nnoremap <silent> <C-f> <cmd>lua require('lspsaga.hover').smart_scroll_hover(1)<CR>
 "-- scroll up hover doc
 nnoremap <silent> <C-b> <cmd>lua require('lspsaga.hover').smart_scroll_hover(-1)<CR>
-
 "-- show signature help
 nnoremap <silent> gs :Lspsaga signature_help<CR>
-
 "-- preview definition
 nnoremap <silent> gd :Lspsaga preview_definition<CR>
-
-
-
 "-- show
 nnoremap <silent> <leader>cd :Lspsaga show_line_diagnostics<CR>
-
-
 "-- jump diagnostic
 nnoremap <silent> [e :Lspsaga diagnostic_jump_next<CR>
 nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>
@@ -670,73 +697,3 @@ nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>
 "tnoremap <silent> <S-d> <C-\><C-n>:Lspsaga close_floaterm<CR>
 
 
-
-"This is just for rust but hope we can have a python version soon 
-nnoremap <Leader>C :lua require'lsp_extensions'.inlay_hints()
-
-" NOTE: This variable doesn't exist before barbar runs. Create it before
-"    
-
-nnoremap <silent>    <S-,> :BufferPrevious<CR>
-nnoremap <silent>    <S-.> :BufferNext<CR>
-" Re-order to previous/next
-nnoremap <silent>    <S-<> :BufferMovePrevious<CR>
-nnoremap <silent>    <S->> :BufferMoveNext<CR>
-" Goto buffer in position...
-nnoremap <silent>    <S-1> :BufferGoto 1<CR>
-nnoremap <silent>    <S-2> :BufferGoto 2<CR>
-nnoremap <silent>    <S-3> :BufferGoto 3<CR>
-nnoremap <silent>    <S-4> :BufferGoto 4<CR>
-nnoremap <silent>    <S-5> :BufferGoto 5<CR>
-
-" Close buffer
-nnoremap <silent>    <S-c> :BufferClose<CR>
-
-
-
-let bufferline = get(g:, 'bufferline', {})
-
-" Enable/disable animations
-let bufferline.animation = v:true
-
-" Enable/disable auto-hiding the tab bar when there is a single buffer
-let bufferline.auto_hide = v:false
-
-" Enable/disable icons
-" if set to 'numbers', will show buffer index in the tabline
-" if set to 'both', will show buffer index and icons in the tabline
-let bufferline.icons = v:true
-
-let bufferline.icon_separator_active = '▎'
-let bufferline.icon_separator_inactive = '▎'
-"et bufferline.icon_close_tab = ''
-let bufferline.icon_close_tab_modified = '●'
-
-" Enable/disable close button
-let bufferline.closable = v:false
-
-" Enables/disable clickable tabs
-"  - left-click: go to buffer
-"  - middle-click: delete buffer
-let bufferline.clickable = v:true
-
-" If set, the letters for each buffer in buffer-pick mode will be
-" assigned based on their name. Otherwise or in case all letters are
-" already assigned, the behavior is to assign letters in order of
-" usability (see order below)
-let bufferline.semantic_letters = v:true
-
-" New buffer letters are assigned in this order. This order is
-" optimal for the qwerty keyboard layout but might need adjustement
-" for other layouts.
-let bufferline.letters =
-  \ 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP'
-
-" Sets the maximum padding width with which to surround each tab
-let bufferline.maximum_padding = 4
-
-
-"Add this in the future 
-"lua require('indent_guides').setup()
-
-call bufferline#highlight#setup()

@@ -8,10 +8,9 @@ setlocal conceallevel=1
 
 setlocal colorcolumn=90
 
-setlocal foldmethod=expr
-setlocal foldexpr=nvim_treesitter#foldexr()  " disabled until it works
-cabbrev Format Black
 
+"setlocal foldexpr=nvim_treesitter#foldexr()  " disabled until it works
+"setlocal foldmethod=expr
 
 
 highlight ColorColumn guibg=Black

@@ -1,9 +1,19 @@
 
 local gl = require('galaxyline')
 local gls = gl.section
-gl.short_line_list = {'LuaTree','vista','dbui'}
+gl.short_line_list = {'chadtree','vista','dbui'}
 local vim = vim
 local vcs = require('galaxyline.provider_vcs')
+
+
+local diagnostic = require('galaxyline.provider_diagnostic')
+local fileinfo = require('galaxyline.provider_fileinfo')
+local extension = require('galaxyline.provider_extensions')
+local colors = require('galaxyline.colors')
+local buffer = require('galaxyline.provider_buffer')
+
+
+
 
 function string:title()
   return self:sub(1,1):upper()..self:sub(2)
@@ -241,13 +251,13 @@ gls.right[8] = {
 --  }
 --}
 
---[[
+
 gls.short_line_right[1] = {
   BufferIcon = {
     provider= 'BufferIcon',
-    separator = '',
+    separator = ' ',
     separator_highlight = {colors.purple,colors.bg},
     highlight = {colors.grey,colors.purple}
   }
 }
-]]
+
