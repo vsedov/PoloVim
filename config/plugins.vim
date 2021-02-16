@@ -48,6 +48,7 @@ Plug 'glepnir/zephyr-nvim'
 Plug 'neovim/nvim-lspconfig' " The most important plugin
 Plug 'nvim-lua/lsp-status.nvim'  " lsp items in the statusbar
 Plug 'nvim-lua/lsp_extensions.nvim'
+
 Plug 'nvim-treesitter/nvim-treesitter' " tree-sitter support
 Plug 'nvim-treesitter/playground'
 Plug 'romgrk/nvim-treesitter-context'
@@ -148,9 +149,9 @@ Plug 'psf/black', { 'branch': 'stable' }
 Plug 'relastle/vim-nayvy'
 Plug 'https://github.com/tpope/vim-sleuth'
 
-
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'https://github.com/chiedo/vim-case-convert'
-Plug 'https://github.com/nikersify/dracula-vim'
+"Plug 'https://github.com/nikersify/dracula-vim'
 Plug 'https://github.com/tmhedberg/SimpylFold'
 
 

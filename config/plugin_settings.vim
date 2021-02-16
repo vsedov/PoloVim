@@ -94,8 +94,13 @@ let g:run_split = 'right'
 
 
 "Lens
-let g:lens#disabled_filetypes = ['nerdtree','chadtree']
+
+
 augroup lens
+  let g:lens#disabled_filetypes = ['nerdtree','chadtree','Quickfix List']
+  let g:lens#height_resize_min = 5
+  let g:lens#width_resize_max = 80
+
   let g:lens#enter_disabled = 0
   autocmd! WinNew * let g:lens#enter_disabled = 1
   autocmd! WinEnter * call lens#win_enter()
@@ -121,9 +126,7 @@ map T <Plug>Sneak_T
 let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_map_keys = 0
 
-hi GitGutterAdd    guifg=#50fa7b
-hi GitGutterChange guifg=#8be9fd
-hi GitGutterDelete guifg=#ff5555
+
 
 
 "Ctrlp
@@ -137,10 +140,6 @@ xmap ga <Plug>(LiveEasyAlign)
 nmap ga <Plug>(LiveEasyAlign)
 " EasyMotion
 
-hi EasyMotionTarget ctermfg=9 guifg=red
-hi EasyMotionTarget2First ctermfg=9 guifg=red
-hi EasyMotionTarget2Second ctermfg=9 guifg=lightred
-hi link EasyMotionShade Comment
 " Emmet
 let g:user_emmet_leader_key = ',z'
 "

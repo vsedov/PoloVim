@@ -68,7 +68,8 @@ set splitbelow
 
 set hlsearch  " highlight search and search while typing
 set incsearch
-"set cpoptions+=x  " stay at seach item when <esc>
+
+set cpoptions+=x  " stay at seach item when <esc>
 
 set noerrorbells  " remove bells (i think this is default in neovim)
 set visualbell

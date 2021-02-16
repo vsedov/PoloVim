@@ -2,13 +2,11 @@
    "coc.preferences.snippets.enable": true,
    "coc.preferences.formatOnType":false,
 
-   "diagnostic.errorSign":"✘",
-   "diagnostic.infoSign":"ℹ",
-   "diagnostic.hintSign":"➤",
 
    "diagnostic.enableHighlightLineNumber":true,
    "codeLens.enable":true,
    "signature.enable":true,
+   "diagnostic.displayByAle": true,
 
    "suggest.enablePreview":true,
    "coc.preferences.colorSupport":true,
@@ -23,7 +21,7 @@
   "coc.preferences.snippetStatusText": "",
   "coc.preferences.formatOnType": false,
 
-  "diagnostic.enable":              false,
+  "diagnostic.enable":              true,
 
   "diagnostic.separateRelatedInformationAsDiagnostics": true,
    "tabnine.priority":99,

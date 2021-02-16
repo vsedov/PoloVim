@@ -42,3 +42,18 @@ require('telescope').setup{
     buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
   }
 }
+
+function P(module)
+  require"plenary.reload".reload_module(module)
+end
+
+function PlenaryReload()
+  require("plenary.reload").reload_module("telescope")
+  require("plenary.reload").reload_module("plenary")
+  require"plenary.reload".reload_module("boo-colorscheme")
+  require"plenary.reload".reload_module("plugin")
+  require"plenary.reload".reload_module("lsp_extensions")
+  require"boo-colorscheme".use {}
+  tele.setup()
+end
+

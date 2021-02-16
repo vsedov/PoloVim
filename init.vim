@@ -12,6 +12,34 @@ runtime config/goyo.vim
 runtime config/loading_java.vim
 
 
+
+"ColorScheme"
+syntax enable
+set termguicolors
+
+hi Normal guibg=NONE ctermbg=NONE
+hi CursorLineNr guifg=#50fa7b
+hi Comment gui=italic
+
+
+hi GitGutterAdd    guifg=#50fa7b
+hi GitGutterChange guifg=#8be9fd
+hi GitGutterDelete guifg=#ff5555
+
+
+hi EasyMotionTarget ctermfg=9 guifg=red
+hi EasyMotionTarget2First ctermfg=9 guifg=red
+hi EasyMotionTarget2Second ctermfg=9 guifg=lightred
+hi link EasyMotionShade Comment
+
+"autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
+" General misc colors
+
+
+
+
+
+
 let mapleader = " " " Leader is the space key
 let g:mapleader = " "
 let maplocalleader = '\'
@@ -100,7 +128,7 @@ endif
 au FileType python map <silent> <leader>j ofrom pdb import set_trace; set_trace()<esc>
 au FileType python map <silent> <leader>J Ofrom pdb import set_trace; set_trace()<esc>
 
-highlight self ctermfg=239
+hi self ctermfg=239
 
 autocmd BufRead *.py set wrap
 autocmd BufRead *.py set splitbelow
@@ -198,16 +226,19 @@ command! What echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 "Ale Configs
 let g:ale_completion_enabled = 0
 let g:ale_python_pylint_options = '--rcfile ~/.config/pylintrc'
-let g:ale_list_window_size =  3
+let g:ale_list_window_size =  4
 let g:ale_sign_column_always = 1
 let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 0 
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_keep_list_window_open = 1
+let g:ale_list_vertical = 1
 
 let g:ale_lint_on_save = 1
 
 let g:ale_sign_error = '‼'
 let g:ale_sign_warning = '∙'
-let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 1
 
 let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_enter = 0
@@ -256,11 +287,13 @@ let g:ale_hover_to_preview = 1
 let g:ale_float_preview = 1
 let g:ale_virtualtext_cursor = 1
 
-"This has to be set to zero for this to work 
+"This has to be set to zero for this to work
 let g:ale_disable_lsp = 1
 
 let g:ale_completion_enabled=0
-set omnifunc=coc#completion#OmniFunc
+
+
+set omnifunc=coc#completion#OmniFuncset omnifunc=coc#completion#OmniFunc
 
 
 set statusline=
@@ -268,7 +301,7 @@ set statusline+=%m
 set statusline+=\ %f
 set statusline+=%=
 
-
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 
 
@@ -523,6 +556,10 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+
+
+
+
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   rainbow = {
@@ -693,7 +730,7 @@ nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>
 
 
 "-- float terminal also you can pass the cli command in open_float_terminal function
-"nnoremap <silent> <S-d> :Lspsaga open_floaterm<CR>
-"tnoremap <silent> <S-d> <C-\><C-n>:Lspsaga close_floaterm<CR>
+nnoremap <silent> <S-d> :Lspsaga open_floaterm<CR>
+tnoremap <silent> <S-d> <C-\><C-n>:Lspsaga close_floaterm<CR>
 
 

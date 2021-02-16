@@ -1,5 +1,6 @@
 function! s:goyo_enter()
     let s:goyo_entered = 1
+    set fullscreen
     set noshowmode
     set noshowcmd
 
@@ -12,6 +13,7 @@ endfunction
 function! s:goyo_leave()
 
     let s:goyo_entered = 0
+		set nofullscreen
     set showmode
     set showcmd
 
@@ -23,3 +25,4 @@ endfunction
 
 autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave
+

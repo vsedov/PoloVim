@@ -2,28 +2,18 @@
 "ColorScheme
 
 "hi Normal guibg=NONE ctermbg=NONE
-hi Normal ctermfg=252 ctermbg=none
-hi Comment gui=italic
 
-
-syntax enable
-set termguicolors
+"hi Comment gui=italic
 "lua require('night-owl')
-"
 "lua require('night-owl')
-
-
-" colorscheme dogrun
+"colorscheme dogrun
 
 lua require'boo-colorscheme'.use{}
 "colorscheme dracula_pro_van_helsing
-
+"colorscheme dracula
 
 "colorscheme palenight
-"autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
-" General misc colors
-"hi LineNr       guibg=#282a36 guifg=#44475a
-hi CursorLineNr guifg=#50fa7b
+
 
 
 " easy split movement

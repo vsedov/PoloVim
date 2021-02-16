@@ -2,6 +2,7 @@
 local lspconfig = require('lspconfig')
 
 local lsp_status = require('lsp-status')
+local status = require("boo.lsp_status")
 
 local api = vim.api
 
@@ -58,31 +59,47 @@ require'lspconfig'.texlab.setup{
 
 
 -- lspconfig.jedi_language_server.setup{
--- 	on_attach = custom_on_attach,
 -- 	cmd = { "jedi-language-server" },
 -- 	filetypes = { "python" },
 
 -- }
 
 lspconfig.pyls.setup{
-  on_attach=on_attach_vim,
+	on_attach = custom_on_attach,
     settings = { pyls = { plugins = {
     	pycodestyle =  { enabled = false },
      	pylint =  { enabled = false },
      	black = {enabled = true},
-     	pyflakes = {enabled = true}
+     	pyflakes = {enabled = false}
      } ,
  	} ,
   },
 }
 
-
+-- lspconfig.pyls_ms.setup{
+-- 	on_attach=on_attach_vim,
+-- 	cmd = { "mspyls" },
+-- 	filetypes = { "python" },
+--     init_options = {
+--       analysisUpdates = true,
+--       asyncStartup = true,
+--       displayOptions = {},
+-- 	  settings = {
+-- 	  	python = {
+-- 	        analysis = {
+-- 	          disabled = {"undefined-variable"},
+-- 	          errors = {"unknown-parameter-name"},
+-- 	          info = {"too-many-function-arguments", "parameter-missing"}
+-- 	        },
+-- 	   },
+-- 	},
+-- },
+-- }
 
 local custom_on_attach_nlua = function(client, bufnr)
 	custom_on_attach_folding(client, bufnr)
-
-
 end
+
 -- require('lua.lsp.nvim').setup(lspconfig, {
 -- 	on_attach = custom_on_attach_nlua,
 -- 	settings = {
