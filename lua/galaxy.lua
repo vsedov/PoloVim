@@ -1,19 +1,8 @@
-
 local gl = require('galaxyline')
 local gls = gl.section
-gl.short_line_list = {'chadtree','vista','dbui'}
+gl.short_line_list = {'LuaTree','vista','dbui','CHADTree','vista','__vista__'}
 local vim = vim
 local vcs = require('galaxyline.provider_vcs')
-
-
-local diagnostic = require('galaxyline.provider_diagnostic')
-local fileinfo = require('galaxyline.provider_fileinfo')
-local extension = require('galaxyline.provider_extensions')
-local colors = require('galaxyline.colors')
-local buffer = require('galaxyline.provider_buffer')
-
-
-
 
 function string:title()
   return self:sub(1,1):upper()..self:sub(2)
@@ -163,7 +152,8 @@ local checkwidth = function()
   end
   return false
 end
---[[
+
+
 gls.left[11] = {
   LeftEnd = {
     provider = function() return '' end,
@@ -172,7 +162,7 @@ gls.left[11] = {
     highlight = {colors.bg,colors.bg}
   }
 }
-]]
+
 ---------------------------------------------------------------------------------------------------
 gls.right[1] = {
   DiffAdd = {
@@ -242,22 +232,21 @@ gls.right[8] = {
 }
 
 ---------------------------------------------------------------------------------------------
---gls.short_line_left[1] = {
-  --BufferType = {
-    --provider = 'FileTypeName',
---    separator = '',
-  --  separator_highlight = {colors.purple,colors.bg},
-    --highlight = {colors.grey,colors.purple}
---  }
---}
+gls.short_line_left[1] = {
+  BufferType = {
+    provider = 'FileTypeName',
+   separator = '',
+   separator_highlight = {colors.purple,colors.bg},
+    highlight = {colors.grey,colors.purple}
+ }
+}
 
 
 gls.short_line_right[1] = {
   BufferIcon = {
     provider= 'BufferIcon',
-    separator = ' ',
+    separator = '',
     separator_highlight = {colors.purple,colors.bg},
     highlight = {colors.grey,colors.purple}
   }
 }
-

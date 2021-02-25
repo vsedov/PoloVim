@@ -25,6 +25,8 @@ end
 --  don't have EFM but use an LSP server that supports folding.
 local custom_on_attach_folding = function(client, bufnr)
 	custom_on_attach(client, bufnr)
+	lsp_status.on_attach(client)
+
 	require('folding').on_attach()
 end
 
@@ -63,6 +65,13 @@ require'lspconfig'.texlab.setup{
 -- 	filetypes = { "python" },
 
 -- }
+--
+lspconfig.jdtls.setup{
+	on_attach = custom_on_attach,
+
+  cmd = {"jdtls"},
+  filetypes = {"java"}
+}
 
 lspconfig.pyls.setup{
 	on_attach = custom_on_attach,

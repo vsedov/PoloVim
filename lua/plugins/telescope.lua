@@ -1,5 +1,6 @@
 local ts = require('telescope')
 local actions = require('telescope.actions')
+
 require('telescope').setup{
   defaults = {
     vimgrep_arguments = {

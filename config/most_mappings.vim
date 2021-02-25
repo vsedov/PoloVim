@@ -1,12 +1,12 @@
 
 "ColorScheme
 
-"hi Normal guibg=NONE ctermbg=NONE
 
-"hi Comment gui=italic
+
 "lua require('night-owl')
 "lua require('night-owl')
 "colorscheme dogrun
+
 
 lua require'boo-colorscheme'.use{}
 "colorscheme dracula_pro_van_helsing
@@ -31,7 +31,7 @@ nnoremap tl :tablast<CR>
 
 
 " mapping Esc
-imap <F13> <Esc>
+imap <F13> <Esc>2
 cnoremap <Esc> <C-c>
 
 inoremap <c-c> <ESC>

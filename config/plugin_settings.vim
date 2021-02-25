@@ -1,6 +1,9 @@
 "UndoTree
 
 let g:undotree_SplitWidth = 40
+
+
+
 let UndotreePos = 'left'
 if !exists('g:undotree_WindowLayout')
     let g:undotree_WindowLayout = 3
@@ -36,6 +39,8 @@ endif
 
 "Vista
 map <C-t> :Vista nvim_lsp<CR>
+
+
       " Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
 let g:vista#renderer#enable_icon = 1
       " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
@@ -93,21 +98,6 @@ let g:run_split = 'right'
 
 
 
-"Lens
-
-
-augroup lens
-  let g:lens#disabled_filetypes = ['nerdtree','chadtree','Quickfix List']
-  let g:lens#height_resize_min = 5
-  let g:lens#width_resize_max = 80
-
-  let g:lens#enter_disabled = 0
-  autocmd! WinNew * let g:lens#enter_disabled = 1
-  autocmd! WinEnter * call lens#win_enter()
-  autocmd! WinNew * let g:lens#enter_disabled = 0
-augroup END
-
-
 "Ipynb Vimpyter
 autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
 autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
@@ -153,22 +143,21 @@ let g:esearch = {
   \}
 
   " Neoterm
-let g:neoterm_size=20
-let g:neoterm_repl_command= 'zsh'
-let g:neoterm_default_mod = 'horizontal'
-let g:neoterm_autoinsert=1
-let g:neoterm_size=16
-nnoremap <leader>tl :<c-u>exec v:count.'Tclear'<cr>
+"let g:neoterm_size=20
+"let g:neoterm_repl_command= 'zsh'
+"let g:neoterm_default_mod = 'horizontal'
+"let g:neoterm_autoinsert=1
+"let g:neoterm_size=16
+"nnoremap <leader>tl :<c-u>exec v:count.'Tclear'<cr>
 
   " toogle the terminal
   " kills the current job (send a <c-c>)
-nnoremap <silent> tc :call neoterm#kill()<cr>
+"nnoremap <silent> tc :call neoterm#kill()<cr>"
 
 "Fold And Number Toggle
 let g:SimpylFold_docstring_preview = 1
 let b:SimpylFold_fold_import = 1
 let b:SimpylFold_fold_import = 1
-nnoremap <F9> :NumbersToggle<CR>
 
 
 
@@ -192,8 +181,61 @@ let g:nayvy_coc_enabled =1
 
 
 "Indent Line 
-let g:indentLine_fileType = ["tex",".tex"]
-let g:indentLine_fileTypeExclude= [".py","py"]
-let g:indentLine_faster = 1
+" let g:indentLine_fileType = ["tex",".tex"]
+" let g:indentLine_fileTypeExclude= [".py","py"]
 
+
+set list
+
+set listchars+=trail:•
+
+set listchars+=nbsp:_
+
+let g:indentLine_char = '│'
+let g:indentLine_first_char = g:indentLine_char
+let g:indentLine_bgcolor_gui = 'NONE'
+let g:indentLine_setConceal = 0
+let g:indentLine_fileTypeExclude = ['help', 'defx', 'vimwiki', 'prcomment','CHADtree']
+let g:indentLine_autoResetWidth = 1
+"let g:indent_blankline_space_char = ' '
+let g:indent_blankline_debug = v:true
+
+
+
+"Vim autosession 
+
+"    neuron_dir = "~/neuron", 
+"     ~/.config/nvim/sessions/ to
+"
+
+""vim-sidebar-manager
+
+
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_SplitWidth = 40
+
+let g:sidebars = {
+  \ 'CHADTree': {
+  \     'position': 'left',
+  \     'check_win': {nr -> getwinvar(nr, '&filetype') ==# 'CHADTree'},
+  \     'open': 'CHADopen',
+  \     'close': 'CHADopen'
+  \ },
+  \ 'vista': {
+  \     'position': 'left',
+  \     'check_win': {nr -> bufname(winbufnr(nr)) =~ '__vista__'},
+  \     'open': 'Vista nvim_lsp',
+  \     'close': 'Vista'
+  \ },
+  \ 'undotree': {
+  \     'position': 'left',
+  \     'check_win': {nr -> getwinvar(nr, '&filetype') ==# 'undotree'},
+  \     'open': 'UndotreeShow',
+  \     'close': 'UndotreeHide'
+  \ }
+  \ }
+
+noremap <silent> <M-1> :call sidebar#toggle('CHADTree')<CR>
+noremap <silent> <M-2> :call sidebar#toggle('vista')<CR>
+nnoremap <F9> :call sidebar#toggle('undotree')<CR>
 

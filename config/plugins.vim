@@ -49,17 +49,18 @@ Plug 'neovim/nvim-lspconfig' " The most important plugin
 Plug 'nvim-lua/lsp-status.nvim'  " lsp items in the statusbar
 Plug 'nvim-lua/lsp_extensions.nvim'
 
-Plug 'nvim-treesitter/nvim-treesitter' " tree-sitter support
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/playground'
 Plug 'romgrk/nvim-treesitter-context'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
-Plug 'https://github.com/p00f/nvim-ts-rainbow'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'luochen1990/rainbow'
+
 " Plug 'wellle/context.vim'
 "Yank memorizer 
 Plug 'honza/vim-snippets'
 
-"Plug 'https://github.com/p00f/nvim-ts-rainbow'
 Plug 'gennaro-tedesco/nvim-peekup'
 
 
@@ -97,7 +98,9 @@ Plug 'justinmk/vim-syntax-extra' " C and bison syntax highlighting
 
 
 "For some reason you need this Indent line for the aut
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
+"
+
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['plaintex', 'tex', 'pandoc']}
 Plug 'https://github.com/tmhedberg/SimpylFold'
 Plug 'lervag/vimtex'
@@ -108,8 +111,20 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'pwntester/octo.nvim'
-
 Plug 'glepnir/lspsaga.nvim'
+
+
+""Neuron Note taking didint work ,. 
+Plug 'oberblastmeister/neuron.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+
+""Vim be good game ? 
+Plug 'ThePrimeagen/vim-be-good' 
+
+"AutoSession
 
 "Debugging
 Plug 'nvim-telescope/telescope-dap.nvim'
@@ -137,7 +152,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'jdhao/better-escape.vim'
 Plug '/home/viv/.vim/plugged/dracula_pro/'
 
-Plug 'kassio/neoterm'
+"Plug 'kassio/neoterm'
 Plug 'metakirby5/codi.vim'
 Plug 'junegunn/goyo.vim'
 
@@ -195,9 +210,8 @@ Plug 'glepnir/dashboard-nvim'
 
 
 "Plug 'https://github.com/glepnir/indent-guides.nvim'
-Plug 'Yggdroot/indentLine'
 "Lua Plugin for Indent Line
-"Plug 'https://github.com/lukas-reineke/indent-blankline.nvim.git',{'branch': 'lua'}
+Plug 'https://github.com/lukas-reineke/indent-blankline.nvim.git',{'branch': 'lua'}
 
 
 Plug 'ryanoasis/vim-devicons'
@@ -205,6 +219,9 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 
+
+""Side bar Manager - looks cool 
+Plug 'https://github.com/brglng/vim-sidebar-manager'
 call plug#end()
 
 autocmd VimEnter *

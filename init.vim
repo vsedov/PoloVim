@@ -14,18 +14,11 @@ runtime config/loading_java.vim
 
 
 "ColorScheme"
-syntax enable
-set termguicolors
-
-hi Normal guibg=NONE ctermbg=NONE
-hi CursorLineNr guifg=#50fa7b
-hi Comment gui=italic
 
 
 hi GitGutterAdd    guifg=#50fa7b
 hi GitGutterChange guifg=#8be9fd
 hi GitGutterDelete guifg=#ff5555
-
 
 hi EasyMotionTarget ctermfg=9 guifg=red
 hi EasyMotionTarget2First ctermfg=9 guifg=red
@@ -37,8 +30,33 @@ hi link EasyMotionShade Comment
 
 
 
+hi CursorLineNr guifg=#50fa7b
+hi Normal guibg=NONE ctermbg=NONE
+"hi Normal ctermfg=252 ctermbg=none
+hi Comment gui=italic
+
+" configure nvcode-color-schemes
+let g:nvcode_termcolors=256
 
 
+
+
+if (has("termguicolors"))
+    set termguicolors
+    hi LineNr ctermbg=NONE guibg=NONE
+endif
+
+syntax on
+
+syntax enable
+set termguicolors
+
+hi Normal guibg=NONE ctermbg=NONE
+hi CursorLineNr guifg=#50fa7b
+hi Comment gui=italic
+
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
 
 let mapleader = " " " Leader is the space key
 let g:mapleader = " "
@@ -67,6 +85,7 @@ augroup AutoRelativeLineNums
 augroup END
 
 "~~~~~~~~~~~~~~~~~~~~~~~~
+let g:rainbow_active = 1
 
 
 
@@ -142,6 +161,28 @@ au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
 map <F7> :let $VIM_DIR=expand('%:p:h')<CR>: vsplit term://zsh<CR>cd $VIM_DIR<CR>
 nnoremap <silent> <F6> :Run <cr>
+
+
+let g:run_cmd_python = ['ipython']
+
+let g:run_cmd_java = [
+                \ 'javac',
+                \ '-g:none',
+                \ run#defaults#fullfilepath(),
+                \ '&&',
+                \ 'java',
+                \ run#defaults#basefilename()
+                \ ]
+
+augroup vimrc_python
+  au!
+  au FileType python let g:run_auto_close = 1
+augroup END
+
+
+
+
+
 
 nnoremap <silent> <F5> :call SaveAndExecutePython()<CR>
 vnoremap <silent> <F5> :<C-u>call SaveAndExecutePython()<CR>
@@ -221,6 +262,26 @@ endfunction
 command! What echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 
 
+augroup lens
+  let g:lens#disabled_filetypes = ['CHADTree']
+  let g:lens#height_resize_min = 5
+  let g:lens#width_resize_max = 80
+
+
+  let g:lens#enter_disabled = 0
+  autocmd! WinNew * let g:lens#enter_disabled = 1
+
+  autocmd! WinEnter * call lens#win_enter()
+  autocmd! WinNew * let g:lens#enter_disabled = 0
+
+
+augroup END
+
+nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
+nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
+nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
+nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
+
 
 
 "Ale Configs
@@ -229,10 +290,16 @@ let g:ale_python_pylint_options = '--rcfile ~/.config/pylintrc'
 let g:ale_list_window_size =  4
 let g:ale_sign_column_always = 1
 let g:ale_open_list = 1
+
+
+
 let g:ale_set_loclist = 0
+
+
+
 let g:ale_set_quickfix = 1
 let g:ale_keep_list_window_open = 1
-let g:ale_list_vertical = 1
+let g:ale_list_vertical = 0
 
 let g:ale_lint_on_save = 1
 
@@ -254,7 +321,7 @@ let g:ale_linters = {
   \   'tex': ['proselint', 'chktex', 'lacheck','texlab','latexindent','textlint'],
   \   'plaintex': ['proselint', 'chktex', 'lacheck','texlab'],
   \   'help': [],
-  \   'python': ['black','pylint','pyright'],
+  \   'python': ['black','pylint','mypy'],
   \   'ruby': ['solargraph', 'rubocop', 'ruby'],
   \   'groovy': ['android'],
   \   'xml': ['android'],
@@ -293,7 +360,9 @@ let g:ale_disable_lsp = 1
 let g:ale_completion_enabled=0
 
 
-set omnifunc=coc#completion#OmniFuncset omnifunc=coc#completion#OmniFunc
+set omnifunc=coc#completion#OmniFunc
+
+"#OmniFuncset omnifunc=coc#completion#OmniFunc
 
 
 set statusline=
@@ -489,7 +558,7 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 
 
-"FloatTerm
+"nvim-hlslens
 
 
 
@@ -497,15 +566,6 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 "Fold
 
 
- " Will get replacc
-" let g:indentLine_defaultGroup = 'Constant'
-" let g:indentLine_defaultGroup = 'SpecialKey'
-" let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-" let g:indentLine_color_gui = '#755faa'
-" let g:indentLine_faster = 1 
-" let g:is_pythonsense_alternate_motion_keymaps = 1
-
-"When coding in python there is a puse or breaks down not sure why "
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 lua << EOF
   require('galaxy')
@@ -538,7 +598,7 @@ lua require('nvim-peekup.config').geometry["title"] = 'An awesome window title'
 
 
 "behaviour of the peekup window on keystroke
-lua require('nvim-peekup.config').on_keystroke["delay"] = '300ms'
+lua require('nvim-peekup.config').on_keystroke["delay"] = '100ms'
 "
 lua require('nvim-peekup.config').on_keystroke["autoclose"] = false
 let g:peekup_open = '<leader>"'
@@ -553,20 +613,10 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,              -- false will disable the whole extension
   },
+
 }
 EOF
 
-
-
-
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  rainbow = {
-    enable = true
-  }
-}
-EOF
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -730,7 +780,9 @@ nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>
 
 
 "-- float terminal also you can pass the cli command in open_float_terminal function
-nnoremap <silent> <S-d> :Lspsaga open_floaterm<CR>
-tnoremap <silent> <S-d> <C-\><C-n>:Lspsaga close_floaterm<CR>
+"nnoremap <silent> <S-D> :Lspsaga open_floaterm<CR>
+"tnoremap <silent> <S-D> <C-\><C-n>:Lspsaga close_floaterm<CR>
 
 
+nnoremap <silent>[b :BufferLineCycleNext<CR>
+nnoremap <silent>b] :BufferLineCyclePrev<CR>
