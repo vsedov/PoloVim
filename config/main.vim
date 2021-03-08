@@ -3,6 +3,14 @@ set nocompatible
 set encoding=utf-8
 set title
 
+
+" File and script encoding settings for vim
+set fileencoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+scriptencoding utf-8
+
+
+
 set wildoptions+=pum
 set lazyredraw
 
@@ -19,10 +27,19 @@ set wildignore=*.pyc,**/__pycache__/*,**/node_modules/*,.coverage.*,.eggs,*.egg-
 " Ignore casing when performing completion
 set wildignorecase
 
+
+
+
 filetype on
 filetype plugin on
 filetype plugin indent on
 syntax on
+
+
+" Settings for popup menu
+set pumheight=15  " Maximum number of items to show in popup menu
+set pumblend=5  " Pesudo blend effect for popup menu
+
 
 set cmdheight=2
 set updatetime=100
@@ -81,4 +98,29 @@ set viminfo='20,<1000  " allow copying of more than 50 lines to other applicatio
 set clipboard=unnamedplus
 
 
+set list
+set listchars+=trail:•
+set listchars+=nbsp:_
 
+" Show hostname, full path of file and last-mod time on the window title.
+" The meaning of the format str for strftime can be found in
+" http://tinyurl.com/l9nuj4a. The function to get lastmod time is drawn from
+" http://tinyurl.com/yxd23vo8
+set title
+set titlestring=
+set titlestring+=%(%{hostname()}\ \ %)
+set titlestring+=%(%{expand('%:p')}\ \ %)
+set titlestring+=%{strftime('%Y-%m-%d\ %H:%M',getftime(expand('%')))}
+
+
+" Virtual edit is useful for visual block edit
+set virtualedit=block
+
+
+
+" Changing fillchars for folding, so there is no garbage charactes
+set fillchars=fold:\ ,vert:\|
+
+
+" Set matching pairs of characters and highlight matching brackets
+set matchpairs+=<:>,「:」

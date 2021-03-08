@@ -30,7 +30,7 @@
   "yank.priority": 10,
   "yank.highlight.enable": false, // use neovim's built-in instead
   "yank.highlight.duration": 200,
-  "yank.list.maxsize": 100,
+  "yank.list.maxsize": 500,
   "yank.enableCompletion": false,
 
 
@@ -116,5 +116,5 @@
       },
       "description":"gitignore completely replace the exists templates (key and value format)"
   },
-
+  "rpc.lowerDetailsViewing":"Viewing {filename}",
 }

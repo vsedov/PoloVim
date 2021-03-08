@@ -42,3 +42,5 @@ let g:dashboard_custom_header=[
     \]
 
 let g:dashboard_session_directory = "$HOME/.vim/dashboard"
+nmap <Leader>ss :<C-u>SessionSave<CR>
+nmap <Leader>sl :<C-u>SessionLoad<CR>

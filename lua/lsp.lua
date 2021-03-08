@@ -1,23 +1,39 @@
 
 local lspconfig = require('lspconfig')
-
-local lsp_status = require('lsp-status')
-local status = require("boo.lsp_status")
+--local lsp_status = require('lsp-status')
+local lsp_status = require("boo.lsp_status")
 
 local api = vim.api
 
+
+
 -- lsp_status.register_progress()
+local custom_on_attach_num = function(client, bufnr)
+  local opts = {
+		noremap=true,
+		silent=true,
+	}
+end
+
+
 
 local custom_on_attach = function(client, bufnr)
   api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  print("'" .. client.name .. "' language server attached")
 
+    if client.resolved_capabilities.document_formatting then
+
+      vim.api.nvim_buf_set_keymap(0, "n", "<Leader>aa",
+                                  "<cmd>lua require'boo.utils'.lsp_format()<cr>", {})
+      print(string.format("Formatting supported %s", client.name))
+
+    end
   -- Mappings.
 
   local opts = {
 		noremap=true,
 		silent=true,
 	}
-	
 	lsp_status.on_attach(client)
 end
 
@@ -73,25 +89,26 @@ lspconfig.jdtls.setup{
   filetypes = {"java"}
 }
 
-lspconfig.pyls.setup{
-	on_attach = custom_on_attach,
-    settings = { pyls = { plugins = {
-    	pycodestyle =  { enabled = false },
-     	pylint =  { enabled = false },
-     	black = {enabled = true},
-     	pyflakes = {enabled = false}
-     } ,
- 	} ,
-  },
-}
+-- lspconfig.pyls.setup{
+-- 	cmd = { "pyls" },
+-- 	on_attach=on_attach_vim,
+--     settings = { pyls = { plugins = {
+--     	pycodestyle =  { enabled = false },
+--      	pylint =  { enabled = false },
+--      	black = {enabled = true},
+--      	pyflakes = {enabled = false}
+--      } ,
+--  	} ,
+--   },
+-- }
 
 -- lspconfig.pyls_ms.setup{
 -- 	on_attach=on_attach_vim,
 -- 	cmd = { "mspyls" },
 -- 	filetypes = { "python" },
 --     init_options = {
---       analysisUpdates = true,
---       asyncStartup = true,
+--       analysisUpdates = false,
+--       asyncStartup = false,
 --       displayOptions = {},
 -- 	  settings = {
 -- 	  	python = {
@@ -100,10 +117,21 @@ lspconfig.pyls.setup{
 -- 	          errors = {"unknown-parameter-name"},
 -- 	          info = {"too-many-function-arguments", "parameter-missing"}
 -- 	        },
+
 -- 	   },
 -- 	},
 -- },
 -- }
+
+
+
+lspconfig.jedi_language_server.setup{
+	on_attach = custom_on_attach_num,
+    cmd = { "jedi-language-server" },
+    filetypes = { "python" },	
+
+}
+
 
 local custom_on_attach_nlua = function(client, bufnr)
 	custom_on_attach_folding(client, bufnr)
@@ -119,3 +147,5 @@ end
 -- 		}
 -- 	}
 -- })
+
+

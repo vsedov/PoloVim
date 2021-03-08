@@ -1,28 +1,22 @@
 function! s:goyo_enter()
-    let s:goyo_entered = 1
-    set fullscreen
-    set noshowmode
-    set noshowcmd
-
-    set scrolloff=999
-    set wrap
-    setlocal textwidth=0
-    setlocal wrapmargin=0
+  set noshowmode
+  set noshowcmd
+  set nonumber
+  set norelativenumber
+  set scrolloff=999
+  nnoremap <buffer> j gj
+  nnoremap <buffer> k gk
 endfunction
 
 function! s:goyo_leave()
-
-    let s:goyo_entered = 0
-		set nofullscreen
-    set showmode
-    set showcmd
-
-    set scrolloff=3
-    set textwidth=120
-    set wrapmargin=8
+  set showmode
+  set showcmd
+  set scrolloff=5
+    if g:use_line_numbers
+      set number
+      set relativenumber
+    endif
 endfunction
 
-
-autocmd! User GoyoEnter call <SID>goyo_enter()
-autocmd! User GoyoLeave call <SID>goyo_leave
-
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()

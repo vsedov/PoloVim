@@ -1,67 +1,4 @@
-"UndoTree
-
-let g:undotree_SplitWidth = 40
-
-
-
-let UndotreePos = 'left'
-if !exists('g:undotree_WindowLayout')
-    let g:undotree_WindowLayout = 3
-endif
-
-  " diff window height
-if !exists('g:undotree_DiffpanelHeight')
-    let g:undotree_DiffpanelHeight = 8
-endif
-
-  " Highlight changed text
-if !exists('g:undotree_HighlightChangedText')
-    let g:undotree_HighlightChangedText = 1
-endif
-
-  " Highlight changed text using signs in the gutter
-if !exists('g:undotree_HighlightChangedWithSign')
-    let g:undotree_HighlightChangedWithSign = 1
-endif
-
-    " Highlight linked syntax type.
-    " You may chose your favorite through ":hi" command
-if !exists('g:undotree_HighlightSyntaxAdd')
-    let g:undotree_HighlightSyntaxAdd = "DiffAdd"
-endif
-if !exists('g:undotree_HighlightSyntaxChange')
-    let g:undotree_HighlightSyntaxChange = "DiffChange"
-endif
-if !exists('g:undotree_HighlightSyntaxDel')
-    let g:undotree_HighlightSyntaxDel = "DiffDelete"
-endif
-
-
-"Vista
-map <C-t> :Vista nvim_lsp<CR>
-
-
-      " Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
-let g:vista#renderer#enable_icon = 1
-      " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
-let g:vista#renderer#icons = {
-\   "function": "\uf794",
-\   "variable": "\uf71b",
-\  }
-
-function! NearestMethodOrFunction() abort
-  return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
-set statusline+=%{NearestMethodOrFunction()}
-
-    " By default vista.vim never run if you don't call it explicitly.
-    "
-    " If you want to show the nearest function in your statusline automatically,
-    " you can add the following line to your vimrc
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
-
-
+"This is just for me being lazy btw "
 " FlyGrep settings
 nnoremap <leader>s :FlyGrep<cr>
 
@@ -79,29 +16,20 @@ let Tlist_Use_Right_Window=1
 
 
 
-"ChadTree
-map <C-n> :CHADopen<CR>
-let g:chadtree_settings = {
-\ "theme.text_colour_set": "env",
-\  "theme.icon_colour_set":"github",
-\  "theme.icon_glyph_set":"devicons",
-\ "ignore.name_glob":['.*'],
-\  "view.width":10,
-\ }
-
-autocmd FileType CHADtree setlocal number relativenumber
-nnoremap <leader>l <cmd>call setqflist([])<cr>
-
-"I Dont know what this does , but if i remove it , it breaks the code ...
 let g:run_split = 'right'
 
+let g:run_cmd_python = ['ipython']
+
+let g:run_cmd_java = [
+                \ 'javac',
+                \ '-g:none',
+                \ run#defaults#fullfilepath(),
+                \ '&&',
+                \ 'java',
+                \ run#defaults#basefilename()
+                \ ]
 
 
-
-"Ipynb Vimpyter
-autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
-autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
-autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
 
 "Sneak Plugin 
 let g:sneak#label = 1
@@ -174,68 +102,12 @@ let g:sandwich#recipes = [
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)+g:sandwich#recipes
 
 
-"Doge and Nayvy Configs Using Custom Nayvy.py
-let g:doge_doc_standard_python = 'google'
-let g:nayvy_import_config_path = '$HOME/nayvy.py'
-let g:nayvy_coc_enabled =1
+let g:suda_smart_edit = 1
+
+let g:formatters_vue = ['black']
+let g:run_all_formatters_vue = 1
+let g:rainbow_active = 1
 
 
-"Indent Line 
-" let g:indentLine_fileType = ["tex",".tex"]
-" let g:indentLine_fileTypeExclude= [".py","py"]
-
-
-set list
-
-set listchars+=trail:•
-
-set listchars+=nbsp:_
-
-let g:indentLine_char = '│'
-let g:indentLine_first_char = g:indentLine_char
-let g:indentLine_bgcolor_gui = 'NONE'
-let g:indentLine_setConceal = 0
-let g:indentLine_fileTypeExclude = ['help', 'defx', 'vimwiki', 'prcomment','CHADtree']
-let g:indentLine_autoResetWidth = 1
-"let g:indent_blankline_space_char = ' '
-let g:indent_blankline_debug = v:true
-
-
-
-"Vim autosession 
-
-"    neuron_dir = "~/neuron", 
-"     ~/.config/nvim/sessions/ to
-"
-
-""vim-sidebar-manager
-
-
-let g:undotree_SetFocusWhenToggle = 1
-let g:undotree_SplitWidth = 40
-
-let g:sidebars = {
-  \ 'CHADTree': {
-  \     'position': 'left',
-  \     'check_win': {nr -> getwinvar(nr, '&filetype') ==# 'CHADTree'},
-  \     'open': 'CHADopen',
-  \     'close': 'CHADopen'
-  \ },
-  \ 'vista': {
-  \     'position': 'left',
-  \     'check_win': {nr -> bufname(winbufnr(nr)) =~ '__vista__'},
-  \     'open': 'Vista nvim_lsp',
-  \     'close': 'Vista'
-  \ },
-  \ 'undotree': {
-  \     'position': 'left',
-  \     'check_win': {nr -> getwinvar(nr, '&filetype') ==# 'undotree'},
-  \     'open': 'UndotreeShow',
-  \     'close': 'UndotreeHide'
-  \ }
-  \ }
-
-noremap <silent> <M-1> :call sidebar#toggle('CHADTree')<CR>
-noremap <silent> <M-2> :call sidebar#toggle('vista')<CR>
-nnoremap <F9> :call sidebar#toggle('undotree')<CR>
-
+noremap <F8> :Autoformat<CR>
+nnoremap <F3> :Black<CR>
