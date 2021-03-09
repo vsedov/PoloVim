@@ -131,7 +131,11 @@ Plug 'sbdchd/vim-run'
 Plug 'psliwka/vim-smoothie'
 Plug 'auxiliary/vim-layout'     " i3 like layout
 
+"Github Plugins"
 Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'tveskag/nvim-blame-line'
+
+
 
 "Better float?
 Plug 'voldikss/vim-floaterm'
