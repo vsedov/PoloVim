@@ -1,8 +1,4 @@
 call plug#begin('~/.vim/plugged')
-"Local
-Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
-Plug 'meain/vim-printer'
-
 
 "Tree
 Plug 'scrooloose/nerdtree'  " file list
@@ -24,7 +20,7 @@ Plug 'w0rp/ale'  " python linters
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 "Need to relearn how to use this dam thing again . "
-Plug 'szymonmaszke/vimpyter' "vim-plug
+Plug 'szymonmaszke/vimpyter' 
 
 "Color Leave me alone ok , i like colours . 
 Plug 'wadackel/vim-dogrun'
@@ -114,14 +110,14 @@ Plug 'nvim-lua/popup.nvim'
 ""Vim be good game ? 
 Plug 'ThePrimeagen/vim-be-good' 
 
-"AutoSession
 
 "Debugging
 Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'theHamsta/nvim-dap-virtual-text'
-Plug 'tpope/vim-sensible'
+Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
+Plug 'meain/vim-printer'
 
 "ANimation
 Plug 'camspiers/animate.vim'
@@ -134,6 +130,8 @@ Plug 'auxiliary/vim-layout'     " i3 like layout
 "Github Plugins"
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'tveskag/nvim-blame-line'
+Plug 'rhysd/git-messenger.vim'
+Plug 'airblade/vim-gitgutter'  " show git changes to files in gutter
 
 
 
@@ -142,7 +140,8 @@ Plug 'voldikss/vim-floaterm'
 
 "Discord rpc"
 
-Plug 'jdhao/better-escape.vim'
+Plug 'tpope/vim-sensible'
+Plug 'jdhao/better-escape.vim' 
 Plug '/home/viv/.vim/plugged/dracula_pro/'
 
 "Plug 'kassio/neoterm'
@@ -168,7 +167,6 @@ Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 Plug 'francoiscabrol/ranger.vim'
 Plug 'stsewd/isort.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'rbgrouleff/bclose.vim'
-Plug 'airblade/vim-gitgutter'  " show git changes to files in gutter
 
 
 Plug 'https://tildegit.org/sloum/gemini-vim-syntax.git'
