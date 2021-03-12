@@ -10,6 +10,8 @@ source  $HOME/.config/nvim/config/plugin_settings.vim
 source  $HOME/.config/nvim/config/ale.vim
 source  $HOME/.config/nvim/config/dashboard.vim
 source  $HOME/.config/nvim/config/floatterm.vim
+source  $HOME/.config/nvim/config/coc.vim
+
 
 source  $HOME/.config/nvim/config/pythonmanualdebug.vim
 source  $HOME/.config/nvim/config/markdow_multicurse.vim
@@ -29,12 +31,14 @@ source  $HOME/.config/nvim/config/Vimjup.vim
 source  $HOME/.config/nvim/config/snipdebugger.vim
 
 source  $HOME/.config/nvim/config/breakhabits.vim
+source  $HOME/.config/nvim/config/animation.vim
+
 
 
 "ColorScheme"
 if (has("termguicolors"))
-    set termguicolors
-    hi LineNr ctermbg=NONE guibg=NONE
+  set termguicolors
+  hi LineNr ctermbg=NONE guibg=NONE
 endif
 
 
@@ -81,46 +85,20 @@ highlight clear ALEWarningSign
 
 
 "~~~~~~~~~~~~~~~~~~~~~~~~
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
 
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-inoremap <silent><expr> <NUL> coc#refresh()
 
-
-" use <tab> for trigger completion and navigate to the next complete item
-
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
 
 " theicfire .vimrc tips
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 
 
-"autocmd BufRead *.py set go+=b
 "
 " Remove all trailing whitespace by pressing C-S
 nnoremap <C-S> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
@@ -128,75 +106,12 @@ au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 map <F7> :let $VIM_DIR=expand('%:p:h')<CR>: vsplit term://zsh<CR>cd $VIM_DIR<CR>
 nnoremap <silent> <F6> :Run <cr>
 
-
+autocmd BufRead *.py set go+=b
 nnoremap <silent> <F5> :call SaveAndExecutePython()<CR>
 vnoremap <silent> <F5> :<C-u>call SaveAndExecutePython()<CR>
 
 let g:previous_window = -1
 au BufEnter * call SmartInsert()
-
-
-command! What echo synIDattr(synID(line('.'), col('.'), 1), 'name')
-
-
-
-
-nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
-nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
-nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
-nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
-
-
-"This was causing sisues ? "
-set omnifunc=coc#completion#OmniFunc
-
-"#OmniFuncset omnifunc=coc#completion#OmniFunc
-
-
-set statusline=
-set statusline+=%m
-set statusline+=\ %f
-set statusline+=%=
-
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-
-
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming Keep this 
-nmap <leader>rn <Plug>(coc-rename)
-
-
-
-"AutoPair Config
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '<M-b>'
-
-" OutOfdate
-let g:rainbow_active = 1  " Rainbow brackets
-let g:targets_aiAI = 'aiAI'
-
-
-
-
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-
-
-
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
-
 
 
 " Configuration example
@@ -222,7 +137,6 @@ lua << EOF
   require('sagastuff')
   require('quickfix-bar')
   require("telescope").load_extension("frecency")
-
 
 EOF
 " geometry configuration
@@ -252,9 +166,10 @@ source  $HOME/.config/nvim/config/peek.vim
 source  $HOME/.config/nvim/config/bufferstuff.vim
 
 
+command! Nani echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 
 ""Help define what the bloody plugin value is
 map <leader>hhi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 

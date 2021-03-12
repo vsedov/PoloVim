@@ -111,3 +111,17 @@ let g:rainbow_active = 1
 
 noremap <F8> :Autoformat<CR>
 nnoremap <F3> :Black<CR>
+
+
+"AutoPair Config
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+
+" OutOfdate
+let g:rainbow_active = 1  " Rainbow brackets
+let g:targets_aiAI = 'aiAI'
+
+
+
+
+
