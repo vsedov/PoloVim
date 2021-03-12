@@ -221,6 +221,8 @@ lua << EOF
   require('treesitter')
   require('sagastuff')
   require('quickfix-bar')
+  require("telescope").load_extension("frecency")
+
 
 EOF
 " geometry configuration
@@ -248,4 +250,11 @@ source  $HOME/.config/nvim/config/telescopebinds.vim
 source  $HOME/.config/nvim/config/saga.vim
 source  $HOME/.config/nvim/config/peek.vim
 source  $HOME/.config/nvim/config/bufferstuff.vim
+
+
+
+""Help define what the bloody plugin value is
+map <leader>hhi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 

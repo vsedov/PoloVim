@@ -52,7 +52,7 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
       \ 'python': ['nayvy#ale_fixer', 'black', 'isort'],
-      \'java':['google_java_format'],
+      \'java':['google_java_format','remove_trailing_lines'],
       \ 'tex':['textlint']
       \ }
 

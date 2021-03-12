@@ -83,7 +83,7 @@ require'lspconfig'.texlab.setup{
 -- }
 --
 lspconfig.jdtls.setup{
-	on_attach = custom_on_attach,
+	on_attach = custom_on_attach_num,
 
   cmd = {"jdtls"},
   filetypes = {"java"}

@@ -124,3 +124,5 @@ set fillchars=fold:\ ,vert:\|
 
 " Set matching pairs of characters and highlight matching brackets
 set matchpairs+=<:>,「:」
+
+autocmd Filetype gitcommit setlocal spell textwidth=72

@@ -26,7 +26,8 @@ nmap <space>gw :Gwrite<cr>
 
 
 "Git Blame"
-autocmd BufEnter * EnableBlameLine
+let g:blameLineUseVirtualText = 0
+"This gets annoying a little bit "
 
 " Specify the highlight group used for the virtual text ('Comment' by default)
 let g:blameLineVirtualTextHighlight = 'Question'
@@ -47,7 +48,7 @@ let g:blameLineGitFormat = '%an - %s'
     "" SingleBlameLine
 
 
-nnoremap <silent><leader><leader>bb :ToggleBlameLine<CR>
+nnoremap <silent><leader><leader>bl :ToggleBlameLine<CR>
 
 
 

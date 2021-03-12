@@ -19,17 +19,17 @@ nmap <silent><leader>tm :make test<CR>
 nmap <silent><leader>to :!firefox coverage/index.html<CR>
 
 
-
+"Leader v , has some issue about sorted tests , though im not sure wy"
 nmap <leader>vf <Plug>(ultest-run-file)
 nmap <leader>vn <Plug>(ultest-run-nearest)
-nmap <leader>vj <Plug>(ultest-next-fail)
-nmap <leader>vk <Plug>(ultest-prev-fail)
+"nmap <leader>vj <Plug>(ultest-next-fail)
+"nmap <leader>vk <Plug>(ultest-prev-fail)
 nmap <leader>vg <Plug>(ultest-output-jump)
 nmap <leader>vo <Plug>(ultest-output-show)
 nmap <leader>vs <Plug>(ultest-summary-toggle)
 nmap <leader>vS <Plug>(ultest-summary-jump)
 nmap <leader>va <Plug>(ultest-attach)
-nmap <leader>vc <Plug>(ultest-stop-nearest)
+"nmap <leader>vc <Plug>(ultest-stop-nearest)
 nmap <leader>vx <Plug>(ultest-stop-file)
 
 

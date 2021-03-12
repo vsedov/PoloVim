@@ -117,4 +117,6 @@
       "description":"gitignore completely replace the exists templates (key and value format)"
   },
   "rpc.lowerDetailsViewing":"Viewing {filename}",
+  "rpc.idleText":"The One True Text Editor",
+  "rpc.smallImage":"The One True Text Editor",
 }

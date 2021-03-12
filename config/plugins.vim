@@ -87,7 +87,6 @@ Plug 'euclidianAce/BetterLua.vim' " better lua syntax highlighting for 5.3/4
 Plug 'norcalli/nvim-colorizer.lua' " Fastest color-code colorizer
 Plug 'justinmk/vim-syntax-extra' " C and bison syntax highlighting
 
-
 "For some reason you need this Indent line for the aut
 "Plug 'Yggdroot/indentLine'
 Plug 'https://github.com/tmhedberg/SimpylFold'
@@ -100,6 +99,10 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'pwntester/octo.nvim'
 Plug 'glepnir/lspsaga.nvim'
+
+
+Plug 'nvim-telescope/telescope-frecency.nvim'
+Plug 'https://github.com/tami5/sql.nvim'
 
 
 ""Neuron Note taking didint work ,. 
