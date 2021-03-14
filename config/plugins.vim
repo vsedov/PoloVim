@@ -17,12 +17,11 @@ Plug 'wsdjeg/FlyGrep.vim'  " awesome grep on the fly
 
 Plug 'w0rp/ale'  " python linters
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 "Need to relearn how to use this dam thing again . "
-Plug 'szymonmaszke/vimpyter' 
+Plug 'szymonmaszke/vimpyter'
 
-"Color Leave me alone ok , i like colours . 
+"Color Leave me alone ok , i like colours .
 Plug 'wadackel/vim-dogrun'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'bluz71/vim-moonfly-colors'
@@ -50,9 +49,8 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'luochen1990/rainbow'
-Plug 'honza/vim-snippets'
 
-"Yank memorizer 
+"Yank memorizer
 Plug 'gennaro-tedesco/nvim-peekup'
 
 
@@ -105,13 +103,13 @@ Plug 'nvim-telescope/telescope-frecency.nvim'
 Plug 'https://github.com/tami5/sql.nvim'
 
 
-""Neuron Note taking didint work ,. 
+""Neuron Note taking didint work ,.
 Plug 'oberblastmeister/neuron.nvim'
 Plug 'nvim-lua/popup.nvim'
 
 
-""Vim be good game ? 
-Plug 'ThePrimeagen/vim-be-good' 
+""Vim be good game ?
+Plug 'ThePrimeagen/vim-be-good'
 
 
 "Debugging
@@ -143,13 +141,7 @@ Plug 'voldikss/vim-floaterm'
 
 "Discord rpc"
 
-Plug 'tpope/vim-sensible'
-Plug 'jdhao/better-escape.vim' 
-Plug '/home/viv/.vim/plugged/dracula_pro/'
 
-"Plug 'kassio/neoterm'
-Plug 'metakirby5/codi.vim'
-Plug 'junegunn/goyo.vim'
 
 
 Plug 'aperezdc/vim-template'
@@ -196,19 +188,19 @@ Plug 'wsdjeg/FlyGrep.vim'  " awesome grep on the fly
 Plug 'b3nj5m1n/kommentary'
 
 
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 "Plug 'epheien/termdbg'
 
 "Repl
 Plug 'tpope/vim-repeat'
 Plug 'pappasam/nvim-repl'
+Plug 'honza/vim-snippets'
 
 "waka"
 Plug 'wakatime/vim-wakatime'
 
 "Plug 'neomake/neomake'
 " looking
-"Plug 'andweeb/presence.nvim' - i honestly prefer the coc extention . 
+"Plug 'andweeb/presence.nvim' - i honestly prefer the coc extention .
 Plug 'kevinhwang91/nvim-bqf'
 Plug 'glepnir/dashboard-nvim'
 
@@ -218,19 +210,8 @@ Plug 'glepnir/dashboard-nvim'
 Plug 'https://github.com/lukas-reineke/indent-blankline.nvim.git',{'branch': 'lua'}
 Plug 'ryanoasis/vim-devicons'
 
-
-
-
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
-
-
-""Side bar Manager - looks cool 
-Plug 'https://github.com/brglng/vim-sidebar-manager'
-
-
-"Because im lazy , i want sudo acccess sometimes 
-Plug 'https://github.com/lambdalisue/suda.vim.git'
-
 
 "Unit Testing"
 Plug 'roxma/nvim-yarp'
@@ -240,19 +221,38 @@ Plug 'rcarriga/vim-ultest'
 
 "Vim Conceal "
 Plug  'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " for VimPlug
-"Multi Curser like Sublime test "
-"Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
 
 "I think this just makes everything just laggy and annoying "
 "Plug 'nathunsmitty/nvim-ale-diagnostic'
+
+"Novilities"
+"Plug 'rmagatti/alternate-toggler'  
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'tpope/vim-sensible'
+Plug 'jdhao/better-escape.vim'
+Plug '/home/viv/.vim/plugged/dracula_pro/'
+"Plug 'kassio/neoterm'
+Plug 'metakirby5/codi.vim'
+Plug 'junegunn/goyo.vim'
+
+
+
+""Side bar Manager - looks cool
+Plug 'https://github.com/brglng/vim-sidebar-manager'
+
+
+"Because im lazy , i want sudo acccess sometimes
+Plug 'https://github.com/lambdalisue/suda.vim.git'
+
 
 
 call plug#end()
 
 autocmd VimEnter *
-  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \|   PlugInstall --sync | q
-  \| endif
+      \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+      \|   PlugInstall --sync | q
+      \| endif
 
 
 

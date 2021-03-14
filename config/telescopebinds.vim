@@ -10,4 +10,4 @@ nnoremap <leader>fl <cmd>Telescope git_files<cr>
 nnoremap <Leader>ppp :lua require'telescope.builtin'.planets{}<cr>
 nnoremap <Leader>lbi :lua require'telescope.builtin'.builtin{}<cr>
 
-nnoremap <Leader><Leader><Leader>  :lua require('telescope').extensions.frecency.frecency()<CR>
+nnoremap <Leader><Leader><Leader> :lua require('telescope').extensions.frecency.frecency()<CR>

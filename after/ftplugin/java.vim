@@ -13,4 +13,4 @@ nmap <buffer> <silent> <leader>bi :lua require'dap'.step_into()<CR>
 nmap <buffer> <silent> <leader>bo :lua require'dap'.step_out()<CR>
 nmap <buffer> <silent> <leader>bm :DebugRepl<cr>
 
-set nospell
+setlocal nospell

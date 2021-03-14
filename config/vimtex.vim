@@ -64,3 +64,5 @@ let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
 
 let g:tex_conceal_frac=1
 
+
+

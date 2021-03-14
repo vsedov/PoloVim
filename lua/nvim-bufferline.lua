@@ -40,12 +40,14 @@ require('bufferline').setup{
     -- [focused and unfocused]. eg: { '|', '|' }
     separator_style = { '', ''},
     -- enforce_regular_tabs = false | true,
-    always_show_bufferline = true,
-    diagnostics = false,
 
+    -- New test . 
+    always_show_bufferline = true,
+
+    always_show_bufferline = false,
+    diagnostics = "nvim_lsp",
     diagnostics_indicator = function(count, level)
       local icon = level:match("error") and " " or ""
-
       return " " .. icon .. count
     end
 

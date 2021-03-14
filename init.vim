@@ -1,17 +1,19 @@
-
 source  $HOME/.config/nvim/config/execution.vim
 source  $HOME/.config/nvim/config/main.vim
 source  $HOME/.config/nvim/config/plugins.vim
 source  $HOME/.config/nvim/config/most_mappings.vim
+
 source  $HOME/.config/nvim/config/autogroup.vim
 source  $HOME/.config/nvim/config/functions.vim
-
 source  $HOME/.config/nvim/config/plugin_settings.vim
 source  $HOME/.config/nvim/config/ale.vim
+
+
 source  $HOME/.config/nvim/config/dashboard.vim
 source  $HOME/.config/nvim/config/floatterm.vim
 source  $HOME/.config/nvim/config/coc.vim
-
+source  $HOME/.config/nvim/config/ui.vim
+source  $HOME/.config/nvim/config/betterescape.vim
 
 source  $HOME/.config/nvim/config/pythonmanualdebug.vim
 source  $HOME/.config/nvim/config/markdow_multicurse.vim
@@ -19,75 +21,19 @@ source  $HOME/.config/nvim/config/vimtex.vim
 source  $HOME/.config/nvim/config/templates.vim
 source  $HOME/.config/nvim/config/goyo.vim
 
-source  $HOME/.config/nvim/config/loading_java.vim
+source  $HOME/.config/nvim/config/gitfug.vim
 source  $HOME/.config/nvim/config/debug_test.vim
 source  $HOME/.config/nvim/config/chadtree.vim
 source  $HOME/.config/nvim/config/undotree.vim
-source  $HOME/.config/nvim/config/gitfug.vim
 
 source  $HOME/.config/nvim/config/indent.vim
 source  $HOME/.config/nvim/config/vista.vim
 source  $HOME/.config/nvim/config/Vimjup.vim
-source  $HOME/.config/nvim/config/snipdebugger.vim
 
+source  $HOME/.config/nvim/config/snipdebugger.vim
 source  $HOME/.config/nvim/config/breakhabits.vim
 source  $HOME/.config/nvim/config/animation.vim
-
-
-
-"ColorScheme"
-if (has("termguicolors"))
-  set termguicolors
-  hi LineNr ctermbg=NONE guibg=NONE
-endif
-
-
-
-syntax on
-syntax enable
-set termguicolors
-
-hi GitGutterAdd    guifg=#50fa7b
-hi GitGutterChange guifg=#8be9fd
-hi GitGutterDelete guifg=#ff5555
-
-hi EasyMotionTarget ctermfg=9 guifg=red
-hi EasyMotionTarget2First ctermfg=9 guifg=red
-hi EasyMotionTarget2Second ctermfg=9 guifg=lightred
-hi link EasyMotionShade Comment
-
-"autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
-" General misc colors
-
-hi CursorLineNr guifg=#50fa7b
-
-hi htmlArg gui=italic
-hi Comment gui=italic
-hi Type    gui=italic
-hi htmlArg cterm=italic
-hi Comment cterm=italic
-hi Type    cterm=italic
-
-
-
-" configure nvcode-color-schemes
-let g:nvcode_termcolors=256
-
-
-hi Normal guibg=NONE ctermbg=NONE
-"hi Normal ctermfg=252 ctermbg=none
-
-hi CursorLineNr guifg=#50fa7b
-hi Comment gui=italic
-
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
-
-
-"~~~~~~~~~~~~~~~~~~~~~~~~
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
-
-
+source  $HOME/.config/nvim/config/loading_java.vim
 
 
 " theicfire .vimrc tips
@@ -106,7 +52,6 @@ au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 map <F7> :let $VIM_DIR=expand('%:p:h')<CR>: vsplit term://zsh<CR>cd $VIM_DIR<CR>
 nnoremap <silent> <F6> :Run <cr>
 
-autocmd BufRead *.py set go+=b
 nnoremap <silent> <F5> :call SaveAndExecutePython()<CR>
 vnoremap <silent> <F5> :<C-u>call SaveAndExecutePython()<CR>
 
@@ -137,7 +82,6 @@ lua << EOF
   require('sagastuff')
   require('quickfix-bar')
   require("telescope").load_extension("frecency")
-
 EOF
 " geometry configuration
 lua require('nvim-peekup.config').geometry["height"] = 0.8

@@ -9,7 +9,7 @@ map <F1> :DogeGenerate<CR>
 
 
 "Doge and Nayvy Configs Using Custom Nayvy.py
-let g:doge_doc_standard_python = 'google'
+let g:doge_doc_standard_python = 'numpy'
 let g:nayvy_import_config_path = '$HOME/nayvy.py'
 let g:nayvy_coc_enabled =1
 

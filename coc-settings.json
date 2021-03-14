@@ -44,6 +44,7 @@
    "jedi.startupMessage":true,
    "jedi.trace.server":true,
    "jedi.jediSettings.autoImportModules":[
+    // Machine learning modules i use allot are pain to load , i have them load on any python file just in case . 
       "numpy",
       "torch",
       "torchvision"
@@ -57,8 +58,6 @@
 
 
   "session.directory": "~/.vimbackupfile",
-
-
 
    "diagnostic-languageserver.formatFiletypes":{
       "python":[

@@ -4,7 +4,11 @@ setlocal expandtab
 setlocal autoindent
 setlocal smarttab
 setlocal conceallevel=1
+setlocal go+=b
 
+filetype indent on
+filetype on
+filetype plugin on
 
 setlocal colorcolumn=90
 

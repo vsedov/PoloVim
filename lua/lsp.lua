@@ -1,14 +1,21 @@
 
 local lspconfig = require('lspconfig')
---local lsp_status = require('lsp-status')
+local lsp_status = require("lsp-status")
+local utils = require("boo.utils")
 local lsp_status = require("boo.lsp_status")
 
 local api = vim.api
 
 
 
+
+
 -- lsp_status.register_progress()
 local custom_on_attach_num = function(client, bufnr)
+  
+  -- This is the new thing added
+  lsp_status.on_attach(client)
+
   local opts = {
 		noremap=true,
 		silent=true,
@@ -41,8 +48,7 @@ end
 --  don't have EFM but use an LSP server that supports folding.
 local custom_on_attach_folding = function(client, bufnr)
 	custom_on_attach(client, bufnr)
-	lsp_status.on_attach(client)
-
+	
 	require('folding').on_attach()
 end
 

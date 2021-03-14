@@ -74,4 +74,6 @@ nnoremap <silent> <expr> ^ ScreenMovement("^")
 nnoremap <silent> <expr> $ ScreenMovement("$")
 
 
-map <F1> :DogeGenerate<CR>
+" Better indenting
+vnoremap < <gv
+vnoremap > >gv
