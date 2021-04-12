@@ -104,7 +104,7 @@ Plug 'ThePrimeagen/vim-be-good'
 Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'mfussenegger/nvim-dap'
 "Ui for this"
-Plug "rcarriga/nvim-dap-ui"
+Plug 'rcarriga/nvim-dap-ui'
 
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'theHamsta/nvim-dap-virtual-text'
