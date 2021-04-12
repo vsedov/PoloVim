@@ -29,11 +29,14 @@ source  $HOME/.config/nvim/config/undotree.vim
 source  $HOME/.config/nvim/config/indent.vim
 source  $HOME/.config/nvim/config/vista.vim
 source  $HOME/.config/nvim/config/Vimjup.vim
-
 source  $HOME/.config/nvim/config/snipdebugger.vim
+
 source  $HOME/.config/nvim/config/breakhabits.vim
 source  $HOME/.config/nvim/config/animation.vim
 source  $HOME/.config/nvim/config/loading_java.vim
+source  $HOME/.config/nvim/config/switch.vim
+
+
 
 
 " theicfire .vimrc tips
@@ -77,11 +80,14 @@ lua << EOF
   require('telescope').load_extension('dap')
   require('dap-python').setup('/usr/bin/python3')
   require('dap-python').test_runner = 'pytest'
+  require("dapui").setup()
   require('kommentary.config').use_extended_mappings()
   require('treesitter')
+  require("telescope").load_extension("frecency")
+  require('pattern')
   require('sagastuff')
   require('quickfix-bar')
-  require("telescope").load_extension("frecency")
+  require('numb').setup()
 EOF
 " geometry configuration
 lua require('nvim-peekup.config').geometry["height"] = 0.8
@@ -116,4 +122,30 @@ command! Nani echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 map <leader>hhi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+
+
+""  require('quickfix-bar') - I think this is causing issues but eh cuase currently i sunkown 
+"
+
+lua << EOF
+require('specs').setup{ 
+    show_jumps  = true,
+    min_jump = 30,
+    popup = {
+        fader = function(blend, cnt)
+            if cnt > 100 then
+                return 80
+            else return nil end
+        end,
+        resizer = function(width, ccol, cnt)
+            if width-cnt > 0 then
+                return {width+cnt, ccol}
+            else return nil end
+        end,
+    }
+}
+EOF
+
+
 

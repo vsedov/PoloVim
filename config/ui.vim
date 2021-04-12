@@ -1,16 +1,15 @@
-
-
-"ColorScheme"
-if (has("termguicolors"))
-  set termguicolors
-  hi LineNr ctermbg=NONE guibg=NONE
-endif
-
+if exists('syntax_on') | syntax reset | endif
+set background=dark
 
 
 syntax on
 syntax enable
 set termguicolors
+set t_Co=256
+
+highlight Normal guibg=NONE ctermbg=NONE
+highlight LineNr guibg=NONE ctermbg=NONE
+
 
 hi GitGutterAdd    guifg=#50fa7b
 hi GitGutterChange guifg=#8be9fd
@@ -24,14 +23,9 @@ hi link EasyMotionShade Comment
 "autocmd ColorScheme dracula_pro* hi CursorLine cterm=underline term=underline
 " General misc colors
 
-hi CursorLineNr guifg=#50fa7b
-
 hi htmlArg gui=italic
-hi Comment gui=italic
 hi Type    gui=italic
 hi htmlArg cterm=italic
-hi Comment cterm=italic
-hi Type    cterm=italic
 
 
 
@@ -39,10 +33,12 @@ hi Type    cterm=italic
 let g:nvcode_termcolors=256
 
 
-hi Normal guibg=NONE ctermbg=NONE
+" Transparent Background (For i3 and compton)
+
+
+
 "hi Normal ctermfg=252 ctermbg=none
 
-hi CursorLineNr guifg=#50fa7b
 hi Comment gui=italic
 
 highlight clear ALEErrorSign

@@ -23,3 +23,8 @@ nnoremap <leader>h :nohlsearch<Bar>:echo<CR>
 "let g:python3_host_prog = '/usr/bin/python3'
 "let g:python_host_prog = '/usr/bin/python2'
 
+
+"set encoding to utf8
+if &encoding != 'utf-8'
+    set encoding=utf-8              "Necessary to show Unicode glyphs
+endif

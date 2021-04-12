@@ -1,5 +1,9 @@
 "ChadTree
-map <C-n> :CHADopen<CR>
+map <C-n> :NERDTreeToggle<CR>
+
+nnoremap <leader><C-n> :CHADopen<CR>
+
+
 let g:chadtree_settings = {
 \ "theme.text_colour_set": "env",
 \  "theme.icon_colour_set":"github",
@@ -9,4 +13,5 @@ let g:chadtree_settings = {
 \ }
 
 autocmd FileType CHADtree setlocal number relativenumber
-nnoremap <leader>l <cmd>call setqflist([])<cr>
+
+let g:NERDTreeWinSize=10

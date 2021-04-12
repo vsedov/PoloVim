@@ -1,6 +1,7 @@
 "Ale Configs
 let g:ale_completion_enabled = 0
 let g:ale_python_pylint_options = '--rcfile ~/.config/pylintrc'
+let g:ale_python_mypy_options = ''
 let g:ale_list_window_size =  4
 let g:ale_sign_column_always = 0
 let g:ale_open_list = 1
@@ -36,7 +37,7 @@ let g:ale_linters = {
   \   'tex': ['proselint', 'chktex', 'lacheck','texlab','latexindent','textlint'],
   \   'plaintex': ['proselint', 'chktex', 'lacheck','texlab'],
   \   'help': [],
-  \   'python': ['black','pylint'], 
+  \   'python': ['black','pylint','mypy'], 
   \   'ruby': ['solargraph', 'rubocop', 'ruby'],
   \   'groovy': ['android'],
   \   'xml': ['android'],
@@ -47,7 +48,8 @@ let g:ale_linters = {
   \   'vim': ['vint'],
   \   'yaml': ['yamllint'],
   \   'openapi': ['yamllint', 'ibm-validator'],
-  \   'mail': ['proselint', 'write-good']
+  \   'mail': ['proselint', 'write-good'],
+  \   'prolog':['swipl']
 \}
 
 let g:ale_fixers = {

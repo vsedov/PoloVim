@@ -2,7 +2,7 @@
 " let g:indentLine_fileType = ["tex",".tex"]
 
 let g:indentLine_char = '│'
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+"let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_first_char = v:false
 let g:indentLine_bgcolor_gui = 'NONE'
 let g:indentLine_setConceal = 0

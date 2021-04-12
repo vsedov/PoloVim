@@ -83,6 +83,4 @@ function PlenaryReload()
   tele.setup()
 end
 
-
-
 return tele

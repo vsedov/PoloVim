@@ -7,8 +7,8 @@
 "lua require('night-owl')
 "colorscheme dogrun
 
+colorscheme boo
 
-lua require'boo-colorscheme'.use{}
 "colorscheme dracula_pro_van_helsing
 "colorscheme dracula
 

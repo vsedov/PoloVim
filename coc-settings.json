@@ -20,6 +20,34 @@
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.snippetStatusText": "",
   "coc.preferences.formatOnType": false,
+  
+  "suggest.completionItemKindLabels": {
+    "keyword": " [keyword]",
+    "variable": "識[variable]",
+    "value": "\uf89f [value]",
+    "operator": "\u03a8 [operator]",
+    "function": " [function]",
+    "reference": "\ufa46 [reference]",
+    "constant": "識[constant]",
+    "method": " [method]",
+    "struct": "\ufb44 [struct]",
+    "class": "\uf0e8 [class]",
+    "interface": "\uf417 [interface]",
+    "text": "\ue612 [text]",
+    "enum": "\uf435 [enum]",
+    "enumMember": "\uf02b [enumMember]",
+    "module": "\uf40d [module]",
+    "color": "\ue22b [color]",
+    "property": " [property]",
+    "field": "\uf9be[field]",
+    "unit": "\uf475 [unit]",
+    "event": "\ufacd [event]",
+    "file": "\uf723 [file]",
+    "folder": "\uf114 [folder]",
+    "snippet": "\ue60b [snippet]",
+    "typeParameter": "\uf728 [type]",
+    "default": "\uf29c [default]"
+  },  
 
   "diagnostic.enable":              true,
 
@@ -52,8 +80,8 @@
    "jedi.executable.command":"jedi-language-server",
    "jedi.completion.disableSnippets":false,
    "jedi.diagnostics.enable":true,
-   "jedi.diagnostics.didOpen":true,
-   "jedi.diagnostics.didChange":true,
+   "jedi.diagnostics.didOpen":false,
+   "jedi.diagnostics.didChange":false,
    "jedi.diagnostics.didSave":true,
 
 

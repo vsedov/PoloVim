@@ -23,17 +23,8 @@ Plug 'szymonmaszke/vimpyter'
 
 "Color Leave me alone ok , i like colours .
 Plug 'wadackel/vim-dogrun'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'bluz71/vim-moonfly-colors'
-Plug 'bluz71/vim-nightfly-guicolors'
-Plug 'tjdevries/colorbuddy.nvim'
-Plug 'Julpikar/night-owl.nvim'
 Plug 'rockerBOO/boo-colorscheme-nvim', { 'branch': 'main' }
-Plug 'glepnir/zephyr-nvim'
-Plug 'fneu/breezy'  " Exactly like breeze theme for ktexteditor
-Plug 'sainnhe/edge'
-Plug 'https://github.com/felipec/vim-felipec'
-
+Plug 'https://github.com/tjdevries/colorbuddy.nvim'
 "LSP stuff
 " Neovim's builtin LSP and treesitter impl. make it a very lightweight IDE
 
@@ -103,9 +94,6 @@ Plug 'nvim-telescope/telescope-frecency.nvim'
 Plug 'https://github.com/tami5/sql.nvim'
 
 
-""Neuron Note taking didint work ,.
-Plug 'oberblastmeister/neuron.nvim'
-Plug 'nvim-lua/popup.nvim'
 
 
 ""Vim be good game ?
@@ -115,10 +103,14 @@ Plug 'ThePrimeagen/vim-be-good'
 "Debugging
 Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'mfussenegger/nvim-dap'
+"Ui for this"
+Plug "rcarriga/nvim-dap-ui"
+
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
 Plug 'meain/vim-printer'
+
 
 "ANimation
 Plug 'camspiers/animate.vim'
@@ -143,7 +135,6 @@ Plug 'voldikss/vim-floaterm'
 
 
 
-
 Plug 'aperezdc/vim-template'
 Plug 'psf/black', { 'branch': 'stable' }
 
@@ -163,9 +154,6 @@ Plug 'francoiscabrol/ranger.vim'
 Plug 'stsewd/isort.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'rbgrouleff/bclose.vim'
 
-
-Plug 'https://tildegit.org/sloum/gemini-vim-syntax.git'
-
 "sdsd
 
 " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -184,12 +172,12 @@ Plug 'https://github.com/mbbill/undotree'
 Plug 'wsdjeg/FlyGrep.vim'  " awesome grep on the fly
 
 "This is outdata and moving it Komentary lua scripted"
-"Plug 'tpope/vim-commentary'  "comment-out by gc
 Plug 'b3nj5m1n/kommentary'
 
 
 "Plug 'epheien/termdbg'
-
+"For fun why note l"
+Plug 'https://github.com/alec-gibson/nvim-tetris.git'
 "Repl
 Plug 'tpope/vim-repeat'
 Plug 'pappasam/nvim-repl'
@@ -198,9 +186,9 @@ Plug 'honza/vim-snippets'
 "waka"
 Plug 'wakatime/vim-wakatime'
 
-"Plug 'neomake/neomake'
+
 " looking
-"Plug 'andweeb/presence.nvim' - i honestly prefer the coc extention .
+"Plug 'andweeb/presence.nvim' 
 Plug 'kevinhwang91/nvim-bqf'
 Plug 'glepnir/dashboard-nvim'
 
@@ -227,24 +215,38 @@ Plug  'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " for VimPlug
 "Plug 'nathunsmitty/nvim-ale-diagnostic'
 
 "Novilities"
-"Plug 'rmagatti/alternate-toggler'  
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'tpope/vim-sensible'
 Plug 'jdhao/better-escape.vim'
 Plug '/home/viv/.vim/plugged/dracula_pro/'
+
 "Plug 'kassio/neoterm'
 Plug 'metakirby5/codi.vim'
 Plug 'junegunn/goyo.vim'
 
+  " Rust syntax rules
+  Plug 'rust-lang/rust.vim'
+
+   " Elixir syntax rules
+  Plug 'elixir-editors/vim-elixir'
 
 
 ""Side bar Manager - looks cool
 Plug 'https://github.com/brglng/vim-sidebar-manager'
 
+"Replace thsi with Plug 'rmagatti/alternate-toggler' once it works . "
+Plug 'rmagatti/alternate-toggler'
+Plug 'zegervdv/nrpattern.nvim'
+Plug 'edluffy/specs.nvim'
+
 
 "Because im lazy , i want sudo acccess sometimes
 Plug 'https://github.com/lambdalisue/suda.vim.git'
 
+Plug 'iqxd/vim-mine-sweeping'
+
+
+Plug 'nacro90/numb.nvim'
 
 
 call plug#end()

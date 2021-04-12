@@ -1,6 +1,7 @@
 local api = vim.api
 local configs = require 'nvim-treesitter.configs'
 local parsers = require 'nvim-treesitter.parsers'
+ 
 require "nvim-treesitter.utils"
 
 require "nvim-treesitter.configs".setup{

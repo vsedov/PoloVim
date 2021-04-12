@@ -27,7 +27,7 @@ syntax keyword pyFancyOperator and conceal cchar=∧
 syntax keyword pyFancySpecial True  conceal cchar=𝐓
 syntax keyword pyFancySpecial False conceal cchar=𝐅
 syntax keyword pyFancySpecial bool conceal cchar=𝔹
-
+syntax keyword pyFancyStatement None conceal cchar=∅
 syntax keyword pyFancyOperator sum conceal cchar=∑
 syntax keyword pyFancyBuiltin all conceal cchar=∀
 syntax keyword pyFancyBuiltin any conceal cchar=∃
