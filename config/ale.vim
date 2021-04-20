@@ -4,6 +4,7 @@ let g:ale_python_pylint_options = '--rcfile ~/.config/pylintrc'
 let g:ale_python_mypy_options = ''
 let g:ale_list_window_size =  4
 let g:ale_sign_column_always = 0
+"etra pointer
 let g:ale_open_list = 1
 
 
@@ -37,7 +38,7 @@ let g:ale_linters = {
   \   'tex': ['proselint', 'chktex', 'lacheck','texlab','latexindent','textlint'],
   \   'plaintex': ['proselint', 'chktex', 'lacheck','texlab'],
   \   'help': [],
-  \   'python': ['black','pylint','mypy'], 
+  \   'python': ['black','pylint'], 
   \   'ruby': ['solargraph', 'rubocop', 'ruby'],
   \   'groovy': ['android'],
   \   'xml': ['android'],

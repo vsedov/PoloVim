@@ -211,6 +211,9 @@ Plug 'rcarriga/vim-ultest'
 Plug  'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " for VimPlug
 
 
+Plug 'RishabhRD/popfix'
+Plug 'RishabhRD/nvim-lsputils'
+
 "I think this just makes everything just laggy and annoying "
 "Plug 'nathunsmitty/nvim-ale-diagnostic'
 
@@ -247,6 +250,13 @@ Plug 'iqxd/vim-mine-sweeping'
 
 
 Plug 'nacro90/numb.nvim'
+
+
+Plug 'nvim-lua/completion-nvim'
+
+Plug 'folke/tokyonight.nvim'
+
+
 
 
 call plug#end()

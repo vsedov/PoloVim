@@ -25,7 +25,9 @@ nnoremap <silent> <leader>drr :lua require'dap'.repl.toggle({width = 50}, "below
 
 nnoremap <silent> <leader>dl :lua require'dap'.repl.run_last()<CR>`
 nnoremap <silent> <leader>dn :lua require('dap-python').test_method()<CR>
-vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
+vnoremap <silent> <leader>ds :lua require('dap-python').debug_selection()<CR>
+
+vnoremap <silent> <leader>duu :lua require("dapui").eval()<CR>
 
 let g:dap_virtual_text = v:true
 let g:dap_virtual_text = "all_frames"

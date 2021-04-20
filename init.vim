@@ -66,7 +66,6 @@ au BufEnter * call SmartInsert()
 "<C-w><C-p> this is to move to the next windw
 
 
-
 "Fold
 "LUA CONFIG STARTS HERE WILL HAVE TO AUTOLOAD THIS AS WELL > "
 
@@ -126,9 +125,10 @@ map <leader>hhi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '>
 
 
 ""  require('quickfix-bar') - I think this is causing issues but eh cuase currently i sunkown 
-"
+" this does something i think 
 
 lua << EOF
+
 require('specs').setup{ 
     show_jumps  = true,
     min_jump = 30,
@@ -148,4 +148,28 @@ require('specs').setup{
 EOF
 
 
+
+lua <<EOF
+vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
+vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
+vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
+vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
+vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
+vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
+vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
+EOF
+
+
+
+
+lua <<EOF
+require('bqf').setup({
+    auto_enable = true,
+    preview = {
+      auto_preview = false,
+    },
+    
+})
+EOF
 

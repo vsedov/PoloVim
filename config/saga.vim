@@ -20,6 +20,8 @@ nnoremap <silent> [e :Lspsaga diagnostic_jump_next<CR>
 nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>
 
 
-"-- float terminal also you can pass the cli command in open_float_terminal function
-"nnoremap <silent> <S-D> :Lspsaga open_floaterm<CR>
-"tnoremap <silent> <S-D> <C-\><C-n>:Lspsaga close_floaterm<CR>
+nnoremap <silent> gD :lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gi :lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> D :lua vim.lsp.buf.type_definition()<CR> 
+nnoremap <silent> gr :lua vim.lsp.buf.references()<CR>
+

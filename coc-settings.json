@@ -83,7 +83,8 @@
    "jedi.diagnostics.didOpen":false,
    "jedi.diagnostics.didChange":false,
    "jedi.diagnostics.didSave":true,
-
+  "jedi.codeAction.nameExtractFunction": "jls_extract_def",
+  "jedi.codeAction.nameExtractVariable": "jls_extract_var",
 
   "session.directory": "~/.vimbackupfile",
 

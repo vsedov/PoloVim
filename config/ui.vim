@@ -47,3 +47,10 @@ highlight clear ALEWarningSign
 
 "~~~~~~~~~~~~~~~~~~~~~~~~
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
+
+
+
+
+let g:tokyonight_style = "night"
+let g:tokyonight_italic_functions = 1
+let g:tokyonight_sidebars = [ "quickfix", "__vista__", "terminal" ]
