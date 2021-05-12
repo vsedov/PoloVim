@@ -1,14 +1,29 @@
-" Only do this when not done yet for this buffer
-if exists("b:did_ftplugin")
-  finish
-endif
+setlocal exrc
+setlocal secure
 
-" Don't load another plugin for this buffer
-let b:did_ftplugin = 1
+setlocal tabstop=4
+setlocal softtabstop=4
+setlocal shiftwidth=4
+setlocal noexpandtab
 
+setlocal makeprg=gcc\ % 
+
+
+setlocal colorcolumn=110
+
+let b:ale_fixers = ['clang-format']
+
+
+
+"Overriding some keybinds that are not needed . "
+"With and without save . "
+" automatically open quickfix window when AsyncRun command is executed
+" set the quickfix window 6 lines height.
 " Using line continuation here.
+
+
 let s:cpo_save = &cpo
-set cpo-=C
+setlocal cpo-=C
 
 let b:undo_ftplugin = "setl fo< com< ofu< cms< def< inc< | if has('vms') | setl isk< | endif"
 
@@ -38,26 +53,8 @@ endif
 let b:match_words = '^\s*#\s*if\(\|def\|ndef\)\>:^\s*#\s*elif\>:^\s*#\s*else\>:^\s*#\s*endif\>'
 let b:match_skip = 's:comment\|string\|character\|special'
 
-" Win32 can filter files in the browse dialog
-if (has("gui_win32") || has("gui_gtk")) && !exists("b:browsefilter")
-  if &ft == "cpp"
-    let b:browsefilter = "C++ Source Files (*.cpp *.c++)\t*.cpp;*.c++\n" .
-	  \ "C Header Files (*.h)\t*.h\n" .
-	  \ "C Source Files (*.c)\t*.c\n" .
-	  \ "All Files (*.*)\t*.*\n"
-  elseif &ft == "ch"
-    let b:browsefilter = "Ch Source Files (*.ch *.chf)\t*.ch;*.chf\n" .
-	  \ "C Header Files (*.h)\t*.h\n" .
-	  \ "C Source Files (*.c)\t*.c\n" .
-	  \ "All Files (*.*)\t*.*\n"
-  else
-    let b:browsefilter = "C Source Files (*.c)\t*.c\n" .
-	  \ "C Header Files (*.h)\t*.h\n" .
-	  \ "Ch Source Files (*.ch *.chf)\t*.ch;*.chf\n" .
-	  \ "C++ Source Files (*.cpp *.c++)\t*.cpp;*.c++\n" .
-	  \ "All Files (*.*)\t*.*\n"
-  endif
-endif
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+"" personal code for runnign C Code : 
