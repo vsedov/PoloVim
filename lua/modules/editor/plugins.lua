@@ -75,4 +75,23 @@ editor['https://github.com/lambdalisue/suda.vim.git']  = {
 }
 
 
+
+editor['andweeb/presence.nvim']  = {
+
+  config = conf.discord
+
+}
+
+
+editor['https://github.com/machakann/vim-sandwich']  = {
+  -- use defaulyt config .
+}
+
+
+
+
+editor['https://github.com/jeetsukumaran/vim-pythonsense']  = {
+  -- use default. config .
+}
+
 return editor

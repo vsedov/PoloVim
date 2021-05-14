@@ -46,8 +46,6 @@ tools['camspiers/animate.vim'] ={
 
 
 
-
-
 tools['w0rp/ale'] = {
   config = function ()
 
@@ -139,7 +137,6 @@ config = function()
 
 end
 }
-
 
 
 

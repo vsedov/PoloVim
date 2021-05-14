@@ -58,3 +58,6 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 "" personal code for runnign C Code : 
+
+""-- If ale wants to go fuck boy yon you .
+let g:ale_disable_lsp = 1

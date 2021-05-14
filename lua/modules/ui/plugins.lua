@@ -57,6 +57,11 @@ ui['kdav5758/TrueZen.nvim'] = {
 }
 
 
+ui['mbbill/undotree'] = {
+  config = conf.undo
+}
+
+
 
 
 

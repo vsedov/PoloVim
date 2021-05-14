@@ -6,9 +6,9 @@ local map_args = bind.map_args
 require('keymap.config')
 
 local plug_map = {
-    ["i|<TAB>"]      = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
-    ["i|<S-TAB>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
-    ["i|<CR>"]       = map_cmd([[compe#confirm('<CR>')]]):with_noremap():with_expr():with_nowait(),
+    ["i|<TAB>"]         = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
+    ["i|<S-TAB>"]       = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
+    ["i|<CR>"]          = map_cmd([[compe#confirm('<CR>')]]):with_noremap():with_expr():with_nowait(),
     
     -- I rely on utilssnips decently , this is required 
   --   ["n|<CR>"]      = map_cmd('g:UltiSnipsExpandTrigger'):with_noremap():with_expr():with_nowait(),
@@ -76,8 +76,8 @@ local plug_map = {
 
 
     -- Far.vim
-    ["n|<Leader>fz"]     = map_cr('Farf'):with_noremap():with_silent();
-    ["v|<Leader>fz"]     = map_cr('Farf'):with_noremap():with_silent();
+    ["n|<Leader>fz"]     = map_cr('Farp'):with_noremap():with_silent();
+    ["v|<Leader>fz"]     = map_cr('Farp'):with_noremap():with_silent();
   
     -- Plugin Telescope
     ["n|<Leader>bb"]     = map_cu('Telescope buffers'):with_noremap():with_silent(),
@@ -121,9 +121,11 @@ local plug_map = {
 
     -- Plugin for debugigng 
     ["n|<F4>"]          = map_cu('Telescope dap commands'):with_noremap():with_silent(),
-    ["n|<Leader>dd"]    = map_cu("Telescope dap configurations"):with_noremap():with_silent(),
+    ["n|<Leader>dd"]    = map_cu("lua require('dap').continue()"):with_noremap():with_silent(),
     ["n|<Leader>vv"]    = map_cu("Telescope treesitter"):with_noremap():with_silent(),
   
+    ["n|<Leader><Leader><Leader>"]    = map_cu("Telescope frecency"):with_noremap():with_silent(),
+
     ["n|<Leader>do"]    = map_cu("lua require'dap'.step_over()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>di"]    = map_cu("lua require'dap'.step_into()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>dO"]    = map_cu("lua require'dap'.step_out()<CR>"):with_noremap():with_silent(),
@@ -141,50 +143,52 @@ local plug_map = {
     ["n|<Leader>dn"]    = map_cu("lua require('dap-python').test_method()<CR>"):with_noremap():with_silent(),
     ["i|<Leader>ds"]    = map_cu("lua require('dap-python').debug_selection()<CR>"):with_noremap():with_silent(),
 
+    -- Nice command to list all breakpoints. .
+    ["n|<Leader>lb"]    = map_cu("Telescope dap list_breakpoints"):with_noremap():with_silent(),
 
     -- Unit Testing  
 
 
     -- Black formating 
-    ["n|<F3>"]      = map_cu('Black'):with_noremap():with_silent(),
+    ["n|<F3>"]          = map_cu('Black'):with_noremap():with_silent(),
 
 
     --sniprun
 
-    ["v|f"]                      = map_cmd("<Plug>SnipRun"):with_silent(),
-    ["n|<Leader>fr"]             = map_cmd("<Plug>SnipRunOperator"):with_silent(),
-    ["n|<Leader>ff"]             = map_cmd("<Plug>SnipRun"):with_silent(),
+    ["v|f"]             = map_cmd("<Plug>SnipRun"):with_silent(),
+    ["n|<Leader>fr"]    = map_cmd("<Plug>SnipRunOperator"):with_silent(),
+    ["n|<Leader>ff"]    = map_cmd("<Plug>SnipRun"):with_silent(),
 
 
     -- Alternate togller
 
-    ["n|<Leader>ta"]            = map_cr("ToggleAlternate"):with_noremap():with_silent(),
+    ["n|<Leader>ta"]    = map_cr("ToggleAlternate"):with_noremap():with_silent(),
 
 
 
     -- TZAtaraxis
-    ["n|<F9>"]                  = map_cu("TZAtaraxis<CR>"):with_noremap():with_silent(),
+    ["n|<F9>"]          = map_cu("TZAtaraxis<CR>"):with_noremap():with_silent(),
 
 
     -- Moving nice animation . 
 
-    ["n|<Up>"]       = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
-    ["n|<Down>"]     = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
-    ["n|<Left>"]     = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
-    ["n|<Right>"]    = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
+    ["n|<Up>"]         = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
+    ["n|<Down>"]       = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
+    ["n|<Left>"]       = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
+    ["n|<Right>"]      = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
 
 
 
     -- Code runner python C c++ support using two neovim and code runner 
     -- might get rid of this , Depending on the other uses . i like the fact that 
     -- this stays when you finish teh code . 
-    ["n|<F5>"]     = map_cr("Run"):with_noremap():with_silent(),
     -- Window Code runner . 
-    ["n|<F6>"]    = map_cu('FRunCode'):with_noremap():with_silent(),
-    -- Native terminal 
-    ["n|<F7>"]    = map_cu("RunCode"):with_noremap():with_silent(),
-    --NeoRunner
-    ["n|<F8>"]    = map_cu("NeoRunner"):with_noremap():with_silent(),
+    ["n|<F5>"]        = map_cu('FRunCode'):with_noremap():with_silent(),
+    -- Nice virticle runner . 
+    ["n|<Leader><F5>"]    = map_cu('RunCode'):with_noremap():with_silent(),
+
+    --NeoRunner_Horizontal 
+    ["n|<F6>"]    = map_cu("NeoRunner"):with_noremap():with_silent(),
 
 
     -- nice little thing to take some quick notes ina  file in latex .
@@ -192,6 +196,10 @@ local plug_map = {
     ["n|<Leader><F9>"]    = map_cu('lua require("nabla").place_inline()<CR>'):with_noremap():with_silent(),
     -- $ ... $ : inline form
     -- $$ ... $$ : wrapped form
+
+
+    -- UndoTree
+    ["n|<F2>"]   = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 
 
 

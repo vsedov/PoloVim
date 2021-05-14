@@ -40,4 +40,18 @@ function config.vim_cursorwod()
 
 end
 
+function config.discord()
+
+  vim.g.presence_auto_update       = 1
+  vim.g.presence_editing_text      = "Editing %s"
+  vim.g.presence_workspace_text    = "Working on %s"
+  vim.g.presence_neovim_image_text = "The One True Text Editor"
+  vim.g.presence_main_image        = "neovim"
+  vim.g.presence_client_id         = "793271441293967371"
+  vim.g.presence_debounce_timeout  = 15
+
+end  
+
+
+
 return config

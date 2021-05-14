@@ -4,9 +4,14 @@ local conf = require('modules.completion.config')
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
   config = conf.nvim_lsp,
-  requires = {'nvim-lua/lsp_extensions.nvim'}
+  requires = {{'nvim-lua/lsp_extensions.nvim'},
+  {'tjdevries/nlua.nvim'},
+  }
 
 }
+
+
+
 
 completion['glepnir/lspsaga.nvim'] = {
   cmd = 'Lspsaga',
@@ -45,14 +50,13 @@ completion['lervag/vimtex'] = {
   config = conf.vimtex
 }
 
-
-completion['sbdchd/vim-run'] = {
-  config = conf.run
-}
+-- completion['sbdchd/vim-run'] = {
+--   config = conf.run
+-- }
 
 completion['kkoomen/vim-doge'] = {
   config = conf.doge,
-  run = 'doge#install()'
+  run = '-> doge#install()'
 
 }
 
@@ -94,11 +98,8 @@ completion['hrsh7th/vim-vsnip'] = {
 
 
 completion['mfussenegger/nvim-dap'] = {
-  requires ={'theHamsta/nvim-dap-virtual-text','mfussenegger/nvim-dap-python','nvim-telescope/telescope-dap.nvim','rcarriga/nvim-dap-ui'},
+  requires ={'theHamsta/nvim-dap-virtual-text','mfussenegger/nvim-dap-python','rcarriga/nvim-dap-ui'},
   config = function()
-
-
-
 
   require('dapstuff.dapstuff')
 
@@ -106,11 +107,17 @@ completion['mfussenegger/nvim-dap'] = {
   
   require('dap-python').setup('/usr/bin/python3')
   require('dap-python').test_runner = 'pytest'
-  
+    -- virtual text deactivated (default)
+  vim.g.dap_virtual_text = true
+  -- show virtual text for current frame (recommended)
+  vim.g.dap_virtual_text = true
+  -- request variable values for all frames (experimental)
+  vim.g.dap_virtual_text = 'all frames'
 
 
   end
 }
+
 
 
 
@@ -119,12 +126,27 @@ completion['nvim-telescope/telescope.nvim'] = {
   requires = {
     {'nvim-lua/popup.nvim', opt = true},
     {'nvim-lua/plenary.nvim',opt = true},
-    {'nvim-telescope/telescope-fzy-native.nvim',opt = true},    
+    {'nvim-telescope/telescope-fzy-native.nvim',opt = true}, 
+    {'nvim-telescope/telescope-cheat.nvim'},
+    {'tami5/sql.nvim'},
+    {'nvim-telescope/telescope-frecency.nvim'},
+    {'nvim-telescope/telescope-dap.nvim'},
   },
   config = conf.telescope
 
 
 }
+
+
+--Real quick autoformat . 
+
+
+-- For most basic files , there is an autoformat . 
+completion['Chiel92/vim-autoformat'] = {
+}
+
+
+
 
 
 
@@ -147,10 +169,8 @@ completion['psf/black'] = {
 
 
 
-
 completion['mattn/vim-sonictemplate'] = {
   cmd = 'Template',
-  ft = {'go','typescript','lua','javascript','vim','rust','markdown'},
   config = conf.vim_sonictemplate,
 }
 

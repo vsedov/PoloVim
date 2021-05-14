@@ -96,7 +96,6 @@ local function load_options()
     breakindent    = true;
     showbreak      = "..";
     lbr            = true;
-    conceallevel   = 1;
 
 
 
@@ -105,10 +104,6 @@ local function load_options()
   }
 
   local bw_local  = {
-    title = true;
-    lazyredraw = true;
-
-
     undofile       = true;
     synmaxcol      = 2500;
     formatoptions  = "1jcroql";
@@ -119,13 +114,13 @@ local function load_options()
     shiftwidth     = 2;
     softtabstop    = -1;
     breakindentopt = "shift:2,min:20";
-    wrapscan       = true;
+    wrap           = false;
     linebreak      = true;
     number         = true;
     colorcolumn    = "80";
     foldenable     = true;
     signcolumn     = "yes";
-    conceallevel   = 1;
+    conceallevel   = 2;
     concealcursor  = "niv";
   }
 

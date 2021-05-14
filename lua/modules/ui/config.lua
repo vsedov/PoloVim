@@ -10,10 +10,12 @@ function config.ui_i()
   vim.g.tokyonight_enable_italic = true
   vim.g.tokyonight_style = "night"
   vim.g.tokyonight_italic_functions = true
-  vim.g.tokyonight_terminal_colors = true
   vim.g.tokyonight_dark_sidebar = true
+  vim.g.tokyonight_dark_float = true
+
   vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
-  
+
+
   -- Load the colorscheme
   vim.cmd[[colorscheme tokyonight]]
 end
@@ -54,12 +56,19 @@ function config.minmin()
   end
 
 end
+
+function  config.undo()
+  vim.g.undotree_WindowLayout = 3
+end
+
+
+
 function config.toggleterm()
 
 
   require("toggleterm").setup{
     open_mapping = [[<Leader><Leader>1]],
-    size = 70,
+    size = 60,
     hide_numbers = true, -- hide the number column in toggleterm buffers
     shade_terminals = true,
     start_in_insert = true,
