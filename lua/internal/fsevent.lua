@@ -53,7 +53,6 @@ function fs:register_root_pattern()
     typescriptreact = {'package.json','jsconfig.json','node_modules'},
     javascriptreact = {'package.json','jsconfig.json','node_modules'},
     lua = {'.git'},
-    rust = {'.Cargo.toml'}
   }
 end
 

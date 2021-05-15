@@ -98,26 +98,37 @@ completion['hrsh7th/vim-vsnip'] = {
 
 
 completion['mfussenegger/nvim-dap'] = {
-  requires ={'theHamsta/nvim-dap-virtual-text','mfussenegger/nvim-dap-python','rcarriga/nvim-dap-ui'},
+  requires ={'rcarriga/vim-ultest','janko/vim-test','theHamsta/nvim-dap-virtual-text','mfussenegger/nvim-dap-python','rcarriga/nvim-dap-ui'},
   config = function()
+  run = ':UpdateRemotePlugins',
 
   require('dapstuff.dapstuff')
 
   require("dapui").setup()
   
-  require('dap-python').setup('/usr/bin/python3')
-  require('dap-python').test_runner = 'pytest'
     -- virtual text deactivated (default)
-  vim.g.dap_virtual_text = true
+  vim.g.dap_virtual_text = false
   -- show virtual text for current frame (recommended)
   vim.g.dap_virtual_text = true
   -- request variable values for all frames (experimental)
   vim.g.dap_virtual_text = 'all frames'
 
+  vim.g.ultest_virtual_text = 1
+  vim.g.ultest_output_cols = 120
+  vim.g.ultest_max_threads = 5
+
 
   end
 }
 
+
+-- completion['rcarriga/vim-ultest'] = {
+
+--   requires = {{'janko/vim-test'}},
+--   run = ':UpdateRemotePlugins',
+--   config = function()
+
+-- }
 
 
 

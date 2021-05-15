@@ -30,4 +30,10 @@ vim.api.nvim_command('autocmd CmdLineEnter :set nosmartcase')
 vim.api.nvim_command('autocmd CmdLineLeave :set smartcase')
 vim.api.nvim_command('augroup END')
 
+vim.api.nvim_command('augroup UltestRunner')
+vim.api.nvim_command('au!')
+vim.api.nvim_command('au BufWritePost * UltestNearest')
+vim.api.nvim_command('augroup END')
+
+
 require("core")

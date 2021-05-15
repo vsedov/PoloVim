@@ -4,6 +4,56 @@ local HOME = os.getenv('HOME')
 -- Need to figure out how to do java 
 
 
+require('dap-python').setup('/usr/bin/python3')
+-- require('dap-python').test_runner = 'pytest'
+dap.configurations.python = {
+    cwd = vim.fn.getcwd(),
+    pathMappings = {
+        {
+            localRoot = vim.fn.getcwd(), -- Wherever your Python code lives locally.
+        };
+    };
+}
+
+
+vim.g['test#python#pytest#executable'] = 'pytest'
+
+
+require("ultest").setup({
+    builders = {
+        ['python#pytest'] = function(cmd)
+
+			local non_modules = {'python', 'pipenv', 'poetry'}
+			-- Index of the python module to run the test.
+			local module
+			if vim.tbl_contains(non_modules, cmd[1]) then
+			module = cmd[3]
+			else
+			module = cmd[1]
+			end
+			-- Remaining elements are arguments to the module
+
+            return {
+                dap = {
+			      type = 'python',
+			      request = 'launch',
+			      module = module,
+			      args = args,
+			      cwd = vim.fn.getcwd(),
+
+			   	  pathMappings = {
+                        {
+                            localRoot = vim.fn.getcwd(), -- Wherever your Python code lives locally.
+                        }
+                    }
+
+                }
+            }
+        end
+    }
+})
+
+
 
 dap.adapters.cpp = {
     type = 'executable',
@@ -65,7 +115,8 @@ dap.adapters.rust = {
         LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
     },
     name = "lldb"
-}dap.configurations.rust = {
+}
+dap.configurations.rust = {
     {
         type = "rust",
         name = "Debug",
@@ -73,4 +124,5 @@ dap.adapters.rust = {
         program= ""
     }
 }
+
 

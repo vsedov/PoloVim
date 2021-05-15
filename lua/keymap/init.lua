@@ -202,6 +202,16 @@ local plug_map = {
     ["n|<F2>"]   = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 
 
+    -- Utesting
+
+    ["n|<Leader>vf"]             = map_cmd("<Plug>(ultest-run-file)"):with_silent(),
+    ["n|<Leader>vn"]             = map_cmd("<Plug>(ultest-run-nearest)"):with_silent(),
+    ["n|<Leader>vg"]             = map_cmd("<Plug>(ultest-output-jump)"):with_silent(),
+    ["n|<Leader>vo"]             = map_cmd("<Plug>(ultest-output-show)"):with_silent(),
+    ["n|<Leader>vs"]             = map_cmd("<Plug>(ultest-summary-toggle)"):with_silent(),
+    ["n|<Leader>va"]             = map_cmd("<Plug>(ultest-attach)"):with_silent(),
+    ["n|<Leader>vx"]             = map_cmd("<Plug>(ultest-stop-file)"):with_silent(),
+
 
 };
 

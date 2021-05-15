@@ -20,3 +20,10 @@ let b:ale_linters = ['pylint']
 
 let g:ale_disable_lsp = 1
 
+let g:test#strategy = "dispatch"
+let g:test#python#pytest#options = "--disable-warnings --color=yes"
+let g:test#python#runner = "pytest"
+
+
+
+
