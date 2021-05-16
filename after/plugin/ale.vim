@@ -1,5 +1,4 @@
 
-
 "Add mypy when required sometimes a complete pain to deal with . "
 let g:ale_linters = {
   \   'markdown': ['mdl'],
@@ -9,7 +8,7 @@ let g:ale_linters = {
   \   'tex': ['proselint', 'chktex', 'lacheck','texlab','latexindent','textlint'],
   \   'plaintex': ['proselint', 'chktex', 'lacheck','texlab'],
   \   'help': [],
-  \   'python': ['pylint'], 
+  \   'python': ['pyright','flake8'], 
   \   'ruby': ['solargraph', 'rubocop', 'ruby'],
   \   'groovy': ['android'],
   \   'xml': ['android'],
@@ -34,7 +33,7 @@ let g:ale_fixers = {
 let g:ale_disable_lsp = 1
 
 
-highlight clear ALEErrorSign
+"highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 
 command! Nani echo synIDattr(synID(line('.'), col('.'), 1), 'name')

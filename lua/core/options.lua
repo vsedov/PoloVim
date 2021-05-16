@@ -1,4 +1,5 @@
 local global = require('core.global')
+
 local function bind_option(options)
   for k, v in pairs(options) do
     if v == true or v == false then
@@ -12,14 +13,14 @@ end
 local function load_options()
     vim.g.python_host_prog = '/usr/bin/python2'
     vim.g.python3_host_prog = '/usr/bin/python3'
-    
+
   local global_local = {
     termguicolors  = true;
     mouse          = "nv";
     errorbells     = true;
     visualbell     = true;
     hidden         = true;
-    fileformats    = "unix";
+    fileformats    = "unix,mac,dos";
     magic          = true;
     virtualedit    = "block";
     encoding       = "utf-8";
@@ -47,10 +48,6 @@ local function load_options()
     ttimeoutlen    = 10;
     updatetime     = 100;
     redrawtime     = 1500;
-
-    undolevels     = 10000;
-    undoreload     = 100000;
-
     ignorecase     = true;
     smartcase      = true;
     infercase      = true;
@@ -93,14 +90,6 @@ local function load_options()
     listchars      = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←";
     pumblend       = 10;
     winblend       = 10;
-    breakindent    = true;
-    showbreak      = "..";
-    lbr            = true;
-
-
-
-
-
   }
 
   local bw_local  = {
@@ -124,7 +113,20 @@ local function load_options()
     concealcursor  = "niv";
   }
 
-
+  if global.is_mac then
+    vim.g.clipboard = {
+      name = "macOS-clipboard",
+      copy = {
+        ["+"] = "pbcopy",
+        ["*"] = "pbcopy",
+      },
+      paste = {
+        ["+"] = "pbpaste",
+        ["*"] = "pbpaste",
+      },
+      cache_enabled = 0
+    }
+  end
   for name, value in pairs(global_local) do
     vim.o[name] = value
   end

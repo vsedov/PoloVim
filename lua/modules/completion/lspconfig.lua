@@ -1,13 +1,21 @@
 local api = vim.api
 local lspconfig = require 'lspconfig'
 local global = require 'core.global'
-vim.o.completeopt = "menuone,noselect"
-
-
+local format = require('modules.completion.format')
+local fn = vim.fn
 
 if not packer_plugins['lspsaga.nvim'].loaded then
   vim.cmd [[packadd lspsaga.nvim]]
+
 end
+
+
+if not packer_plugins['nvim-ale-diagnostic'].loaded then
+  vim.cmd [[packadd nvim-ale-diagnostic]]
+
+end
+
+
 
 local saga = require 'lspsaga'
 saga.init_lsp_saga({
@@ -68,46 +76,49 @@ end
 vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
 vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
 
--- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
---   vim.lsp.diagnostic.on_publish_diagnostics, {
---     -- Enable underline, use default values
---     underline = false,
---     -- Enable virtual text, override spacing to 4
---     virtual_text = false,
---     signs = {
---       enable = true,
---       priority = 20
---     },
---     -- Disable a feature
---     update_in_insert = false,
--- })
-
 
 -- I dont like the lsp diagnositcs, it can be very annoying and gets in teh way 
-vim.lsp.handlers['textDocument/publishDiagnostics']= function() end
+-- vim.lsp.handlers['textDocument/publishDiagnostics']= function() end
+require("nvim-ale-diagnostic")
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- Enable underline, use default values
+    underline = false,
+    -- Enable virtual text, override spacing to 4
+    virtual_text = false,
+    signs =  true,
+    -- Disable a feature
+    update_in_insert = false,
+})
+vim.cmd [[autocmd CursorHold * Lspsaga show_line_diagnostics]]
+vim.cmd[[autocmd CursorHoldI * silent! Lspsaga signature_help]]
 
--- vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
--- vim.cmd[[autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()]]
+
 
 local enhance_attach = function(client,bufnr)
-
+  if client.resolved_capabilities.document_formatting then
+    format.lsp_before_save()
+  end
   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-
 end
-lspconfig.vimls.setup{
-  cmd = { "vim-language-server", "--stdio" },
-  filetypes = { "vim" },
- on_attach = enhance_attach,
- capabilities = capabilities,
 
 
+
+
+local servers = {
+  'dockerls','bashls'
 }
+
+for _,server in ipairs(servers) do
+  lspconfig[server].setup {
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+  }
+end
 
 
 lspconfig.gopls.setup {
-    filetypes = {"go"},
-
+  filetypes = {"go"},
   cmd = {"gopls","--remote=auto"},
   on_attach = enhance_attach,
   capabilities = capabilities,
@@ -137,40 +148,68 @@ lspconfig.clangd.setup {
 
 }
 
--- lspconfig.ccls.setup {
---   cmd = {"ccls" },
---   on_attach = enhance_attach,
---   capabilities = capabilities,
---   filetypes = { "c", "cpp", "objc", "objcpp" },
-
--- }
 
 
 
-local servers = {
-  'dockerls','bashls'
+lspconfig.jedi_language_server.setup{
+ cmd = { "jedi-language-server" },
+ filetypes = { "python" },
+ on_attach = enhance_attach,
+ capabilities = capabilities,
+  init_options = {
+    diagnostics = {
+          enable = true,
+          didOpen = true,
+          didChange = true,
+          didSave = true
+    },
+    jediSettings = {
+      autoImportModules = {'numpy'},
+    },
+  },
 }
 
-for _,server in ipairs(servers) do
-  lspconfig[server].setup {
-    on_attach = enhance_attach,
-    capabilities = capabilities,
-  }
-end
 
--- lspconfig.pyright.setup{
---     on_attach = enhance_attach,
---     capabilities = capabilities,
---     settings = {
---       python = {
---         analysis = {
---           autoSearchPaths = true;
---           useLibraryCodeForTypes = true;
---           autoImportCompletions = true;
---         };
---     };
---   };
--- };
+lspconfig.diagnosticls.setup {
+  filetypes = { "python" },
+  init_options = {
+    filetypes = {
+      python = {"flake8"},
+    },
+    linters = {
+      flake8 = {
+        debounce = 100,
+        sourceName = "flake8",
+        command = "flake8",
+        args = {
+          "--extend-ignore=E",
+          "--format",
+          "%(row)d:%(col)d:%(code)s:%(code)s: %(text)s",
+
+          "%file",
+
+        },
+        formatPattern = {
+          "^(\\d+):(\\d+):(\\w+):(\\w).+: (.*)$",
+          {
+              line = 1,
+              column = 2,
+              message = {"[", 3, "] ", 5},
+              security = 4
+          }
+        },
+        securities = {
+          E = "error",
+          W = "warning",
+          F = "info",
+          B = "hint",
+        },
+      },
+    },
+  }
+}
+
+
 
 
 lspconfig.jdtls.setup{
@@ -179,14 +218,6 @@ lspconfig.jdtls.setup{
   on_attach = enhance_attach,
   capabilities = capabilities,
 
-}
-
-
-lspconfig.jedi_language_server.setup{
- cmd = { "jedi-language-server" },
- filetypes = { "python" },
- on_attach = enhance_attach,
- capabilities = capabilities,
 }
 
 
@@ -200,38 +231,70 @@ lspconfig.rust_analyzer.setup {
 
 
 }
-require("nlua.lsp.nvim").setup(lspconfig, {
-    filetypes = {"lua"},
 
+
+
+lspconfig.sumneko_lua.setup {
+  capabilities = capabilities,
+  on_attach = enhance_attach,
+
+  cmd = {'lua-language-server', "-E", '/usr/share/lua-language-server/main.lua'};
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = vim.split(package.path, ';'),
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = {
+          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+        },
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+
+lspconfig.vimls.setup{
   on_attach = enhance_attach,
   capabilities = capabilities,
-})
+
+  cmd = { "vim-language-server", "--stdio" };
+  filetypes = {"vim"},
+  init_options = {
+    diagnostic = {
+      enable = true
+    },
+    indexes = {
+      count = 3,
+      gap = 100,
+      projectRootPatterns = { "runtime", "nvim", ".git", "autoload", "plugin" },
+      runtimepath = true
+    },
+    iskeyword = "@,48-57,_,192-255,-#",
+    runtimepath = "",
+    suggest = {
+      fromRuntimepath = true,
+      fromVimruntime = true
+    },
+    vimruntime = "",
+  },
+}
 
 
 
 
--- lspconfig.pyls.setup{
---     on_attach = enhance_attach,
---     capabilities = capabilities,
---     filetypes = { "python" },
---     settings = { 
---      pyls = { 
---        plugins = {
---          pycodestyle =  {
---           enabled = false 
---          },
---          pylint =  {
---           enabled = true 
---          },
---          black = {
---            enabled = true
---          },
---          pyflakes = {enabled = false},
---          jedi_completion = {enabled = true}
---         };
---      };
---   };
--- }
 
 local function setup_servers()
   require'lspinstall'.setup()
@@ -255,3 +318,61 @@ require'lspinstall'.post_install_hook = function ()
 end
 
 
+
+
+
+
+--trash
+
+-- i like jedi 
+-- lspconfig.pyls.setup{
+--     on_attach = enhance_attach,
+--     capabilities = capabilities,
+--     filetypes = { "python" },
+--      settings = {
+--       pyls = {
+--                   plugins = {
+--                         jedi_completion = {
+--                         enabled=true,
+--                         include_params=true, 
+--                         include_class_objects=true
+--                       },
+--                       pycodestyle={enabled=false},
+--                       mccabe={enabled=false},
+--                       pyflakes={enabled=false},
+--                       pylint= {
+--                       enabled=true,
+--                       args = {"--rcfile ~/.config/pylintrc"}
+--                       }
+--                   },
+--               },
+--           },
+-- }
+
+
+
+
+
+-- lspconfig.pyright.setup{
+--     -- on_attach = enhance_attach,
+--     cmd = {'pyright-langserver','--stdio'}
+--   --   capabilities = capabilities,
+--   --   settings = {
+--   --     python = {
+--   --       analysis = {
+--   --         autoSearchPaths = true;
+--   --         useLibraryCodeForTypes = true;
+--   --         autoImportCompletions = true;
+--   --       };
+--   --   };
+--   -- };
+-- };
+
+
+-- lspconfig.ccls.setup {
+--   cmd = {"ccls" },
+--   on_attach = enhance_attach,
+--   capabilities = capabilities,
+--   filetypes = { "c", "cpp", "objc", "objcpp" },
+
+-- }

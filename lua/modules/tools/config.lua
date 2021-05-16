@@ -39,11 +39,6 @@ function config.vim_dadbod_ui()
   vim.g.dbs = load_dbs()
 end
 
-
-function kommentary()
-end
-
-
 function config.vim_vista()
   vim.g['vista#renderer#enable_icon'] = 1
   vim.g.vista_disable_statusline = 1
@@ -59,6 +54,10 @@ function config.vim_vista()
   }
 end
 
+
+
+function kommentary()
+end
 
 
 return config

@@ -1,26 +1,5 @@
 local config = {}
 
-
-
-function config.ui_i()
-  -- vim.cmd('colorscheme boo')
-
-  vim.g.tokyonight_transparent = true
-  vim.g.tokyonight_enable_italic_comment = true
-  vim.g.tokyonight_enable_italic = true
-  vim.g.tokyonight_style = "night"
-  vim.g.tokyonight_italic_functions = true
-  vim.g.tokyonight_dark_sidebar = true
-  vim.g.tokyonight_dark_float = true
-
-  vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
-
-
-  -- Load the colorscheme
-  vim.cmd[[colorscheme tokyonight]]
-end
-
-
 function config.galaxyline()
   require('modules.ui.eviline')
 end
@@ -36,60 +15,7 @@ function config.nvim_bufferline()
   }
 end
 
-function config.minmin()
-  local true_zen = require("true-zen")
-
-  true_zen.after_minimalist_mode_hidden = function ()
-    vim.cmd("echo 'I ran after minimalist mode hid everything :)'")
-  end
-
-  true_zen.before_minimalist_mode_hidden = function ()
-    vim.cmd("echo 'I ran before minimalist mode hid everything :)'")
-  end
-
-  true_zen.after_minimalist_mode_shown = function ()
-    vim.cmd("echo 'I ran after minimalist mode showed everything :)'")
-  end
-
-  true_zen.before_minimalist_mode_shown = function ()
-    vim.cmd("echo 'I ran before minimalist mode showed everything :)'")
-  end
-
-end
-
-function  config.undo()
-  vim.g.undotree_WindowLayout = 3
-end
-
-
-
-function config.toggleterm()
-
-
-  require("toggleterm").setup{
-    open_mapping = [[<Leader><Leader>1]],
-    size = 60,
-    hide_numbers = true, -- hide the number column in toggleterm buffers
-    shade_terminals = true,
-    start_in_insert = true,
-    persist_size = true,
-    direction = 'vertical',
-    close_on_exit = true, -- close the terminal window when the process exits
-    float_opts = {
-      border = 'curved',
-      -- width = <value>,
-      -- height = <,
-      winblend = 3,
-      highlights = {
-        border = "Normal",
-        background = "Normal",
-      }      
-    },
-  }
-end 
-
 function config.dashboard()
-
   local home = os.getenv('HOME')
   vim.g.dashboard_footer_icon = '🐬 '
   vim.g.dashboard_preview_command = 'cat'
@@ -117,17 +43,19 @@ function config.dashboard()
     find_dotfiles = {
      description = {'  Open Personal dotfiles                  SPC f d'},
      command = 'Telescope dotfiles path=' .. home ..'/.dotfiles'},
+    go_source = {
+     description = {'  Find cheat  - Language container        SPC f s'},
+     command = 'Telescope cheat fd'},
   }
 end
 
 function config.nvim_tree()
-   -- On Ready Event for Lazy Loading work
+  -- On Ready Event for Lazy Loading work
   require("nvim-tree.events").on_nvim_tree_ready(
     function()
       vim.cmd("NvimTreeRefresh")
     end
   )
-
   vim.g.nvim_tree_follow = 1
   vim.g.nvim_tree_hide_dotfiles = 1
   vim.g.nvim_tree_indent_markers = 1
@@ -182,8 +110,6 @@ function config.gitsigns()
   }
 end
 
-
-
 function config.indent_blakline()
   vim.g.indent_blankline_char = "│"
   vim.g.indent_blankline_show_first_indent_level = true
@@ -229,5 +155,35 @@ function config.indent_blakline()
   -- because lazy load indent-blankline so need readd this autocmd
   vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
 end
+
+
+
+
+function config.ui()
+  -- vim.cmd('colorscheme boo')
+
+  vim.g.tokyonight_transparent = true
+  vim.g.tokyonight_enable_italic_comment = true
+  vim.g.tokyonight_enable_italic = true
+  vim.g.tokyonight_style = "night"
+  vim.g.tokyonight_italic_functions = true
+  vim.g.tokyonight_dark_sidebar = true
+  vim.g.tokyonight_dark_float = true
+  
+  vim.g.tokyonight_sidebars = { "qf", "NvimTree", "NvimTreeNormal", "packer" }
+  vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+
+
+  -- Load the colorscheme
+  vim.cmd[[colorscheme tokyonight]]
+end
+
+
+function  config.undo()
+  vim.g.undotree_WindowLayout = 3
+end
+
+
+
 
 return config

@@ -6,28 +6,19 @@ local map_args = bind.map_args
 require('keymap.config')
 
 local plug_map = {
-    ["i|<TAB>"]         = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
-    ["i|<S-TAB>"]       = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
-    ["i|<CR>"]          = map_cmd([[compe#confirm('<CR>')]]):with_noremap():with_expr():with_nowait(),
-    
-    -- I rely on utilssnips decently , this is required 
-  --   ["n|<CR>"]      = map_cmd('g:UltiSnipsExpandTrigger'):with_noremap():with_expr():with_nowait(),
-  --   ["n|<Tab>"]      = map_cmd('g:UltiSnipsJumpForwardTrigger'):with_expr():with_silent(),
-  --   ["n|<s-tab>"]      = map_cmd('g:UltiSnipsJumpBackwardTrigger'):with_expr():with_silent(),
-  -- -- vim.g.UltiSnipsExpandTrigger = "<CR>"      
-  -- -- vim.g.UltiSnipsJumpForwardTrigger = "<Tab>" 
-  -- -- vim.g.UltiSnipsJumpBackwardTrigger = "<S_Tab>"
-
-    ["n|<F1>"]           = map_cr("DogeGenerate"):with_noremap():with_silent(),
-
+    ["i|<TAB>"]      = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
+    ["i|<S-TAB>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
+    ["i|<CR>"]       = map_cmd([[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]]):with_noremap():with_expr():with_nowait(),
     -- person keymap
     ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
     ["n|gb"]             = map_cr("BufferLinePick"):with_noremap():with_silent(),
+    
+
     -- Packer
     ["n|<leader>pu"]     = map_cr("PackerUpdate"):with_silent():with_noremap():with_nowait();
     ["n|<leader>pi"]     = map_cr("PackerInstall"):with_silent():with_noremap():with_nowait();
     ["n|<leader>pc"]     = map_cr("PackerCompile"):with_silent():with_noremap():with_nowait();
-    
+   
 
     -- Lsp mapp work when insertenter and lsp start
     ["n|<leader>li"]     = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),
@@ -48,38 +39,35 @@ local plug_map = {
     ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>ce"]     = map_cr('Lspsaga show_line_diagnostics'):with_noremap():with_silent(),
-    ["n|<C-]>"]          = map_args("Template"),
+    ["n|<Leader>ct"]      = map_args("Template"),
     ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
-   
-    -- I used code action decent sometimes it doesnt work 
+       -- I used code action decent sometimes it doesnt work 
 
     ["n|<Leader>ca"]     = map_cmd("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
+   -- doge
+    ["n|<F1>"]           = map_cr("DogeGenerate"):with_noremap():with_silent(),
 
 
     -- Plugin nvim-tree
     ["n|<Leader>e"]      = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
     ["n|<Leader>FF"]     = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
-  
+
     -- Plugin MarkdownPreview
     ["n|<Leader>om"]     = map_cu('MarkdownPreview'):with_noremap():with_silent(),
-  
     -- Plugin DadbodUI
     ["n|<Leader>od"]     = map_cr('DBUIToggle'):with_noremap():with_silent(),
-  
+
     -- Plugin Floaterm
     ["n|<A-d>"]          = map_cu('Lspsaga open_floaterm'):with_noremap():with_silent(),
     ["t|<A-d>"]          = map_cu([[<C-\><C-n>:Lspsaga close_floaterm<CR>]]):with_noremap():with_silent(),
     ["n|<Leader>g"]      = map_cu("Lspsaga open_floaterm lazygit"):with_noremap():with_silent(),
-    
-
-    ["n|<Leader>1"]      = map_cu("Lspsaga open_floaterm lazygit"):with_noremap():with_silent(),
-
+ 
 
     -- Far.vim
-    ["n|<Leader>fz"]     = map_cr('Farp'):with_noremap():with_silent();
-    ["v|<Leader>fz"]     = map_cr('Farp'):with_noremap():with_silent();
-  
+    ["n|<Leader>fz"]     = map_cr('Farf'):with_noremap():with_silent();
+    ["v|<Leader>fz"]     = map_cr('Farf'):with_noremap():with_silent();
     -- Plugin Telescope
+-- Plugin Telescope
     ["n|<Leader>bb"]     = map_cu('Telescope buffers'):with_noremap():with_silent(),
     ["n|<Leader>fa"]     = map_cu('DashboardFindWord'):with_noremap():with_silent(),
     ["n|<Leader>fb"]     = map_cu('Telescope file_browser'):with_noremap():with_silent(),
@@ -98,13 +86,11 @@ local plug_map = {
     ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
     ["n|k"]              = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
     -- Plugin QuickRun
-    ["n|<Leader>r"]      = map_cr("<cmd> lua require'internal.quickrun'.run_command()"):with_noremap():with_silent(),
+    ["n|<Leader>r"]     = map_cr("<cmd> lua require'internal.quickrun'.run_command()"):with_noremap():with_silent(),
     -- Plugin Vista
     ["n|<Leader>v"]      = map_cu('Vista'):with_noremap():with_silent(),
-    -- Plugin vim-operator-surround
-    ["n|sa"]             = map_cmd("<Plug>(operator-surround-append)"):with_silent(),
-    ["n|sd"]             = map_cmd("<Plug>(operator-surround-delete)"):with_silent(),
-    ["n|sr"]             = map_cmd("<Plug>(operator-surround-replace)"):with_silent(),
+
+
     -- Plugin hrsh7th/vim-eft
     ["n|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
     ["x|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
@@ -119,37 +105,42 @@ local plug_map = {
     ["x|gI"]             = map_cmd("v:lua.enhance_nice_block('gI')"):with_expr(),
     ["x|A"]              = map_cmd("v:lua.enhance_nice_block('A')"):with_expr(),
 
+
     -- Plugin for debugigng 
     ["n|<F4>"]          = map_cu('Telescope dap commands'):with_noremap():with_silent(),
     ["n|<Leader>dd"]    = map_cu("lua require('dap').continue()"):with_noremap():with_silent(),
     ["n|<Leader>vv"]    = map_cu("Telescope treesitter"):with_noremap():with_silent(),
-  
+
+    --Nice finder 
     ["n|<Leader><Leader><Leader>"]    = map_cu("Telescope frecency"):with_noremap():with_silent(),
 
-    ["n|<Leader>do"]    = map_cu("lua require'dap'.step_over()<CR>"):with_noremap():with_silent(),
-    ["n|<Leader>di"]    = map_cu("lua require'dap'.step_into()<CR>"):with_noremap():with_silent(),
-    ["n|<Leader>dO"]    = map_cu("lua require'dap'.step_out()<CR>"):with_noremap():with_silent(),
-
-    ["n|<Leader>b"]     = map_cu("lua require'dap'.toggle_breakpoint()<CR>"):with_noremap():with_silent(),
-    ["n|<Leader>B"]     = map_cu("lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>"):with_noremap():with_silent(),
-    ["n|<Leader>lp"]    = map_cu("lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>"):with_noremap():with_silent(),
-
-    ["n|<Leader>dr"]    = map_cu("lua require'dap'.repl.open()<CR>"):with_noremap():with_silent(),
-    ["n|<Leader>drr"]   = map_cu('lua require"dap".repl.toggle({width = 50}, "belowright vsplit")<cr>'):with_noremap():with_silent(),
 
 
-    ["n|<Leader>dl"]    = map_cu("lua require'dap'.repl.run_last()<CR>"):with_noremap():with_silent(),
 
-    ["n|<Leader>dn"]    = map_cu("lua require('dap-python').test_method()<CR>"):with_noremap():with_silent(),
-    ["i|<Leader>ds"]    = map_cu("lua require('dap-python').debug_selection()<CR>"):with_noremap():with_silent(),
 
     -- Nice command to list all breakpoints. .
-    ["n|<Leader>lb"]    = map_cu("Telescope dap list_breakpoints"):with_noremap():with_silent(),
+    ["n|<Leader>lb"]    = map_cr("Telescope dap list_breakpoints"):with_noremap():with_silent(),
 
-    -- Unit Testing  
+    ["n|<Leader>do"]    = map_cr("<cmd> lua require'dap'.step_over()<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>di"]    = map_cr("<cmd> lua require'dap'.step_into()<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>dO"]    = map_cr("<cmd> lua require'dap'.step_out()<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>b"]     = map_cr("<cmd> lua require'dap'.toggle_breakpoint()<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>dr"]    = map_cr("<cmd> lua require'dap'.repl.open()<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>drr"]   = map_cr('<cmd> lua require"dap".repl.toggle({width = 50}, "belowright vsplit")<cr>'):with_noremap():with_silent(),
+    ["n|<Leader>dl"]    = map_cr("<cmd> lua require'dap'.repl.run_last()<CR>"):with_noremap():with_silent(),
 
 
-    -- Black formating 
+
+
+
+    -- Nice animation
+    ["n|<Up>"]         = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
+    ["n|<Down>"]       = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
+    ["n|<Left>"]       = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
+    ["n|<Right>"]      = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
+
+
+
     ["n|<F3>"]          = map_cu('Black'):with_noremap():with_silent(),
 
 
@@ -161,23 +152,12 @@ local plug_map = {
 
 
     -- Alternate togller
-
     ["n|<Leader>ta"]    = map_cr("ToggleAlternate"):with_noremap():with_silent(),
 
 
 
     -- TZAtaraxis
     ["n|<F9>"]          = map_cu("TZAtaraxis<CR>"):with_noremap():with_silent(),
-
-
-    -- Moving nice animation . 
-
-    ["n|<Up>"]         = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
-    ["n|<Down>"]       = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
-    ["n|<Left>"]       = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
-    ["n|<Right>"]      = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
-
-
 
     -- Code runner python C c++ support using two neovim and code runner 
     -- might get rid of this , Depending on the other uses . i like the fact that 
@@ -202,8 +182,8 @@ local plug_map = {
     ["n|<F2>"]   = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 
 
-    -- Utesting
 
+    --- new 
     ["n|<Leader>vf"]             = map_cmd("<Plug>(ultest-run-file)"):with_silent(),
     ["n|<Leader>vn"]             = map_cmd("<Plug>(ultest-run-nearest)"):with_silent(),
     ["n|<Leader>vg"]             = map_cmd("<Plug>(ultest-output-jump)"):with_silent(),
@@ -211,6 +191,12 @@ local plug_map = {
     ["n|<Leader>vs"]             = map_cmd("<Plug>(ultest-summary-toggle)"):with_silent(),
     ["n|<Leader>va"]             = map_cmd("<Plug>(ultest-attach)"):with_silent(),
     ["n|<Leader>vx"]             = map_cmd("<Plug>(ultest-stop-file)"):with_silent(),
+
+    -- Float term plugins . 
+
+
+
+
 
 
 };

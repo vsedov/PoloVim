@@ -1,43 +1,15 @@
 local ui = {}
 local conf = require('modules.ui.config')
 
--- ui['glepnir/zephyr-nvim'] = {
---   config = [[vim.cmd('colorscheme zephyr')]]
--- }
-
-
---rockerBOO/boo-colorscheme-nvim
 ui['folke/tokyonight.nvim'] = {
-  config = conf.ui_i,
-
-  branch = 'main',
-
+  config = conf.ui,
 }
-
-ui['justinmk/vim-syntax-extra'] = {
-
-}
-
-
-
-ui['akinsho/nvim-toggleterm.lua'] = {
-
-  config = conf.toggleterm
-
-}
-
-
-
-
-
-
-ui['psliwka/vim-smoothie'] ={}
-
-
 
 ui['glepnir/dashboard-nvim'] = {
-  config = conf.dashboard
+  config = conf.dashboard,
+
 }
+
 
 ui['glepnir/galaxyline.nvim'] = {
   branch = 'main',
@@ -50,21 +22,6 @@ ui['lukas-reineke/indent-blankline.nvim'] = {
   branch = 'lua',
   config = conf.indent_blakline
 }
-
-
-ui['kdav5758/TrueZen.nvim'] = {
-  config = conf.minmin
-}
-
-
-ui['mbbill/undotree'] = {
-  config = conf.undo
-}
-
-
-
-
-
 
 
 ui['akinsho/nvim-bufferline.lua'] = {
@@ -86,8 +43,19 @@ ui['lewis6991/gitsigns.nvim'] = {
 
 
 
-ui['https://github.com/alec-gibson/nvim-tetris'] = {
+
+ui['mbbill/undotree'] = {
+  config = conf.undo
 }
+
+
+--  I think this is causing the issue
+-- ui['akinsho/nvim-toggleterm.lua'] = {
+
+--   config = conf.toggleterm
+
+-- }
+
 
 
 

@@ -1,10 +1,6 @@
 local global = require 'core.global'
 local vim = vim
 
-
-vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
-vim.cmd [[ "hi Normal guibg=NONE ctermbg=NONE" ]]
-
 -- Create cache dir and subs dir
 local createdir = function ()
   local data_dir = {
@@ -47,6 +43,7 @@ local disable_distribution_plugins= function()
   vim.g.loaded_netrwFileHandlers = 1
 end
 
+
 local leader_map = function()
   vim.g.mapleader = " "
   vim.g.maplocalleader ='\\'
@@ -59,7 +56,6 @@ end
 
 local load_core =function()
   local pack = require('core.pack')
-  
   createdir()
   disable_distribution_plugins()
   leader_map()

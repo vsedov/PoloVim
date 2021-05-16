@@ -53,6 +53,7 @@ function fs:register_root_pattern()
     typescriptreact = {'package.json','jsconfig.json','node_modules'},
     javascriptreact = {'package.json','jsconfig.json','node_modules'},
     lua = {'.git'},
+    rust = {'.Cargo.toml'}
   }
 end
 
@@ -127,7 +128,7 @@ function fs:render_window()
   api.nvim_buf_add_highlight(self.hcb, 0, 'ProJectIcon', 0, 0, #project_icon)
   api.nvim_buf_add_highlight(self.hcb, 0, 'ProJectPath', 0, #project_icon, -1)
   api.nvim_command('hi ProJectIcon guifg=#98be65 gui=bold')
-  ('hi ProJectPath guifg=#a9a1e1 gui=bold')
+  api.nvim_command('hi ProJectPath guifg=#a9a1e1 gui=bold')
 
   local input_border_opts = {
     border = 1,

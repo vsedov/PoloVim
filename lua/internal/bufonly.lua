@@ -3,7 +3,6 @@ local api = vim.api
 local option = api.nvim_buf_get_option
 
 local function buf_only()
-  
   local del_non_modifiable = g.bufonly_delete_non_modifiable or false
 
   local cur = api.nvim_get_current_buf()

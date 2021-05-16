@@ -4,12 +4,60 @@ local conf = require('modules.completion.config')
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
   config = conf.nvim_lsp,
-  requires = {{'nvim-lua/lsp_extensions.nvim'},
+
+  requires = {
+  {'nvim-lua/lsp_extensions.nvim'},
   {'tjdevries/nlua.nvim'},
+  {'nathunsmitty/nvim-ale-diagnostic',opt=true},
+  {'kabouzeid/nvim-lspinstall'},
+  {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
 
 }
 
+completion['dense-analysis/ale'] = {
+  config = function ()
+
+    vim.g.ale_completion_enabled = 0
+    vim.g.ale_python_pylint_options = '--rcfile ~/.config/pylintrc'
+    vim.g.ale_python_mypy_options = ''
+    vim.g.ale_list_window_size =  4
+    vim.g.ale_sign_column_always = 0
+    vim.g.ale_open_list = 1
+
+
+    vim.g.ale_set_loclist = 0
+
+    vim.g.ale_set_quickfix = 1
+    vim.g.ale_keep_list_window_open = 1
+    vim.g.ale_list_vertical = 0
+
+    vim.g.ale_lint_on_save = 1
+
+    vim.g.ale_sign_error = ''
+    vim.g.ale_sign_warning = ''
+    vim.g.ale_lint_on_text_changed = 1
+
+    vim.g.ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+    vim.g.ale_lint_on_insert_leave = 0
+    vim.g.ale_lint_on_enter = 0
+
+
+    vim.g.ale_set_balloons = 1
+    vim.g.ale_hover_cursor = 1
+    vim.g.ale_hover_to_preview = 1
+    vim.g.ale_float_preview = 1
+    vim.g.ale_virtualtext_cursor = 1
+
+    vim.g.ale_fix_on_save = 1
+    vim.g.ale_fix_on_insert_leave = 0
+    vim.g.ale_fix_on_text_changed = 'never'
+
+
+
+  end
+}
 
 
 
@@ -17,15 +65,36 @@ completion['glepnir/lspsaga.nvim'] = {
   cmd = 'Lspsaga',
 }
 
-
 completion['tzachar/compe-tabnine'] = {
   run = './install.sh',
   requires = {{'hrsh7th/nvim-compe'},
               {'GoldsteinE/compe-latex-symbols'}},
-  event = 'InsertEnter',
   config = conf.nvim_compe,
 
 }
+
+
+completion['hrsh7th/vim-vsnip'] = {
+  event = 'InsertCharPre',
+  config = conf.vim_vsnip
+}
+
+completion['nvim-telescope/telescope.nvim'] = {
+  cmd = 'Telescope',
+  requires = {
+    {'nvim-lua/popup.nvim', opt = true},
+    {'nvim-lua/plenary.nvim',opt = true},
+    {'nvim-telescope/telescope-fzy-native.nvim',opt = true}, 
+    {'nvim-telescope/telescope-cheat.nvim'},
+    {'tami5/sql.nvim'},
+    {'nvim-telescope/telescope-frecency.nvim'},
+    {'nvim-telescope/telescope-dap.nvim'},
+  },
+  config = conf.telescope
+
+
+}
+--Leave for last i think ,. 
 
 completion['SirVer/ultisnips'] = {
   requires = 'honza/vim-snippets',
@@ -34,29 +103,9 @@ completion['SirVer/ultisnips'] = {
 
 
 
-completion['mboughaba/i3config.vim'] = {
-}
-
-completion['kabouzeid/nvim-lspinstall'] = {
-}
-
-
-
-
-completion['https://github.com/tmhedberg/SimpylFold'] = {
-}
-
-completion['lervag/vimtex'] = {
-  config = conf.vimtex
-}
-
--- completion['sbdchd/vim-run'] = {
---   config = conf.run
--- }
-
 completion['kkoomen/vim-doge'] = {
   config = conf.doge,
-  run = '-> doge#install()'
+  run = ':call doge#install()'
 
 }
 
@@ -65,7 +114,7 @@ completion['kkoomen/vim-doge'] = {
 -- command Neorunner - depends if i will keep this trying out new stuff . 
 completion['BenGH28/neo-runner.nvim'] = {
   config = conf.neorunner,
-  run = 'UpdateRemotePlugins'
+  run = ':UpdateRemotePlugins'
 }
 
 
@@ -85,26 +134,24 @@ completion['kevinhwang91/nvim-bqf'] = {
 
 
 
-
-completion['hrsh7th/vim-vsnip'] = {
-  event = 'InsertCharPre',
-  config = conf.vim_vsnip
-}
-
--- completion['mfussenegger/nvim-dap'] = {
---   requires =  'mfussenegger/nvim-dap-python',
---   config = conf.dap_text
--- }
-
-
 completion['mfussenegger/nvim-dap'] = {
-  requires ={'rcarriga/vim-ultest','janko/vim-test','theHamsta/nvim-dap-virtual-text','mfussenegger/nvim-dap-python','rcarriga/nvim-dap-ui'},
-  config = function()
+  requires ={
+    {'rcarriga/vim-ultest'},
+    {'janko/vim-test'},
+    {'theHamsta/nvim-dap-virtual-text'},
+    {'mfussenegger/nvim-dap-python'},
+    {'rcarriga/nvim-dap-ui'},
+  },
   run = ':UpdateRemotePlugins',
+
+
+  config = function()
 
   require('dapstuff.dapstuff')
 
   require("dapui").setup()
+
+
   
     -- virtual text deactivated (default)
   vim.g.dap_virtual_text = false
@@ -122,43 +169,18 @@ completion['mfussenegger/nvim-dap'] = {
 }
 
 
--- completion['rcarriga/vim-ultest'] = {
-
---   requires = {{'janko/vim-test'}},
---   run = ':UpdateRemotePlugins',
---   config = function()
-
--- }
 
 
-
-completion['nvim-telescope/telescope.nvim'] = {
-  cmd = 'Telescope',
-  requires = {
-    {'nvim-lua/popup.nvim', opt = true},
-    {'nvim-lua/plenary.nvim',opt = true},
-    {'nvim-telescope/telescope-fzy-native.nvim',opt = true}, 
-    {'nvim-telescope/telescope-cheat.nvim'},
-    {'tami5/sql.nvim'},
-    {'nvim-telescope/telescope-frecency.nvim'},
-    {'nvim-telescope/telescope-dap.nvim'},
-  },
-  config = conf.telescope
-
-
+completion['lervag/vimtex'] = {
+  config = conf.vimtex
 }
 
 
---Real quick autoformat . 
 
 
 -- For most basic files , there is an autoformat . 
 completion['Chiel92/vim-autoformat'] = {
 }
-
-
-
-
 
 
 
@@ -179,12 +201,25 @@ completion['psf/black'] = {
 
 
 
-
-completion['mattn/vim-sonictemplate'] = {
-  cmd = 'Template',
-  config = conf.vim_sonictemplate,
+completion['glepnir/smartinput.nvim'] = {
+  ft = 'go',
+  config = conf.smart_input
 }
 
 
+
+
+
+completion['mattn/vim-sonictemplate'] = {
+  cmd = 'Template',
+  ft = {'go','typescript','lua','javascript','vim','rust','markdown'},
+  config = conf.vim_sonictemplate,
+}
+
+completion['mattn/emmet-vim'] = {
+  event = 'InsertEnter',
+  ft = {'html','css','javascript','javascriptreact','vue','typescript','typescriptreact'},
+  config = conf.emmet,
+}
 
 return completion

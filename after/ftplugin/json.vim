@@ -13,4 +13,3 @@ if s:bufname && s:bufname ==# 'jsonschema'
   setlocal softtabstop=2
   setlocal tabstop=4
 endif
-
