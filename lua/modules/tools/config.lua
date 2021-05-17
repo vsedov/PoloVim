@@ -51,6 +51,7 @@ function config.vim_vista()
     markdown = 'toc',
     typescript = 'nvim_lsp',
     python =  'nvim_lsp',
+    c = 'nvim_lsp',
   }
 end
 

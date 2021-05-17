@@ -1,4 +1,6 @@
 local config = {}
+local api = vim.api
+
 
 function config.nvim_treesitter()
   vim.api.nvim_command('set foldmethod=expr')
@@ -61,19 +63,11 @@ function config.nvim_treesitter()
 
 end
 
-
 local ft_str = ""
 local autocmd_fold_str = ""
 
-for _, ft in pairs(parsers.available_parsers()) do
-    if (ft == "c_sharp") then
-        ft_str = ft_str..'cs'..','
-    else
-        ft_str = ft_str..ft..','
-    end
-end
-
 autocmd_fold_str = 'autocmd Filetype '..ft_str..' setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()'
 api.nvim_command(autocmd_fold_str)
+
 return config
 

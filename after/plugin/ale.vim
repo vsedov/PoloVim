@@ -8,7 +8,7 @@ let g:ale_linters = {
   \   'tex': ['proselint', 'chktex', 'lacheck','texlab','latexindent','textlint'],
   \   'plaintex': ['proselint', 'chktex', 'lacheck','texlab'],
   \   'help': [],
-  \   'python': ['flake8'], 
+  \   'python': [''], 
   \   'ruby': ['solargraph', 'rubocop', 'ruby'],
   \   'groovy': ['android'],
   \   'xml': ['android'],
@@ -19,7 +19,9 @@ let g:ale_linters = {
   \   'vim': ['vint'],
   \   'yaml': ['yamllint'],
   \   'openapi': ['yamllint', 'ibm-validator'],
-  \   'mail': ['proselint', 'write-good']
+  \   'mail': ['proselint', 'write-good'],
+  \   'lua': [''],
+  \   'c':['']
 \}
 
 let g:ale_fixers = {

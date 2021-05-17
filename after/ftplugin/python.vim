@@ -12,7 +12,6 @@ setlocal colorcolumn=90
 
 
 
-highlight ColorColumn guibg=Black
 
 
 let g:runner_python_ex = 'python3'

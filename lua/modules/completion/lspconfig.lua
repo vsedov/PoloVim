@@ -16,7 +16,6 @@ end
 -- end
 
 
-
 local saga = require 'lspsaga'
 saga.init_lsp_saga({
   code_action_keys = {
@@ -78,18 +77,18 @@ vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
 
 
 -- I dont like the lsp diagnositcs, it can be very annoying and gets in teh way 
-vim.lsp.handlers['textDocument/publishDiagnostics']= function() end
--- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
---   vim.lsp.diagnostic.on_publish_diagnostics, {
---     -- Enable underline, use default values
---     underline = false,
---     -- Enable virtual text, override spacing to 4
---     virtual_text = false,
---     signs =  true,
---     -- Disable a feature
---     update_in_insert = false,
--- })
---vim.cmd [[autocmd CursorHold * Lspsaga show_line_diagnostics]]
+-- vim.lsp.handlers['textDocument/publishDiagnostics']= function() end
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- Enable underline, use default values
+    underline = false,
+    -- Enable virtual text, override spacing to 4
+    virtual_text = false,
+    signs =  true,
+    -- Disable a feature
+    update_in_insert = true,
+})
+vim.cmd [[autocmd CursorHold * Lspsaga show_line_diagnostics]]
 vim.cmd[[autocmd CursorHoldI * silent! Lspsaga signature_help]]
 
 
@@ -304,7 +303,11 @@ require'lspinstall'.post_install_hook = function ()
 end
 
 
-
+vim.api.nvim_call_function('sign_define', {"LspDiagnosticsSignError", {text = "", texthl = "LspDiagnosticsDefaultError"}})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", texthl = "LspDiagnosticsDefaultWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", texthl = "LspDiagnosticsDefaultInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsDefaultHint"})
+vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagnosticsDefaultOther"})
 
 
 
