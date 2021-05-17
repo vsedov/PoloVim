@@ -56,7 +56,7 @@ editor['andweeb/presence.nvim']  = {
         log_level         = nil,                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
         debounce_timeout  = 15,                         -- Number of seconds to debounce TextChanged events (or calls to `:lua Presence:update(<buf>, true)`)
     })
-    
+
   end
 }
 
@@ -98,6 +98,16 @@ editor['rmagatti/alternate-toggler']  = {
 
 editor['https://github.com/lambdalisue/suda.vim.git']  = {
 }
+
+
+editor['https://github.com/tmhedberg/SimpylFold']  = {
+  requires  ='https://github.com/Konfekt/FastFold',
+
+  config = function()
+  vim.g.SimpylFold_docstring_preview = 1
+  end
+}
+
 
 
 

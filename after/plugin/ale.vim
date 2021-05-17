@@ -8,7 +8,7 @@ let g:ale_linters = {
   \   'tex': ['proselint', 'chktex', 'lacheck','texlab','latexindent','textlint'],
   \   'plaintex': ['proselint', 'chktex', 'lacheck','texlab'],
   \   'help': [],
-  \   'python': ['pyright','flake8'], 
+  \   'python': ['flake8'], 
   \   'ruby': ['solargraph', 'rubocop', 'ruby'],
   \   'groovy': ['android'],
   \   'xml': ['android'],
@@ -23,17 +23,15 @@ let g:ale_linters = {
 \}
 
 let g:ale_fixers = {
-      \ 'python': ['nayvy#ale_fixer', 'black'],
-      \'java':['google_java_format','remove_trailing_lines'],
-      \ 'tex':['textlint']
-      \ }
+  \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \ 'python': ['nayvy#ale_fixer','black'],
+\ }
 
 
-"This has to be set to zero for this to work
-let g:ale_disable_lsp = 1
 
 
 "highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 
 command! Nani echo synIDattr(synID(line('.'), col('.'), 1), 'name')
+

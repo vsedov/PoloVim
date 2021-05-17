@@ -26,6 +26,8 @@ tools['relastle/vim-nayvy'] ={
     vim.g.nayvy_import_config_path = '$HOME/nayvy.py'
   end
 }
+
+
 tools['wakatime/vim-wakatime'] ={
 }
 
@@ -35,10 +37,6 @@ tools['camspiers/animate.vim'] ={
 
 tools['psliwka/vim-smoothie'] ={
 }
-
-
-
-
 
 tools['euclidianAce/BetterLua.vim'] = {}
 

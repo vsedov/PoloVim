@@ -8,14 +8,14 @@ completion['neovim/nvim-lspconfig'] = {
   requires = {
   {'nvim-lua/lsp_extensions.nvim'},
   {'tjdevries/nlua.nvim'},
-  {'nathunsmitty/nvim-ale-diagnostic',opt=true},
   {'kabouzeid/nvim-lspinstall'},
-  {'nathunsmitty/nvim-ale-diagnostic',opt=true}
+  -- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
 
 }
 
 completion['dense-analysis/ale'] = {
+
   config = function ()
 
     vim.g.ale_completion_enabled = 0
@@ -31,6 +31,9 @@ completion['dense-analysis/ale'] = {
     vim.g.ale_set_quickfix = 1
     vim.g.ale_keep_list_window_open = 1
     vim.g.ale_list_vertical = 0
+
+    vim.g.ale_disable_lsp =1
+
 
     vim.g.ale_lint_on_save = 1
 
@@ -53,12 +56,8 @@ completion['dense-analysis/ale'] = {
     vim.g.ale_fix_on_save = 1
     vim.g.ale_fix_on_insert_leave = 0
     vim.g.ale_fix_on_text_changed = 'never'
-
-
-
   end
 }
-
 
 
 completion['glepnir/lspsaga.nvim'] = {
@@ -180,6 +179,7 @@ completion['lervag/vimtex'] = {
 
 -- For most basic files , there is an autoformat . 
 completion['Chiel92/vim-autoformat'] = {
+
 }
 
 
