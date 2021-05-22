@@ -16,7 +16,7 @@ cmd([[ augroup END ]])
 
 
 
--- I like relative numbers and the other ones both , so i have this instead . 
+-- I like relative numbers and the other ones both , so i have this instead .
 vim.api.nvim_command('augroup AutoRelativeLineNums')
 vim.api.nvim_command('autocmd!')
 vim.api.nvim_command('au InsertEnter * set norelativenumber')

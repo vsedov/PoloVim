@@ -39,13 +39,21 @@ local plug_map = {
     ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>ce"]     = map_cr('Lspsaga show_line_diagnostics'):with_noremap():with_silent(),
-    ["n|<Leader>ct"]      = map_args("Template"),
+    ["n|<C-]>"]     = map_args("Template"),
     ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
        -- I used code action decent sometimes it doesnt work 
 
     ["n|<Leader>ca"]     = map_cmd("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
    -- doge
     ["n|<F1>"]           = map_cr("DogeGenerate"):with_noremap():with_silent(),
+    ["n|<F2>"]           = map_cu("UndotreeToggle"):with_noremap():with_silent(),
+    ["n|<F3>"]           = map_cu('Black'):with_noremap():with_silent(),
+    ["n|<F5>"]           = map_cu('FRunCode'):with_noremap():with_silent(),
+    --NeoRunner_Horizontal 
+    ["n|<F6>"]           = map_cu("NeoRunner"):with_noremap():with_silent(),
+    ["n|<Leader><F5>"]   = map_cu('RunCode'):with_noremap():with_silent(),
+    
+
 
 
     -- Plugin nvim-tree
@@ -141,8 +149,6 @@ local plug_map = {
 
 
 
-    ["n|<F3>"]          = map_cu('Black'):with_noremap():with_silent(),
-
 
     --sniprun
 
@@ -157,18 +163,15 @@ local plug_map = {
 
 
     -- TZAtaraxis
-    ["n|<F9>"]          = map_cu("TZAtaraxis<CR>"):with_noremap():with_silent(),
+    ["n|<Leader><Leader>1"]          = map_cu("ZenMode"):with_noremap():with_silent(),
+    ["n|<Leader><leader>2"]          = map_cu("TZAtaraxis<CR>"):with_noremap():with_silent(),
+    ["n|<Leader><Leader>3"]          = map_cu("TZMinimalist<CR>"):with_noremap():with_silent(),
+    ["n|<Leader><Leader>4"]          = map_cu("TZFocus<CR>"):with_noremap():with_silent(),
 
-    -- Code runner python C c++ support using two neovim and code runner 
-    -- might get rid of this , Depending on the other uses . i like the fact that 
-    -- this stays when you finish teh code . 
-    -- Window Code runner . 
-    ["n|<F5>"]        = map_cu('FRunCode'):with_noremap():with_silent(),
-    -- Nice virticle runner . 
-    ["n|<Leader><F5>"]    = map_cu('RunCode'):with_noremap():with_silent(),
 
-    --NeoRunner_Horizontal 
-    ["n|<F6>"]    = map_cu("NeoRunner"):with_noremap():with_silent(),
+
+
+
 
 
     -- nice little thing to take some quick notes ina  file in latex .
@@ -176,10 +179,6 @@ local plug_map = {
     ["n|<Leader><F9>"]    = map_cu('lua require("nabla").place_inline()<CR>'):with_noremap():with_silent(),
     -- $ ... $ : inline form
     -- $$ ... $$ : wrapped form
-
-
-    -- UndoTree
-    ["n|<F2>"]   = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 
 
 
@@ -192,12 +191,13 @@ local plug_map = {
     ["n|<Leader>va"]             = map_cmd("<Plug>(ultest-attach)"):with_silent(),
     ["n|<Leader>vx"]             = map_cmd("<Plug>(ultest-stop-file)"):with_silent(),
 
-    -- Float term plugins . 
-
-
-
-
-
+    -- Quick Fix infomation and binds 
+    ["n|<Leader>xx"]    = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>xw"]    = map_cr("<cmd>Trouble lsp_workspace_diagnostics<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>xd"]    = map_cr("<cmd>Trouble lsp_document_diagnostics<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>xl"]    = map_cr("<cmd>Trouble loclist<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>xf"]    = map_cr("<cmd>Trouble quickfix<CR>"):with_noremap():with_silent(),
+    ["n|<Leader>xR"]    = map_cr("<cmd>Trouble lsp_references<CR>"):with_noremap():with_silent(),
 
 };
 

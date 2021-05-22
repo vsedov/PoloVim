@@ -184,6 +184,32 @@ function  config.undo()
 end
 
 
+function config.truezen()
+
+  local true_zen = require("true-zen")
+
+  true_zen.after_minimalist_mode_hidden = function ()
+    vim.cmd("echo 'I ran after minimalist mode hid everything :)'")
+  end
+
+  true_zen.before_minimalist_mode_hidden = function ()
+    vim.cmd("echo 'I ran before minimalist mode hid everything :)'")
+  end
+
+  true_zen.after_minimalist_mode_shown = function ()
+    vim.cmd("echo 'I ran after minimalist mode showed everything :)'")
+  end
+
+  true_zen.before_minimalist_mode_shown = function ()
+    vim.cmd("echo 'I ran before minimalist mode showed everything :)'")
+  end
+
+end 
+
+function config.folkzen()
+ require("zen-mode").setup {
+  }
+end
 
 
 return config

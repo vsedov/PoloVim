@@ -46,3 +46,4 @@ local gosource = function(opts)
 end
 
 return telescope.register_extension { exports = {gosource = gosource} }
+

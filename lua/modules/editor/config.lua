@@ -8,6 +8,11 @@ function config.delimimate()
   vim.api.nvim_command('au FileType markdown let b:delimitMate_nesting_quotes = ["`"]')
 end
 
+function config.autopairs()
+  require('nvim-autopairs').setup()
+
+end
+
 function config.nvim_colorizer()
   require 'colorizer'.setup {
     css = { rgb_fn = true; };
@@ -36,8 +41,28 @@ function config.vim_cursorwod()
   vim.api.nvim_command('augroup END')
 end
 
-function config.terminal()
-  
+
+
+-- one thing that does not even work , ffs ... 
+function config.discord()
+
+  require("presence"):setup({
+      -- General options
+      auto_update         = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+      neovim_image_text   = "The One True Text Editor", -- Text displayed when hovered over the Neovim image
+      main_image          = "neovim",                   -- Main image display (either "neovim" or "file")
+      client_id           = "793271441293967371",       -- Use your own Discord application client id (not recommended)
+      log_level           = "debug",                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+      debounce_timeout    = 15,                         -- Number of seconds to debounce TextChanged events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+
+      -- Rich Presence text options
+      editing_text        = "Editing %s",               -- Format string rendered when an editable file is loaded in the buffer
+      file_explorer_text  = "Browsing %s",              -- Format string rendered when browsing a file explorer
+      git_commit_text     = "Committing changes",       -- Format string rendered when commiting changes in git
+      plugin_manager_text = "Managing plugins",         -- Format string rendered when managing plugins
+      reading_text        = "Reading %s",               -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer
+      workspace_text      = "Working on %s",            -- Workspace format string (either string or function(git_project_name: string|nil, buffer: string): string)
+  })
 end
 
 

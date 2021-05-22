@@ -11,10 +11,6 @@ tools['editorconfig/editorconfig-vim'] = {
   ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
 }
 
--- tools['glepnir/prodoc.nvim'] = {
---   event = 'BufReadPre'
--- }
-
 tools['b3nj5m1n/kommentary'] = {
   config = conf.kommentary,
 }
@@ -46,8 +42,20 @@ tools['nacro90/numb.nvim'] = {
 }
 
 
+tools['gennaro-tedesco/nvim-jqx'] = {
+}
 
 
+--NOT REALLY SURE WHAT THIS DOES NGL . BUT FUCK IT .
+tools['ahmedkhalf/lsp-rooter.nvim'] = {
+}
+
+
+
+
+
+tools['jbyuki/nabla.nvim'] = {
+}
 
 tools['liuchengxu/vista.vim'] = {
   cmd = 'Vista',
