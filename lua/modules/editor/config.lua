@@ -43,7 +43,7 @@ end
 
 
 
--- one thing that does not even work , ffs ... 
+--Working yay 
 function config.discord()
 
   require("presence"):setup({
@@ -52,7 +52,7 @@ function config.discord()
       neovim_image_text   = "The One True Text Editor", -- Text displayed when hovered over the Neovim image
       main_image          = "neovim",                   -- Main image display (either "neovim" or "file")
       client_id           = "793271441293967371",       -- Use your own Discord application client id (not recommended)
-      log_level           = "debug",                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+      -- log_level           = "debug",                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
       debounce_timeout    = 15,                         -- Number of seconds to debounce TextChanged events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
 
       -- Rich Presence text options

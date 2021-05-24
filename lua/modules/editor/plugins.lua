@@ -40,19 +40,22 @@ editor['kana/vim-operator-replace'] = {
 
 
 editor['https://github.com/machakann/vim-sandwich']  = {
-  -- use defaulyt config .
+  -- use default config .
 }
 
 -- Pipe keeps losing this will get fixed . 
 
 editor['andweeb/presence.nvim']  = {
+  event = 'InsertEnter',
+
   config = conf.discord
 }
 
 editor['voldikss/vim-floaterm']  = {}
 
 
-
+--Req Syntax Nice Stuff . 
+editor['raimon49/requirements.txt.vim']  = {}
 
 
 editor['kana/vim-niceblock']  = {
