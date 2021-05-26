@@ -52,18 +52,18 @@ function config.nvim_compe()
         -- buffer = {kind = "  "},
         calc = {kind = "  "},
         vsnip = {kind = "  "},
-        nvim_lsp = {kind = "  "},
+        nvim_lsp = {priority = 1000,kind = "  "},
         -- nvim_lua = {kind = "  "},
         nvim_lua = false,
         -- spell = {kind = "  "},
         tags = false,
         vim_dadbod_completion = false,
-        tabnine = {kind = "TN "},
+        tabnine = {priority = 999,kind = "TN "},
         -- snippets_nvim N= {kind = "  "},
         latex_symbols = true,
         -- zsh = true,
         ultisnips = {kind = "  "},
-        treesitter = {kind = "  "},
+        -- treesitter = {kind = "  "},
         emoji = {kind = " ﲃ ", filetypes={"markdown", "text"}}
         -- for emoji press : (idk if that in compe tho)
     }

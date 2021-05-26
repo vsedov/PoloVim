@@ -50,11 +50,6 @@ capabilities.textDocument.codeAction = {
 
 
 
-do
-  
-end
-
-
 
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())
@@ -85,7 +80,8 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     -- Disable a feature
     update_in_insert = true,
 })
-vim.cmd [[autocmd CursorHold * Lspsaga show_line_diagnostics]]
+vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
+
 vim.cmd [[autocmd CursorHoldI * silent! Lspsaga signature_help]]
 
 
@@ -138,7 +134,6 @@ lspconfig.jedi_language_server.setup{
  capabilities = capabilities,
 }
 
-
 lspconfig.diagnosticls.setup {
   filetypes = { "python" },
   init_options = {
@@ -147,6 +142,7 @@ lspconfig.diagnosticls.setup {
     },
     linters = {
       flake8 = {
+        debounce = 100,
         sourceName = "flake8",
         command = "flake8",
         args = {
@@ -162,7 +158,7 @@ lspconfig.diagnosticls.setup {
           {
               line = 1,
               column = 2,
-              message = {"[", 7, "] ", 5},
+              message = {"[", 3, "] ", 5},
               security = 4
           }
         },
@@ -176,8 +172,6 @@ lspconfig.diagnosticls.setup {
     },
   }
 }
-
-
 
 
 lspconfig.jdtls.setup{
@@ -357,3 +351,6 @@ vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagno
 --   vim.cmd [[packadd lspinstall]]
 
 -- end
+
+-- vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
+-- vim.cmd [[autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()]]
