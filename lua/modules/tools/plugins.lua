@@ -50,7 +50,8 @@ tools['gennaro-tedesco/nvim-jqx'] = {
 tools['ahmedkhalf/lsp-rooter.nvim'] = {
 }
 
-
+tools['Pocco81/HighStr.nvim'] = {
+}
 
 
 

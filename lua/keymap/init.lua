@@ -171,17 +171,6 @@ local plug_map = {
 
 
 
-
-
-
-    -- nice little thing to take some quick notes ina  file in latex .
-    -- I like this . 
-    ["n|<Leader><F9>"]    = map_cu('lua require("nabla").place_inline()<CR>'):with_noremap():with_silent(),
-    -- $ ... $ : inline form
-    -- $$ ... $$ : wrapped form
-
-
-
     --- new 
     ["n|<Leader>vf"]             = map_cmd("<Plug>(ultest-run-file)"):with_silent(),
     ["n|<Leader>vn"]             = map_cmd("<Plug>(ultest-run-nearest)"):with_silent(),
@@ -198,6 +187,17 @@ local plug_map = {
     ["n|<Leader>xl"]    = map_cr("<cmd>Trouble loclist<CR>"):with_noremap():with_silent(),
     ["n|<Leader>xf"]    = map_cr("<cmd>Trouble quickfix<CR>"):with_noremap():with_silent(),
     ["n|<Leader>xR"]    = map_cr("<cmd>Trouble lsp_references<CR>"):with_noremap():with_silent(),
+
+
+    -- Nice highlighting for latex when writing notes 
+    ["n|<Leader><F9>"]    = map_cu('lua require("nabla").place_inline()<CR>'):with_noremap():with_silent(),
+    -- $ ... $ : inline form
+    -- $$ ... $$ : wrapped form
+    ["v|<F3>"]    = map_cmd(":<c-u>HSHighlight 3<CR>"):with_noremap():with_silent(),
+    --Remove highlight 
+    ["v|<F4>"]    = map_cmd(":<c-u>HSRmHighlight<CR>"):with_noremap():with_silent(),
+
+
 
 };
 

@@ -33,19 +33,19 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 
 capabilities.textDocument.codeAction = {
   dynamicRegistration = false;
-      codeActionLiteralSupport = {
-          codeActionKind = {
-              valueSet = {
-                 "quickfix",
-                 "refactor",
-                 "refactor.extract",
-                 "refactor.inline",
-                 "refactor.rewrite",
-                 "source",
-                 "source.organizeImports",
-              };
-          };
+  codeActionLiteralSupport = {
+    codeActionKind = {
+      valueSet = {
+        "quickfix",
+        "refactor",
+        "refactor.extract",
+        "refactor.inline",
+        "refactor.rewrite",
+        "source",
+        "source.organizeImports",
       };
+    };
+  };
 }
 
 
@@ -65,7 +65,7 @@ vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
 vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
 
 
--- I dont like the lsp diagnositcs, it can be very annoying and gets in teh way 
+-- I dont like the lsp diagnositcs, it can be very annoying and gets in teh way
 -- vim.lsp.handlers['textDocument/publishDiagnostics']= function() end
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -79,7 +79,7 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     },
     -- Disable a feature
     update_in_insert = true,
-})
+  })
 vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
 
 vim.cmd [[autocmd CursorHoldI * silent! Lspsaga signature_help]]
@@ -119,8 +119,8 @@ lspconfig.clangd.setup {
     "--clang-tidy",
     "--header-insertion=iwyu",
   },
-    on_attach = enhance_attach,
-    capabilities = capabilities,
+  on_attach = enhance_attach,
+  capabilities = capabilities,
 
 }
 
@@ -128,10 +128,10 @@ lspconfig.clangd.setup {
 
 
 lspconfig.jedi_language_server.setup{
- cmd = { "jedi-language-server" },
- filetypes = { "python" },
- on_attach = enhance_attach,
- capabilities = capabilities,
+  cmd = { "jedi-language-server" },
+  filetypes = { "python" },
+  on_attach = enhance_attach,
+  capabilities = capabilities,
 }
 
 lspconfig.diagnosticls.setup {
@@ -156,10 +156,10 @@ lspconfig.diagnosticls.setup {
         formatPattern = {
           "^(\\d+):(\\d+):(\\w+):(\\w).+: (.*)$",
           {
-              line = 1,
-              column = 2,
-              message = {"[", 3, "] ", 5},
-              security = 4
+            line = 1,
+            column = 2,
+            message = {"[", 3, "] ", 5},
+            security = 4
           }
         },
         securities = {
@@ -184,12 +184,12 @@ lspconfig.jdtls.setup{
 
 
 
--- You will have to Build a package for this . 
+-- You will have to Build a package for this .
 lspconfig.rust_analyzer.setup {
-    filetypes = {"rust"},
-    cmd = { "rust-analyzer" },
-    capabilities = capabilities,
-    on_attach = enhance_attach,
+  filetypes = {"rust"},
+  cmd = { "rust-analyzer" },
+  capabilities = capabilities,
+  on_attach = enhance_attach,
 
 
 }
@@ -266,7 +266,7 @@ vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagno
 
 --trash
 
--- i like jedi 
+-- i like jedi
 -- lspconfig.pyls.setup{
 --     on_attach = enhance_attach,
 --     capabilities = capabilities,
@@ -276,7 +276,7 @@ vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagno
 --                   plugins = {
 --                         jedi_completion = {
 --                         enabled=true,
---                         include_params=true, 
+--                         include_params=true,
 --                         include_class_objects=true
 --                       },
 --                       pycodestyle={enabled=false},
@@ -331,7 +331,7 @@ vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagno
 --   local servers = require'lspinstall'.installed_servers()
 --   for _, server in pairs(servers) do
 --     require'lspconfig'[server].setup{
-      
+
 --       capabilities = capabilities,
 --       on_attach = enhance_attach,
 
