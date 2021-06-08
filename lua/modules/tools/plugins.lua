@@ -77,4 +77,21 @@ tools['iamcco/markdown-preview.nvim'] = {
   end
 }
 
+
+
+
+-- Nice toools 
+
+
+tools['kevinhwang91/nvim-hlslens'] = {
+  config = function ()
+    require('hlslens').setup({
+      calm_down = true,
+      nearest_only = true,
+      nearest_float_when = 'always'
+    })
+  end
+}
+
+
 return tools

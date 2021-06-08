@@ -25,6 +25,4 @@ let g:test#python#runner = "pytest"
 
 
 
-
-
 "au BufWrite * :Black

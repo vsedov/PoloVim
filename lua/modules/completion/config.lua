@@ -49,7 +49,7 @@ function config.nvim_compe()
 
     source = {
         path = {kind = "  "},
-        -- buffer = {kind = "  "},
+        buffer = {kind = "  "},
         calc = {kind = "  "},
         vsnip = {kind = "  "},
         nvim_lsp = {priority = 1000,kind = "  "},
@@ -246,7 +246,8 @@ function config.todo_comments()
 
 end
 
-
+-- FUCKING DOG SHIT PLUGIN IS BROKEN , GET THIS PRICK TO FIX THE FUCKING SHIT 
+-- HONESTLY , FUCK THIS 
 function config.trouble()
   require("trouble").setup {
           position = "bottom", -- position of the list can be: bottom, top, left, right
@@ -331,6 +332,36 @@ function config.ale()
     vim.g.ale_fix_on_insert_leave = 0
     vim.g.ale_fix_on_text_changed = 'never'
 end
+
+function config.AbbrevMan()
+  require("abbrev-man").setup({
+      load_natural_dictionaries_at_startup = true,
+      load_programming_dictionaries_at_startup = true,
+      natural_dictionaries = {
+
+        -- Common mistakes i make . 
+        ["nt_en"] = {
+          ["adn"] = "and",
+          ["THe"] = "The",
+          ["my_email"] = "viv.sedov@hotmail.com",
+          ["maek"] = "make",
+          ["meake"] = "make"
+
+
+        },
+
+      },
+      programming_dictionaries = {
+        ["pr_py"] = {
+          ["printt"]  = "print",
+          ["teh"] = "the"
+        }
+      }
+
+})
+
+end 
+
 
 
 return config

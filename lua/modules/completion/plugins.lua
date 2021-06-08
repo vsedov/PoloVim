@@ -29,6 +29,7 @@ completion['https://github.com/folke/trouble.nvim'] = {
 }
 
 
+
 completion['dense-analysis/ale'] = {
 
   config = conf.ale
@@ -74,6 +75,11 @@ completion['nvim-telescope/telescope.nvim'] = {
 completion['SirVer/ultisnips'] = {
   requires = 'honza/vim-snippets',
   config = conf.ultisnipsconf
+}
+
+
+completion['Pocco81/AbbrevMan.nvim'] = {
+  config = conf.AbbrevMan
 }
 
 

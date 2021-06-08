@@ -18,5 +18,10 @@ lang['https://github.com/haringsrob/nvim_context_vt'] = {
 }
 
 
+lang['https://github.com/RRethy/nvim-treesitter-textsubjects'] = {
+  after = 'nvim-treesitter',
+
+}
+
 
 return lang

@@ -59,7 +59,17 @@ function config.nvim_treesitter()
               },
             },
           },
-        }
+
+
+  -- Very nice very nice indeed . 
+  textsubjects = {
+      enable = true,
+      keymaps = {
+            ['<CR>'] = 'textsubjects-smart',
+      }
+  },
+
+}
 
 end
 
