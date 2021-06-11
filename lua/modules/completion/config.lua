@@ -345,8 +345,7 @@ function config.AbbrevMan()
           ["THe"] = "The",
           ["my_email"] = "viv.sedov@hotmail.com",
           ["maek"] = "make",
-          ["meake"] = "make"
-
+          ["meake"] = "make",
 
         },
 
@@ -354,7 +353,7 @@ function config.AbbrevMan()
       programming_dictionaries = {
         ["pr_py"] = {
           ["printt"]  = "print",
-          ["teh"] = "the"
+          ["teh"] = "the",
         }
       }
 
