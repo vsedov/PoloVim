@@ -55,15 +55,11 @@ ui['mbbill/undotree'] = {
 }
 
 
---  I think this is causing the issue
--- ui['akinsho/nvim-toggleterm.lua'] = {
-
---   config = conf.toggleterm
-
--- }
+-- Just a nicert delete 
+ui['famiu/bufdelete.nvim'] = {
 
 
-
+}
 
 
 

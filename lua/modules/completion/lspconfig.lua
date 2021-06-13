@@ -4,6 +4,9 @@ local global = require 'core.global'
 local format = require('modules.completion.format')
 local fn = vim.fn
 
+require("lsp-rooter").setup {}
+
+
 if not packer_plugins['lspsaga.nvim'].loaded then
   vim.cmd [[packadd lspsaga.nvim]]
 

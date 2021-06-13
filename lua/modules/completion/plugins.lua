@@ -8,9 +8,12 @@ completion['neovim/nvim-lspconfig'] = {
   requires = {
   {'nvim-lua/lsp_extensions.nvim'},
   {'tjdevries/nlua.nvim'},
+  {'ahmedkhalf/lsp-rooter.nvim'}
   -- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
 }
+
+
 
 
 

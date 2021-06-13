@@ -46,9 +46,6 @@ tools['gennaro-tedesco/nvim-jqx'] = {
 }
 
 
---NOT REALLY SURE WHAT THIS DOES NGL . BUT FUCK IT .
-tools['ahmedkhalf/lsp-rooter.nvim'] = {
-}
 
 tools['Pocco81/HighStr.nvim'] = {
 }
