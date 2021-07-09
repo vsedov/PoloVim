@@ -1,9 +1,10 @@
 local ui = {}
 local conf = require('modules.ui.config')
 
-ui['folke/tokyonight.nvim'] = {
+ui['yashguptaz/calvera-dark.nvim'] = {
   config = conf.ui,
 }
+
 
 ui['glepnir/dashboard-nvim'] = {
   config = conf.dashboard,
@@ -19,7 +20,7 @@ ui['glepnir/galaxyline.nvim'] = {
 
 ui['lukas-reineke/indent-blankline.nvim'] = {
   event = 'BufRead',
-  branch = 'lua',
+  branch = 'master',
   config = conf.indent_blakline
 }
 
@@ -45,15 +46,10 @@ ui['kdav5758/TrueZen.nvim'] = {
   config = conf.truezen
 }
 
-ui['folke/zen-mode.nvim'] = {
-  config = conf.folkzen
-}
-
 
 ui['mbbill/undotree'] = {
   config = conf.undo
 }
-
 
 -- Just a nicert delete 
 ui['famiu/bufdelete.nvim'] = {

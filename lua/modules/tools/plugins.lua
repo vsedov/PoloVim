@@ -67,6 +67,7 @@ tools['brooth/far.vim'] = {
   end
 }
 
+
 tools['iamcco/markdown-preview.nvim'] = {
   run = ':call mkdp#util#install()',
 

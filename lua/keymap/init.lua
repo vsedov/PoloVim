@@ -8,6 +8,12 @@ require('keymap.config')
 local plug_map = {
     ["i|<TAB>"]      = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
     ["i|<S-TAB>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
+
+
+    -- not really sure how else to do this 
+    ["i|<c-k>"]    = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
+    ["i|<c-j>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
+
     ["i|<CR>"]       = map_cmd([[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]]):with_noremap():with_expr():with_nowait(),
     -- person keymap
     ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
@@ -49,13 +55,11 @@ local plug_map = {
     ["n|<F2>"]           = map_cu("UndotreeToggle"):with_noremap():with_silent(),
     ["n|<F3>"]           = map_cu('Black'):with_noremap():with_silent(),
     ["n|<F5>"]           = map_cu('FRunCode'):with_noremap():with_silent(),
+
     --NeoRunner_Horizontal 
     ["n|<F6>"]           = map_cu("NeoRunner"):with_noremap():with_silent(),
     ["n|<Leader><F5>"]   = map_cu('RunCode'):with_noremap():with_silent(),
     
-
-
-
     -- Plugin nvim-tree
     ["n|<Leader>e"]      = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
     ["n|<Leader>FF"]     = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
@@ -152,7 +156,7 @@ local plug_map = {
 
     --sniprun
 
-    ["v|f"]             = map_cmd("<Plug>SnipRun"):with_silent(),
+    ["v|<Leader>fr"]             = map_cmd("<Plug>SnipRun"):with_silent(),
     ["n|<Leader>fr"]    = map_cmd("<Plug>SnipRunOperator"):with_silent(),
     ["n|<Leader>ff"]    = map_cmd("<Plug>SnipRun"):with_silent(),
 

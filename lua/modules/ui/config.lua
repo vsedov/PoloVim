@@ -18,9 +18,22 @@ end
 function config.dashboard()
   local home = os.getenv('HOME')
   vim.g.dashboard_footer_icon = '🐬 '
-  vim.g.dashboard_preview_command = 'cat'
-  vim.g.dashboard_preview_pipeline = 'lolcat -F 0.3'
-  vim.g.dashboard_preview_file = home .. '/.config/nvim/static/neovim.cat'
+  vim.g.dashboard_custom_header = {
+      "                                   ",
+      "                                   ",
+      "   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆         ",
+      "    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ",
+      "          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ",
+      "           ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    ",
+      "          ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀   ",
+      "   ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄  ",
+      "  ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄   ",
+      " ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄  ",
+      " ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ ",
+      "    ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆       ",
+      "       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ",
+      "                                   "
+  }
   vim.g.dashboard_preview_file_height = 12
   vim.g.dashboard_preview_file_width = 80
   vim.g.dashboard_default_executive = 'telescope'
@@ -59,11 +72,7 @@ function config.nvim_tree()
   vim.g.nvim_tree_follow = 1
   vim.g.nvim_tree_hide_dotfiles = 1
   vim.g.nvim_tree_indent_markers = 1
-  vim.g.nvim_tree_bindings = {
-    ["l"] = ":lua require'nvim-tree'.on_keypress('edit')<CR>",
-    ["s"] = ":lua require'nvim-tree'.on_keypress('vsplit')<CR>",
-    ["i"] = ":lua require'nvim-tree'.on_keypress('split')<CR>",
-  }
+  local tree_cb = require'nvim-tree.config'.nvim_tree_callback
   vim.g.nvim_tree_icons = {
     default =  '',
     symlink =  '',
@@ -75,6 +84,10 @@ function config.nvim_tree()
      untracked = "★",
     },
   }
+  vim.g.nvim_tree_bindings = {
+      { key = "<C-s>",                        cb = tree_cb("vsplit") },
+      { key = "<C-i>",                        cb = tree_cb("split") },
+}
 end
 
 function config.gitsigns()
@@ -162,20 +175,35 @@ end
 function config.ui()
   -- vim.cmd('colorscheme boo')
 
-  vim.g.tokyonight_transparent = true
-  vim.g.tokyonight_enable_italic_comment = true
-  vim.g.tokyonight_enable_italic = true
-  vim.g.tokyonight_style = "night"
-  vim.g.tokyonight_italic_functions = true
-  vim.g.tokyonight_dark_sidebar = true
-  vim.g.tokyonight_dark_float = true
+  -- vim.g.tokyonight_transparent = true
+  -- vim.g.tokyonight_enable_italic_comment = true
+  -- vim.g.tokyonight_enable_italic = true
+  -- vim.g.tokyonight_style = "night"
+  -- vim.g.tokyonight_italic_functions = true
+  -- vim.g.tokyonight_dark_sidebar = true
+  -- vim.g.tokyonight_dark_float = true
   
-  vim.g.tokyonight_sidebars = { "qf", "NvimTree", "NvimTreeNormal", "packer" }
-  vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+  -- vim.g.tokyonight_sidebars = { "qf", "NvimTree", "NvimTreeNormal", "packer" }
+  -- vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
 
 
-  -- Load the colorscheme
-  vim.cmd[[colorscheme tokyonight]]
+  -- -- Load the colorscheme
+  -- vim.cmd[[colorscheme tokyonight]]
+
+
+-- Example config in lua
+  vim.g.calvera_italic_comments = true
+  vim.g.calvera_italic_keywords = true
+  vim.g.calvera_italic_functions = true
+  vim.g.calvera_italic_variables = false
+  vim.g.calvera_contrast = true
+  vim.g.calvera_borders = true
+  vim.g.calvera_disable_background = true
+  vim.g.calvera_hide_eob = true
+  vim.g.calvera_custom_colors = {contrast = "#0f111a"}
+  -- Required Setting
+  require('calvera').set()
+
 end
 
 
@@ -206,10 +234,7 @@ function config.truezen()
 
 end 
 
-function config.folkzen()
- require("zen-mode").setup {
-  }
-end
+
 
 
 return config

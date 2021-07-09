@@ -59,12 +59,12 @@ function config.nvim_compe()
         -- spell = {kind = "  "},
         tags = false,
         vim_dadbod_completion = false,
-        tabnine = {priority = 999,kind = "TN "},
+        tabnine = {priority = 999,kind = "TN ",max_line = 1000, show_prediction_strength = true},
         -- snippets_nvim N= {kind = "  "},
         latex_symbols = true,
         -- zsh = true,
         ultisnips = {kind = "  "},
-        -- treesitter = {kind = "  "},
+        treesitter = {kind = "  "},
         emoji = {kind = " ﲃ ", filetypes={"markdown", "text"}}
         -- for emoji press : (idk if that in compe tho)
     }
@@ -136,27 +136,32 @@ end
 
 function config.sniprun()
 
-    require'sniprun'.setup({
-    selected_interpreters = {},     --" use those instead of the default for the current filetype
-    repl_enable = {},               --" enable REPL-like behavior for the given interpreters
-    repl_disable = {},              --" disable REPL-like behavior for the given interpreters
+require'sniprun'.setup({
+  selected_interpreters = {},     --" use those instead of the default for the current filetype
+  repl_enable = {},               --" enable REPL-like behavior for the given interpreters
+  repl_disable = {},              --" disable REPL-like behavior for the given interpreters
 
-    inline_messages = 0,             --" inline_message (0/1) is a one-line way to display messages
-                                    --" to workaround sniprun not being able to display anything
+  interpreter_options = {},       --" intepreter-specific options, consult docs / :SnipInfo <name>
 
-    -- " you can combo different display modes as desired
-    display = {
-      -- "Classic",                    -- "display results in the command-line  area
-      "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
-      -- "VirtualTextErr",          -- "display error results as virtual text
-      "TempFloatingWindow",      -- "display results in a floating window
-      -- "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
-      -- "Terminal"                 -- "display results in a vertical split
-      },
-      
+  --" you can combo different display modes as desired
+  display = {
+    "Classic",                    -- "display results in the command-line  area
+    "VirtualTextOk",              -- "display ok results as virtual text (multiline is shortened)
+
+    "VirtualTextErr",          -- "display error results as virtual text
+    -- "TempFloatingWindow",      -- "display results in a floating window
+    -- "LongTempFloatingWindow",  -- "same as above, but only long results. To use with VirtualText__
+    "Terminal"                 -- "display results in a vertical split
+    },
 
 
-  })
+  --" miscellaneous compatibility/adjustement settings
+  inline_messages = 0,             --" inline_message (0/1) is a one-line way to display messages
+           --" to workaround sniprun not being able to display anything
+
+  borders = 'single'               --" display borders around floating windows
+                                   --" possible values are 'none', 'single', 'double', or 'shadow'
+})
 
 end
 

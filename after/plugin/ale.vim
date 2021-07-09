@@ -8,7 +8,7 @@ let g:ale_linters = {
   \   'tex': ['proselint', 'chktex', 'lacheck','texlab','latexindent','textlint'],
   \   'plaintex': ['proselint', 'chktex', 'lacheck','texlab'],
   \   'help': [],
-  \   'python': [''], 
+  \   'python': [], 
   \   'ruby': ['solargraph', 'rubocop', 'ruby'],
   \   'groovy': ['android'],
   \   'xml': ['android'],
@@ -20,14 +20,15 @@ let g:ale_linters = {
   \   'yaml': ['yamllint'],
   \   'openapi': ['yamllint', 'ibm-validator'],
   \   'mail': ['proselint', 'write-good'],
-  \   'lua': [''],
-  \   'c':['']
+  \   'lua': [],
+  \   'c':[]
 \}
 
 let g:ale_fixers = {
   \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \ 'python': ['nayvy#ale_fixer','black','isort'],
 \ }
+
 
 
 

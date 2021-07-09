@@ -8,7 +8,8 @@ completion['neovim/nvim-lspconfig'] = {
   requires = {
   {'nvim-lua/lsp_extensions.nvim'},
   {'tjdevries/nlua.nvim'},
-  {'ahmedkhalf/lsp-rooter.nvim'}
+  {'ahmedkhalf/lsp-rooter.nvim'},
+  {'ray-x/lsp_signature.nvim'}
   -- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
 }
@@ -16,7 +17,10 @@ completion['neovim/nvim-lspconfig'] = {
 
 
 
-
+completion['folke/lsp-colors.nvim']={
+  config = conf.colours,
+  after = 'nvim-lspconfig'
+}
 completion['folke/todo-comments.nvim']  = {
   config = conf.todo_comments,
   after = 'trouble.nvim'
@@ -26,7 +30,6 @@ completion['folke/todo-comments.nvim']  = {
 -- For thoe that only use lsp - i use this for linting - python flake8 for 
 -- this ale lint is disabled ale fix enabled and so on . 
 completion['https://github.com/folke/trouble.nvim'] = {
-
   config = conf.trouble,
 
 }

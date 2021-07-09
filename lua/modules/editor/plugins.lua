@@ -86,9 +86,6 @@ editor['zegervdv/nrpattern.nvim']  = {
 editor['rmagatti/alternate-toggler']  = {
 }
 
-editor['https://github.com/lambdalisue/suda.vim.git']  = {
-}
-
 
 editor['https://github.com/tmhedberg/SimpylFold']  = {
   requires  ='https://github.com/Konfekt/FastFold',
