@@ -25,7 +25,6 @@ tools['relastle/vim-nayvy'] ={
 
 
 
-
 tools['wakatime/vim-wakatime'] ={
 }
 

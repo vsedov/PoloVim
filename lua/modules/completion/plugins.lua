@@ -73,13 +73,17 @@ completion['nvim-telescope/telescope.nvim'] = {
     {'tami5/sql.nvim'},
     {'nvim-telescope/telescope-frecency.nvim'},
     {'nvim-telescope/telescope-dap.nvim'},
-    {'https://github.com/fhill2/telescope-ultisnips.nvim'}
+    {'https://github.com/fhill2/telescope-ultisnips.nvim'},
   },
   config = conf.telescope
-
-
 }
+completion['pwntester/octo.nvim']={
+  after="telescope.nvim",
+  config  = function()
+    require"octo".setup()
 
+  end
+}
 
 --Leave for last i think ,. 
 

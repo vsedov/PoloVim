@@ -15,6 +15,7 @@ require('telescope').load_extension('cheat')
 require('telescope').load_extension('frecency')
 require('telescope').load_extension('ultisnips')
 
+
 if not packer_plugins['trouble.nvim'].loaded then
   vim.cmd [[packadd folke/trouble.nvim]]
 end

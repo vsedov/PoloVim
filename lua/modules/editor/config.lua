@@ -68,5 +68,9 @@ function config.discord()
 
 end
 
+function config.diffview()
+  require('modules.editor.diffview')
+  vim.g.gitblame_enabled  = 0
+end
 
 return config

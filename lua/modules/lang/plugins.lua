@@ -27,6 +27,7 @@ lang['https://github.com/RRethy/nvim-treesitter-textsubjects'] = {
 }
 
 
+
 lang['https://github.com/p00f/nvim-ts-rainbow'] = {
   config = conf.rainbow,
   after = 'nvim-treesitter',

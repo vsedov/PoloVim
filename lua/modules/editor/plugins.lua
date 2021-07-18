@@ -22,12 +22,28 @@ editor['itchyny/vim-cursorword'] = {
   config = conf.vim_cursorwod
 }
 
-editor['hrsh7th/vim-eft'] = {
-  opt = true,
-  config = function()
-    vim.g.eft_ignorecase = true
+
+-- Better version below
+editor['https://github.com/ggandor/lightspeed.nvim'] = {
+    
+    config = function()
+    require'lightspeed'.setup {
+      jump_to_first_match = true,
+      highlight_unique_chars = true,
+      grey_out_search_area = true,
+      match_only_the_start_of_same_char_seqs = true,
+      limit_ft_matches = 10,
+      full_inclusive_prefix_key = '<c-x>',
+      -- By default, the values of these will be decided at runtime,
+      -- based on `jump_to_first_match`.
+      labels = nil,
+      cycle_group_fwd_key = "<Tab.",
+      cycle_group_bwd_key = "S-TAB",
+    }
   end
 }
+
+
 
 editor['kana/vim-operator-replace'] = {
   keys = {{'x','p'}},
@@ -91,6 +107,14 @@ editor['zegervdv/nrpattern.nvim']  = {
     end
 
 }
+
+editor['sindrets/diffview.nvim']={
+  config = conf.diffview,
+  requires= 'f-person/git-blame.nvim'
+}
+
+
+
 
 editor['rmagatti/alternate-toggler']  = {
 }

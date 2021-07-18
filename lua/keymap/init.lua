@@ -111,14 +111,16 @@ local plug_map = {
 
 
     -- Plugin hrsh7th/vim-eft
-    ["n|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
-    ["x|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
-    ["n|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
-    ["x|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
-    ["o|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
-    ["n|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
-    ["x|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
-    ["o|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
+    -- ["n|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
+    -- ["x|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
+    -- ["n|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
+    -- ["x|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
+    -- ["o|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
+    -- ["n|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
+    -- ["x|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
+    -- ["o|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
+   
+
     -- Plugin vim_niceblock
     ["x|I"]              = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
     ["x|gI"]             = map_cmd("v:lua.enhance_nice_block('gI')"):with_expr(),
@@ -133,7 +135,8 @@ local plug_map = {
     --Nice finder 
     ["n|<Leader><Leader><Leader>"]    = map_cu("Telescope frecency"):with_noremap():with_silent(),
 
-
+    -- git Blame 
+    ["n|<Leader><Leader>tgb"]    = map_cu("ToggleBlameLine"):with_noremap():with_silent(),
 
 
 
