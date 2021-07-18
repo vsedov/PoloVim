@@ -34,6 +34,7 @@ end
 
 
 function config.nvim_compe()
+
   require'compe'.setup {
     enabled = true;
     autocomplete = true,
@@ -47,25 +48,28 @@ function config.nvim_compe()
     max_kind_width = 100,
     max_menu_width = 100,
     documentation = true,
-
     source = {
         path = {kind = "  "},
         buffer = {kind = "  "},
+        
         calc = {kind = "  "},
         vsnip = {kind = "  "},
         nvim_lsp = {priority = 1000,kind = "  "},
         -- nvim_lua = {kind = "  "},
         nvim_lua = false,
-        -- spell = {kind = "  "},
-        tags = false,
-        vim_dadbod_completion = false,
-        tabnine = {priority = 999,kind = "TN ",max_line = 1000, show_prediction_strength = true},
+        spell = {kind = "  "},
+        tags = true,
+        vim_dadbod_completion = true,
+        tabnine = {priority = 999,kind = "  ",max_line = 1000, show_prediction_strength = true},
         -- snippets_nvim N= {kind = "  "},
         latex_symbols = true,
+
         -- zsh = true,
         ultisnips = {kind = "  "},
-        treesitter = {kind = "  "},
-        emoji = {kind = " ﲃ ", filetypes={"markdown", "text"}}
+        treesitter=false,
+        -- treesitter = {kind = "  "},
+        emoji = {kind = " ﲃ ", filetypes={"markdown", "text"}},
+        neorg = {priority=1000,filetypes={"neorg","norg"}},
         -- for emoji press : (idk if that in compe tho)
     }
   }
@@ -98,11 +102,11 @@ function config.vim_sonictemplate()
   vim.g.sonictemplate_vim_template_dir = os.getenv("HOME").. '/.config/nvim/template'
 end
 
-function config.smart_input()
-  require('smartinput').setup {
-    ['go'] = { ';',':=',';' }
-  }
-end
+-- function config.smart_input()
+--   require('smartinput').setup {
+--     ['go'] = { ';',':=',';' }
+--   }
+-- end
 
 function config.emmet()
   vim.g.user_emmet_complete_tag = 0

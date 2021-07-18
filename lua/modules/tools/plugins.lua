@@ -24,6 +24,8 @@ tools['relastle/vim-nayvy'] ={
 }
 
 
+
+
 tools['wakatime/vim-wakatime'] ={
 }
 
@@ -47,6 +49,7 @@ tools['gennaro-tedesco/nvim-jqx'] = {
 
 
 
+
 tools['Pocco81/HighStr.nvim'] = {
 }
 
@@ -60,12 +63,20 @@ tools['liuchengxu/vista.vim'] = {
   config = conf.vim_vista
 }
 
+
+tools['simrat39/symbols-outline.nvim'] = {
+  cmd = 'SymbolsOutline',
+}
+
+
+
 tools['brooth/far.vim'] = {
   cmd = {'Far','Farp'},
   config = function ()
     vim.g['far#source'] = 'rg'
   end
 }
+
 
 
 tools['iamcco/markdown-preview.nvim'] = {
@@ -76,6 +87,9 @@ tools['iamcco/markdown-preview.nvim'] = {
     vim.g.mkdp_auto_start = 1
   end
 }
+
+
+
 
 -- Nice toools 
 

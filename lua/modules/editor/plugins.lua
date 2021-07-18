@@ -64,6 +64,15 @@ editor['kana/vim-niceblock']  = {
 
 
 
+editor['https://github.com/tpope/vim-sensible'] = {
+  opt = true
+}
+
+
+
+
+
+
 
 editor['Vimjas/vim-python-pep8-indent'] = {
 }
@@ -86,12 +95,11 @@ editor['zegervdv/nrpattern.nvim']  = {
 editor['rmagatti/alternate-toggler']  = {
 }
 
-
 editor['https://github.com/tmhedberg/SimpylFold']  = {
   requires  ='https://github.com/Konfekt/FastFold',
 
   config = function()
-  vim.g.SimpylFold_docstring_preview = 1
+    vim.g.SimpylFold_docstring_preview = 1
   end
 }
 

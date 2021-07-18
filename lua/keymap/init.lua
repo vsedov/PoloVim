@@ -10,11 +10,11 @@ local plug_map = {
     ["i|<S-TAB>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
 
 
-    -- not really sure how else to do this 
-    ["i|<c-k>"]    = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
-    ["i|<c-j>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
-
+    ["i|<C-k>"]       = map_cmd([[compe#scroll({ 'delta': +4 })]]):with_noremap():with_expr():with_nowait(),
+    ["i|<C-j>"]       = map_cmd([[compe#scroll({ 'delta': -4 })]]):with_noremap():with_expr():with_nowait(),
+    ["i|<C-e>"]       = map_cmd([[compe#close('<C-e>')]]):with_noremap():with_expr():with_nowait(),
     ["i|<CR>"]       = map_cmd([[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]]):with_noremap():with_expr():with_nowait(),
+   
     -- person keymap
     ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
     ["n|gb"]             = map_cr("BufferLinePick"):with_noremap():with_silent(),
@@ -30,6 +30,8 @@ local plug_map = {
     ["n|<leader>li"]     = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),
     ["n|<leader>ll"]     = map_cr("LspLog"):with_noremap():with_silent():with_nowait(),
     ["n|<leader>lr"]     = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
+   
+
     ["n|<C-f>"]          = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>"):with_silent():with_noremap():with_nowait(),
     ["n|<C-b>"]          = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"):with_silent():with_noremap():with_nowait(),
     ["n|[e"]             = map_cr('Lspsaga diagnostic_jump_next'):with_noremap():with_silent(),
@@ -45,6 +47,8 @@ local plug_map = {
     ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>ce"]     = map_cr('Lspsaga show_line_diagnostics'):with_noremap():with_silent(),
+    
+
     ["n|<C-]>"]     = map_args("Template"),
     ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
        -- I used code action decent sometimes it doesnt work 
@@ -77,7 +81,10 @@ local plug_map = {
 
     -- Far.vim
     ["n|<Leader>fz"]     = map_cr('Farf'):with_noremap():with_silent();
-    ["v|<Leader>fz"]     = map_cr('Farf'):with_noremap():with_silent();
+    ["v|<Leader>fz"]     = map_cr('Farr'):with_noremap():with_silent();
+    ["n|<Leader>fzd"]     = map_cr('Fardo'):with_noremap():with_silent();
+    ["n|<Leader>fzu"]     = map_cr('Farundo'):with_noremap():with_silent();
+
     -- Plugin Telescope
 -- Plugin Telescope
     ["n|<Leader>bb"]     = map_cu('Telescope buffers'):with_noremap():with_silent(),
@@ -91,16 +98,16 @@ local plug_map = {
     ["n|<Leader>fc"]     = map_cu('Telescope git_commits'):with_noremap():with_silent(),
     ["n|<Leader>ft"]     = map_cu('Telescope help_tags'):with_noremap():with_silent(),
     ["n|<Leader>fd"]     = map_cu('Telescope dotfiles path='..os.getenv("HOME")..'/.config/nvim'):with_noremap():with_silent(),
-    ["n|<Leader>fs"]     = map_cu('Telescope gosource'):with_noremap():with_silent(),
-    ["n|<Leader>qf"]     = map_cu("Telescope quickfix"):with_noremap():with_silent(),
+    ["n|<Leader>qf"]     = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
+    -- ["n|<Leader>fs"]     = map_cu("Telescope utilsnips"):with_noremap():with_silent(),
 
     -- Plugin acceleratedjk
     ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
     ["n|k"]              = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
     -- Plugin QuickRun
     ["n|<Leader>r"]     = map_cr("<cmd> lua require'internal.quickrun'.run_command()"):with_noremap():with_silent(),
-    -- Plugin Vista
-    ["n|<Leader>v"]      = map_cu('Vista'):with_noremap():with_silent(),
+    -- Plugin Vista or SymbolsOutline
+    ["n|<Leader>v"]      = map_cu('SymbolsOutline'):with_noremap():with_silent(),
 
 
     -- Plugin hrsh7th/vim-eft

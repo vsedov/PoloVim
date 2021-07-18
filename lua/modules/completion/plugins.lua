@@ -8,19 +8,14 @@ completion['neovim/nvim-lspconfig'] = {
   requires = {
   {'nvim-lua/lsp_extensions.nvim'},
   {'tjdevries/nlua.nvim'},
-  {'ahmedkhalf/lsp-rooter.nvim'},
-  {'ray-x/lsp_signature.nvim'}
+  {'ray-x/lsp_signature.nvim'},
+  {'https://github.com/onsails/lspkind-nvim'},
+  {'folke/lsp-colors.nvim'}
+
   -- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
 }
 
-
-
-
-completion['folke/lsp-colors.nvim']={
-  config = conf.colours,
-  after = 'nvim-lspconfig'
-}
 completion['folke/todo-comments.nvim']  = {
   config = conf.todo_comments,
   after = 'trouble.nvim'
@@ -42,10 +37,17 @@ completion['dense-analysis/ale'] = {
 
 }
 
-
+-- OUt of date need to replace this
 completion['glepnir/lspsaga.nvim'] = {
   cmd = 'Lspsaga',
 }
+
+-- completion['ray-x/navigator.lua'] = {
+--   requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}
+
+-- }
+
+
 
 completion['tzachar/compe-tabnine'] = {
   run = './install.sh',
@@ -71,11 +73,14 @@ completion['nvim-telescope/telescope.nvim'] = {
     {'tami5/sql.nvim'},
     {'nvim-telescope/telescope-frecency.nvim'},
     {'nvim-telescope/telescope-dap.nvim'},
+    {'https://github.com/fhill2/telescope-ultisnips.nvim'}
   },
   config = conf.telescope
 
 
 }
+
+
 --Leave for last i think ,. 
 
 completion['SirVer/ultisnips'] = {
@@ -179,6 +184,10 @@ completion['michaelb/sniprun'] = {
   -- This has not been 100% set up make sure you set it up later 
 
 }
+-- completion['simrat39/symbols-outline.nvim'] = {
+--   config = conf.outline
+-- }
+
 
 
 

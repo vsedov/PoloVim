@@ -39,6 +39,27 @@ function config.vim_dadbod_ui()
   vim.g.dbs = load_dbs()
 end
 
+function  config.sybolsoutline()
+  vim.g.symbols_outline = {
+      highlight_hovered_item = false,
+      show_guides = true,
+      auto_preview = true,
+      position = 'right',
+      show_numbers = false,
+      show_relative_numbers = false,
+      show_symbol_details = true,
+      keymaps = {
+          close = "<Esc>",
+          goto_location = "<Cr>",
+          focus_location = "o",
+          hover_symbol = "<C-space>",
+          rename_symbol = "r",
+          code_actions = "a",
+      },
+      lsp_blacklist = {},
+  }
+end
+
 function config.vim_vista()
   vim.g['vista#renderer#enable_icon'] = 1
   vim.g.vista_disable_statusline = 1
@@ -54,6 +75,29 @@ function config.vim_vista()
     c = 'nvim_lsp',
   }
 end
+
+function config.SymbolsOutline()
+
+  vim.g.symbols_outline = {
+      highlight_hovered_item = true,
+      show_guides = true,
+      auto_preview = true,
+      position = 'right',
+      show_numbers = false,
+      show_relative_numbers = false,
+      show_symbol_details = true,
+      keymaps = {
+          close = "<Esc>",
+          goto_location = "<Cr>",
+          focus_location = "o",
+          hover_symbol = "<C-space>",
+          rename_symbol = "r",
+          code_actions = "a",
+      },
+      lsp_blacklist = {},
+  }
+end
+
 
 
 

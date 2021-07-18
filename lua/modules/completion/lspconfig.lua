@@ -3,9 +3,48 @@ local lspconfig = require 'lspconfig'
 local global = require 'core.global'
 local format = require('modules.completion.format')
 local fn = vim.fn
+require('lspkind').init({
+    -- enables text annotations
+    --
+    -- default: true
+    with_text = true,
 
-require("lsp-rooter").setup {}
+    -- default symbol map
+    -- can be either 'default' or
+    -- 'codicons' for codicon preset (requires vscode-codicons font installed)
+    --
+    -- default: 'default'
+    preset = 'default',
 
+    -- override preset symbols
+    -- default: {}
+    symbol_map = {
+      Text = '',
+      Method = 'ƒ',
+      Function = '',
+      Constructor = '',
+      Variable = '',
+      Class = '',
+      Interface = 'ﰮ',
+      Module = '',
+      Property = '',
+      Unit = '',
+      Value = '',
+      Enum = '了',
+      Keyword = '',
+      Snippet = '﬌',
+      Color = '',
+      File = '',
+      Folder = '',
+      EnumMember = '',
+      Constant = '',
+      Struct = '',
+      Reference = '',
+      Operator ='烈',
+      TypeParameter='',
+
+    },
+})
 
 if not packer_plugins['lspsaga.nvim'].loaded then
   vim.cmd [[packadd lspsaga.nvim]]
@@ -29,6 +68,8 @@ saga.init_lsp_saga({
   code_action_icon = '',
 })
 
+
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -40,7 +81,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 capabilities.textDocument.codeAction = {
-  dynamicRegistration = false;
+  dynamicRegistration = true;
   codeActionLiteralSupport = {
     codeActionKind = {
       valueSet = {
@@ -72,13 +113,11 @@ end
 vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
 vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
 
- cfg = {
+cfg = {
   bind = true, -- This is mandatory, otherwise border config won't get registered.
                -- If you want to hook lspsaga or other signature handler, pls set to false
-  doc_lines = 30, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
-                 -- set to 0 if you DO NOT want any API comments be shown
-                 -- This setting only take effect in insert mode, it does not affect signature help in normal
-                 -- mode, 10 by default
+  doc_lines = 40,
+
 
   floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
   fix_pos = false,  -- set to true, the floating window will not auto-close until finish all parameters
@@ -87,10 +126,10 @@ vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
   hint_scheme = "String",
   use_lspsaga = false,  -- set to true if you want to use lspsaga popup
   hi_parameter = "Search", -- how your parameter will be highlight
-  max_height = 100, 
+  max_height = 110, 
   -- max height of signature floating_window, if content is more than max_height, you can scroll down
                    -- to view the hiding contents
-  max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+  max_width = 140, -- max_width of signature floating_window, line will be wrapped if exceed max_width
   handler_opts = {
     -- border = "shadow"
     -- border = {""},
@@ -99,7 +138,6 @@ vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
   },
 
   extra_trigger_chars = {} -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-
 }
 
 
@@ -127,7 +165,6 @@ vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ fo
 -- vim.cmd [[autocmd CursorHoldI * silent! Lspsaga signature_help]]
 
 
-
 local enhance_attach = function(client,bufnr)
   require'lsp_signature'.on_attach(cfg)
   if client.resolved_capabilities.document_formatting then
@@ -135,6 +172,9 @@ local enhance_attach = function(client,bufnr)
   end
   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
+
+
+
 
 lspconfig.gopls.setup {
   filetypes = {"go"},

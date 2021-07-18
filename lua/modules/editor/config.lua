@@ -50,10 +50,10 @@ function config.discord()
       -- General options
       auto_update         = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
       neovim_image_text   = "The One True Text Editor", -- Text displayed when hovered over the Neovim image
-      main_image          = "neovim",                   -- Main image display (either "neovim" or "file")
+      main_image          = "file",                   -- Main image display (either "neovim" or "file")
       client_id           = "793271441293967371",       -- Use your own Discord application client id (not recommended)
-      -- log_level           = "debug",                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
-      debounce_timeout    = 15,                         -- Number of seconds to debounce TextChanged events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+      debounce_timeout    = 10,                         -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+      enable_line_number  = true,                      -- Displays the current line number instead of the current project
 
       -- Rich Presence text options
       editing_text        = "Editing %s",               -- Format string rendered when an editable file is loaded in the buffer
@@ -62,7 +62,10 @@ function config.discord()
       plugin_manager_text = "Managing plugins",         -- Format string rendered when managing plugins
       reading_text        = "Reading %s",               -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer
       workspace_text      = "Working on %s",            -- Workspace format string (either string or function(git_project_name: string|nil, buffer: string): string)
+      line_number_text    = "Line %s out of %s",        -- Line number format string (for when enable_line_number is set to true)
   })
+
+
 end
 
 

@@ -1,7 +1,8 @@
 local ui = {}
 local conf = require('modules.ui.config')
 
-ui['yashguptaz/calvera-dark.nvim'] = {
+--switch out with folke/tokyonight.nvim
+ui['folke/tokyonight.nvim'] = {
   config = conf.ui,
 }
 
@@ -10,6 +11,7 @@ ui['glepnir/dashboard-nvim'] = {
   config = conf.dashboard,
 
 }
+
 
 
 ui['glepnir/galaxyline.nvim'] = {
@@ -44,6 +46,23 @@ ui['lewis6991/gitsigns.nvim'] = {
 
 ui['kdav5758/TrueZen.nvim'] = {
   config = conf.truezen
+}
+ui['folke/zen-mode.nvim'] = {
+
+  config = function()
+    require("zen-mode").setup {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+
+
+
+  end
+
+}
+
+ui['folke/twilight.nvim'] = {
 }
 
 

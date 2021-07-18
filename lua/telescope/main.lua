@@ -13,6 +13,28 @@ local actions = require('telescope.actions')
 require('telescope').load_extension('dap')
 require('telescope').load_extension('cheat')
 require('telescope').load_extension('frecency')
+require('telescope').load_extension('ultisnips')
+
+if not packer_plugins['trouble.nvim'].loaded then
+  vim.cmd [[packadd folke/trouble.nvim]]
+end
+
+
+
+local actions = require("telescope.actions")
+local trouble = require("trouble.providers.telescope")
+
+local telescope = require("telescope")
+
+telescope.setup {
+  defaults = {
+    mappings = {
+      i = { ["<c-t>"] = trouble.open_with_trouble },
+      n = { ["<c-t>"] = trouble.open_with_trouble },
+    },
+  },
+}
+
 
 
 
@@ -78,7 +100,6 @@ end
 function PlenaryReload()
   require("plenary.reload").reload_module("telescope")
   require("plenary.reload").reload_module("plenary")
-  require"plenary.reload".reload_module("boo-colorscheme")
   require"plenary.reload".reload_module("plugin")
   require"plenary.reload".reload_module("lsp_extensions")
   tele.setup()
