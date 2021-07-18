@@ -37,6 +37,9 @@ telescope.setup {
 }
 
 
+local plugins_directory = function()
+  return require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack")
+end
 
 
 local tele = {}
@@ -62,12 +65,14 @@ tele.setup = function()
   }
 
   telescope.setup({defaults = telescope_config})
+
 end
 
 -- Themes
 -- >>- ------- -<
 
-local theme = themes.get_dropdown {winblend = 10, results_height = 10}
+
+local theme = themes.get_dropdown({ winblend = 10, layout_config = { height = 10 } })
 
 tele.theme = function(opts)
   return vim.tbl_deep_extend("force", theme, opts or {})
@@ -77,14 +82,11 @@ end
 -- >>- ------- -<
 
 tele.find_files = function(input_opts)
-  local opts = vim.tbl_deep_extend("force", theme, input_opts or {})
-  require"telescope.builtin".find_files(opts)
+  require("telescope.builtin").find_files(tele.theme(input_opts))
 end
 
 tele.find_files_plugins = function()
-  local cwd = require"packer.util".join_paths(vim.fn.stdpath("data"), "site", "pack")
-
-  require"telescope.builtin".find_files(tele.theme({cwd = cwd}))
+  require("telescope.builtin").find_files(tele.theme({ cwd = plugins_directory() }))
 end
 
 -- Treesitter 

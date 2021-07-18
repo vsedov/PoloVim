@@ -80,14 +80,6 @@ editor['kana/vim-niceblock']  = {
 
 
 
-editor['https://github.com/tpope/vim-sensible'] = {
-  opt = true
-}
-
-
-
-
-
 
 
 editor['Vimjas/vim-python-pep8-indent'] = {
