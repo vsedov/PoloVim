@@ -1,13 +1,20 @@
 local dap = require('dap');    
 local api = vim.api
 local HOME = os.getenv('HOME')
+
+
+
 -- Need to figure out how to do java 
 
 
 require('dap-python').setup('/usr/bin/python3')
 require('dap-python').test_runner = 'pytest'
+require('dapui').setup({})
 
 
+vim.g.dap_virtual_text = false
+vim.g.dap_virtual_text = true
+vim.g.dap_virtual_text = 'all frames'
 
 vim.g['test#python#pytest#executable'] = 'pytest'
 
@@ -46,76 +53,27 @@ require("ultest").setup({
     }
 })
 
-
-
-dap.adapters.cpp = {
-    type = 'executable',
-    attach = {
-        pidProperty = "pid",
-        pidSelect = "ask"
-    },
-    command = 'lldb',
-    env = {
-        LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
-    },
-    name = "lldb"
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/usr/bin/lldb-vscode', -- adjust as needed
+  name = "lldb"
 }
 
+local dap = require('dap')
 dap.configurations.cpp = {
-{
-  name = "Launch",
-  type = "cpp",
-  request = "launch",
-  program = function()
-    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-  end,
-  cwd = '${workspaceFolder}',
-  env = function()
-    local variables = {}
-    for k, v in pairs(vim.fn.environ()) do
-      table.insert(variables, string.format("%s=%s", k, v))
-    end
-    return variables
-  end,
-  stopOnEntry = false,
-  args = {}
-},
+  {
+    name = "Launch",
+    type = "lldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+    runInTerminal = false,
+  },
 }
 
-
--- need final one for java and then i should be good with lsp . 
-
-
--- I also need a rust debugger as well considering that im learning rust . 
-
-
-
-
--- Rust 
--- Java
--- Double Check C 
--- Memory control  
--- Lua debugger as well and lsp , just to be sure . 
-
-dap.adapters.rust = {
-    type = 'executable',
-    attach = {
-        pidProperty = "pid",
-        pidSelect = "ask"
-    },
-    command = 'lldb-vscode', -- my binary was called 'lldb-vscode-11'
-    env = {
-        LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
-    },
-    name = "lldb"
-}
-dap.configurations.rust = {
-    {
-        type = "rust",
-        name = "Debug",
-        request = "launch",
-        program= ""
-    }
-}
-
-
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp

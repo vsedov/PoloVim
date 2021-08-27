@@ -32,6 +32,15 @@ ui['akinsho/nvim-bufferline.lua'] = {
   requires = 'kyazdani42/nvim-web-devicons'
 }
 
+
+ui['kazhala/close-buffers.nvim'] = {
+  config = conf.buffers_close,
+}
+
+
+
+
+
 ui['kyazdani42/nvim-tree.lua'] = {
   cmd = {'NvimTreeToggle','NvimTreeOpen'},
   config = conf.nvim_tree,
@@ -44,7 +53,16 @@ ui['lewis6991/gitsigns.nvim'] = {
   requires = {'nvim-lua/plenary.nvim',opt=true}
 }
 
+-- ui['beauwilliams/focus.nvim']={
 
+--   config = function()
+--   local focus = require('focus')
+--   -- Displays a cursorline in the focussed window only
+--   -- Not displayed in unfocussed windows
+--   -- Default: true
+--   focus.cursorline = false
+--   end
+-- }
 
 
 ui['kdav5758/TrueZen.nvim'] = {
@@ -69,14 +87,10 @@ ui['folke/twilight.nvim'] = {
 }
 
 
+
+
 ui['mbbill/undotree'] = {
   config = conf.undo
-}
-
--- Just a nicert delete 
-ui['famiu/bufdelete.nvim'] = {
-
-
 }
 
 

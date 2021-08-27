@@ -39,8 +39,38 @@ tools['psliwka/vim-smoothie'] ={
 }
 --^D ^U ^F ^B gg1 G1
 
+-- tools['https://github.com/karb94/neoscroll.nvim']={
 
-
+--   config = function() 
+--     require('neoscroll').setup({
+--         easing_function = "quintic",
+--         -- All these keys will be mapped to their corresponding default scrolling animation
+--         mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+--                     '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
+--         hide_cursor = true,          -- Hide cursor while scrolling
+--         stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+--         use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
+--         respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+--         cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+--         easing_function = nil,        -- Default easing function
+--         pre_hook = nil,              -- Function to run before the scrolling animation starts
+--         post_hook = nil,              -- Function to run after the scrolling animation ends
+--     })
+--         local t = {}
+--     -- Syntax: t[keys] = {function, {function arguments}}
+--     t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '250'}}
+--     t['<C-d>'] = {'scroll', {'vim.wo.scroll', 'true', '250'}}
+--     t['<C-b>'] = {'scroll', {'-vim.api.nvim_win_get_height(0)', 'true', '450'}}
+--     t['<C-f>'] = {'scroll', {'vim.api.nvim_win_get_height(0)', 'true', '450'}}
+--     t['<C-y>'] = {'scroll', {'-0.10', 'false', '100'}}
+--     t['<C-e>'] = {'scroll', {'0.10', 'false', '100'}}
+--     t['zt'] = {'zt', {'250'}}
+--     t['zz'] = {'zz', {'250'}}
+--     t['zb'] = {'zb', {'250'}}
+--     require('neoscroll.config').set_mappings(t)
+    
+--   end
+-- }
 
 
 tools['euclidianAce/BetterLua.vim'] = {}
@@ -51,7 +81,15 @@ tools['nacro90/numb.nvim'] = {
 }
 
 
-tools['gennaro-tedesco/nvim-jqx'] = {
+-- quick code snipit , very nice
+tools['https://github.com/rktjmp/paperplanes.nvim'] = {
+    config = function ()
+      require("paperplanes").setup({
+        register = "+",
+        provider = "dpaste.org"
+      })
+    end
+
 }
 
 
@@ -127,13 +165,23 @@ vim.g.symbols_outline = {
 
 
 tools['brooth/far.vim'] = {
-  cmd = {'Far','Farp'},
+  -- cmd = {'Far','Farp'},
   config = function ()
     vim.g['far#source'] = 'rg'
   end
 }
 
 
+
+-- tools['https://github.com/rcarriga/nvim-notify']={
+
+--   config = function()
+--     require("notify")("My super important message")
+--     vim.notify = require("notify")
+--     vim.notify("This is an error message", "error")
+
+--   end
+-- }
 
 tools['iamcco/markdown-preview.nvim'] = {
   run = ':call mkdp#util#install()',
@@ -150,15 +198,12 @@ tools['iamcco/markdown-preview.nvim'] = {
 -- Nice toools 
 
 
-tools['kevinhwang91/nvim-hlslens'] = {
-  config = function ()
-    require('hlslens').setup({
-      calm_down = true,
-      nearest_only = true,
-      nearest_float_when = 'always'
-    })
-  end
-}
+-- tools['kevinhwang91/nvim-hlslens'] = {
+--   config = function ()
+--     require('hlslens').setup({
+--     })
+--   end
+-- }
 
 
 return tools

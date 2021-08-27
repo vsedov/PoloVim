@@ -34,7 +34,6 @@ end
 
 
 function config.nvim_compe()
-
   require'compe'.setup {
     enabled = true;
     autocomplete = true,
@@ -47,7 +46,10 @@ function config.nvim_compe()
     max_abbr_width = 100,
     max_kind_width = 100,
     max_menu_width = 100,
-    documentation = true,
+    documentation = {
+
+    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    },
     source = {
         path = {kind = "  "},
         buffer = {kind = "  "},
@@ -92,9 +94,6 @@ function config.telescope()
   
 
 
-  require('telescope').load_extension('fzy_native')
-  require('telescope').load_extension('dotfiles')
-
 end
 
 function config.vim_sonictemplate()
@@ -120,23 +119,24 @@ function config.neorunner()
 
   vim.g.runner_c_compiler = 'gcc'
   vim.g.runner_cpp_compiler = 'g++'
-  vim.g.runner_c_options = '-std=c99 -Wall'
+  vim.g.runner_c_options = '-Wall'
   vim.g.runner_cpp_options = '-std=c++11 -Wall'
 
 end
 
-function config.code_runner()
-  require('code_runner').setup {
-    term = {
-      position = "vert",
-      size = 60
-    },
-    fterm = {
-      height = 0.7,
-      width = 0.7
-    }
-  }
-end
+-- function config.code_runner()
+-- require('code_runner').setup {
+--   term = {
+--     position = "vert",
+--     size = 8
+--   },
+--   fterm = {
+--     height = 0.7,
+--     width = 0.7
+--   }
+-- }
+
+-- end
 
 function config.sniprun()
 

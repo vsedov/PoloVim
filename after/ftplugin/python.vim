@@ -12,8 +12,6 @@ setlocal colorcolumn=90
 
 
 
-
-
 let g:runner_python_ex = 'python3'
 let g:runner_python_options = ''
 
@@ -25,4 +23,3 @@ let g:test#python#runner = "pytest"
 
 
 
-"au BufWrite * :Black

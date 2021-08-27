@@ -1,3 +1,14 @@
+if not packer_plugins['trouble.nvim'].loaded then
+  vim.cmd [[packadd folke/trouble.nvim]]
+end
+if not packer_plugins['plenary.nvim'].loaded then
+  vim.cmd [[packadd plenary.nvim]]
+  vim.cmd [[packadd popup.nvim]]
+  vim.cmd [[packadd telescope-fzy-native.nvim]]
+end
+
+
+
 local telescope = require "telescope"
 local themes = require "telescope.themes"
 local previewers = require "telescope.previewers"
@@ -10,15 +21,14 @@ local actions = require('telescope.actions')
 
 
 
+require('telescope').load_extension('dotfiles')
 require('telescope').load_extension('dap')
 require('telescope').load_extension('cheat')
 require('telescope').load_extension('frecency')
 require('telescope').load_extension('ultisnips')
+-- require('telescope').load_extension('projects')
+require('telescope').load_extension('fzy_native')
 
-
-if not packer_plugins['trouble.nvim'].loaded then
-  vim.cmd [[packadd folke/trouble.nvim]]
-end
 
 
 
@@ -45,24 +55,24 @@ end
 local tele = {}
 
 -- Telescope defaults
-tele.setup = function()
+tele.setup_defaults = function()
   local telescope_config = {
+    dynamic_preview_title = true,
     selection_strategy = "reset",
-    shorten_path = true,
     layout_strategy = "flex",
-    prompt_position = "top",
+    -- layout_config = { prompt_position = "top", width = 0.8, height = 0.7 },
     sorting_strategy = "ascending",
     winblend = 3,
-    prompt_prefix = "※",
-    width = 0.8,
-    height = 0.7,
-    results_width = 80,
-    file_previewer = previewers.vim_buffer_cat.new,
-    grep_previewer = previewers.vim_buffer_vimgrep.new,
-    qflist_previewer = previewers.vim_buffer_qflist.new,
-    generic_sorter = sorters.get_fzy_sorter,
-    -- file_sorter = sorters.get_fzy_sorter,
+    prompt_prefix = "> ",
+    -- set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
   }
+
+  telescope.setup({ defaults = telescope_config })
+
+  
 
   telescope.setup({defaults = telescope_config})
 

@@ -25,29 +25,74 @@ end
 
 function config.textobjects()
   require'nvim-treesitter.configs'.setup {
-      textobjects = {
+          textobjects = {
             select = {
               enable = true,
+              lookahead = true,
               disable = {},
               keymaps = {
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-                ["aC"] = "@conditional.outer",
-                ["iC"] = "@conditional.inner",
+                ["aC"] = "@class.outer",
+                ["iC"] = "@class.inner",
+
+
+                ["ac"] = "@conditional.outer",
+                ["ic"] = "@conditional.inner",
+
+
                 ["ae"] = "@block.outer",
                 ["ie"] = "@block.inner",
+
+
                 ["al"] = "@loop.outer",
                 ["il"] = "@loop.inner",
+
+
                 ["is"] = "@statement.inner",
                 ["as"] = "@statement.outer",
+
+
                 ["ad"] = "@lhs.inner",
                 ["id"] = "@rhs.inner",
+
                 ["am"] = "@call.outer",
-                ["im"] = "@call.inner"
-              }
+                ["im"] = "@call.inner",
+
+                ["iM"] = "@frame.inner",
+                ["aM"] = "@frame.outer",
+
+                ["ai"] = "@parameter.outer",
+                ["ii"] = "@parameter.inner",
+
+                ["aS"] = { "@scope", "locals" }, -- selects `@scope` from locals.scm
+              },
             },
+
+            swap = {
+              enable = true,
+              swap_next = {
+                ["<leader>a"] = "@parameter.inner",
+                ["<a-f>"] = "@function.outer",
+                ["<a-s>"] = { "@scope", "locals" },
+              },
+              swap_previous = {
+                ["<leader>A"] = "@parameter.inner",
+                ["<a-F>"] = "@function.outer",
+                ["<a-S>"] = { "@scope", "locals" },
+              },
+            },
+            lsp_interop = {
+              enable = true,
+              peek_definition_code = {
+                ["df"] = "@function.outer",
+                ["dF"] = "@class.outer",
+              },
+              peek_type_definition_code = {
+                ["def"] = "@class.outer",
+              },
+            },
+
             move = {
               enable = true,
               goto_next_start = {
@@ -112,3 +157,4 @@ api.nvim_command(autocmd_fold_str)
 
 return config
 
+-- 10 11 17 18 

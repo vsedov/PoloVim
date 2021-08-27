@@ -57,7 +57,7 @@ local function load_options()
     inccommand     = "nosplit";
     grepformat     = "%f:%l:%c:%m";
     grepprg        = 'rg --hidden --vimgrep --smart-case --';
-    breakat        = [[\ \	;:,!?]];
+    breakat        = [[\ \  ;:,!?]];
     startofline    = false;
     whichwrap      = "h,l,<,>,[,],~";
     splitbelow     = true;

@@ -13,10 +13,52 @@ function config.nvim_bufferline()
     options = {
       modified_icon = '✥',
       buffer_close_icon = '',
-      mappings = true,
-      always_show_bufferline = false,
-    }
+      diagnostics = "nvim_lsp",
+
+      diagnostics_indicator = function(count, level)
+        local icon = level:match("error") and " " or " "
+        return " " .. icon .. count
+      end,
+      -- custom_filter = function(buf, buf_nums)
+      --   local logs =
+      --     vim.tbl_filter(
+      --     function(b)
+      --       return is_ft(b, "log")
+      --     end,
+      --     buf_nums
+      --   )
+      --   if vim.tbl_isempty(logs) then
+      --     return true
+      --   end
+      --   local tab_num = vim.fn.tabpagenr()
+      --   local last_tab = vim.fn.tabpagenr("$")
+      --   local is_log = is_ft(buf, "log")
+      --   -- only show log buffers in secondary tabs
+      --   return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
+      -- end,
+
+      -- mappings = true,
+      show_close_icon = false,
+      always_show_bufferline = true,
+      show_buffer_close_icons = false,
+    },  
   }
+end
+
+function config.buffers_close()
+  require('close_buffers').setup({
+    preserve_window_layout = { 'this' },
+    next_buffer_cmd = function(windows)
+      require('bufferline').cycle(1)
+      local bufnr = vim.api.nvim_get_current_buf()
+
+      for _, window in ipairs(windows) do
+        vim.api.nvim_win_set_buf(window, bufnr)
+      end
+    end,
+  })
+
+
 end
 
 function config.dashboard()
@@ -190,12 +232,13 @@ function config.ui()
 
   vim.g.tokyonight_terminal_colors = true
 
-  vim.g.tokyonight_dark_sidebar = true
   vim.g.tokyonight_dark_float = true
   vim.g.tokyonight_sidebars = { "qf", "NvimTree", "NvimTreeNormal", "packer" }
   
 
   vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+  vim.g.tokyonight_transparent_sidebar = true
+  vim.g.tokyonight_dark_sidebar = false
 
 
   -- Load the colorscheme

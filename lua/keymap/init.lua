@@ -17,7 +17,6 @@ local plug_map = {
    
     -- person keymap
     ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
-    ["n|gb"]             = map_cr("BufferLinePick"):with_noremap():with_silent(),
     
 
     -- Packer
@@ -68,6 +67,12 @@ local plug_map = {
     ["n|<Leader>e"]      = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
     ["n|<Leader>FF"]     = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
 
+    ["n|<Leader>ss"] = map_cu('SaveSession'):with_noremap(),
+    ["n|<Leader>sl"] = map_cu('RestoreSession'):with_noremap(),
+    ["n|<Leader>sd"] = map_cu('DeleteSession'):with_noremap(),
+
+
+    
     -- Plugin MarkdownPreview
     ["n|<Leader>om"]     = map_cu('MarkdownPreview'):with_noremap():with_silent(),
     -- Plugin DadbodUI
@@ -105,20 +110,19 @@ local plug_map = {
     ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
     ["n|k"]              = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
     -- Plugin QuickRun
-    ["n|<Leader>r"]     = map_cr("<cmd> lua require'internal.quickrun'.run_command()"):with_noremap():with_silent(),
+    -- ["n|<Leader>r"]     = map_cr("<cmd> lua require'internal.quickrun'.run_command()"):with_noremap():with_silent(),
     -- Plugin Vista or SymbolsOutline
     ["n|<Leader>v"]      = map_cu('SymbolsOutline'):with_noremap():with_silent(),
 
 
-    -- Plugin hrsh7th/vim-eft
-    -- ["n|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
-    -- ["x|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
-    -- ["n|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
-    -- ["x|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
-    -- ["o|f"]              = map_cmd("v:lua.enhance_ft_move('f')"):with_expr(),
-    -- ["n|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
-    -- ["x|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
-    -- ["o|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
+
+
+    ["n|$"] = map_cmd("<cmd>lua require'hop'.hint_words()<cr>"),
+    ["n|/"] = map_cmd(":HopPattern<CR>"),
+    ["n|,"] = map_cmd(":HopLine<CR>"),
+    
+    ["n|f"] = map_cmd(":HopChar1<CR>"),
+
    
 
     -- Plugin vim_niceblock
@@ -137,7 +141,6 @@ local plug_map = {
 
     -- git Blame 
     ["n|<Leader><Leader>tgb"]    = map_cu("ToggleBlameLine"):with_noremap():with_silent(),
-
 
 
     -- Nice command to list all breakpoints. .
@@ -166,7 +169,7 @@ local plug_map = {
 
     --sniprun
 
-    ["v|<Leader>fr"]             = map_cmd("<Plug>SnipRun"):with_silent(),
+    ["v|<Leader>fr"]    = map_cmd("<Plug>SnipRun"):with_silent(),
     ["n|<Leader>fr"]    = map_cmd("<Plug>SnipRunOperator"):with_silent(),
     ["n|<Leader>ff"]    = map_cmd("<Plug>SnipRun"):with_silent(),
 
@@ -212,7 +215,31 @@ local plug_map = {
     ["v|<F4>"]    = map_cmd(":<c-u>HSRmHighlight<CR>"):with_noremap():with_silent(),
 
 
+    --[[ ["n|<Leader>bc"]     = map_cr("Bdelete"):with_noremap():with_silent(),
+    ["n|<Leader>bw"]     = map_cr("Bwipeout"):with_noremap():with_silent(), ]]
+    
+    -- Next other buffers with this one . 
+    ["n|<Leader>bth"]    = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap();
+    ["n|<Leader>btu"]    = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap();
+    ["n|<Leader>btc"]    = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap();
+
+    ["n|<Leader>bw"]    = map_cr("BWipeout! all"):with_silent():with_nowait():with_noremap();
+    ["n|<Leader>bc"]    = map_cr("BWipeout!"):with_silent():with_nowait():with_noremap();
+
+
+
+    ["n|<Leader>bo"]     = map_cr("<cmd>lua require('internal.utils').only()<CR>"):with_silent():with_nowait():with_noremap();
+    ["n|<Leader>bv"]     = map_cr("BufferLinePick"):with_noremap():with_silent(),
+    ["n|<Leader>b["]     = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
+    ["n|<Leader>b]"]     = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
+    ["n|<Leader>bnn"]    = map_cr("BufferLineCycleNext"):with_noremap():with_silent(),
+    ["n|<Leader>bmm"]    = map_cr("BufferLineCyclePrev"):with_noremap():with_silent(),
+    ["n|gb"]             = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
 };
 
 bind.nvim_load_mapping(plug_map)
+
+
+
+

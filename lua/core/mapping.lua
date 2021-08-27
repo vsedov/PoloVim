@@ -11,6 +11,7 @@ local def_map = {
     ["n|<Leader>q"] = map_cmd(':q!<CR>'):with_noremap(),
     
     ["n|Y"] = map_cmd('y$'),
+
     ["n|]w"] = map_cu('WhitespaceNext'):with_noremap(),
     ["n|[w"] = map_cu('WhitespacePrev'):with_noremap(),
     ["n|]b"] = map_cu('bp'):with_noremap(),

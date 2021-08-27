@@ -22,13 +22,11 @@ completion['folke/todo-comments.nvim']  = {
 
 }
 
--- For thoe that only use lsp - i use this for linting - python flake8 for 
--- this ale lint is disabled ale fix enabled and so on . 
+
 completion['https://github.com/folke/trouble.nvim'] = {
   config = conf.trouble,
 
 }
-
 
 
 completion['dense-analysis/ale'] = {
@@ -46,7 +44,6 @@ completion['glepnir/lspsaga.nvim'] = {
 --   requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}
 
 -- }
-
 
 
 completion['tzachar/compe-tabnine'] = {
@@ -77,6 +74,7 @@ completion['nvim-telescope/telescope.nvim'] = {
   },
   config = conf.telescope
 }
+
 completion['pwntester/octo.nvim']={
   after="telescope.nvim",
   config  = function()
@@ -115,11 +113,7 @@ completion['BenGH28/neo-runner.nvim'] = {
 
 
 -- This one seems to have more support and looks better . 
-completion['CRAG666/code_runner.nvim'] = {
-  requires = 'numtostr/FTerm.nvim',
-  config = conf.code_runner,
-}
-
+-- -- Currenty Broken , give a few days to see if it will be back up or not .
 
 
 
@@ -144,10 +138,6 @@ completion['mfussenegger/nvim-dap'] = {
   config = function()
 
   require('dapstuff.dapstuff')
-
-  require("dapui").setup()
-
-
   
     -- virtual text deactivated (default)
   vim.g.dap_virtual_text = false
@@ -159,10 +149,14 @@ completion['mfussenegger/nvim-dap'] = {
   vim.g.ultest_virtual_text = 1
   vim.g.ultest_output_cols = 120
   vim.g.ultest_max_threads = 5
-
+  
 
   end
 }
+
+
+
+
 
 
 
@@ -174,10 +168,7 @@ completion['lervag/vimtex'] = {
 
 
 
--- For most basic files , there is an autoformat . 
-completion['Chiel92/vim-autoformat'] = {
 
-}
 
 
 
@@ -202,10 +193,10 @@ completion['psf/black'] = {
 
 
 
-completion['glepnir/smartinput.nvim'] = {
-  ft = 'go',
-  config = conf.smart_input
-}
+-- completion['glepnir/smartinput.nvim'] = {
+--   ft = 'go',
+--   config = conf.smart_input
+-- }
 
 
 
