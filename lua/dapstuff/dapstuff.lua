@@ -1,15 +1,17 @@
 local dap = require('dap');    
 local api = vim.api
 local HOME = os.getenv('HOME')
+local dap_install = require("dap-install")
 
+dap_install.setup({
+    installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+    verbosely_call_debuggers = false,
+})
 
 
 -- Need to figure out how to do java 
 
 
-require('dap-python').setup('/usr/bin/python3')
-require('dap-python').test_runner = 'pytest'
-require('dapui').setup({})
 
 
 vim.g.dap_virtual_text = false
@@ -54,26 +56,38 @@ require("ultest").setup({
 })
 
 dap.adapters.lldb = {
-  type = 'executable',
-  command = '/usr/bin/lldb-vscode', -- adjust as needed
-  name = "lldb"
+    type = 'executable',
+    command = '/usr/bin/lldb-vscode',
+    name = 'lldb'
 }
 
-local dap = require('dap')
 dap.configurations.cpp = {
-  {
-    name = "Launch",
-    type = "lldb",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = false,
-    args = {},
-    runInTerminal = false,
-  },
+    {
+        name = "Launch",
+        type = "lldb",
+        request = "launch",
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/',
+                                'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+
+        runInTerminal = false
+    }
 }
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
+
+
+local dap_install = require("dap-install")
+local dbg_list = require("dap-install.debuggers_list").debuggers
+
+for debugger, _ in pairs(dbg_list) do
+    dap_install.config(debugger, {})
+end
+require('dap-python').setup('/usr/bin/python3')
+require('dap-python').test_runner = 'pytest'
+require('dapui').setup({})

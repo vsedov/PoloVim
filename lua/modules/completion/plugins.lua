@@ -131,6 +131,7 @@ completion['mfussenegger/nvim-dap'] = {
     {'theHamsta/nvim-dap-virtual-text'},
     {'mfussenegger/nvim-dap-python'},
     {'rcarriga/nvim-dap-ui'},
+    {'Pocco81/DAPInstall.nvim'},
   },
   run = ':UpdateRemotePlugins',
 
