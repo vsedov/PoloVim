@@ -120,8 +120,10 @@ local plug_map = {
     ["n|$"] = map_cmd("<cmd>lua require'hop'.hint_words()<cr>"),
     ["n|/"] = map_cmd(":HopPattern<CR>"),
     ["n|,"] = map_cmd(":HopLine<CR>"),
+
     
-    ["n|f"] = map_cmd(":HopChar1<CR>"),
+    ["n|f"] = map_cmd(":HopChar1AC<CR>"),
+    ["n|F"] = map_cmd(":HopChar1BC<CR>"),
 
    
 
@@ -215,8 +217,6 @@ local plug_map = {
     ["v|<F4>"]    = map_cmd(":<c-u>HSRmHighlight<CR>"):with_noremap():with_silent(),
 
 
-    --[[ ["n|<Leader>bc"]     = map_cr("Bdelete"):with_noremap():with_silent(),
-    ["n|<Leader>bw"]     = map_cr("Bwipeout"):with_noremap():with_silent(), ]]
     
     -- Next other buffers with this one . 
     ["n|<Leader>bth"]    = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap();
@@ -226,6 +226,8 @@ local plug_map = {
     ["n|<Leader>bw"]    = map_cr("BWipeout! all"):with_silent():with_nowait():with_noremap();
     ["n|<Leader>bc"]    = map_cr("BWipeout!"):with_silent():with_nowait():with_noremap();
 
+    --["n|<Leader>bc"]  = map_cr("Bdelete"):with_noremap():with_silent(),
+    --["n|<Leader>bw"]  = map_cr("Bwipeout"):with_noremap():with_silent(),
 
 
     ["n|<Leader>bo"]     = map_cr("<cmd>lua require('internal.utils').only()<CR>"):with_silent():with_nowait():with_noremap();

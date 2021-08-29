@@ -2,7 +2,8 @@ local editor = {}
 local conf = require('modules.editor.config')
 
 editor['Raimondi/delimitMate'] = {
-  event = 'InsertEnter',
+  opt = true,
+  event  = 'InsertEnter',
   config = conf.delimimate,
 }
 
@@ -12,39 +13,74 @@ editor['rhysd/accelerated-jk'] = {
   opt = true
 }
 
-editor['norcalli/nvim-colorizer.lua'] = {
-  ft = { 'html','css','sass','vim','typescript','typescriptreact'},
-  config = conf.nvim_colorizer
-}
-
-
 editor['haya14busa/vim-asterisk'] = {
   opt = true,
 }
 
--- to get better keep this on . 
+editor['rmagatti/auto-session'] = {
+  -- cmd = {'SaveSession', 'RestoreSession', 'DeleteSession'},
+  config = function ()
+    require('auto-session').setup {
+      auto_session_root_dir = ('%s/session/auto/'):format(vim.fn.stdpath 'data'),
+    }
+  end
+}
+
 editor['takac/vim-hardtime'] = {
-  -- cmd = { 'HardTimeOn', 'HardTimeOff', 'HardTimeToggle' },
-  config = function()
-      vim.g.hardtime_ignore_quickfix = 1
-      vim.g.hardtime_allow_different_key = 1
-      vim.g.hardtime_maxcount = 3
-      vim.g.hardtime_default_on = 1
+  opt = true,
+  cmd = { 'HardTimeOn', 'HardTimeOff', 'HardTimeToggle' }
+}
 
+editor['famiu/bufdelete.nvim'] = {
+  opt = true,
+  cmd = {'Bdelete', 'Bwipeout'}
+}
 
+editor['folke/todo-comments.nvim'] = {
+  config = function ()
+    require("todo-comments").setup({})
+  end
+}
+
+editor['turbio/bracey.vim'] ={
+  opt = true,
+  run = 'npm install --prefix server',
+  cmd = {'Bracey', 'BraceyStop', 'BraceyReload'},
+  config = function ()
+    vim.g.bracey_refresh_on_save = 0
   end
 }
 
 
-editor['itchyny/vim-cursorword'] = {
-  event = {'BufReadPre','BufNewFile'},
-  config = conf.vim_cursorwod
+editor['simrat39/symbols-outline.nvim'] = {
+  opt = true,
+  cmd = {'SymbolsOutline', 'SymbolsOulineOpen'},
+  config = conf.symbols_outline
 }
 
+-- editor['norcalli/nvim-colorizer.lua'] = {
+--   opt = true,
+--   ft = { 'html','css','sass','vim','typescript','typescriptreact'},
+--   cmd = {'ColorizerToggle', 'ColorizerAttachToBuffer', 'ColorizerDetachFromBuffer', 'ColorizerReloadAllBuffers'},
+--   config = conf.nvim_colorizer
+-- }
 
--- Better version below
+-- nvim-colorizer replacement
+editor["rrethy/vim-hexokinase"] = {
+  -- ft = { 'html','css','sass','vim','typescript','typescriptreact'},
+  config = conf.hexokinase,
+  run = "make hexokinase",
+  opt = true,
+  cmd = {"HexokinaseTurnOn", "HexokinaseToggle"}
+}
+
+editor['itchyny/vim-cursorword'] = {
+  opt = true,
+  event = {'BufReadPre','BufNewFile'},
+  config = conf.vim_cursorwod,
+}
+
 editor['ggandor/lightspeed.nvim'] = {
-
     requires={'https://github.com/tpope/vim-repeat'},
     
     config = function()
@@ -70,19 +106,10 @@ editor['ggandor/lightspeed.nvim'] = {
       }
 
 
-    -- vim.api.nvim_set_keymap('n', 'f', ':HopChar1' {})
-
-    vim.api.nvim_set_keymap('n', 'S', '<Plug>Lightspeed_s', {})
-    vim.api.nvim_set_keymap('n', 'ss', '<Plug>Lightspeed_S', {})
-
-
-
     vim.cmd[[nmap <expr> c reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_f" : "f"]]
     vim.cmd[[nmap <expr> C reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_F" : "F"]]
     vim.cmd[[nmap <expr> t reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_t" : "t"]]
     vim.cmd[[nmap <expr> T reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_T" : "T"]]
-
-
 
   end
 }
@@ -93,46 +120,44 @@ editor['phaazon/hop.nvim']={
     require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
   end
 
-
-
 }
 
-editor['rmagatti/auto-session'] = {
-  cmd = {'SaveSession', 'RestoreSession', 'DeleteSession'},
-  -- cmd = {'SaveSession', 'RestoreSession', 'DeleteSession'},
-  config = function ()
-    require('auto-session').setup {
-      auto_session_root_dir = ('%s/session/auto/'):format(vim.fn.stdpath 'data'),
-      auto_session_enabled = false
-    }
+
+
+editor['dhruvasagar/vim-table-mode'] = {
+  cmd = {'TableModeToggle'}
+}
+
+editor["hrsh7th/vim-eft"] = {
+  opt = true,
+  config = function()
+    vim.g.eft_ignorecase = true
   end
 }
+
+editor['kana/vim-niceblock']  = {
+  opt = true
+}
+
+editor["tpope/vim-repeat"]  = {}
+
+
+
+-- Paste without yank
+editor['kana/vim-operator-replace'] = {
+  opt = true,
+  keys = {{'x','p'}},
+  config = function()
+    vim.api.nvim_set_keymap("x", "p", "<Plug>(operator-replace)",{silent =true})
+  end
+}
+
 
 -- This is rather nice i kinda like it . 
 editor['https://github.com/LoricAndre/OneTerm.nvim.git']={
     cmd = { 'OneTerm' }
 
 }
-
-
-editor['kana/vim-operator-replace'] = {
-  keys = {{'x','p'}},
-  config = function()
-    vim.api.nvim_set_keymap("x", "p", "<Plug>(operator-replace)",{silent =true})
-  end,
-  requires = 'kana/vim-operator-user'
-}
-
-editor['sbdchd/neoformat'] = {opt = true, cmd = 'Neoformat'}
-
-
-editor['https://github.com/machakann/vim-sandwich']  = {
-  -- use default config .
-}
-
--- Pipe keeps losing this will get fixed . 
--- This was causing some string error which i was unsure what it was . 
--- Though I will figure something out , if this is the issue . 
 
 
 
@@ -146,11 +171,6 @@ editor['voldikss/vim-floaterm']  = {}
 
 --Req Syntax Nice Stuff . 
 editor['raimon49/requirements.txt.vim']  = {}
-
-
-editor['kana/vim-niceblock']  = {
-  opt = true
-}
 
 
 
@@ -192,8 +212,6 @@ editor['https://github.com/tmhedberg/SimpylFold']  = {
     vim.g.SimpylFold_docstring_preview = 1
   end
 }
-
-
 
 
 

@@ -124,7 +124,7 @@ local function load_options()
         ["+"] = "pbpaste",
         ["*"] = "pbpaste",
       },
-      cache_enabled = 0
+      cache_enabled = 1
     }
   end
   for name, value in pairs(global_local) do

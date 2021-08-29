@@ -44,9 +44,6 @@ _G.enhance_jk_move = function(key)
 end
 
 
-
-
-
 _G.enhance_nice_block = function (key)
   if not packer_plugins['vim-niceblock'].loaded then
     vim.cmd [[packadd vim-niceblock]]

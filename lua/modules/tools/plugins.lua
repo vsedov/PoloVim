@@ -1,19 +1,49 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
+
 tools['kristijanhusak/vim-dadbod-ui'] = {
+  opt = true,
   cmd = {'DBUIToggle','DBUIAddConnection','DBUI','DBUIFindBuffer','DBUIRenameBuffer'},
   config = conf.vim_dadbod_ui,
   requires = {{'tpope/vim-dadbod',opt = true}}
 }
 
-tools['editorconfig/editorconfig-vim'] = {
-  ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
+
+
+
+tools["editorconfig/editorconfig-vim"] = {
+  opt = true,
+  cmd = {"EditorConfigReload"}
+  -- ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
 }
 
 tools['b3nj5m1n/kommentary'] = {
   config = conf.kommentary,
 }
+
+
+tools['AndrewRadev/splitjoin.vim'] = {
+  opt = true,
+  cmd = {'SplitjoinSplit', 'SplitjoinJoin'},
+  config = function ()
+    vim.g.splitjoin_split_mapping = ''
+    vim.g.splitjoin_join_mapping  = ''
+  end
+}
+
+
+
+tools['vimwiki/vimwiki'] = {
+  opt = true,
+  branch = "dev",
+  keys = {"<leader>ww", "<leader>wt", "<leader>wi"},
+  event = {"BufEnter *.wiki"},
+  setup = conf.vimwiki_setup,
+  config = conf.vimwiki_config
+}
+
+
 
 
 tools['relastle/vim-nayvy'] ={
@@ -37,48 +67,33 @@ tools['psliwka/vim-smoothie'] ={
     vim.g.smoothie_experimental_mappings =1
   end
 }
---^D ^U ^F ^B gg1 G1
 
--- tools['https://github.com/karb94/neoscroll.nvim']={
+tools["kamykn/spelunker.vim"] = {
+  opt = true, fn = {"spelunker#check"},
+  setup = conf.spelunker,
+  config = conf.spellcheck,
+}
 
---   config = function() 
---     require('neoscroll').setup({
---         easing_function = "quintic",
---         -- All these keys will be mapped to their corresponding default scrolling animation
---         mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
---                     '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
---         hide_cursor = true,          -- Hide cursor while scrolling
---         stop_eof = true,             -- Stop at <EOF> when scrolling downwards
---         use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
---         respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
---         cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
---         easing_function = nil,        -- Default easing function
---         pre_hook = nil,              -- Function to run before the scrolling animation starts
---         post_hook = nil,              -- Function to run after the scrolling animation ends
---     })
---         local t = {}
---     -- Syntax: t[keys] = {function, {function arguments}}
---     t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '250'}}
---     t['<C-d>'] = {'scroll', {'vim.wo.scroll', 'true', '250'}}
---     t['<C-b>'] = {'scroll', {'-vim.api.nvim_win_get_height(0)', 'true', '450'}}
---     t['<C-f>'] = {'scroll', {'vim.api.nvim_win_get_height(0)', 'true', '450'}}
---     t['<C-y>'] = {'scroll', {'-0.10', 'false', '100'}}
---     t['<C-e>'] = {'scroll', {'0.10', 'false', '100'}}
---     t['zt'] = {'zt', {'250'}}
---     t['zz'] = {'zz', {'250'}}
---     t['zb'] = {'zb', {'250'}}
---     require('neoscroll.config').set_mappings(t)
-    
---   end
--- }
+tools["rhysd/vim-grammarous"] = {
+  opt = true,
+  cmd = {"GrammarousCheck"},
+  ft = {"markdown", "txt"}
+}
+
+
 
 
 tools['euclidianAce/BetterLua.vim'] = {}
 
 tools['nacro90/numb.nvim'] = {
   config = function ()
-  require('numb').setup()  end
+    require('numb').setup{
+      show_numbers = true, -- Enable 'number' for the window while peeking
+      show_cursorline = true -- Enable 'cursorline' for the window while peeking
+    }
+  end
 }
+
 
 
 -- quick code snipit , very nice
@@ -104,6 +119,7 @@ tools['jbyuki/nabla.nvim'] = {
 }
 
 tools['liuchengxu/vista.vim'] = {
+  opt=true,
   cmd = 'Vista',
   config = conf.vim_vista
 }
@@ -159,6 +175,14 @@ vim.g.symbols_outline = {
         TypeParameter = {icon = "𝙏", hl = "TSParameter"}
     }
 }
+  end
+}
+
+tools['kdheepak/lazygit.nvim'] = {
+  opt = true,
+  cmd = {'LazyGit', 'LazyGitConfig'},
+  config = function()
+    vim.g.lazygit_floating_window_winblend = 2
   end
 }
 

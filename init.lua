@@ -56,5 +56,5 @@ vim.api.nvim_command('nnoremap <esc>^[ <esc>^[')
 require("core")
 
 
-vim.cmd('unmap s')
+-- vim.cmd('unmap s')
 -- vim.cmd('unmap S')

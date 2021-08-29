@@ -50,72 +50,56 @@ telescope.setup {
 local plugins_directory = function()
   return require("packer.util").join_paths(vim.fn.stdpath("data"), "site", "pack")
 end
-
-
-local tele = {}
-
--- Telescope defaults
-tele.setup_defaults = function()
-  local telescope_config = {
-    dynamic_preview_title = true,
+require('telescope').setup {
+  defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case'
+    },
+    selection_caret = "> ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
     selection_strategy = "reset",
-    layout_strategy = "flex",
-    -- layout_config = { prompt_position = "top", width = 0.8, height = 0.7 },
-    sorting_strategy = "ascending",
-    winblend = 3,
-    prompt_prefix = "> ",
-    -- set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+    sorting_strategy = "descending",
+    layout_strategy = "horizontal",
+    prompt_prefix = "-> ",
+    layout_config = {
+      horizontal = {
+        mirror = false,
+      },
+      vertical = {
+        mirror = false,
+      },
+      -- width = 0.75,
+      -- height = 10,
+      preview_cutoff = 120,
+    },
+    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
+    file_ignore_patterns = {},
+    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+    path_display = {
+      'shorten',
+      'absolute',
+    },
+    winblend = 0,
+    border = {},
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    color_devicons = true,
+    use_less = true,
+    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+  },
+  extensions = {
+      fzy_native = {
+          override_generic_sorter = false,
+          override_file_sorter = true,
+      }
   }
-
-  telescope.setup({ defaults = telescope_config })
-
-  
-
-  telescope.setup({defaults = telescope_config})
-
-end
-
--- Themes
--- >>- ------- -<
-
-
-local theme = themes.get_dropdown({ winblend = 10, layout_config = { height = 10 } })
-
-tele.theme = function(opts)
-  return vim.tbl_deep_extend("force", theme, opts or {})
-end
-
--- File Functions 
--- >>- ------- -<
-
-tele.find_files = function(input_opts)
-  require("telescope.builtin").find_files(tele.theme(input_opts))
-end
-
-tele.find_files_plugins = function()
-  require("telescope.builtin").find_files(tele.theme({ cwd = plugins_directory() }))
-end
-
--- Treesitter 
--- >>- ------- -<
-
-tele.treesitter = function()
-  return require"telescope.builtin".treesitter(tele.theme())
-end
-
-function P(module)
-  require"plenary.reload".reload_module(module)
-end
-
-function PlenaryReload()
-  require("plenary.reload").reload_module("telescope")
-  require("plenary.reload").reload_module("plenary")
-  require"plenary.reload".reload_module("plugin")
-  require"plenary.reload".reload_module("lsp_extensions")
-  tele.setup()
-end
-
-return tele
+}

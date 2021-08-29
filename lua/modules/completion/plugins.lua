@@ -61,6 +61,7 @@ completion['hrsh7th/vim-vsnip'] = {
 }
 
 completion['nvim-telescope/telescope.nvim'] = {
+  
   cmd = 'Telescope',
   requires = {
     {'nvim-lua/popup.nvim', opt = true},
