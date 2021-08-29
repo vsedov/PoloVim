@@ -37,6 +37,9 @@ lang['https://github.com/p00f/nvim-ts-rainbow'] = {
 }
 
 
+
+
+
 -- -- Bloody Usefull 
 -- lang['vhyrro/neorg']={
 --     branch = "main",

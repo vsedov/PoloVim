@@ -207,19 +207,27 @@ lspconfig.tsserver.setup {
   end
 }
 
-lspconfig.clangd.setup {
-  cmd = {
-    "clangd",
-    "--background-index",
-    "--suggest-missing-includes",
-    "--clang-tidy",
-    "--header-insertion=iwyu",
-  },
+-- lspconfig.clangd.setup {
+--   cmd = {
+--     "clangd",
+--     "--background-index",
+--     "--suggest-missing-includes",
+--     "--clang-tidy",
+--     "--header-insertion=iwyu",
+--   },
+--   on_attach = enhance_attach,
+--   capabilities = capabilities,
+
+-- }
+
+
+lspconfig.ccls.setup {
+  cmd = {"ccls" },
   on_attach = enhance_attach,
   capabilities = capabilities,
+  filetypes = { "c", "cpp", "objc", "objcpp" },
 
 }
-
 
 
 

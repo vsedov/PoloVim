@@ -27,8 +27,14 @@ editor['rmagatti/auto-session'] = {
 }
 
 editor['takac/vim-hardtime'] = {
-  opt = true,
-  cmd = { 'HardTimeOn', 'HardTimeOff', 'HardTimeToggle' }
+  -- opt = true,
+  -- cmd = { 'HardTimeOn', 'HardTimeOff', 'HardTimeToggle' },
+  config = function()
+    vim.g.hardtime_default_on = 1
+    vim.g.hardtime_ignore_quickfix = 1
+    vim.g.hardtime_allow_different_key = 1
+    vim.g.hardtime_maxcount = 5
+  end
 }
 
 editor['famiu/bufdelete.nvim'] = {
@@ -166,12 +172,28 @@ editor['andweeb/presence.nvim']  = {
   config = conf.discord
 }
 
-editor['voldikss/vim-floaterm']  = {}
+-- editor['voldikss/vim-floaterm']  = {}
 
+editor['https://github.com/numtostr/FTerm.nvim']={
+    config = function()
+        require("FTerm").setup()
+        local term = require("FTerm.terminal")
+
+        local top = term:new():setup({
+            cmd = "bpytop"
+        })
+
+         -- Use this to toggle bpytop in a floating terminal
+        function _G.__fterm_top()
+            top:toggle()
+        end
+
+
+    end
+}
 
 --Req Syntax Nice Stuff . 
 editor['raimon49/requirements.txt.vim']  = {}
-
 
 
 

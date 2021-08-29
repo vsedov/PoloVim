@@ -57,11 +57,9 @@ local plug_map = {
     ["n|<F1>"]           = map_cr("DogeGenerate"):with_noremap():with_silent(),
     ["n|<F2>"]           = map_cu("UndotreeToggle"):with_noremap():with_silent(),
     ["n|<F3>"]           = map_cu('Black'):with_noremap():with_silent(),
-    ["n|<F5>"]           = map_cu('FRunCode'):with_noremap():with_silent(),
 
     --NeoRunner_Horizontal 
     ["n|<F6>"]           = map_cu("NeoRunner"):with_noremap():with_silent(),
-    ["n|<Leader><F5>"]   = map_cu('RunCode'):with_noremap():with_silent(),
     
     -- Plugin nvim-tree
     ["n|<Leader>e"]      = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
@@ -121,7 +119,12 @@ local plug_map = {
     ["n|/"] = map_cmd(":HopPattern<CR>"),
     ["n|,"] = map_cmd(":HopLine<CR>"),
 
+    ["n|<Leader><TAB>"]    = map_cr('<CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),
     
+    ["t|<Leader><TAB>"]    = map_cr('<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),
+
+
+
     ["n|f"] = map_cmd(":HopChar1AC<CR>"),
     ["n|F"] = map_cmd(":HopChar1BC<CR>"),
 
