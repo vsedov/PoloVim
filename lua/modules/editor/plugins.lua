@@ -42,11 +42,6 @@ editor['famiu/bufdelete.nvim'] = {
   cmd = {'Bdelete', 'Bwipeout'}
 }
 
-editor['folke/todo-comments.nvim'] = {
-  config = function ()
-    require("todo-comments").setup({})
-  end
-}
 
 editor['turbio/bracey.vim'] ={
   opt = true,
@@ -58,11 +53,6 @@ editor['turbio/bracey.vim'] ={
 }
 
 
-editor['simrat39/symbols-outline.nvim'] = {
-  opt = true,
-  cmd = {'SymbolsOutline', 'SymbolsOulineOpen'},
-  config = conf.symbols_outline
-}
 
 -- editor['norcalli/nvim-colorizer.lua'] = {
 --   opt = true,

@@ -10,11 +10,14 @@ completion['neovim/nvim-lspconfig'] = {
   {'tjdevries/nlua.nvim'},
   {'ray-x/lsp_signature.nvim'},
   {'https://github.com/onsails/lspkind-nvim'},
-  {'folke/lsp-colors.nvim'}
+  {'folke/lsp-colors.nvim'},
+  {'kabouzeid/nvim-lspinstall'}
 
   -- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
 }
+
+
 
 completion['folke/todo-comments.nvim']  = {
   config = conf.todo_comments,
@@ -181,25 +184,11 @@ completion['michaelb/sniprun'] = {
   -- This has not been 100% set up make sure you set it up later 
 
 }
--- completion['simrat39/symbols-outline.nvim'] = {
---   config = conf.outline
--- }
-
 
 
 
 completion['psf/black'] = {
 }
-
-
-
-
-
--- completion['glepnir/smartinput.nvim'] = {
---   ft = 'go',
---   config = conf.smart_input
--- }
-
 
 
 

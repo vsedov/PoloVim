@@ -3,6 +3,8 @@ local lspconfig = require 'lspconfig'
 local global = require 'core.global'
 local format = require('modules.completion.format')
 local fn = vim.fn
+
+
 require('lspkind').init({
     -- enables text annotations
     --
@@ -81,7 +83,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 capabilities.textDocument.codeAction = {
-  dynamicRegistration = true;
+  -- dynamicRegistration = false;
   codeActionLiteralSupport = {
     codeActionKind = {
       valueSet = {
@@ -96,6 +98,7 @@ capabilities.textDocument.codeAction = {
     };
   };
 }
+
 
 
 
@@ -180,13 +183,24 @@ vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ fo
 
 local enhance_attach = function(client,bufnr)
   require'lsp_signature'.on_attach(cfg)
-  if client.resolved_capabilities.document_formatting then
-    format.lsp_before_save()
-  end
+
+
   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
 end
 
 
+
+require'lspinstall'.setup() -- important
+local util = require 'lspconfig/util'
+
+local servers = require'lspinstall'.installed_servers()
+for _, server in pairs(servers) do
+  lspconfig[server].setup{
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+  }
+end
 
 
 lspconfig.gopls.setup {
@@ -207,18 +221,25 @@ lspconfig.tsserver.setup {
   end
 }
 
--- lspconfig.clangd.setup {
---   cmd = {
---     "clangd",
---     "--background-index",
---     "--suggest-missing-includes",
---     "--clang-tidy",
---     "--header-insertion=iwyu",
---   },
---   on_attach = enhance_attach,
---   capabilities = capabilities,
 
--- }
+local custom_on_attach_num = function(client, bufnr)
+  
+  -- This is the new thing added
+  local opts = {
+    noremap=true,
+    silent=true,
+  }
+end
+
+
+lspconfig.jdtls.setup {
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+    cmd = {"jdtls"},
+    filetypes = { "java" },
+    -- init_options = {bundles = bundles}
+    -- on_attach = require'lsp'.common_on_attach
+}
 
 
 lspconfig.ccls.setup {
@@ -237,6 +258,10 @@ lspconfig.jedi_language_server.setup{
   on_attach = enhance_attach,
   capabilities = capabilities,
 }
+
+
+
+
 
 lspconfig.diagnosticls.setup {
   filetypes = { "python" },
@@ -278,14 +303,13 @@ lspconfig.diagnosticls.setup {
 }
 
 
-lspconfig.jdtls.setup{
-  filetypes = {"java"},
-  cmd = {'jdtls'},
+lspconfig.sqlls.setup{
+
+  filetypes = { "sql", "mysql" },
+  cmd = {"sql-language-server", "up", "--method", "stdio"},
   on_attach = enhance_attach,
   capabilities = capabilities,
-
 }
-
 
 
 -- You will have to Build a package for this .
@@ -458,3 +482,15 @@ vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagno
 
 -- vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
 -- vim.cmd [[autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()]]
+-- lspconfig.clangd.setup {
+--   cmd = {
+--     "clangd",
+--     "--background-index",
+--     "--suggest-missing-includes",
+--     "--clang-tidy",
+--     "--header-insertion=iwyu",
+--   },
+--   on_attach = enhance_attach,
+--   capabilities = capabilities,
+
+-- }
