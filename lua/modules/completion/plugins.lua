@@ -16,7 +16,10 @@ completion['neovim/nvim-lspconfig'] = {
   -- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
 }
+completion['https://github.com/mfussenegger/nvim-jdtls']={
 
+  
+}
 
 
 completion['folke/todo-comments.nvim']  = {

@@ -124,19 +124,7 @@ function config.neorunner()
 
 end
 
--- function config.code_runner()
--- require('code_runner').setup {
---   term = {
---     position = "vert",
---     size = 8
---   },
---   fterm = {
---     height = 0.7,
---     width = 0.7
---   }
--- }
 
--- end
 
 function config.sniprun()
 

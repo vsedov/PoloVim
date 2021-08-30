@@ -137,7 +137,7 @@ vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
   max_width = 140, -- max_width of signature floating_window, line will be wrapped if exceed max_width
   transpancy = 10, -- set this value if you want the floating windows to be transpant (100 fully transpant), nil to disable(default)
   handler_opts = {
-    border = "shadow"   -- double, single, shadow, none
+    border = "single"   -- double, single, shadow, none
   },
 
   trigger_on_newline = false, -- set to true if you need multiple line parameter, sometime show signature on new line can be confusing, set it to false for #58
@@ -242,11 +242,30 @@ lspconfig.jdtls.setup {
 }
 
 
-lspconfig.ccls.setup {
-  cmd = {"ccls" },
+-- lspconfig.ccls.setup {
+--   cmd = {"ccls" },
+--   on_attach = enhance_attach,
+--   capabilities = capabilities,
+--   filetypes = { "c", "cpp", "objc", "objcpp" },
+
+-- }
+local clangd_flags = {
+  "--background-index",
+  "--cross-file-rename",
+  "--clang-tidy-checks=clang-diagnostic-*,clang-analyzer-*,-*,bugprone*,modernize*,performance*,-modernize-pass-by-value,-modernize-use-auto,-modernize-use-using,-modernize-use-trailing-return-type",
+}
+
+lspconfig.clangd.setup {
+  -- cmd = {
+  --   "clangd",
+  --   "--background-index",
+  --   "--suggest-missing-includes",
+  --   "--clang-tidy",
+  --   "--header-insertion=iwyu",
+  -- },
+  cmd = {"clangd", unpack(clangd_flags)},
   on_attach = enhance_attach,
   capabilities = capabilities,
-  filetypes = { "c", "cpp", "objc", "objcpp" },
 
 }
 
@@ -482,15 +501,3 @@ vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagno
 
 -- vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
 -- vim.cmd [[autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()]]
--- lspconfig.clangd.setup {
---   cmd = {
---     "clangd",
---     "--background-index",
---     "--suggest-missing-includes",
---     "--clang-tidy",
---     "--header-insertion=iwyu",
---   },
---   on_attach = enhance_attach,
---   capabilities = capabilities,
-
--- }

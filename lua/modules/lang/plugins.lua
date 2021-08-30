@@ -1,5 +1,24 @@
 local lang = {}
 local conf = require('modules.lang.config')
+lang['tpope/vim-liquid'] = {
+  ft = {'liquid'}
+}
+
+
+lang['pseewald/vim-anyfold'] = {
+  cmd = 'AnyFoldActivate'
+}
+
+lang['arecarn/vim-fold-cycle'] = {
+  opt = true
+}
+
+
+lang['nvim-treesitter/playground'] = {
+  after = 'nvim-treesitter'
+}
+
+
 
 lang['nvim-treesitter/nvim-treesitter'] = {
   event = 'BufRead',
@@ -18,6 +37,15 @@ lang['https://github.com/haringsrob/nvim_context_vt'] = {
   after = 'nvim-treesitter',
 
 }
+
+
+lang['andymass/vim-matchup'] = {
+  config = function ()
+    vim.g.matchup_matchparen_enabled = 0
+    vim.g.matchup_matchparen_fallback = 0
+  end
+}
+
 
 
 
@@ -40,41 +68,41 @@ lang['https://github.com/p00f/nvim-ts-rainbow'] = {
 
 
 
--- -- Bloody Usefull 
--- lang['vhyrro/neorg']={
---     branch = "main",
---     ft = "norg",
---     config = function()
---         if not packer_plugins['plenary.nvim'].loaded then
---           vim.cmd [[packadd plenary.nvim]]
---         end
---         require('neorg').setup {
---             -- Tell Neorg what modules to load
---             load = {
---                 ["core.defaults"] = {}, -- Load all the default modules
---                 ["core.keybinds"] = { -- Configure core.keybinds
---                     config = {
---                         default_keybinds = true, -- Generate the default keybinds
---                     }
---                 },
---                 ["core.norg.concealer"] = {}, -- Allows for use of icons
---                 ["core.norg.dirman"] = { -- Manage your directories with Neorg
---                     config = {
---                         workspaces = {
---                             my_workspace = "~/neorg"
---                         }
---                     }
---                 }
---             },
---         }
+-- Bloody Usefull 
+lang['vhyrro/neorg']={
+    branch = "main",
+    ft = "norg",
+    config = function()
+        if not packer_plugins['plenary.nvim'].loaded then
+          vim.cmd [[packadd plenary.nvim]]
+        end
+        require('neorg').setup {
+            -- Tell Neorg what modules to load
+            load = {
+                ["core.defaults"] = {}, -- Load all the default modules
+                ["core.keybinds"] = { -- Configure core.keybinds
+                    config = {
+                        default_keybinds = true, -- Generate the default keybinds
+                    }
+                },
+                ["core.norg.concealer"] = {}, -- Allows for use of icons
+                ["core.norg.dirman"] = { -- Manage your directories with Neorg
+                    config = {
+                        workspaces = {
+                            my_workspace = "~/neorg"
+                        }
+                    }
+                }
+            },
+        }
 
---     end,
+    end,
 
---     requires = "nvim-lua/plenary.nvim",
+    requires = "nvim-lua/plenary.nvim",
 
 
---     after = 'nvim-treesitter',
+    after = 'nvim-treesitter',
 
--- }
+}
 
 return lang
