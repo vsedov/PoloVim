@@ -9,16 +9,6 @@ lang['pseewald/vim-anyfold'] = {
   cmd = 'AnyFoldActivate'
 }
 
-lang['arecarn/vim-fold-cycle'] = {
-  opt = true
-}
-
-
-lang['nvim-treesitter/playground'] = {
-  after = 'nvim-treesitter'
-}
-
-
 
 lang['nvim-treesitter/nvim-treesitter'] = {
   event = 'BufRead',
@@ -39,13 +29,20 @@ lang['https://github.com/haringsrob/nvim_context_vt'] = {
 }
 
 
-lang['andymass/vim-matchup'] = {
-  config = function ()
-    vim.g.matchup_matchparen_enabled = 0
-    vim.g.matchup_matchparen_fallback = 0
-  end
-}
+-- lang['andymass/vim-matchup'] = {
+--   config = function ()
+--     vim.g.matchup_matchparen_enabled = 1
+--     vim.g.matchup_matchparen_fallback = 0
+--   end,
+--   after = 'nvim-treesitter',
+-- }
 
+
+-- lang['https://github.com/p00f/nvim-ts-rainbow'] = {
+--   config = conf.rainbow,
+--   after = 'nvim-treesitter',
+
+-- }
 
 
 
@@ -57,12 +54,6 @@ lang['https://github.com/RRethy/nvim-treesitter-textsubjects'] = {
 }
 
 
-
-lang['https://github.com/p00f/nvim-ts-rainbow'] = {
-  config = conf.rainbow,
-  after = 'nvim-treesitter',
-
-}
 
 
 

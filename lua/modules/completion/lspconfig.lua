@@ -53,6 +53,15 @@ if not packer_plugins['lspsaga.nvim'].loaded then
 
 
 end
+
+
+if not packer_plugins['telescope.nvim'].loaded then
+  vim.cmd [[packadd telescope.nvim]]
+
+
+end
+
+
 if not packer_plugins['lsp-colors.nvim'].loaded then
   vim.cmd [[packadd folke/lsp-colors.nvim]]
   
@@ -98,6 +107,10 @@ capabilities.textDocument.codeAction = {
     };
   };
 }
+
+
+
+
 
 
 
@@ -191,7 +204,7 @@ end
 
 
 
-require'lspinstall'.setup() -- important
+--[[ require'lspinstall'.setup() -- important
 local util = require 'lspconfig/util'
 
 local servers = require'lspinstall'.installed_servers()
@@ -200,7 +213,7 @@ for _, server in pairs(servers) do
     on_attach = enhance_attach,
     capabilities = capabilities,
   }
-end
+end ]]
 
 
 lspconfig.gopls.setup {
@@ -232,14 +245,14 @@ local custom_on_attach_num = function(client, bufnr)
 end
 
 
-lspconfig.jdtls.setup {
-    on_attach = enhance_attach,
-    capabilities = capabilities,
-    cmd = {"jdtls"},
-    filetypes = { "java" },
-    -- init_options = {bundles = bundles}
-    -- on_attach = require'lsp'.common_on_attach
-}
+-- lspconfig.jdtls.setup {
+--     on_attach = enhance_attach,
+--     capabilities = capabilities,
+--     cmd = {"jdtls"},
+--     filetypes = { "java" },
+--     -- init_options = {bundles = bundles}
+--     -- on_attach = require'lsp'.common_on_attach
+-- }
 
 
 -- lspconfig.ccls.setup {
@@ -501,3 +514,24 @@ vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagno
 
 -- vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
 -- vim.cmd [[autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()]]
+
+
+
+
+
+-- local home = os.getenv('HOME')
+-- local root_markers = {'gradlew', '.git'}
+-- local root_dir = require('jdtls.setup').find_root(root_markers)
+-- local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
+-- -- lots of other stuff
+-- config.cmd = {'/home/viv/workspace/java-lsp.sh', workspace_folder}
+-- require('jdtls').start_or_attach(config)
+
+lspconfig.jdtls.setup {
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+    cmd = {'jdtls'},
+    filetypes = { "java" },
+    -- init_options = {bundles = bundles}
+    -- on_attach = require'lsp'.common_on_attach
+}

@@ -53,6 +53,13 @@ vim.api.nvim_command('augroup END')
 vim.api.nvim_command('nnoremap <esc> :noh<return><esc>')
 vim.api.nvim_command('nnoremap <esc>^[ <esc>^[')
 
+vim.api.nvim_command('augroup matchup_matchparen_highlight')
+vim.api.nvim_command('autocmd!')
+vim.api.nvim_command('autocmd ColorScheme * hi MatchParen guifg=purple')
+vim.api.nvim_command('augroup END')
+
+
+
 require("core")
 
 

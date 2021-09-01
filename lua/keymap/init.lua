@@ -117,7 +117,7 @@ local plug_map = {
 
     ["n|$"] = map_cmd("<cmd>lua require'hop'.hint_words()<cr>"),
     ["n|/"] = map_cmd(":HopPattern<CR>"),
-    ["n|,"] = map_cmd(":HopLine<CR>"),
+    ["n|,"] = map_cmd(":HopLineStart<CR>"),
 
     ["n|<Leader><TAB>"]    = map_cr('<CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),
     

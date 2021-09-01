@@ -68,6 +68,11 @@ function config.textobjects()
                 ["aS"] = { "@scope", "locals" }, -- selects `@scope` from locals.scm
               },
             },
+            matchup = {
+                enable = true,              -- mandatory, false will disable the whole extension
+                disable = {  "ruby" },  -- optional, list of language that will be disabled
+              },
+
 
             swap = {
               enable = true,

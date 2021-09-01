@@ -11,14 +11,10 @@ completion['neovim/nvim-lspconfig'] = {
   {'ray-x/lsp_signature.nvim'},
   {'https://github.com/onsails/lspkind-nvim'},
   {'folke/lsp-colors.nvim'},
-  {'kabouzeid/nvim-lspinstall'}
+  {'https://github.com/mfussenegger/nvim-jdtls'}
 
   -- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
-}
-completion['https://github.com/mfussenegger/nvim-jdtls']={
-
-  
 }
 
 

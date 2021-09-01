@@ -32,6 +32,10 @@ vim.g.UltiSnipsJumpForwardTrigger = "<C-j>"
 vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
 end
 
+function config.jdtls()
+  require('modules.completion.jdtls')
+
+end
 
 function config.nvim_compe()
   require'compe'.setup {
