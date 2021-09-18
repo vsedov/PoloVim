@@ -1,5 +1,6 @@
 local completion = {}
 local conf = require('modules.completion.config')
+local remap = vim.api.nvim_set_keymap
 
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
@@ -11,7 +12,8 @@ completion['neovim/nvim-lspconfig'] = {
   {'ray-x/lsp_signature.nvim'},
   {'https://github.com/onsails/lspkind-nvim'},
   {'folke/lsp-colors.nvim'},
-  {'https://github.com/mfussenegger/nvim-jdtls'}
+  {'https://github.com/mfussenegger/nvim-jdtls'},
+
 
   -- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
   }
@@ -19,10 +21,82 @@ completion['neovim/nvim-lspconfig'] = {
 
 
 completion['folke/todo-comments.nvim']  = {
+  opt=true,
   config = conf.todo_comments,
   after = 'trouble.nvim'
-
 }
+
+completion['ray-x/lsp_signature.nvim'] = {opt = true, after = 'nvim-lspconfig'}
+completion["hrsh7th/nvim-cmp"] = {
+  event = "InsertEnter", -- InsertCharPre
+  requires = {
+    {"hrsh7th/cmp-buffer", after = "nvim-cmp"},
+    {"hrsh7th/cmp-nvim-lua", after = "nvim-cmp"},
+    {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
+    {"hrsh7th/cmp-calc", after = "nvim-cmp"},
+    {"hrsh7th/cmp-path", after = "nvim-cmp"},
+    {"https://github.com/ray-x/cmp-treesitter", after = "nvim-cmp"},
+    {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"},
+    {"f3fora/cmp-spell", after = "nvim-cmp"},
+    {"octaltree/cmp-look", after = "nvim-cmp"},
+    {"dcampos/cmp-snippy",after = {"nvim-snippy", "nvim-cmp"}},
+    {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
+    {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
+    {'tzachar/cmp-tabnine',
+            run = './install.sh',
+            after = 'cmp-spell',
+            config = conf.tabnine
+    }
+  },
+    config = conf.cmp,
+}
+
+-- can not lazyload, it is also slow...
+completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
+  event = "InsertEnter",
+  requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
+  config = conf.luasnip
+}
+completion["kristijanhusak/vim-dadbod-completion"] = {
+  event = "InsertEnter",
+  ft = {'sql'},
+  setup = function()
+    vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
+    -- vim.cmd([[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
+    -- body
+  end
+}
+
+
+
+
+
+completion["kristijanhusak/vim-dadbod-completion"] = {
+  event = "InsertEnter",
+  ft = {'sql'},
+  setup = function()
+    vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
+    vim.cmd([[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
+    -- body
+  end
+}
+
+completion["dcampos/nvim-snippy"] = {
+  opt = true,
+  -- event = "InsertEnter",
+  -- requires = {"honza/vim-snippets", event = "InsertEnter"}, --event = "InsertEnter"
+  config = function()
+    require'snippy'.setup {}
+    -- body
+    -- vim.cmd([[imap <expr> <Tab> snippy#can_expand_or_advance() ? '<Plug>(snippy-expand-or-next)' : '<Tab>']])
+    -- vim.cmd([[imap <expr> <S-Tab> snippy#can_jump(-1) ? '<Plug>(snippy-previous)' : '<Tab>']])
+    -- vim.cmd([[smap <expr> <Tab> snippy#can_jump(1) ? '<Plug>(snippy-next)' : '<Tab>']])
+    -- vim.cmd([[smap <expr> <S-Tab> snippy#can_jump(-1) ? '<Plug>(snippy-previous)' : '<Tab>']])
+  end
+  -- after = "vim-snippets"
+}
+
+
 
 
 completion['https://github.com/folke/trouble.nvim'] = {
@@ -37,30 +111,73 @@ completion['dense-analysis/ale'] = {
 
 }
 
--- OUt of date need to replace this
-completion['glepnir/lspsaga.nvim'] = {
-  cmd = 'Lspsaga',
+
+
+
+
+
+
+
+
+
+completion['windwp/nvim-autopairs'] = {
+    after = 'nvim-cmp',
+    config = conf.autopairs
 }
 
--- completion['ray-x/navigator.lua'] = {
---   requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}
 
+-- completion["ms-jpq/coq_nvim"] = {
+--   -- event = "InsertCharPre",
+--   after = {"coq.artifacts"},
+--   branch = 'coq',
+
+--   config = function()
+--   vim.g.coq_settings = {
+--     ['clients.lsp.weight_adjust'] = 0.7,
+--     ['clients.tabnine.weight_adjust'] = 0.6,
+--     ['clients.snippets.weight_adjust'] = 0.5,
+--     ['clients.paths.weight_adjust'] = 0.4,
+--     ['clients.buffers.weight_adjust'] = 0.3,
+--     ['display.icons.mode'] = 'long',
+--     ['display.pum.source_context'] = { '[', ']' },
+--     ['display.pum.kind_context'] = { ' ', ' ' },
+--     ['match.proximate_lines']=25,
+--     ['match.fuzzy_cutoff'] = 0.5,
+
+--     keymap = {
+--           recommended  = true,
+--           jump_to_mark = '<c-k>',
+--           -- manual_complete ='<cr>',
+--           bigger_preview = '<c-l>',
+--     },
+
+--     clients = {
+--           lsp = {enabled = true},
+--           snippets = {enabled = true},
+--           tabnine = {enabled = true},
+--           tree_sitter = {enabled = true},
+
+--       },
+--     display = {
+--         pum={fast_close = false},
+
+--       },
+
+
+--   }
+--   vim.defer_fn(function() vim.opt.completeopt = 'menuone,noinsert' end, 1000) -- has to be deferred since COQ changes this setting
+--   vim.cmd([[COQnow --shut-up]])
+--   end
 -- }
 
 
-completion['tzachar/compe-tabnine'] = {
-  run = './install.sh',
-  requires = {{'hrsh7th/nvim-compe'},
-              {'GoldsteinE/compe-latex-symbols'}},
-  config = conf.nvim_compe,
-
-}
+-- completion["ms-jpq/coq.artifacts"] = {
+--   -- opt = true,
+--   event = "InsertEnter",
+--   branch = 'artifacts'
+-- }
 
 
-completion['hrsh7th/vim-vsnip'] = {
-  event = 'InsertCharPre',
-  config = conf.vim_vsnip
-}
 
 completion['nvim-telescope/telescope.nvim'] = {
   
@@ -86,15 +203,11 @@ completion['pwntester/octo.nvim']={
   end
 }
 
---Leave for last i think ,. 
 
-completion['SirVer/ultisnips'] = {
-  requires = 'honza/vim-snippets',
-  config = conf.ultisnipsconf
-}
 
 
 completion['Pocco81/AbbrevMan.nvim'] = {
+  opt = true,
   config = conf.AbbrevMan
 }
 
@@ -158,22 +271,9 @@ completion['mfussenegger/nvim-dap'] = {
   end
 }
 
-
-
-
-
-
-
-
 completion['lervag/vimtex'] = {
   config = conf.vimtex
 }
-
-
-
-
-
-
 
 
 completion['michaelb/sniprun'] = {
@@ -184,12 +284,8 @@ completion['michaelb/sniprun'] = {
 
 }
 
-
-
 completion['psf/black'] = {
 }
-
-
 
 
 completion['mattn/vim-sonictemplate'] = {

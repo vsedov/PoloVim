@@ -5,6 +5,14 @@ local format = require('modules.completion.format')
 local fn = vim.fn
 
 
+require'lsp_extensions'.inlay_hints{
+  highlight = "Comment",
+  prefix = " > ",
+  aligned = false,
+  only_current_line = false,
+  enabled = { "ChainingHint" }
+}
+
 require('lspkind').init({
     -- enables text annotations
     --
@@ -48,11 +56,17 @@ require('lspkind').init({
     },
 })
 
-if not packer_plugins['lspsaga.nvim'].loaded then
-  vim.cmd [[packadd lspsaga.nvim]]
+-- if not packer_plugins['lspsaga.nvim'].loaded then
+--   vim.cmd [[packadd lspsaga.nvim]]
 
+-- end
 
-end
+-- if not packer_plugins['coq_nvim'].loaded then
+--   vim.cmd [[packadd coq_nvim]]
+
+-- end
+
+-- local coq = require('coq')
 
 
 if not packer_plugins['telescope.nvim'].loaded then
@@ -68,16 +82,16 @@ if not packer_plugins['lsp-colors.nvim'].loaded then
 end
 
 
-local saga = require 'lspsaga'
-saga.init_lsp_saga({
-  code_action_keys = {
-    quit = 'q',exec = '<CR>'
-  },
-  rename_action_keys = {
-    quit = '<C-c>',exec = '<CR>'  -- quit can be a table
-  },
-  code_action_icon = '',
-})
+-- local saga = require 'lspsaga'
+-- saga.init_lsp_saga({
+--   code_action_keys = {
+--     quit = 'q',exec = '<CR>'
+--   },
+--   rename_action_keys = {
+--     quit = '<C-c>',exec = '<CR>'  -- quit can be a table
+--   },
+--   code_action_icon = '',
+-- })
 
 
 
@@ -174,6 +188,7 @@ vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
 -- I dont like the lsp diagnositcs, it can be very annoying and gets in teh way
 -- vim.lsp.handlers['textDocument/publishDiagnostics']= function() end
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+ 
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- Enable underline, use default values
     underline = false,
@@ -187,6 +202,7 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     },
     -- Disable a feature
     update_in_insert = true,
+    
   })
 
 vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })]]
@@ -196,7 +212,7 @@ vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ fo
 
 local enhance_attach = function(client,bufnr)
   require'lsp_signature'.on_attach(cfg)
-
+  -- coq.lsp_ensure_capabilities()
 
   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -204,16 +220,6 @@ end
 
 
 
---[[ require'lspinstall'.setup() -- important
-local util = require 'lspconfig/util'
-
-local servers = require'lspinstall'.installed_servers()
-for _, server in pairs(servers) do
-  lspconfig[server].setup{
-    on_attach = enhance_attach,
-    capabilities = capabilities,
-  }
-end ]]
 
 
 lspconfig.gopls.setup {
@@ -245,16 +251,6 @@ local custom_on_attach_num = function(client, bufnr)
 end
 
 
--- lspconfig.jdtls.setup {
---     on_attach = enhance_attach,
---     capabilities = capabilities,
---     cmd = {"jdtls"},
---     filetypes = { "java" },
---     -- init_options = {bundles = bundles}
---     -- on_attach = require'lsp'.common_on_attach
--- }
-
-
 -- lspconfig.ccls.setup {
 --   cmd = {"ccls" },
 --   on_attach = enhance_attach,
@@ -269,13 +265,6 @@ local clangd_flags = {
 }
 
 lspconfig.clangd.setup {
-  -- cmd = {
-  --   "clangd",
-  --   "--background-index",
-  --   "--suggest-missing-includes",
-  --   "--clang-tidy",
-  --   "--header-insertion=iwyu",
-  -- },
   cmd = {"clangd", unpack(clangd_flags)},
   on_attach = enhance_attach,
   capabilities = capabilities,
@@ -388,6 +377,16 @@ lspconfig.sumneko_lua.setup {
   },
 }
 
+lspconfig.jdtls.setup {
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+    cmd = {'jdtls'},
+    filetypes = { "java" },
+    -- init_options = {bundles = bundles}
+    -- on_attach = require'lsp'.common_on_attach
+}
+
+
 lspconfig.vimls.setup{
   on_attach = enhance_attach,
   capabilities = capabilities,
@@ -421,6 +420,8 @@ vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", texthl = "LspDiag
 vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", texthl = "LspDiagnosticsDefaultInformation"})
 vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsDefaultHint"})
 vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagnosticsDefaultOther"})
+
+
 
 
 
@@ -526,12 +527,3 @@ vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagno
 -- -- lots of other stuff
 -- config.cmd = {'/home/viv/workspace/java-lsp.sh', workspace_folder}
 -- require('jdtls').start_or_attach(config)
-
-lspconfig.jdtls.setup {
-    on_attach = enhance_attach,
-    capabilities = capabilities,
-    cmd = {'jdtls'},
-    filetypes = { "java" },
-    -- init_options = {bundles = bundles}
-    -- on_attach = require'lsp'.common_on_attach
-}

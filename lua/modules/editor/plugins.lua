@@ -1,11 +1,11 @@
 local editor = {}
 local conf = require('modules.editor.config')
 
-editor['Raimondi/delimitMate'] = {
-  opt = true,
-  event  = 'InsertEnter',
-  config = conf.delimimate,
-}
+-- editor['Raimondi/delimitMate'] = {
+--   opt = true,
+--   event  = 'InsertEnter',
+--   config = conf.delimimate,
+-- }
 
 editor['junegunn/vim-easy-align'] = {opt = true, cmd = 'EasyAlign'}
 
@@ -25,6 +25,63 @@ editor['rmagatti/auto-session'] = {
     }
   end
 }
+
+editor["andymass/vim-matchup"] = {
+  event = {"CursorMoved", "CursorMovedI"},
+  config = function()
+    vim.g.matchup_enabled = 1
+    vim.g.matchup_surround_enabled = 1
+    -- vim.g.matchup_transmute_enabled = 1
+    vim.g.matchup_matchparen_deferred = 1
+    vim.g.matchup_matchparen_offscreen = {method = 'popup'}
+    vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
+  end
+}
+
+
+editor["tpope/vim-surround"] = {
+  opt = true
+  -- event = 'InsertEnter',
+  -- keys={'c', 'd'}
+}
+editor["matze/vim-move"] = {
+  opt = true,
+  event = "InsertEnter"
+  -- fn = {'<Plug>MoveBlockDown', '<Plug>MoveBlockUp', '<Plug>MoveLineDown', '<Plug>MoveLineUp'}
+}
+
+editor["bfredl/nvim-miniyank"] = {
+  keys = {"p", "y", "<C-v>"},
+  opt = true,
+  setup = function()
+    vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
+    vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
+  end
+}
+
+-- fix terminal color
+editor["norcalli/nvim-terminal.lua"] = {
+  opt = true,
+  ft = {"log", "terminal"},
+  config = function()
+    require"terminal".setup()
+  end
+}
+editor["mbbill/undotree"] = { cmd = {"UndotreeToggle"}}
+
+
+
+editor["AndrewRadev/splitjoin.vim"] = {
+  opt = true,
+  cmd = {"SplitjoinJoin", "SplitjoinSplit"},
+  setup = function()
+    vim.g.splitjoin_split_mapping = ""
+    vim.g.splitjoin_join_mapping = ""
+  end
+  -- keys = {'<space>S', '<space>J'}
+}
+
+
 
 editor['takac/vim-hardtime'] = {
   -- opt = true,
@@ -52,14 +109,6 @@ editor['turbio/bracey.vim'] ={
   end
 }
 
-
-
--- editor['norcalli/nvim-colorizer.lua'] = {
---   opt = true,
---   ft = { 'html','css','sass','vim','typescript','typescriptreact'},
---   cmd = {'ColorizerToggle', 'ColorizerAttachToBuffer', 'ColorizerDetachFromBuffer', 'ColorizerReloadAllBuffers'},
---   config = conf.nvim_colorizer
--- }
 
 -- nvim-colorizer replacement
 editor["rrethy/vim-hexokinase"] = {
@@ -166,17 +215,6 @@ editor['andweeb/presence.nvim']  = {
 
 editor['https://github.com/numtostr/FTerm.nvim']={
     config = function()
-        require("FTerm").setup()
-        local term = require("FTerm.terminal")
-
-        local top = term:new():setup({
-            cmd = "bpytop"
-        })
-
-         -- Use this to toggle bpytop in a floating terminal
-        function _G.__fterm_top()
-            top:toggle()
-        end
 
 
     end
@@ -198,6 +236,7 @@ editor['jdhao/better-escape.vim']  = {
 
 
 editor['zegervdv/nrpattern.nvim']  = {
+  opt = true,
 
   config = function()
     require"nrpattern".setup()
@@ -215,6 +254,8 @@ editor['sindrets/diffview.nvim']={
 
 
 editor['rmagatti/alternate-toggler']  = {
+    opt = true,
+
 }
 
 editor['https://github.com/tmhedberg/SimpylFold']  = {
@@ -225,6 +266,13 @@ editor['https://github.com/tmhedberg/SimpylFold']  = {
   end
 }
 
+
+
+editor["chaoren/vim-wordmotion"] = {
+  opt = true,
+  fn = {"<Plug>WordMotion_w"}
+  -- keys = {'w','W', 'gE', 'aW'}
+}
 
 
 

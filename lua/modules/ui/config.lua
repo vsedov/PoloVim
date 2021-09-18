@@ -4,9 +4,6 @@ function config.galaxyline()
   require('modules.ui.eviline')
 end
 
-function config.felineconfig()
-  require('modules.ui.feline')
-end
 
 function config.nvim_bufferline()
   require('bufferline').setup{
@@ -19,25 +16,6 @@ function config.nvim_bufferline()
         local icon = level:match("error") and " " or " "
         return " " .. icon .. count
       end,
-      -- custom_filter = function(buf, buf_nums)
-      --   local logs =
-      --     vim.tbl_filter(
-      --     function(b)
-      --       return is_ft(b, "log")
-      --     end,
-      --     buf_nums
-      --   )
-      --   if vim.tbl_isempty(logs) then
-      --     return true
-      --   end
-      --   local tab_num = vim.fn.tabpagenr()
-      --   local last_tab = vim.fn.tabpagenr("$")
-      --   local is_log = is_ft(buf, "log")
-      --   -- only show log buffers in secondary tabs
-      --   return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
-      -- end,
-
-      -- mappings = true,
       show_close_icon = false,
       always_show_bufferline = true,
       show_buffer_close_icons = false,
@@ -199,7 +177,7 @@ function config.indent_blakline()
     "" -- for all buffers without a file type
   }
   vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
-  vim.g.indent_blankline_show_trailing_blankline_indent = false
+  vim.g.indent_blankline_show_trailing_blankline_indent = true
   vim.g.indent_blankline_show_current_context = true
   vim.g.indent_blankline_context_patterns = {
     "class",
@@ -224,7 +202,7 @@ end
 function config.ui()
   -- vim.cmd('colorscheme boo')
   vim.g.tokyonight_style = "night"
-  vim.g.tokyonight_transparent = true
+  vim.g.tokyonight_transparent = false
 
   vim.g.tokyonight_enable_italic_comment = true
   vim.g.tokyonight_enable_italic = true
@@ -243,23 +221,6 @@ function config.ui()
 
   -- Load the colorscheme
   vim.cmd[[colorscheme tokyonight]]
-
-
--- Example config in lu
-  -- vim.g.calvera_style = 'deep ocean'
-  -- vim.g.calvera_italic_comments = true
-  -- vim.g.calvera_italic_keywords = true
-  -- vim.g.calvera_italic_functions = true
-  -- vim.g.calvera_italic_variables = false
-  -- vim.g.calvera_contrast = true
-  -- vim.g.calvera_lighter_contrast=true
-
-  -- vim.g.calvera_borders = true
-  -- vim.g.calvera_disable_background = true
-  -- vim.g.calvera_hide_eob = true
-  -- -- vim.g.calvera_custom_colors = {contrast = "#3c021b"}
-  -- -- Required Setting
-  -- require('calvera').set()
 end
 
 
@@ -290,9 +251,47 @@ function config.truezen()
 
 end 
 
+function config.windline()
+  if not packer_plugins["nvim-web-devicons"].loaded then
+    packer_plugins["nvim-web-devicons"].loaded = true
+    require"packer".loader("nvim-web-devicons")
+  end
 
+  require("modules.ui.eviline")
+end
 
+function config.scrollview()
+  if vim.wo.diff then
+    return
+  end
+  local w = vim.api.nvim_call_function("winwidth", {0})
+  if w < 70 then
+    return
+  end
 
+  vim.g.scrollview_column = 1
+end
+
+function config.scrollbar()
+  if vim.wo.diff then
+    return
+  end
+  local w = vim.api.nvim_call_function("winwidth", {0})
+  if w < 70 then
+    return
+  end
+  local vimcmd = vim.api.nvim_command
+  vimcmd("augroup " .. "ScrollbarInit")
+  vimcmd("autocmd!")
+  vimcmd("autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()")
+  vimcmd("autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()")
+  vimcmd("autocmd WinLeave,FocusLost,BufLeave    * silent! lua require('scrollbar').clear()")
+  vimcmd("autocmd WinLeave,BufLeave    * silent! DiffviewClose")
+  vimcmd("augroup end")
+  vimcmd("highlight link Scrollbar Comment")
+  vim.g.sb_default_behavior = "never"
+  vim.g.sb_bar_style = "solid"
+end
 
 
 return config

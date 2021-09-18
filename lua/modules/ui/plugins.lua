@@ -14,18 +14,27 @@ ui['glepnir/dashboard-nvim'] = {
 
 
 
-ui['glepnir/galaxyline.nvim'] = {
+ui['NTBBloodbath/galaxyline.nvim'] = {
   branch = 'main',
   config = conf.galaxyline,
   requires = 'kyazdani42/nvim-web-devicons'
 }
 
+-- ui["windwp/windline.nvim"] = {
+--   event = "UIEnter",
+--   config = conf.windline,
+--   -- requires = {'kyazdani42/nvim-web-devicons'},
+--   opt = true
+-- }
+
+ui["lambdalisue/glyph-palette.vim"] = {}
+
+
 ui['lukas-reineke/indent-blankline.nvim'] = {
-  event = 'BufRead',
-  branch = 'master',
   config = conf.indent_blakline
 }
 
+ui["dstein64/nvim-scrollview"] = {config = conf.scrollview}
 
 ui['akinsho/nvim-bufferline.lua'] = {
   config = conf.nvim_bufferline,
@@ -86,12 +95,6 @@ ui['folke/zen-mode.nvim'] = {
 ui['folke/twilight.nvim'] = {
 }
 
-
-
-
-ui['mbbill/undotree'] = {
-  config = conf.undo
-}
 
 
 

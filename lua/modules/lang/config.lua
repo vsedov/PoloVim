@@ -23,6 +23,54 @@ function config.rainbow()
   }
 end
 
+function config.sqls()
+end
+
+function config.sidekick()
+  -- body
+  vim.g.sidekick_printable_def_types = {
+    'function', 'class', 'type', 'module', 'parameter', 'method', 'field'
+  }
+  -- vim.g.sidekick_def_type_icons = {
+  --    class = "\\uf0e8",
+  --    type = "\\uf0e8",
+  --    ['function'] = "\\uf794",
+  --    module = "\\uf7fe",
+  --    arc_component = "\\uf6fe",
+  --    sweep = "\\uf7fd",
+  --    parameter = "•",
+  --    var = "v",
+  --    method = "\\uf794",
+  --    field = "\\uf6de",
+  -- }
+  -- vim.g.sidekick_ignore_by_def_type = {
+  --   ['var'] = {"_": 1, "self": 1},
+  --   parameters = {"self": 1},
+  -- }
+
+  -- Indicates which definition types should have their line number displayed in the outline window.
+  vim.g.sidekick_line_num_def_types = {
+    class = 1,
+    type = 1,
+    ['function'] = 1,
+    module = 1,
+    method = 1
+  }
+
+  -- What to display between definition and line number
+  vim.g.sidekick_line_num_separator = " "
+  -- What to display to the left and right of the line number
+  -- vim.g.sidekick_line_num_left = "\\ue0b2"
+  -- vim.g.sidekick_line_num_right = "\\ue0b0"
+  -- -- What to display before outer vs inner vs folded outer definitions
+  -- vim.g.sidekick_outer_node_folded_icon = "\\u2570\\u2500\\u25C9"
+  -- vim.g.sidekick_outer_node_icon = "\\u2570\\u2500\\u25CB"
+  -- vim.g.sidekick_inner_node_icon = "\\u251c\\u2500\\u25CB"
+  -- -- What to display to left and right of def_type_icon
+  -- vim.g.sidekick_left_bracket = "\\u27ea"
+  -- vim.g.sidekick_right_bracket = "\\u27eb"
+end
+
 function config.textobjects()
   require'nvim-treesitter.configs'.setup {
           textobjects = {

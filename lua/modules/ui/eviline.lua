@@ -1,12 +1,12 @@
 local gl  = require('galaxyline')
 local gls = gl.section
 
-local buffer    = require('galaxyline.provider_buffer')
+local buffer    = require('galaxyline.providers.buffer')
 local colors    = require("tokyonight.colors").setup(config)
 local condition = require('galaxyline.condition')
-local fileinfo  = require('galaxyline.provider_fileinfo')
-local lsp       = require('galaxyline.provider_lsp')
-local vcs       = require('galaxyline.provider_vcs')
+local fileinfo  = require('galaxyline.providers.fileinfo')
+local lsp       = require('galaxyline.providers.lsp')
+local vcs       = require('galaxyline.providers.vcs')
 
 gl.short_line_list = {'NvimTree', 'help', 'tagbar'}
 

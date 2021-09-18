@@ -1,15 +1,6 @@
 local dap = require('dap');    
 local api = vim.api
 local HOME = os.getenv('HOME')
-local dap_install = require("dap-install")
-
-dap_install.setup({
-    installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-    verbosely_call_debuggers = false,
-})
-
-
--- Need to figure out how to do java 
 
 
 
@@ -80,14 +71,3 @@ dap.configurations.cpp = {
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
-
-
-local dap_install = require("dap-install")
-local dbg_list = require("dap-install.debuggers_list").debuggers
-
-for debugger, _ in pairs(dbg_list) do
-    dap_install.config(debugger, {})
-end
-require('dap-python').setup('/usr/bin/python3')
-require('dap-python').test_runner = 'pytest'
-require('dapui').setup({})

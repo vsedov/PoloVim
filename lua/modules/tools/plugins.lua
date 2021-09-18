@@ -2,15 +2,28 @@ local tools = {}
 local conf = require('modules.tools.config')
 
 
-tools['kristijanhusak/vim-dadbod-ui'] = {
-  opt = true,
-  cmd = {'DBUIToggle','DBUIAddConnection','DBUI','DBUIFindBuffer','DBUIRenameBuffer'},
+tools["kristijanhusak/vim-dadbod-ui"] = {
+  cmd = {"DBUIToggle", "DBUIAddConnection", "DBUI", "DBUIFindBuffer", "DBUIRenameBuffer", "DB"},
   config = conf.vim_dadbod_ui,
-  requires = {{'tpope/vim-dadbod',opt = true}}
+  requires = {"tpope/vim-dadbod", ft = {'sql'}},
+  opt = true,
+  setup = function()
+    vim.g.dbs = {
+      eraser = 'postgres://postgres:password@localhost:5432/eraser_local',
+      staging = 'postgres://postgres:password@localhost:5432/my-staging-db',
+      wp = 'mysql://root@localhost/wp_awesome'
+    }
+  end
 }
 
 
-
+tools["TimUntersberger/neogit"] = {
+  cmd = {"Neogit"},
+  config = function()
+    local neogit = require('neogit')
+    neogit.setup {}
+  end
+}
 
 tools["editorconfig/editorconfig-vim"] = {
   opt = true,
@@ -22,15 +35,6 @@ tools['b3nj5m1n/kommentary'] = {
   config = conf.kommentary,
 }
 
-
-tools['AndrewRadev/splitjoin.vim'] = {
-  opt = true,
-  cmd = {'SplitjoinSplit', 'SplitjoinJoin'},
-  config = function ()
-    vim.g.splitjoin_split_mapping = ''
-    vim.g.splitjoin_join_mapping  = ''
-  end
-}
 
 
 
@@ -180,7 +184,7 @@ vim.g.symbols_outline = {
 
 tools['kdheepak/lazygit.nvim'] = {
   opt = true,
-  cmd = {'LazyGit', 'LazyGitConfig'},
+  cmd = {'LazyGit'},
   config = function()
     vim.g.lazygit_floating_window_winblend = 2
   end

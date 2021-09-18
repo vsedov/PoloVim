@@ -6,6 +6,177 @@ function config.nvim_lsp()
 end
 
 
+
+
+
+
+function config.cmp()
+    local t = function(str)
+        return vim.api.nvim_replace_termcodes(str, true, true, true)
+    end
+    local comp_kind = nil
+    local t = function(str)
+      return vim.api.nvim_replace_termcodes(str, true, true, true)
+    end
+    local check_back_space = function()
+      local col = vim.fn.col '.' - 1
+      return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s' ~= nil
+    end
+
+
+    local sources = {
+            {name = 'nvim_lsp',},
+            {name = 'nvim_lua'},
+            {name = 'luasnip'},
+            {name = 'cmp_tabnine'},
+            {name = 'ultisnips'},
+            {name = 'treesitter', keyword_length = 2},
+            {name = 'look', keyword_length = 4},
+            {name = 'buffer'},
+            {name = 'path'},
+            {name = 'spell'},
+            {name = 'tmux'},
+            {name = 'calc'}, 
+
+        }
+
+    local cmp = require('cmp')
+    if vim.o.ft == 'sql' then
+      table.insert(sources, {name = 'vim-dadbod-completion'})
+    end
+    if vim.o.ft == 'markdown' then
+      table.insert(sources, {name = 'spell'})
+      table.insert(sources, {name = 'look'})
+    end
+
+    cmp.setup {
+        completion = {
+          autocomplete = {require("cmp.types").cmp.TriggerEvent.TextChanged},
+          completeopt = "menu,menuone,noselect"
+        },
+
+        formatting = {
+            format = function(entry, vim_item)
+
+                local lspkind_icons = {
+                    Text = "",
+                    Method = "",
+                    Function = "",
+                    Constructor = "",
+                    Field = "ﰠ",
+                    Variable = "",
+                    Class = "ﴯ",
+                    Interface = "",
+                    Module = "",
+                    Property = "ﰠ",
+                    Unit = "塞",
+                    Value = "",
+                    Enum = "",
+                    Keyword = "",
+                    Snippet = "",
+                    Color = "",
+                    File = "",
+                    Reference = "",
+                    Folder = "",
+                    EnumMember = "",
+                    Constant = "",
+                    Struct = "פּ",
+                    Event = "",
+                    Operator = "",
+                    TypeParameter = ""
+                }
+                -- load lspkind icons
+                vim_item.kind = string.format("%s %s",
+                                              lspkind_icons[vim_item.kind],
+                                              vim_item.kind)
+
+                vim_item.menu = ({
+                    cmp_tabnine = "[TN]",
+                    nvim_lsp = "[LSP]",
+                    nvim_lua = "[Lua]",
+                    buffer = "[BUF]",
+                    path = "[PATH]",
+                    tmux = "[TMUX]",
+                    luasnip = "[SNIP]",
+                    ultisnips = "[UltiSnips]",
+                    spell = "[SPELL]"
+                })[entry.source.name]
+
+                return vim_item
+            end
+        },
+        -- You can set mappings if you want
+        mapping = {
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Insert, select = true}),
+
+
+        ["<tab>"] = cmp.mapping(function(fallback)
+
+                  if vim.fn.pumvisible() == 1 then
+                    vim.fn.feedkeys(t("<C-n>"), "n")
+
+                  elseif require'luasnip'.expand_or_jumpable() then
+                  
+                    vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
+                  elseif check_back_space() then
+                    vim.fn.feedkeys(t("<tab>"), "n")
+                  else
+                    fallback()
+                  end
+                end, {"i", "s"}),
+
+        ["<S-tab>"] = cmp.mapping(function(fallback)
+                  if vim.fn.pumvisible() == 1 then
+                    vim.fn.feedkeys(t("<C-p>"), "n")
+
+                  elseif require'luasnip'.jumpable(-1) then
+                    vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
+
+                  else
+                    fallback()
+                  end
+                end, {"i", "s"})
+              },
+
+
+        snippet = {
+            expand = function(args)
+                require("luasnip").lsp_expand(args.body)
+            end
+        },
+         documentation = {
+            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+          },
+
+        sources = sources
+
+    
+    }
+end
+
+function config.luasnip()
+    require('luasnip').config.set_config {
+        history = true,
+        updateevents = "TextChanged,TextChangedI"
+    }
+    require("luasnip/loaders/from_vscode").load()
+end
+
+
+
+
+function config.tabnine()
+    local tabnine = require('cmp_tabnine.config')
+    tabnine:setup({max_line = 1000, max_num_results = 20, sort = true})
+end
+
+
 function config.bqf()
 
   require('bqf').setup({
@@ -26,63 +197,12 @@ function config.bqf()
 end
 
 
-function config.ultisnipsconf()
-vim.g.UltiSnipsExpandTrigger = "<C-s>"      
-vim.g.UltiSnipsJumpForwardTrigger = "<C-j>" 
-vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
-end
 
 function config.jdtls()
   require('modules.completion.jdtls')
 
 end
 
-function config.nvim_compe()
-  require'compe'.setup {
-    enabled = true;
-    autocomplete = true,
-    debug = false,
-    min_length = 1,
-    preselect = 'enable',
-    throttle_time = 80,
-    source_timeout = 200,
-    incomplete_delay = 400,
-    max_abbr_width = 100,
-    max_kind_width = 100,
-    max_menu_width = 100,
-    documentation = {
-
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
-    source = {
-        path = {kind = "  "},
-        buffer = {kind = "  "},
-        
-        calc = {kind = "  "},
-        vsnip = {kind = "  "},
-        nvim_lsp = {priority = 1000,kind = "  "},
-        -- nvim_lua = {kind = "  "},
-        nvim_lua = false,
-        spell = {kind = "  "},
-        tags = true,
-        vim_dadbod_completion = true,
-        tabnine = {priority = 999,kind = "  ",max_line = 1000, show_prediction_strength = true},
-        -- snippets_nvim N= {kind = "  "},
-        latex_symbols = true,
-
-        -- zsh = true,
-        ultisnips = {kind = "  "},
-        treesitter=false,
-        -- treesitter = {kind = "  "},
-        emoji = {kind = " ﲃ ", filetypes={"markdown", "text"}},
-        neorg = {priority=1000,filetypes={"neorg","norg"}},
-        -- for emoji press : (idk if that in compe tho)
-    }
-  }
-end
-function config.vim_vsnip()
-  vim.g.vsnip_snippet_dir = os.getenv('HOME') .. '/.config/nvim/snippets'
-end
 
 function config.telescope()
   if not packer_plugins['plenary.nvim'].loaded then
@@ -90,14 +210,7 @@ function config.telescope()
     vim.cmd [[packadd popup.nvim]]
     vim.cmd [[packadd telescope-fzy-native.nvim]]
   end
-
-
-
-
   require('telescope.main')
-  
-
-
 end
 
 function config.vim_sonictemplate()
@@ -296,7 +409,6 @@ end
 function config.ale()
 
     vim.g.ale_completion_enabled = 0
-    vim.g.ale_python_pylint_options = '--rcfile ~/.config/pylintrc'
     vim.g.ale_python_mypy_options = ''
     vim.g.ale_list_window_size =  4
     vim.g.ale_sign_column_always = 0
@@ -363,6 +475,139 @@ function config.AbbrevMan()
 
 end 
 
-
+function config.autopairs()
+    require('nvim-autopairs').setup {fast_wrap = {}}
+    require("nvim-autopairs.completion.cmp").setup({
+        map_cr = true,
+        map_complete = true,
+        auto_select = true
+    })
+end
 
 return config
+
+
+
+
+
+
+-- function config.cmp()
+--     local t = function(str)
+--         return vim.api.nvim_replace_termcodes(str, true, true, true)
+--     end
+
+--     local cmp = require('cmp')
+--     cmp.setup {
+--         formatting = {
+--             format = function(entry, vim_item)
+--                 local lspkind_icons = {
+--                     Text = "",
+--                     Method = "",
+--                     Function = "",
+--                     Constructor = "",
+--                     Field = "ﰠ",
+--                     Variable = "",
+--                     Class = "ﴯ",
+--                     Interface = "",
+--                     Module = "",
+--                     Property = "ﰠ",
+--                     Unit = "塞",
+--                     Value = "",
+--                     Enum = "",
+--                     Keyword = "",
+--                     Snippet = "",
+--                     Color = "",
+--                     File = "",
+--                     Reference = "",
+--                     Folder = "",
+--                     EnumMember = "",
+--                     Constant = "",
+--                     Struct = "פּ",
+--                     Event = "",
+--                     Operator = "",
+--                     TypeParameter = ""
+--                 }
+--                 -- load lspkind icons
+--                 vim_item.kind = string.format("%s %s",
+--                                               lspkind_icons[vim_item.kind],
+--                                               vim_item.kind)
+
+--                 vim_item.menu = ({
+--                     cmp_tabnine = "[TN]",
+--                     nvim_lsp = "[LSP]",
+--                     nvim_lua = "[Lua]",
+--                     buffer = "[BUF]",
+--                     path = "[PATH]",
+--                     tmux = "[TMUX]",
+--                     luasnip = "[SNIP]",
+--                     spell = "[SPELL]"
+--                 })[entry.source.name]
+
+--                 return vim_item
+--             end
+--         },
+--         -- You can set mappings if you want
+--         mapping = {
+--             ['<C-p>'] = cmp.mapping.select_prev_item(),
+--             ['<C-n>'] = cmp.mapping.select_next_item(),
+--             ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+--             ['<C-f>'] = cmp.mapping.scroll_docs(4),
+--             ['<C-e>'] = cmp.mapping.close(),
+--             ["<Tab>"] = function(fallback)
+--                 if vim.fn.pumvisible() == 1 then
+--                     vim.fn.feedkeys(t("<C-n>"), "n")
+--                 else
+--                     fallback()
+--                 end
+--             end,
+--             ["<S-Tab>"] = function(fallback)
+--                 if vim.fn.pumvisible() == 1 then
+--                     vim.fn.feedkeys(t("<C-p>"), "n")
+--                 else
+--                     fallback()
+--                 end
+--             end,
+--             ["<C-h>"] = function(fallback)
+--                 if require("luasnip").jumpable(-1) then
+--                     vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
+--                 else
+--                     fallback()
+--                 end
+--             end,
+--             ["<C-l>"] = function(fallback)
+--                 if require("luasnip").expand_or_jumpable() then
+--                     vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
+--                 else
+--                     fallback()
+--                 end
+--             end
+--         },
+
+--         snippet = {
+--             expand = function(args)
+--                 require("luasnip").lsp_expand(args.body)
+--             end
+--         },
+
+--         -- You should specify your *installed* sources.
+--         sources = {
+--             {name = 'nvim_lsp'}, {name = 'nvim_lua'}, {name = 'luasnip'},
+--             {name = 'buffer'}, {name = 'path'}, {name = 'spell'},
+--             {name = 'tmux'},
+--           {name = 'cmp_tabnine'},
+--         }
+--     }
+-- end
+
+-- function config.luasnip()
+--     require('luasnip').config.set_config {
+--         history = true,
+--         updateevents = "TextChanged,TextChangedI"
+--     }
+--     require("luasnip/loaders/from_vscode").load()
+-- end
+
+-- function config.tabnine()
+--     local tabnine = require('cmp_tabnine.config')
+--     tabnine:setup({max_line = 1000, max_num_results = 20, sort = true})
+-- end
