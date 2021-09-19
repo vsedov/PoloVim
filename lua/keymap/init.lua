@@ -107,22 +107,10 @@ local plug_map = {
     ["n|<Leader>v"]      = map_cu('SymbolsOutline'):with_noremap():with_silent(),
 
 
-
-
-    ["n|$"] = map_cmd("<cmd>lua require'hop'.hint_words()<cr>"),
-    ["n|/"] = map_cmd(":HopPattern<CR>"),
-    ["n|,"] = map_cmd(":HopLineStart<CR>"),
-
     ["n|<Leader><TAB>"]    = map_cr('<CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),
     
     ["t|<Leader><TAB>"]    = map_cr('<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),
 
-
-
-    ["n|f"] = map_cmd(":HopChar1AC<CR>"),
-    ["n|F"] = map_cmd(":HopChar1BC<CR>"),
-
-   
 
     -- Plugin vim_niceblock
     ["x|I"]              = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
@@ -164,8 +152,12 @@ local plug_map = {
     ["n|<Right>"]      = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
 
 
-
-
+    -- Plugin hrsh7th/vim-eft
+    ["n|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
+    ["x|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
+    -- Plugin EasyAlign
+    ["n|ga"]                = map_cmd("v:lua.enhance_align('nga')"):with_expr(),
+    ["x|ga"]                = map_cmd("v:lua.enhance_align('xga')"):with_expr(),
     --sniprun
 
     ["v|<Leader>fr"]    = map_cmd("<Plug>SnipRun"):with_silent(),
@@ -183,10 +175,6 @@ local plug_map = {
     ["n|<Leader><leader>2"]          = map_cu("TZAtaraxis<CR>"):with_noremap():with_silent(),
     ["n|<Leader><Leader>3"]          = map_cu("TZMinimalist<CR>"):with_noremap():with_silent(),
     ["n|<Leader><Leader>4"]          = map_cu("TZFocus<CR>"):with_noremap():with_silent(),
-
-
-
-
     --- new 
     ["n|<Leader>vf"]             = map_cmd("<Plug>(ultest-run-file)"):with_silent(),
     ["n|<Leader>vn"]             = map_cmd("<Plug>(ultest-run-nearest)"):with_silent(),

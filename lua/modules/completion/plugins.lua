@@ -9,7 +9,6 @@ completion['neovim/nvim-lspconfig'] = {
   requires = {
   {'nvim-lua/lsp_extensions.nvim'},
   {'tjdevries/nlua.nvim'},
-  {'ray-x/lsp_signature.nvim'},
   {'https://github.com/onsails/lspkind-nvim'},
   {'folke/lsp-colors.nvim'},
   {'https://github.com/mfussenegger/nvim-jdtls'},
@@ -26,10 +25,10 @@ completion['folke/todo-comments.nvim']  = {
   after = 'trouble.nvim'
 }
 
-completion['ray-x/lsp_signature.nvim'] = {opt = true, after = 'nvim-lspconfig'}
 completion["hrsh7th/nvim-cmp"] = {
   event = "InsertEnter", -- InsertCharPre
   requires = {
+    {'ray-x/lsp_signature.nvim',after= "nvim-lspconfig"},
     {"hrsh7th/cmp-buffer", after = "nvim-cmp"},
     {"hrsh7th/cmp-nvim-lua", after = "nvim-cmp"},
     {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
@@ -41,6 +40,7 @@ completion["hrsh7th/nvim-cmp"] = {
     {"octaltree/cmp-look", after = "nvim-cmp"},
     {"dcampos/cmp-snippy",after = {"nvim-snippy", "nvim-cmp"}},
     {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
+      -- {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
     {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
     {'tzachar/cmp-tabnine',
             run = './install.sh',
@@ -57,19 +57,6 @@ completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
   requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
   config = conf.luasnip
 }
-completion["kristijanhusak/vim-dadbod-completion"] = {
-  event = "InsertEnter",
-  ft = {'sql'},
-  setup = function()
-    vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
-    -- vim.cmd([[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
-    -- body
-  end
-}
-
-
-
-
 
 completion["kristijanhusak/vim-dadbod-completion"] = {
   event = "InsertEnter",
@@ -80,6 +67,15 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
     -- body
   end
 }
+
+completion["SirVer/ultisnips"]={
+  requires = "honza/vim-snippets",
+  config = function()
+    vim.g.UltiSnipsRemoveSelectModeMappings = 0
+  end,
+}
+
+
 
 completion["dcampos/nvim-snippy"] = {
   opt = true,
@@ -113,69 +109,11 @@ completion['dense-analysis/ale'] = {
 
 
 
-
-
-
-
-
-
-
 completion['windwp/nvim-autopairs'] = {
     after = 'nvim-cmp',
     config = conf.autopairs
 }
 
-
--- completion["ms-jpq/coq_nvim"] = {
---   -- event = "InsertCharPre",
---   after = {"coq.artifacts"},
---   branch = 'coq',
-
---   config = function()
---   vim.g.coq_settings = {
---     ['clients.lsp.weight_adjust'] = 0.7,
---     ['clients.tabnine.weight_adjust'] = 0.6,
---     ['clients.snippets.weight_adjust'] = 0.5,
---     ['clients.paths.weight_adjust'] = 0.4,
---     ['clients.buffers.weight_adjust'] = 0.3,
---     ['display.icons.mode'] = 'long',
---     ['display.pum.source_context'] = { '[', ']' },
---     ['display.pum.kind_context'] = { ' ', ' ' },
---     ['match.proximate_lines']=25,
---     ['match.fuzzy_cutoff'] = 0.5,
-
---     keymap = {
---           recommended  = true,
---           jump_to_mark = '<c-k>',
---           -- manual_complete ='<cr>',
---           bigger_preview = '<c-l>',
---     },
-
---     clients = {
---           lsp = {enabled = true},
---           snippets = {enabled = true},
---           tabnine = {enabled = true},
---           tree_sitter = {enabled = true},
-
---       },
---     display = {
---         pum={fast_close = false},
-
---       },
-
-
---   }
---   vim.defer_fn(function() vim.opt.completeopt = 'menuone,noinsert' end, 1000) -- has to be deferred since COQ changes this setting
---   vim.cmd([[COQnow --shut-up]])
---   end
--- }
-
-
--- completion["ms-jpq/coq.artifacts"] = {
---   -- opt = true,
---   event = "InsertEnter",
---   branch = 'artifacts'
--- }
 
 
 
@@ -301,3 +239,73 @@ completion['mattn/emmet-vim'] = {
 }
 
 return completion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- completion["ms-jpq/coq_nvim"] = {
+--   -- event = "InsertCharPre",
+--   after = {"coq.artifacts"},
+--   branch = 'coq',
+
+--   config = function()
+--   vim.g.coq_settings = {
+--     ['clients.lsp.weight_adjust'] = 0.7,
+--     ['clients.tabnine.weight_adjust'] = 0.6,
+--     ['clients.snippets.weight_adjust'] = 0.5,
+--     ['clients.paths.weight_adjust'] = 0.4,
+--     ['clients.buffers.weight_adjust'] = 0.3,
+--     ['display.icons.mode'] = 'long',
+--     ['display.pum.source_context'] = { '[', ']' },
+--     ['display.pum.kind_context'] = { ' ', ' ' },
+--     ['match.proximate_lines']=25,
+--     ['match.fuzzy_cutoff'] = 0.5,
+
+--     keymap = {
+--           recommended  = true,
+--           jump_to_mark = '<c-k>',
+--           -- manual_complete ='<cr>',
+--           bigger_preview = '<c-l>',
+--     },
+
+--     clients = {
+--           lsp = {enabled = true},
+--           snippets = {enabled = true},
+--           tabnine = {enabled = true},
+--           tree_sitter = {enabled = true},
+
+--       },
+--     display = {
+--         pum={fast_close = false},
+
+--       },
+
+
+--   }
+--   vim.defer_fn(function() vim.opt.completeopt = 'menuone,noinsert' end, 1000) -- has to be deferred since COQ changes this setting
+--   vim.cmd([[COQnow --shut-up]])
+--   end
+-- }
+
+
+-- completion["ms-jpq/coq.artifacts"] = {
+--   -- opt = true,
+--   event = "InsertEnter",
+--   branch = 'artifacts'
+-- }
+

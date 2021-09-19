@@ -35,7 +35,19 @@ tools['b3nj5m1n/kommentary'] = {
   config = conf.kommentary,
 }
 
-
+tools["nanotee/zoxide.vim"] = {cmd = {"Z", "Lz", "Zi"}}
+tools["liuchengxu/vim-clap"] = {
+  cmd = {"Clap"},
+  run = function()
+    vim.fn["clap#installer#download_binary"]()
+  end,
+  setup = conf.clap,
+  config = conf.clap_after
+}
+tools["sindrets/diffview.nvim"] = {
+  cmd = {"DiffviewOpen", "DiffviewFileHistory", "DiffviewFocusFiles", "DiffviewToggleFiles", "DiffviewRefresh"},
+   config = conf.diffview
+}
 
 
 tools['vimwiki/vimwiki'] = {
@@ -192,12 +204,15 @@ tools['kdheepak/lazygit.nvim'] = {
 
 
 
-tools['brooth/far.vim'] = {
-  -- cmd = {'Far','Farp'},
-  config = function ()
-    vim.g['far#source'] = 'rg'
-  end
-}
+tools["brooth/far.vim"] = {
+  cmd = {"Farr", "Farf"},
+  run = function()
+    require"packer".loader('far.vim')
+    vim.cmd [[UpdateRemotePlugins]]
+  end,
+  config = conf.far,
+  opt = true
+} -- brooth/far.vim
 
 
 

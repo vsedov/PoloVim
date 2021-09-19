@@ -170,6 +170,7 @@ function config.textobjects()
 end
 
 
+
 function config.nvim_treesitter()
   local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
 
@@ -199,6 +200,8 @@ function config.nvim_treesitter()
     },
     
 }
+
+
 
 end
 

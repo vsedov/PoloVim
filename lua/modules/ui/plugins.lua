@@ -1,6 +1,12 @@
 local ui = {}
 local conf = require('modules.ui.config')
+local winwidth = function()
+  return vim.api.nvim_call_function("winwidth", {0})
+end
 
+
+ui["kyazdani42/nvim-web-devicons"] = {}
+ui["lambdalisue/glyph-palette.vim"] = {}
 --switch out with folke/tokyonight.nvim
 ui['folke/tokyonight.nvim'] = {
   config = conf.ui,
@@ -34,20 +40,24 @@ ui['lukas-reineke/indent-blankline.nvim'] = {
   config = conf.indent_blakline
 }
 
+
+
 ui["dstein64/nvim-scrollview"] = {config = conf.scrollview}
 
-ui['akinsho/nvim-bufferline.lua'] = {
+
+ui["akinsho/bufferline.nvim"] = {
   config = conf.nvim_bufferline,
-  requires = 'kyazdani42/nvim-web-devicons'
+  event = "UIEnter",
+  diagnostics_update_in_insert = false,
+  -- after = {"aurora"}
+  -- requires = {'kyazdani42/nvim-web-devicons'}
+  opt = true
 }
 
 
 ui['kazhala/close-buffers.nvim'] = {
   config = conf.buffers_close,
 }
-
-
-
 
 
 ui['kyazdani42/nvim-tree.lua'] = {
@@ -91,6 +101,13 @@ ui['folke/zen-mode.nvim'] = {
   end
 
 }
+
+
+ui['https://github.com/yamatsum/nvim-cursorline'] = {
+}
+
+
+
 
 ui['folke/twilight.nvim'] = {
 }

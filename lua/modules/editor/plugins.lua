@@ -26,6 +26,14 @@ editor['rmagatti/auto-session'] = {
   end
 }
 
+
+editor["rmagatti/session-lens"] = {
+  cmd = "SearchSession",
+  config = function()
+    require('session-lens').setup {shorten_path = true, previewer = true}
+  end
+}
+
 editor["andymass/vim-matchup"] = {
   event = {"CursorMoved", "CursorMovedI"},
   config = function()
@@ -39,11 +47,6 @@ editor["andymass/vim-matchup"] = {
 }
 
 
-editor["tpope/vim-surround"] = {
-  opt = true
-  -- event = 'InsertEnter',
-  -- keys={'c', 'd'}
-}
 editor["matze/vim-move"] = {
   opt = true,
   event = "InsertEnter"
@@ -125,49 +128,51 @@ editor['itchyny/vim-cursorword'] = {
   config = conf.vim_cursorwod,
 }
 
+editor["blackCauldron7/surround.nvim"]  = {
+  config = function()
+    require"surround".setup {mappings_style = "surround"}
+  end
+
+}
+
+
 editor['ggandor/lightspeed.nvim'] = {
     requires={'https://github.com/tpope/vim-repeat'},
-    
     config = function()
-
       require'lightspeed'.setup {
-        automap = true,
         jump_to_first_match = true,
-        jump_on_partial_input_safety_timeout = 200,
-        -- This can get _really_ slow if the window has a lot of content,
-        -- turn it on only if your machine can always cope with it.
+        jump_on_partial_input_safety_timeout = 400,
         highlight_unique_chars = true,
         grey_out_search_area = true,
         match_only_the_start_of_same_char_seqs = true,
-        limit_ft_matches = 10,
-        full_inclusive_prefix_key = '<c-x>',
-
+        limit_ft_matches = 5,
+        x_mode_prefix_key = '<C-x>',
+        substitute_chars = { ['\r'] = '¬' }, 
         instant_repeat_fwd_key = nil,
         instant_repeat_bwd_key = nil,
-
+        -- If no values are given, these will be set at runtime,
+        -- based on `jump_to_first_match`.
         labels = nil,
         cycle_group_fwd_key = nil,
         cycle_group_bwd_key = nil,
       }
 
-
-    vim.cmd[[nmap <expr> c reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_f" : "f"]]
-    vim.cmd[[nmap <expr> C reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_F" : "F"]]
-    vim.cmd[[nmap <expr> t reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_t" : "t"]]
-    vim.cmd[[nmap <expr> T reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_T" : "T"]]
-
   end
-}
 
-editor['phaazon/hop.nvim']={
-  config = function()
-    -- you can configure Hop the way you like here; see :h hop-config
-    require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-  end
 
 }
 
 
+editor['simnalamburt/vim-mundo']  = { opt = true, cmd ={'MundoToggle', 'MundoShow', 'MundoHide'},
+run = function() 
+  vim.cmd[[packadd vim-mundo]]
+  vim.cmd[[UpdateRemotePlugins]]
+end,
+setup = function ()
+  -- body
+  vim.g.mundo_prefer_python3=1
+end
+}
 
 editor['dhruvasagar/vim-table-mode'] = {
   cmd = {'TableModeToggle'}
@@ -244,12 +249,6 @@ editor['zegervdv/nrpattern.nvim']  = {
     end
 
 }
-
-editor['sindrets/diffview.nvim']={
-  config = conf.diffview,
-  requires= 'f-person/git-blame.nvim'
-}
-
 
 
 

@@ -11,29 +11,33 @@ local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif vim.fn.call("vsnip#available", {1}) == 1 then
-    return t "<Plug>(vsnip-expand-or-jump)"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
-  end
+
+_G.ctrl_k = function()
+  vim.lsp.buf.signature_help()
+  vim.cmd([[:MatchupWhereAmI?]])
 end
 
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
-  else
-    return t "<S-Tab>"
+
+
+_G.word_motion_move = function(key)
+  if not packer_plugins['vim-wordmotion'] or not packer_plugins['vim-wordmotion'].loaded then
+    require'packer'.loader("vim-wordmotion")
+    -- vim.cmd [[packadd vim-wordmotion]]
   end
+  local map = key == 'w' and '<Plug>(WordMotion_w)' or '<Plug>(WordMotion_b)'
+  return t(map)
 end
+
+
+
+_G.enhance_align = function(key)
+    if not packer_plugins['vim-easy-align'].loaded then
+        vim.cmd [[packadd vim-easy-align]]
+    end
+    local map = {['nga'] = '<Plug>(EasyAlign)', ['xga'] = '<Plug>(EasyAlign)'}
+    return t(map[key])
+end
+
 
 _G.enhance_jk_move = function(key)
   if packer_plugins['accelerated-jk'] and not packer_plugins['accelerated-jk'].loaded then
@@ -55,3 +59,4 @@ _G.enhance_nice_block = function (key)
   }
   return t(map[key])
 end
+

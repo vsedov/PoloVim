@@ -5,23 +5,23 @@ function config.galaxyline()
 end
 
 
-function config.nvim_bufferline()
-  require('bufferline').setup{
-    options = {
-      modified_icon = '✥',
-      buffer_close_icon = '',
-      diagnostics = "nvim_lsp",
+-- function config.nvim_bufferline()
+--   require('bufferline').setup{
+--     options = {
+--       modified_icon = '✥',
+--       buffer_close_icon = '',
+--       diagnostics = "nvim_lsp",
 
-      diagnostics_indicator = function(count, level)
-        local icon = level:match("error") and " " or " "
-        return " " .. icon .. count
-      end,
-      show_close_icon = false,
-      always_show_bufferline = true,
-      show_buffer_close_icons = false,
-    },  
-  }
-end
+--       diagnostics_indicator = function(count, level)
+--         local icon = level:match("error") and " " or " "
+--         return " " .. icon .. count
+--       end,
+--       show_close_icon = false,
+--       always_show_bufferline = true,
+--       show_buffer_close_icons = false,
+--     },  
+--   }
+-- end
 
 function config.buffers_close()
   require('close_buffers').setup({
@@ -291,6 +291,20 @@ function config.scrollbar()
   vimcmd("highlight link Scrollbar Comment")
   vim.g.sb_default_behavior = "never"
   vim.g.sb_bar_style = "solid"
+end
+
+
+function config.minimap()
+  local w = vim.api.nvim_call_function("winwidth", {0})
+  if w > 180 then
+    vim.g.minimap_width = 12
+  elseif w > 120 then
+    vim.g.minimap_width = 10
+  elseif w > 80 then
+    vim.g.minimap_width = 7
+  else
+    vim.g.minimap_width = 2
+  end
 end
 
 
