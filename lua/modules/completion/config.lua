@@ -5,24 +5,22 @@ function config.nvim_lsp()
 end
 
 function config.cmp()
+  local cmp = require("cmp")
     local t = function(str)
-        return vim.api.nvim_replace_termcodes(str, true, true, true)
+      return vim.api.nvim_replace_termcodes(str, true, true, true)
     end
-    local comp_kind = nil
-    local t = function(str)
-        return vim.api.nvim_replace_termcodes(str, true, true, true)
-    end
+
     local check_back_space = function()
-        local col = vim.fn.col "." - 1
-        return col == 0 or vim.fn.getline("."):sub(col, col):match "%s" ~= nil
+      local col = vim.fn.col(".") - 1
+      return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
     end
+
 
     local sources = {
         {name = "nvim_lsp"},
-        {name = "ultisnips"},
         {name = "cmp_tabnine"},
-        {name = "luasnip"},
         {name = "treesitter", keyword_length = 2},
+        {name = "ultisnips"},
         {name = "look", keyword_length = 4},
         {name = "nvim_lua"},
         {name = "buffer"},
@@ -41,152 +39,87 @@ function config.cmp()
         table.insert(sources, {name = "look"})
     end
 
-    cmp.setup {
-        snippet = {
-            expand = function(args)
-                require "luasnip".lsp_expand(args.body)
-                -- require 'snippy'.expand_snippet(args.body)
-                -- vim.fn["UltiSnips#Anon"](args.body)
+
+
+    cmp.setup({
+      snippet = {
+        expand = function(args)
+          vim.fn["UltiSnips#Anon"](args.body)
+        end,
+      },
+  
+      -- Configure for <TAB> people
+      -- - <TAB> and <S-TAB>: cycle forward and backward through autocompletion items
+      -- - <TAB> and <S-TAB>: cycle forward and backward through snippets tabstops and placeholders
+      -- - <TAB> to expand snippet when no completion item selected (you don't need to select the snippet from completion item to expand)
+      -- - <C-space> to expand the selected snippet from completion menu
+      mapping = {
+        ["<C-Space>"] = cmp.mapping(function(fallback)
+          if vim.fn.pumvisible() == 1 then
+            if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
+              return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
             end
-        },
-        completion = {
-            autocomplete = {require("cmp.types").cmp.TriggerEvent.TextChanged},
-            completeopt = "menu,menuone,noselect"
-        },
-        documentation = {
-            border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
-        },
-        formatting = {
-            format = function(entry, vim_item)
-                local lspkind_icons = {
-                    Text = "",
-                    Method = "",
-                    Function = "",
-                    Constructor = "",
-                    Field = "ﰠ",
-                    Variable = "",
-                    Class = "ﴯ",
-                    Interface = "",
-                    Module = "",
-                    Property = "ﰠ",
-                    Unit = "塞",
-                    Value = "",
-                    Enum = "",
-                    Keyword = "",
-                    Snippet = "",
-                    Color = "",
-                    File = "",
-                    Reference = "",
-                    Folder = "",
-                    EnumMember = "",
-                    Constant = "",
-                    Struct = "פּ",
-                    Event = "",
-                    Operator = "",
-                    TypeParameter = ""
-                }
-                -- load lspkind icons
-                vim_item.kind = string.format("%s %s", lspkind_icons[vim_item.kind], vim_item.kind)
 
-                vim_item.menu =
-                    ({
-                    cmp_tabnine = "[TN]",
-                    nvim_lsp = "[LSP]",
-                    nvim_lua = "[Lua]",
-                    buffer = "[BUF]",
-                    path = "[PATH]",
-                    tmux = "[TMUX]",
-                    luasnip = "[SNIP]",
-                    ultisnips = "[UltiSnips]",
-                    spell = "[SPELL]"
-                })[entry.source.name]
-
-                return vim_item
-            end
-        },
-        -- You can set mappings if you want
-        mapping = {
-            ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-            ["<Tab>"] = cmp.mapping.select_next_item(),
-            ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-            ["<C-f>"] = cmp.mapping.scroll_docs(4),
-            ["<C-Space>"] = cmp.mapping.complete(),
-            ["<C-e>"] = cmp.mapping.close(),
-            ["<CR>"] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Insert, select = true}),
-            ["<C-Space>"] = cmp.mapping(
-                function(fallback)
-                    if vim.fn.pumvisible() == 1 then
-                        if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-                            return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
-                        end
-
-                        vim.fn.feedkeys(t("<C-n>"), "n")
-                    elseif check_back_space() then
-                        vim.fn.feedkeys(t("<cr>"), "n")
-                    else
-                        fallback()
-                    end
-                end,
-                {
-                    "i",
-                    "s"
-                }
-            ),
-            ["<Tab>"] = cmp.mapping(
-                function(fallback)
-                    if vim.fn.complete_info()["selected"] == -1 and vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-                        vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
-                    elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-                        vim.fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
-                    elseif vim.fn.pumvisible() == 1 then
-                        vim.fn.feedkeys(t("<C-n>"), "n")
-                    elseif require "luasnip".expand_or_jumpable() then
-                        vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"))
-                    elseif check_back_space() then
-                        vim.fn.feedkeys(t("<tab>"), "n")
-                    else
-                        fallback()
-                    end
-                end,
-                {
-                    "i",
-                    "s"
-                }
-            ),
-            ["<S-tab>"] = cmp.mapping(
-                function(fallback)
-                    if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-                        return vim.fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
-                    elseif vim.fn.pumvisible() == 1 then
-                        vim.fn.feedkeys(t("<C-p>"), "n")
-                    elseif require "luasnip".jumpable(-1) then
-                        vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"))
-                    else
-                        fallback()
-                    end
-                end,
-                {
-                    "i",
-                    "s"
-                }
-            )
-        },
+            vim.fn.feedkeys(t("<C-n>"), "n")
+          elseif check_back_space() then
+            vim.fn.feedkeys(t("<cr>"), "n")
+          else
+            fallback()
+          end
+        end, {
+          "i",
+          "s",
+        }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if vim.fn.complete_info()["selected"] == -1 and vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
+            vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+          elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+            vim.fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
+          elseif vim.fn.pumvisible() == 1 then
+            vim.fn.feedkeys(t("<C-n>"), "n")
+          elseif check_back_space() then
+            vim.fn.feedkeys(t("<tab>"), "n")
+          else
+            fallback()
+          end
+        end, {
+          "i",
+          "s",
+        }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+            return vim.fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
+          elseif vim.fn.pumvisible() == 1 then
+            vim.fn.feedkeys(t("<C-p>"), "n")
+          else
+            fallback()
+          end
+        end, {
+          "i",
+          "s",
+        }),
+      },
         sources = sources
-    }
-end
+    })
+  end
 
-function config.luasnip()
-    require("luasnip").config.set_config {
-        history = true,
-        updateevents = "TextChanged,TextChangedI"
-    }
-    require("luasnip/loaders/from_vscode").load()
-end
+
+
+
+
 
 function config.tabnine()
     local tabnine = require("cmp_tabnine.config")
     tabnine:setup({max_line = 1000, max_num_results = 20, sort = true})
 end
+
+
+
+
+
+
+
+
 
 function config.bqf()
     require("bqf").setup(

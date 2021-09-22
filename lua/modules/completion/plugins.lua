@@ -40,8 +40,8 @@ completion["hrsh7th/nvim-cmp"] = {
     {"octaltree/cmp-look", after = "nvim-cmp"},
     {"dcampos/cmp-snippy",after = {"nvim-snippy", "nvim-cmp"}},
     {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
-      -- {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
-    {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
+      {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
+    -- {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
     {'tzachar/cmp-tabnine',
             run = './install.sh',
             after = 'cmp-spell',
@@ -71,7 +71,10 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 completion["SirVer/ultisnips"]={
   requires = "honza/vim-snippets",
   config = function()
-    vim.g.UltiSnipsRemoveSelectModeMappings = 0
+    -- vim.g.UltiSnipsRemoveSelectModeMappings = 0
+    vim.g.UltiSnipsExpandTrigger = "<C-s>"      
+  vim.g.UltiSnipsJumpForwardTrigger = "<C-j>" 
+  vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
   end,
 }
 

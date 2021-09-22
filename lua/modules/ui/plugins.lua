@@ -103,8 +103,8 @@ ui['folke/zen-mode.nvim'] = {
 }
 
 
-ui['https://github.com/yamatsum/nvim-cursorline'] = {
-}
+-- ui['https://github.com/yamatsum/nvim-cursorline'] = {
+-- }
 
 
 
