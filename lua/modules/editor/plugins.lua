@@ -221,6 +221,28 @@ editor['andweeb/presence.nvim']  = {
 editor['https://github.com/numtostr/FTerm.nvim']={
     config = function()
 
+      local fterm = require("FTerm")
+
+      local gitui = fterm:new({
+          cmd = "gitui",
+          dimensions = {
+              height = 0.9,
+              width = 0.9
+          }
+      })
+
+       -- Use this to toggle gitui in a floating terminal
+      function _G.__fterm_gitui()
+          gitui:toggle()
+      end
+
+
+      local top = fterm:new({ cmd = "bpytop" })
+
+       -- Use this to toggle bpytop in a floating terminal
+      function _G.__fterm_top()
+          top:toggle()
+      end
 
     end
 }

@@ -52,11 +52,11 @@ completion["hrsh7th/nvim-cmp"] = {
 }
 
 -- can not lazyload, it is also slow...
-completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
-  event = "InsertEnter",
-  requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
-  config = conf.luasnip
-}
+-- completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
+--   event = "InsertEnter",
+--   requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
+--   config = conf.luasnip
+-- }
 
 completion["kristijanhusak/vim-dadbod-completion"] = {
   event = "InsertEnter",
@@ -243,72 +243,4 @@ completion['mattn/emmet-vim'] = {
 
 return completion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- completion["ms-jpq/coq_nvim"] = {
---   -- event = "InsertCharPre",
---   after = {"coq.artifacts"},
---   branch = 'coq',
-
---   config = function()
---   vim.g.coq_settings = {
---     ['clients.lsp.weight_adjust'] = 0.7,
---     ['clients.tabnine.weight_adjust'] = 0.6,
---     ['clients.snippets.weight_adjust'] = 0.5,
---     ['clients.paths.weight_adjust'] = 0.4,
---     ['clients.buffers.weight_adjust'] = 0.3,
---     ['display.icons.mode'] = 'long',
---     ['display.pum.source_context'] = { '[', ']' },
---     ['display.pum.kind_context'] = { ' ', ' ' },
---     ['match.proximate_lines']=25,
---     ['match.fuzzy_cutoff'] = 0.5,
-
---     keymap = {
---           recommended  = true,
---           jump_to_mark = '<c-k>',
---           -- manual_complete ='<cr>',
---           bigger_preview = '<c-l>',
---     },
-
---     clients = {
---           lsp = {enabled = true},
---           snippets = {enabled = true},
---           tabnine = {enabled = true},
---           tree_sitter = {enabled = true},
-
---       },
---     display = {
---         pum={fast_close = false},
-
---       },
-
-
---   }
---   vim.defer_fn(function() vim.opt.completeopt = 'menuone,noinsert' end, 1000) -- has to be deferred since COQ changes this setting
---   vim.cmd([[COQnow --shut-up]])
---   end
--- }
-
-
--- completion["ms-jpq/coq.artifacts"] = {
---   -- opt = true,
---   event = "InsertEnter",
---   branch = 'artifacts'
--- }
 

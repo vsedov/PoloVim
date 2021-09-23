@@ -47,6 +47,59 @@ function config.cmp()
           vim.fn["UltiSnips#Anon"](args.body)
         end,
       },
+
+
+        formatting = {
+            format = function(entry, vim_item)
+
+                local lspkind_icons = {
+                    Text = "",
+                    Method = "",
+                    Function = "",
+                    Constructor = "",
+                    Field = "ﰠ",
+                    Variable = "",
+                    Class = "ﴯ",
+                    Interface = "",
+                    Module = "",
+                    Property = "ﰠ",
+                    Unit = "塞",
+                    Value = "",
+                    Enum = "",
+                    Keyword = "",
+                    Snippet = "",
+                    Color = "",
+                    File = "",
+                    Reference = "",
+                    Folder = "",
+                    EnumMember = "",
+                    Constant = "",
+                    Struct = "פּ",
+                    Event = "",
+                    Operator = "",
+                    TypeParameter = ""
+                }
+
+                -- load lspkind icons
+                vim_item.kind = string.format("%s %s",
+                                              lspkind_icons[vim_item.kind],
+                                              vim_item.kind)
+
+                vim_item.menu = ({
+                    cmp_tabnine = "[TN]",
+                    nvim_lsp = "[LSP]",
+                    nvim_lua = "[Lua]",
+                    buffer = "[BUF]",
+                    path = "[PATH]",
+                    tmux = "[TMUX]",
+                    luasnip = "[SNIP]",
+                    ultisnips = "[UltiSnips]",
+                    spell = "[SPELL]"
+                })[entry.source.name]
+
+                return vim_item
+            end
+        },
   
       -- Configure for <TAB> people
       -- - <TAB> and <S-TAB>: cycle forward and backward through autocompletion items
@@ -110,7 +163,14 @@ function config.cmp()
 
 function config.tabnine()
     local tabnine = require("cmp_tabnine.config")
-    tabnine:setup({max_line = 1000, max_num_results = 20, sort = true})
+    tabnine:setup({
+
+        max_line = 1000,
+        max_num_results = 20, 
+        sort = true,
+        run_on_every_keystroke = true;
+
+    })
 end
 
 
@@ -284,8 +344,6 @@ function config.todo_comments()
     }
 end
 
--- FUCKING DOG SHIT PLUGIN IS BROKEN , GET THIS PRICK TO FIX THE FUCKING SHIT
--- HONESTLY , FUCK THIS
 function config.trouble()
     require("trouble").setup {
         position = "bottom", -- position of the list can be: bottom, top, left, right
