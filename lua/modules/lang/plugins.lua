@@ -38,6 +38,11 @@ lang["lifepillar/pgsql.vim"] = {ft = {"sql", "pgsql"}}
 
 lang["nanotee/sqls.nvim"] = {ft = {"sql", "pgsql"}, setup = conf.sqls, opt = true}
 
+lang["yardnsm/vim-import-cost"] = {
+  cmd = "ImportCost",
+  opt = true
+}
+
 
 lang["wellle/context.vim"] = {
   after = "nvim-treesitter",

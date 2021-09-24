@@ -7,10 +7,78 @@ end
 
 ui["kyazdani42/nvim-web-devicons"] = {}
 ui["lambdalisue/glyph-palette.vim"] = {}
---switch out with folke/tokyonight.nvim
+
+
+
 ui['folke/tokyonight.nvim'] = {
-  config = conf.ui,
+  -- config = conf.ui,
 }
+
+
+
+ui['Pocco81/Catppuccino.nvim'] ={
+  config = function()
+    require("catppuccino").setup(
+        {
+        colorscheme = "neon_latte",
+        transparency = true,
+        term_colors = false,
+        styles = {
+          comments = "italic",
+          functions = "italic",
+          keywords = "italic",
+          strings = "NONE",
+          variables = "NONE",
+        },
+        integrations = {
+          treesitter = true,
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              errors = "italic",
+              hints = "italic",
+              warnings = "italic",
+              information = "italic",
+            },
+            underlines = {
+              errors = "underline",
+              hints = "underline",
+              warnings = "underline",
+              information = "underline",
+            }
+          },
+          lsp_trouble = true,
+          lsp_saga = false,
+          gitgutter = true,
+          gitsigns = true,
+          telescope = true,
+          nvimtree = {
+            enabled = true,
+            show_root = true,
+          },
+          which_key = true,
+          indent_blankline = {
+            enabled = true,
+            colored_indent_levels = true,
+          },
+          dashboard = true,
+          neogit = true,
+          vim_sneak = true,
+          fern = true,
+          barbar = true,
+          bufferline = true,
+          markdown = true,
+          lightspeed = true,
+          ts_rainbow = true,
+          hop = true,
+        }
+      }
+    )
+    vim.cmd[[colorscheme catppuccino]]
+  end 
+}
+
+
 
 
 ui['glepnir/dashboard-nvim'] = {
@@ -72,16 +140,21 @@ ui['lewis6991/gitsigns.nvim'] = {
   requires = {'nvim-lua/plenary.nvim',opt=true}
 }
 
--- ui['beauwilliams/focus.nvim']={
+ui['beauwilliams/focus.nvim']={
 
---   config = function()
---   local focus = require('focus')
---   -- Displays a cursorline in the focussed window only
---   -- Not displayed in unfocussed windows
---   -- Default: true
---   focus.cursorline = false
---   end
--- }
+  config = function()
+  local focus = require('focus')
+  -- Displays a cursorline in the focussed window only
+  -- Not displayed in unfocussed windows
+  -- Default: true
+  focus.cursorline = false
+  vim.api.nvim_set_keymap('n', '<leader>h', ':FocusSplitLeft<CR>', { silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>j', ':FocusSplitDown<CR>', { silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>k', ':FocusSplitUp<CR>', { silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>l', ':FocusSplitRight<CR>', { silent = true })
+
+  end
+}
 
 
 ui['kdav5758/TrueZen.nvim'] = {
