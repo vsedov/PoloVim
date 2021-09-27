@@ -23,10 +23,10 @@ lang['nvim-treesitter/nvim-treesitter-textobjects'] = {
 }
 
 
--- lang['https://github.com/haringsrob/nvim_context_vt'] = {
---   after = 'nvim-treesitter',
+lang['https://github.com/haringsrob/nvim_context_vt'] = {
+  after = 'nvim-treesitter',
 
--- }
+}
 
 lang['https://github.com/RRethy/nvim-treesitter-textsubjects'] = {
   config = conf.textsubjects,
@@ -44,20 +44,20 @@ lang["yardnsm/vim-import-cost"] = {
 }
 
 
-lang["wellle/context.vim"] = {
-  after = "nvim-treesitter",
-  opt = true,
-  -- cmd = {"ContextEnable", "ContextActivate", "ContextToggle", "ContextToggleWindow", "ContextPeek"},
-  setup = function()
-    vim.g.context_enabled = 1
-    vim.g.context_max_height = 6
-    vim.g.context_filetype_blacklist = {'clap_input', ''}
-  end,
-  config = function()
-    vim.cmd([[ContextActivate]])
-    -- vim.cmd([[ContextEnable]])  -- enable on command as it has performance issue
-  end
-}
+-- lang["wellle/context.vim"] = {
+--   after = "nvim-treesitter",
+--   opt = true,
+--   -- cmd = {"ContextEnable", "ContextActivate", "ContextToggle", "ContextToggleWindow", "ContextPeek"},
+--   setup = function()
+--     vim.g.context_enabled = 1
+--     vim.g.context_max_height = 6
+--     vim.g.context_filetype_blacklist = {'clap_input', ''}
+--   end,
+--   config = function()
+--     vim.cmd([[ContextActivate]])
+--     -- vim.cmd([[ContextEnable]])  -- enable on command as it has performance issue
+--   end
+-- }
 
 lang["ElPiloto/sidekick.nvim"] = {opt = true, fn = {'SideKickNoReload'}, setup = conf.sidekick}
 lang["jbyuki/one-small-step-for-vimkind"] = {opt = true, ft = {"lua"}}
@@ -65,20 +65,18 @@ lang["mtdl9/vim-log-highlighting"] = {ft = {"text", "log"}}
 
 
 lang["windwp/nvim-ts-autotag"] = {
-  opt = true
+  opt = true,
   -- after = "nvim-treesitter",
-  -- config = function() require"nvim-treesitter.configs".setup {autotag = {enable = true}} end
+  config = function() require"nvim-treesitter.configs".setup {autotag = {enable = true}} end
 }
 
+lang['nvim-lua/plenary.nvim']={
+
+}
 
 -- Bloody Usefull 
 lang['vhyrro/neorg']={
-    branch = "main",
-    ft = "norg",
     config = function()
-        if not packer_plugins['plenary.nvim'].loaded then
-          vim.cmd [[packadd plenary.nvim]]
-        end
         require('neorg').setup {
             -- Tell Neorg what modules to load
             load = {
@@ -86,7 +84,13 @@ lang['vhyrro/neorg']={
                 ["core.keybinds"] = { -- Configure core.keybinds
                     config = {
                         default_keybinds = true, -- Generate the default keybinds
+                        neorg_leader = "<Leader>v" -- This is the default if unspecified
                     }
+                },
+                ["core.norg.completion"] = {
+                  config = {
+                    engine = "nvim-cmp" -- We current support nvim-compe and nvim-cmp only
+                  }
                 },
                 ["core.norg.concealer"] = {}, -- Allows for use of icons
                 ["core.norg.dirman"] = { -- Manage your directories with Neorg
@@ -98,14 +102,8 @@ lang['vhyrro/neorg']={
                 }
             },
         }
-
     end,
-
     requires = "nvim-lua/plenary.nvim",
-
-
-    after = 'nvim-treesitter',
-
+    after =  {'nvim-treesitter',"nvim-cmp"}
 }
-
 return lang

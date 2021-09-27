@@ -27,7 +27,8 @@ function config.cmp()
         {name = "path"},
         {name = "spell"},
         {name = "tmux"},
-        {name = "calc"}
+        {name = "calc"},
+        {name = "neorg"}
     }
 
     local cmp = require("cmp")
@@ -38,7 +39,6 @@ function config.cmp()
         table.insert(sources, {name = "spell"})
         table.insert(sources, {name = "look"})
     end
-
 
 
     cmp.setup({

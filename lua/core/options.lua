@@ -68,7 +68,7 @@ local function load_options()
     completeopt    = "menuone,noselect";
     jumpoptions    = "stack";
     showmode       = false;
-    shortmess      = "aoOTIcF";
+    shortmess      = "aotTIcF"; --"aoOTIcF";
     scrolloff      = 2;
     sidescrolloff  = 5;
     foldlevelstart = 99;

@@ -160,6 +160,21 @@ completion['kkoomen/vim-doge'] = {
 
 }
 
+completion['CRAG666/code_runner.nvim']={
+  config = function()
+
+    require('code_runner').setup {
+      term = {
+        position = "vert",
+        size = 8
+      },
+      filetype = {
+        map = "<leader>r",
+      },
+    }
+  end
+}
+
 
 
 -- command Neorunner - depends if i will keep this trying out new stuff . 

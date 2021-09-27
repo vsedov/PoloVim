@@ -128,11 +128,72 @@ ui['kazhala/close-buffers.nvim'] = {
 }
 
 
+-- legit stoped working 
 ui['kyazdani42/nvim-tree.lua'] = {
   cmd = {'NvimTreeToggle','NvimTreeOpen'},
-  config = conf.nvim_tree,
-  requires = 'kyazdani42/nvim-web-devicons'
+  requires = 'kyazdani42/nvim-web-devicons',
+
+  -- config = conf.nvim_tree,
+  config = function() 
+
+    vim.g.nvim_tree_git_hl = 1 
+    vim.g.nvim_tree_highlight_opened_files = 1
+    vim.g.nvim_tree_update_cwd = 1
+    vim.g.nvim_tree_hide_dotfiles = 1
+    vim.g.nvim_tree_indent_markers = 1
+
+    local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+    vim.g.nvim_tree_icons = {
+      default =  '',
+      symlink =  '',
+      git = {
+       unstaged = "✚",
+       staged =  "✚",
+       unmerged =  "≠",
+       renamed =  "≫",
+       untracked = "★",
+      },
+    }
+    vim.g.nvim_tree_bindings = {
+        { key = "<C-s>",                        cb = tree_cb("vsplit") },
+        { key = "<C-i>",                        cb = tree_cb("split") },
+    }
+
+    require'nvim-tree'.setup {
+      -- disables netrw completely
+      disable_netrw       = true,
+      -- hijack netrw window on startup
+      hijack_netrw        = false,
+      -- open the tree when running this setup function
+      open_on_setup       = false,
+      -- will not open on setup if the filetype is in this list
+      ignore_ft_on_setup  = {},
+      -- closes neovim automatically when the tree is the last **WINDOW** in the view
+      auto_close          = true,
+      -- opens the tree when changing/opening a new tab if the tree wasn't previously opened
+      open_on_tab         = false,
+      -- hijack the cursor in the tree to put it at the start of the filename
+      hijack_cursor       = false,
+      -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually) 
+      update_cwd          = true,
+      -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
+      update_focused_file = {
+        -- enables the feature
+        enable      = false,
+        -- update the root directory of the tree to the one of the folder containing the file if the file is not under the current root directory
+        -- only relevant when `update_focused_file.enable` is true
+        update_cwd  = false,
+        -- list of buffer names / filetypes that will not update the cwd if the file isn't found under the current root directory
+        -- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
+        ignore_list = {}
+      },
+    }
+
+  end
 }
+
+
+
 
 ui['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead','BufNewFile'},
