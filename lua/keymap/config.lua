@@ -30,14 +30,6 @@ end
 
 
 
-_G.enhance_align = function(key)
-    if not packer_plugins['vim-easy-align'].loaded then
-        vim.cmd [[packadd vim-easy-align]]
-    end
-    local map = {['nga'] = '<Plug>(EasyAlign)', ['xga'] = '<Plug>(EasyAlign)'}
-    return t(map[key])
-end
-
 
 _G.enhance_jk_move = function(key)
   if packer_plugins['accelerated-jk'] and not packer_plugins['accelerated-jk'].loaded then

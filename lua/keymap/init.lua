@@ -35,8 +35,8 @@ local plug_map = {
     -- All commands with leader 
     ["n|<Leader>gD"]     = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
     ["n|<Leader>gr"]     = map_cmd("<cmd>lua vim.lsp.buf.rename()<CR>"):with_noremap():with_silent(),
-    ["n|<Leader>ca"]     = map_cmd("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
-    ["n|<Leader>g"]      = map_cu("LazyGit"):with_noremap():with_silent(),
+    ["n|ga"]     = map_cu("CodeActionMenu"):with_noremap():with_silent(),
+    ["n|<Leader>ggi"]    = map_cu("LazyGit"):with_noremap():with_silent(),
 
     -- On n map commands 
     ["n|gD"]     = map_cmd("<cmd>lua vim.lsp.buf.declaration()<CR>"):with_noremap():with_silent(),
@@ -156,8 +156,8 @@ local plug_map = {
     ["n|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
     ["x|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
     -- Plugin EasyAlign
-    ["n|ga"]                = map_cmd("v:lua.enhance_align('nga')"):with_expr(),
-    ["x|ga"]                = map_cmd("v:lua.enhance_align('xga')"):with_expr(),
+    -- ["n|ga"]                = map_cmd("v:lua.enhance_align('nga')"):with_expr(),
+    -- ["x|ga"]                = map_cmd("v:lua.enhance_align('xga')"):with_expr(),
     --sniprun
 
     ["v|<Leader>fr"]    = map_cmd("<Plug>SnipRun"):with_silent(),

@@ -116,7 +116,9 @@ completion['windwp/nvim-autopairs'] = {
     after = 'nvim-cmp',
     config = conf.autopairs
 }
-
+completion['weilbith/nvim-code-action-menu']={
+  cmd = 'CodeActionMenu',
+}
 
 
 

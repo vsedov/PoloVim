@@ -15,6 +15,7 @@ local function load_options()
     vim.g.python3_host_prog = '/usr/bin/python3'
 
   local global_local = {
+    relativenumber  = true;
     termguicolors  = true;
     mouse          = "nv";
     errorbells     = true;
