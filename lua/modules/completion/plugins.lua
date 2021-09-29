@@ -131,7 +131,7 @@ completion['nvim-telescope/telescope.nvim'] = {
     {'nvim-telescope/telescope-fzy-native.nvim'}, 
     {'nvim-telescope/telescope-cheat.nvim'},
     {'tami5/sql.nvim'},
-    {'nvim-telescope/telescope-frecency.nvim'},
+    {'nvim-telescope/telescope-frecency.nvim',requires = {"tami5/sqlite.lua"}},
     {'nvim-telescope/telescope-dap.nvim'},
     {'https://github.com/fhill2/telescope-ultisnips.nvim'},
   },

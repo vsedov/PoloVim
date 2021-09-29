@@ -124,7 +124,7 @@ local plug_map = {
     ["n|<Leader>vv"]    = map_cu("Telescope treesitter"):with_noremap():with_silent(),
 
     --Nice finder 
-    ["n|<Leader><Leader><Leader>"]    = map_cu("Telescope frecency"):with_noremap():with_silent(),
+    ["n|<Leader><Leader><Leader>"]    = map_cr("<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>"):with_noremap():with_silent(),
 
     -- git Blame 
     ["n|<Leader><Leader>tgb"]    = map_cu("ToggleBlameLine"):with_noremap():with_silent(),
