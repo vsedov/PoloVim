@@ -126,9 +126,9 @@ completion['nvim-telescope/telescope.nvim'] = {
   
   cmd = 'Telescope',
   requires = {
-    {'nvim-lua/popup.nvim', opt = true},
-    {'nvim-lua/plenary.nvim',opt = true},
-    {'nvim-telescope/telescope-fzy-native.nvim',opt = true}, 
+    {'nvim-lua/popup.nvim'},
+    {'nvim-lua/plenary.nvim'},
+    {'nvim-telescope/telescope-fzy-native.nvim'}, 
     {'nvim-telescope/telescope-cheat.nvim'},
     {'tami5/sql.nvim'},
     {'nvim-telescope/telescope-frecency.nvim'},
