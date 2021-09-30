@@ -48,8 +48,6 @@ editor["andymass/vim-matchup"] = {
 
 
 editor["matze/vim-move"] = {
-  opt = true,
-  event = "InsertEnter"
   -- fn = {'<Plug>MoveBlockDown', '<Plug>MoveBlockUp', '<Plug>MoveLineDown', '<Plug>MoveLineUp'}
 }
 
@@ -257,9 +255,14 @@ editor['Vimjas/vim-python-pep8-indent'] = {
 }
 
 
-editor['jdhao/better-escape.vim']  = {
-}
+-- editor['jdhao/better-escape.vim']  = {
+-- }
 
+editor['max397574/better-escape.nvim']={
+    config = function()
+      require("better_escape").setup()
+    end,
+}
 
 
 editor['zegervdv/nrpattern.nvim']  = {
@@ -275,8 +278,6 @@ editor['zegervdv/nrpattern.nvim']  = {
 
 
 editor['rmagatti/alternate-toggler']  = {
-    opt = true,
-
 }
 
 editor['https://github.com/tmhedberg/SimpylFold']  = {
@@ -291,8 +292,8 @@ editor['https://github.com/tmhedberg/SimpylFold']  = {
 
 editor["chaoren/vim-wordmotion"] = {
   opt = true,
-  fn = {"<Plug>WordMotion_w"}
-  -- keys = {'w','W', 'gE', 'aW'}
+  fn = {"<Plug>WordMotion_w","<Plug>WordMotion_b","<Plug>WordMotion_gE"," <Plug>WordMotion_aW"},
+  keys = {'w','W', 'gE', 'aW'}
 }
 
 

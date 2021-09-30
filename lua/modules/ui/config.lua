@@ -93,28 +93,7 @@ function config.nvim_tree()
   --     vim.cmd("NvimTreeRefresh")
   --   end
   -- )
-  -- vim.g.nvim_tree_git_hl = 1 
-  -- vim.g.nvim_tree_highlight_opened_files = 1
-  -- vim.g.nvim_tree_update_cwd = 1
-  -- vim.g.nvim_tree_follow = 1
-  -- vim.g.nvim_tree_hide_dotfiles = 1
-  -- vim.g.nvim_tree_indent_markers = 1
-  -- local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-  -- vim.g.nvim_tree_icons = {
-  --   default =  '',
-  --   symlink =  '',
-  --   git = {
-  --    unstaged = "✚",
-  --    staged =  "✚",
-  --    unmerged =  "≠",
-  --    renamed =  "≫",
-  --    untracked = "★",
-  --   },
-  -- }
-  -- vim.g.nvim_tree_bindings = {
-  --     { key = "<C-s>",                        cb = tree_cb("vsplit") },
-  --     { key = "<C-i>",                        cb = tree_cb("split") },
--- }
+
 end
 
 function config.gitsigns()

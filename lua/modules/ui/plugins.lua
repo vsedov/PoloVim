@@ -15,7 +15,6 @@ ui['folke/tokyonight.nvim'] = {
 }
 
 
-
 ui['Pocco81/Catppuccino.nvim'] ={
   config = function()
     require("catppuccino").setup(
@@ -112,6 +111,11 @@ ui['lukas-reineke/indent-blankline.nvim'] = {
 
 ui["dstein64/nvim-scrollview"] = {config = conf.scrollview}
 
+ui['NFrid/due.nvim']={
+  config = function()
+    require('due_nvim').setup {}
+  end
+}
 
 ui["akinsho/bufferline.nvim"] = {
   config = conf.nvim_bufferline,

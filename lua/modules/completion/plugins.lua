@@ -246,9 +246,8 @@ completion['psf/black'] = {
 }
 
 
-completion['mattn/vim-sonictemplate'] = {
+completion['https://github.com/vsedov/vim-sonictemplate'] = {
   cmd = 'Template',
-  ft = {'go','typescript','lua','javascript','vim','rust','markdown'},
   config = conf.vim_sonictemplate,
 }
 
