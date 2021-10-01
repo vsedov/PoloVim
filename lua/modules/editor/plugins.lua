@@ -289,6 +289,16 @@ editor['https://github.com/tmhedberg/SimpylFold']  = {
 }
 
 
+-- editor['https://github.com/waiting-for-dev/vim-www']  = {
+--   requires = 'https://github.com/tpope/vim-dispatch',
+
+--   config = function()
+--     vim.g.www_default_search_engine = 'google'
+--   end
+-- }
+
+
+
 
 editor["chaoren/vim-wordmotion"] = {
   opt = true,

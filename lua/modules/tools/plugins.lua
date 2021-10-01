@@ -60,6 +60,23 @@ tools['vimwiki/vimwiki'] = {
 }
 
 
+tools['rktjmp/highlight-current-n.nvim'] ={
+
+  config = function ()
+    require("highlight_current_n").setup({
+      highlight_group = "IncSearch" -- highlight group name to use for highlight
+    })  
+
+vim.api.nvim_set_keymap("n", "n", "<Plug>(highlight-current-n-n)",{silent =true})
+vim.api.nvim_set_keymap("n", "N", "<Plug>(highlight-current-n-N)",{silent =true})
+
+end
+}
+
+
+
+
+
 
 
 tools['relastle/vim-nayvy'] ={

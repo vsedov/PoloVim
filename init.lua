@@ -18,20 +18,30 @@ cmd([[ augroup END ]])
 
 -- I like relative numbers and the other ones both , so i have this instead .
 
-vim.api.nvim_command('augroup AutoRelativeLineNums')
-vim.api.nvim_command('autocmd!')
-vim.api.nvim_command('au InsertEnter * set norelativenumber')
-vim.api.nvim_command('au InsertLeave * set relativenumber')
-vim.api.nvim_command('augroup END')
+-- vim.api.nvim_command('augroup AutoRelativeLineNums')
+-- vim.api.nvim_command('autocmd!')
+-- vim.api.nvim_command('au InsertEnter * set norelativenumber')
+-- vim.api.nvim_command('au InsertLeave * set relativenumber')
+-- vim.api.nvim_command('augroup END')
 
 
--- vim.api.nvim_exec([[
--- augroup hybrid_line_number
---     autocmd!
---     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
---     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
--- augroup END
--- ]], false)
+vim.api.nvim_exec([[
+augroup hybrid_line_number
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+    autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
+augroup END
+]], false)
+
+vim.api.nvim_exec([[
+augroup ClearSearchHL
+  autocmd!
+  autocmd CmdlineEnter /,\? set hlsearch
+  autocmd CmdlineLeave /,\? set nohlsearch
+  autocmd CmdlineLeave /,\? lua require('highlight_current_n')['/,?']()
+augroup END
+]], false)
+
 
 
 

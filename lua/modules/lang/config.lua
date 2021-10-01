@@ -73,46 +73,80 @@ end
 
 function config.textobjects()
   require'nvim-treesitter.configs'.setup {
+          
+          incremental_selection = {
+            -- this enables incremental selection
+            enable = true,
+            disable = {},
+            --keymaps = {
+            --init_selection = "<enter>", -- maps in normal mode to init the node/scope selection
+            --node_incremental = "<enter>", -- increment to the upper named parent
+            --scope_incremental = "Ts", -- increment to the upper scope (as defined in locals.scm)
+            --node_decremental = "<bs>"
+            --}
+          },
+          node_movement = {
+            enable = true,
+            highlight_current_node = true,
+            keymaps = {
+              move_up = "<a-k>",
+              move_down = "<a-j>",
+              move_left = "<a-h>",
+              move_right = "<a-l>",
+              swap_up = "<s-a-k>",
+              swap_left = "<s-a-h>",
+              swap_right = "<s-a-l>",
+            },
+            allow_switch_parents = true,
+            allow_next_parent = true,
+          },
+          autotag = {
+            enable = true,
+          },
+          pairs = {
+            enable = true,
+            highlight_pair_events = {},
+            highlight_self = false,
+            goto_right_end = false,
+            fallback_cmd_normal = "call matchit#Match_wrapper('',1,'n')",
+            keymaps = {
+              goto_partner = "%",
+              --delete_balanced = "x"
+            },
+            delete_balanced = {
+              only_on_first_char = true,
+              fallback_cmd_normal = "normal! x",
+              longest_partner = true,
+            },
+          },
+
           textobjects = {
             select = {
               enable = true,
               lookahead = true,
               disable = {},
+
               keymaps = {
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
                 ["aC"] = "@class.outer",
                 ["iC"] = "@class.inner",
-
-
                 ["ac"] = "@conditional.outer",
                 ["ic"] = "@conditional.inner",
-
-
                 ["ae"] = "@block.outer",
                 ["ie"] = "@block.inner",
-
-
                 ["al"] = "@loop.outer",
                 ["il"] = "@loop.inner",
-
-
                 ["is"] = "@statement.inner",
                 ["as"] = "@statement.outer",
-
-
                 ["ad"] = "@lhs.inner",
                 ["id"] = "@rhs.inner",
-
                 ["am"] = "@call.outer",
                 ["im"] = "@call.inner",
-
                 ["iM"] = "@frame.inner",
                 ["aM"] = "@frame.outer",
-
                 ["ai"] = "@parameter.outer",
                 ["ii"] = "@parameter.inner",
-
                 ["aS"] = { "@scope", "locals" }, -- selects `@scope` from locals.scm
               },
             },
@@ -135,6 +169,7 @@ function config.textobjects()
                 ["<a-S>"] = { "@scope", "locals" },
               },
             },
+
             lsp_interop = {
               enable = true,
               peek_definition_code = {
