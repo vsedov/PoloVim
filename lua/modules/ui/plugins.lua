@@ -142,7 +142,6 @@ ui['kyazdani42/nvim-tree.lua'] = {
 
     vim.g.nvim_tree_git_hl = 1 
     vim.g.nvim_tree_highlight_opened_files = 1
-    vim.g.nvim_tree_update_cwd = 1
     vim.g.nvim_tree_hide_dotfiles = 1
     vim.g.nvim_tree_indent_markers = 1
 
@@ -241,8 +240,8 @@ ui['folke/zen-mode.nvim'] = {
 }
 
 
--- ui['https://github.com/yamatsum/nvim-cursorline'] = {
--- }
+ui['https://github.com/yamatsum/nvim-cursorline'] = {
+}
 
 
 

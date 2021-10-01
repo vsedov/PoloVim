@@ -5,23 +5,23 @@ function config.galaxyline()
 end
 
 
--- function config.nvim_bufferline()
---   require('bufferline').setup{
---     options = {
---       modified_icon = '✥',
---       buffer_close_icon = '',
---       diagnostics = "nvim_lsp",
+function config.nvim_bufferline()
+  require('bufferline').setup{
+    options = {
+      modified_icon = '✥',
+      buffer_close_icon = '',
+      diagnostics = "nvim_lsp",
 
---       diagnostics_indicator = function(count, level)
---         local icon = level:match("error") and " " or " "
---         return " " .. icon .. count
---       end,
---       show_close_icon = false,
---       always_show_bufferline = true,
---       show_buffer_close_icons = false,
---     },  
---   }
--- end
+      diagnostics_indicator = function(count, level)
+        local icon = level:match("error") and " " or " "
+        return " " .. icon .. count
+      end,
+      show_close_icon = false,
+      always_show_bufferline = true,
+      show_buffer_close_icons = false,
+    },  
+  }
+end
 
 function config.buffers_close()
   require('close_buffers').setup({
