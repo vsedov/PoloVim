@@ -97,6 +97,7 @@ function config.textobjects()
               swap_left = "<s-a-h>",
               swap_right = "<s-a-l>",
             },
+
             allow_switch_parents = true,
             allow_next_parent = true,
           },
