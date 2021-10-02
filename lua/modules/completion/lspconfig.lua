@@ -80,6 +80,8 @@ if not packer_plugins['lsp_signature.nvim'].loaded then
   
 end
 
+
+
 if not packer_plugins['lsp-colors.nvim'].loaded then
   vim.cmd [[packadd folke/lsp-colors.nvim]]
   
@@ -224,7 +226,6 @@ vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ fo
 local enhance_attach = function(client,bufnr)
   require'lsp_signature'.on_attach(cfg)
   -- coq.lsp_ensure_capabilities()
-
   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
 end

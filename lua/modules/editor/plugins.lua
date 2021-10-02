@@ -298,7 +298,9 @@ editor['https://github.com/tmhedberg/SimpylFold']  = {
 -- }
 
 
-
+editor['ray-x/guihua.lua']  = {
+  run =  'cd lua/fzy && make'
+}
 
 editor["chaoren/vim-wordmotion"] = {
   opt = true,

@@ -96,7 +96,7 @@ local plug_map = {
     ["n|<Leader>ft"]     = map_cu('Telescope help_tags'):with_noremap():with_silent(),
     ["n|<Leader>fd"]     = map_cu('Telescope dotfiles path='..os.getenv("HOME")..'/.config/nvim'):with_noremap():with_silent(),
     ["n|<Leader>qf"]     = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
-    -- ["n|<Leader>fs"]     = map_cu("Telescope utilsnips"):with_noremap():with_silent(),
+    ["n|<Leader>fs"]     = map_cr("<cmd> lua require'telescope'.extensions.ultisnips.ultisnips{}<CR>"):with_noremap():with_silent(),
 
     -- Plugin acceleratedjk
     ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),

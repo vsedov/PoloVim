@@ -18,6 +18,12 @@ completion['neovim/nvim-lspconfig'] = {
   }
 }
 
+completion['ahmedkhalf/project.nvim']={
+    config = function()
+      require("project_nvim").setup {
+    }
+  end
+}
 
 completion['folke/todo-comments.nvim']  = {
   opt=true,
@@ -35,7 +41,7 @@ completion["hrsh7th/nvim-cmp"] = {
     {"hrsh7th/cmp-calc", after = "nvim-cmp"},
     {"hrsh7th/cmp-path", after = "nvim-cmp"},
     {"https://github.com/ray-x/cmp-treesitter", after = "nvim-cmp"},
-    {"hrsh7th/cmp-nvim-lsp", after = "nvim-cmp"},
+    {"hrsh7th/cmp-nvim-lsp", after = {"nvim-cmp"}},
     {"f3fora/cmp-spell", after = "nvim-cmp"},
     {"octaltree/cmp-look", after = "nvim-cmp"},
     {"dcampos/cmp-snippy",after = {"nvim-snippy", "nvim-cmp"}},
