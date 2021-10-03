@@ -274,6 +274,8 @@ end
 
 
 function config.minimap()
+  vim.g.minimap_auto_start = 1
+  
   local w = vim.api.nvim_call_function("winwidth", {0})
   if w > 180 then
     vim.g.minimap_width = 12

@@ -14,14 +14,15 @@ ui['folke/tokyonight.nvim'] = {
   -- config = conf.ui,
 }
 
+-- Pocco81/Catppuccino.nvim 
 
-ui['Pocco81/Catppuccino.nvim'] ={
+ui['Pocco81/Catppuccino.nvim'] = {
   config = function()
     require("catppuccino").setup(
         {
         colorscheme = "neon_latte",
         transparency = true,
-        term_colors = false,
+        term_colors = true,
         styles = {
           comments = "italic",
           functions = "italic",
@@ -47,7 +48,7 @@ ui['Pocco81/Catppuccino.nvim'] ={
             }
           },
           lsp_trouble = true,
-          lsp_saga = false,
+          lsp_saga = true,
           gitgutter = true,
           gitsigns = true,
           telescope = true,
@@ -73,7 +74,13 @@ ui['Pocco81/Catppuccino.nvim'] ={
         }
       }
     )
-    vim.cmd[[colorscheme catppuccino]]
+
+  end
+}
+
+ui['https://github.com/numToStr/Sakura.nvim'] ={
+  config = function()
+    vim.cmd[[colorscheme sakura]]
   end 
 }
 
@@ -238,6 +245,16 @@ ui['folke/zen-mode.nvim'] = {
   end
 
 }
+
+
+ui["wfxr/minimap.vim"] = {
+  run = ":!cargo install --locked code-minimap --force",
+  setup = conf.minimap
+
+
+}
+
+
 
 
 ui['https://github.com/yamatsum/nvim-cursorline'] = {
