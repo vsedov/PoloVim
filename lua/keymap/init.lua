@@ -53,7 +53,15 @@ local plug_map = {
 
    -- doge
     ["n|<F1>"]           = map_cr("DogeGenerate"):with_noremap():with_silent(),
-    ["n|<F2>"]           = map_cu("UndotreeToggle"):with_noremap():with_silent(),
+
+    -- never go wrong with clap 
+    ["n|<Leader>cl"]    = map_cr("Clap"):with_noremap():with_silent(),
+
+
+    ["n|<F2>"]           = map_cu("MundoToggle"):with_noremap():with_silent(),
+    ["n|<Leader><F2>"]   = map_cu("UndotreeToggle"):with_noremap():with_silent(),
+
+
     ["n|<F3>"]           = map_cu('Black'):with_noremap():with_silent(),
 
     --NeoRunner_Horizontal 
@@ -153,8 +161,8 @@ local plug_map = {
 
 
     -- Plugin hrsh7th/vim-eft
-    ["n|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
-    ["x|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
+    -- ["n|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
+    -- ["x|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
     -- Plugin EasyAlign
     -- ["n|ga"]                = map_cmd("v:lua.enhance_align('nga')"):with_expr(),
     -- ["x|ga"]                = map_cmd("v:lua.enhance_align('xga')"):with_expr(),
@@ -167,7 +175,6 @@ local plug_map = {
 
     -- Alternate togller
     ["n|<Leader>ta"]    = map_cr("ToggleAlternate"):with_noremap():with_silent(),
-
 
 
     -- TZAtaraxis

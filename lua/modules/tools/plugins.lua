@@ -50,6 +50,11 @@ tools["sindrets/diffview.nvim"] = {
 }
 
 
+tools["fladson/vim-kitty"] = {
+}
+
+
+
 tools['vimwiki/vimwiki'] = {
   opt = true,
   branch = "dev",

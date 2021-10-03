@@ -297,6 +297,13 @@ editor['https://github.com/tmhedberg/SimpylFold']  = {
 --   end
 -- }
 
+-- THIS CAUSED ISSUES BEFORe
+
+-- editor["kevinhwang91/nvim-hlslens"] = {
+--   -- keys = {"/", "?", '*', '#'}, --'n', 'N', '*', '#', 'g'
+--   -- opt = true,
+--   -- config = conf.hlslens
+-- }
 
 editor['ray-x/guihua.lua']  = {
   run =  'cd lua/fzy && make'
