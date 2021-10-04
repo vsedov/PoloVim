@@ -79,9 +79,9 @@ completion["SirVer/ultisnips"]={
   config = function()
     
     vim.g.UltiSnipsRemoveSelectModeMappings = 0
-    -- vim.g.UltiSnipsExpandTrigger = "<C-s>"      
-  -- vim.g.UltiSnipsJumpForwardTrigger = "<C-j>" 
-  -- vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
+    vim.g.UltiSnipsExpandTrigger = "<C-s>"      
+  vim.g.UltiSnipsJumpForwardTrigger = "<C-j>" 
+  vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
   end,
 }
 
