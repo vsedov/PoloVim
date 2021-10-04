@@ -147,27 +147,12 @@ ui['kyazdani42/nvim-tree.lua'] = {
   -- config = conf.nvim_tree,
   config = function() 
 
-    vim.g.nvim_tree_git_hl = 1 
-    vim.g.nvim_tree_highlight_opened_files = 1
-    vim.g.nvim_tree_hide_dotfiles = 1
-    vim.g.nvim_tree_indent_markers = 1
+    -- vim.g.nvim_tree_git_hl = 1 
+    -- vim.g.nvim_tree_highlight_opened_files = 1
+    -- vim.g.nvim_tree_hide_dotfiles = 1
+    -- vim.g.nvim_tree_indent_markers = 1
 
-    local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-    vim.g.nvim_tree_icons = {
-      default =  '',
-      symlink =  '',
-      git = {
-       unstaged = "✚",
-       staged =  "✚",
-       unmerged =  "≠",
-       renamed =  "≫",
-       untracked = "★",
-      },
-    }
-    vim.g.nvim_tree_bindings = {
-        { key = "<C-s>",                        cb = tree_cb("vsplit") },
-        { key = "<C-i>",                        cb = tree_cb("split") },
-    }
+
 
     require'nvim-tree'.setup {
       -- disables netrw completely
@@ -189,14 +174,33 @@ ui['kyazdani42/nvim-tree.lua'] = {
       -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
       update_focused_file = {
         -- enables the feature
-        enable      = false,
+        enable      = true,
         -- update the root directory of the tree to the one of the folder containing the file if the file is not under the current root directory
         -- only relevant when `update_focused_file.enable` is true
-        update_cwd  = false,
+        update_cwd  = true,
         -- list of buffer names / filetypes that will not update the cwd if the file isn't found under the current root directory
         -- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
         ignore_list = {}
+
+
+
       },
+    }
+        local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+    vim.g.nvim_tree_icons = {
+      default =  '',
+      symlink =  '',
+      git = {
+       unstaged = "✚",
+       staged =  "✚",
+       unmerged =  "≠",
+       renamed =  "≫",
+       untracked = "★",
+      },
+    }
+    vim.g.nvim_tree_bindings = {
+        { key = "<C-s>",                        cb = tree_cb("vsplit") },
+        { key = "<C-i>",                        cb = tree_cb("split") },
     }
 
   end
@@ -214,15 +218,10 @@ ui['lewis6991/gitsigns.nvim'] = {
 ui['beauwilliams/focus.nvim']={
 
   config = function()
-  local focus = require('focus')
-  -- Displays a cursorline in the focussed window only
-  -- Not displayed in unfocussed windows
-  -- Default: true
-  focus.cursorline = false
-  vim.api.nvim_set_keymap('n', '<leader>h', ':FocusSplitLeft<CR>', { silent = true })
-  vim.api.nvim_set_keymap('n', '<leader>j', ':FocusSplitDown<CR>', { silent = true })
-  vim.api.nvim_set_keymap('n', '<leader>k', ':FocusSplitUp<CR>', { silent = true })
-  vim.api.nvim_set_keymap('n', '<leader>l', ':FocusSplitRight<CR>', { silent = true })
+  require("focus").setup({hybridnumber = true, excluded_filetypes = {"minimap"}})
+
+  vim.api.nvim_set_keymap('n', '<leader>hh', ':FocusMaximise<CR>', { silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>pf', ':FocusSplitNicely<CR>', { silent = true })
 
   end
 }

@@ -20,12 +20,12 @@ function config.cmp()
         {name = "nvim_lsp"},
         {name = "cmp_tabnine"},
         {name = "treesitter", keyword_length = 2},
-        -- {name = "look", keyword_length = 4},
+        {name = "look", keyword_length = 4},
         {name = "nvim_lua"},
         {name = "buffer"},
         {name = "ultisnips"},
         {name = "path"},
-        -- {name = "spell"},
+        {name = "spell"},
         {name = "tmux"},
         {name = "calc"},
         {name = "neorg"}
@@ -101,13 +101,8 @@ function config.cmp()
             end
         },
   
-      -- Configure for <TAB> people
-      -- - <TAB> and <S-TAB>: cycle forward and backward through autocompletion items
-      -- - <TAB> and <S-TAB>: cycle forward and backward through snippets tabstops and placeholders
-      -- - <TAB> to expand snippet when no completion item selected (you don't need to select the snippet from completion item to expand)
-      -- - <C-space> to expand the selected snippet from completion menu
-      mapping = {
-        ["<C-Space>"] = cmp.mapping(function(fallback)
+        mapping = {
+        ["<C-n>"] = cmp.mapping(function(fallback)
           if vim.fn.pumvisible() == 1 then
             if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
               return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))

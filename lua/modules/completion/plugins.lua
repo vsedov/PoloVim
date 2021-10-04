@@ -77,10 +77,11 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 completion["SirVer/ultisnips"]={
   requires = "honza/vim-snippets",
   config = function()
-    -- vim.g.UltiSnipsRemoveSelectModeMappings = 0
-    vim.g.UltiSnipsExpandTrigger = "<C-s>"      
-  vim.g.UltiSnipsJumpForwardTrigger = "<C-j>" 
-  vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
+    
+    vim.g.UltiSnipsRemoveSelectModeMappings = 0
+    -- vim.g.UltiSnipsExpandTrigger = "<C-s>"      
+  -- vim.g.UltiSnipsJumpForwardTrigger = "<C-j>" 
+  -- vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
   end,
 }
 
@@ -92,11 +93,7 @@ completion["dcampos/nvim-snippy"] = {
   -- requires = {"honza/vim-snippets", event = "InsertEnter"}, --event = "InsertEnter"
   config = function()
     require'snippy'.setup {}
-    -- body
-    -- vim.cmd([[imap <expr> <Tab> snippy#can_expand_or_advance() ? '<Plug>(snippy-expand-or-next)' : '<Tab>']])
-    -- vim.cmd([[imap <expr> <S-Tab> snippy#can_jump(-1) ? '<Plug>(snippy-previous)' : '<Tab>']])
-    -- vim.cmd([[smap <expr> <Tab> snippy#can_jump(1) ? '<Plug>(snippy-next)' : '<Tab>']])
-    -- vim.cmd([[smap <expr> <S-Tab> snippy#can_jump(-1) ? '<Plug>(snippy-previous)' : '<Tab>']])
+
   end
   -- after = "vim-snippets"
 }

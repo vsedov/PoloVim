@@ -86,15 +86,15 @@ function config.dashboard()
   }
 end
 
-function config.nvim_tree()
-  -- On Ready Event for Lazy Loading work
-  -- require("nvim-tree.events").on_nvim_tree_ready(
-  --   function()
-  --     vim.cmd("NvimTreeRefresh")
-  --   end
-  -- )
+-- function config.nvim_tree()
+--   -- On Ready Event for Lazy Loading work
+--   -- require("nvim-tree.events").on_nvim_tree_ready(
+--   --   function()
+--   --     vim.cmd("NvimTreeRefresh")
+--   --   end
+--   -- )
 
-end
+-- end
 
 function config.gitsigns()
   if not packer_plugins['plenary.nvim'].loaded then
