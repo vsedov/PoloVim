@@ -17,6 +17,7 @@ ui['folke/tokyonight.nvim'] = {
 -- Pocco81/Catppuccino.nvim 
 
 ui['Pocco81/Catppuccino.nvim'] = {
+  opt = true,
   config = function()
     require("catppuccino").setup(
         {
@@ -218,7 +219,7 @@ ui['lewis6991/gitsigns.nvim'] = {
 ui['beauwilliams/focus.nvim']={
 
   config = function()
-  require("focus").setup({hybridnumber = true, excluded_filetypes = {"minimap"}})
+  require("focus").setup({hybridnumber = true, excluded_filetypes = {"minimap","vista","outline","symbols_outline"}})
 
   vim.api.nvim_set_keymap('n', '<leader>hh', ':FocusMaximise<CR>', { silent = true })
   vim.api.nvim_set_keymap('n', '<leader>pf', ':FocusSplitNicely<CR>', { silent = true })

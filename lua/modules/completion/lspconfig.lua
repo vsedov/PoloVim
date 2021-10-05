@@ -161,7 +161,7 @@ vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
                  -- This setting only take effect in insert mode, it does not affect signature help in normal
                  -- mode, 10 by default
 
-  floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
+  floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
 
   floating_window_above_cur_line = true, -- try to place the floating above the current line when possible Note:
   -- will set to true when fully tested, set to false will use whichever side has more space
@@ -182,7 +182,6 @@ vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
 
   always_trigger = false, -- sometime show signature on new line or in middle of parameter can be confusing, set it to false for #58
 
-  auto_close_after = nil, -- autoclose signature float win after x sec, disabled if nil.
   extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
   zindex = 200, -- by default it will be on top of all floating windows, set to <= 50 send it to bottom
 

@@ -59,7 +59,7 @@ lang["yardnsm/vim-import-cost"] = {
 --   end
 -- }
 
-lang["ElPiloto/sidekick.nvim"] = {opt = true, fn = {'SideKickNoReload'}, setup = conf.sidekick}
+lang["ElPiloto/sidekick.nvim"] = {cmd = {'SideKickNoReload'}, config = conf.sidekick}
 lang["jbyuki/one-small-step-for-vimkind"] = {opt = true, ft = {"lua"}}
 lang["mtdl9/vim-log-highlighting"] = {ft = {"text", "log"}}
 

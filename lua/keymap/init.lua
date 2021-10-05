@@ -114,7 +114,6 @@ local plug_map = {
     -- Plugin Vista or SymbolsOutline
     ["n|<Leader>v"]      = map_cu('SymbolsOutline'):with_noremap():with_silent(),
 
-
     ["n|<Leader><TAB>"]    = map_cr('<CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),
     
     ["t|<Leader><TAB>"]    = map_cr('<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),

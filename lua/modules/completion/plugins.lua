@@ -47,7 +47,7 @@ completion["hrsh7th/nvim-cmp"] = {
     {"dcampos/cmp-snippy",after = {"nvim-snippy", "nvim-cmp"}},
     {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
       {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
-    -- {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
+    {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
     {'tzachar/cmp-tabnine',
             run = './install.sh',
             after = 'cmp-spell',
@@ -58,11 +58,11 @@ completion["hrsh7th/nvim-cmp"] = {
 }
 
 -- can not lazyload, it is also slow...
--- completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
---   event = "InsertEnter",
---   requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
---   config = conf.luasnip
--- }
+completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
+  event = "InsertEnter",
+  requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
+  config = conf.luasnip
+}
 
 completion["kristijanhusak/vim-dadbod-completion"] = {
   event = "InsertEnter",
@@ -79,9 +79,9 @@ completion["SirVer/ultisnips"]={
   config = function()
     
     vim.g.UltiSnipsRemoveSelectModeMappings = 0
-    vim.g.UltiSnipsExpandTrigger = "<C-s>"      
-  vim.g.UltiSnipsJumpForwardTrigger = "<C-j>" 
-  vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
+  vim.g.UltiSnipsExpandTrigger = "<C-s>"      
+  vim.g.UltiSnipsJumpForwardTrigger = "<Tab>" 
+  vim.g.UltiSnipsJumpBackwardTrigger = "<S-Tab>"
   end,
 }
 

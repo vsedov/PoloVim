@@ -44,10 +44,15 @@ function config.cmp()
     cmp.setup({
       snippet = {
         expand = function(args)
-          vim.fn["UltiSnips#Anon"](args.body)
+
+          require'luasnip'.lsp_expand(args.body)
+                    -- vim.fn["UltiSnips#Anon"](args.body)
         end,
       },
-
+    completion = {
+        autocomplete = {require("cmp.types").cmp.TriggerEvent.TextChanged},
+        completeopt = "menu,menuone,noselect"
+      },
 
         formatting = {
             format = function(entry, vim_item)
@@ -101,57 +106,70 @@ function config.cmp()
             end
         },
   
-        mapping = {
-        ["<C-n>"] = cmp.mapping(function(fallback)
-          if vim.fn.pumvisible() == 1 then
-            if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-              return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
-            end
-
-            vim.fn.feedkeys(t("<C-n>"), "n")
-          elseif check_back_space() then
-            vim.fn.feedkeys(t("<cr>"), "n")
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
+     mapping = {
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Insert, select = true}),
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if vim.fn.complete_info()["selected"] == -1 and vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-            vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
-          elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-            vim.fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
-          elseif vim.fn.pumvisible() == 1 then
+          if vim.fn.pumvisible() == 1 then
             vim.fn.feedkeys(t("<C-n>"), "n")
+            -- elseif require'snippy'.can_expand_or_advance()  then
+            --   vim.fn.feedkeys(t("<Plug>(snippy-expand-or-next)"), "")
+          elseif require'luasnip'.expand_or_jumpable() then
+            vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
           elseif check_back_space() then
             vim.fn.feedkeys(t("<tab>"), "n")
           else
             fallback()
           end
-        end, {
-          "i",
-          "s",
-        }),
+        end, {"i", "s"}),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-            return vim.fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
-          elseif vim.fn.pumvisible() == 1 then
+          if vim.fn.pumvisible() == 1 then
             vim.fn.feedkeys(t("<C-p>"), "n")
+            -- elseif require'snippy'.can_jump(-1) then
+            --   vim.fn.feedkeys(t("<Plug>(snippy-previous)"), "")
+          elseif require'luasnip'.jumpable(-1) then
+            vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
           else
             fallback()
           end
-        end, {
-          "i",
-          "s",
-        }),
+        end, {"i", "s"})
       },
-        sources = sources
+
+      -- You should specify your *installed* sources.
+      sources = sources
     })
+    if vim.o.ft ~= 'clap_input' then
+      require'cmp'.setup.buffer { completion = {enable = false} }
+    end
+    vim.cmd("autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }")
+
+    vim.cmd("autocmd FileType clap_input lua require('cmp').setup.buffer { enabled = false }")
+    -- if vim.o.ft ~= 'sql' then
+    --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
+    -- end
   end
 
 
+
+  function config.vim_vsnip()
+    vim.g.vsnip_snippet_dir = os.getenv("HOME") .. "/.config/nvim/snippets"
+  end
+
+  function config.luasnip()
+    print("luasnip")
+    local ls = require "luasnip"
+    ls.config.set_config {history = true, updateevents = "TextChanged,TextChangedI"}
+    require("luasnip.loaders.from_vscode").load {}
+
+    vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
+    vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
+
+  end
 
 
 

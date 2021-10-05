@@ -54,17 +54,6 @@ tools["fladson/vim-kitty"] = {
 }
 
 
-
-tools['vimwiki/vimwiki'] = {
-  opt = true,
-  branch = "dev",
-  keys = {"<leader>ww", "<leader>wt", "<leader>wi"},
-  event = {"BufEnter *.wiki"},
-  setup = conf.vimwiki_setup,
-  config = conf.vimwiki_config
-}
-
-
 tools['rktjmp/highlight-current-n.nvim'] ={
 
   config = function ()
@@ -128,6 +117,7 @@ tools['nacro90/numb.nvim'] = {
     require('numb').setup{
       show_numbers = true, -- Enable 'number' for the window while peeking
       show_cursorline = true,-- Enable 'cursorline' for the window while peeking
+      
     number_only = true, -- Peek only when the command is only a number instead of when it starts with a number
     }
   end

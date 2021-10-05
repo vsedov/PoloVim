@@ -260,7 +260,10 @@ editor['Vimjas/vim-python-pep8-indent'] = {
 
 editor['max397574/better-escape.nvim']={
     config = function()
-      require("better_escape").setup()
+      require("better_escape").setup({
+        timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+        clear_empty_lines = true, -- clear line after escaping if ther is only whitespace      })
+      })
     end,
 }
 
