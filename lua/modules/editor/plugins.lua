@@ -60,27 +60,9 @@ editor["bfredl/nvim-miniyank"] = {
   end
 }
 
--- fix terminal color
-editor["norcalli/nvim-terminal.lua"] = {
-  opt = true,
-  ft = {"log", "terminal"},
-  config = function()
-    require"terminal".setup()
-  end
-}
+
 editor["mbbill/undotree"] = { cmd = {"UndotreeToggle"}}
 
-
-
-editor["AndrewRadev/splitjoin.vim"] = {
-  opt = true,
-  cmd = {"SplitjoinJoin", "SplitjoinSplit"},
-  setup = function()
-    vim.g.splitjoin_split_mapping = ""
-    vim.g.splitjoin_join_mapping = ""
-  end
-  -- keys = {'<space>S', '<space>J'}
-}
 
 
 
@@ -88,7 +70,7 @@ editor['takac/vim-hardtime'] = {
   -- opt = true,
   -- cmd = { 'HardTimeOn', 'HardTimeOff', 'HardTimeToggle' },
   config = function()
-    vim.g.hardtime_default_on = 0
+    vim.g.hardtime_default_on = 1
     vim.g.hardtime_ignore_quickfix = 1
     vim.g.hardtime_allow_different_key = 1
     vim.g.hardtime_maxcount = 5
