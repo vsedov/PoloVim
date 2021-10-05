@@ -51,6 +51,10 @@ editor["matze/vim-move"] = {
   -- fn = {'<Plug>MoveBlockDown', '<Plug>MoveBlockUp', '<Plug>MoveLineDown', '<Plug>MoveLineUp'}
 }
 
+
+-- MOST IMPORTANT FEATURE OF THEM ALL, I APROVE OF THIS 
+editor['rtakasuke/vim-neko']={}
+
 editor["bfredl/nvim-miniyank"] = {
   keys = {"p", "y", "<C-v>"},
   opt = true,
