@@ -47,7 +47,7 @@ completion["hrsh7th/nvim-cmp"] = {
     {"dcampos/cmp-snippy",after = {"nvim-snippy", "nvim-cmp"}},
     {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
       {"hrsh7th/cmp-vsnip", after = "nvim-cmp"},
-    {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
+    -- {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
     {'tzachar/cmp-tabnine',
             run = './install.sh',
             after = 'cmp-spell',
@@ -58,11 +58,11 @@ completion["hrsh7th/nvim-cmp"] = {
 }
 
 -- can not lazyload, it is also slow...
-completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
-  event = "InsertEnter",
-  requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
-  config = conf.luasnip
-}
+-- completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
+--   event = "InsertEnter",
+--   requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
+--   config = conf.luasnip
+-- }
 
 completion["kristijanhusak/vim-dadbod-completion"] = {
   event = "InsertEnter",
@@ -74,23 +74,23 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
   end
 }
 
-completion["SirVer/ultisnips"]={
-  requires = "honza/vim-snippets",
-  config = function()
+-- completion["SirVer/ultisnips"]={
+--   requires = "honza/vim-snippets",
+--   config = function()
     
-    vim.g.UltiSnipsRemoveSelectModeMappings = 0
-  vim.g.UltiSnipsExpandTrigger = "<C-s>"      
-  vim.g.UltiSnipsJumpForwardTrigger = "<Tab>" 
-  vim.g.UltiSnipsJumpBackwardTrigger = "<S-Tab>"
-  end,
-}
+--     vim.g.UltiSnipsRemoveSelectModeMappings = 0
+--   vim.g.UltiSnipsExpandTrigger = "<C-s>"      
+--   vim.g.UltiSnipsJumpForwardTrigger = "<Tab>" 
+--   vim.g.UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+--   end,
+-- }
 
 
 
 completion["dcampos/nvim-snippy"] = {
-  opt = true,
-  -- event = "InsertEnter",
-  -- requires = {"honza/vim-snippets", event = "InsertEnter"}, --event = "InsertEnter"
+  -- opt = true,
+  event = "InsertEnter",
+  requires = {"honza/vim-snippets", event = "InsertEnter"}, --event = "InsertEnter"
   config = function()
     require'snippy'.setup {}
 
@@ -169,10 +169,6 @@ completion['CRAG666/code_runner.nvim']={
   config = function()
 
     require('code_runner').setup {
-      term = {
-        position = "vert",
-        size = 8
-      },
       filetype = {
         map = "<leader>r",
       },

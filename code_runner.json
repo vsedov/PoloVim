@@ -1,10 +1,13 @@
 {
-    "java": "cd {dir} && javac {fileName} && java {fileNameWithoutExt}",
-    "kt": "cd {dir} && kotlinc-native {fileName} -o {fileNameWithoutExt} && ./{fileNameWithoutExt}.kexe",
-    "c": "cd {dir} && gcc {fileName} -o {fileNameWithoutExt} && {dir}{fileNameWithoutExt}",
-    "cpp": "cd {dir} && g++ {fileName} -o {fileNameWithoutExt} && {dir}{fileNameWithoutExt}",
-    "py": "python -u {file}",
-    "cs": "alacritty -e sh -c 'cd {dir} && mcs {fileName} && mono *.exe'",
-    "ts": "deno run {file}",
-    "rs": "cd {dir} && rustc {fileName} && {dir}{fileNameWithoutExt}"
+    "javascript": "node",
+    "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+    "kotlin": "cd $dir && kotlinc-native $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt.kexe",
+    "c": "cd $dir && gcc $fileName -o -Werror $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+    "python": "python -u",
+    "shellscript": "bash",
+    "csharp": "cd $dir && mcs $fileName && mono $fileNameWithoutExt.exe",
+    "typescript": "deno run",
+    "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+    "dart": "dart"
 }

@@ -44,9 +44,9 @@ function config.cmp()
     cmp.setup({
       snippet = {
         expand = function(args)
-
-          require'luasnip'.lsp_expand(args.body)
-                    -- vim.fn["UltiSnips#Anon"](args.body)
+            require 'snippy'.expand_snippet(args.body)
+          -- require'luasnip'.lsp_expand(args.body)
+          -- vim.fn["UltiSnips#Anon"](args.body)
         end,
       },
     completion = {
@@ -114,13 +114,19 @@ function config.cmp()
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Insert, select = true}),
+     
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if vim.fn.pumvisible() == 1 then
-            vim.fn.feedkeys(t("<C-n>"), "n")
-            -- elseif require'snippy'.can_expand_or_advance()  then
-            --   vim.fn.feedkeys(t("<Plug>(snippy-expand-or-next)"), "")
-          elseif require'luasnip'.expand_or_jumpable() then
-            vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
+          if cmp.visible() then
+            cmp.select_next_item()
+           
+
+            elseif require'snippy'.can_expand_or_advance()  then
+              vim.fn.feedkeys(t("<Plug>(snippy-expand-or-next)"), "")
+          
+          -- elseif require'luasnip'.expand_or_jumpable() then
+          --   vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
+          
+
           elseif check_back_space() then
             vim.fn.feedkeys(t("<tab>"), "n")
           else
@@ -128,12 +134,12 @@ function config.cmp()
           end
         end, {"i", "s"}),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if vim.fn.pumvisible() == 1 then
-            vim.fn.feedkeys(t("<C-p>"), "n")
-            -- elseif require'snippy'.can_jump(-1) then
-            --   vim.fn.feedkeys(t("<Plug>(snippy-previous)"), "")
-          elseif require'luasnip'.jumpable(-1) then
-            vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
+          if cmp.visible() then
+            cmp.select_prev_item()
+            elseif require'snippy'.can_jump(-1) then
+              vim.fn.feedkeys(t("<Plug>(snippy-previous)"), "")
+          -- elseif require'luasnip'.jumpable(-1) then
+          --   vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
           else
             fallback()
           end
