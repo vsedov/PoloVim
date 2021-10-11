@@ -70,31 +70,22 @@ editor["mbbill/undotree"] = { cmd = {"UndotreeToggle"}}
 
 
 
-editor['takac/vim-hardtime'] = {
-  -- opt = true,
-  -- cmd = { 'HardTimeOn', 'HardTimeOff', 'HardTimeToggle' },
-  config = function()
-    vim.g.hardtime_default_on = 0
-    vim.g.hardtime_ignore_quickfix = 1
-    vim.g.hardtime_allow_different_key = 1
-    vim.g.hardtime_maxcount = 5
-  end
-}
+-- editor['takac/vim-hardtime'] = {
+--   -- opt = true,
+--   -- cmd = { 'HardTimeOn', 'HardTimeOff', 'HardTimeToggle' },
+--   config = function()
+--     vim.g.hardtime_default_on = 0
+--     vim.g.hardtime_ignore_quickfix = 1
+--     vim.g.hardtime_allow_different_key = 1
+--     vim.g.hardtime_maxcount = 5
+--   end
+-- }
 
 editor['famiu/bufdelete.nvim'] = {
   opt = true,
   cmd = {'Bdelete', 'Bwipeout'}
 }
 
-
-editor['turbio/bracey.vim'] ={
-  opt = true,
-  run = 'npm install --prefix server',
-  cmd = {'Bracey', 'BraceyStop', 'BraceyReload'},
-  config = function ()
-    vim.g.bracey_refresh_on_save = 0
-  end
-}
 
 
 -- nvim-colorizer replacement
@@ -278,22 +269,6 @@ editor['https://github.com/tmhedberg/SimpylFold']  = {
 }
 
 
--- editor['https://github.com/waiting-for-dev/vim-www']  = {
---   requires = 'https://github.com/tpope/vim-dispatch',
-
---   config = function()
---     vim.g.www_default_search_engine = 'google'
---   end
--- }
-
--- THIS CAUSED ISSUES BEFORe
-
--- editor["kevinhwang91/nvim-hlslens"] = {
---   -- keys = {"/", "?", '*', '#'}, --'n', 'N', '*', '#', 'g'
---   -- opt = true,
---   -- config = conf.hlslens
--- }
-
 editor['ray-x/guihua.lua']  = {
   run =  'cd lua/fzy && make'
 }
@@ -303,6 +278,8 @@ editor["chaoren/vim-wordmotion"] = {
   fn = {"<Plug>WordMotion_w","<Plug>WordMotion_b","<Plug>WordMotion_gE"," <Plug>WordMotion_aW"},
   keys = {'w','W', 'gE', 'aW'}
 }
+
+
 
 
 

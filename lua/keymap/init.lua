@@ -229,6 +229,11 @@ local plug_map = {
     ["n|<Leader>bmm"]    = map_cr("BufferLineCyclePrev"):with_noremap():with_silent(),
     ["n|gb"]             = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
+
+    ["n|<Leader>ot"]             = map_cr("OneTerm"):with_noremap():with_silent(),
+
+
+
 };
 
 bind.nvim_load_mapping(plug_map)

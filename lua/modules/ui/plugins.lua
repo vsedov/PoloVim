@@ -128,9 +128,7 @@ ui['NFrid/due.nvim']={
 ui["akinsho/bufferline.nvim"] = {
   config = conf.nvim_bufferline,
   event = "UIEnter",
-  diagnostics_update_in_insert = false,
-  -- after = {"aurora"}
-  -- requires = {'kyazdani42/nvim-web-devicons'}
+  requires = {'kyazdani42/nvim-web-devicons'},
   opt = true
 }
 
@@ -222,7 +220,7 @@ ui['beauwilliams/focus.nvim']={
   require("focus").setup({hybridnumber = true, excluded_filetypes = {"minimap","vista","outline","symbols_outline"}})
 
   vim.api.nvim_set_keymap('n', '<leader>hh', ':FocusMaximise<CR>', { silent = true })
-  vim.api.nvim_set_keymap('n', '<leader>pf', ':FocusSplitNicely<CR>', { silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>kk', ':FocusSplitNicely<CR>', { silent = true })
 
   end
 }

@@ -15,7 +15,8 @@ local function load_options()
     vim.g.python3_host_prog = '/usr/bin/python3'
 
   local global_local = {
-    relativenumber  = true;
+    ttyfast        = true; -- Indicate fast terminal conn for faster redraw
+    relativenumber = true;
     termguicolors  = true;
     mouse          = "nv";
     errorbells     = true;
@@ -91,6 +92,14 @@ local function load_options()
     listchars      = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←";
     pumblend       = 10;
     winblend       = 10;
+
+    showmatch     = true;
+    smartindent   = true;
+    autowrite     = true;
+    autoread      = true;
+    breakindent   = true;
+    hlsearch      = true;
+    foldmethod = "indent";
   }
 
   local bw_local  = {
@@ -104,12 +113,13 @@ local function load_options()
     shiftwidth     = 2;
     softtabstop    = -1;
     breakindentopt = "shift:2,min:20";
-    wrap           = false;
+    wrap           = true;
     linebreak      = true;
     number         = true;
     colorcolumn    = "80";
     foldenable     = true;
-    signcolumn     = "yes";
+    -- signcolumn     = "yes";
+    signcolumn     = "auto:1";
     conceallevel   = 2;
     concealcursor  = "niv";
   }

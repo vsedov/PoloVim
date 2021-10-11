@@ -230,16 +230,6 @@ tools["brooth/far.vim"] = {
 
 
 
--- tools['https://github.com/rcarriga/nvim-notify']={
-
---   config = function()
---     require("notify")("My super important message")
---     vim.notify = require("notify")
---     vim.notify("This is an error message", "error")
-
---   end
--- }
-
 tools['iamcco/markdown-preview.nvim'] = {
   run = ':call mkdp#util#install()',
 
@@ -249,18 +239,6 @@ tools['iamcco/markdown-preview.nvim'] = {
   end
 }
 
-
-
-
--- Nice toools 
-
-
--- tools['kevinhwang91/nvim-hlslens'] = {
---   config = function ()
---     require('hlslens').setup({
---     })
---   end
--- }
 
 
 return tools
