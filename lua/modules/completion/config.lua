@@ -1,6 +1,5 @@
 local config = {}
 
-
 function config.nvim_lsp()
 	require("modules.completion.lspconfig")
 end
@@ -17,7 +16,7 @@ function config.cmp()
 	local sources = {
 		{ name = "nvim_lsp" },
 		{ name = "cmp_tabnine" },
-		{ name = 'luasnip' },
+		{ name = "luasnip" },
 		{ name = "treesitter", keyword_length = 2 },
 		{ name = "look", keyword_length = 4 },
 		{ name = "nvim_lua" },
@@ -43,7 +42,7 @@ function config.cmp()
 		snippet = {
 			expand = function(args)
 				-- require 'snippy'.expand_snippet(args.body)
-				require'luasnip'.lsp_expand(args.body)
+				require("luasnip").lsp_expand(args.body)
 				-- vim.fn["UltiSnips#Anon"](args.body)
 			end,
 		},
@@ -100,67 +99,70 @@ function config.cmp()
 				return vim_item
 			end,
 		},
-        sorting = {
-            comparators = {
-                cmp.config.compare.exact, cmp.config.compare.score,
-                cmp.config.compare.offset, cmp.config.compare.length,
-                cmp.config.compare.sort_text, cmp.config.compare.order,
-            },
-        },
-	  snippet = {
-	    expand = function(args)
-	      require("luasnip").lsp_expand(args.body)
-	    end,
-	  },
-	  preselect = cmp.PreselectMode.None,
-	  experimental = {
-	    ghost_text = true,
-	    native_menu = false,
-	  },
-	  mapping = {
-		["<C-e>"] = cmp.mapping.close(),
-	    ["<C-p>"] = cmp.mapping.select_prev_item(),
-	    ["<C-n>"] = cmp.mapping.select_next_item(),
-	    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-	    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-	    ["<C-Space>"] = function()
-	      if cmp.visible() then
-	        cmp.close()
-	      else
-	        cmp.complete()
-	      end
-	    end,
-	    ["<CR>"] = cmp.mapping.confirm({
-	      behavior = cmp.ConfirmBehavior.Replace,
-	      select = false,
-	    }),
-	    ["<Tab>"] = cmp.mapping(function()
-	      if cmp.visible() then
-	        cmp.select_next_item()
-	      elseif utils.invalid_prev_col() then
-	        fn.feedkeys(utils.t("<Tab>"), "n")
-	      elseif require("luasnip").expand_or_jumpable() then
-	        fn.feedkeys(utils.t("<Plug>luasnip-expand-or-jump"), "")
-	      else
-	        fn.feedkeys(utils.t("<Tab>"), "n")
-	      end
-	    end, {
-	      "i",
-	      "s",
-	    }),
-	    ["<S-Tab>"] = cmp.mapping(function()
-	      if cmp.visible() then
-	        cmp.select_prev_item()
-	      elseif require("luasnip").jumpable(-1) then
-	        fn.feedkeys(utils.t("<Plug>luasnip-jump-prev"), "")
-	      else
-	        fn.feedkeys(utils.t("<C-d>"), "n")
-	      end
-	    end, {
-	      "i",
-	      "s",
-	    }),
-	  },
+		sorting = {
+			comparators = {
+				cmp.config.compare.exact,
+				cmp.config.compare.score,
+				cmp.config.compare.offset,
+				cmp.config.compare.length,
+				cmp.config.compare.sort_text,
+				cmp.config.compare.order,
+			},
+		},
+		snippet = {
+			expand = function(args)
+				require("luasnip").lsp_expand(args.body)
+			end,
+		},
+		preselect = cmp.PreselectMode.None,
+		experimental = {
+			ghost_text = true,
+			native_menu = false,
+		},
+		mapping = {
+			["<C-e>"] = cmp.mapping.close(),
+			["<C-p>"] = cmp.mapping.select_prev_item(),
+			["<C-n>"] = cmp.mapping.select_next_item(),
+			["<C-d>"] = cmp.mapping.scroll_docs(-4),
+			["<C-f>"] = cmp.mapping.scroll_docs(4),
+			["<C-Space>"] = function()
+				if cmp.visible() then
+					cmp.close()
+				else
+					cmp.complete()
+				end
+			end,
+			["<CR>"] = cmp.mapping.confirm({
+				behavior = cmp.ConfirmBehavior.Replace,
+				select = false,
+			}),
+			["<Tab>"] = cmp.mapping(function()
+				if cmp.visible() then
+					cmp.select_next_item()
+				elseif utils.invalid_prev_col() then
+					fn.feedkeys(utils.t("<Tab>"), "n")
+				elseif require("luasnip").expand_or_jumpable() then
+					fn.feedkeys(utils.t("<Plug>luasnip-expand-or-jump"), "")
+				else
+					fn.feedkeys(utils.t("<Tab>"), "n")
+				end
+			end, {
+				"i",
+				"s",
+			}),
+			["<S-Tab>"] = cmp.mapping(function()
+				if cmp.visible() then
+					cmp.select_prev_item()
+				elseif require("luasnip").jumpable(-1) then
+					fn.feedkeys(utils.t("<Plug>luasnip-jump-prev"), "")
+				else
+					fn.feedkeys(utils.t("<C-d>"), "n")
+				end
+			end, {
+				"i",
+				"s",
+			}),
+		},
 
 		-- You should specify your *installed* sources.
 		sources = sources,
@@ -171,8 +173,6 @@ function config.cmp()
 	vim.cmd("autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }")
 
 	vim.cmd("autocmd FileType clap_input lua require('cmp').setup.buffer { enabled = false }")
-
-
 end
 
 function config.vim_vsnip()
@@ -182,7 +182,7 @@ end
 function config.luasnip()
 	print("luasnip")
 	local ls = require("luasnip")
-    require("luasnip.loaders.from_vscode").lazy_load()
+	require("luasnip.loaders.from_vscode").lazy_load()
 
 	vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
 	vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
