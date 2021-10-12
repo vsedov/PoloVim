@@ -35,7 +35,6 @@ tools['b3nj5m1n/kommentary'] = {
   config = conf.kommentary,
 }
 
-tools["nanotee/zoxide.vim"] = {cmd = {"Z", "Lz", "Zi"}}
 tools["liuchengxu/vim-clap"] = {
   cmd = {"Clap"},
   run = function()

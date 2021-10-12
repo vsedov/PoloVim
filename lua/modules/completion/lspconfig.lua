@@ -131,9 +131,7 @@ end
 vim.cmd("command! -nargs=0 LspLog call v:lua.open_lsp_log()")
 vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 
-cfg = {
-	floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
-}
+
 
 -- I dont like the lsp diagnositcs, it can be very annoying and gets in teh way
 -- vim.lsp.handlers['textDocument/publishDiagnostics']= function() end
@@ -177,8 +175,14 @@ vim.cmd([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ fo
 -- vim.cmd [[autocmd CursorHoldI * silent! Lspsaga signature_help]]
 
 local enhance_attach = function(client, bufnr)
-	require("lsp_signature").on_attach(cfg)
-	-- coq.lsp_ensure_capabilities()
+
+    require "lsp_signature".on_attach({
+      bind = true, 
+      handler_opts = {
+        border = "single"
+      }
+    }, bufnr)
+
 	api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 

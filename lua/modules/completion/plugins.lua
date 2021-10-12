@@ -45,7 +45,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		-- { "dcampos/cmp-snippy", after = { "nvim-snippy", "nvim-cmp" } },
 		{ "quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-vsnip", rtp = ".", after = "nvim-cmp" },
-		-- {"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
+		{"saadparwaiz1/cmp_luasnip", after = {"nvim-cmp", "LuaSnip"}},
 		{
 			"tzachar/cmp-tabnine",
 			run = "./install.sh",
@@ -57,11 +57,11 @@ completion["hrsh7th/nvim-cmp"] = {
 }
 
 -- can not lazyload, it is also slow...
--- completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
---   event = "InsertEnter",
---   requires = {event = "InsertEnter"}, -- , event = "InsertEnter"
---   config = conf.luasnip
--- }
+completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
+  event = "InsertEnter",
+  requires = {"rafamadriz/friendly-snippets", event = "InsertEnter"}, -- , event = "InsertEnter"
+  config = conf.luasnip
+}
 
 completion["kristijanhusak/vim-dadbod-completion"] = {
 	event = "InsertEnter",

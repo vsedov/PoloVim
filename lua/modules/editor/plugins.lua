@@ -13,9 +13,9 @@ editor['rhysd/accelerated-jk'] = {
   opt = true
 }
 
-editor['haya14busa/vim-asterisk'] = {
-  opt = true,
-}
+-- editor['haya14busa/vim-asterisk'] = {
+--   opt = true,
+-- }
 
 editor['rmagatti/auto-session'] = {
   -- cmd = {'SaveSession', 'RestoreSession', 'DeleteSession'},
@@ -190,8 +190,6 @@ editor['andweeb/presence.nvim']  = {
   event = 'BufReadPre',
   config = conf.discord
 }
-
--- editor['voldikss/vim-floaterm']  = {}
 
 editor['https://github.com/numtostr/FTerm.nvim']={
     config = function()

@@ -252,9 +252,6 @@ ui["wfxr/minimap.vim"] = {
 
 }
 
-
-
-
 ui['https://github.com/yamatsum/nvim-cursorline'] = {
 }
 

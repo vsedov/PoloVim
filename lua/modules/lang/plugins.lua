@@ -38,26 +38,6 @@ lang["lifepillar/pgsql.vim"] = {ft = {"sql", "pgsql"}}
 
 lang["nanotee/sqls.nvim"] = {ft = {"sql", "pgsql"}, setup = conf.sqls, opt = true}
 
-lang["yardnsm/vim-import-cost"] = {
-  cmd = "ImportCost",
-  opt = true
-}
-
-
--- lang["wellle/context.vim"] = {
---   after = "nvim-treesitter",
---   opt = true,
---   -- cmd = {"ContextEnable", "ContextActivate", "ContextToggle", "ContextToggleWindow", "ContextPeek"},
---   setup = function()
---     vim.g.context_enabled = 1
---     vim.g.context_max_height = 6
---     vim.g.context_filetype_blacklist = {'clap_input', ''}
---   end,
---   config = function()
---     vim.cmd([[ContextActivate]])
---     -- vim.cmd([[ContextEnable]])  -- enable on command as it has performance issue
---   end
--- }
 
 lang["ElPiloto/sidekick.nvim"] = {cmd = {'SideKickNoReload'}, config = conf.sidekick}
 lang["jbyuki/one-small-step-for-vimkind"] = {opt = true, ft = {"lua"}}
