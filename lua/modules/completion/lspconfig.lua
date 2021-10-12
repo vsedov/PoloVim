@@ -135,7 +135,7 @@ vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 -- vim.lsp.handlers['textDocument/publishDiagnostics']= function() end
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 	-- Enable underline, use default values
-	underline = true,
+	underline = false,
 	-- Enable virtual text, override spacing to 4
 
 	virtual_text = false,
@@ -149,23 +149,15 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	update_in_insert = false,
 })
 
--- Diagnostic signs
-vim.fn.sign_define("LspDiagnosticsSignError", {
-	text = "",
-	texthl = "",
-})
-vim.fn.sign_define("LspDiagnosticsSignWarning", {
-	text = "",
-	texthl = "",
-})
-vim.fn.sign_define("LspDiagnosticsSignInformation", {
-	text = "",
-	texthl = "",
-})
-vim.fn.sign_define("LspDiagnosticsSignHint", {
-	text = "",
-	texthl = "",
-})
+
+
+
+vim.api.nvim_call_function('sign_define', {"LspDiagnosticsSignError", {text = "", texthl = "LspDiagnosticsDefaultError"}})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", texthl = "LspDiagnosticsDefaultWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", texthl = "LspDiagnosticsDefaultInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsDefaultHint"})
+vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagnosticsDefaultOther"})
+
 
 vim.cmd([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })]])
 
