@@ -149,15 +149,14 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	update_in_insert = false,
 })
 
-
-
-
-vim.api.nvim_call_function('sign_define', {"LspDiagnosticsSignError", {text = "", texthl = "LspDiagnosticsDefaultError"}})
-vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", texthl = "LspDiagnosticsDefaultWarning"})
-vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", texthl = "LspDiagnosticsDefaultInformation"})
-vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", texthl = "LspDiagnosticsDefaultHint"})
-vim.fn.sign_define("LspDiagnosticsSignOther", {text = "﫠", texthl = "LspDiagnosticsDefaultOther"})
-
+vim.api.nvim_call_function(
+	"sign_define",
+	{ "LspDiagnosticsSignError", { text = "", texthl = "LspDiagnosticsDefaultError" } }
+)
+vim.fn.sign_define("LspDiagnosticsSignWarning", { text = "", texthl = "LspDiagnosticsDefaultWarning" })
+vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = "LspDiagnosticsDefaultInformation" })
+vim.fn.sign_define("LspDiagnosticsSignHint", { text = "", texthl = "LspDiagnosticsDefaultHint" })
+vim.fn.sign_define("LspDiagnosticsSignOther", { text = "﫠", texthl = "LspDiagnosticsDefaultOther" })
 
 vim.cmd([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })]])
 

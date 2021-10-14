@@ -14,9 +14,9 @@ function config.cmp()
 	end
 
 	local sources = {
+		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
 		{ name = "cmp_tabnine" },
-		{ name = "luasnip" },
 		{ name = "treesitter", keyword_length = 2 },
 		{ name = "look", keyword_length = 4 },
 		{ name = "nvim_lua" },
@@ -29,7 +29,6 @@ function config.cmp()
 		{ name = "neorg" },
 	}
 
-	local cmp = require("cmp")
 	if vim.o.ft == "sql" then
 		table.insert(sources, { name = "vim-dadbod-completion" })
 	end
@@ -182,7 +181,8 @@ end
 function config.luasnip()
 	print("luasnip")
 	local ls = require("luasnip")
-	require("luasnip.loaders.from_vscode").lazy_load()
+	-- require("luasnip.loaders.from_vscode").lazy_load()
+	require("luasnip/loaders/from_vscode").load()
 
 	vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
 	vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
@@ -281,6 +281,8 @@ end
 
 function config.doge()
 	vim.g.doge_doc_standard_python = "numpy"
+	vim.g.doge_mapping_comment_jump_forward = "<C-n>"
+	vim.g.doge_mapping_comment_jump_backward = "C-p>"
 end
 
 function config.vimtex()

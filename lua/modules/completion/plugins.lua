@@ -1,6 +1,5 @@
 local completion = {}
 local conf = require("modules.completion.config")
-local remap = vim.api.nvim_set_keymap
 
 completion["neovim/nvim-lspconfig"] = {
 	event = "BufReadPre",
@@ -42,6 +41,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "hrsh7th/cmp-nvim-lsp", after = { "nvim-cmp" } },
 		{ "f3fora/cmp-spell", after = "nvim-cmp" },
 		{ "octaltree/cmp-look", after = "nvim-cmp" },
+		{ "honza/vim-snippets", after = "nvim-cmp" },
 		-- { "dcampos/cmp-snippy", after = { "nvim-snippy", "nvim-cmp" } },
 		{ "quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-vsnip", rtp = ".", after = "nvim-cmp" },
@@ -59,7 +59,9 @@ completion["hrsh7th/nvim-cmp"] = {
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
 	event = "InsertEnter",
-	requires = { "rafamadriz/friendly-snippets", event = "InsertEnter" }, -- , event = "InsertEnter"
+	requires = {
+		{ "rafamadriz/friendly-snippets", event = "InsertEnter" },
+	}, -- , event = "InsertEnter"
 	config = conf.luasnip,
 }
 
@@ -80,8 +82,8 @@ completion["SirVer/ultisnips"] = {
 	config = function()
 		vim.g.UltiSnipsRemoveSelectModeMappings = 0
 		vim.g.UltiSnipsExpandTrigger = "<C-s>"
-		vim.g.UltiSnipsJumpForwardTrigger = "<C-j>"
-		vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
+		vim.g.UltiSnipsJumpForwardTrigger = "<C-n>"
+		vim.g.UltiSnipsJumpBackwardTrigger = "<C-p>"
 	end,
 }
 

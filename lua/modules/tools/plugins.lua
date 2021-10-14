@@ -29,8 +29,14 @@ tools["editorconfig/editorconfig-vim"] = {
 	-- ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
 }
 
-tools["b3nj5m1n/kommentary"] = {
-	config = conf.kommentary,
+-- tools["b3nj5m1n/kommentary"] = {
+-- 	config = conf.kommentary,
+-- }
+
+tools["numToStr/Comment.nvim"] = {
+	config = function()
+		require("Comment").setup()
+	end,
 }
 
 tools["liuchengxu/vim-clap"] = {
@@ -178,7 +184,6 @@ tools["simrat39/symbols-outline.nvim"] = {
 }
 
 tools["kdheepak/lazygit.nvim"] = {
-	opt = true,
 	cmd = { "LazyGit" },
 	config = function()
 		vim.g.lazygit_floating_window_winblend = 2

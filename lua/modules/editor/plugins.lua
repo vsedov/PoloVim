@@ -198,6 +198,12 @@ editor["https://github.com/numtostr/FTerm.nvim"] = {
 	end,
 }
 
+editor["arthurxavierx/vim-caser"] = {
+
+	config = function()
+		vim.g.caser_no_mappings = 1
+	end,
+}
 --Req Syntax Nice Stuff .
 editor["raimon49/requirements.txt.vim"] = {}
 

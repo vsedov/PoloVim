@@ -50,18 +50,21 @@ local plug_map = {
 	["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
 	["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
 
-	-- doge
-	["n|<F1>"] = map_cr("DogeGenerate"):with_noremap():with_silent(),
-
 	-- never go wrong with clap
-	["n|<Leader>cl"] = map_cr("Clap"):with_noremap():with_silent(),
+	["n|<F1>"] = map_cr("Clap"):with_noremap():with_silent(),
+	["n|<Leader><F1>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
+
+	["n|<Leader>fq"] = map_cu("Clap grep ++query=<Cword>"):with_noremap():with_silent(),
+	["v|<A-w>"] = map_cu("Clap maps +mode=v | startinsert"),
+
+	-- ["n|<Leader>cl"] = map_cmd("<Plug>CaserCamelCase"),
 
 	["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
 	["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 
 	["n|<F3>"] = map_cu("Black"):with_noremap():with_silent(),
 
-	--NeoRunner_Horizontal
+	--NeoRunner_Horizontalo
 	["n|<F6>"] = map_cu("NeoRunner"):with_noremap():with_silent(),
 
 	-- Plugin nvim-tree
@@ -217,45 +220,9 @@ local plug_map = {
 	["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
 	["n|<Leader>bnn"] = map_cr("BufferLineCycleNext"):with_noremap():with_silent(),
 	["n|<Leader>bmm"] = map_cr("BufferLineCyclePrev"):with_noremap():with_silent(),
-	["n|gb"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
+	["n|bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
 	["n|<Leader>ot"] = map_cr("OneTerm"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)
-
--- ["i|<TAB>"]      = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
--- ["i|<S-TAB>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
-
--- ["i|<C-k>"]       = map_cmd([[compe#scroll({ 'delta': +4 })]]):with_noremap():with_expr():with_nowait(),
--- ["i|<C-j>"]       = map_cmd([[compe#scroll({ 'delta': -4 })]]):with_noremap():with_expr():with_nowait(),
--- ["i|<C-e>"]       = map_cmd([[compe#close('<C-e>')]]):with_noremap():with_expr():with_nowait(),
--- ["i|<CR>"]       = map_cmd([[pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"})]]):with_noremap():with_expr():with_nowait(),
-
--- remap('i', '<c-e>', [[pumvisible() ? "<c-e><esc>" : "<esc>"]], { expr = true, noremap = true })
--- remap('i', '<TAB>', [[pumvisible() ? "<c-e><c-c>" : "<c-c>"]], { expr = true, noremap = true })
--- remap('i', '<TAB>', [[pumvisible() ? "<c-n>" : "<tab>"]], { expr = true, noremap = true })
--- remap('i', '<S-TAB>', [[pumvisible() ? "<c-p>" : "<bs>"]], { expr = true, noremap = true })
--- ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
--- ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
--- ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
--- ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
--- ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
--- ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
-
--- -- Plugin Floaterm
--- ["n|<A-d>"]          = map_cu('Lspsaga open_floaterm'):with_noremap():with_silent(),
--- ["t|<A-d>"]          = map_cu([[<C-\><C-n>:Lspsaga close_floaterm<CR>]]):with_noremap():with_silent(),
--- ["n|<Leader>g"]      = map_cu("Lspsaga open_floaterm lazygit"):with_noremap():with_silent(),
--- ["n|<Leader>ce"]     = map_cr('Lspsaga show_line_diagnostics'):with_noremap():with_silent(),
--- ["n|<C-f>"]          = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>"):with_silent():with_noremap():with_nowait(),
--- ["n|<C-b>"]          = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"):with_silent():with_noremap():with_nowait(),
--- ["n|[e"]             = map_cr('Lspsaga diagnostic_jump_next'):with_noremap():with_silent(),
--- ["n|]e"]             = map_cr('Lspsaga diagnostic_jump_prev'):with_noremap():with_silent(),
--- ["n|K"]              = map_cr("Lspsaga hover_doc"):with_noremap():with_silent(),
--- ["n|ga"]             = map_cr("Lspsaga code_action"):with_noremap():with_silent(),
--- ["v|ga"]             = map_cu("Lspsaga range_code_action"):with_noremap():with_silent(),
--- ["n|gd"]             = map_cr('Lspsaga preview_definition'):with_noremap():with_silent(),
--- ["n|gs"]             = map_cr('Lspsaga signature_help'):with_noremap():with_silent(),
--- ["n|gr"]             = map_cr('Lspsaga rename'):with_noremap():with_silent(),
--- ["n|gh"]             = map_cr('Lspsaga lsp_finder'):with_noremap():with_silent(),
