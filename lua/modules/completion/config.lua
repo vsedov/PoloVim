@@ -9,10 +9,6 @@ function config.cmp()
 	local fn = vim.fn
 	local utils = require("modules.completion.misc")
 
-	local t = function(str)
-		return vim.api.nvim_replace_termcodes(str, true, true, true)
-	end
-
 	local sources = {
 		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
