@@ -41,7 +41,6 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "hrsh7th/cmp-nvim-lsp", after = { "nvim-cmp" } },
 		{ "f3fora/cmp-spell", after = "nvim-cmp" },
 		{ "octaltree/cmp-look", after = "nvim-cmp" },
-		{ "honza/vim-snippets", after = "nvim-cmp" },
 		-- { "dcampos/cmp-snippy", after = { "nvim-snippy", "nvim-cmp" } },
 		{ "quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-vsnip", rtp = ".", after = "nvim-cmp" },
@@ -58,11 +57,26 @@ completion["hrsh7th/nvim-cmp"] = {
 
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
-	event = "InsertEnter",
 	requires = {
 		{ "rafamadriz/friendly-snippets", event = "InsertEnter" },
+		-- { "honza/vim-snippets", event = "InsertEnter" }
 	}, -- , event = "InsertEnter"
 	config = conf.luasnip,
+	after = "nvim-cmp",
+}
+
+completion["SirVer/ultisnips"] = {
+	requires = "honza/vim-snippets",
+	config = function()
+		-- vim.g.UltiSnipsRemoveSelectModeMappings = 0
+		vim.g.UltiSnipsExpandTrigger = "<C-s>"
+		vim.g.UltiSnipsJumpForwardTrigger = "<C-n>"
+		vim.g.UltiSnipsJumpBackwardTrigger = "<C-p>"
+	end,
+}
+
+completion["https://github.com/folke/trouble.nvim"] = {
+	config = conf.trouble,
 }
 
 completion["kristijanhusak/vim-dadbod-completion"] = {
@@ -76,30 +90,6 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 		-- body
 	end,
 }
-
-completion["SirVer/ultisnips"] = {
-	requires = "honza/vim-snippets",
-	config = function()
-		vim.g.UltiSnipsRemoveSelectModeMappings = 0
-		vim.g.UltiSnipsExpandTrigger = "<C-s>"
-		vim.g.UltiSnipsJumpForwardTrigger = "<C-n>"
-		vim.g.UltiSnipsJumpBackwardTrigger = "<C-p>"
-	end,
-}
-
--- completion["dcampos/nvim-snippy"] = {
--- 	-- opt = true,
--- 	event = "InsertEnter",
--- 	requires = { "honza/vim-snippets", event = "InsertEnter" }, --event = "InsertEnter"
--- 	config = function()
--- 		require("snippy").setup({})
--- 	end,
--- }
-
-completion["https://github.com/folke/trouble.nvim"] = {
-	config = conf.trouble,
-}
-
 completion["dense-analysis/ale"] = {
 
 	config = conf.ale,
