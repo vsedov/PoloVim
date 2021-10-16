@@ -24,7 +24,6 @@ local plug_map = {
 	["n|<leader>lr"] = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
 
 	["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
-	["n|gD"] = map_cmd("<cmd>lua vim.lsp.buf.implementation()<CR>"):with_noremap():with_silent(),
 
 	["n|<C-]>"] = map_args("Template"),
 	["n|<Leader>tf"] = map_cu("DashboardNewFile"):with_noremap():with_silent(),

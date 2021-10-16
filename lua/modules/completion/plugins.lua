@@ -12,6 +12,7 @@ completion["neovim/nvim-lspconfig"] = {
 		{ "folke/lsp-colors.nvim" },
 		{ "https://github.com/mfussenegger/nvim-jdtls" },
 		{ "ray-x/lsp_signature.nvim" },
+		{ "williamboman/nvim-lsp-installer" },
 
 		-- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
 	},
@@ -124,6 +125,10 @@ completion["pwntester/octo.nvim"] = {
 	config = function()
 		require("octo").setup()
 	end,
+}
+
+completion["Groctel/jobsplit.nvim"] = {
+	config = function() end,
 }
 
 completion["Pocco81/AbbrevMan.nvim"] = {

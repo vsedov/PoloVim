@@ -11,13 +11,7 @@ cmd([[  autocmd! ]])
 cmd([[  autocmd TextYankPost *  lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000} ]])
 cmd([[ augroup END ]])
 
--- I like relative numbers and the other ones both , so i have this instead .
 
--- vim.api.nvim_command('augroup AutoRelativeLineNums')
--- vim.api.nvim_command('autocmd!')
--- vim.api.nvim_command('au InsertEnter * set norelativenumber')
--- vim.api.nvim_command('au InsertLeave * set relativenumber')
--- vim.api.nvim_command('augroup END')
 
 vim.api.nvim_exec(
 	[[
@@ -30,17 +24,7 @@ augroup END
 	false
 )
 
-vim.api.nvim_exec(
-	[[
-augroup ClearSearchHL
-  autocmd!
-  autocmd CmdlineEnter /,\? set hlsearch
-  autocmd CmdlineLeave /,\? set nohlsearch
-  autocmd CmdlineLeave /,\? lua require('highlight_current_n')['/,?']()
-augroup END
-]],
-	false
-)
+
 
 --Do not use smart case in command line mode
 vim.api.nvim_command("augroup dynamic_smartcase")
@@ -66,3 +50,26 @@ require("core")
 
 -- vim.cmd('unmap s')
 -- vim.cmd('unmap S')
+
+vim.api.nvim_exec(
+[[
+let g:twilight_autocommands=1
+augroup twilight_mode
+   autocmd InsertEnter * :TwilightEnable
+   autocmd InsertLeave * :TwilightDisable
+augroup END
+]],
+  false
+)
+
+vim.api.nvim_exec(
+  [[
+augroup ClearSearchHL
+  autocmd!
+  autocmd CmdlineEnter /,\? set hlsearch
+  autocmd CmdlineLeave /,\? set nohlsearch
+  autocmd CmdlineLeave /,\? lua require('highlight_current_n')['/,?']()
+augroup END
+]],
+  false
+)

@@ -8,6 +8,10 @@ ui["kyazdani42/nvim-web-devicons"] = {}
 ui["lambdalisue/glyph-palette.vim"] = {}
 
 ui["folke/tokyonight.nvim"] = {
+	config = function() end,
+}
+
+ui["folke/tokyonight.nvim"] = {
 	-- config = conf.ui,
 }
 
@@ -149,6 +153,7 @@ ui["beauwilliams/focus.nvim"] = {
 ui["kdav5758/TrueZen.nvim"] = {
 	config = conf.truezen,
 }
+
 ui["folke/zen-mode.nvim"] = {
 
 	config = function()
