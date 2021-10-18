@@ -92,12 +92,13 @@ local function load_options()
 		pumblend = 10,
 		winblend = 10,
 
-		-- showmatch = true,
-		-- smartindent = true,
-		-- autowrite = true,
-		-- autoread = true,
-		-- breakindent = true,
-		-- hlsearch = true,
+		showmatch = true,
+		smartindent = true,
+		autowrite = true,
+		autoread = true,
+		breakindent = true,
+		hlsearch = true,
+
 		foldmethod = "indent",
 	}
 

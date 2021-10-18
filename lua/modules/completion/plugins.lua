@@ -58,8 +58,9 @@ completion["hrsh7th/nvim-cmp"] = {
 
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
+	event = "InsertEnter",
 	requires = {
-		{ "rafamadriz/friendly-snippets", event = "InsertEnter" },
+		{ "rafamadriz/friendly-snippets" },
 		-- { "honza/vim-snippets", event = "InsertEnter" }
 	}, -- , event = "InsertEnter"
 	config = conf.luasnip,

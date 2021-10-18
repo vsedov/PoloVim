@@ -162,14 +162,9 @@ vim.cmd([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ fo
 
 -- vim.cmd [[autocmd CursorHoldI * silent! Lspsaga signature_help]]
 
-local enhance_attach = function(client, bufnr)
-	require("lsp_signature").on_attach({
-		bind = true,
-		handler_opts = {
-			border = "single",
-		},
-	}, bufnr)
+require("lsp_signature").setup(cfg)
 
+local enhance_attach = function(client, bufnr)
 	api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 
