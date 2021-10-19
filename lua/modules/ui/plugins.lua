@@ -16,10 +16,9 @@ ui["folke/tokyonight.nvim"] = {
 }
 
 ui["Pocco81/Catppuccino.nvim"] = {
-	opt = true,
 	config = function()
 		require("catppuccino").setup({
-			colorscheme = "neon_latte",
+			colorscheme = "dark_catppuccino",
 			transparency = true,
 			term_colors = true,
 			styles = {
@@ -72,12 +71,14 @@ ui["Pocco81/Catppuccino.nvim"] = {
 				hop = true,
 			},
 		})
+
+		vim.cmd([[colorscheme catppuccino ]])
 	end,
 }
 
 ui["https://github.com/numToStr/Sakura.nvim"] = {
 	config = function()
-		vim.cmd([[colorscheme sakura]])
+		-- vim.cmd([[colorscheme sakura]])
 	end,
 }
 

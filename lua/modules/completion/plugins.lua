@@ -24,11 +24,6 @@ completion["ahmedkhalf/project.nvim"] = {
 	end,
 }
 
-completion["folke/todo-comments.nvim"] = {
-	opt = true,
-	config = conf.todo_comments,
-	after = "trouble.nvim",
-}
 
 completion["hrsh7th/nvim-cmp"] = {
 	event = "InsertEnter", -- InsertCharPre
@@ -80,6 +75,16 @@ completion["SirVer/ultisnips"] = {
 completion["https://github.com/folke/trouble.nvim"] = {
 	config = conf.trouble,
 }
+completion["folke/todo-comments.nvim"] = {
+	config = conf.todo_comments,
+	after = "trouble.nvim",
+}
+
+-- completion["luukvbaal/stabilize.nvim"] = {
+-- 	config = function()
+-- 		require("stabilize").setup()
+-- 	end,
+-- }
 
 completion["kristijanhusak/vim-dadbod-completion"] = {
 	event = "InsertEnter",
