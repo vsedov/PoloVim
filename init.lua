@@ -51,16 +51,16 @@ require("core")
 -- vim.cmd('unmap s')
 -- vim.cmd('unmap S')
 
-vim.api.nvim_exec(
-[[
-let g:twilight_autocommands=1
-augroup twilight_mode
-   autocmd InsertEnter * :TwilightEnable
-   autocmd InsertLeave * :TwilightDisable
-augroup END
-]],
-  false
-)
+-- vim.api.nvim_exec(
+-- [[
+-- let g:twilight_autocommands=1
+-- augroup twilight_mode
+--    autocmd InsertEnter * :TwilightEnable
+--    autocmd InsertLeave * :TwilightDisable
+-- augroup END
+-- ]],
+--   false
+-- )
 
 vim.api.nvim_exec(
   [[

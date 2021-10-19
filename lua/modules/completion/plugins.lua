@@ -201,12 +201,21 @@ completion["lervag/vimtex"] = {
 	config = conf.vimtex,
 }
 
+completion['rcarriga/nvim-notify']={
+	config = conf.nvim_notify
+
+}
+
 completion["michaelb/sniprun"] = {
 	run = "bash install.sh",
 	config = conf.sniprun,
-
-	-- This has not been 100% set up make sure you set it up later
 }
+completion["dccsillag/magma-nvim"] = {
+	-- ft = "python", 
+	config = conf.magma,
+}
+
+
 
 completion["psf/black"] = {}
 
