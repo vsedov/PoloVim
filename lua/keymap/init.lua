@@ -147,19 +147,20 @@ local plug_map = {
 	["n|<Leader>dO"] = map_cr("<cmd> lua require'dap'.step_out()<CR>"):with_noremap():with_silent(),
 	["n|<Leader>b"] = map_cr("<cmd> lua require'dap'.toggle_breakpoint()<CR>"):with_noremap():with_silent(),
 	["n|<Leader>dr"] = map_cr("<cmd> lua require'dap'.repl.open()<CR>"):with_noremap():with_silent(),
-	["n|<Leader>drr"] = map_cr('<cmd> lua require"dap".repl.toggle({width = 50}, "belowright vsplit")<cr>'):with_noremap():with_silent(),
+	["n|<Leader>drr"] = map_cr('<cmd> lua require"dap".repl.toggle({width = 50}, "belowright vsplit")<cr>')
+		:with_noremap()
+		:with_silent(),
 	["n|<Leader>dl"] = map_cr("<cmd> lua require'dap'.repl.run_last()<CR>"):with_noremap():with_silent(),
 
-	--- Test run 
-    -- ["n|c"] = map_cr('<cmd>lua require"dap".continue()<CR>'):with_noremap():with_silent(),
-    ["n|C"] = map_cr('<cmd>lua require"dap".run_to_cursor()<CR>'):with_noremap():with_silent(),
+	--- Test run
+	-- ["n|c"] = map_cr('<cmd>lua require"dap".continue()<CR>'):with_noremap():with_silent(),
+	["n|C"] = map_cr('<cmd>lua require"dap".run_to_cursor()<CR>'):with_noremap():with_silent(),
 
-	["n|<LeftMouse>"] = map_cmd( "<LeftMouse><cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
+	["n|<LeftMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
 	["n|<RightMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>"):with_noremap():with_silent(),
 
 	["n|<C-ScrollWheelUp>"] = map_cmd("<C-i>"):with_noremap():with_silent(),
 	["n|<C-ScrollWheelDown>"] = map_cmd("<C-o>"):with_noremap():with_silent(),
-
 
 	-- Nice animation
 	["n|<Up>"] = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
@@ -239,22 +240,21 @@ local plug_map = {
 
 bind.nvim_load_mapping(plug_map)
 
+-- mx              Set mark x
+-- m,              Set the next available alphabetical (lowercase) mark
+-- m;              Toggle the next available mark at the current line
+-- dmx             Delete mark x
+-- dm-             Delete all marks on the current line
+-- dm<space>       Delete all marks in the current buffer
+-- m]              Move to next mark
+-- m[              Move to previous mark
+-- m:              Preview mark. This will prompt you for a specific mark to
+--                 preview; press <cr> to preview the next mark.
 
-    -- mx              Set mark x
-    -- m,              Set the next available alphabetical (lowercase) mark
-    -- m;              Toggle the next available mark at the current line
-    -- dmx             Delete mark x
-    -- dm-             Delete all marks on the current line
-    -- dm<space>       Delete all marks in the current buffer
-    -- m]              Move to next mark
-    -- m[              Move to previous mark
-    -- m:              Preview mark. This will prompt you for a specific mark to
-    --                 preview; press <cr> to preview the next mark.
-                    
-    -- m[0-9]          Add a bookmark from bookmark group[0-9].
-    -- dm[0-9]         Delete all bookmarks from bookmark group[0-9].
-    -- m}              Move to the next bookmark having the same type as the bookmark under
-    --                 the cursor. Works across buffers.
-    -- m{              Move to the previous bookmark having the same type as the bookmark under
-    --                 the cursor. Works across buffers.
-    -- dm=             Delete the bookmark under the cursor.
+-- m[0-9]          Add a bookmark from bookmark group[0-9].
+-- dm[0-9]         Delete all bookmarks from bookmark group[0-9].
+-- m}              Move to the next bookmark having the same type as the bookmark under
+--                 the cursor. Works across buffers.
+-- m{              Move to the previous bookmark having the same type as the bookmark under
+--                 the cursor. Works across buffers.
+-- dm=             Delete the bookmark under the cursor.

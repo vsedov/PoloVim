@@ -19,7 +19,7 @@ dap_install.setup({
 	installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
 })
 
--- get local debug on the gen list . 
+-- get local debug on the gen list .
 
 for _, debugger in ipairs(dbg_list) do
 	dap_install.config(debugger)

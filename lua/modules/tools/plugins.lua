@@ -20,17 +20,13 @@ tools["TimUntersberger/neogit"] = {
 	config = conf.neogit,
 }
 
-
 tools["f-person/git-blame.nvim"] = {}
-
 
 tools["editorconfig/editorconfig-vim"] = {
 	opt = true,
 	cmd = { "EditorConfigReload" },
 	-- ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
 }
-
-
 
 tools["numToStr/Comment.nvim"] = {
 	config = function()
@@ -56,7 +52,6 @@ tools["fladson/vim-kitty"] = {}
 tools["rktjmp/highlight-current-n.nvim"] = {
 
 	config = conf.highlight,
-
 }
 
 tools["relastle/vim-nayvy"] = {
@@ -125,7 +120,7 @@ tools["liuchengxu/vista.vim"] = {
 
 tools["simrat39/symbols-outline.nvim"] = {
 
-	config = conf.outline
+	config = conf.outline,
 }
 
 tools["kdheepak/lazygit.nvim"] = {
@@ -156,9 +151,8 @@ tools["iamcco/markdown-preview.nvim"] = {
 	end,
 }
 
-
-tools["chentau/marks.nvim"]={
-	config = conf.marks
+tools["chentau/marks.nvim"] = {
+	config = conf.marks,
 }
 
 return tools
