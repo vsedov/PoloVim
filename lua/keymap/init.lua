@@ -154,7 +154,6 @@ local plug_map = {
 	["n|<Leader>xr"] = map_cr("<Cmd>lua require('dapui').eval()<CR>"):with_noremap():with_silent(),
 	["n|C"] = map_cr('<cmd>lua require"dap".run_to_cursor()<CR>'):with_noremap():with_silent(),
 
-
 	["n|<LeftMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
 	["n|<RightMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>"):with_noremap():with_silent(),
 
