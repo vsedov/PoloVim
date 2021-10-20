@@ -59,8 +59,8 @@ local plug_map = {
 
 	["n|<Leader>fq"] = map_cu("Clap grep ++query=<Cword>"):with_noremap():with_silent(),
 	["v|<A-w>"] = map_cu("Clap maps +mode=v | startinsert"),
-
-	-- ["n|<Leader>cl"] = map_cmd("<Plug>CaserCamelCase"),
+ 
+	["n|<Leader>cl"] = map_cu("Telescope neoclip a extra=star,plus,b"):with_noremap():with_silent(),
 
 	["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
 	["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),

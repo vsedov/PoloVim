@@ -25,6 +25,9 @@ require("telescope").load_extension("ultisnips")
 -- require('telescope').load_extension('projects')
 require("telescope").load_extension("fzy_native")
 
+
+
+
 local actions = require("telescope.actions")
 local trouble = require("trouble.providers.telescope")
 

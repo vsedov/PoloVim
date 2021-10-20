@@ -103,6 +103,9 @@ completion["weilbith/nvim-code-action-menu"] = {
 	cmd = "CodeActionMenu",
 }
 
+
+
+
 completion["nvim-telescope/telescope.nvim"] = {
 
 	cmd = "Telescope",
