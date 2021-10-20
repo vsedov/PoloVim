@@ -352,102 +352,18 @@ require("nvim-lsp-installer").settings({
 })
 
 local lsp_installer = require("nvim-lsp-installer")
+lsp_installer.settings {
+    ui = {
+        icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
+        }
+    }
+}
 
 lsp_installer.on_server_ready(function(server)
 	local opts = {}
 	server:setup(opts)
 	vim.cmd([[ do User LspAttachBuffers ]])
 end)
-
---trash
-
--- i like jedi
--- lspconfig.pyls.setup{
---     on_attach = enhance_attach,
---     capabilities = capabilities,
---     filetypes = { "python" },
---      settings = {
---       pyls = {
---                   plugins = {
---                         jedi_completion = {
---                         enabled=true,
---                         include_params=true,
---                         include_class_objects=true
---                       },
---                       pycodestyle={enabled=false},
---                       mccabe={enabled=false},
---                       pyflakes={enabled=false},
---                       pylint= {
---                       enabled=true,
---                       args = {"--rcfile ~/.config/pylintrc"}
---                       }
---                   },
---               },
---           },
--- }
-
--- lspconfig.pyright.setup{
---     -- on_attach = enhance_attach,
---     cmd = {'pyright-langserver','--stdio'}
---   --   capabilities = capabilities,
---   --   settings = {
---   --     python = {
---   --       analysis = {
---   --         autoSearchPaths = true;
---   --         useLibraryCodeForTypes = true;
---   --         autoImportCompletions = true;
---   --       };
---   --   };
---   -- };
--- };
-
--- lspconfig.ccls.setup {
---   cmd = {"ccls" },
---   on_attach = enhance_attach,
---   capabilities = capabilities,
---   filetypes = { "c", "cpp", "objc", "objcpp" },
-
--- }
--- require'lspinstall'.setup() -- important
-
--- local servers = require'lspinstall'.installed_servers()
--- for _, server in pairs(servers) do
---   require'lspconfig'[server].setup{}
--- end
-
--- local function setup_servers()
---   require'lspinstall'.setup()
---   local servers = require'lspinstall'.installed_servers()
---   for _, server in pairs(servers) do
---     require'lspconfig'[server].setup{
-
---       capabilities = capabilities,
---       on_attach = enhance_attach,
-
---     }
---   end
--- end
-
--- setup_servers()
-
--- -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
--- require'lspinstall'.post_install_hook = function ()
---   setup_servers() -- reload installed servers
---   vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
--- end
-
--- if not packer_plugins['lspinstall'].loaded then
---   vim.cmd [[packadd lspinstall]]
-
--- end
-
--- vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
--- vim.cmd [[autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()]]
-
--- local home = os.getenv('HOME')
--- local root_markers = {'gradlew', '.git'}
--- local root_dir = require('jdtls.setup').find_root(root_markers)
--- local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
--- -- lots of other stuff
--- config.cmd = {'/home/viv/workspace/java-lsp.sh', workspace_folder}
--- require('jdtls').start_or_attach(config)
