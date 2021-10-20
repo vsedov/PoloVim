@@ -6,13 +6,6 @@ local map_args = bind.map_args
 require("keymap.config")
 
 local plug_map = {
-
-	-- person keymap
-	["n|mf"] = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>")
-		:with_silent()
-		:with_nowait()
-		:with_noremap(),
-
 	-- Packer
 	["n|<leader>pu"] = map_cr("PackerUpdate"):with_silent():with_noremap():with_nowait(),
 	["n|<leader>pi"] = map_cr("PackerInstall"):with_silent():with_noremap():with_nowait(),
@@ -60,7 +53,7 @@ local plug_map = {
 	["n|<Leader>fq"] = map_cu("Clap grep ++query=<Cword>"):with_noremap():with_silent(),
 	["v|<A-w>"] = map_cu("Clap maps +mode=v | startinsert"),
 
-	["n|<Leader>cl"] = map_cu("Telescope neoclip a extra=star,plus,b"):with_noremap():with_silent(),
+	["n|<Leader>cl"] = map_cu("Telescope neoclip a extra=star,plus,unnamed,b"):with_noremap():with_silent(),
 
 	["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
 	["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
