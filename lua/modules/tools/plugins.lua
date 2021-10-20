@@ -23,6 +23,10 @@ tools["TimUntersberger/neogit"] = {
 	end,
 }
 
+
+tools["f-person/git-blame.nvim"] = {}
+
+
 tools["editorconfig/editorconfig-vim"] = {
 	opt = true,
 	cmd = { "EditorConfigReload" },
@@ -185,8 +189,10 @@ tools["simrat39/symbols-outline.nvim"] = {
 
 tools["kdheepak/lazygit.nvim"] = {
 	cmd = { "LazyGit" },
+	requires = "nvim-lua/plenary.nvim",
 	config = function()
 		vim.g.lazygit_floating_window_winblend = 2
+		vim.g.lazygit_floating_window_use_plenary = 1
 	end,
 }
 

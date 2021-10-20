@@ -19,8 +19,12 @@ augroup END
 vim.api.nvim_command("nnoremap <esc> :noh<return><esc>")
 vim.api.nvim_command("nnoremap <esc>^[ <esc>^[")
 
--- CALL CORE AND ALL MAIN STUFF .
+----------------------------------------------------
+----------------------------------------------------
 require("core")
+----------------------------------------------------
+----------------------------------------------------
+
 
 -- after everythign i called call utest runner
 vim.api.nvim_exec(

@@ -147,9 +147,7 @@ local plug_map = {
 	["n|<Leader>dO"] = map_cr("<cmd> lua require'dap'.step_out()<CR>"):with_noremap():with_silent(),
 	["n|<Leader>b"] = map_cr("<cmd> lua require'dap'.toggle_breakpoint()<CR>"):with_noremap():with_silent(),
 	["n|<Leader>dr"] = map_cr("<cmd> lua require'dap'.repl.open()<CR>"):with_noremap():with_silent(),
-	["n|<Leader>drr"] = map_cr('<cmd> lua require"dap".repl.toggle({width = 50}, "belowright vsplit")<cr>')
-		:with_noremap()
-		:with_silent(),
+	["n|<Leader>drr"] = map_cr('<cmd> lua require"dap".repl.toggle({width = 50}, "belowright vsplit")<cr>'):with_noremap():with_silent(),
 	["n|<Leader>dl"] = map_cr("<cmd> lua require'dap'.repl.run_last()<CR>"):with_noremap():with_silent(),
 
 	-- Nice animation
