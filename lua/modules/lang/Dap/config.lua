@@ -23,5 +23,5 @@ dap_install.setup({
 for _, debugger in ipairs(dbg_list) do
 	dap_install.config(debugger)
 end
--- Dap Ui  
+-- Dap Ui
 require("dapui").setup()
