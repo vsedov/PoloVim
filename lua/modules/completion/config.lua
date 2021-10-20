@@ -252,60 +252,57 @@ function config.neorunner()
 end
 function config.nvim_notify()
 	require("notify").setup({
-	  -- Animation style (see below for details)
-	  stages = "fade_in_slide_out",
+		-- Animation style (see below for details)
+		stages = "fade_in_slide_out",
 
-	  -- Default timeout for notifications
-	  timeout = 5000,
+		-- Default timeout for notifications
+		timeout = 5000,
 
-	  -- For stages that change opacity this is treated as the highlight behind the window
-	  -- Set this to either a highlight group or an RGB hex value e.g. "#000000"
-	  background_colour = "#000000",
+		-- For stages that change opacity this is treated as the highlight behind the window
+		-- Set this to either a highlight group or an RGB hex value e.g. "#000000"
+		background_colour = "#000000",
 
-	  -- Icons for the different levels
-	  icons = {
-	    ERROR = "",
-	    WARN = "",
-	    INFO = "",
-	    DEBUG = "",
-	    TRACE = "✎",
-	  },
+		-- Icons for the different levels
+		icons = {
+			ERROR = "",
+			WARN = "",
+			INFO = "",
+			DEBUG = "",
+			TRACE = "✎",
+		},
 	})
 end
 function config.sniprun()
-	require'sniprun'.setup({
-	  selected_interpreters = {},     --# use those instead of the default for the current filetype
-	  repl_enable = {},               --# enable REPL-like behavior for the given interpreters
-	  repl_disable = {},              --# disable REPL-like behavior for the given interpreters
+	require("sniprun").setup({
+		selected_interpreters = {}, --# use those instead of the default for the current filetype
+		repl_enable = {}, --# enable REPL-like behavior for the given interpreters
+		repl_disable = {}, --# disable REPL-like behavior for the given interpreters
 
-	  interpreter_options = {},       --# intepreter-specific options, consult docs / :SnipInfo <name>
+		interpreter_options = {}, --# intepreter-specific options, consult docs / :SnipInfo <name>
 
-	  --# you can combo different display modes as desired
-	  display = {
-	    "VirtualTextErr",          --# display error results as virtual text
-	    "NvimNotify",              --# display with the nvim-notify plugin
-	  },
+		--# you can combo different display modes as desired
+		display = {
+			"VirtualTextErr", --# display error results as virtual text
+			"NvimNotify", --# display with the nvim-notify plugin
+		},
 
-	  --# You can use the same keys to customize whether a sniprun producing
-	  --# no output should display nothing or '(no output)'
-	  show_no_output = {
-	    "Classic",
-	    "TempFloatingWindow",      --# implies LongTempFloatingWindow, which has no effect on its own
-	  },
+		--# You can use the same keys to customize whether a sniprun producing
+		--# no output should display nothing or '(no output)'
+		show_no_output = {
+			"Classic",
+			"TempFloatingWindow", --# implies LongTempFloatingWindow, which has no effect on its own
+		},
 
-	  --# miscellaneous compatibility/adjustement settings
-	  inline_messages = 0,             --# inline_message (0/1) is a one-line way to display messages
-					   --# to workaround sniprun not being able to display anything
+		--# miscellaneous compatibility/adjustement settings
+		inline_messages = 0, --# inline_message (0/1) is a one-line way to display messages
+		--# to workaround sniprun not being able to display anything
 
-	  borders = 'single'               --# display borders around floating windows
-	                                   --# possible values are 'none', 'single', 'double', or 'shadow'
+		borders = "single", --# display borders around floating windows
+		--# possible values are 'none', 'single', 'double', or 'shadow'
 	})
 end
 
-
-function config.magma()
-
-end
+function config.magma() end
 
 function config.doge()
 	vim.g.doge_doc_standard_python = "numpy"

@@ -34,7 +34,9 @@ lang["lifepillar/pgsql.vim"] = { ft = { "sql", "pgsql" } }
 lang["nanotee/sqls.nvim"] = { ft = { "sql", "pgsql" }, setup = conf.sqls, opt = true }
 
 lang["ElPiloto/sidekick.nvim"] = { cmd = { "SideKickNoReload" }, config = conf.sidekick }
+
 lang["jbyuki/one-small-step-for-vimkind"] = { opt = true, ft = { "lua" } }
+
 lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
 lang["windwp/nvim-ts-autotag"] = {
@@ -79,4 +81,24 @@ lang["vhyrro/neorg"] = {
 	requires = "nvim-lua/plenary.nvim",
 	after = { "nvim-treesitter", "nvim-cmp" },
 }
+
+lang["rcarriga/vim-ultest"] = {
+	requires = { "janko/vim-test" },
+	run = ":UpdateRemotePlugins",
+	config = conf.ultest,
+}
+lang["mfussenegger/nvim-dap"] = {
+	requires = {
+		{ "theHamsta/nvim-dap-virtual-text" },
+		{ "mfussenegger/nvim-dap-python" },
+		{ "rcarriga/nvim-dap-ui" },
+		{ "Pocco81/DAPInstall.nvim" },
+	},
+	run = ":UpdateRemotePlugins",
+
+	config = function()
+		require("modules.lang.Dap.config")
+	end,
+}
+
 return lang

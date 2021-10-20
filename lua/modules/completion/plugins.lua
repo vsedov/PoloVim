@@ -24,7 +24,6 @@ completion["ahmedkhalf/project.nvim"] = {
 	end,
 }
 
-
 completion["hrsh7th/nvim-cmp"] = {
 	event = "InsertEnter", -- InsertCharPre
 	requires = {
@@ -78,12 +77,6 @@ completion["https://github.com/folke/trouble.nvim"] = {
 completion["folke/todo-comments.nvim"] = {
 	config = conf.todo_comments,
 	after = "trouble.nvim",
-}
-
-completion["luukvbaal/stabilize.nvim"] = {
-	config = function()
-		require("stabilize").setup()
-	end,
 }
 
 completion["kristijanhusak/vim-dadbod-completion"] = {
@@ -170,40 +163,12 @@ completion["kevinhwang91/nvim-bqf"] = {
 	config = conf.bqf,
 }
 
-completion["mfussenegger/nvim-dap"] = {
-	requires = {
-		{ "rcarriga/vim-ultest" },
-		{ "janko/vim-test" },
-		{ "theHamsta/nvim-dap-virtual-text" },
-		{ "mfussenegger/nvim-dap-python" },
-		{ "rcarriga/nvim-dap-ui" },
-		{ "Pocco81/DAPInstall.nvim" },
-	},
-	run = ":UpdateRemotePlugins",
-
-	config = function()
-		require("dapstuff.dapstuff")
-
-		-- virtual text deactivated (default)
-		vim.g.dap_virtual_text = false
-		-- show virtual text for current frame (recommended)
-		vim.g.dap_virtual_text = true
-		-- request variable values for all frames (experimental)
-		vim.g.dap_virtual_text = "all frames"
-
-		vim.g.ultest_virtual_text = 1
-		vim.g.ultest_output_cols = 120
-		vim.g.ultest_max_threads = 5
-	end,
-}
-
 completion["lervag/vimtex"] = {
 	config = conf.vimtex,
 }
 
-completion['rcarriga/nvim-notify']={
-	config = conf.nvim_notify
-
+completion["rcarriga/nvim-notify"] = {
+	config = conf.nvim_notify,
 }
 
 completion["michaelb/sniprun"] = {
@@ -211,11 +176,9 @@ completion["michaelb/sniprun"] = {
 	config = conf.sniprun,
 }
 completion["dccsillag/magma-nvim"] = {
-	-- ft = "python", 
+	-- ft = "python",
 	config = conf.magma,
 }
-
-
 
 completion["psf/black"] = {}
 
