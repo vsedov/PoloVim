@@ -182,11 +182,6 @@ local plug_map = {
 
 	-- Quick Fix infomation and binds
 	["n|<Leader>xx"] = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
-	["n|<Leader>xw"] = map_cr("<cmd>Trouble lsp_workspace_diagnostics<CR>"):with_noremap():with_silent(),
-	["n|<Leader>xd"] = map_cr("<cmd>Trouble lsp_document_diagnostics<CR>"):with_noremap():with_silent(),
-	["n|<Leader>xl"] = map_cr("<cmd>Trouble loclist<CR>"):with_noremap():with_silent(),
-	["n|<Leader>xf"] = map_cr("<cmd>Trouble quickfix<CR>"):with_noremap():with_silent(),
-	["n|<Leader>xR"] = map_cr("<cmd>Trouble lsp_references<CR>"):with_noremap():with_silent(),
 
 	-- Nice highlighting for latex when writing notes
 	["n|<Leader><F9>"] = map_cu('lua require("nabla").place_inline()<CR>'):with_noremap():with_silent(),
