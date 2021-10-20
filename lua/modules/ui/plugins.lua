@@ -20,7 +20,7 @@ ui["Pocco81/Catppuccino.nvim"] = {
 		require("catppuccino").setup({
 			colorscheme = "dark_catppuccino",
 			transparency = true,
-			term_colors = true,
+			-- term_colors = true,
 			styles = {
 				comments = "italic",
 				functions = "italic",
