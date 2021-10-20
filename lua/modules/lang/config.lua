@@ -225,19 +225,19 @@ function config.textobjects()
 			move = {
 				enable = true,
 				goto_next_start = {
-					["]m"] = "@function.outer",
+					["]l"] = "@function.outer",
 					["]]"] = "@class.outer",
 				},
 				goto_next_end = {
-					["]M"] = "@function.outer",
+					["]L"] = "@function.outer",
 					["]["] = "@class.outer",
 				},
 				goto_previous_start = {
-					["[m"] = "@function.outer",
+					["[l"] = "@function.outer",
 					["[["] = "@class.outer",
 				},
 				goto_previous_end = {
-					["[M"] = "@function.outer",
+					["[L"] = "@function.outer",
 					["[]"] = "@class.outer",
 				},
 			},

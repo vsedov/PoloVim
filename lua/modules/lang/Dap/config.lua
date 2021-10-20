@@ -4,8 +4,7 @@ local dap_install = require("dap-install")
 local api = vim.api
 local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
--- Dap Ui  + Virtual Text stuff
-require("dapui").setup()
+--Virtual Text stuff
 vim.g.dap_virtual_text = true
 
 --
@@ -24,3 +23,5 @@ dap_install.setup({
 for _, debugger in ipairs(dbg_list) do
 	dap_install.config(debugger)
 end
+-- Dap Ui  
+require("dapui").setup()
