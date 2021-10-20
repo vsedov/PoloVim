@@ -212,4 +212,82 @@ function config.outline()
 	}
 end
 
+function config.comment()
+	require("Comment").setup({
+		padding = true,
+		sticky = true,
+		ignore = nil,
+		mappings = {
+			basic = true,
+			extra = true,
+			extended = true,
+		},
+		toggler = {
+			---line-comment keymap
+			line = "gcc",
+			---block-comment keymap
+			block = "gbc",
+		},
+
+		opleader = {
+			line = "gc",
+			block = "gb",
+		},
+
+		pre_hook = nil,
+		post_hook = nil,
+	})
+
+	local ft = require("Comment.ft")
+
+	-- 1. Using set function
+
+	-- set both line and block commentstring
+	ft.set("python", { "#%s", '"""%s"""' })
+end
+
+function config.numb()
+	require("numb").setup({
+		show_numbers = true, -- Enable 'number' for the window while peeking
+		show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+
+		number_only = true, -- Peek only when the command is only a number instead of when it starts with a number
+	})
+end
+
+function config.paperplanes()
+	require("paperplanes").setup({
+		register = "+",
+		provider = "dpaste.org",
+	})
+end
+
+function config.clipboard()
+	require("neoclip").setup({
+		history = 1000,
+		enable_persistant_history = true,
+		db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+		filter = nil,
+		preview = true,
+		default_register = "+",
+		content_spec_column = true,
+		on_paste = {
+			set_reg = true,
+		},
+		keys = {
+			i = {
+				select = "<cr>",
+				paste = "<c-p>",
+				paste_behind = "<c-k>",
+				custom = {},
+			},
+			n = {
+				select = "<cr>",
+				paste = "p",
+				paste_behind = "P",
+			},
+		},
+	})
+end
+
 return config
