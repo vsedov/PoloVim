@@ -151,10 +151,9 @@ local plug_map = {
 		:with_noremap()
 		:with_silent(),
 	["n|<Leader>dl"] = map_cr("<cmd> lua require'dap'.repl.run_last()<CR>"):with_noremap():with_silent(),
-
-	--- Test run
-	-- ["n|c"] = map_cr('<cmd>lua require"dap".continue()<CR>'):with_noremap():with_silent(),
+	["n|<Leader>xr"] = map_cr("<Cmd>lua require('dapui').eval()<CR>"):with_noremap():with_silent(),
 	["n|C"] = map_cr('<cmd>lua require"dap".run_to_cursor()<CR>'):with_noremap():with_silent(),
+
 
 	["n|<LeftMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
 	["n|<RightMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>"):with_noremap():with_silent(),
@@ -167,14 +166,6 @@ local plug_map = {
 	["n|<Down>"] = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
 	["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
 	["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
-
-	-- Plugin hrsh7th/vim-eft
-	-- ["n|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
-	-- ["x|;"]                 = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
-	-- Plugin EasyAlign
-	-- ["n|ga"]                = map_cmd("v:lua.enhance_align('nga')"):with_expr(),
-	-- ["x|ga"]                = map_cmd("v:lua.enhance_align('xga')"):with_expr(),
-	--sniprun
 
 	["v|<Leader>fr"] = map_cmd("<Plug>SnipRun"):with_silent(),
 	["n|<Leader>fr"] = map_cmd("<Plug>SnipRunOperator"):with_silent(),
