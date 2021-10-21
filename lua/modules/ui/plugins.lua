@@ -113,9 +113,9 @@ ui["https://github.com/numToStr/Sakura.nvim"] = {
 	end,
 }
 
--- ui["glepnir/dashboard-nvim"] = {
--- 	config = conf.dashboard,
--- }
+ui["glepnir/dashboard-nvim"] = {
+	config = conf.dashboard,
+}
 
 ui["NTBBloodbath/galaxyline.nvim"] = {
 	branch = "main",
