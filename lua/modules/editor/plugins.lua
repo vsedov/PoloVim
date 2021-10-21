@@ -17,22 +17,6 @@ editor["rhysd/accelerated-jk"] = {
 --   opt = true,
 -- }
 
-editor["rmagatti/auto-session"] = {
-	-- cmd = {'SaveSession', 'RestoreSession', 'DeleteSession'},
-	config = function()
-		require("auto-session").setup({
-			auto_session_root_dir = ("%s/session/auto/"):format(vim.fn.stdpath("data")),
-		})
-	end,
-}
-
-editor["rmagatti/session-lens"] = {
-	cmd = "SearchSession",
-	config = function()
-		require("session-lens").setup({ shorten_path = true, previewer = true })
-	end,
-}
-
 editor["andymass/vim-matchup"] = {
 	event = { "CursorMoved", "CursorMovedI" },
 	config = function()

@@ -15,6 +15,37 @@ ui["folke/tokyonight.nvim"] = {
 	-- config = conf.ui,
 }
 
+-- ui["EdenEast/nightfox.nvim"] = {
+-- 	config = function()
+-- 		local nightfox = require('nightfox')
+--  		nightfox.setup({
+-- 		  fox = "nordfox", -- change the colorscheme to use nordfox
+-- 		  styles = {
+-- 		    comments = "italic", -- change style of comments to be italic
+-- 		    keywords = "bold", -- change style of keywords to be bold
+-- 		    functions = "italic,bold" -- styles can be a comma separated list
+-- 		  },
+-- 		  inverse {
+-- 		    match_paren = true, -- inverse the highlighting of match_parens
+-- 		  },
+-- 		  colors = {
+-- 		    red = "#FF000", -- Override the red color for MAX POWER
+-- 		    bg_alt = "#000000",
+-- 		  },
+
+-- 		  hlgroups = {
+-- 		    TSPunctDelimiter = { fg = "${red}" }, -- Override a highlight group with the color red
+-- 		    LspCodeLens = { bg = "#000000", style = "italic" },
+-- 		  }
+
+-- 		})
+
+-- 		-- Load the configuration set above and apply the colorscheme
+-- 		nightfox.load()
+-- 	end
+
+-- }
+
 ui["Pocco81/Catppuccino.nvim"] = {
 	config = function()
 		require("catppuccino").setup({
@@ -23,7 +54,7 @@ ui["Pocco81/Catppuccino.nvim"] = {
 			-- term_colors = true,
 			styles = {
 				comments = "italic",
-				functions = "italic",
+				functions = "italic,bold",
 				keywords = "italic",
 				strings = "NONE",
 				variables = "NONE",
@@ -82,9 +113,9 @@ ui["https://github.com/numToStr/Sakura.nvim"] = {
 	end,
 }
 
-ui["glepnir/dashboard-nvim"] = {
-	config = conf.dashboard,
-}
+-- ui["glepnir/dashboard-nvim"] = {
+-- 	config = conf.dashboard,
+-- }
 
 ui["NTBBloodbath/galaxyline.nvim"] = {
 	branch = "main",
@@ -143,7 +174,7 @@ ui["beauwilliams/focus.nvim"] = {
 	config = function()
 		require("focus").setup({
 			hybridnumber = true,
-			excluded_filetypes = { "minimap", "vista", "outline", "symbols_outline" },
+			excluded_filetypes = { "minimap", "vista", "OUTLINE", "symbols_outline" },
 		})
 
 		vim.api.nvim_set_keymap("n", "<leader>hh", ":FocusMaximise<CR>", { silent = true })

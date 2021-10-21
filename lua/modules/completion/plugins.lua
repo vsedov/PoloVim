@@ -37,7 +37,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "f3fora/cmp-spell", after = "nvim-cmp" },
 		{ "octaltree/cmp-look", after = "nvim-cmp" },
 		-- { "dcampos/cmp-snippy", after = { "nvim-snippy", "nvim-cmp" } },
-		{ "quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
+		-- { "quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-vsnip", rtp = ".", after = "nvim-cmp" },
 		{ "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
 		{

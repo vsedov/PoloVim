@@ -109,6 +109,18 @@ tools["simrat39/symbols-outline.nvim"] = {
 	config = conf.outline,
 }
 
+tools["rmagatti/auto-session"] = {
+	-- cmd = {'SaveSession', 'RestoreSession', 'DeleteSession'},
+	config = conf.session,
+}
+
+tools["rmagatti/session-lens"] = {
+	cmd = "SearchSession",
+	config = function()
+		require("session-lens").setup({ shorten = true, previewer = true })
+	end,
+}
+
 tools["kdheepak/lazygit.nvim"] = {
 	cmd = { "LazyGit" },
 	requires = "nvim-lua/plenary.nvim",
