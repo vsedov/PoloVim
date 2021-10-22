@@ -20,7 +20,11 @@ tools["TimUntersberger/neogit"] = {
 	config = conf.neogit,
 }
 
-tools["f-person/git-blame.nvim"] = {}
+tools["f-person/git-blame.nvim"] = {
+	config = function()
+		vim.g.gitblame_enabled = 0
+	end,
+}
 
 tools["editorconfig/editorconfig-vim"] = {
 	opt = true,
@@ -157,5 +161,12 @@ tools["AckslD/nvim-neoclip.lua"] = {
 	requires = { "tami5/sqlite.lua", module = "sqlite" },
 	config = conf.clipboard,
 }
+
+tools["gelguy/wilder.nvim"] = {
+	requires = "https://github.com/romgrk/fzy-lua-native",
+	run = ":UpdateRemotePlugins",
+}
+
+tools["tjdevries/train.nvim"] = {}
 
 return tools

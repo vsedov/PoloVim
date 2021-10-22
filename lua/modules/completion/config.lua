@@ -96,11 +96,13 @@ function config.cmp()
 		},
 		sorting = {
 			comparators = {
+				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,
-				cmp.config.compare.offset,
-				cmp.config.compare.length,
+				require("cmp-under-comparator").under,
+				cmp.config.compare.kind,
 				cmp.config.compare.sort_text,
+				cmp.config.compare.length,
 				cmp.config.compare.order,
 			},
 		},
@@ -412,7 +414,7 @@ function config.trouble()
 			next = "j", -- next item
 		},
 		indent_lines = true, -- add an indent guide below the fold icons
-		auto_open = true, -- automatically open the list when you have diagnostics
+		auto_open = false, -- automatically open the list when you have diagnostics
 		auto_close = false, -- automatically close the list when you have no diagnostics
 		auto_preview = true, -- automatyically preview the location of the diagnostic. <esc> to close preview and go back to last window
 		auto_fold = true, -- automatically fold a file trouble list at creation

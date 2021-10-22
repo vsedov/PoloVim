@@ -13,22 +13,6 @@ editor["rhysd/accelerated-jk"] = {
 	opt = true,
 }
 
--- editor['haya14busa/vim-asterisk'] = {
---   opt = true,
--- }
-
-editor["andymass/vim-matchup"] = {
-	event = { "CursorMoved", "CursorMovedI" },
-	config = function()
-		vim.g.matchup_enabled = 1
-		vim.g.matchup_surround_enabled = 1
-		-- vim.g.matchup_transmute_enabled = 1
-		vim.g.matchup_matchparen_deferred = 1
-		vim.g.matchup_matchparen_offscreen = { method = "popup" }
-		vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
-	end,
-}
-
 editor["matze/vim-move"] = {
 	-- fn = {'<Plug>MoveBlockDown', '<Plug>MoveBlockUp', '<Plug>MoveLineDown', '<Plug>MoveLineUp'}
 }
@@ -47,29 +31,9 @@ editor["bfredl/nvim-miniyank"] = {
 
 editor["mbbill/undotree"] = { cmd = { "UndotreeToggle" } }
 
--- editor['takac/vim-hardtime'] = {
---   -- opt = true,
---   -- cmd = { 'HardTimeOn', 'HardTimeOff', 'HardTimeToggle' },
---   config = function()
---     vim.g.hardtime_default_on = 0
---     vim.g.hardtime_ignore_quickfix = 1
---     vim.g.hardtime_allow_different_key = 1
---     vim.g.hardtime_maxcount = 5
---   end
--- }
-
 editor["famiu/bufdelete.nvim"] = {
 	opt = true,
 	cmd = { "Bdelete", "Bwipeout" },
-}
-
--- nvim-colorizer replacement
-editor["rrethy/vim-hexokinase"] = {
-	-- ft = { 'html','css','sass','vim','typescript','typescriptreact'},
-	config = conf.hexokinase,
-	run = "make hexokinase",
-	opt = true,
-	cmd = { "HexokinaseTurnOn", "HexokinaseToggle" },
 }
 
 editor["itchyny/vim-cursorword"] = {
@@ -122,13 +86,6 @@ editor["simnalamburt/vim-mundo"] = {
 
 editor["dhruvasagar/vim-table-mode"] = {
 	cmd = { "TableModeToggle" },
-}
-
-editor["hrsh7th/vim-eft"] = {
-	opt = true,
-	config = function()
-		vim.g.eft_ignorecase = true
-	end,
 }
 
 editor["kana/vim-niceblock"] = {

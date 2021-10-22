@@ -149,6 +149,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	update_in_insert = false,
 })
 
+require("dd").setup()
+
 vim.api.nvim_call_function(
 	"sign_define",
 	{ "LspDiagnosticsSignError", { text = "", texthl = "LspDiagnosticsDefaultError" } }
@@ -158,7 +160,7 @@ vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = "Ls
 vim.fn.sign_define("LspDiagnosticsSignHint", { text = "", texthl = "LspDiagnosticsDefaultHint" })
 vim.fn.sign_define("LspDiagnosticsSignOther", { text = "﫠", texthl = "LspDiagnosticsDefaultOther" })
 
-vim.cmd([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })]])
+-- vim.cmd([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = true })]])
 
 -- vim.cmd [[autocmd CursorHoldI * silent! Lspsaga signature_help]]
 

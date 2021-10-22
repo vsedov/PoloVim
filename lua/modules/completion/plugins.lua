@@ -13,6 +13,7 @@ completion["neovim/nvim-lspconfig"] = {
 		{ "https://github.com/mfussenegger/nvim-jdtls" },
 		{ "ray-x/lsp_signature.nvim" },
 		{ "williamboman/nvim-lsp-installer" },
+		{ "https://gitlab.com/yorickpeterse/nvim-dd.git" },
 
 		-- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
 	},
@@ -29,6 +30,7 @@ completion["hrsh7th/nvim-cmp"] = {
 	requires = {
 		{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
+		{ "https://github.com/lukas-reineke/cmp-under-comparator", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-vsnip", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-calc", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-path", after = "nvim-cmp" },
@@ -37,7 +39,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "f3fora/cmp-spell", after = "nvim-cmp" },
 		{ "octaltree/cmp-look", after = "nvim-cmp" },
 		-- { "dcampos/cmp-snippy", after = { "nvim-snippy", "nvim-cmp" } },
-		-- { "quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
+		{ "quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-vsnip", rtp = ".", after = "nvim-cmp" },
 		{ "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
 		{
@@ -126,14 +128,14 @@ completion["pwntester/octo.nvim"] = {
 	end,
 }
 
-completion["Groctel/jobsplit.nvim"] = {
-	config = function() end,
-}
+-- completion["Groctel/jobsplit.nvim"] = {
+-- 	config = function() end,
+-- }
 
-completion["Pocco81/AbbrevMan.nvim"] = {
-	opt = true,
-	config = conf.AbbrevMan,
-}
+-- completion["Pocco81/AbbrevMan.nvim"] = {
+-- 	opt = true,
+-- 	config = conf.AbbrevMan,
+-- }
 
 completion["kkoomen/vim-doge"] = {
 	config = conf.doge,

@@ -11,11 +11,6 @@ local t = function(str)
 	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-_G.ctrl_k = function()
-	vim.lsp.buf.signature_help()
-	vim.cmd([[:MatchupWhereAmI?]])
-end
-
 _G.word_motion_move = function(key)
 	if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then
 		vim.cmd([[packadd vim-wordmotion]])
@@ -24,13 +19,13 @@ _G.word_motion_move = function(key)
 	return t(map)
 end
 
-_G.word_motion_move_b = function(key)
-	if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then
-		vim.cmd([[packadd vim-wordmotion]])
-	end
-	local map = key == "b" and "<Plug>(WordMotion_b)"
-	return t(map)
-end
+-- _G.word_motion_move_b = function(key)
+-- 	if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then
+-- 		vim.cmd([[packadd vim-wordmotion]])
+-- 	end
+-- 	local map = key == "b" and "<Plug>(WordMotion_b)"
+-- 	return t(map)
+-- end
 
 _G.word_motion_move_gE = function(key)
 	if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then
