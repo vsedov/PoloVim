@@ -152,9 +152,24 @@ tools["iamcco/markdown-preview.nvim"] = {
 		vim.g.mkdp_auto_start = 1
 	end,
 }
-
+-- --
 tools["chentau/marks.nvim"] = {
-	config = conf.marks,
+
+	branch = "master",
+	config = function()
+		require("marks").setup({
+			default_mappings = true,
+			builtin_marks = { ".", "<", ">", "^" },
+			cyclic = true,
+			force_write_shada = true,
+			refresh_interval = 250,
+			sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
+			bookmark_0 = {
+				sign = "⚑",
+				virt_text = "Bookmarks",
+			},
+		})
+	end,
 }
 
 tools["AckslD/nvim-neoclip.lua"] = {
@@ -163,7 +178,12 @@ tools["AckslD/nvim-neoclip.lua"] = {
 }
 
 tools["gelguy/wilder.nvim"] = {
-	requires = "https://github.com/romgrk/fzy-lua-native",
+	requires = {
+		"https://github.com/romgrk/fzy-lua-native",
+		"nixprime/cpsm",
+		"kyazdani42/nvim-web-devicons",
+		"https://github.com/lambdalisue/nerdfont.vim",
+	},
 	run = ":UpdateRemotePlugins",
 }
 

@@ -30,7 +30,7 @@ completion["hrsh7th/nvim-cmp"] = {
 	requires = {
 		{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
-		{ "https://github.com/lukas-reineke/cmp-under-comparator", after = "nvim-cmp" },
+		{ "https://github.com/lukas-reineke/cmp-under-comparator" },
 		{ "hrsh7th/cmp-vsnip", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-calc", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-path", after = "nvim-cmp" },
@@ -76,6 +76,7 @@ completion["SirVer/ultisnips"] = {
 completion["https://github.com/folke/trouble.nvim"] = {
 	config = conf.trouble,
 }
+
 completion["folke/todo-comments.nvim"] = {
 	config = conf.todo_comments,
 	after = "trouble.nvim",

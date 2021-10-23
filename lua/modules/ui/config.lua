@@ -148,7 +148,7 @@ function config.nvim_tree()
 		},
 		hijack_cursor = false,
 		-- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
-		update_cwd = false,
+		update_cwd = true,
 		-- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
 		update_focused_file = {
 			-- enables the feature
