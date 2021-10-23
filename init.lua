@@ -81,7 +81,6 @@ augroup END
 	false
 )
 
-
 vim.api.nvim_exec(
 [[
 
@@ -100,3 +99,4 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 ]], 
     false
 )
+

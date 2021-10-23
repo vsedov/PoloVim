@@ -162,7 +162,7 @@ vim.fn.sign_define("LspDiagnosticsSignOther", { text = "﫠", texthl = "LspDiagn
 
 -- vim.cmd([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = true })]])
 
--- vim.cmd [[autocmd CursorHoldI * silent! Lspsaga signature_help]]
+vim.api.nvim_command("autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})")
 
 require("lsp_signature").setup(cfg)
 

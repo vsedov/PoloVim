@@ -90,40 +90,6 @@ function config.dashboard()
 		},
 	}
 end
-function config.nvim_tree_setup()
-	vim.g.nvim_tree_hide_dotfiles = 1
-	vim.g.nvim_tree_indent_markers = 1
-	vim.g.nvim_tree_width = 28
-	vim.g.nvim_tree_git_hl = 1
-	vim.g.nvim_tree_width_allow_resize = 1
-	vim.g.nvim_tree_highlight_opened_files = 1
-	vim.g.nvim_tree_icons = {
-		default = "",
-		symlink = "",
-		git = {
-			unstaged = "✗",
-			staged = "✓",
-			unmerged = "",
-			renamed = "➜",
-			untracked = "★",
-			deleted = "",
-			ignored = "◌",
-		},
-		folder = {
-			arrow_open = "",
-			arrow_closed = "",
-			default = "",
-			open = "",
-			symlink = "",
-			empty = "",
-			empty_open = "",
-			symlink = "",
-			symlink_open = "",
-		},
-	}
-	vim.cmd([[autocmd Filetype NvimTree set cursorline]])
-end
-
 function config.nvim_tree()
 	-- following options are the default
 	require("nvim-tree").setup({
@@ -146,7 +112,7 @@ function config.nvim_tree()
 			-- allow to open the tree if it was previously closed
 			auto_open = true,
 		},
-		hijack_cursor = false,
+		hijack_cursor = true,
 		-- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
 		update_cwd = true,
 		-- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
@@ -160,13 +126,7 @@ function config.nvim_tree()
 			-- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
 			ignore_list = {},
 		},
-		-- configuration options for the system open command (`s` in the tree by default)
-		system_open = {
-			-- the command to run this, leaving nil should work in most cases
-			cmd = nil,
-			-- the command arguments as a list
-			args = {},
-		},
+
 		diagnostics = {
 			enable = true,
 			icons = {
@@ -177,17 +137,11 @@ function config.nvim_tree()
 			},
 		},
 		view = {
-			-- width of the window, can be either a number (columns) or a string in `%`
 			width = 30,
-			-- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
 			side = "left",
-			-- if true the tree will resize itself after opening a file
-			auto_resize = false,
+			auto_resize = true,
 			mappings = {
-				-- custom only false will merge the list with the default mappings
-				-- if true, it will only use your list to set the mappings
 				custom_only = false,
-				-- list of mappings to set on the tree manually
 				list = {},
 			},
 		},

@@ -38,5 +38,4 @@ let g:ale_fixers = {
 "highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 
-command! Nani echo synIDattr(synID(line('.'), col('.'), 1), 'name')
 

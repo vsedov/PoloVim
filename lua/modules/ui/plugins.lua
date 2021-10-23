@@ -12,6 +12,7 @@ ui["folke/tokyonight.nvim"] = {
 }
 
 ui["Pocco81/Catppuccino.nvim"] = {
+	opt = true,
 	config = function()
 		require("catppuccino").setup({
 			colorscheme = "dark_catppuccino",
@@ -19,7 +20,7 @@ ui["Pocco81/Catppuccino.nvim"] = {
 			-- term_colors = true,
 			styles = {
 				comments = "italic",
-				functions = "italic,bold",
+				functions = "italic",
 				keywords = "italic",
 				strings = "NONE",
 				variables = "NONE",
@@ -67,13 +68,14 @@ ui["Pocco81/Catppuccino.nvim"] = {
 				hop = true,
 			},
 		})
-		vim.cmd([[colorscheme catppuccino]])
+		-- vim.cmd([[colorscheme catppuccino]])
 	end,
 }
 
 ui["https://github.com/numToStr/Sakura.nvim"] = {
-	opt = true,
-	config = function() end,
+	config = function()
+		vim.cmd([[colorscheme sakura]])
+	end,
 }
 
 ui["glepnir/dashboard-nvim"] = {
@@ -121,8 +123,7 @@ ui["kazhala/close-buffers.nvim"] = {
 -- legit stoped working
 ui["kyazdani42/nvim-tree.lua"] = {
 	cmd = { "NvimTreeToggle", "NvimTreeOpen" },
-	-- requires = {'kyazdani42/nvim-web-devicons'},
-	setup = conf.nvim_tree_setup,
+	requires = { "kyazdani42/nvim-web-devicons" },
 	config = conf.nvim_tree,
 }
 
