@@ -4,6 +4,11 @@ local global = require("core.global")
 local format = require("modules.completion.format")
 local fn = vim.fn
 
+vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "LspDiagnosticsSignError" })
+vim.fn.sign_define("DiagnosticSignWarning", { text = "", texthl = "LspDiagnosticsSignWarning" })
+vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "LspDiagnosticsSignInformation" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "LspDiagnosticsSignHint" })
+
 require("lsp_extensions").inlay_hints({
 	highlight = "Comment",
 	prefix = " > ",
@@ -137,7 +142,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	-- Enable underline, use default values
 	underline = false,
 	-- Enable virtual text, override spacing to 4
-
 	virtual_text = false,
 
 	signs = {
@@ -150,17 +154,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 })
 
 require("dd").setup()
-
-vim.api.nvim_call_function(
-	"sign_define",
-	{ "LspDiagnosticsSignError", { text = "", texthl = "LspDiagnosticsDefaultError" } }
-)
-vim.fn.sign_define("LspDiagnosticsSignWarning", { text = "", texthl = "LspDiagnosticsDefaultWarning" })
-vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = "LspDiagnosticsDefaultInformation" })
-vim.fn.sign_define("LspDiagnosticsSignHint", { text = "", texthl = "LspDiagnosticsDefaultHint" })
-vim.fn.sign_define("LspDiagnosticsSignOther", { text = "﫠", texthl = "LspDiagnosticsDefaultOther" })
-
--- vim.cmd([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = true })]])
 
 vim.api.nvim_command("autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})")
 
