@@ -6,6 +6,7 @@ local map_args = bind.map_args
 require("keymap.config")
 
 local plug_map = {
+
 	-- Packer
 	["n|<leader>pu"] = map_cr("PackerUpdate"):with_silent():with_noremap():with_nowait(),
 	["n|<leader>pi"] = map_cr("PackerInstall"):with_silent():with_noremap():with_nowait(),
@@ -40,7 +41,6 @@ local plug_map = {
 	["n|K"] = map_cmd("<cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
 	["n|gi"] = map_cmd("<cmd>lua vim.lsp.buf.implementation()<CR>"):with_noremap():with_silent(),
 
-	["n|<C-k>"] = map_cmd("<cmd>lua vim.lsp.buf.signature_help()<CR>"):with_noremap():with_silent(),
 	["n|rn"] = map_cmd("<cmd>lua vim.lsp.buf.references()<CR>"):with_noremap():with_silent(),
 
 	["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
@@ -192,25 +192,22 @@ local plug_map = {
 	["v|<F4>"] = map_cmd(":<c-u>HSRmHighlight<CR>"):with_noremap():with_silent(),
 
 	-- Next other buffers with this one .
-	["n|<Leader>bth"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
-	["n|<Leader>btu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
-	["n|<Leader>btc"] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
+	["n|bth"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
+	["n|btu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
+	["n|btc"] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
 
 	["n|<Leader>bw"] = map_cr("BWipeout! all"):with_silent():with_nowait():with_noremap(),
 	["n|<Leader>bc"] = map_cr("BWipeout!"):with_silent():with_nowait():with_noremap(),
-
-	--["n|<Leader>bc"]  = map_cr("Bdelete"):with_noremap():with_silent(),
-	--["n|<Leader>bw"]  = map_cr("Bwipeout"):with_noremap():with_silent(),
-
 	["n|<Leader>bo"] = map_cr("<cmd>lua require('internal.utils').only()<CR>")
 		:with_silent()
 		:with_nowait()
 		:with_noremap(),
-	["n|<Leader>bv"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
+
+	-- Better buffer selection
+	["n|<C-[>"] = map_cr("<cmd>lua require('nvim-window').pick()<CR>"):with_silent():with_noremap():with_nowait(),
+
 	["n|<Leader>b["] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
 	["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
-	["n|<Leader>bnn"] = map_cr("BufferLineCycleNext"):with_noremap():with_silent(),
-	["n|<Leader>bmm"] = map_cr("BufferLineCyclePrev"):with_noremap():with_silent(),
 	["n|bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
 	["n|<Leader>ot"] = map_cr("OneTerm"):with_noremap():with_silent(),
