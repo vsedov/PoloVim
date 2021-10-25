@@ -32,7 +32,7 @@ local plug_map = {
 
 	["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
 
-	["n|<Leader>ggi"] = map_cu("LazyGit"):with_noremap():with_silent(),
+	["n|<Leader>gh"] = map_cu("LazyGit"):with_noremap():with_silent(),
 
 	-- On n map commands
 	["n|gD"] = map_cmd("<cmd>lua vim.lsp.buf.declaration()<CR>"):with_noremap():with_silent(),
@@ -204,7 +204,7 @@ local plug_map = {
 		:with_noremap(),
 
 	-- Better buffer selection
-	["n|<C-[>"] = map_cr("<cmd>lua require('nvim-window').pick()<CR>"):with_silent():with_noremap():with_nowait(),
+	-- ["n|<C-[>"] = map_cr("<cmd>lua require('nvim-window').pick()<CR>"):with_silent():with_noremap():with_nowait(),
 
 	["n|<Leader>b["] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
 	["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),

@@ -37,8 +37,6 @@ editor["famiu/bufdelete.nvim"] = {
 }
 
 editor["itchyny/vim-cursorword"] = {
-	opt = true,
-	event = { "BufReadPre", "BufNewFile" },
 	config = conf.vim_cursorwod,
 }
 
@@ -138,13 +136,18 @@ editor["https://github.com/numtostr/FTerm.nvim"] = {
 		end
 	end,
 }
+---
+----
+--------
 
-editor["arthurxavierx/vim-caser"] = {
+-- editor["arthurxavierx/vim-caser"] = {
 
-	config = function()
-		vim.g.caser_no_mappings = 1
-	end,
-}
+-- 	config = function()
+-- 		vim.g.caser_no_mappings = 1
+-- 	end,
+-- }
+
+
 --Req Syntax Nice Stuff .
 editor["raimon49/requirements.txt.vim"] = {}
 
@@ -166,9 +169,30 @@ editor["zegervdv/nrpattern.nvim"] = {
 	opt = true,
 
 	config = function()
-		require("nrpattern").setup()
+	
+	local patterns = require"nrpattern.default"
+
+	-- The dict uses the pattern as key, and has a dict of options as value.
+	-- To add a new pattern, for example the VHDL x"aabb" format.
+	patterns['()x"(%x+)"'] = {
+	  base = 16, -- Hexadecimal
+	  format = '%sx"%s"', -- Output format
+	  priority = 15, -- Determines order in pattern matching
+	}
+
+	-- Change a default setting:
+	patterns["(%d*)'h([%x_]+)"].separator.group = 8
+
+
+	patterns[{"yes", "no"}] = {priority = 5}
+
+	-- Call the setup to enable the patterns
+	require"nrpattern".setup(patterns)
+
 	end,
 }
+
+
 
 editor["rmagatti/alternate-toggler"] = {}
 
@@ -185,9 +209,11 @@ editor["ray-x/guihua.lua"] = {
 }
 
 editor["chaoren/vim-wordmotion"] = {
-	opt = true,
 	fn = { "<Plug>WordMotion_w", "<Plug>WordMotion_b", "<Plug>WordMotion_gE", " <Plug>WordMotion_aW" },
 	keys = { "w", "W", "gE", "aW" },
 }
+
+
+
 
 return editor

@@ -25,6 +25,9 @@ completion["ahmedkhalf/project.nvim"] = {
 	end,
 }
 
+
+
+
 completion["hrsh7th/nvim-cmp"] = {
 	event = "InsertEnter", -- InsertCharPre
 	requires = {
@@ -129,14 +132,10 @@ completion["pwntester/octo.nvim"] = {
 	end,
 }
 
--- completion["Groctel/jobsplit.nvim"] = {
--- 	config = function() end,
--- }
+completion["Groctel/jobsplit.nvim"] = {
+	config = function() end,
+}
 
--- completion["Pocco81/AbbrevMan.nvim"] = {
--- 	opt = true,
--- 	config = conf.AbbrevMan,
--- }
 
 completion["kkoomen/vim-doge"] = {
 	config = conf.doge,

@@ -166,7 +166,6 @@ ui["wfxr/minimap.vim"] = {
 	setup = conf.minimap,
 }
 
-ui["https://github.com/yamatsum/nvim-cursorline"] = {}
 
 ui["folke/twilight.nvim"] = {}
 

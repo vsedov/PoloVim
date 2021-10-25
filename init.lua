@@ -81,22 +81,8 @@ augroup END
 	false
 )
 
-vim.api.nvim_exec(
-[[
 
-call wilder#setup({'modes': [':', '/', '?']})
-call wilder#set_option('renderer', wilder#popupmenu_renderer({
-      \ 'highlighter': [
-      \   wilder#lua_pcre2_highlighter(),
-      \   wilder#lua_fzy_highlighter(),
-      \ ],
-      \ 'highlights': {
-      \   'accent': wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#f4468f'}]),
-      \ },
-      \ }))
-
-      
-]], 
-    false
-)
-
+vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "LspDiagnosticsSignError" })
+vim.fn.sign_define("DiagnosticSignWarning", { text = "", texthl = "LspDiagnosticsSignWarning" })
+vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "LspDiagnosticsSignInformation" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "LspDiagnosticsSignHint" })
