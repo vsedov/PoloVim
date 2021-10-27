@@ -215,5 +215,11 @@ editor["chaoren/vim-wordmotion"] = {
 
 
 
+---------------------
+---------------------
+---------------------
+---------------------
+--jupyter notebook--
+
 
 return editor

@@ -170,49 +170,73 @@ function config.gitsigns()
 end
 
 function config.indent_blakline()
-	vim.g.indent_blankline_char = "│"
-	vim.g.indent_blankline_show_first_indent_level = true
-	vim.g.indent_blankline_filetype_exclude = {
-		"startify",
-		"dashboard",
-		"dotooagenda",
-		"log",
-		"fugitive",
-		"gitcommit",
-		"packer",
-		"vimwiki",
-		"markdown",
-		"json",
-		"txt",
-		"vista",
-		"help",
-		"todoist",
-		"NvimTree",
-		"peekaboo",
-		"git",
-		"TelescopePrompt",
-		"undotree",
-		"flutterToolsOutline",
-		"", -- for all buffers without a file type
-	}
-	vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
-	vim.g.indent_blankline_show_trailing_blankline_indent = true
-	vim.g.indent_blankline_show_current_context = true
-	vim.g.indent_blankline_context_patterns = {
-		"class",
-		"function",
-		"method",
-		"block",
-		"list_literal",
-		"selector",
-		"^if",
-		"^table",
-		"if_statement",
-		"while",
-		"for",
-	}
-	-- because lazy load indent-blankline so need readd this autocmd
-	vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
+	-- vim.g.indent_blankline_char = "│"
+	-- vim.g.indent_blankline_show_first_indent_level = true
+	-- vim.g.indent_blankline_filetype_exclude = {
+	-- 	"startify",
+	-- 	"dashboard",
+	-- 	"dotooagenda",
+	-- 	"log",
+	-- 	"fugitive",
+	-- 	"gitcommit",
+	-- 	"packer",
+	-- 	"vimwiki",
+	-- 	"markdown",
+	-- 	"json",
+	-- 	"txt",
+	-- 	"vista",
+	-- 	"help",
+	-- 	"todoist",
+	-- 	"NvimTree",
+	-- 	"peekaboo",
+	-- 	"git",
+	-- 	"TelescopePrompt",
+	-- 	"undotree",
+	-- 	"flutterToolsOutline",
+	-- 	"", -- for all buffers without a file type
+	-- }
+	-- vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
+	-- vim.g.indent_blankline_show_trailing_blankline_indent = true
+	-- vim.g.indent_blankline_show_current_context = true
+	-- vim.g.indent_blankline_context_patterns = {
+	-- 	"class",
+	-- 	"function",
+	-- 	"method",
+	-- 	"block",
+	-- 	"list_literal",
+	-- 	"selector",
+	-- 	"^if",
+	-- 	"^table",
+	-- 	"if_statement",
+	-- 	"while",
+	-- 	"for",
+	-- }
+	-- -- because lazy load indent-blankline so need readd this autocmd
+	-- vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
+  require("indent_blankline").setup {
+        enabled = true,
+        -- char = "|",
+        char_list = {"", "┊", "┆", "¦", "|", "¦", "┆", "┊", ""},
+        filetype_exclude = {
+          "help", "startify", "dashboard", "packer", "guihua", "NvimTree", "sidekick"
+        },
+        show_trailing_blankline_indent = false,
+        show_first_indent_level = false,
+        buftype_exclude = {"terminal"},
+        space_char_blankline = " ",
+        use_treesitter = true,
+        show_current_context = true,
+        context_patterns = {
+          "class", "return", "function", "method", "^if", "if", "^while", "jsx_element", "^for", "for",
+          "^object", "^table", "block", "arguments", "if_statement", "else_clause", "jsx_element",
+          "jsx_self_closing_element", "try_statement", "catch_clause", "import_statement",
+          "operation_type"
+        },
+        bufname_exclude = {"README.md"},
+    }
+  -- useing treesitter instead of char highlight
+  -- vim.g.indent_blankline_char_highlight_list =
+  -- {"WarningMsg", "Identifier", "Delimiter", "Type", "String", "Boolean"}
 end
 
 function config.ui()

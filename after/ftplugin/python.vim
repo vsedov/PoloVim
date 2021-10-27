@@ -12,7 +12,7 @@ setlocal colorcolumn=90
 
 
 
-let g:runner_python_ex = 'python3'
+" let g:runner_python_ex = 'python3'
 let g:runner_python_options = ''
 
 
@@ -25,7 +25,7 @@ let g:test#python#runner = "pytest"
 nnoremap <silent>       <Leader>ai :MagmaInit<CR>
 
 nnoremap <expr><silent> <Leader>a  nvim_exec('MagmaEvaluateOperator', v:true)
-nnoremap <silent>       <Leader>aR :MagmaEvaluateLine<CR>
+nnoremap <silent>       <Leader>ar :MagmaEvaluateLine<CR>
 xnoremap <silent>       <Leader>a :<C-u>MagmaEvaluateVisual<CR>
 nnoremap <silent>       <Leader>ac :MagmaReevaluateCell<CR>
 

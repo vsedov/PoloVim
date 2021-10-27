@@ -25,12 +25,11 @@ completion["ahmedkhalf/project.nvim"] = {
 	end,
 }
 
-
-
-
 completion["hrsh7th/nvim-cmp"] = {
 	event = "InsertEnter", -- InsertCharPre
 	requires = {
+		{ "petertriho/cmp-git", requires = "nvim-lua/plenary.nvim", after = "nvim-cmp" },
+		{ "lukas-reineke/cmp-rg", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
 		{ "https://github.com/lukas-reineke/cmp-under-comparator" },
@@ -135,7 +134,6 @@ completion["pwntester/octo.nvim"] = {
 completion["Groctel/jobsplit.nvim"] = {
 	config = function() end,
 }
-
 
 completion["kkoomen/vim-doge"] = {
 	config = conf.doge,
