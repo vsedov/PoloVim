@@ -59,7 +59,7 @@ editor["mg979/vim-visual-multi"] = {
 		"<M-Right>",
 		"<M-D>",
 		"<M-Down>",
-		"<C-d>",
+		"<C-dd>",
 		"<C-Down>",
 		"<S-Right>",
 		"<C-LeftMouse>",
@@ -71,7 +71,9 @@ editor["mg979/vim-visual-multi"] = {
 	setup = conf.vmulti,
 }
 
-editor["mbbill/undotree"] = { cmd = { "UndotreeToggle" } }
+editor["mbbill/undotree"] = {
+	cmd = { "UndotreeToggle" },
+}
 
 editor["famiu/bufdelete.nvim"] = {
 	opt = true,
