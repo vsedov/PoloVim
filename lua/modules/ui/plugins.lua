@@ -146,7 +146,7 @@ ui["beauwilliams/focus.nvim"] = {
 	end,
 }
 
-ui["kdav5758/TrueZen.nvim"] = {
+ui["Pocco81/TrueZen.nvim"] = {
 	config = conf.truezen,
 }
 
