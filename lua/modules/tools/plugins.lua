@@ -182,10 +182,9 @@ tools["AckslD/nvim-neoclip.lua"] = {
 	config = conf.clipboard,
 }
 
-tools["gelguy/wilder.nvim"]={
+tools["gelguy/wilder.nvim"] = {
 
-	run = ":UpdateRemotePlugins"
-	
+	run = ":UpdateRemotePlugins",
 }
 
 return tools

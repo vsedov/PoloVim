@@ -166,7 +166,6 @@ ui["wfxr/minimap.vim"] = {
 	setup = conf.minimap,
 }
 
-
 ui["folke/twilight.nvim"] = {}
 
 return ui

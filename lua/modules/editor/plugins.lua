@@ -13,6 +13,22 @@ editor["rhysd/accelerated-jk"] = {
 	opt = true,
 }
 
+editor["andymass/vim-matchup"] = {
+	event = { "CursorMoved", "CursorMovedI" },
+	config = function()
+		vim.g.matchup_enabled = 1
+		vim.g.matchup_surround_enabled = 1
+		-- vim.g.matchup_transmute_enabled = 1
+		vim.g.matchup_matchparen_deferred = 1
+		vim.g.matchup_matchparen_offscreen = { method = "popup" }
+		vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
+	end,
+}
+
+-- <A-k>   Move current line/selection up
+-- <A-j>   Move current line/selection down
+-- <A-h>   Move current character/selection left
+-- <A-l>   Move current character/selection right
 editor["matze/vim-move"] = {
 	-- fn = {'<Plug>MoveBlockDown', '<Plug>MoveBlockUp', '<Plug>MoveLineDown', '<Plug>MoveLineUp'}
 }
@@ -27,6 +43,32 @@ editor["bfredl/nvim-miniyank"] = {
 		vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
 		vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
 	end,
+}
+
+editor["mg979/vim-visual-multi"] = {
+	keys = {
+		"<Ctrl>",
+		"<M>",
+		"<C-a>",
+		"<C-a>",
+		"<M-n>",
+		"<S-Down>",
+		"<S-Up>",
+		"<M-Left>",
+		"<M-i>",
+		"<M-Right>",
+		"<M-D>",
+		"<M-Down>",
+		"<C-d>",
+		"<C-Down>",
+		"<S-Right>",
+		"<C-LeftMouse>",
+		"<M-LeftMouse>",
+		"<M-C-RightMouse>",
+		"<Leader>",
+	},
+	opt = true,
+	setup = conf.vmulti,
 }
 
 editor["mbbill/undotree"] = { cmd = { "UndotreeToggle" } }
@@ -55,8 +97,8 @@ editor["ggandor/lightspeed.nvim"] = {
 			highlight_unique_chars = true,
 			grey_out_search_area = true,
 			match_only_the_start_of_same_char_seqs = true,
-			limit_ft_matches = 5,
-			x_mode_prefix_key = "<C-x>",
+			limit_ft_matches = 10,
+			x_mode_prefix_key = "<c-x>",
 			substitute_chars = { ["\r"] = "¬" },
 			instant_repeat_fwd_key = nil,
 			instant_repeat_bwd_key = nil,
@@ -147,7 +189,6 @@ editor["https://github.com/numtostr/FTerm.nvim"] = {
 -- 	end,
 -- }
 
-
 --Req Syntax Nice Stuff .
 editor["raimon49/requirements.txt.vim"] = {}
 
@@ -169,30 +210,25 @@ editor["zegervdv/nrpattern.nvim"] = {
 	opt = true,
 
 	config = function()
-	
-	local patterns = require"nrpattern.default"
+		local patterns = require("nrpattern.default")
 
-	-- The dict uses the pattern as key, and has a dict of options as value.
-	-- To add a new pattern, for example the VHDL x"aabb" format.
-	patterns['()x"(%x+)"'] = {
-	  base = 16, -- Hexadecimal
-	  format = '%sx"%s"', -- Output format
-	  priority = 15, -- Determines order in pattern matching
-	}
+		-- The dict uses the pattern as key, and has a dict of options as value.
+		-- To add a new pattern, for example the VHDL x"aabb" format.
+		patterns['()x"(%x+)"'] = {
+			base = 16, -- Hexadecimal
+			format = '%sx"%s"', -- Output format
+			priority = 15, -- Determines order in pattern matching
+		}
 
-	-- Change a default setting:
-	patterns["(%d*)'h([%x_]+)"].separator.group = 8
+		-- Change a default setting:
+		patterns["(%d*)'h([%x_]+)"].separator.group = 8
 
+		patterns[{ "yes", "no" }] = { priority = 5 }
 
-	patterns[{"yes", "no"}] = {priority = 5}
-
-	-- Call the setup to enable the patterns
-	require"nrpattern".setup(patterns)
-
+		-- Call the setup to enable the patterns
+		require("nrpattern").setup(patterns)
 	end,
 }
-
-
 
 editor["rmagatti/alternate-toggler"] = {}
 
@@ -213,13 +249,10 @@ editor["chaoren/vim-wordmotion"] = {
 	keys = { "w", "W", "gE", "aW" },
 }
 
-
-
 ---------------------
 ---------------------
 ---------------------
 ---------------------
 --jupyter notebook--
-
 
 return editor

@@ -4,7 +4,6 @@ local global = require("core.global")
 local format = require("modules.completion.format")
 local fn = vim.fn
 
-
 require("lsp_extensions").inlay_hints({
 	highlight = "Comment",
 	prefix = " > ",
