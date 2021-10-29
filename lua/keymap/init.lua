@@ -28,7 +28,7 @@ local plug_map = {
 	["n|<Leader>gD"] = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
 	["n|<Leader>gr"] = map_cmd("<cmd>lua vim.lsp.buf.rename()<CR>"):with_noremap():with_silent(),
 
-	["n|ga"] = map_cmd("CodeActionMenu"):with_noremap():with_silent(),
+	["n|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
 
 	["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
 
