@@ -36,13 +36,6 @@ function config.cmp()
 	end
 
 	cmp.setup({
-		snippet = {
-			expand = function(args)
-				-- require 'snippy'.expand_snippet(args.body)
-				require("luasnip").lsp_expand(args.body)
-				-- vim.fn["UltiSnips#Anon"](args.body)
-			end,
-		},
 		completion = {
 			autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
 			completeopt = "menu,menuone,noselect",
@@ -522,10 +515,78 @@ function config.AbbrevMan()
 end
 
 function config.autopairs()
-	require("nvim-autopairs").setup({ fast_wrap = {} })
+	-- require("nvim-autopairs").setup({ fast_wrap = {} })
+	-- require("nvim-autopairs.completion.cmp").setup({
+	-- 	map_cr = true,
+	-- 	map_complete = true,
+	-- })
+	--
+
+	local has_autopairs, autopairs = pcall(require, "nvim-autopairs")
+	if not has_autopairs then
+		print("autopairs not loaded")
+		vim.cmd([[packadd nvim-autopairs]])
+		has_autopairs, autopairs = pcall(require, "nvim-autopairs")
+		if not has_autopairs then
+			print("autopairs not installed")
+			return
+		end
+	end
+	local npairs = require("nvim-autopairs")
+	local Rule = require("nvim-autopairs.rule")
+	npairs.setup({
+		disable_filetype = { "TelescopePrompt", "guihua", "clap_input" },
+		autopairs = { enable = true },
+		ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
+		enable_check_bracket_line = false,
+		html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
+		check_ts = true,
+		ts_config = {
+			lua = { "string" }, -- it will not add pair on that treesitter node
+			-- go = {'string'},
+			javascript = { "template_string" },
+			java = false, -- don't check treesitter on java
+		},
+		fast_wrap = {
+			map = "<M-e>",
+			chars = { "{", "[", "(", '"', "'", "`" },
+			pattern = string.gsub([[ [%'%"%`%+%)%>%]%)%}%,%s] ]], "%s+", ""),
+			end_key = "$",
+			keys = "qwertyuiopzxcvbnmasdfghjkl",
+			check_comma = true,
+			hightlight = "Search",
+		},
+	})
+	local ts_conds = require("nvim-autopairs.ts-conds")
+	-- you need setup cmp first put this after cmp.setup()
+
+	npairs.add_rules({
+		Rule(" ", " "):with_pair(function(opts)
+			local pair = opts.line:sub(opts.col - 1, opts.col)
+			return vim.tbl_contains({ "()", "[]", "{}" }, pair)
+		end),
+		Rule("(", ")")
+			:with_pair(function(opts)
+				return opts.prev_char:match(".%)") ~= nil
+			end)
+			:use_key(")"),
+		Rule("{", "}")
+			:with_pair(function(opts)
+				return opts.prev_char:match(".%}") ~= nil
+			end)
+			:use_key("}"),
+		Rule("[", "]")
+			:with_pair(function(opts)
+				return opts.prev_char:match(".%]") ~= nil
+			end)
+			:use_key("]"),
+		Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+		Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
+	})
+
 	require("nvim-autopairs.completion.cmp").setup({
-		map_cr = true,
-		map_complete = true,
+		map_cr = true, --  map <CR> on insert mode
+		map_complete = true, -- it will auto insert `(` after select function or method item
 		auto_select = true,
 	})
 end

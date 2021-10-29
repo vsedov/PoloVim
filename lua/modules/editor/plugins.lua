@@ -84,11 +84,7 @@ editor["itchyny/vim-cursorword"] = {
 	config = conf.vim_cursorwod,
 }
 
-editor["blackCauldron7/surround.nvim"] = {
-	config = function()
-		require("surround").setup({ mappings_style = "surround" })
-	end,
-}
+editor["tpope/vim-surround"] = {}
 
 editor["ggandor/lightspeed.nvim"] = {
 	requires = { "https://github.com/tpope/vim-repeat" },
