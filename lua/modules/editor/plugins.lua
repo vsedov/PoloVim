@@ -248,6 +248,12 @@ editor["chaoren/vim-wordmotion"] = {
 	keys = { "w", "W", "gE", "aW" },
 }
 
+--- Cheat
+
+editor["RishabhRD/nvim-cheat.sh"]={
+	requires="RishabhRD/popfix"
+}
+
 ---------------------
 ---------------------
 ---------------------

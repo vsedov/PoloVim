@@ -115,7 +115,7 @@ completion["nvim-telescope/telescope.nvim"] = {
 		{ "nvim-lua/popup.nvim" },
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-telescope/telescope-fzy-native.nvim" },
-		{ "nvim-telescope/telescope-cheat.nvim" },
+		{ "nvim-telescope/telescope-cheat.nvim", requires="tami5/sqlite.lua" },
 		{ "tami5/sql.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim", requires = { "tami5/sqlite.lua" } },
 		{ "nvim-telescope/telescope-dap.nvim" },
