@@ -84,6 +84,7 @@ editor["itchyny/vim-cursorword"] = {
 	config = conf.vim_cursorwod,
 }
 
+-- cs item + what you replacing with
 editor["tpope/vim-surround"] = {}
 
 editor["ggandor/lightspeed.nvim"] = {

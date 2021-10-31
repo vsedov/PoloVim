@@ -21,14 +21,16 @@ let g:ale_linters = {
   \   'openapi': ['yamllint', 'ibm-validator'],
   \   'mail': ['proselint', 'write-good'],
   \   'lua': [],
-  \   'c':[]
+  \   'c':[],
+  \   'sh':['shellharden']
 \}
 
 let g:ale_fixers = {
   \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \ 'python': ['nayvy#ale_fixer','black','isort'],
       \ 'java':['google_java_format'],
-      \ 'lua' :['stylua']
+      \ 'lua' :['stylua'],
+      \ 'sh' :['shfmt']
 \ }
 
 

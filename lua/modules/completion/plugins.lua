@@ -142,11 +142,7 @@ completion["kkoomen/vim-doge"] = {
 
 completion["CRAG666/code_runner.nvim"] = {
 	config = function()
-		require("code_runner").setup({
-			filetype = {
-				map = "<leader>r",
-			},
-		})
+		require("code_runner").setup({})
 	end,
 }
 
