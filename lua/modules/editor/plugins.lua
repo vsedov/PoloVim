@@ -49,8 +49,8 @@ editor["mg979/vim-visual-multi"] = {
 	keys = {
 		"<Ctrl>",
 		"<M>",
-		"<C-a>",
-		"<C-a>",
+		"<C-m>",
+		"<C-m>",
 		"<M-n>",
 		"<S-Down>",
 		"<S-Up>",
@@ -193,6 +193,10 @@ editor["raimon49/requirements.txt.vim"] = {}
 
 editor["Vimjas/vim-python-pep8-indent"] = {}
 
+editor["kalekseev/vim-coverage.py"] = {
+	run = ":UpdateRemotePlugins",
+}
+
 -- editor['jdhao/better-escape.vim']  = {
 -- }
 
@@ -250,8 +254,8 @@ editor["chaoren/vim-wordmotion"] = {
 
 --- Cheat
 
-editor["RishabhRD/nvim-cheat.sh"]={
-	requires="RishabhRD/popfix"
+editor["RishabhRD/nvim-cheat.sh"] = {
+	requires = "RishabhRD/popfix",
 }
 
 ---------------------

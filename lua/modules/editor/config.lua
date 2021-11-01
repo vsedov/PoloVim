@@ -118,8 +118,8 @@ function config.vmulti()
 	vim.g.VM_default_mappings = 1
 	vim.cmd([[
       let g:VM_maps = {}
-      let g:VM_maps['Find Under'] = '<C-a>'
-      let g:VM_maps['Find Subword Under'] = '<C-a>'
+      let g:VM_maps['Find Under'] = '<C-m>'
+      let g:VM_maps['Find Subword Under'] = '<C-m>'
       let g:VM_maps['Select All'] = '<C-M-n>'
       let g:VM_maps['Seek Next'] = 'n'
       let g:VM_maps['Seek Prev'] = 'N'
