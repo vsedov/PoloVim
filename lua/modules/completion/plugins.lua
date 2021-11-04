@@ -28,6 +28,7 @@ completion["ahmedkhalf/project.nvim"] = {
 completion["hrsh7th/nvim-cmp"] = {
 	event = "InsertEnter", -- InsertCharPre
 	requires = {
+		{ "https://github.com/github/copilot.vim.git" },
 		{ "petertriho/cmp-git", requires = "nvim-lua/plenary.nvim" },
 		{ "lukas-reineke/cmp-rg", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
@@ -122,6 +123,13 @@ completion["nvim-telescope/telescope.nvim"] = {
 		{ "https://github.com/fhill2/telescope-ultisnips.nvim" },
 	},
 	config = conf.telescope,
+}
+
+completion["https://github.com/camgraff/telescope-tmux.nvim"] = {
+	requires = "https://github.com/norcalli/nvim-terminal.lua",
+	config = function()
+		require("terminal").setup()
+	end,
 }
 
 completion["pwntester/octo.nvim"] = {

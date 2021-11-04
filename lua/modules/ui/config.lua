@@ -91,28 +91,18 @@ function config.dashboard()
 	}
 end
 function config.nvim_tree()
-	vim.g.nvim_tree_respect_buf_cwd = 1
-
 	require("nvim-tree").setup({
-		-- disables netrw completely
 		disable_netrw = true,
-		-- hijack netrw window on startup
 		hijack_netrw = true,
-		-- open the tree when running this setup function
 		open_on_setup = false,
-		-- will not open on setup if the filetype is in this list
 		ignore_ft_on_setup = {},
-		-- closes neovim automatically when the tree is the last **WINDOW** in the view
 		auto_close = false,
-		-- opens the tree when changing/opening a new tab if the tree wasn't previously opened
 		open_on_tab = false,
-		-- hijack the cursor in the tree to put it at the start of the filename
 		update_to_buf_dir = {
 			enable = true,
 			auto_open = true,
 		},
 		hijack_cursor = true,
-		-- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
 		update_cwd = true,
 		update_focused_file = {
 			enable = true,
@@ -127,6 +117,10 @@ function config.nvim_tree()
 				warning = "",
 				error = "",
 			},
+		},
+		filters = {
+			dotfiles = true,
+			custom = { ".git", "venv", ".cache", "__pycache__" },
 		},
 		view = {
 			width = 30,
@@ -353,6 +347,7 @@ end
 
 function config.minimap()
 	vim.g.minimap_auto_start = 1
+	vim.g.minimap_block_filetypes = { "java" }
 
 	local w = vim.api.nvim_call_function("winwidth", { 0 })
 	if w > 180 then

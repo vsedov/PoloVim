@@ -25,7 +25,6 @@ require("core")
 ----------------------------------------------------
 ----------------------------------------------------
 
-
 -- after everythign i called call utest runner
 vim.api.nvim_exec(
 	[[
@@ -80,7 +79,6 @@ augroup END
 ]],
 	false
 )
-
 
 vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "LspDiagnosticsSignError" })
 vim.fn.sign_define("DiagnosticSignWarning", { text = "", texthl = "LspDiagnosticsSignWarning" })

@@ -45,6 +45,27 @@ editor["bfredl/nvim-miniyank"] = {
 	end,
 }
 
+editor["filipdutescu/renamer.nvim"] = {
+	branch = "develop",
+	requires = "nvim-lua/plenary.nvim",
+
+	config = function()
+		local mappings_utils = require("renamer.mappings.utils")
+		require("renamer").setup({
+			-- The popup title, shown if `border` is true
+			title = "Rename",
+			-- The padding around the popup content
+			padding = { 0, 0, 0, 0 },
+			-- Whether or not to shown a border around the popup
+			border = true,
+			-- The characters which make up the border
+			border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+			-- Whether or not o highlight the current word references through LSP
+			show_refs = true,
+		})
+	end,
+}
+
 editor["mg979/vim-visual-multi"] = {
 	keys = {
 		"<Ctrl>",

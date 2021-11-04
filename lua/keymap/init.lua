@@ -26,7 +26,11 @@ local plug_map = {
 
 	-- All commands with leader
 	["n|<Leader>gD"] = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
-	["n|<Leader>gr"] = map_cmd("<cmd>lua vim.lsp.buf.rename()<CR>"):with_noremap():with_silent(),
+
+	["n|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
+	["v|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
+
+	-- ["n|<Leader>gr"] = map_cmd("<cmd>lua vim.lsp.buf.rename()<CR>"):with_noremap():with_silent(),
 
 	["n|<Leader>r"] = map_cr("RunCode"):with_noremap():with_silent(),
 

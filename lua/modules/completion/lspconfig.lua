@@ -296,15 +296,6 @@ lspconfig.sumneko_lua.setup({
 	},
 })
 
-lspconfig.jdtls.setup({
-	on_attach = enhance_attach,
-	capabilities = capabilities,
-	cmd = { "jdtls" },
-	filetypes = { "java" },
-	-- init_options = {bundles = bundles}
-	-- on_attach = require'lsp'.common_on_attach
-})
-
 lspconfig.vimls.setup({
 	on_attach = enhance_attach,
 	capabilities = capabilities,

@@ -9,6 +9,10 @@ function config.cmp()
 	local fn = vim.fn
 	local utils = require("modules.completion.misc")
 
+	vim.g.copilot_no_tab_map = true
+	vim.g.copilot_assume_mapped = true
+	vim.g.copilot_tab_fallback = ""
+
 	local sources = {
 		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
@@ -143,6 +147,19 @@ function config.cmp()
 				"i",
 				"s",
 			}),
+
+			["<C-L>"] = cmp.mapping(function(fallback)
+				local copilot_keys = vim.fn["copilot#Accept"]()
+				if copilot_keys ~= "" then
+					vim.api.nvim_feedkeys(copilot_keys, "i", true)
+				else
+					fallback()
+				end
+			end, {
+				"i",
+				"s",
+			}),
+
 			["<S-Tab>"] = cmp.mapping(function()
 				if cmp.visible() then
 					cmp.select_prev_item()

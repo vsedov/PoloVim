@@ -122,7 +122,6 @@ ui["kazhala/close-buffers.nvim"] = {
 
 -- legit stoped working
 ui["kyazdani42/nvim-tree.lua"] = {
-	cmd = { "NvimTreeToggle", "NvimTreeOpen" },
 	requires = { "kyazdani42/nvim-web-devicons" },
 	config = conf.nvim_tree,
 }
