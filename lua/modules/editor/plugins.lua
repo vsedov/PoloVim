@@ -101,8 +101,13 @@ editor["famiu/bufdelete.nvim"] = {
 	cmd = { "Bdelete", "Bwipeout" },
 }
 
-editor["itchyny/vim-cursorword"] = {
-	config = conf.vim_cursorwod,
+-- editor["itchyny/vim-cursorword"] = {
+-- 	config = conf.vim_cursorwod,
+-- }
+
+editor["https://github.com/yamatsum/nvim-cursorline"] = {
+	branch = "nightly",
+	config = function() end,
 }
 
 -- cs item + what you replacing with
