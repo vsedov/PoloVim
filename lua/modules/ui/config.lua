@@ -346,7 +346,7 @@ function config.scrollbar()
 end
 
 function config.minimap()
-	vim.g.minimap_auto_start = 1
+	vim.g.minimap_auto_start = 0
 	vim.g.minimap_block_filetypes = { "java" }
 
 	local w = vim.api.nvim_call_function("winwidth", { 0 })
