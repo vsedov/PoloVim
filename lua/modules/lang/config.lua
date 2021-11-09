@@ -190,6 +190,15 @@ function config.textobjects()
 				disable = {},
 
 				keymaps = {
+					["iL"] = {
+						-- you can define your own textobjects directly here
+						python = "(function_definition) @function",
+						cpp = "(function_definition) @function",
+						c = "(function_definition) @function",
+						go = "(function_definition) @function",
+						java = "(method_declaration) @function",
+					},
+
 					["af"] = "@function.outer",
 					["if"] = "@function.inner",
 					["aC"] = "@class.outer",

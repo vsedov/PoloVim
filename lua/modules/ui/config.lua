@@ -5,20 +5,37 @@ function config.galaxyline()
 end
 
 function config.nvim_bufferline()
+	if not packer_plugins["nvim-web-devicons"].loaded then
+		packer_plugins["nvim-web-devicons"].loaded = true
+		vim.cmd([[packadd nvim-web-devicons]])
+	end
 	require("bufferline").setup({
 		options = {
-			modified_icon = "✥",
-			buffer_close_icon = "",
+			view = "multiwindow",
+			numbers = "none", -- function(opts) return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal)) end,
+			close_command = "bdelete! %d",
+			right_mouse_command = "bdelete! %d",
+			left_mouse_command = "buffer %d",
+			-- mappings = true,
+			max_name_length = 14,
+			max_prefix_length = 10,
+			tab_size = 16,
 			diagnostics = "nvim_lsp",
-
-			diagnostics_indicator = function(count, level)
-				local icon = level:match("error") and " " or " "
-				return " " .. icon .. count
-			end,
-			diagnostics_update_in_insert = true,
-			show_close_icon = false,
-			always_show_bufferline = true,
+			show_buffer_icons = true,
 			show_buffer_close_icons = false,
+			show_tab_indicators = true,
+			diagnostics_update_in_insert = false,
+			diagnostics_indicator = function(count, level)
+				local icon = level:match("error") and "" or "" -- "" or ""
+				return "" .. icon .. count
+			end,
+			-- can also be a table containing 2 custom separators
+			-- [focused and unfocused]. eg: { '|', '|' }
+			separator_style = "thin",
+			enforce_regular_tabs = false,
+			always_show_bufferline = false,
+			-- 'extension' | 'directory' |
+			sort_by = "directory",
 		},
 	})
 end
@@ -91,41 +108,67 @@ function config.dashboard()
 	}
 end
 function config.nvim_tree()
+	-- following options are the default
 	require("nvim-tree").setup({
+		-- disables netrw completely
 		disable_netrw = true,
+		-- hijack netrw window on startup
 		hijack_netrw = true,
+		-- open the tree when running this setup function
 		open_on_setup = false,
+		-- will not open on setup if the filetype is in this list
 		ignore_ft_on_setup = {},
+		-- closes neovim automatically when the tree is the last **WINDOW** in the view
 		auto_close = false,
+		-- opens the tree when changing/opening a new tab if the tree wasn't previously opened
 		open_on_tab = false,
+		-- hijack the cursor in the tree to put it at the start of the filename
 		update_to_buf_dir = {
-			enable = true,
+			-- enable the feature
+			enable = false,
+			-- allow to open the tree if it was previously closed
 			auto_open = true,
 		},
-		hijack_cursor = true,
-		update_cwd = true,
+		hijack_cursor = false,
+		-- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
+		update_cwd = false,
+		-- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
 		update_focused_file = {
+			-- enables the feature
 			enable = true,
-			update_cwd = true,
+			-- update the root directory of the tree to the one of the folder containing the file if the file is not under the current root directory
+			-- only relevant when `update_focused_file.enable` is true
+			update_cwd = false,
+			-- list of buffer names / filetypes that will not update the cwd if the file isn't found under the current root directory
+			-- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
+			ignore_list = {},
 		},
-
+		-- configuration options for the system open command (`s` in the tree by default)
+		system_open = {
+			-- the command to run this, leaving nil should work in most cases
+			cmd = nil,
+			-- the command arguments as a list
+			args = {},
+		},
 		diagnostics = {
 			enable = true,
-			icons = {
-				hint = "",
-				info = "",
-				warning = "",
-				error = "",
-			},
+			icons = { hint = "", info = "", warning = "", error = "" },
 		},
-		filters = {
-			dotfiles = true,
-			custom = { ".git", "venv", ".cache", "__pycache__" },
-		},
+		filters = { dotfiles = true, custom = {} },
 		view = {
+			-- width of the window, can be either a number (columns) or a string in `%`
 			width = 30,
+			-- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
 			side = "left",
-			auto_resize = true,
+			-- if true the tree will resize itself after opening a file
+			auto_resize = false,
+			mappings = {
+				-- custom only false will merge the list with the default mappings
+				-- if true, it will only use your list to set the mappings
+				custom_only = false,
+				-- list of mappings to set on the tree manually
+				list = {},
+			},
 		},
 	})
 end
@@ -164,62 +207,11 @@ function config.gitsigns()
 end
 
 function config.indent_blakline()
-	-- vim.g.indent_blankline_char = "│"
-	-- vim.g.indent_blankline_show_first_indent_level = true
-	-- vim.g.indent_blankline_filetype_exclude = {
-	-- 	"startify",
-	-- 	"dashboard",
-	-- 	"dotooagenda",
-	-- 	"log",
-	-- 	"fugitive",
-	-- 	"gitcommit",
-	-- 	"packer",
-	-- 	"vimwiki",
-	-- 	"markdown",
-	-- 	"json",
-	-- 	"txt",
-	-- 	"vista",
-	-- 	"help",
-	-- 	"todoist",
-	-- 	"NvimTree",
-	-- 	"peekaboo",
-	-- 	"git",
-	-- 	"TelescopePrompt",
-	-- 	"undotree",
-	-- 	"flutterToolsOutline",
-	-- 	"", -- for all buffers without a file type
-	-- }
-	-- vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
-	-- vim.g.indent_blankline_show_trailing_blankline_indent = true
-	-- vim.g.indent_blankline_show_current_context = true
-	-- vim.g.indent_blankline_context_patterns = {
-	-- 	"class",
-	-- 	"function",
-	-- 	"method",
-	-- 	"block",
-	-- 	"list_literal",
-	-- 	"selector",
-	-- 	"^if",
-	-- 	"^table",
-	-- 	"if_statement",
-	-- 	"while",
-	-- 	"for",
-	-- }
-	-- -- because lazy load indent-blankline so need readd this autocmd
-	-- vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
 	require("indent_blankline").setup({
 		enabled = true,
 		-- char = "|",
 		char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
-		filetype_exclude = {
-			"help",
-			"startify",
-			"dashboard",
-			"packer",
-			"guihua",
-			"NvimTree",
-			"sidekick",
-		},
+		filetype_exclude = { "help", "startify", "dashboard", "packer", "guihua", "NvimTree", "sidekick" },
 		show_trailing_blankline_indent = false,
 		show_first_indent_level = false,
 		buftype_exclude = { "terminal" },
@@ -255,6 +247,17 @@ function config.indent_blakline()
 	-- useing treesitter instead of char highlight
 	-- vim.g.indent_blankline_char_highlight_list =
 	-- {"WarningMsg", "Identifier", "Delimiter", "Type", "String", "Boolean"}
+
+	-- useing treesitter instead of char highlight
+	-- vim.g.indent_blankline_char_highlight_list =
+	-- {"WarningMsg", "Identifier", "Delimiter", "Type", "String", "Boolean"}
+end
+
+function config.indentguides()
+	require("indent_guides").setup({
+		-- put your options in here
+		indent_soft_pattern = "\\s",
+	})
 end
 
 function config.ui()

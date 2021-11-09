@@ -100,8 +100,6 @@ ui["lukas-reineke/indent-blankline.nvim"] = {
 	config = conf.indent_blakline,
 }
 
-ui["dstein64/nvim-scrollview"] = { config = conf.scrollview }
-
 ui["NFrid/due.nvim"] = {
 	config = function()
 		require("due_nvim").setup({})
@@ -131,18 +129,43 @@ ui["lewis6991/gitsigns.nvim"] = {
 	requires = { "nvim-lua/plenary.nvim", opt = true },
 }
 
+-- For now this kinda breaks the treesitter ocnfig
 ui["beauwilliams/focus.nvim"] = {
-
+	opt = true,
+	cmd = { "FocusSplitNicely", "FocusSplitCycle", "FocusMaximise", "FocusToggle", "FocusEqualise" },
 	config = function()
 		require("focus").setup({
+			tmux = false,
 			hybridnumber = true,
-			excluded_filetypes = { "minimap", "vista", "OUTLINE", "symbols_outline" },
+			signcolumn = "number",
+			bufnew = false,
+			cursorline = false,
+			signcolumn = false,
 		})
-
 		vim.api.nvim_set_keymap("n", "<leader>hh", ":FocusMaximise<CR>", { silent = true })
-		vim.api.nvim_set_keymap("n", "<leader>kk", ":FocusSplitNicely<CR>", { silent = true })
+
+		vim.api.nvim_set_keymap("n", "<Leader>kk", ":lua require('focus').split_nicely()<CR>", { silent = true })
+
+		local focusmap = function(direction)
+			vim.api.nvim_set_keymap(
+				"n",
+				"<Leader>" .. direction,
+				":lua require'focus'.split_command('" .. direction .. "')<CR>",
+				{ silent = true }
+			)
+		end
+		-- Use `<Leader>h` to split the screen to the left, same as command FocusSplitLeft etc
+		focusmap("h")
+		focusmap("j")
+		focusmap("k")
+		focusmap("l")
+
+		vim.cmd("hi link UnfocusedWindow CursorLine")
+		vim.cmd("hi link FocusedWindow VisualNOS")
 	end,
 }
+
+-- ui["dstein64/nvim-scrollview"] = { config = conf.scrollview }
 
 ui["Pocco81/TrueZen.nvim"] = {
 	config = conf.truezen,

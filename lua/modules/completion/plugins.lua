@@ -85,6 +85,12 @@ completion["folke/todo-comments.nvim"] = {
 	after = "trouble.nvim",
 }
 
+completion["luukvbaal/stabilize.nvim"] = {
+	config = function()
+		require("stabilize").setup()
+	end,
+}
+
 completion["kristijanhusak/vim-dadbod-completion"] = {
 	event = "InsertEnter",
 	ft = { "sql" },

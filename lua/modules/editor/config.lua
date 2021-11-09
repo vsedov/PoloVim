@@ -9,7 +9,100 @@ function config.delimimate()
 end
 
 function config.autopairs()
-	require("nvim-autopairs").setup()
+	local has_autopairs, autopairs = pcall(require, "nvim-autopairs")
+	if not has_autopairs then
+		print("autopairs not loaded")
+		vim.cmd([[packadd nvim-autopairs]])
+		has_autopairs, autopairs = pcall(require, "nvim-autopairs")
+		if not has_autopairs then
+			print("autopairs not installed")
+			return
+		end
+	end
+	local npairs = require("nvim-autopairs")
+	local Rule = require("nvim-autopairs.rule")
+	npairs.setup({
+		disable_filetype = { "TelescopePrompt", "guihua", "clap_input" },
+		autopairs = { enable = true },
+		ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
+		enable_check_bracket_line = false,
+		html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
+		check_ts = true,
+		ts_config = {
+			lua = { "string" }, -- it will not add pair on that treesitter node
+			-- go = {'string'},
+			javascript = { "template_string" },
+			java = false, -- don't check treesitter on java
+		},
+		fast_wrap = {
+			map = "<M-e>",
+			chars = { "{", "[", "(", '"', "'", "`" },
+			pattern = string.gsub([[ [%'%"%`%+%)%>%]%)%}%,%s] ]], "%s+", ""),
+			end_key = "$",
+			keys = "qwertyuiopzxcvbnmasdfghjkl",
+			check_comma = true,
+			hightlight = "Search",
+		},
+	})
+	local ts_conds = require("nvim-autopairs.ts-conds")
+	-- you need setup cmp first put this after cmp.setup()
+
+	npairs.add_rules({
+		Rule(" ", " "):with_pair(function(opts)
+			local pair = opts.line:sub(opts.col - 1, opts.col)
+			return vim.tbl_contains({ "()", "[]", "{}" }, pair)
+		end),
+
+		Rule("(", ")")
+			:with_pair(function(opts)
+				return opts.prev_char:match(".%)") ~= nil
+			end)
+			:use_key(")"),
+
+		Rule("{", "}")
+			:with_pair(function(opts)
+				return opts.prev_char:match(".%}") ~= nil
+			end)
+			:use_key("}"),
+
+		Rule("[", "]")
+			:with_pair(function(opts)
+				return opts.prev_char:match(".%]") ~= nil
+			end)
+			:use_key("]"),
+
+		Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+
+		Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
+	})
+
+	-- If you want insert `(` after select function or method item
+	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+	local cmp = require("cmp")
+	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+
+	MUtils.CR = function()
+		if vim.fn.pumvisible() ~= 0 then
+			if vim.fn.complete_info({ "selected" }).selected ~= -1 then
+				return npairs.esc("<c-y>")
+			else
+				-- you can change <c-g><c-g> to <c-e> if you don't use other i_CTRL-X modes
+				return npairs.esc("<c-g><c-g>") .. npairs.autopairs_cr()
+			end
+		else
+			return npairs.autopairs_cr()
+		end
+	end
+	remap("i", "<cr>", "v:lua.MUtils.CR()", { expr = true, noremap = true })
+
+	MUtils.BS = function()
+		if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ "mode" }).mode == "eval" then
+			return npairs.esc("<c-e>") .. npairs.autopairs_bs()
+		else
+			return npairs.autopairs_bs()
+		end
+	end
+	remap("i", "<bs>", "v:lua.MUtils.BS()", { expr = true, noremap = true })
 end
 
 function config.nvim_colorizer()

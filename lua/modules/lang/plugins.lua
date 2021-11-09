@@ -47,6 +47,15 @@ lang["windwp/nvim-ts-autotag"] = {
 	end,
 }
 
+lang["p00f/nvim-ts-rainbow"] = {
+	opt = true,
+	-- after = "nvim-treesitter",
+	-- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
+	cmd = "Rainbow",
+	config = conf.rainbow,
+	opt = true,
+}
+
 lang["nvim-lua/plenary.nvim"] = {}
 
 -- Bloody Usefull
@@ -95,5 +104,6 @@ lang["mfussenegger/nvim-dap"] = {
 		require("modules.lang.Dap.config")
 	end,
 }
+lang["yardnsm/vim-import-cost"] = { cmd = "ImportCost", opt = true }
 
 return lang

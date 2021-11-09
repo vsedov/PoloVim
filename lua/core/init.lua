@@ -54,10 +54,15 @@ local leader_map = function()
 end
 
 local load_core = function()
+	require("core.helper").init()
 	local pack = require("core.pack")
 	createdir()
 	disable_distribution_plugins()
 	leader_map()
+
+	if pcall(require, "impatient") then
+		require("impatient")
+	end
 
 	pack.ensure_plugins()
 	require("core.options")
@@ -65,6 +70,7 @@ local load_core = function()
 	require("keymap")
 	require("core.event")
 	pack.load_compile()
+	require("core.lazy")
 end
 
 load_core()

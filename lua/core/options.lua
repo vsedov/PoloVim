@@ -143,4 +143,6 @@ local function load_options()
 	bind_option(bw_local)
 end
 
+vim.cmd([[syntax off]])
+
 load_options()

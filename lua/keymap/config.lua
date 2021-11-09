@@ -44,14 +44,14 @@ _G.enhance_jk_move = function(key)
 	return t(map)
 end
 
-_G.enhance_nice_block = function(key)
-	if not packer_plugins["vim-niceblock"].loaded then
-		vim.cmd([[packadd vim-niceblock]])
-	end
-	local map = {
-		I = "<Plug>(niceblock-I)",
-		["gI"] = "<Plug>(niceblock-gI)",
-		A = "<Plug>(niceblock-A)",
-	}
-	return t(map[key])
-end
+-- _G.enhance_nice_block = function(key)
+-- 	if not packer_plugins["vim-niceblock"].loaded then
+-- 		vim.cmd([[packadd vim-niceblock]])
+-- 	end
+-- 	local map = {
+-- 		I = "<Plug>(niceblock-I)",
+-- 		["gI"] = "<Plug>(niceblock-gI)",
+-- 		A = "<Plug>(niceblock-A)",
+-- 	}
+-- 	return t(map[key])
+-- end

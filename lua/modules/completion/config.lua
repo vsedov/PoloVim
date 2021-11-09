@@ -177,7 +177,7 @@ function config.cmp()
 		-- You should specify your *installed* sources.
 		sources = sources,
 	})
-	if vim.o.ft ~= "clap_input" then
+	if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then
 		require("cmp").setup.buffer({ completion = { enable = false } })
 	end
 	vim.cmd("autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }")
@@ -266,7 +266,9 @@ function config.telescope()
 		vim.cmd([[packadd popup.nvim]])
 		vim.cmd([[packadd telescope-fzy-native.nvim]])
 	end
-	require("telescope.main")
+	require("utils.telescope").setup()
+
+	-- require("telescope.main")
 end
 
 function config.vim_sonictemplate()
@@ -455,7 +457,7 @@ function config.trouble()
 			next = "j", -- next item
 		},
 		indent_lines = true, -- add an indent guide below the fold icons
-		auto_open = false, -- automatically open the list when you have diagnostics
+		auto_open = true, -- automatically open the list when you have diagnostics
 		auto_close = false, -- automatically close the list when you have no diagnostics
 		auto_preview = true, -- automatyically preview the location of the diagnostic. <esc> to close preview and go back to last window
 		auto_fold = true, -- automatically fold a file trouble list at creation
