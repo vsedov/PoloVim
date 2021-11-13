@@ -24,6 +24,12 @@ lang["https://github.com/haringsrob/nvim_context_vt"] = {
 	after = "nvim-treesitter",
 }
 
+lang["nvim-treesitter/nvim-treesitter-refactor"] = {
+	after = "nvim-treesitter-textobjects", -- manual loading
+	config = conf.nvim_treesitter_ref, -- let the last loaded config treesitter
+	opt = true,
+}
+
 lang["https://github.com/RRethy/nvim-treesitter-textsubjects"] = {
 	config = conf.textsubjects,
 	after = "nvim-treesitter",

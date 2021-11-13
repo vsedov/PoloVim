@@ -32,19 +32,16 @@ M.find_dots = function(opts)
 
 	pickers.new(opts, {
 		prompt_title = "~~ Dotfiles ~~",
-		finder = finders.new_oneshot_job(
-			{
-				"git",
-				"--git-dir=" .. require("core.global").home .. "/.dots/",
-				"--work-tree=" .. require("core.global").home,
-				"ls-tree",
-				"--full-tree",
-				"-r",
-				"--name-only",
-				"HEAD",
-			},
-			opts
-		),
+		finder = finders.new_oneshot_job({
+			"git",
+			"--git-dir=" .. require("core.global").home .. "/.dots/",
+			"--work-tree=" .. require("core.global").home,
+			"ls-tree",
+			"--full-tree",
+			"-r",
+			"--name-only",
+			"HEAD",
+		}, opts),
 		previewer = previewers.cat.new(opts),
 		sorter = conf.file_sorter(opts),
 	}):find()

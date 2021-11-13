@@ -14,7 +14,7 @@ setlocal colorcolumn=90
 
 " let g:runner_python_ex = 'python3'
 let g:runner_python_options = ''
-
+let g:SuperTabDefaultCompletionType='context'
 
 
 let g:test#strategy = "dispatch"

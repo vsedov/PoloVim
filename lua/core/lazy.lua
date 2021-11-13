@@ -1,5 +1,14 @@
 function lazyload()
 	local loader = require("packer").loader
+	-- vim.cmd([[syntax on]])
+	if vim.wo.diff then
+		local plugins = "nvim-treesitter" -- nvim-treesitter-textobjects will be autoloaded with loader
+		-- loader(plugins)
+		vim.cmd([[packadd nvim-treesitter]])
+		require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = true } })
+		-- vim.cmd([[syntax on]])
+		return
+	end
 
 	print("I am lazy")
 
@@ -15,7 +24,14 @@ function lazyload()
 		"defx",
 		"sidekick",
 	}
+	local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
+	if syn_on then
+		vim.cmd([[syntax manual]])
+		-- else
+		--   vim.cmd([[syntax on]])
+	end
 
+	-- local fname = vim.fn.expand("%:p:f")
 	local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
 	if fsize == nil or fsize < 0 then
 		fsize = 1
@@ -37,8 +53,6 @@ function lazyload()
 	loader(plugins)
 	vim.g.vimsyn_embed = "lPr"
 
-	local gitrepo = vim.fn.isdirectory(".git/index")
-
 	if load_lsp then
 		loader("nvim-lspconfig") -- null-ls.nvim
 		loader("lsp_signature.nvim")
@@ -46,14 +60,28 @@ function lazyload()
 
 	require("vscripts.cursorhold")
 	require("vscripts.tools")
+	if load_ts_plugins then
+		-- print('load ts plugins')
+		loader("nvim-treesitter")
+	end
 
 	if load_lsp or load_ts_plugins then
 		loader("guihua.lua")
-		loader("focus.nvim")
 	end
 
 	local bytes = vim.fn.wordcount()["bytes"]
 	-- print(bytes)
+
+	if load_ts_plugins then
+		plugins = "nvim-treesitter-refactor nvim-ts-autotag " --  nvim-ts-rainbow  nvim-treesitter nvim-treesitter-refactor
+		-- nvim-treesitter-textobjects should be autoloaded
+		loader(plugins)
+		loader("indent-blankline.nvim")
+	end
+
+	-- if bytes < 2 * 1024 * 1024 and syn_on then
+	--   vim.cmd([[setlocal syntax=on]])
+	-- end
 
 	vim.cmd([[autocmd FileType vista,guihua,guihua setlocal syntax=on]])
 	vim.cmd(

@@ -72,5 +72,5 @@ local load_core = function()
 	pack.load_compile()
 	require("core.lazy")
 end
-
+vim.cmd([[syntax off]])
 load_core()
