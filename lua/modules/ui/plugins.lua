@@ -11,63 +11,62 @@ ui["folke/tokyonight.nvim"] = {
 	config = function() end,
 }
 
-ui["Pocco81/Catppuccino.nvim"] = {
+ui["catppuccin/nvim"] = {
 	config = function()
-		require("catppuccino").setup({
-			colorscheme = "dark_catppuccino",
-			transparency = true,
-			-- term_colors = true,
-			styles = {
-				comments = "italic",
-				functions = "italic",
-				keywords = "italic",
-				strings = "NONE",
-				variables = "NONE",
-			},
-			integrations = {
-				treesitter = true,
-				native_lsp = {
-					enabled = true,
-					virtual_text = {
-						errors = "italic",
-						hints = "italic",
-						warnings = "italic",
-						information = "italic",
+		require("catppuccin").setup({
+				transparent_background = true,
+				term_colors = false,
+				styles = {
+					comments = "italic",
+					functions = "italic",
+					keywords = "italic",
+					strings = "NONE",
+					variables = "NONE",
+				},
+				integrations = {
+					treesitter = true,
+					native_lsp = {
+						enabled = true,
+						virtual_text = {
+							errors = "italic",
+							hints = "italic",
+							warnings = "italic",
+							information = "italic",
+						},
+						underlines = {
+							errors = "underline",
+							hints = "underline",
+							warnings = "underline",
+							information = "underline",
+						},
 					},
-					underlines = {
-						errors = "underline",
-						hints = "underline",
-						warnings = "underline",
-						information = "underline",
+					lsp_trouble = true,
+					lsp_saga = false,
+					gitgutter = true,
+					gitsigns = true,
+					telescope = true,
+					nvimtree = {
+						enabled = true,
+						show_root = true,
 					},
+					which_key = false,
+					indent_blankline = {
+						enabled = true,
+						colored_indent_levels = true,
+					},
+					dashboard = true,
+					neogit = true,
+					vim_sneak = true,
+					fern = true,
+					barbar = true,
+					bufferline = true,
+					markdown = false,
+					lightspeed = true,
+					ts_rainbow = true,
+					hop = true,
 				},
-				lsp_trouble = true,
-				lsp_saga = true,
-				gitgutter = true,
-				gitsigns = true,
-				telescope = true,
-				nvimtree = {
-					enabled = true,
-					show_root = true,
-				},
-				which_key = true,
-				indent_blankline = {
-					enabled = true,
-					colored_indent_levels = true,
-				},
-				dashboard = true,
-				neogit = true,
-				vim_sneak = true,
-				fern = true,
-				barbar = false,
-				bufferline = true,
-				markdown = true,
-				lightspeed = true,
-				ts_rainbow = true,
-				hop = true,
-			},
 		})
-		vim.cmd([[colorscheme catppuccino]])
+		vim.cmd([[colorscheme catppuccin]])
 	end,
 }
 

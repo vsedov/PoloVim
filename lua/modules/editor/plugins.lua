@@ -284,10 +284,11 @@ editor["RishabhRD/nvim-cheat.sh"] = {
 	requires = "RishabhRD/popfix",
 }
 
----------------------
+---------------
 ---------------------
 ---------------------
 ---------------------
 --jupyter notebook--
+
 
 return editor
