@@ -1,12 +1,12 @@
 function lazyload()
 	local loader = require("packer").loader
-	-- vim.cmd([[syntax on]])
+	vim.cmd([[syntax on]])
 	if vim.wo.diff then
 		local plugins = "nvim-treesitter" -- nvim-treesitter-textobjects will be autoloaded with loader
 		-- loader(plugins)
 		vim.cmd([[packadd nvim-treesitter]])
 		require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = true } })
-		-- vim.cmd([[syntax on]])
+
 		return
 	end
 
@@ -27,8 +27,8 @@ function lazyload()
 	local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
 	if syn_on then
 		vim.cmd([[syntax manual]])
-		-- else
-		--   vim.cmd([[syntax on]])
+	else
+		vim.cmd([[syntax on]])
 	end
 
 	-- local fname = vim.fn.expand("%:p:f")

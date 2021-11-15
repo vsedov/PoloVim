@@ -14,57 +14,57 @@ ui["folke/tokyonight.nvim"] = {
 ui["catppuccin/nvim"] = {
 	config = function()
 		require("catppuccin").setup({
-				transparent_background = true,
-				term_colors = false,
-				styles = {
-					comments = "italic",
-					functions = "italic",
-					keywords = "italic",
-					strings = "NONE",
-					variables = "NONE",
+			transparent_background = true,
+			term_colors = false,
+			styles = {
+				comments = "italic",
+				functions = "italic",
+				keywords = "italic",
+				strings = "NONE",
+				variables = "NONE",
+			},
+			integrations = {
+				treesitter = true,
+				native_lsp = {
+					enabled = true,
+					virtual_text = {
+						errors = "italic",
+						hints = "italic",
+						warnings = "italic",
+						information = "italic",
+					},
+					underlines = {
+						errors = "underline",
+						hints = "underline",
+						warnings = "underline",
+						information = "underline",
+					},
 				},
-				integrations = {
-					treesitter = true,
-					native_lsp = {
-						enabled = true,
-						virtual_text = {
-							errors = "italic",
-							hints = "italic",
-							warnings = "italic",
-							information = "italic",
-						},
-						underlines = {
-							errors = "underline",
-							hints = "underline",
-							warnings = "underline",
-							information = "underline",
-						},
-					},
-					lsp_trouble = true,
-					lsp_saga = false,
-					gitgutter = true,
-					gitsigns = true,
-					telescope = true,
-					nvimtree = {
-						enabled = true,
-						show_root = true,
-					},
-					which_key = false,
-					indent_blankline = {
-						enabled = true,
-						colored_indent_levels = true,
-					},
-					dashboard = true,
-					neogit = true,
-					vim_sneak = true,
-					fern = true,
-					barbar = true,
-					bufferline = true,
-					markdown = false,
-					lightspeed = true,
-					ts_rainbow = true,
-					hop = true,
+				lsp_trouble = true,
+				lsp_saga = false,
+				gitgutter = true,
+				gitsigns = true,
+				telescope = true,
+				nvimtree = {
+					enabled = true,
+					show_root = true,
 				},
+				which_key = false,
+				indent_blankline = {
+					enabled = true,
+					colored_indent_levels = true,
+				},
+				dashboard = true,
+				neogit = true,
+				vim_sneak = true,
+				fern = true,
+				barbar = true,
+				bufferline = true,
+				markdown = false,
+				lightspeed = true,
+				ts_rainbow = true,
+				hop = true,
+			},
 		})
 		vim.cmd([[colorscheme catppuccin]])
 	end,
@@ -127,44 +127,6 @@ ui["lewis6991/gitsigns.nvim"] = {
 	config = conf.gitsigns,
 	requires = { "nvim-lua/plenary.nvim", opt = true },
 }
-
--- For now this kinda breaks the treesitter ocnfig
-ui["beauwilliams/focus.nvim"] = {
-	opt = true,
-	cmd = { "FocusSplitNicely", "FocusSplitCycle", "FocusMaximise", "FocusToggle", "FocusEqualise" },
-	config = function()
-		require("focus").setup({
-			tmux = false,
-			hybridnumber = true,
-			signcolumn = "number",
-			bufnew = false,
-			cursorline = false,
-			signcolumn = false,
-		})
-		vim.api.nvim_set_keymap("n", "<leader>hh", ":FocusMaximise<CR>", { silent = true })
-
-		vim.api.nvim_set_keymap("n", "<Leader>kk", ":lua require('focus').split_nicely()<CR>", { silent = true })
-
-		local focusmap = function(direction)
-			vim.api.nvim_set_keymap(
-				"n",
-				"<Leader>" .. direction,
-				":lua require'focus'.split_command('" .. direction .. "')<CR>",
-				{ silent = true }
-			)
-		end
-		-- Use `<Leader>h` to split the screen to the left, same as command FocusSplitLeft etc
-		focusmap("h")
-		focusmap("j")
-		focusmap("k")
-		focusmap("l")
-
-		vim.cmd("hi link UnfocusedWindow CursorLine")
-		vim.cmd("hi link FocusedWindow VisualNOS")
-	end,
-}
-
--- ui["dstein64/nvim-scrollview"] = { config = conf.scrollview }
 
 ui["Pocco81/TrueZen.nvim"] = {
 	config = conf.truezen,

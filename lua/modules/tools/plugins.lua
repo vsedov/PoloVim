@@ -184,8 +184,6 @@ tools["AckslD/nvim-neoclip.lua"] = {
 
 tools["dstein64/vim-startuptime"] = { opt = true, cmd = "StartupTime" }
 
-
-
 ----------------------
 --TERMINALS
 ----------------------

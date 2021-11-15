@@ -113,8 +113,10 @@ editor["https://github.com/yamatsum/nvim-cursorline"] = {
 -- cs item + what you replacing with
 editor["tpope/vim-surround"] = {}
 
+editor["tpope/vim-repeat"] = {}
+
 editor["ggandor/lightspeed.nvim"] = {
-	requires = { "https://github.com/tpope/vim-repeat" },
+	requires = "tpope/vim-repeat",
 	config = function()
 		require("lightspeed").setup({
 			jump_to_first_match = true,
@@ -125,13 +127,8 @@ editor["ggandor/lightspeed.nvim"] = {
 			limit_ft_matches = 10,
 			x_mode_prefix_key = "<c-x>",
 			substitute_chars = { ["\r"] = "¬" },
-			instant_repeat_fwd_key = nil,
-			instant_repeat_bwd_key = nil,
-			-- If no values are given, these will be set at runtime,
-			-- based on `jump_to_first_match`.
+
 			labels = nil,
-			cycle_group_fwd_key = nil,
-			cycle_group_bwd_key = nil,
 		})
 	end,
 }
@@ -156,8 +153,6 @@ editor["dhruvasagar/vim-table-mode"] = {
 editor["kana/vim-niceblock"] = {
 	opt = true,
 }
-
-editor["tpope/vim-repeat"] = {}
 
 -- Paste without yank
 editor["kana/vim-operator-replace"] = {
@@ -289,6 +284,5 @@ editor["RishabhRD/nvim-cheat.sh"] = {
 ---------------------
 ---------------------
 --jupyter notebook--
-
 
 return editor
