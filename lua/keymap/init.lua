@@ -52,6 +52,13 @@ local plug_map = {
 	["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
 	["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
 
+	-- Goto prev mapping
+	--
+	["n|gpd"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_definition()<CR>"):with_noremap(),
+	["n|gpi"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_implementation()<CR>"):with_noremap(),
+	["n|gP"] = map_cmd("<cmd>lua require('goto-preview').close_all_win()<CR>"):with_noremap(),
+	["n|gpr"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_references()<CR>"):with_noremap(),
+
 	-- never go wrong with clap
 	["n|<F1>"] = map_cr("Clap"):with_noremap():with_silent(),
 	["n|<Leader><F1>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
@@ -94,11 +101,11 @@ local plug_map = {
 	["n|<Leader>fa"] = map_cu("DashboardFindWord"):with_noremap():with_silent(),
 	["n|<Leader>fb"] = map_cu("Telescope file_browser"):with_noremap():with_silent(),
 	["n|<Leader>fff"] = map_cu("DashboardFindFile"):with_noremap():with_silent(),
-	["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
+
 	["n|<Leader>fw"] = map_cu("Telescope grep_string"):with_noremap():with_silent(),
 	["n|<Leader>fh"] = map_cu("DashboardFindHistory"):with_noremap():with_silent(),
 	["n|<Leader>fl"] = map_cu("Telescope loclist"):with_noremap():with_silent(),
-	["n|<Leader>fc"] = map_cu("Telescope git_commits"):with_noremap():with_silent(),
+
 	["n|<Leader>ft"] = map_cu("Telescope help_tags"):with_noremap():with_silent(),
 	["n|<Leader>fd"] = map_cu("Telescope dotfiles path=" .. os.getenv("HOME") .. "/.config/nvim")
 		:with_noremap()
@@ -136,7 +143,21 @@ local plug_map = {
 		:with_silent(),
 
 	-- git Blame
-	["n|<Leader><Leader>tgb"] = map_cu("ToggleBlameLine"):with_noremap():with_silent(),
+	-- ["n|<Leader><Leader>tgb"] = map_cu("ToggleBlameLine"):with_noremap():with_silent(),
+
+	-- git stuff
+	["n|<Leader>gt"] = map_cr(
+		'<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>'
+	):with_silent(),
+	["v|<Leader>gt"] = map_cr(
+		'<cmd>lua require"gitlinker".get_buf_range_url("v", {action_callback = require"gitlinker.actions".open_in_browser})<cr>'
+	),
+	["n|<Leader>gY"] = map_cr('<cmd>lua require"gitlinker".get_repo_url()<cr>'):with_silent(),
+	["n|<Leader>gT"] = map_cr(
+		'<cmd>lua require"gitlinker".get_repo_url({action_callback = require"gitlinker.actions".open_in_browser})<cr>'
+	):with_silent(),
+	["n|<Leader>fc"] = map_cu("Telescope git_commits"):with_noremap():with_silent(),
+	["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
 
 	-- Nice command to list all breakpoints. .
 	["n|<Leader>lb"] = map_cr("Telescope dap list_breakpoints"):with_noremap():with_silent(),

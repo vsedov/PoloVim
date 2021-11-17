@@ -67,45 +67,44 @@ augroup END
 	false
 )
 
-
-
 vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "LspDiagnosticsSignError" })
 vim.fn.sign_define("DiagnosticSignWarning", { text = "", texthl = "LspDiagnosticsSignWarning" })
 vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "LspDiagnosticsSignInformation" })
 vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "LspDiagnosticsSignHint" })
 
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+	[[
     augroup VimStartup
         autocmd BufReadPost * if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
     augroup END
-]], false) -- restore cursor position (" -- mark of last cursor position)
+]],
+	false
+) -- restore cursor position (" -- mark of last cursor position)
 
-
-
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+	[[
 augroup AutoSaveFolds | autocmd!
   autocmd BufWinLeave,BufLeave,BufWritePost ?* nested silent! mkview!
   autocmd BufWinEnter ?* silent! loadview
 augroup END
 
-]], false )
+]],
+	false
+)
 
-
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+	[[
 augroup pythondebug
   autocmd!
   autocmd FileType python map <buffer> <Leader><C-S> :update<CR>:exec '!python' shellescape(@%, 1)<CR>
   autocmd FileType python map <buffer> <Leader>dk :update<CR>:sp term://python -m pdb %<CR>
 augroup END
-]], false)
-
-
-
-
-
+]],
+	false
+)
 
 vim.api.nvim_exec(
-  [[
+	[[
 " Setting FileType:
 augroup ensureFileType
   " Make sure all markdown files have the correct filetype set
@@ -147,11 +146,11 @@ augroup frontend
   autocmd FileType vue,typescript setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
 augroup end
 ]],
-  false
+	false
 )
 
-
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+	[[
 
 autocmd CmdlineLeave /,\? lua require('highlight_current_n')['/,?']()
 nmap * *N
@@ -168,7 +167,6 @@ augroup ClearSearchHL
   autocmd CmdlineLeave /,\? lua require('highlight_current_n')['/,?']()
 augroup END
 
-]], false)
-
-
-
+]],
+	false
+)

@@ -203,4 +203,8 @@ completion["mattn/emmet-vim"] = {
 	config = conf.emmet,
 }
 
+completion["rmagatti/goto-preview"] = {
+	config = conf.goto_preview,
+}
+
 return completion

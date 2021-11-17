@@ -152,39 +152,6 @@ function config.session()
 	require("auto-session").setup(opts)
 end
 
-function config.wilder()
-	vim.api.nvim_exec(
-		[[
-call wilder#setup({'modes': [':', '/', '?']})
-call wilder#set_option('pipeline', [
-      \   wilder#branch(
-      \     wilder#cmdline_pipeline({
-      \       'fuzzy': 1,
-      \       'set_pcre2_pattern': has('nvim'),
-      \     }),
-      \     wilder#python_search_pipeline({
-      \       'pattern': 'fuzzy',
-      \     }),
-      \   ),
-      \ ])
-let s:highlighters = [
-        \ wilder#pcre2_highlighter(),
-        \ wilder#basic_highlighter(),
-        \ ]
-call wilder#set_option('renderer', wilder#renderer_mux({
-      \ ':': wilder#popupmenu_renderer({
-      \   'highlighter': s:highlighters,
-      \ }),
-      \ '/': wilder#wildmenu_renderer({
-      \   'highlighter': s:highlighters,
-      \ }),
-      \ }))
-      
-]],
-		false
-	)
-end
-
 function config.outline()
 	-- init.lua
 	vim.g.symbols_outline = {
@@ -246,28 +213,28 @@ function config.comment()
 			extra = true,
 			extended = true,
 		},
-		toggler = {
-			---line-comment keymap
-			line = "gcc",
-			---block-comment keymap
-			block = "gbc",
-		},
+		-- toggler = {
+		-- 	---line-comment keymap
+		-- 	line = "gcc",
+		-- 	---block-comment keymap
+		-- 	block = "gbc",
+		-- },
 
-		opleader = {
-			line = "gc",
-			block = "gb",
-		},
+		-- opleader = {
+		-- 	line = "gc",
+		-- 	block = "gb",
+		-- },
 
-		pre_hook = nil,
-		post_hook = nil,
+		-- pre_hook = nil,
+		-- post_hook = nil,
 	})
 
-	local ft = require("Comment.ft")
+	-- local ft = require("Comment.ft")
 
-	-- 1. Using set function
+	-- -- 1. Using set function
 
-	-- set both line and block commentstring
-	ft.set("python", { "#%s", '"""%s"""' })
+	-- -- set both line and block commentstring
+	-- ft.set("python", { "#%s", '"""%s"""' })
 end
 
 function config.numb()

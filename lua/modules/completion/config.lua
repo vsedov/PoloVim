@@ -217,6 +217,10 @@ function config.vim_vsnip()
 	vim.g.vsnip_snippet_dir = os.getenv("HOME") .. "/.config/nvim/snippets"
 end
 
+function config.goto_preview()
+	require("goto-preview").setup({})
+end
+
 function config.luasnip()
 	print("luasnip")
 	local ls = require("luasnip")
@@ -457,7 +461,7 @@ function config.trouble()
 			next = "j", -- next item
 		},
 		indent_lines = true, -- add an indent guide below the fold icons
-		auto_open = true, -- automatically open the list when you have diagnostics
+		auto_open = false, -- automatically open the list when you have diagnostics
 		auto_close = false, -- automatically close the list when you have no diagnostics
 		auto_preview = true, -- automatyically preview the location of the diagnostic. <esc> to close preview and go back to last window
 		auto_fold = true, -- automatically fold a file trouble list at creation
