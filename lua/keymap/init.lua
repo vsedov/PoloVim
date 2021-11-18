@@ -24,6 +24,7 @@ local plug_map = {
 
 	-- I used code action decent sometimes it doesnt work
 
+	-- ["o|z"],
 	-- All commands with leader
 	["n|<Leader>gD"] = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
 
