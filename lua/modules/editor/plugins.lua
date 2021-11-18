@@ -116,41 +116,32 @@ editor["tpope/vim-surround"] = {}
 editor["tpope/vim-repeat"] = {}
 
 editor["ggandor/lightspeed.nvim"] = {
-	branch = "smart-autojump",
 	requires = "tpope/vim-repeat",
 
 	config = function()
-		-- require("lightspeed").setup({
-		-- 	jump_to_first_match = true,
-		-- 	jump_on_partial_input_safety_timeout = 400,
-		-- 	highlight_unique_chars = true,
-		-- 	grey_out_search_area = true,
-		-- 	match_only_the_start_of_same_char_seqs = true,
-		-- 	limit_ft_matches = 10,
-		-- 	x_mode_prefix_key = "<c-x>",
-		-- 	substitute_chars = { ["\r"] = "¬" },
-		--
-		-- 	labels = nil,
-		-- })
-		-- --
-		require("lightspeed").setup({
-			exit_after_idle_msecs = { labeled = 1500, unlabeled = 1000 },
-			grey_out_search_area = true,
-			highlight_unique_chars = true,
-			match_only_the_start_of_same_char_seqs = true,
-			jump_on_partial_input_safety_timeout = 400,
-			substitute_chars = { ["\r"] = "¬" },
+		require'lightspeed'.setup {
+		  exit_after_idle_msecs = { labeled = 1500, unlabeled = 1000 },
 
-			safe_labels = {},
-			labels = {},
-			x_mode_prefix_key = "<c-x>",
-			cycle_group_fwd_key = "<space>",
-			cycle_group_bwd_key = "<tab>",
-			-- f/t
-			limit_ft_matches = 30,
-			instant_repeat_fwd_key = nil,
-			instant_repeat_bwd_key = nil,
-		})
+		  -- s/x
+		  grey_out_search_area = true,
+		  highlight_unique_chars = true,
+		  match_only_the_start_of_same_char_seqs = true,
+		  jump_on_partial_input_safety_timeout = 400,
+		  substitute_chars = { ['\r'] = '¬' },
+		  -- Leaving the appropriate list empty effectively disables
+		  -- -- "smart" mode, and forces auto-jump to be on or off.
+		  -- safe_labels = { ... },
+		  -- labels = { ... },
+		  cycle_group_fwd_key = '<space>',
+		  cycle_group_bwd_key = '<tab>',
+		  x_mode_prefix_key = '<c-x>',
+		  z_mode_prefix_key = '<c-z>',
+
+		  -- f/t
+		  limit_ft_matches = 20,
+		  instant_repeat_fwd_key = nil,
+		  instant_repeat_bwd_key = nil,
+		}
 	end,
 }
 
@@ -303,41 +294,40 @@ editor["chaoren/vim-wordmotion"] = {
 
 --- Cheat
 
-editor["RishabhRD/popfix"] = {
+-- editor["RishabhRD/popfix"] = {
+	
 
-	config = function()
-		local border_chars = {
-			TOP_LEFT = "┌",
-			TOP_RIGHT = "┐",
-			MID_HORIZONTAL = "─",
-			MID_VERTICAL = "│",
-			BOTTOM_LEFT = "└",
-			BOTTOM_RIGHT = "┘",
-		}
-		--
-		local opts = {
-			height = 40,
-			width = 120,
-			mode = "editor",
+-- 	config = function()
+-- 		local border_chars = {
+-- 			TOP_LEFT = "┌",
+-- 			TOP_RIGHT = "┐",
+-- 			MID_HORIZONTAL = "─",
+-- 			MID_VERTICAL = "│",
+-- 			BOTTOM_LEFT = "└",
+-- 			BOTTOM_RIGHT = "┘",
+-- 		}
+-- 		--
+-- 		local opts = {
+-- 			height = 40,
+-- 			width = 120,
+-- 			mode = "editor",
 
-			prompt = {
-				border = true,
-				numbering = true,
-				title = "MyTitle",
-				border_chars = border_chars,
-				highlight = "Normal",
-				prompt_highlight = "Normal",
-			},
-			sorter = require("popfix.sorter").new_fzy_native_sorter(true),
-			fuzzyEngine = require("popfix.fuzzy_engine").new_SingleExecutionEngine(),
-		}
+-- 			prompt = {
+-- 				border = true,
+-- 				numbering = true,
+-- 				title = "MyTitle",
+-- 				border_chars = border_chars,
+-- 				highlight = "Normal",
+-- 				prompt_highlight = "Normal",
+-- 			},
+-- 		}
 
-		local popup = require("popfix"):new(opts)
-	end,
-}
-editor["RishabhRD/nvim-cheat.sh"] = {
-	requires = "RishabhRD/popfix",
-}
+-- 		local popup = require("popfix"):new(opts)
+-- 	end,
+-- }
+-- editor["RishabhRD/nvim-cheat.sh"] = {
+-- 	requires = "RishabhRD/popfix",
+-- }
 
 ---------------
 ---------------------
