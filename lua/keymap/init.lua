@@ -220,9 +220,9 @@ local plug_map = {
 	["v|<F4>"] = map_cmd(":<c-u>HSRmHighlight<CR>"):with_noremap():with_silent(),
 
 	-- Next other buffers with this one .
-	["n|bth"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
-	["n|btu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
-	["n|btc"] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
+	["n|<localleader>bth"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
+	["n|<localleader>btu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
+	["n|<localleader>btc"] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
 
 	["n|<Leader>bw"] = map_cr("BWipeout! all"):with_silent():with_nowait():with_noremap(),
 	["n|<Leader>bc"] = map_cr("BWipeout!"):with_silent():with_nowait():with_noremap(),
@@ -236,7 +236,7 @@ local plug_map = {
 
 	["n|<Leader>b["] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
 	["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
-	["n|bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
+	["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
 	["n|<Leader>ot"] = map_cr("OneTerm"):with_noremap():with_silent(),
 }

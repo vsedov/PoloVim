@@ -288,9 +288,18 @@ editor["ruifm/gitlinker.nvim"] = {
 }
 
 editor["chaoren/vim-wordmotion"] = {
-	fn = { "<Plug>WordMotion_w", "<Plug>WordMotion_b", "<Plug>WordMotion_gE", " <Plug>WordMotion_aW" },
-	keys = { "w", "W", "gE", "aW" },
+	opt = true,
+	fn = {
+		"<Plug>WordMotion_w",
+		"<Plug>WordMotion_b",
+		"<Plug>WordMotion_gE",
+		"<Plug>WordMotion_aW",
+	},
 }
+-- nmap w          <Plug>WordMotion_w
+-- nmap b          <Plug>WordMotion_b
+-- nmap gE         <Plug>WordMotion_gE
+-- omap aW         <Plug>WordMotion_aW
 
 --- Cheat
 
