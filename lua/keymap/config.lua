@@ -37,7 +37,6 @@ end
 _G.word_motion_move = function(key)
 	if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then
 		vim.cmd([[packadd vim-wordmotion]])
-
 	end
 
 	local map = key == "w" and "<Plug>(WordMotion_w)" or "<Plug>(WordMotion_b)"

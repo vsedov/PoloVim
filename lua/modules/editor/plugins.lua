@@ -288,50 +288,33 @@ editor["ruifm/gitlinker.nvim"] = {
 }
 
 editor["chaoren/vim-wordmotion"] = {
-	fn = {  "<Plug>WordMotion_w",
-	 		"<Plug>WordMotion_b",
-	  		"<Plug>WordMotion_gE",
-	   		"<Plug>WordMotion_aW" 
+	fn = {
+		"<Plug>WordMotion_w",
+		"<Plug>WordMotion_b",
+		"<Plug>WordMotion_gE",
+		"<Plug>WordMotion_aW",
 	},
-	keys = { "w", "W", "gE", "aW", "b", "B"},
+	keys = { "w", "W", "gE", "aW", "b", "B" },
 }
 
+editor["VonHeikemen/fine-cmdline.nvim"] = {
 
---- Cheat
+	requires = {
+		{ "MunifTanjim/nui.nvim" },
+	},
 
--- editor["RishabhRD/popfix"] = {
-
--- 	config = function()
--- 		local border_chars = {
--- 			TOP_LEFT = "┌",
--- 			TOP_RIGHT = "┐",
--- 			MID_HORIZONTAL = "─",
--- 			MID_VERTICAL = "│",
--- 			BOTTOM_LEFT = "└",
--- 			BOTTOM_RIGHT = "┘",
--- 		}
--- 		--
--- 		local opts = {
--- 			height = 40,
--- 			width = 120,
--- 			mode = "editor",
-
--- 			prompt = {
--- 				border = true,
--- 				numbering = true,
--- 				title = "MyTitle",
--- 				border_chars = border_chars,
--- 				highlight = "Normal",
--- 				prompt_highlight = "Normal",
--- 			},
--- 		}
-
--- 		local popup = require("popfix"):new(opts)
--- 	end,
--- }
--- editor["RishabhRD/nvim-cheat.sh"] = {
--- 	requires = "RishabhRD/popfix",
--- }
+	config = function()
+		require("fine-cmdline").setup({
+			hooks = {
+				before_mount = function(input)
+					-- Beware, the prompt can mess around with the completion
+					input.input_props.prompt = ":"
+				end,
+			},
+		})
+		vim.api.nvim_set_keymap("n", "<C-p>", ':lua require("fine-cmdline").open()<CR>', { noremap = true })
+	end,
+}
 
 ---------------
 ---------------------

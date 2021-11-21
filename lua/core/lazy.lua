@@ -31,6 +31,10 @@ function lazyload()
 		vim.cmd([[syntax on]])
 	end
 
+	if vim.bo.filetype == "norg" then
+		loader("neorg")
+	end
+
 	-- local fname = vim.fn.expand("%:p:f")
 	local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
 	if fsize == nil or fsize < 0 then

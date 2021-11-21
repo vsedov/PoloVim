@@ -282,6 +282,7 @@ M.setup = function()
 	telescope.load_extension("frecency")
 	telescope.load_extension("ultisnips")
 	telescope.load_extension("projects")
+	telescope.load_extension("cheat")
 end
 
 return M
