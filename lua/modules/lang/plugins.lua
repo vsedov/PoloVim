@@ -54,15 +54,20 @@ lang["windwp/nvim-ts-autotag"] = {
 }
 
 lang["p00f/nvim-ts-rainbow"] = {
-	opt = true,
 	-- after = "nvim-treesitter",
 	-- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
 	cmd = "Rainbow",
 	config = conf.rainbow,
-	opt = true,
 }
 
 lang["nvim-lua/plenary.nvim"] = {}
+
+lang["nathom/filetype.nvim"] = {
+	-- event = {'BufEnter'},
+	setup = function()
+		vim.g.did_load_filetypes = 1
+	end,
+}
 
 -- Bloody Usefull
 lang["vhyrro/neorg"] = {

@@ -20,7 +20,6 @@ function config.cmp()
 		{ name = "treesitter", keyword_length = 2 },
 		{ name = "look", keyword_length = 4 },
 		{ name = "cmp_git" },
-		{ name = "rg" },
 		{ name = "buffer" },
 		{ name = "ultisnips" },
 		{ name = "nvim_lua" },
@@ -88,7 +87,7 @@ function config.cmp()
 					luasnip = "[SNIP]",
 					ultisnips = "[UltiSnips]",
 					spell = "[SPELL]",
-					rg = "[RG]",
+					-- rg = "[RG]",
 				})[entry.source.name]
 
 				return vim_item

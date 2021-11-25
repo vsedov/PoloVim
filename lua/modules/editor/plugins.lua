@@ -13,17 +13,21 @@ editor["rhysd/accelerated-jk"] = {
 	opt = true,
 }
 
-editor["andymass/vim-matchup"] = {
-	event = { "CursorMoved", "CursorMovedI" },
-	config = function()
-		vim.g.matchup_enabled = 1
-		vim.g.matchup_surround_enabled = 1
-		-- vim.g.matchup_transmute_enabled = 1
-		vim.g.matchup_matchparen_deferred = 1
-		vim.g.matchup_matchparen_offscreen = { method = "popup" }
-		vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
-	end,
-}
+-- editor["andymass/vim-matchup"] = {
+--   opt = true,
+--   event = {"CursorMoved", "CursorMovedI"},
+--   cmd = {'MatchupWhereAmI?'},
+--   setup = function()
+--     vim.g.matchup_enabled = 1
+--     vim.g.matchup_surround_enabled = 1
+--     -- vim.g.matchup_transmute_enabled = 1
+--     vim.g.matchup_matchparen_deferred = 1
+--     vim.g.matchup_matchparen_insert_timeout = 200
+--     vim.g.matchup_matchparen_deferred_show_delay = 150
+--     vim.g.matchup_matchparen_offscreen = {method = 'status_manual'} -- = {method = 'popup'}
+--     vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
+--   end
+-- }
 
 -- <A-k>   Move current line/selection up
 -- <A-j>   Move current line/selection down

@@ -30,7 +30,7 @@ completion["hrsh7th/nvim-cmp"] = {
 	requires = {
 		{ "https://github.com/github/copilot.vim.git" },
 		{ "petertriho/cmp-git", requires = "nvim-lua/plenary.nvim" },
-		{ "lukas-reineke/cmp-rg", after = "nvim-cmp" },
+		-- { "lukas-reineke/cmp-rg", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
 		{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
 		{ "https://github.com/lukas-reineke/cmp-under-comparator" },
@@ -107,6 +107,8 @@ completion["dense-analysis/ale"] = {
 	config = conf.ale,
 }
 
+-- possible removeable
+
 completion["windwp/nvim-autopairs"] = {
 	after = "nvim-cmp",
 	config = conf.autopairs,
@@ -119,16 +121,23 @@ completion["nvim-telescope/telescope.nvim"] = {
 
 	cmd = "Telescope",
 	requires = {
+		{ "https://github.com/nvim-telescope/telescope-fzf-writer.nvim" },
+		{ "jvgrootveld/telescope-zoxide" },
 		{ "nvim-lua/popup.nvim" },
 		{ "nvim-lua/plenary.nvim" },
-		{ "nvim-telescope/telescope-fzy-native.nvim" },
 		{ "tami5/sql.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim", requires = { "tami5/sqlite.lua" } },
 		{ "nvim-telescope/telescope-dap.nvim" },
 		{ "https://github.com/fhill2/telescope-ultisnips.nvim" },
+		{ "nvim-telescope/telescope-fzf-native.nvim" },
 	},
+	run = "make",
 	config = conf.telescope,
 }
+
+-- completion["nvim-telescope/telescope-fzy-native.nvim"]={
+-- run = 'make'
+-- }
 
 completion["nvim-telescope/telescope-cheat.nvim"] = {
 	requires = "tami5/sqlite.lua",
