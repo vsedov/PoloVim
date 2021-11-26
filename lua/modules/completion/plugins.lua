@@ -118,22 +118,29 @@ completion["weilbith/nvim-code-action-menu"] = {
 }
 
 completion["nvim-telescope/telescope.nvim"] = {
-
-	cmd = "Telescope",
 	requires = {
+		{ "nvim-lua/plenary.nvim" },
+		{ "nvim-telescope/telescope-fzy-native.nvim" },
+		{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+		{ "nvim-telescope/telescope-live-grep-raw.nvim" },
 		{ "https://github.com/nvim-telescope/telescope-fzf-writer.nvim" },
 		{ "jvgrootveld/telescope-zoxide" },
 		{ "nvim-lua/popup.nvim" },
-		{ "nvim-lua/plenary.nvim" },
 		{ "tami5/sql.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim", requires = { "tami5/sqlite.lua" } },
 		{ "nvim-telescope/telescope-dap.nvim" },
 		{ "https://github.com/fhill2/telescope-ultisnips.nvim" },
-		{ "nvim-telescope/telescope-fzf-native.nvim" },
+		{ "nvim-neorg/neorg-telescope" },
 	},
 	run = "make",
 	config = conf.telescope,
 }
+
+-- completion["nvim-telescope/telescope.nvim"] = {
+--   requires = {
+
+--   },
+-- }
 
 -- completion["nvim-telescope/telescope-fzy-native.nvim"]={
 -- run = 'make'

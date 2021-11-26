@@ -98,11 +98,3 @@ local lazy_timer = 60
 vim.defer_fn(function()
 	vim.cmd([[doautocmd User LoadLazyPlugin]])
 end, lazy_timer)
-
-vim.defer_fn(function()
-	-- lazyload()
-	local cmd = "TSEnableAll highlight " .. vim.o.ft
-	vim.cmd(cmd)
-	vim.cmd([[doautocmd ColorScheme]])
-	vim.cmd(cmd)
-end, lazy_timer + 20)

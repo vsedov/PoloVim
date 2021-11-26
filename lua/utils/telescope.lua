@@ -1,9 +1,7 @@
 local a = vim.api
 
 local loader = require("packer").loader
-if not packer_plugins["telescope.nvim"].loaded then
-	loader("telescope.nvim")
-end
+
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 local conf = require("telescope.config").values
@@ -189,7 +187,7 @@ function M.command_history()
 end
 
 function M.load_dotfiles()
-	local has_telescope, telescope = pcall(require, "telescope.builtin")
+	local has_telescope = pcall(require, "telescope.builtin")
 	if has_telescope then
 		local themes = require("telescope.themes")
 
@@ -201,11 +199,12 @@ function M.load_dotfiles()
 			end
 		end
 
+		local global = require("core.global")
 		for file in io.popen('find "' .. global.vim_path .. '" -type f'):lines() do
 			table.insert(results, file)
 		end
 
-		telescope.dotfiles = function(opts)
+		builtin.dotfiles = function(opts)
 			opts = themes.get_dropdown({})
 			pickers.new(opts, {
 				prompt = "dotfiles",
@@ -215,7 +214,7 @@ function M.load_dotfiles()
 			}):find()
 		end
 	end
-	require("telescope.builtin").dotfiles()
+	builtin.dotfiles()
 end
 
 -- https://github.com/AshineFoster/nvim/blob/master/lua/plugins/telescope.lua
@@ -268,7 +267,6 @@ end
 
 -- https://github.com/nvim-telescope/telescope.nvim/issues/416#issuecomment-841273053
 
-local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 
 function custom_actions.fzf_multi_select(prompt_bufnr)
@@ -286,7 +284,6 @@ function custom_actions.fzf_multi_select(prompt_bufnr)
 end
 
 M.setup = function()
-	local loader = require("packer").loader
 	telescope.setup({
 		defaults = {
 			shorten_path = true,
@@ -375,6 +372,7 @@ M.setup = function()
 	telescope.load_extension("gosource")
 
 	loader("telescope-fzy-native.nvim telescope-fzf-native.nvim telescope-live-grep-raw.nvim")
+	loader("sqlite.lua")
 
 	telescope.setup({
 		extensions = {
@@ -387,14 +385,13 @@ M.setup = function()
 			},
 		},
 	})
+
 	telescope.load_extension("fzf")
 	telescope.setup({
 		extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
 	})
 	telescope.load_extension("fzy_native")
 
-	telescope.load_extension("dotfiles")
-	telescope.load_extension("gosource")
 	telescope.load_extension("live_grep_raw")
 	telescope.load_extension("dap")
 	telescope.load_extension("frecency")
@@ -403,11 +400,3 @@ M.setup = function()
 end
 
 return M
-
--- require("telescope").load_extension("dotfiles")
--- require("telescope").
--- require("telescope").load_extension("cheat")
--- require("telescope").
--- require("telescope").
--- -- require('telescope').
--- require("telescope").load_extension("fzy_native")

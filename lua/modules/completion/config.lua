@@ -14,6 +14,7 @@ function config.cmp()
 	vim.g.copilot_tab_fallback = ""
 
 	local sources = {
+		{ name = "neorg" },
 		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
 		{ name = "cmp_tabnine" },
@@ -27,7 +28,6 @@ function config.cmp()
 		{ name = "spell" },
 		{ name = "tmux" },
 		{ name = "calc" },
-		{ name = "neorg" },
 	}
 
 	if vim.o.ft == "sql" then
@@ -87,6 +87,7 @@ function config.cmp()
 					luasnip = "[SNIP]",
 					ultisnips = "[UltiSnips]",
 					spell = "[SPELL]",
+					neorg = "norg",
 					-- rg = "[RG]",
 				})[entry.source.name]
 
@@ -263,15 +264,26 @@ function config.jdtls()
 	require("modules.completion.jdtls")
 end
 
-function config.telescope()
-	if not packer_plugins["plenary.nvim"].loaded then
-		vim.cmd([[packadd plenary.nvim]])
-		vim.cmd([[packadd popup.nvim]])
-		vim.cmd([[packadd telescope-fzy-native.nvim]])
-	end
-	require("utils.telescope").setup()
+-- function config.telescope()
+-- 	if not packer_plugins["plenary.nvim"].loaded then
+-- 		vim.cmd([[packadd plenary.nvim]])
+-- 		vim.cmd([[packadd popup.nvim]])
+-- 		vim.cmd([[packadd telescope-fzy-native.nvim]])
+-- 	end
+-- 	require("utils.telescope").setup()
+-- end
 
-	-- require("telescope.main")
+function config.telescope_preload()
+	if not packer_plugins["plenary.nvim"].loaded then
+		require("packer").loader("plenary.nvim")
+	end
+	-- if not packer_plugins["telescope-fzy-native.nvim"].loaded then
+	--   require"packer".loader("telescope-fzy-native.nvim")
+	-- end
+end
+
+function config.telescope()
+	require("utils.telescope").setup()
 end
 
 function config.vim_sonictemplate()
