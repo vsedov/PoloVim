@@ -14,10 +14,27 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
 		}
 	end,
 }
-
 tools["TimUntersberger/neogit"] = {
 	cmd = { "Neogit" },
-	config = conf.neogit,
+	config = function()
+		local neogit = require("neogit")
+		neogit.setup({})
+	end,
+	requires = {
+		"nvim-lua/plenary.nvim",
+		"sindrets/diffview.nvim",
+	},
+}
+
+tools["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
+	setup = function()
+		vim.o.updatetime = 2000
+		vim.wo.signcolumn = "yes"
+	end,
+	cmd = { "VGit" },
+	after = { "telescope.nvim" },
+	opt = true,
+	config = conf.vgit,
 }
 
 tools["f-person/git-blame.nvim"] = {

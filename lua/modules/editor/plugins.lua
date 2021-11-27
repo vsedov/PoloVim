@@ -296,9 +296,8 @@ editor["chaoren/vim-wordmotion"] = {
 		"<Plug>WordMotion_w",
 		"<Plug>WordMotion_b",
 		"<Plug>WordMotion_gE",
-		"<Plug>WordMotion_aW",
 	},
-	keys = { "w", "W", "gE", "aW", "b", "B" },
+	keys = { "w", "W", "gE", "b", "B" },
 }
 
 editor["VonHeikemen/fine-cmdline.nvim"] = {

@@ -53,6 +53,13 @@ function lazyload()
 	loader(plugins)
 	vim.g.vimsyn_embed = "lPr"
 
+	local gitrepo = vim.fn.isdirectory(".git/index")
+	if gitrepo then
+		loader("gitsigns.nvim") -- neogit vgit.nvim
+		loader("neogit")
+		loader("vgit.nvim")
+	end
+
 	if load_lsp then
 		loader("nvim-lspconfig") -- null-ls.nvim
 		loader("lsp_signature.nvim")
@@ -85,9 +92,6 @@ function lazyload()
 	-- end
 
 	vim.cmd([[autocmd FileType vista,guihua,guihua setlocal syntax=on]])
-	vim.cmd(
-		[[autocmd FileType * silent! lua if vim.fn.wordcount()['bytes'] > 2048000 then print("syntax off") vim.cmd("setlocal syntax=off") else print("syntax on") vim.cmd("setlocal syntax=on") end]]
-	)
 end
 
 vim.cmd([[autocmd User LoadLazyPlugin lua lazyload()]])

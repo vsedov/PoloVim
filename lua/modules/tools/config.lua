@@ -27,9 +27,71 @@ local function load_dbs()
 	return dbs
 end
 
+function config.vgit()
+	-- use this as a diff tool (faster than Diffview)
+	-- there are overlaps with gitgutter. following are nice features
+	require("vgit").setup({
+		keymaps = {
+			["n <leader>ga"] = "actions", -- show all commands in telescope
+			["n <leader>ba"] = "buffer_gutter_blame_preview", -- show all blames
+			["n <leader>bp"] = "buffer_blame_preview", -- buffer diff
+			["n <leader>bh"] = "buffer_history_preview", -- buffer commit history DiffviewFileHistory
+			["n <leader>gp"] = "buffer_staged_diff_preview", -- diff for staged changes
+			["n <leader>pd"] = "project_diff_preview", -- diffview is slow
+		},
+		controller = {
+			hunks_enabled = false, -- gitsigns
+			blames_enabled = false,
+			diff_strategy = "index",
+			diff_preference = "vertical",
+			predict_hunk_signs = true,
+			predict_hunk_throttle_ms = 500,
+			predict_hunk_max_lines = 50000,
+			blame_line_throttle_ms = 250,
+			show_untracked_file_signs = true,
+			action_delay_ms = 500,
+		},
+	})
+	require("packer").loader("telescope.nvim")
+	-- print('vgit')
+	-- require("vgit")._buf_attach()
+end
+
 function config.neogit()
-	local neogit = require("neogit")
-	neogit.setup({})
+	require("neogit").setup({
+		disable_signs = false,
+		disable_context_highlighting = false,
+		disable_commit_confirmation = false,
+		-- customize displayed signs
+		signs = {
+			-- { CLOSED, OPENED }
+			section = { ">", "v" },
+			item = { ">", "v" },
+			hunk = { "", "" },
+		},
+		integrations = {
+			-- Neogit only provides inline diffs. If you want a more traditional way to look at diffs, you can use `sindrets/diffview.nvim`.
+			-- The diffview integration enables the diff popup, which is a wrapper around `sindrets/diffview.nvim`.
+			--
+			-- Requires you to have `sindrets/diffview.nvim` installed.
+			-- use {
+			--   'TimUntersberger/neogit',
+
+			-- }
+			--
+			diffview = true,
+		},
+		-- override/add mappings
+		mappings = {
+			-- modify status buffer mappings
+			status = {
+				-- Adds a mapping with "B" as key that does the "BranchPopup" command
+				["B"] = "BranchPopup",
+				-- Removes the default mapping of "s"
+				["s"] = "",
+			},
+		},
+	})
 end
 
 function config.highlight()
