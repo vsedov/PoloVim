@@ -15,7 +15,6 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
 	end,
 }
 tools["TimUntersberger/neogit"] = {
-	cmd = { "Neogit" },
 	config = function()
 		local neogit = require("neogit")
 		neogit.setup({})
@@ -93,6 +92,23 @@ tools["editorconfig/editorconfig-vim"] = {
 
 tools["numToStr/Comment.nvim"] = {
 	config = conf.comment,
+}
+
+-- This is kinda cool look at plugin https://github.com/ThePrimeagen/harpoon
+tools["ThePrimeagen/harpoon"] = {
+	opt = true,
+	config = function()
+		require("harpoon").setup({
+			global_settings = {
+				save_on_toggle = false,
+				save_on_change = true,
+				enter_on_sendcmd = false,
+				tmux_autoclose_windows = false,
+				excluded_filetypes = { "harpoon" },
+			},
+		})
+		require("telescope").load_extension("harpoon")
+	end,
 }
 
 tools["liuchengxu/vim-clap"] = {

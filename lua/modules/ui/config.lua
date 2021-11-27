@@ -4,6 +4,15 @@ function config.galaxyline()
 	require("modules.ui.eviline")
 end
 
+function config.windline()
+	if not packer_plugins["nvim-web-devicons"].loaded then
+		packer_plugins["nvim-web-devicons"].loaded = true
+		require("packer").loader("nvim-web-devicons")
+	end
+
+	-- require('wlfloatline').toggle()
+end
+
 function config.nvim_bufferline()
 	if not packer_plugins["nvim-web-devicons"].loaded then
 		packer_plugins["nvim-web-devicons"].loaded = true

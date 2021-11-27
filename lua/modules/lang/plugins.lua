@@ -96,4 +96,13 @@ lang["mfussenegger/nvim-dap"] = {
 }
 lang["yardnsm/vim-import-cost"] = { cmd = "ImportCost", opt = true }
 
+lang["danymat/neogen"] = {
+	opt = true,
+	config = function()
+		require("neogen").setup({ enabled = true })
+		local opts = { noremap = true, silent = true }
+		vim.api.nvim_set_keymap("n", "<Leader>n", ":lua require('neogen').generate()<CR>", opts)
+	end,
+}
+
 return lang

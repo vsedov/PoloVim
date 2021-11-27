@@ -90,6 +90,8 @@ function lazyload()
 	-- if bytes < 2 * 1024 * 1024 and syn_on then
 	--   vim.cmd([[setlocal syntax=on]])
 	-- end
+	require("modules.ui.eviline")
+	require("wlfloatline").setup()
 
 	vim.cmd([[autocmd FileType vista,guihua,guihua setlocal syntax=on]])
 end
@@ -102,3 +104,7 @@ local lazy_timer = 60
 vim.defer_fn(function()
 	vim.cmd([[doautocmd User LoadLazyPlugin]])
 end, lazy_timer)
+vim.defer_fn(function()
+	local loader = require("packer").loader
+	loader("neogen harpoon")
+end, lazy_timer + 100)

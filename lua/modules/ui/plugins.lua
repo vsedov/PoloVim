@@ -80,18 +80,27 @@ ui["glepnir/dashboard-nvim"] = {
 	config = conf.dashboard,
 }
 
-ui["NTBBloodbath/galaxyline.nvim"] = {
-	branch = "main",
-	config = conf.galaxyline,
-	requires = "kyazdani42/nvim-web-devicons",
+-- ui["NTBBloodbath/galaxyline.nvim"] = {
+-- 	branch = "main",
+-- 	config = conf.galaxyline,
+-- 	requires = "kyazdani42/nvim-web-devicons",
+-- }
+
+ui["windwp/windline.nvim"] = {
+	event = "UIEnter",
+	config = conf.windline,
+	-- requires = {'kyazdani42/nvim-web-devicons'},
+	opt = true,
 }
 
--- ui["windwp/windline.nvim"] = {
---   event = "UIEnter",
---   config = conf.windline,
---   -- requires = {'kyazdani42/nvim-web-devicons'},
---   opt = true
--- }
+ui["lukas-reineke/virt-column.nvim"] = {
+	opt = true,
+	event = { "CursorMoved", "CursorMovedI" },
+	config = function()
+		vim.cmd("highlight clear ColorColumn")
+		require("virt-column").setup()
+	end,
+}
 
 ui["lambdalisue/glyph-palette.vim"] = {}
 
