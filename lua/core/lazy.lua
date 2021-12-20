@@ -1,11 +1,3 @@
-local function daylight()
-  local h = tonumber(os.date("%H"))
-  if h > 6 and h < 18 then
-    return "light"
-  else
-    return "dark"
-  end
-end
 
 local loader = require("packer").loader
 _G.PLoader = loader
@@ -15,19 +7,11 @@ function Lazyload()
   local themes = {
 
     "tokyonight.nvim",
+    -- TODO Add more themes 
+    
 
   }
 
-  if plugin_folder() == [[~/github/]] then
-    if daylight() == "light" then
-      themes = { "gruvbox-material", "starry.nvim" }
-    end
-
-    -- themes = {"gruvbox-material"}
-    -- debug the color theme
-    -- themes = { "starry.nvim" }
-    -- themes = {"aurora"}
-  end
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
 

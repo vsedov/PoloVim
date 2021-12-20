@@ -39,6 +39,20 @@ ui["akinsho/bufferline.nvim"] = {
 --   setup = conf.minimap
 -- }
 
+
+-- TODO MODIFY THIS
+ui["startup-nvim/startup.nvim"] = { 
+
+    requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+  config = function()
+    require("startup").setup({theme = "dashboard"})
+
+  end
+
+
+
+}
+
 ui["kyazdani42/nvim-tree.lua"] = {
   cmd = { "NvimTreeToggle", "NvimTreeOpen" },
   -- requires = {'kyazdani42/nvim-web-devicons'},
@@ -119,7 +133,7 @@ ui["kazhala/close-buffers.nvim"] = {
 
 
 ui["mhinz/vim-sayonara"] = {
-  
+
 }
 
 
