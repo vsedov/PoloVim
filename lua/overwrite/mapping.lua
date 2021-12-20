@@ -101,17 +101,19 @@ local keys = {
   ["n|<Leader>sd"] = map_cu("DeleteSession"):with_noremap(),
 
 
-  -- ["n|<Space>M"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]),
-  -- ["n|<Space>m1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]),
-  -- ["n|<Space>m2"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]),
-  -- ["n|<Space>m3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]),
-  -- ["n|<Space>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
-  -- ["n|<Space>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
+  ["n|<localleader>M"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]),
+  ["n|<localleader>m1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]),
+  ["n|<localleader>m2"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]),
+  ["n|<localleader>m3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]),
+  ["n|<localleader>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
+  ["n|<localleader>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
+ 
+
   -- ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>"),
   -- ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>"),
   -- ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>"),
 
-  -- ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>")
+  ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>")
 }
 
 --
@@ -129,7 +131,9 @@ vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
 bind.nvim_load_mapping(keys)
 
 
+-- Run DebugOpen and then you run Debug 
 vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]])
+vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
 --
 return K

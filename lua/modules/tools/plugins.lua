@@ -34,21 +34,21 @@ tools["rktjmp/paperplanes.nvim"] = {
   config = conf.paperplanes,
 }
 
--- tools['ThePrimeagen/harpoon'] = {
---   opt = true,
---   config = function()
---     require("harpoon").setup({
---       global_settings = {
---         save_on_toggle = false,
---         save_on_change = true,
---         enter_on_sendcmd = false,
---         tmux_autoclose_windows = false,
---         excluded_filetypes = {"harpoon"}
---       }
---     })
---     require("telescope").load_extension('harpoon')
---   end
--- }
+tools['ThePrimeagen/harpoon'] = {
+  opt = true,
+  config = function()
+    require("harpoon").setup({
+      global_settings = {
+        save_on_toggle = false,
+        save_on_change = true,
+        enter_on_sendcmd = false,
+        tmux_autoclose_windows = false,
+        excluded_filetypes = {"harpoon"}
+      }
+    })
+    require("telescope").load_extension('harpoon')
+  end
+}
 
 -- github GH ui
 -- tools['pwntester/octo.nvim'] ={

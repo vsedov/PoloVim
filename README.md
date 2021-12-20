@@ -1,9 +1,6 @@
-# Open Notice
+# vim as a programming IDE
 
-Main Maintainer of this is Ray-X, i have just modified it and added extra Plugins: ALL CREDIT goes to him.
-Thank you :
-
-
+## 🏎 🏎 🏎 Need for speed! 🏎 🏎 🏎
 
 This neovim configure file is highly optimized for the impatient. Packer lazy loading + After syntax highlight rendering. Maybe the
 only nvim setup in github that can render multiple files with treesitter in less than 80ms with ~110 plugins installed
@@ -68,7 +65,7 @@ I used following plugin a lots
 Lint and format moved to efm-server
 
 - Programming support:
-  Treesitter, nvim-lsp
+  Treesitter, nvim-lsp and [navigator.lua](https://github.com/ray-x/navigator.lua), for golang, use [go.nvim](https://github.com/ray-x/go.nvim)
 
 - Debug:
 
@@ -80,8 +77,8 @@ Lint and format moved to efm-server
 
 - Color:
 
-  TokyoNight most likely
-
+  Primary with treesitter from nvim nightly (nvim-lsp and this make it hard for me to turn back to vim), log-highlight, limelight, interestingwords,
+  hexokinase as a replacement for colorizer (display hex and color in highlight)
 
 - Git:
 
@@ -103,7 +100,30 @@ Lint and format moved to efm-server
 
   easymotion -> hop&lightspeed, vim-multi-cursor, navigator.lua (better treesitter folding), Sad for complex find and replace
 
-# Startup nvim
+## Install
+
+Note: I tested it on Mac and linux, not sure about window
+
+Clone the repo
+
+Link nvim to $HOME/.config/
+
+e.g.
+
+```
+ls ~/.config/nvim
+
+~/.config/nvim -> /Users/rayx/github/dotfiles/nvim
+
+```
+
+On windows the config path is
+`C:\Users\your_user_name\AppData\Local\nvim`
+You need to link or replace above folder
+
+Please install Nerd Fonts(I am using VictorMono) and kitty so font setting in GUI will work as expected
+
+Startup nvim
 
 If you saw error message "Error in packer_compiled: ..." Please press `Enter`, that will allow packer install the plugins.
 After all plugins install restart the nvim.
