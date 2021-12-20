@@ -1,4 +1,12 @@
-# vim as a programming IDE
+
+# IMPORTANT NOTE: 
+
+I did not create this, all credit for the majority goes to ray-x as this setup is forked from his, i have merely added / removed certain aspects to fit my own programming needs, such as using ale, dap install and so on, i will continue to lazy load things if I can. 
+
+
+Again all credit to ray-x, if this setup is currently not working - ive most likely screwed something up : please just refer to his setup as it works : ) 
+
+
 
 ## 🏎 🏎 🏎 Need for speed! 🏎 🏎 🏎
 
