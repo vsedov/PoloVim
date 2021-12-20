@@ -1,162 +1,129 @@
 local ui = {}
 local conf = require("modules.ui.config")
+
+--
 local winwidth = function()
-	return vim.api.nvim_call_function("winwidth", { 0 })
+  return vim.api.nvim_call_function("winwidth", { 0 })
 end
 
 ui["kyazdani42/nvim-web-devicons"] = {}
-ui["lambdalisue/glyph-palette.vim"] = {}
-
-ui["folke/tokyonight.nvim"] = {
-	config = function() end,
-}
-
-ui["catppuccin/nvim"] = {
-	config = function()
-		require("catppuccin").setup({
-			transparent_background = false,
-			term_colors = false,
-			styles = {
-				comments = "italic",
-				functions = "italic",
-				keywords = "italic",
-				strings = "NONE",
-				variables = "NONE",
-			},
-			integrations = {
-				treesitter = true,
-				native_lsp = {
-					enabled = true,
-					virtual_text = {
-						errors = "italic",
-						hints = "italic",
-						warnings = "italic",
-						information = "italic",
-					},
-					underlines = {
-						errors = "underline",
-						hints = "underline",
-						warnings = "underline",
-						information = "underline",
-					},
-				},
-				lsp_trouble = true,
-				lsp_saga = false,
-				gitgutter = true,
-				gitsigns = true,
-				telescope = true,
-				nvimtree = {
-					enabled = true,
-					show_root = true,
-				},
-				which_key = false,
-				indent_blankline = {
-					enabled = true,
-					colored_indent_levels = true,
-				},
-				dashboard = true,
-				neogit = true,
-				vim_sneak = true,
-				fern = true,
-				barbar = true,
-				bufferline = true,
-				markdown = false,
-				lightspeed = true,
-				ts_rainbow = true,
-				hop = true,
-			},
-		})
-		vim.cmd([[colorscheme catppuccin]])
-	end,
-}
-
-ui["https://github.com/numToStr/Sakura.nvim"] = {
-	config = function()
-		-- vim.cmd([[colorscheme sakura]])
-	end,
-}
-
-ui["glepnir/dashboard-nvim"] = {
-	config = conf.dashboard,
-}
-
--- ui["NTBBloodbath/galaxyline.nvim"] = {
--- 	branch = "main",
--- 	config = conf.galaxyline,
--- 	requires = "kyazdani42/nvim-web-devicons",
--- }
 
 ui["windwp/windline.nvim"] = {
-	event = "UIEnter",
-	config = conf.windline,
-	-- requires = {'kyazdani42/nvim-web-devicons'},
-	opt = true,
-}
-
-ui["lukas-reineke/virt-column.nvim"] = {
-	opt = true,
-	event = { "CursorMoved", "CursorMovedI" },
-	config = function()
-		vim.cmd("highlight clear ColorColumn")
-		require("virt-column").setup()
-	end,
+  -- event = "UIEntwindlineer",
+  config = conf.windline,
+  -- requires = {'kyazdani42/nvim-web-devicons'},
+  opt = true,
 }
 
 ui["lambdalisue/glyph-palette.vim"] = {}
 
-ui["lukas-reineke/indent-blankline.nvim"] = {
-	config = conf.indent_blakline,
-}
-
-ui["NFrid/due.nvim"] = {
-	config = function()
-		require("due_nvim").setup({})
-	end,
-}
-
 ui["akinsho/bufferline.nvim"] = {
-	config = conf.nvim_bufferline,
-	event = "UIEnter",
-	requires = { "kyazdani42/nvim-web-devicons" },
-	opt = true,
+  config = conf.nvim_bufferline,
+  event = "UIEnter",
+  diagnostics_update_in_insert = false,
+  -- after = {"aurora"}
+  -- requires = {'kyazdani42/nvim-web-devicons'}
+  opt = true,
+}
+-- 'luaromgrk/barbar.nvim'
+-- ui['romgrk/barbar.nvim'] = {
+--   config = conf.barbar,
+--   requires = {'kyazdani42/nvim-web-devicons'}
+-- }
+--
+-- not so useful...
+-- ui["wfxr/minimap.vim"] = {
+--   run = ":!cargo install --locked code-minimap",
+--   keys = {"<F14>"},
+--   cmd = {"Minimap", "MinimapToggle"},
+--   setup = conf.minimap
+-- }
+
+ui["kyazdani42/nvim-tree.lua"] = {
+  cmd = { "NvimTreeToggle", "NvimTreeOpen" },
+  -- requires = {'kyazdani42/nvim-web-devicons'},
+  setup = conf.nvim_tree_setup,
+  config = conf.nvim_tree,
+}
+
+ui["lukas-reineke/indent-blankline.nvim"] = { opt = true, config = conf.blankline } -- after="nvim-treesitter",
+
+-- disabled does not work with muliti split
+ui["lukas-reineke/virt-column.nvim"] = {
+  opt = true,
+  -- event = {"CursorMoved", "CursorMovedI"},
+  config = function()
+    vim.cmd("highlight clear ColorColumn")
+    require("virt-column").setup()
+
+    vim.cmd("highlight VirtColumn guifg=#4358BF")
+  end,
+}
+
+ui["dstein64/nvim-scrollview"] = { event = { "CursorMoved", "CursorMovedI" }, config = conf.scrollview }
+
+ui["ray-x/aurora"] = { opt = true, config = conf.aurora }
+ui["folke/tokyonight.nvim"] = {
+  opt = true,
+  setup = conf.tokyonight,
+  config = function()
+    -- vim.cmd [[hi CursorLine guibg=#353644]]
+    vim.cmd([[colorscheme tokyonight]])
+    vim.cmd([[hi TSCurrentScope guibg=#282338]])
+  end,
+}
+
+ui["projekt0n/github-nvim-theme"] = {
+  opt = true,
+  config = function()
+    -- vim.cmd [[hi CursorLine guibg=#353644]]
+    local styles = { "dark", "dark_default", "dimmed" }
+    local v = math.random(1, #styles)
+    local st = styles[v]
+    require("github-theme").setup({
+      function_style = "bold",
+      theme_style = st,
+      sidebars = { "qf", "vista_kind", "terminal", "packer" },
+      colors = { bg_statusline = "#332344" },
+    })
+    -- vim.cmd([[highlight StatusLine guibg='#A3B3C4']])
+    vim.cmd([[highlight ColorColumn guibg='#335364']])
+    vim.cmd([[doautocmd ColorScheme]])
+  end,
+}
+
+-- ui["ChristianChiarulli/nvcode-color-schemes.vim"] = {opt = true, config = conf.nvcode}
+
+ui["sainnhe/sonokai"] = { opt = true, config = conf.sonokai }
+ui["sainnhe/gruvbox-material"] = { opt = true, config = conf.gruvbox }
+
+-- cant config cursor line
+-- ui["rafamadriz/neon"] = {opt = true, config = conf.neon}
+
+ui["ray-x/starry.nvim"] = {
+  opt = true,
+  setup = conf.starry,
+  config = function()
+    require("starry").set()
+  end,
+}
+
+
+ui["wiliamks/mechanical.nvim"] = {
+  opt = true,
 }
 
 ui["kazhala/close-buffers.nvim"] = {
-	config = conf.buffers_close,
+  config = conf.buffers_close,
 }
 
--- legit stoped working
-ui["kyazdani42/nvim-tree.lua"] = {
-	requires = { "kyazdani42/nvim-web-devicons" },
-	config = conf.nvim_tree,
+
+ui["mhinz/vim-sayonara"] = {
+  
 }
 
-ui["lewis6991/gitsigns.nvim"] = {
-	event = { "BufRead", "BufNewFile" },
-	config = conf.gitsigns,
-	requires = { "nvim-lua/plenary.nvim", opt = true },
-}
 
-ui["Pocco81/TrueZen.nvim"] = {
-	config = conf.truezen,
-}
 
-ui["folke/zen-mode.nvim"] = {
 
-	config = function()
-		require("zen-mode").setup({
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		})
-	end,
-}
-
-ui["wfxr/minimap.vim"] = {
-	run = ":!cargo install --locked code-minimap --force",
-	setup = conf.minimap,
-}
-
-ui["folke/twilight.nvim"] = {}
 
 return ui

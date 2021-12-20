@@ -12,7 +12,7 @@ setlocal colorcolumn=90
 
 
 
-" let g:runner_python_ex = 'python3'
+let g:runner_python_ex = 'python3'
 let g:runner_python_options = ''
 let g:SuperTabDefaultCompletionType='context'
 
@@ -31,4 +31,3 @@ nnoremap <silent>       <Leader>ac :MagmaReevaluateCell<CR>
 
 nnoremap <silent> <Leader>ad :MagmaDelete<CR>
 nnoremap <silent> <Leader>ao :MagmaShowOutput<CR>
-

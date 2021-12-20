@@ -2,228 +2,194 @@ local completion = {}
 local conf = require("modules.completion.config")
 
 completion["neovim/nvim-lspconfig"] = {
-	event = "BufReadPre",
-	config = conf.nvim_lsp,
+  -- ft = {'html','css', 'javascript', 'java', 'javascriptreact', 'vue','typescript', 'typescriptreact', 'go', 'lua', 'cpp', 'c',
+  -- 'markdown', 'makefile','python','bash', 'sh', 'php', 'yaml', 'json', 'sql', 'vim', 'sh'},
+  config = conf.nvim_lsp,
 
-	requires = {
-		{ "nvim-lua/lsp_extensions.nvim" },
-		{ "tjdevries/nlua.nvim" },
-		{ "https://github.com/onsails/lspkind-nvim" },
-		{ "folke/lsp-colors.nvim" },
-		{ "https://github.com/mfussenegger/nvim-jdtls" },
-		{ "ray-x/lsp_signature.nvim" },
-		{ "williamboman/nvim-lsp-installer" },
-		{ "https://gitlab.com/yorickpeterse/nvim-dd.git" },
+  requires = {
+    { "nvim-lua/lsp_extensions.nvim", opt = true },
+    { "tjdevries/nlua.nvim", opt = true },
+    { "folke/lsp-colors.nvim", opt = true },
+    { "williamboman/nvim-lsp-installer", opt = true },
 
-		-- {'nathunsmitty/nvim-ale-diagnostic',opt=true}
-	},
+    -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
+  },
+
+  opt = true,
 }
 
-completion["ahmedkhalf/project.nvim"] = {
-	config = function()
-		require("project_nvim").setup({})
-	end,
-}
+if load_coq() then
+  completion["ms-jpq/coq_nvim"] = {
+    -- opt = true,
+    -- ft = {'html','css', 'javascript', 'java', 'typescript', 'typescriptreact','go', 'python', 'cpp', 'c', 'rust'},
+    -- event = "InsertCharPre",
+    after = { "coq.artifacts" },
+    branch = "coq",
+    setup = function()
+      vim.g.coq_settings = { auto_start = false }
+      -- vim.g.coq_settings = { auto_start = false, ['display.icons.mode'] = 'short', ['display.pum.kind_context'] = {'',''}, ['display.pum.source_context'] = {'',''} , ['display.pum.fast_close'] = false}
+    end,
+    config = function()
+      vim.g.coq_settings = {
+        auto_start = false,
+        ["display.icons.mode"] = "short",
+        ["display.pum.kind_context"] = { "", "" },
+        ["display.pum.source_context"] = { "", "" },
+        ["display.icons.spacing"] = 0,
+      } -- ['display.pum.fast_close'] = false,
+      if not load_coq() then
+        return
+      end
+      vim.cmd([[COQnow]])
+    end,
+  }
+  completion["ms-jpq/coq.thirdparty"] = {
+    after = { "coq_nvim" },
+    -- event = "InsertEnter",
+    branch = "3p",
+    config = function()
+      if not load_coq() then
+        return
+      end
+      require("coq_3p")({ { src = "nvimlua", short_name = "", conf_only = true } })
+    end,
+  }
 
+  completion["ms-jpq/coq.artifacts"] = {
+    -- opt = true,
+    event = "InsertEnter",
+    branch = "artifacts",
+  }
+else
+  completion["ms-jpq/coq_nvim"] = { opt = true }
+  completion["ms-jpq/coq.thirdparty"] = { opt = true }
+  completion["ms-jpq/coq.artifacts"] = { opt = true }
+end
+
+-- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 completion["hrsh7th/nvim-cmp"] = {
-	event = "InsertEnter", -- InsertCharPre
-	requires = {
-		{ "https://github.com/github/copilot.vim.git" },
-		{ "petertriho/cmp-git", requires = "nvim-lua/plenary.nvim" },
-		-- { "lukas-reineke/cmp-rg", after = "nvim-cmp" },
-		{ "hrsh7th/cmp-buffer", after = "nvim-cmp" },
-		{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
-		{ "https://github.com/lukas-reineke/cmp-under-comparator" },
-		{ "hrsh7th/cmp-vsnip", after = "nvim-cmp" },
-		{ "hrsh7th/cmp-calc", after = "nvim-cmp" },
-		{ "hrsh7th/cmp-path", after = "nvim-cmp" },
-		{ "https://github.com/ray-x/cmp-treesitter", after = "nvim-cmp" },
-		{ "hrsh7th/cmp-nvim-lsp", after = { "nvim-cmp" } },
-		{ "f3fora/cmp-spell", after = "nvim-cmp" },
-		{ "octaltree/cmp-look", after = "nvim-cmp" },
-		-- { "dcampos/cmp-snippy", after = { "nvim-snippy", "nvim-cmp" } },
-		{ "quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp" },
-		{ "hrsh7th/cmp-vsnip", rtp = ".", after = "nvim-cmp" },
-		{ "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
-		{
-			"tzachar/cmp-tabnine",
-			run = "./install.sh",
-			after = "cmp-spell",
-			config = conf.tabnine,
-		},
-	},
-	config = conf.cmp,
+  -- opt = true,
+  -- event = "InsertEnter", -- InsertCharPre
+  -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
+  after = { "LuaSnip" }, -- "nvim-snippy",
+  requires = {
+    { "https://github.com/github/copilot.vim.git" },
+    {
+      "tzachar/cmp-tabnine",
+      run = "./install.sh",
+      after = "nvim-cmp",
+      config = conf.tabnine,
+      opt = true,
+    },
+    { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
+    { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
+    { "hrsh7th/cmp-calc", after = "nvim-cmp", opt = true },
+    { "hrsh7th/cmp-path", after = "nvim-cmp", opt = true },
+    { "hrsh7th/cmp-cmdline", after = "nvim-cmp", opt = true },
+    { "ray-x/cmp-treesitter", after = "nvim-cmp", opt = true },
+    { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", opt = true },
+    { "f3fora/cmp-spell", after = "nvim-cmp", opt = true },
+    { "octaltree/cmp-look", after = "nvim-cmp", opt = true },
+    -- {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp", opt=true },
+    { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
+    -- {"tzachar/cmp-tabnine", opt = true}
+  },
+  config = conf.nvim_cmp,
 }
 
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
-	event = "InsertEnter",
-	requires = {
-		{ "rafamadriz/friendly-snippets" },
-		-- { "honza/vim-snippets", event = "InsertEnter" }
-	}, -- , event = "InsertEnter"
-	config = conf.luasnip,
-	after = "nvim-cmp",
+  event = "InsertEnter",
+  requires = { "rafamadriz/friendly-snippets", event = "InsertEnter" }, -- , event = "InsertEnter"
+  config = conf.luasnip,
 }
-
-completion["SirVer/ultisnips"] = {
-	requires = "honza/vim-snippets",
-	config = function()
-		-- vim.g.UltiSnipsRemoveSelectModeMappings = 0
-		vim.g.UltiSnipsExpandTrigger = "<C-s>"
-		vim.g.UltiSnipsJumpForwardTrigger = "<C-n>"
-		vim.g.UltiSnipsJumpBackwardTrigger = "<C-p>"
-	end,
-}
-
-completion["https://github.com/folke/trouble.nvim"] = {
-	config = conf.trouble,
-}
-
-completion["folke/todo-comments.nvim"] = {
-	config = conf.todo_comments,
-	after = "trouble.nvim",
-}
-
-completion["luukvbaal/stabilize.nvim"] = {
-	config = function()
-		require("stabilize").setup()
-	end,
-}
-
 completion["kristijanhusak/vim-dadbod-completion"] = {
-	event = "InsertEnter",
-	ft = { "sql" },
-	setup = function()
-		vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
-		vim.cmd(
-			[[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]]
-		)
-		-- body
-	end,
-}
-completion["dense-analysis/ale"] = {
-
-	config = conf.ale,
-}
-
--- possible removeable
-
-completion["windwp/nvim-autopairs"] = {
-	after = "nvim-cmp",
-	config = conf.autopairs,
-}
-completion["weilbith/nvim-code-action-menu"] = {
-	cmd = "CodeActionMenu",
+  event = "InsertEnter",
+  ft = { "sql" },
+  setup = function()
+    vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
+    -- vim.cmd([[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
+    -- body
+  end,
 }
 
 completion["nvim-telescope/telescope.nvim"] = {
-	requires = {
-		{ "nvim-lua/plenary.nvim" },
-		{ "nvim-telescope/telescope-fzy-native.nvim" },
-		{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-		{ "nvim-telescope/telescope-live-grep-raw.nvim" },
-		{ "https://github.com/nvim-telescope/telescope-fzf-writer.nvim" },
-		{ "jvgrootveld/telescope-zoxide" },
-		{ "nvim-lua/popup.nvim" },
-		{ "tami5/sql.nvim" },
-		{ "nvim-telescope/telescope-frecency.nvim", requires = { "tami5/sqlite.lua" } },
-		{ "nvim-telescope/telescope-dap.nvim" },
-		{ "https://github.com/fhill2/telescope-ultisnips.nvim" },
-		{ "nvim-neorg/neorg-telescope" },
-	},
-	run = "make",
-	config = conf.telescope,
-}
-
--- completion["nvim-telescope/telescope.nvim"] = {
---   requires = {
-
---   },
--- }
-
--- completion["nvim-telescope/telescope-fzy-native.nvim"]={
--- run = 'make'
--- }
-
-completion["nvim-telescope/telescope-cheat.nvim"] = {
-	requires = "tami5/sqlite.lua",
-}
-
-completion["https://github.com/camgraff/telescope-tmux.nvim"] = {
-	requires = "https://github.com/norcalli/nvim-terminal.lua",
-	config = function()
-		require("terminal").setup()
-	end,
-}
-
-completion["pwntester/octo.nvim"] = {
-	after = "telescope.nvim",
-	config = function()
-		require("octo").setup()
-	end,
-}
-
-completion["Groctel/jobsplit.nvim"] = {
-	config = function() end,
-}
-
-completion["kkoomen/vim-doge"] = {
-	config = conf.doge,
-	run = ":call doge#install()",
-}
-
-completion["CRAG666/code_runner.nvim"] = {
-	config = function()
-		require("code_runner").setup({})
-	end,
-}
-
--- command Neorunner - depends if i will keep this trying out new stuff .
-completion["BenGH28/neo-runner.nvim"] = {
-	config = conf.neorunner,
-	run = ":UpdateRemotePlugins",
-}
-
--- This one seems to have more support and looks better .
--- -- Currenty Broken , give a few days to see if it will be back up or not .
-
-completion["kevinhwang91/nvim-bqf"] = {
-	config = conf.bqf,
-}
-
-completion["lervag/vimtex"] = {
-	config = conf.vimtex,
-}
-
-completion["rcarriga/nvim-notify"] = {
-	config = conf.nvim_notify,
-}
-
-completion["michaelb/sniprun"] = {
-	run = "bash install.sh",
-	config = conf.sniprun,
-}
-completion["dccsillag/magma-nvim"] = {
-	-- ft = "python",
-	config = conf.magma,
-}
-
-completion["psf/black"] = {}
-
-completion["https://github.com/vsedov/vim-sonictemplate"] = {
-	cmd = "Template",
-	config = conf.vim_sonictemplate,
+  config = conf.telescope,
+  setup = conf.telescope_preload,
+  requires = {
+    { "nvim-lua/plenary.nvim", opt = true },
+    { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
+    { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
+    { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
+  },
+  opt = true,
 }
 
 completion["mattn/emmet-vim"] = {
-	event = "InsertEnter",
-	ft = { "html", "css", "javascript", "javascriptreact", "vue", "typescript", "typescriptreact" },
-	config = conf.emmet,
+  event = "InsertEnter",
+  ft = {
+    "html",
+    "css",
+    "javascript",
+    "javascriptreact",
+    "vue",
+    "typescript",
+    "typescriptreact",
+    "scss",
+    "sass",
+    "less",
+    "jade",
+    "haml",
+    "elm",
+  },
+  setup = conf.emmet,
 }
 
-completion["rmagatti/goto-preview"] = {
-	config = conf.goto_preview,
+-- note: part of the code is used in navigator
+completion["ray-x/lsp_signature.nvim"] = {
+  opt = true,
+  config = function()
+    require("lsp_signature").setup({
+      bind = true,
+      -- doc_lines = 4,
+      toggle_key = "<C-x>",
+      floating_window = false,
+      floating_window_above_cur_line = true,
+      hint_enable = true,
+      fix_pos = false,
+      -- floating_window_above_first = true,
+      log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
+      debug = plugin_debug(),
+      verbose = plugin_debug(),
+      -- hi_parameter = "Search",
+      zindex = 1002,
+      timer_interval = 100,
+      extra_trigger_chars = {},
+      handler_opts = {
+        border = "rounded", -- "shadow", --{"╭", "─" ,"╮", "│", "╯", "─", "╰", "│" },
+      },
+      max_height = 4,
+    })
+  end,
+}
+
+
+
+completion["weilbith/nvim-code-action-menu"] = {
+  cmd = "CodeActionMenu",
+}
+
+
+
+completion["dense-analysis/ale"] = {
+
+  config = conf.ale,
+}
+
+
+completion["https://github.com/vsedov/vim-sonictemplate"] = {
+  cmd = "Template",
+  config = conf.vim_sonictemplate,
 }
 
 return completion

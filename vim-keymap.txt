@@ -1,0 +1,146 @@
+some notes for daily vim usage
+
+copy the cmd output
+redir @* | echo &guifont | redir END
+
+
+copy/paste and repeat
+
+yiw  copy word, yi"  copy inner 
+
+ciw ^R0   (change word with register 0)
+
+.  (repete)
+
+Line:
+Vp select 2nd line, replace with yank
+V"0p  3rd line and replace with 1st
+
+word count g^g
+
+run plug function
+
+:execute "normal \<Plug>NiceCenterCursor"
+
+
+execute "normal \<Plug>CamelCaseMotion_iw"
+
+" highlight"
+echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+
+
+replace with clipboard
+
+ciw^r0 (yiw if not in first char)  and then repeat with .
+
+search and replace 
+args `grep Neovim -l -r .` or args `rg Neovim -l`
+
+argdo %s/Neovim/Nvim/ge | update
+
+with register and clap
+:cfdo %s/<C-r>s/blabla/ge \| update
+
+replace from current line
+:,$s/old/new/c
+
+Note: use `cdo` is better
+:cdo[!] {cmd} - Execute {cmd} in each valid entry in the quickfix list.
+:cfdo[!] {cmd} - Execute {cmd} in each file in the quickfix list.
+:ld[o][!] {cmd} - Execute {cmd} in each valid entry in the location list for the current window.
+:lfdo[!] {cmd} - Execute {cmd} in each file in the location list for the current window.
+
+set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+set grepformat=%f:%l:%c:%m
+grep whatever
+cfdo %s/Neovim/Nvim/ge | update
+
+
+:grep -r -l 'foo'
+:cfdo %s/foo/bar/g|w
+
+cfdo %s/float_win/floating_win/gc|w
+
+cfdo %s/floatinzrg_win/float_win/gc|w
+
+
+How to see which plugins are making Vim slow?
+You can use built-in profiling support: after launching vim do
+
+:profile start profile.log
+:profile func *
+:profile file *
+" At this point do slow actions
+:profile pause
+:noautocmd qall!
+"startup time"
+vim --startuptime timeCost.txt timeCost.txt
+
+
+"log all event"
+
+Building on the answers that suggest using Vp or VP to paste over a line -- to avoid changing the contents of the yank register I find the most ergonomic command is simply:
+
+VPY
+
+
+debug vim profile
+https://codeinthehole.com/tips/debugging-vim-by-example/#why-is-action-slow
+
+change file type hl `set ft=json`
+wc in visual   g<C>g
+python prettier    :%!jq    (%! means use file as stdin)
+
+repeat 
+@@
+.
+
+command history:    q:
+If you always want to use the command editing window, try these mappings:
+
+nnoremap : q:i
+nnoremap / q/i
+nnoremap ? q?i
+
+Using "finish" stops Vim from reading the rest of the file, it's much quicker
+than using if-endif around the whole file.
+
+let [s:plugin, s:enter] = maktaba#plugin#Enter(expand('<sfile>:p'))
+if !s:enter
+  finish
+endif
+
+Here is a TDD recipe for a small project. No plugins used:
+nvim feature.py
+Split a new terminal vertically
+
+:vsp | :terminal
+Get the terminal's job id.
+
+<C-[>
+:echo b:terminal_job_id
+3
+Switch to the other window
+
+<C-[>
+<C-w>w
+Add an autocmd that sends a command to the terminal to run the tests. The job id is used here.
+
+:au BufWritePost <buffer> :call jobsend(3, "\<C-c>clear\<CR>python3 feature_test.py\<CR>")
+# do tdd
+Clean up the buffer's autocmd. Run on the code window.
+
+
+ replace the term currently under the cursor 
+%s/<c-r><c-w>/new value/g       "c-r, c-w insert word under cursor"
+or use * , the substitute command uses the last searched one.
+and %s//new value/
+
+
+color=$( convert filename.png -format "%[pixel:p{0,0}]" info:- )
+convert filename.png -alpha off -bordercolor $color -border 1 \
+    \( +clone -fuzz 30% -fill none -floodfill +0+0 $color \
+       -alpha extract -geometry 200% -blur 0x0.5 \
+       -morphology erode square:1 -geometry 50% \) \
+    -compose CopyOpacity -composite -shave 1 outputfilename.png
+

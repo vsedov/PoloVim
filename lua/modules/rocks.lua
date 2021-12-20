@@ -1,4 +1,4 @@
 return {
-	-- 'fzy',
-	-- 'lualogging',
+  -- 'fzy',
+  -- 'lualogging',
 }
