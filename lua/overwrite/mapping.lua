@@ -60,7 +60,7 @@ local keys = {
   -- ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
   ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
   -- ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
-  ["n|<F9>"] = map_cr("GoBreakToggle"),
+  -- ["n|<F9>"] = map_cr("GoBreakToggle"),
 
   -- Buffer Line
   ["n|<localleader>bth"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
