@@ -39,18 +39,13 @@ ui["akinsho/bufferline.nvim"] = {
 --   setup = conf.minimap
 -- }
 
-
 -- TODO MODIFY THIS
-ui["startup-nvim/startup.nvim"] = { 
+ui["startup-nvim/startup.nvim"] = {
 
-    requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+  requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   config = function()
-    require("startup").setup({theme = "dashboard"})
-
-  end
-
-
-
+    require("startup").setup({ theme = "dashboard" })
+  end,
 }
 
 ui["kyazdani42/nvim-tree.lua"] = {
@@ -122,7 +117,6 @@ ui["ray-x/starry.nvim"] = {
   end,
 }
 
-
 ui["wiliamks/mechanical.nvim"] = {
   opt = true,
 }
@@ -131,10 +125,6 @@ ui["kazhala/close-buffers.nvim"] = {
   config = conf.buffers_close,
 }
 
-
-ui["mhinz/vim-sayonara"] = {
-
-}
-
+ui["mhinz/vim-sayonara"] = {}
 
 return ui

@@ -47,7 +47,7 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 })
 
 -- show diagnostics for current line
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]]
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
 -- show diagnostics for current position
 -- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
 
@@ -154,7 +154,6 @@ lspconfig.jedi_language_server.setup({
   on_attach = enhance_attach,
   capabilities = capabilities,
 })
-
 
 lspconfig.sqlls.setup({
 

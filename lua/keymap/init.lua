@@ -25,10 +25,8 @@ local plug_map = {
   ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
   ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
 
-
   ["n|j"] = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
   ["n|k"] = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
-
 
   ["n|<C-]>"] = map_args("Template"),
   -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
@@ -53,7 +51,6 @@ local plug_map = {
 
   ["n|rn"] = map_cmd("<cmd>lua vim.lsp.buf.references()<CR>"):with_noremap():with_silent(),
 
-
   -- Depreciated, need to recode this part up.
   ["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
   ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
@@ -74,10 +71,6 @@ local plug_map = {
   ["n|<Leader>rf"] = map_cr("RunFile"):with_noremap():with_silent(),
   ["n|<Leader>rp"] = map_cr("RunProject"):with_noremap():with_silent(),
 
-
-
-
-
   ["n|<F6>"] = map_cu("NeoRunner"):with_noremap():with_silent(),
 
   -- -- Git commands
@@ -92,13 +85,12 @@ local plug_map = {
   ["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
   ["n|<F3>"] = map_cu("Black"):with_noremap():with_silent(),
 
-
   -- -- Plugin MarkdownPreview
   ["n|<Leader>om"] = map_cu("MarkdownPreview"):with_noremap():with_silent(),
   -- Plugin DadbodUI
   ["n|<Leader>od"] = map_cr("DBUIToggle"):with_noremap():with_silent(),
 
-  -- Far.vim Conflicting 
+  -- Far.vim Conflicting
   ["n|<Leader>fz"] = map_cr("Farf"):with_noremap():with_silent(),
   ["v|<Leader>fz"] = map_cr("Farr"):with_noremap():with_silent(),
   ["n|<Leader>fzd"] = map_cr("Fardo"):with_noremap():with_silent(),
@@ -110,7 +102,6 @@ local plug_map = {
     :with_noremap()
     :with_silent(),
   ["n|<Leader>qf"] = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
-
 
   ["n|<Leader>bb"] = map_cu("Telescope buffers"):with_noremap():with_silent(),
   ["n|<Leader>fb"] = map_cu("Telescope file_browser"):with_noremap():with_silent(),
@@ -150,7 +141,6 @@ local plug_map = {
   ["in|<d-F>"] = map_cr("<cmd> lua require'telescope.builtin'.live_grep({defulat_text=vim.fn.expand('cword')})"):with_noremap(),
   -- :with_silent(),
   -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
-
 
   -- Plugin Vista or SymbolsOutline
   ["n|<Leader>v"] = map_cu("SymbolsOutline"):with_noremap():with_silent(),
@@ -217,7 +207,7 @@ local plug_map = {
   ["n|<Leader>xx"] = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
 
   -- Nice highlighting for latex when writing notes Norg files only.
-  ["n|<F9>"]  = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
+  ["n|<F9>"] = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
   ["n|<localleader>b"] = map_cr('<cmd> lua require("nabla").popup()<CR>'):with_noremap(),
 
   -- $ ... $ : inline form

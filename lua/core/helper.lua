@@ -1,12 +1,11 @@
 return {
   init = function()
-
     _G.plugin_folder = function()
       if Plugin_folder then
         return Plugin_folder
       end
       local host = os.getenv("HOST_NAME")
-      if host and host:find('Ray') then
+      if host and host:find("Ray") then
         Plugin_folder = [[~/github/]] -- vim.fn.expand("$HOME") .. '/github/'
       else
         Plugin_folder = [[ray-x/]]
@@ -19,7 +18,7 @@ return {
         return Plugin_debug
       end
       local host = os.getenv("HOST_NAME")
-      if host and host:find('Ray') then
+      if host and host:find("Ray") then
         Plugin_debug = true -- enable debug here, will be slow
       else
         Plugin_debug = false
@@ -72,9 +71,13 @@ return {
         s = vim.fn.expand("<cword>")
       end
       lprint("replace: ", s)
-      local n = s:gsub('%f[^%l]%u', '_%1'):gsub('%f[^%a]%d', '_%1'):gsub('%f[^%d]%a', '_%1'):gsub('(%u)(%u%l)', '%1_%2')
-                    :lower()
-      vim.fn.setreg('s', n)
+      local n = s
+        :gsub("%f[^%l]%u", "_%1")
+        :gsub("%f[^%a]%d", "_%1")
+        :gsub("%f[^%d]%a", "_%1")
+        :gsub("(%u)(%u%l)", "%1_%2")
+        :lower()
+      vim.fn.setreg("s", n)
       vim.cmd([[exe "norm! ciw\<C-R>s"]])
       lprint("newstr", n)
     end
@@ -90,7 +93,7 @@ return {
         local rest = string.sub(word, 3)
         return string.upper(first) .. rest
       end)
-      vim.fn.setreg('s', n)
+      vim.fn.setreg("s", n)
       vim.cmd([[exe "norm! ciw\<C-R>s"]])
     end
 
@@ -108,6 +111,5 @@ return {
         vim.cmd([[Jsonformat]]) -- :%!jq .
       end
     end
-  end
-
+  end,
 }

@@ -15,12 +15,11 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
   end,
 }
 
-
-tools['camspiers/snap'] = {
+tools["camspiers/snap"] = {
   -- event = {'CursorMoved', 'CursorMovedI'},
   -- rocks = {'fzy'},
   opt = true,
-  config = conf.snap
+  config = conf.snap,
 }
 
 tools["editorconfig/editorconfig-vim"] = {
@@ -30,11 +29,11 @@ tools["editorconfig/editorconfig-vim"] = {
 }
 
 tools["rktjmp/paperplanes.nvim"] = {
-  opt = true, 
+  opt = true,
   config = conf.paperplanes,
 }
 
-tools['ThePrimeagen/harpoon'] = {
+tools["ThePrimeagen/harpoon"] = {
   opt = true,
   config = function()
     require("harpoon").setup({
@@ -43,11 +42,11 @@ tools['ThePrimeagen/harpoon'] = {
         save_on_change = true,
         enter_on_sendcmd = false,
         tmux_autoclose_windows = false,
-        excluded_filetypes = {"harpoon"}
-      }
+        excluded_filetypes = { "harpoon" },
+      },
     })
-    require("telescope").load_extension('harpoon')
-  end
+    require("telescope").load_extension("harpoon")
+  end,
 }
 
 -- github GH ui
@@ -130,9 +129,7 @@ tools["liuchengxu/vim-clap"] = {
   config = conf.clap_after,
 }
 
-
 tools["wakatime/vim-wakatime"] = {}
-
 
 tools["sindrets/diffview.nvim"] = {
   cmd = {
@@ -231,17 +228,13 @@ tools["kevinhwang91/nvim-bqf"] = {
   config = conf.bqf,
 }
 
-
-tools["vim-test/vim-test"] = { }
-
-
+tools["vim-test/vim-test"] = {}
 
 -- I use allot of tddd, so i like using this, no need for this to be lazy loaded .
 tools["rcarriga/vim-ultest"] = {
   requires = { "vim-test/vim-test" },
   run = ":UpdateRemotePlugins",
   config = conf.ultest,
-
 }
 
 -- lua require'telescope'.extensions.project.project{ display_type = 'full' }
@@ -281,20 +274,20 @@ tools["AckslD/nvim-neoclip.lua"] = {
         set_reg = true,
       },
       keys = {
-                telescope = {
-        i = {
-          select = "<cr>",
-          paste = "<c-p>",
-          -- C-P and C-;
-          paste_behind = "<c-;>",
-          custom = {},
+        telescope = {
+          i = {
+            select = "<cr>",
+            paste = "<c-p>",
+            -- C-P and C-;
+            paste_behind = "<c-;>",
+            custom = {},
+          },
+          n = {
+            select = "<cr>",
+            paste = "p",
+            paste_behind = "P",
+          },
         },
-        n = {
-          select = "<cr>",
-          paste = "p",
-          paste_behind = "P",
-        },
-      },
       },
     })
   end,
@@ -366,14 +359,13 @@ tools["relastle/vim-nayvy"] = {
   end,
 }
 
-
--- Dont know why, but i kinda enjoy this 
-tools["sQVe/sort.nvim"]={
+-- Dont know why, but i kinda enjoy this
+tools["sQVe/sort.nvim"] = {
   config = function()
     require("sort").setup({
       -- Input configuration here.
       -- Refer to the configuration section below for options.
     })
-  end
+  end,
 }
 return tools

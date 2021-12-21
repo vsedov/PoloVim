@@ -19,7 +19,6 @@ end
 
 function config.pyfold()
   require("modules.lang.treesitter").pyfold()
-
 end
 
 function config.refactor()
@@ -59,7 +58,7 @@ function config.neorunner()
 end
 
 function config.jaq()
-  require('jaq-nvim').setup{
+  require("jaq-nvim").setup({
     -- Commands used with 'Jaq'
     cmds = {
       -- Default UI used (see `Usage` for options)
@@ -80,8 +79,8 @@ function config.jaq()
       -- Uses internal commands such as 'source' and 'luafile'
       internal = {
         lua = "luafile %",
-        vim = "source %"
-      }
+        vim = "source %",
+      },
     },
 
     -- UI settings
@@ -92,18 +91,18 @@ function config.jaq()
       -- Floating Window settings
       float = {
         -- Floating window border (see ':h nvim_open_win')
-        border    = "none",
+        border = "none",
 
         -- Num from `0 - 1` for measurements
-        height    = 0.8,
-        width     = 0.8,
+        height = 0.8,
+        width = 0.8,
 
         -- Highlight group for floating window/border (see ':h winhl')
         border_hl = "FloatBorder",
-        float_hl  = "Normal",
+        float_hl = "Normal",
 
         -- Floating Window Transparency (see ':h winblend')
-        blend     = 0
+        blend = 0,
       },
 
       terminal = {
@@ -111,7 +110,7 @@ function config.jaq()
         position = "bot",
 
         -- Size of terminal
-        size     = 10
+        size = 10,
       },
 
       quickfix = {
@@ -119,11 +118,10 @@ function config.jaq()
         position = "bot",
 
         -- Size of quickfix window
-        size     = 10
-      }
-    }
-  }
-
+        size = 10,
+      },
+    },
+  })
 end
 
 function config.doge()
@@ -419,7 +417,7 @@ function config.go()
 end
 
 function config.dap()
-    require("modules.lang.dap.init")
+  require("modules.lang.dap.init")
 end
 
 return config

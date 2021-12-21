@@ -13,9 +13,9 @@ lang["pseewald/vim-anyfold"] = {
   cmd = "AnyFoldActivate",
 }
 
-lang["nvim-treesitter/nvim-treesitter"] = { 
-  opt = true, 
-  config = conf.nvim_treesitter 
+lang["nvim-treesitter/nvim-treesitter"] = {
+  opt = true,
+  config = conf.nvim_treesitter,
 }
 
 lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
@@ -24,7 +24,7 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
   opt = true,
 }
 -- lang["eddiebergman/nvim-treesitter-pyfold"] = {config = conf.pyfold}
-lang["RRethy/nvim-treesitter-textsubjects"] = {opt = true , config = conf.tsubject }
+lang["RRethy/nvim-treesitter-textsubjects"] = { opt = true, config = conf.tsubject }
 
 -- Better plugin for this i think ,
 -- lang['danymat/neogen'] = {
@@ -61,8 +61,8 @@ lang["nanotee/sqls.nvim"] = { ft = { "sql", "pgsql" }, setup = conf.sqls, opt = 
 lang["ray-x/go.nvim"] = { ft = { "go", "gomod" }, config = conf.go }
 
 lang["ray-x/guihua.lua"] = {
-   run = 'cd lua/fzy && make',
-    opt = true
+  run = "cd lua/fzy && make",
+  opt = true,
 }
 
 -- lang["gcmt/wildfire.vim"] = {
@@ -106,7 +106,6 @@ lang["simrat39/symbols-outline.nvim"] = {
 }
 lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 
-
 lang["mfussenegger/nvim-dap"] = {
   requires = {
     { "theHamsta/nvim-dap-virtual-text" },
@@ -114,26 +113,20 @@ lang["mfussenegger/nvim-dap"] = {
     { "rcarriga/nvim-dap-ui" },
     { "Pocco81/DAPInstall.nvim" },
   },
-  
+
   run = ":UpdateRemotePlugins",
 
- config = conf.dap, 
-
+  config = conf.dap,
 } -- cmd = "Luadev",
 
 lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
-
-
-
 lang["jbyuki/one-small-step-for-vimkind"] = { opt = true, ft = { "lua" } }
 
-
 lang["nvim-telescope/telescope-dap.nvim"] = {
-  requires = {"telescope.nvim", "nvim-dap"},
+  requires = { "telescope.nvim", "nvim-dap" },
   config = conf.dap,
 }
-
 
 lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
@@ -194,15 +187,14 @@ lang["folke/trouble.nvim"] = {
 }
 
 lang["folke/todo-comments.nvim"] = {
-  cmd = { "TodoTelescope", "TodoTelescope","TodoTrouble" },
+  cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
   requires = "nvim-lua/plenary.nvim",
-  opt =true, 
+  opt = true,
   config = function()
     require("todo-comments").setup({})
   end,
   after = "trouble.nvim",
 }
-
 
 -- Can Gonna Use jaq for now ?
 -- lang["CRAG666/code_runner.nvim"] = {
@@ -216,21 +208,18 @@ lang["folke/todo-comments.nvim"] = {
 
 -- command Neorunner - depends if i will keep this trying out new stuff .
 lang["BenGH28/neo-runner.nvim"] = {
-  opt = true, 
-  after = 'filetype.nvim',
+  opt = true,
+  after = "filetype.nvim",
   config = conf.neorunner,
   run = ":UpdateRemotePlugins",
 }
 
 lang["is0n/jaq-nvim"] = {
-  opt = true, 
-  after = 'filetype.nvim',
+  opt = true,
+  after = "filetype.nvim",
 
   config = conf.jaq,
 }
-
-
-
 
 lang["kkoomen/vim-doge"] = {
   config = conf.doge,

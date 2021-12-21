@@ -43,8 +43,8 @@ editor["tamton-aquib/duck.nvim"] = {
     vim.api.nvim_set_keymap("n", "<leader><leader>dk", ':lua require("duck").cook("🐼")<CR>', { noremap = true })
   end,
 }
-editor["https://github.com/raghavdoescode/nvim-owoifier"]={
-  opt =true
+editor["https://github.com/raghavdoescode/nvim-owoifier"] = {
+  opt = true,
 }
 ------------------------------------------------------------------------------
 
@@ -115,12 +115,10 @@ editor["https://github.com/LoricAndre/OneTerm.nvim.git"] = {
   cmd = { "OneTerm" },
 }
 
-
--- Currently needs to be calle , not sure if i have to lazy load this or not. 
+-- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {
-  event = {"BufEnter","BufRead"},
+  event = { "BufEnter", "BufRead" },
   config = conf.discord,
-
 }
 
 editor["itchyny/vim-cursorword"] = {
@@ -200,7 +198,7 @@ editor["https://github.com/numtostr/FTerm.nvim"] = {
 -- `gbac` - Toggle comment around a class (w/ LSP/treesitter support)
 
 editor["numToStr/Comment.nvim"] = {
-  opt = true, 
+  opt = true,
   config = conf.comment,
 }
 
@@ -266,38 +264,32 @@ editor["folke/zen-mode.nvim"] = {
   end,
 }
 
-editor["nvim-neorg/neorg"]={
-  
+editor["nvim-neorg/neorg"] = {
 
-    config = function()
-  require("packer").loader("plenary.nvim")
-  require("packer").loader("nvim-treesitter")
-  require("packer").loader("telescope.nvim")
- 
+  config = function()
+    require("packer").loader("plenary.nvim")
+    require("packer").loader("nvim-treesitter")
+    require("packer").loader("telescope.nvim")
 
-  require('neorg').setup {
-    -- Tell Neorg what modules to load
-    load = {
-      ["core.defaults"] = {}, -- Load all the default modules
-      ["core.norg.concealer"] = {}, -- Allows for use of icons
-      ["core.norg.dirman"] = { -- Manage your directories with Neorg
-        config = {workspaces = {my_workspace = "~/neorg"}}
+    require("neorg").setup({
+      -- Tell Neorg what modules to load
+      load = {
+        ["core.defaults"] = {}, -- Load all the default modules
+        ["core.norg.concealer"] = {}, -- Allows for use of icons
+        ["core.norg.dirman"] = { -- Manage your directories with Neorg
+          config = { workspaces = { my_workspace = "~/neorg" } },
+        },
+        ["core.keybinds"] = { -- Configure core.keybinds
+          config = {
+            default_keybinds = true, -- Generate the default keybinds
+            neorg_leader = "<Leader>o", -- This is the default if unspecified
+          },
+        },
+        ["core.integrations.telescope"] = {}, -- Enable the telescope module
       },
-      ["core.keybinds"] = { -- Configure core.keybinds
-        config = {
-          default_keybinds = true, -- Generate the default keybinds
-          neorg_leader = "<Leader>o" -- This is the default if unspecified
-        }
-      },
-      ["core.integrations.telescope"] = {} -- Enable the telescope module
-    }
-  
-
-  }
-   
-end
+    })
+  end,
 }
-
 
 editor["psf/black"] = { ft = "python" }
 
@@ -393,25 +385,19 @@ editor["zegervdv/nrpattern.nvim"] = {
 
 editor["rmagatti/alternate-toggler"] = {}
 
-
 -- nEed to add this or add something extra to this.
 editor["VonHeikemen/fine-cmdline.nvim"] = {
   opt = true,
   requires = {
     { "MunifTanjim/nui.nvim", opt = true },
-  }
-
+  },
 }
 
-
-editor["jbyuki/nabla.nvim"]={
-  opt = true, 
-  ft = "norg", 
+editor["jbyuki/nabla.nvim"] = {
+  opt = true,
+  ft = "norg",
   requires = "nvim-lua/popup.nvim",
-  config = function()
-  end 
-
-
+  config = function() end,
 }
 
 return editor

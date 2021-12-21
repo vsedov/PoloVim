@@ -1,4 +1,3 @@
-
 local loader = require("packer").loader
 _G.PLoader = loader
 function Lazyload()
@@ -7,9 +6,7 @@ function Lazyload()
   local themes = {
 
     "tokyonight.nvim",
-    -- TODO Add more themes 
-    
-
+    -- TODO Add more themes
   }
 
   local v = math.random(1, #themes)
@@ -69,7 +66,6 @@ function Lazyload()
   local plugins = "plenary.nvim" -- nvim-lspconfig navigator.lua   guihua.lua navigator.lua  -- gitsigns.nvim
   loader("plenary.nvim")
 
-
   if vim.bo.filetype == "lua" then
     loader("lua-dev.nvim")
   end
@@ -108,7 +104,7 @@ function Lazyload()
   -- local bytes = vim.fn.wordcount()['bytes']
   if load_ts_plugins then
     plugins =
-      "nvim-treesitter-textobjects  nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects" 
+      "nvim-treesitter-textobjects  nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
     loader(plugins)
     lprint(plugins)
     -- nvim-treesitter-textobjects should be autoloaded
