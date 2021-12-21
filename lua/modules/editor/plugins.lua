@@ -26,6 +26,8 @@ editor["kana/vim-niceblock"] = {
   opt = true,
 }
 
+-- Remove at any time if you dont want
+------------------------------------------------------------------------------
 -- MOST IMPORTANT FEATURE OF THEM ALL, I APROVE OF THIS
 editor["rtakasuke/vim-neko"] = {}
 
@@ -41,6 +43,10 @@ editor["tamton-aquib/duck.nvim"] = {
     vim.api.nvim_set_keymap("n", "<leader><leader>dk", ':lua require("duck").cook("🐼")<CR>', { noremap = true })
   end,
 }
+editor["https://github.com/raghavdoescode/nvim-owoifier"]={
+  opt =true
+}
+------------------------------------------------------------------------------
 
 -- I want this all the time - so im not lazy loading this .,
 editor["ggandor/lightspeed.nvim"] = {
@@ -109,9 +115,12 @@ editor["https://github.com/LoricAndre/OneTerm.nvim.git"] = {
   cmd = { "OneTerm" },
 }
 
+
+-- Currently needs to be calle , not sure if i have to lazy load this or not. 
 editor["andweeb/presence.nvim"] = {
-  event = "BufReadPre",
+  event = {"BufEnter","BufRead"},
   config = conf.discord,
+
 }
 
 editor["itchyny/vim-cursorword"] = {

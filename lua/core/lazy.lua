@@ -69,6 +69,7 @@ function Lazyload()
   local plugins = "plenary.nvim" -- nvim-lspconfig navigator.lua   guihua.lua navigator.lua  -- gitsigns.nvim
   loader("plenary.nvim")
 
+
   if vim.bo.filetype == "lua" then
     loader("lua-dev.nvim")
   end
@@ -86,6 +87,7 @@ function Lazyload()
     loader("null-ls.nvim")
     -- loader("code_runner.nvim")
     loader("neo-runner.nvim")
+    loader("jaq-nvim")
   end
 
   require("vscripts.cursorhold")
@@ -114,9 +116,9 @@ function Lazyload()
     loader("indent-blankline.nvim")
   end
 
-  if load_ts_plugins and vim.bo.filetype == "python" then
-    loader("nvim-treesitter-pyfold")
-  end
+  -- if load_ts_plugins and vim.bo.filetype == "python" then
+  --   loader("nvim-treesitter-pyfold")
+  -- end
 
   -- if bytes < 2 * 1024 * 1024 and syn_on then
   --   vim.cmd([[setlocal syntax=on]])

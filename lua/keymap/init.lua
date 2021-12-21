@@ -70,7 +70,7 @@ local plug_map = {
   ["v|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
 
   -- -- How to run some code .
-  ["n|<Leader>r"] = map_cr("RunCode"):with_noremap():with_silent(),
+  ["n|<Leader>r"] = map_cr("Jaq"):with_noremap():with_silent(),
   ["n|<Leader>rf"] = map_cr("RunFile"):with_noremap():with_silent(),
   ["n|<Leader>rp"] = map_cr("RunProject"):with_noremap():with_silent(),
 

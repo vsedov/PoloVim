@@ -23,7 +23,7 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
   config = conf.treesitter_obj,
   opt = true,
 }
-lang["eddiebergman/nvim-treesitter-pyfold"] = {opt = true, config = conf.pyfold}
+-- lang["eddiebergman/nvim-treesitter-pyfold"] = {config = conf.pyfold}
 lang["RRethy/nvim-treesitter-textsubjects"] = {opt = true , config = conf.tsubject }
 
 -- Better plugin for this i think ,
@@ -204,15 +204,15 @@ lang["folke/todo-comments.nvim"] = {
 }
 
 
--- Can NeoRunner and Code runner be lazy loaded ?
-lang["CRAG666/code_runner.nvim"] = {
-  branch = "main",
-  requires = "nvim-lua/plenary.nvim",
-  config = function()
-    require("code_runner").setup({
-    })
-  end,
-}
+-- Can Gonna Use jaq for now ?
+-- lang["CRAG666/code_runner.nvim"] = {
+--   branch = "main",
+--   requires = "nvim-lua/plenary.nvim",
+--   config = function()
+--     require("code_runner").setup({
+--     })
+--   end,
+-- }
 
 -- command Neorunner - depends if i will keep this trying out new stuff .
 lang["BenGH28/neo-runner.nvim"] = {
@@ -221,6 +221,16 @@ lang["BenGH28/neo-runner.nvim"] = {
   config = conf.neorunner,
   run = ":UpdateRemotePlugins",
 }
+
+lang["is0n/jaq-nvim"] = {
+  opt = true, 
+  after = 'filetype.nvim',
+
+  config = conf.jaq,
+}
+
+
+
 
 lang["kkoomen/vim-doge"] = {
   config = conf.doge,
