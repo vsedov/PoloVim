@@ -251,6 +251,66 @@ function config.tokyonight()
   vim.g.tokyonight_colors = { hint = "orange", error = "#ae1960" }
 end
 
+function config.catppuccin()
+  if not packer_plugins["nvim"].loaded then
+    vim.cmd([[packadd nvim]])
+  end
+
+  require("catppuccin").setup({
+    transparent_background = true,
+    term_colors = false,
+    styles = {
+      comments = "italic",
+      functions = "italic",
+      keywords = "italic",
+      strings = "NONE",
+      variables = "NONE",
+    },
+    integrations = {
+      treesitter = true,
+      native_lsp = {
+        enabled = true,
+        virtual_text = {
+          errors = "italic",
+          hints = "italic",
+          warnings = "italic",
+          information = "italic",
+        },
+        underlines = {
+          errors = "underline",
+          hints = "underline",
+          warnings = "underline",
+          information = "underline",
+        },
+      },
+      lsp_trouble = true,
+      lsp_saga = false,
+      gitgutter = true,
+      gitsigns = true,
+      telescope = true,
+      nvimtree = {
+        enabled = true,
+        show_root = true,
+      },
+      which_key = false,
+      indent_blankline = {
+        enabled = true,
+        colored_indent_levels = true,
+      },
+      dashboard = true,
+      neogit = true,
+      vim_sneak = true,
+      fern = true,
+      barbar = true,
+      bufferline = true,
+      markdown = false,
+      lightspeed = true,
+      ts_rainbow = true,
+      hop = true,
+    },
+  })
+end
+
 function config.nightfly()
   vim.g.nightflyCursorColor = 1
   vim.g.nightflyUnderlineMatchParen = 1

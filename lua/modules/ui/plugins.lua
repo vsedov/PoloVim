@@ -82,6 +82,23 @@ ui["folke/tokyonight.nvim"] = {
   end,
 }
 
+ui["catppuccin/nvim"] = {
+  opt = true,
+  setup = conf.catppuccin,
+  config = function()
+    vim.cmd([[colorscheme catppuccin]])
+    vim.cmd([[hi TSCurrentScope guibg=#282338]])
+  end,
+}
+
+ui["https://github.com/numToStr/Sakura.nvim"] = {
+  opt = true,
+  config = function()
+    vim.cmd([[colorscheme sakura]])
+    vim.cmd([[hi TSCurrentScope guibg=#282338]])
+  end,
+}
+
 ui["projekt0n/github-nvim-theme"] = {
   opt = true,
   config = function()

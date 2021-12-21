@@ -1,5 +1,6 @@
-Open cheatsheet | <leader>?
-Open cheatsheet in floating window | :CheatSheet!
 
-View mappings | :map [mapping]
-Set text width to {n} | :set tw={n}
+
+https://github.com/sudormrfbin/cheatsheet.nvim/blob/master/cheatsheets/cheatsheet-default.txt
+
+
+Add Main stuff here 

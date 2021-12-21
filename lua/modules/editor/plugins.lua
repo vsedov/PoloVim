@@ -115,14 +115,13 @@ editor["https://github.com/LoricAndre/OneTerm.nvim.git"] = {
   cmd = { "OneTerm" },
 }
 
-
 editor["sudormrfbin/cheatsheet.nvim"] = {
-  cmd = {"Cheatsheet"},
+  cmd = { "Cheatsheet" },
   requires = {
-      {'nvim-telescope/telescope.nvim'},
-      {'nvim-lua/popup.nvim'},
-      {'nvim-lua/plenary.nvim'},
-    }
+    { "nvim-telescope/telescope.nvim" },
+    { "nvim-lua/popup.nvim" },
+    { "nvim-lua/plenary.nvim" },
+  },
 }
 
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
@@ -133,7 +132,6 @@ editor["andweeb/presence.nvim"] = {
 
 editor["itchyny/vim-cursorword"] = {
   opt = true,
-  event = { "BufReadPre", "BufNewFile" },
   config = conf.vim_cursorwod,
 }
 

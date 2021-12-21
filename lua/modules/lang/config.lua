@@ -66,16 +66,16 @@ function config.jaq()
 
       -- Uses external commands such as 'g++' and 'cargo'
       external = {
-      javascript = "node",
-      java = "cd $dir && javac $file && java $fileBase",
-      c = "gcc $file -o $fileBase && ./$fileBase",
-      cpp=  "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
-      python =  "python -u %",
-      shellscript = "bash",
-      csharp = "cd $dir && mcs $fileName && mono $fileNameWithoutExt.exe",
-      typescript =  "deno run",
-      rust="cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
-      dart=  "dart"
+        javascript = "node",
+        java = "cd $dir && javac $file && java $fileBase",
+        c = "gcc $file -o $fileBase && ./$fileBase",
+        cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+        python = "python -u %",
+        shellscript = "bash",
+        csharp = "cd $dir && mcs $fileName && mono $fileNameWithoutExt.exe",
+        typescript = "deno run",
+        rust = "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+        dart = "dart",
       },
       -- Uses internal commands such as 'source' and 'luafile'
       internal = {

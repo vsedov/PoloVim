@@ -6,6 +6,9 @@ function Lazyload()
   local themes = {
 
     "tokyonight.nvim",
+    "nvim",
+    "Sakura.nvim",
+
     -- TODO Add more themes
   }
 
@@ -37,6 +40,19 @@ function Lazyload()
     "defx",
     "sidekick",
   }
+
+  --   ui["catppuccin/nvim"] = {
+  --   opt = true,
+  --   setup = conf.catppuccin,
+  --   config = function()
+  --     vim.cmd([[colorscheme catppuccin]])
+  --   end,
+  -- }
+
+  -- ui["https://github.com/numToStr/Sakura.nvim"] = {
+  --   opt = true,
+  --   config = function()
+  --     vim.cmd([[colorscheme sakura]])
 
   local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
   if syn_on then
@@ -171,5 +187,5 @@ vim.defer_fn(function()
   require("modules.ui.eviline")
   require("wlfloatline").setup()
   loader("nui.nvim fine-cmdline.nvim")
-  loader("FTerm.nvim")
+  loader("FTerm.nvim  vim-cursorword")
 end, lazy_timer + 100)

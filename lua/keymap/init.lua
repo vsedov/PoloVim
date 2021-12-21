@@ -109,7 +109,6 @@ local plug_map = {
   ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
   ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
   ["n|<Leader>fj"] = map_cmd('<cmd>lua require"utils.telescope".jump()<CR>'):with_noremap():with_silent(),
-  
 
   ["n|<F5>"] = map_cmd("<cmd>Cheatsheet<CR>"):with_noremap():with_silent(),
 
