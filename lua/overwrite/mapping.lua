@@ -130,8 +130,8 @@ vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
 --
 bind.nvim_load_mapping(keys)
 
-
 -- Run DebugOpen and then you run Debug 
+
 vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]])
 vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.

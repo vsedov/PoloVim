@@ -11,7 +11,6 @@ local dap = require("dap")
 local HOME = os.getenv("HOME")
 local dap_install = require("dap-install")
 local api = vim.api
-local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
 
 
@@ -54,8 +53,7 @@ local function keybind()
   local dap_keys = {
     -- DAP --
     -- run
-    -- ["n|r"] = map_cr('<cmd>lua require"go.dap".run()<CR>'):with_noremap():with_silent(),
-
+    ["n|r"] = map_cr('<cmd>lua require"go.dap".run()<CR>'):with_noremap():with_silent(),
     ["n|c"] = map_cr('<cmd>lua require"dap".continue()<CR>'):with_noremap():with_silent(),
     ["n|n"] = map_cr('<cmd>lua require"dap".step_over()<CR>'):with_noremap():with_silent(),
     ["n|s"] = map_cr('<cmd>lua require"dap".step_into()<CR>'):with_noremap():with_silent(),
@@ -72,7 +70,12 @@ local function keybind()
   }
 
   bind.nvim_load_mapping(dap_keys)
+
 end
+
+
+
+
 
 local loader = require("packer").loader
 
@@ -103,6 +106,8 @@ require("nvim-dap-virtual-text").setup({
 dap_install.setup({
   installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
 })
+
+local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
 for _, debugger in ipairs(dbg_list) do
   dap_install.config(debugger)
@@ -165,20 +170,26 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
   vim.cmd([[command! BPToggle lua require"dap".toggle_breakpoint()]])
+
   vim.cmd([[command! Debug lua require"modules.lang.dap".StartDbg()]])
+  vim.cmd([[command! StopDebug lua require"modules.lang.dap".StopDbg()]])
+
 
   require("dapui").setup()
   require("dapui").open()
 end
 
 M.StartDbg = function()
+
   -- body
   keybind()
   require("dap").continue()
 end
 
+
 M.StopDbg = function()
-  local keys = { "r", "c", "n", "s", "o", "S", "u", "d", "C", "b", "P" }
+
+  local keys = { "c", "n", "s", "o", "u", "D", "C", "b", "P", "p" }
   for _, value in pairs(keys) do
     local cmd = "unmap " .. value
     vim.cmd(cmd)
