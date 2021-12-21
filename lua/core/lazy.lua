@@ -41,19 +41,6 @@ function Lazyload()
     "sidekick",
   }
 
-  --   ui["catppuccin/nvim"] = {
-  --   opt = true,
-  --   setup = conf.catppuccin,
-  --   config = function()
-  --     vim.cmd([[colorscheme catppuccin]])
-  --   end,
-  -- }
-
-  -- ui["https://github.com/numToStr/Sakura.nvim"] = {
-  --   opt = true,
-  --   config = function()
-  --     vim.cmd([[colorscheme sakura]])
-
   local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
   if syn_on then
     vim.cmd([[syntax on]])
