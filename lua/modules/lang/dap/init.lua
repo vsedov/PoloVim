@@ -74,9 +74,6 @@ local function keybind()
 end
 
 
-
-
-
 local loader = require("packer").loader
 
 -- if ft == 'go' then
