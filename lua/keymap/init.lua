@@ -22,6 +22,14 @@ local plug_map = {
 
   -- -- Word Motion
   ["n|w"] = map_cmd('v:lua.word_motion_move("w")'):with_silent():with_expr(),
+  ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
+  ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
+
+
+  ["n|j"] = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
+  ["n|k"] = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
+
+
   ["n|<C-]>"] = map_args("Template"),
   -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
   -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
@@ -90,7 +98,7 @@ local plug_map = {
   -- Plugin DadbodUI
   ["n|<Leader>od"] = map_cr("DBUIToggle"):with_noremap():with_silent(),
 
-  -- Far.vim
+  -- Far.vim Conflicting 
   ["n|<Leader>fz"] = map_cr("Farf"):with_noremap():with_silent(),
   ["v|<Leader>fz"] = map_cr("Farr"):with_noremap():with_silent(),
   ["n|<Leader>fzd"] = map_cr("Fardo"):with_noremap():with_silent(),
@@ -103,8 +111,6 @@ local plug_map = {
     :with_silent(),
   ["n|<Leader>qf"] = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
 
-  ["n|<Leader>fz"] = map_cr('<cmd>lua require("telescope").extensions.zoxide.list()'):with_silent(),
-  ["n|<Leader>fp"] = map_cr('<cmd>lua require("telescope").extensions.projects.projects()'):with_silent(),
 
   ["n|<Leader>bb"] = map_cu("Telescope buffers"):with_noremap():with_silent(),
   ["n|<Leader>fb"] = map_cu("Telescope file_browser"):with_noremap():with_silent(),
@@ -112,8 +118,8 @@ local plug_map = {
   ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
   ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
   ["n|<Leader>fj"] = map_cmd('<cmd>lua require"utils.telescope".jump()<CR>'):with_noremap():with_silent(),
-  ["n|<Leader>fz"] = map_cr('<cmd>lua require("telescope").extensions.zoxide.list()'):with_silent(),
-  ["n|<Leader>fp"] = map_cr('<cmd>lua require("telescope").extensions.projects.projects()'):with_silent(),
+  -- ["n|<Leader>fz"] = map_cr('<cmd>lua require("telescope").extensions.zoxide.list()'):with_silent(),
+  -- ["n|<Leader>fp"] = map_cr('<cmd>lua require("telescope").extensions.projects.projects()'):with_silent(),
   ["n|<Leader>fw"] = map_cu("Telescope grep_string"):with_noremap():with_silent(),
   ["n|<Leader>fl"] = map_cu("Telescope loclist"):with_noremap():with_silent(),
   ["n|<Leader>fc"] = map_cu("Telescope git_commits"):with_noremap():with_silent(),
@@ -145,9 +151,6 @@ local plug_map = {
   -- :with_silent(),
   -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
 
-  -- Plugin acceleratedjk
-  -- ["n|j"] = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
-  -- ["n|k"] = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
 
   -- Plugin Vista or SymbolsOutline
   ["n|<Leader>v"] = map_cu("SymbolsOutline"):with_noremap():with_silent(),
@@ -192,7 +195,7 @@ local plug_map = {
 
   ["v|<Leader>fr"] = map_cmd("<Plug>SnipRun"):with_silent(),
   ["n|<Leader>fr"] = map_cmd("<Plug>SnipRunOperator"):with_silent(),
-  ["n|<Leader>ff"] = map_cmd("<Plug>SnipRun"):with_silent(),
+  ["n|<Leader>sr"] = map_cmd("<Plug>SnipRun"):with_silent(),
 
   -- Alternate togller
   ["n|<Leader>ta"] = map_cr("ToggleAlternate"):with_noremap():with_silent(),
@@ -214,7 +217,7 @@ local plug_map = {
   -- Quick Fix infomation and binds
   ["n|<Leader>xx"] = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
 
-  -- Nice highlighting for latex when writing notes
+  -- Nice highlighting for latex when writing notes Norg files only.
   ["n|<F9>"]  = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
   ["n|<localleader>b"] = map_cr('<cmd> lua require("nabla").popup()<CR>'):with_noremap(),
 

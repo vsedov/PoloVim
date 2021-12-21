@@ -50,6 +50,16 @@ local keys = {
   ["n|<Leader><Leader>s"] = map_cr("SplitjoinSplit"),
   ["n|<Leader><Leader>j"] = map_cr("SplitjoinJoin"),
 
+  -- Plugin Vista
+  ["n|<Leader>v]"] = map_cu("Vista!!"):with_noremap():with_silent(),
+
+  -- clap --
+  ["n|<d-C>"] = map_cu("Clap | startinsert"),
+  ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
+  ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
+  ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
+  ["n|<F9>"] = map_cr("GoBreakToggle"),
+
   -- Buffer Line
   ["n|<localleader>bth"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
   ["n|<localleader>btu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
@@ -96,8 +106,6 @@ local keys = {
   -- -- session
 
 
-  ["n|<Leader>ss"] = map_cu('SessionSave'):with_noremap(),
-  ["n|<Leader>sl"] = map_cu('SessionLoad'):with_noremap(),
   ["n|<Leader>sd"] = map_cu("DeleteSession"):with_noremap(),
 
 

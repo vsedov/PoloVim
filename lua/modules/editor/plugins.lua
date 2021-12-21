@@ -121,6 +121,8 @@ editor["itchyny/vim-cursorword"] = {
 }
 
 editor["https://github.com/numtostr/FTerm.nvim"] = {
+  opt = true,
+
   config = function()
     local fterm = require("FTerm")
 
@@ -315,10 +317,6 @@ editor["filipdutescu/renamer.nvim"] = {
   end,
 }
 
-editor["https://github.com/numtostr/FTerm.nvim"] = {
-  opt = true,
-}
-
 editor["raimon49/requirements.txt.vim"] = {}
 
 -- This might not be needed
@@ -367,12 +365,18 @@ editor["VonHeikemen/fine-cmdline.nvim"] = {
   opt = true,
   requires = {
     { "MunifTanjim/nui.nvim", opt = true },
-  },
+  }
+
 }
 
 
 editor["jbyuki/nabla.nvim"]={
-  requires = "nvim-lua/popup.nvim" 
+  opt = true, 
+  ft = "norg", 
+  requires = "nvim-lua/popup.nvim",
+  config = function()
+  end 
+
 
 }
 
