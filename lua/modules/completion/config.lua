@@ -65,10 +65,16 @@ function config.nvim_cmp()
   if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
   end
+  if vim.o.ft == "python" then 
+    table.insert(sources, { name = "cmp_tabnine" })
+
+  end 
 
   if vim.o.ft == "norg" then
     table.insert(sources, { name = "neorg" })
   end
+
+
   if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
     table.insert(sources, { name = "look" })

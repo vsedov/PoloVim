@@ -13,7 +13,10 @@ lang["pseewald/vim-anyfold"] = {
   cmd = "AnyFoldActivate",
 }
 
-lang["nvim-treesitter/nvim-treesitter"] = { opt = true, config = conf.nvim_treesitter }
+lang["nvim-treesitter/nvim-treesitter"] = { 
+  opt = true, 
+  config = conf.nvim_treesitter 
+}
 
 lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
   after = "nvim-treesitter",

@@ -281,6 +281,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
         set_reg = true,
       },
       keys = {
+                telescope = {
         i = {
           select = "<cr>",
           paste = "<c-p>",
@@ -293,6 +294,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
           paste = "p",
           paste_behind = "P",
         },
+      },
       },
     })
   end,

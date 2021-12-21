@@ -257,15 +257,56 @@ editor["folke/zen-mode.nvim"] = {
   end,
 }
 
--- editor["nvim-neorg/neorg-telescope"] = {opt = true}
-editor["nvim-neorg/neorg"] = {
-  opt = true,
-  config = conf.neorg,
-  ft = "norg",
-  after = { "nvim-treesitter" },
-  setup = vim.cmd("autocmd BufRead,BufNewFile *.norg setlocal filetype=norg"),
-  requires = { "nvim-neorg/neorg-telescope", ft = { "norg" } },
-}
+editor["nvim-neorg/neorg"]={
+  
+
+    config = function()
+  require("packer").loader("plenary.nvim")
+  require("packer").loader("nvim-treesitter")
+  require("packer").loader("neorg-telescope")
+  require("packer").loader("telescope.nvim")
+
+
+  require('neorg').setup {
+    -- Tell Neorg what modules to load
+    load = {
+      ["core.defaults"] = {}, -- Load all the default modules
+      ["core.norg.concealer"] = {}, -- Allows for use of icons
+      ["core.norg.dirman"] = { -- Manage your directories with Neorg
+        config = {workspaces = {my_workspace = "~/neorg"}}
+      },
+      ["core.keybinds"] = { -- Configure core.keybinds
+        config = {
+          default_keybinds = true, -- Generate the default keybinds
+          neorg_leader = "<Leader>o" -- This is the default if unspecified
+        }
+      },
+      ["core.integrations.telescope"] = {} -- Enable the telescope module
+    }
+  }
+
+
+    local neorg_callbacks = require("neorg.callbacks")
+
+  neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
+    -- Map all the below keybinds only when the "norg" mode is active
+    keybinds.map_event_to_mode("norg", {
+      n = { -- Bind keys in normal mode
+        {"<C-s>", "core.integrations.telescope.find_linkable"}
+      },
+
+      i = { -- Bind in insert mode
+        {"<C-k>", "core.integrations.telescope.insert_link"}
+      }
+    }, {silent = true, noremap = true})
+  end)
+
+    end,
+
+
+  }
+
+
 editor["psf/black"] = { ft = "python" }
 
 editor["famiu/bufdelete.nvim"] = {

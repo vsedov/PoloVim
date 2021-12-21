@@ -90,7 +90,7 @@ function config.tsubject()
   require("nvim-treesitter.configs").setup({
     textsubjects = {
       enable = true,
-      keymaps = { ["."] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
+      keymaps = { ["<CR>"] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
     },
   })
 end

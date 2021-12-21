@@ -58,9 +58,9 @@ local keys = {
 
   -- clap --
   ["n|<d-C>"] = map_cu("Clap | startinsert"),
-  ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
+  -- ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
   ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
-  ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
+  -- ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
   ["n|<F9>"] = map_cr("GoBreakToggle"),
 
   -- Buffer Line
