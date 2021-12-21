@@ -216,8 +216,6 @@ lang["BenGH28/neo-runner.nvim"] = {
 
 lang["is0n/jaq-nvim"] = {
   opt = true,
-  after = "filetype.nvim",
-
   config = conf.jaq,
 }
 
