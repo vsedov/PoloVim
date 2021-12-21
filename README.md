@@ -8,8 +8,6 @@ Again all credit to ray-x, if this setup is currently not working - ive most lik
 
 
 
-## 🏎 🏎 🏎 Need for speed! 🏎 🏎 🏎
-
 This neovim configure file is highly optimized for the impatient. Packer lazy loading + After syntax highlight rendering. Maybe the
 only nvim setup in github that can render multiple files with treesitter in less than 80ms with ~110 plugins installed
 (e.g. Open both util.lua(1686 loc) and lsp.lua(1538 loc) from neovim source code in 80.6ms)
@@ -31,7 +29,7 @@ nvim+kitty](https://user-images.githubusercontent.com/1681295/109258178-db2e6d80
 
 ## Battery included
 
-About 100 plugins and 1600 lines of lua and vim code.
+About 200 plugins and 1600 lines of lua and vim code.
 
 ## Neovim Plugins
 

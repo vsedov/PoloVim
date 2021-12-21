@@ -78,7 +78,6 @@ ui["folke/tokyonight.nvim"] = {
   config = function()
     -- vim.cmd [[hi CursorLine guibg=#353644]]
     vim.cmd([[colorscheme tokyonight]])
-    vim.cmd([[hi TSCurrentScope guibg=#282338]])
   end,
 }
 
@@ -87,7 +86,6 @@ ui["catppuccin/nvim"] = {
   setup = conf.catppuccin,
   config = function()
     vim.cmd([[colorscheme catppuccin]])
-    vim.cmd([[hi TSCurrentScope guibg=#282338]])
   end,
 }
 
