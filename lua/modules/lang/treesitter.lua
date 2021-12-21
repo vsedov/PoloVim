@@ -1,10 +1,9 @@
 local enable = true
 local langtree = true
 local lines = vim.fn.line("$")
-_G.lprint=require'utils.log'.lprint
+_G.lprint = require("utils.log").lprint
 
 local treesitter = function()
-
   lprint("loading treesitter")
   if lines > 30000 then -- skip some settings for large file
     -- vim.cmd[[syntax on]]
@@ -18,31 +17,31 @@ local treesitter = function()
     langtree = false
     print("disable ts txtobj")
   end
-    -- print('load treesitter refactor', vim.fn.line('$'))
-  local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+  -- print('load treesitter refactor', vim.fn.line('$'))
+  local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
   parser_configs.norg = {
-      install_info = {
-          url = "https://github.com/nvim-neorg/tree-sitter-norg",
-          files = { "src/parser.c", "src/scanner.cc" },
-          branch = "main"
-      },
+    install_info = {
+      url = "https://github.com/nvim-neorg/tree-sitter-norg",
+      files = { "src/parser.c", "src/scanner.cc" },
+      branch = "main",
+    },
   }
 
   parser_configs.norg_meta = {
-      install_info = {
-          url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
-          files = { "src/parser.c" },
-          branch = "main"
-      },
+    install_info = {
+      url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+      files = { "src/parser.c" },
+      branch = "main",
+    },
   }
 
   parser_configs.norg_table = {
-      install_info = {
-          url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
-          files = { "src/parser.c" },
-          branch = "main"
-      },
+    install_info = {
+      url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
+      files = { "src/parser.c" },
+      branch = "main",
+    },
   }
   -- parser_config.sql = {
   --   install_info = {
@@ -61,10 +60,8 @@ local treesitter = function()
   --   used_by = { "proto" }, -- additional filetypes that use this parser
   -- }
 
-
-
   require("nvim-treesitter.configs").setup({
-        autopairs = {enable = true},
+    autopairs = { enable = true },
 
     highlight = {
       enable = true, -- false will disable the whole extension
@@ -83,6 +80,15 @@ local treesitter = function()
         node_incremental = "<TAB>", -- increment to the upper named parent
         node_decremental = "<S-TAB>", -- decrement to the previous node
       },
+    },
+  })
+end
+
+local pyfold = function()
+  require("nvim-treesitter.configs").setup({
+    pyfold = {
+      enable = true,
+      custom_foldtext = true, -- Sets provided foldtext on window where module is active
     },
   })
 end
@@ -205,7 +211,6 @@ local treesitter_ref = function()
     enable = false
   end
 
-
   require("nvim-treesitter.configs").setup({
     refactor = {
       highlight_definitions = { enable = enable },
@@ -234,8 +239,6 @@ local treesitter_ref = function()
     autopairs = { enable = true },
     autotag = { enable = true },
   })
-
-
 end
 
 function textsubjects()
@@ -254,4 +257,5 @@ return {
   treesitter_obj = treesitter_obj,
   treesitter_ref = treesitter_ref,
   textsubjects = textsubjects,
+  pyfold = pyfoldo,
 }

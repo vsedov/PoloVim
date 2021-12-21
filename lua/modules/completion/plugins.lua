@@ -117,7 +117,7 @@ completion["nvim-telescope/telescope.nvim"] = {
   config = conf.telescope,
   setup = conf.telescope_preload,
   requires = {
-    {"nvim-neorg/neorg-telescope", opt = true},
+    { "nvim-neorg/neorg-telescope", opt = true },
     { "nvim-lua/plenary.nvim", opt = true },
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
@@ -174,19 +174,14 @@ completion["ray-x/lsp_signature.nvim"] = {
   end,
 }
 
-
-
 completion["weilbith/nvim-code-action-menu"] = {
   cmd = "CodeActionMenu",
 }
-
-
 
 completion["dense-analysis/ale"] = {
 
   config = conf.ale,
 }
-
 
 completion["https://github.com/vsedov/vim-sonictemplate"] = {
   cmd = "Template",

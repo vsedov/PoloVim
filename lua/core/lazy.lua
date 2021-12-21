@@ -1,4 +1,3 @@
-
 local loader = require("packer").loader
 _G.PLoader = loader
 function Lazyload()
@@ -7,9 +6,7 @@ function Lazyload()
   local themes = {
 
     "tokyonight.nvim",
-    -- TODO Add more themes 
-    
-
+    -- TODO Add more themes
   }
 
   local v = math.random(1, #themes)
@@ -86,6 +83,7 @@ function Lazyload()
     loader("null-ls.nvim")
     -- loader("code_runner.nvim")
     loader("neo-runner.nvim")
+    loader("jaq-nvim")
   end
 
   require("vscripts.cursorhold")
@@ -106,13 +104,17 @@ function Lazyload()
   -- local bytes = vim.fn.wordcount()['bytes']
   if load_ts_plugins then
     plugins =
-      "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects" --  nvim-ts-rainbow  nvim-treesitter nvim-treesitter-refactor
-
+      "nvim-treesitter-textobjects  nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
+    loader(plugins)
     lprint(plugins)
     -- nvim-treesitter-textobjects should be autoloaded
     loader("refactoring.nvim")
     loader("indent-blankline.nvim")
   end
+
+  -- if load_ts_plugins and vim.bo.filetype == "python" then
+  --   loader("nvim-treesitter-pyfold")
+  -- end
 
   -- if bytes < 2 * 1024 * 1024 and syn_on then
   --   vim.cmd([[setlocal syntax=on]])

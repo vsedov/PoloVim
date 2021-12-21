@@ -23,7 +23,6 @@ local keys = {
 
   ["n|<C-p>"] = map_cr("<cmd>FineCmdline<CR>"):with_noremap():with_silent(),
 
-
   -- pack?
   -- ["n|<Leader>tr"]     = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
   -- ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
@@ -108,9 +107,7 @@ local keys = {
   -- ["n|<F9>"] = map_cr("GoBreakToggle"),
   -- -- session
 
-
   ["n|<Leader>sd"] = map_cu("DeleteSession"):with_noremap(),
-
 
   ["n|<localleader>M"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]),
   ["n|<localleader>m1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]),
@@ -118,13 +115,12 @@ local keys = {
   ["n|<localleader>m3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]),
   ["n|<localleader>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
   ["n|<localleader>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
- 
 
   -- ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>"),
   -- ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>"),
   -- ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>"),
 
-  ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>")
+  ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 }
 
 --
@@ -141,7 +137,7 @@ vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
 --
 bind.nvim_load_mapping(keys)
 
--- Run DebugOpen and then you run Debug 
+-- Run DebugOpen and then you run Debug
 
 vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]])
 vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
