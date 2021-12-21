@@ -65,10 +65,36 @@ function config.nvim_cmp()
   if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
   end
+  if vim.o.ft == "python" then 
+    table.insert(sources, { name = "cmp_tabnine" })
+
+  end 
 
   if vim.o.ft == "norg" then
+
+    -- Get the current Neorg state
+    local neorg = require('neorg')
+
+    --- Loads the Neorg completion module
+    local function load_completion()
+        neorg.modules.load_module("core.norg.completion", nil, {
+            engine = "nvim-cmp" -- Choose your completion engine here
+        })
+    end
+
+    -- If Neorg is loaded already then don't hesitate and load the completion
+    if neorg.is_loaded() then
+        load_completion()
+    else -- Otherwise wait until Neorg gets started and load the completion module then
+        neorg.callbacks.on_event("core.started", load_completion)
+    end
+
     table.insert(sources, { name = "neorg" })
+
+
   end
+
+
   if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
     table.insert(sources, { name = "look" })

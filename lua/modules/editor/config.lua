@@ -231,14 +231,7 @@ function config.comment()
 end
 
 function config.neorg()
-  local loader = require("packer").loader
-  if not packer_plugins["nvim-treesitter"].loaded then
-    loader("nvim-treesitter")
-  end
-  if not packer_plugins["neorg-telescope"].loaded then
-    loader("telescope.nvim")
-    loader("neorg-telescope")
-  end
+
 
   require("neorg").setup({
     -- Tell Neorg what modules to load

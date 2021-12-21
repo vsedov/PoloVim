@@ -117,6 +117,7 @@ completion["nvim-telescope/telescope.nvim"] = {
   config = conf.telescope,
   setup = conf.telescope_preload,
   requires = {
+    {"nvim-neorg/neorg-telescope", opt = true},
     { "nvim-lua/plenary.nvim", opt = true },
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },

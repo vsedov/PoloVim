@@ -93,12 +93,12 @@ function Lazyload()
   if load_ts_plugins then
     -- print('load ts plugins')
     loader("nvim-treesitter")
-    loader("paperplanes.nvim")
   end
 
   if load_lsp or load_ts_plugins then
     loader("guihua.lua")
     loader("Comment.nvim")
+    loader("paperplanes.nvim")
 
     -- loader("navigator.lua")
   end
