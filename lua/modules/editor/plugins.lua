@@ -281,11 +281,11 @@ editor["nvim-neorg/neorg"]={
         }
       },
       ["core.integrations.telescope"] = {} -- Enable the telescope module
-    
-  }
+    }
+  
 
-
   }
+   
 end
 }
 
