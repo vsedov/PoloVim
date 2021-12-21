@@ -17,6 +17,11 @@ function config.treesitter_ref()
   require("modules.lang.treesitter").treesitter_ref()
 end
 
+function config.pyfold()
+  require("modules.lang.treesitter").pyfold()
+
+end
+
 function config.refactor()
   local refactor = require("refactoring")
   refactor.setup({})

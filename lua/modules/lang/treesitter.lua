@@ -87,6 +87,16 @@ local treesitter = function()
   })
 end
 
+local pyfold = function()
+require('nvim-treesitter.configs').setup({
+    pyfold = {
+        enable = true ,
+        custom_foldtext = true -- Sets provided foldtext on window where module is active
+    },
+})
+end
+
+
 local treesitter_obj = function()
   lprint("loading treesitter textobj")
   if lines > 30000 then -- skip some settings for large file
@@ -254,4 +264,5 @@ return {
   treesitter_obj = treesitter_obj,
   treesitter_ref = treesitter_ref,
   textsubjects = textsubjects,
+  pyfold = pyfoldo
 }

@@ -137,7 +137,4 @@ ui["mhinz/vim-sayonara"] = {
 }
 
 
-
-
-
 return ui

@@ -521,7 +521,7 @@ end
 function config.paperplanes()
 require("paperplanes").setup({
   register = "+",
-  provider = "http://dpaste.org"
+  provider = "ix.io"
 })
 end
 

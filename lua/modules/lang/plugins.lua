@@ -23,8 +23,8 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
   config = conf.treesitter_obj,
   opt = true,
 }
-
-lang["RRethy/nvim-treesitter-textsubjects"] = { opt = true, config = conf.tsubject }
+lang["eddiebergman/nvim-treesitter-pyfold"] = {opt = true, config = conf.pyfold}
+lang["RRethy/nvim-treesitter-textsubjects"] = {opt = true , config = conf.tsubject }
 
 -- Better plugin for this i think ,
 -- lang['danymat/neogen'] = {
