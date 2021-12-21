@@ -22,7 +22,7 @@ local plug_map = {
 
   -- -- Word Motion
   ["n|w"] = map_cmd('v:lua.word_motion_move("w")'):with_silent():with_expr(),
-
+  ["n|<C-]>"] = map_args("Template"),
   -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
   -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
 
@@ -215,13 +215,11 @@ local plug_map = {
   ["n|<Leader>xx"] = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
 
   -- Nice highlighting for latex when writing notes
-  ["n|<Leader><F9>"] = map_cu('lua require("nabla").place_inline()<CR>'):with_noremap():with_silent(),
+  ["n|<F9>"]  = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
+  ["n|<localleader>b"] = map_cr('<cmd> lua require("nabla").popup()<CR>'):with_noremap(),
+
   -- $ ... $ : inline form
   -- $$ ... $$ : wrapped form
-  ["v|<F3>"] = map_cmd(":<c-u>HSHighlight 3<CR>"):with_noremap():with_silent(),
-  --Remove highlight
-  ["v|<F4>"] = map_cmd(":<c-u>HSRmHighlight<CR>"):with_noremap():with_silent(),
-
   ["n|<Leader>ot"] = map_cr("OneTerm"):with_noremap():with_silent(),
 
   ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),

@@ -361,11 +361,19 @@ editor["zegervdv/nrpattern.nvim"] = {
 
 editor["rmagatti/alternate-toggler"] = {}
 
+
+-- nEed to add this or add something extra to this.
 editor["VonHeikemen/fine-cmdline.nvim"] = {
   opt = true,
   requires = {
     { "MunifTanjim/nui.nvim", opt = true },
   },
+}
+
+
+editor["jbyuki/nabla.nvim"]={
+  requires = "nvim-lua/popup.nvim" 
+
 }
 
 return editor
