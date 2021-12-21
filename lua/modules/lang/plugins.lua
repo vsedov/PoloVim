@@ -138,6 +138,7 @@ lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
 lang["michaelb/sniprun"] = {
   opt = true,
+  cmd = { "SnipRun", "'<,'>SnipRun" },
   run = "bash install.sh",
   requires = "rcarriga/nvim-notify",
   config = conf.sniprun,
@@ -190,6 +191,9 @@ lang["folke/trouble.nvim"] = {
 }
 
 lang["folke/todo-comments.nvim"] = {
+  cmd = { "TodoTelescope", "TodoTelescope","TodoTrouble" },
+  requires = "nvim-lua/plenary.nvim",
+  opt =true, 
   config = function()
     require("todo-comments").setup({})
   end,
@@ -197,15 +201,20 @@ lang["folke/todo-comments.nvim"] = {
 }
 
 
+-- Can NeoRunner and Code runner be lazy loaded ?
 lang["CRAG666/code_runner.nvim"] = {
-   requires = 'nvim-lua/plenary.nvim',
+  branch = "main",
+  requires = "nvim-lua/plenary.nvim",
   config = function()
-    require("code_runner").setup({})
+    require("code_runner").setup({
+    })
   end,
 }
 
 -- command Neorunner - depends if i will keep this trying out new stuff .
 lang["BenGH28/neo-runner.nvim"] = {
+  opt = true, 
+  after = 'filetype.nvim',
   config = conf.neorunner,
   run = ":UpdateRemotePlugins",
 }

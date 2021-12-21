@@ -179,12 +179,6 @@ function config.sniprun()
     borders = "single", --# display borders around floating windows
     --# possible values are 'none', 'single', 'double', or 'shadow'
   })
-
-  if vim.o.ft == "python" or vim.o.ft == "py" or vim.o.ft == "c" or vim.o.ft == "java" then
-    local loader = require("packer").loader
-      loader("sniprun")
-  end
-
 end
 
 function config.aerial()
@@ -353,7 +347,6 @@ end
 
 function config.dap()
     require("modules.lang.dap.init")
-
 end
 
 return config

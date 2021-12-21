@@ -191,6 +191,7 @@ editor["https://github.com/numtostr/FTerm.nvim"] = {
 -- `gbac` - Toggle comment around a class (w/ LSP/treesitter support)
 
 editor["numToStr/Comment.nvim"] = {
+  opt = true, 
   config = conf.comment,
 }
 

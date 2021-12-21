@@ -27,7 +27,7 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
   \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \ 'python': ['black','isort'],
+      \ 'python': ['nayvy#ale_fixer','black','isort'],
       \ 'java':['google_java_format'],
       \ 'lua' :['stylua'],
       \ 'sh' :['shfmt']
@@ -37,5 +37,5 @@ let g:ale_fixers = {
 
 
 
-"highlight clear ALEErrorSign'nayvy#ale_fixer'
+"highlight clear ALEErrorSign''
 highlight clear ALEWarningSign

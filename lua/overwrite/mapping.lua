@@ -21,6 +21,9 @@ end
 
 local keys = {
 
+  ["n|<C-p>"] = map_cr("<cmd>FineCmdline<CR>"):with_noremap():with_silent(),
+
+
   -- pack?
   -- ["n|<Leader>tr"]     = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
   -- ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
@@ -31,7 +34,7 @@ local keys = {
   ["n|<Leader>bb"] = map_cu("Clap buffers"):with_noremap():with_silent(),
   ["n|<Leader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
   ["n|<Leader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
-  -- ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
+  ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
   ["n|<Leader>ff"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
   -- ["n|<M-g>"] = map_cu("Clap gfiles"):with_noremap():with_silent(),
   ["n|<Leader>fw"] = map_cu("Clap grep ++query=<Cword>"):with_noremap():with_silent(),

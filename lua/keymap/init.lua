@@ -193,9 +193,8 @@ local plug_map = {
   ["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
   ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
 
-  ["v|<Leader>fr"] = map_cmd("<Plug>SnipRun"):with_silent(),
-  ["n|<Leader>fr"] = map_cmd("<Plug>SnipRunOperator"):with_silent(),
-  ["n|<Leader>sr"] = map_cmd("<Plug>SnipRun"):with_silent(),
+  ["v|<Leader>sr"] = map_cu("SnipRun<cr>"):with_noremap():with_silent(),
+  ["n|<Leader>sr"] = map_cu("SnipRun<cr>"):with_noremap():with_silent(),
 
   -- Alternate togller
   ["n|<Leader>ta"] = map_cr("ToggleAlternate"):with_noremap():with_silent(),
