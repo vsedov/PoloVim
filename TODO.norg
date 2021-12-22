@@ -1,0 +1,32 @@
+@document.meta
+  title: TODO
+  description:
+  authors: viv
+  categories:
+  created: 2021-12-22
+  version: 0.0.9
+@end
+
+
+
+* Table of Contents
+  -> [Introduction](#Introduction)
+  -> [TODO Priority](#Priority TODO)
+  -> [TODO Nice to have](#Nice to have)
+
+
+* Introduction
+  TODO : List of different things to do, and to reduce load time
+  GOAL : Reduce Startup time to 100ms
+
+* Priority TODO
+  - [-] LazyLoad Ale, and get Null-ls format working for certain files
+  - [-] Better StartUp Screen
+  - [-] Use Telescope for cursorline ?
+
+
+* Nice to have
+  - [-] Better UI
+  - [-] remove any uneeded, bad plugins
+  - [-] Discord presence is a bit odd sometimes it works o_o
+  - [-] Need to add Norg file for Binds/ Readme
