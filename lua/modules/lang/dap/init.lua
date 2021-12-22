@@ -76,9 +76,8 @@ local loader = require("packer").loader
 -- end
 
 M.prepare = function()
-  -- loader("nvim-dap")
-  -- loader("nvim-dap-ui")
-  -- loader("nvim-dap-virtual-text")
+  loader("nvim-dap-ui")
+  loader("nvim-dap-virtual-text")
 
   require("nvim-dap-virtual-text").setup({
     enabled = true, -- enable this plugin (the default)
@@ -105,8 +104,13 @@ M.prepare = function()
     dap_install.config(debugger)
   end
 
-  require("dap-python").setup("/bin/python")
-  require("dap-python").test_runner = "pytest"
+  if vim.bo.filetype == "python" then
+    loader("nvim-dap-python")
+    require("dap-python").setup("/bin/python")
+    require("dap-python").test_runner = "pytest"
+
+  end
+
 
   require("dapui").setup({
     icons = { expanded = "▾", collapsed = "▸" },

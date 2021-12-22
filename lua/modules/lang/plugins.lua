@@ -108,10 +108,10 @@ lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 
 lang["mfussenegger/nvim-dap"] = {
   requires = {
-    { "theHamsta/nvim-dap-virtual-text" },
-    { "mfussenegger/nvim-dap-python"},
-    { "rcarriga/nvim-dap-ui" },
-    { "Pocco81/DAPInstall.nvim"},
+    { "theHamsta/nvim-dap-virtual-text", opt = true },
+    { "mfussenegger/nvim-dap-python", ft = "python"},
+    { "rcarriga/nvim-dap-ui", opt = true },
+    { "Pocco81/DAPInstall.nvim"}, -- Not sue what to do with this.
   },
 
   run = ":UpdateRemotePlugins",
