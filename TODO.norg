@@ -21,6 +21,8 @@
 
 * Priority TODO
   - [-] LazyLoad Ale, and get Null-ls format working for certain files
+    - [=] Lazy Load Ale
+    - [=] Lazy Load Ale with Null-ls
   - [-] Better StartUp Screen
   - [-] Use Telescope for cursorline ?
 
