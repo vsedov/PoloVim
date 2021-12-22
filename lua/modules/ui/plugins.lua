@@ -76,7 +76,7 @@ ui["folke/tokyonight.nvim"] = {
   opt = true,
   setup = conf.tokyonight,
   config = function()
-    -- vim.cmd [[hi CursorLine guibg=#353644]]
+    vim.cmd [[hi CursorLine guibg=#353644]]
     vim.cmd([[colorscheme tokyonight]])
   end,
 }
@@ -93,7 +93,7 @@ ui["https://github.com/numToStr/Sakura.nvim"] = {
   opt = true,
   config = function()
     vim.cmd([[colorscheme sakura]])
-    vim.cmd([[hi TSCurrentScope guibg=#282338]])
+    -- vim.cmd([[hi TSCurrentScope guibg=#282338]])
   end,
 }
 
