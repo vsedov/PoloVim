@@ -29,7 +29,9 @@ editor["kana/vim-niceblock"] = {
 -- Remove at any time if you dont want
 ------------------------------------------------------------------------------
 -- MOST IMPORTANT FEATURE OF THEM ALL, I APROVE OF THIS
-editor["rtakasuke/vim-neko"] = {}
+editor["rtakasuke/vim-neko"] = {
+  cmd = "Neko"
+}
 
 editor["tamton-aquib/duck.nvim"] = {
   config = function()

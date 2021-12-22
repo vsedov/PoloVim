@@ -224,6 +224,11 @@ end
 function config.sqls() end
 
 function config.sniprun()
+
+  if packer_plugins["nvim-notify"] then
+    vim.cmd([[packadd nvim-notify]])
+  end
+  require("telescope").load_extension("notify")
   require("sniprun").setup({
     selected_interpreters = {}, --# use those instead of the default for the current filetype
     repl_enable = {}, --# enable REPL-like behavior for the given interpreters

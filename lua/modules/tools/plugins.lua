@@ -111,7 +111,7 @@ tools["turbio/bracey.vim"] = {
 -- }
 
 tools["akinsho/toggleterm.nvim"] = {
-
+  opt = true, 
   config = function()
     require("modules.tools.toggleterm")
   end,
@@ -228,11 +228,13 @@ tools["kevinhwang91/nvim-bqf"] = {
   config = conf.bqf,
 }
 
-tools["vim-test/vim-test"] = {}
-
+tools["vim-test/vim-test"] = {
+  opt = true, 
+}
 -- I use allot of tddd, so i like using this, no need for this to be lazy loaded .
 tools["rcarriga/vim-ultest"] = {
-  requires = { "vim-test/vim-test" },
+  opt = true, 
+  requires = { "vim-test/vim-test"},
   run = ":UpdateRemotePlugins",
   config = conf.ultest,
 }
@@ -294,6 +296,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
 }
 
 tools["camspiers/animate.vim"] = {}
+
 tools["nvim-telescope/telescope-frecency.nvim"] = {
   keys = { "<M>", "<Leader><Leader><Leader>" },
   after = { "telescope.nvim" },
@@ -361,6 +364,7 @@ tools["relastle/vim-nayvy"] = {
 
 -- Dont know why, but i kinda enjoy this
 tools["sQVe/sort.nvim"] = {
+  cmd = "Sort",
   config = function()
     require("sort").setup({
       -- Input configuration here.

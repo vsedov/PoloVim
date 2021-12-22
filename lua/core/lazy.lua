@@ -8,7 +8,7 @@ function Lazyload()
     "tokyonight.nvim",
     "nvim",
     "Sakura.nvim",
-
+    "kanagawa.nvim"
     -- TODO Add more themes
   }
 
@@ -169,7 +169,7 @@ vim.cmd([[hi LineNr guifg=#505068]])
 vim.defer_fn(function()
   local loader = require("packer").loader
   loader("telescope.nvim telescope-zoxide project.nvim nvim-neoclip.lua")
-  loader("harpoon")
+  loader("neogen harpoon")
   loader("windline.nvim")
   require("modules.ui.eviline")
   require("wlfloatline").setup()

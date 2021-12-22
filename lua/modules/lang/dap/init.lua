@@ -76,9 +76,9 @@ local loader = require("packer").loader
 -- end
 
 M.prepare = function()
-  loader("nvim-dap")
-  loader("nvim-dap-ui")
-  loader("nvim-dap-virtual-text")
+  -- loader("nvim-dap")
+  -- loader("nvim-dap-ui")
+  -- loader("nvim-dap-virtual-text")
 
   require("nvim-dap-virtual-text").setup({
     enabled = true, -- enable this plugin (the default)

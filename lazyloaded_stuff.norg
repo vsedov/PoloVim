@@ -1,0 +1,8 @@
+@document.meta
+  title: lazyloaded_stuff
+  description:
+  authors: viv
+  categories:
+  created: 2021-12-22
+  version: 0.0.9
+@end

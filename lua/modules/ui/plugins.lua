@@ -97,6 +97,16 @@ ui["https://github.com/numToStr/Sakura.nvim"] = {
   end,
 }
 
+ui["rebelot/kanagawa.nvim"]={
+  opt = true, 
+  setup = conf.kanagawa,
+  config = function()
+    vim.cmd([[colorscheme kanagawa]])
+    vim.cmd([[hi TSCurrentScope guibg=NONE]])
+
+  end
+}
+
 ui["projekt0n/github-nvim-theme"] = {
   opt = true,
   config = function()
@@ -140,6 +150,8 @@ ui["kazhala/close-buffers.nvim"] = {
   config = conf.buffers_close,
 }
 
-ui["mhinz/vim-sayonara"] = {}
+ui["mhinz/vim-sayonara"] = {
+  cmd = "Sayonara"
+}
 
 return ui

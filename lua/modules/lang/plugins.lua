@@ -27,12 +27,12 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
 lang["RRethy/nvim-treesitter-textsubjects"] = { opt = true, config = conf.tsubject }
 
 -- Better plugin for this i think ,
--- lang['danymat/neogen'] = {
---   opt = true,
---   config = function()
---     require("neogen").setup({enabled = true})
---   end
--- }
+lang['danymat/neogen'] = {
+  opt = true,
+  config = function()
+    require("neogen").setup({enabled = true})
+  end
+}
 
 lang["ThePrimeagen/refactoring.nvim"] = {
   opt = true,
@@ -109,9 +109,9 @@ lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 lang["mfussenegger/nvim-dap"] = {
   requires = {
     { "theHamsta/nvim-dap-virtual-text" },
-    { "mfussenegger/nvim-dap-python" },
+    { "mfussenegger/nvim-dap-python"},
     { "rcarriga/nvim-dap-ui" },
-    { "Pocco81/DAPInstall.nvim" },
+    { "Pocco81/DAPInstall.nvim"},
   },
 
   run = ":UpdateRemotePlugins",
@@ -127,6 +127,12 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
   requires = { "telescope.nvim", "nvim-dap" },
   config = conf.dap,
 }
+
+
+  -- loader("nvim-dap")
+  -- loader("nvim-dap-ui")
+  -- loader("nvim-dap-virtual-text")
+
 
 lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
@@ -150,7 +156,10 @@ lang["dccsillag/magma-nvim"] = {
   end,
 }
 
+-- Lazy Loading nvim-notify
 lang["rcarriga/nvim-notify"] = {
+  requires = "telescope.nvim", 
+  opt = true, 
   config = conf.nvim_notify,
 }
 
@@ -216,13 +225,16 @@ lang["BenGH28/neo-runner.nvim"] = {
 
 lang["is0n/jaq-nvim"] = {
   opt = true,
+  cmd = "Jaq",
   config = conf.jaq,
 }
 
-lang["kkoomen/vim-doge"] = {
-  config = conf.doge,
-  run = ":call doge#install()",
-}
+-- Might use neogen
+-- lang["kkoomen/vim-doge"] = {
+--   opt = true,
+--   config = conf.doge,
+--   run = ":call doge#install()",
+-- }
 
 lang["ldelossa/calltree.nvim"] = {
   cmd = { "CTExpand", "CTCollapse", "CTSwitch", "CTJump", "CTFocus" },
