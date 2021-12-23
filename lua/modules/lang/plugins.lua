@@ -27,11 +27,11 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
 lang["RRethy/nvim-treesitter-textsubjects"] = { opt = true, config = conf.tsubject }
 
 -- Better plugin for this i think ,
-lang['danymat/neogen'] = {
+lang["danymat/neogen"] = {
   opt = true,
   config = function()
-    require("neogen").setup({enabled = true})
-  end
+    require("neogen").setup({ enabled = true })
+  end,
 }
 
 lang["ThePrimeagen/refactoring.nvim"] = {
@@ -109,9 +109,9 @@ lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 lang["mfussenegger/nvim-dap"] = {
   requires = {
     { "theHamsta/nvim-dap-virtual-text", opt = true },
-    { "mfussenegger/nvim-dap-python", ft = "python"},
+    { "mfussenegger/nvim-dap-python", ft = "python" },
     { "rcarriga/nvim-dap-ui", opt = true },
-    { "Pocco81/DAPInstall.nvim"}, -- Not sue what to do with this
+    { "Pocco81/DAPInstall.nvim" }, -- Not sue what to do with this
   },
 
   run = ":UpdateRemotePlugins",
@@ -128,11 +128,9 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
   config = conf.dap,
 }
 
-
-  -- loader("nvim-dap")
-  -- loader("nvim-dap-ui")
-  -- loader("nvim-dap-virtual-text")
-
+-- loader("nvim-dap")
+-- loader("nvim-dap-ui")
+-- loader("nvim-dap-virtual-text")
 
 lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
@@ -158,8 +156,8 @@ lang["dccsillag/magma-nvim"] = {
 
 -- Lazy Loading nvim-notify
 lang["rcarriga/nvim-notify"] = {
-  opt = true, 
-  requires = "telescope.nvim", 
+  opt = true,
+  requires = "telescope.nvim",
   config = conf.nvim_notify,
 }
 

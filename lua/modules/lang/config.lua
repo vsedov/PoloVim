@@ -224,7 +224,6 @@ end
 function config.sqls() end
 
 function config.sniprun()
-
   if packer_plugins["nvim-notify"] then
     vim.cmd([[packadd nvim-notify]])
   end

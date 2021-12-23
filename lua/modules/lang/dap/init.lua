@@ -107,9 +107,7 @@ M.prepare = function()
     loader("nvim-dap-python")
     require("dap-python").setup("/bin/python")
     require("dap-python").test_runner = "pytest"
-
   end
-
 
   require("dapui").setup({
     icons = { expanded = "▾", collapsed = "▸" },
