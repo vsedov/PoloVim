@@ -98,10 +98,10 @@ local keys = {
   -- -- ["i|<M-m>"] = map_cu("Clap maps +mode=i | startinsert"),
   -- -- ["v|<M-m>"] = map_cu("Clap maps +mode=v | startinsert"),
 
-  -- -- ["n|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
-  -- -- ["i|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
-  -- ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
-  -- ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
+  ["n|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
+  ["i|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
+  ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
+  ["i|<C-df>"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
   -- -- ["n|<F2>"] = map_cr(""):with_expr(),
   -- ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
   -- ["n|<F9>"] = map_cr("GoBreakToggle"),
@@ -116,9 +116,9 @@ local keys = {
   ["n|<localleader>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
   ["n|<localleader>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
 
-  -- ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>"),
-  -- ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>"),
-  -- ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>"),
+  ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>"),
+  ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>"),
+  ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>"),
 
   ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 }
@@ -138,6 +138,9 @@ vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
 bind.nvim_load_mapping(keys)
 
 -- Run DebugOpen and then you run Debug
+
+
+vim.cmd([[command! -nargs=*  DuckStart lua require"modules.editor.config".launch_duck()]])
 
 vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]])
 vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
