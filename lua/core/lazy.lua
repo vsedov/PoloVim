@@ -1,13 +1,14 @@
 local loader = require("packer").loader
 _G.PLoader = loader
 function Lazyload()
+
   --
   math.randomseed(os.time())
   local themes = {
 
     "tokyonight.nvim",
     "nvim",
-    "Sakura.nvim",
+    -- "Sakura.nvim",
     "kanagawa.nvim"
     -- TODO Add more themes
   }
@@ -15,8 +16,11 @@ function Lazyload()
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
 
+  loader("lightspeed vim-repeat")
+
   loader(loading_theme)
-  --
+
+
   if vim.wo.diff then
     -- loader(plugins)
     lprint("diffmode")
@@ -100,6 +104,7 @@ function Lazyload()
     loader("guihua.lua")
     loader("Comment.nvim")
     loader("paperplanes.nvim")
+    loader("renamer.nvim")
 
     -- loader("navigator.lua")
   end
@@ -173,6 +178,5 @@ vim.defer_fn(function()
   loader("windline.nvim")
   require("modules.ui.eviline")
   require("wlfloatline").setup()
-  loader("nui.nvim fine-cmdline.nvim")
   loader("FTerm.nvim  vim-cursorword")
 end, lazy_timer + 100)
