@@ -181,11 +181,10 @@ completion["weilbith/nvim-code-action-menu"] = {
 }
 
 completion["dense-analysis/ale"] = {
+  -- Maybe just for python and C ? - not sure
   ft = {
     "python",
     "c",
-    "java",
-    "lua",
   },
   config = conf.ale,
 }
