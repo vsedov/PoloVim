@@ -76,7 +76,7 @@ ui["folke/tokyonight.nvim"] = {
   opt = true,
   setup = conf.tokyonight,
   config = function()
-    vim.cmd [[hi CursorLine guibg=#353644]]
+    vim.cmd([[hi CursorLine guibg=#353644]])
     vim.cmd([[colorscheme tokyonight]])
   end,
 }
@@ -97,14 +97,13 @@ ui["https://github.com/numToStr/Sakura.nvim"] = {
   end,
 }
 
-ui["rebelot/kanagawa.nvim"]={
-  opt = true, 
+ui["rebelot/kanagawa.nvim"] = {
+  opt = true,
   setup = conf.kanagawa,
   config = function()
     vim.cmd([[colorscheme kanagawa]])
     vim.cmd([[hi TSCurrentScope guibg=NONE]])
-
-  end
+  end,
 }
 
 ui["projekt0n/github-nvim-theme"] = {
@@ -147,12 +146,12 @@ ui["wiliamks/mechanical.nvim"] = {
 }
 
 ui["kazhala/close-buffers.nvim"] = {
-  cmd = {"BDelete", "BWipeout"},
+  cmd = { "BDelete", "BWipeout" },
   config = conf.buffers_close,
 }
 
 ui["mhinz/vim-sayonara"] = {
-  cmd = "Sayonara"
+  cmd = "Sayonara",
 }
 
 return ui

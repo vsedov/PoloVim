@@ -16,9 +16,9 @@
 
  - [ ] Lazy Load DAP
 
- - [ ]  toggle term has been moved to opt - this has to be lazy loaded properly
+ - [x]   toggle term has been moved to opt - this has to be lazy loaded properly
 
- - [ ]  Vim test and vim-utlest have been opt - i want to call a function for them to load for test file
+ - [x]   Vim test and vim-utlest have been opt - i want to call a function for them to load for test file
 
 * TODO
  - [-] Fix any errors

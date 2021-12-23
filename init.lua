@@ -14,15 +14,6 @@ augroup END
 )
 
 -- after everythign i called call utest runner
--- vim.api.nvim_exec(
---   [[
--- augroup UltestRunner
---     au!
---     au BufWritePost * UltestNearest
--- augroup END
--- ]],
---   false
--- )
 
 vim.api.nvim_exec(
   [[

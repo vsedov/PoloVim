@@ -255,7 +255,7 @@ function config.catppuccin()
   if not packer_plugins["nvim"].loaded then
     vim.cmd([[packadd nvim]])
   end
-  
+
   require("catppuccin").setup({
     transparent_background = false,
     term_colors = false,
@@ -312,27 +312,24 @@ function config.catppuccin()
 end
 
 function config.kanagawa()
-
-if not packer_plugins["kanagawa.nvim"].loaded then
-  vim.cmd([[packadd kanagawa.nvim]])
-end
-require('kanagawa').setup({
-    undercurl = true,           -- enable undercurls
+  if not packer_plugins["kanagawa.nvim"].loaded then
+    vim.cmd([[packadd kanagawa.nvim]])
+  end
+  require("kanagawa").setup({
+    undercurl = true, -- enable undercurls
     commentStyle = "italic",
     functionStyle = "NONE",
     keywordStyle = "italic",
     statementStyle = "bold",
     typeStyle = "NONE",
     variablebuiltinStyle = "italic",
-    specialReturn = true,       -- special highlight for the return keyword
-    specialException = true,    -- special highlight for exception handling keywords 
-    transparent = false,        -- do not set background color
+    specialReturn = true, -- special highlight for the return keyword
+    specialException = true, -- special highlight for exception handling keywords
+    transparent = false, -- do not set background color
     colors = {},
     overrides = {},
-})
-
+  })
 end
-
 
 function config.nightfly()
   vim.g.nightflyCursorColor = 1
