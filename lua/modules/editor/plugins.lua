@@ -29,28 +29,26 @@ editor["kana/vim-niceblock"] = {
 -- Remove at any time if you dont want
 ------------------------------------------------------------------------------
 -- MOST IMPORTANT FEATURE OF THEM ALL, I APROVE OF THIS
-editor["rtakasuke/vim-neko"] = {}
+editor["rtakasuke/vim-neko"] = {
+  cmd = "Neko",
+  opt = true,
+}
 
 editor["tamton-aquib/duck.nvim"] = {
-  config = function()
-    require("duck").setup({
-      winblend = 100, -- 0 to 100
-      speed = 1, -- optimal: 1 to 99
-      width = 2,
-    })
-
-    vim.api.nvim_set_keymap("n", "<leader><leader>dd", ':lua require("duck").hatch("🐼")<CR>', { noremap = true })
-    vim.api.nvim_set_keymap("n", "<leader><leader>dk", ':lua require("duck").cook("🐼")<CR>', { noremap = true })
-  end,
-}
-editor["https://github.com/raghavdoescode/nvim-owoifier"] = {
   opt = true,
+}
+editor["raghavdoescode/nvim-owoifier"] = {
+  cmd = "OWOify",
+  opt = true,
+  run = ":UpdateRemotePlugins",
 }
 ------------------------------------------------------------------------------
 
 -- I want this all the time - so im not lazy loading this .,
 editor["ggandor/lightspeed.nvim"] = {
-  requires = { "tpope/vim-repeat" },
+  as = "lightspeed",
+  opt = true,
+  requires = { "tpope/vim-repeat", opt = true },
   config = conf.lightspeed,
 }
 
@@ -111,7 +109,9 @@ editor["mg979/vim-visual-multi"] = {
   setup = conf.vmulti,
 }
 
-editor["https://github.com/LoricAndre/OneTerm.nvim.git"] = {
+-- Out of data, might not be great  ?
+editor["LoricAndre/OneTerm.nvim"] = {
+  opt = true,
   cmd = { "OneTerm" },
 }
 
@@ -124,17 +124,18 @@ editor["sudormrfbin/cheatsheet.nvim"] = {
   },
 }
 
+editor["itchyny/vim-cursorword"] = {
+  opt = true,
+  config = conf.vim_cursorwod,
+}
+
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {
   event = { "BufEnter", "BufRead" },
   config = conf.discord,
 }
 
-editor["itchyny/vim-cursorword"] = {
-  opt = true,
-  config = conf.vim_cursorwod,
-}
-
+--
 editor["https://github.com/numtostr/FTerm.nvim"] = {
   opt = true,
 
@@ -273,7 +274,7 @@ editor["folke/zen-mode.nvim"] = {
 }
 
 editor["nvim-neorg/neorg"] = {
-
+  -- requires = "nvim-lua/plenary.nvim",
   config = function()
     require("packer").loader("plenary.nvim")
     require("packer").loader("nvim-treesitter")
@@ -307,9 +308,9 @@ editor["famiu/bufdelete.nvim"] = {
 }
 
 editor["filipdutescu/renamer.nvim"] = {
+  opt = true,
   branch = "master",
   requires = { { "nvim-lua/plenary.nvim" } },
-
   config = function()
     local mappings_utils = require("renamer.mappings.utils")
     require("renamer").setup({
@@ -351,12 +352,16 @@ editor["filipdutescu/renamer.nvim"] = {
   end,
 }
 
-editor["raimon49/requirements.txt.vim"] = {}
+editor["raimon49/requirements.txt.vim"] = {
+  ft = { "requirements" },
+}
 
 -- This might not be needed
--- editor["kalekseev/vim-coverage.py"] = {
---   run = ":UpdateRemotePlugins",
--- }
+editor["mgedmin/coverage-highlight.vim"] = {
+  ft = "python",
+  opt = true,
+  run = ":UpdateRemotePlugins",
+}
 
 editor["max397574/better-escape.nvim"] = {
   config = function()
@@ -391,21 +396,16 @@ editor["zegervdv/nrpattern.nvim"] = {
   end,
 }
 
-editor["rmagatti/alternate-toggler"] = {}
-
--- nEed to add this or add something extra to this.
-editor["VonHeikemen/fine-cmdline.nvim"] = {
+editor["rmagatti/alternate-toggler"] = {
   opt = true,
-  requires = {
-    { "MunifTanjim/nui.nvim", opt = true },
-  },
+  cmd = "ToggleAlternate",
 }
 
 editor["jbyuki/nabla.nvim"] = {
   opt = true,
   ft = "norg",
-  requires = "nvim-lua/popup.nvim",
-  config = function() end,
+  requires = { "nvim-lua/popup.nvim" },
+  -- config = function() end,
 }
 
 return editor

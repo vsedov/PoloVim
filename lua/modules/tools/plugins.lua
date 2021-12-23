@@ -111,7 +111,7 @@ tools["turbio/bracey.vim"] = {
 -- }
 
 tools["akinsho/toggleterm.nvim"] = {
-
+  cmd = { "ToggleTerm", "ToggleTermToggleAll", "TermExec" },
   config = function()
     require("modules.tools.toggleterm")
   end,
@@ -228,13 +228,15 @@ tools["kevinhwang91/nvim-bqf"] = {
   config = conf.bqf,
 }
 
-tools["vim-test/vim-test"] = {}
+tools["vim-test/vim-test"] = {
+  opt = true,
+}
 
--- I use allot of tddd, so i like using this, no need for this to be lazy loaded .
 tools["rcarriga/vim-ultest"] = {
-  requires = { "vim-test/vim-test" },
+  requires = { "vim-test/vim-test", opt = true },
   run = ":UpdateRemotePlugins",
   config = conf.ultest,
+  opt = true,
 }
 
 -- lua require'telescope'.extensions.project.project{ display_type = 'full' }
@@ -293,7 +295,11 @@ tools["AckslD/nvim-neoclip.lua"] = {
   end,
 }
 
-tools["camspiers/animate.vim"] = {}
+-- This can be lazy loaded probably, figure out how ?
+tools["camspiers/animate.vim"] = {
+  opt = true,
+}
+
 tools["nvim-telescope/telescope-frecency.nvim"] = {
   keys = { "<M>", "<Leader><Leader><Leader>" },
   after = { "telescope.nvim" },
@@ -361,6 +367,7 @@ tools["relastle/vim-nayvy"] = {
 
 -- Dont know why, but i kinda enjoy this
 tools["sQVe/sort.nvim"] = {
+  cmd = "Sort",
   config = function()
     require("sort").setup({
       -- Input configuration here.

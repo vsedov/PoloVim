@@ -249,6 +249,11 @@ function config.telescope_preload()
   if not packer_plugins["plenary.nvim"].loaded then
     require("packer").loader("plenary.nvim")
   end
+
+  -- if not packer_plugins["telescope.nvim"].loaded then
+  --   require("packer").loader("telescope.nvim")
+  -- end
+
   -- if not packer_plugins["telescope-fzy-native.nvim"].loaded then
   --   require"packer".loader("telescope-fzy-native.nvim")
   -- end
@@ -295,7 +300,7 @@ function config.ale()
 
   vim.g.ale_disable_lsp = 1
 
-  vim.g.ale_lint_on_save = 1
+  vim.g.ale_lint_on_save = 0
 
   vim.g.ale_sign_error = ""
   vim.g.ale_sign_warning = ""

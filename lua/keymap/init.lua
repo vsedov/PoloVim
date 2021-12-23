@@ -40,6 +40,8 @@ local plug_map = {
   ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
   ["v|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
   ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
+ 
+
   ["n|<Leader>gD"] = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
 
   -- -- On n map commands
@@ -97,6 +99,8 @@ local plug_map = {
   ["n|<Leader>fzu"] = map_cr("Farundo"):with_noremap():with_silent(),
 
   -- -- Plugin Telescope
+  
+  ["v|<Leader>ga"] = map_cu("Telescope lsp_range_code_actions"):with_noremap():with_silent(),
 
   ["n|<Leader>fd"] = map_cu("Telescope dotfiles path=" .. os.getenv("HOME") .. "/.config/nvim")
     :with_noremap()

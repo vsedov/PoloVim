@@ -45,7 +45,7 @@ end
 
 local leader_map = function()
   vim.g.mapleader = " "
-  vim.g.maplocalleader = "\\"
+  vim.g.maplocalleader = "."
 
   vim.api.nvim_set_keymap("n", "<SPACE>", "<Nop>", { noremap = true })
 

@@ -92,7 +92,6 @@ completion["hrsh7th/nvim-cmp"] = {
     { "octaltree/cmp-look", after = "nvim-cmp", opt = true },
     -- {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp", opt=true },
     { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
-    -- {"tzachar/cmp-tabnine", opt = true}
   },
   config = conf.nvim_cmp,
 }
@@ -123,6 +122,7 @@ completion["nvim-telescope/telescope.nvim"] = {
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
     { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
+    { "rcarriga/nvim-notify", opt = true },
   },
   opt = true,
 }
@@ -175,12 +175,18 @@ completion["ray-x/lsp_signature.nvim"] = {
   end,
 }
 
+-- This too should also be lazy loaded
 completion["weilbith/nvim-code-action-menu"] = {
   cmd = "CodeActionMenu",
 }
 
 completion["dense-analysis/ale"] = {
-
+  ft = {
+    "python",
+    "c",
+    "java",
+    "lua",
+  },
   config = conf.ale,
 }
 

@@ -48,6 +48,11 @@ function config.refactor()
       end,
     }):find()
   end
+
+-- vim.api.nvim_set_keymap("v", "<Leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
+-- vim.api.nvim_set_keymap("v", "<Leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
+-- vim.api.nvim_set_keymap("v", "<Leader>rt", [[ <Esc><Cmd>lua M.refactors()<CR>]], {noremap = true, silent = true, expr = false})
+
 end
 
 function config.neorunner()
@@ -224,6 +229,9 @@ end
 function config.sqls() end
 
 function config.sniprun()
+  if packer_plugins["nvim-notify"] then
+    vim.cmd([[packadd nvim-notify]])
+  end
   require("sniprun").setup({
     selected_interpreters = {}, --# use those instead of the default for the current filetype
     repl_enable = {}, --# enable REPL-like behavior for the given interpreters
