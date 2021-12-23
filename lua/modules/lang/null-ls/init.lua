@@ -4,6 +4,7 @@ return {
     local lspconfig = require("lspconfig")
 
     local sources = {
+      -- null_ls.builtins.hover,
       null_ls.builtins.formatting.rustfmt,
       null_ls.builtins.diagnostics.yamllint,
       null_ls.builtins.code_actions.gitsigns,
@@ -71,8 +72,8 @@ return {
     if exist("flake8") then
       table.insert(
         sources,
-        null_ls.builtins.formatting.stylua.with({
-          extra_args = { "--extend-ignore=E800", "--format", "%(row)d:%(col)d:%(code)s:%(code)s: %(text)s", "%file" },
+        null_ls.builtins.diagnostics.flake8.with({
+          extra_args = { "--append-config", vim.fn.expand("~/.config/flake8")}
         })
       )
     end
@@ -111,5 +112,8 @@ return {
     }
 
     null_ls.setup(cfg)
+
   end,
+
+
 }

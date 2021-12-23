@@ -99,9 +99,12 @@ end
 vim.cmd("command! -nargs=0 LspLog call v:lua.open_lsp_log()")
 vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 
+
 local enhance_attach = function(client, bufnr)
+
   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
+
 
 lspconfig.gopls.setup({
   filetypes = { "go" },
