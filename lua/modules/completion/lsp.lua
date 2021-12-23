@@ -99,12 +99,9 @@ end
 vim.cmd("command! -nargs=0 LspLog call v:lua.open_lsp_log()")
 vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 
-
 local enhance_attach = function(client, bufnr)
-
   api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
-
 
 lspconfig.gopls.setup({
   filetypes = { "go" },
@@ -173,6 +170,13 @@ lspconfig.rust_analyzer.setup({
   capabilities = capabilities,
   on_attach = enhance_attach,
 })
+lspconfig.jdtls.setup({
+  cmd = { "jdtls" },
+  filetypes = {"java" },
+  on_attach = enhance_attach,
+  capabilities = capabilities,
+})
+-- lspconfig.jdtls.setup({ cmd = { "jdtls" } })
 
 lspconfig.sumneko_lua.setup({
   capabilities = capabilities,
@@ -256,5 +260,5 @@ lsp_installer.settings({
 lsp_installer.on_server_ready(function(server)
   local opts = {}
   server:setup(opts)
-  vim.cmd([[ do User LspAttachBuffers ]])
+  -- vim.cmd([[ do User LspAttachBuffers ]])
 end)

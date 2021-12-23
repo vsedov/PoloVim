@@ -257,5 +257,5 @@ return {
   treesitter_obj = treesitter_obj,
   treesitter_ref = treesitter_ref,
   textsubjects = textsubjects,
-  pyfold = pyfoldo,
+  -- pyfold = pyfoldo,
 }

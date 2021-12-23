@@ -31,7 +31,7 @@ local keys = {
   ["n|<Leader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
   ["n|<Leader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
   ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
-  ["n|<Leader>ff"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
+  ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
   -- ["n|<M-g>"] = map_cu("Clap gfiles"):with_noremap():with_silent(),
   ["n|<Leader>fw"] = map_cu("Clap grep ++query=<Cword>"):with_noremap():with_silent(),
   ["n|<M-h>"] = map_cu("Clap history"):with_noremap():with_silent(),
@@ -97,7 +97,6 @@ local keys = {
 
   ["n|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
   ["i|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
-  ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
   ["i|<C-df>"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
   -- -- ["n|<F2>"] = map_cr(""):with_expr(),
   -- ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),

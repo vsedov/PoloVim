@@ -184,7 +184,6 @@ completion["dense-analysis/ale"] = {
   -- Maybe just for python and C ? - not sure
   ft = {
     "python",
-    "c",
   },
   config = conf.ale,
 }
