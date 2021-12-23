@@ -63,7 +63,8 @@ local plug_map = {
 
 
 
-  -- -- Goto prev mapping
+  -- -- Goto prev mapping 
+  --- WARNING THERE COULD BE AN ISSUE WITH THIS>
   -- --
   ["n|gpd"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_definition()<CR>"):with_noremap(),
   ["n|gpi"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_implementation()<CR>"):with_noremap(),
