@@ -111,7 +111,7 @@ lang["mfussenegger/nvim-dap"] = {
     { "theHamsta/nvim-dap-virtual-text", opt = true },
     { "mfussenegger/nvim-dap-python", ft = "python"},
     { "rcarriga/nvim-dap-ui", opt = true },
-    { "Pocco81/DAPInstall.nvim"}, -- Not sue what to do with this.
+    { "Pocco81/DAPInstall.nvim"}, -- Not sue what to do with this
   },
 
   run = ":UpdateRemotePlugins",
@@ -158,8 +158,8 @@ lang["dccsillag/magma-nvim"] = {
 
 -- Lazy Loading nvim-notify
 lang["rcarriga/nvim-notify"] = {
-  requires = "telescope.nvim", 
   opt = true, 
+  requires = "telescope.nvim", 
   config = conf.nvim_notify,
 }
 
