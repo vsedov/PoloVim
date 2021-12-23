@@ -36,13 +36,11 @@ editor["rtakasuke/vim-neko"] = {
 
 editor["tamton-aquib/duck.nvim"] = {
   opt = true,
-
 }
 editor["raghavdoescode/nvim-owoifier"] = {
   cmd = "OWOify",
   opt = true,
-  run = ":UpdateRemotePlugins"
-
+  run = ":UpdateRemotePlugins",
 }
 ------------------------------------------------------------------------------
 
@@ -50,7 +48,7 @@ editor["raghavdoescode/nvim-owoifier"] = {
 editor["ggandor/lightspeed.nvim"] = {
   as = "lightspeed",
   opt = true,
-  requires = { "tpope/vim-repeat" , opt = true },
+  requires = { "tpope/vim-repeat", opt = true },
   config = conf.lightspeed,
 }
 
@@ -111,7 +109,6 @@ editor["mg979/vim-visual-multi"] = {
   setup = conf.vmulti,
 }
 
-
 -- Out of data, might not be great  ?
 editor["LoricAndre/OneTerm.nvim"] = {
   opt = true,
@@ -122,7 +119,7 @@ editor["sudormrfbin/cheatsheet.nvim"] = {
   cmd = { "Cheatsheet" },
   requires = {
     { "nvim-telescope/telescope.nvim" },
-    { "nvim-lua/popup.nvim"},
+    { "nvim-lua/popup.nvim" },
     { "nvim-lua/plenary.nvim" },
   },
 }
@@ -132,14 +129,13 @@ editor["itchyny/vim-cursorword"] = {
   config = conf.vim_cursorwod,
 }
 
-
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {
   event = { "BufEnter", "BufRead" },
   config = conf.discord,
 }
 
--- 
+--
 editor["https://github.com/numtostr/FTerm.nvim"] = {
   opt = true,
 
@@ -357,13 +353,13 @@ editor["filipdutescu/renamer.nvim"] = {
 }
 
 editor["raimon49/requirements.txt.vim"] = {
-  ft = {"requirements"}
+  ft = { "requirements" },
 }
 
 -- This might not be needed
 editor["mgedmin/coverage-highlight.vim"] = {
-  ft = "python", 
-  opt = true, 
+  ft = "python",
+  opt = true,
   run = ":UpdateRemotePlugins",
 }
 
@@ -401,15 +397,14 @@ editor["zegervdv/nrpattern.nvim"] = {
 }
 
 editor["rmagatti/alternate-toggler"] = {
-  opt = true, 
-  cmd = "ToggleAlternate"
-
+  opt = true,
+  cmd = "ToggleAlternate",
 }
 
 editor["jbyuki/nabla.nvim"] = {
   opt = true,
   ft = "norg",
-  requires = {"nvim-lua/popup.nvim"}
+  requires = { "nvim-lua/popup.nvim" },
   -- config = function() end,
 }
 
