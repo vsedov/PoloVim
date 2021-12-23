@@ -249,6 +249,12 @@ function config.telescope_preload()
   if not packer_plugins["plenary.nvim"].loaded then
     require("packer").loader("plenary.nvim")
   end
+
+  -- if not packer_plugins["telescope.nvim"].loaded then
+  --   require("packer").loader("telescope.nvim")
+  -- end
+
+
   -- if not packer_plugins["telescope-fzy-native.nvim"].loaded then
   --   require"packer".loader("telescope-fzy-native.nvim")
   -- end
