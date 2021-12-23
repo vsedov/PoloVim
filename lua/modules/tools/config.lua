@@ -429,39 +429,7 @@ function config.vim_test()
 end
 
 function config.ultest()
-  vim.g["test#python#pytest#executable"] = "pytest"
-
-  require("ultest").setup({
-    builders = {
-      ["python#pytest"] = function(cmd)
-        local non_modules = { "python", "pipenv", "poetry" }
-        -- Index of the python module to run the test.
-        local module
-        if vim.tbl_contains(non_modules, cmd[1]) then
-          module = cmd[3]
-        else
-          module = cmd[1]
-        end
-        -- Remaining elements are arguments to the module
-
-        return {
-          dap = {
-            type = "python",
-            request = "launch",
-            module = module,
-            args = args,
-            cwd = vim.fn.getcwd(),
-
-            pathMappings = {
-              {
-                localRoot = vim.fn.getcwd(), -- Wherever your Python code lives locally.
-              },
-            },
-          },
-        }
-      end,
-    },
-  })
+  require("modules.tools.testing")
 end
 
 function config.mkdp()

@@ -20,9 +20,6 @@ local t = function(str)
 end
 
 local keys = {
-
-  ["n|<C-p>"] = map_cr("<cmd>FineCmdline<CR>"):with_noremap():with_silent(),
-
   -- pack?
   -- ["n|<Leader>tr"]     = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
   -- ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
@@ -139,8 +136,11 @@ bind.nvim_load_mapping(keys)
 
 -- Run DebugOpen and then you run Debug
 
-
 vim.cmd([[command! -nargs=*  DuckStart lua require"modules.editor.config".launch_duck()]])
+
+-- Load Test Case - it will recognise test file - and you can run Template test and a nice
+-- Python test suit
+vim.cmd([[command! -nargs=*  TestStart lua require"modules.tools.testing".testStart()]])
 
 vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]])
 vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
