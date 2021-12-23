@@ -141,7 +141,6 @@ vim.cmd([[command! -nargs=*  DuckStart lua require"modules.editor.config".launch
 -- Load Test Case - it will recognise test file - and you can run Template test and a nice
 -- Python test suit
 vim.cmd([[command! -nargs=*  TestStart lua require"modules.tools.testing".testStart()]])
-
 vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]])
 vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
