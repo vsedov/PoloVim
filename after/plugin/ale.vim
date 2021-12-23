@@ -32,10 +32,3 @@ let g:ale_fixers = {
       \ 'lua' :['stylua'],
       \ 'sh' :['shfmt']
 \ }
-
-
-
-
-
-"highlight clear ALEErrorSign''
-highlight clear ALEWarningSign

@@ -34,9 +34,13 @@ lang["danymat/neogen"] = {
   end,
 }
 
+-- Inline functions dont seem to work . 
 lang["ThePrimeagen/refactoring.nvim"] = {
   opt = true,
-  requires = { { "nvim-lua/plenary.nvim" }, { "nvim-treesitter/nvim-treesitter" } },
+  requires = { 
+    { "nvim-lua/plenary.nvim" }, 
+    { "nvim-treesitter/nvim-treesitter" }
+  },
   config = conf.refactor,
 }
 
