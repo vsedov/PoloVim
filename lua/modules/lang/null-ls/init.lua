@@ -109,10 +109,15 @@ return {
         "package.json",
         "tsconfig.json"
       ),
+      on_attach = function(client)
+        -- I dont want any formating on python files.
+        if client.resolved_capabilities.document_formatting and vim.bo.filetype ~= "python" then
+          vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+        end
+      end,
     }
 
     null_ls.setup(cfg)
-
   end,
 
 
