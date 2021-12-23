@@ -6,7 +6,6 @@ local map_cr = bind.map_cr
 -- local map_cmd = bind.map_cmd
 -- local map_args = bind.map_args
 
-local dap = require("dap")
 local HOME = os.getenv("HOME")
 local dap_install = require("dap-install")
 local api = vim.api
@@ -20,7 +19,7 @@ local function keybind()
     ["n|<leader><F10>"] = map_cr('<cmd>lua require"dap".step_over()'):with_noremap():with_silent(),
     ["n|<leader><F11>"] = map_cr('<cmd>lua require"dap".step_into()'):with_noremap():with_silent(),
     ["n|<leader><F12>"] = map_cr('<cmd>lua require"dap".step_out()'):with_noremap():with_silent(),
-    ["n|<leader>ds"] = map_cr('<cmd>lua require"dap".stop()'):with_noremap():with_silent(),
+    ["n|<leader>ds"] = map_cr('<cmd>lua require"dap".close()'):with_noremap():with_silent(),
     ["n|<leader>dk"] = map_cr('<cmd>lua require"dap".up()'):with_noremap():with_silent(),
     ["n|<leader>dj"] = map_cr('<cmd>lua require"dap".down()'):with_noremap():with_silent(),
     ["n|<leader><F9>"] = map_cr('<cmd>lua require"dap".toggle_breakpoint()'):with_noremap():with_silent(),
