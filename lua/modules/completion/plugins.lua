@@ -122,9 +122,9 @@ completion["nvim-telescope/telescope.nvim"] = {
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
     { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
-    { "rcarriga/nvim-notify", opt = true}
+    { "rcarriga/nvim-notify", opt = true },
   },
-  opt = true
+  opt = true,
 }
 
 completion["mattn/emmet-vim"] = {
@@ -175,17 +175,16 @@ completion["ray-x/lsp_signature.nvim"] = {
   end,
 }
 
-
--- This too should also be lazy loaded 
+-- This too should also be lazy loaded
 completion["weilbith/nvim-code-action-menu"] = {
   cmd = "CodeActionMenu",
 }
 
 completion["dense-analysis/ale"] = {
   ft = {
-    "python", 
-    "c", 
-    "java", 
+    "python",
+    "c",
+    "java",
     "lua",
   },
   config = conf.ale,
