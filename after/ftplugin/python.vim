@@ -18,6 +18,8 @@ let g:SuperTabDefaultCompletionType='context'
 
 
 let g:test#strategy = "dispatch"
+
+
 let g:test#python#pytest#options = "--disable-warnings --color=yes"
 let g:test#python#runner = "pytest"
 
