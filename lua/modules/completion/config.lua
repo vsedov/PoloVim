@@ -298,7 +298,7 @@ function config.ale()
   vim.g.ale_keep_list_window_open = 1
   vim.g.ale_list_vertical = 0
 
-  vim.g.ale_disable_lsp = 1
+  vim.g.ale_disable_lsp = 0
 
   vim.g.ale_lint_on_save = 0
 

@@ -56,6 +56,12 @@ local plug_map = {
   -- Depreciated, need to recode this part up.
   ["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
   ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
+  ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
+  ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'):with_noremap():with_silent(),
+  ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".peek_definition()<CR>'):with_noremap():with_silent(),
+
+
+
 
   -- -- Goto prev mapping
   -- --
@@ -125,7 +131,7 @@ local plug_map = {
   ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
   --Nice finder
   ["n|<Leader><Leader><Leader>"] = map_cr(
-    '<cmd>lua require("telescope").extensions.frecency.frecency({ sorter = require("telescope").extensions.fzf.native_fzf_sorter() })'
+    '<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})'
   ):with_noremap():with_silent(),
   ["n|<F4>"] = map_cu("Telescope dap commands"):with_noremap():with_silent(),
 

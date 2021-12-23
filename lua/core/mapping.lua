@@ -14,7 +14,7 @@ local def_map = {
   ["n|[b"] = map_cu("bn"):with_noremap(),
 
   ["n|<Leader>w"] = map_cu("write"):with_noremap(),
-  ["n|<Leader>q"] = map_cmd(":q!<CR>"):with_noremap(),
+  ["n|<Leader>q"] = map_cr("Sayonara"):with_noremap(),
 
   ["n|<Space>cw"] = map_cu([[silent! keeppatterns %substitute/\s\+$//e]]):with_noremap():with_silent(),
 
