@@ -243,13 +243,13 @@ tools["rcarriga/vim-ultest"] = {
 tools["ahmedkhalf/project.nvim"] = {
   opt = true,
   after = { "telescope.nvim" },
-  keys = { "<M>", "<Leader>" },
+  -- keys = { "<M>", "<Leader>" },
   config = conf.project,
 }
 
 tools["jvgrootveld/telescope-zoxide"] = {
   opt = true,
-  keys = { "<M>", "<Leader>" },
+  -- keys = { "<M>", "<Leader>" },
   after = { "telescope.nvim" },
   config = function()
     require("utils.telescope")
@@ -259,7 +259,7 @@ tools["jvgrootveld/telescope-zoxide"] = {
 
 tools["AckslD/nvim-neoclip.lua"] = {
   opt = true,
-  keys = { "<M>", "<Leader>" },
+  -- keys = { "<M>", "<Leader>" },
   after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite" },
   config = function()

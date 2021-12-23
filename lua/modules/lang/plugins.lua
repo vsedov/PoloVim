@@ -44,8 +44,11 @@ lang["ThePrimeagen/refactoring.nvim"] = {
   config = conf.refactor,
 }
 
+
+-- This can be lazy loaded, without using Lazy, some other method , im sure of it .
 lang["rmagatti/goto-preview"] = {
   opt = true,
+  requires = "telescope.nvim",
   config = conf.goto_preview,
 }
 

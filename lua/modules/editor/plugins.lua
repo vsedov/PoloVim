@@ -26,6 +26,18 @@ editor["kana/vim-niceblock"] = {
   opt = true,
 }
 
+-- Yep Can be lazyly loaded lovely
+editor["folke/which-key.nvim"]={
+opt = true,
+after = "nvim-treesitter",
+config = function()
+   require("which-key").setup {}
+
+   --
+end
+
+}
+
 -- Remove at any time if you dont want
 ------------------------------------------------------------------------------
 -- MOST IMPORTANT FEATURE OF THEM ALL, I APROVE OF THIS
@@ -103,7 +115,6 @@ editor["mg979/vim-visual-multi"] = {
     "<C-LeftMouse>",
     "<M-LeftMouse>",
     "<M-C-RightMouse>",
-    "<Leader>",
   },
   opt = true,
   setup = conf.vmulti,
@@ -279,6 +290,7 @@ editor["nvim-neorg/neorg"] = {
     require("packer").loader("plenary.nvim")
     require("packer").loader("nvim-treesitter")
     require("packer").loader("telescope.nvim")
+    require("packer").loader("neorg-telescope")
 
     require("neorg").setup({
       -- Tell Neorg what modules to load
