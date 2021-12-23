@@ -17,10 +17,10 @@ if not packer_plugins["lsp-colors.nvim"].loaded then
 end
 
 vim.diagnostic.config({
-  virtual_text = false,
+  virtual_text = true,
   severity_sort = true,
   signs = true,
-  underline = true,
+  underline = false,
   update_in_insert = true,
   float = {
     focusable = true,
@@ -47,7 +47,7 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 })
 
 -- show diagnostics for current line
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
+-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
 -- show diagnostics for current position
 -- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
 
