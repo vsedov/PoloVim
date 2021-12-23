@@ -33,13 +33,12 @@
     - [?] Auto-session
     - [?] DAPInstall.nvim # Dont think this can be lazy loaded
     - [?] Telescope-dap ? Why is this not lazy loaded ?
-    - [?] close-buffers.nvim
     - [?] nvim-dap # Dont think this can be lazy loaded
-    - [?] popup.nvim
-    - [?] renamer.nvim
-    - [?] vim-repeat
 
- ** Should be lazy loaded
+ ** completed
+  - [x] close-buffers.nvim
+  - [x] renamer.nvim
+  - [x] vim-repeat
   - [x] Alternate-toggler
   - [x] Duck.nvim - Can be converted into a command im sure of it .
   - [x] Lightspeed
