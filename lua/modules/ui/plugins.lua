@@ -147,6 +147,7 @@ ui["wiliamks/mechanical.nvim"] = {
 }
 
 ui["kazhala/close-buffers.nvim"] = {
+  cmd = {"BDelete", "BWipeout"},
   config = conf.buffers_close,
 }
 

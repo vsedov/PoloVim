@@ -255,7 +255,7 @@ function config.catppuccin()
   if not packer_plugins["nvim"].loaded then
     vim.cmd([[packadd nvim]])
   end
-
+  
   require("catppuccin").setup({
     transparent_background = false,
     term_colors = false,
