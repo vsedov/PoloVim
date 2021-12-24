@@ -20,17 +20,20 @@
   GOAL : Reduce Startup time to 100ms
 
 * Priority TODO
-  - [-] LazyLoad Ale, and get Null-ls format working for certain files
-    - [=] Lazy Load Ale
-    - [=] Lazy Load Ale with Null-ls
-  - [-] Better StartUp Screen
-  - [-] Use Telescope for cursorline ?
+  - [x] LazyLoad Ale, and get Null-ls format working for certain files
+    - [x]  Lazy Load Ale
+    - [x] Lazy Load Ale with Null-ls
+  - [=] Better StartUp Screen
+  - [ ] New readme.md
+  - [ ] Update whichk key - value pairs used
+  - [ ] update cmp - nice floating window, but color is not the same, need to fix that
+  - [ ] Fix neorg files being a bit lagy on input : better escape and other plugins causing issues
 
 
 * Nice to have
-  - [-] Use Which Key
+  - [x]  Use Which Key
   - [-] Have norg documentation - Something like doom-nvim
-  - [-] Better UI
-  - [-] remove any uneeded, bad plugins
-  - [-] Discord presence is a bit odd sometimes it works o_o
+  - [?] Better UI
+  - [x] remove any uneeded, bad plugins
+  - [x] Discord presence is a bit odd sometimes it works o_o
   - [-] Need to add Norg file for Binds/ Readme
