@@ -248,6 +248,12 @@ lang["ldelossa/calltree.nvim"] = {
   end,
 }
 
-lang["jose-elias-alvarez/null-ls.nvim"] = { opt = true, config = require("modules.lang.null-ls").config }
+lang["jose-elias-alvarez/null-ls.nvim"] = { 
+  opt = true, 
+  event="InsertEnter",
+  config = require("modules.lang.null-ls").config,
+
+
+}
 
 return lang

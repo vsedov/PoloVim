@@ -78,6 +78,22 @@ return {
       )
     end
 
+    if exist("clang-format") then 
+      table.insert(
+        sources,
+        null_ls.builtins.formatting.clang_format
+      )
+    end
+
+    if exitst("cppcheck") then 
+        table.insert(
+        sources,
+        null_ls.builtins.diagnostics.cppcheck
+      )
+    end 
+
+
+
     table.insert(sources, null_ls.builtins.formatting.trim_newlines)
     table.insert(sources, null_ls.builtins.formatting.trim_whitespace)
 
@@ -112,7 +128,7 @@ return {
       on_attach = function(client)
         -- I dont want any formating on python files.
         if client.resolved_capabilities.document_formatting and vim.bo.filetype ~= "python" then
-          vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+          vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
         end
       end,
     }

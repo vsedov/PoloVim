@@ -45,14 +45,3 @@ augroup END
 ]],
   false
 )
-
-vim.api.nvim_exec(
-  [[
-augroup pythondebug
-  autocmd!
-  autocmd FileType python map <buffer> <Leader><C-S> :update<CR>:exec '!python' shellescape(@%, 1)<CR>
-  autocmd FileType python map <buffer> <Leader>dk :update<CR>:sp term://python -m pdb %<CR>
-augroup END
-]],
-  false
-)

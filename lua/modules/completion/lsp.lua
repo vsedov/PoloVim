@@ -59,6 +59,8 @@ for type, icon in pairs(signs) do
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.offsetEncoding = { "utf-16" }
+
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -139,11 +141,14 @@ end
 local clangd_flags = {
   "--background-index",
   "--cross-file-rename",
+  "--offset-encoding=utf-16",
   "--clang-tidy-checks=clang-diagnostic-*,clang-analyzer-*,-*,bugprone*,modernize*,performance*,-modernize-pass-by-value,-modernize-use-auto,-modernize-use-using,-modernize-use-trailing-return-type",
 }
 
+
 lspconfig.clangd.setup({
   cmd = { "clangd", unpack(clangd_flags) },
+  filetypes = { "c", "cpp", "objc", "objcpp" },
   on_attach = enhance_attach,
   capabilities = capabilities,
 })
