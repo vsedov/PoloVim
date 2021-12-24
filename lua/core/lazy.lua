@@ -86,12 +86,11 @@ function Lazyload()
     loader("nvim-lspconfig") -- null-ls.nvim
     loader("lsp_signature.nvim")
     loader("goto-preview")
-    -- For the timem  null-ls does not work well with jdtls
-    if vim.bo.filetype ~= "java" then
-      loader("null-ls.nvim")
-    end
+    
+    loader("null-ls.nvim")
+    
     -- loader("code_runner.nvim")
-    loader("neo-runner.nvim jaq-nvim lspsaga.nvim")
+    loader("neo-runner.nvim jaq-nvim renamer.nvim") -- lspsaga.nvim
 
   end
 
