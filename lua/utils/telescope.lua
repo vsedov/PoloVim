@@ -170,7 +170,7 @@ M.theme = function(opts)
     width = 100,
     results_height = 15,
     results_width = 0.37,
-    border = false,
+    border = true,
     borderchars = {
       { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
@@ -306,9 +306,20 @@ end
 M.setup = function()
   telescope.setup({
     defaults = {
+      vimgrep_arguments = {
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+      },
       shorten_path = true,
-      prompt_prefix = "🙊",
+      prompt_prefix = "   ",
       layout_strategy = "flex",
+      entry_prefix = "  ",
+      initial_mode = "insert",
       layout_config = {
         prompt_position = "top",
         width = 0.9,
@@ -332,14 +343,27 @@ M.setup = function()
           flip_columns = 120,
         },
       },
+
+      file_sorter = require("telescope.sorters").get_fuzzy_file,
+      file_ignore_patterns = { "node_modules" },
+      generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+      path_display = { "truncate" },
+      winblend = 0,
+
+      border = true,
+      borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+      color_devicons = true,
+      use_less = true,
+      set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+
       sorting_strategy = "ascending",
-      selection_strategy = "closest",
+      selection_strategy = "reset", -- closest
       scroll_strategy = "cycle",
-      selection_caret = [[🦑]],
       file_previewer = require("telescope.previewers").vim_buffer_cat.new,
       grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
       qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
       extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
+      buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
       -- check telescoe/mappings.lua
       -- n<C-u/d> pageup/down in preview
       -- i <C-_> help keymap
@@ -355,7 +379,7 @@ M.setup = function()
             local height = vim.api.nvim_win_get_height(results_win)
             action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
           end,
-          ["<Space>"] = {
+          ["<localleader>"] = {
             actions.toggle_selection,
             type = "action",
             -- See https://github.com/nvim-telescope/telescope.nvim/pull/890
@@ -429,14 +453,29 @@ M.setup = function()
     -- Map all the below keybinds only when the "norg" mode is active
     keybinds.map_event_to_mode("norg", {
       n = { -- Bind keys in normal mode
-        { "<C-s>", "core.integrations.telescope.find_linkable" },
+        { "<c-s>", "core.integrations.telescope.find_linkable" },
+        { "<c-i>", "core.integrations.telescope.search_headings" },
       },
-
       i = { -- Bind in insert mode
-        { "<C-k>", "core.integrations.telescope.insert_link" },
+        { "<c-k>", "core.integrations.telescope.insert_link" },
       },
     }, { silent = true, noremap = true })
   end)
 end
+-- map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
+
+local fg = require("utils.ui_utils").fg
+-- local fg_bg = require("utils.ui_utils").fg_bg
+local bg = require("utils.ui_utils").bg
+
+-- telescope
+-- bg("TelescopeBorder", "NONE")
+-- bg("TelescopePrompt", "NONE")
+-- bg("TelescopeResults", "NONE")
+-- bg("TelescopePromptBorder", "NONE")
+-- bg("TelescopePromptNormal", "NONE")
+-- bg("TelescopeNormal", "NONE")
+-- bg("TelescopePromptPrefix", "NONE")
+-- fg("TelescopeBorder", "NONE")
 
 return M
