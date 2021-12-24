@@ -462,20 +462,4 @@ M.setup = function()
     }, { silent = true, noremap = true })
   end)
 end
--- map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
-
-local fg = require("utils.ui_utils").fg
--- local fg_bg = require("utils.ui_utils").fg_bg
-local bg = require("utils.ui_utils").bg
-
--- telescope
--- bg("TelescopeBorder", "NONE")
--- bg("TelescopePrompt", "NONE")
--- bg("TelescopeResults", "NONE")
--- bg("TelescopePromptBorder", "NONE")
--- bg("TelescopePromptNormal", "NONE")
--- bg("TelescopeNormal", "NONE")
--- bg("TelescopePromptPrefix", "NONE")
--- fg("TelescopeBorder", "NONE")
-
 return M
