@@ -27,15 +27,14 @@ editor["kana/vim-niceblock"] = {
 }
 
 -- Yep Can be lazyly loaded lovely
-editor["folke/which-key.nvim"]={
-opt = true,
-after = "nvim-treesitter",
-config = function()
-   require("which-key").setup {}
+editor["folke/which-key.nvim"] = {
+  opt = true,
+  after = "nvim-treesitter",
+  config = function()
+    require("which-key").setup({})
 
-   --
-end
-
+    --
+  end,
 }
 
 -- Remove at any time if you dont want
@@ -278,37 +277,15 @@ editor["chaoren/vim-wordmotion"] = {
 
 editor["folke/zen-mode.nvim"] = {
   opt = true,
+  requires = { "folke/twilight.nvim", opt = true, config = conf.twilight },
   cmd = { "ZenMode" },
-  config = function()
-    require("zen-mode").setup({})
-  end,
+  config = conf.zen,
 }
 
 editor["nvim-neorg/neorg"] = {
   -- requires = "nvim-lua/plenary.nvim",
   config = function()
-    require("packer").loader("plenary.nvim")
-    require("packer").loader("nvim-treesitter")
-    require("packer").loader("telescope.nvim")
-    require("packer").loader("neorg-telescope")
-
-    require("neorg").setup({
-      -- Tell Neorg what modules to load
-      load = {
-        ["core.defaults"] = {}, -- Load all the default modules
-        ["core.norg.concealer"] = {}, -- Allows for use of icons
-        ["core.norg.dirman"] = { -- Manage your directories with Neorg
-          config = { workspaces = { my_workspace = "~/neorg" } },
-        },
-        ["core.keybinds"] = { -- Configure core.keybinds
-          config = {
-            default_keybinds = true, -- Generate the default keybinds
-            neorg_leader = "<Leader>o", -- This is the default if unspecified
-          },
-        },
-        ["core.integrations.telescope"] = {}, -- Enable the telescope module
-      },
-    })
+    require("modules.editor.neorg")
   end,
 }
 
