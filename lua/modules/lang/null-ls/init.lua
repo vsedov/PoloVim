@@ -78,21 +78,13 @@ return {
       )
     end
 
-    if exist("clang-format") then 
-      table.insert(
-        sources,
-        null_ls.builtins.formatting.clang_format
-      )
+    if exist("clang-format") then
+      table.insert(sources, null_ls.builtins.formatting.clang_format)
     end
 
-    if exist("cppcheck") then 
-        table.insert(
-        sources,
-        null_ls.builtins.diagnostics.cppcheck
-      )
-    end 
-
-
+    if exist("cppcheck") then
+      table.insert(sources, null_ls.builtins.diagnostics.cppcheck)
+    end
 
     table.insert(sources, null_ls.builtins.formatting.trim_newlines)
     table.insert(sources, null_ls.builtins.formatting.trim_whitespace)
