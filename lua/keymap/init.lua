@@ -56,16 +56,28 @@ local plug_map = {
   -- Depreciated, need to recode this part up.
   ["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
   ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
-  ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
-  
-  ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
-  -- ["n|<localleader>d"] = map_cu("Lspsaga show_line_diagnostics"):with_noremap():with_silent(),
 
+  ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
   ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'):with_noremap():with_silent(),
   ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".peek_definition()<CR>'):with_noremap():with_silent(),
+  -- -- Rename Values
+  ["n|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
+  ["v|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
 
 
 
+--- 
+-- LSP SPAGA : 
+  -- Lines 51, 57, 58, 60 , 64 would have to be remaped to teh following . 
+--- 
+
+  -- ["n|<Leader>gr"] = map_cu("Lspsaga rename"):with_noremap():with_silent(),
+  -- ["n|K"] = map_cu("<cmd>Lspsaga hover_doc<cr>"):with_noremap():with_silent(),
+  -- ["n|[d"] = map_cmd("<cmd>Lspsaga diagnostic_jump_next()<CR>"):with_noremap():with_silent(),
+  -- ["n|]d"] = map_cmd("<cmd>Lspsaga diagnostic_jump_prev()<CR>"):with_noremap():with_silent(),
+  -- ["n|<localleader>d"] = map_cu("Lspsaga show_line_diagnostics"):with_noremap():with_silent(),
+  -- ["n|<C-u>"] = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>"),
+  -- ["n|<C-d>"] = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>"),
 
   -- -- Goto prev mapping 
   --- WARNING THERE COULD BE AN ISSUE WITH THIS>
@@ -75,9 +87,6 @@ local plug_map = {
   ["n|gP"] = map_cmd("<cmd>lua require('goto-preview').close_all_win()<CR>"):with_noremap(),
   ["n|gpr"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_references()<CR>"):with_noremap(),
 
-  -- -- Rename Values
-  ["n|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
-  ["v|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
 
   -- -- How to run some code .
   ["n|<Leader>r"] = map_cr("Jaq"):with_noremap():with_silent(),
