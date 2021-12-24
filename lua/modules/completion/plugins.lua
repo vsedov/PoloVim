@@ -11,7 +11,7 @@ completion["neovim/nvim-lspconfig"] = {
     { "tjdevries/nlua.nvim", opt = true },
     { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
-    { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga"}
+    { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
 
     -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
   },
@@ -21,7 +21,7 @@ completion["neovim/nvim-lspconfig"] = {
 
 -- Nice to have it back, but might stick with nvim-lsp version to see how it goes.
 -- completion["tami5/lspsaga.nvim"]={
---   -- opt = true, 
+--   -- opt = true,
 --   config = conf.saga
 -- }
 
@@ -74,7 +74,8 @@ else
 end
 
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
-completion["hrsh7th/nvim-cmp"] = {
+completion["Iron-E/nvim-cmp"] = {
+  branch = "feat/completion-menu-borders",
   -- opt = true,
   -- event = "InsertEnter", -- InsertCharPre
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
@@ -88,6 +89,7 @@ completion["hrsh7th/nvim-cmp"] = {
       config = conf.tabnine,
       opt = true,
     },
+    { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-calc", after = "nvim-cmp", opt = true },
@@ -120,7 +122,6 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 }
 
 completion["nvim-telescope/telescope.nvim"] = {
-  cmd = "Telescope",
   config = conf.telescope,
   setup = conf.telescope_preload,
   requires = {
@@ -168,8 +169,6 @@ completion["ray-x/lsp_signature.nvim"] = {
       fix_pos = false,
       -- floating_window_above_first = true,
       log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-      debug = plugin_debug(),
-      verbose = plugin_debug(),
       -- hi_parameter = "Search",
       zindex = 1002,
       timer_interval = 100,

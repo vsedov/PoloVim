@@ -40,7 +40,6 @@ local plug_map = {
   ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
   ["v|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
   ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
- 
 
   ["n|<Leader>gD"] = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
 
@@ -58,18 +57,34 @@ local plug_map = {
   ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
 
   ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
-  ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'):with_noremap():with_silent(),
-  ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".peek_definition()<CR>'):with_noremap():with_silent(),
+  ["n|<localleader>D"] = map_cmd(
+    '<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'
+  )
+    :with_noremap()
+    :with_silent(),
+  ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekDefinition()<CR>')
+    :with_noremap()
+    :with_silent(),
+
+
+  ["n|<localleader>dpt"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekTypeDefinition()<CR>')
+    :with_noremap()
+    :with_silent(),
+
+  ["n|<localleader>dpi"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekImplementation()<CR>')
+    :with_noremap()
+    :with_silent(),
+
+
+
   -- -- Rename Values
   ["n|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
   ["v|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
 
-
-
---- 
--- LSP SPAGA : 
-  -- Lines 51, 57, 58, 60 , 64 would have to be remaped to teh following . 
---- 
+  ---
+  -- LSP SPAGA :
+  -- Lines 51, 57, 58, 60 , 64 would have to be remaped to teh following .
+  ---
 
   -- ["n|<Leader>gr"] = map_cu("Lspsaga rename"):with_noremap():with_silent(),
   -- ["n|K"] = map_cu("<cmd>Lspsaga hover_doc<cr>"):with_noremap():with_silent(),
@@ -79,14 +94,13 @@ local plug_map = {
   -- ["n|<C-u>"] = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>"),
   -- ["n|<C-d>"] = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>"),
 
-  -- -- Goto prev mapping 
+  -- -- Goto prev mapping
   --- WARNING THERE COULD BE AN ISSUE WITH THIS>
   -- --
   ["n|gpd"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_definition()<CR>"):with_noremap(),
   ["n|gpi"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_implementation()<CR>"):with_noremap(),
   ["n|gP"] = map_cmd("<cmd>lua require('goto-preview').close_all_win()<CR>"):with_noremap(),
   ["n|gpr"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_references()<CR>"):with_noremap(),
-
 
   -- -- How to run some code .
   ["n|<Leader>r"] = map_cr("Jaq"):with_noremap():with_silent(),
@@ -119,7 +133,7 @@ local plug_map = {
   ["n|<Leader>fzu"] = map_cr("Farundo"):with_noremap():with_silent(),
 
   -- -- Plugin Telescope
-  
+
   ["v|<Leader>ga"] = map_cu("Telescope lsp_range_code_actions"):with_noremap():with_silent(),
 
   ["n|<Leader>fd"] = map_cu("Telescope dotfiles path=" .. os.getenv("HOME") .. "/.config/nvim")
@@ -161,7 +175,7 @@ local plug_map = {
   --     :with_expr(),
 
   -- LEgit have no clue what the D is her
-  ["n|<d-f>"] = map_cmd([[ ':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
+  ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
   ["in|<d-F>"] = map_cmd(
     [['<cmd> lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>' .  ' --type ' . &ft . ' ' . expand('<cword>')]]
   ):with_expr():with_silent(),
