@@ -7,7 +7,7 @@ else
   let g:loaded_fix_cursorhold_nvim = 'yes'
 endif
 
-let g:cursorhold_updatetime = get(g:, 'cursorhold_updatetime', &updatetime)
+let g:cursorhold_updatetime = 100
 let g:fix_cursorhold_nvim_timer = -1
 set eventignore+=CursorHold,CursorHoldI
 

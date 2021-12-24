@@ -59,6 +59,7 @@ tools["ThePrimeagen/harpoon"] = {
 
 -- tools["wellle/targets.vim"] = {}
 tools["TimUntersberger/neogit"] = {
+  opt = true, 
   cmd = { "Neogit" },
   config = function()
     local neogit = require("neogit")

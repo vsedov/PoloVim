@@ -85,7 +85,7 @@ return {
       )
     end
 
-    if exitst("cppcheck") then 
+    if exist("cppcheck") then 
         table.insert(
         sources,
         null_ls.builtins.diagnostics.cppcheck

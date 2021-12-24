@@ -91,8 +91,8 @@ function Lazyload()
       loader("null-ls.nvim")
     end
     -- loader("code_runner.nvim")
-    loader("neo-runner.nvim")
-    loader("jaq-nvim")
+    loader("neo-runner.nvim jaq-nvim lspsaga.nvim")
+
   end
 
   require("vscripts.cursorhold")
@@ -106,7 +106,6 @@ function Lazyload()
   if load_lsp or load_ts_plugins then
     loader("guihua.lua")
     loader("Comment.nvim")
-    loader("renamer.nvim")
     loader("FTerm.nvim  vim-cursorword")
     -- loader("navigator.lua")
   end

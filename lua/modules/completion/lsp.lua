@@ -17,7 +17,7 @@ if not packer_plugins["lsp-colors.nvim"].loaded then
 end
 
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = false,
   severity_sort = true,
   signs = true,
   underline = false,
@@ -39,17 +39,13 @@ vim.diagnostic.config({
   },
 })
 
+
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
   border = "single",
 })
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "single",
 })
-
--- show diagnostics for current line
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
--- show diagnostics for current position
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
 
 local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
 
@@ -87,6 +83,19 @@ capabilities.textDocument.codeAction = {
     },
   },
 }
+
+
+
+
+
+-- show diagnostics for current line
+-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
+-- show diagnostics for current position
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
+
+
+
+
 
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())

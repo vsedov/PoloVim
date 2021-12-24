@@ -57,6 +57,9 @@ local plug_map = {
   ["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
   ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
   ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
+  
+  ["n|<localleader>d"] = map_cu("Lspsaga show_line_diagnostics"):with_noremap():with_silent(),
+
   ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'):with_noremap():with_silent(),
   ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".peek_definition()<CR>'):with_noremap():with_silent(),
 
