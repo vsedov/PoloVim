@@ -258,7 +258,7 @@ function config.catppuccin()
 
   require("catppuccin").setup({
     transparent_background = false,
-    term_colors = false,
+    term_colors = true,
     styles = {
       comments = "italic",
       functions = "italic",
@@ -284,7 +284,7 @@ function config.catppuccin()
         },
       },
       lsp_trouble = true,
-      lsp_saga = false,
+      lsp_saga = true,
       gitgutter = true,
       gitsigns = true,
       telescope = true,
@@ -292,7 +292,7 @@ function config.catppuccin()
         enabled = true,
         show_root = true,
       },
-      which_key = false,
+      which_key = true,
       indent_blankline = {
         enabled = true,
         colored_indent_levels = true,
@@ -306,7 +306,7 @@ function config.catppuccin()
       markdown = false,
       lightspeed = true,
       ts_rainbow = true,
-      hop = true,
+      hop = false,
     },
   })
 end
