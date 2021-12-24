@@ -258,7 +258,7 @@ function config.catppuccin()
 
   require("catppuccin").setup({
     transparent_background = false,
-    term_colors = true,
+    term_colors = false,
     styles = {
       comments = "italic",
       functions = "italic",
