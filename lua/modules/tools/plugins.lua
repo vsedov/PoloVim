@@ -59,7 +59,7 @@ tools["ThePrimeagen/harpoon"] = {
 
 -- tools["wellle/targets.vim"] = {}
 tools["TimUntersberger/neogit"] = {
-  opt = true, 
+  opt = true,
   cmd = { "Neogit" },
   config = function()
     local neogit = require("neogit")
@@ -223,6 +223,7 @@ tools["rmagatti/session-lens"] = {
   end,
 }
 
+-- need quick fix
 tools["kevinhwang91/nvim-bqf"] = {
   opt = true,
   event = { "CmdlineEnter", "QuickfixCmdPre" },
