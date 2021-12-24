@@ -95,6 +95,7 @@ function Lazyload()
 
   require("vscripts.cursorhold")
   require("vscripts.tools")
+  require("utils.ui_overwrite")
   if load_ts_plugins then
     -- print('load ts plugins')
     loader("nvim-treesitter")
