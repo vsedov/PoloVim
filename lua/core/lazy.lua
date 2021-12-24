@@ -86,12 +86,11 @@ function Lazyload()
     loader("nvim-lspconfig") -- null-ls.nvim
     loader("lsp_signature.nvim")
     loader("goto-preview")
-    
+
     loader("null-ls.nvim")
-    
+
     -- loader("code_runner.nvim")
     loader("neo-runner.nvim jaq-nvim renamer.nvim") -- lspsaga.nvim
-
   end
 
   require("vscripts.cursorhold")
