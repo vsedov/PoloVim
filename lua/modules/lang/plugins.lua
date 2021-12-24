@@ -34,16 +34,15 @@ lang["danymat/neogen"] = {
   end,
 }
 
--- Inline functions dont seem to work . 
+-- Inline functions dont seem to work .
 lang["ThePrimeagen/refactoring.nvim"] = {
   opt = true,
-  requires = { 
-    { "nvim-lua/plenary.nvim" }, 
-    { "nvim-treesitter/nvim-treesitter" }
+  requires = {
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-treesitter/nvim-treesitter" },
   },
   config = conf.refactor,
 }
-
 
 -- This can be lazy loaded, without using Lazy, some other method , im sure of it .
 lang["rmagatti/goto-preview"] = {
@@ -248,12 +247,10 @@ lang["ldelossa/calltree.nvim"] = {
   end,
 }
 
-lang["jose-elias-alvarez/null-ls.nvim"] = { 
-  opt = true, 
-  event="InsertEnter",
+lang["jose-elias-alvarez/null-ls.nvim"] = {
+  opt = true,
+  event = "InsertEnter",
   config = require("modules.lang.null-ls").config,
-
-
 }
 
 return lang
