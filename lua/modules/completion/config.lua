@@ -145,7 +145,7 @@ function config.nvim_cmp()
   end
   cmp.setup({
     documentation = {
-      border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
     },
 
     snippet = {
@@ -156,7 +156,7 @@ function config.nvim_cmp()
       end,
     },
     completion = {
-      border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
       autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
       completeopt = "menu,menuone,noselect",
     },
