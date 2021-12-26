@@ -16,8 +16,6 @@ if not packer_plugins["lsp-colors.nvim"].loaded then
   vim.cmd([[packadd lsp-colors.nvim]])
 end
 
-
-
 vim.diagnostic.config({
   virtual_text = false,
   severity_sort = true,
@@ -52,15 +50,8 @@ local border = {
   { "│", "FloatBorder" },
 }
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover,
-  { border = border }
-)
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  { border = border }
-)
-
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 
 local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
 
@@ -76,8 +67,7 @@ capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
 capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-capabilities.textDocument.completion.completionItem.commitCharactersSupport =
-  true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
 capabilities.textDocument.completion.completionItem.tagSupport = {
   valueSet = { 1 },
 }
@@ -85,7 +75,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" },
 }
-
 
 capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = {
@@ -117,13 +106,10 @@ capabilities.textDocument.codeAction = {
 -- show diagnostics for current position
 -- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
 
-
 vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
 vim.cmd(
   [[au CursorHold,CursorHoldI  * lua vim.diagnostic.open_float(0, { focusable = true,scope = "cursor",source = "if_many",format = function(diagnostic) return require'modules.completion.lsp_support'.parse_diagnostic(diagnostic) end, header = {"Cursor Diagnostics:","DiagnosticHeader"}, prefix = function(diagnostic,i,total) local icon, highlight if diagnostic.severity == 1 then icon = ""; highlight ="DiagnosticError" elseif diagnostic.severity == 2 then icon = ""; highlight ="DiagnosticWarn" elseif diagnostic.severity == 3 then icon = ""; highlight ="DiagnosticInfo" elseif diagnostic.severity == 4 then icon = ""; highlight ="DiagnosticHint" end return i.."/"..total.." "..icon.."  ",highlight end})]]
 )
-
-
 
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())
