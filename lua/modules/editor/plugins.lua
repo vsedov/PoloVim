@@ -37,30 +37,29 @@ editor["folke/which-key.nvim"] = {
   end,
 }
 
--- Remove at any time if you dont want
-------------------------------------------------------------------------------
--- MOST IMPORTANT FEATURE OF THEM ALL, I APROVE OF THIS
-editor["rtakasuke/vim-neko"] = {
-  cmd = "Neko",
-  opt = true,
-}
-
-editor["tamton-aquib/duck.nvim"] = {
-  opt = true,
-}
-editor["raghavdoescode/nvim-owoifier"] = {
-  cmd = "OWOify",
-  opt = true,
-  run = ":UpdateRemotePlugins",
-}
-------------------------------------------------------------------------------
-
 -- I want this all the time - so im not lazy loading this .,
 editor["ggandor/lightspeed.nvim"] = {
   as = "lightspeed",
   opt = true,
   requires = { "tpope/vim-repeat", opt = true },
   config = conf.lightspeed,
+}
+
+-- maybe use later idk
+-- editor["hrsh7th/vim-seak"]={
+--   event = "CmdlineEnter",
+--   config = function()
+--     vim.g.seak_enabled = 1
+--     vim.api.nvim_command("cmap <C-j>  <Plug>(seak-select)")
+--   end
+-- }
+
+editor["phaazon/hop.nvim"] = {
+  as = "hop",
+  cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC", "HopPattern" },
+  config = function()
+    require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
+  end,
 }
 
 editor["tpope/vim-surround"] = {
@@ -353,6 +352,7 @@ editor["mgedmin/coverage-highlight.vim"] = {
 }
 
 editor["max397574/better-escape.nvim"] = {
+  event = "InsertEnter",
   config = function()
     require("better_escape").setup({
       timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
