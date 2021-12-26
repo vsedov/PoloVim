@@ -33,3 +33,4 @@ nnoremap <silent>       <Leader>ac :MagmaReevaluateCell<CR>
 
 nnoremap <silent> <Leader>ad :MagmaDelete<CR>
 nnoremap <silent> <Leader>ao :MagmaShowOutput<CR>
+
