@@ -7,7 +7,7 @@ function Lazyload()
 
     "tokyonight.nvim",
     "nvim",
-    -- "Sakura.nvim",
+    -- -- "Sakura.nvim",
     "kanagawa.nvim",
     -- TODO Add more themes
   }
