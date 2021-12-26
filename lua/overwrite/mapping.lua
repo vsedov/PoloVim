@@ -68,6 +68,17 @@ local keys = {
   ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
   ["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
+  -- These are nice
+  ["n|hA"] = map_cr("HopWord"),
+  ["n|hW"] = map_cr("HopWordBC"),
+  ["n|hw"] = map_cr("HopWordAC"),
+
+  ["n|g/"] = map_cr("HopLineStartAC"),
+  ["n|g?"] = map_cr("HopLineStartBC"),
+  ["n|/"] = map_cr("HopPattern"),
+
+  -- clap --
+
   -- ["xon|f"] = map_cmd("<cmd>lua  Line_ft('f')<cr>"),
   -- ["xon|F"] = map_cmd("<cmd>lua  Line_ft('F')<cr>"),
   -- ["xon|t"] = map_cmd("<cmd>lua  Line_ft('t')<cr>"),
@@ -133,9 +144,47 @@ vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
 --
 bind.nvim_load_mapping(keys)
 
+-- _G.Line_ft = function(a)
+
+--   -- check and load hop
+--   local loaded, hop = pcall(require, 'hop')
+--   if not loaded or not hop.initialized then
+--     require"packer".loader('hop')
+--     loaded, hop = pcall(require, 'hop')
+--   end
+--   if a == 'f' then
+--     require'hop'.hint_char1({
+--       direction = require'hop.hint'.HintDirection.AFTER_CURSOR,
+--       current_line_only = true,
+--       inclusive_jump = true
+--     })
+--   end
+--   if a == 'F' then
+--     require'hop'.hint_char1({
+--       direction = require'hop.hint'.HintDirection.BEFORE_CURSOR,
+--       current_line_only = true,
+--       inclusive_jump = true
+--     })
+--   end
+
+--   if a == 't' then
+--     require'hop'.hint_char1({
+--       direction = require'hop.hint'.HintDirection.AFTER_CURSOR,
+--       current_line_only = true
+--     })
+--   end
+--   if a == 'T' then
+--     require'hop'.hint_char1({
+--       direction = require'hop.hint'.HintDirection.BEFORE_CURSOR,
+--       current_line_only = true
+--     })
+--   end
+
+-- end
+
 -- Run DebugOpen and then you run Debug
 
-vim.cmd([[command! -nargs=*  DuckStart lua require"modules.editor.config".launch_duck()]])
+vim.cmd([[command! -nargs=*  DuckStart lua require"modules.useless.config".launch_duck()]])
 
 -- Load Test Case - it will recognise test file - and you can run Template test and a nice
 -- Python test suit
