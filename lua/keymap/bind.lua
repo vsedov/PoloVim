@@ -21,7 +21,7 @@ function rhs_options:map_cr(cmd_string)
 end
 
 function rhs_options:map_args(cmd_string)
-  self.cmd = (":%s<Space>"):format(cmd_string)
+  self.cmd = (":%s<localleader>"):format(cmd_string)
   return self
 end
 
