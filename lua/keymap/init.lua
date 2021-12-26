@@ -66,7 +66,6 @@ local plug_map = {
     :with_noremap()
     :with_silent(),
 
-
   ["n|<localleader>dpt"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekTypeDefinition()<CR>')
     :with_noremap()
     :with_silent(),
@@ -74,8 +73,6 @@ local plug_map = {
   ["n|<localleader>dpi"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekImplementation()<CR>')
     :with_noremap()
     :with_silent(),
-
-
 
   -- -- Rename Values
   ["n|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
