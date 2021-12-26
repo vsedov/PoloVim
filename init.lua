@@ -13,17 +13,6 @@ augroup END
   false
 )
 
--- after everythign i called call utest runner
-
-vim.api.nvim_exec(
-  [[
-augroup matchup_matchparen_highlight
-    autocmd!
-    autocmd ColorScheme * hi MatchParen guifg=purple
-augroup END
-]],
-  false
-)
 
 vim.api.nvim_exec(
   [[
@@ -35,13 +24,13 @@ augroup END
   false
 )
 
-vim.api.nvim_exec(
-  [[
-augroup AutoSaveFolds | autocmd!
-  autocmd BufWinLeave,BufLeave,BufWritePost ?* nested silent! mkview!
-  autocmd BufWinEnter ?* silent! loadview
-augroup END
+-- vim.api.nvim_exec(
+--   [[
+-- augroup AutoSaveFolds | autocmd!
+--   autocmd BufWinLeave,BufLeave,BufWritePost ?* nested silent! mkview!
+--   autocmd BufWinEnter ?* silent! loadview
+-- augroup END
 
-]],
-  false
-)
+-- ]],
+--   false
+-- )

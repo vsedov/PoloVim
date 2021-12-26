@@ -14,11 +14,9 @@ M.toggle_diagnostics_visibility = function()
   end
 end
 
-
 function M.parse_diagnostic(diagnostic)
-    return diagnostic.message
+  return diagnostic.message
 end
-
 
 function M.preview_location(location, context, before_context)
   -- location may be LocationLink or Location (more useful for the former)
@@ -41,11 +39,7 @@ function M.preview_location(location, context, before_context)
     false
   )
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  return vim.lsp.util.open_floating_preview(
-    contents,
-    filetype,
-    { border = "single" }
-  )
+  return vim.lsp.util.open_floating_preview(contents, filetype, { border = "single" })
 end
 
 function M.preview_location_callback(_, result)
@@ -54,15 +48,9 @@ function M.preview_location_callback(_, result)
     return nil
   end
   if vim.tbl_islist(result) then
-    M.floating_buf, M.floating_win = M.preview_location(
-      result[1],
-      context
-    )
+    M.floating_buf, M.floating_win = M.preview_location(result[1], context)
   else
-    M.floating_buf, M.floating_win = M.preview_location(
-      result,
-      context
-    )
+    M.floating_buf, M.floating_win = M.preview_location(result, context)
   end
 end
 
@@ -71,12 +59,7 @@ function M.PeekDefinition()
     vim.api.nvim_set_current_win(M.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(
-      0,
-      "textDocument/definition",
-      params,
-      M.preview_location_callback
-    )
+    return vim.lsp.buf_request(0, "textDocument/definition", params, M.preview_location_callback)
   end
 end
 
@@ -85,12 +68,7 @@ function M.PeekTypeDefinition()
     vim.api.nvim_set_current_win(M.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(
-      0,
-      "textDocument/typeDefinition",
-      params,
-      M.preview_location_callback
-    )
+    return vim.lsp.buf_request(0, "textDocument/typeDefinition", params, M.preview_location_callback)
   end
 end
 
@@ -99,14 +77,8 @@ function M.PeekImplementation()
     vim.api.nvim_set_current_win(M.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(
-      0,
-      "textDocument/implementation",
-      params,
-      M.preview_location_callback
-    )
+    return vim.lsp.buf_request(0, "textDocument/implementation", params, M.preview_location_callback)
   end
 end
-
 
 return M
