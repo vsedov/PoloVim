@@ -53,7 +53,7 @@ editor["ggandor/lightspeed.nvim"] = {
 --     vim.api.nvim_command("cmap <C-j>  <Plug>(seak-select)")
 --   end
 -- }
-
+editor['indianboy42/hop-extensions'] = {after = 'hop', opt = true}
 editor["phaazon/hop.nvim"] = {
   as = "hop",
   cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC", "HopPattern" },

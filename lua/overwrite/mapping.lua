@@ -28,18 +28,20 @@ local keys = {
   --
   ["n|<Leader>tc"] = map_cu("Clap colors"):with_noremap():with_silent(),
   ["n|<Leader>bb"] = map_cu("Clap buffers"):with_noremap():with_silent(),
-  ["n|<Leader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
-  ["n|<Leader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
+  ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
+  ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
   ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
   ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
   -- ["n|<M-g>"] = map_cu("Clap gfiles"):with_noremap():with_silent(),
-  ["n|<Leader>fw"] = map_cu("Clap grep ++query=<Cword>"):with_noremap():with_silent(),
   ["n|<M-h>"] = map_cu("Clap history"):with_noremap():with_silent(),
+  ["n|<Leader>fw"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
 
-  -- ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
+  ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
   -- ["n|<Leader>fl"] = map_cu("Clap loclist"):with_noremap():with_silent(),
   ["n|<Leader>fu"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
   ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
+  
+  -- Might use telescope ? 
   ["n|<Leader>fh"] = map_cu("Clap command_history"):with_noremap():with_silent(),
 
   ["n|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.hover()"):with_expr(),
@@ -53,11 +55,12 @@ local keys = {
   ["n|<Leader>v]"] = map_cu("Vista!!"):with_noremap():with_silent(),
 
   -- clap --
-  ["n|<d-C>"] = map_cu("Clap | startinsert"),
-  -- ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
+  -- ["n|<localleader-C>"] = map_cu("Clap | startinsert"),
+  -- ["i|<localleader-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
+  
+
   ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
   -- ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
-  -- ["n|<F9>"] = map_cr("GoBreakToggle"),
 
   -- Buffer Line
   ["n|<localleader>bth"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
@@ -68,14 +71,16 @@ local keys = {
   ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
   ["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
-  -- These are nice
-  ["n|hA"] = map_cr("HopWord"),
-  ["n|hW"] = map_cr("HopWordBC"),
-  ["n|hw"] = map_cr("HopWordAC"),
+  -- These are nice -- cant have these me
+  ["n|<A-a>"] = map_cr("HopWord"):with_silent(),
+  ["n|<A-w>"] = map_cr("HopWordBC"):with_silent(),
+  ["n|<A-W>"] = map_cr("HopWordAC"):with_silent(),
 
+  ["n|g£"] = map_cr("HopLine"),
   ["n|g/"] = map_cr("HopLineStartAC"),
   ["n|g?"] = map_cr("HopLineStartBC"),
-  ["n|/"] = map_cr("HopPattern"),
+  ["n|/"] = map_cr("HopPattern"), -- might change this .
+
 
   -- clap --
 
@@ -106,7 +111,7 @@ local keys = {
   -- -- ["i|<M-m>"] = map_cu("Clap maps +mode=i | startinsert"),
   -- -- ["v|<M-m>"] = map_cu("Clap maps +mode=v | startinsert"),
 
-  ["n|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
+  -- ["n|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
   ["i|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
   ["i|<C-df>"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
   -- -- ["n|<F2>"] = map_cr(""):with_expr(),
@@ -143,6 +148,21 @@ vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
 
 --
 bind.nvim_load_mapping(keys)
+
+-- _G.hop1 = function(ac)
+--   if packer_plugins['hop'].loaded ~= true then
+--     loader('hop')
+--   end
+--   if vim.fn.mode() == 's' then
+--     -- print(vim.fn.mode(), vim.fn.mode() == 's')
+--     return vim.cmd('exe "normal! i s"')
+--   end
+--   if ac == 1 then
+--     require'hop'.hint_char1({direction = require'hop.hint'.HintDirection.AFTER_CURSOR})
+--   else
+--     require'hop'.hint_char1({direction = require'hop.hint'.HintDirection.BEFORE_CURSOR})
+--   end
+-- end
 
 -- _G.Line_ft = function(a)
 
