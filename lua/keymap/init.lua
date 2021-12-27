@@ -139,7 +139,7 @@ local plug_map = {
   ["n|<Leader>qf"] = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
 
   ["n|<Leader>bb"] = map_cu("Telescope buffers"):with_noremap():with_silent(),
-  ["n|<Leader>fb"] = map_cu("Telescope file_browser"):with_noremap():with_silent(),
+  ["n|<Leader>fb"] = map_cmd('<cmd>lua require("utils.telescope").file_browser()<cr>'):with_noremap():with_silent(),
   ["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
   ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
   ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
@@ -156,12 +156,14 @@ local plug_map = {
   ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
   --Nice finder
   ["n|<Leader><Leader><Leader>"] = map_cr(
-    '<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})'
+    '<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})<CR>'
   ):with_noremap():with_silent(),
+
   ["n|<F4>"] = map_cu("Telescope dap commands"):with_noremap():with_silent(),
 
-  ["n|<Leader>fff"] = map_cu("Telescope find_files"):with_noremap():with_silent(),
-  ["in|<d-T>"] = map_cu("Telescope"):with_noremap():with_silent(),
+  ["n|<Leader>ff"] = map_cu("Telescope find_files"):with_noremap():with_silent(),
+
+  -- ["in|<d-T>"] = map_cu("Telescope"):with_noremap():with_silent(),
   ["in|<d-f>"] = map_cr("<cmd> lua require'telescope.builtin'.grep_string({defulat_text=vim.fn.expand('cword')})")
     :with_noremap()
     :with_silent(),
@@ -171,7 +173,7 @@ local plug_map = {
     :with_silent(),
   --     :with_expr(),
 
-  -- LEgit have no clue what the D is her
+  -- kitty / mac users, have a nice time >.< || will be changed
   ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
   ["in|<d-F>"] = map_cmd(
     [['<cmd> lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>' .  ' --type ' . &ft . ' ' . expand('<cword>')]]
