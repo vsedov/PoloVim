@@ -19,6 +19,7 @@ local function load_options()
     hidden = true,
     fileformats = "unix,mac,dos",
     magic = true,
+    -- autochdir = true, -- keep pwd the same as current buffer
     virtualedit = "block",
     encoding = "utf-8",
     viewoptions = "folds,cursor,curdir,slash,unix",
