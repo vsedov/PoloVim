@@ -232,14 +232,14 @@ function M.file_browser()
   require("telescope").load_extension("file_browser")
   local opts
 
-  opts = {
-    --   sorting_strategy = "ascending",
-    --   scroll_strategy = "cycle",
-    --   prompt_prefix = "  ",
-    --   layout_config = {
-    --     prompt_position = "top",
-    --   },
-  }
+  opts = themes.get_ivy({
+    sorting_strategy = "ascending",
+    scroll_strategy = "cycle",
+    prompt_prefix = "  ",
+    layout_config = {
+      prompt_position = "top",
+    },
+  })
   require("telescope").extensions.file_browser.file_browser(opts)
 end
 
