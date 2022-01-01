@@ -21,7 +21,7 @@ vim.diagnostic.config({
   severity_sort = true,
   signs = true,
   underline = true,
-  update_in_insert = true,
+  update_in_insert = false,
   float = {
     focusable = true,
     style = "minimal",
@@ -161,13 +161,14 @@ end
 --   filetypes = { "c", "cpp", "objc", "objcpp" },
 
 -- }
+
 local clangd_flags = {
   "--background-index",
   "--cross-file-rename",
   "--offset-encoding=utf-16",
   "--clang-tidy-checks=clang-diagnostic-*,clang-analyzer-*,-*,bugprone*,modernize*,performance*,-modernize-pass-by-value,-modernize-use-auto,-modernize-use-using,-modernize-use-trailing-return-type",
 }
-
+-- Need to configer this for xmake soon
 lspconfig.clangd.setup({
   cmd = { "clangd", unpack(clangd_flags) },
   filetypes = { "c", "cpp", "objc", "objcpp" },
