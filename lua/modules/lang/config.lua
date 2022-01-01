@@ -136,6 +136,10 @@ function config.doge()
 end
 
 function config.goto_preview()
+  vim.cmd([[command! -nargs=* GotoPrev lua require('goto-preview').goto_preview_definition()]])
+  vim.cmd([[command! -nargs=* GotoImp lua require('goto-preview').goto_preview_implementation()]])
+  vim.cmd([[command! -nargs=* GotoTel lua require('goto-preview').goto_preview_references()]])
+
   require("goto-preview").setup({
     width = 120, -- Width of the floating window
     height = 15, -- Height of the floating window
@@ -150,29 +154,6 @@ function config.goto_preview()
     dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
     force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
     bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
-  })
-end
-
-function config.nvim_notify()
-  require("notify").setup({
-    -- Animation style (see below for details)
-    stages = "fade_in_slide_out",
-
-    -- Default timeout for notifications
-    timeout = 5000,
-
-    -- For stages that change opacity this is treated as the highlight behind the window
-    -- Set this to either a highlight group or an RGB hex value e.g. "#000000"
-    background_colour = "#000000",
-
-    -- Icons for the different levels
-    icons = {
-      ERROR = "",
-      WARN = "",
-      INFO = "",
-      DEBUG = "",
-      TRACE = "✎",
-    },
   })
 end
 
@@ -241,10 +222,14 @@ end
 
 function config.sqls() end
 
+function config.ultest()
+  require("modules.lang.language_utils").testStart()
+end
+
+function config.magma()
+  vim.g.magma_automatically_open_output = false
+end
 function config.sniprun()
-  if packer_plugins["nvim-notify"] then
-    vim.cmd([[packadd nvim-notify]])
-  end
   require("sniprun").setup({
     selected_interpreters = {}, --# use those instead of the default for the current filetype
     repl_enable = {}, --# enable REPL-like behavior for the given interpreters
@@ -270,7 +255,6 @@ function config.sniprun()
     --# to workaround sniprun not being able to display anything
 
     borders = "single", --# display borders around floating windows
-    --# possible values are 'none', 'single', 'double', or 'shadow'
   })
 end
 
@@ -401,9 +385,37 @@ function config.playground()
   })
 end
 function config.luadev()
-  vim.cmd([[vmap <leader><leader>r <Plug>(Luadev-Run)]])
+  vim.cmd([[vmap <leader><leader>lr <Plug>(Luadev-Run)]])
 end
-function config.lua_dev() end
+
+function config.lua_dev()
+  local cfg = {
+    library = {
+      vimruntime = true, -- runtime path
+      types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+      plugins = true -- installed opt or start plugins in packpath
+      -- you can also specify the list of plugins to make available as a workspace library
+      -- plugins = { "nvim-treesitter", "plenary.nvim", "navigator" },
+    },
+    -- pass any additional options that will be merged in the final lsp config
+    lspconfig = {
+      -- cmd = {sumneko_binary},
+      -- on_attach = ...
+    }
+  }
+
+  local luadev = require("lua-dev").setup(cfg)
+  -- {
+  --   -- add any options here, or leave empty to use the default settings
+  --   -- lspconfig = {
+  --   --   cmd = {"lua-language-server"}
+  --   -- },
+  -- })
+  -- print(vim.inspect(luadev))
+  -- require('lspconfig').sumneko_lua.setup(luadev)
+end
+
+
 
 function config.go()
   require("go").setup({

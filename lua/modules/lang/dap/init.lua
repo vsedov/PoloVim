@@ -10,10 +10,11 @@ local HOME = os.getenv("HOME")
 local dap_install = require("dap-install")
 local api = vim.api
 
+-- TODO 
+-- need to fix debug files and binds, such that when i stop i get my olds binds back , 
 local function keybind()
   local keys = {
     -- DAP --
-    --
 
     ["n|<leader><F5>"] = map_cr('<cmd>lua require"dap".continue()'):with_noremap():with_silent(),
     ["n|<leader><F10>"] = map_cr('<cmd>lua require"dap".step_over()'):with_noremap():with_silent(),
@@ -49,11 +50,11 @@ local function keybind()
   local dap_keys = {
     -- DAP --
     -- run
-    ["n|r"] = map_cr('<cmd>lua require"go.dap".run()<CR>'):with_noremap():with_silent(),
+    -- ["n|r"] = map_cr('<cmd>lua require"go.dap".run()<CR>'):with_noremap():with_silent(),
     ["n|c"] = map_cr('<cmd>lua require"dap".continue()<CR>'):with_noremap():with_silent(),
     ["n|n"] = map_cr('<cmd>lua require"dap".step_over()<CR>'):with_noremap():with_silent(),
     ["n|s"] = map_cr('<cmd>lua require"dap".step_into()<CR>'):with_noremap():with_silent(),
-    ["n|o"] = map_cr('<cmd>lua require"dap".step_out()<CR>'):with_noremap():with_silent(),
+    -- ["n|o"] = map_cr('<cmd>lua require"dap".step_out()<CR>'):with_noremap():with_silent(),
     ["n|S"] = map_cr('<cmd>lua require"dap".stop()<CR>'):with_noremap():with_silent(),
     ["n|u"] = map_cr('<cmd>lua require"dap".up()<CR>'):with_noremap():with_silent(),
     ["n|D"] = map_cr('<cmd>lua require"dap".down()<CR>'):with_noremap():with_silent(),
@@ -70,44 +71,14 @@ end
 
 local loader = require("packer").loader
 
--- if ft == 'go' then
---   require('modules.lang.dap.go')
--- end
+if ft == 'go' then
+  require('modules.lang.dap.go')
+end
 
 M.prepare = function()
   loader("nvim-dap-ui")
   loader("nvim-dap-virtual-text")
 
-  require("nvim-dap-virtual-text").setup({
-    enabled = true, -- enable this plugin (the default)
-    enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did notify its termination)
-    highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-    highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-    show_stop_reason = true, -- show stop reason when stopped for exceptions
-    commented = false, -- prefix virtual text with comment string
-    -- experimental features:
-    virt_text_pos = "eol", -- position of virtual text, see :h nvim_buf_set_extmark()
-    all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-    virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
-    virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
-    -- e.g. 80 to position at column 80 see :h nvim_buf_set_extmark()
-  })
-
-  dap_install.setup({
-    installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-  })
-
-  local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
-
-  for _, debugger in ipairs(dbg_list) do
-    dap_install.config(debugger)
-  end
-
-  if vim.bo.filetype == "python" then
-    loader("nvim-dap-python")
-    require("dap-python").setup("/bin/python")
-    require("dap-python").test_runner = "pytest"
-  end
 
   require("dapui").setup({
     icons = { expanded = "▾", collapsed = "▸" },
@@ -160,6 +131,62 @@ M.prepare = function()
     dapui.close()
   end
 
+  require("nvim-dap-virtual-text").setup({
+    enabled = true, -- enable this plugin (the default)
+    enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did notify its termination)
+    highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+    highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+    show_stop_reason = true, -- show stop reason when stopped for exceptions
+    commented = false, -- prefix virtual text with comment string
+    -- experimental features:
+    virt_text_pos = "eol", -- position of virtual text, see :h nvim_buf_set_extmark()
+    all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+    virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
+    virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
+    -- e.g. 80 to position at column 80 see :h nvim_buf_set_extmark()
+  })
+
+  dap_install.setup({
+    installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+  })
+
+  local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+
+  for _, debugger in ipairs(dbg_list) do
+    dap_install.config(debugger)
+  end
+
+  if vim.bo.filetype == "python" then
+    loader("nvim-dap-python")
+    require("dap-python").setup("/bin/python")
+    require("dap-python").test_runner = "pytest"
+  end
+
+    local ft = vim.bo.filetype
+    print(ft)
+
+    if ft == 'lua' then
+      local keys = {
+        ["n|<F5>"] = map_cr('<cmd>lua require"osv".launch()'):with_noremap():with_silent(),
+        ["n|<F4>"] = map_cr('<cmd>lua require"dap".continue()'):with_noremap():with_silent()
+
+
+      }
+      bind.nvim_load_mapping(keys)
+      require('modules.lang.dap.lua')
+    end
+    if ft == 'rust' then
+      require('modules.lang.dap.lua')
+    end
+
+ if ft == 'typescript' or ft == 'javascript' then
+    print("debug prepare for js")
+    -- vim.cmd([[command! -nargs=*  Debug lua require"modules.lang.dap.jest".attach()]])
+    vim.cmd([[command! -nargs=*  DebugTest lua require"modules.lang.dap.jest".run(<f-args>)]])
+    require('modules.lang.dap.js')
+  end
+
+
   vim.cmd([[command! BPToggle lua require"dap".toggle_breakpoint()]])
 
   vim.cmd([[command! Debug lua require"modules.lang.dap".StartDbg()]])
@@ -168,6 +195,8 @@ M.prepare = function()
   require("dapui").setup()
   require("dapui").open()
 end
+
+
 
 M.StartDbg = function()
   -- body

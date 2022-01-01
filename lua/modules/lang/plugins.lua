@@ -9,10 +9,6 @@ lang["nathom/filetype.nvim"] = {
   end,
 }
 
-lang["pseewald/vim-anyfold"] = {
-  cmd = "AnyFoldActivate",
-}
-
 lang["nvim-treesitter/nvim-treesitter"] = {
   opt = true,
   config = conf.nvim_treesitter,
@@ -24,13 +20,31 @@ lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
   opt = true,
 }
 -- lang["eddiebergman/nvim-treesitter-pyfold"] = {config = conf.pyfold}
-lang["RRethy/nvim-treesitter-textsubjects"] = { opt = true, config = conf.tsubject }
+lang["RRethy/nvim-treesitter-textsubjects"] = {
+  ft = { "lua", "rust", "go", "python", "javascript" },
+  opt = true,
+  config = conf.tsubject,
+}
 
 -- Better plugin for this i think ,
 lang["danymat/neogen"] = {
   opt = true,
   config = function()
-    require("neogen").setup({ enabled = true })
+    require("neogen").setup({
+      enabled = true,
+      languages = {
+        lua = {
+          template = { annotation_convention = "emmylua" },
+        },
+        python = {
+          template = { annotation_convention = "numpydoc" },
+        },
+
+        c = {
+          template = { annotation_convention = "doxygen" },
+        },
+      },
+    })
   end,
 }
 
@@ -44,9 +58,9 @@ lang["ThePrimeagen/refactoring.nvim"] = {
   config = conf.refactor,
 }
 
--- This can be lazy loaded, without using Lazy, some other method , im sure of it .
+-- Yay gotopreview lazy loaded
 lang["rmagatti/goto-preview"] = {
-  opt = true,
+  cmd = { "GotoPrev", "GotoImp", "GotoTel" },
   requires = "telescope.nvim",
   config = conf.goto_preview,
 }
@@ -114,7 +128,7 @@ lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 
 lang["mfussenegger/nvim-dap"] = {
   requires = {
-    { "theHamsta/nvim-dap-virtual-text", opt = true },
+    { "theHamsta/nvim-dap-virtual-text",cmd = "Luadev",  opt = true },
     { "mfussenegger/nvim-dap-python", ft = "python" },
     { "rcarriga/nvim-dap-ui", opt = true },
     { "Pocco81/DAPInstall.nvim" }, -- Not sue what to do with this
@@ -129,22 +143,60 @@ lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
 lang["jbyuki/one-small-step-for-vimkind"] = { opt = true, ft = { "lua" } }
 
+lang["rafcamlet/nvim-luapad"]={
+  cmd = {"LuaRun", "Lua", "Luapad"},
+  ft = {"lua"}, 
+  config = function()
+    require('luapad').setup{
+      count_limit = 150000,
+      error_indicator = true,
+      eval_on_move = true,
+      error_highlight = 'WarningMsg',
+      on_init = function()
+        print 'Hello from Luapad!'
+      end,
+      context = {
+        the_answer = 42,
+        shout = function(str) return(string.upper(str) .. '!') end
+      }
+    }
+    end 
+}
+
 lang["nvim-telescope/telescope-dap.nvim"] = {
   requires = { "telescope.nvim", "nvim-dap" },
   config = conf.dap,
 }
 
--- loader("nvim-dap")
--- loader("nvim-dap-ui")
--- loader("nvim-dap-virtual-text")
-
 lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
 -- lang["RRethy/vim-illuminate"] = {opt=true, ft = {"go"}}
 
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
+lang["Shatur/neovim-cmake"] = {
+  opt = true,
+  ft = { "c", "cpp" },
+  requires = { { "nvim-lua/plenary.nvim" } },
+  after = { "telescope.nvim" },
+  config = function()
+    -- vim.cmd([[packadd nvim-dap]])
+    local Path = require("plenary.path")
+    require("cmake").setup({
+      type = "codelldb",
+      request = "launch",
+      stopOnEntry = false,
+      runInTerminal = true,
+    })
+  end,
+}
+
+--
 lang["michaelb/sniprun"] = {
   opt = true,
-  cmd = { "SnipRun", "'<,'>SnipRun" },
   run = "bash install.sh",
   requires = "rcarriga/nvim-notify",
   config = conf.sniprun,
@@ -152,20 +204,32 @@ lang["michaelb/sniprun"] = {
 
 lang["dccsillag/magma-nvim"] = {
   opt = true,
-  config = function()
-    if vim.o.ft == "python" or vim.o.ft == "py" then
-      local loader = require("packer").loader
-      loader("magma-nvim")
-    end
-  end,
+  requires = "rcarriga/nvim-notify",
+  run = ":UpdateRemotePlugins",
+  config = conf.magma,
 }
 
--- Lazy Loading nvim-notify
-lang["rcarriga/nvim-notify"] = {
+lang["vim-test/vim-test"] = {
   opt = true,
-  requires = "telescope.nvim",
-  config = conf.nvim_notify,
 }
+
+lang["rcarriga/vim-ultest"] = {
+  requires = { "vim-test/vim-test", opt = true },
+  run = ":UpdateRemotePlugins",
+  opt = true,
+}
+
+-- This might not be needed
+lang["mgedmin/coverage-highlight.vim"] = {
+  ft = "python",
+  opt = true,
+  run = ":UpdateRemotePlugins",
+}
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 -- JqxList and JqxQuery json browsing, format
 lang["gennaro-tedesco/nvim-jqx"] = { opt = true, cmd = { "JqxList", "JqxQuery" } }
@@ -199,15 +263,15 @@ lang["folke/trouble.nvim"] = {
   end,
 }
 
-lang["folke/todo-comments.nvim"] = {
-  cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
-  requires = "nvim-lua/plenary.nvim",
-  opt = true,
-  config = function()
-    require("todo-comments").setup({})
-  end,
-  after = "trouble.nvim",
-}
+-- lang["folke/todo-comments.nvim"] = {
+--   cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
+--   requires = "nvim-lua/plenary.nvim",
+--   opt = true,
+--   config = function()
+--     require("todo-comments").setup({})
+--   end,
+--   after = "trouble.nvim",
+-- }
 
 -- Can Gonna Use jaq for now ?
 -- lang["CRAG666/code_runner.nvim"] = {
@@ -233,19 +297,12 @@ lang["is0n/jaq-nvim"] = {
   config = conf.jaq,
 }
 
--- Might use neogen
--- lang["kkoomen/vim-doge"] = {
---   opt = true,
---   config = conf.doge,
---   run = ":call doge#install()",
+-- lang["ldelossa/calltree.nvim"] = {
+--   cmd = { "CTExpand", "CTCollapse", "CTSwitch", "CTJump", "CTFocus" },
+--   config = function()
+--     require("calltree").setup({})
+--   end,
 -- }
-
-lang["ldelossa/calltree.nvim"] = {
-  cmd = { "CTExpand", "CTCollapse", "CTSwitch", "CTJump", "CTFocus" },
-  config = function()
-    require("calltree").setup({})
-  end,
-}
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
   opt = true,
