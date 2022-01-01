@@ -108,14 +108,22 @@ return {
     --
     local cfg = {
       sources = sources,
-      debounce = 1000,
+      -- debounce = 1000,
+
       root_dir = require("lspconfig").util.root_pattern(
+        ".venv", -- for python
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "node_modules",
+        "xmake.lua",
+        "CMakeLists.txt",
         ".null-ls-root",
         "Makefile",
-        ".git",
-        "go.mod",
         "package.json",
-        "tsconfig.json"
+        "tsconfig.json",
+        ".git"
       ),
       on_attach = function(client)
         -- I dont want any formating on python files.
