@@ -73,6 +73,25 @@ else
   completion["ms-jpq/coq.artifacts"] = { opt = true }
 end
 
+completion["https://github.com/github/copilot.vim.git"] = {
+  event = "InsertEnter",
+  after = "nvim-cmp",
+  config = function()
+    vim.opt.completeopt = "menuone,noselect"
+
+    -- Have copilot play nice with nvim-cmp.
+    vim.g.copilot_no_tab_map = true
+    vim.g.copilot_assume_mapped = true
+    vim.g.copilot_tab_fallback = ""
+    local excluded_filetypes = { "norg", "nofile", "prompt" }
+    local copilot_filetypes = {}
+    for _, ft in pairs(excluded_filetypes) do
+      copilot_filetypes[ft] = false
+    end
+
+    vim.g["copilot_filetypes"] = copilot_filetypes
+  end,
+}
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 completion["Iron-E/nvim-cmp"] = {
   branch = "feat/completion-menu-borders",
@@ -81,7 +100,6 @@ completion["Iron-E/nvim-cmp"] = {
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
   after = { "LuaSnip" }, -- "nvim-snippy",
   requires = {
-    { "https://github.com/github/copilot.vim.git" },
     {
       "tzachar/cmp-tabnine",
       run = "./install.sh",
@@ -122,19 +140,23 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 }
 
 completion["nvim-telescope/telescope.nvim"] = {
+  cmd = "Telescope",
+  module = { "telescope", "utils.telescope" },
   config = conf.telescope,
   setup = conf.telescope_preload,
   requires = {
     { "nvim-neorg/neorg-telescope", opt = true },
     { "nvim-lua/plenary.nvim", opt = true },
-    { "nvim-telescope/telescope-file-browser.nvim", opt = true }, -- nvim-tree alternative ?
-    { "nvim-telescope/telescope-symbols.nvim", opt = true },
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
     { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
-    { "rcarriga/nvim-notify", opt = true },
   },
   opt = true,
+}
+
+completion["nvim-telescope/telescope-file-browser.nvim"] = {
+  opt = true,
+  after = "telescope.nvim",
 }
 
 completion["mattn/emmet-vim"] = {
@@ -165,7 +187,7 @@ completion["ray-x/lsp_signature.nvim"] = {
       bind = true,
       -- doc_lines = 4,
       toggle_key = "<C-x>",
-      floating_window = false,
+      floating_window = true,
       floating_window_above_cur_line = true,
       hint_enable = true,
       fix_pos = false,
