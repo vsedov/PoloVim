@@ -5,8 +5,8 @@ function Lazyload()
   math.randomseed(os.time())
   local themes = {
 
-    "tokyonight.nvim",
-    "nvim",
+    -- "tokyonight.nvim",
+    -- "nvim",
     -- -- "Sakura.nvim",
     "kanagawa.nvim",
     -- TODO Add more themes
@@ -85,17 +85,21 @@ function Lazyload()
   if load_lsp then
     loader("nvim-lspconfig") -- null-ls.nvim
     loader("lsp_signature.nvim")
-    loader("goto-preview")
-
-    loader("null-ls.nvim")
+    if use_nulls() then
+      loader("null-ls.nvim")
+    end
+    loader("refactoring.nvim") -- need to do the same thing for refactoring
+    -- loader("goto-preview")
 
     -- loader("code_runner.nvim")
-    loader("neo-runner.nvim jaq-nvim renamer.nvim") -- lspsaga.nvim
+    loader("neo-runner.nvim jaq-nvim") -- lspsaga.nvim --
+    loader("neogen") -- Load neogen only for active lsp servers
   end
 
   require("vscripts.cursorhold")
   require("vscripts.tools")
   require("utils.ui_overwrite")
+
   if load_ts_plugins then
     -- print('load ts plugins')
     loader("nvim-treesitter")
@@ -104,8 +108,9 @@ function Lazyload()
 
   if load_lsp or load_ts_plugins then
     loader("guihua.lua")
-    loader("Comment.nvim")
-    loader("FTerm.nvim  vim-cursorword")
+    -- loader("Comment.nvim")
+    loader("vim-cursorword")
+
     -- loader("navigator.lua")
   end
 
@@ -113,12 +118,13 @@ function Lazyload()
   if load_ts_plugins then
     plugins =
       "nvim-treesitter-textobjects  nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
-    loader(plugins)
+    -- loader(plugins)
     lprint(plugins)
-    -- nvim-treesitter-textobjects should be autoloaded
-    loader("refactoring.nvim")
+    -- nvim-treesitter-textobjects  | nvim-treesitter-refactor | nvim-treesitter-textsubjects  -- need to load t
     loader("indent-blankline.nvim")
   end
+
+  loader("nvim-notify popup.nvim")
 
   -- if load_ts_plugins and vim.bo.filetype == "python" then
   --   loader("nvim-treesitter-pyfold")
@@ -174,7 +180,7 @@ vim.cmd([[hi LineNr guifg=#505068]])
 vim.defer_fn(function()
   local loader = require("packer").loader
   loader("telescope.nvim telescope-zoxide project.nvim nvim-neoclip.lua")
-  loader("neogen harpoon")
+  loader("harpoon")
   loader("windline.nvim")
   require("modules.ui.eviline")
   require("wlfloatline").setup()

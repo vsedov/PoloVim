@@ -19,6 +19,16 @@ local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
+if vim.bo.filetype == "lua" then
+  local luakeys = { 
+  ["n|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+  ["v|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+  ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
+  }
+  bind.nvim_load_mapping(luakeys)
+end
+
+
 local keys = {
   -- pack?
   -- ["n|<Leader>tr"]     = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
@@ -40,8 +50,8 @@ local keys = {
   -- ["n|<Leader>fl"] = map_cu("Clap loclist"):with_noremap():with_silent(),
   ["n|<Leader>fu"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
   ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
-  
-  -- Might use telescope ? 
+
+  -- Might use telescope ?
   ["n|<Leader>fh"] = map_cu("Clap command_history"):with_noremap():with_silent(),
 
   ["n|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.hover()"):with_expr(),
@@ -57,7 +67,6 @@ local keys = {
   -- clap --
   -- ["n|<localleader-C>"] = map_cu("Clap | startinsert"),
   -- ["i|<localleader-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
-  
 
   ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
   -- ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
@@ -79,8 +88,6 @@ local keys = {
   ["n|g£"] = map_cr("HopLine"),
   ["n|g/"] = map_cr("HopLineStartAC"),
   ["n|g?"] = map_cr("HopLineStartBC"),
-  ["n|/"] = map_cr("HopPattern"), -- might change this .
-
 
   -- clap --
 
@@ -128,9 +135,19 @@ local keys = {
   ["n|<localleader>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
   ["n|<localleader>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
 
-  ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>"),
-  ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>"),
-  ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>"),
+  --- Use commands for this .
+  ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>")
+    :with_noremap()
+    :with_silent()
+    :with_expr(),
+  ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>")
+    :with_noremap()
+    :with_silent()
+    :with_expr(),
+  ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>")
+    :with_noremap()
+    :with_silent()
+    :with_expr(),
 
   ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 }
@@ -149,58 +166,43 @@ vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
 --
 bind.nvim_load_mapping(keys)
 
--- _G.hop1 = function(ac)
---   if packer_plugins['hop'].loaded ~= true then
---     loader('hop')
---   end
---   if vim.fn.mode() == 's' then
---     -- print(vim.fn.mode(), vim.fn.mode() == 's')
---     return vim.cmd('exe "normal! i s"')
---   end
---   if ac == 1 then
---     require'hop'.hint_char1({direction = require'hop.hint'.HintDirection.AFTER_CURSOR})
---   else
---     require'hop'.hint_char1({direction = require'hop.hint'.HintDirection.BEFORE_CURSOR})
---   end
--- end
 
--- _G.Line_ft = function(a)
+_G.run_or_test = function(debug)
+  local ft = vim.bo.filetype
+  local fn = vim.fn.expand("%")
+  fn = string.lower(fn)
+  if fn == "[nvim-lua]" then
+    if not packer_plugins["nvim-luadev"].loaded then
+      loader("nvim-luadev")
+    end
+    return t("<Plug>(Luadev-Run)")
+  end
+  if ft == "lua" then
+    local f = string.find(fn, "spec")
+    if f == nil then
+      -- let run lua test
+      return t("<cmd>luafile %<CR>")
+    end
+    return t("<Plug>PlenaryTestFile")
+  end
+  if ft == "go" then
+    local f = string.find(fn, "test.go")
+    if f == nil then
+      -- let run lua test
+      if debug then
+        return t("<cmd>GoDebug <CR>")
+      else
+        return t("<cmd>GoRun <CR>")
+      end
+    end
 
---   -- check and load hop
---   local loaded, hop = pcall(require, 'hop')
---   if not loaded or not hop.initialized then
---     require"packer".loader('hop')
---     loaded, hop = pcall(require, 'hop')
---   end
---   if a == 'f' then
---     require'hop'.hint_char1({
---       direction = require'hop.hint'.HintDirection.AFTER_CURSOR,
---       current_line_only = true,
---       inclusive_jump = true
---     })
---   end
---   if a == 'F' then
---     require'hop'.hint_char1({
---       direction = require'hop.hint'.HintDirection.BEFORE_CURSOR,
---       current_line_only = true,
---       inclusive_jump = true
---     })
---   end
-
---   if a == 't' then
---     require'hop'.hint_char1({
---       direction = require'hop.hint'.HintDirection.AFTER_CURSOR,
---       current_line_only = true
---     })
---   end
---   if a == 'T' then
---     require'hop'.hint_char1({
---       direction = require'hop.hint'.HintDirection.BEFORE_CURSOR,
---       current_line_only = true
---     })
---   end
-
--- end
+    if debug then
+      return t("<cmd>GoDebug nearest<CR>")
+    else
+      return t("<cmd>GoTestFile <CR>")
+    end
+  end
+end
 
 -- Run DebugOpen and then you run Debug
 
@@ -208,9 +210,14 @@ vim.cmd([[command! -nargs=*  DuckStart lua require"modules.useless.config".launc
 
 -- Load Test Case - it will recognise test file - and you can run Template test and a nice
 -- Python test suit
-vim.cmd([[command! -nargs=*  TestStart lua require"modules.tools.testing".testStart()]])
+vim.cmd([[command! -nargs=*  TestStart lua require"modules.lang.language_utils".testStart()]])
 vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]])
 vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
---
+
+
+-- temp for the time being. 
+vim.cmd([[command! -nargs=*  Ytmnotify lua require("ytmmusic").notifyCurrentStats()]])
+
+
 return K
