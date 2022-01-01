@@ -51,6 +51,12 @@ local def_map = {
   ["c|<C-d>"] = map_cmd("<Del>"):with_noremap(),
   ["c|<C-h>"] = map_cmd("<BS>"):with_noremap(),
   ["c|<C-t>"] = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]]):with_noremap(),
+
+  -- Nice animation
+  ["n|<Up>"] = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
+  ["n|<Down>"] = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
+  ["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
+  ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
 }
 
 local os_map = {
