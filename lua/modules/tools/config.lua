@@ -21,7 +21,7 @@ function config.session()
     auto_session_suppress_dirs = { "~/", "~/Projects" },
     auto_session_enable_last_session = false,
     auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
-    auto_session_enabled = true,
+    auto_session_enabled = false,
     auto_save_enabled = nil,
     auto_restore_enabled = nil,
   }
@@ -157,6 +157,7 @@ function config.project()
     ignore_lsp = { "efm" },
     exclude_dirs = { "~/.cargo/*" },
     silent_chdir = false,
+    patterns = { "xmake.lua", "CMakeLists.txt", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
@@ -270,7 +271,7 @@ function config.gitsigns()
     sign_priority = 6,
     status_formatter = nil, -- Use default
     debug_mode = false,
-    current_line_blame = true,
+    current_line_blame = false,
     current_line_blame_opts = { delay = 1500 },
     update_debounce = 300,
     word_diff = true,
@@ -426,10 +427,6 @@ function config.vim_test()
   -- nmap <silent> t<C-s> :TestSuite<CR>
   -- nmap <silent> t<C-l> :TestLast<CR>
   -- nmap <silent> t<C-g> :TestVisit<CR>
-end
-
-function config.ultest()
-  require("modules.tools.testing")
 end
 
 function config.mkdp()
