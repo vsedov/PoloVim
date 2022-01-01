@@ -102,7 +102,7 @@ local treesitter_obj = function()
 
   require("nvim-treesitter.configs").setup({
 
-    indent = { enable = true },
+    indent = { enable = true, disable = { "python" } },
     context_commentstring = { enable = true, enable_autocmd = false },
     textobjects = {
       -- syntax-aware textobjects
