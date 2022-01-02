@@ -65,10 +65,25 @@ editor["phaazon/hop.nvim"] = {
   end,
 }
 
-editor["tpope/vim-surround"] = {
-  opt = true,
-  -- event = 'InsertEnter',
-  -- keys={'c', 'd'}
+editor["blackCauldron7/surround.nvim"] = {
+  config = function()
+    require("surround").setup({
+      mappings_style = "surround",
+      pairs = {
+        nestable = {
+          { "(", ")" },
+          { "[", "]" },
+          { "{", "}" },
+          { "/", "/" },
+          {
+            "*",
+            "*",
+          },
+        },
+        linear = { { "'", "'" }, { "`", "`" }, { '"', '"' } },
+      },
+    })
+  end,
 }
 
 -- nvim-colorizer replacement
@@ -149,6 +164,7 @@ editor["sudormrfbin/cheatsheet.nvim"] = {
 }
 
 editor["itchyny/vim-cursorword"] = {
+  event = { "BufReadPre", "BufNewFile" },
   opt = true,
   config = conf.vim_cursorwod,
 }
