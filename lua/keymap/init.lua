@@ -121,11 +121,8 @@ local plug_map = {
   ["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
   ["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 
-  -- Have file specific mappings - sooon . 
+  -- Have file specific mappings - sooon .
   -- ["n|<F3>"] = map_cu("Black"):with_noremap():with_silent(),
-
-
-
 
   -- -- Plugin MarkdownPreview
   ["n|<Leader>om"] = map_cu("MarkdownPreview"):with_noremap():with_silent(),
