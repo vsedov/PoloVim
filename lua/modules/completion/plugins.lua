@@ -96,7 +96,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
 completion["Iron-E/nvim-cmp"] = {
   branch = "feat/completion-menu-borders",
   -- opt = true,
-  -- event = "InsertEnter", -- InsertCharPre
+  -- event = {"InsertEnter", "CmdLineEnter"}, -- InsertCharPre Due to luasnip
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
   after = { "LuaSnip" }, -- "nvim-snippy",
   requires = {
@@ -145,6 +145,7 @@ completion["nvim-telescope/telescope.nvim"] = {
   config = conf.telescope,
   setup = conf.telescope_preload,
   requires = {
+    { "nvim-lua/popup.nvim" }, -- test
     { "nvim-neorg/neorg-telescope", opt = true },
     { "nvim-lua/plenary.nvim", opt = true },
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
