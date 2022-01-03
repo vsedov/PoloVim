@@ -143,6 +143,7 @@ function config.nvim_cmp()
   cmp.setup({
     documentation = {
       border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
     },
 
     snippet = {
@@ -154,6 +155,7 @@ function config.nvim_cmp()
     },
     completion = {
       border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
       autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
       completeopt = "menu,menuone,noselect",
     },
@@ -274,6 +276,42 @@ function config.nvim_cmp()
   -- if vim.o.ft ~= 'sql' then
   --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
   -- end
+  cmp.setup.cmdline(":", {
+    completion = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+    sources = cmp.config.sources({
+      { name = "path" },
+    }, {
+      { name = "cmdline" },
+    }),
+    enabled = function()
+      return true
+    end,
+  })
+
+  cmp.setup.cmdline("/", {
+    sources = {
+      { name = "buffer", keyword_length = 1 },
+    },
+    enabled = function()
+      return true
+    end,
+    completion = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+  })
+
   vim.cmd([[hi NormalFloat guibg=none]])
 end
 
