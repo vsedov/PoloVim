@@ -66,6 +66,7 @@ tools["TimUntersberger/neogit"] = {
     neogit.setup({})
   end,
 }
+
 tools["liuchengxu/vista.vim"] = { cmd = "Vista", setup = conf.vim_vista, opt = true }
 
 tools["kamykn/spelunker.vim"] = {
@@ -234,7 +235,7 @@ tools["tpope/vim-fugitive"] = {
 --   end,
 -- }
 
--- need quick fix
+-- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
   opt = true,
   event = { "CmdlineEnter", "QuickfixCmdPre" },
@@ -321,6 +322,8 @@ tools["chentau/marks.nvim"] = {
   end,
 }
 
+
+-- this causing issues with better escape 
 tools["Krafi2/jeskape.nvim"] = {
   event = "InsertEnter",
   config = function()
@@ -328,10 +331,6 @@ tools["Krafi2/jeskape.nvim"] = {
       mappings = {
         ["c"] = {
           ["c"] = "<cmd>lua require'utils'.append_comma()<CR>",
-        },
-        j = {
-          k = "<esc>",
-          j = "<esc>o",
         },
       },
     })
