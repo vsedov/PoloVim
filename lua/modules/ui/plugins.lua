@@ -135,17 +135,13 @@ ui["ray-x/starry.nvim"] = {
   end,
 }
 
-ui["wiliamks/mechanical.nvim"] = {
-  opt = true,
-}
-
 ui["kazhala/close-buffers.nvim"] = {
   cmd = { "BDelete", "BWipeout" },
   config = conf.buffers_close,
 }
 
-ui["mhinz/vim-sayonara"] = {
-  cmd = "Sayonara",
+ui["norcalli/nvim-colorizer.lua"] = {
+  opt = true,
 }
 
 return ui
