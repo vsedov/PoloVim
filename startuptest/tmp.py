@@ -12,7 +12,6 @@ import pyinspect as pi
 
 
 def main() -> None:
-    ...
 
 
 if __name__ == "__main__":

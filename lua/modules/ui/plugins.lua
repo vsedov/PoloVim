@@ -28,7 +28,7 @@ ui["akinsho/bufferline.nvim"] = {
 
 -- TODO MODIFY THIS
 ui["startup-nvim/startup.nvim"] = {
-
+  opt = true, -- Turn this off to increase startup
   requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   config = function()
     require("startup").setup({ theme = "evil" })
@@ -77,7 +77,6 @@ ui["folke/tokyonight.nvim"] = {
     vim.cmd([[colorscheme tokyonight]])
   end,
 }
-
 ui["catppuccin/nvim"] = {
   opt = true,
   setup = conf.catppuccin,
