@@ -297,6 +297,7 @@ editor["famiu/bufdelete.nvim"] = {
   opt = true,
   cmd = { "Bdelete", "Bwipeout" },
 }
+
 editor["nvim-lua/popup.nvim"] = {
   opt = true,
 }

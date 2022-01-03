@@ -7,11 +7,10 @@ local map_cr = bind.map_cr
 -- local map_args = bind.map_args
 
 local HOME = os.getenv("HOME")
-local dap_install = require("dap-install")
 local api = vim.api
 
--- TODO 
--- need to fix debug files and binds, such that when i stop i get my olds binds back , 
+-- TODO
+-- need to fix debug files and binds, such that when i stop i get my olds binds back ,
 local function keybind()
   local keys = {
     -- DAP --
@@ -71,14 +70,13 @@ end
 
 local loader = require("packer").loader
 
-if ft == 'go' then
-  require('modules.lang.dap.go')
+if ft == "go" then
+  require("modules.lang.dap.go")
 end
 
 M.prepare = function()
   loader("nvim-dap-ui")
   loader("nvim-dap-virtual-text")
-
 
   require("dapui").setup({
     icons = { expanded = "▾", collapsed = "▸" },
@@ -146,15 +144,6 @@ M.prepare = function()
     -- e.g. 80 to position at column 80 see :h nvim_buf_set_extmark()
   })
 
-  dap_install.setup({
-    installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-  })
-
-  local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
-
-  for _, debugger in ipairs(dbg_list) do
-    dap_install.config(debugger)
-  end
 
   if vim.bo.filetype == "python" then
     loader("nvim-dap-python")
@@ -162,30 +151,27 @@ M.prepare = function()
     require("dap-python").test_runner = "pytest"
   end
 
-    local ft = vim.bo.filetype
-    print(ft)
+  local ft = vim.bo.filetype
+  print(ft)
 
-    if ft == 'lua' then
-      local keys = {
-        ["n|<F5>"] = map_cr('<cmd>lua require"osv".launch()'):with_noremap():with_silent(),
-        ["n|<F4>"] = map_cr('<cmd>lua require"dap".continue()'):with_noremap():with_silent()
+  if ft == "lua" then
+    local keys = {
+      ["n|<F5>"] = map_cr('<cmd>lua require"osv".launch()'):with_noremap():with_silent(),
+      ["n|<F4>"] = map_cr('<cmd>lua require"dap".continue()'):with_noremap():with_silent(),
+    }
+    bind.nvim_load_mapping(keys)
+    require("modules.lang.dap.lua")
+  end
+  if ft == "rust" then
+    require("modules.lang.dap.lua")
+  end
 
-
-      }
-      bind.nvim_load_mapping(keys)
-      require('modules.lang.dap.lua')
-    end
-    if ft == 'rust' then
-      require('modules.lang.dap.lua')
-    end
-
- if ft == 'typescript' or ft == 'javascript' then
+  if ft == "typescript" or ft == "javascript" then
     print("debug prepare for js")
     -- vim.cmd([[command! -nargs=*  Debug lua require"modules.lang.dap.jest".attach()]])
     vim.cmd([[command! -nargs=*  DebugTest lua require"modules.lang.dap.jest".run(<f-args>)]])
-    require('modules.lang.dap.js')
+    require("modules.lang.dap.js")
   end
-
 
   vim.cmd([[command! BPToggle lua require"dap".toggle_breakpoint()]])
 
@@ -195,8 +181,6 @@ M.prepare = function()
   require("dapui").setup()
   require("dapui").open()
 end
-
-
 
 M.StartDbg = function()
   -- body

@@ -18,7 +18,6 @@ vim.cmd([[
   autocmd InsertEnter,WinLeave * set nocursorline
 ]])
 
-
 vim.api.nvim_exec(
   [[
 augroup YankHighlight
@@ -29,7 +28,6 @@ augroup END
   false
 )
 
-
 -- For now, this is some next level btec fix .
 -- vim.api.nvim_exec(
 --   [[
@@ -38,16 +36,10 @@ augroup END
 --   false
 -- )
 
-
-
-
--- -- Nice ot have for now . 
+-- -- Nice ot have for now .
 -- vim.cmd([[autocmd! BufWinEnter COMMIT_EDITMSG set filetype=gitcommit]], false)
 -- vim.cmd([[autocmd! BufWinEnter *.cpp set filetype=cpp]], false)
 -- -- cmd [[autocmd! BufWritePost *.lua !stylua %]]
-
-
-
 
 -- -- windows to close with "q"
 -- vim.cmd(
@@ -56,7 +48,6 @@ augroup END
 -- vim.cmd([[autocmd FileType man nnoremap <buffer><silent> q :quit<CR>]])
 
 -- vim.cmd([[au FocusGained * :checktime]])
-
 
 -- vim.cmd(
 --   "autocmd User TelescopeFindPre lua vim.opt.laststatus=0; vim.cmd[[autocmd BufWinLeave * ++once lua vim.opt.laststatus=2]]"

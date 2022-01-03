@@ -1,15 +1,26 @@
 local loader = require("packer").loader
--- Load all main modules required
-loader("plenary.nvim")
-loader("nvim-treesitter")
 
-loader("telescope.nvim")
-loader("neorg-telescope")
-loader("zen-mode.nvim")
+if not packer_plugins["zen-mode.nvim"].loaded then
+  vim.cmd([[packadd zen-mode.nvim ]])
+end
+if not packer_plugins["neorg-telescope"].loaded then
+  vim.cmd([[packadd neorg-telescope ]])
+end
+if not packer_plugins["telescope.nvim"].loaded then
+  vim.cmd([[packadd telescope.nvim ]])
+end
+
+if not packer_plugins["nvim-treesitter"].loaded then
+  vim.cmd([[packadd nvim-treesitter ]])
+  vim.cmd([[packadd plenary.nvim ]])
+end
+
+if not packer_plugins["nvim-cmp"].loaded then
+  vim.cmd([[packadd nvim-cmp]])
+end
 
 local neorg_callbacks = require("neorg.callbacks")
 -- neorg_callbacks.on_event("core.autocommands.events.bufenter", function(event, event_content)
--- vim.cmd([[PackerLoad nvim-cmp]])
 neorg_callbacks.on_event("core.started", function(event, event_content)
   require("neorg").setup({
     load = {
@@ -24,6 +35,12 @@ require("neorg").setup({
   load = {
     ["core.integrations.telescope"] = {}, -- Enable the telescope module
     ["core.defaults"] = {}, -- Load all the default modules
+    ["core.norg.completion"] = {
+      config = {
+        engine = "nvim-cmp", -- We current support nvim-compe and nvim-cmp only
+      },
+    },
+
     ["core.norg.concealer"] = {
       config = {
         icon_preset = "diamond",
