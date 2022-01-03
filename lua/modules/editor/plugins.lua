@@ -49,10 +49,6 @@ editor["hrsh7th/vim-seak"] = {
   event = "CmdlineEnter",
   requires = { "nvim-lua/popup.nvim" },
   setup = function()
-<<<<<<< HEAD
-    vim.cmd([[packadd popup.nvim]])
-=======
->>>>>>> nightly
     vim.g.seak_enabled = 1
     vim.cmd([[cnoremap <C-j> <Cmd>call seak#select({ 'nohlsearch': v:true })<CR>]])
   end,

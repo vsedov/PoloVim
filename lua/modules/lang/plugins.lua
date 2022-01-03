@@ -28,11 +28,7 @@ lang["RRethy/nvim-treesitter-textsubjects"] = {
 
 -- Better plugin for this i think ,
 lang["danymat/neogen"] = {
-<<<<<<< HEAD
-  keys = { "<leader>a" },
-=======
   keys = { "<F3>" },
->>>>>>> nightly
   opt = true,
   requires = "nvim-treesitter/nvim-treesitter",
   config = function()
