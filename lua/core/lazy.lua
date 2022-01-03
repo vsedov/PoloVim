@@ -86,7 +86,7 @@ function Lazyload()
     loader("nvim-lspconfig") -- null-ls.nvim
     loader("lsp_signature.nvim")
     if use_nulls() then
-      -- loader("null-ls.nvim")
+      loader("null-ls.nvim")
     end
     loader("refactoring.nvim") -- need to do the same thing for refactoring
     -- loader("goto-preview")
@@ -179,7 +179,7 @@ vim.cmd([[hi LineNr guifg=#505068]])
 
 vim.defer_fn(function()
   local loader = require("packer").loader
-  loader("telescope.nvim telescope-zoxide project.nvim nvim-neoclip.lua")
+  loader("telescope.nvim telescope-zoxide  nvim-neoclip.lua") --project.nvim
   loader("harpoon")
   loader("windline.nvim")
   require("modules.ui.eviline")

@@ -106,29 +106,28 @@ return {
     --   })
     -- )
     --
+    local lsputil = require("lspconfig.util")
+
     local cfg = {
+
       sources = sources,
-      -- debounce = 1000,
+      debounce = 1000,
 
-      -- Maybe not use this :
-
-      -- root_dir = require("lspconfig").util.root_pattern(
-      --   ".venv", -- for python
-      --   "_darcs",
-      --   ".hg",
-      --   ".bzr",
-      --   ".svn",
-      --   "node_modules",
-      --   "xmake.lua",
-      --   "CMakeLists.txt",
-      --   ".null-ls-root",
-      --   "Makefile",
-      --   "package.json",
-      --   "tsconfig.json",
-      --   ".git"
-      -- ),
-
-
+      root_dir = require("lspconfig").util.root_pattern(
+        ".venv", -- for python
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "node_modules",
+        "xmake.lua",
+        "CMakeLists.txt",
+        ".null-ls-root",
+        "Makefile",
+        "package.json",
+        "tsconfig.json",
+        ".git"
+      ),
       
       on_attach = function(client)
         -- I dont want any formating on python files.
