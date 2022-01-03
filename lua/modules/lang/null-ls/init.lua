@@ -86,7 +86,7 @@ return {
       table.insert(sources, null_ls.builtins.diagnostics.cppcheck)
     end
 
-    table.insert(sources, null_ls.builtins.formatting.trim_newlines)
+    table.insert(sources, null_ls.builtins.formatting.trim_newlines.with({ disabled_filetypes = { "norg" } }))
     table.insert(sources, null_ls.builtins.formatting.trim_whitespace)
 
     -- table.insert(
@@ -128,7 +128,7 @@ return {
         "tsconfig.json",
         ".git"
       ),
-      
+
       on_attach = function(client)
         -- I dont want any formating on python files.
         if client.resolved_capabilities.document_formatting and vim.bo.filetype ~= "python" then
