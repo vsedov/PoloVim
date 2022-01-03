@@ -7,7 +7,6 @@ local map_cr = bind.map_cr
 -- local map_args = bind.map_args
 
 local HOME = os.getenv("HOME")
-local dap_install = require("dap-install")
 local api = vim.api
 
 -- TODO
@@ -145,15 +144,6 @@ M.prepare = function()
     -- e.g. 80 to position at column 80 see :h nvim_buf_set_extmark()
   })
 
-  dap_install.setup({
-    installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-  })
-
-  local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
-
-  for _, debugger in ipairs(dbg_list) do
-    dap_install.config(debugger)
-  end
 
   if vim.bo.filetype == "python" then
     loader("nvim-dap-python")
