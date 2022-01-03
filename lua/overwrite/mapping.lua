@@ -20,14 +20,13 @@ local t = function(str)
 end
 
 if vim.bo.filetype == "lua" then
-  local luakeys = { 
-  ["n|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
-  ["v|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
-  ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
+  local luakeys = {
+    ["n|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+    ["v|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+    ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
   }
   bind.nvim_load_mapping(luakeys)
 end
-
 
 local keys = {
   -- pack?
@@ -166,7 +165,6 @@ vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
 --
 bind.nvim_load_mapping(keys)
 
-
 _G.run_or_test = function(debug)
   local ft = vim.bo.filetype
   local fn = vim.fn.expand("%")
@@ -215,9 +213,7 @@ vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]]
 vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
 
-
--- temp for the time being. 
+-- temp for the time being.
 vim.cmd([[command! -nargs=*  Ytmnotify lua require("ytmmusic").notifyCurrentStats()]])
-
 
 return K
