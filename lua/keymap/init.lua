@@ -22,7 +22,11 @@ local plug_map = {
 
   -- -- Word Motion
   ["n|w"] = map_cmd('v:lua.word_motion_move("w")'):with_silent():with_expr(),
+  ["n|W"] = map_cmd('v:lua.word_motion_move("W")'):with_silent():with_expr(),
+
   ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
+  ["n|B"] = map_cmd('v:lua.word_motion_move_b("B")'):with_silent():with_expr(),
+
   ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
 
   ["n|j"] = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
@@ -40,7 +44,6 @@ local plug_map = {
   ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
   ["v|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
   ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
- 
 
   ["n|<Leader>gD"] = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
 
@@ -58,18 +61,35 @@ local plug_map = {
   ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
 
   ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
-  ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'):with_noremap():with_silent(),
-  ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".peek_definition()<CR>'):with_noremap():with_silent(),
-  -- -- Rename Values
-  ["n|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
-  ["v|<Leader>gr"] = map_cmd('<cmd>lua require("renamer").rename()<cr>'):with_noremap():with_silent(),
+  ["n|<localleader>D"] = map_cmd(
+    '<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'
+  )
+    :with_noremap()
+    :with_silent(),
+  ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekDefinition()<CR>')
+    :with_noremap()
+    :with_silent(),
 
+  ["n|<localleader>dpt"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekTypeDefinition()<CR>')
+    :with_noremap()
+    :with_silent(),
 
+  ["n|<localleader>dpi"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekImplementation()<CR>')
+    :with_noremap()
+    :with_silent(),
 
---- 
--- LSP SPAGA : 
-  -- Lines 51, 57, 58, 60 , 64 would have to be remaped to teh following . 
---- 
+  -- -- SOMETHING WRONG HERE .
+  ["n|<Leader>gr"] = map_cu("Lspsaga rename <cr>"):with_noremap():with_silent(),
+  ["v|<Leader>gr"] = map_cu("Lspsaga rename <cr>"):with_noremap():with_silent(),
+
+  ["n|gpd"] = map_cu("GotoPrev"):with_noremap(),
+  ["n|gpi"] = map_cu("GotoImp"):with_noremap(),
+  ["n|gpt"] = map_cu("GotoTel"):with_noremap(),
+
+  ---
+  -- LSP SPAGA :
+  -- Lines 51, 57, 58, 60 , 64 would have to be remaped to teh following .
+  ---
 
   -- ["n|<Leader>gr"] = map_cu("Lspsaga rename"):with_noremap():with_silent(),
   -- ["n|K"] = map_cu("<cmd>Lspsaga hover_doc<cr>"):with_noremap():with_silent(),
@@ -79,14 +99,9 @@ local plug_map = {
   -- ["n|<C-u>"] = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>"),
   -- ["n|<C-d>"] = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>"),
 
-  -- -- Goto prev mapping 
+  -- -- Goto prev mapping
   --- WARNING THERE COULD BE AN ISSUE WITH THIS>
   -- --
-  ["n|gpd"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_definition()<CR>"):with_noremap(),
-  ["n|gpi"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_implementation()<CR>"):with_noremap(),
-  ["n|gP"] = map_cmd("<cmd>lua require('goto-preview').close_all_win()<CR>"):with_noremap(),
-  ["n|gpr"] = map_cmd("<cmd>lua require('goto-preview').goto_preview_references()<CR>"):with_noremap(),
-
 
   -- -- How to run some code .
   ["n|<Leader>r"] = map_cr("Jaq"):with_noremap():with_silent(),
@@ -105,7 +120,9 @@ local plug_map = {
   ["n|<Leader>cl"] = map_cu("Telescope neoclip a extra=star,plus,unnamed,b"):with_noremap():with_silent(),
   ["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
   ["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
-  ["n|<F3>"] = map_cu("Black"):with_noremap():with_silent(),
+
+  -- Have file specific mappings - sooon .
+  -- ["n|<F3>"] = map_cu("Black"):with_noremap():with_silent(),
 
   -- -- Plugin MarkdownPreview
   ["n|<Leader>om"] = map_cu("MarkdownPreview"):with_noremap():with_silent(),
@@ -119,7 +136,7 @@ local plug_map = {
   ["n|<Leader>fzu"] = map_cr("Farundo"):with_noremap():with_silent(),
 
   -- -- Plugin Telescope
-  
+
   ["v|<Leader>ga"] = map_cu("Telescope lsp_range_code_actions"):with_noremap():with_silent(),
 
   ["n|<Leader>fd"] = map_cu("Telescope dotfiles path=" .. os.getenv("HOME") .. "/.config/nvim")
@@ -128,7 +145,7 @@ local plug_map = {
   ["n|<Leader>qf"] = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
 
   ["n|<Leader>bb"] = map_cu("Telescope buffers"):with_noremap():with_silent(),
-  ["n|<Leader>fb"] = map_cu("Telescope file_browser"):with_noremap():with_silent(),
+  ["n|<Leader>fb"] = map_cmd('<cmd>lua require("utils.telescope").file_browser()<cr>'):with_noremap():with_silent(),
   ["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
   ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
   ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
@@ -144,13 +161,15 @@ local plug_map = {
   ["n|<Leader>ft"] = map_cu("Telescope help_tags"):with_noremap():with_silent(),
   ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
   --Nice finder
-  ["n|<Leader><Leader><Leader>"] = map_cr(
-    '<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})'
+  ["n|<Leader><Leader><Leader>"] = map_cmd(
+    '<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})<CR>'
   ):with_noremap():with_silent(),
+
   ["n|<F4>"] = map_cu("Telescope dap commands"):with_noremap():with_silent(),
 
-  ["n|<Leader>fff"] = map_cu("Telescope find_files"):with_noremap():with_silent(),
-  ["in|<d-T>"] = map_cu("Telescope"):with_noremap():with_silent(),
+  ["n|<Leader>ff"] = map_cu("Telescope find_files"):with_noremap():with_silent(),
+
+  -- ["in|<d-T>"] = map_cu("Telescope"):with_noremap():with_silent(),
   ["in|<d-f>"] = map_cr("<cmd> lua require'telescope.builtin'.grep_string({defulat_text=vim.fn.expand('cword')})")
     :with_noremap()
     :with_silent(),
@@ -160,8 +179,8 @@ local plug_map = {
     :with_silent(),
   --     :with_expr(),
 
-  -- LEgit have no clue what the D is her
-  ["n|<d-f>"] = map_cmd([[ ':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
+  -- kitty / mac users, have a nice time >.< || will be changed
+  ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
   ["in|<d-F>"] = map_cmd(
     [['<cmd> lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>' .  ' --type ' . &ft . ' ' . expand('<cword>')]]
   ):with_expr():with_silent(),
@@ -171,10 +190,6 @@ local plug_map = {
 
   -- Plugin Vista or SymbolsOutline
   ["n|<Leader>v"] = map_cu("SymbolsOutline"):with_noremap():with_silent(),
-
-  ["n|<Leader><TAB>"] = map_cr('<CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),
-
-  ["t|<Leader><TAB>"] = map_cr('<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>'):with_noremap():with_silent(),
 
   -- Plugin vim_niceblock
   ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
@@ -204,15 +219,6 @@ local plug_map = {
   ["n|<C-ScrollWheelUp>"] = map_cmd("<C-i>"):with_noremap():with_silent(),
   ["n|<C-ScrollWheelDown>"] = map_cmd("<C-o>"):with_noremap():with_silent(),
 
-  -- Nice animation
-  ["n|<Up>"] = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
-  ["n|<Down>"] = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
-  ["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
-  ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
-
-  ["v|<Leader>sr"] = map_cu("SnipRun<cr>"):with_noremap():with_silent(),
-  ["n|<Leader>sr"] = map_cu("SnipRun<cr>"):with_noremap():with_silent(),
-
   -- Alternate togller
   ["n|<Leader>ta"] = map_cr("ToggleAlternate"):with_noremap():with_silent(),
 
@@ -239,7 +245,6 @@ local plug_map = {
 
   -- $ ... $ : inline form
   -- $$ ... $$ : wrapped form
-  ["n|<Leader>ot"] = map_cr("OneTerm"):with_noremap():with_silent(),
 
   ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
 }

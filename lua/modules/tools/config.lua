@@ -18,12 +18,12 @@ end
 function config.session()
   local opts = {
     log_level = "info",
+    auto_session_suppress_dirs = { "~/", "~/Projects" },
     auto_session_enable_last_session = false,
     auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
-    auto_session_enabled = true,
+    auto_session_enabled = false,
     auto_save_enabled = nil,
     auto_restore_enabled = nil,
-    auto_session_suppress_dirs = nil,
   }
   require("auto-session").setup(opts)
 end
@@ -151,20 +151,6 @@ function config.clap_after()
   end
 end
 
-function config.project()
-  require("project_nvim").setup({
-    datapath = vim.fn.stdpath("data"),
-    ignore_lsp = { "efm" },
-    exclude_dirs = { "~/.cargo/*" },
-    silent_chdir = false,
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  })
-  require("utils.telescope")
-  require("telescope").load_extension("projects")
-end
-
 function config.vgit()
   -- use this as a diff tool (faster than Diffview)
   -- there are overlaps with gitgutter. following are nice features
@@ -270,7 +256,7 @@ function config.gitsigns()
     sign_priority = 6,
     status_formatter = nil, -- Use default
     debug_mode = false,
-    current_line_blame = true,
+    current_line_blame = false,
     current_line_blame_opts = { delay = 1500 },
     update_debounce = 300,
     word_diff = true,
@@ -426,10 +412,6 @@ function config.vim_test()
   -- nmap <silent> t<C-s> :TestSuite<CR>
   -- nmap <silent> t<C-l> :TestLast<CR>
   -- nmap <silent> t<C-g> :TestVisit<CR>
-end
-
-function config.ultest()
-  require("modules.tools.testing")
 end
 
 function config.mkdp()

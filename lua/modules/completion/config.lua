@@ -6,43 +6,43 @@ function config.nvim_lsp()
 end
 
 function config.saga()
-  require("lspsaga").init_lsp_saga {
+  require("lspsaga").init_lsp_saga({
     debug = false,
-      use_saga_diagnostic_sign = true,
-      -- diagnostic sign
-      error_sign = "",
-      warn_sign = "",
-      hint_sign = "",
-      infor_sign = "",
-      diagnostic_header_icon = "   ",
-      -- code action title icon
-      code_action_icon = " ",
-      code_action_prompt = {
-        enable = true,
-        sign = true,
-        sign_priority = 40,
-        virtual_text = true,
-      },
-      finder_definition_icon = "  ",
-      finder_reference_icon = "  ",
-      max_preview_lines = 10,
-      finder_action_keys = {
-        open = "o",
-        vsplit = "s",
-        split = "i",
-        quit = "q",
-        scroll_down = "<C-f>",
-        scroll_up = "<C-b>",
-      },
-      code_action_keys = {
-        quit = "q",
-        exec = "<CR>",
-      },
-      rename_action_keys = {
-        quit = "<C-c>",
-        exec = "<CR>",
-      },
-    }
+    use_saga_diagnostic_sign = true,
+    -- diagnostic sign
+    error_sign = "",
+    warn_sign = "",
+    hint_sign = "",
+    infor_sign = "",
+    diagnostic_header_icon = "   ",
+    -- code action title icon
+    code_action_icon = " ",
+    code_action_prompt = {
+      enable = true,
+      sign = true,
+      sign_priority = 40,
+      virtual_text = true,
+    },
+    finder_definition_icon = "  ",
+    finder_reference_icon = "  ",
+    max_preview_lines = 10,
+    finder_action_keys = {
+      open = "o",
+      vsplit = "s",
+      split = "i",
+      quit = "q",
+      scroll_down = "<C-f>",
+      scroll_up = "<C-b>",
+    },
+    code_action_keys = {
+      quit = "q",
+      exec = "<CR>",
+    },
+    rename_action_keys = {
+      quit = "<C-c>",
+      exec = "<CR>",
+    },
+  })
 end
 
 local function is_prior_char_whitespace()
@@ -57,9 +57,7 @@ end
 function config.nvim_cmp()
   local cmp = require("cmp")
 
-  vim.g.copilot_no_tab_map = true
-  vim.g.copilot_assume_mapped = true
-  vim.g.copilot_tab_fallback = ""
+  -- let g;copiol
 
   local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -99,6 +97,7 @@ function config.nvim_cmp()
     { name = "luasnip" },
     { name = "treesitter", keyword_length = 2 },
     { name = "look", keyword_length = 4 },
+    { name = "vim_lsp_signature_help", priority = 10 },
     -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
   }
@@ -110,7 +109,6 @@ function config.nvim_cmp()
   end
 
   if vim.o.ft == "norg" then
-    -- Get the current Neorg state
     local neorg = require("neorg")
 
     --- Loads the Neorg completion module
@@ -127,7 +125,7 @@ function config.nvim_cmp()
       neorg.callbacks.on_event("core.started", load_completion)
     end
 
-    table.insert(sources, { name = "neorg" })
+    table.insert(sources, { name = "norg" })
   end
 
   if vim.o.ft == "markdown" then
@@ -143,6 +141,11 @@ function config.nvim_cmp()
     table.insert(sources, { name = "calc" })
   end
   cmp.setup({
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+
     snippet = {
       expand = function(args)
         require("luasnip").lsp_expand(args.body)
@@ -151,6 +154,8 @@ function config.nvim_cmp()
       end,
     },
     completion = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
       autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
       completeopt = "menu,menuone,noselect",
     },
@@ -215,7 +220,7 @@ function config.nvim_cmp()
       ["<C-Space>"] = cmp.mapping.complete(),
       ["<C-e>"] = cmp.mapping.close(),
       ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-      -- ['<Tab>'] = cmp.mapping(tab, {'i', 's'}),
+      ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
 
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -255,7 +260,7 @@ function config.nvim_cmp()
     -- You should specify your *installed* sources.
     sources = sources,
 
-    experimental = { ghost_text = true },
+    experimental = { ghost_text = true, native_menu = false },
   })
   require("packer").loader("nvim-autopairs")
   local cmp_autopairs = require("nvim-autopairs.completion.cmp")
@@ -265,11 +270,49 @@ function config.nvim_cmp()
   if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then
     require("cmp").setup.buffer({ completion = { enable = false } })
   end
+
   vim.cmd("autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }")
   vim.cmd("autocmd FileType clap_input lua require('cmp').setup.buffer { enabled = false }")
   -- if vim.o.ft ~= 'sql' then
   --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
   -- end
+  cmp.setup.cmdline(":", {
+    completion = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+    sources = cmp.config.sources({
+      { name = "path" },
+    }, {
+      { name = "cmdline" },
+    }),
+    enabled = function()
+      return true
+    end,
+  })
+
+  cmp.setup.cmdline("/", {
+    sources = {
+      { name = "buffer", keyword_length = 1 },
+    },
+    enabled = function()
+      return true
+    end,
+    completion = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+    },
+  })
+
+  vim.cmd([[hi NormalFloat guibg=none]])
 end
 
 function config.vim_vsnip()
@@ -300,7 +343,7 @@ function config.telescope_preload()
 end
 
 function config.telescope()
-  require("utils.telescope").setup()
+  require("utils.telescope")
 end
 
 function config.emmet()

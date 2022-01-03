@@ -27,34 +27,15 @@ editor["kana/vim-niceblock"] = {
 }
 
 -- Yep Can be lazyly loaded lovely
-editor["folke/which-key.nvim"]={
-opt = true,
-after = "nvim-treesitter",
-config = function()
-   require("which-key").setup {}
-
-   --
-end
-
-}
-
--- Remove at any time if you dont want
-------------------------------------------------------------------------------
--- MOST IMPORTANT FEATURE OF THEM ALL, I APROVE OF THIS
-editor["rtakasuke/vim-neko"] = {
-  cmd = "Neko",
+editor["folke/which-key.nvim"] = {
   opt = true,
-}
+  after = "nvim-treesitter",
+  config = function()
+    require("which-key").setup({})
 
-editor["tamton-aquib/duck.nvim"] = {
-  opt = true,
+    --
+  end,
 }
-editor["raghavdoescode/nvim-owoifier"] = {
-  cmd = "OWOify",
-  opt = true,
-  run = ":UpdateRemotePlugins",
-}
-------------------------------------------------------------------------------
 
 -- I want this all the time - so im not lazy loading this .,
 editor["ggandor/lightspeed.nvim"] = {
@@ -64,10 +45,45 @@ editor["ggandor/lightspeed.nvim"] = {
   config = conf.lightspeed,
 }
 
-editor["tpope/vim-surround"] = {
-  opt = true,
-  -- event = 'InsertEnter',
-  -- keys={'c', 'd'}
+-- maybe use later idk
+editor["hrsh7th/vim-seak"] = {
+  event = "CmdlineEnter",
+  requires = { "nvim-lua/popup.nvim" },
+  setup = function()
+    vim.cmd([[packadd popup.nvim]])
+    vim.g.seak_enabled = 1
+    vim.cmd([[cnoremap <C-j> <Cmd>call seak#select({ 'nohlsearch': v:true })<CR>]])
+  end,
+}
+
+-- editor["indianboy42/hop-extensions"] = { after = "hop", opt = true }
+editor["phaazon/hop.nvim"] = {
+  as = "hop",
+  cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC" },
+  config = function()
+    require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
+  end,
+}
+
+editor["blackCauldron7/surround.nvim"] = {
+  config = function()
+    require("surround").setup({
+      mappings_style = "surround",
+      pairs = {
+        nestable = {
+          { "(", ")" },
+          { "[", "]" },
+          { "{", "}" },
+          { "/", "/" },
+          {
+            "*",
+            "*",
+          },
+        },
+        linear = { { "'", "'" }, { "`", "`" }, { '"', '"' } },
+      },
+    })
+  end,
 }
 
 -- nvim-colorizer replacement
@@ -79,13 +95,25 @@ editor["rrethy/vim-hexokinase"] = {
   cmd = { "HexokinaseTurnOn", "HexokinaseToggle" },
 }
 
--- <A-k>   Move current line/selection up
--- <A-j>   Move current line/selection down
--- <A-h>   Move current character/selection left
--- <A-l>   Move current character/selection right
-editor["matze/vim-move"] = {
+-- Mapping   Normal  Visual  Line-Visual   Block-Visual
+-- <A-h>   Block Left  Block Left  Line Left   Block Left
+-- <A-j>   Line Down   Line Down   Line Down   Block Down
+-- <A-k>   Line Up   Line Up   Line Up   Block Up
+-- <A-l>   Block Right   Block Right   Line Right  Block Right
+editor["booperlv/nvim-gomove"] = {
   opt = true,
-  event = { "CursorMoved", "CursorMovedI" },
+  config = function()
+    require("gomove").setup({
+      -- whether or not to map default key bindings, (true/false)
+      map_defaults = true,
+      -- what method to use for reindenting, ("vim-move" / "simple" / ("none"/nil))
+      reindent_mode = "vim-move",
+      -- whether to not to move past line when moving blocks horizontally, (true/false)
+      move_past_line = true,
+      -- whether or not to ignore indent when duplicating lines horizontally, (true/false)
+      ignore_indent_lh_dup = true,
+    })
+  end,
   -- fn = {'<Plug>MoveBlockDown', '<Plug>MoveBlockUp', '<Plug>MoveLineDown', '<Plug>MoveLineUp'}
 }
 
@@ -120,11 +148,11 @@ editor["mg979/vim-visual-multi"] = {
   setup = conf.vmulti,
 }
 
--- Out of data, might not be great  ?
-editor["LoricAndre/OneTerm.nvim"] = {
-  opt = true,
-  cmd = { "OneTerm" },
-}
+-- -- Out of data, might not be great  ?
+-- editor["LoricAndre/OneTerm.nvim"] = {
+--   opt = true,
+--   cmd = { "OneTerm" },
+-- }
 
 editor["sudormrfbin/cheatsheet.nvim"] = {
   cmd = { "Cheatsheet" },
@@ -136,44 +164,18 @@ editor["sudormrfbin/cheatsheet.nvim"] = {
 }
 
 editor["itchyny/vim-cursorword"] = {
+  event = { "BufReadPre", "BufNewFile" },
   opt = true,
   config = conf.vim_cursorwod,
 }
 
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {
-  event = { "BufEnter", "BufRead" },
+  event = { "BufEnter", "BufRead", "InsertEnter" },
   config = conf.discord,
 }
 
---
-editor["https://github.com/numtostr/FTerm.nvim"] = {
-  opt = true,
-
-  config = function()
-    local fterm = require("FTerm")
-
-    local gitui = fterm:new({
-      cmd = "gitui",
-      dimensions = {
-        height = 0.9,
-        width = 0.9,
-      },
-    })
-
-    -- Use this to toggle gitui in a floating terminal
-    function _G.__fterm_gitui()
-      gitui:toggle()
-    end
-
-    local top = fterm:new({ cmd = "bpytop" })
-
-    -- Use this to toggle bpytop in a floating terminal
-    function _G.__fterm_top()
-      top:toggle()
-    end
-  end,
-}
+-- REMOVED FTERM
 
 -- NORMAL mode:
 -- `gcc` - Toggles the current line using linewise comment
@@ -218,7 +220,7 @@ editor["https://github.com/numtostr/FTerm.nvim"] = {
 -- `gbac` - Toggle comment around a class (w/ LSP/treesitter support)
 
 editor["numToStr/Comment.nvim"] = {
-  opt = true,
+  keys = { "g", "<ESC>" },
   config = conf.comment,
 }
 
@@ -278,37 +280,14 @@ editor["chaoren/vim-wordmotion"] = {
 
 editor["folke/zen-mode.nvim"] = {
   opt = true,
+  requires = { "folke/twilight.nvim", opt = true, config = conf.twilight },
   cmd = { "ZenMode" },
-  config = function()
-    require("zen-mode").setup({})
-  end,
+  config = conf.zen,
 }
 
 editor["nvim-neorg/neorg"] = {
-  -- requires = "nvim-lua/plenary.nvim",
   config = function()
-    require("packer").loader("plenary.nvim")
-    require("packer").loader("nvim-treesitter")
-    require("packer").loader("telescope.nvim")
-    require("packer").loader("neorg-telescope")
-
-    require("neorg").setup({
-      -- Tell Neorg what modules to load
-      load = {
-        ["core.defaults"] = {}, -- Load all the default modules
-        ["core.norg.concealer"] = {}, -- Allows for use of icons
-        ["core.norg.dirman"] = { -- Manage your directories with Neorg
-          config = { workspaces = { my_workspace = "~/neorg" } },
-        },
-        ["core.keybinds"] = { -- Configure core.keybinds
-          config = {
-            default_keybinds = true, -- Generate the default keybinds
-            neorg_leader = "<Leader>o", -- This is the default if unspecified
-          },
-        },
-        ["core.integrations.telescope"] = {}, -- Enable the telescope module
-      },
-    })
+    require("modules.editor.neorg")
   end,
 }
 
@@ -319,63 +298,16 @@ editor["famiu/bufdelete.nvim"] = {
   cmd = { "Bdelete", "Bwipeout" },
 }
 
-editor["filipdutescu/renamer.nvim"] = {
+editor["nvim-lua/popup.nvim"] = {
   opt = true,
-  branch = "master",
-  requires = { { "nvim-lua/plenary.nvim" } },
-  config = function()
-    local mappings_utils = require("renamer.mappings.utils")
-    require("renamer").setup({
-      -- The popup title, shown if `border` is true
-      title = "Rename",
-      -- The padding around the popup content
-      padding = {
-        top = 0,
-        left = 0,
-        bottom = 0,
-        right = 0,
-      },
-      -- Whether or not to shown a border around the popup
-      border = true,
-      -- The characters which make up the border
-      border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-      -- Whether or not to highlight the current word references through LSP
-      show_refs = true,
-      -- Whether or not to add resulting changes to the quickfix list
-      with_qf_list = true,
-      -- Whether or not to enter the new name through the UI or Neovim's `input`
-      -- prompt
-      with_popup = true,
-      -- The keymaps available while in the `renamer` buffer. The example below
-      -- overrides the default values, but you can add others as well.
-      mappings = {
-        ["<c-i>"] = mappings_utils.set_cursor_to_start,
-        ["<c-a>"] = mappings_utils.set_cursor_to_end,
-        ["<c-e>"] = mappings_utils.set_cursor_to_word_end,
-        ["<c-b>"] = mappings_utils.set_cursor_to_word_start,
-        ["<c-c>"] = mappings_utils.clear_line,
-        ["<c-u>"] = mappings_utils.undo,
-        ["<c-r>"] = mappings_utils.redo,
-      },
-      -- Custom handler to be run after successfully renaming the word. Receives
-      -- the LSP 'textDocument/rename' raw response as its parameter.
-      handler = nil,
-    })
-  end,
 }
 
 editor["raimon49/requirements.txt.vim"] = {
   ft = { "requirements" },
 }
 
--- This might not be needed
-editor["mgedmin/coverage-highlight.vim"] = {
-  ft = "python",
-  opt = true,
-  run = ":UpdateRemotePlugins",
-}
-
 editor["max397574/better-escape.nvim"] = {
+  event = "InsertEnter",
   config = function()
     require("better_escape").setup({
       timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
@@ -417,7 +349,6 @@ editor["jbyuki/nabla.nvim"] = {
   opt = true,
   ft = "norg",
   requires = { "nvim-lua/popup.nvim" },
-  -- config = function() end,
 }
 
 return editor

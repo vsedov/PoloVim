@@ -15,12 +15,12 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
   end,
 }
 
-tools["camspiers/snap"] = {
-  -- event = {'CursorMoved', 'CursorMovedI'},
-  -- rocks = {'fzy'},
-  opt = true,
-  config = conf.snap,
-}
+-- tools["camspiers/snap"] = {
+--   -- event = {'CursorMoved', 'CursorMovedI'},
+--   -- rocks = {'fzy'},
+--   opt = true,
+--   config = conf.snap,
+-- }
 
 tools["editorconfig/editorconfig-vim"] = {
   opt = true,
@@ -50,16 +50,16 @@ tools["ThePrimeagen/harpoon"] = {
 }
 
 -- github GH ui
--- tools['pwntester/octo.nvim'] ={
---   cmd = {'Octo', 'Octo pr list'},
---   config=function()
---     require"octo".setup()
---   end
--- }
+tools["pwntester/octo.nvim"] = {
+  cmd = { "Octo", "Octo pr list" },
+  config = function()
+    require("octo").setup()
+  end,
+}
 
 -- tools["wellle/targets.vim"] = {}
 tools["TimUntersberger/neogit"] = {
-  opt = true, 
+  opt = true,
   cmd = { "Neogit" },
   config = function()
     local neogit = require("neogit")
@@ -112,7 +112,7 @@ tools["turbio/bracey.vim"] = {
 -- }
 
 tools["akinsho/toggleterm.nvim"] = {
-  cmd = { "ToggleTerm", "ToggleTermToggleAll", "TermExec" },
+  keys = { "<c-t>" },
   config = function()
     require("modules.tools.toggleterm")
   end,
@@ -130,7 +130,17 @@ tools["liuchengxu/vim-clap"] = {
   config = conf.clap_after,
 }
 
-tools["wakatime/vim-wakatime"] = {}
+tools["wakatime/vim-wakatime"] = {
+  cmd = {
+    "WakaTimeApiKey",
+    "WakaTimeDebugEnable",
+    "WakaTimeDebugDisable",
+    "WakaTimeScreenRedrawEnable",
+    "WakaTimeScreenRedrawEnableAuto",
+    "WakaTimeScreenRedrawDisable",
+    "WakaTimeToday",
+  },
+}
 
 tools["sindrets/diffview.nvim"] = {
   cmd = {
@@ -192,108 +202,65 @@ tools["ray-x/viewdoc.nvim"] = {
 }
 
 -- early stage...
--- tools['tanvirtin/vgit.nvim'] = { -- gitsign has similar features
---   setup = function()
---     vim.o.updatetime = 2000
---   end,
---   cmd = {'VGit'},
---   -- after = {"telescope.nvim"},
---   opt = true,
---   config = conf.vgit
--- }
-
--- tools["tpope/vim-fugitive"] = {
---   cmd = {"Gvsplit", "Git", "Gedit", "Gstatus", "Gdiffsplit", "Gvdiffsplit"},
---   opt = true
--- }
-
-tools["rmagatti/auto-session"] = { config = conf.session }
-
-tools["rmagatti/session-lens"] = {
-  cmd = "SearchSession",
-  after = { "telescope.nvim" },
-  config = function()
-    require("packer").loader("telescope.nvim")
-    require("telescope").load_extension("session-lens")
-    require("session-lens").setup({
-      path_display = { "shorten" },
-      theme_conf = { border = true },
-      previewer = true,
-    })
+tools["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
+  setup = function()
+    vim.o.updatetime = 2000
   end,
+  cmd = { "VGit" },
+  -- after = {"telescope.nvim"},
+  opt = true,
+  config = conf.vgit,
 }
 
+tools["tpope/vim-fugitive"] = {
+  cmd = { "Gvsplit", "Git", "Gedit", "Gstatus", "Gdiffsplit", "Gvdiffsplit" },
+  opt = true,
+}
+
+-- I dont use this
+-- tools["rmagatti/auto-session"] = { config = conf.session }
+
+-- tools["rmagatti/session-lens"] = {
+--   cmd = "SearchSession",
+--   after = { "telescope.nvim" },
+--   config = function()
+--     require("packer").loader("telescope.nvim")
+--     require("telescope").load_extension("session-lens")
+--     require("session-lens").setup({
+--       path_display = { "shorten" },
+--       theme_conf = { border = true },
+--       previewer = true,
+--     })
+--   end,
+-- }
+
+-- need quick fix
 tools["kevinhwang91/nvim-bqf"] = {
   opt = true,
   event = { "CmdlineEnter", "QuickfixCmdPre" },
   config = conf.bqf,
 }
 
-tools["vim-test/vim-test"] = {
-  opt = true,
-}
-
-tools["rcarriga/vim-ultest"] = {
-  requires = { "vim-test/vim-test", opt = true },
-  run = ":UpdateRemotePlugins",
-  config = conf.ultest,
-  opt = true,
-}
-
 -- lua require'telescope'.extensions.project.project{ display_type = 'full' }
-tools["ahmedkhalf/project.nvim"] = {
-  opt = true,
-  after = { "telescope.nvim" },
-  -- keys = { "<M>", "<Leader>" },
-  config = conf.project,
-}
+-- tools["ahmedkhalf/project.nvim"] = {
+--   opt = true,
+--   after = { "telescope.nvim" },
+--   config = conf.project,
+-- }
 
 tools["jvgrootveld/telescope-zoxide"] = {
   opt = true,
-  -- keys = { "<M>", "<Leader>" },
   after = { "telescope.nvim" },
   config = function()
     require("utils.telescope")
     require("telescope").load_extension("zoxide")
   end,
 }
-
+-- this needs to load lazy
 tools["AckslD/nvim-neoclip.lua"] = {
   opt = true,
-  -- keys = { "<M>", "<Leader>" },
   after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite" },
-  config = function()
-    require("utils.telescope")
-    require("neoclip").setup({
-      history = 1000,
-      enable_persistant_history = true,
-      db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-      filter = nil,
-      preview = true,
-      default_register = "+",
-      content_spec_column = true,
-      on_paste = {
-        set_reg = true,
-      },
-      keys = {
-        telescope = {
-          i = {
-            select = "<cr>",
-            paste = "<c-p>",
-            -- C-P and C-;
-            paste_behind = "<c-;>",
-            custom = {},
-          },
-          n = {
-            select = "<cr>",
-            paste = "p",
-            paste_behind = "P",
-          },
-        },
-      },
-    })
-  end,
 }
 
 -- This can be lazy loaded probably, figure out how ?
@@ -302,11 +269,12 @@ tools["camspiers/animate.vim"] = {
 }
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
-  keys = { "<M>", "<Leader><Leader><Leader>" },
+  keys = { "<Leader><Leader><Leader>" },
   after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite", opt = true },
   opt = true,
   config = function()
+    require("packer").loader("sqlite.lua")
     local telescope = require("telescope")
     telescope.load_extension("frecency")
     telescope.setup({
@@ -325,7 +293,6 @@ tools["nvim-telescope/telescope-frecency.nvim"] = {
         },
       },
     })
-    -- vim.api.nvim_set_keymap("n", "<leader><leader>p", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>", {noremap = true, silent = true})
   end,
 }
 
@@ -349,6 +316,23 @@ tools["chentau/marks.nvim"] = {
       bookmark_0 = {
         sign = "⚑",
         virt_text = "BookMarks",
+      },
+    })
+  end,
+}
+
+tools["Krafi2/jeskape.nvim"] = {
+  event = "InsertEnter",
+  config = function()
+    require("jeskape").setup({
+      mappings = {
+        ["c"] = {
+          ["c"] = "<cmd>lua require'utils'.append_comma()<CR>",
+        },
+        j = {
+          k = "<esc>",
+          j = "<esc>o",
+        },
       },
     })
   end,

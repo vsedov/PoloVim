@@ -141,22 +141,23 @@ end
 function config.lightspeed()
   require("lightspeed").setup({
     ignore_case = false,
-    exit_after_idle_msecs = { labeled = nil, unlabeled = 1000 },
+    exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
 
     -- s/x
     grey_out_search_area = true,
     highlight_unique_chars = true,
-    match_only_the_start_of_same_char_seqs = true,
     jump_on_partial_input_safety_timeout = 400,
+    match_only_the_start_of_same_char_seqs = true,
     substitute_chars = { ["\r"] = "¬" },
     -- Leaving the appropriate list empty effectively disables
-
-    cycle_group_fwd_key = "<space>",
-    cycle_group_bwd_key = "<tab>",
-
+    -- "smart" mode, and forces auto-jump to be on or off.
+    -- safe_labels = { . . . },
+    -- labels = { . . . },
+    cycle_group_fwd_key = "]",
+    cycle_group_bwd_key = "[",
     -- f/t
-    limit_ft_matches = 4,
-    repeat_ft_with_target_char = false,
+    limit_ft_matches = 10,
+    repeat_ft_with_target_char = true,
   })
 end
 
@@ -226,41 +227,6 @@ function config.comment()
       end
     end,
   })
-end
-
-function config.neorg()
-  require("neorg").setup({
-    -- Tell Neorg what modules to load
-    load = {
-      ["core.defaults"] = {}, -- Load all the default modules
-      ["core.norg.concealer"] = {}, -- Allows for use of icons
-      ["core.norg.dirman"] = { -- Manage your directories with Neorg
-        config = { workspaces = { my_workspace = "~/neorg" } },
-      },
-      ["core.keybinds"] = { -- Configure core.keybinds
-        config = {
-          default_keybinds = true, -- Generate the default keybinds
-          neorg_leader = "<Leader>o", -- This is the default if unspecified
-        },
-      },
-      ["core.norg.completion"] = { config = { engine = "nvim-cmp" } },
-      ["core.integrations.telescope"] = {}, -- Enable the telescope module
-    },
-  })
-  local neorg_callbacks = require("neorg.callbacks")
-
-  neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
-    -- Map all the below keybinds only when the "norg" mode is active
-    keybinds.map_event_to_mode("norg", {
-      n = { -- Bind keys in normal mode
-        { "<C-s>", "core.integrations.telescope.find_linkable" },
-      },
-
-      i = { -- Bind in insert mode
-        { "<C-i>", "core.integrations.telescope.insert_link" },
-      },
-    }, { silent = true, noremap = true })
-  end)
 end
 
 function config.vim_cursorwod()
@@ -338,20 +304,60 @@ function config.vmulti()
   ]])
 end
 
-function config.launch_duck()
-  local loader = require("packer").loader
-  loader("duck.nvim")
-  require("duck").setup({
-    winblend = 100, -- 0 to 100
-    speed = 1, -- optimal: 1 to 99
-    width = 2,
+function config.twilight()
+  require("twilight").setup({
+    dimming = {
+      alpha = 0.25,
+      color = { "Normal", "#ffffff" },
+      inactive = false,
+    },
+    context = 10,
+    treesitter = true,
+    expand = {
+      "function",
+      "method",
+      "table",
+      "if_statement",
+    },
   })
+end
 
-  -- Starts teh duck
-  vim.cmd([[lua require("duck").hatch("🐼")]])
-
-  -- Call function DuckKilil to kill it
-  vim.cmd([[command! -nargs=*  DuckKill lua require("duck").cook("🐼")]])
+function config.zen()
+  require("zen-mode").setup({
+    window = {
+      backdrop = 0.3, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
+      width = 0.85, -- width of the Zen window
+      height = 1, -- height of the Zen window
+      options = {
+        -- signcolumn = "no", -- disable signcolumn
+        -- number = false, -- disable number column
+        -- relativenumber = false, -- disable relative numbers
+        -- cursorline = false, -- disable cursorline
+        cursorcolumn = false, -- disable cursor column
+        foldcolumn = "0", -- disable fold column
+        list = false, -- disable whitespace characters
+      },
+    },
+    plugins = {
+      options = {
+        enabled = true,
+        ruler = false, -- disables the ruler text in the cmd line area
+        showcmd = false, -- disables the command in the last line of the screen
+      },
+      twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
+      gitsigns = { enabled = true }, -- disables git signs
+      tmux = { enabled = false }, -- disables the tmux statusline
+      kitty = {
+        enabled = true,
+      },
+    },
+    -- callback where you can add custom code when the Zen window opens
+    on_open = function(win)
+      vim.cmd([[PackerLoad twilight.nvim]])
+    end,
+    -- callback where you can add custom code when the Zen window closes
+    on_close = function() end,
+  })
 end
 
 return config

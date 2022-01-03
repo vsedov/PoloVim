@@ -16,12 +16,14 @@ if not packer_plugins["lsp-colors.nvim"].loaded then
   vim.cmd([[packadd lsp-colors.nvim]])
 end
 
+require("lsp-colors").setup({})
+
 vim.diagnostic.config({
   virtual_text = false,
   severity_sort = true,
   signs = true,
-  underline = false,
-  update_in_insert = true,
+  underline = true,
+  update_in_insert = false,
   float = {
     focusable = true,
     style = "minimal",
@@ -39,13 +41,19 @@ vim.diagnostic.config({
   },
 })
 
+local border = {
+  { "╭", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╮", "FloatBorder" },
+  { "│", "FloatBorder" },
+  { "╯", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╰", "FloatBorder" },
+  { "│", "FloatBorder" },
+}
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = "single",
-})
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "single",
-})
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 
 local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
 
@@ -57,7 +65,18 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities.offsetEncoding = { "utf-16" }
 
+capabilities.textDocument.completion.completionItem.preselectSupport = true
+capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+capabilities.textDocument.completion.completionItem.tagSupport = {
+  valueSet = { 1 },
+}
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = { "documentation", "detail", "additionalTextEdits" },
+}
 
 capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = {
@@ -84,17 +103,15 @@ capabilities.textDocument.codeAction = {
   },
 }
 
-
-
-
-
 -- show diagnostics for current line
 -- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
 -- show diagnostics for current position
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
+-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
 
-
-
+vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
+vim.cmd(
+  [[au CursorHold,CursorHoldI  * lua vim.diagnostic.open_float(0, { focusable = true,scope = "cursor",source = "if_many",format = function(diagnostic) return require'modules.completion.lsp_support'.parse_diagnostic(diagnostic) end, header = {"Cursor Diagnostics:","DiagnosticHeader"}, prefix = function(diagnostic,i,total) local icon, highlight if diagnostic.severity == 1 then icon = ""; highlight ="DiagnosticError" elseif diagnostic.severity == 2 then icon = ""; highlight ="DiagnosticWarn" elseif diagnostic.severity == 3 then icon = ""; highlight ="DiagnosticInfo" elseif diagnostic.severity == 4 then icon = ""; highlight ="DiagnosticHint" end return i.."/"..total.." "..icon.."  ",highlight end})]]
+)
 
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())
@@ -146,14 +163,14 @@ end
 --   filetypes = { "c", "cpp", "objc", "objcpp" },
 
 -- }
+
 local clangd_flags = {
   "--background-index",
   "--cross-file-rename",
   "--offset-encoding=utf-16",
   "--clang-tidy-checks=clang-diagnostic-*,clang-analyzer-*,-*,bugprone*,modernize*,performance*,-modernize-pass-by-value,-modernize-use-auto,-modernize-use-using,-modernize-use-trailing-return-type",
 }
-
-
+-- Need to configer this for xmake soon
 lspconfig.clangd.setup({
   cmd = { "clangd", unpack(clangd_flags) },
   filetypes = { "c", "cpp", "objc", "objcpp" },
@@ -185,43 +202,11 @@ lspconfig.rust_analyzer.setup({
 })
 lspconfig.jdtls.setup({
   cmd = { "jdtls" },
-  filetypes = {"java" },
+  filetypes = { "java" },
   on_attach = enhance_attach,
   capabilities = capabilities,
 })
 -- lspconfig.jdtls.setup({ cmd = { "jdtls" } })
-
-lspconfig.sumneko_lua.setup({
-  capabilities = capabilities,
-  on_attach = enhance_attach,
-
-  cmd = { "lua-language-server", "-E", "/usr/share/lua-language-server/main.lua" },
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = "LuaJIT",
-        -- Setup your lua path
-        path = vim.split(package.path, ";"),
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { "vim" },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = {
-          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-        },
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-})
 
 lspconfig.vimls.setup({
   on_attach = enhance_attach,

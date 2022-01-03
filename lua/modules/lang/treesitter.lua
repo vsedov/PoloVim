@@ -65,7 +65,7 @@ local treesitter = function()
 
     highlight = {
       enable = true, -- false will disable the whole extension
-      additional_vim_regex_highlighting = false,
+      additional_vim_regex_highlighting = true,
       disable = { "elm" }, -- list of language that will be disabled
       use_languagetree = langtree,
       custom_captures = { todo = "Todo" },
@@ -102,7 +102,7 @@ local treesitter_obj = function()
 
   require("nvim-treesitter.configs").setup({
 
-    indent = { enable = true },
+    indent = { enable = true, disable = { "python" } },
     context_commentstring = { enable = true, enable_autocmd = false },
     textobjects = {
       -- syntax-aware textobjects
@@ -173,6 +173,8 @@ local treesitter_obj = function()
     -- ensure_installed = "maintained"
     ensure_installed = {
       "norg",
+      "norg_table",
+      "norg_meta",
       "go",
       "css",
       "html",
@@ -222,13 +224,13 @@ local treesitter_ref = function()
         },
       },
       navigation = {
-        enable = false, -- use navigator
+        enable = true, -- enabled navigation might conflict with mapping
         keymaps = {
           goto_definition = "gnd", -- mapping to go to definition of symbol under cursor
           list_definitions = "gnD", -- mapping to list all definitions in current file
           list_definitions_toc = "gO", -- gT navigator
-          -- goto_next_usage = "<c->>",
-          -- goto_previous_usage = "<c-<>",
+          goto_next_usage = "<c->>",
+          goto_previous_usage = "<c-<>",
         },
       },
     },

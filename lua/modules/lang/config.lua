@@ -49,10 +49,9 @@ function config.refactor()
     }):find()
   end
 
--- vim.api.nvim_set_keymap("v", "<Leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
--- vim.api.nvim_set_keymap("v", "<Leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
--- vim.api.nvim_set_keymap("v", "<Leader>rt", [[ <Esc><Cmd>lua M.refactors()<CR>]], {noremap = true, silent = true, expr = false})
-
+  -- vim.api.nvim_set_keymap("v", "<Leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
+  -- vim.api.nvim_set_keymap("v", "<Leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
+  -- vim.api.nvim_set_keymap("v", "<Leader>rt", [[ <Esc><Cmd>lua M.refactors()<CR>]], {noremap = true, silent = true, expr = false})
 end
 
 function config.neorunner()
@@ -137,29 +136,24 @@ function config.doge()
 end
 
 function config.goto_preview()
-  require("goto-preview").setup({})
-end
+  vim.cmd([[command! -nargs=* GotoPrev lua require('goto-preview').goto_preview_definition()]])
+  vim.cmd([[command! -nargs=* GotoImp lua require('goto-preview').goto_preview_implementation()]])
+  vim.cmd([[command! -nargs=* GotoTel lua require('goto-preview').goto_preview_references()]])
 
-function config.nvim_notify()
-  require("notify").setup({
-    -- Animation style (see below for details)
-    stages = "fade_in_slide_out",
-
-    -- Default timeout for notifications
-    timeout = 5000,
-
-    -- For stages that change opacity this is treated as the highlight behind the window
-    -- Set this to either a highlight group or an RGB hex value e.g. "#000000"
-    background_colour = "#000000",
-
-    -- Icons for the different levels
-    icons = {
-      ERROR = "",
-      WARN = "",
-      INFO = "",
-      DEBUG = "",
-      TRACE = "✎",
-    },
+  require("goto-preview").setup({
+    width = 120, -- Width of the floating window
+    height = 15, -- Height of the floating window
+    border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
+    default_mappings = false, -- Bind default mappings
+    debug = false, -- Print debug information
+    opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+    resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
+    post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+    -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+    focus_on_open = true, -- Focus the floating window when opening it.
+    dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
+    force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+    bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
   })
 end
 
@@ -228,10 +222,14 @@ end
 
 function config.sqls() end
 
+function config.ultest()
+  require("modules.lang.language_utils").testStart()
+end
+
+function config.magma()
+  vim.g.magma_automatically_open_output = false
+end
 function config.sniprun()
-  if packer_plugins["nvim-notify"] then
-    vim.cmd([[packadd nvim-notify]])
-  end
   require("sniprun").setup({
     selected_interpreters = {}, --# use those instead of the default for the current filetype
     repl_enable = {}, --# enable REPL-like behavior for the given interpreters
@@ -257,7 +255,6 @@ function config.sniprun()
     --# to workaround sniprun not being able to display anything
 
     borders = "single", --# display borders around floating windows
-    --# possible values are 'none', 'single', 'double', or 'shadow'
   })
 end
 
@@ -388,9 +385,55 @@ function config.playground()
   })
 end
 function config.luadev()
-  vim.cmd([[vmap <leader><leader>r <Plug>(Luadev-Run)]])
+  vim.cmd([[vmap <leader><leader>lr <Plug>(Luadev-Run)]])
 end
-function config.lua_dev() end
+
+function config.lua_dev()
+  local sumneko_lua_server = {
+    capabilities = capabilities,
+    on_attach = enhance_attach,
+
+    cmd = { "lua-language-server", "-E", "/usr/share/lua-language-server/main.lua" },
+    settings = {
+      Lua = {
+        runtime = {
+          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          version = "LuaJIT",
+          -- Setup your lua path
+          path = vim.split(package.path, ";"),
+        },
+        diagnostics = {
+          -- Get the language server to recognize the `vim` global
+          globals = { "vim", "dump", "hs", "lvim" },
+        },
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          library = {
+            [vim.fn.expand("~/.config/nvim_config/lua")] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+            maxPreload = 100000,
+            preloadFileSize = 1000,
+          },
+        },
+        -- Do not send telemetry data containing a randomized but unique identifier
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
+  }
+
+  local luadev = require("lua-dev").setup({
+    library = {
+      vimruntime = true,
+      types = true,
+      plugins = false,
+    },
+    lspconfig = sumneko_lua_server,
+  })
+  require("lspconfig").sumneko_lua.setup(luadev)
+end
 
 function config.go()
   require("go").setup({

@@ -8,10 +8,9 @@ completion["neovim/nvim-lspconfig"] = {
 
   requires = {
     { "nvim-lua/lsp_extensions.nvim", opt = true },
-    { "tjdevries/nlua.nvim", opt = true },
     { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
-    { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga"}
+    { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
 
     -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
   },
@@ -21,7 +20,7 @@ completion["neovim/nvim-lspconfig"] = {
 
 -- Nice to have it back, but might stick with nvim-lsp version to see how it goes.
 -- completion["tami5/lspsaga.nvim"]={
---   -- opt = true, 
+--   -- opt = true,
 --   config = conf.saga
 -- }
 
@@ -73,14 +72,33 @@ else
   completion["ms-jpq/coq.artifacts"] = { opt = true }
 end
 
+completion["https://github.com/github/copilot.vim.git"] = {
+  event = "InsertEnter",
+  after = "nvim-cmp",
+  config = function()
+    vim.opt.completeopt = "menuone,noselect"
+
+    -- Have copilot play nice with nvim-cmp.
+    vim.g.copilot_no_tab_map = true
+    vim.g.copilot_assume_mapped = true
+    vim.g.copilot_tab_fallback = ""
+    local excluded_filetypes = { "norg", "nofile", "prompt" }
+    local copilot_filetypes = {}
+    for _, ft in pairs(excluded_filetypes) do
+      copilot_filetypes[ft] = false
+    end
+
+    vim.g["copilot_filetypes"] = copilot_filetypes
+  end,
+}
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
-completion["hrsh7th/nvim-cmp"] = {
+completion["Iron-E/nvim-cmp"] = {
+  branch = "feat/completion-menu-borders",
   -- opt = true,
-  -- event = "InsertEnter", -- InsertCharPre
+  -- event = {"InsertEnter", "CmdLineEnter"}, -- InsertCharPre Due to luasnip
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
   after = { "LuaSnip" }, -- "nvim-snippy",
   requires = {
-    { "https://github.com/github/copilot.vim.git" },
     {
       "tzachar/cmp-tabnine",
       run = "./install.sh",
@@ -88,6 +106,7 @@ completion["hrsh7th/nvim-cmp"] = {
       config = conf.tabnine,
       opt = true,
     },
+    { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-calc", after = "nvim-cmp", opt = true },
@@ -120,16 +139,17 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 }
 
 completion["nvim-telescope/telescope.nvim"] = {
-  cmd = "Telescope",
+  module = { "telescope", "utils.telescope" },
   config = conf.telescope,
   setup = conf.telescope_preload,
   requires = {
+    { "nvim-lua/popup.nvim", opt = true }, -- test
     { "nvim-neorg/neorg-telescope", opt = true },
     { "nvim-lua/plenary.nvim", opt = true },
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
     { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
-    { "rcarriga/nvim-notify", opt = true },
+    { "nvim-telescope/telescope-file-browser.nvim", opt = true },
   },
   opt = true,
 }
@@ -162,14 +182,12 @@ completion["ray-x/lsp_signature.nvim"] = {
       bind = true,
       -- doc_lines = 4,
       toggle_key = "<C-x>",
-      floating_window = false,
+      floating_window = true,
       floating_window_above_cur_line = true,
       hint_enable = true,
       fix_pos = false,
       -- floating_window_above_first = true,
       log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-      debug = plugin_debug(),
-      verbose = plugin_debug(),
       -- hi_parameter = "Search",
       zindex = 1002,
       timer_interval = 100,
@@ -195,7 +213,7 @@ completion["dense-analysis/ale"] = {
   config = conf.ale,
 }
 
-completion["https://github.com/vsedov/vim-sonictemplate"] = {
+completion["vsedov/vim-sonictemplate"] = {
   cmd = "Template",
   config = conf.vim_sonictemplate,
 }

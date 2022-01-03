@@ -1,6 +1,7 @@
 -- retreives data form file
 -- and line to highlight
 -- first wrote by https://github.com/RishabhRD/nvim-lsputils
+local cmd = vim.cmd
 
 M = {
   log_path = vim.lsp.get_log_path(),
@@ -254,4 +255,23 @@ function M.newbinsource(cmd)
     return output
   end
 end
+
+function _G.dump(...)
+  print(vim.inspect(...))
+end
+
+---Reloads a module
+---@param module string Name of the module
+function RELOAD(module)
+  return require("plenary.reload").reload_module(module)
+end
+
+---Reloads and requires a module
+---@param name string Name of the module
+---@return any module The required module
+R = function(name)
+  RELOAD(name)
+  return require(name)
+end
+
 return M

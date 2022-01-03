@@ -25,27 +25,21 @@ ui["akinsho/bufferline.nvim"] = {
   -- requires = {'kyazdani42/nvim-web-devicons'}
   opt = true,
 }
--- 'luaromgrk/barbar.nvim'
--- ui['romgrk/barbar.nvim'] = {
---   config = conf.barbar,
---   requires = {'kyazdani42/nvim-web-devicons'}
--- }
---
--- not so useful...
--- ui["wfxr/minimap.vim"] = {
---   run = ":!cargo install --locked code-minimap",
---   keys = {"<F14>"},
---   cmd = {"Minimap", "MinimapToggle"},
---   setup = conf.minimap
--- }
 
 -- TODO MODIFY THIS
 ui["startup-nvim/startup.nvim"] = {
 
   requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   config = function()
-    require("startup").setup({ theme = "dashboard" })
+    require("startup").setup({ theme = "evil" })
   end,
+}
+
+-- Lazy Loading nvim-notify
+ui["rcarriga/nvim-notify"] = {
+  opt = true,
+  requires = "telescope.nvim", -- this might not be needed
+  config = conf.notify,
 }
 
 ui["kyazdani42/nvim-tree.lua"] = {
@@ -69,7 +63,10 @@ ui["lukas-reineke/virt-column.nvim"] = {
   end,
 }
 
-ui["dstein64/nvim-scrollview"] = { event = { "CursorMoved", "CursorMovedI" }, config = conf.scrollview }
+ui["dstein64/nvim-scrollview"] = {
+  event = { "CursorMoved", "CursorMovedI" },
+  config = conf.scrollview,
+}
 
 ui["ray-x/aurora"] = { opt = true, config = conf.aurora }
 ui["folke/tokyonight.nvim"] = {
@@ -89,7 +86,7 @@ ui["catppuccin/nvim"] = {
   end,
 }
 
-ui["https://github.com/numToStr/Sakura.nvim"] = {
+ui["numToStr/Sakura.nvim"] = {
   opt = true,
   config = function()
     vim.cmd([[colorscheme sakura]])
@@ -127,9 +124,6 @@ ui["projekt0n/github-nvim-theme"] = {
 
 -- ui["ChristianChiarulli/nvcode-color-schemes.vim"] = {opt = true, config = conf.nvcode}
 
-ui["sainnhe/sonokai"] = { opt = true, config = conf.sonokai }
-ui["sainnhe/gruvbox-material"] = { opt = true, config = conf.gruvbox }
-
 -- cant config cursor line
 -- ui["rafamadriz/neon"] = {opt = true, config = conf.neon}
 
@@ -141,17 +135,13 @@ ui["ray-x/starry.nvim"] = {
   end,
 }
 
-ui["wiliamks/mechanical.nvim"] = {
-  opt = true,
-}
-
 ui["kazhala/close-buffers.nvim"] = {
   cmd = { "BDelete", "BWipeout" },
   config = conf.buffers_close,
 }
 
-ui["mhinz/vim-sayonara"] = {
-  cmd = "Sayonara",
+ui["norcalli/nvim-colorizer.lua"] = {
+  opt = true,
 }
 
 return ui

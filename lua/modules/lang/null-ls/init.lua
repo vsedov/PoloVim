@@ -78,23 +78,15 @@ return {
       )
     end
 
-    if exist("clang-format") then 
-      table.insert(
-        sources,
-        null_ls.builtins.formatting.clang_format
-      )
+    if exist("clang-format") then
+      table.insert(sources, null_ls.builtins.formatting.clang_format)
     end
 
-    if exist("cppcheck") then 
-        table.insert(
-        sources,
-        null_ls.builtins.diagnostics.cppcheck
-      )
-    end 
+    if exist("cppcheck") then
+      table.insert(sources, null_ls.builtins.diagnostics.cppcheck)
+    end
 
-
-
-    table.insert(sources, null_ls.builtins.formatting.trim_newlines)
+    table.insert(sources, null_ls.builtins.formatting.trim_newlines.with({ disabled_filetypes = { "norg" } }))
     table.insert(sources, null_ls.builtins.formatting.trim_whitespace)
 
     -- table.insert(
@@ -114,17 +106,29 @@ return {
     --   })
     -- )
     --
+    local lsputil = require("lspconfig.util")
+
     local cfg = {
+
       sources = sources,
       debounce = 1000,
+
       root_dir = require("lspconfig").util.root_pattern(
+        ".venv", -- for python
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "node_modules",
+        "xmake.lua",
+        "CMakeLists.txt",
         ".null-ls-root",
         "Makefile",
-        ".git",
-        "go.mod",
         "package.json",
-        "tsconfig.json"
+        "tsconfig.json",
+        ".git"
       ),
+
       on_attach = function(client)
         -- I dont want any formating on python files.
         if client.resolved_capabilities.document_formatting and vim.bo.filetype ~= "python" then

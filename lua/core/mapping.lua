@@ -6,7 +6,7 @@ local map_cmd = bind.map_cmd
 -- default map
 local def_map = {
   -- Vim map
-  ["n|<C-x>k"] = map_cr("Sayonara"):with_noremap():with_silent(),
+  ["n|<C-x>k"] = map_cr("bdelete"):with_noremap():with_silent(),
   ["n|Y"] = map_cmd("y$"),
   ["n|]w"] = map_cu("WhitespaceNext"):with_noremap(),
   ["n|[w"] = map_cu("WhitespacePrev"):with_noremap(),
@@ -14,7 +14,7 @@ local def_map = {
   ["n|[b"] = map_cu("bn"):with_noremap(),
 
   ["n|<Leader>w"] = map_cu("write"):with_noremap(),
-  ["n|<Leader>q"] = map_cr("Sayonara"):with_noremap(),
+  ["n|<Leader>q"] = map_cmd(":q!<CR>"):with_noremap(),
 
   ["n|<Space>cw"] = map_cu([[silent! keeppatterns %substitute/\s\+$//e]]):with_noremap():with_silent(),
 
@@ -51,6 +51,12 @@ local def_map = {
   ["c|<C-d>"] = map_cmd("<Del>"):with_noremap(),
   ["c|<C-h>"] = map_cmd("<BS>"):with_noremap(),
   ["c|<C-t>"] = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]]):with_noremap(),
+
+  -- Nice animation
+  ["n|<Up>"] = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
+  ["n|<Down>"] = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
+  ["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
+  ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
 }
 
 local os_map = {
