@@ -205,6 +205,7 @@ end
 -- Run DebugOpen and then you run Debug
 
 vim.cmd([[command! -nargs=*  DuckStart lua require"modules.useless.config".launch_duck()]])
+vim.cmd([[command! -nargs=*  LoadCol lua require"modules.ui.config".colour()]])
 
 -- Load Test Case - it will recognise test file - and you can run Template test and a nice
 -- Python test suit
