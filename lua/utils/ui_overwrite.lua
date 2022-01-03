@@ -1,27 +1,27 @@
 local cmd = vim.cmd
 
 local colors = {
-  white = "#abb2bf",
-  darker_black = "#1b1f27",
-  black = "#11121D", --  nvim bg
-  black2 = "#0b0c17",
+  white = "#DCD7BA",
+  darker_black = "#2A2A37",
+  black = "#363646", --  nvim bg
+  black2 = "#16161D",
   one_bg = "#1b1c27",
-  one_bg2 = "#242530",
-  one_bg3 = "#2c2d38",
-  grey = "#393a45",
+  one_bg2 = "#223249",
+  one_bg3 = "#2D4F67",
+  grey = "#727169",
   grey_fg = "#43444f",
   grey_fg2 = "#4d4e59",
   light_grey = "#555661",
-  red = "#ee6d85",
-  baby_pink = "#fd7c94",
-  pink = "#fe6D85",
+  red = "#957FB8",
+  baby_pink = "#C34043",
+  pink = "#E46876",
   line = "#20212c",
   green = "#98c379",
   vibrant_green = "#95c561",
-  nord_blue = "#648ce1",
-  blue = "#7199ee",
-  yellow = "#d7a65f",
-  sun = "#dfae67",
+  nord_blue = "#9CABCA",
+  blue = "#7FB4CA",
+  yellow = "#C0A36E",
+  sun = "#E6C384",
   purple = "#a485dd",
   dark_purple = "#9071c9",
   teal = "#519aba",
@@ -30,8 +30,8 @@ local colors = {
   statusline_bg = "#151621",
   lightbg = "#22232e",
   lightbg2 = "#1c1d28",
-  pmenu_bg = "#98C379",
-  folder_bg = "#354a77",
+  pmenu_bg = "#16161D",
+  folder_bg = "#43242B",
 }
 
 local black = colors.black
@@ -80,11 +80,11 @@ local function fg_bg(group, fgcol, bgcol)
 end
 
 -- Comments
-if ui.italic_comments then
-  fg("Comment", grey_fg .. " gui=italic")
-else
-  fg("Comment", grey_fg)
-end
+-- if ui.italic_comments then
+--   fg("Comment", grey_fg .. " gui=italic")
+-- else
+--   fg("Comment", grey_fg)
+-- end
 
 -- -- Disable cusror line
 -- -- Line number
