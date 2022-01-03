@@ -393,7 +393,7 @@ function config.lua_dev()
     library = {
       vimruntime = true, -- runtime path
       types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-      plugins = true -- installed opt or start plugins in packpath
+      plugins = true, -- installed opt or start plugins in packpath
       -- you can also specify the list of plugins to make available as a workspace library
       -- plugins = { "nvim-treesitter", "plenary.nvim", "navigator" },
     },
@@ -401,7 +401,7 @@ function config.lua_dev()
     lspconfig = {
       -- cmd = {sumneko_binary},
       -- on_attach = ...
-    }
+    },
   }
 
   local luadev = require("lua-dev").setup(cfg)
@@ -414,8 +414,6 @@ function config.lua_dev()
   -- print(vim.inspect(luadev))
   -- require('lspconfig').sumneko_lua.setup(luadev)
 end
-
-
 
 function config.go()
   require("go").setup({
