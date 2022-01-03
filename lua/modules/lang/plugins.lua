@@ -28,7 +28,7 @@ lang["RRethy/nvim-treesitter-textsubjects"] = {
 
 -- Better plugin for this i think ,
 lang["danymat/neogen"] = {
-  module = { "neogen" },
+  keys = { "<leader>a" },
   opt = true,
   config = function()
     require("neogen").setup({
@@ -132,7 +132,6 @@ lang["mfussenegger/nvim-dap"] = {
     { "theHamsta/nvim-dap-virtual-text", cmd = "Luadev", opt = true },
     { "mfussenegger/nvim-dap-python", ft = "python" },
     { "rcarriga/nvim-dap-ui", opt = true },
-    { "Pocco81/DAPInstall.nvim" }, -- Not sue what to do with this
   },
 
   run = ":UpdateRemotePlugins",
@@ -249,6 +248,14 @@ lang["folke/lua-dev.nvim"] = {
   config = conf.lua_dev,
 }
 
+lang["nanotee/luv-vimdocs"] = {
+  opt = true,
+}
+-- builtin lua functions
+lang["milisims/nvim-luaref"] = {
+  opt = true,
+}
+
 lang["p00f/nvim-ts-rainbow"] = {
   opt = true,
   -- after = "nvim-treesitter",
@@ -294,9 +301,11 @@ lang["BenGH28/neo-runner.nvim"] = {
   run = ":UpdateRemotePlugins",
 }
 
+
 lang["is0n/jaq-nvim"] = {
-  opt = true,
   cmd = "Jaq",
+  after = "filetype.nvim",
+  opt = true,
   config = conf.jaq,
 }
 
