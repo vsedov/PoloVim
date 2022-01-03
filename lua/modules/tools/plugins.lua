@@ -50,12 +50,12 @@ tools["ThePrimeagen/harpoon"] = {
 }
 
 -- github GH ui
--- tools['pwntester/octo.nvim'] ={
---   cmd = {'Octo', 'Octo pr list'},
---   config=function()
---     require"octo".setup()
---   end
--- }
+tools['pwntester/octo.nvim'] ={
+  cmd = {'Octo', 'Octo pr list'},
+  config=function()
+    require"octo".setup()
+  end
+}
 
 -- tools["wellle/targets.vim"] = {}
 tools["TimUntersberger/neogit"] = {
@@ -243,57 +243,23 @@ tools["kevinhwang91/nvim-bqf"] = {
 -- lua require'telescope'.extensions.project.project{ display_type = 'full' }
 tools["ahmedkhalf/project.nvim"] = {
   opt = true,
-  -- after = { "telescope.nvim" },
-  -- keys = { "<M>", "<Leader>" },
+  after = { "telescope.nvim" },
   config = conf.project,
 }
 
 tools["jvgrootveld/telescope-zoxide"] = {
   opt = true,
-  -- keys = { "<M>", "<Leader>" },
-  -- after = { "telescope.nvim" },
-  -- config = function()
-  --   require("utils.telescope")
-  --   require("telescope").load_extension("zoxide")
-  -- end,
+  after = { "telescope.nvim" },
+  config = function()
+    require("utils.telescope")
+    require("telescope").load_extension("zoxide")
+  end,
 }
-
+-- this needs to load lazy
 tools["AckslD/nvim-neoclip.lua"] = {
   opt = true,
-  -- keys = { "<M>", "<Leader>" },
-  -- after = { "telescope.nvim" },
+  after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite" },
-  -- config = function()
-  --   require("utils.telescope")
-  --   require("neoclip").setup({
-  --     history = 1000,
-  --     enable_persistant_history = true,
-  --     db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-  --     filter = nil,
-  --     preview = true,
-  --     default_register = "+",
-  --     content_spec_column = true,
-  --     on_paste = {
-  --       set_reg = true,
-  --     },
-  --     keys = {
-  --       telescope = {
-  --         i = {
-  --           select = "<cr>",
-  --           paste = "<c-p>",
-  --           -- C-P and C-;
-  --           paste_behind = "<c-;>",
-  --           custom = {},
-  --         },
-  --         n = {
-  --           select = "<cr>",
-  --           paste = "p",
-  --           paste_behind = "P",
-  --         },
-  --       },
-  --     },
-  --   })
-  -- end,
 }
 
 -- This can be lazy loaded probably, figure out how ?
@@ -302,31 +268,31 @@ tools["camspiers/animate.vim"] = {
 }
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
-  keys = { "<M>", "<Leader><Leader><Leader>" },
-  -- after = { "telescope.nvim" },
+  keys = { "<Leader><Leader><Leader>" },
+  after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite", opt = true },
   opt = true,
-  -- config = function()
-  --   local telescope = require("telescope")
-  --   telescope.load_extension("frecency")
-  --   telescope.setup({
-  --     extensions = {
-  --       frecency = {
-  --         show_scores = false,
-  --         show_unindexed = true,
-  --         ignore_patterns = { "*.git/*", "*/tmp/*" },
-  --         disable_devicons = false,
-  --         workspaces = {
-  --           -- ["conf"] = "/home/my_username/.config",
-  --           -- ["data"] = "/home/my_username/.local/share",
-  --           -- ["project"] = "/home/my_username/projects",
-  --           -- ["wiki"] = "/home/my_username/wiki"
-  --         },
-  --       },
-  --     },
-  --   })
-  -- vim.api.nvim_set_keymap("n", "<leader><leader>p", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>", {noremap = true, silent = true})
-  -- end,
+  config = function()
+    require("packer").loader("sqlite.lua")
+    local telescope = require("telescope")
+    telescope.load_extension("frecency")
+    telescope.setup({
+      extensions = {
+        frecency = {
+          show_scores = false,
+          show_unindexed = true,
+          ignore_patterns = { "*.git/*", "*/tmp/*" },
+          disable_devicons = false,
+          workspaces = {
+            -- ["conf"] = "/home/my_username/.config",
+            -- ["data"] = "/home/my_username/.local/share",
+            -- ["project"] = "/home/my_username/projects",
+            -- ["wiki"] = "/home/my_username/wiki"
+          },
+        },
+      },
+    })
+  end,
 }
 
 tools["chentau/marks.nvim"] = {
