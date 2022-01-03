@@ -9,15 +9,5 @@ user["~/GitHub/ytmmusic.lua"] = {
   end,
 }
 
-user["nanotee/luv-vimdocs"] = {
-  opt = true,
-  ft = { "lua" },
-}
--- builtin lua functions
-user["milisims/nvim-luaref"] = {
-  opt = true,
-  ft = { "lua" },
-}
-
 -- your plugin config
 return user
