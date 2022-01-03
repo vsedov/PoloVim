@@ -156,8 +156,9 @@ function config.project()
     datapath = vim.fn.stdpath("data"),
     ignore_lsp = { "efm" },
     exclude_dirs = { "~/.cargo/*" },
+    detection_methods = { "lsp"},
     silent_chdir = false,
-    patterns = { "xmake.lua", "CMakeLists.txt", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+    -- patterns = { "xmake.lua", "CMakeLists.txt", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
