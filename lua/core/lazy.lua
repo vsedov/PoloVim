@@ -5,8 +5,8 @@ function Lazyload()
   math.randomseed(os.time())
   local themes = {
 
-    -- "tokyonight.nvim",
-    -- "nvim",
+    "tokyonight.nvim",
+    "nvim",
     -- -- "Sakura.nvim",
     "kanagawa.nvim",
     -- TODO Add more themes
@@ -86,7 +86,7 @@ function Lazyload()
     loader("nvim-lspconfig") -- null-ls.nvim
     loader("lsp_signature.nvim")
     if use_nulls() then
-      loader("null-ls.nvim")
+      -- loader("null-ls.nvim")
     end
     loader("refactoring.nvim") -- need to do the same thing for refactoring
     -- loader("goto-preview")
