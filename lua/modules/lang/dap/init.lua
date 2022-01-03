@@ -144,7 +144,6 @@ M.prepare = function()
     -- e.g. 80 to position at column 80 see :h nvim_buf_set_extmark()
   })
 
-
   if vim.bo.filetype == "python" then
     loader("nvim-dap-python")
     require("dap-python").setup("/bin/python")

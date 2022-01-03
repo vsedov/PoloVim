@@ -362,6 +362,8 @@ end
 
 -- Looks for git files, but falls back to normal files
 M.files = function(opts)
+  reloader()
+
   opts = opts or {}
 
   vim.fn.system("git status")
@@ -391,10 +393,14 @@ M.files = function(opts)
 end
 
 M.jump = function()
+  reloader()
+
   require("telescope.builtin").jumplist({ layout_strategy = "vertical" })
 end
 
 M.installed_plugins = function()
+  reloader()
+
   require("telescope.builtin").find_files({
     cwd = vim.fn.stdpath("data") .. "/site/pack/packer/start/",
   })
@@ -421,7 +427,9 @@ M.theme = function(opts)
   }, opts or {})
 end
 
-function M.buffers()
+M.buffers = function()
+  reloader()
+
   local opts = { shorten_path = true }
   local buffers = vim.tbl_filter(function(b)
     return (opts.show_all_buffers or vim.api.nvim_buf_is_loaded(b)) and 1 == vim.fn.buflisted(b)
@@ -437,10 +445,14 @@ function M.buffers()
 end
 
 M.command_history = function()
+  reloader()
+
   builtin.command_history(M.theme())
 end
 
 M.load_dotfiles = function()
+  reloader()
+
   local has_telescope = pcall(require, "telescope.builtin")
   if has_telescope then
     local themes = require("telescope.themes")

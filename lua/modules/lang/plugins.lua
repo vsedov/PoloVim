@@ -301,7 +301,6 @@ lang["BenGH28/neo-runner.nvim"] = {
   run = ":UpdateRemotePlugins",
 }
 
-
 lang["is0n/jaq-nvim"] = {
   cmd = "Jaq",
   after = "filetype.nvim",
