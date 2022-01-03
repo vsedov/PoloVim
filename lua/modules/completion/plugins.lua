@@ -151,14 +151,11 @@ completion["nvim-telescope/telescope.nvim"] = {
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
     { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
+    { "nvim-telescope/telescope-file-browser.nvim", opt = true}
   },
   opt = true,
 }
 
-completion["nvim-telescope/telescope-file-browser.nvim"] = {
-  opt = true,
-  after = "telescope.nvim",
-}
 
 completion["mattn/emmet-vim"] = {
   event = "InsertEnter",
@@ -219,7 +216,7 @@ completion["dense-analysis/ale"] = {
   config = conf.ale,
 }
 
-completion["https://github.com/vsedov/vim-sonictemplate"] = {
+completion["vsedov/vim-sonictemplate"] = {
   cmd = "Template",
   config = conf.vim_sonictemplate,
 }
