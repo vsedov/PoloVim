@@ -66,6 +66,7 @@ tools["TimUntersberger/neogit"] = {
     neogit.setup({})
   end,
 }
+
 tools["liuchengxu/vista.vim"] = { cmd = "Vista", setup = conf.vim_vista, opt = true }
 
 tools["kamykn/spelunker.vim"] = {
@@ -234,7 +235,11 @@ tools["tpope/vim-fugitive"] = {
 --   end,
 -- }
 
+<<<<<<< HEAD
 -- need quick fix
+=======
+-- need quick fix  :vimgrep /\w\+/j % | copen
+>>>>>>> nightly
 tools["kevinhwang91/nvim-bqf"] = {
   opt = true,
   event = { "CmdlineEnter", "QuickfixCmdPre" },
@@ -321,6 +326,11 @@ tools["chentau/marks.nvim"] = {
   end,
 }
 
+<<<<<<< HEAD
+=======
+
+-- this causing issues with better escape 
+>>>>>>> nightly
 tools["Krafi2/jeskape.nvim"] = {
   event = "InsertEnter",
   config = function()
@@ -329,10 +339,13 @@ tools["Krafi2/jeskape.nvim"] = {
         ["c"] = {
           ["c"] = "<cmd>lua require'utils'.append_comma()<CR>",
         },
+<<<<<<< HEAD
         j = {
           k = "<esc>",
           j = "<esc>o",
         },
+=======
+>>>>>>> nightly
       },
     })
   end,

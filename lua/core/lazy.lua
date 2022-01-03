@@ -3,6 +3,7 @@ _G.PLoader = loader
 function Lazyload()
   --
   math.randomseed(os.time())
+  -- i will soon be using themer for this .
   local themes = {
 
     -- "tokyonight.nvim",

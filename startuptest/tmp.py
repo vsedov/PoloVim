@@ -12,7 +12,10 @@ import pyinspect as pi
 
 
 def main() -> None:
+<<<<<<< HEAD
     ...
+=======
+>>>>>>> nightly
 
 
 if __name__ == "__main__":

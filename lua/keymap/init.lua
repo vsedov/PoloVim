@@ -247,6 +247,10 @@ local plug_map = {
   -- $$ ... $$ : wrapped form
 
   ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
+
+  -- Neogen
+
+  ["n|<F3>"] = map_cr("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)

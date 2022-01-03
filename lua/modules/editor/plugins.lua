@@ -40,7 +40,6 @@ editor["folke/which-key.nvim"] = {
 -- I want this all the time - so im not lazy loading this .,
 editor["ggandor/lightspeed.nvim"] = {
   as = "lightspeed",
-  opt = true,
   requires = { "tpope/vim-repeat", opt = true },
   config = conf.lightspeed,
 }
@@ -50,7 +49,10 @@ editor["hrsh7th/vim-seak"] = {
   event = "CmdlineEnter",
   requires = { "nvim-lua/popup.nvim" },
   setup = function()
+<<<<<<< HEAD
     vim.cmd([[packadd popup.nvim]])
+=======
+>>>>>>> nightly
     vim.g.seak_enabled = 1
     vim.cmd([[cnoremap <C-j> <Cmd>call seak#select({ 'nohlsearch': v:true })<CR>]])
   end,

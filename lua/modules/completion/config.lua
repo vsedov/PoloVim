@@ -107,8 +107,8 @@ function config.nvim_cmp()
   if vim.o.ft == "python" then
     table.insert(sources, { name = "cmp_tabnine" })
   end
-
   if vim.o.ft == "norg" then
+<<<<<<< HEAD
     local neorg = require("neorg")
 
     --- Loads the Neorg completion module
@@ -126,7 +126,11 @@ function config.nvim_cmp()
     end
 
     table.insert(sources, { name = "norg" })
+=======
+    table.insert(sources, { name = "neorg" })
+>>>>>>> nightly
   end
+
 
   if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
@@ -227,6 +231,8 @@ function config.nvim_cmp()
           cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
+        elseif neogen.jumpable() then
+          vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_next()<CR>"), "")
         elseif has_words_before() then
           cmp.complete()
         else
