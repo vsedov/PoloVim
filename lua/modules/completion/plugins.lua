@@ -8,7 +8,6 @@ completion["neovim/nvim-lspconfig"] = {
 
   requires = {
     { "nvim-lua/lsp_extensions.nvim", opt = true },
-    { "tjdevries/nlua.nvim", opt = true },
     { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
     { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
@@ -140,24 +139,19 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 }
 
 completion["nvim-telescope/telescope.nvim"] = {
-  cmd = "Telescope",
   module = { "telescope", "utils.telescope" },
   config = conf.telescope,
   setup = conf.telescope_preload,
   requires = {
-    { "nvim-lua/popup.nvim" }, -- test
+    { "nvim-lua/popup.nvim", opt = true }, -- test
     { "nvim-neorg/neorg-telescope", opt = true },
     { "nvim-lua/plenary.nvim", opt = true },
     { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
     { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
+    { "nvim-telescope/telescope-file-browser.nvim", opt = true },
   },
   opt = true,
-}
-
-completion["nvim-telescope/telescope-file-browser.nvim"] = {
-  opt = true,
-  after = "telescope.nvim",
 }
 
 completion["mattn/emmet-vim"] = {
@@ -219,7 +213,7 @@ completion["dense-analysis/ale"] = {
   config = conf.ale,
 }
 
-completion["https://github.com/vsedov/vim-sonictemplate"] = {
+completion["vsedov/vim-sonictemplate"] = {
   cmd = "Template",
   config = conf.vim_sonictemplate,
 }

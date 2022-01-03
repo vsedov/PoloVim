@@ -389,33 +389,51 @@ function config.luadev()
 end
 
 function config.lua_dev()
-  local cfg = {
-    library = {
-      vimruntime = true, -- runtime path
-      types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-      plugins = true -- installed opt or start plugins in packpath
-      -- you can also specify the list of plugins to make available as a workspace library
-      -- plugins = { "nvim-treesitter", "plenary.nvim", "navigator" },
+  local sumneko_lua_server = {
+    capabilities = capabilities,
+    on_attach = enhance_attach,
+
+    cmd = { "lua-language-server", "-E", "/usr/share/lua-language-server/main.lua" },
+    settings = {
+      Lua = {
+        runtime = {
+          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          version = "LuaJIT",
+          -- Setup your lua path
+          path = vim.split(package.path, ";"),
+        },
+        diagnostics = {
+          -- Get the language server to recognize the `vim` global
+          globals = { "vim", "dump", "hs", "lvim" },
+        },
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          library = {
+            [vim.fn.expand("~/.config/nvim_config/lua")] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+            maxPreload = 100000,
+            preloadFileSize = 1000,
+          },
+        },
+        -- Do not send telemetry data containing a randomized but unique identifier
+        telemetry = {
+          enable = false,
+        },
+      },
     },
-    -- pass any additional options that will be merged in the final lsp config
-    lspconfig = {
-      -- cmd = {sumneko_binary},
-      -- on_attach = ...
-    }
   }
 
-  local luadev = require("lua-dev").setup(cfg)
-  -- {
-  --   -- add any options here, or leave empty to use the default settings
-  --   -- lspconfig = {
-  --   --   cmd = {"lua-language-server"}
-  --   -- },
-  -- })
-  -- print(vim.inspect(luadev))
-  -- require('lspconfig').sumneko_lua.setup(luadev)
+  local luadev = require("lua-dev").setup({
+    library = {
+      vimruntime = true,
+      types = true,
+      plugins = false,
+    },
+    lspconfig = sumneko_lua_server,
+  })
+  require("lspconfig").sumneko_lua.setup(luadev)
 end
-
-
 
 function config.go()
   require("go").setup({

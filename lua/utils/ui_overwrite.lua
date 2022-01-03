@@ -1,12 +1,59 @@
 local cmd = vim.cmd
 
-local colors = require("kanagawa.colors")
+local colors = {
+  white = "#DCD7BA",
+  darker_black = "#2A2A37",
+  black = "#363646", --  nvim bg
+  black2 = "#16161D",
+  one_bg = "#1b1c27",
+  one_bg2 = "#223249",
+  one_bg3 = "#2D4F67",
+  grey = "#727169",
+  grey_fg = "#43444f",
+  grey_fg2 = "#4d4e59",
+  light_grey = "#555661",
+  red = "#957FB8",
+  baby_pink = "#C34043",
+  pink = "#E46876",
+  line = "#20212c",
+  green = "#98c379",
+  vibrant_green = "#95c561",
+  nord_blue = "#9CABCA",
+  blue = "#7FB4CA",
+  yellow = "#C0A36E",
+  sun = "#E6C384",
+  purple = "#a485dd",
+  dark_purple = "#9071c9",
+  teal = "#519aba",
+  orange = "#f6955b",
+  cyan = "#38a89d",
+  statusline_bg = "#151621",
+  lightbg = "#22232e",
+  lightbg2 = "#1c1d28",
+  pmenu_bg = "#16161D",
+  folder_bg = "#43242B",
+}
+
+local black = colors.black
+local black2 = colors.black2
+local blue = colors.blue
+local darker_black = colors.darker_black
+local folder_bg = colors.folder_bg
+local green = colors.green
+local grey = colors.grey
+local grey_fg = colors.grey_fg
+local line = colors.line
+local nord_blue = colors.nord_blue
+local one_bg = colors.one_bg
+local one_bg2 = colors.one_bg2
+local pmenu_bg = colors.pmenu_bg
+local purple = colors.purple
+local red = colors.red
+local white = colors.white
+local yellow = colors.yellow
 
 local ui = {
   italic_comments = true,
-  -- theme to be used, check available themes with `<leader> + t + h`
-  -- Enable this only if your terminal has the colorscheme set which nvchad uses
-  -- For Ex : if you have onedark set in nvchad, set onedark's bg color on your terminal
   transparency = false,
 }
 
@@ -32,32 +79,109 @@ local function fg_bg(group, fgcol, bgcol)
   cmd("hi " .. group .. " guifg=" .. fgcol .. " guibg=" .. bgcol)
 end
 
--- -- For floating windows
--- fg("FloatBorder", colors.waveBlue1)
--- bg("NormalFloat", colors.waveBlue2)
+-- Comments
+-- if ui.italic_comments then
+--   fg("Comment", grey_fg .. " gui=italic")
+-- else
+--   fg("Comment", grey_fg)
+-- end
 
--- -- Pmenu
-bg("Pmenu", colors.bg)
-bg("PmenuSbar", colors.bg_light0)
-bg("PmenuSel", colors.bg_menu)
-bg("PmenuThumb", colors.bg_menu)
+-- -- Disable cusror line
+-- -- Line number
+-- fg("cursorlinenr", white)
 
-fg_bg("TelescopeBorder", colors.bg, colors.bg)
-fg_bg("TelescopePromptBorder", colors.bg, colors.bg)
-fg_bg("TelescopePreviewBorder", colors.bg, colors.bg)
-fg_bg("TelescopeResultsBorder", colors.bg, colors.bg)
+-- -- same it bg, so it doesn't appear
+-- fg("EndOfBuffer", black)
 
-fg_bg("TelescopePromptNormal", colors.bg_menu, colors.fg_border) -- where teh letters are put
-fg_bg("TelescopePromptPrefix", colors.bg_menu, colors.fg_border)
+-- For floating windows
+bg("NormalFloat", one_bg)
 
-bg("TelescopeNormal", colors.winterBlue)
-bg("TelescopePreviewNormal", colors.winterBlue) -- colors.bg
+-- Pmenu
+bg("Pmenu", one_bg)
+-- bg("PmenuSbar", one_bg)
+-- bg("PmenuSel", blue)
+-- bg("PmenuThumb", nord_blue)
 
-fg_bg("TelescopePreviewTitle", colors.sm, colors.bg_visual)
-fg_bg("TelescopePromptTitle", colors.sm, colors.bg_visual)
-fg_bg("TelescopeResultsTitle", colors.sm, colors.bg_visual)
+-- -- misc
+-- fg("LineNr", grey)
+-- fg("NvimInternalError", red)
+-- fg("VertSplit", one_bg2)
 
-fg("TelescopeSelection", colors.fg) --colors.fg
+if ui.transparency then
+  vim.cmd("hi clear CursorLine")
+  bg("Normal", "NONE")
+  bg("Folded", "NONE")
+  fg("Folded", "NONE")
+  fg("Comment", grey)
+end
+
+-- [[ Plugin Highlights
+
+-- Dashboard
+-- fg("DashboardCenter", grey_fg)
+-- fg("DashboardFooter", grey_fg)
+-- fg("DashboardHeader", grey_fg)
+-- fg("DashboardShortcut", grey_fg)
+
+-- -- Git signs
+-- fg_bg("DiffAdd", nord_blue, "none")
+-- fg_bg("DiffChange", grey_fg, "none")
+-- fg_bg("DiffModified", nord_blue, "none")
+
+-- Indent blankline plugin
+fg("IndentBlanklineChar", line)
+
+-- ]]
+
+-- [[ LspDiagnostics
+
+-- -- Errors
+-- fg("LspDiagnosticsSignError", red)
+-- fg("LspDiagnosticsSignWarning", yellow)
+-- fg("LspDiagnosticsVirtualTextError", red)
+-- fg("LspDiagnosticsVirtualTextWarning", yellow)
+
+-- -- Info
+-- fg("LspDiagnosticsSignInformation", green)
+-- fg("LspDiagnosticsVirtualTextInformation", green)
+
+-- -- Hints
+-- fg("LspDiagnosticsSignHint", purple)
+-- fg("LspDiagnosticsVirtualTextHint", purple)
+
+-- -- ]]
+
+-- -- NvimTree
+-- fg("NvimTreeEmptyFolderName", blue)
+-- fg("NvimTreeEndOfBuffer", darker_black)
+-- fg("NvimTreeFolderIcon", folder_bg)
+-- fg("NvimTreeFolderName", folder_bg)
+-- fg("NvimTreeGitDirty", red)
+-- fg("NvimTreeIndentMarker", one_bg2)
+-- bg("NvimTreeNormal", darker_black)
+-- fg("NvimTreeOpenedFolderName", blue)
+-- fg("NvimTreeRootFolder", red .. " gui=underline") -- enable underline for root folder in nvim tree
+-- fg_bg("NvimTreeStatuslineNc", darker_black, darker_black)
+-- fg("NvimTreeVertSplit", darker_black)
+-- bg("NvimTreeVertSplit", darker_black)
+-- fg_bg("NvimTreeWindowPicker", red, black2)
+
+fg_bg("TelescopeBorder", darker_black, darker_black)
+fg_bg("TelescopePromptBorder", black2, black2)
+fg_bg("TelescopePreviewBorder", darker_black, darker_black)
+fg_bg("TelescopeResultsBorder", darker_black, darker_black)
+
+fg_bg("TelescopePromptNormal", white, black2)
+fg_bg("TelescopePromptPrefix", red, black2)
+
+bg("TelescopeNormal", darker_black)
+bg("TelescopePreviewNormal", darker_black)
+
+fg_bg("TelescopePreviewTitle", black, green)
+fg_bg("TelescopePromptTitle", black, red)
+fg_bg("TelescopeResultsTitle", black, blue)
+fg("TelescopeSelection", blue)
+
 bg("TelescopeSelection", "#353b45")
 bg("TelescopePreviewLine", "#353b45")
 
@@ -66,16 +190,16 @@ if ui.transparency then
   bg("NvimTreeNormal", "NONE")
   bg("NvimTreeStatusLineNC", "NONE")
   bg("NvimTreeVertSplit", "NONE")
-  fg("NvimTreeVertSplit", colors.fujiGray)
+  fg("NvimTreeVertSplit", grey)
   bg("TelescopeNormal", "NONE")
   bg("TelescopePreviewNormal", "NONE")
 end
 
-bg("Search", colors.bg_search)
-bg("IncSearch", colors.bg_menu_sel)
+bg("Search", yellow)
+bg("IncSearch", red)
 
 -- Telescope
-fg("TelescopeBorder", colors.fg) -- --colors.fg
--- fg("TelescopePreviewBorder", colors.bg)
--- fg("TelescopePromptBorder", colors.bg)
--- fg("TelescopeResultsBorder", colors.bg)
+fg("TelescopeBorder", folder_bg)
+-- fg("TelescopePreviewBorder", folder_bg)
+-- fg("TelescopePromptBorder", folder_bg)
+-- fg("TelescopeResultsBorder", folder_bg)

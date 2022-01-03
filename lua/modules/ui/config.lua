@@ -501,6 +501,11 @@ function config.buffers_close()
   })
 end
 
+function config.colour()
+  require("packer").loader("nvim-colorizer.lua")
+  vim.cmd([[ColorizerAttachToBuffer]])
+end
+
 vim.api.nvim_exec(
   [[
     set nocursorcolumn

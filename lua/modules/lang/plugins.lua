@@ -28,6 +28,7 @@ lang["RRethy/nvim-treesitter-textsubjects"] = {
 
 -- Better plugin for this i think ,
 lang["danymat/neogen"] = {
+  keys = { "<leader>a" },
   opt = true,
   config = function()
     require("neogen").setup({
@@ -128,10 +129,9 @@ lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 
 lang["mfussenegger/nvim-dap"] = {
   requires = {
-    { "theHamsta/nvim-dap-virtual-text",cmd = "Luadev",  opt = true },
+    { "theHamsta/nvim-dap-virtual-text", cmd = "Luadev", opt = true },
     { "mfussenegger/nvim-dap-python", ft = "python" },
     { "rcarriga/nvim-dap-ui", opt = true },
-    { "Pocco81/DAPInstall.nvim" }, -- Not sue what to do with this
   },
 
   run = ":UpdateRemotePlugins",
@@ -143,24 +143,26 @@ lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
 lang["jbyuki/one-small-step-for-vimkind"] = { opt = true, ft = { "lua" } }
 
-lang["rafcamlet/nvim-luapad"]={
-  cmd = {"LuaRun", "Lua", "Luapad"},
-  ft = {"lua"}, 
+lang["rafcamlet/nvim-luapad"] = {
+  cmd = { "LuaRun", "Lua", "Luapad" },
+  ft = { "lua" },
   config = function()
-    require('luapad').setup{
+    require("luapad").setup({
       count_limit = 150000,
       error_indicator = true,
       eval_on_move = true,
-      error_highlight = 'WarningMsg',
+      error_highlight = "WarningMsg",
       on_init = function()
-        print 'Hello from Luapad!'
+        print("Hello from Luapad!")
       end,
       context = {
         the_answer = 42,
-        shout = function(str) return(string.upper(str) .. '!') end
-      }
-    }
-    end 
+        shout = function(str)
+          return (string.upper(str) .. "!")
+        end,
+      },
+    })
+  end,
 }
 
 lang["nvim-telescope/telescope-dap.nvim"] = {
@@ -246,6 +248,14 @@ lang["folke/lua-dev.nvim"] = {
   config = conf.lua_dev,
 }
 
+lang["nanotee/luv-vimdocs"] = {
+  opt = true,
+}
+-- builtin lua functions
+lang["milisims/nvim-luaref"] = {
+  opt = true,
+}
+
 lang["p00f/nvim-ts-rainbow"] = {
   opt = true,
   -- after = "nvim-treesitter",
@@ -291,9 +301,11 @@ lang["BenGH28/neo-runner.nvim"] = {
   run = ":UpdateRemotePlugins",
 }
 
+
 lang["is0n/jaq-nvim"] = {
-  opt = true,
   cmd = "Jaq",
+  after = "filetype.nvim",
+  opt = true,
   config = conf.jaq,
 }
 

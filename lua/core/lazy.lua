@@ -73,6 +73,8 @@ function Lazyload()
 
   if vim.bo.filetype == "lua" then
     loader("lua-dev.nvim")
+    loader("luv-vimdocs")
+    loader("nvim-luaref")
   end
 
   vim.g.vimsyn_embed = "lPr"
@@ -92,7 +94,7 @@ function Lazyload()
     -- loader("goto-preview")
 
     -- loader("code_runner.nvim")
-    loader("neo-runner.nvim jaq-nvim") -- lspsaga.nvim --
+    loader("neo-runner.nvim") -- lspsaga.nvim --
     loader("neogen") -- Load neogen only for active lsp servers
   end
 
@@ -109,8 +111,6 @@ function Lazyload()
   if load_lsp or load_ts_plugins then
     loader("guihua.lua")
     -- loader("Comment.nvim")
-    loader("vim-cursorword")
-
     -- loader("navigator.lua")
   end
 
@@ -179,7 +179,7 @@ vim.cmd([[hi LineNr guifg=#505068]])
 
 vim.defer_fn(function()
   local loader = require("packer").loader
-  loader("telescope.nvim telescope-zoxide project.nvim nvim-neoclip.lua")
+  loader("telescope.nvim telescope-zoxide  nvim-neoclip.lua") --project.nvim
   loader("harpoon")
   loader("windline.nvim")
   require("modules.ui.eviline")
