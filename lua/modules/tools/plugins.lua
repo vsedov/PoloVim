@@ -270,7 +270,6 @@ tools["camspiers/animate.vim"] = {
 }
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
-  keys = { "<Leader><Leader><Leader>" },
   after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite", opt = true },
   opt = true,

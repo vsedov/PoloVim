@@ -161,9 +161,7 @@ local plug_map = {
   ["n|<Leader>ft"] = map_cu("Telescope help_tags"):with_noremap():with_silent(),
   ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
   --Nice finder
-  ["n|<Leader><Leader><Leader>"] = map_cmd(
-    '<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})<CR>'
-  ):with_noremap():with_silent(),
+  ["n|<Leader><Leader><Leader>"] = map_cr('<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})<CR>'):with_noremap():with_silent(),
 
   ["n|<F4>"] = map_cu("Telescope dap commands"):with_noremap():with_silent(),
 

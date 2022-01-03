@@ -78,6 +78,9 @@ local keys = {
   ["n|<Leader>b["] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
   ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
   ["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
+  
+
+
 
   -- These are nice -- cant have these me
   ["n|<A-a>"] = map_cr("HopWord"):with_silent(),
