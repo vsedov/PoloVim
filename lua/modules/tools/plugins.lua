@@ -50,11 +50,11 @@ tools["ThePrimeagen/harpoon"] = {
 }
 
 -- github GH ui
-tools['pwntester/octo.nvim'] ={
-  cmd = {'Octo', 'Octo pr list'},
-  config=function()
-    require"octo".setup()
-  end
+tools["pwntester/octo.nvim"] = {
+  cmd = { "Octo", "Octo pr list" },
+  config = function()
+    require("octo").setup()
+  end,
 }
 
 -- tools["wellle/targets.vim"] = {}
@@ -217,21 +217,22 @@ tools["tpope/vim-fugitive"] = {
   opt = true,
 }
 
-tools["rmagatti/auto-session"] = { config = conf.session }
+-- I dont use this
+-- tools["rmagatti/auto-session"] = { config = conf.session }
 
-tools["rmagatti/session-lens"] = {
-  cmd = "SearchSession",
-  after = { "telescope.nvim" },
-  config = function()
-    require("packer").loader("telescope.nvim")
-    require("telescope").load_extension("session-lens")
-    require("session-lens").setup({
-      path_display = { "shorten" },
-      theme_conf = { border = true },
-      previewer = true,
-    })
-  end,
-}
+-- tools["rmagatti/session-lens"] = {
+--   cmd = "SearchSession",
+--   after = { "telescope.nvim" },
+--   config = function()
+--     require("packer").loader("telescope.nvim")
+--     require("telescope").load_extension("session-lens")
+--     require("session-lens").setup({
+--       path_display = { "shorten" },
+--       theme_conf = { border = true },
+--       previewer = true,
+--     })
+--   end,
+-- }
 
 -- need quick fix
 tools["kevinhwang91/nvim-bqf"] = {
@@ -315,6 +316,23 @@ tools["chentau/marks.nvim"] = {
       bookmark_0 = {
         sign = "⚑",
         virt_text = "BookMarks",
+      },
+    })
+  end,
+}
+
+tools["Krafi2/jeskape.nvim"] = {
+  event = "InsertEnter",
+  config = function()
+    require("jeskape").setup({
+      mappings = {
+        ["c"] = {
+          ["c"] = "<cmd>lua require'utils'.append_comma()<CR>",
+        },
+        j = {
+          k = "<esc>",
+          j = "<esc>o",
+        },
       },
     })
   end,
