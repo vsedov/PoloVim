@@ -13,6 +13,23 @@ function autocmd.nvim_create_augroups(definitions)
   end
 end
 
+-- vim.api.nvim_exec(
+--   [[
+-- augroup dynamic_smartcase
+--   autocmd!
+--   autocmd CmdLineEnter :set nosmartcase
+--   autocmd CmdLineLeave :set smartcase
+-- augroup END
+-- ]],
+--   false
+-- )
+
+-- -- show cursor line only in active window
+-- vim.cmd([[
+--   autocmd InsertLeave,WinEnter * set cursorline
+--   autocmd InsertEnter,WinLeave * set nocursorline
+-- ]])
+
 function autocmd.load_autocmds()
   local definitions = {
     packer = {
@@ -32,14 +49,31 @@ function autocmd.load_autocmds()
       { "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
       { "BufWritePre", "*.tmp", "setlocal noundofile" },
       { "BufWritePre", "*.bak", "setlocal noundofile" },
+      -- { "BufEnter", "*", [[silent! lcd %:p:h]] }, -- Not requried atm
     },
 
     wins = {
       -- Highlight current line only on focused window
-      -- {"WinEnter,BufEnter,InsertLeave", "*", [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]]};
-      -- {"WinLeave,BufLeave,InsertEnter", "*", [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorline | endif]]};
-      -- {"WinLeave,BufLeave,InsertEnter", "*", [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]]};
+
+      {
+        "WinEnter,BufEnter,InsertLeave",
+        "*",
+        [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
+      },
+      {
+        "WinLeave,BufLeave,InsertEnter",
+        "*",
+        [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorline | endif]],
+      },
+      {
+        "WinLeave,BufLeave,InsertEnter",
+        "*",
+        [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
+      },
+
       { "BufEnter", "NvimTree", [[setlocal cursorline]] },
+      { "CmdLineEnter", "*", [[set nosmartcase]] },
+      { "CmdLineLeave", "*", [[set smartcase]] },
 
       -- Equalize window dimensions when resizing vim window
       { "VimResized", "*", [[tabdo wincmd =]] },
