@@ -43,7 +43,8 @@ local keys = {
   ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
   -- ["n|<M-g>"] = map_cu("Clap gfiles"):with_noremap():with_silent(),
   ["n|<M-h>"] = map_cu("Clap history"):with_noremap():with_silent(),
-  ["n|<Leader>fw"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
+
+  ["n|<Leader>fq"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
 
   ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
   -- ["n|<Leader>fl"] = map_cu("Clap loclist"):with_noremap():with_silent(),
