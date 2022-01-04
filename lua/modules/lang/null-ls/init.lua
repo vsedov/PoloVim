@@ -86,8 +86,8 @@ return {
       table.insert(sources, null_ls.builtins.diagnostics.cppcheck)
     end
 
-    table.insert(sources, null_ls.builtins.formatting.trim_newlines.with({ disabled_filetypes = { "norg" } }))
-    table.insert(sources, null_ls.builtins.formatting.trim_whitespace)
+    table.insert(sources, null_ls.builtins.formatting.trim_newlines.with({ disabled_filetypes = { "norg", "python" } }))
+    table.insert(sources, null_ls.builtins.formatting.trim_whitespace.with({ disabled_filetypes = { "norg", "python" } }))
 
     -- table.insert(
     --   sources,
