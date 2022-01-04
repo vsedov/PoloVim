@@ -9,5 +9,11 @@ user["~/GitHub/ytmmusic.lua"] = {
   end,
 }
 
+-- user["Willy-JL/nvim-cursorline"]={
+-- opt = true,
+-- -- require = {"xiyaowong/nvim-cursorword"},
+-- event = "BufWinEnter",
+
+-- }
 -- your plugin config
 return user
