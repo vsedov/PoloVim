@@ -209,7 +209,9 @@ completion["dense-analysis/ale"] = {
   -- Maybe just for python and C ? - not sure
   ft = {
     "python",
-  },
+    "norg",
+  }, 
+  -- Test out norg files 
   config = conf.ale,
 }
 
