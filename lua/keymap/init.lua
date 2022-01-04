@@ -110,9 +110,6 @@ local plug_map = {
 
   ["n|<F6>"] = map_cu("NeoRunner"):with_noremap():with_silent(),
 
-  -- -- Git commands
-  ["n|<Leader>gh"] = map_cu("LazyGit"):with_noremap():with_silent(),
-
   -- -- never go wrong with clap
   -- Figure out the error with clap, giving very annoying error j
   ["n|<F1>"] = map_cr("Clap"):with_noremap():with_silent(),
@@ -161,7 +158,9 @@ local plug_map = {
   ["n|<Leader>ft"] = map_cu("Telescope help_tags"):with_noremap():with_silent(),
   ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
   --Nice finder
-  ["n|<Leader><Leader><Leader>"] = map_cr('<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})<CR>'):with_noremap():with_silent(),
+  ["n|<Leader><Leader><Leader>"] = map_cr(
+    '<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})<CR>'
+  ):with_noremap():with_silent(),
 
   ["n|<F4>"] = map_cu("Telescope dap commands"):with_noremap():with_silent(),
 

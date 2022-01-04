@@ -161,16 +161,6 @@ tools["lewis6991/gitsigns.nvim"] = {
   opt = true,
 }
 
-tools["kdheepak/lazygit.nvim"] = {
-  opt = true,
-  cmd = { "LazyGit" },
-  requires = "nvim-lua/plenary.nvim",
-  config = function()
-    vim.g.lazygit_floating_window_winblend = 2
-    vim.g.lazygit_floating_window_use_plenary = 1
-  end,
-}
-
 tools["brooth/far.vim"] = {
   cmd = { "Farr", "Farf" },
   run = function()
