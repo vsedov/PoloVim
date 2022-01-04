@@ -1,5 +1,3 @@
-local a = vim.api
-
 local loader = require("packer").loader
 if not packer_plugins["telescope.nvim"].loaded then
   loader("telescope.nvim")
@@ -314,6 +312,14 @@ layout.custom = function(self, columns, lines)
 end
 
 M = {}
+
+M.frequency = function()
+  reloader()
+  require("telescope").extensions.frecency.frecency({
+    sorter = require("telescope").extensions.fzf.native_fzf_sorter(),
+  })
+end
+
 --- Plugins to be loaded, lazily
 M.neoclip = function()
   if not packer_plugins["sqlite.lua"].loaded then
@@ -451,7 +457,6 @@ M.command_history = function()
 end
 
 M.load_dotfiles = function()
-
   reloader()
 
   local has_telescope = pcall(require, "telescope.builtin")
