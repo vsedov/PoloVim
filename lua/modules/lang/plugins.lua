@@ -199,7 +199,7 @@ lang["Shatur/neovim-cmake"] = {
 
 --
 lang["michaelb/sniprun"] = {
-  cmd = {"'<,'>SnipRun", "SnipRun"},
+  cmd = { "'<,'>SnipRun", "SnipRun" },
   opt = true,
   run = "bash install.sh",
   requires = "rcarriga/nvim-notify",
@@ -207,7 +207,7 @@ lang["michaelb/sniprun"] = {
 }
 
 lang["dccsillag/magma-nvim"] = {
-  opt = true, 
+  opt = true,
   requires = "rcarriga/nvim-notify",
   run = ":UpdateRemotePlugins",
   config = conf.magma,
@@ -275,15 +275,15 @@ lang["folke/trouble.nvim"] = {
   end,
 }
 
--- lang["folke/todo-comments.nvim"] = {
---   cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
---   requires = "nvim-lua/plenary.nvim",
---   opt = true,
---   config = function()
---     require("todo-comments").setup({})
---   end,
---   after = "trouble.nvim",
--- }
+-- Might use this
+lang["folke/todo-comments.nvim"] = {
+  cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
+  opt = true,
+  config = function()
+    require("todo-comments").setup({}) -- Use defualt
+  end,
+  after = "trouble.nvim",
+}
 
 -- Can Gonna Use jaq for now ?
 -- lang["CRAG666/code_runner.nvim"] = {
@@ -303,7 +303,6 @@ lang["BenGH28/neo-runner.nvim"] = {
   run = ":UpdateRemotePlugins",
 }
 
-
 lang["is0n/jaq-nvim"] = {
   cmd = "Jaq",
   after = "filetype.nvim",
@@ -311,16 +310,8 @@ lang["is0n/jaq-nvim"] = {
   config = conf.jaq,
 }
 
--- lang["ldelossa/calltree.nvim"] = {
---   cmd = { "CTExpand", "CTCollapse", "CTSwitch", "CTJump", "CTFocus" },
---   config = function()
---     require("calltree").setup({})
---   end,
--- }
-
 lang["jose-elias-alvarez/null-ls.nvim"] = {
   opt = true,
-  event = "InsertEnter",
   config = require("modules.lang.null-ls").config,
 }
 

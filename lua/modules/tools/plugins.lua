@@ -29,6 +29,7 @@ tools["editorconfig/editorconfig-vim"] = {
 }
 
 tools["rktjmp/paperplanes.nvim"] = {
+  cmd = { "PP" },
   opt = true,
   config = conf.paperplanes,
 }
@@ -321,8 +322,7 @@ tools["chentau/marks.nvim"] = {
   end,
 }
 
-
--- this causing issues with better escape 
+-- this causing issues with better escape
 tools["Krafi2/jeskape.nvim"] = {
   event = "InsertEnter",
   config = function()

@@ -1,7 +1,6 @@
 return {
   config = function()
     local null_ls = require("null-ls")
-    local lspconfig = require("lspconfig")
 
     local sources = {
       -- null_ls.builtins.hover,
@@ -87,7 +86,10 @@ return {
     end
 
     table.insert(sources, null_ls.builtins.formatting.trim_newlines.with({ disabled_filetypes = { "norg", "python" } }))
-    table.insert(sources, null_ls.builtins.formatting.trim_whitespace.with({ disabled_filetypes = { "norg", "python" } }))
+    table.insert(
+      sources,
+      null_ls.builtins.formatting.trim_whitespace.with({ disabled_filetypes = { "norg", "python" } })
+    )
 
     -- table.insert(
     --   sources,
@@ -131,7 +133,7 @@ return {
 
       on_attach = function(client)
         -- I dont want any formating on python files.
-        if client.resolved_capabilities.document_formatting and vim.bo.filetype ~= "python" then
+        if client.resolved_capabilities.document_formatting then
           vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
         end
       end,
