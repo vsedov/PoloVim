@@ -36,7 +36,7 @@ local keys = {
   -- Lsp mapp work when insertenter and lsp start
   --
   ["n|<Leader>tc"] = map_cu("Clap colors"):with_noremap():with_silent(),
-  ["n|<Leader>bb"] = map_cu("Clap buffers"):with_noremap():with_silent(),
+  ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
   ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
   ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
   ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
@@ -78,18 +78,15 @@ local keys = {
   ["n|<Leader>b["] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
   ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
   ["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
-  
-
-
 
   -- These are nice -- cant have these me
   ["n|<A-a>"] = map_cr("HopWord"):with_silent(),
   ["n|<A-w>"] = map_cr("HopWordBC"):with_silent(),
   ["n|<A-W>"] = map_cr("HopWordAC"):with_silent(),
 
-  ["n|g£"] = map_cr("HopLine"),
-  ["n|g/"] = map_cr("HopLineStartAC"),
-  ["n|g?"] = map_cr("HopLineStartBC"),
+  ["n|g/"] = map_cr("HopLine"),
+  ["n|g<"] = map_cr("HopLineStartAC"),
+  ["n|g>"] = map_cr("HopLineStartBC"),
 
   -- clap --
 
@@ -219,7 +216,6 @@ vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
 -- temp for the time being.
 vim.cmd([[command! -nargs=*  Ytmnotify lua require("ytmmusic").notifyCurrentStats()]])
 
-
--- for the time have this 
+-- for the time have this
 
 return K
