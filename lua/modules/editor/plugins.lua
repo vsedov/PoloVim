@@ -161,11 +161,11 @@ editor["sudormrfbin/cheatsheet.nvim"] = {
   },
 }
 
-editor["itchyny/vim-cursorword"] = {
-  event = { "BufReadPre", "BufNewFile" },
-  opt = true,
-  config = conf.vim_cursorwod,
-}
+-- editor["itchyny/vim-cursorword"] = {
+--   event = { "BufReadPre", "BufNewFile" },
+--   opt = true,
+--   config = conf.vim_cursorwod,
+-- }
 
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {
