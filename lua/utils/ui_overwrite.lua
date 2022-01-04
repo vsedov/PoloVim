@@ -195,8 +195,9 @@ if ui.transparency then
   bg("TelescopePreviewNormal", "NONE")
 end
 
-bg("Search", yellow)
-bg("IncSearch", red)
+-- bg("Search","#938AA9")
+-- bg("IncSearch", "#363646")
+
 
 -- Telescope
 fg("TelescopeBorder", folder_bg)
