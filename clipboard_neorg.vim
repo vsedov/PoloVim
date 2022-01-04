@@ -34,3 +34,4 @@ function! NeorgClipboardImage() abort
     execute "normal! ki\b"
   endif
 endfunction
+

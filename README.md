@@ -1,35 +1,34 @@
 
-# IMPORTANT NOTE: 
+# IMPORTANT NOTE:
 
-I did not create this, all credit for the majority goes to ray-x as this setup is forked from his, i have merely added / removed certain aspects to fit my own programming needs, such as using ale, dap install and so on, i will continue to lazy load things if I can. 
+I did not create this, all credit for the majority goes to ray-x as this setup is forked from his, i have merely added / removed certain aspects to fit my own programming needs, such as using ale, dap install and so on, i will continue to lazy load things if I can.
 
 
-Again all credit to ray-x, if this setup is currently not working - ive most likely screwed something up : please just refer to his setup as it works : ) 
+Again all credit to ray-x, if this setup is currently not working - ive most likely screwed something up : please just refer to his setup as it works : )
 
 
 
 This neovim configure file is highly optimized for the impatient. Packer lazy loading + After syntax highlight rendering. Maybe the
-only nvim setup in github that can render multiple files with treesitter in less than 80ms with ~110 plugins installed
-(e.g. Open both util.lua(1686 loc) and lsp.lua(1538 loc) from neovim source code in 80.6ms)
-
-The `Plug` config is located in branch [Plug branch](https://github.com/ray-x/dotfiles/tree/zprezto-plug)
+only nvim setup in github that can render multiple files with treesitter in less than 80ms with ~200 plugins installed
+(e.g. Open both util.lua(1686 loc) and lsp.lua(1538 loc) from neovim source code in 60.6ms)
 
 - nvim+kitty configured with pop menu:
 
-  ![vim_ide with nvim+kitty](https://github.com/ray-x/dotfiles/blob/master/img/menu.jpg?raw=true)
 
-- nvim clap preview:
+## Why this config ?
 
-  ![vim_ide with nvim+kitty](https://github.com/ray-x/dotfiles/blob/master/img/clap.jpg?raw=true)
+1. Im a plugin hoe, i love having extra stuff, find a list of plugins in my stared if you want some random ones .
+2. I mainly code in python, C, Java : I have yet to setup java correctly as its too much of a hastle and mavent is not
+   avaliable for it : This setup is made for C++ / C / Lua / Python / Bash / Golang
+3. My binds: Still a few things left to do, but i made sure that everything is easy to reach in some sense .
 
-- nvim+kitty + compe (cmp) :
+## Previews
 
-  ![vim_ide with
-nvim+kitty](https://user-images.githubusercontent.com/1681295/109258178-db2e6d80-784d-11eb-9cef-8b1cc6435e01.png?raw=true)
 
 ## Battery included
 
 About 200 plugins and 1600 lines of lua and vim code.
+
 
 ## Neovim Plugins
 
@@ -39,9 +38,6 @@ I used following plugin a lots
 - `Plug` -> `Dein` -> `Lua-Packer`
   Change to Lua-Packer does not
   decrease startup time as Plug -> Dein. But still about 80ms faster for Golang codes loading.
-  If you interested in Dein version, Please refer to [Dein](https://github.com/ray-x/dotfiles/tree/nvim-comple).
-  This was the last Dein/Packer dual supports version I have (init.vim has a flag to choose).
-  ATM, minium support for vim. Most plugins only works under neovim 0.5.0+.
 
   I followed Raphael(a.k.a glepnir) https://github.com/glepnir/nvim dotfiles. He provides a good wrapper for
   Packer. I have an `overwrite` folder which will override the settings. Also, lots of changes in modules/plugins.
@@ -54,24 +50,15 @@ I used following plugin a lots
 
   One of the best plugin for search anything. I used it to replace fzf, leaderF, leaderP, defx, Ag/Ack/Rg, yank(ring), project management. undolist and many more. Telescope is awesome, only issue is performance.
 
-- nvim-lsp with [navigator.lua](https://github.com/ray-x/navigator.lua)
+- nvim-lsp
 
-  I turn off vim-go auto-complete/LSP and turn to nvim-lsp. It adds around 200ms bootup time and some of the extensions
-  might crash when I using coc (but it hard to check which becuase ~4 node.js services coc forked)
-  Some useful script from TJ, and [glepnir](https://github.com/glepnir)
-
-  nvim-tree: file-explorer (lightweight and fast)
-  hrsh7th/nvim-cmp: auto-complete
-  vsnip: code snipts(Load snippet from VSCode extension). It is a full featured IDE.
-
-  ![document symbol](https://github.com/ray-x/files/blob/master/img/navigator/doc_symbol.gif?raw=true)
-
+- nvim-tree: file-explorer (lightweight and fast)
+- hrsh7th/nvim-cmp: auto-complete
+- vsnip: code snipts(Load snippet from VSCode extension). It is a full featured IDE.
 - ALE -> Efm
 
 Lint and format moved to efm-server
 
-- Programming support:
-  Treesitter, nvim-lsp and [navigator.lua](https://github.com/ray-x/navigator.lua), for golang, use [go.nvim](https://github.com/ray-x/go.nvim)
 
 - Debug:
 
@@ -151,21 +138,23 @@ You can put your own plugins setup in `modules/user` folder
 
 ## Shell
 
-- OhMyZshell is good, iterm2 is popular, but I turned to
-  fish + spaceship + kitty. It is cooool and faster.
-  nvim+kitty split view:
+- OhMyZshell with kitty
 
-  ![vim_ide with nvim+kitty](https://github.com/ray-x/dotfiles/blob/master/img/kitty.jpg)
 
 ## Parking lots
 
-These tools are good, but due to confliction, less use, or, not suite to my workflow
+Main Tools i use are the following
 
-- vim/gvim
-- YCM you complete me
-- easymotion
-- oh-my-zh, iterm2
-- zpreztor
-- rainbow
-- defx
-- ALE
+### Python :
+ - Ale - loaded only for python files - formats and has a nice auto import
+ - use java language server with null-ls as my flake8 service : Ale linting is disabled i only use it for vim-nayvy .
+ - All refactor and referencing plugins are used
+
+### C:
+- Just use toggle term mate
+
+### Debuging
+- It is a pain in the ass to set up every debugger, i used to use dapinstall, but for now im just working off some
+custom ones that i can make. GDB is teh main one for C - please refer to the debugging section .
+
+## References
