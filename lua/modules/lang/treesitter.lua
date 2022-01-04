@@ -216,7 +216,7 @@ local treesitter_ref = function()
   require("nvim-treesitter.configs").setup({
     refactor = {
       highlight_definitions = { enable = enable },
-      highlight_current_scope = { enable = enable },
+      highlight_current_scope = { enable = false },
       smart_rename = {
         enable = false,
         keymaps = {
