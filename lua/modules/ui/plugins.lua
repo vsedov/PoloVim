@@ -98,7 +98,6 @@ ui["rebelot/kanagawa.nvim"] = {
   setup = conf.kanagawa,
   config = function()
     vim.cmd([[colorscheme kanagawa]])
-    vim.cmd([[hi TSCurrentScope guibg=NONE]])
   end,
 }
 

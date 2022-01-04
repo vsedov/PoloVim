@@ -347,6 +347,7 @@ function config.kanagawa()
   if not packer_plugins["kanagawa.nvim"].loaded then
     vim.cmd([[packadd kanagawa.nvim]])
   end
+
   require("kanagawa").setup({
     undercurl = true, -- enable undercurls
     commentStyle = "italic",
