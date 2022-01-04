@@ -1,0 +1,24 @@
+@document.meta
+  title: code_runer
+  description:
+  authors: viv
+  categories:
+  created: 2022-01-04
+  version: 0.0.9
+@end
+
+@code json
+{
+    "javascript": "node",
+    "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+    "kotlin": "cd $dir && kotlinc-native $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt.kexe",
+    "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+    "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+    "python": "python -u",
+    "shellscript": "bash",
+    "csharp": "cd $dir && mcs $fileName && mono $fileNameWithoutExt.exe",
+    "typescript": "deno run",
+    "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+    "dart": "dart"
+}
+@end
