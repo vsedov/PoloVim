@@ -199,6 +199,7 @@ lang["Shatur/neovim-cmake"] = {
 
 --
 lang["michaelb/sniprun"] = {
+  cmd = {"'<,'>SnipRun", "SnipRun"},
   opt = true,
   run = "bash install.sh",
   requires = "rcarriga/nvim-notify",
@@ -206,7 +207,7 @@ lang["michaelb/sniprun"] = {
 }
 
 lang["dccsillag/magma-nvim"] = {
-  opt = true,
+  opt = true, 
   requires = "rcarriga/nvim-notify",
   run = ":UpdateRemotePlugins",
   config = conf.magma,

@@ -138,8 +138,4 @@ ui["kazhala/close-buffers.nvim"] = {
   config = conf.buffers_close,
 }
 
-ui["norcalli/nvim-colorizer.lua"] = {
-  opt = true,
-}
-
 return ui

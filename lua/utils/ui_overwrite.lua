@@ -198,7 +198,6 @@ end
 -- bg("Search","#938AA9")
 -- bg("IncSearch", "#363646")
 
-
 -- Telescope
 fg("TelescopeBorder", folder_bg)
 -- fg("TelescopePreviewBorder", folder_bg)
