@@ -28,7 +28,7 @@ local function magma_binds()
     ["n|<leader>ad"] = map_cr("<cmd>MagmaDelete<cr>"):with_noremap():with_silent(),
     ["n|<leader>ao"] = map_cr("<cmd>MagmaShowOutput<cr>"):with_noremap():with_silent(),
     ["n|<leader>ac"] = map_cr("<cmd><cmd>MagmaReevaluateCell<cr>"):with_noremap():with_silent(),
-    ["v|<leader>ar"]  = map_cr("<cmd>MagmaEvaluateVisual<cr>"):with_noremap():with_silent(),
+    ["v|<leader>ar"] = map_cr("<cmd>MagmaEvaluateVisual<cr>"):with_noremap():with_silent(),
   }
   bind.nvim_load_mapping(keys)
 end
@@ -123,9 +123,8 @@ M.python_repl = function()
   loader("magma-nvim")
   vim.cmd([[UpdateRemotePlugins]])
 
-  vim.cmd[[MagmaInit python3]]
+  vim.cmd([[MagmaInit python3]])
   magma_binds()
 end
-
 
 return M

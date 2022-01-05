@@ -230,7 +230,6 @@ function config.magma()
   vim.g.magma_automatically_open_output = false
 end
 
-
 function config.sniprun()
   require("modules.lang.language_utils").load_snip_run()
 end
