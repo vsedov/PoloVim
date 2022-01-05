@@ -249,7 +249,7 @@ local plug_map = {
 
   -- Neogen
 
-  ["n|<F3>"] = map_cr("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
+  ["n|<Leader>d"] = map_cr("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)
