@@ -1,6 +1,5 @@
 local wk = require("which-key")
 
-
 wk.setup({
   window = {
     border = "none", -- none, single, double, shadow
@@ -11,7 +10,7 @@ wk.setup({
 
 wk.register({
 
-c = {
+  c = {
     name = "+Comment",
     c = "Current line",
     o = "Enter insert below",
@@ -51,5 +50,4 @@ c = {
       b = { '<cmd>lua require("utils.telescope").file_browser()<cr>', "file_browser" },
     },
   },
-
 })
