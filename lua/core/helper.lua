@@ -33,10 +33,10 @@ return {
     end
 
     _G.use_nulls = function()
-      -- Remove this for norg files 
-      if vim.bo.filetype == "norg" then 
+      -- Remove this for norg files
+      if vim.bo.filetype == "norg" then
         return false
-      end 
+      end
 
       return true
     end
