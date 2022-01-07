@@ -185,6 +185,7 @@ completion["ray-x/lsp_signature.nvim"] = {
       floating_window = true,
       floating_window_above_cur_line = true,
       hint_enable = true,
+      use_lspsaga = true,
       fix_pos = false,
       -- floating_window_above_first = true,
       log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
@@ -193,7 +194,7 @@ completion["ray-x/lsp_signature.nvim"] = {
       timer_interval = 100,
       extra_trigger_chars = {},
       handler_opts = {
-        border = "rounded", -- "shadow", --{"╭", "─" ,"╮", "│", "╯", "─", "╰", "│" },
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
       },
       max_height = 4,
     })
@@ -210,8 +211,9 @@ completion["dense-analysis/ale"] = {
   ft = {
     "python",
     "norg",
-  }, 
-  -- Test out norg files 
+  },
+  opt = true,
+  -- Test out norg files
   config = conf.ale,
 }
 

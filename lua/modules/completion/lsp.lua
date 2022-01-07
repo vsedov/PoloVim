@@ -18,6 +18,32 @@ end
 
 require("lsp-colors").setup({})
 
+local codes = { 
+  no_matching_function = { 
+    "redundant-parameter", 
+    "ovl_no_viable_function_in_call",
+  }
+
+}
+local border = {
+  { "🭽", "FloatBorder" },
+  { "▔", "FloatBorder" },
+  { "🭾", "FloatBorder" },
+  { "▕", "FloatBorder" },
+  { "🭿", "FloatBorder" },
+  { "▁", "FloatBorder" },
+  { "🭼", "FloatBorder" },
+  { "▏", "FloatBorder" },
+  -- { "╭", "FloatBorder" },
+  -- { "─", "FloatBorder" },
+  -- { "╮", "FloatBorder" },
+  -- { "│", "FloatBorder" },
+  -- { "╯", "FloatBorder" },
+  -- { "─", "FloatBorder" },
+  -- { "╰", "FloatBorder" },
+  -- { "│", "FloatBorder" },
+}
+
 vim.diagnostic.config({
   virtual_text = false,
   severity_sort = true,
@@ -27,10 +53,12 @@ vim.diagnostic.config({
   float = {
     focusable = true,
     style = "minimal",
-    border = "rounded",
     source = "always",
-    header = "",
-    prefix = "",
+    header = " diagnostic",
+    scope = "cursor", 
+    prefix = function(prefix, i, total)
+      return i .. "/" .. total .. " "
+    end,
     format = function(d)
       local t = vim.deepcopy(d)
       if d.code then
@@ -41,26 +69,8 @@ vim.diagnostic.config({
   },
 })
 
-local border = {
-  { "╭", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "╮", "FloatBorder" },
-  { "│", "FloatBorder" },
-  { "╯", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "╰", "FloatBorder" },
-  { "│", "FloatBorder" },
-}
-
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
-
-local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
-
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities.offsetEncoding = { "utf-16" }
@@ -103,16 +113,62 @@ capabilities.textDocument.codeAction = {
   },
 }
 
+local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
+
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+-- wrap open_float to inspect diagnostics and use the severity color for border
+-- https://neovim.discourse.group/t/lsp-diagnostics-how-and-where-to-retrieve-severity-level-to-customise-border-color/1679
+vim.diagnostic.open_float = (function(orig)
+  return function(bufnr, opts)
+    local line_number = vim.api.nvim_win_get_cursor(0)[1] - 1
+    local opts = opts or {}
+
+    local diagnostics = vim.diagnostic.get(opts.bufnr or 0, { lnum = line_number })
+    local max_severity = vim.diagnostic.severity.HINT
+    for _, d in ipairs(diagnostics) do
+      if d.severity < max_severity then
+        max_severity = d.severity
+      end
+    end
+    local border_color = ({
+      [vim.diagnostic.severity.HINT] = "DiagnosticHint",
+      [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+      [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+      [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+    })[max_severity]
+    opts.border = border
+    orig(bufnr, opts)
+  end
+end)(vim.diagnostic.open_float)
+
+-- Show line diagnostics in floating popup on hover, except insert mode (CursorHoldI)
+vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float()]])
+
 -- show diagnostics for current line
 -- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
 -- show diagnostics for current position
 -- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
 
-vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
-vim.cmd(
-  [[au CursorHold,CursorHoldI  * lua vim.diagnostic.open_float(0, { focusable = true,scope = "cursor",source = "if_many",format = function(diagnostic) return require'modules.completion.lsp_support'.parse_diagnostic(diagnostic) end, header = {"Cursor Diagnostics:","DiagnosticHeader"}, prefix = function(diagnostic,i,total) local icon, highlight if diagnostic.severity == 1 then icon = ""; highlight ="DiagnosticError" elseif diagnostic.severity == 2 then icon = ""; highlight ="DiagnosticWarn" elseif diagnostic.severity == 3 then icon = ""; highlight ="DiagnosticInfo" elseif diagnostic.severity == 4 then icon = ""; highlight ="DiagnosticHint" end return i.."/"..total.." "..icon.."  ",highlight end})]]
-)
+-- vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
+-- vim.cmd(
+--   [[au CursorHold   * lua vim.diagnostic.open_float(0, { focusable = true,scope = "cursor",source = "if_many",
 
+-- format = function(diagnostic)
+--   return require'modules.completion.lsp_support'.parse_diagnostic(diagnostic)
+-- end,
+-- header = {"Cursor Diagnostics:","DiagnosticHeader"},
+--
+-- prefix = function(diagnostic,i,total)
+--   local icon, highlight
+--   if diagnostic.severity == 1 then icon = ""; highlight ="DiagnosticError" elseif diagnostic.severity == 2 then icon = ""; highlight ="DiagnosticWarn" elseif diagnostic.severity == 3 then icon = ""; highlight ="DiagnosticInfo" elseif diagnostic.severity == 4 then icon = ""; highlight ="DiagnosticHint" end
+--
+-- return i.."/"..total.." "..icon.."  ",highlight end})]]
+-- -- )
+--
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())
   vim.cmd([[edit]])
@@ -260,3 +316,45 @@ lsp_installer.on_server_ready(function(server)
   server:setup(opts)
   -- vim.cmd([[ do User LspAttachBuffers ]])
 end)
+
+
+
+
+
+
+-- lspconfig.diagnosticls.setup({
+-- filetypes = { "python" },
+-- init_options = {
+--     filetypes = {
+--         python = { "flake8" },
+--     },
+--     linters = {
+--         flake8 = {
+--             debounce = 100,
+--             sourceName = "flake8",
+--             command = "flake8",
+--             args = {
+--                 "--extend-ignore=E",
+--                 "--format",
+--                 "%(row)d:%(col)d:%(code)s:%(code)s: %(text)s",
+--                 "%file",
+--             },
+--             formatPattern = {
+--                 "^(\\d+):(\\d+):(\\w+):(\\w).+: (.*)$",
+--                 {
+--                     line = 1,
+--                     column = 2,
+--                     message = { "[", 3, "] ", 5 },
+--                     security = 4,
+--                 },
+--             },
+--             securities = {
+--                 E = "error",
+--                 W = "warning",
+--                 F = "info",
+--                 B = "hint",
+--             },
+--         },
+--     },
+-- },
+-- })

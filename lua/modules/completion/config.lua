@@ -111,7 +111,6 @@ function config.nvim_cmp()
     table.insert(sources, { name = "neorg" })
   end
 
-
   if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
     table.insert(sources, { name = "look" })
@@ -125,9 +124,16 @@ function config.nvim_cmp()
     table.insert(sources, { name = "calc" })
   end
   cmp.setup({
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
+
+    window = {
+      completion = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
+      documentation = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
     },
 
     snippet = {
@@ -138,8 +144,6 @@ function config.nvim_cmp()
       end,
     },
     completion = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
       autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
       completeopt = "menu,menuone,noselect",
     },
@@ -263,13 +267,15 @@ function config.nvim_cmp()
   --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
   -- end
   cmp.setup.cmdline(":", {
-    completion = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
-    },
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
+    window = {
+      completion = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
+      documentation = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
     },
     sources = cmp.config.sources({
       { name = "path" },
@@ -288,13 +294,15 @@ function config.nvim_cmp()
     enabled = function()
       return true
     end,
-    completion = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
-    },
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
+    window = {
+      completion = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
+      documentation = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
     },
   })
 
