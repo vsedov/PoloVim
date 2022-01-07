@@ -42,33 +42,33 @@ require("neorg").setup({
     },
 
     ["core.norg.concealer"] = {
-      -- config = {
-      --   icon_preset = "diamond",
-      --   icons = {
-      --     marker = {
-      --       icon = " ",
-      --     },
-      --     todo = {
-      --       enable = true,
-      --       pending = {
-      --         -- icon = ""
-      --         icon = "",
-      --       },
-      --       uncertain = {
-      --         icon = "?",
-      --       },
-      --       urgent = {
-      --         icon = "",
-      --       },
-      --       on_hold = {
-      --         icon = "",
-      --       },
-      --       cancelled = {
-      --         icon = "",
-      --       },
-      --     },
-      --   },
-      -- },
+      config = {
+        icon_preset = "diamond",
+        icons = {
+          marker = {
+            icon = " ",
+          },
+          todo = {
+            enable = true,
+            pending = {
+              -- icon = ""
+              icon = "",
+            },
+            uncertain = {
+              icon = "?",
+            },
+            urgent = {
+              icon = "",
+            },
+            on_hold = {
+              icon = "",
+            },
+            cancelled = {
+              icon = "",
+            },
+          },
+        },
+      },
     },
     ["core.presenter"] = {
       config = {
