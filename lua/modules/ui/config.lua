@@ -211,6 +211,26 @@ function config.scrollbar()
     return
   end
   local vimcmd = vim.api.nvim_command
+  require("scrollbar").setup({
+    handle = {
+      color = "#16161D",
+    },
+    marks = {
+      Search = { color = "#FFA066" },
+      Error = { color = "#E82424" },
+      Warn = { color = "#FF9E3B" },
+      Info = { color = "#6A9589" },
+      Hint = { color = "#658594" },
+      Misc = { color = "#938AA9" },
+    },
+  })
+  vim.cmd([[
+      augroup scrollbar_search_hide
+        autocmd!
+        autocmd CmdlineLeave : lua require('scrollbar').search_handler.hide()
+      augroup END
+  ]])
+
   vimcmd("augroup " .. "ScrollbarInit")
   vimcmd("autocmd!")
   vimcmd("autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()")
@@ -501,7 +521,6 @@ function config.buffers_close()
     end,
   })
 end
-
 
 vim.api.nvim_exec(
   [[

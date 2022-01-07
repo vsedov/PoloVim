@@ -132,7 +132,7 @@ tools["liuchengxu/vim-clap"] = {
   config = conf.clap_after,
 }
 
--- For this to record, cmd might not work 
+-- For this to record, cmd might not work
 tools["wakatime/vim-wakatime"] = {
   event = "InsertEnter",
   cmd = {

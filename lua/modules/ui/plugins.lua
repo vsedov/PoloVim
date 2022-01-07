@@ -28,9 +28,10 @@ ui["akinsho/bufferline.nvim"] = {
 
 -- TODO MODIFY THIS
 ui["startup-nvim/startup.nvim"] = {
-  opt = true, -- Turn this off to increase startup
+  opt = true,
   requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   config = function()
+    -- require("startup").setup({theme = "dashboard"})
     require("startup").setup({ theme = "evil" })
   end,
 }
@@ -63,9 +64,14 @@ ui["lukas-reineke/virt-column.nvim"] = {
   end,
 }
 
-ui["dstein64/nvim-scrollview"] = {
+-- ui["dstein64/nvim-scrollview"] = {
+--   event = { "CursorMoved", "CursorMovedI" },
+--   config = conf.scrollview,
+-- }
+
+ui["petertriho/nvim-scrollbar"] = {
   event = { "CursorMoved", "CursorMovedI" },
-  config = conf.scrollview,
+  config = conf.scrollbar,
 }
 
 ui["folke/tokyonight.nvim"] = {
@@ -99,12 +105,6 @@ ui["rebelot/kanagawa.nvim"] = {
     vim.cmd([[colorscheme kanagawa]])
   end,
 }
-
--- ui["ChristianChiarulli/nvcode-color-schemes.vim"] = {opt = true, config = conf.nvcode}
-
--- cant config cursor line
--- ui["rafamadriz/neon"] = {opt = true, config = conf.neon}
-
 
 ui["kazhala/close-buffers.nvim"] = {
   cmd = { "BDelete", "BWipeout" },
