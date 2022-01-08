@@ -18,12 +18,11 @@ end
 
 require("lsp-colors").setup({})
 
-local codes = { 
-  no_matching_function = { 
-    "redundant-parameter", 
+local codes = {
+  no_matching_function = {
+    "redundant-parameter",
     "ovl_no_viable_function_in_call",
-  }
-
+  },
 }
 local border = {
   { "🭽", "FloatBorder" },
@@ -55,7 +54,7 @@ vim.diagnostic.config({
     style = "minimal",
     source = "always",
     header = " diagnostic",
-    scope = "cursor", 
+    scope = "cursor",
     prefix = function(prefix, i, total)
       return i .. "/" .. total .. " "
     end,
@@ -316,11 +315,6 @@ lsp_installer.on_server_ready(function(server)
   server:setup(opts)
   -- vim.cmd([[ do User LspAttachBuffers ]])
 end)
-
-
-
-
-
 
 -- lspconfig.diagnosticls.setup({
 -- filetypes = { "python" },

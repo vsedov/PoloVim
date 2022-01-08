@@ -185,7 +185,7 @@ completion["ray-x/lsp_signature.nvim"] = {
       floating_window = true,
       floating_window_above_cur_line = true,
       hint_enable = true,
-      use_lspsaga = true,
+      use_lspsaga = false,
       fix_pos = false,
       -- floating_window_above_first = true,
       log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
@@ -217,7 +217,7 @@ completion["dense-analysis/ale"] = {
   config = conf.ale,
 }
 
-completion["vsedov/vim-sonictemplate"] = {
+completion["~/GitHub/vim-sonictemplate"] = {
   cmd = "Template",
   config = conf.vim_sonictemplate,
 }

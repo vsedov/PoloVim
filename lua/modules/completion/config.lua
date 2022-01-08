@@ -239,6 +239,8 @@ function config.nvim_cmp()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
+        elseif neogen.jumpable(-1) then
+          vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
         elseif luasnip.jumpable(-1) then
           luasnip.jump(-1)
         else
