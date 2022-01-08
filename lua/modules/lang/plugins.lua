@@ -121,6 +121,7 @@ lang["stevearc/aerial.nvim"] = {
     end)
   end,
 }
+
 lang["simrat39/symbols-outline.nvim"] = {
   opt = true,
   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },

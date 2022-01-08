@@ -74,6 +74,13 @@ ui["petertriho/nvim-scrollbar"] = {
   config = conf.scrollbar,
 }
 
+-- test fold
+
+ui["anuvyklack/pretty-fold.nvim"] = {
+  event = "BufRead",
+  config = conf.pretty_fold,
+}
+
 ui["folke/tokyonight.nvim"] = {
   opt = true,
   setup = conf.tokyonight,
