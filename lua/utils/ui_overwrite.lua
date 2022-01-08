@@ -103,7 +103,6 @@ bg("Pmenu", "NONE")
 -- bg("PmenuSel", blue)
 -- bg("PmenuThumb", nord_blue)
 
-
 -- [[ Plugin Highlights
 
 -- Dashboard
