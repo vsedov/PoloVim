@@ -56,7 +56,6 @@ end
 
 function config.nvim_cmp()
   local cmp = require("cmp")
-
   -- let g;copiol
 
   local has_words_before = function()
@@ -97,7 +96,7 @@ function config.nvim_cmp()
     { name = "luasnip" },
     { name = "treesitter", keyword_length = 2 },
     { name = "look", keyword_length = 4 },
-    { name = "vim_lsp_signature_help", priority = 10 },
+    { name = "nvim_lsp_signature_help", priority = 10 },
     -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
   }
