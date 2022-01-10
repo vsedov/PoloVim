@@ -114,7 +114,7 @@ tools["turbio/bracey.vim"] = {
 -- }
 
 tools["akinsho/toggleterm.nvim"] = {
-  keys = { "<c-t>" },
+  keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv" },
   config = function()
     require("modules.tools.toggleterm")
   end,
@@ -329,7 +329,7 @@ tools["Krafi2/jeskape.nvim"] = {
 }
 
 tools["fladson/vim-kitty"] = {
-  opt = true,
+  ft = { "*.conf" },
 }
 
 tools["relastle/vim-nayvy"] = {

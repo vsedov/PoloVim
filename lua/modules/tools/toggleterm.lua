@@ -19,8 +19,6 @@ require("toggleterm").setup({
     -- the 'curved' border is a custom border type
     -- not natively supported but implemented in this plugin.
     border = "single", --| 'double' | 'shadow' | 'curved' | ... other options supported by win open
-    width = 30,
-    height = 20,
     winblend = 3,
     highlights = {
       border = "Normal",
@@ -28,6 +26,13 @@ require("toggleterm").setup({
     },
   },
 })
+
+vim.keymap.set("n", "<Leader>gh", function()
+  require("toggleterm.terminal").Terminal:new({ cmd = "lazygit", hidden = true }):toggle()
+end)
+
+vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction='vertical'<cr>")
+vim.keymap.set("n", "<Leader>tv", "<cmd>ToggleTerm direction='float'<cr>")
 
 local function toggleterm_winnr() end
 
@@ -199,13 +204,3 @@ _G.toggleterm_jump_traceback = function(count)
   -- })
   -- split:mount()
 end
-
-vim.cmd([[
-
-command! -count=1 TermGitPush  lua require'toggleterm'.exec("git push",    <count>, 12)
-command! -count=1 TermGitPushF lua require'toggleterm'.exec("git push -f", <count>, 12)
-
-command! -count=1 TermV :ToggleTerm direction='vertical'
-command! -count=1 TermF :ToggleTerm direction='float'
-
-]])

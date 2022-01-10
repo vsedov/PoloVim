@@ -246,6 +246,10 @@ function M.P(v)
   print(vim.inspect(v))
 end
 
+function M.isempty(s)
+  return s == nil or s == ""
+end
+
 function M.newbinsource(cmd)
   return function()
     local file = io.popen(cmd)

@@ -245,12 +245,13 @@ function config.scrollbar()
       search = false,
     },
   })
-  vim.cmd([[
-      augroup scrollbar_search_hide
-        autocmd!
-        autocmd CmdlineLeave : lua require('scrollbar').search_handler.hide()
-      augroup END
-  ]])
+
+  -- vim.cmd([[
+  --     augroup scrollbar_search_hide
+  --       autocmd!
+  --       autocmd CmdlineLeave : lua require('scrollbar').search_handler.hide()
+  --     augroup END
+  -- ]])
 
   -- vimcmd("augroup " .. "ScrollbarInit")
   -- vimcmd("autocmd!")
@@ -265,23 +266,33 @@ function config.scrollbar()
 end
 
 function config.pretty_fold()
-  require('pretty-fold.preview').setup_keybinding('l')
+  require("pretty-fold.preview").setup_keybinding("l")
   require("pretty-fold").setup({
     keep_indentation = true,
-  fill_char = '━',
-     sections = {
-        left = {
-           '━ ', function() return string.rep('*', vim.v.foldlevel) end, ' ━┫', 'content', '┣'
-        },
-        right = {
-           '┫ ', 'number_of_folded_lines', ': ', 'percentage', ' ┣━━',
-        }
-     },
-      -- List of patterns that will be removed from content foldtext section.
-      stop_words = {
-        "@brief%s*", -- (for cpp) Remove '@brief' and all spaces after.
+    fill_char = "━",
+    sections = {
+      left = {
+        "━ ",
+        function()
+          return string.rep("*", vim.v.foldlevel)
+        end,
+        " ━┫",
+        "content",
+        "┣",
       },
-    })
+      right = {
+        "┫ ",
+        "number_of_folded_lines",
+        ": ",
+        "percentage",
+        " ┣━━",
+      },
+    },
+    -- List of patterns that will be removed from content foldtext section.
+    stop_words = {
+      "@brief%s*", -- (for cpp) Remove '@brief' and all spaces after.
+    },
+  })
 end
 
 function config.scrollview()

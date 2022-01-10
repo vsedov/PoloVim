@@ -21,6 +21,7 @@ local action_layout = require("telescope.actions.layout")
 local actions_layout = require("telescope.actions.layout")
 local utils = require("utils.helper")
 
+local action_state = require("telescope.actions.state")
 -- https://github.com/max397574/NeovimConfig/blob/2267d7dfa8a30148516e2f5a6bb0e5ecc5de2c3c/lua/configs/telescope.lua
 local function reloader()
   RELOAD("plenary")
@@ -70,15 +71,7 @@ end
 --   require('telescope.actions.set').shift_selection(prompt_bufnr, 5)
 -- end
 
-function custom_actions.change_directory(prompt_bufnr)
-  local entry = require("telescope.actions.state").get_selected_entry()
-  require("telescope.actions").close(prompt_bufnr)
-  vim.cmd("lcd " .. entry.path)
-end
-
 -- https://github.com/nvim-telescope/telescope.nvim/issues/416#issuecomment-841273053
-
-local action_state = require("telescope.actions.state")
 
 function custom_actions.fzf_multi_select(prompt_bufnr)
   local picker = action_state.get_current_picker(prompt_bufnr)
@@ -143,7 +136,6 @@ require("telescope").setup({
       preview_cutoff = 20,
       prompt_position = "top",
       horizontal = {
-        preview_width = 0.65,
         preview_width = function(_, cols, _)
           if cols > 200 then
             return math.floor(cols * 0.5)
@@ -179,8 +171,11 @@ require("telescope").setup({
         ["<C-y>"] = set_prompt_to_entry_value,
         ["<C-d>"] = actions.preview_scrolling_up,
         ["<C-f>"] = actions.preview_scrolling_down,
-        ["<C-n>"] = require("telescope.actions").cycle_history_next,
         ["<C-u>"] = require("telescope.actions").cycle_history_prev,
+
+        ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
+        ["<c-s>"] = custom_actions.multi_selection_open_split,
+        ["<c-t>"] = custom_actions.multi_selection_open_tab,
 
         ["<C-n>"] = function(prompt_bufnr)
           local results_win = state.get_status(prompt_bufnr).results_win
@@ -195,6 +190,11 @@ require("telescope").setup({
         end,
       },
       i = {
+        ["<cr>"] = custom_actions.multi_selection_open,
+        ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
+        ["<c-s>"] = custom_actions.multi_selection_open_split,
+        ["<c-t>"] = custom_actions.multi_selection_open_tab,
+
         ["<C-j>"] = actions.move_selection_next,
         ["<c-p>"] = action_layout.toggle_prompt_position,
         ["<C-k>"] = actions.move_selection_previous,
@@ -206,7 +206,6 @@ require("telescope").setup({
         ["<C-l>"] = actions_layout.toggle_preview,
         ["<C-d>"] = actions.preview_scrolling_up,
         ["<C-f>"] = actions.preview_scrolling_down,
-        ["<C-n>"] = require("telescope.actions").cycle_history_next,
         ["<C-u>"] = require("telescope.actions").cycle_history_prev,
 
         ["<C-n>"] = function(prompt_bufnr)
@@ -246,6 +245,7 @@ telescope.load_extension("gosource")
 
 loader("telescope-fzy-native.nvim telescope-fzf-native.nvim telescope-live-grep-raw.nvim")
 -- loader("project.nvim") -- telescope-frecency.nvim nvim-neoclip.lua telescope-zoxide
+telescope.load_extension("fzf")
 
 telescope.setup({
   extensions = {
@@ -401,13 +401,13 @@ end
 M.jump = function()
   reloader()
 
-  require("telescope.builtin").jumplist({ layout_strategy = "vertical" })
+  builtin.jumplist({ layout_strategy = "vertical" })
 end
 
 M.installed_plugins = function()
   reloader()
 
-  require("telescope.builtin").find_files({
+  builtin.find_files({
     cwd = vim.fn.stdpath("data") .. "/site/pack/packer/start/",
   })
 end
@@ -433,21 +433,103 @@ M.theme = function(opts)
   }, opts or {})
 end
 
-M.buffers = function()
-  reloader()
+M.search_only_certain_files = function()
+  builtin.find_files({
+    find_command = {
+      "rg",
+      "--files",
+      "--type",
+      vim.fn.input("Type: "),
+    },
+  })
+end
 
-  local opts = { shorten_path = true }
-  local buffers = vim.tbl_filter(function(b)
-    return (opts.show_all_buffers or vim.api.nvim_buf_is_loaded(b)) and 1 == vim.fn.buflisted(b)
-  end, vim.api.nvim_list_bufs())
+M.grep_string_visual = function()
+  local visual_selection = function()
+    local save_previous = vim.fn.getreg("a")
+    vim.api.nvim_command('silent! normal! "ay')
+    local selection = vim.fn.trim(vim.fn.getreg("a"))
+    vim.fn.setreg("a", save_previous)
+    return vim.fn.substitute(selection, [[\n]], [[\\n]], "g")
+  end
+  builtin.live_grep({
+    default_text = visual_selection(),
+  })
+end
 
-  local max_bufnr = math.max(unpack(buffers))
-  opts.bufnr_width = #tostring(max_bufnr)
+-- find files in the upper directory YES
+M.find_updir = function()
+  local up_dir = vim.fn.getcwd():gsub("(.*)/.*$", "%1")
+  local opts = {
+    cwd = up_dir,
+  }
 
-  pickers.new(M.theme(), {
-    finder = finders.new_table({ results = buffers, entry_maker = make_entry.gen_from_buffer(opts) }),
-    sorter = sorters.get_fzy_sorter(),
-  }):find()
+  builtin.find_files(opts)
+end
+
+-- show implementations of the current thingy using language server
+M.lsp_implementations = function()
+  local opts = {
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+  builtin.lsp_implementations(opts)
+end
+
+-- show refrences to this using language server
+M.lsp_references = function()
+  local opts = {
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+  builtin.lsp_references(opts)
+end
+
+M._multiopen = function(prompt_bufnr, open_cmd)
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local num_selections = table.getn(picker:get_multi_selection())
+  local border_contents = picker.prompt_border.contents[1]
+  if not (string.find(border_contents, "Find Files") or string.find(border_contents, "Git Files")) then
+    actions.select_default(prompt_bufnr)
+    return
+  end
+  if num_selections > 1 then
+    vim.cmd("bw!")
+    for _, entry in ipairs(picker:get_multi_selection()) do
+      vim.cmd(string.format("%s %s", open_cmd, entry.value))
+    end
+    vim.cmd("stopinsert")
+  else
+    if open_cmd == "vsplit" then
+      actions.file_vsplit(prompt_bufnr)
+    elseif open_cmd == "split" then
+      actions.file_split(prompt_bufnr)
+    elseif open_cmd == "tabe" then
+      actions.file_tab(prompt_bufnr)
+    else
+      actions.file_edit(prompt_bufnr)
+    end
+  end
+end
+M.multi_selection_open_vsplit = function(prompt_bufnr)
+  M._multiopen(prompt_bufnr, "vsplit")
+end
+M.multi_selection_open_split = function(prompt_bufnr)
+  M._multiopen(prompt_bufnr, "split")
+end
+M.multi_selection_open_tab = function(prompt_bufnr)
+  M._multiopen(prompt_bufnr, "tabe")
+end
+M.multi_selection_open = function(prompt_bufnr)
+  M._multiopen(prompt_bufnr, "edit")
 end
 
 M.command_history = function()
@@ -495,12 +577,8 @@ M.file_browser = function()
   local opts
 
   opts = {
-    --   sorting_strategy = "ascending",
-    --   scroll_strategy = "cycle",
-    --   prompt_prefix = "  ",
-    --   layout_config = {
-    --     prompt_position = "top",
-    --   },
+    sorting_strategy = "ascending",
+    scroll_strategy = "cycle",
   }
 
   require("telescope").extensions.file_browser.file_browser(opts)
@@ -512,16 +590,7 @@ M.find_notes = function()
     cwd = "~/notes",
     prompt_title = "~ Notes ~",
   }
-  require("telescope.builtin").find_files(opts)
-end
-
-M.search_config = function()
-  reloader()
-  local opts = {
-    cwd = "~/.config/nvim",
-    prompt_title = "~ Neovim Config ~",
-  }
-  require("telescope.builtin").find_files(opts)
+  builtin.find_files(opts)
 end
 
 M.help_tags = function()
@@ -610,7 +679,7 @@ M.grep_last_search = function(opts)
   opts.search = register
   opts.prompt_title = "~ Last Search Grep ~"
 
-  require("telescope.builtin").grep_string(opts)
+  builtin.grep_string(opts)
 end
 
 M.curbuf = function()
@@ -624,7 +693,7 @@ M.curbuf = function()
     prompt_title = "~ Current Buffer ~",
     layout_config = { prompt_position = "top", height = 0.4 },
   }
-  require("telescope.builtin").current_buffer_fuzzy_find(opts)
+  builtin.current_buffer_fuzzy_find(opts)
 end
 
 M.git_diff = function()
@@ -643,7 +712,7 @@ M.git_diff = function()
       hide_on_startup = false,
     },
   }
-  require("telescope.builtin").git_status(opts)
+  builtin.git_status(opts)
 end
 
 M.find_files = function()
@@ -655,7 +724,7 @@ M.find_files = function()
       prompt_position = "top",
     },
   }
-  require("telescope.builtin").find_files(opts)
+  builtin.find_files(opts)
 end
 
 return M
