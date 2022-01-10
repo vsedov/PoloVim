@@ -313,6 +313,45 @@ end
 
 M = {}
 
+M._multiopen = function(prompt_bufnr, open_cmd)
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local num_selections = table.getn(picker:get_multi_selection())
+  local border_contents = picker.prompt_border.contents[1]
+  if not (string.find(border_contents, "Find Files") or string.find(border_contents, "Git Files")) then
+    actions.select_default(prompt_bufnr)
+    return
+  end
+  if num_selections > 1 then
+    vim.cmd("bw!")
+    for _, entry in ipairs(picker:get_multi_selection()) do
+      vim.cmd(string.format("%s %s", open_cmd, entry.value))
+    end
+    vim.cmd("stopinsert")
+  else
+    if open_cmd == "vsplit" then
+      actions.file_vsplit(prompt_bufnr)
+    elseif open_cmd == "split" then
+      actions.file_split(prompt_bufnr)
+    elseif open_cmd == "tabe" then
+      actions.file_tab(prompt_bufnr)
+    else
+      actions.file_edit(prompt_bufnr)
+    end
+  end
+end
+M.multi_selection_open_vsplit = function(prompt_bufnr)
+  M._multiopen(prompt_bufnr, "vsplit")
+end
+M.multi_selection_open_split = function(prompt_bufnr)
+  M._multiopen(prompt_bufnr, "split")
+end
+M.multi_selection_open_tab = function(prompt_bufnr)
+  M._multiopen(prompt_bufnr, "tabe")
+end
+M.multi_selection_open = function(prompt_bufnr)
+  M._multiopen(prompt_bufnr, "edit")
+end
+
 M.frequency = function()
   reloader()
   require("telescope").extensions.frecency.frecency({
@@ -493,44 +532,6 @@ M.lsp_references = function()
   builtin.lsp_references(opts)
 end
 
-M._multiopen = function(prompt_bufnr, open_cmd)
-  local picker = action_state.get_current_picker(prompt_bufnr)
-  local num_selections = table.getn(picker:get_multi_selection())
-  local border_contents = picker.prompt_border.contents[1]
-  if not (string.find(border_contents, "Find Files") or string.find(border_contents, "Git Files")) then
-    actions.select_default(prompt_bufnr)
-    return
-  end
-  if num_selections > 1 then
-    vim.cmd("bw!")
-    for _, entry in ipairs(picker:get_multi_selection()) do
-      vim.cmd(string.format("%s %s", open_cmd, entry.value))
-    end
-    vim.cmd("stopinsert")
-  else
-    if open_cmd == "vsplit" then
-      actions.file_vsplit(prompt_bufnr)
-    elseif open_cmd == "split" then
-      actions.file_split(prompt_bufnr)
-    elseif open_cmd == "tabe" then
-      actions.file_tab(prompt_bufnr)
-    else
-      actions.file_edit(prompt_bufnr)
-    end
-  end
-end
-M.multi_selection_open_vsplit = function(prompt_bufnr)
-  M._multiopen(prompt_bufnr, "vsplit")
-end
-M.multi_selection_open_split = function(prompt_bufnr)
-  M._multiopen(prompt_bufnr, "split")
-end
-M.multi_selection_open_tab = function(prompt_bufnr)
-  M._multiopen(prompt_bufnr, "tabe")
-end
-M.multi_selection_open = function(prompt_bufnr)
-  M._multiopen(prompt_bufnr, "edit")
-end
 
 M.command_history = function()
   reloader()
@@ -569,6 +570,30 @@ M.load_dotfiles = function()
     end
   end
   builtin.dotfiles()
+end
+
+
+M.git_conflicts = function(opts)
+  opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
+
+  pickers.new(opts, {
+    prompt_title = 'Git Conflicts',
+    finder = finders.new_oneshot_job(
+      vim.tbl_flatten({"git","diff","--name-only","--diff-filter=U"}),
+      opts
+    ),
+    previewer = conf.file_previewer(opts),
+    sorter = conf.file_sorter(opts),
+  }):find()
+end
+
+
+-- Path grep 
+M.live_grep_in_path = function(path)
+  local _path = path or vim.fn.input("Dir: ", "", "dir")
+    builtin.live_grep({
+      search_dirs = { _path }
+    })
 end
 
 M.file_browser = function()
