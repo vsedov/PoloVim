@@ -130,6 +130,7 @@ lang["simrat39/symbols-outline.nvim"] = {
 lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 
 lang["mfussenegger/nvim-dap"] = {
+  opt = true,
   requires = {
     { "theHamsta/nvim-dap-virtual-text", cmd = "Luadev", opt = true },
     { "mfussenegger/nvim-dap-python", ft = "python" },
@@ -140,6 +141,13 @@ lang["mfussenegger/nvim-dap"] = {
 
   config = conf.dap,
 } -- cmd = "Luadev",
+
+
+lang["nvim-telescope/telescope-dap.nvim"] = {
+  opt = true,
+  requires = { "telescope.nvim", "nvim-dap" },
+  config = conf.dap,
+}
 
 lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
@@ -167,36 +175,11 @@ lang["rafcamlet/nvim-luapad"] = {
   end,
 }
 
-lang["nvim-telescope/telescope-dap.nvim"] = {
-  requires = { "telescope.nvim", "nvim-dap" },
-  config = conf.dap,
-}
 
 lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
 -- lang["RRethy/vim-illuminate"] = {opt=true, ft = {"go"}}
 
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
-
-lang["Shatur/neovim-cmake"] = {
-  opt = true,
-  ft = { "c", "cpp" },
-  requires = { { "nvim-lua/plenary.nvim" } },
-  after = { "telescope.nvim" },
-  config = function()
-    -- vim.cmd([[packadd nvim-dap]])
-    local Path = require("plenary.path")
-    require("cmake").setup({
-      type = "codelldb",
-      request = "launch",
-      stopOnEntry = false,
-      runInTerminal = true,
-    })
-  end,
-}
 
 --
 lang["michaelb/sniprun"] = {
@@ -246,8 +229,8 @@ lang["windwp/nvim-ts-autotag"] = {
 }
 
 lang["folke/lua-dev.nvim"] = {
-  opt = true,
-  -- ft = {'lua'},
+  -- opt = true,
+  ft = { "lua" },
   config = conf.lua_dev,
 }
 
