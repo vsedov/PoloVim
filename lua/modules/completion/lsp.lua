@@ -5,6 +5,8 @@ local lsp = require("vim.lsp")
 local fn = vim.fn
 local api = vim.api
 
+local util = require("utils.helper")
+
 if not packer_plugins["telescope.nvim"].loaded then
   vim.cmd([[packadd telescope.nvim]])
 end
@@ -18,13 +20,23 @@ end
 
 require("lsp-colors").setup({})
 
-local codes = {
-  no_matching_function = {
-    "redundant-parameter",
-    "ovl_no_viable_function_in_call",
-  },
-}
+local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
+
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
 local border = {
+  -- { "╔", "FloatBorder" },
+  -- { "═", "FloatBorder" },
+  -- { "╗", "FloatBorder" },
+  -- { "║", "FloatBorder" },
+  -- { "╝", "FloatBorder" },
+  -- { "═", "FloatBorder" },
+  -- { "╚", "FloatBorder" },
+  -- { "║", "FloatBorder" },
+
   { "🭽", "FloatBorder" },
   { "▔", "FloatBorder" },
   { "🭾", "FloatBorder" },
@@ -33,14 +45,94 @@ local border = {
   { "▁", "FloatBorder" },
   { "🭼", "FloatBorder" },
   { "▏", "FloatBorder" },
-  -- { "╭", "FloatBorder" },
-  -- { "─", "FloatBorder" },
-  -- { "╮", "FloatBorder" },
-  -- { "│", "FloatBorder" },
-  -- { "╯", "FloatBorder" },
-  -- { "─", "FloatBorder" },
-  -- { "╰", "FloatBorder" },
-  -- { "│", "FloatBorder" },
+
+  --   { "┏", "FloatBorder" },
+  --   { "━", "FloatBorder" },
+  --   { "┓", "FloatBorder" },
+  --   { "┃", "FloatBorder" },
+  --   { "┛", "FloatBorder" },
+  --   { "━", "FloatBorder" },
+  --   { "┗", "FloatBorder" },
+  --   { "┃", "FloatBorder" },
+  --
+  --   {  "▛","FloatBorder"},
+  --   {  "▀","FloatBorder"},
+  --   {  "▜","FloatBorder"},
+  --   {  "▐","FloatBorder"},
+  --   {  "▟","FloatBorder"},
+  --   {  "▄","FloatBorder"},
+  --   {  "▙","FloatBorder"},
+  --   {  "▌","FloatBorder"},
+
+  --   { "╭", "FloatBorder" },
+  --   { "─", "FloatBorder" },
+  --   { "╮", "FloatBorder" },
+  --   { "│", "FloatBorder" },
+  --   { "╯", "FloatBorder" },
+  --   { "─", "FloatBorder" },
+  --   { "╰", "FloatBorder" },
+  --   { "│", "FloatBorder" },
+}
+
+local codes = {
+  no_matching_function = {
+    message = " Can't find a matching function",
+    "redundant-parameter",
+    "ovl_no_viable_function_in_call",
+  },
+  empty_block = {
+    message = " That shouldn't be empty here",
+    "empty-block",
+  },
+  missing_symbol = {
+    message = " Here should be a symbol",
+    "miss-symbol",
+  },
+  expected_semi_colon = {
+    message = " Remember the `;` or `,`",
+    "expected_semi_declaration",
+    "miss-sep-in-table",
+    "invalid_token_after_toplevel_declarator",
+  },
+  redefinition = {
+    message = " That variable was defined before",
+    "redefinition",
+    "redefined-local",
+  },
+  no_matching_variable = {
+    message = " Can't find that variable",
+    "undefined-global",
+    "reportUndefinedVariable",
+  },
+  trailing_whitespace = {
+    message = " Remove trailing whitespace",
+    "trailing-whitespace",
+    "trailing-space",
+  },
+  unused_variable = {
+    message = " Don't define variables you don't use",
+    "unused-local",
+  },
+  unused_function = {
+    message = " Don't define functions you don't use",
+    "unused-function",
+  },
+  useless_symbols = {
+    message = " Remove that useless symbols",
+    "unknown-symbol",
+  },
+  wrong_type = {
+    message = " Try to use the correct types",
+    "init_conversion_failed",
+  },
+  undeclared_variable = {
+    message = " Have you delcared that variable somewhere?",
+    "undeclared_var_use",
+  },
+  lowercase_global = {
+    message = " Should that be a global? (if so make it uppercase)",
+    "lowercase-global",
+  },
 }
 
 vim.diagnostic.config({
@@ -50,23 +142,89 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
   float = {
-    focusable = true,
-    style = "minimal",
-    source = "always",
-    header = " diagnostic",
+    focusable = false,
     scope = "cursor",
-    prefix = function(prefix, i, total)
-      return i .. "/" .. total .. " "
-    end,
-    format = function(d)
-      local t = vim.deepcopy(d)
-      if d.code then
-        t.message = string.format("%s [%s]", t.message, t.code):gsub("1. ", "")
+    -- source = true,
+
+    format = function(diagnostic)
+      local diag = vim.deepcopy(diagnostic)
+      print("diagnostic:")
+      dump(diagnostic)
+
+      if not util.isempty(diagnostic.user_data) then
+        local code = diagnostic.user_data.lsp.code
+
+        for _, table in pairs(codes) do
+          if vim.tbl_contains(table, code) then
+            return table.message
+          end
+        end
       end
-      return t.message
+
+      if diagnostic.code then
+        diag.message = string.format("%s [%s]", diag.message, diag.code):gsub("1. ", "")
+      end
+
+      return diag.message
+    end,
+
+    header = " Diagnostic",
+    pos = 1,
+    prefix = function(diagnostic, i, total)
+      local icon, highlight
+      if diagnostic.severity == 1 then
+        icon = ""
+        highlight = "DiagnosticError"
+      elseif diagnostic.severity == 2 then
+        icon = ""
+        highlight = "DiagnosticWarn"
+      elseif diagnostic.severity == 3 then
+        icon = ""
+        highlight = "DiagnosticInfo"
+      elseif diagnostic.severity == 4 then
+        icon = ""
+        highlight = "DiagnosticHint"
+      end
+      return i .. "/" .. total .. " " .. icon .. "  ", highlight
     end,
   },
 })
+
+-- -- -- wrap open_float to inspect diagnostics and use the severity color for border
+-- -- -- https://neovim.discourse.group/t/lsp-diagnostics-how-and-where-to-retrieve-severity-level-to-customise-border-color/1679
+vim.diagnostic.open_float = (function(orig)
+  return function(bufnr, opts)
+    local line_number = vim.api.nvim_win_get_cursor(0)[1] - 1
+    local opts = opts or {}
+
+    local diagnostics = vim.diagnostic.get(opts.bufnr or 0, { lnum = line_number })
+    local max_severity = vim.diagnostic.severity.HINT
+    for _, d in ipairs(diagnostics) do
+      if d.severity < max_severity then
+        max_severity = d.severity
+      end
+    end
+    local border_color = ({
+      [vim.diagnostic.severity.HINT] = "DiagnosticHint",
+      [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+      [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+      [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+    })[max_severity]
+    opts.border = border
+    orig(bufnr, opts)
+  end
+end)(vim.diagnostic.open_float)
+
+vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
+vim.cmd([[au CursorHold  * lua vim.diagnostic.open_float()]])
+
+-- Show line diagnostics in floating popup on hover, except insert mode (CursorHoldI)
+-- vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float()]])
+
+-- show diagnostics for current line
+-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
+-- show diagnostics for current position
+-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
@@ -112,62 +270,6 @@ capabilities.textDocument.codeAction = {
   },
 }
 
-local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
-
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
-
--- wrap open_float to inspect diagnostics and use the severity color for border
--- https://neovim.discourse.group/t/lsp-diagnostics-how-and-where-to-retrieve-severity-level-to-customise-border-color/1679
-vim.diagnostic.open_float = (function(orig)
-  return function(bufnr, opts)
-    local line_number = vim.api.nvim_win_get_cursor(0)[1] - 1
-    local opts = opts or {}
-
-    local diagnostics = vim.diagnostic.get(opts.bufnr or 0, { lnum = line_number })
-    local max_severity = vim.diagnostic.severity.HINT
-    for _, d in ipairs(diagnostics) do
-      if d.severity < max_severity then
-        max_severity = d.severity
-      end
-    end
-    local border_color = ({
-      [vim.diagnostic.severity.HINT] = "DiagnosticHint",
-      [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
-      [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
-      [vim.diagnostic.severity.ERROR] = "DiagnosticError",
-    })[max_severity]
-    opts.border = border
-    orig(bufnr, opts)
-  end
-end)(vim.diagnostic.open_float)
-
--- Show line diagnostics in floating popup on hover, except insert mode (CursorHoldI)
-vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float()]])
-
--- show diagnostics for current line
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
--- show diagnostics for current position
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
-
--- vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
--- vim.cmd(
---   [[au CursorHold   * lua vim.diagnostic.open_float(0, { focusable = true,scope = "cursor",source = "if_many",
-
--- format = function(diagnostic)
---   return require'modules.completion.lsp_support'.parse_diagnostic(diagnostic)
--- end,
--- header = {"Cursor Diagnostics:","DiagnosticHeader"},
---
--- prefix = function(diagnostic,i,total)
---   local icon, highlight
---   if diagnostic.severity == 1 then icon = ""; highlight ="DiagnosticError" elseif diagnostic.severity == 2 then icon = ""; highlight ="DiagnosticWarn" elseif diagnostic.severity == 3 then icon = ""; highlight ="DiagnosticInfo" elseif diagnostic.severity == 4 then icon = ""; highlight ="DiagnosticHint" end
---
--- return i.."/"..total.." "..icon.."  ",highlight end})]]
--- -- )
---
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())
   vim.cmd([[edit]])
@@ -182,7 +284,10 @@ vim.cmd("command! -nargs=0 LspLog call v:lua.open_lsp_log()")
 vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 
 local enhance_attach = function(client, bufnr)
-  api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  -- api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  -- I dont want any formating on python files.
+  client.resolved_capabilities.document_formatting = false
+  client.resolved_capabilities.document_range_formatting = false
 end
 
 lspconfig.gopls.setup({
@@ -210,14 +315,6 @@ local custom_on_attach_num = function(client, bufnr)
     silent = true,
   }
 end
-
--- lspconfig.ccls.setup {
---   cmd = {"ccls" },
---   on_attach = enhance_attach,
---   capabilities = capabilities,
---   filetypes = { "c", "cpp", "objc", "objcpp" },
-
--- }
 
 local clangd_flags = {
   "--background-index",
@@ -317,14 +414,14 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 -- lspconfig.diagnosticls.setup({
--- filetypes = { "python" },
--- init_options = {
+--   filetypes = { "python" },
+--   init_options = {
 --     filetypes = {
 --         python = { "flake8" },
 --     },
 --     linters = {
 --         flake8 = {
---             debounce = 100,
+--             debounce = 10,
 --             sourceName = "flake8",
 --             command = "flake8",
 --             args = {
