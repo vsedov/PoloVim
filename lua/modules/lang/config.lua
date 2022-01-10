@@ -365,50 +365,56 @@ function config.luadev()
 end
 
 function config.lua_dev()
-  local sumneko_lua_server = {
-    capabilities = capabilities,
-    on_attach = enhance_attach,
+  -- local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
+  -- local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
+  local runtime_path = vim.split(package.path, ";")
+  table.insert(runtime_path, "lua/?.lua")
+  table.insert(runtime_path, "lua/?/init.lua")
 
-    cmd = { "lua-language-server", "-E", "/usr/share/lua-language-server/main.lua" },
+  local sumneko_lua_server = {
+    -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+    cmd = { "lua-language-server" },
+    on_attach = on_attach,
+    capabilities = capabilities,
     settings = {
       Lua = {
         runtime = {
-          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
-          -- Setup your lua path
-          path = vim.split(package.path, ";"),
-        },
-        diagnostics = {
-          -- Get the language server to recognize the `vim` global
-          globals = { "vim", "dump", "hs", "lvim" },
-        },
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = {
-            [vim.fn.expand("~/.config/nvim_config/lua")] = true,
-            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+          runtime = {
+            path = runtime_path,
+          },
+          diagnostics = {
+            globals = { "vim", "dump", "hs", "lvim" },
+          },
+          workspace = {
+            library = {
+              vim.api.nvim_get_runtime_file("", true),
+              [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
+              vim.api.nvim_get_runtime_file("", false),
+              [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
+              [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = false,
+              [vim.fn.expand("$VIMRUNTIME/lua")] = false,
+            },
             maxPreload = 100000,
             preloadFileSize = 1000,
           },
-        },
-        -- Do not send telemetry data containing a randomized but unique identifier
-        telemetry = {
-          enable = false,
         },
       },
     },
   }
 
+  local lspconfig = require("lspconfig")
   local luadev = require("lua-dev").setup({
     library = {
       vimruntime = true,
       types = true,
-      plugins = false,
+      -- makes everything lag
+      plugins = false, -- toggle this to get completion for require of all plugins
+      -- plugins = {nvim-notify, telescope}
     },
     lspconfig = sumneko_lua_server,
   })
-  require("lspconfig").sumneko_lua.setup(luadev)
+
+  lspconfig.sumneko_lua.setup(luadev)
 end
 
 function config.go()
