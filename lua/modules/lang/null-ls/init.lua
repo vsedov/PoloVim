@@ -2,8 +2,13 @@ return {
   config = function()
     local null_ls = require("null-ls")
 
+    local user_data = {
+      lsp = {},
+    }
+
     local sources = {
       -- null_ls.builtins.hover,
+
       null_ls.builtins.formatting.rustfmt,
       null_ls.builtins.diagnostics.yamllint,
       null_ls.builtins.code_actions.gitsigns,
@@ -16,15 +21,17 @@ return {
       return vim.fn.exepath(bin) ~= ""
     end
 
-    table.insert(
-      sources,
-      null_ls.builtins.formatting.golines.with({
-        extra_args = {
-          "--max-len=120",
-          "--base-formatter=gofumpt",
-        },
-      })
-    )
+    if exist("goline") then
+      table.insert(
+        sources,
+        null_ls.builtins.formatting.golines.with({
+          extra_args = {
+            "--max-len=120",
+            "--base-formatter=gofumpt",
+          },
+        })
+      )
+    end
 
     -- shell script
     if exist("shellcheck") then
@@ -66,13 +73,21 @@ return {
         })
       )
     end
+    if exist("luacheck") then
+      table.insert(
+        sources,
+        null_ls.builtins.diagnostics.luacheck.with({
+          extra_args = { "--append-config", vim.fn.expand("~/.config/flake8") },
+        })
+      )
+    end
 
     -- python
     if exist("flake8") then
       table.insert(
         sources,
         null_ls.builtins.diagnostics.flake8.with({
-          extra_args = { "--append-config", vim.fn.expand("~/.config/flake8") },
+          extra_args = { "--config", vim.fn.expand("~/.config/flake8") },
         })
       )
     end
@@ -91,25 +106,11 @@ return {
       null_ls.builtins.formatting.trim_whitespace.with({ disabled_filetypes = { "norg", "python" } })
     )
 
-    -- table.insert(
-    --   sources,
-    --   require("null-ls.helpers").make_builtin({
-    --     method = require("null-ls.methods").internal.DIAGNOSTICS,
-    --     filetypes = { "java" },
-    --     generator_opts = {
-    --       command = "java",
-    --       args = { "$FILENAME" },
-    --       to_stdin = false,
-    --       format = "raw",
-    --       from_stderr = true,
-    --       on_output = require("null-ls.helpers").diagnostics.from_errorformat([[%f:%l: %trror: %m]], "java"),
-    --     },
-    --     factory = require("null-ls.helpers").generator_factory,
-    --   })
-    -- )
-    --
     local lsputil = require("lspconfig.util")
-
+    -- local diagnostics = null_ls.builtins.diagnostics
+    -- table.insert(diagnostics, user_data)
+    -- table.insert(sources,diagnostics)
+    -- ...ite/pack/packer/opt/null-ls.nvim/lua/null-ls/sources.lua
     local cfg = {
 
       sources = sources,
@@ -134,7 +135,7 @@ return {
       on_attach = function(client)
         -- I dont want any formating on python files.
         if client.resolved_capabilities.document_formatting then
-          vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
+          vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
         end
       end,
     }
