@@ -2,7 +2,7 @@ local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
-local map_args = bind.map_args
+-- local map_args = bind.map_args
 
 local loader = require("packer").loader
 K = {}
@@ -48,7 +48,7 @@ local keys = {
 
   ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
   -- ["n|<Leader>fl"] = map_cu("Clap loclist"):with_noremap():with_silent(),
-  ["n|<Leader>fu"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
+  ["n|<Leader>gd"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
   ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
 
   -- Might use telescope ?
@@ -86,9 +86,8 @@ local keys = {
   ["n|<A-W>"] = map_cr("HopWordAC"):with_silent(),
 
   -- Broken
-  ["n|g/"] = map_cr("HopLine"):with_silent(),
-  ["n|g<"] = map_cr("HopLineStartAC"):with_silent(),
-  ["n|g>"] = map_cr("HopLineStartBC"):with_silent(),
+  ["n|g/"] = map_cmd("<cmd>HopLineStartAC<cr>"):with_silent(),
+  ["n|g,"] = map_cmd("<cmd>HopLineStartBC<cr>"):with_silent(),
 
   -- clap --
 

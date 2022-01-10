@@ -1,12 +1,6 @@
 local wk = require("which-key")
 
-wk.setup({
-  window = {
-    border = "none", -- none, single, double, shadow
-    margin = { 1, 0, 1, 0 },
-    winblend = 20,
-  },
-})
+wk.setup({})
 
 wk.register({
 

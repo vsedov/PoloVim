@@ -19,9 +19,10 @@ editor["windwp/nvim-autopairs"] = {
   opt = true,
 }
 
-editor["rhysd/accelerated-jk"] = {
-  opt = true,
-}
+-- editor["rhysd/accelerated-jk"] = {
+--   opt = true,
+-- }
+
 editor["kana/vim-niceblock"] = {
   opt = true,
 }
@@ -55,14 +56,14 @@ editor["zeertzjq/which-key.nvim"] = {
 
 -- -- HOP BROKEN
 -- editor["indianboy42/hop-extensions"] = { after = "hop", opt = true }
--- editor["phaazon/hop.nvim"] = {
---   as = "hop",
---   cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC","HopeLine" },
---   branch = 'v1',
---   config = function()
---     require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
---   end,
--- }
+editor["phaazon/hop.nvim"] = {
+  as = "hop",
+  cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC","HopeLine" },
+  config = function()
+    require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
+
+  end,
+}
 
 editor["blackCauldron7/surround.nvim"] = {
   config = function()
