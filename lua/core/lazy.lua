@@ -72,6 +72,7 @@ function Lazyload()
   local plugins = "plenary.nvim" -- nvim-lspconfig navigator.lua   guihua.lua navigator.lua  -- gitsigns.nvim
   loader("plenary.nvim")
 
+  -- only works if you are working from one python file .
   if vim.bo.filetype == "lua" then
     loader("lua-dev.nvim")
     loader("luv-vimdocs")
@@ -87,7 +88,7 @@ function Lazyload()
 
   if load_lsp then
     loader("nvim-lspconfig") -- null-ls.nvim
-    loader("lsp_signature.nvim")
+    -- loader("lsp_signature.nvim")
     if use_nulls() then
       loader("null-ls.nvim")
     end

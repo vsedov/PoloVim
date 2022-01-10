@@ -47,10 +47,14 @@ local leader_map = function()
   vim.g.mapleader = " "
   vim.g.maplocalleader = "."
 
-  vim.api.nvim_set_keymap("n", "<SPACE>", "<Nop>", { noremap = true })
+  -- vim.api.nvim_set_keymap("n", "<SPACE>", "<Nop>", { noremap = true })
 
-  vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
-  vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
+  -- vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
+  -- vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
+
+  vim.keymap.set("n", "<SPACE>", "<Nop>", { noremap = true })
+  vim.keymap.set("n", " ", "", { noremap = true })
+  vim.keymap.set("x", " ", "", { noremap = true })
 end
 local load_core = function()
   require("core.helper").init()
