@@ -11,18 +11,11 @@ completion["neovim/nvim-lspconfig"] = {
     { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
     { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
-
     -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
   },
 
   opt = true,
 }
-
--- Nice to have it back, but might stick with nvim-lsp version to see how it goes.
--- completion["tami5/lspsaga.nvim"]={
---   -- opt = true,
---   config = conf.saga
--- }
 
 if load_coq() then
   completion["ms-jpq/coq_nvim"] = {
