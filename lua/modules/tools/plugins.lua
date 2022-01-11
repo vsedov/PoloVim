@@ -250,7 +250,6 @@ tools["nvim-telescope/telescope-frecency.nvim"] = {
   requires = { "tami5/sqlite.lua", module = "sqlite", opt = true },
   opt = true,
   config = function()
-    require("packer").loader("sqlite.lua")
     local telescope = require("telescope")
     telescope.load_extension("frecency")
     telescope.setup({
