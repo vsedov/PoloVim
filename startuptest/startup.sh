@@ -12,6 +12,8 @@ echo "Warmup #1"
 nvim -c q
 echo "Warmup #2"
 nvim -c q
+echo "Warmup #3"
+nvim -c q
 
 pf "No config"
 nvim -nu NORC --startuptime tmp
