@@ -126,7 +126,6 @@ function Lazyload()
 
   loader("nvim-notify popup.nvim")
 
-
   -- if bytes < 2 * 1024 * 1024 and syn_on then
   --   vim.cmd([[setlocal syntax=on]])
   -- end

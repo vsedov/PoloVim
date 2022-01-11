@@ -354,16 +354,13 @@ end
 
 M.frequency = function()
   reloader()
-  require("telescope").extensions.frecency.frecency({
-    sorter = require("telescope").extensions.fzf.native_fzf_sorter(),
+  telescope.extensions.frecency.frecency({
+    sorter = telescope.extensions.fzf.native_fzf_sorter(),
   })
 end
 
 --- Plugins to be loaded, lazily
 M.neoclip = function()
-  if not packer_plugins["sqlite.lua"].loaded then
-    loader("sqlite.lua")
-  end
   opts = {
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",

@@ -116,7 +116,6 @@ local plug_map = {
   -- Figure out the error with clap, giving very annoying error j
   ["n|<F1>"] = map_cr("Clap"):with_noremap():with_silent(),
 
-
   ["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
   ["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 

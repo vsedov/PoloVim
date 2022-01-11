@@ -92,7 +92,7 @@ tools["plasticboy/vim-markdown"] = {
 }
 
 tools["ekickx/clipboard-image.nvim"] = {
-  ft = {"norg", "markdown"},
+  ft = { "norg", "markdown" },
   opt = true,
   config = conf.clipboardimage,
 }
@@ -217,14 +217,12 @@ tools["tpope/vim-fugitive"] = {
   opt = true,
 }
 
-
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
   opt = true,
   event = { "CmdlineEnter", "QuickfixCmdPre" },
   config = conf.bqf,
 }
-
 
 tools["jvgrootveld/telescope-zoxide"] = {
   opt = true,
@@ -234,11 +232,12 @@ tools["jvgrootveld/telescope-zoxide"] = {
     require("telescope").load_extension("zoxide")
   end,
 }
--- this needs to load lazy
+
+-- manual call
 tools["AckslD/nvim-neoclip.lua"] = {
   opt = true,
   requires = { "tami5/sqlite.lua", module = "sqlite" },
-  config = conf.neoclip
+  config = conf.neoclip,
 }
 
 -- This can be lazy loaded probably, figure out how ?

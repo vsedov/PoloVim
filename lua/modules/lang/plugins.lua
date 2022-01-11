@@ -30,7 +30,7 @@ lang["RRethy/nvim-treesitter-textsubjects"] = {
 lang["danymat/neogen"] = {
   module = { "neogen" },
   opt = true,
-  requires = {"nvim-treesitter/nvim-treesitter","rcarriga/nvim-notify"},
+  requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
   config = function()
     require("neogen").setup({
       enabled = true,
