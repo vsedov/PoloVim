@@ -47,6 +47,18 @@ Opening C File : 034.394
 Opening norg File : 110.658
 ```
 
+### What does <= 1.8 Mean ?
+
+No config presents how fast your pc is, in my case i have a rather fast pc : such that my start up time with no config
+is 015 : once a config is added it is 0.29
+
+```
+029.731/015.695
+1.8942975469894872
+```
+
+This is how fast the config should start up, for your pc 1.8 ish times
+
 If you want to add plugins, please add them in the users folder
 
 lua/modules/users/plugins

@@ -11,7 +11,7 @@ function global:load_variables()
   if self.is_windows then
     path_sep = "\\"
     home = os.getenv("HOMEDRIVE") or "C:"
-    home = home .. (os.getenv("HOMEPATH"))
+    home = home .. (os.getenv("HOMEPATH") or "\\")
   end
 
   self.cache_dir = home .. path_sep .. ".cache" .. path_sep .. "nvim" .. path_sep
@@ -20,6 +20,12 @@ function global:load_variables()
   self.path_sep = path_sep
   self.home = home
   self.data_dir = string.format("%s%ssite%s", vim.fn.stdpath("data"), path_sep, path_sep)
+  self.log_dir = string.format("%s%stmp", home, path_sep)
+
+  if vim.fn.isdirectory(global.log_dir) == 0 then
+    vim.fn.mkdir(self.log_dir, "p", 0700)
+  end
+  self.log_path = string.format("%s%s%s", self.log_dir, path_sep, "neovim_debug.log")
 end
 
 global:load_variables()

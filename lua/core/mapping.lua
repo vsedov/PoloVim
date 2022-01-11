@@ -27,9 +27,6 @@ local def_map = {
   ["n|<A-]>"] = map_cr("vertical resize +5"):with_silent(),
   ["n|<C-q>"] = map_cmd(":wq<CR>"),
 
-  ["n|<Leader>ss"] = map_cu("SessionSave"):with_noremap(),
-  ["n|<Leader>sl"] = map_cu("SessionLoad"):with_noremap(),
-
   -- Insert
   ["i|<C-w>"] = map_cmd("<C-[>diwa"):with_noremap(),
   ["i|<C-h>"] = map_cmd("<BS>"):with_noremap(),

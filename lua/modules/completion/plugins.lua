@@ -99,7 +99,6 @@ completion["Iron-E/nvim-cmp"] = {
       config = conf.tabnine,
       opt = true,
     },
-    { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-calc", after = "nvim-cmp", opt = true },
@@ -197,6 +196,7 @@ completion["ray-x/lsp_signature.nvim"] = {
 -- This too should also be lazy loaded
 completion["weilbith/nvim-code-action-menu"] = {
   cmd = "CodeActionMenu",
+  ft = {"python", "lua", "c", "java", "prolog", "lisp", "cpp"}
 }
 
 completion["dense-analysis/ale"] = {

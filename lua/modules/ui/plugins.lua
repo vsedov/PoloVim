@@ -77,7 +77,7 @@ ui["petertriho/nvim-scrollbar"] = {
 -- test fold
 
 ui["anuvyklack/pretty-fold.nvim"] = {
-  event = "BufRead",
+  ft = {"python", "c", "lua", "cpp", "java"},
   config = conf.pretty_fold,
 }
 
@@ -113,9 +113,13 @@ ui["rebelot/kanagawa.nvim"] = {
   end,
 }
 
+
 ui["kazhala/close-buffers.nvim"] = {
   cmd = { "BDelete", "BWipeout" },
   config = conf.buffers_close,
 }
+
+
+
 
 return ui

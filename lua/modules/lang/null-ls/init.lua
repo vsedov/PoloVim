@@ -106,7 +106,6 @@ return {
       null_ls.builtins.formatting.trim_whitespace.with({ disabled_filetypes = { "norg", "python" } })
     )
 
-    local lsputil = require("lspconfig.util")
     -- local diagnostics = null_ls.builtins.diagnostics
     -- table.insert(diagnostics, user_data)
     -- table.insert(sources,diagnostics)

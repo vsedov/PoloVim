@@ -153,9 +153,9 @@ function config.lightspeed()
     -- "smart" mode, and forces auto-jump to be on or off.
     -- safe_labels = { . . . },
     -- labels = { . . . },
-    cycle_group_fwd_key = "]",
-    cycle_group_bwd_key = "[",
-    -- f/t
+    cycle_group_fwd_key = '<space>',
+    cycle_group_bwd_key = '<tab>',
+      -- f/t
     limit_ft_matches = 10,
     repeat_ft_with_target_char = true,
   })
@@ -377,25 +377,33 @@ end
 function config.searchx()
   --   nnoremap <C-k> <Cmd>call searchx#prev()<CR>
   -- nnoremap <C-j> <Cmd>call searchx#next()<CR>
+
+  vim.keymap.set("n", "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
+  vim.keymap.set("n", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+  vim.keymap.set("x", "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
+  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+
+  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+  vim.keymap.set("c", ";", "<Cmd>call searchx#select()<CR>")
+
+  -- might interfear with normal mapping for n maybe ?  
+  vim.keymap.set("n", "N", "<Cmd>call searchx#prev_dir()<CR>")
+  vim.keymap.set("n", "n", "<Cmd>call searchx#next_dir()<CR>")
+  vim.keymap.set("x", "N", "<Cmd>call searchx#prev_dir()<CR>")
+  vim.keymap.set("x", "n", "<Cmd>call searchx#next_dir()<CR>")
+
+
+  vim.keymap.set("x", "<C-k>", "<Cmd>call searchx#prev()<CR>")
+  vim.keymap.set("x", "<C-j>", "<Cmd>call searchx#prev()<CR>")
+  vim.keymap.set("c", "<C-k>", "<Cmd>call searchx#prev()<CR>")
+  vim.keymap.set("c", "<C-j>", "<Cmd>call searchx#next()<CR>")
+
+  vim.keymap.set("n", "<C-l>", "<Cmd>call searchx#clear()<CR>")
+
   vim.cmd([[
     " Overwrite / and ?.
-    nnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
-    nnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
-    xnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
-    xnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
-    cnoremap ; <Cmd>call searchx#select()<CR>
-    " Move to next/prev match.
-    nnoremap N <Cmd>call searchx#prev_dir()<CR>
-    nnoremap n <Cmd>call searchx#next_dir()<CR>
-    xnoremap N <Cmd>call searchx#prev_dir()<CR>
-    xnoremap n <Cmd>call searchx#next_dir()<CR>
-
-    xnoremap <C-k> <Cmd>call searchx#prev()<CR>
-    xnoremap <C-j> <Cmd>call searchx#next()<CR>
-    cnoremap <C-k> <Cmd>call searchx#prev()<CR>
-    cnoremap <C-j> <Cmd>call searchx#next()<CR>
-    " Clear highlights
-    nnoremap <C-l> <Cmd>call searchx#clear()<CR>
     let g:searchx = {}
     " Auto jump if the recent input matches to any marker.
     let g:searchx.auto_accept = v:true
@@ -415,4 +423,25 @@ function config.searchx()
   ]])
 end
 
+
+
 return config
+
+    -- nnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
+    -- nnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
+    -- xnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
+    -- xnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
+    -- cnoremap ; <Cmd>call searchx#select()<CR>
+    -- " Move to next/prev match.
+    -- nnoremap N <Cmd>call searchx#prev_dir()<CR>
+    -- nnoremap n <Cmd>call searchx#next_dir()<CR>
+    -- xnoremap N <Cmd>call searchx#prev_dir()<CR>
+    -- xnoremap n <Cmd>call searchx#next_dir()<CR>
+
+    -- xnoremap <C-k> <Cmd>call searchx#prev()<CR>
+    -- xnoremap <C-j> <Cmd>call searchx#next()<CR>
+    -- cnoremap <C-k> <Cmd>call searchx#prev()<CR>
+    -- cnoremap <C-j> <Cmd>call searchx#next()<CR>
+
+    -- " Clear highlights
+    --    nnoremap <C-l> <Cmd>call searchx#clear()<CR>

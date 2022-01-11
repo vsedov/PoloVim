@@ -96,12 +96,12 @@ require("neorg").setup({
         workspace = "gtd",
       },
     },
-    -- ["core.norg.qol.toc"] = {
-    --   config = {
-    --     close_split_on_jump = false,
-    --     toc_split_placement = "left",
-    --   },
-    -- },
+    ["core.norg.qol.toc"] = {
+      config = {
+        close_split_on_jump = false,
+        toc_split_placement = "left",
+      },
+    },
     ["core.norg.journal"] = {
       config = {
         journal_folder = "my_journal",

@@ -9,11 +9,9 @@ user["~/GitHub/ytmmusic.lua"] = {
   end,
 }
 
--- user["Willy-JL/nvim-cursorline"]={
--- opt = true,
--- -- require = {"xiyaowong/nvim-cursorword"},
--- event = "BufWinEnter",
-
--- }
 -- your plugin config
 return user
+
+
+-- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, rhs, options) 93
+-- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, value, {}) 95

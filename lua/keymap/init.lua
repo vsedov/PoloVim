@@ -116,7 +116,6 @@ local plug_map = {
   -- Figure out the error with clap, giving very annoying error j
   ["n|<F1>"] = map_cr("Clap"):with_noremap():with_silent(),
 
-  ["n|<Leader>cl"] = map_cu("Telescope neoclip a extra=star,plus,unnamed,b"):with_noremap():with_silent(),
 
   ["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
   ["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
@@ -154,6 +153,7 @@ local plug_map = {
   ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
 
   -- Extra telescope commands from utils.telescope
+  ["n|<Leader>cl"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
 
   -------------------------- Find
 
