@@ -196,6 +196,7 @@ completion["ray-x/lsp_signature.nvim"] = {
 -- This too should also be lazy loaded
 completion["weilbith/nvim-code-action-menu"] = {
   cmd = "CodeActionMenu",
+  ft = {"python", "lua", "c", "java", "prolog", "lisp", "cpp"}
 }
 
 completion["dense-analysis/ale"] = {

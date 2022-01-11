@@ -123,15 +123,6 @@ editor["mg979/vim-visual-multi"] = {
   setup = conf.vmulti,
 }
 
-editor["sudormrfbin/cheatsheet.nvim"] = {
-  cmd = { "Cheatsheet" },
-  requires = {
-    { "nvim-telescope/telescope.nvim" },
-    { "nvim-lua/popup.nvim" },
-    { "nvim-lua/plenary.nvim" },
-  },
-}
-
 -- editor["itchyny/vim-cursorword"] = {
 --   event = { "BufReadPre", "BufNewFile" },
 --   opt = true,

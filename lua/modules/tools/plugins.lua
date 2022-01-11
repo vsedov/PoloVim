@@ -92,9 +92,9 @@ tools["plasticboy/vim-markdown"] = {
 }
 
 tools["ekickx/clipboard-image.nvim"] = {
-  ft = "markdown",
+  ft = {"norg", "markdown"},
   opt = true,
-  setup = conf.clipboardimage,
+  config = conf.clipboardimage,
 }
 
 tools["iamcco/markdown-preview.nvim"] = {
