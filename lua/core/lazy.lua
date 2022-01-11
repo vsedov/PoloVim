@@ -16,8 +16,6 @@ function Lazyload()
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
 
-  loader("lightspeed vim-repeat")
-
   loader(loading_theme)
 
   if vim.wo.diff then

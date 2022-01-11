@@ -155,7 +155,7 @@ function config.lightspeed()
     -- labels = { . . . },
     cycle_group_fwd_key = '<space>',
     cycle_group_bwd_key = '<tab>',
-    -- f/t
+      -- f/t
     limit_ft_matches = 10,
     repeat_ft_with_target_char = true,
   })
@@ -388,7 +388,7 @@ function config.searchx()
   vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
   vim.keymap.set("c", ";", "<Cmd>call searchx#select()<CR>")
 
-
+  -- might interfear with normal mapping for n maybe ?  
   vim.keymap.set("n", "N", "<Cmd>call searchx#prev_dir()<CR>")
   vim.keymap.set("n", "n", "<Cmd>call searchx#next_dir()<CR>")
   vim.keymap.set("x", "N", "<Cmd>call searchx#prev_dir()<CR>")

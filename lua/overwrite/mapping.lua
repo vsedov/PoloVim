@@ -80,14 +80,14 @@ local keys = {
   ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
   ["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
-  -- These are nice
-  ["n|<A-a>"] = map_cr("HopWord"):with_silent(),
-  ["n|<A-w>"] = map_cr("HopWordBC"):with_silent(),
-  ["n|<A-W>"] = map_cr("HopWordAC"):with_silent(),
+  -- These are nice but pointless if you have lightspeed
+  -- ["n|<A-a>"] = map_cr("HopWord"):with_silent(),
+  -- ["n|<A-w>"] = map_cr("HopWordBC"):with_silent(),
+  -- ["n|<A-W>"] = map_cr("HopWordAC"):with_silent(),
 
-  -- Broken
-  ["n|g/"] = map_cmd("<cmd>HopLineStartAC<cr>"):with_silent(),
-  ["n|g,"] = map_cmd("<cmd>HopLineStartBC<cr>"):with_silent(),
+  -- -- Broken
+  -- ["n|g/"] = map_cmd("<cmd>HopLineStartAC<cr>"):with_silent(),
+  -- ["n|g,"] = map_cmd("<cmd>HopLineStartBC<cr>"):with_silent(),
 
   -- clap --
 

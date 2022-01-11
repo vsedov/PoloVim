@@ -26,7 +26,8 @@ editor["kana/vim-niceblock"] = {
 -- I want this all the time - so im not lazy loading this .,
 editor["ggandor/lightspeed.nvim"] = {
   as = "lightspeed",
-  requires = { "tpope/vim-repeat", opt = true },
+  event = "BufReadPost",
+  opt = true, 
   config = conf.lightspeed,
 }
 
@@ -47,13 +48,13 @@ editor["zeertzjq/which-key.nvim"] = {
 
 -- -- HOP BROKEN
 -- editor["indianboy42/hop-extensions"] = { after = "hop", opt = true }
-editor["phaazon/hop.nvim"] = {
-  as = "hop",
-  cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC", "HopeLine" },
-  config = function()
-    require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
-  end,
-}
+-- editor["phaazon/hop.nvim"] = {
+--   as = "hop",
+--   cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC", "HopeLine" },
+--   config = function()
+--     require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
+--   end,
+-- }
 
 editor["blackCauldron7/surround.nvim"] = {
   config = function()
@@ -122,12 +123,6 @@ editor["mg979/vim-visual-multi"] = {
   opt = true,
   setup = conf.vmulti,
 }
-
--- editor["itchyny/vim-cursorword"] = {
---   event = { "BufReadPre", "BufNewFile" },
---   opt = true,
---   config = conf.vim_cursorwod,
--- }
 
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {
