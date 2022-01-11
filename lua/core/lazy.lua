@@ -75,6 +75,7 @@ function Lazyload()
     loader("lua-dev.nvim")
     loader("luv-vimdocs")
     loader("nvim-luaref")
+    loader("structlog.nvim") -- logging
   end
 
   vim.g.vimsyn_embed = "lPr"

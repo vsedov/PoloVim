@@ -8,7 +8,6 @@ user["~/GitHub/ytmmusic.lua"] = {
     require("ytmmusic")
   end,
 }
-
 -- your plugin config
 return user
 

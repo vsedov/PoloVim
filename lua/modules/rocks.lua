@@ -1,3 +1,1 @@
-return {
-  -- 'fzy',
-}
+return {}
