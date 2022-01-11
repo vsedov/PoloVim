@@ -153,8 +153,8 @@ function config.lightspeed()
     -- "smart" mode, and forces auto-jump to be on or off.
     -- safe_labels = { . . . },
     -- labels = { . . . },
-    cycle_group_fwd_key = "]",
-    cycle_group_bwd_key = "[",
+    cycle_group_fwd_key = '<space>',
+    cycle_group_bwd_key = '<tab>',
     -- f/t
     limit_ft_matches = 10,
     repeat_ft_with_target_char = true,
