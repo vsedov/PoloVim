@@ -217,22 +217,6 @@ tools["tpope/vim-fugitive"] = {
   opt = true,
 }
 
--- I dont use this
--- tools["rmagatti/auto-session"] = { config = conf.session }
-
--- tools["rmagatti/session-lens"] = {
---   cmd = "SearchSession",
---   after = { "telescope.nvim" },
---   config = function()
---     require("packer").loader("telescope.nvim")
---     require("telescope").load_extension("session-lens")
---     require("session-lens").setup({
---       path_display = { "shorten" },
---       theme_conf = { border = true },
---       previewer = true,
---     })
---   end,
--- }
 
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
@@ -241,12 +225,6 @@ tools["kevinhwang91/nvim-bqf"] = {
   config = conf.bqf,
 }
 
--- lua require'telescope'.extensions.project.project{ display_type = 'full' }
--- tools["ahmedkhalf/project.nvim"] = {
---   opt = true,
---   after = { "telescope.nvim" },
---   config = conf.project,
--- }
 
 tools["jvgrootveld/telescope-zoxide"] = {
   opt = true,
@@ -259,8 +237,8 @@ tools["jvgrootveld/telescope-zoxide"] = {
 -- this needs to load lazy
 tools["AckslD/nvim-neoclip.lua"] = {
   opt = true,
-  after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite" },
+  config = conf.neoclip
 }
 
 -- This can be lazy loaded probably, figure out how ?

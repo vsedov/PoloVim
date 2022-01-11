@@ -372,37 +372,7 @@ M.neoclip = function()
       prompt_position = "top",
     },
   }
-
-  require("neoclip").setup({
-    history = 1000,
-    enable_persistant_history = true,
-    db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-    filter = nil,
-    preview = true,
-    default_register = "+",
-    content_spec_column = true,
-    on_paste = {
-      set_reg = true,
-    },
-    keys = {
-      telescope = {
-        i = {
-          select = "<cr>",
-          paste = "<c-p>",
-          -- C-P and C-;
-          paste_behind = "<c-;>",
-          custom = {},
-        },
-        n = {
-          select = "<cr>",
-          paste = "p",
-          paste_behind = "P",
-        },
-      },
-    },
-  })
-
-  require("telescope").extensions.neoclip.neoclip(opts)
+  telescope.extensions.neoclip.default(opts)
 end
 
 -- Looks for git files, but falls back to normal files
@@ -600,7 +570,7 @@ M.file_browser = function()
     scroll_strategy = "cycle",
   }
 
-  require("telescope").extensions.file_browser.file_browser(opts)
+  telescope.extensions.file_browser.file_browser(opts)
 end
 
 M.find_notes = function()
