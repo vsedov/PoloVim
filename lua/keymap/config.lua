@@ -53,14 +53,9 @@ _G.s_tab_complete = function()
   return t("<S-Tab>")
 end
 
-_G.enhance_jk_move = function(key)
-  if packer_plugins["accelerated-jk"] and not packer_plugins["accelerated-jk"].loaded then
-    vim.cmd([[packadd accelerated-jk]])
-  end
-
-  local map = key == "j" and "<Plug>(accelerated_jk_gj)" or "<Plug>(accelerated_jk_gk)"
-  return t(map)
-end
+-- _G.enhance_jk_move = function()
+--   return "fo:qP:"
+-- end
 
 _G.word_motion_move = function(key)
   if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then

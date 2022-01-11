@@ -94,26 +94,14 @@ end
 -- fg("EndOfBuffer", black)
 
 -- For floating windows
-bg("NormalFloat", one_bg)
+bg("NormalFloat", "NONE")
 
 -- Pmenu
-bg("Pmenu", one_bg)
+bg("Pmenu", "NONE")
+
 -- bg("PmenuSbar", one_bg)
 -- bg("PmenuSel", blue)
 -- bg("PmenuThumb", nord_blue)
-
--- -- misc
--- fg("LineNr", grey)
--- fg("NvimInternalError", red)
--- fg("VertSplit", one_bg2)
-
-if ui.transparency then
-  vim.cmd("hi clear CursorLine")
-  bg("Normal", "NONE")
-  bg("Folded", "NONE")
-  fg("Folded", "NONE")
-  fg("Comment", grey)
-end
 
 -- [[ Plugin Highlights
 
@@ -195,8 +183,8 @@ if ui.transparency then
   bg("TelescopePreviewNormal", "NONE")
 end
 
-bg("Search", yellow)
-bg("IncSearch", red)
+-- bg("Search","#938AA9")
+-- bg("IncSearch", "#363646")
 
 -- Telescope
 fg("TelescopeBorder", folder_bg)

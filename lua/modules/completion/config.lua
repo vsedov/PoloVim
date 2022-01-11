@@ -56,7 +56,6 @@ end
 
 function config.nvim_cmp()
   local cmp = require("cmp")
-
   -- let g;copiol
 
   local has_words_before = function()
@@ -97,7 +96,7 @@ function config.nvim_cmp()
     { name = "luasnip" },
     { name = "treesitter", keyword_length = 2 },
     { name = "look", keyword_length = 4 },
-    { name = "vim_lsp_signature_help", priority = 10 },
+    { name = "nvim_lsp_signature_help", priority = 10 },
     -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
   }
@@ -110,7 +109,6 @@ function config.nvim_cmp()
   if vim.o.ft == "norg" then
     table.insert(sources, { name = "neorg" })
   end
-
 
   if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
@@ -125,9 +123,16 @@ function config.nvim_cmp()
     table.insert(sources, { name = "calc" })
   end
   cmp.setup({
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
+
+    window = {
+      completion = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
+      documentation = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
     },
 
     snippet = {
@@ -138,8 +143,6 @@ function config.nvim_cmp()
       end,
     },
     completion = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
       autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
       completeopt = "menu,menuone,noselect",
     },
@@ -235,6 +238,8 @@ function config.nvim_cmp()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
+        elseif neogen.jumpable(-1) then
+          vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
         elseif luasnip.jumpable(-1) then
           luasnip.jump(-1)
         else
@@ -263,13 +268,15 @@ function config.nvim_cmp()
   --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
   -- end
   cmp.setup.cmdline(":", {
-    completion = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
-    },
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
+    window = {
+      completion = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
+      documentation = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
     },
     sources = cmp.config.sources({
       { name = "path" },
@@ -288,13 +295,15 @@ function config.nvim_cmp()
     enabled = function()
       return true
     end,
-    completion = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
-    },
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      scrollbar = "║",
+    window = {
+      completion = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
+      documentation = {
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        scrollbar = { "║" },
+      },
     },
   })
 

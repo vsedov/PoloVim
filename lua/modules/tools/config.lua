@@ -287,6 +287,16 @@ function config.bqf()
   })
 end
 
+function config.clipboardimage()
+
+vim.cmd[[packadd clipboard-image.nvim]]
+require'clipboard-image'.setup {
+
+  }
+
+end
+
+
 function config.dapui()
   vim.cmd([[let g:dbs = {
   \ 'eraser': 'postgres://postgres:password@localhost:5432/eraser_local',

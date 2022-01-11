@@ -75,6 +75,8 @@ if ft == "go" then
 end
 
 M.prepare = function()
+  loader("nvim-dap")
+  loader("telescope-dap.nvim")
   loader("nvim-dap-ui")
   loader("nvim-dap-virtual-text")
 

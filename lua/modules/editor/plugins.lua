@@ -19,22 +19,8 @@ editor["windwp/nvim-autopairs"] = {
   opt = true,
 }
 
-editor["rhysd/accelerated-jk"] = {
-  opt = true,
-}
 editor["kana/vim-niceblock"] = {
   opt = true,
-}
-
--- Yep Can be lazyly loaded lovely
-editor["folke/which-key.nvim"] = {
-  opt = true,
-  after = "nvim-treesitter",
-  config = function()
-    require("which-key").setup({})
-
-    --
-  end,
 }
 
 -- I want this all the time - so im not lazy loading this .,
@@ -44,20 +30,26 @@ editor["ggandor/lightspeed.nvim"] = {
   config = conf.lightspeed,
 }
 
--- maybe use later idk
-editor["hrsh7th/vim-seak"] = {
-  event = "CmdlineEnter",
-  requires = { "nvim-lua/popup.nvim" },
-  setup = function()
-    vim.g.seak_enabled = 1
-    vim.cmd([[cnoremap <C-j> <Cmd>call seak#select({ 'nohlsearch': v:true })<CR>]])
+editor["hrsh7th/vim-searchx"] = {
+  event = { "CmdwinEnter", "CmdlineEnter" },
+  setup = conf.searchx,
+}
+
+-- folke BROKEN
+editor["zeertzjq/which-key.nvim"] = {
+  branch = "patch-1",
+  opt = true,
+  after = "nvim-treesitter",
+  config = function()
+    require("modules.editor.which_key")
   end,
 }
 
+-- -- HOP BROKEN
 -- editor["indianboy42/hop-extensions"] = { after = "hop", opt = true }
 editor["phaazon/hop.nvim"] = {
   as = "hop",
-  cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC" },
+  cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC", "HopeLine" },
   config = function()
     require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
   end,
@@ -93,26 +85,11 @@ editor["rrethy/vim-hexokinase"] = {
   cmd = { "HexokinaseTurnOn", "HexokinaseToggle" },
 }
 
--- Mapping   Normal  Visual  Line-Visual   Block-Visual
--- <A-h>   Block Left  Block Left  Line Left   Block Left
--- <A-j>   Line Down   Line Down   Line Down   Block Down
--- <A-k>   Line Up   Line Up   Line Up   Block Up
--- <A-l>   Block Right   Block Right   Line Right  Block Right
+-- Its hard for this because binds are weird
 editor["booperlv/nvim-gomove"] = {
+  event = { "CursorMoved", "CursorMovedI" },
   opt = true,
-  config = function()
-    require("gomove").setup({
-      -- whether or not to map default key bindings, (true/false)
-      map_defaults = true,
-      -- what method to use for reindenting, ("vim-move" / "simple" / ("none"/nil))
-      reindent_mode = "vim-move",
-      -- whether to not to move past line when moving blocks horizontally, (true/false)
-      move_past_line = true,
-      -- whether or not to ignore indent when duplicating lines horizontally, (true/false)
-      ignore_indent_lh_dup = true,
-    })
-  end,
-  -- fn = {'<Plug>MoveBlockDown', '<Plug>MoveBlockUp', '<Plug>MoveLineDown', '<Plug>MoveLineUp'}
+  config = conf.gomove,
 }
 
 -- editor["kevinhwang91/nvim-hlslens"] = {
@@ -146,12 +123,6 @@ editor["mg979/vim-visual-multi"] = {
   setup = conf.vmulti,
 }
 
--- -- Out of data, might not be great  ?
--- editor["LoricAndre/OneTerm.nvim"] = {
---   opt = true,
---   cmd = { "OneTerm" },
--- }
-
 editor["sudormrfbin/cheatsheet.nvim"] = {
   cmd = { "Cheatsheet" },
   requires = {
@@ -161,11 +132,11 @@ editor["sudormrfbin/cheatsheet.nvim"] = {
   },
 }
 
-editor["itchyny/vim-cursorword"] = {
-  event = { "BufReadPre", "BufNewFile" },
-  opt = true,
-  config = conf.vim_cursorwod,
-}
+-- editor["itchyny/vim-cursorword"] = {
+--   event = { "BufReadPre", "BufNewFile" },
+--   opt = true,
+--   config = conf.vim_cursorwod,
+-- }
 
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {

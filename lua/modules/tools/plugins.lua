@@ -29,6 +29,7 @@ tools["editorconfig/editorconfig-vim"] = {
 }
 
 tools["rktjmp/paperplanes.nvim"] = {
+  cmd = { "PP" },
   opt = true,
   config = conf.paperplanes,
 }
@@ -90,6 +91,11 @@ tools["plasticboy/vim-markdown"] = {
   opt = true,
 }
 
+tools["ekickx/clipboard-image.nvim"] = {
+  ft = "markdown",
+  setup = conf.clipboardimage,
+}
+
 tools["iamcco/markdown-preview.nvim"] = {
   ft = { "markdown", "pandoc.markdown", "rmd" },
   cmd = { "MarkdownPreview" },
@@ -113,7 +119,7 @@ tools["turbio/bracey.vim"] = {
 -- }
 
 tools["akinsho/toggleterm.nvim"] = {
-  keys = { "<c-t>" },
+  keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv" },
   config = function()
     require("modules.tools.toggleterm")
   end,
@@ -131,7 +137,9 @@ tools["liuchengxu/vim-clap"] = {
   config = conf.clap_after,
 }
 
+-- For this to record, cmd might not work
 tools["wakatime/vim-wakatime"] = {
+  event = "InsertEnter",
   cmd = {
     "WakaTimeApiKey",
     "WakaTimeDebugEnable",
@@ -158,16 +166,6 @@ tools["lewis6991/gitsigns.nvim"] = {
   config = conf.gitsigns,
   -- keys = {']c', '[c'},  -- load by lazy.lua
   opt = true,
-}
-
-tools["kdheepak/lazygit.nvim"] = {
-  opt = true,
-  cmd = { "LazyGit" },
-  requires = "nvim-lua/plenary.nvim",
-  config = function()
-    vim.g.lazygit_floating_window_winblend = 2
-    vim.g.lazygit_floating_window_use_plenary = 1
-  end,
 }
 
 tools["brooth/far.vim"] = {
@@ -270,7 +268,6 @@ tools["camspiers/animate.vim"] = {
 }
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
-  keys = { "<Leader><Leader><Leader>" },
   after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite", opt = true },
   opt = true,
@@ -322,8 +319,7 @@ tools["chentau/marks.nvim"] = {
   end,
 }
 
-
--- this causing issues with better escape 
+-- this causing issues with better escape
 tools["Krafi2/jeskape.nvim"] = {
   event = "InsertEnter",
   config = function()
@@ -338,7 +334,7 @@ tools["Krafi2/jeskape.nvim"] = {
 }
 
 tools["fladson/vim-kitty"] = {
-  opt = true,
+  ft = { "*.conf" },
 }
 
 tools["relastle/vim-nayvy"] = {

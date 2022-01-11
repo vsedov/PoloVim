@@ -15,7 +15,7 @@ ui["windwp/windline.nvim"] = {
   opt = true,
 }
 
-ui["lambdalisue/glyph-palette.vim"] = {}
+-- ui["lambdalisue/glyph-palette.vim"] = {}
 
 ui["akinsho/bufferline.nvim"] = {
   config = conf.nvim_bufferline,
@@ -28,9 +28,10 @@ ui["akinsho/bufferline.nvim"] = {
 
 -- TODO MODIFY THIS
 ui["startup-nvim/startup.nvim"] = {
-  opt = true, -- Turn this off to increase startup
+  opt = true,
   requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   config = function()
+    -- require("startup").setup({theme = "dashboard"})
     require("startup").setup({ theme = "evil" })
   end,
 }
@@ -63,12 +64,23 @@ ui["lukas-reineke/virt-column.nvim"] = {
   end,
 }
 
-ui["dstein64/nvim-scrollview"] = {
+-- ui["dstein64/nvim-scrollview"] = {
+--   event = { "CursorMoved", "CursorMovedI" },
+--   config = conf.scrollview,
+-- }
+
+ui["petertriho/nvim-scrollbar"] = {
   event = { "CursorMoved", "CursorMovedI" },
-  config = conf.scrollview,
+  config = conf.scrollbar,
 }
 
-ui["ray-x/aurora"] = { opt = true, config = conf.aurora }
+-- test fold
+
+ui["anuvyklack/pretty-fold.nvim"] = {
+  event = "BufRead",
+  config = conf.pretty_fold,
+}
+
 ui["folke/tokyonight.nvim"] = {
   opt = true,
   setup = conf.tokyonight,
@@ -98,49 +110,12 @@ ui["rebelot/kanagawa.nvim"] = {
   setup = conf.kanagawa,
   config = function()
     vim.cmd([[colorscheme kanagawa]])
-    vim.cmd([[hi TSCurrentScope guibg=NONE]])
-  end,
-}
-
-ui["projekt0n/github-nvim-theme"] = {
-  opt = true,
-  config = function()
-    -- vim.cmd [[hi CursorLine guibg=#353644]]
-    local styles = { "dark", "dark_default", "dimmed" }
-    local v = math.random(1, #styles)
-    local st = styles[v]
-    require("github-theme").setup({
-      function_style = "bold",
-      theme_style = st,
-      sidebars = { "qf", "vista_kind", "terminal", "packer" },
-      colors = { bg_statusline = "#332344" },
-    })
-    -- vim.cmd([[highlight StatusLine guibg='#A3B3C4']])
-    vim.cmd([[highlight ColorColumn guibg='#335364']])
-    vim.cmd([[doautocmd ColorScheme]])
-  end,
-}
-
--- ui["ChristianChiarulli/nvcode-color-schemes.vim"] = {opt = true, config = conf.nvcode}
-
--- cant config cursor line
--- ui["rafamadriz/neon"] = {opt = true, config = conf.neon}
-
-ui["ray-x/starry.nvim"] = {
-  opt = true,
-  setup = conf.starry,
-  config = function()
-    require("starry").set()
   end,
 }
 
 ui["kazhala/close-buffers.nvim"] = {
   cmd = { "BDelete", "BWipeout" },
   config = conf.buffers_close,
-}
-
-ui["norcalli/nvim-colorizer.lua"] = {
-  opt = true,
 }
 
 return ui

@@ -21,16 +21,15 @@ local plug_map = {
   ["n|<leader>lr"] = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
 
   -- -- Word Motion
-  ["n|w"] = map_cmd('v:lua.word_motion_move("w")'):with_silent():with_expr(),
-  ["n|W"] = map_cmd('v:lua.word_motion_move("W")'):with_silent():with_expr(),
+  -- ["n|w"] = map_cmd(function() return "w"end ):with_silent():with_expr(),
+  -- ["n|W"] = map_cmd('v:lua.word_motion_move("W")'):with_silent():with_expr(),
+
+  -- have this for the time, i might use some root , not usre .
+  ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
 
   ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
   ["n|B"] = map_cmd('v:lua.word_motion_move_b("B")'):with_silent():with_expr(),
-
   ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
-
-  ["n|j"] = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
-  ["n|k"] = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
 
   ["n|<C-]>"] = map_args("Template"),
   -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
@@ -42,7 +41,10 @@ local plug_map = {
 
   -- -- Code actions ?
   ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
+
+  ["n|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
   ["v|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
+  -- Back up .
   ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
 
   ["n|<Leader>gD"] = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
@@ -110,14 +112,12 @@ local plug_map = {
 
   ["n|<F6>"] = map_cu("NeoRunner"):with_noremap():with_silent(),
 
-  -- -- Git commands
-  ["n|<Leader>gh"] = map_cu("LazyGit"):with_noremap():with_silent(),
-
   -- -- never go wrong with clap
   -- Figure out the error with clap, giving very annoying error j
   ["n|<F1>"] = map_cr("Clap"):with_noremap():with_silent(),
 
   ["n|<Leader>cl"] = map_cu("Telescope neoclip a extra=star,plus,unnamed,b"):with_noremap():with_silent(),
+
   ["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
   ["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 
@@ -137,54 +137,80 @@ local plug_map = {
 
   -- -- Plugin Telescope
 
-  ["v|<Leader>ga"] = map_cu("Telescope lsp_range_code_actions"):with_noremap():with_silent(),
+  ["v|<Leader>ga"] = map_cmd("<cmd>lua require('utils.telescope').code_actions()<CR>"):with_noremap():with_silent(),
 
-  ["n|<Leader>fd"] = map_cu("Telescope dotfiles path=" .. os.getenv("HOME") .. "/.config/nvim")
-    :with_noremap()
-    :with_silent(),
   ["n|<Leader>qf"] = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
 
   ["n|<Leader>bb"] = map_cu("Telescope buffers"):with_noremap():with_silent(),
-  ["n|<Leader>fb"] = map_cmd('<cmd>lua require("utils.telescope").file_browser()<cr>'):with_noremap():with_silent(),
-  ["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
   ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
   ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
-  ["n|<Leader>fj"] = map_cmd('<cmd>lua require"utils.telescope".jump()<CR>'):with_noremap():with_silent(),
 
   ["n|<F5>"] = map_cmd("<cmd>Cheatsheet<CR>"):with_noremap():with_silent(),
 
   -- ["n|<Leader>fz"] = map_cr('<cmd>lua require("telescope").extensions.zoxide.list()'):with_silent(),
   -- ["n|<Leader>fp"] = map_cr('<cmd>lua require("telescope").extensions.projects.projects()'):with_silent(),
-  ["n|<Leader>fw"] = map_cu("Telescope grep_string"):with_noremap():with_silent(),
   ["n|<Leader>fl"] = map_cu("Telescope loclist"):with_noremap():with_silent(),
   ["n|<Leader>fc"] = map_cu("Telescope git_commits"):with_noremap():with_silent(),
-  ["n|<Leader>ft"] = map_cu("Telescope help_tags"):with_noremap():with_silent(),
   ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
-  --Nice finder
-  ["n|<Leader><Leader><Leader>"] = map_cmd(
-    '<cmd>lua require("telescope").extensions.frecency.frecency({sorter = require("telescope").extensions.fzf.native_fzf_sorter()})<CR>'
-  ):with_noremap():with_silent(),
 
-  ["n|<F4>"] = map_cu("Telescope dap commands"):with_noremap():with_silent(),
+  -- Extra telescope commands from utils.telescope
 
-  ["n|<Leader>ff"] = map_cu("Telescope find_files"):with_noremap():with_silent(),
+  -------------------------- Find
 
-  -- ["in|<d-T>"] = map_cu("Telescope"):with_noremap():with_silent(),
-  ["in|<d-f>"] = map_cr("<cmd> lua require'telescope.builtin'.grep_string({defulat_text=vim.fn.expand('cword')})")
+  ["n|<Leader>up"] = map_cmd('<cmd>lua require"utils.telescope".find_updir()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>ff"] = map_cmd('<cmd>lua require"utils.telescope".find_files()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>fff"] = map_cmd('<cmd>lua require"utils.telescope".files()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>fn"] = map_cmd('<cmd>lua require"utils.telescope".find_notes()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>fs"] = map_cmd('<cmd>lua require"utils.telescope".find_string()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>ft"] = map_cmd('<cmd>lua require"utils.telescope".search_only_certain_files()<CR>')
     :with_noremap()
     :with_silent(),
 
-  ["n|<Leader>ffi"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])
+  ["n|<Leader>fh"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
+
+  -- grep
+  ["n|<Leader>fw"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])
     :with_expr()
     :with_silent(),
+  ["n|<Leader>fW"] = map_cu("Telescope grep_string"):with_noremap():with_silent(),
+  ["n|<Leader>gw"] = map_cmd('<cmd>lua require"utils.telescope".grep_last_search()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>cb"] = map_cmd('<cmd>lua require"utils.telescope".curbuf()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>gv"] = map_cmd('<cmd>lua require"utils.telescope".grep_string_visual()<CR>'):with_noremap():with_silent(),
+
+  -- git
+  ["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
+  ["n|<Leader>fu"] = map_cmd('<cmd>lua require"utils.telescope".git_diff()<CR>'):with_noremap():with_silent(),
+
+  ["n|<Leader>fb"] = map_cmd('<cmd>lua require("utils.telescope").file_browser()<cr>'):with_noremap():with_silent(),
+
+  ["n|<Leader>ip"] = map_cmd('<cmd>lua require"utils.telescope".installed_plugins()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>ch"] = map_cmd('<cmd>lua require"utils.telescope".command_history()<CR>'):with_noremap():with_silent(),
+
+  -- Dot files
+  ["n|<Leader>fd"] = map_cmd('<cmd>lua require"utils.telescope".load_dotfiles()<CR>'):with_noremap():with_silent(),
+
+  -- Jump
+  ["n|<Leader>fj"] = map_cmd('<cmd>lua require"utils.telescope".jump()<CR>'):with_noremap():with_silent(),
+
+  -- lsp implmentation with telescop
+
+  ["n|<Leader>ir"] = map_cmd('<cmd>lua require"utils.telescope".lsp_references()<CR>'):with_noremap():with_silent(),
+
+  ["n|<Leader><Leader><Leader>"] = map_cmd('<cmd>lua require"utils.telescope".frequency()<CR>')
+    :with_noremap()
+    :with_silent(),
+
+  -- ["n|<F4>"] = map_cu("Telescope dap commands"):with_noremap():with_silent(),
+
+  -- ["in|<d-T>"] = map_cu("Telescope"):with_noremap():with_silent(),
   --     :with_expr(),
 
   -- kitty / mac users, have a nice time >.< || will be changed
-  ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
-  ["in|<d-F>"] = map_cmd(
-    [['<cmd> lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>' .  ' --type ' . &ft . ' ' . expand('<cword>')]]
-  ):with_expr():with_silent(),
-  ["in|<d-F>"] = map_cr("<cmd> lua require'telescope.builtin'.live_grep({defulat_text=vim.fn.expand('cword')})"):with_noremap(),
+  -- ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
+  -- ["n|<d-F>"] = map_cmd(
+  --   [['<cmd> lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>' .  ' --type ' . &ft . ' ' . expand('<cword>')]]
+  -- ):with_expr():with_silent(),
+  -- ["n|<d-f>"] = map_cr("<cmd> lua require'telescope.builtin'.live_grep({defulat_text=vim.fn.expand('cword')})"):with_noremap(),
   -- :with_silent(),
   -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
 
@@ -250,7 +276,7 @@ local plug_map = {
 
   -- Neogen
 
-  ["n|<F3>"] = map_cr("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
+  ["n|<Leader>d"] = map_cr("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)

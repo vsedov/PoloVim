@@ -7,8 +7,8 @@ function Lazyload()
   local themes = {
 
     -- "tokyonight.nvim",
-    -- "nvim",
-    -- -- "Sakura.nvim",
+    "nvim",
+    -- "Sakura.nvim",
     "kanagawa.nvim",
     -- TODO Add more themes
   }
@@ -72,6 +72,7 @@ function Lazyload()
   local plugins = "plenary.nvim" -- nvim-lspconfig navigator.lua   guihua.lua navigator.lua  -- gitsigns.nvim
   loader("plenary.nvim")
 
+  -- only works if you are working from one python file .
   if vim.bo.filetype == "lua" then
     loader("lua-dev.nvim")
     loader("luv-vimdocs")

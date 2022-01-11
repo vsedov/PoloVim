@@ -11,7 +11,7 @@ function global:load_variables()
   if self.is_windows then
     path_sep = "\\"
     home = os.getenv("HOMEDRIVE") or "C:"
-    home = home .. (os.getenv("HOMEPATH") or "\\")
+    home = home .. (os.getenv("HOMEPATH"))
   end
 
   self.cache_dir = home .. path_sep .. ".cache" .. path_sep .. "nvim" .. path_sep

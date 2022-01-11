@@ -12,10 +12,8 @@ import pyinspect as pi
 
 
 def main() -> None:
-<<<<<<< HEAD
-    ...
-=======
->>>>>>> nightly
+    """Main function"""
+    pass
 
 
 if __name__ == "__main__":

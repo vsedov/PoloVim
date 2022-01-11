@@ -2,7 +2,7 @@ local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
-local map_args = bind.map_args
+-- local map_args = bind.map_args
 
 local loader = require("packer").loader
 K = {}
@@ -36,18 +36,19 @@ local keys = {
   -- Lsp mapp work when insertenter and lsp start
   --
   ["n|<Leader>tc"] = map_cu("Clap colors"):with_noremap():with_silent(),
-  ["n|<Leader>bb"] = map_cu("Clap buffers"):with_noremap():with_silent(),
+  ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
   ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
   ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
   ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
   ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
   -- ["n|<M-g>"] = map_cu("Clap gfiles"):with_noremap():with_silent(),
   ["n|<M-h>"] = map_cu("Clap history"):with_noremap():with_silent(),
-  ["n|<Leader>fw"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
+
+  ["n|<Leader>fq"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
 
   ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
   -- ["n|<Leader>fl"] = map_cu("Clap loclist"):with_noremap():with_silent(),
-  ["n|<Leader>fu"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
+  ["n|<Leader>gd"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
   ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
 
   -- Might use telescope ?
@@ -79,14 +80,14 @@ local keys = {
   ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
   ["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
-  -- These are nice -- cant have these me
+  -- These are nice
   ["n|<A-a>"] = map_cr("HopWord"):with_silent(),
   ["n|<A-w>"] = map_cr("HopWordBC"):with_silent(),
   ["n|<A-W>"] = map_cr("HopWordAC"):with_silent(),
 
-  ["n|g£"] = map_cr("HopLine"),
-  ["n|g/"] = map_cr("HopLineStartAC"),
-  ["n|g?"] = map_cr("HopLineStartBC"),
+  -- Broken
+  ["n|g/"] = map_cmd("<cmd>HopLineStartAC<cr>"):with_silent(),
+  ["n|g,"] = map_cmd("<cmd>HopLineStartBC<cr>"):with_silent(),
 
   -- clap --
 
@@ -205,7 +206,6 @@ end
 -- Run DebugOpen and then you run Debug
 
 vim.cmd([[command! -nargs=*  DuckStart lua require"modules.useless.config".launch_duck()]])
-vim.cmd([[command! -nargs=*  LoadCol lua require"modules.ui.config".colour()]])
 
 -- Load Test Case - it will recognise test file - and you can run Template test and a nice
 -- Python test suit
@@ -216,5 +216,7 @@ vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
 
 -- temp for the time being.
 vim.cmd([[command! -nargs=*  Ytmnotify lua require("ytmmusic").notifyCurrentStats()]])
+
+-- for the time have this
 
 return K

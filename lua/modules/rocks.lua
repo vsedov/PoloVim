@@ -1,4 +1,3 @@
 return {
   -- 'fzy',
-  -- 'lualogging',
 }

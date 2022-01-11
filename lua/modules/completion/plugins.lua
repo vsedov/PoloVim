@@ -11,18 +11,11 @@ completion["neovim/nvim-lspconfig"] = {
     { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
     { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
-
     -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
   },
 
   opt = true,
 }
-
--- Nice to have it back, but might stick with nvim-lsp version to see how it goes.
--- completion["tami5/lspsaga.nvim"]={
---   -- opt = true,
---   config = conf.saga
--- }
 
 if load_coq() then
   completion["ms-jpq/coq_nvim"] = {
@@ -185,6 +178,7 @@ completion["ray-x/lsp_signature.nvim"] = {
       floating_window = true,
       floating_window_above_cur_line = true,
       hint_enable = true,
+      use_lspsaga = false,
       fix_pos = false,
       -- floating_window_above_first = true,
       log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
@@ -193,7 +187,7 @@ completion["ray-x/lsp_signature.nvim"] = {
       timer_interval = 100,
       extra_trigger_chars = {},
       handler_opts = {
-        border = "rounded", -- "shadow", --{"╭", "─" ,"╮", "│", "╯", "─", "╰", "│" },
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
       },
       max_height = 4,
     })
@@ -209,11 +203,14 @@ completion["dense-analysis/ale"] = {
   -- Maybe just for python and C ? - not sure
   ft = {
     "python",
+    "norg",
   },
+  opt = true,
+  -- Test out norg files
   config = conf.ale,
 }
 
-completion["vsedov/vim-sonictemplate"] = {
+completion["~/GitHub/vim-sonictemplate"] = {
   cmd = "Template",
   config = conf.vim_sonictemplate,
 }

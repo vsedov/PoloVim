@@ -102,7 +102,7 @@ local treesitter_obj = function()
 
   require("nvim-treesitter.configs").setup({
 
-    indent = { enable = true, disable = { "python" } },
+    indent = { enable = true, disable = { "python", "c", "cpp" } },
     context_commentstring = { enable = true, enable_autocmd = false },
     textobjects = {
       -- syntax-aware textobjects
@@ -175,6 +175,7 @@ local treesitter_obj = function()
       "norg",
       "norg_table",
       "norg_meta",
+      "vim",
       "go",
       "css",
       "html",
@@ -216,7 +217,7 @@ local treesitter_ref = function()
   require("nvim-treesitter.configs").setup({
     refactor = {
       highlight_definitions = { enable = enable },
-      highlight_current_scope = { enable = enable },
+      highlight_current_scope = { enable = false },
       smart_rename = {
         enable = false,
         keymaps = {

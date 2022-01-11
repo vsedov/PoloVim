@@ -62,7 +62,7 @@ end
 function config.notify()
   require("notify").setup({
     -- Animation style (see below for details)
-    stages = "fade_in_slide_out",
+    stages = "fade_in_slide_out", -- "slide",
 
     -- Function called when a new window is opened, use for changing win settings/config
     on_open = nil,
@@ -78,13 +78,26 @@ function config.notify()
 
     -- For stages that change opacity this is treated as the highlight behind the window
     -- Set this to either a highlight group or an RGB hex value e.g. "#000000"
-    background_colour = "Normal",
+    background_colour = function()
+      local group_bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Normal")), "bg#")
+      if group_bg == "" or group_bg == "none" then
+        group_bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Float")), "bg#")
+        if group_bg == "" or group_bg == "none" then
+          return "#000000"
+        end
+      end
+      return group_bg
+    end,
 
     -- Minimum width for notification windows
     minimum_width = 50,
 
     -- Icons for the different levels
     icons = {
+      ERROR = "",
+      WARN = "",
+      INFO = "",
+      DEBUG = "",
       TRACE = "✎",
     },
   })
@@ -211,16 +224,88 @@ function config.scrollbar()
     return
   end
   local vimcmd = vim.api.nvim_command
-  vimcmd("augroup " .. "ScrollbarInit")
-  vimcmd("autocmd!")
-  vimcmd("autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()")
-  vimcmd("autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()")
-  vimcmd("autocmd WinLeave,FocusLost,BufLeave    * silent! lua require('scrollbar').clear()")
-  vimcmd("autocmd WinLeave,BufLeave    * silent! DiffviewClose")
-  vimcmd("augroup end")
-  vimcmd("highlight link Scrollbar Comment")
-  vim.g.sb_default_behavior = "never"
-  vim.g.sb_bar_style = "solid"
+  require("scrollbar").setup({
+    handle = {
+      color = "#16161D",
+    },
+    marks = {
+      Search = { color = "#FFA066" },
+      Error = { color = "#E82424" },
+      Warn = { color = "#FF9E3B" },
+      Info = { color = "#6A9589" },
+      Hint = { color = "#658594" },
+      Misc = { color = "#938AA9" },
+    },
+    excluded_filetypes = {
+      "",
+      "prompt",
+      "TelescopePrompt",
+    },
+    autocmd = {
+      render = {
+        "BufWinEnter",
+        "TabEnter",
+        "TermEnter",
+        "WinEnter",
+        "CmdwinLeave",
+        "TextChanged",
+        "VimResized",
+        "WinScrolled",
+      },
+    },
+    handlers = {
+      diagnostic = true,
+      search = false,
+    },
+  })
+
+  -- vim.cmd([[
+  --     augroup scrollbar_search_hide
+  --       autocmd!
+  --       autocmd CmdlineLeave : lua require('scrollbar').search_handler.hide()
+  --     augroup END
+  -- ]])
+
+  -- vimcmd("augroup " .. "ScrollbarInit")
+  -- vimcmd("autocmd!")
+  -- vimcmd("autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()")
+  -- vimcmd("autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()")
+  -- vimcmd("autocmd WinLeave,FocusLost,BufLeave    * silent! lua require('scrollbar').clear()")
+  -- vimcmd("autocmd WinLeave,BufLeave    * silent! DiffviewClose")
+  -- vimcmd("augroup end")
+  -- vimcmd("highlight link Scrollbar Comment")
+  -- vim.g.sb_default_behavior = "never"
+  -- vim.g.sb_bar_style = "solid"
+end
+
+function config.pretty_fold()
+  require("pretty-fold.preview").setup_keybinding("l")
+  require("pretty-fold").setup({
+    keep_indentation = true,
+    fill_char = "━",
+    sections = {
+      left = {
+        "━ ",
+        function()
+          return string.rep("*", vim.v.foldlevel)
+        end,
+        " ━┫",
+        "content",
+        "┣",
+      },
+      right = {
+        "┫ ",
+        "number_of_folded_lines",
+        ": ",
+        "percentage",
+        " ┣━━",
+      },
+    },
+    -- List of patterns that will be removed from content foldtext section.
+    stop_words = {
+      "@brief%s*", -- (for cpp) Remove '@brief' and all spaces after.
+    },
+  })
 end
 
 function config.scrollview()
@@ -347,6 +432,7 @@ function config.kanagawa()
   if not packer_plugins["kanagawa.nvim"].loaded then
     vim.cmd([[packadd kanagawa.nvim]])
   end
+
   require("kanagawa").setup({
     undercurl = true, -- enable undercurls
     commentStyle = "italic",
@@ -499,11 +585,6 @@ function config.buffers_close()
       end
     end,
   })
-end
-
-function config.colour()
-  require("packer").loader("nvim-colorizer.lua")
-  vim.cmd([[ColorizerAttachToBuffer]])
 end
 
 vim.api.nvim_exec(

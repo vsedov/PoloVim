@@ -1,3 +1,13 @@
+@document.meta
+  title: code_runer
+  description:
+  authors: viv
+  categories:
+  created: 2022-01-04
+  version: 0.0.9
+@end
+
+@code json
 {
     "javascript": "node",
     "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
@@ -11,3 +21,4 @@
     "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
     "dart": "dart"
 }
+@end

@@ -1,6 +1,0 @@
-
-
-https://github.com/sudormrfbin/cheatsheet.nvim/blob/master/cheatsheets/cheatsheet-default.txt
-
-
-Add Main stuff here 
