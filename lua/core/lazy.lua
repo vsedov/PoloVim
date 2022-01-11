@@ -7,8 +7,8 @@ function Lazyload()
   local themes = {
 
     -- "tokyonight.nvim",
-    -- "nvim",
-    -- -- "Sakura.nvim",
+    "nvim",
+    -- "Sakura.nvim",
     "kanagawa.nvim",
     -- TODO Add more themes
   }
@@ -88,7 +88,7 @@ function Lazyload()
 
   if load_lsp then
     loader("nvim-lspconfig") -- null-ls.nvim
-    -- loader("lsp_signature.nvim")
+    loader("lsp_signature.nvim")
     if use_nulls() then
       loader("null-ls.nvim")
     end

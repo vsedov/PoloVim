@@ -91,6 +91,11 @@ tools["plasticboy/vim-markdown"] = {
   opt = true,
 }
 
+tools["ekickx/clipboard-image.nvim"] = {
+  ft = "markdown",
+  setup = conf.clipboardimage,
+}
+
 tools["iamcco/markdown-preview.nvim"] = {
   ft = { "markdown", "pandoc.markdown", "rmd" },
   cmd = { "MarkdownPreview" },

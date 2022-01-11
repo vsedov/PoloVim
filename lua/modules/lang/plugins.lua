@@ -142,7 +142,6 @@ lang["mfussenegger/nvim-dap"] = {
   config = conf.dap,
 } -- cmd = "Luadev",
 
-
 lang["nvim-telescope/telescope-dap.nvim"] = {
   opt = true,
   requires = { "telescope.nvim", "nvim-dap" },
@@ -175,11 +174,9 @@ lang["rafcamlet/nvim-luapad"] = {
   end,
 }
 
-
 lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
 -- lang["RRethy/vim-illuminate"] = {opt=true, ft = {"go"}}
-
 
 --
 lang["michaelb/sniprun"] = {

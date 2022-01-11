@@ -19,10 +19,6 @@ editor["windwp/nvim-autopairs"] = {
   opt = true,
 }
 
--- editor["rhysd/accelerated-jk"] = {
---   opt = true,
--- }
-
 editor["kana/vim-niceblock"] = {
   opt = true,
 }
@@ -34,14 +30,9 @@ editor["ggandor/lightspeed.nvim"] = {
   config = conf.lightspeed,
 }
 
--- maybe use later idk
-editor["hrsh7th/vim-seak"] = {
-  event = "CmdlineEnter",
-  requires = { "nvim-lua/popup.nvim" },
-  setup = function()
-    vim.g.seak_enabled = 1
-    vim.cmd([[cnoremap <C-j> <Cmd>call seak#select({ 'nohlsearch': v:true })<CR>]])
-  end,
+editor["hrsh7th/vim-searchx"] = {
+  event = { "CmdwinEnter", "CmdlineEnter" },
+  setup = conf.searchx,
 }
 
 -- folke BROKEN
@@ -58,10 +49,9 @@ editor["zeertzjq/which-key.nvim"] = {
 -- editor["indianboy42/hop-extensions"] = { after = "hop", opt = true }
 editor["phaazon/hop.nvim"] = {
   as = "hop",
-  cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC","HopeLine" },
+  cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC", "HopeLine" },
   config = function()
     require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
-
   end,
 }
 

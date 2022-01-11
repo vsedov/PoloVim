@@ -532,7 +532,6 @@ M.lsp_references = function()
   builtin.lsp_references(opts)
 end
 
-
 M.command_history = function()
   reloader()
 
@@ -572,28 +571,23 @@ M.load_dotfiles = function()
   builtin.dotfiles()
 end
 
-
 M.git_conflicts = function(opts)
   opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
 
   pickers.new(opts, {
-    prompt_title = 'Git Conflicts',
-    finder = finders.new_oneshot_job(
-      vim.tbl_flatten({"git","diff","--name-only","--diff-filter=U"}),
-      opts
-    ),
+    prompt_title = "Git Conflicts",
+    finder = finders.new_oneshot_job(vim.tbl_flatten({ "git", "diff", "--name-only", "--diff-filter=U" }), opts),
     previewer = conf.file_previewer(opts),
     sorter = conf.file_sorter(opts),
   }):find()
 end
 
-
--- Path grep 
+-- Path grep
 M.live_grep_in_path = function(path)
   local _path = path or vim.fn.input("Dir: ", "", "dir")
-    builtin.live_grep({
-      search_dirs = { _path }
-    })
+  builtin.live_grep({
+    search_dirs = { _path },
+  })
 end
 
 M.file_browser = function()
