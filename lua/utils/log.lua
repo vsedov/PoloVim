@@ -1,4 +1,5 @@
-local log_path = vim.fn.expand("$HOME") .. "/tmp/neovim_debug.log"
+local global = require("core.global")
+local log_path = global.log_path
 
 local log = function(...)
   local arg = { ... }

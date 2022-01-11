@@ -79,7 +79,7 @@ tools["kamykn/spelunker.vim"] = {
 tools["rhysd/vim-grammarous"] = {
   opt = true,
   cmd = { "GrammarousCheck" },
-  ft = { "markdown", "txt" },
+  ft = { "markdown", "txt", "norg" },
   setup = conf.grammarous,
 }
 

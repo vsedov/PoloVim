@@ -113,9 +113,13 @@ ui["rebelot/kanagawa.nvim"] = {
   end,
 }
 
+
 ui["kazhala/close-buffers.nvim"] = {
   cmd = { "BDelete", "BWipeout" },
   config = conf.buffers_close,
 }
+
+
+
 
 return ui

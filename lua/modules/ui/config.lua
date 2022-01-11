@@ -428,6 +428,17 @@ function config.catppuccin()
   })
 end
 
+function config.themer()
+  if not packer_plugins["themer.lua"].loaded then
+    vim.cmd([[packadd themer.lua]])
+    require("themer")
+  end
+
+
+end
+
+
+
 function config.kanagawa()
   if not packer_plugins["kanagawa.nvim"].loaded then
     vim.cmd([[packadd kanagawa.nvim]])
@@ -458,6 +469,14 @@ function config.nightfly()
   vim.g.nightflyTransparent = 1
 
   -- body
+end
+
+function config.rosepine()
+        vim.g.rose_pine_variant = "moon"
+        vim.g.rose_pine_bold_vertical_split_line = true
+        vim.g.rose_pine_disable_italics = false
+        vim.g.rose_pine_disable_background = false
+        vim.g.rose_pine_disable_float_background = true
 end
 
 function config.nvcode()
@@ -572,6 +591,8 @@ function config.minimap()
     vim.g.minimap_width = 2
   end
 end
+
+
 
 function config.buffers_close()
   require("close_buffers").setup({

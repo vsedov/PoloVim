@@ -6,9 +6,9 @@ function Lazyload()
   -- i will soon be using themer for this .
   local themes = {
 
-    -- "tokyonight.nvim",
-    "nvim",
-    -- "Sakura.nvim",
+    "tokyonight.nvim",
+    "nvim", -- cat
+    "Sakura.nvim",
     "kanagawa.nvim",
     -- TODO Add more themes
   }
@@ -128,9 +128,6 @@ function Lazyload()
 
   loader("nvim-notify popup.nvim")
 
-  -- if load_ts_plugins and vim.bo.filetype == "python" then
-  --   loader("nvim-treesitter-pyfold")
-  -- end
 
   -- if bytes < 2 * 1024 * 1024 and syn_on then
   --   vim.cmd([[setlocal syntax=on]])
