@@ -229,7 +229,7 @@ lang["windwp/nvim-ts-autotag"] = {
 lang["Tastyep/structlog.nvim"] = {
   opt = true,
   config = function()
-    require("modules.lang.log")
+    require("utils.Log")
   end,
 }
 

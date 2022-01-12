@@ -60,7 +60,12 @@ function config.nvim_bufferline()
 end
 
 function config.notify()
-  require("notify").setup({
+  if #vim.api.nvim_list_uis() == 0 then
+    -- no need to configure notifications in headless
+    return
+  end
+  local notify = require("notify")
+  local default = {
     -- Animation style (see below for details)
     stages = "fade_in_slide_out", -- "slide",
 
@@ -100,7 +105,11 @@ function config.notify()
       DEBUG = "",
       TRACE = "✎",
     },
-  })
+  }
+
+  vim.notify = notify
+  notify.setup(default)
+
   require("telescope").load_extension("notify")
 end
 

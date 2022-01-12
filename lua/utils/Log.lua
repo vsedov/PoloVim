@@ -1,4 +1,14 @@
+-- https://github.com/LunarVim/LunarVim/blob/9017389766ff1ce31c8f0a21fe667653a7ab6b3a/lua/lnvim/core/log.lua
 local Log = {}
+
+Log.default = {
+
+  ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
+  level = "warn",
+  -- currently disabled due to instabilities
+  override_notify = false,
+}
+-- Log:get_logger()
 
 local logfile = string.format("%s/%s.log", "/home/viv/Trash_Stuff", "nvim")
 
@@ -19,11 +29,25 @@ function Log:init()
     return nil
   end
 
-  local log_level = Log.levels["INFO"]
-  local lvim_log = {
-    debug = {
+  local default_namer = function(logger, entry)
+    entry["title"] = logger.name
+    return entry
+  end
+
+  local notify_opts_injecter = function(_, entry)
+    for key, value in pairs(notify_opts) do
+      entry[key] = value
+    end
+    notify_opts = {}
+    return entry
+  end
+
+  local log_level = Log.levels[(Log.default.level):upper() or "WARN"]
+
+  local logger = {
+    control = {
       sinks = {
-        structlog.sinks.Console(self.levels.INFO, {
+        structlog.sinks.Console(log_level, {
           async = false,
           processors = {
             structlog.processors.Namer(),
@@ -36,6 +60,7 @@ function Log:init()
             { level = structlog.formatters.FormatColorizer.color_level() }
           ),
         }),
+
         structlog.sinks.File(self.levels.TRACE, logfile, {
           processors = {
             structlog.processors.Namer(),
@@ -47,29 +72,30 @@ function Log:init()
             { "timestamp", "level", "logger_name", "msg" }
           ),
         }),
-        structlog.sinks.NvimNotify(self.levels.WARN, {
+
+        --- cba to manually figure this out . 
+        structlog.sinks.NvimNotify(log_level, {
           processors = {
-            structlog.processors.Namer(),
+            default_namer,
+            notify_opts_injecter,
           },
           formatter = structlog.formatters.Format( --
             "%s",
             { "msg" },
-            { blacklist = { "level", "logger_name" } }
+            { blacklist_all = true }
           ),
-          params_map = { title = "logger_name" },
-        }),
-        structlog.sinks.NvimNotify(self.levels.ERROR, {
-          processors = {
-            structlog.processors.Namer(),
+          -- This should probably not be hard-coded
+          params_map = {
+            icon = "icon",
+            keep = "keep",
+            on_open = "on_open",
+            on_close = "on_close",
+            timeout = "timeout",
+            title = "title",
           },
-          formatter = structlog.formatters.Format( --
-            "%s",
-            { "msg" },
-            { blacklist = { "level", "logger_name" } }
-          ),
-          params_map = { title = "logger_name" },
         }),
 
+        ----
         structlog.sinks.File(Log.levels.TRACE, "./test.log", {
           processors = {
             structlog.processors.Namer(),
@@ -85,9 +111,30 @@ function Log:init()
     },
     -- other_logger = {...}
   }
-  structlog.configure(lvim_log)
-  local logger = structlog.get_logger("debug")
 
+  structlog.configure(logger)
+  local logger = structlog.get_logger("control")
+
+  -- Overwrite `vim.notify` to use the logger
+  if Log.default.override_notify then
+    local notify = require("notify")
+    vim.notify = notify
+    vim.notify = function(msg, vim_log_level, opts)
+      notify_opts = opts or {}
+
+      -- vim_log_level can be omitted
+      if vim_log_level == nil then
+        vim_log_level = Log.levels["INFO"]
+      elseif type(vim_log_level) == "string" then
+        vim_log_level = Log.levels[(vim_log_level):upper()] or Log.levels["INFO"]
+      else
+        -- https://github.com/neovim/neovim/blob/685cf398130c61c158401b992a1893c2405cd7d2/runtime/lua/vim/lsp/log.lua#L5
+        vim_log_level = vim_log_level + 1
+      end
+
+      logger:log(vim_log_level, msg)
+    end
+  end
   return logger
 end
 
@@ -128,35 +175,35 @@ end
 ---@param msg any
 ---@param event any
 function Log:trace(msg, event)
-  self:add_entry(self.levels.TRACE, msg, event)
+  self:add_entry(Log.levels.TRACE, msg, event)
 end
 
 ---Add a log entry at DEBUG level
 ---@param msg any
 ---@param event any
 function Log:debug(msg, event)
-  self:add_entry(self.levels.DEBUG, msg, event)
+  self:add_entry(Log.levels.DEBUG, msg, event)
 end
 
 ---Add a log entry at INFO level
 ---@param msg any
 ---@param event any
 function Log:info(msg, event)
-  self:add_entry(self.levels.INFO, msg, event)
+  self:add_entry(Log.levels.INFO, msg, event)
 end
 
 ---Add a log entry at WARN level
 ---@param msg any
 ---@param event any
 function Log:warn(msg, event)
-  self:add_entry(self.levels.WARN, msg, event)
+  self:add_entry(Log.levels.WARN, msg, event)
 end
 
 ---Add a log entry at ERROR level
 ---@param msg any
 ---@param event any
 function Log:error(msg, event)
-  self:add_entry(self.levels.ERROR, msg, event)
+  self:add_entry(Log.levels.ERROR, msg, event)
 end
 
 setmetatable({}, Log)
