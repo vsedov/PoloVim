@@ -50,6 +50,11 @@ tools["ThePrimeagen/harpoon"] = {
   end,
 }
 
+tools["ThePrimeagen/git-worktree.nvim"] = {
+  event = { "CmdwinEnter", "CmdlineEnter" },
+  config = conf.worktree,
+}
+
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
   cmd = { "Octo", "Octo pr list" },
