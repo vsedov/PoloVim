@@ -6,15 +6,36 @@ return {
       lsp = {},
     }
 
-    local sources = {
-      -- null_ls.builtins.hover,
+    local lspconfig = require("lspconfig")
 
+    local diagnostics = null_ls.builtins.diagnostics
+    local hover = null_ls.builtins.hover
+    local actions = null_ls.builtins.code_actions
+    local sources = {
       null_ls.builtins.formatting.rustfmt,
       null_ls.builtins.diagnostics.yamllint,
       null_ls.builtins.code_actions.gitsigns,
       null_ls.builtins.code_actions.proselint,
       null_ls.builtins.code_actions.refactoring,
       null_ls.builtins.formatting.prettier,
+      -- hover.dictionary,
+      diagnostics.misspell.with({
+        filetypes = { "markdown", "text", "txt" },
+        args = { "$FILENAME" },
+      }),
+      diagnostics.write_good.with({
+        filetypes = { "markdown", "tex", "" },
+        extra_filetypes = { "txt", "text" },
+        args = { "--text=$TEXT", "--parse" },
+        command = "write-good",
+      }),
+      diagnostics.proselint.with({
+        filetypes = { "markdown", "tex" },
+        extra_filetypes = { "txt", "text" },
+        command = "proselint",
+        args = { "--json" },
+      }),
+      actions.proselint.with({ filetypes = { "markdown", "tex" }, command = "proselint", args = { "--json" } }),
     }
 
     local function exist(bin)
@@ -115,7 +136,7 @@ return {
       sources = sources,
       debounce = 1000,
 
-      root_dir = require("lspconfig").util.root_pattern(
+      root_dir = lspconfig.util.root_pattern(
         ".venv", -- for python
         "_darcs",
         ".hg",
@@ -134,7 +155,7 @@ return {
       on_attach = function(client)
         -- I dont want any formating on python files.
         if client.resolved_capabilities.document_formatting then
-          vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+          vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
         end
       end,
     }
