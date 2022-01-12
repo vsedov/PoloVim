@@ -13,23 +13,6 @@ function autocmd.nvim_create_augroups(definitions)
   end
 end
 
--- vim.api.nvim_exec(
---   [[
--- augroup dynamic_smartcase
---   autocmd!
---   autocmd CmdLineEnter :set nosmartcase
---   autocmd CmdLineLeave :set smartcase
--- augroup END
--- ]],
---   false
--- )
-
--- -- show cursor line only in active window
--- vim.cmd([[
---   autocmd InsertLeave,WinEnter * set cursorline
---   autocmd InsertEnter,WinLeave * set nocursorline
--- ]])
-
 function autocmd.load_autocmds()
   local definitions = {
     packer = {
@@ -86,6 +69,7 @@ function autocmd.load_autocmds()
     },
 
     ft = {
+      { "FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>" },
       { "FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2" },
       { "BufNewFile,BufRead", "*.toml", " setf toml" },
     },

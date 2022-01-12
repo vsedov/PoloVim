@@ -60,7 +60,12 @@ function config.nvim_bufferline()
 end
 
 function config.notify()
-  require("notify").setup({
+  if #vim.api.nvim_list_uis() == 0 then
+    -- no need to configure notifications in headless
+    return
+  end
+  local notify = require("notify")
+  local default = {
     -- Animation style (see below for details)
     stages = "fade_in_slide_out", -- "slide",
 
@@ -100,7 +105,11 @@ function config.notify()
       DEBUG = "",
       TRACE = "✎",
     },
-  })
+  }
+
+  vim.notify = notify
+  notify.setup(default)
+
   require("telescope").load_extension("notify")
 end
 
@@ -433,11 +442,7 @@ function config.themer()
     vim.cmd([[packadd themer.lua]])
     require("themer")
   end
-
-
 end
-
-
 
 function config.kanagawa()
   if not packer_plugins["kanagawa.nvim"].loaded then
@@ -472,11 +477,11 @@ function config.nightfly()
 end
 
 function config.rosepine()
-        vim.g.rose_pine_variant = "moon"
-        vim.g.rose_pine_bold_vertical_split_line = true
-        vim.g.rose_pine_disable_italics = false
-        vim.g.rose_pine_disable_background = false
-        vim.g.rose_pine_disable_float_background = true
+  vim.g.rose_pine_variant = "moon"
+  vim.g.rose_pine_bold_vertical_split_line = true
+  vim.g.rose_pine_disable_italics = false
+  vim.g.rose_pine_disable_background = false
+  vim.g.rose_pine_disable_float_background = true
 end
 
 function config.nvcode()
@@ -591,8 +596,6 @@ function config.minimap()
     vim.g.minimap_width = 2
   end
 end
-
-
 
 function config.buffers_close()
   require("close_buffers").setup({

@@ -195,6 +195,7 @@ M.StopDbg = function()
     local cmd = "unmap " .. value
     vim.cmd(cmd)
   end
+  -- rebind everything back to normal -_-
 
   vim.cmd([[uvmap p]])
   require("dap").disconnect()

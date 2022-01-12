@@ -160,13 +160,13 @@ lua/modules/users/plugins
 ## The Battery
 
 ### Layout
+![2022-01-11-08-12-57](https://user-images.githubusercontent.com/28804392/149077596-7f5abfbe-1184-4800-8283-2dc95877e817.png)
 
-![](img/2022-01-11-08-12-57.png)
 
 ### CMP
+![2022-01-11-08-09-32](https://user-images.githubusercontent.com/28804392/149077640-b5576522-4959-4687-9257-a1a5eb465821.png)
 
-![LSP](img/2022-01-11-08-09-32.png)
-![Command Line](img/2022-01-11-08-08-22.png)
+![2022-01-11-08-08-22](https://user-images.githubusercontent.com/28804392/149077656-b1267228-486d-41ca-9608-9d47cf2471a6.png)
 
 ### Diagnostics @[Max](https://github.com/max397574/NeovimConfig)
 
@@ -174,33 +174,33 @@ lua/modules/users/plugins
 ![](img/2022-01-11-08-10-22.png)
 
 #### QuickFix
+![2022-01-11-08-15-16](https://user-images.githubusercontent.com/28804392/149077693-13a7b1ce-dc4e-48c8-9c4c-0d100b174539.png)
+![2022-01-11-08-15-08](https://user-images.githubusercontent.com/28804392/149077697-43bd072c-f653-49f1-9cf0-047c02ae65e1.png)
 
-![](img/2022-01-11-08-15-08.png)
-![](img/2022-01-11-08-15-16.png)
+
 
 _Null-ls does not support custom diagnostics currently_
 
 ### Telescope @[Max](https://github.com/max397574/NeovimConfig)
-
-![](img/2022-01-11-08-17-06.png)
+![2022-01-11-08-17-06](https://user-images.githubusercontent.com/28804392/149077718-8412a918-f32f-4742-a58a-9dab47afbed2.png)
 
 ### Clap
 
-![](img/2022-01-11-08-13-40.png)
+![2022-01-11-08-14-40](https://user-images.githubusercontent.com/28804392/149077736-f4b28c6b-d160-47ee-ad16-9fe605e022e5.png)
 
 ### LSP
 
 #### LSP DEF
+![2022-01-11-08-14-24](https://user-images.githubusercontent.com/28804392/149077750-187ab1ae-5db6-4dcc-9a6d-a5445d13b57e.png)
 
-![](img/2022-01-11-08-14-24.png)
 
 #### Lsp Preview
 
-![](img/2022-01-11-08-14-40.png)
+![2022-01-11-08-13-40](https://user-images.githubusercontent.com/28804392/149077775-8863b612-5a9b-421d-9aa5-d70ad6070b6a.png)
 
 #### Lsp Sig
 
-![](img/2022-01-11-08-15-39.png)
+![2022-01-11-08-15-39](https://user-images.githubusercontent.com/28804392/149077791-92a171d9-3e15-4fcc-8fce-bf624ca17e9c.png)
 
 ## Main Features used :
 

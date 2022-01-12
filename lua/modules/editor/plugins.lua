@@ -27,7 +27,7 @@ editor["kana/vim-niceblock"] = {
 editor["ggandor/lightspeed.nvim"] = {
   as = "lightspeed",
   event = "BufReadPost",
-  opt = true, 
+  opt = true,
   config = conf.lightspeed,
 }
 

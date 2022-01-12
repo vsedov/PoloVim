@@ -6,9 +6,9 @@ function Lazyload()
   -- i will soon be using themer for this .
   local themes = {
 
-    "tokyonight.nvim",
+    -- "tokyonight.nvim",
     "nvim", -- cat
-    "Sakura.nvim",
+    -- "Sakura.nvim",
     "kanagawa.nvim",
     -- TODO Add more themes
   }
@@ -75,6 +75,7 @@ function Lazyload()
     loader("lua-dev.nvim")
     loader("luv-vimdocs")
     loader("nvim-luaref")
+    loader("structlog.nvim") -- logging
   end
 
   vim.g.vimsyn_embed = "lPr"
@@ -125,7 +126,6 @@ function Lazyload()
   end
 
   loader("nvim-notify popup.nvim")
-
 
   -- if bytes < 2 * 1024 * 1024 and syn_on then
   --   vim.cmd([[setlocal syntax=on]])
