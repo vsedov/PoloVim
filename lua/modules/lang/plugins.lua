@@ -127,7 +127,6 @@ lang["simrat39/symbols-outline.nvim"] = {
   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
   setup = conf.outline,
 }
-lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 
 lang["mfussenegger/nvim-dap"] = {
   opt = true,
@@ -151,6 +150,8 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
 lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
 lang["jbyuki/one-small-step-for-vimkind"] = { opt = true, ft = { "lua" } }
+
+lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 
 lang["rafcamlet/nvim-luapad"] = {
   cmd = { "LuaRun", "Lua", "Luapad" },
@@ -223,6 +224,13 @@ lang["windwp/nvim-ts-autotag"] = {
   opt = true,
   -- after = "nvim-treesitter",
   -- config = function() require"nvim-treesitter.configs".setup {autotag = {enable = true}} end
+}
+
+lang["Tastyep/structlog.nvim"] = {
+  opt = true,
+  config = function()
+    require("utils.Log")
+  end,
 }
 
 lang["folke/lua-dev.nvim"] = {
