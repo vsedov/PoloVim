@@ -70,10 +70,6 @@ function Log:init()
           params_map = { title = "logger_name" },
         }),
 
-
-
-
-
         structlog.sinks.File(Log.levels.TRACE, "./test.log", {
           processors = {
             structlog.processors.Namer(),
@@ -92,10 +88,8 @@ function Log:init()
   structlog.configure(lvim_log)
   local logger = structlog.get_logger("debug")
 
-
   return logger
 end
-
 
 --- Adds a log entry using Plenary.log
 ---@param msg any
