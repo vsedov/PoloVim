@@ -5,7 +5,7 @@ local map_cmd = bind.map_cmd
 -- local map_args = bind.map_args
 
 local loader = require("packer").loader
-K = {}
+local K = {}
 local function check_back_space()
   local col = vim.fn.col(".") - 1
   if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
@@ -217,6 +217,25 @@ vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
 -- temp for the time being.
 vim.cmd([[command! -nargs=*  Ytmnotify lua require("ytmmusic").notifyCurrentStats()]])
 
--- for the time have this
+local plugmap = require("keymap").map
+local merged = vim.tbl_extend("force", plugmap, keys)
 
+bind.nvim_load_mapping(merged)
+local key_maps = bind.all_keys
+
+K.get_keymaps = function()
+  local ListView = require("guihua.listview")
+  local win = ListView:new({
+    loc = "top_center",
+    border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+    prompt = true,
+    enter = true,
+    rect = { height = 20, width = 90 },
+    data = key_maps,
+  })
+end
+
+vim.cmd([[command! -nargs=* Keymaps lua require('overwrite.mapping').get_keymaps()]])
+-- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
+--
 return K
