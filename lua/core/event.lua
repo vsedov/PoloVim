@@ -19,6 +19,7 @@ function autocmd.load_autocmds()
       { "BufWritePost", "*.lua", "lua require('core.pack').auto_compile()" },
     },
     bufs = {
+      { "BufRead,BufNewFile", "*.norg", "setlocal filetype=norg" },
       -- Reload vim config automatically
       { "BufWritePost", [[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]] },
       -- Reload Vim script automatically if setlocal autoread
@@ -69,7 +70,7 @@ function autocmd.load_autocmds()
     },
 
     ft = {
-      { "FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>" },
+      { "FileType qf,help,man,ls:pinfo nnoremap <silent> <buffer> q :close<CR>" },
       { "FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2" },
       { "BufNewFile,BufRead", "*.toml", " setf toml" },
     },
