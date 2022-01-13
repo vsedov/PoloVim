@@ -96,6 +96,7 @@ function config.nvim_cmp()
     { name = "luasnip" },
     { name = "treesitter", keyword_length = 2 },
     { name = "look", keyword_length = 4 },
+    { name = "nvim_lsp_signature_help", priority = 6 },
     -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
   }
@@ -107,11 +108,15 @@ function config.nvim_cmp()
   end
   if vim.o.ft == "norg" then
     table.insert(sources, { name = "neorg" })
+    table.insert(sources, { name = "spell" })
+    table.insert(sources, { name = "look" })
+    table.insert(sources, { name = "latex_symbols" })
   end
 
   if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
     table.insert(sources, { name = "look" })
+    table.insert(sources, { name = "latex_symbols" })
   end
   if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
