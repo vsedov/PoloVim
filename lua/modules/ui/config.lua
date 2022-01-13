@@ -506,6 +506,8 @@ function config.sonokai()
 end
 
 function config.blankline()
+  vim.opt.termguicolors = true
+  vim.opt.list = true
   require("indent_blankline").setup({
     enabled = true,
     -- char = "|",
@@ -517,6 +519,14 @@ function config.blankline()
     space_char_blankline = " ",
     use_treesitter = true,
     show_current_context = true,
+    char_highlight_list = {
+      "IndentBlanklineIndent1",
+      "IndentBlanklineIndent2",
+      "IndentBlanklineIndent3",
+      "IndentBlanklineIndent4",
+      "IndentBlanklineIndent5",
+      "IndentBlanklineIndent6",
+    },
     context_patterns = {
       "class",
       "return",

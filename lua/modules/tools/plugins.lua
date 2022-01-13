@@ -302,18 +302,17 @@ tools["chentau/marks.nvim"] = {
 }
 
 -- this causing issues with better escape
-tools["Krafi2/jeskape.nvim"] = {
-  event = "InsertEnter",
-  config = function()
-    require("jeskape").setup({
-      mappings = {
-        ["c"] = {
-          ["c"] = "<cmd>lua require'utils'.append_comma()<CR>",
-        },
-      },
-    })
-  end,
-}
+-- tools["Krafi2/jeskape.nvim"] = {
+--   event = "InsertEnter",
+--   config = function()
+--     require("jeskape").setup({
+--       mappings = {
+--         ["c"] = {
+--         },
+--       },
+--     })
+--   end,
+-- }
 
 tools["fladson/vim-kitty"] = {
   ft = { "*.conf" },

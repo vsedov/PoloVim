@@ -21,7 +21,7 @@ function rhs_options:map_cr(cmd_string)
 end
 
 function rhs_options:map_args(cmd_string)
-  self.cmd = (":%s<localleader>"):format(cmd_string)
+  self.cmd = (":%s<Space>"):format(cmd_string)
   return self
 end
 
@@ -82,6 +82,7 @@ function pbind.map_args(cmd_string)
   return ro:map_args(cmd_string)
 end
 
+pbind.all_keys = {}
 function pbind.nvim_load_mapping(mapping)
   for key, value in pairs(mapping) do
     local mode, keymap = key:match("([^|]*)|?(.*)")
@@ -89,10 +90,17 @@ function pbind.nvim_load_mapping(mapping)
       if type(value) == "table" then
         local rhs = value.cmd
         local options = value.options
-
+        -- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, rhs, options)
         vim.keymap.set(mode:sub(i, i), keymap, rhs, options)
+
+        rhs = vim.trim(rhs, {}, 0)
+        table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. rhs)
       elseif type(value) == "string" then
+        -- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, value, {})
         vim.keymap.set(mode:sub(i, i), keymap, value, {})
+
+        value = vim.trim(value, {}, 0)
+        table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. value)
       end
     end
   end

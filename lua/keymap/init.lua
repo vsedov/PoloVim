@@ -278,7 +278,7 @@ local plug_map = {
   ["n|<Leader>d"] = map_cr("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
 }
 
-bind.nvim_load_mapping(plug_map)
+return { map = plug_map }
 
 -- Might be used, not sure how .
 -- ["n|<Leader>dd"] = map_cu("lua require('dap').continue()"):with_noremap():with_silent(),
