@@ -195,7 +195,7 @@ local plug_map = {
 
   ["n|<Leader>ir"] = map_cmd('<cmd>lua require"utils.telescope".lsp_references()<CR>'):with_noremap():with_silent(),
 
-  ["n|<Leader><Leader><Leader>"] = map_cmd('<cmd>lua require"utils.telescope".frequency()<CR>')
+  ["n|<Leader><Leader><Leader>"] = map_cmd('<cmd>lua require"utils.telescope".frecency()<CR>')
     :with_noremap()
     :with_silent(),
 
