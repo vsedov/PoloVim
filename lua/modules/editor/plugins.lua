@@ -36,9 +36,7 @@ editor["hrsh7th/vim-searchx"] = {
   setup = conf.searchx,
 }
 
--- folke BROKEN
-editor["zeertzjq/which-key.nvim"] = {
-  branch = "patch-1",
+editor["max397574/which-key.nvim"] = {
   opt = true,
   after = "nvim-treesitter",
   config = function()
