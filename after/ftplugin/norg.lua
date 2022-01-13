@@ -3,3 +3,4 @@ vim.bo.shiftwidth = 2
 vim.o.conceallevel = 2
 vim.bo.commentstring = "#%s"
 
+vim.cmd([[source ~/.config/nvim_config/clipboard_neorg.vim]])
