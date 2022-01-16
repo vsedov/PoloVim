@@ -13,24 +13,19 @@ Probably one of the few neovim configs out there with a startup of <=1.8, loaded
 loading, About 200 plugins
 
 ```
-     124 text files.
-     105 unique files.
-      33 files ignored.
-
-github.com/AlDanial/cloc v 1.92  T=0.11 s (990.4 files/s, 122134.8 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Lua                             70           1249           1439           8402
+Lua                             69           1234           1425           8220
 vim script                      25            201            316            969
-Markdown                         2             48              0            162
+Markdown                         2             56              0            205
 Scheme                           2              7              0             46
 TOML                             3             10              0             40
-Bourne Shell                     1              5              0             30
+Bourne Shell                     1              5              0             32
 Python                           1              5              7              9
 C                                1              1              0              2
 -------------------------------------------------------------------------------
-SUM:                           105           1526           1762           9660
+SUM:                           104           1519           1748           9523
 -------------------------------------------------------------------------------
 ```
 
