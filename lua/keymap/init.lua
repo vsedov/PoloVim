@@ -213,8 +213,8 @@ local plug_map = {
   -- :with_silent(),
   -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
 
-  -- Plugin Vista or SymbolsOutline
-  ["n|<Leader>v"] = map_cu("SymbolsOutline"):with_noremap():with_silent(),
+  -- Plugin Vista or SymbolsOutline -- Symbol Breaks for the time .
+  ["n|<Leader>v"] = map_cu("Vista"):with_noremap():with_silent(),
 
   -- Plugin vim_niceblock
   ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
@@ -235,11 +235,10 @@ local plug_map = {
     '<cmd>lua require"gitlinker".get_repo_url({action_callback = require"gitlinker.actions".open_in_browser})<cr>'
   ):with_silent(),
 
-  -- Nice command to list all breakpoints. .
-  ["n|<Leader>lb"] = map_cr("Telescope dap list_breakpoints"):with_noremap():with_silent(),
+  -- -- Nice command to list all breakpoints. .
+  -- ["n|<Leader>lb"] = map_cr("Telescope dap list_breakpoints"):with_noremap():with_silent(),
 
-  -- ["n|<LeftMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
-  ["n|<RightMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>"):with_noremap():with_silent(),
+  ["n|<RightMouse>"] = map_cmd("<RightMouse><cmd>lua vim.lsp.buf.definition()<CR>"):with_noremap():with_silent(),
 
   ["n|<C-ScrollWheelUp>"] = map_cmd("<C-i>"):with_noremap():with_silent(),
   ["n|<C-ScrollWheelDown>"] = map_cmd("<C-o>"):with_noremap():with_silent(),
@@ -249,9 +248,6 @@ local plug_map = {
 
   -- TZAtaraxis
   ["n|<Leader><Leader>1"] = map_cu("ZenMode"):with_noremap():with_silent(),
-  ["n|<Leader><leader>2"] = map_cu("TZAtaraxis<CR>"):with_noremap():with_silent(),
-  ["n|<Leader><Leader>3"] = map_cu("TZMinimalist<CR>"):with_noremap():with_silent(),
-  ["n|<Leader><Leader>4"] = map_cu("TZFocus<CR>"):with_noremap():with_silent(),
   --- new
   ["n|<Leader>vf"] = map_cmd("<Plug>(ultest-run-file)"):with_silent(),
   ["n|<Leader>vn"] = map_cmd("<Plug>(ultest-run-nearest)"):with_silent(),
@@ -264,7 +260,7 @@ local plug_map = {
   -- Quick Fix infomation and binds
   ["n|<Leader>xx"] = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
 
-  -- Nice highlighting for latex when writing notes Norg files only.
+  -- Change map for certain file types: remove this for local . .
   ["n|<F9>"] = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
   ["n|<localleader>b"] = map_cr('<cmd> lua require("nabla").popup()<CR>'):with_noremap(),
 
@@ -274,7 +270,6 @@ local plug_map = {
   ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
 
   -- Neogen
-
   ["n|<Leader>d"] = map_cr("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
 }
 

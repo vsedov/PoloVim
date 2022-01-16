@@ -85,6 +85,8 @@ completion["https://github.com/github/copilot.vim.git"] = {
   end,
 }
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
+-- hrsh7th
+-- Iron-E
 completion["Iron-E/nvim-cmp"] = {
   branch = "feat/completion-menu-borders",
   -- opt = true,
@@ -99,7 +101,7 @@ completion["Iron-E/nvim-cmp"] = {
       config = conf.tabnine,
       opt = true,
     },
-    { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
+    -- { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
     { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
@@ -187,9 +189,9 @@ completion["ray-x/lsp_signature.nvim"] = {
       zindex = 1002,
       timer_interval = 100,
       extra_trigger_chars = {},
-      handler_opts = {
-        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-      },
+      -- handler_opts = {
+      --   border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+      -- },
       max_height = 4,
     })
   end,
