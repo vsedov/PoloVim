@@ -128,26 +128,26 @@ local keys = {
 
   ["n|<Leader>sd"] = map_cu("DeleteSession"):with_noremap(),
 
-  ["n|<localleader>M"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]),
-  ["n|<localleader>m1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]),
-  ["n|<localleader>m2"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]),
-  ["n|<localleader>m3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]),
-  ["n|<localleader>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
-  ["n|<localleader>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
+  -- Switch from local to Normal for M to test how it tis
+  ["n|<Leader>M"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]),
+  ["n|<Leader>m1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]),
+  ["n|<Leader>m2"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]),
+  ["n|<Leader>m3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]),
+  ["n|<Leader>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
+  ["n|<Leader>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
 
-  --- Use commands for this .
-  ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>")
-    :with_noremap()
-    :with_silent()
-    :with_expr(),
-  ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>")
-    :with_noremap()
-    :with_silent()
-    :with_expr(),
-  ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>")
-    :with_noremap()
-    :with_silent()
-    :with_expr(),
+  --- Refactoring
+  ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>"):with_noremap(),
+
+  ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>"):with_noremap(),
+
+  ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>"):with_noremap(),
+
+  ["v|<Leader>rp"] = map_cmd("<cmd>lua require('refactoring').debug.printf({below = false})<CR>"):with_noremap(),
+
+  ["v|<Leader>rv"] = map_cmd("<cmd>lua require('refactoring').debug.print_var({})<CR>"):with_noremap(),
+
+  ["v|<Leader>rc"] = map_cmd("<cmd>lua require('refactoring').debug.cleanup({})<CR>"):with_noremap(),
 
   ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 }
@@ -158,10 +158,10 @@ vim.cmd([[nnoremap  <leader>Y  "+yg_]])
 -- vim.cmd([[vnoremap  <M-c>  "+y]])
 -- vim.cmd([[nnoremap  <M-c>  "+yg_]])
 
-vim.cmd([[vnoremap  <D-c>  *+y]])
-vim.cmd([[nnoremap  <D-c>  *+yg_]])
-vim.cmd([[inoremap  <D-c>  *+yg_]])
-vim.cmd([[inoremap  <D-v>  <CTRL-r>*]])
+vim.cmd([[vnoremap  <localleader>c  *+y]])
+vim.cmd([[nnoremap  <localleader>c  *+yg_]])
+vim.cmd([[inoremap  <localleader>c  *+yg_]])
+vim.cmd([[inoremap  <localleader>v <C-r>*]])
 
 --
 bind.nvim_load_mapping(keys)

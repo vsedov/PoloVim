@@ -352,9 +352,14 @@ M.multi_selection_open = function(prompt_bufnr)
   M._multiopen(prompt_bufnr, "edit")
 end
 
-M.frequency = function()
+M.frecency = function()
   reloader()
+
   telescope.extensions.frecency.frecency({
+    show_scores = false,
+    show_unindexed = true,
+    ignore_patterns = { "*.git/*", "*/tmp/*" },
+    disable_devicons = false,
     sorter = telescope.extensions.fzf.native_fzf_sorter(),
   })
 end
@@ -559,7 +564,7 @@ end
 
 M.file_browser = function()
   reloader()
-  require("telescope").load_extension("file_browser")
+  telescope.load_extension("file_browser")
   local opts
 
   opts = {
