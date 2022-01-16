@@ -252,28 +252,8 @@ tools["camspiers/animate.vim"] = {
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
   after = { "telescope.nvim" },
-  requires = { "tami5/sqlite.lua", module = "sqlite", opt = true },
+  requires = { "tami5/sqlite.lua", module = "sqlite" },
   opt = true,
-  config = function()
-    local telescope = require("telescope")
-    telescope.load_extension("frecency")
-    telescope.setup({
-      extensions = {
-        frecency = {
-          show_scores = false,
-          show_unindexed = true,
-          ignore_patterns = { "*.git/*", "*/tmp/*" },
-          disable_devicons = false,
-          workspaces = {
-            -- ["conf"] = "/home/my_username/.config",
-            -- ["data"] = "/home/my_username/.local/share",
-            -- ["project"] = "/home/my_username/projects",
-            -- ["wiki"] = "/home/my_username/wiki"
-          },
-        },
-      },
-    })
-  end,
 }
 
 tools["chentau/marks.nvim"] = {
@@ -301,18 +281,19 @@ tools["chentau/marks.nvim"] = {
   end,
 }
 
--- this causing issues with better escape
--- tools["Krafi2/jeskape.nvim"] = {
---   event = "InsertEnter",
---   config = function()
---     require("jeskape").setup({
---       mappings = {
---         ["c"] = {
---         },
---       },
---     })
---   end,
--- }
+tools["Krafi2/jeskape.nvim"] = {
+  event = "InsertEnter",
+  config = function()
+    require("jeskape").setup({
+      mappings = {
+        ["\\"] = {
+          i = "<cmd>Clap | startinsert<cr>",
+          f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
+        },
+      },
+    })
+  end,
+}
 
 tools["fladson/vim-kitty"] = {
   ft = { "*.conf" },
@@ -330,10 +311,7 @@ tools["relastle/vim-nayvy"] = {
 tools["sQVe/sort.nvim"] = {
   cmd = "Sort",
   config = function()
-    require("sort").setup({
-      -- Input configuration here.
-      -- Refer to the configuration section below for options.
-    })
+    require("sort").setup({})
   end,
 }
 return tools

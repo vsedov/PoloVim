@@ -107,7 +107,6 @@ ui["numToStr/Sakura.nvim"] = {
 
 ui["rebelot/kanagawa.nvim"] = {
   opt = true,
-  setup = conf.kanagawa,
   config = function()
     vim.cmd([[colorscheme kanagawa]])
   end,

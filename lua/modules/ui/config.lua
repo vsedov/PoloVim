@@ -445,10 +445,6 @@ function config.themer()
 end
 
 function config.kanagawa()
-  if not packer_plugins["kanagawa.nvim"].loaded then
-    vim.cmd([[packadd kanagawa.nvim]])
-  end
-
   require("kanagawa").setup({
     undercurl = true, -- enable undercurls
     commentStyle = "italic",
@@ -460,6 +456,7 @@ function config.kanagawa()
     specialReturn = true, -- special highlight for the return keyword
     specialException = true, -- special highlight for exception handling keywords
     transparent = false, -- do not set background color
+    dimInactive = true, -- dim inactive window `:h hl-NormalNC`
     colors = {},
     overrides = {},
   })
@@ -508,6 +505,11 @@ end
 function config.blankline()
   vim.opt.termguicolors = true
   vim.opt.list = true
+
+  -- test this for now, not sure if i like this or not .
+  vim.opt.listchars:append("space:⋅")
+  vim.opt.listchars:append("eol:↴")
+
   require("indent_blankline").setup({
     enabled = true,
     -- char = "|",
@@ -519,14 +521,7 @@ function config.blankline()
     space_char_blankline = " ",
     use_treesitter = true,
     show_current_context = true,
-    char_highlight_list = {
-      "IndentBlanklineIndent1",
-      "IndentBlanklineIndent2",
-      "IndentBlanklineIndent3",
-      "IndentBlanklineIndent4",
-      "IndentBlanklineIndent5",
-      "IndentBlanklineIndent6",
-    },
+
     context_patterns = {
       "class",
       "return",

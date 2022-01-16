@@ -376,6 +376,43 @@ function config.gomove()
   })
 end
 
+--- to be updated  - better way of doing this im sure . 
+function config.side_bar()
+  local sidebar = require("sidebar-nvim")
+  local opts = {
+    open = false,
+    disable_default_keybindings = true,
+    side = "left",
+    initial_width = 40,
+    update_interval = 2000,
+    sections = {
+      "datetime",
+      "git",
+      "diagnostics",
+      "symbols",
+    },
+    section_separator = "─────",
+    bindings = {
+      ["q"] = function()
+        require("sidebar-nvim").close()
+      end,
+
+      ["<C-q>"] = function()
+        require("sidebar-nvim").close()
+      end,
+    },
+    datetime = { format = "%a %b %d, %H:%M", clocks = { { name = "こんにちは" } } },
+    todos = { ignored_paths = { "~" } },
+    disable_closing_prompt = false,
+    dap = {
+      breakpoints = {
+        icon = "",
+      },
+    },
+  }
+  sidebar.setup(opts)
+end
+
 function config.searchx()
   --   nnoremap <C-k> <Cmd>call searchx#prev()<CR>
   -- nnoremap <C-j> <Cmd>call searchx#next()<CR>
@@ -383,10 +420,6 @@ function config.searchx()
   vim.keymap.set("n", "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
   vim.keymap.set("n", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
   vim.keymap.set("x", "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
-  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-
-  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
   vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
   vim.keymap.set("c", ";", "<Cmd>call searchx#select()<CR>")
 
@@ -401,7 +434,7 @@ function config.searchx()
   vim.keymap.set("c", "<C-k>", "<Cmd>call searchx#prev()<CR>")
   vim.keymap.set("c", "<C-j>", "<Cmd>call searchx#next()<CR>")
 
-  vim.keymap.set("n", "<C-l>", "<Cmd>call searchx#clear()<CR>")
+  vim.keymap.set("n", "<c-/>", "<Cmd>call searchx#clear()<CR>")
 
   vim.cmd([[
     " Overwrite / and ?.
@@ -422,6 +455,13 @@ function config.searchx()
       return join(split(a:input, ' '), '.\{-}')
     endfunction
   ]])
+end
+
+function config.dial_setup()
+  vim.keymap.set({ "n", "x" }, "<C-a>", "<Plug>(dial-increment)")
+  vim.keymap.set({ "n", "x" }, "<C-x>", "<Plug>(dial-decrement)")
+  vim.keymap.set("x", "<C-a>", "<Plug>(dial-increment-additional)")
+  vim.keymap.set("x", "<C-x>", "<Plug>(dial-decrement-additional)")
 end
 
 return config

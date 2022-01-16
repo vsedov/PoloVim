@@ -23,7 +23,22 @@ editor["kana/vim-niceblock"] = {
   opt = true,
 }
 
--- I want this all the time - so im not lazy loading this .,
+-- I like this plugin, but 1) offscreen context is slow
+-- 2) it not friendly to lazyload and treesitter startup
+-- editor["andymass/vim-matchup"] = {
+--   opt = true,
+--   event = {"CursorMoved", "CursorMovedI"},
+--   cmd = {'MatchupWhereAmI?'},
+--   config = function()
+--     vim.g.matchup_enabled = 1
+--     vim.g.matchup_surround_enabled = 1
+--     -- vim.g.matchup_transmute_enabled = 1
+--     vim.g.matchup_matchparen_deferred = 1
+--     vim.g.matchup_matchparen_offscreen = {method = 'popup'}
+--     vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
+--   end
+-- }
+
 editor["ggandor/lightspeed.nvim"] = {
   as = "lightspeed",
   event = "BufReadPost",
@@ -36,7 +51,8 @@ editor["hrsh7th/vim-searchx"] = {
   setup = conf.searchx,
 }
 
-editor["max397574/which-key.nvim"] = {
+--max397574
+editor["folke/which-key.nvim"] = {
   opt = true,
   after = "nvim-treesitter",
   config = function()
@@ -269,27 +285,58 @@ editor["max397574/better-escape.nvim"] = {
   end,
 }
 
-editor["zegervdv/nrpattern.nvim"] = {
+editor["monaqa/dial.nvim"] = {
+  keys = { "<Plug>(dial-" },
   opt = true,
-
+  setup = conf.dial_setup(),
   config = function()
-    local patterns = require("nrpattern.default")
-
-    -- The dict uses the pattern as key, and has a dict of options as value.
-    -- To add a new pattern, for example the VHDL x"aabb" format.
-    patterns['()x"(%x+)"'] = {
-      base = 16, -- Hexadecimal
-      format = '%sx"%s"', -- Output format
-      priority = 15, -- Determines order in pattern matching
+    local dial = require("dial")
+    dial.config.searchlist.normal = {
+      "number#decimal",
+      "number#hex",
+      "number#binary",
+      "date#[%Y/%m/%d]",
+      "markup#markdown#header",
     }
+    if vim.o.ft == "norg" or vim.o.ft == "markdown" then
+      table.insert(dial.config.searchlist.normal, "date#[%ja]")
+      table.insert(dial.config.searchlist.normal, "char#alph#small#word")
+      table.insert(dial.config.searchlist.normal, "char#alph#small#str")
+      table.insert(dial.config.searchlist.normal, "char#alph#capital#word")
+    end
+  end,
+}
 
-    -- Change a default setting:
-    patterns["(%d*)'h([%x_]+)"].separator.group = 8
+-- Test for now
+editor["ethanholz/nvim-lastplace"] = {
+  event = "BufRead",
+  config = function()
+    require("nvim-lastplace").setup({
+      lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+      lastplace_ignore_filetype = {
+        "gitcommit",
+        "gitrebase",
+        "svn",
+        "hgcommit",
+      },
+      lastplace_open_folds = true,
+    })
+  end,
+}
 
-    patterns[{ "yes", "no" }] = { priority = 5 }
+-- Latest dont work .
+editor["sidebar-nvim/sidebar.nvim"] = {
+  ft = { "python", "lua", "c", "cpp", "prolog" },
+  opt = true,
+  branch = "dev",
+  config = conf.side_bar,
+}
 
-    -- Call the setup to enable the patterns
-    require("nrpattern").setup(patterns)
+editor["nyngwang/NeoZoom.lua"] = {
+  event = "BufRead",
+  after = "which-key.nvim",
+  config = function()
+    require("which-key").register({ g = { z = { "<Cmd>NeoZoomToggle<CR>", "Toggle Zoom" } } }, { prefix = "<c-w>" })
   end,
 }
 

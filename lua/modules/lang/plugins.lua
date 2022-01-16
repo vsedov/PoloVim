@@ -114,6 +114,7 @@ lang["simrat39/symbols-outline.nvim"] = {
   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
   setup = conf.outline,
 }
+-- Test
 
 lang["mfussenegger/nvim-dap"] = {
   opt = true,
@@ -127,6 +128,8 @@ lang["mfussenegger/nvim-dap"] = {
 
   config = conf.dap,
 } -- cmd = "Luadev",
+
+-- better python indent
 
 lang["nvim-telescope/telescope-dap.nvim"] = {
   opt = true,
@@ -180,6 +183,10 @@ lang["dccsillag/magma-nvim"] = {
   requires = "rcarriga/nvim-notify",
   run = ":UpdateRemotePlugins",
   config = conf.magma,
+}
+
+lang["Vimjas/vim-python-pep8-indent"] = {
+  ft = "python",
 }
 
 lang["vim-test/vim-test"] = {
@@ -241,6 +248,20 @@ lang["p00f/nvim-ts-rainbow"] = {
   cmd = "Rainbow",
   config = function()
     require("nvim-treesitter.configs").setup({ rainbow = { enable = true, extended_mode = true } })
+  end,
+}
+
+lang["onsails/diaglist.nvim"] = {
+  cmd = { "DiaglistA", "DiaglistB" },
+  opt = true,
+  ft = { "python", "c", "lua", "cpp" },
+  config = function()
+    require("diaglist").init({
+      debug = false,
+      debounce_ms = 150,
+    })
+    vim.cmd([[command! -nargs=*  DiaglistA lua require('diaglist').open_all_diagnostics()]])
+    vim.cmd([[command! -nargs=*  DiaglistB lua require('diaglist').open_buffer_diagnostics()]])
   end,
 }
 
