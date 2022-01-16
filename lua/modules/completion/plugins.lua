@@ -87,8 +87,8 @@ completion["https://github.com/github/copilot.vim.git"] = {
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th
 -- Iron-E
-completion["Iron-E/nvim-cmp"] = {
-  branch = "feat/completion-menu-borders",
+completion["hrsh7th/nvim-cmp"] = {
+  -- branch = "feat/completion-menu-borders",
   -- opt = true,
   -- event = {"InsertEnter", "CmdLineEnter"}, -- InsertCharPre Due to luasnip
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
