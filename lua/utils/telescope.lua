@@ -718,4 +718,87 @@ M.find_files = function()
   builtin.find_files(opts)
 end
 
+---------------------------------------------------------------------------------------------------------------------
+
+local function enter(prompt_bufnr)
+  local selected = action_state.get_selected_entry()
+  local cmd = "colorscheme " .. selected[1]
+  vim.cmd(cmd)
+  local nvimColor = "vim.cmd([[colorscheme " .. " " .. selected[1] .. "]])"
+  vim.fn.jobstart(nvimColor)
+  actions.close(prompt_bufnr)
+end
+
+local function next_color(prompt_bufnr)
+  actions.move_selection_next(prompt_bufnr)
+  local selection = action_state.get_selected_entry()
+  local cmd = "colorscheme " .. selection[1]
+  vim.cmd(cmd)
+end
+
+local function prev_color(prompt_bufnr)
+  actions.move_selection_previous(prompt_bufnr)
+  local selection = action_state.get_selected_entry()
+  local cmd = "colorscheme " .. selection[1]
+  vim.cmd(cmd)
+end
+
+local function preview(prompt_bufnr)
+  local selection = action_state.get_selected_entry()
+  local cmd = "colorscheme " .. selection[1]
+  vim.cmd(cmd)
+end
+
+function M.colorscheme()
+  -- loader("tokyodark.nvim tokyonight.nvim")
+  local before_color = vim.api.nvim_exec("colorscheme", true)
+  local need_restore = true
+
+  local colors = { before_color }
+  if not vim.tbl_contains(colors, before_color) then
+    table.insert(colors, 1, before_color)
+  end
+
+  colors = vim.list_extend(
+    colors,
+    vim.tbl_filter(function(color)
+      return color ~= before_color
+    end, vim.fn.getcompletion("themer", "color"))
+  )
+  local opts = {
+    prompt_title = " Find colorscheme",
+    results_title = "Change colorscheme",
+    path_display = { "smart" },
+    finder = finders.new_table({
+      results = colors,
+    }),
+    prompt_position = "bottom",
+    previewer = false,
+    winblend = 0,
+    layout_config = {
+      width = 0.5,
+      height = 0.5,
+      prompt_position = "bottom", -- top bottom
+    },
+    attach_mappings = function(prompt_bufnr, map)
+      map("i", "<cr>", enter)
+
+      map("i", "<S-Tab>", prev_color)
+      map("i", "<Tab>", next_color)
+
+      map("i", "k", prev_color)
+      map("i", "j", next_color)
+
+      map("n", "p", preview)
+      map("n", "<cr>", enter)
+
+      return true
+    end,
+    sorter = require("telescope.config").values.generic_sorter({}),
+  }
+  -- themes.get_ivy() themes.get_cursor
+  local colorschemes = pickers.new(themes.get_ivy(), opts)
+  colorschemes:find()
+end
+
 return M
