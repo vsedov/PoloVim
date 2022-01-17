@@ -436,13 +436,13 @@ function config.catppuccin()
     },
   })
 end
-
-function config.themer()
-  if not packer_plugins["themer.lua"].loaded then
-    vim.cmd([[packadd themer.lua]])
-    require("themer")
-  end
+function config.dir_buff()
+require("dirbuf").setup {
+    hash_padding = 2,
+    show_hidden = true,
+}
 end
+
 
 function config.kanagawa()
   require("kanagawa").setup({

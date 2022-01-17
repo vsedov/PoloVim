@@ -376,11 +376,11 @@ function config.gomove()
   })
 end
 
---- to be updated  - better way of doing this im sure . 
+--- to be updated  - better way of doing this im sure .
 function config.side_bar()
   local sidebar = require("sidebar-nvim")
   local opts = {
-    open = false,
+    open = true,
     disable_default_keybindings = true,
     side = "left",
     initial_width = 40,
@@ -417,22 +417,13 @@ function config.searchx()
   --   nnoremap <C-k> <Cmd>call searchx#prev()<CR>
   -- nnoremap <C-j> <Cmd>call searchx#next()<CR>
 
-  vim.keymap.set("n", "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
-  vim.keymap.set("n", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-  vim.keymap.set("x", "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
-  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+  vim.keymap.set({"n","x"}, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
+  vim.keymap.set({"n","x"}, "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
   vim.keymap.set("c", ";", "<Cmd>call searchx#select()<CR>")
 
   -- might interfear with normal mapping for n maybe ?
-  vim.keymap.set("n", "N", "<Cmd>call searchx#prev_dir()<CR>")
-  vim.keymap.set("n", "n", "<Cmd>call searchx#next_dir()<CR>")
-  vim.keymap.set("x", "N", "<Cmd>call searchx#prev_dir()<CR>")
-  vim.keymap.set("x", "n", "<Cmd>call searchx#next_dir()<CR>")
-
-  vim.keymap.set("x", "<C-k>", "<Cmd>call searchx#prev()<CR>")
-  vim.keymap.set("x", "<C-j>", "<Cmd>call searchx#prev()<CR>")
-  vim.keymap.set("c", "<C-k>", "<Cmd>call searchx#prev()<CR>")
-  vim.keymap.set("c", "<C-j>", "<Cmd>call searchx#next()<CR>")
+  vim.keymap.set({"n","x"}, "N", "<Cmd>call searchx#prev_dir()<CR>")
+  vim.keymap.set({"n","x"}, "n", "<Cmd>call searchx#next_dir()<CR>")
 
   vim.keymap.set("n", "<c-/>", "<Cmd>call searchx#clear()<CR>")
 
