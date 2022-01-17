@@ -94,6 +94,16 @@ ui["folke/tokyonight.nvim"] = {
     vim.cmd([[colorscheme tokyonight]])
   end,
 }
+
+ui["tiagovla/tokyodark.nvim"] = {
+  opt = true,
+  setup = conf.tokyodark,
+  config = function()
+    vim.cmd([[hi CursorLine guibg=#353644]])
+    vim.cmd([[colorscheme tokyodark]])
+  end,
+}
+
 ui["catppuccin/nvim"] = {
   opt = true,
   setup = conf.catppuccin,
@@ -113,15 +123,14 @@ ui["numToStr/Sakura.nvim"] = {
 -- Use default when loading this .
 ui["rebelot/kanagawa.nvim"] = {
   opt = true,
-  config = function()
-    vim.cmd([[colorscheme kanagawa]])
-  end,
+  module = "kanagawa",
+  config = conf.kanagawa,
 }
 
 -- Might want to manually call this through telescope or something .
 ui["narutoxy/themer.lua"] = {
   opt = true,
-  -- module = "themer",
+  module = "themer",
   branch = "dev",
   config = conf.themer,
 }

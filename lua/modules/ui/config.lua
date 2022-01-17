@@ -377,6 +377,13 @@ function config.tokyonight()
   vim.g.tokyonight_colors = { hint = "orange", error = "#ae1960" }
 end
 
+function config.tokyodark()
+  vim.g.tokyodark_transparent_background = false
+  vim.g.tokyodark_enable_italic_comment = true
+  vim.g.tokyodark_enable_italic = true
+  vim.g.tokyodark_color_gamma = "1.0"
+end
+
 function config.catppuccin()
   if not packer_plugins["nvim"].loaded then
     vim.cmd([[packadd nvim]])
@@ -459,6 +466,7 @@ function config.kanagawa()
     colors = {},
     overrides = {},
   })
+  vim.cmd([[colorscheme kanagawa]])
 end
 
 function config.nightfly()
