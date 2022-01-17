@@ -417,13 +417,13 @@ function config.searchx()
   --   nnoremap <C-k> <Cmd>call searchx#prev()<CR>
   -- nnoremap <C-j> <Cmd>call searchx#next()<CR>
 
-  vim.keymap.set({"n","x"}, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
-  vim.keymap.set({"n","x"}, "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+  vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
+  vim.keymap.set({ "n", "x" }, "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
   vim.keymap.set("c", ";", "<Cmd>call searchx#select()<CR>")
 
   -- might interfear with normal mapping for n maybe ?
-  vim.keymap.set({"n","x"}, "N", "<Cmd>call searchx#prev_dir()<CR>")
-  vim.keymap.set({"n","x"}, "n", "<Cmd>call searchx#next_dir()<CR>")
+  vim.keymap.set({ "n", "x" }, "N", "<Cmd>call searchx#prev_dir()<CR>")
+  vim.keymap.set({ "n", "x" }, "n", "<Cmd>call searchx#next_dir()<CR>")
 
   vim.keymap.set("n", "<c-/>", "<Cmd>call searchx#clear()<CR>")
 

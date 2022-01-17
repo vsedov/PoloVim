@@ -437,18 +437,17 @@ function config.catppuccin()
   })
 end
 function config.dir_buff()
-require("dirbuf").setup {
+  require("dirbuf").setup({
     hash_padding = 2,
     show_hidden = true,
-}
+  })
 end
-
 
 function config.kanagawa()
   require("kanagawa").setup({
     undercurl = true, -- enable undercurls
     commentStyle = "italic",
-    functionStyle = "NONE",
+    functionStyle = "italic",
     keywordStyle = "italic",
     statementStyle = "bold",
     typeStyle = "NONE",
@@ -613,6 +612,59 @@ function config.buffers_close()
         vim.api.nvim_win_set_buf(window, bufnr)
       end
     end,
+  })
+end
+
+function config.themer()
+  require("themer").setup({
+    config = {
+      options = {
+        transparency = false,
+        term_colors = true,
+        styles = {
+          comments = { italic = true },
+          functions = { italic = true },
+          keywords = { italic = true },
+          strings = {},
+          variables = { italic = true },
+          parameters = { italic = true },
+          fields = {},
+        },
+
+        integrations = {
+          treesitter = true,
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              error = { italic = true },
+              hint = { italic = true },
+              warn = { italic = true },
+              info = { italic = true },
+            },
+            underlines = {
+              error = { underline = true },
+              hint = { underline = true },
+              warn = { underline = true },
+              info = { underline = true },
+            },
+          },
+          cmp = true,
+          gitsigns = true,
+          telescope = true,
+          indent_blankline = {
+            enabled = true,
+            colored_indent_levels = true,
+          },
+          barbar = true,
+          bufferline = true,
+          markdown = true,
+        },
+        extra_integrations = {
+          galaxyline = true,
+          lualine = true,
+        },
+      },
+    },
   })
 end
 

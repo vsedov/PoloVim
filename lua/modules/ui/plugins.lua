@@ -49,9 +49,9 @@ ui["kyazdani42/nvim-tree.lua"] = {
   setup = conf.nvim_tree_setup,
   config = conf.nvim_tree,
 }
--- Use this with nvimtree . 
-ui["elihunter173/dirbuf.nvim"]={
-  cmd = {"Dirbuf"}, 
+-- Use this with nvimtree .
+ui["elihunter173/dirbuf.nvim"] = {
+  cmd = { "Dirbuf" },
   config = conf.dir_buff,
 }
 
@@ -110,7 +110,7 @@ ui["numToStr/Sakura.nvim"] = {
   end,
 }
 
--- Use default when loading this . 
+-- Use default when loading this .
 ui["rebelot/kanagawa.nvim"] = {
   opt = true,
   config = function()
@@ -118,12 +118,12 @@ ui["rebelot/kanagawa.nvim"] = {
   end,
 }
 
--- Might want to manually call this through telescope or something . 
+-- Might want to manually call this through telescope or something .
 ui["narutoxy/themer.lua"] = {
   opt = true,
-  module = "themer",
+  -- module = "themer",
   branch = "dev",
-  -- setup = conf.themer,
+  config = conf.themer,
 }
 
 ui["kazhala/close-buffers.nvim"] = {
