@@ -81,8 +81,15 @@ local plug_map = {
     :with_silent(),
 
   -- -- SOMETHING WRONG HERE .
-  ["n|<Leader>gr"] = map_cu("Lspsaga rename <cr>"):with_noremap():with_silent(),
-  ["v|<Leader>gr"] = map_cu("Lspsaga rename <cr>"):with_noremap():with_silent(),
+  ["n|<Leader>gr"] = map_cmd("Lspsaga rename <cr>"):with_noremap():with_silent(),
+  ["v|<Leader>gr"] = map_cmd("Lspsaga rename <cr>"):with_noremap():with_silent(),
+
+  -- Replace word under cursor in Buffer (case-sensitive)
+  -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
+  ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>"),
+  -- Replace word under cursor on Line (case-sensitive)
+  -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
+  ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>"),
 
   ["n|gpd"] = map_cu("GotoPrev"):with_noremap(),
   ["n|gpi"] = map_cu("GotoImp"):with_noremap(),
