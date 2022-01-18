@@ -52,7 +52,7 @@ editor["hrsh7th/vim-searchx"] = {
 }
 
 --max397574
-editor["folke/which-key.nvim"] = {
+editor["max397574/which-key.nvim"] = {
   opt = true,
   after = "nvim-treesitter",
   config = function()
@@ -71,9 +71,10 @@ editor["folke/which-key.nvim"] = {
 -- }
 
 editor["blackCauldron7/surround.nvim"] = {
+  keys = { "<" },
   config = function()
     require("surround").setup({
-      mappings_style = "surround",
+      mappings_style = "sandwich",
       pairs = {
         nestable = {
           { "(", ")" },
@@ -87,6 +88,7 @@ editor["blackCauldron7/surround.nvim"] = {
         },
         linear = { { "'", "'" }, { "`", "`" }, { '"', '"' } },
       },
+      prefix = "<",
     })
   end,
 }

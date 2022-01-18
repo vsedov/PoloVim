@@ -114,7 +114,10 @@ lang["simrat39/symbols-outline.nvim"] = {
   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
   setup = conf.outline,
 }
--- Test
+-- Only for java files help maven.txt
+lang["mikelue/vim-maven-plugin"] = {
+  ft = "java",
+}
 
 lang["mfussenegger/nvim-dap"] = {
   opt = true,

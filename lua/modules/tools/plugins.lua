@@ -184,7 +184,7 @@ tools["brooth/far.vim"] = {
   opt = true,
 } -- brooth/far.vim
 
--- ze black magic 
+-- ze black magic
 tools["windwp/nvim-spectre"] = {
   module = "spectre",
   requires = { "nvim-lua/plenary.nvim" },
