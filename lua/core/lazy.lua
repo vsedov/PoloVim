@@ -125,7 +125,10 @@ function Lazyload()
     loader("indent-blankline.nvim")
   end
 
-  loader("nvim-notify popup.nvim")
+  loader("nvim-notify")
+  vim.notify = require("notify")
+
+  loader("popup.nvim")
 
   -- if bytes < 2 * 1024 * 1024 and syn_on then
   --   vim.cmd([[setlocal syntax=on]])

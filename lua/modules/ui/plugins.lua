@@ -131,7 +131,7 @@ ui["rebelot/kanagawa.nvim"] = {
 ui["narutoxy/themer.lua"] = {
   opt = true,
   module = "themer",
-  branch = "dev",
+  branch = "new-palette",
   config = conf.themer,
 }
 
@@ -141,3 +141,4 @@ ui["kazhala/close-buffers.nvim"] = {
 }
 
 return ui
+-- hemer.lua: ...te/pack/packer/opt/themer.lua/lua/themer/core/mapper.lua:64: attempt to index field 'bg' (a string value)

@@ -107,7 +107,6 @@ function config.notify()
     },
   }
 
-  vim.notify = notify
   notify.setup(default)
 
   require("telescope").load_extension("notify")
