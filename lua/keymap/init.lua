@@ -13,6 +13,8 @@ local plug_map = {
   ["s|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr():with_silent(),
   ["s|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
 
+  ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
+
   -- -- -- person keymap
   -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
   -- -- Lsp mapp work when insertenter and lsp start
@@ -198,8 +200,7 @@ local plug_map = {
   -- Jump
   ["n|<Leader>fj"] = map_cmd('<cmd>lua require"utils.telescope".jump()<CR>'):with_noremap():with_silent(),
 
-  -- lsp implmentation with telescop
-
+  -- lsp implmentation with telescope
   ["n|<Leader>ir"] = map_cmd('<cmd>lua require"utils.telescope".lsp_references()<CR>'):with_noremap():with_silent(),
 
   ["n|<Leader><Leader><Leader>"] = map_cmd('<cmd>lua require"utils.telescope".frecency()<CR>')
@@ -221,7 +222,7 @@ local plug_map = {
   -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
 
   -- Plugin Vista or SymbolsOutline -- Symbol Breaks for the time .
-  ["n|<Leader>v"] = map_cu("Vista"):with_noremap():with_silent(),
+  ["n|<Leader>v"] = map_cu("Vista!!"):with_noremap():with_silent(),
 
   -- Plugin vim_niceblock
   ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),

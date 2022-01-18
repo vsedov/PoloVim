@@ -149,6 +149,9 @@ local keys = {
 
   ["v|<Leader>rc"] = map_cmd("<cmd>lua require('refactoring').debug.cleanup({})<CR>"):with_noremap(),
 
+  -- Need to be manually called from telescope
+  ["v|<Leader>Rt"] = map_cmd('<Esc><cmd>lua require"utils.telescope".refactor()<CR>'):with_noremap(),
+
   ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 }
 
@@ -161,7 +164,7 @@ vim.cmd([[nnoremap  <leader>Y  "+yg_]])
 vim.cmd([[vnoremap  <localleader>c  *+y]])
 vim.cmd([[nnoremap  <localleader>c  *+yg_]])
 vim.cmd([[inoremap  <localleader>c  *+yg_]])
-vim.cmd([[inoremap  <localleader>v <C-r>*]])
+-- vim.cmd([[inoremap  <localleader>v <C-r>*]])
 
 --
 bind.nvim_load_mapping(keys)
@@ -236,7 +239,7 @@ K.get_keymaps = function()
 end
 
 vim.cmd([[command! -nargs=* Keymaps lua require('overwrite.mapping').get_keymaps()]])
-vim.cmd([[command! -nargs=* CustColour lua require('utils.telescope').colorscheme()]])
+vim.cmd([[command! -nargs=* ColourScheme lua require('utils.telescope').colorscheme()]])
 
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
 --

@@ -327,6 +327,7 @@ editor["ethanholz/nvim-lastplace"] = {
 -- Latest dont work .
 editor["sidebar-nvim/sidebar.nvim"] = {
   ft = { "python", "lua", "c", "cpp", "prolog" },
+  requires = { "sidebar-nvim/sections-dap", ft = { "python", "lua", "c", "cpp", "prolog" } },
   opt = true,
   branch = "dev",
   config = conf.side_bar,

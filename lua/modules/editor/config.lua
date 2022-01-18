@@ -383,13 +383,14 @@ function config.side_bar()
     open = true,
     disable_default_keybindings = true,
     side = "left",
-    initial_width = 40,
-    update_interval = 2000,
+    initial_width = 30,
+    update_interval = 900,
     sections = {
       "datetime",
       "git",
       "diagnostics",
       "symbols",
+      require("dap-sidebar-nvim.breakpoints"), -- not even sure this works 
     },
     section_separator = "─────",
     bindings = {
