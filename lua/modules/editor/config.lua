@@ -390,7 +390,7 @@ function config.side_bar()
       "git",
       "diagnostics",
       "symbols",
-      require("dap-sidebar-nvim.breakpoints"), -- not even sure this works 
+      require("dap-sidebar-nvim.breakpoints"), -- not even sure this works
     },
     section_separator = "─────",
     bindings = {

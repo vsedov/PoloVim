@@ -184,6 +184,25 @@ tools["brooth/far.vim"] = {
   opt = true,
 } -- brooth/far.vim
 
+tools["windwp/nvim-spectre"] = {
+  module = "spectre",
+  requires = { "nvim-lua/plenary.nvim" },
+  keys = {
+    "<Leader><Leader>Ss",
+    "<Leader><Leader>Sw",
+    "<Leader><Leader>Sv",
+    "<Leader><Leader>Sc",
+  },
+
+  config = function()
+    local status_ok, spectre = pcall(require, "spectre")
+    if not status_ok then
+      return
+    end
+    spectre.setup()
+  end,
+}
+
 tools["ray-x/sad.nvim"] = {
   cmd = { "Sad" },
   requires = "ray-x/guihua.lua",
