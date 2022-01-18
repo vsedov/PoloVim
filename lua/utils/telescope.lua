@@ -377,6 +377,19 @@ M.neoclip = function()
   telescope.extensions.neoclip.default(opts)
 end
 
+M.refactor = function()
+  opts = {
+    sorting_strategy = "ascending",
+    scroll_strategy = "cycle",
+    prompt_prefix = "  ",
+    layout_config = {
+      prompt_position = "top",
+    },
+  }
+
+  telescope.extensions.refactoring.refactors(opts)
+end
+
 -- Looks for git files, but falls back to normal files
 M.files = function(opts)
   reloader()
@@ -493,14 +506,17 @@ end
 
 -- show refrences to this using language server
 M.lsp_references = function()
-  local opts = {
-    layout_strategy = "vertical",
+  local opts = themes.get_ivy({
+
+    layout_strategy = "horizontal", -- horizontal
     layout_config = {
       prompt_position = "top",
     },
     sorting_strategy = "ascending",
     ignore_filename = false,
-  }
+    entry_maker = entry_maker(opts),
+  })
+
   builtin.lsp_references(opts)
 end
 
