@@ -75,11 +75,20 @@ tools["TimUntersberger/neogit"] = {
 
 tools["liuchengxu/vista.vim"] = { cmd = "Vista", setup = conf.vim_vista, opt = true }
 
+
+------------- Spelling and Grammer
 tools["kamykn/spelunker.vim"] = {
   opt = true,
   fn = { "spelunker#check" },
   setup = conf.spelunker,
   config = conf.spellcheck,
+}
+
+tools["lewis6991/spellsitter.nvim"] = { 
+  ft = {"norg", "markdown"}, 
+  config = function()
+    require('spellsitter').setup()
+  end 
 }
 tools["rhysd/vim-grammarous"] = {
   opt = true,
@@ -87,6 +96,7 @@ tools["rhysd/vim-grammarous"] = {
   ft = { "markdown", "txt", "norg" },
   setup = conf.grammarous,
 }
+-------------
 
 tools["plasticboy/vim-markdown"] = {
   ft = "markdown",

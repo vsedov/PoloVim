@@ -455,6 +455,7 @@ end
 function config.spelunker()
   -- vim.cmd("command! Spell call spelunker#check()")
   vim.g.enable_spelunker_vim_on_readonly = 0
+  vim.g.spelunker_target_min_char_len = 5
   vim.g.spelunker_check_type = 2
   vim.g.spelunker_highlight_type = 2
   vim.g.spelunker_disable_uri_checking = 1
@@ -480,6 +481,7 @@ function config.grammcheck()
   end
   vim.cmd([[GrammarousCheck]])
 end
+
 function config.vim_test()
   vim.g["test#strategy"] = { nearest = "neovim", file = "neovim", suite = "neovim" }
   vim.g["test#neovim#term_position"] = "vert botright 60"

@@ -71,7 +71,7 @@ editor["max397574/which-key.nvim"] = {
 -- }
 
 editor["blackCauldron7/surround.nvim"] = {
-  keys = { "<" },
+  keys = { "<F3>" },
   config = function()
     require("surround").setup({
       mappings_style = "sandwich",
@@ -88,7 +88,7 @@ editor["blackCauldron7/surround.nvim"] = {
         },
         linear = { { "'", "'" }, { "`", "`" }, { '"', '"' } },
       },
-      prefix = "<",
+      prefix = "<F3>",
     })
   end,
 }
