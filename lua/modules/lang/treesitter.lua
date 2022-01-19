@@ -113,7 +113,6 @@ local treesitter_obj = function()
         peek_definition_code = { ["DF"] = "@function.outer", ["CF"] = "@class.outer" },
       },
       keymaps = {
-        -- or you use the queries from supported languages with textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
         ["aC"] = "@class.outer",
@@ -246,21 +245,3 @@ return {
   textsubjects = textsubjects,
   -- pyfold = pyfoldo,
 }
-
--- ["iL"] = {
---   -- you can define your own textobjects directly here
---   python = "(function_definition) @function-custom",
---   -- cpp = "(function_definition) @function-custom",
---   -- c = "(function_definition) @function-custom",
---   -- go = "(function_definition) @function-custom",
---   -- java = "(method_declaration) @function-custom",
--- },
-
--- Or you can define your own textobjects like this
--- ["iF"] = {
---   python = "(function_definition) @function-custom",
---   -- cpp = "(function_definition) @function-custom",
---   -- c = "(function_definition) @function-custom",
---   -- java = "(method_declaration) @function-custom",
---   -- go = "(method_declaration) @function-custom",
--- },

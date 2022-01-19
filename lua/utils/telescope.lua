@@ -514,7 +514,6 @@ M.lsp_references = function()
     },
     sorting_strategy = "ascending",
     ignore_filename = false,
-    entry_maker = entry_maker(opts),
   })
 
   builtin.lsp_references(opts)
