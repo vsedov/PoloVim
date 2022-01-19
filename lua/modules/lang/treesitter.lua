@@ -113,14 +113,6 @@ local treesitter_obj = function()
         peek_definition_code = { ["DF"] = "@function.outer", ["CF"] = "@class.outer" },
       },
       keymaps = {
-        ["iL"] = {
-          -- you can define your own textobjects directly here
-          python = "(function_definition) @function",
-          cpp = "(function_definition) @function",
-          c = "(function_definition) @function",
-          go = "(function_definition) @function",
-          java = "(method_declaration) @function",
-        },
         -- or you use the queries from supported languages with textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
@@ -154,14 +146,6 @@ local treesitter_obj = function()
           ["if"] = "@function.inner",
           ["ac"] = "@class.outer",
           ["ic"] = "@class.inner",
-          -- Or you can define your own textobjects like this
-          ["iF"] = {
-            python = "(function_definition) @function",
-            cpp = "(function_definition) @function",
-            c = "(function_definition) @function",
-            java = "(method_declaration) @function",
-            go = "(method_declaration) @function",
-          },
         },
       },
       swap = {
@@ -262,3 +246,21 @@ return {
   textsubjects = textsubjects,
   -- pyfold = pyfoldo,
 }
+
+-- ["iL"] = {
+--   -- you can define your own textobjects directly here
+--   python = "(function_definition) @function-custom",
+--   -- cpp = "(function_definition) @function-custom",
+--   -- c = "(function_definition) @function-custom",
+--   -- go = "(function_definition) @function-custom",
+--   -- java = "(method_declaration) @function-custom",
+-- },
+
+-- Or you can define your own textobjects like this
+-- ["iF"] = {
+--   python = "(function_definition) @function-custom",
+--   -- cpp = "(function_definition) @function-custom",
+--   -- c = "(function_definition) @function-custom",
+--   -- java = "(method_declaration) @function-custom",
+--   -- go = "(method_declaration) @function-custom",
+-- },
