@@ -1,1 +1,0 @@
-(function parameter: (_) @parameter.inner @parameter.outer)
