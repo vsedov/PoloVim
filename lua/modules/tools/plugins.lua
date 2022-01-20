@@ -258,14 +258,13 @@ tools["kevinhwang91/nvim-bqf"] = {
   config = conf.bqf,
 }
 
--- lua require'telescope'.extensions.project.project{ display_type = 'full' }
 tools["ahmedkhalf/project.nvim"] = {
-  cmd = {"ProjectRoot"},
+  module = "project",
+  ft = {"python", "java", "c", "cpp", "lua"}, 
   opt = true,
   after = { "telescope.nvim" },
   config = conf.project,
 }
-
 
 
 tools["jvgrootveld/telescope-zoxide"] = {

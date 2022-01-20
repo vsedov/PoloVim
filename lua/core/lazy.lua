@@ -176,7 +176,7 @@ end, lazy_timer + 60)
 vim.defer_fn(function()
   lprint("telescope family")
   loader("telescope.nvim")
-  loader("telescope.nvim telescope-zoxide project.nvim nvim-neoclip.lua") --project.nvim
+  loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
   loader("harpoon")
   lprint("all done")
 end, lazy_timer + 100)
