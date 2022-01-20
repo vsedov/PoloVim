@@ -106,26 +106,21 @@ lang["nvim-treesitter/playground"] = {
 lang["stevearc/aerial.nvim"] = {
   opt = true,
   cmd = { "AerialToggle" },
-  setup = conf.aerial,
-  config = function()
-    local aerial = require("aerial")
-    aerial.register_attach_cb(function(bufnr)
-      -- Toggle the aerial window with <leader>a
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "<F8>", "<cmd>AerialToggle!<CR>", {})
-      -- Jump forwards/backwards with '{' and '}'
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "{", "<cmd>AerialPrev<CR>", {})
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "}", "<cmd>AerialNext<CR>", {})
-      -- Jump up the tree with '[[' or ']]'
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "[[", "<cmd>AerialPrevUp<CR>", {})
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "]]", "<cmd>AerialNextUp<CR>", {})
-    end)
-  end,
+  config = conf.aerial,
 }
 
 lang["simrat39/symbols-outline.nvim"] = {
   opt = true,
   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
   setup = conf.outline,
+}
+-- Only for java files help maven.txt
+lang["mikelue/vim-maven-plugin"] = {
+  ft = "java",
+}
+
+lang["mfussenegger/nvim-jdtls"] = {
+  ft = "java",
 }
 
 lang["mfussenegger/nvim-dap"] = {
@@ -140,6 +135,8 @@ lang["mfussenegger/nvim-dap"] = {
 
   config = conf.dap,
 } -- cmd = "Luadev",
+
+-- better python indent
 
 lang["nvim-telescope/telescope-dap.nvim"] = {
   opt = true,
@@ -193,6 +190,10 @@ lang["dccsillag/magma-nvim"] = {
   requires = "rcarriga/nvim-notify",
   run = ":UpdateRemotePlugins",
   config = conf.magma,
+}
+
+lang["Vimjas/vim-python-pep8-indent"] = {
+  ft = "python",
 }
 
 lang["vim-test/vim-test"] = {
@@ -257,6 +258,20 @@ lang["p00f/nvim-ts-rainbow"] = {
   end,
 }
 
+lang["onsails/diaglist.nvim"] = {
+  cmd = { "DiaglistA", "DiaglistB" },
+  opt = true,
+  ft = { "python", "c", "lua", "cpp" },
+  config = function()
+    require("diaglist").init({
+      debug = false,
+      debounce_ms = 150,
+    })
+    vim.cmd([[command! -nargs=*  DiaglistA lua require('diaglist').open_all_diagnostics()]])
+    vim.cmd([[command! -nargs=*  DiaglistB lua require('diaglist').open_buffer_diagnostics()]])
+  end,
+}
+
 lang["folke/trouble.nvim"] = {
   cmd = { "Trouble", "TroubleToggle" },
   config = function()
@@ -283,14 +298,6 @@ lang["folke/todo-comments.nvim"] = {
 --     })
 --   end,
 -- }
-
--- command Neorunner - depends if i will keep this trying out new stuff .
-lang["BenGH28/neo-runner.nvim"] = {
-  opt = true,
-  after = "filetype.nvim",
-  config = conf.neorunner,
-  run = ":UpdateRemotePlugins",
-}
 
 lang["is0n/jaq-nvim"] = {
   cmd = "Jaq",

@@ -49,6 +49,11 @@ ui["kyazdani42/nvim-tree.lua"] = {
   setup = conf.nvim_tree_setup,
   config = conf.nvim_tree,
 }
+-- Use this with nvimtree .
+ui["elihunter173/dirbuf.nvim"] = {
+  cmd = { "Dirbuf" },
+  config = conf.dir_buff,
+}
 
 ui["lukas-reineke/indent-blankline.nvim"] = { opt = true, config = conf.blankline } -- after="nvim-treesitter",
 
@@ -89,12 +94,20 @@ ui["folke/tokyonight.nvim"] = {
     vim.cmd([[colorscheme tokyonight]])
   end,
 }
+
+ui["tiagovla/tokyodark.nvim"] = {
+  opt = true,
+  setup = conf.tokyodark,
+  config = function()
+    vim.cmd([[hi CursorLine guibg=#353644]])
+    vim.cmd([[colorscheme tokyodark]])
+  end,
+}
+
 ui["catppuccin/nvim"] = {
   opt = true,
-  setup = conf.catppuccin,
-  config = function()
-    vim.cmd([[colorscheme catppuccin]])
-  end,
+  module = "nvim",
+  config = conf.catppuccin,
 }
 
 ui["numToStr/Sakura.nvim"] = {
@@ -105,12 +118,19 @@ ui["numToStr/Sakura.nvim"] = {
   end,
 }
 
+-- Use default when loading this .
 ui["rebelot/kanagawa.nvim"] = {
   opt = true,
-  setup = conf.kanagawa,
-  config = function()
-    vim.cmd([[colorscheme kanagawa]])
-  end,
+  module = "kanagawa",
+  config = conf.kanagawa,
+}
+
+-- Might want to manually call this through telescope or something .
+ui["narutoxy/themer.lua"] = {
+  opt = true,
+  module = "themer",
+  branch = "new-palette",
+  config = conf.themer,
 }
 
 ui["kazhala/close-buffers.nvim"] = {
@@ -119,3 +139,4 @@ ui["kazhala/close-buffers.nvim"] = {
 }
 
 return ui
+-- hemer.lua: ...te/pack/packer/opt/themer.lua/lua/themer/core/mapper.lua:64: attempt to index field 'bg' (a string value)

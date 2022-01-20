@@ -143,19 +143,21 @@ function config.lightspeed()
     ignore_case = false,
     exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
 
-    -- s/x
-    grey_out_search_area = true,
-    highlight_unique_chars = true,
-    jump_on_partial_input_safety_timeout = 400,
+    --- s/x ---
+    jump_to_unique_chars = { safety_timeout = 400 },
     match_only_the_start_of_same_char_seqs = true,
+    force_beacons_into_match_width = false,
+    -- Display characters in a custom way in the highlighted matches.
     substitute_chars = { ["\r"] = "¬" },
-    -- Leaving the appropriate list empty effectively disables
-    -- "smart" mode, and forces auto-jump to be on or off.
-    -- safe_labels = { . . . },
-    -- labels = { . . . },
-    cycle_group_fwd_key = "<space>",
-    cycle_group_bwd_key = "<tab>",
-    -- f/t
+    -- Leaving the appropriate list empty effectively disables "smart" mode,
+    -- and forces auto-jump to be on or off.
+    -- These keys are captured directly by the plugin at runtime.
+    special_keys = {
+      next_match_group = "<space>",
+      prev_match_group = "<tab>",
+    },
+
+    --- f/t ---
     limit_ft_matches = 10,
     repeat_ft_with_target_char = true,
   })
@@ -374,32 +376,56 @@ function config.gomove()
   })
 end
 
+--- to be updated  - better way of doing this im sure .
+function config.side_bar()
+  local sidebar = require("sidebar-nvim")
+  local opts = {
+    open = true,
+    disable_default_keybindings = true,
+    side = "left",
+    initial_width = 30,
+    update_interval = 900,
+    sections = {
+      "datetime",
+      "git",
+      "diagnostics",
+      "symbols",
+    },
+    section_separator = "─────",
+    bindings = {
+      ["q"] = function()
+        require("sidebar-nvim").close()
+      end,
+
+      ["<C-q>"] = function()
+        require("sidebar-nvim").close()
+      end,
+    },
+    datetime = { format = "%a %b %d, %H:%M", clocks = { { name = "こんにちは" } } },
+    todos = { ignored_paths = { "~" } },
+    disable_closing_prompt = false,
+    dap = {
+      breakpoints = {
+        icon = "",
+      },
+    },
+  }
+  sidebar.setup(opts)
+end
+
 function config.searchx()
   --   nnoremap <C-k> <Cmd>call searchx#prev()<CR>
   -- nnoremap <C-j> <Cmd>call searchx#next()<CR>
 
-  vim.keymap.set("n", "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
-  vim.keymap.set("n", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-  vim.keymap.set("x", "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
-  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-
-  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-  vim.keymap.set("x", "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
+  vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
+  vim.keymap.set({ "n", "x" }, "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
   vim.keymap.set("c", ";", "<Cmd>call searchx#select()<CR>")
 
   -- might interfear with normal mapping for n maybe ?
-  vim.keymap.set("n", "N", "<Cmd>call searchx#prev_dir()<CR>")
-  vim.keymap.set("n", "n", "<Cmd>call searchx#next_dir()<CR>")
-  vim.keymap.set("x", "N", "<Cmd>call searchx#prev_dir()<CR>")
-  vim.keymap.set("x", "n", "<Cmd>call searchx#next_dir()<CR>")
+  vim.keymap.set({ "n", "x" }, "N", "<Cmd>call searchx#prev_dir()<CR>")
+  vim.keymap.set({ "n", "x" }, "n", "<Cmd>call searchx#next_dir()<CR>")
 
-  vim.keymap.set("x", "<C-k>", "<Cmd>call searchx#prev()<CR>")
-  vim.keymap.set("x", "<C-j>", "<Cmd>call searchx#prev()<CR>")
-  vim.keymap.set("c", "<C-k>", "<Cmd>call searchx#prev()<CR>")
-  vim.keymap.set("c", "<C-j>", "<Cmd>call searchx#next()<CR>")
-
-  vim.keymap.set("n", "<C-l>", "<Cmd>call searchx#clear()<CR>")
+  vim.keymap.set("n", "<c-/>", "<Cmd>call searchx#clear()<CR>")
 
   vim.cmd([[
     " Overwrite / and ?.
@@ -420,6 +446,13 @@ function config.searchx()
       return join(split(a:input, ' '), '.\{-}')
     endfunction
   ]])
+end
+
+function config.dial_setup()
+  vim.keymap.set({ "n", "x" }, "<C-a>", "<Plug>(dial-increment)")
+  vim.keymap.set({ "n", "x" }, "<C-x>", "<Plug>(dial-decrement)")
+  vim.keymap.set("x", "<C-a>", "<Plug>(dial-increment-additional)")
+  vim.keymap.set("x", "<C-x>", "<Plug>(dial-decrement-additional)")
 end
 
 return config

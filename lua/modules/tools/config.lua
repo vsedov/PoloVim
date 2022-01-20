@@ -181,6 +181,39 @@ function config.vgit()
   -- require("vgit")._buf_attach()
 end
 
+-- Nice 
+function config.project()
+  require("project_nvim").setup({
+    datapath = vim.fn.stdpath("data"),
+    ignore_lsp = { "efm" },
+    exclude_dirs = { "~/.cargo/*", "~/.conf/nvim/"},
+    silent_chdir = true,
+    detection_methods = { "lsp", "pattern" },
+    patterns = {
+        "pom.xml",--
+        ".venv", -- for python
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "node_modules",
+        "xmake.lua",
+        "pom.xml",  -- java 
+        "CMakeLists.txt",
+        ".null-ls-root",
+        "Makefile",
+        "package.json",
+        "tsconfig.json",
+        ".git"
+      },
+
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  })
+  require("telescope").load_extension("projects")
+end
+
 function config.worktree()
   function git_worktree(arg)
     if arg == "create" then
@@ -455,6 +488,7 @@ end
 function config.spelunker()
   -- vim.cmd("command! Spell call spelunker#check()")
   vim.g.enable_spelunker_vim_on_readonly = 0
+  vim.g.spelunker_target_min_char_len = 5
   vim.g.spelunker_check_type = 2
   vim.g.spelunker_highlight_type = 2
   vim.g.spelunker_disable_uri_checking = 1
@@ -480,6 +514,7 @@ function config.grammcheck()
   end
   vim.cmd([[GrammarousCheck]])
 end
+
 function config.vim_test()
   vim.g["test#strategy"] = { nearest = "neovim", file = "neovim", suite = "neovim" }
   vim.g["test#neovim#term_position"] = "vert botright 60"

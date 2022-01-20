@@ -13,6 +13,8 @@ local plug_map = {
   ["s|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr():with_silent(),
   ["s|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
 
+  ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
+
   -- -- -- person keymap
   -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
   -- -- Lsp mapp work when insertenter and lsp start
@@ -81,8 +83,15 @@ local plug_map = {
     :with_silent(),
 
   -- -- SOMETHING WRONG HERE .
-  ["n|<Leader>gr"] = map_cu("Lspsaga rename <cr>"):with_noremap():with_silent(),
-  ["v|<Leader>gr"] = map_cu("Lspsaga rename <cr>"):with_noremap():with_silent(),
+  ["n|<Leader>gr"] = map_cmd("Lspsaga rename <cr>"):with_noremap():with_silent(),
+  ["v|<Leader>gr"] = map_cmd("Lspsaga rename <cr>"):with_noremap():with_silent(),
+
+  -- Replace word under cursor in Buffer (case-sensitive)
+  -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
+  ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>"),
+  -- Replace word under cursor on Line (case-sensitive)
+  -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
+  ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>"),
 
   ["n|gpd"] = map_cu("GotoPrev"):with_noremap(),
   ["n|gpi"] = map_cu("GotoImp"):with_noremap(),
@@ -110,7 +119,8 @@ local plug_map = {
   ["n|<Leader>rf"] = map_cr("RunFile"):with_noremap():with_silent(),
   ["n|<Leader>rp"] = map_cr("RunProject"):with_noremap():with_silent(),
 
-  ["n|<F6>"] = map_cu("NeoRunner"):with_noremap():with_silent(),
+  -- Open with quick fix .
+  ["n|<F6>"] = map_cu("Jaq qf"):with_noremap():with_silent(),
 
   -- -- never go wrong with clap
   -- Figure out the error with clap, giving very annoying error j
@@ -191,11 +201,10 @@ local plug_map = {
   -- Jump
   ["n|<Leader>fj"] = map_cmd('<cmd>lua require"utils.telescope".jump()<CR>'):with_noremap():with_silent(),
 
-  -- lsp implmentation with telescop
-
+  -- lsp implmentation with telescope
   ["n|<Leader>ir"] = map_cmd('<cmd>lua require"utils.telescope".lsp_references()<CR>'):with_noremap():with_silent(),
 
-  ["n|<Leader><Leader><Leader>"] = map_cmd('<cmd>lua require"utils.telescope".frequency()<CR>')
+  ["n|<Leader><Leader><Leader>"] = map_cmd('<cmd>lua require"utils.telescope".frecency()<CR>')
     :with_noremap()
     :with_silent(),
 
@@ -213,8 +222,8 @@ local plug_map = {
   -- :with_silent(),
   -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
 
-  -- Plugin Vista or SymbolsOutline
-  ["n|<Leader>v"] = map_cu("SymbolsOutline"):with_noremap():with_silent(),
+  -- Plugin Vista or SymbolsOutline -- Symbol Breaks for the time .
+  ["n|<Leader>v"] = map_cu("Vista!!"):with_noremap():with_silent(),
 
   -- Plugin vim_niceblock
   ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
@@ -235,11 +244,10 @@ local plug_map = {
     '<cmd>lua require"gitlinker".get_repo_url({action_callback = require"gitlinker.actions".open_in_browser})<cr>'
   ):with_silent(),
 
-  -- Nice command to list all breakpoints. .
-  ["n|<Leader>lb"] = map_cr("Telescope dap list_breakpoints"):with_noremap():with_silent(),
+  -- -- Nice command to list all breakpoints. .
+  -- ["n|<Leader>lb"] = map_cr("Telescope dap list_breakpoints"):with_noremap():with_silent(),
 
-  -- ["n|<LeftMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
-  ["n|<RightMouse>"] = map_cmd("<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>"):with_noremap():with_silent(),
+  ["n|<RightMouse>"] = map_cmd("<RightMouse><cmd>lua vim.lsp.buf.definition()<CR>"):with_noremap():with_silent(),
 
   ["n|<C-ScrollWheelUp>"] = map_cmd("<C-i>"):with_noremap():with_silent(),
   ["n|<C-ScrollWheelDown>"] = map_cmd("<C-o>"):with_noremap():with_silent(),
@@ -249,9 +257,6 @@ local plug_map = {
 
   -- TZAtaraxis
   ["n|<Leader><Leader>1"] = map_cu("ZenMode"):with_noremap():with_silent(),
-  ["n|<Leader><leader>2"] = map_cu("TZAtaraxis<CR>"):with_noremap():with_silent(),
-  ["n|<Leader><Leader>3"] = map_cu("TZMinimalist<CR>"):with_noremap():with_silent(),
-  ["n|<Leader><Leader>4"] = map_cu("TZFocus<CR>"):with_noremap():with_silent(),
   --- new
   ["n|<Leader>vf"] = map_cmd("<Plug>(ultest-run-file)"):with_silent(),
   ["n|<Leader>vn"] = map_cmd("<Plug>(ultest-run-nearest)"):with_silent(),
@@ -264,7 +269,7 @@ local plug_map = {
   -- Quick Fix infomation and binds
   ["n|<Leader>xx"] = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
 
-  -- Nice highlighting for latex when writing notes Norg files only.
+  -- Change map for certain file types: remove this for local . .
   ["n|<F9>"] = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
   ["n|<localleader>b"] = map_cr('<cmd> lua require("nabla").popup()<CR>'):with_noremap(),
 
@@ -274,11 +279,16 @@ local plug_map = {
   ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
 
   -- Neogen
+  ["n|<Leader>d"] = map_cmd("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
 
-  ["n|<Leader>d"] = map_cr("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
+  -- Spectre
+  ["n|<Leader><Leader>Ss"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
+  ["n|<Leader><Leader>Sw"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
+  ["v|<Leader><Leader>Sv"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
+  ["v|<Leader><Leader>Sc"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
 }
 
-bind.nvim_load_mapping(plug_map)
+return { map = plug_map }
 
 -- Might be used, not sure how .
 -- ["n|<Leader>dd"] = map_cu("lua require('dap').continue()"):with_noremap():with_silent(),

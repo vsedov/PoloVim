@@ -148,7 +148,7 @@ M.prepare = function()
 
   if vim.bo.filetype == "python" then
     loader("nvim-dap-python")
-    require("dap-python").setup("/bin/python")
+    require("dap-python").setup("/bin/python") -- might use whch python here not sure
     require("dap-python").test_runner = "pytest"
   end
 

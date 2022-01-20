@@ -96,6 +96,7 @@ function config.nvim_cmp()
     { name = "luasnip" },
     { name = "treesitter", keyword_length = 2 },
     { name = "look", keyword_length = 4 },
+    -- { name = "nvim_lsp_signature_help", priority = 10 },
     -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
   }
@@ -107,11 +108,15 @@ function config.nvim_cmp()
   end
   if vim.o.ft == "norg" then
     table.insert(sources, { name = "neorg" })
+    table.insert(sources, { name = "spell" })
+    table.insert(sources, { name = "look" })
+    table.insert(sources, { name = "latex_symbols" })
   end
 
   if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
     table.insert(sources, { name = "look" })
+    table.insert(sources, { name = "latex_symbols" })
   end
   if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
@@ -204,7 +209,8 @@ function config.nvim_cmp()
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-Space>"] = cmp.mapping.complete(),
-      ["<C-e>"] = cmp.mapping.close(),
+      -- ["<C-e>"] = cmp.mapping.close(),
+      ["<C-e>"] = cmp.mapping.abort(),
       ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
       ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
 

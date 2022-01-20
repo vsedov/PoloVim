@@ -36,7 +36,7 @@ local function load_options()
     backupdir = global.cache_dir .. "backup/",
     viewdir = global.cache_dir .. "view/",
     spellfile = global.cache_dir .. "spell/en.uft-8.add",
-    history = 2000,
+    history = 4000,
     shada = "!,'300,<50,@100,s10,h",
     backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
     smarttab = true,
@@ -129,8 +129,19 @@ local function load_options()
       cache_enabled = 0,
     }
     vim.g.python_host_prog = "/usr/bin/python2"
-    vim.g.python3_host_prog = "/usr/bin/python3"
+    -- vim.g.python3_host_prog = "/usr/bin/python3"
+    if vim.fn.exists("$VIRTUAL_ENV") == 1 then
+      vim.g.python3_host_prog = vim.fn.substitute(
+        vim.fn.system("which -a python3 | head -n2 | tail -n1"),
+        "\n",
+        "",
+        "g"
+      )
+    else
+      vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
+    end
   end
+
   for name, value in pairs(global_local) do
     vim.o[name] = value
   end
@@ -138,5 +149,5 @@ local function load_options()
 end
 
 vim.cmd([[syntax off]])
-
+vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
 load_options()

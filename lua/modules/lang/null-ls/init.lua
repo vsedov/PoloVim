@@ -131,6 +131,23 @@ return {
     -- table.insert(diagnostics, user_data)
     -- table.insert(sources,diagnostics)
     -- ...ite/pack/packer/opt/null-ls.nvim/lua/null-ls/sources.lua
+    table.insert(
+      sources,
+      require("null-ls.helpers").make_builtin({
+        method = require("null-ls.methods").internal.DIAGNOSTICS,
+        filetypes = { "java" },
+        generator_opts = {
+          command = "java",
+          args = { "$FILENAME" },
+          to_stdin = false,
+          format = "raw",
+          from_stderr = true,
+          on_output = require("null-ls.helpers").diagnostics.from_errorformat([[%f:%l: %trror: %m]], "java"),
+        },
+        factory = require("null-ls.helpers").generator_factory,
+      })
+    )
+    
     local cfg = {
 
       sources = sources,
@@ -144,6 +161,7 @@ return {
         ".svn",
         "node_modules",
         "xmake.lua",
+        "pom.xml",  -- java 
         "CMakeLists.txt",
         ".null-ls-root",
         "Makefile",

@@ -69,6 +69,7 @@ local load_core = function()
 
   if pcall(require, "impatient") then
     require("impatient")
+    require("impatient").enable_profile()
   end
 
   if pack.ensure_plugins() == "installed" then

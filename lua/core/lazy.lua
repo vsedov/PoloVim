@@ -7,7 +7,7 @@ function Lazyload()
   local themes = {
 
     -- "tokyonight.nvim",
-    "nvim", -- cat
+    -- "nvim", -- cat
     -- "Sakura.nvim",
     "kanagawa.nvim",
     -- TODO Add more themes
@@ -43,9 +43,7 @@ function Lazyload()
   }
 
   local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
-  if syn_on then
-    vim.cmd([[syntax on]])
-  else
+  if not syn_on then
     vim.cmd([[syntax manual]])
   end
 
@@ -95,13 +93,7 @@ function Lazyload()
     -- loader("goto-preview")
 
     -- loader("code_runner.nvim")
-    loader("neo-runner.nvim") -- lspsaga.nvim --
-    loader("neogen") -- Load neogen only for active lsp servers
   end
-
-  require("vscripts.cursorhold")
-  require("vscripts.tools")
-  require("utils.ui_overwrite")
 
   if load_ts_plugins then
     -- print('load ts plugins')
@@ -117,15 +109,17 @@ function Lazyload()
 
   -- local bytes = vim.fn.wordcount()['bytes']
   if load_ts_plugins then
-    plugins =
-      "nvim-treesitter-textobjects  nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
+    plugins = "nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
     -- loader(plugins)
     lprint(plugins)
     -- nvim-treesitter-textobjects  | nvim-treesitter-refactor | nvim-treesitter-textsubjects  -- need to load t
+    loader("neogen") -- Load neogen only for active lsp servers
     loader("indent-blankline.nvim")
   end
 
-  loader("nvim-notify popup.nvim")
+  loader("nvim-notify")
+  vim.notify = require("notify")
+  loader("popup.nvim")
 
   -- if bytes < 2 * 1024 * 1024 and syn_on then
   --   vim.cmd([[setlocal syntax=on]])
@@ -133,26 +127,16 @@ function Lazyload()
 
   vim.cmd([[autocmd FileType vista,guihua setlocal syntax=on]])
   vim.cmd(
-    [[autocmd FileType * silent! lua if vim.fn.wordcount()['bytes'] > 2048000 then print("syntax off") vim.cmd("setlocal syntax=off") else lprint('setlocal syntax=on') vim.cmd("setlocal syntax=on") end]]
+    [[autocmd FileType * silent! lua if vim.fn.wordcount()['bytes'] > 2048000 then print("syntax off") vim.cmd("setlocal syntax=off") end]]
   )
-  -- local cmd = [[au VimEnter * ++once lua require("packer.load")({']] .. loading_theme
-  --                 .. [['}, { event = "VimEnter *" }, _G.packer_plugins)]]
-  -- vim.cmd(cmd)
-  -- loader('windline.nvim')
-  -- require("modules.ui.eviline")
-  -- require('wlfloatline').setup()
 end
 
-vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
-vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
-vim.cmd("command! Spell call spelunker#check()")
-
-local lazy_timer = 50
+local lazy_timer = 30
 if _G.packer_plugins == nil or _G.packer_plugins["packer.nvim"] == nil then
   print("recompile")
   vim.cmd([[PackerCompile]])
   vim.defer_fn(function()
-    print("Packer recompiled, please restart nvim")
+    print("Packer recompiled, please run `:PackerCompile` and restart nvim")
   end, 1000)
   return
 end
@@ -173,13 +157,30 @@ vim.defer_fn(function()
 end, lazy_timer + 20)
 
 vim.cmd([[hi LineNr guifg=#505068]])
+vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-  local loader = require("packer").loader
-  loader("telescope.nvim telescope-zoxide  nvim-neoclip.lua") --project.nvim
-  loader("harpoon")
   loader("windline.nvim")
   require("modules.ui.eviline")
   require("wlfloatline").setup()
+
+  require("vscripts.cursorhold")
+  require("vscripts.tools")
+  require("utils.ui_overwrite")
+
+  vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
+  vim.cmd("command! Spell call spelunker#check()")
   loader("animate.vim")
+end, lazy_timer + 60)
+
+vim.defer_fn(function()
+  lprint("telescope family")
+  loader("telescope.nvim")
+  loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
+  loader("harpoon")
+  lprint("all done")
 end, lazy_timer + 100)
+
+-- vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
+-- vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
+-- vim.cmd("command! Spell call spelunker#check()")

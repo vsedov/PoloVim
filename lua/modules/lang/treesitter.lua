@@ -113,15 +113,6 @@ local treesitter_obj = function()
         peek_definition_code = { ["DF"] = "@function.outer", ["CF"] = "@class.outer" },
       },
       keymaps = {
-        ["iL"] = {
-          -- you can define your own textobjects directly here
-          python = "(function_definition) @function",
-          cpp = "(function_definition) @function",
-          c = "(function_definition) @function",
-          go = "(function_definition) @function",
-          java = "(method_declaration) @function",
-        },
-        -- or you use the queries from supported languages with textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
         ["aC"] = "@class.outer",
@@ -141,10 +132,38 @@ local treesitter_obj = function()
       move = {
         enable = enable,
         set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
-        goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
-        goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
-        goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
+        goto_next_start = {
+          ["]m"] = "@function.outer",
+          ["]]"] = "@class.outer",
+
+          ["gnp"] = "@parameter.inner",
+          ["gnc"] = "@call.outer",
+          ["gnic"] = "@call.inner",
+        },
+        goto_next_end = {
+          ["]M"] = "@function.outer",
+          ["]["] = "@class.outer",
+
+          ["gnP"] = "@parameter.inner",
+          ["gnC"] = "@call.outer",
+          ["gniC"] = "@call.inner",
+        },
+        goto_previous_start = {
+          ["[m"] = "@function.outer",
+          ["[["] = "@class.outer",
+
+          ["gpp"] = "@parameter.inner",
+          ["gpc"] = "@call.outer",
+          ["gpic"] = "@call.inner",
+        },
+        goto_previous_end = {
+          ["[M"] = "@function.outer",
+          ["[]"] = "@class.outer",
+
+          ["gpP"] = "@parameter.inner",
+          ["gpC"] = "@call.outer",
+          ["gpiC"] = "@call.inner",
+        },
       },
       select = {
         enable = enable,
@@ -154,14 +173,6 @@ local treesitter_obj = function()
           ["if"] = "@function.inner",
           ["ac"] = "@class.outer",
           ["ic"] = "@class.inner",
-          -- Or you can define your own textobjects like this
-          ["iF"] = {
-            python = "(function_definition) @function",
-            cpp = "(function_definition) @function",
-            c = "(function_definition) @function",
-            java = "(method_declaration) @function",
-            go = "(method_declaration) @function",
-          },
         },
       },
       swap = {

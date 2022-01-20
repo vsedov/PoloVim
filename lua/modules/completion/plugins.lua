@@ -85,8 +85,10 @@ completion["https://github.com/github/copilot.vim.git"] = {
   end,
 }
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
-completion["Iron-E/nvim-cmp"] = {
-  branch = "feat/completion-menu-borders",
+-- hrsh7th
+-- Iron-E
+completion["hrsh7th/nvim-cmp"] = {
+  -- branch = "feat/completion-menu-borders",
   -- opt = true,
   -- event = {"InsertEnter", "CmdLineEnter"}, -- InsertCharPre Due to luasnip
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
@@ -99,6 +101,8 @@ completion["Iron-E/nvim-cmp"] = {
       config = conf.tabnine,
       opt = true,
     },
+    -- { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
+    { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
     { "hrsh7th/cmp-calc", after = "nvim-cmp", opt = true },
@@ -185,9 +189,9 @@ completion["ray-x/lsp_signature.nvim"] = {
       zindex = 1002,
       timer_interval = 100,
       extra_trigger_chars = {},
-      handler_opts = {
-        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-      },
+      -- handler_opts = {
+      --   border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+      -- },
       max_height = 4,
     })
   end,

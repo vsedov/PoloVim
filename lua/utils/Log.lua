@@ -73,7 +73,7 @@ function Log:init()
           ),
         }),
 
-        --- cba to manually figure this out . 
+        --- cba to manually figure this out .
         structlog.sinks.NvimNotify(log_level, {
           processors = {
             default_namer,

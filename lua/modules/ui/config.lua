@@ -107,7 +107,6 @@ function config.notify()
     },
   }
 
-  vim.notify = notify
   notify.setup(default)
 
   require("telescope").load_extension("notify")
@@ -377,11 +376,14 @@ function config.tokyonight()
   vim.g.tokyonight_colors = { hint = "orange", error = "#ae1960" }
 end
 
-function config.catppuccin()
-  if not packer_plugins["nvim"].loaded then
-    vim.cmd([[packadd nvim]])
-  end
+function config.tokyodark()
+  vim.g.tokyodark_transparent_background = false
+  vim.g.tokyodark_enable_italic_comment = true
+  vim.g.tokyodark_enable_italic = true
+  vim.g.tokyodark_color_gamma = "1.0"
+end
 
+function config.catppuccin()
   require("catppuccin").setup({
     transparent_background = false,
     term_colors = false,
@@ -435,24 +437,23 @@ function config.catppuccin()
       hop = false,
     },
   })
+  vim.cmd([[colorscheme catppuccin]])
 end
-
-function config.themer()
-  if not packer_plugins["themer.lua"].loaded then
-    vim.cmd([[packadd themer.lua]])
-    require("themer")
-  end
+function config.dir_buff()
+  require("dirbuf").setup({
+    hash_padding = 2,
+    show_hidden = true,
+    sort_order = function(l, r)
+      return l.fname:lower() < r.fname:lower()
+    end,
+  })
 end
 
 function config.kanagawa()
-  if not packer_plugins["kanagawa.nvim"].loaded then
-    vim.cmd([[packadd kanagawa.nvim]])
-  end
-
   require("kanagawa").setup({
     undercurl = true, -- enable undercurls
     commentStyle = "italic",
-    functionStyle = "NONE",
+    functionStyle = "italic",
     keywordStyle = "italic",
     statementStyle = "bold",
     typeStyle = "NONE",
@@ -460,9 +461,11 @@ function config.kanagawa()
     specialReturn = true, -- special highlight for the return keyword
     specialException = true, -- special highlight for exception handling keywords
     transparent = false, -- do not set background color
+    dimInactive = false, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
     colors = {},
     overrides = {},
   })
+  vim.cmd([[colorscheme kanagawa]])
 end
 
 function config.nightfly()
@@ -506,6 +509,13 @@ function config.sonokai()
 end
 
 function config.blankline()
+  vim.opt.termguicolors = true
+  vim.opt.list = true
+
+  -- test this for now, not sure if i like this or not .
+  -- vim.opt.listchars:append("space:⋅")
+  -- vim.opt.listchars:append("eol:↴")
+
   require("indent_blankline").setup({
     enabled = true,
     -- char = "|",
@@ -517,6 +527,7 @@ function config.blankline()
     space_char_blankline = " ",
     use_treesitter = true,
     show_current_context = true,
+
     context_patterns = {
       "class",
       "return",
@@ -608,6 +619,59 @@ function config.buffers_close()
         vim.api.nvim_win_set_buf(window, bufnr)
       end
     end,
+  })
+end
+
+function config.themer()
+  require("themer").setup({
+    config = {
+      options = {
+        transparency = false,
+        term_colors = true,
+        styles = {
+          comments = { italic = true },
+          functions = { italic = true },
+          keywords = { italic = true },
+          strings = {},
+          variables = { italic = true },
+          parameters = { italic = true },
+          fields = {},
+        },
+
+        integrations = {
+          treesitter = true,
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              error = { italic = true },
+              hint = { italic = true },
+              warn = { italic = true },
+              info = { italic = true },
+            },
+            underlines = {
+              error = { underline = true },
+              hint = { underline = true },
+              warn = { underline = true },
+              info = { underline = true },
+            },
+          },
+          cmp = true,
+          gitsigns = true,
+          telescope = true,
+          indent_blankline = {
+            enabled = true,
+            colored_indent_levels = true,
+          },
+          barbar = true,
+          bufferline = true,
+          markdown = true,
+        },
+        extra_integrations = {
+          galaxyline = true,
+          lualine = true,
+        },
+      },
+    },
   })
 end
 
