@@ -119,7 +119,8 @@ local plug_map = {
   ["n|<Leader>rf"] = map_cr("RunFile"):with_noremap():with_silent(),
   ["n|<Leader>rp"] = map_cr("RunProject"):with_noremap():with_silent(),
 
-  ["n|<F6>"] = map_cu("NeoRunner"):with_noremap():with_silent(),
+  -- Open with quick fix .
+  ["n|<F6>"] = map_cu("Jaq qf"):with_noremap():with_silent(),
 
   -- -- never go wrong with clap
   -- Figure out the error with clap, giving very annoying error j

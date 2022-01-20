@@ -352,12 +352,14 @@ lspconfig.rust_analyzer.setup({
   capabilities = capabilities,
   on_attach = enhance_attach,
 })
-lspconfig.jdtls.setup({
-  cmd = { "jdtls" },
-  filetypes = { "java" },
-  on_attach = enhance_attach,
-  capabilities = capabilities,
-})
+
+-- use jdtls
+-- lspconfig.jdtls.setup({
+--   cmd = { "jdtls" },
+--   filetypes = { "java" },
+--   on_attach = enhance_attach,
+--   capabilities = capabilities,
+-- })
 -- lspconfig.jdtls.setup({ cmd = { "jdtls" } })
 
 lspconfig.vimls.setup({
@@ -409,6 +411,10 @@ lsp_installer.settings({
 
 lsp_installer.on_server_ready(function(server)
   local opts = {}
+  -- (optional) Customize the options passed to the server
+  if server.name == "jdtls" then
+    return
+  end
   server:setup(opts)
   -- vim.cmd([[ do User LspAttachBuffers ]])
 end)

@@ -106,10 +106,8 @@ ui["tiagovla/tokyodark.nvim"] = {
 
 ui["catppuccin/nvim"] = {
   opt = true,
-  setup = conf.catppuccin,
-  config = function()
-    vim.cmd([[colorscheme catppuccin]])
-  end,
+  module = "nvim",
+  config = conf.catppuccin,
 }
 
 ui["numToStr/Sakura.nvim"] = {

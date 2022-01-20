@@ -364,6 +364,18 @@ M.frecency = function()
   })
 end
 
+M.projects = function()
+  telescope.extensions.projects.projects()
+end
+
+M.project_search = function()
+  require("telescope.builtin").find_files({
+    previewer = false,
+    layout_strategy = "vertical",
+    cwd = require("lspconfig").util.root_pattern(".git")(vim.fn.expand("%:p")),
+  })
+end
+
 --- Plugins to be loaded, lazily
 M.neoclip = function()
   opts = {

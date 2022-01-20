@@ -132,10 +132,38 @@ local treesitter_obj = function()
       move = {
         enable = enable,
         set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
-        goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
-        goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
-        goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
+        goto_next_start = {
+          ["]m"] = "@function.outer",
+          ["]]"] = "@class.outer",
+
+          ["gnp"] = "@parameter.inner",
+          ["gnc"] = "@call.outer",
+          ["gnic"] = "@call.inner",
+        },
+        goto_next_end = {
+          ["]M"] = "@function.outer",
+          ["]["] = "@class.outer",
+
+          ["gnP"] = "@parameter.inner",
+          ["gnC"] = "@call.outer",
+          ["gniC"] = "@call.inner",
+        },
+        goto_previous_start = {
+          ["[m"] = "@function.outer",
+          ["[["] = "@class.outer",
+
+          ["gpp"] = "@parameter.inner",
+          ["gpc"] = "@call.outer",
+          ["gpic"] = "@call.inner",
+        },
+        goto_previous_end = {
+          ["[M"] = "@function.outer",
+          ["[]"] = "@class.outer",
+
+          ["gpP"] = "@parameter.inner",
+          ["gpC"] = "@call.outer",
+          ["gpiC"] = "@call.inner",
+        },
       },
       select = {
         enable = enable,

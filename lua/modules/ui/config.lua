@@ -384,10 +384,6 @@ function config.tokyodark()
 end
 
 function config.catppuccin()
-  if not packer_plugins["nvim"].loaded then
-    vim.cmd([[packadd nvim]])
-  end
-
   require("catppuccin").setup({
     transparent_background = false,
     term_colors = false,
@@ -441,11 +437,15 @@ function config.catppuccin()
       hop = false,
     },
   })
+  vim.cmd([[colorscheme catppuccin]])
 end
 function config.dir_buff()
   require("dirbuf").setup({
     hash_padding = 2,
     show_hidden = true,
+    sort_order = function(l, r)
+      return l.fname:lower() < r.fname:lower()
+    end,
   })
 end
 
@@ -461,7 +461,7 @@ function config.kanagawa()
     specialReturn = true, -- special highlight for the return keyword
     specialException = true, -- special highlight for exception handling keywords
     transparent = false, -- do not set background color
-    dimInactive = true, -- dim inactive window `:h hl-NormalNC`
+    dimInactive = false, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
     colors = {},
     overrides = {},
   })
@@ -513,8 +513,8 @@ function config.blankline()
   vim.opt.list = true
 
   -- test this for now, not sure if i like this or not .
-  vim.opt.listchars:append("space:⋅")
-  vim.opt.listchars:append("eol:↴")
+  -- vim.opt.listchars:append("space:⋅")
+  -- vim.opt.listchars:append("eol:↴")
 
   require("indent_blankline").setup({
     enabled = true,
