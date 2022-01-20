@@ -119,6 +119,10 @@ lang["mikelue/vim-maven-plugin"] = {
   ft = "java",
 }
 
+lang["mfussenegger/nvim-jdtls"] = {
+  ft = "java",
+}
+
 lang["mfussenegger/nvim-dap"] = {
   opt = true,
   requires = {
@@ -294,14 +298,6 @@ lang["folke/todo-comments.nvim"] = {
 --     })
 --   end,
 -- }
-
--- command Neorunner - depends if i will keep this trying out new stuff .
-lang["BenGH28/neo-runner.nvim"] = {
-  opt = true,
-  after = "filetype.nvim",
-  config = conf.neorunner,
-  run = ":UpdateRemotePlugins",
-}
 
 lang["is0n/jaq-nvim"] = {
   cmd = "Jaq",

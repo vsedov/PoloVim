@@ -181,6 +181,39 @@ function config.vgit()
   -- require("vgit")._buf_attach()
 end
 
+-- Nice 
+function config.project()
+  require("project_nvim").setup({
+    datapath = vim.fn.stdpath("data"),
+    ignore_lsp = { "efm" },
+    exclude_dirs = { "~/.cargo/*" },
+    silent_chdir = false,
+    detection_methods = { "lsp", "pattern" },
+    patterns = {
+        "pom.xml",--
+        ".venv", -- for python
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "node_modules",
+        "xmake.lua",
+        "pom.xml",  -- java 
+        "CMakeLists.txt",
+        ".null-ls-root",
+        "Makefile",
+        "package.json",
+        "tsconfig.json",
+        ".git"
+      },
+
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  })
+  require("telescope").load_extension("projects")
+end
+
 function config.worktree()
   function git_worktree(arg)
     if arg == "create" then
