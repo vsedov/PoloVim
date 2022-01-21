@@ -6,10 +6,10 @@ end
 -- Determine OS
 local home = os.getenv "HOME"
 if vim.fn.has "mac" == 1 then
-  WORKSPACE_PATH = home .. "/workspace/"
+  WORKSPACE_PATH = home .. "/GitHub/"
   CONFIG = "mac"
 elseif vim.fn.has "unix" == 1 then
-  WORKSPACE_PATH = home .. "/workspace/"
+  WORKSPACE_PATH = home .. "/GitHub/"
   CONFIG = "linux"
 else
   print "Unsupported system"
@@ -86,7 +86,7 @@ local config = {
     on_attach = function(client, bufnr)
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false
-      require('jdtls').setup_dap({ hotcodereplace = 'auto' })
+      -- require('jdtls').setup_dap({ hotcodereplace = 'auto' })
     end,
 
   -- 💀
@@ -99,11 +99,11 @@ local config = {
   -- for a list of options
   settings = {
     java = {
-      -- jdt = {
-      --   ls = {
-      --     vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
-      --   }
-      -- },
+      jdt = {
+        ls = {
+          vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
+        }
+      },
       eclipse = {
         downloadSources = true,
       },
