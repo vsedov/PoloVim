@@ -55,6 +55,8 @@ tools["ThePrimeagen/git-worktree.nvim"] = {
   config = conf.worktree,
 }
 
+-- Packer
+
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
   cmd = { "Octo", "Octo pr list" },
@@ -183,16 +185,6 @@ tools["lewis6991/gitsigns.nvim"] = {
   opt = true,
 }
 
-tools["brooth/far.vim"] = {
-  cmd = { "Farr", "Farf" },
-  run = function()
-    require("packer").loader("far.vim")
-    vim.cmd([[UpdateRemotePlugins]])
-  end,
-  config = conf.far,
-  opt = true,
-} -- brooth/far.vim
-
 -- ze black magic
 tools["windwp/nvim-spectre"] = {
   module = "spectre",
@@ -260,12 +252,11 @@ tools["kevinhwang91/nvim-bqf"] = {
 
 tools["ahmedkhalf/project.nvim"] = {
   module = "project",
-  ft = {"python", "java", "c", "cpp", "lua"}, 
+  ft = { "python", "java", "c", "cpp", "lua" },
   opt = true,
   after = { "telescope.nvim" },
   config = conf.project,
 }
-
 
 tools["jvgrootveld/telescope-zoxide"] = {
   opt = true,
