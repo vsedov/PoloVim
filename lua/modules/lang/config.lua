@@ -400,6 +400,14 @@ local path = vim.split(package.path, ";")
 table.insert(path, "lua/?.lua")
 table.insert(path, "lua/?/init.lua")
 
+function config.context()
+  require("treesitter-context.config").setup({
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+  })
+end
+
+-- function config.treehopper() end
+
 function config.playground()
   require("nvim-treesitter.configs").setup({
     playground = {

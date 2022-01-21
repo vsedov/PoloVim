@@ -495,45 +495,20 @@ local default = {
 -- })
 
 windline.setup({
-  colors_name = function(colors)
-    --- add more color
+   colors_name = function(colors)
+      --- add new colors
+      colors.FilenameFg = colors.white_light
+      colors.FilenameBg = colors.black
 
-    local mod = function(c, value)
-      if vim.o.background == "dark" then
-        return HSL.rgb_to_hsl(c):tint(value):to_rgb()
-      end
-      return HSL.rgb_to_hsl(c):shade(value):to_rgb()
-    end
+      -- this color will not update if you change a colorscheme
+      colors.gray = "#fefefe"
 
-    local normalFg, normalBg = require("windline.themes").get_hl_color("StatusLine")
+      -- dynamically get color from colorscheme hightlight group
+      local searchFg, searchBg = require('windline.themes').get_hl_color('Search')
+      colors.SearchFg = searchFg or colors.white
+      colors.SearchBg = searchBg or colors.yellow
 
-    colors.NormalFg = normalFg or colors.white
-    colors.NormalBg = normalBg or colors.yellow
-    colors.FilenameFg = colors.white_light
-    colors.FilenameBg = colors.NormalFg
-
-    -- this color will not update if you change a colorscheme
-    -- colors.gray = "#fefefe"
-    colors.magenta_a = colors.magenta
-    colors.magenta_b = mod(colors.magenta, 0.5)
-    colors.magenta_c = mod(colors.magenta, 0.7)
-
-    colors.yellow_a = colors.yellow
-    colors.yellow_b = mod(colors.yellow, 0.5)
-    colors.yellow_c = mod(colors.yellow, 0.7)
-
-    colors.blue_a = colors.blue
-    colors.blue_b = mod(colors.blue, 0.5)
-    colors.blue_c = mod(colors.blue, 0.7)
-
-    colors.green_a = mod(colors.green, 0.3)
-    colors.green_b = mod(colors.green, 0.5)
-    colors.green_c = mod(colors.green, 0.7)
-
-    colors.red_a = colors.red
-    colors.red_b = mod(colors.red, 0.5)
-    colors.red_c = mod(colors.red, 0.7)
-    return colors
+      return colors
   end,
   statuslines = { default, quickfix, explorer },
 })

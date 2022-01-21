@@ -88,6 +88,10 @@ local keys = {
   -- -- Working
   ["n|/"] = map_cmd("<cmd>Pounce<cr>"):with_silent(),
 
+  -- tshit
+  ["o|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
+  ["v|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
+
   -- clap --
 
   -- ["xon|f"] = map_cmd("<cmd>lua  Line_ft('f')<cr>"),

@@ -187,7 +187,7 @@ function config.project()
     datapath = vim.fn.stdpath("data"),
     ignore_lsp = { "efm" },
     exclude_dirs = { "~/.cargo/*", "~/.conf/nvim/" },
-    silent_chdir = true,
+    silent_chdir = false,
     detection_methods = { "lsp", "pattern" },
     patterns = {
       "pom.xml", --

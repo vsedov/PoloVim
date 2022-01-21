@@ -94,6 +94,16 @@ lang["ray-x/guihua.lua"] = {
 --   fn = {'<Plug>(wildfire-fuel)', '<Plug>(wildfire-water)', '<Plug>(wildfire-quick-select)'}
 -- }
 
+lang["romgrk/nvim-treesitter-context"] = {
+  event = "CursorMoved",
+  config = conf.context,
+}
+
+lang["max397574/nvim-treehopper"] = {
+  module = "tsht",
+  config = conf.treehopper,
+}
+
 lang["nvim-treesitter/playground"] = {
   -- after = "nvim-treesitter",
   opt = true,
