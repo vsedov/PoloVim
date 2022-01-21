@@ -228,7 +228,7 @@ basic.lsp_diagnos = {
   name = "diagnostic",
   hl_colors = {
     red = { "red", "NormalBg" },
-    yellow = { "yellow_b", "NormalBg" },
+    yellow = { "yellow", "NormalBg" },
     blue = { "blue", "NormalBg" },
   },
   width = breakpoint_width,
@@ -338,7 +338,7 @@ basic.funcname = {
   hl_colors = {
     default = hl_list.NormalBg,
     white = { "white", "black" },
-    green = { "green_b", "NormalBg" },
+    green = { "green", "NormalBg" },
     green_light = { "green_light", "NormalBg" },
   },
   text = function(_, winnr, width, is_float)
@@ -495,20 +495,20 @@ local default = {
 -- })
 
 windline.setup({
-   colors_name = function(colors)
-      --- add new colors
-      colors.FilenameFg = colors.white_light
-      colors.FilenameBg = colors.black
+  colors_name = function(colors)
+    --- add new colors
+    colors.FilenameFg = colors.white_light
+    colors.FilenameBg = colors.black
 
-      -- this color will not update if you change a colorscheme
-      colors.gray = "#fefefe"
+    -- this color will not update if you change a colorscheme
+    colors.gray = "#fefefe"
 
-      -- dynamically get color from colorscheme hightlight group
-      local searchFg, searchBg = require('windline.themes').get_hl_color('Search')
-      colors.SearchFg = searchFg or colors.white
-      colors.SearchBg = searchBg or colors.yellow
+    -- dynamically get color from colorscheme hightlight group
+    local searchFg, searchBg = require("windline.themes").get_hl_color("Search")
+    colors.SearchFg = searchFg or colors.white
+    colors.SearchBg = searchBg or colors.yellow
 
-      return colors
+    return colors
   end,
   statuslines = { default, quickfix, explorer },
 })
