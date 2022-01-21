@@ -163,7 +163,7 @@ vim.cmd([[nnoremap  <leader>Y  "+yg_]])
 
 vim.cmd([[vnoremap  <localleader>c  *+y]])
 vim.cmd([[nnoremap  <localleader>c  *+yg_]])
-vim.cmd([[inoremap  <localleader>c  *+yg_]])
+-- No need to use local leader in insert mode
 -- vim.cmd([[inoremap  <localleader>v <C-r>*]])
 
 --
