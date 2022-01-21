@@ -109,11 +109,11 @@ lang["stevearc/aerial.nvim"] = {
   config = conf.aerial,
 }
 
-lang["simrat39/symbols-outline.nvim"] = {
-  opt = true,
-  cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
-  setup = conf.outline,
-}
+-- lang["simrat39/symbols-outline.nvim"] = {
+--   opt = true,
+--   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
+--   setup = conf.outline,
+-- }
 -- Only for java files help maven.txt
 lang["mikelue/vim-maven-plugin"] = {
   ft = "java",
@@ -289,12 +289,29 @@ lang["folke/todo-comments.nvim"] = {
   after = "trouble.nvim",
 }
 
--- Can Gonna Use jaq for now ?
+-- -- Can Gonna Use jaq for now ?
 -- lang["CRAG666/code_runner.nvim"] = {
---   branch = "main",
+--   -- ft = {"c", "java"},
 --   requires = "nvim-lua/plenary.nvim",
 --   config = function()
 --     require("code_runner").setup({
+--       term = {
+--         position = "belowright",
+--         size = 8,
+--       },
+--       filetype = {
+--         java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
+--         python = "python -U",
+--         typescript = "deno run",
+--         rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
+--       },
+--       project = {
+--         ["~/GitHub/TeamProject2022_28/ARMS"] = {
+--           name = "ARMS",
+--           description = "Project with make file",
+--           command = "cd ~/GitHub/TeamProject2022_28/ARMS && mvn! compile && mvn test",
+--         },
+--       },
 --     })
 --   end,
 -- }
