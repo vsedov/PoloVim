@@ -413,41 +413,6 @@ function config.side_bar()
   sidebar.setup(opts)
 end
 
-function config.searchx()
-  --   nnoremap <C-k> <Cmd>call searchx#prev()<CR>
-  -- nnoremap <C-j> <Cmd>call searchx#next()<CR>
-
-  vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
-  vim.keymap.set({ "n", "x" }, "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-  vim.keymap.set("c", ";", "<Cmd>call searchx#select()<CR>")
-
-  -- might interfear with normal mapping for n maybe ?
-  vim.keymap.set({ "n", "x" }, "N", "<Cmd>call searchx#prev_dir()<CR>")
-  vim.keymap.set({ "n", "x" }, "n", "<Cmd>call searchx#next_dir()<CR>")
-
-  vim.keymap.set("n", "<c-/>", "<Cmd>call searchx#clear()<CR>")
-
-  vim.cmd([[
-    " Overwrite / and ?.
-    let g:searchx = {}
-    " Auto jump if the recent input matches to any marker.
-    let g:searchx.auto_accept = v:true
-    " The scrolloff value for moving to next/prev.
-    let g:searchx.scrolloff = &scrolloff
-    " To enable scrolling animation.
-    let g:searchx.scrolltime = 500
-    " Marker characters.
-    let g:searchx.markers = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '.\zs')
-    " Convert search pattern.
-    function g:searchx.convert(input) abort
-      if a:input !~# '\k'
-        return '\V' .. a:input
-      endif
-      return join(split(a:input, ' '), '.\{-}')
-    endfunction
-  ]])
-end
-
 function config.dial_setup()
   vim.keymap.set({ "n", "x" }, "<C-a>", "<Plug>(dial-increment)")
   vim.keymap.set({ "n", "x" }, "<C-x>", "<Plug>(dial-decrement)")
@@ -456,22 +421,3 @@ function config.dial_setup()
 end
 
 return config
-
--- nnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
--- nnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
--- xnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
--- xnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
--- cnoremap ; <Cmd>call searchx#select()<CR>
--- " Move to next/prev match.
--- nnoremap N <Cmd>call searchx#prev_dir()<CR>
--- nnoremap n <Cmd>call searchx#next_dir()<CR>
--- xnoremap N <Cmd>call searchx#prev_dir()<CR>
--- xnoremap n <Cmd>call searchx#next_dir()<CR>
-
--- xnoremap <C-k> <Cmd>call searchx#prev()<CR>
--- xnoremap <C-j> <Cmd>call searchx#next()<CR>
--- cnoremap <C-k> <Cmd>call searchx#prev()<CR>
--- cnoremap <C-j> <Cmd>call searchx#next()<CR>
-
--- " Clear highlights
---    nnoremap <C-l> <Cmd>call searchx#clear()<CR>

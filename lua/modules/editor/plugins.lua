@@ -46,9 +46,15 @@ editor["ggandor/lightspeed.nvim"] = {
   config = conf.lightspeed,
 }
 
-editor["hrsh7th/vim-searchx"] = {
-  event = { "CmdwinEnter", "CmdlineEnter" },
-  setup = conf.searchx,
+editor["rlane/pounce.nvim"] = {
+  cmd = { "Pounce" },
+  opt = true,
+  config = function()
+    require("pounce").setup({
+      accept_keys = "JFKDLSAHGNUVRBYTMICEOXWPQZ",
+      debug = false,
+    })
+  end,
 }
 
 --max397574

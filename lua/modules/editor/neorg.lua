@@ -31,18 +31,18 @@ neorg_callbacks.on_event("core.started", function(event, event_content)
 end)
 
 require("neorg").setup({
-
   load = {
-    ["core.integrations.telescope"] = {}, -- Enable the telescope module
     ["core.defaults"] = {}, -- Load all the default modules
+    ["core.integrations.telescope"] = {},
     ["core.norg.completion"] = {
       config = {
-        engine = "nvim-cmp", -- We current support nvim-compe and nvim-cmp only
+        engine = "nvim-cmp",
       },
     },
-
+    ["external.zettelkasten"] = {},
     ["core.norg.concealer"] = {
       config = {
+        markup_preset = "dimmed",
         icon_preset = "diamond",
         icons = {
           marker = {
@@ -77,16 +77,17 @@ require("neorg").setup({
     },
     ["core.keybinds"] = {
       config = {
-        default_keybinds = true,
+        default_keybinds = false,
         neorg_leader = "<Leader>o",
       },
     },
     ["core.norg.dirman"] = {
       config = {
         workspaces = {
-          my_workspace = "~/neorg",
+          startup = "~/startup.nvim",
           example_ws = "~/example_workspaces/gtd/",
           gtd = "~/gtd",
+          dany_gtd = "~/dany_gtd/",
           notes = "~notes",
         },
       },
@@ -94,6 +95,8 @@ require("neorg").setup({
     ["core.gtd.base"] = {
       config = {
         workspace = "gtd",
+        -- workspace = "example_ws",
+        -- exclude = { "" },
       },
     },
     ["core.norg.qol.toc"] = {
@@ -109,22 +112,22 @@ require("neorg").setup({
       },
     },
   },
+  logger = {
+    level = "warn",
+  },
 })
 
-local neorg_callbacks = require("neorg.callbacks")
-
-neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
-  -- Map all the below keybinds only when the "norg" mode is active
-  keybinds.map_event_to_mode("norg", {
-    n = { -- Bind keys in normal mode
-      { "<c-s>", "core.integrations.telescope.find_linkable" },
-      { "<c-i>", "core.integrations.telescope.search_headings" },
-      { "<c-k>", "core.integrations.telescope.insert_link" },
+neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, content)
+  content.map_to_mode("traverse-heading", {
+    n = {
+      {
+        "<C-s>",
+        [[<cmd>lua require"telescope".extensions.neorg.search_headings({theme="ivy",border = true,previewer = false,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>]],
+      },
     },
-    i = { -- Bind in insert mode
-      { "<c-k>", "core.integrations.telescope.insert_link" },
-    },
-  }, { silent = true, noremap = true })
+  }, {
+    silent = true,
+  })
 end)
 
 local neorg_leader = "<leader>o"
@@ -242,6 +245,10 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
     n = {
       { neorg_leader .. "mn", ":Neorg mode norg<CR>" },
       { neorg_leader .. "mh", ":Neorg mode traverse-heading<CR>" },
+
+      { neorg_leader .. "ze", ":Neorg zettel explore<CR>" },
+      { neorg_leader .. "zn", ":Neorg zettel new<CR>" },
+      { neorg_leader .. "zb", ":Neorg zettel backlinks<CR>" },
     },
   }, {
     silent = true,
