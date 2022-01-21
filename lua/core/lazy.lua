@@ -1,20 +1,36 @@
 local loader = require("packer").loader
-_G.PLoader = loader
-function Lazyload()
-  --
-  math.randomseed(os.time())
-  -- i will soon be using themer for this .
-  local themes = {
 
-    -- "tokyonight.nvim",
-    -- "nvim", -- cat
-    -- "Sakura.nvim",
+local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
+if fsize == nil or fsize < 0 then
+  fsize = 1
+end
+
+local load_ts_plugins = true
+local load_lsp = true
+
+if fsize > 1024 * 1024 then
+  load_ts_plugins = false
+  load_lsp = false
+end
+
+local function loadscheme()
+  local themes = {
     "kanagawa.nvim",
+    "nvim",
+    "tokyonight.nvim",
+    "tokyodark.nvim",
   }
+
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
-  loader(loading_theme)
 
+  require("packer").loader(loading_theme)
+end
+function Lazyload()
+  --
+  _G.PLoader = loader
+
+  loadscheme()
   if vim.wo.diff then
     -- loader(plugins)
     lprint("diffmode")
@@ -47,18 +63,6 @@ function Lazyload()
   end
 
   -- local fname = vim.fn.expand("%:p:f")
-  local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
-  if fsize == nil or fsize < 0 then
-    fsize = 1
-  end
-
-  local load_lsp = true
-  local load_ts_plugins = true
-
-  if fsize > 1024 * 1024 then
-    load_ts_plugins = false
-    load_lsp = false
-  end
   if fsize > 6 * 1024 * 1024 then
     vim.cmd([[syntax off]])
     return
@@ -102,8 +106,6 @@ function Lazyload()
       "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
     loader(plugins)
     lprint(plugins)
-    loader("paperplanes.nvim")
-
     loader("neogen") -- Load neogen only for active lsp servers
     loader("indent-blankline.nvim")
     loader("refactoring.nvim") -- need to do the same thing for refactoring
