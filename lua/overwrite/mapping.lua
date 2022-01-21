@@ -85,9 +85,8 @@ local keys = {
   -- ["n|<A-w>"] = map_cr("HopWordBC"):with_silent(),
   -- ["n|<A-W>"] = map_cr("HopWordAC"):with_silent(),
 
-  -- -- Broken
-  -- ["n|g/"] = map_cmd("<cmd>HopLineStartAC<cr>"):with_silent(),
-  -- ["n|g,"] = map_cmd("<cmd>HopLineStartBC<cr>"):with_silent(),
+  -- -- Working
+  ["n|/"] = map_cmd("<cmd>Pounce<cr>"):with_silent(),
 
   -- clap --
 
@@ -126,14 +125,14 @@ local keys = {
   -- ["n|<F9>"] = map_cr("GoBreakToggle"),
   -- -- session
 
-  ["n|<Leader>sd"] = map_cu("DeleteSession"):with_noremap(),
-
   -- Switch from local to Normal for M to test how it tis
   ["n|<Leader>M"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]),
   ["n|<Leader>m1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]),
   ["n|<Leader>m2"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]),
   ["n|<Leader>m3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]),
   ["n|<Leader>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
+
+  -- Need to load this properly
   ["n|<Leader>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
 
   --- Refactoring

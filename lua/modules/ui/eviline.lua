@@ -513,7 +513,7 @@ windline.setup({
     colors.FilenameBg = colors.NormalFg
 
     -- this color will not update if you change a colorscheme
-    colors.gray = "#fefefe"
+    -- colors.gray = "#fefefe"
     colors.magenta_a = colors.magenta
     colors.magenta_b = mod(colors.magenta, 0.5)
     colors.magenta_c = mod(colors.magenta, 0.7)
