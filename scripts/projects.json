@@ -1,0 +1,7 @@
+{
+    "~/GitHub/TeamProject2022_28/ARMS": {
+        "name": "ARMS"
+        "description": "Project with MVN file",
+        "command": "mvn test"
+    }
+}
