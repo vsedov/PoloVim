@@ -11,6 +11,7 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
       eraser = "postgres://postgres:password@localhost:5432/eraser_local",
       staging = "postgres://postgres:password@localhost:5432/my-staging-db",
       wp = "mysql://root@localhost/wp_awesome",
+      uni = "sqlite:/home/viv/GitHub/TeamProject2022_28/ARMS/src/main/resources/db/DummyARMS.sql",
     }
   end,
 }
