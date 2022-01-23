@@ -244,6 +244,17 @@ tools["tpope/vim-fugitive"] = {
   opt = true,
 }
 
+
+tools["LhKipp/nvim-git-fixer"] = {
+  cmd = {"FixUp","Ammend" },
+  opt = true,
+  config = function()
+    require('fixer').setup{}
+    vim.cmd([[command! -nargs=*  FixUp lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]])
+    vim.cmd([[command! -nargs=*  Ammend lua require('fixer/picker/telescope').commit{type="amend"} ]])
+  end 
+}
+
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
   opt = true,
@@ -331,7 +342,7 @@ tools["fladson/vim-kitty"] = {
 
 tools["relastle/vim-nayvy"] = {
   ft = "python",
-
+  run = ":UpdateRemotePlugins",
   config = function()
     vim.g.nayvy_import_config_path = "$HOME/nayvy.py"
   end,

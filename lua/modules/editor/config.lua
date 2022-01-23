@@ -292,7 +292,7 @@ function config.vmulti()
       let g:VM_maps = {}
       let g:VM_maps['Find Under'] = '<C-n>'
       let g:VM_maps['Find Subword Under'] = '<C-n>'
-      let g:VM_maps['Select All'] = '<C-M-n>'
+      let g:VM_maps['Select All'] = '<C-n>a'
       let g:VM_maps['Seek Next'] = 'n'
       let g:VM_maps['Seek Prev'] = 'N'
       let g:VM_maps["Undo"] = 'u'
