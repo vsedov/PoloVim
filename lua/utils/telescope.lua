@@ -933,6 +933,66 @@ function M.colorscheme()
     end, vim.fn.getcompletion("themer", "color"))
   )
   local opts = {
+    prompt_title = "Themer Finder",
+    results_title = "Change colorscheme",
+    path_display = { "smart" },
+    finder = finders.new_table({
+      results = colors,
+    }),
+    prompt_position = "bottom",
+    previewer = false,
+    winblend = 0,
+    layout_config = {
+      prompt_position = "bottom", -- top bottom
+    },
+    attach_mappings = function(prompt_bufnr, map)
+      map("i", "<cr>", enter)
+
+      map("i", "<S-Tab>", prev_color)
+      map("i", "<Tab>", next_color)
+
+      map("i", "k", prev_color)
+      map("i", "j", next_color)
+
+      map("n", "p", preview)
+      map("n", "<cr>", enter)
+
+      return true
+    end,
+    sorter = require("telescope.config").values.generic_sorter({}),
+  }
+  local colorschemes = pickers.new(themes.get_ivy(), opts)
+  colorschemes:find()
+end
+
+-- Get colour sceheme from package local
+local function get_theme()
+  local themes = {}
+  local theme_dir = vim.fn.stdpath("data") .. "/site/pack/packer/opt/themer.lua/colors/"
+
+  local fd = require("plenary.scandir").scan_dir(theme_dir, {})
+  if fd then
+    -- Insert each file into the table
+    for _, file in ipairs(fd) do
+      table.insert(
+        themes,
+        (file:gsub(vim.fn.stdpath("data") .. "/site/pack/packer/opt/themer.lua/colors/", ""):gsub(".lua", ""))
+      )
+    end
+  end
+  return themes
+end
+
+M.live_colorscheme = function()
+  local colors = get_theme()
+
+  -- have previous colors as well ? or just themer
+
+  local before_color = vim.api.nvim_exec("colorscheme", true)
+  if before_color == "themer" then
+    before_color = "default"
+  end
+  local opts = {
     prompt_title = " Find colorscheme",
     results_title = "Change colorscheme",
     path_display = { "smart" },

@@ -133,34 +133,34 @@ lang["mfussenegger/nvim-jdtls"] = {
   ft = "java",
 }
 
-    -- :lua require'blanket'.start() - start the plugin, useful when filetype property is not set
-    -- :lua require'blanket'.stop() - stop displaying coverage and cleanup autocmds, watcher etc.
-    -- :lua require'blanket'.refresh() - manually trigger a refresh of signs, useful when filetype property is not set
-    -- :lua require'blanket'.set_report_path() - change report_path to a new value and refresh the gutter based on the new report
+-- :lua require'blanket'.start() - start the plugin, useful when filetype property is not set
+-- :lua require'blanket'.stop() - stop displaying coverage and cleanup autocmds, watcher etc.
+-- :lua require'blanket'.refresh() - manually trigger a refresh of signs, useful when filetype property is not set
+-- :lua require'blanket'.set_report_path() - change report_path to a new value and refresh the gutter based on the new report
 
 lang["dsych/blanket.nvim"] = {
   ft = "java",
   config = function()
-    require'blanket'.setup{
-        -- can use env variables and anything that could be interpreted by expand(), see :h expandcmd()
-        -- REQUIRED
-        report_path = "/home/viv/GitHub/TeamProject2022_28/ARMS/target/site/jacoco/jacoco.xml",
-        -- refresh gutter every time we enter java file
-        -- defauls to empty - no autocmd is created
-        filetypes = "java",
-        -- for debugging purposes to see whether current file is present inside the report
-        -- defaults to false
-        silent = true,
-        -- can set the signs as well
-        signs = {
-            priority = 10,
-            incomplete_branch = "█",
-            uncovered = "█",
-            covered = "█",
-            sign_group = "Blanket"
-        },
-    }
-  end
+    require("blanket").setup({
+      -- can use env variables and anything that could be interpreted by expand(), see :h expandcmd()
+      -- REQUIRED
+      report_path = "/home/viv/GitHub/TeamProject2022_28/ARMS/target/site/jacoco/jacoco.xml",
+      -- refresh gutter every time we enter java file
+      -- defauls to empty - no autocmd is created
+      filetypes = "java",
+      -- for debugging purposes to see whether current file is present inside the report
+      -- defaults to false
+      silent = true,
+      -- can set the signs as well
+      signs = {
+        priority = 10,
+        incomplete_branch = "█",
+        uncovered = "█",
+        covered = "█",
+        sign_group = "Blanket",
+      },
+    })
+  end,
 }
 
 lang["mfussenegger/nvim-dap"] = {

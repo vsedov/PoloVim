@@ -244,15 +244,14 @@ tools["tpope/vim-fugitive"] = {
   opt = true,
 }
 
-
 tools["LhKipp/nvim-git-fixer"] = {
-  cmd = {"FixUp","Ammend" },
+  cmd = { "FixUp", "Ammend" },
   opt = true,
   config = function()
-    require('fixer').setup{}
+    require("fixer").setup({})
     vim.cmd([[command! -nargs=*  FixUp lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]])
     vim.cmd([[command! -nargs=*  Ammend lua require('fixer/picker/telescope').commit{type="amend"} ]])
-  end 
+  end,
 }
 
 -- need quick fix  :vimgrep /\w\+/j % | copen

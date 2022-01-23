@@ -621,53 +621,13 @@ end
 
 function config.themer()
   require("themer").setup({
-    config = {
-      options = {
-        transparency = false,
-        term_colors = true,
-        styles = {
-          comments = { italic = true },
-          functions = { italic = true },
-          keywords = { italic = true },
-          strings = {},
-          variables = { italic = true },
-          parameters = { italic = true },
-          fields = {},
-        },
-
-        integrations = {
-          treesitter = true,
-          native_lsp = {
-            enabled = true,
-            virtual_text = {
-              error = { italic = true },
-              hint = { italic = true },
-              warn = { italic = true },
-              info = { italic = true },
-            },
-            underlines = {
-              error = { underline = true },
-              hint = { underline = true },
-              warn = { underline = true },
-              info = { underline = true },
-            },
-          },
-          cmp = true,
-          gitsigns = true,
-          telescope = true,
-          indent_blankline = {
-            enabled = true,
-            colored_indent_levels = true,
-          },
-          barbar = true,
-          bufferline = true,
-          markdown = true,
-        },
-        extra_integrations = {
-          galaxyline = true,
-          lualine = true,
-        },
-      },
+    colorscheme = "kanagawa",
+    styles = {
+      ["function"] = { style = "italic" },
+      functionbuiltin = { style = "italic" },
+      variable = { style = "italic" },
+      variableBuiltIn = { style = "italic" },
+      parameter = { style = "italic" },
     },
   })
 end
