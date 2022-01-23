@@ -4,15 +4,15 @@ if not status then
 end
 
 -- Determine OS
-local home = os.getenv "HOME"
-if vim.fn.has "mac" == 1 then
+local home = os.getenv("HOME")
+if vim.fn.has("mac") == 1 then
   WORKSPACE_PATH = home .. "/GitHub/"
   CONFIG = "mac"
-elseif vim.fn.has "unix" == 1 then
+elseif vim.fn.has("unix") == 1 then
   WORKSPACE_PATH = home .. "/GitHub/"
   CONFIG = "linux"
 else
-  print "Unsupported system"
+  print("Unsupported system")
 end
 
 -- Find root of project
@@ -28,6 +28,13 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 
 local workspace_dir = WORKSPACE_PATH .. project_name
+
+local bundles = {
+  vim.fn.glob(
+    "/home/viv/JavaShit/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar"
+  ),
+}
+vim.list_extend(bundles, vim.split(vim.fn.glob("/home/viv/JavaShit/vscode-java-test/server/*.jar"), "\n"))
 
 -- TODO: Testing
 -- local bundles = {
@@ -78,16 +85,15 @@ local config = {
     workspace_dir,
   },
 
-
-  -- Might need something later on the line . 
+  -- Might need something later on the line .
   -- on_attach = require("user.lsp.handlers").on_attach,
   -- capabilities = require("user.lsp.handlers").capabilities,
 
-    on_attach = function(client, bufnr)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
-      -- require('jdtls').setup_dap({ hotcodereplace = 'auto' })
-    end,
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+    require("jdtls").setup_dap({ hotcodereplace = "auto" })
+  end,
 
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.
@@ -101,8 +107,8 @@ local config = {
     java = {
       jdt = {
         ls = {
-          vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
-        }
+          vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m",
+        },
       },
       eclipse = {
         downloadSources = true,
@@ -166,25 +172,23 @@ local config = {
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
-    bundles = {
-    },
+    bundles = bundles,
     -- bundles = bundles,
   },
 }
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 
-
 require("jdtls").start_or_attach(config)
 
 -- require('jdtls').setup_dap()
 
-vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
-vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)"
-vim.cmd "command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()"
--- vim.cmd "command! -buffer JdtJol lua require('jdtls').jol()"
-vim.cmd "command! -buffer JdtBytecode lua require('jdtls').javap()"
--- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"
+vim.cmd("command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)")
+vim.cmd("command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)")
+vim.cmd("command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()")
+vim.cmd("command! -buffer JdtJol lua require('jdtls').jol()")
+vim.cmd("command! -buffer JdtBytecode lua require('jdtls').javap()")
+vim.cmd("command! -buffer JdtJshell lua require('jdtls').jshell()")
 
 local status_ok, which_key = pcall(require, "which-key")
 if not status_ok then
@@ -216,6 +220,11 @@ local mappings = {
     v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", "Extract Variable" },
     c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", "Extract Constant" },
   },
+  T = {
+    name = "Java",
+    c = { "<cmd>lua require'jdtls'.test_class()", "Test class" },
+    m = { "<cmd>lua require'jdtls'.test_nearest_method()", "test method" },
+  },
 }
 
 local vmappings = {
@@ -230,5 +239,5 @@ local vmappings = {
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
 
-vim.cmd [[setlocal shiftwidth=2]]
-vim.cmd [[setlocal tabstop=2]]
+vim.cmd([[setlocal shiftwidth=2]])
+vim.cmd([[setlocal tabstop=2]])

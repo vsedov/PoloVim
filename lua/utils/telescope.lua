@@ -516,19 +516,108 @@ M.lsp_implementations = function()
   builtin.lsp_implementations(opts)
 end
 
--- show refrences to this using language server
-M.lsp_references = function()
-  local opts = themes.get_ivy({
+local function lsp_ref_from_qf(opts)
+  opts = opts or {}
 
-    layout_strategy = "horizontal", -- horizontal
-    layout_config = {
-      prompt_position = "top",
+  local displayer = entry_display.create({
+    -- separator = "▏",
+    separator = " ",
+    items = {
+      { width = 8 },
+      { width = 20 },
+      { remaining = true },
     },
-    sorting_strategy = "ascending",
-    ignore_filename = false,
   })
 
-  builtin.lsp_references(opts)
+  local make_display = function(entry)
+    -- print("entry:")
+    -- dump(entry)
+    local filename = require("telescope.utils").transform_path(opts, entry.filename)
+
+    local line_info = {
+      -- table.concat({ entry.lnum, entry.col }, ":"),
+      "(" .. entry.lnum .. ")",
+      "TelescopeResultsLineNr",
+    }
+    -- if #filename > 20 then
+    --     filename = filename:sub(-20, -1)
+    -- end
+
+    return displayer({
+      line_info,
+      -- entry.text:gsub(".* | ", ""),
+      -- string.rep(" ", 30 - #vim.trim(entry.text)),
+      vim.trim(entry.text),
+      filename,
+    })
+  end
+
+  return function(entry)
+    local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
+
+    return {
+      valid = true,
+
+      value = entry,
+      ordinal = (not opts.ignore_filename and filename or "") .. " " .. entry.text,
+      display = make_display,
+
+      bufnr = entry.bufnr,
+      filename = filename,
+      lnum = entry.lnum,
+      col = entry.col,
+      text = entry.text,
+      start = entry.start,
+      finish = entry.finish,
+    }
+  end
+end
+
+M.lsp_references = function()
+  reloader()
+  local opts = themes.get_dropdown({
+    -- local opts = themes.get_ivy({
+    prompt_title = "~ LSP References ~",
+    preview_title = "~ File Preview ~ ",
+    results_title = "~ References ~",
+    layout_config = {
+      -- preview_width = 0.5,
+      height = 0.6,
+      anchor = "S",
+    },
+    preview = {
+      hide_on_startup = false,
+    },
+  })
+  local params = vim.lsp.util.make_position_params()
+  params.context = { includeDeclaration = true }
+
+  vim.lsp.buf_request(0, "textDocument/references", params, function(err, result, _ctx, _config)
+    if err then
+      vim.api.nvim_err_writeln("Error when finding references: " .. err.message)
+      return
+    end
+
+    local locations = {}
+    if result then
+      vim.list_extend(locations, vim.lsp.util.locations_to_items(result) or {})
+    end
+
+    if vim.tbl_isempty(locations) then
+      return
+    end
+    -- print("locations:")
+    -- dump(locations)
+
+    pickers.new(opts, {
+      finder = finders.new_table({
+        results = locations,
+        entry_maker = lsp_ref_from_qf(),
+      }),
+      previewer = conf.qflist_previewer(opts),
+      sorter = conf.generic_sorter(opts),
+    }):find()
+  end)
 end
 
 M.command_history = function()
@@ -714,12 +803,63 @@ M.curbuf = function()
   builtin.current_buffer_fuzzy_find(opts)
 end
 
-M.git_diff = function()
+M.git_status = function()
   reloader()
   local opts = {
     -- layout_strategy = "horizontal",
+    git_icons = {
+      added = "",
+      changed = "",
+      copied = "",
+      deleted = "",
+      renamed = "",
+      unmerged = "‡",
+      untracked = "",
+    },
+    border = true,
+    prompt_title = "~ Git Status ~",
+    preview_title = "~ Diff Preview ~ ",
+    results_title = "~ Changed Files ~",
+    layout_config = {
+      width = 0.99,
+      height = 0.69,
+      preview_width = 0.7,
+      prompt_position = "top",
+    },
+    preview = {
+      hide_on_startup = true,
+    },
+  }
+  require("telescope.builtin").git_status(opts)
+end
+
+M.git_diff = function()
+  reloader()
+  local cwd = vim.fn.expand(vim.loop.cwd())
+  local function entry_maker()
+    return function(entry)
+      local mod, file = string.match(entry, "(..).*%s[->%s]?(.+)")
+      return {
+        value = file,
+        status = mod,
+        ordinal = entry,
+        display = file,
+        path = Path:new({ cwd, file }):absolute(),
+      }
+    end
+  end
+  local git_cmd = { "git", "status", "-s", "--", "." }
+  local output = require("telescope.utils").get_os_command_output(git_cmd, cwd)
+  local opts = {
+    -- layout_strategy = "horizontal",
+    finder = finders.new_table({
+      results = output,
+      entry_maker = entry_maker(),
+    }),
     border = true,
     prompt_title = "~ Git Diff ~",
+    preview_title = "~ Diff ~ ",
+    results_title = "~ Changed Files ~",
     layout_config = {
       width = 0.99,
       height = 0.69,
@@ -730,7 +870,7 @@ M.git_diff = function()
       hide_on_startup = false,
     },
   }
-  builtin.git_status(opts)
+  require("telescope.builtin").git_status(opts)
 end
 
 M.find_files = function()
