@@ -278,4 +278,12 @@ R = function(name)
   return require(name)
 end
 
+function M.x86()
+  local arch = vim.fn.system("uname -m")
+  if arch == "i386" or arch == "x86_64" then
+    return "x86"
+  else
+    return "arm"
+  end
+end
 return M

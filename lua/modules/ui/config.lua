@@ -629,7 +629,22 @@ function config.themer()
       variableBuiltIn = { style = "italic" },
       parameter = { style = "italic" },
     },
+    telescope_mappings = {
+      ["n"] = {
+        ["<CR>"] = "enter",
+        ["k"] = "prev_color",
+        ["j"] = "next_color",
+        ["p"] = "preview",
+      },
+      ["i"] = {
+        ["<CR>"] = "enter",
+        ["<S-Tab>"] = "prev_color",
+        ["<Tab>"] = "next_color",
+        ["<C-p>"] = "preview",
+      },
+    },
   })
+  require("telescope").load_extension("themes")
 end
 
 vim.api.nvim_exec(

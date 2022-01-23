@@ -201,6 +201,11 @@ editor["numToStr/Comment.nvim"] = {
   config = conf.comment,
 }
 
+-- TODO do shit to this
+editor["LudoPinelli/comment-box.nvim"] = {
+  cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },
+  config = conf.comment_box,
+}
 -- copy paste failed in block mode when clipboard = unnameplus"
 editor["bfredl/nvim-miniyank"] = {
   keys = { "p", "y", "<C-v>" },
