@@ -127,6 +127,7 @@ ui["rebelot/kanagawa.nvim"] = {
 
 -- Might want to manually call this through telescope or something .
 ui["narutoxy/themer.lua"] = {
+  branch = "dev",
   opt = true,
   module = "themer",
   config = conf.themer,
