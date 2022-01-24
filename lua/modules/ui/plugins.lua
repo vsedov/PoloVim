@@ -106,7 +106,6 @@ ui["tiagovla/tokyodark.nvim"] = {
 
 ui["catppuccin/nvim"] = {
   opt = true,
-  module = "nvim",
   config = conf.catppuccin,
 }
 
@@ -129,7 +128,6 @@ ui["rebelot/kanagawa.nvim"] = {
 ui["vsedov/themer.lua"] = {
   branch = "dev",
   module = "themer",
-  opt = true,
   config = conf.themer,
 }
 
