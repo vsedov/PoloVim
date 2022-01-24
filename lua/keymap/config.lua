@@ -57,6 +57,15 @@ end
 --   return "fo:qP:"
 -- end
 
+_G.toggleCopilot = function()
+  if vim.fn["copilot#Enabled"]() == 1 then
+    vim.cmd([[ Copilot disable ]])
+  else
+    vim.cmd([[ Copilot enable ]])
+  end
+  vim.cmd([[ Copilot status ]])
+end
+
 _G.word_motion_move = function(key)
   if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then
     vim.cmd([[packadd vim-wordmotion]])

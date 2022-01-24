@@ -34,6 +34,8 @@ local plug_map = {
   ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
 
   ["n|<C-]>"] = map_args("Template"),
+  ["n|<C-[>"] = map_cmd("<cmd>call v:lua.toggleCopilot()<cr>"),
+
   -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
   -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
 
