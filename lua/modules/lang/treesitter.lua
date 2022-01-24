@@ -140,33 +140,29 @@ local treesitter_obj = function()
         enable = enable,
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
-          ["]m"] = "@function.outer",
-          ["]]"] = "@class.outer",
-
+          ["gnf"] = "@function.outer",
+          ["gnif"] = "@function.inner",
           ["gnp"] = "@parameter.inner",
           ["gnc"] = "@call.outer",
           ["gnic"] = "@call.inner",
         },
         goto_next_end = {
-          ["]M"] = "@function.outer",
-          ["]["] = "@class.outer",
-
+          ["gnF"] = "@function.outer",
+          ["gniF"] = "@function.inner",
           ["gnP"] = "@parameter.inner",
           ["gnC"] = "@call.outer",
           ["gniC"] = "@call.inner",
         },
         goto_previous_start = {
-          ["[m"] = "@function.outer",
-          ["[["] = "@class.outer",
-
+          ["gpf"] = "@function.outer",
+          ["gpif"] = "@function.inner",
           ["gpp"] = "@parameter.inner",
           ["gpc"] = "@call.outer",
           ["gpic"] = "@call.inner",
         },
         goto_previous_end = {
-          ["[M"] = "@function.outer",
-          ["[]"] = "@class.outer",
-
+          ["gpF"] = "@function.outer",
+          ["gpiF"] = "@function.inner",
           ["gpP"] = "@parameter.inner",
           ["gpC"] = "@call.outer",
           ["gpiC"] = "@call.inner",
@@ -254,7 +250,7 @@ local treesitter_ref = function()
       },
     },
     matchup = {
-      enable = false, -- mandatory, false will disable the whole extension
+      enable = true, -- mandatory, false will disable the whole extension
       disable = { "ruby" }, -- optional, list of language that will be disabled
     },
     autopairs = { enable = true },
