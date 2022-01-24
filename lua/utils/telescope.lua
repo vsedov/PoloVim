@@ -800,6 +800,7 @@ M.curbuf = function()
     prompt_title = "~ Current Buffer ~",
     layout_config = { prompt_position = "top", height = 0.4 },
   }
+  vim.cmd("normal! m'")
   builtin.current_buffer_fuzzy_find(opts)
 end
 

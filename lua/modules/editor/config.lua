@@ -330,6 +330,15 @@ function config.comment_box()
     line_blank_line_above = false, -- insert a blank line above the line
     line_blank_line_below = false, -- insert a blank line below the line
   })
+
+  local keymap = vim.keymap.set
+  local cb = require("comment-box")
+
+  keymap({ "n", "v" }, "<Leader>cb", cb.lbox, {})
+  keymap({ "n", "v" }, "<Leader>cc", cb.cbox, {})
+
+  keymap("n", "<Leader>cl", cb.line, {})
+  keymap("i", "<M-p>", cb.line, {})
 end
 
 function config.twilight()

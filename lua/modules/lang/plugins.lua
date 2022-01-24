@@ -95,7 +95,7 @@ lang["ray-x/guihua.lua"] = {
 -- }
 
 lang["romgrk/nvim-treesitter-context"] = {
-  event = "CursorMoved",
+  event = "InsertEnter",
   config = conf.context,
 }
 

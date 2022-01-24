@@ -203,7 +203,9 @@ editor["numToStr/Comment.nvim"] = {
 
 -- TODO do shit to this
 editor["LudoPinelli/comment-box.nvim"] = {
+  keys = { "<Leader>cb", "<Leader>cc", "<Leader>cl", "<M-p>" },
   cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },
+  opt = true,
   config = conf.comment_box,
 }
 -- copy paste failed in block mode when clipboard = unnameplus"
