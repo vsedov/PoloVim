@@ -70,6 +70,12 @@ require("neorg").setup({
         },
       },
     },
+
+    ["core.norg.esupports.metagen"] = {
+      config = {
+        type = "auto",
+      },
+    },
     ["core.presenter"] = {
       config = {
         zen_mode = "zen-mode",
@@ -84,7 +90,6 @@ require("neorg").setup({
     ["core.norg.dirman"] = {
       config = {
         workspaces = {
-          startup = "~/startup.nvim",
           example_ws = "~/example_workspaces/gtd/",
           gtd = "~/gtd",
           dany_gtd = "~/dany_gtd/",
