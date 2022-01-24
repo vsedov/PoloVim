@@ -70,8 +70,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
   after = "nvim-cmp",
   config = function()
     vim.opt.completeopt = "menuone,noselect"
-    vimg.g.copilot_enabled = false
-
+    vim.g.copilot_enabled = false
     -- Have copilot play nice with nvim-cmp.
     vim.g.copilot_no_tab_map = true
     vim.g.copilot_assume_mapped = true
