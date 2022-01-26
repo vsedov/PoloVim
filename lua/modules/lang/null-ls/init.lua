@@ -153,6 +153,8 @@ return {
       fallback_severity = vim.diagnostic.severity.WARN,
       root_dir = lspconfig.util.root_pattern(
         ".venv", -- for python
+        "Pipfile",
+
         "_darcs",
         ".hg",
         ".bzr",

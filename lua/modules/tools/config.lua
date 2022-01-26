@@ -191,6 +191,7 @@ function config.project()
     detection_methods = { "lsp", "pattern" },
     patterns = {
       "pom.xml", --
+      "Pipfile",
       ".venv", -- for python
       "_darcs",
       ".hg",
