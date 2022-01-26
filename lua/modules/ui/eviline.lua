@@ -9,8 +9,6 @@ local HSL = require("wlanimation.utils")
 local sep = helper.separators
 local luffy_text = ""
 
-local home = require("core.global").home
-
 local hl_list = {
   NormalBg = { "NormalFg", "NormalBg" },
   White = { "black", "white" },
@@ -142,6 +140,7 @@ local function getEntryFromEnd(table, entry)
 end
 
 local TrimmedDirectory = function(dir)
+  local home = require("core.global").home
   local _, index = string.find(dir, home, 1)
   if index ~= nil and index ~= string.len(dir) then
     -- TODO Trimmed Home Directory
@@ -228,7 +227,7 @@ basic.lsp_diagnos = {
   name = "diagnostic",
   hl_colors = {
     red = { "red", "NormalBg" },
-    yellow = { "yellow", "NormalBg" },
+    yellow = { "yellow_b", "NormalBg" },
     blue = { "blue", "NormalBg" },
   },
   width = breakpoint_width,
@@ -338,7 +337,7 @@ basic.funcname = {
   hl_colors = {
     default = hl_list.NormalBg,
     white = { "white", "black" },
-    green = { "green", "NormalBg" },
+    green = { "green_b", "NormalBg" },
     green_light = { "green_light", "NormalBg" },
   },
   text = function(_, winnr, width, is_float)
@@ -496,18 +495,43 @@ local default = {
 
 windline.setup({
   colors_name = function(colors)
-    --- add new colors
+    --- add more color
+
+    local mod = function(c, value)
+      if vim.o.background == "light" then
+        return HSL.rgb_to_hsl(c):tint(value):to_rgb()
+      end
+      return HSL.rgb_to_hsl(c):shade(value):to_rgb()
+    end
+
+    local normalFg, normalBg = require("windline.themes").get_hl_color("StatusLine")
+
+    colors.NormalFg = normalFg or colors.white
+    colors.NormalBg = normalBg or colors.yellow
     colors.FilenameFg = colors.white_light
-    colors.FilenameBg = colors.black
+    colors.FilenameBg = colors.NormalFg
 
     -- this color will not update if you change a colorscheme
     colors.gray = "#fefefe"
+    colors.magenta_a = colors.magenta
+    colors.magenta_b = mod(colors.magenta, 0.5)
+    colors.magenta_c = mod(colors.magenta, 0.7)
 
-    -- dynamically get color from colorscheme hightlight group
-    local searchFg, searchBg = require("windline.themes").get_hl_color("Search")
-    colors.SearchFg = searchFg or colors.white
-    colors.SearchBg = searchBg or colors.yellow
+    colors.yellow_a = colors.yellow
+    colors.yellow_b = mod(colors.yellow, 0.5)
+    colors.yellow_c = mod(colors.yellow, 0.7)
 
+    colors.blue_a = colors.blue
+    colors.blue_b = mod(colors.blue, 0.5)
+    colors.blue_c = mod(colors.blue, 0.7)
+
+    colors.green_a = colors.green
+    colors.green_b = mod(colors.green, 0.1)
+    colors.green_c = mod(colors.green, 0.7)
+
+    colors.red_a = colors.red
+    colors.red_b = mod(colors.red, 0.5)
+    colors.red_c = mod(colors.red, 0.7)
     return colors
   end,
   statuslines = { default, quickfix, explorer },

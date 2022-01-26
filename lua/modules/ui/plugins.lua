@@ -105,17 +105,18 @@ ui["tiagovla/tokyodark.nvim"] = {
 }
 
 ui["catppuccin/nvim"] = {
+  as = "catppuccin",
   opt = true,
   config = conf.catppuccin,
 }
 
--- ui["numToStr/Sakura.nvim"] = {
---   opt = true,
---   config = function()
---     vim.cmd([[colorscheme sakura]])
---     -- vim.cmd([[hi TSCurrentScope guibg=#282338]])
---   end,
--- }
+ui["numToStr/Sakura.nvim"] = {
+  opt = true,
+  config = function()
+    vim.cmd([[colorscheme sakura]])
+    -- vim.cmd([[hi TSCurrentScope guibg=#282338]])
+  end,
+}
 
 -- Use default when loading this .
 ui["rebelot/kanagawa.nvim"] = {

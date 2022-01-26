@@ -324,6 +324,15 @@ function config.scrollview()
 
   vim.g.scrollview_column = 1
 end
+function config.dir_buff()
+  require("dirbuf").setup({
+    hash_padding = 2,
+    show_hidden = true,
+    sort_order = function(l, r)
+      return l.fname:lower() < r.fname:lower()
+    end,
+  })
+end
 
 function config.default()
   vim.cmd("set cursorcolumn")
@@ -381,7 +390,10 @@ function config.tokyodark()
 end
 
 function config.catppuccin()
-  require("catppuccin").setup({
+  local catppuccin = require("catppuccin")
+
+  -- configure it
+  catppuccin.setup({
     transparent_background = false,
     term_colors = false,
     styles = {
@@ -389,7 +401,7 @@ function config.catppuccin()
       functions = "italic",
       keywords = "italic",
       strings = "NONE",
-      variables = "NONE",
+      variables = "italic",
     },
     integrations = {
       treesitter = true,
@@ -409,41 +421,36 @@ function config.catppuccin()
         },
       },
       lsp_trouble = true,
+      cmp = true,
       lsp_saga = true,
       gitgutter = true,
       gitsigns = true,
       telescope = true,
       nvimtree = {
         enabled = true,
-        show_root = true,
+        show_root = truetrue,
+        transparent_panel = true,
       },
       which_key = true,
       indent_blankline = {
         enabled = true,
         colored_indent_levels = true,
       },
-      dashboard = true,
+      dashboard = false,
       neogit = true,
       vim_sneak = true,
       fern = true,
       barbar = true,
       bufferline = true,
-      markdown = false,
+      markdown = true,
       lightspeed = true,
       ts_rainbow = true,
       hop = false,
+      notify = true,
+      telekasten = true,
     },
   })
   vim.cmd([[colorscheme catppuccin]])
-end
-function config.dir_buff()
-  require("dirbuf").setup({
-    hash_padding = 2,
-    show_hidden = true,
-    sort_order = function(l, r)
-      return l.fname:lower() < r.fname:lower()
-    end,
-  })
 end
 
 function config.kanagawa()
