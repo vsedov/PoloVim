@@ -13,13 +13,28 @@ if fsize > 1024 * 1024 then
   load_lsp = false
 end
 
+math.randomseed(os.time())
+
+local function daylight()
+  local h = tonumber(os.date("%H"))
+  if h > 6 and h < 18 then
+    return "light"
+  else
+    return "dark"
+  end
+end
+
 local function loadscheme()
   local themes = {
     "kanagawa.nvim",
-    -- "nvim",
+    "catppuccin",
     -- "tokyonight.nvim",
   }
-
+  if daylight() == "light" then
+    themes = { "kanagawa.nvim", "catppuccin", "Sakura.nvim" }
+  else
+    themes = { "kanagawa.nvim", "tokyonight.nvim", "tokyodark.nvim" }
+  end
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
 
