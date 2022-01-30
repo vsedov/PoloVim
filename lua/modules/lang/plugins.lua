@@ -29,6 +29,7 @@ lang["RRethy/nvim-treesitter-textsubjects"] = {
 -- Better plugin for this i think ,
 lang["danymat/neogen"] = {
   module = { "neogen" },
+
   opt = true,
   requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
   config = function()
@@ -48,6 +49,7 @@ lang["danymat/neogen"] = {
       },
     })
   end,
+  requires = "nvim-treesitter/nvim-treesitter",
 }
 
 -- Inline functions dont seem to work .
