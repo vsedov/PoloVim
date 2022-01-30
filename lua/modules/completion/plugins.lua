@@ -10,7 +10,7 @@ completion["neovim/nvim-lspconfig"] = {
     { "nvim-lua/lsp_extensions.nvim", opt = true },
     { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
-    { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
+    -- { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
     -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
   },
 
