@@ -105,8 +105,8 @@ ui["tiagovla/tokyodark.nvim"] = {
 }
 
 ui["catppuccin/nvim"] = {
+  as = "catppuccin",
   opt = true,
-  module = "nvim",
   config = conf.catppuccin,
 }
 
@@ -126,10 +126,9 @@ ui["rebelot/kanagawa.nvim"] = {
 }
 
 -- Might want to manually call this through telescope or something .
-ui["narutoxy/themer.lua"] = {
-  opt = true,
+ui["~/GitHub/themer/themer.lua"] = {
+  branch = "dev",
   module = "themer",
-  branch = "new-palette",
   config = conf.themer,
 }
 

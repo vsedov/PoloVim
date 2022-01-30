@@ -337,10 +337,30 @@ lspconfig.jedi_language_server.setup({
   capabilities = capabilities,
 })
 
-lspconfig.sqlls.setup({
+-- Need to setup watchman if you want to use this - have to use venv
+-- https://pyre-check.org/docs/getting-started/
+-- lspconfig.pyre.setup({
+--   cmd = { "pyre","persistent"},
+--   filetypes = { "python" },
+-- })
 
+lspconfig.sqls.setup({
   filetypes = { "sql", "mysql" },
   cmd = { "sql-language-server", "up", "--method", "stdio" },
+  settings = {
+    sqls = {
+      connections = {
+        {
+          name = "sqlite3-project",
+          adapter = "sqlite3",
+          filename = "/home/viv/GitHub/TeamProject2022_28/ARMS/src/main/resources/db/DummyARMS.sqlite",
+          projectPaths = "/home/viv/GitHub/TeamProject2022_28/ARMS/",
+        },
+      },
+    },
+  },
+
+  -- cmd = { "sql-language-server", "up", "--method", "stdio" },
   on_attach = enhance_attach,
   capabilities = capabilities,
 })

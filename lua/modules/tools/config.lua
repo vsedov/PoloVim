@@ -181,31 +181,32 @@ function config.vgit()
   -- require("vgit")._buf_attach()
 end
 
--- Nice 
+-- Nice
 function config.project()
   require("project_nvim").setup({
     datapath = vim.fn.stdpath("data"),
     ignore_lsp = { "efm" },
-    exclude_dirs = { "~/.cargo/*", "~/.conf/nvim/"},
-    silent_chdir = true,
+    exclude_dirs = { "~/.cargo/*", "~/.conf/nvim/" },
+    silent_chdir = false,
     detection_methods = { "lsp", "pattern" },
     patterns = {
-        "pom.xml",--
-        ".venv", -- for python
-        "_darcs",
-        ".hg",
-        ".bzr",
-        ".svn",
-        "node_modules",
-        "xmake.lua",
-        "pom.xml",  -- java 
-        "CMakeLists.txt",
-        ".null-ls-root",
-        "Makefile",
-        "package.json",
-        "tsconfig.json",
-        ".git"
-      },
+      "pom.xml", --
+      "Pipfile",
+      ".venv", -- for python
+      "_darcs",
+      ".hg",
+      ".bzr",
+      ".svn",
+      "node_modules",
+      "xmake.lua",
+      "pom.xml", -- java
+      "CMakeLists.txt",
+      ".null-ls-root",
+      "Makefile",
+      "package.json",
+      "tsconfig.json",
+      ".git",
+    },
 
     -- your configuration comes here
     -- or leave it empty to use the default settings
@@ -364,7 +365,7 @@ function config.gitsigns()
     current_line_blame = false,
     current_line_blame_opts = { delay = 1500 },
     update_debounce = 300,
-    word_diff = true,
+    word_diff = false,
     diff_opts = { internal = true },
   })
 end

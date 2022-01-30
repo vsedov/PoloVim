@@ -290,23 +290,20 @@ function config.pretty_fold()
   require("pretty-fold.preview").setup_keybinding("l")
   require("pretty-fold").setup({
     keep_indentation = true,
-    fill_char = "━",
+    fill_char = "•",
     sections = {
       left = {
-        "━ ",
-        function()
-          return string.rep("*", vim.v.foldlevel)
-        end,
-        " ━┫",
         "content",
-        "┣",
       },
       right = {
-        "┫ ",
+        " ",
         "number_of_folded_lines",
         ": ",
         "percentage",
-        " ┣━━",
+        " ",
+        function(config)
+          return config.fill_char:rep(3)
+        end,
       },
     },
     -- List of patterns that will be removed from content foldtext section.
@@ -326,6 +323,15 @@ function config.scrollview()
   end
 
   vim.g.scrollview_column = 1
+end
+function config.dir_buff()
+  require("dirbuf").setup({
+    hash_padding = 2,
+    show_hidden = true,
+    sort_order = function(l, r)
+      return l.fname:lower() < r.fname:lower()
+    end,
+  })
 end
 
 function config.default()
@@ -384,7 +390,10 @@ function config.tokyodark()
 end
 
 function config.catppuccin()
-  require("catppuccin").setup({
+  local catppuccin = require("catppuccin")
+
+  -- configure it
+  catppuccin.setup({
     transparent_background = false,
     term_colors = false,
     styles = {
@@ -392,7 +401,7 @@ function config.catppuccin()
       functions = "italic",
       keywords = "italic",
       strings = "NONE",
-      variables = "NONE",
+      variables = "italic",
     },
     integrations = {
       treesitter = true,
@@ -412,41 +421,36 @@ function config.catppuccin()
         },
       },
       lsp_trouble = true,
+      cmp = true,
       lsp_saga = true,
       gitgutter = true,
       gitsigns = true,
       telescope = true,
       nvimtree = {
         enabled = true,
-        show_root = true,
+        show_root = truetrue,
+        transparent_panel = true,
       },
       which_key = true,
       indent_blankline = {
         enabled = true,
         colored_indent_levels = true,
       },
-      dashboard = true,
+      dashboard = false,
       neogit = true,
       vim_sneak = true,
       fern = true,
       barbar = true,
       bufferline = true,
-      markdown = false,
+      markdown = true,
       lightspeed = true,
       ts_rainbow = true,
       hop = false,
+      notify = true,
+      telekasten = true,
     },
   })
   vim.cmd([[colorscheme catppuccin]])
-end
-function config.dir_buff()
-  require("dirbuf").setup({
-    hash_padding = 2,
-    show_hidden = true,
-    sort_order = function(l, r)
-      return l.fname:lower() < r.fname:lower()
-    end,
-  })
 end
 
 function config.kanagawa()
@@ -624,55 +628,23 @@ end
 
 function config.themer()
   require("themer").setup({
-    config = {
-      options = {
-        transparency = false,
-        term_colors = true,
-        styles = {
-          comments = { italic = true },
-          functions = { italic = true },
-          keywords = { italic = true },
-          strings = {},
-          variables = { italic = true },
-          parameters = { italic = true },
-          fields = {},
-        },
-
-        integrations = {
-          treesitter = true,
-          native_lsp = {
-            enabled = true,
-            virtual_text = {
-              error = { italic = true },
-              hint = { italic = true },
-              warn = { italic = true },
-              info = { italic = true },
-            },
-            underlines = {
-              error = { underline = true },
-              hint = { underline = true },
-              warn = { underline = true },
-              info = { underline = true },
-            },
-          },
-          cmp = true,
-          gitsigns = true,
-          telescope = true,
-          indent_blankline = {
-            enabled = true,
-            colored_indent_levels = true,
-          },
-          barbar = true,
-          bufferline = true,
-          markdown = true,
-        },
-        extra_integrations = {
-          galaxyline = true,
-          lualine = true,
-        },
-      },
+    colorscheme = "kanagawa",
+    dim_inactive = false,
+    disable_telescope_themes = {
+      "ayu",
+      "rose_pine_dawn",
+      "github_light",
+    },
+    styles = {
+      ["function"] = { style = "italic" },
+      functionbuiltin = { style = "italic" },
+      variable = { style = "italic" },
+      variableBuiltIn = { style = "italic" },
+      parameter = { style = "italic" },
+      type = { style = "italic" },
     },
   })
+  require("telescope").load_extension("themes")
 end
 
 vim.api.nvim_exec(

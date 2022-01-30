@@ -166,8 +166,6 @@ local TrimmedDirectory = function(dir)
     pc = string.sub(p3, 0, 4) .. "/" .. string.sub(p2, 0, 4) .. "/" .. string.sub(p1, 0, 5)
   elseif p2 ~= nil then
     pc = string.sub(p2, 0, 5) .. "/" .. string.sub(p1, 0, 6)
-  elseif p2 ~= nil then
-    pc = p1
   else
     pc = ""
   end
@@ -508,7 +506,7 @@ windline.setup({
     local normalFg, normalBg = require("windline.themes").get_hl_color("StatusLine")
 
     colors.NormalFg = normalFg or colors.white
-    colors.NormalBg = normalBg or colors.yellow
+    colors.NormalBg = normalBg or "#1F1F28"
     colors.FilenameFg = colors.white_light
     colors.FilenameBg = colors.NormalFg
 

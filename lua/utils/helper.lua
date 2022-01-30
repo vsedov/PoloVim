@@ -2,6 +2,9 @@
 -- and line to highlight
 -- first wrote by https://github.com/RishabhRD/nvim-lsputils
 local cmd = vim.cmd
+local api = vim.api
+local Job = require("plenary.job")
+local a = require("plenary.async")
 
 M = {
   log_path = vim.lsp.get_log_path(),
@@ -250,6 +253,26 @@ function M.isempty(s)
   return s == nil or s == ""
 end
 
+function M.test()
+  local file_name = api.nvim_buf_get_name(0)
+  local cmd = "pdoc"
+  Job
+    :new({
+      command = cmd,
+      args = { "", file_name },
+      cwd = vim.fn.fnamemodify(file_name, ":p:h"),
+      on_stderr = function(line)
+        print(line)
+      end,
+      on_stdout = function(err, line) end,
+    })
+    :start()
+end
+function M.killer()
+  local cmd = "!lsof -t -i:8080 | xargs kill -9"
+  vim.cmd(cmd)
+end
+
 function M.newbinsource(cmd)
   return function()
     local file = io.popen(cmd)
@@ -278,4 +301,12 @@ R = function(name)
   return require(name)
 end
 
+function M.x86()
+  local arch = vim.fn.system("uname -m")
+  if arch == "i386" or arch == "x86_64" then
+    return "x86"
+  else
+    return "arm"
+  end
+end
 return M

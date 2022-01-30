@@ -11,6 +11,7 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
       eraser = "postgres://postgres:password@localhost:5432/eraser_local",
       staging = "postgres://postgres:password@localhost:5432/my-staging-db",
       wp = "mysql://root@localhost/wp_awesome",
+      uni = "sqlite:/home/viv/GitHub/TeamProject2022_28/ARMS/src/main/resources/db/DummyARMS.sql",
     }
   end,
 }
@@ -54,6 +55,8 @@ tools["ThePrimeagen/git-worktree.nvim"] = {
   event = { "CmdwinEnter", "CmdlineEnter" },
   config = conf.worktree,
 }
+
+-- Packer
 
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
@@ -183,16 +186,6 @@ tools["lewis6991/gitsigns.nvim"] = {
   opt = true,
 }
 
-tools["brooth/far.vim"] = {
-  cmd = { "Farr", "Farf" },
-  run = function()
-    require("packer").loader("far.vim")
-    vim.cmd([[UpdateRemotePlugins]])
-  end,
-  config = conf.far,
-  opt = true,
-} -- brooth/far.vim
-
 -- ze black magic
 tools["windwp/nvim-spectre"] = {
   module = "spectre",
@@ -251,6 +244,16 @@ tools["tpope/vim-fugitive"] = {
   opt = true,
 }
 
+tools["LhKipp/nvim-git-fixer"] = {
+  cmd = { "FixUp", "Ammend" },
+  opt = true,
+  config = function()
+    require("fixer").setup({})
+    vim.cmd([[command! -nargs=*  FixUp lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]])
+    vim.cmd([[command! -nargs=*  Ammend lua require('fixer/picker/telescope').commit{type="amend"} ]])
+  end,
+}
+
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
   opt = true,
@@ -260,12 +263,11 @@ tools["kevinhwang91/nvim-bqf"] = {
 
 tools["ahmedkhalf/project.nvim"] = {
   module = "project",
-  ft = {"python", "java", "c", "cpp", "lua"}, 
+  ft = { "python", "java", "c", "cpp", "lua" },
   opt = true,
   after = { "telescope.nvim" },
   config = conf.project,
 }
-
 
 tools["jvgrootveld/telescope-zoxide"] = {
   opt = true,
@@ -339,7 +341,7 @@ tools["fladson/vim-kitty"] = {
 
 tools["relastle/vim-nayvy"] = {
   ft = "python",
-
+  run = ":UpdateRemotePlugins",
   config = function()
     vim.g.nayvy_import_config_path = "$HOME/nayvy.py"
   end,

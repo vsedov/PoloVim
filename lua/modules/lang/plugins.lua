@@ -29,6 +29,7 @@ lang["RRethy/nvim-treesitter-textsubjects"] = {
 -- Better plugin for this i think ,
 lang["danymat/neogen"] = {
   module = { "neogen" },
+
   opt = true,
   requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
   config = function()
@@ -48,6 +49,7 @@ lang["danymat/neogen"] = {
       },
     })
   end,
+  requires = "nvim-treesitter/nvim-treesitter",
 }
 
 -- Inline functions dont seem to work .
@@ -94,6 +96,16 @@ lang["ray-x/guihua.lua"] = {
 --   fn = {'<Plug>(wildfire-fuel)', '<Plug>(wildfire-water)', '<Plug>(wildfire-quick-select)'}
 -- }
 
+lang["romgrk/nvim-treesitter-context"] = {
+  event = "InsertEnter",
+  config = conf.context,
+}
+
+lang["max397574/nvim-treehopper"] = {
+  module = "tsht",
+  config = conf.treehopper,
+}
+
 lang["nvim-treesitter/playground"] = {
   -- after = "nvim-treesitter",
   opt = true,
@@ -109,11 +121,11 @@ lang["stevearc/aerial.nvim"] = {
   config = conf.aerial,
 }
 
-lang["simrat39/symbols-outline.nvim"] = {
-  opt = true,
-  cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
-  setup = conf.outline,
-}
+-- lang["simrat39/symbols-outline.nvim"] = {
+--   opt = true,
+--   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
+--   setup = conf.outline,
+-- }
 -- Only for java files help maven.txt
 lang["mikelue/vim-maven-plugin"] = {
   ft = "java",
@@ -121,6 +133,36 @@ lang["mikelue/vim-maven-plugin"] = {
 
 lang["mfussenegger/nvim-jdtls"] = {
   ft = "java",
+}
+
+-- :lua require'blanket'.start() - start the plugin, useful when filetype property is not set
+-- :lua require'blanket'.stop() - stop displaying coverage and cleanup autocmds, watcher etc.
+-- :lua require'blanket'.refresh() - manually trigger a refresh of signs, useful when filetype property is not set
+-- :lua require'blanket'.set_report_path() - change report_path to a new value and refresh the gutter based on the new report
+
+lang["dsych/blanket.nvim"] = {
+  ft = "java",
+  config = function()
+    require("blanket").setup({
+      -- can use env variables and anything that could be interpreted by expand(), see :h expandcmd()
+      -- REQUIRED
+      report_path = "/home/viv/GitHub/TeamProject2022_28/ARMS/target/site/jacoco/jacoco.xml",
+      -- refresh gutter every time we enter java file
+      -- defauls to empty - no autocmd is created
+      filetypes = "java",
+      -- for debugging purposes to see whether current file is present inside the report
+      -- defaults to false
+      silent = true,
+      -- can set the signs as well
+      signs = {
+        priority = 10,
+        incomplete_branch = "█",
+        uncovered = "█",
+        covered = "█",
+        sign_group = "Blanket",
+      },
+    })
+  end,
 }
 
 lang["mfussenegger/nvim-dap"] = {
@@ -289,12 +331,29 @@ lang["folke/todo-comments.nvim"] = {
   after = "trouble.nvim",
 }
 
--- Can Gonna Use jaq for now ?
+-- -- Can Gonna Use jaq for now ?
 -- lang["CRAG666/code_runner.nvim"] = {
---   branch = "main",
+--   -- ft = {"c", "java"},
 --   requires = "nvim-lua/plenary.nvim",
 --   config = function()
 --     require("code_runner").setup({
+--       term = {
+--         position = "belowright",
+--         size = 8,
+--       },
+--       filetype = {
+--         java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
+--         python = "python -U",
+--         typescript = "deno run",
+--         rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
+--       },
+--       project = {
+--         ["~/GitHub/TeamProject2022_28/ARMS"] = {
+--           name = "ARMS",
+--           description = "Project with make file",
+--           command = "cd ~/GitHub/TeamProject2022_28/ARMS && mvn! compile && mvn test",
+--         },
+--       },
 --     })
 --   end,
 -- }

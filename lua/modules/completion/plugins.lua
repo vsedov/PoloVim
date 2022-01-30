@@ -10,7 +10,7 @@ completion["neovim/nvim-lspconfig"] = {
     { "nvim-lua/lsp_extensions.nvim", opt = true },
     { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
-    { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
+    -- { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
     -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
   },
 
@@ -70,7 +70,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
   after = "nvim-cmp",
   config = function()
     vim.opt.completeopt = "menuone,noselect"
-
+    vim.g.copilot_enabled = false
     -- Have copilot play nice with nvim-cmp.
     vim.g.copilot_no_tab_map = true
     vim.g.copilot_assume_mapped = true

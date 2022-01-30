@@ -1,23 +1,50 @@
 local loader = require("packer").loader
-_G.PLoader = loader
-function Lazyload()
-  --
-  math.randomseed(os.time())
-  -- i will soon be using themer for this .
+
+local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
+if fsize == nil or fsize < 0 then
+  fsize = 1
+end
+
+local load_ts_plugins = true
+local load_lsp = true
+
+if fsize > 1024 * 1024 then
+  load_ts_plugins = false
+  load_lsp = false
+end
+
+math.randomseed(os.time())
+
+local function daylight()
+  local h = tonumber(os.date("%H"))
+  if h > 6 and h < 18 then
+    return "light"
+  else
+    return "dark"
+  end
+end
+
+local function loadscheme()
   local themes = {
-
-    -- "tokyonight.nvim",
-    -- "nvim", -- cat
-    -- "Sakura.nvim",
     "kanagawa.nvim",
-    -- TODO Add more themes
+    "catppuccin",
+    -- "tokyonight.nvim",
   }
-
+  if daylight() == "light" then
+    themes = { "kanagawa.nvim", "catppuccin", "Sakura.nvim" }
+  else
+    themes = { "kanagawa.nvim", "tokyonight.nvim", "tokyodark.nvim" }
+  end
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
 
-  loader(loading_theme)
+  require("packer").loader(loading_theme)
+end
+function Lazyload()
+  --
+  _G.PLoader = loader
 
+  loadscheme()
   if vim.wo.diff then
     -- loader(plugins)
     lprint("diffmode")
@@ -25,6 +52,8 @@ function Lazyload()
     require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = false } })
     vim.cmd([[syntax on]])
     return
+  else
+    loader("nvim-treesitter")
   end
 
   lprint("I am lazy")
@@ -48,18 +77,6 @@ function Lazyload()
   end
 
   -- local fname = vim.fn.expand("%:p:f")
-  local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
-  if fsize == nil or fsize < 0 then
-    fsize = 1
-  end
-
-  local load_lsp = true
-  local load_ts_plugins = true
-
-  if fsize > 1024 * 1024 then
-    load_ts_plugins = false
-    load_lsp = false
-  end
   if fsize > 6 * 1024 * 1024 then
     vim.cmd([[syntax off]])
     return
@@ -89,16 +106,6 @@ function Lazyload()
     if use_nulls() then
       loader("null-ls.nvim")
     end
-    loader("refactoring.nvim") -- need to do the same thing for refactoring
-    -- loader("goto-preview")
-
-    -- loader("code_runner.nvim")
-  end
-
-  if load_ts_plugins then
-    -- print('load ts plugins')
-    loader("nvim-treesitter")
-    loader("paperplanes.nvim")
   end
 
   if load_lsp or load_ts_plugins then
@@ -109,16 +116,15 @@ function Lazyload()
 
   -- local bytes = vim.fn.wordcount()['bytes']
   if load_ts_plugins then
-    plugins = "nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
-    -- loader(plugins)
+    plugins =
+      "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
+    loader(plugins)
     lprint(plugins)
-    -- nvim-treesitter-textobjects  | nvim-treesitter-refactor | nvim-treesitter-textsubjects  -- need to load t
     loader("neogen") -- Load neogen only for active lsp servers
     loader("indent-blankline.nvim")
+    loader("refactoring.nvim") -- need to do the same thing for refactoring
   end
 
-  loader("nvim-notify")
-  vim.notify = require("notify")
   loader("popup.nvim")
 
   -- if bytes < 2 * 1024 * 1024 and syn_on then
@@ -145,16 +151,16 @@ vim.defer_fn(function()
   vim.cmd([[doautocmd User LoadLazyPlugin]])
 end, lazy_timer)
 
-vim.defer_fn(function()
-  -- lazyload()
-  local cmd = "TSEnableAll highlight " .. vim.o.ft
-  vim.cmd(cmd)
-  vim.cmd(
-    [[autocmd BufEnter * silent! lua vim.fn.wordcount()['bytes'] < 2048000 then vim.cmd('set syntax=on') local cmd= "TSBufEnable "..vim.o.ft vim.cmd(cmd) lprint(cmd, vim.o.ft, vim.o.syntax) end]]
-  )
-  -- vim.cmd([[doautocmd ColorScheme]])
-  -- vim.cmd(cmd)
-end, lazy_timer + 20)
+-- vim.defer_fn(function()
+--   -- lazyload()
+--   local cmd = "TSEnableAll highlight " .. vim.o.ft
+--   vim.cmd(cmd)
+--   vim.cmd(
+--     [[autocmd BufEnter * silent! lua vim.fn.wordcount()['bytes'] < 2048000 then vim.cmd('set syntax=on') local cmd= "TSBufEnable "..vim.o.ft vim.cmd(cmd) lprint(cmd, vim.o.ft, vim.o.syntax) end]]
+--   )
+--   -- vim.cmd([[doautocmd ColorScheme]])
+--   -- vim.cmd(cmd)
+-- end, lazy_timer + 20)
 
 vim.cmd([[hi LineNr guifg=#505068]])
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
@@ -178,9 +184,9 @@ vim.defer_fn(function()
   loader("telescope.nvim")
   loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
   loader("harpoon")
-  lprint("all done")
-end, lazy_timer + 100)
 
--- vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
--- vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
--- vim.cmd("command! Spell call spelunker#check()")
+  loader("nvim-notify")
+  vim.notify = require("notify")
+
+  lprint("all done")
+end, lazy_timer + 80)

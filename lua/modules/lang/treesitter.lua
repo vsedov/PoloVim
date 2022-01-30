@@ -24,6 +24,7 @@ local treesitter = function()
     install_info = {
       url = "https://github.com/nvim-neorg/tree-sitter-norg",
       files = { "src/parser.c", "src/scanner.cc" },
+      filetype = "norg",
       branch = "main",
     },
   }
@@ -32,6 +33,7 @@ local treesitter = function()
     install_info = {
       url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
       files = { "src/parser.c" },
+      filetype = "norg",
       branch = "main",
     },
   }
@@ -40,25 +42,19 @@ local treesitter = function()
     install_info = {
       url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
       files = { "src/parser.c" },
+      filetype = "norg",
       branch = "main",
     },
   }
-  -- parser_config.sql = {
-  --   install_info = {
-  --     url = vim.fn.expand("$HOME") .. "/github/nvim-treesitter/tree-sitter-sql", -- local path or git repo
-  --     files = { "src/parser.c" },
-  --   },
-  --   filetype = "sql", -- if filetype does not agrees with parser name
-  --   used_by = { "psql", "pgsql" }, -- additional filetypes that use this parser
-  -- }
-  -- parser_config.proto = {
-  --   install_info = {
-  --     url = vim.fn.expand("$HOME") .. "/github/nvim-treesitter/tree-sitter-proto", -- local path or git repo
-  --     files = { "src/parser.c" },
-  --   },
-  --   filetype = "proto", -- if filetype does not agrees with parser name
-  --   used_by = { "proto" }, -- additional filetypes that use this parser
-  -- }
+
+  parser_configs.prolog = {
+    install_info = {
+      url = "https://github.com/Rukiza/tree-sitter-prolog",
+      files = { "src/parser.c" },
+      filetype = "prolog",
+      branch = "main",
+    },
+  }
 
   require("nvim-treesitter.configs").setup({
     autopairs = { enable = true },
@@ -66,6 +62,17 @@ local treesitter = function()
     highlight = {
       enable = true, -- false will disable the whole extension
       additional_vim_regex_highlighting = true,
+
+      -- thanks max >.<
+      custom_captures = {
+        ["require_call"] = "RequireCall",
+        ["function_definition"] = "FunctionDefinition",
+      },
+      query_linter = {
+        enable = true,
+        use_virtual_text = true,
+        lint_events = { "BufWrite", "CursorHold", "CursorMoved" },
+      },
       disable = { "elm" }, -- list of language that will be disabled
       use_languagetree = langtree,
       custom_captures = { todo = "Todo" },
@@ -133,33 +140,29 @@ local treesitter_obj = function()
         enable = enable,
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
-          ["]m"] = "@function.outer",
-          ["]]"] = "@class.outer",
-
+          ["gnf"] = "@function.outer",
+          ["gnif"] = "@function.inner",
           ["gnp"] = "@parameter.inner",
           ["gnc"] = "@call.outer",
           ["gnic"] = "@call.inner",
         },
         goto_next_end = {
-          ["]M"] = "@function.outer",
-          ["]["] = "@class.outer",
-
+          ["gnF"] = "@function.outer",
+          ["gniF"] = "@function.inner",
           ["gnP"] = "@parameter.inner",
           ["gnC"] = "@call.outer",
           ["gniC"] = "@call.inner",
         },
         goto_previous_start = {
-          ["[m"] = "@function.outer",
-          ["[["] = "@class.outer",
-
+          ["gpf"] = "@function.outer",
+          ["gpif"] = "@function.inner",
           ["gpp"] = "@parameter.inner",
           ["gpc"] = "@call.outer",
           ["gpic"] = "@call.inner",
         },
         goto_previous_end = {
-          ["[M"] = "@function.outer",
-          ["[]"] = "@class.outer",
-
+          ["gpF"] = "@function.outer",
+          ["gpiF"] = "@function.inner",
           ["gpP"] = "@parameter.inner",
           ["gpC"] = "@call.outer",
           ["gpiC"] = "@call.inner",
@@ -247,7 +250,7 @@ local treesitter_ref = function()
       },
     },
     matchup = {
-      enable = false, -- mandatory, false will disable the whole extension
+      enable = true, -- mandatory, false will disable the whole extension
       disable = { "ruby" }, -- optional, list of language that will be disabled
     },
     autopairs = { enable = true },

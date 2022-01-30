@@ -46,9 +46,15 @@ editor["ggandor/lightspeed.nvim"] = {
   config = conf.lightspeed,
 }
 
-editor["hrsh7th/vim-searchx"] = {
-  event = { "CmdwinEnter", "CmdlineEnter" },
-  setup = conf.searchx,
+editor["rlane/pounce.nvim"] = {
+  cmd = { "Pounce" },
+  opt = true,
+  config = function()
+    require("pounce").setup({
+      accept_keys = "JFKDLSAHGNUVRBYTMICEOXWPQZ",
+      debug = false,
+    })
+  end,
 }
 
 --max397574
@@ -195,6 +201,13 @@ editor["numToStr/Comment.nvim"] = {
   config = conf.comment,
 }
 
+-- TODO do shit to this
+editor["LudoPinelli/comment-box.nvim"] = {
+  keys = { "<Leader>cb", "<Leader>cc", "<Leader>cl", "<M-p>" },
+  cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },
+  opt = true,
+  config = conf.comment_box,
+}
 -- copy paste failed in block mode when clipboard = unnameplus"
 editor["bfredl/nvim-miniyank"] = {
   keys = { "p", "y", "<C-v>" },
@@ -257,6 +270,7 @@ editor["folke/zen-mode.nvim"] = {
 }
 
 editor["nvim-neorg/neorg"] = {
+  requires = { "max397574/neorg-zettelkasten" },
   config = function()
     require("modules.editor.neorg")
   end,

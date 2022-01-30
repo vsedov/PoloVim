@@ -8,7 +8,7 @@ pf() {
 	printf '%s : ' "$@"
 }
 
-echo "Warmup #1"
+echo "Warmup test #1"
 nvim -c q
 echo "Warmup #2"
 nvim -c q

@@ -13,14 +13,14 @@ let g:neovide_input_use_logo=v:true
  "" Hack\ Nerd\ Font  VictorMono
 
 if exists(':GuiFont')
-   :Guifont VictorMono\ Nerd\ Font:h18 
+   :Guifont VictorMono\ Nerd\ Font:h18
    :GuiTabline 1
    :GuiRenderLigatures 1
    set linespace=0  " a small linespace"
 endif
 
 if exists('g:fvim_loaded')
-    set guifont=JetBrainsMono\ Nerd\ Font:h18    
+    set guifont=JetBrainsMono\ Nerd\ Font:h18
     FVimCursorSmoothMove v:true
     FVimCursorSmoothBlink v:true
 endif

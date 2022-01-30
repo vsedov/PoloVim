@@ -15,6 +15,10 @@ local plug_map = {
 
   ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
 
+  -- Copilot toggle
+  ["n|<localleader>c]"] = map_cmd("v:lua.toggleCopilot()"):with_silent():with_expr(),
+  ["n|<localleader>c["] = map_cmd("v:lua.test()"):with_silent():with_expr(),
+
   -- -- -- person keymap
   -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
   -- -- Lsp mapp work when insertenter and lsp start
@@ -34,6 +38,7 @@ local plug_map = {
   ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
 
   ["n|<C-]>"] = map_args("Template"),
+
   -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
   -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
 
@@ -82,9 +87,9 @@ local plug_map = {
     :with_noremap()
     :with_silent(),
 
-  -- -- SOMETHING WRONG HERE .
-  ["n|<Leader>gr"] = map_cmd("Lspsaga rename <cr>"):with_noremap():with_silent(),
-  ["v|<Leader>gr"] = map_cmd("Lspsaga rename <cr>"):with_noremap():with_silent(),
+  -- -- -- SOMETHING WRONG HERE .
+  -- ["n|<Leader>gr"] = map_cmd("<cmd>lua require('renamer').rename()<cr>"):with_noremap():with_silent(),
+  -- ["v|<Leader>gr"] = map_cmd("<cmd>lua require('renamer').rename()<cr>"):with_noremap():with_silent(),
 
   -- Replace word under cursor in Buffer (case-sensitive)
   -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
@@ -96,19 +101,6 @@ local plug_map = {
   ["n|gpd"] = map_cu("GotoPrev"):with_noremap(),
   ["n|gpi"] = map_cu("GotoImp"):with_noremap(),
   ["n|gpt"] = map_cu("GotoTel"):with_noremap(),
-
-  ---
-  -- LSP SPAGA :
-  -- Lines 51, 57, 58, 60 , 64 would have to be remaped to teh following .
-  ---
-
-  -- ["n|<Leader>gr"] = map_cu("Lspsaga rename"):with_noremap():with_silent(),
-  -- ["n|K"] = map_cu("<cmd>Lspsaga hover_doc<cr>"):with_noremap():with_silent(),
-  -- ["n|[d"] = map_cmd("<cmd>Lspsaga diagnostic_jump_next()<CR>"):with_noremap():with_silent(),
-  -- ["n|]d"] = map_cmd("<cmd>Lspsaga diagnostic_jump_prev()<CR>"):with_noremap():with_silent(),
-  -- ["n|<localleader>d"] = map_cu("Lspsaga show_line_diagnostics"):with_noremap():with_silent(),
-  -- ["n|<C-u>"] = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>"),
-  -- ["n|<C-d>"] = map_cmd("<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>"),
 
   -- -- Goto prev mapping
   --- WARNING THERE COULD BE AN ISSUE WITH THIS>
@@ -280,6 +272,8 @@ local plug_map = {
 
   -- Neogen
   ["n|<Leader>d"] = map_cmd("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
+  ["n|<Leader>dc"] = map_cmd("<cmd>lua require('neogen').generate({type = 'class'})<CR>"):with_noremap():with_silent(),
+  ["n|<Leader>ds"] = map_cmd("<cmd>lua require('neogen').generate({type = 'type'})<CR>"):with_noremap():with_silent(),
 
   -- Spectre
   ["n|<Leader><Leader>Ss"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
