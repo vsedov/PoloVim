@@ -90,7 +90,7 @@ return {
       table.insert(
         sources,
         null_ls.builtins.formatting.stylua.with({
-          extra_args = { "--indent-type", "Spaces", "--indent-width", "2" },
+          extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml")  },
         })
       )
     end
@@ -98,7 +98,7 @@ return {
       table.insert(
         sources,
         null_ls.builtins.diagnostics.luacheck.with({
-          extra_args = { "--append-config", vim.fn.expand("~/.config/flake8") },
+          extra_args = { "--append-config", vim.fn.expand("~/.luacheckrc") },
         })
       )
     end
