@@ -9,3 +9,6 @@ setlocal colorcolumn=90
 command! -nargs=*  PyRepl lua require"modules.lang.language_utils".python_repl()
 
 
+
+
+" nnoremap <buffer> <localleader>H :<C-u>execute "!pdoc " . "%"<CR>
