@@ -90,7 +90,7 @@ return {
       table.insert(
         sources,
         null_ls.builtins.formatting.stylua.with({
-          extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml")  },
+          extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml") },
         })
       )
     end

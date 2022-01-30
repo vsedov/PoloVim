@@ -40,6 +40,7 @@ local function loadscheme()
 
   require("packer").loader(loading_theme)
 end
+
 function Lazyload()
   --
   _G.PLoader = loader
@@ -177,6 +178,7 @@ vim.defer_fn(function()
   vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
   vim.cmd("command! Spell call spelunker#check()")
   loader("animate.vim")
+  loader("presence.nvim")
 end, lazy_timer + 60)
 
 vim.defer_fn(function()

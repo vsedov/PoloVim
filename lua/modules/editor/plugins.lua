@@ -148,8 +148,9 @@ editor["mg979/vim-visual-multi"] = {
 
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {
-  event = { "BufEnter", "BufRead", "InsertEnter" },
+  opt = true,
   config = conf.discord,
+  requires = "plenary.nvim",
 }
 
 -- REMOVED FTERM
