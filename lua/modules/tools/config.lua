@@ -365,7 +365,7 @@ function config.gitsigns()
     current_line_blame = false,
     current_line_blame_opts = { delay = 1500 },
     update_debounce = 300,
-    word_diff = true,
+    word_diff = false,
     diff_opts = { internal = true },
   })
 end
