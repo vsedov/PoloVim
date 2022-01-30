@@ -126,7 +126,7 @@ ui["rebelot/kanagawa.nvim"] = {
 }
 
 -- Might want to manually call this through telescope or something .
-ui["vsedov/themer.lua"] = {
+ui["~/GitHub/themer/themer.lua"] = {
   branch = "dev",
   module = "themer",
   config = conf.themer,

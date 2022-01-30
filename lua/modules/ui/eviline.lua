@@ -9,6 +9,8 @@ local HSL = require("wlanimation.utils")
 local sep = helper.separators
 local luffy_text = ""
 
+local home = require("core.global").home
+
 local hl_list = {
   NormalBg = { "NormalFg", "NormalBg" },
   White = { "black", "white" },
@@ -140,7 +142,6 @@ local function getEntryFromEnd(table, entry)
 end
 
 local TrimmedDirectory = function(dir)
-  local home = require("core.global").home
   local _, index = string.find(dir, home, 1)
   if index ~= nil and index ~= string.len(dir) then
     -- TODO Trimmed Home Directory
@@ -165,8 +166,6 @@ local TrimmedDirectory = function(dir)
     pc = string.sub(p3, 0, 4) .. "/" .. string.sub(p2, 0, 4) .. "/" .. string.sub(p1, 0, 5)
   elseif p2 ~= nil then
     pc = string.sub(p2, 0, 5) .. "/" .. string.sub(p1, 0, 6)
-  elseif p2 ~= nil then
-    pc = p1
   else
     pc = ""
   end
@@ -498,7 +497,7 @@ windline.setup({
     --- add more color
 
     local mod = function(c, value)
-      if vim.o.background == "light" then
+      if vim.o.background == "dark" then
         return HSL.rgb_to_hsl(c):tint(value):to_rgb()
       end
       return HSL.rgb_to_hsl(c):shade(value):to_rgb()
@@ -507,7 +506,7 @@ windline.setup({
     local normalFg, normalBg = require("windline.themes").get_hl_color("StatusLine")
 
     colors.NormalFg = normalFg or colors.white
-    colors.NormalBg = normalBg or colors.yellow
+    colors.NormalBg = normalBg or "#1F1F28"
     colors.FilenameFg = colors.white_light
     colors.FilenameBg = colors.NormalFg
 
@@ -525,8 +524,8 @@ windline.setup({
     colors.blue_b = mod(colors.blue, 0.5)
     colors.blue_c = mod(colors.blue, 0.7)
 
-    colors.green_a = colors.green
-    colors.green_b = mod(colors.green, 0.1)
+    colors.green_a = mod(colors.green, 0.3)
+    colors.green_b = mod(colors.green, 0.5)
     colors.green_c = mod(colors.green, 0.7)
 
     colors.red_a = colors.red

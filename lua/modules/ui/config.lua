@@ -629,26 +629,19 @@ end
 function config.themer()
   require("themer").setup({
     colorscheme = "kanagawa",
+    dim_inactive = false,
+    disable_telescope_themes = {
+      "ayu",
+      "rose_pine_dawn",
+      "github_light",
+    },
     styles = {
       ["function"] = { style = "italic" },
       functionbuiltin = { style = "italic" },
       variable = { style = "italic" },
       variableBuiltIn = { style = "italic" },
       parameter = { style = "italic" },
-    },
-    telescope_mappings = {
-      ["n"] = {
-        ["<CR>"] = "enter",
-        ["k"] = "prev_color",
-        ["j"] = "next_color",
-        ["p"] = "preview",
-      },
-      ["i"] = {
-        ["<CR>"] = "enter",
-        ["<S-Tab>"] = "prev_color",
-        ["<Tab>"] = "next_color",
-        ["<C-p>"] = "preview",
-      },
+      type = { style = "italic" },
     },
   })
   require("telescope").load_extension("themes")
