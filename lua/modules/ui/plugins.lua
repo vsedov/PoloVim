@@ -80,6 +80,26 @@ ui["petertriho/nvim-scrollbar"] = {
 }
 
 -- test fold
+ui["xiyaowong/nvim-transparent"] = {
+  cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
+  config = function()
+    require("transparent").setup({
+      enable = false,
+      -- additional groups that should be clear
+      extra_groups = {
+        -- example of akinsho/nvim-bufferline.lua
+        "BufferLineTabClose",
+        "BufferlineBufferSelected",
+        "BufferLineFill",
+        "BufferLineBackground",
+        "BufferLineSeparator",
+        "BufferLineIndicatorSelected",
+      },
+      -- groups you don't want to clear
+      exclude = {},
+    })
+  end,
+}
 
 ui["anuvyklack/pretty-fold.nvim"] = {
   ft = { "python", "c", "lua", "cpp", "java" },
@@ -137,5 +157,11 @@ ui["kazhala/close-buffers.nvim"] = {
   config = conf.buffers_close,
 }
 
+ui["rockerBOO/boo-colorscheme-nvim"] = {
+  opt = true,
+  config = function()
+    vim.cmd([[colorscheme boo]])
+  end,
+}
 return ui
 -- hemer.lua: ...te/pack/packer/opt/themer.lua/lua/themer/core/mapper.lua:64: attempt to index field 'bg' (a string value)

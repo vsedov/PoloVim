@@ -94,7 +94,7 @@ end
 -- fg("EndOfBuffer", black)
 
 -- For floating windows
-bg("NormalFloat", "NONE")
+fg_bg("NormalFloat", "NONE", "NONE")
 
 -- Pmenu
 bg("Pmenu", "NONE")
