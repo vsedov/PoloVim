@@ -1,3 +1,4 @@
+-- https://github.com/luan/nvim/blob/main/lua/update.lua
 local jobs = require 'packer.jobs'
 local a = require 'packer.async'
 local result = require 'packer.result'
