@@ -153,6 +153,20 @@ editor["andweeb/presence.nvim"] = {
   requires = "plenary.nvim",
 }
 
+editor["beauwilliams/focus.nvim"] = {
+  cmd = { "FocusNicely", "FocusToggle", "FocusEnable" },
+  event = "InsertEnter",
+  config = function()
+    require("focus").setup({
+      cursorline = false,
+      number = false,
+      signcolumn = false,
+      colorcolumn = { enable = true, width = tonumber(vim.o.colorcolumn) },
+      excluded_filetypes = { "toggleterm", "SidebarNvim" },
+    })
+  end,
+}
+
 -- REMOVED FTERM
 
 -- NORMAL mode:

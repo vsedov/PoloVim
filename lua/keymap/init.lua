@@ -17,7 +17,6 @@ local plug_map = {
 
   -- Copilot toggle
   ["n|<localleader>c]"] = map_cmd("v:lua.toggleCopilot()"):with_silent():with_expr(),
-  ["n|<localleader>c["] = map_cmd("v:lua.test()"):with_silent():with_expr(),
 
   -- -- -- person keymap
   -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
