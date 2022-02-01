@@ -25,15 +25,10 @@ local function daylight()
 end
 
 local function loadscheme()
-  local themes = {
-    "kanagawa.nvim",
-    "catppuccin",
-    -- "tokyonight.nvim",
-  }
   if daylight() == "light" then
     themes = { "kanagawa.nvim", "catppuccin", "Sakura.nvim" }
   else
-    themes = { "kanagawa.nvim", "tokyonight.nvim", "tokyodark.nvim" }
+    themes = { "boo-colorscheme-nvim", "kanagawa.nvim", "tokyonight.nvim" }
   end
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
