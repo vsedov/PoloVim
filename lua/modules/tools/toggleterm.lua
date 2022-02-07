@@ -34,6 +34,28 @@ end)
 vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction='vertical'<cr>")
 vim.keymap.set("n", "<Leader>tv", "<cmd>ToggleTerm direction='float'<cr>")
 
+local files = {
+  python = "python3 -i " .. exp("%:t"),
+  lua = "lua " .. exp("%:t"),
+  applescript = "osascript " .. exp("%:t"),
+  c = "gcc -o temp " .. exp("%:t") .. " && ./temp && rm ./temp",
+  cpp = "clang++ -o temp " .. exp("%:t") .. " && ./temp && rm ./temp",
+  java = "javac " .. exp("%:t") .. " && java " .. exp("%:t:r") .. " && rm *.class",
+  rust = "cargo run",
+  javascript = "node " .. exp("%:t"),
+  typescript = "tsc " .. exp("%:t") .. " && node " .. exp("%:t:r") .. ".js",
+}
+local function Run_file()
+  vim.cmd([[w]])
+  local command = files[vim.bo.filetype]
+  if command ~= nil then
+    require("toggleterm.terminal").Terminal:new({ cmd = command, close_on_exit = false }):toggle()
+    print("Running: " .. command)
+  end
+end
+
+vim.keymap.set("n", "<leader>tr", Run_file, nore_silent)
+
 local function toggleterm_winnr() end
 
 _G.focus_toggleterm = function(count)
