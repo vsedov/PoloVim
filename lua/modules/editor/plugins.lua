@@ -148,8 +148,44 @@ editor["mg979/vim-visual-multi"] = {
 
 -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor["andweeb/presence.nvim"] = {
-  event = { "BufEnter", "BufRead", "InsertEnter" },
+  opt = true,
   config = conf.discord,
+  requires = "plenary.nvim",
+}
+
+-- bad on startup time but i can change this i think.
+editor["beauwilliams/focus.nvim"] = {
+  cmd = { "FocusNicely", "FocusToggle", "FocusEnable" },
+  module = "focus",
+  config = function()
+    require("focus").setup({
+      cursorline = false,
+      number = false,
+      signcolumn = false,
+      colorcolumn = { enable = true, width = tonumber(vim.o.colorcolumn) },
+      excluded_filetypes = {
+        "TelescopePrompt",
+        "toggleterm",
+        "Trouble",
+        "NvimTree",
+        "dapui_scopes",
+        "dapui_breakpoints",
+        "dapui_stacks",
+        "diffview",
+      },
+    })
+  end,
+}
+
+-- pretty neat
+editor["mizlan/iswap.nvim"] = {
+  cmd = { "ISwap", "ISwapWith" },
+  config = function()
+    require("iswap").setup({
+      keys = "qwertyuiop",
+      autoswap = true,
+    })
+  end,
 }
 
 -- REMOVED FTERM
@@ -219,6 +255,10 @@ editor["bfredl/nvim-miniyank"] = {
 }
 
 editor["dhruvasagar/vim-table-mode"] = { cmd = { "TableModeToggle" } }
+
+editor["jbyuki/venn.nvim"] = {
+  cmd = "VBox",
+}
 
 -- fix terminal color
 editor["norcalli/nvim-terminal.lua"] = {

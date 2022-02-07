@@ -291,9 +291,9 @@ tools["camspiers/animate.vim"] = {
 }
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
+  opt = true,
   after = { "telescope.nvim" },
   requires = { "tami5/sqlite.lua", module = "sqlite" },
-  opt = true,
 }
 
 tools["chentau/marks.nvim"] = {

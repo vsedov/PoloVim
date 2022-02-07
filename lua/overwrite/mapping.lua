@@ -240,7 +240,6 @@ K.get_keymaps = function()
     data = key_maps,
   })
 end
-
 vim.cmd([[command! -nargs=* Keymaps lua require('overwrite.mapping').get_keymaps()]])
 vim.cmd([[command! -nargs=* ColourScheme lua require('utils.telescope').colorscheme()]])
 

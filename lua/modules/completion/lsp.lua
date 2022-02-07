@@ -330,6 +330,43 @@ lspconfig.clangd.setup({
   capabilities = capabilities,
 })
 
+-- lspconfig.pyright.setup({
+--   cmd = { "pyright-langserver", "--stdio" },
+--   filetypes = { "python" },
+--     on_attach = enhance_attach,
+--   capabilities = capabilities,
+
+--   settings = {
+--     python = {
+--       analysis = {
+--         diagnosticMode = "openFilesOnly",
+--         typeCheckingMode = "basic",
+--         --[[ diagnosticSeverityOverrides = {
+--           reportGeneralTypeIssues = "warning",
+--           reportMissingTypeStubs = "information",
+--           reportUnboundVariable = "warning",
+--           reportUndefinedVariable = "error",
+--           reportUnknownMemberType = "information",
+--           reportUnknownVariableType = "information",
+--           reportUntypedClassDecorator = "none",
+--           reportUntypedFunctionDecorator = "none",
+--           reportFunctionMemberAccess = "warning",
+--           reportUnknownArgumentType = "warning",
+--           reportUnknownParameterType = "warning",
+--           reportUnknownLambdaType = "warning",
+--           reportUnusedImport = "information",
+--           reportUnusedFunction = "information",
+--           reportUnusedVariable = "information",
+--           reportUnusedClass = "information",
+--           strictParameterNoneValue = false,
+--           reportOptionalSubscript = "warning",
+--           reportOptionalMemberAccess = "warning",
+--           reportOptionalIterable = "warning",
+--         }, ]]
+--       },
+--     },
+--   },
+-- })
 lspconfig.jedi_language_server.setup({
   cmd = { "jedi-language-server" },
   filetypes = { "python" },

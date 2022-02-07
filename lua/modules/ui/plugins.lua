@@ -80,6 +80,26 @@ ui["petertriho/nvim-scrollbar"] = {
 }
 
 -- test fold
+ui["xiyaowong/nvim-transparent"] = {
+  cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
+  config = function()
+    require("transparent").setup({
+      enable = false,
+      -- additional groups that should be clear
+      extra_groups = {
+        -- example of akinsho/nvim-bufferline.lua
+        "BufferLineTabClose",
+        "BufferlineBufferSelected",
+        "BufferLineFill",
+        "BufferLineBackground",
+        "BufferLineSeparator",
+        "BufferLineIndicatorSelected",
+      },
+      -- groups you don't want to clear
+      exclude = {},
+    })
+  end,
+}
 
 ui["anuvyklack/pretty-fold.nvim"] = {
   ft = { "python", "c", "lua", "cpp", "java" },
@@ -126,7 +146,8 @@ ui["rebelot/kanagawa.nvim"] = {
 }
 
 -- Might want to manually call this through telescope or something .
-ui["~/GitHub/themer/themer.lua"] = {
+-- ui["~/GitHub/themer/themer.lua"] = {
+ui["themercorp/themer.lua"] = {
   branch = "dev",
   module = "themer",
   config = conf.themer,

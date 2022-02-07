@@ -5,6 +5,47 @@ function config.nvim_lsp()
   require("modules.completion.lsp")
 end
 
+function config.saga()
+  local lspsaga = require("lspsaga")
+  lspsaga.setup({ -- defaults ...
+    debug = false,
+    use_saga_diagnostic_sign = false,
+    -- code action title icon
+    code_action_icon = "",
+    code_action_prompt = {
+      enable = false,
+      sign = false,
+      sign_priority = 40,
+      virtual_text = false,
+    },
+
+    finder_definition_icon = "  ",
+    finder_reference_icon = "  ",
+    max_preview_lines = 10,
+    finder_action_keys = {
+      open = "o",
+      vsplit = "s",
+      split = "i",
+      quit = "q",
+      scroll_down = "<C-f>",
+      scroll_up = "<C-b>",
+    },
+    code_action_keys = {
+      quit = "q",
+      exec = "<CR>",
+    },
+    rename_action_keys = {
+      quit = "<C-c>",
+      exec = "<CR>",
+    },
+    definition_preview_icon = "  ",
+    border_style = "single",
+    rename_prompt_prefix = "➤",
+    server_filetype_map = {},
+    diagnostic_prefix_format = "%d. ",
+  })
+end
+
 local function is_prior_char_whitespace()
   local col = vim.fn.col(".") - 1
   if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
@@ -105,6 +146,8 @@ function config.nvim_cmp()
         require("luasnip").lsp_expand(args.body)
         -- require 'snippy'.expand_snippet(args.body)
         -- vim.fn["UltiSnips#Anon"](args.body)
+        -- require("luasnip.loaders.from_vscode").load()
+        require("luasnip.loaders.from_snipmate").load()
       end,
     },
     completion = {

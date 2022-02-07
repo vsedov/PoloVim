@@ -250,13 +250,12 @@ end
 
 function config.neoclip()
   require("neoclip").setup({
-    history = 1000,
-    enable_persistant_history = true,
+    history = 2000,
+    enable_persistent_history = true,
     db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
     filter = nil,
     preview = true,
     default_register = "a extra=star,plus,unnamed,b",
-
     default_register_macros = "q",
     enable_macro_history = true,
     content_spec_column = true,

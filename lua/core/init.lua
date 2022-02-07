@@ -58,7 +58,6 @@ local leader_map = function()
 end
 local load_core = function()
   require("core.helper").init()
-
   local pack = require("core.pack")
 
   -- print(vim.inspect(debug.traceback()))

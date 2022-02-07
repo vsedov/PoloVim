@@ -26,6 +26,13 @@ lang["RRethy/nvim-treesitter-textsubjects"] = {
   config = conf.tsubject,
 }
 
+lang["RRethy/nvim-treesitter-endwise"] = {
+  ft = { "lua", "ruby", "vim" },
+  event = "InsertEnter",
+  opt = true,
+  config = conf.endwise,
+}
+
 -- Better plugin for this i think ,
 lang["danymat/neogen"] = {
   module = { "neogen" },
@@ -316,6 +323,7 @@ lang["onsails/diaglist.nvim"] = {
 
 lang["folke/trouble.nvim"] = {
   cmd = { "Trouble", "TroubleToggle" },
+  opt = true,
   config = function()
     require("trouble").setup({})
   end,

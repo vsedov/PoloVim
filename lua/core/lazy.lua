@@ -25,21 +25,17 @@ local function daylight()
 end
 
 local function loadscheme()
-  local themes = {
-    "kanagawa.nvim",
-    "catppuccin",
-    -- "tokyonight.nvim",
-  }
   if daylight() == "light" then
     themes = { "kanagawa.nvim", "catppuccin", "Sakura.nvim" }
   else
-    themes = { "kanagawa.nvim", "tokyonight.nvim", "tokyodark.nvim" }
+    themes = { "kanagawa.nvim", "tokyonight.nvim" }
   end
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
 
   require("packer").loader(loading_theme)
 end
+
 function Lazyload()
   --
   _G.PLoader = loader
@@ -177,6 +173,7 @@ vim.defer_fn(function()
   vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
   vim.cmd("command! Spell call spelunker#check()")
   loader("animate.vim")
+  loader("presence.nvim")
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
