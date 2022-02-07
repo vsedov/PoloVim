@@ -54,29 +54,45 @@ local yellow = colors.yellow
 
 local ui = {
   italic_comments = true,
-  transparency = false,
+  -- theme to be used, check available themes with `<leader> + t + h`
 }
 
 -- Define bg color
 -- @param group Group
 -- @param color Color
-local function bg(group, color)
-  cmd("hi " .. group .. " guibg=" .. color)
+local function bg(group, color, args)
+  local arg = {}
+  if args then
+    vim.tbl_extend("keep", arg, args)
+  end
+  arg["bg"] = color
+  vim.api.nvim_set_hl(0, group, arg)
 end
 
 -- Define fg color
 -- @param group Group
 -- @param color Color
-local function fg(group, color)
-  cmd("hi " .. group .. " guifg=" .. color)
+local function fg(group, color, args)
+  local arg = {}
+  if args then
+    vim.tbl_extend("keep", arg, args)
+  end
+  arg["fg"] = color
+  vim.api.nvim_set_hl(0, group, arg)
 end
 
 -- Define bg and fg color
 -- @param group Group
 -- @param fgcol Fg Color
 -- @param bgcol Bg Color
-local function fg_bg(group, fgcol, bgcol)
-  cmd("hi " .. group .. " guifg=" .. fgcol .. " guibg=" .. bgcol)
+local function fg_bg(group, fgcol, bgcol, args)
+  local arg = {}
+  if args then
+    vim.tbl_extend("keep", arg, args)
+  end
+  arg["bg"] = bgcol
+  arg["fg"] = fgcol
+  vim.api.nvim_set_hl(0, group, arg)
 end
 
 -- Comments
