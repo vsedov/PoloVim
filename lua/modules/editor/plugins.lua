@@ -153,16 +153,37 @@ editor["andweeb/presence.nvim"] = {
   requires = "plenary.nvim",
 }
 
+-- bad on startup time but i can change this i think.
 editor["beauwilliams/focus.nvim"] = {
   cmd = { "FocusNicely", "FocusToggle", "FocusEnable" },
-  event = "InsertEnter",
+  module = "focus",
   config = function()
     require("focus").setup({
       cursorline = false,
       number = false,
       signcolumn = false,
       colorcolumn = { enable = true, width = tonumber(vim.o.colorcolumn) },
-      excluded_filetypes = { "toggleterm", "SidebarNvim" },
+      excluded_filetypes = {
+        "TelescopePrompt",
+        "toggleterm",
+        "Trouble",
+        "NvimTree",
+        "dapui_scopes",
+        "dapui_breakpoints",
+        "dapui_stacks",
+        "diffview",
+      },
+    })
+  end,
+}
+
+-- pretty neat
+editor["mizlan/iswap.nvim"] = {
+  cmd = { "ISwap", "ISwapWith" },
+  config = function()
+    require("iswap").setup({
+      keys = "qwertyuiop",
+      autoswap = true,
     })
   end,
 }
@@ -234,6 +255,10 @@ editor["bfredl/nvim-miniyank"] = {
 }
 
 editor["dhruvasagar/vim-table-mode"] = { cmd = { "TableModeToggle" } }
+
+editor["jbyuki/venn.nvim"] = {
+  cmd = "VBox",
+}
 
 -- fix terminal color
 editor["norcalli/nvim-terminal.lua"] = {

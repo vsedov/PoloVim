@@ -153,8 +153,8 @@ function config.lightspeed()
     -- and forces auto-jump to be on or off.
     -- These keys are captured directly by the plugin at runtime.
     special_keys = {
-      next_match_group = "<space>",
-      prev_match_group = "<tab>",
+      next_match_group = "<TAB>",
+      prev_match_group = "<S-Tab>",
     },
 
     --- f/t ---
