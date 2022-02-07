@@ -14,20 +14,16 @@ local plug_map = {
   ["s|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
 
   ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
+  ["n|<C-]>"] = map_args("Template"),
 
   -- Copilot toggle
   ["n|<localleader>c]"] = map_cmd("v:lua.toggleCopilot()"):with_silent():with_expr(),
 
-  -- -- -- person keymap
   -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
   -- -- Lsp mapp work when insertenter and lsp start
   ["n|<leader>li"] = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),
   ["n|<leader>ll"] = map_cr("LspLog"):with_noremap():with_silent():with_nowait(),
   ["n|<leader>lr"] = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
-
-  -- -- Word Motion
-  -- ["n|w"] = map_cmd(function() return "w"end ):with_silent():with_expr(),
-  -- ["n|W"] = map_cmd('v:lua.word_motion_move("W")'):with_silent():with_expr(),
 
   -- have this for the time, i might use some root , not usre .
   ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
@@ -35,8 +31,6 @@ local plug_map = {
   ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
   ["n|B"] = map_cmd('v:lua.word_motion_move_b("B")'):with_silent():with_expr(),
   ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
-
-  ["n|<C-]>"] = map_args("Template"),
 
   -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
   -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
@@ -47,9 +41,10 @@ local plug_map = {
 
   -- -- Code actions ?
   ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
-
-  ["n|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
+  -- no longer work .
+  -- ["n|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
   ["v|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
+
   -- Back up .
   ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
 
@@ -86,6 +81,22 @@ local plug_map = {
     :with_noremap()
     :with_silent(),
 
+  ["n|<Leader>gr"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
+  ["n|ga"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
+  ["n|gar"] = map_cmd("<cmd>Lspsaga range_code_action<CR>"):with_noremap():with_silent(),
+  ["n|gar"] = map_cmd("<cmd>Lspsaga range_code_action<CR>"):with_noremap():with_silent(),
+
+  -- map(0, "n", "gr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
+  -- map(0, "n", "gx", "<cmd>Lspsaga code_action<cr>", {silent = true, noremap = true})
+  -- map(0, "x", "gx", ":<c-u>Lspsaga range_code_action<cr>", {silent = true, noremap = true})
+  -- map(0, "n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
+  -- map(0, "n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
+  -- map(0, "n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
+  -- map(0, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
+  -- map(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>")
+  -- map(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>")
+  -- -- -- person keymap
+
   -- -- -- SOMETHING WRONG HERE .
   -- ["n|<Leader>gr"] = map_cmd("<cmd>lua require('renamer').rename()<cr>"):with_noremap():with_silent(),
   -- ["v|<Leader>gr"] = map_cmd("<cmd>lua require('renamer').rename()<cr>"):with_noremap():with_silent(),
@@ -120,9 +131,6 @@ local plug_map = {
   ["n|<F2>"] = map_cu("MundoToggle"):with_noremap():with_silent(),
   ["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
 
-  -- Have file specific mappings - sooon .
-  -- ["n|<F3>"] = map_cu("Black"):with_noremap():with_silent(),
-
   -- -- Plugin MarkdownPreview
   ["n|<Leader>om"] = map_cu("MarkdownPreview"):with_noremap():with_silent(),
   -- Plugin DadbodUI
@@ -144,13 +152,19 @@ local plug_map = {
   ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
   ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
 
-  ["n|<F5>"] = map_cmd("<cmd>Cheatsheet<CR>"):with_noremap():with_silent(),
-
   -- ["n|<Leader>fz"] = map_cr('<cmd>lua require("telescope").extensions.zoxide.list()'):with_silent(),
   -- ["n|<Leader>fp"] = map_cr('<cmd>lua require("telescope").extensions.projects.projects()'):with_silent(),
   ["n|<Leader>fl"] = map_cu("Telescope loclist"):with_noremap():with_silent(),
   ["n|<Leader>fc"] = map_cu("Telescope git_commits"):with_noremap():with_silent(),
   ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
+
+  -- pretty neat
+
+  -- Swap
+  ["n|<leader>sw"] = map_cu("ISwapWith"):with_noremap():with_silent(),
+
+  -- Venv
+  ["n|<localleader>V"] = map_cmd("v:lua.toggle_venn()"):with_noremap():with_silent():with_expr(),
 
   -- Extra telescope commands from utils.telescope
   ["n|<Leader>cl"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
@@ -198,11 +212,6 @@ local plug_map = {
   ["n|<Leader><Leader><Leader>"] = map_cmd('<cmd>lua require"utils.telescope".frecency()<CR>')
     :with_noremap()
     :with_silent(),
-
-  -- ["n|<F4>"] = map_cu("Telescope dap commands"):with_noremap():with_silent(),
-
-  -- ["in|<d-T>"] = map_cu("Telescope"):with_noremap():with_silent(),
-  --     :with_expr(),
 
   -- kitty / mac users, have a nice time >.< || will be changed
   -- ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),

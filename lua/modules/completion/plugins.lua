@@ -10,11 +10,17 @@ completion["neovim/nvim-lspconfig"] = {
     { "nvim-lua/lsp_extensions.nvim", opt = true },
     { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
-    -- { "tami5/lspsaga.nvim", opt = true, cmd = "Lspsaga" },
     -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
   },
 
   opt = true,
+}
+completion["tami5/lspsaga.nvim"] = {
+  cmd = "lspsaga",
+  module = "lspsaga",
+  opt = true,
+  config = conf.saga,
+  after = "nvim-lspconfig",
 }
 
 if load_coq() then
@@ -87,8 +93,8 @@ completion["https://github.com/github/copilot.vim.git"] = {
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th
 -- Iron-E
-completion["hrsh7th/nvim-cmp"] = {
-  -- branch = "feat/completion-menu-borders",
+completion["Iron-E/nvim-cmp"] = {
+  branch = "feat/completion-menu-borders",
   -- opt = true,
   -- event = {"InsertEnter", "CmdLineEnter"}, -- InsertCharPre Due to luasnip
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
@@ -121,7 +127,10 @@ completion["hrsh7th/nvim-cmp"] = {
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
   event = "InsertEnter",
-  requires = { "rafamadriz/friendly-snippets", event = "InsertEnter" }, -- , event = "InsertEnter"
+  requires = {
+    { "rafamadriz/friendly-snippets", event = "InsertEnter" },
+    { "molleweide/LuaSnip-snippets.nvim" },
+  }, -- , event = "InsertEnter"
   config = conf.luasnip,
 }
 completion["kristijanhusak/vim-dadbod-completion"] = {
@@ -132,6 +141,10 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
     -- vim.cmd([[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
     -- body
   end,
+}
+
+completion["nvim-lua/plenary.nvim"] = {
+  module = "plenary",
 }
 
 completion["nvim-telescope/telescope.nvim"] = {
