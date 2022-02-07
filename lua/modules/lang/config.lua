@@ -9,6 +9,10 @@ function config.nvim_treesitter()
   require("modules.lang.treesitter").treesitter()
 end
 
+function config.endwise()
+  require("modules.lang.treesitter").endwise()
+end
+
 function config.treesitter_obj()
   require("modules.lang.treesitter").treesitter_obj()
 end

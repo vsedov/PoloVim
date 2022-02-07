@@ -258,6 +258,14 @@ local treesitter_ref = function()
   })
 end
 
+local endwise = function()
+  require("nvim-treesitter.configs").setup({
+    endwise = {
+      enable = true,
+    },
+  })
+end
+
 function textsubjects()
   require("nvim-treesitter.configs").setup({
     textsubjects = {
@@ -270,6 +278,7 @@ end
 -- treesitter()
 
 return {
+  endwise = endwise,
   treesitter = treesitter,
   treesitter_obj = treesitter_obj,
   treesitter_ref = treesitter_ref,
