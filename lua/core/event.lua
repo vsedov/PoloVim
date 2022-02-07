@@ -18,6 +18,7 @@ function autocmd.load_autocmds()
     packer = {
       { "BufWritePost", "*.lua", "lua require('core.pack').auto_compile()" },
     },
+
     bufs = {
       { "BufRead,BufNewFile", "*.norg", "setlocal filetype=norg" },
       -- Reload vim config automatically
