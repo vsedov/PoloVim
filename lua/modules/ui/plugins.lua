@@ -146,7 +146,8 @@ ui["rebelot/kanagawa.nvim"] = {
 }
 
 -- Might want to manually call this through telescope or something .
-ui["~/GitHub/themer/themer.lua"] = {
+-- ui["~/GitHub/themer/themer.lua"] = {
+ui["themercorp/themer.lua"] = {
   branch = "dev",
   module = "themer",
   config = conf.themer,
@@ -157,11 +158,5 @@ ui["kazhala/close-buffers.nvim"] = {
   config = conf.buffers_close,
 }
 
-ui["rockerBOO/boo-colorscheme-nvim"] = {
-  opt = true,
-  config = function()
-    vim.cmd([[colorscheme boo]])
-  end,
-}
 return ui
 -- hemer.lua: ...te/pack/packer/opt/themer.lua/lua/themer/core/mapper.lua:64: attempt to index field 'bg' (a string value)

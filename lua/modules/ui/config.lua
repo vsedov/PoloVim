@@ -395,7 +395,7 @@ function config.catppuccin()
   -- configure it
   catppuccin.setup({
     transparent_background = false,
-    term_colors = false,
+    term_colors = true,
     styles = {
       comments = "italic",
       functions = "italic",
@@ -428,7 +428,7 @@ function config.catppuccin()
       telescope = true,
       nvimtree = {
         enabled = true,
-        show_root = truetrue,
+        show_root = true,
         transparent_panel = true,
       },
       which_key = true,
@@ -467,7 +467,10 @@ function config.kanagawa()
     transparent = false, -- do not set background color
     dimInactive = false, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
     colors = {},
-    overrides = {},
+    overrides = {
+      Pmenu = { fg = "NONE", bg = "NONE" },
+      normalfloat = { bg = "NONE" },
+    },
   })
   vim.cmd([[colorscheme kanagawa]])
 end
