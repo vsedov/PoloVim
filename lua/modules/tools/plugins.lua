@@ -291,8 +291,12 @@ tools["camspiers/animate.vim"] = {
 }
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
-  opt = true,
+  branch = "refactor",
+  module = "telescope-frecency",
   after = { "telescope.nvim" },
+  config = function()
+    require("telescope").load_extension("frecency")
+  end,
   requires = { "tami5/sqlite.lua", module = "sqlite" },
 }
 

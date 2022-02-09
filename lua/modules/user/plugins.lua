@@ -9,7 +9,6 @@ user["~/GitHub/ytmmusic.lua"] = {
   end,
 }
 
-
 user["~/GitHub/Generatorg"] = {
   ft = "python",
   opt = true,
