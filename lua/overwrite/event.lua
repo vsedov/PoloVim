@@ -18,6 +18,8 @@ end
 function autocmd.load_autocmds()
   local definitions = {
     bufs = {
+      { "BufWritePost", "*.json", ":silent :JqxList" },
+
       { "BufWritePost", "*.sum, *.mod", ":silent :GoModTidy" },
       {
         "TextYankPost",
