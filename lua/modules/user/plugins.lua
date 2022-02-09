@@ -8,6 +8,15 @@ user["~/GitHub/ytmmusic.lua"] = {
     require("ytmmusic")
   end,
 }
+
+
+user["~/GitHub/Generatorg"] = {
+  ft = "python",
+  opt = true,
+  config = function()
+    require("generatorg")
+  end,
+}
 -- your plugin config
 return user
 
