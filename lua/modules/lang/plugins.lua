@@ -41,11 +41,11 @@ lang["danymat/neogen"] = {
     require("neogen").setup({
       enabled = true,
       languages = {
-        python = {
-          template = {
-            annotation_convention = "numpydoc", -- for a full list of annotation_conventions, see supported-languages below,
-          },
-        },
+        -- python = {
+        --   template = {
+        --     annotation_convention = "numpydoc", -- for a full list of annotation_conventions, see supported-languages below,
+        --   },
+        -- },
       },
     })
   end,
@@ -139,7 +139,7 @@ lang["mfussenegger/nvim-jdtls"] = {
 -- :lua require'blanket'.stop() - stop displaying coverage and cleanup autocmds, watcher etc.
 -- :lua require'blanket'.refresh() - manually trigger a refresh of signs, useful when filetype property is not set
 -- :lua require'blanket'.set_report_path() - change report_path to a new value and refresh the gutter based on the new report
-
+-- temp for groupwork will remove soon .
 lang["dsych/blanket.nvim"] = {
   ft = "java",
   config = function()
@@ -261,7 +261,11 @@ lang["mgedmin/coverage-highlight.vim"] = {
 ------------------------------------------------------------------------------
 
 -- JqxList and JqxQuery json browsing, format
-lang["gennaro-tedesco/nvim-jqx"] = { opt = true, cmd = { "JqxList", "JqxQuery" } }
+lang["gennaro-tedesco/nvim-jqx"] = {
+  ft = "json",
+  cmd = { "JqxList", "JqxQuery" },
+  opt = true,
+}
 
 lang["windwp/nvim-ts-autotag"] = {
   opt = true,
