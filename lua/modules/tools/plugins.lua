@@ -60,7 +60,12 @@ tools["ThePrimeagen/git-worktree.nvim"] = {
 
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
-  cmd = { "Octo", "Octo pr list" },
+  cmd = { "Octo" },
+  requires = {
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim",
+    "kyazdani42/nvim-web-devicons",
+  },
   config = function()
     require("octo").setup()
   end,
@@ -129,15 +134,8 @@ tools["turbio/bracey.vim"] = {
   opt = true,
 }
 
--- nvim-toggleterm.lua ?
--- tools["voldikss/vim-floaterm"] = {
---   cmd = {"FloatermNew", "FloatermToggle"},
---   setup = conf.floaterm,
---   opt = true
--- }
-
 tools["akinsho/toggleterm.nvim"] = {
-  keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv" },
+  keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr" },
   config = function()
     require("modules.tools.toggleterm")
   end,
