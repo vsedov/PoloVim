@@ -426,6 +426,10 @@ function config.side_bar()
       "git",
       "diagnostics",
       "symbols",
+      "todos",
+      "files",
+      "buffers",
+      "containers",
     },
     section_separator = "─────",
     bindings = {
@@ -447,6 +451,7 @@ function config.side_bar()
     },
   }
   sidebar.setup(opts)
+  -- vim.cmd.("link SidebarNvimLspDiagnosticsTotalNumber Normal")
 end
 
 function config.dial_setup()
