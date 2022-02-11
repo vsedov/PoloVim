@@ -90,6 +90,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
     vim.g["copilot_filetypes"] = copilot_filetypes
   end,
 }
+
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th
 -- Iron-E
@@ -129,7 +130,7 @@ completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
   event = "InsertEnter",
   requires = {
     { "rafamadriz/friendly-snippets", event = "InsertEnter" },
-    { "molleweide/LuaSnip-snippets.nvim" },
+    { "molleweide/LuaSnip-snippets.nvim", event = "InsertEnter" },
   }, -- , event = "InsertEnter"
   config = conf.luasnip,
 }
