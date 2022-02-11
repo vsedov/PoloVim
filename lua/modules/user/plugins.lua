@@ -2,19 +2,20 @@ local user = {}
 local conf = require("modules.user.config")
 
 user["~/GitHub/ytmmusic.lua"] = {
-  opt = true,
-  require = { "rcarriga/nvim-notify", "nvim-lua/plenary.nvim" },
-  config = function()
-    require("ytmmusic")
-  end,
+    branch = "fix-auth",
+    require = { "rcarriga/nvim-notify", "nvim-lua/plenary.nvim" },
+    config = function()
+        require("ytmmusic")
+        require("telescope").load_extension("ytmmusic")
+    end,
 }
 
 user["~/GitHub/Generatorg"] = {
-  ft = "python",
-  opt = true,
-  config = function()
-    require("generatorg")
-  end,
+    ft = "python",
+    opt = true,
+    config = function()
+        require("generatorg")
+    end,
 }
 -- your plugin config
 return user
