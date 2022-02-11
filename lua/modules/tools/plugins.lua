@@ -332,6 +332,10 @@ tools["Krafi2/jeskape.nvim"] = {
           i = "<cmd>Clap | startinsert<cr>",
           f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
         },
+        j = {
+          k = "<esc>",
+          j = "<esc>o",
+        },
       },
     })
   end,
