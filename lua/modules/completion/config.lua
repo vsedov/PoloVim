@@ -219,6 +219,8 @@ function config.nvim_cmp()
           cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
+        elseif require("neogen").jumpable() then
+          require("neogen").jump_next()
         elseif has_words_before() then
           cmp.complete()
         else
@@ -232,7 +234,7 @@ function config.nvim_cmp()
           luasnip.expand()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
-        elseif check_backspace() then
+        elseif check_back_space() then
           fallback()
         elseif has_words_before() then
           cmp.complete()
@@ -259,6 +261,8 @@ function config.nvim_cmp()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
+        elseif require("neogen").jumpable(true) then
+          require("neogen").jump_prev()
         elseif luasnip.jumpable(-1) then
           luasnip.jump(-1)
         else

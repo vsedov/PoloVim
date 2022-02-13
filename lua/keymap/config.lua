@@ -103,7 +103,6 @@ _G.word_motion_move_b = function(key)
   return t(map)
 end
 
-
 _G.word_motion_move_gE = function(key)
   if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then
     vim.cmd([[packadd vim-wordmotion]])

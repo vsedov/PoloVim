@@ -276,9 +276,6 @@ local plug_map = {
   ["n|<Leader><Leader>Sw"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
   ["v|<Leader><Leader>Sv"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
   ["v|<Leader><Leader>Sc"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
-
-
-
 }
 
 return { map = plug_map }
