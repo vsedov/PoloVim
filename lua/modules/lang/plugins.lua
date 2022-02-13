@@ -7,6 +7,17 @@ lang["nathom/filetype.nvim"] = {
   setup = function()
     vim.g.did_load_filetypes = 1
   end,
+  config = function()
+    require("filetype").setup({
+      overrides = {
+        literal = {
+          ["kitty.conf"] = "kitty",
+          [".gitignore"] = "conf",
+          [".env"] = "sh",
+        },
+      },
+    })
+  end,
 }
 
 lang["nvim-treesitter/nvim-treesitter"] = {
@@ -33,23 +44,24 @@ lang["RRethy/nvim-treesitter-endwise"] = {
   config = conf.endwise,
 }
 
--- Better plugin for this i think ,
 lang["danymat/neogen"] = {
-  module = { "neogen" },
+  opt = true,
   requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
   config = function()
     require("neogen").setup({
-      enabled = true,
       languages = {
-        -- python = {
-        --   template = {
-        --     annotation_convention = "numpydoc", -- for a full list of annotation_conventions, see supported-languages below,
-        --   },
-        -- },
+        lua = {
+          template = { annotation_convention = "emmylua" },
+        },
+        python = {
+          template = { annotation_convention = "numpydoc" },
+        },
+        c = {
+          template = { annotation_convention = "doxygen" },
+        },
       },
     })
   end,
-  requires = "nvim-treesitter/nvim-treesitter",
 }
 
 -- Inline functions dont seem to work .
@@ -186,12 +198,12 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
   config = conf.dap,
 }
 
-lang['m-demare/hlargs.nvim'] = {
-  ft = {"python", "c", "java", "lua"},
-  requires = { 'nvim-treesitter/nvim-treesitter' },
+lang["m-demare/hlargs.nvim"] = {
+  ft = { "python", "c", "java", "lua" },
+  requires = { "nvim-treesitter/nvim-treesitter" },
   config = function()
-    require('hlargs').setup()
-  end
+    require("hlargs").setup()
+  end,
 }
 
 lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
@@ -244,6 +256,13 @@ lang["dccsillag/magma-nvim"] = {
 
 lang["Vimjas/vim-python-pep8-indent"] = {
   ft = "python",
+}
+-- Quite nice
+lang["ok97465/pycell_deco.nvim"] = {
+  ft = "python",
+  config = function()
+    require("pycell_deco").setup({ cell_name_fg = "#1abc9c", cell_line_bg = nil })
+  end,
 }
 
 lang["vim-test/vim-test"] = {

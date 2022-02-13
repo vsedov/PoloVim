@@ -408,5 +408,4 @@ editor["jbyuki/nabla.nvim"] = {
   requires = { "nvim-lua/popup.nvim" },
 }
 
-
 return editor
