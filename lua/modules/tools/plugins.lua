@@ -51,20 +51,17 @@ tools["ThePrimeagen/harpoon"] = {
   end,
 }
 
-tools["natecraddock/workspaces.nvim"]={
-  opt = true, 
+tools["natecraddock/workspaces.nvim"] = {
+  opt = true,
   config = function()
     require("workspaces").setup({
-        hooks = {
-            open = { "Telescope find_files" },
-        }
+      hooks = {
+        open = { "Telescope find_files" },
+      },
     })
     require("telescope").load_extension("workspaces")
-
-  end
-
+  end,
 }
-
 
 tools["ThePrimeagen/git-worktree.nvim"] = {
   event = { "CmdwinEnter", "CmdlineEnter" },

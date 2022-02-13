@@ -40,16 +40,9 @@ lang["danymat/neogen"] = {
   config = function()
     require("neogen").setup({
       enabled = true,
-      languages = {
-        -- python = {
-        --   template = {
-        --     annotation_convention = "numpydoc", -- for a full list of annotation_conventions, see supported-languages below,
-        --   },
-        -- },
-      },
     })
+    require("neogen").get_template("python"):config({ annotation_convention = "numpydoc" })
   end,
-  requires = "nvim-treesitter/nvim-treesitter",
 }
 
 -- Inline functions dont seem to work .
@@ -186,12 +179,12 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
   config = conf.dap,
 }
 
-lang['m-demare/hlargs.nvim'] = {
-  ft = {"python", "c", "java", "lua"},
-  requires = { 'nvim-treesitter/nvim-treesitter' },
+lang["m-demare/hlargs.nvim"] = {
+  ft = { "python", "c", "java", "lua" },
+  requires = { "nvim-treesitter/nvim-treesitter" },
   config = function()
-    require('hlargs').setup()
-  end
+    require("hlargs").setup()
+  end,
 }
 
 lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
