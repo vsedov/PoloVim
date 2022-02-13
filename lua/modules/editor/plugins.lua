@@ -331,15 +331,15 @@ editor["raimon49/requirements.txt.vim"] = {
   ft = { "requirements" },
 }
 
-editor["max397574/better-escape.nvim"] = {
-  event = "InsertEnter",
-  config = function()
-    require("better_escape").setup({
-      timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
-      clear_empty_lines = true, -- clear line after escaping if ther is only whitespace      })
-    })
-  end,
-}
+-- editor["max397574/better-escape.nvim"] = {
+--   event = "InsertEnter",
+--   config = function()
+--     require("better_escape").setup({
+--       timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+--       clear_empty_lines = true, -- clear line after escaping if ther is only whitespace      })
+--     })
+--   end,
+-- }
 
 editor["monaqa/dial.nvim"] = {
   keys = { "<Plug>(dial-" },
@@ -407,5 +407,6 @@ editor["jbyuki/nabla.nvim"] = {
   ft = "norg",
   requires = { "nvim-lua/popup.nvim" },
 }
+
 
 return editor

@@ -84,18 +84,6 @@ local plug_map = {
   ["n|<Leader>gr"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
   ["n|ga"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
   ["n|gar"] = map_cmd("<cmd>Lspsaga range_code_action<CR>"):with_noremap():with_silent(),
-  ["n|gar"] = map_cmd("<cmd>Lspsaga range_code_action<CR>"):with_noremap():with_silent(),
-
-  -- map(0, "n", "gr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
-  -- map(0, "n", "gx", "<cmd>Lspsaga code_action<cr>", {silent = true, noremap = true})
-  -- map(0, "x", "gx", ":<c-u>Lspsaga range_code_action<cr>", {silent = true, noremap = true})
-  -- map(0, "n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
-  -- map(0, "n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
-  -- map(0, "n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
-  -- map(0, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
-  -- map(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>")
-  -- map(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>")
-  -- -- -- person keymap
 
   -- -- -- SOMETHING WRONG HERE .
   -- ["n|<Leader>gr"] = map_cmd("<cmd>lua require('renamer').rename()<cr>"):with_noremap():with_silent(),
@@ -279,15 +267,18 @@ local plug_map = {
   ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
 
   -- Neogen
-  ["n|<Leader>d"] = map_cmd("<cmd>lua require('neogen').generate()<CR>"):with_noremap():with_silent(),
-  ["n|<Leader>dc"] = map_cmd("<cmd>lua require('neogen').generate({type = 'class'})<CR>"):with_noremap():with_silent(),
-  ["n|<Leader>ds"] = map_cmd("<cmd>lua require('neogen').generate({type = 'type'})<CR>"):with_noremap():with_silent(),
+  ["n|<Leader>d"] = map_cr("lua require('neogen').generate()"):with_noremap():with_silent(),
+  ["n|<Leader>dc"] = map_cr("lua require('neogen').generate({type = 'class'})"):with_noremap():with_silent(),
+  ["n|<Leader>ds"] = map_cr("lua require('neogen').generate({type = 'type'})"):with_noremap():with_silent(),
 
   -- Spectre
   ["n|<Leader><Leader>Ss"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
   ["n|<Leader><Leader>Sw"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
   ["v|<Leader><Leader>Sv"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
   ["v|<Leader><Leader>Sc"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
+
+
+
 }
 
 return { map = plug_map }

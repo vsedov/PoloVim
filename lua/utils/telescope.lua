@@ -97,6 +97,28 @@ local set_prompt_to_entry_value = function(prompt_bufnr)
   action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
 end
 
+local Job = require("plenary.job")
+local new_maker = function(filepath, bufnr, opts)
+  filepath = vim.fn.expand(filepath)
+  Job
+    :new({
+      command = "file",
+      args = { "--mime-type", "-b", filepath },
+      on_exit = function(j)
+        local mime_type = vim.split(j:result()[1], "/")[1]
+        if mime_type == "text" then
+          previewers.buffer_previewer_maker(filepath, bufnr, opts)
+        else
+          -- maybe we want to write something to the buffer here
+          vim.schedule(function()
+            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
+          end)
+        end
+      end,
+    })
+    :sync()
+end
+
 require("telescope").setup({
   defaults = themes.get_ivy({
     -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
@@ -117,6 +139,8 @@ require("telescope").setup({
       return string.format("%s / %s", xx, yy)
       -- return ""
     end,
+    buffer_previewer_maker = new_maker,
+    file_ignore_patterns = { "node_modules", "vendor" },
     layout_strategy = "horizontal",
     selection_strategy = "reset",
     -- layout_strategy = layout_strategies.bottom_pane,

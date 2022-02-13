@@ -253,21 +253,6 @@ function M.isempty(s)
   return s == nil or s == ""
 end
 
-function M.test()
-  local file_name = api.nvim_buf_get_name(0)
-  local cmd = "pdoc"
-  Job
-    :new({
-      command = cmd,
-      args = { "", file_name },
-      cwd = vim.fn.fnamemodify(file_name, ":p:h"),
-      on_stderr = function(line)
-        print(line)
-      end,
-      on_stdout = function(err, line) end,
-    })
-    :start()
-end
 function M.killer()
   local cmd = "!lsof -t -i:8080 | xargs kill -9"
   vim.cmd(cmd)

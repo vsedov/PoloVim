@@ -15,8 +15,6 @@ ui["windwp/windline.nvim"] = {
   opt = true,
 }
 
--- ui["lambdalisue/glyph-palette.vim"] = {}
-
 ui["akinsho/bufferline.nvim"] = {
   config = conf.nvim_bufferline,
   event = "UIEnter",
@@ -130,12 +128,11 @@ ui["catppuccin/nvim"] = {
   config = conf.catppuccin,
 }
 
-ui["numToStr/Sakura.nvim"] = {
+-- fix annoying strikethrough issue as that was not a valid key apparently .
+ui["~/GitHub/Sakura.nvim"] = {
+  module = "Sakura",
   opt = true,
-  config = function()
-    vim.cmd([[colorscheme sakura]])
-    -- vim.cmd([[hi TSCurrentScope guibg=#282338]])
-  end,
+  config = function() end,
 }
 
 -- Use default when loading this .
@@ -147,8 +144,8 @@ ui["rebelot/kanagawa.nvim"] = {
 
 -- Might want to manually call this through telescope or something .
 -- ui["~/GitHub/themer/themer.lua"] = {
-ui["themercorp/themer.lua"] = {
-  branch = "dev",
+ui["ThemerCorp/themer.lua"] = {
+  branch = "main",
   module = "themer",
   config = conf.themer,
 }

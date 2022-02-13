@@ -13,7 +13,6 @@ useless["tamton-aquib/duck.nvim"] = {
   opt = true,
 }
 
--- Why ?
 -- useless["raghavdoescode/nvim-owoifier"] = {
 --   cmd = "OWOify",
 --   opt = true,

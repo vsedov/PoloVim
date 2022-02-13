@@ -144,10 +144,6 @@ function config.nvim_cmp()
     snippet = {
       expand = function(args)
         require("luasnip").lsp_expand(args.body)
-        -- require 'snippy'.expand_snippet(args.body)
-        -- vim.fn["UltiSnips#Anon"](args.body)
-        -- require("luasnip.loaders.from_vscode").load()
-        require("luasnip.loaders.from_snipmate").load()
       end,
     },
     completion = {
@@ -223,14 +219,30 @@ function config.nvim_cmp()
           cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
-        elseif neogen.jumpable() then
-          vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_next()<CR>"), "")
         elseif has_words_before() then
           cmp.complete()
         else
           fallback()
         end
       end, { "i", "s" }),
+      ["<C-k>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expandable() then
+          luasnip.expand()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif check_backspace() then
+          fallback()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, {
+        "i",
+        "s",
+      }),
 
       ["<C-l>"] = cmp.mapping(function(fallback)
         local copilot_keys = vim.fn["copilot#Accept"]()
@@ -247,8 +259,6 @@ function config.nvim_cmp()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif neogen.jumpable(-1) then
-          vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
         elseif luasnip.jumpable(-1) then
           luasnip.jump(-1)
         else
@@ -320,30 +330,11 @@ function config.nvim_cmp()
 end
 
 function config.vim_vsnip()
-  vim.g.vsnip_snippet_dir = global.home .. "/.config/nvim/snippets"
+  vim.g.vsnip_snippet_dir = os.getenv("HOME") .. "/.config/nvim/snippets"
 end
-
+-- packer.nvim: Error running config for LuaSnip: [string "..."]:0: attempt to index global 'ls_types' (a nil value)
 function config.luasnip()
-  local ls = require("luasnip")
-  ls.config.set_config({ history = true, updateevents = "TextChanged,TextChangedI" })
-  require("luasnip.loaders.from_vscode").load({})
-
-  vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
-  vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
-end
-
-function config.telescope_preload()
-  if not packer_plugins["plenary.nvim"].loaded then
-    require("packer").loader("plenary.nvim")
-  end
-
-  -- if not packer_plugins["telescope.nvim"].loaded then
-  --   require("packer").loader("telescope.nvim")
-  -- end
-
-  -- if not packer_plugins["telescope-fzy-native.nvim"].loaded then
-  --   require"packer".loader("telescope-fzy-native.nvim")
-  -- end
+  require("modules.completion.luasnip")
 end
 
 function config.telescope()

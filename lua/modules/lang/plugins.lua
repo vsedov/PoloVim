@@ -36,23 +36,16 @@ lang["RRethy/nvim-treesitter-endwise"] = {
 -- Better plugin for this i think ,
 lang["danymat/neogen"] = {
   module = { "neogen" },
-
-  opt = true,
   requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
   config = function()
     require("neogen").setup({
       enabled = true,
       languages = {
-        lua = {
-          template = { annotation_convention = "emmylua" },
-        },
-        python = {
-          template = { annotation_convention = "numpydoc" },
-        },
-
-        c = {
-          template = { annotation_convention = "doxygen" },
-        },
+        -- python = {
+        --   template = {
+        --     annotation_convention = "numpydoc", -- for a full list of annotation_conventions, see supported-languages below,
+        --   },
+        -- },
       },
     })
   end,
@@ -146,7 +139,7 @@ lang["mfussenegger/nvim-jdtls"] = {
 -- :lua require'blanket'.stop() - stop displaying coverage and cleanup autocmds, watcher etc.
 -- :lua require'blanket'.refresh() - manually trigger a refresh of signs, useful when filetype property is not set
 -- :lua require'blanket'.set_report_path() - change report_path to a new value and refresh the gutter based on the new report
-
+-- temp for groupwork will remove soon .
 lang["dsych/blanket.nvim"] = {
   ft = "java",
   config = function()
@@ -191,6 +184,14 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
   opt = true,
   requires = { "telescope.nvim", "nvim-dap" },
   config = conf.dap,
+}
+
+lang['m-demare/hlargs.nvim'] = {
+  ft = {"python", "c", "java", "lua"},
+  requires = { 'nvim-treesitter/nvim-treesitter' },
+  config = function()
+    require('hlargs').setup()
+  end
 }
 
 lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
@@ -268,7 +269,11 @@ lang["mgedmin/coverage-highlight.vim"] = {
 ------------------------------------------------------------------------------
 
 -- JqxList and JqxQuery json browsing, format
-lang["gennaro-tedesco/nvim-jqx"] = { opt = true, cmd = { "JqxList", "JqxQuery" } }
+lang["gennaro-tedesco/nvim-jqx"] = {
+  ft = "json",
+  cmd = { "JqxList", "JqxQuery" },
+  opt = true,
+}
 
 lang["windwp/nvim-ts-autotag"] = {
   opt = true,

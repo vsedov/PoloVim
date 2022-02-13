@@ -181,7 +181,7 @@ vim.defer_fn(function()
   loader("telescope.nvim")
   loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
   loader("harpoon")
-
+  loader("workspaces.nvim")
   loader("nvim-notify")
   vim.notify = require("notify")
 
