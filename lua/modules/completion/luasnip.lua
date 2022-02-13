@@ -249,7 +249,7 @@ local function pair(pair_begin, pair_end, expand_func, ...)
 end
 
 -- ls.snippets = require("luasnip-snippets").load_snippets()
-require("luasnip.loaders.from_vscode").load({}) -- Load snippets from my-snippets folder
+require("luasnip.loaders.from_vscode").load({ paths = "/home/viv/.local/share/nvim/site/pack/packer/opt/friendly-snippets"}) -- Load snippets from my-snippets folder
 -- these should be inside your snippet-table.
 ls.snippets = {
   all = {
