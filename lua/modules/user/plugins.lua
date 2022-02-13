@@ -1,7 +1,9 @@
 local user = {}
 local conf = require("modules.user.config")
 
-user["~/GitHub/ytmmusic.lua"] = {
+user["NarutoXY/ytmmusic.lua"] = {
+    after = "telescope.nvim", 
+    cmd = {"YtNotifyPrevious", "YtNotifyNext", "YtNotifyCurrent", "YtVolumeControl"}, 
     branch = "fix-auth",
     require = { "rcarriga/nvim-notify", "nvim-lua/plenary.nvim" },
     config = function()
