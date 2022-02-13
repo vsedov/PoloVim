@@ -33,7 +33,6 @@ lang["RRethy/nvim-treesitter-endwise"] = {
   config = conf.endwise,
 }
 
--- Better plugin for this i think ,
 lang["danymat/neogen"] = {
   module = { "neogen" },
   requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
