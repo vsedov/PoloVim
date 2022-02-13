@@ -45,13 +45,22 @@ lang["RRethy/nvim-treesitter-endwise"] = {
 }
 
 lang["danymat/neogen"] = {
-  module = { "neogen" },
+  opt = true,
   requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
   config = function()
     require("neogen").setup({
-      enabled = true,
+      languages = {
+        lua = {
+          template = { annotation_convention = "emmylua" },
+        },
+        python = {
+          template = { annotation_convention = "numpydoc" },
+        },
+        c = {
+          template = { annotation_convention = "doxygen" },
+        },
+      },
     })
-    require("neogen").get_template("python"):config({ annotation_convention = "numpydoc" })
   end,
 }
 

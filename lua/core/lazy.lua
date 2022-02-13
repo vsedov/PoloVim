@@ -32,6 +32,7 @@ local function loadscheme()
   end
   local v = math.random(1, #themes)
   local loading_theme = themes[v]
+  print(loading_theme)
 
   require("packer").loader(loading_theme)
 end

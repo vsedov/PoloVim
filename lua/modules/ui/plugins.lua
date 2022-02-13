@@ -132,7 +132,9 @@ ui["catppuccin/nvim"] = {
 ui["~/GitHub/Sakura.nvim"] = {
   module = "Sakura",
   opt = true,
-  config = function() end,
+  config = function()
+    vim.cmd([[colorscheme sakura]])
+  end,
 }
 
 -- Use default when loading this .
