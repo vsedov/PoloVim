@@ -51,6 +51,21 @@ tools["ThePrimeagen/harpoon"] = {
   end,
 }
 
+tools["natecraddock/workspaces.nvim"]={
+  opt = true, 
+  config = function()
+    require("workspaces").setup({
+        hooks = {
+            open = { "Telescope find_files" },
+        }
+    })
+    require("telescope").load_extension("workspaces")
+
+  end
+
+}
+
+
 tools["ThePrimeagen/git-worktree.nvim"] = {
   event = { "CmdwinEnter", "CmdlineEnter" },
   config = conf.worktree,
@@ -345,7 +360,7 @@ tools["fladson/vim-kitty"] = {
   ft = { "*.conf" },
 }
 
-tools["relastle/vim-nayvy"] = {
+tools["marekzidek/vim-nayvy"] = {
   ft = "python",
   run = ":UpdateRemotePlugins",
   config = function()
