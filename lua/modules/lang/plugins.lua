@@ -7,6 +7,17 @@ lang["nathom/filetype.nvim"] = {
   setup = function()
     vim.g.did_load_filetypes = 1
   end,
+  config = function()
+    require("filetype").setup({
+      overrides = {
+        literal = {
+          ["kitty.conf"] = "kitty",
+          [".gitignore"] = "conf",
+          [".env"] = "sh",
+        },
+      },
+    })
+  end,
 }
 
 lang["nvim-treesitter/nvim-treesitter"] = {
@@ -236,6 +247,13 @@ lang["dccsillag/magma-nvim"] = {
 
 lang["Vimjas/vim-python-pep8-indent"] = {
   ft = "python",
+}
+-- Quite nice
+lang["ok97465/pycell_deco.nvim"] = {
+  ft = "python",
+  config = function()
+    require("pycell_deco").setup({ cell_name_fg = "#1abc9c", cell_line_bg = nil })
+  end,
 }
 
 lang["vim-test/vim-test"] = {

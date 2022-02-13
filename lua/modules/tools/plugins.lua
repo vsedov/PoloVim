@@ -93,6 +93,13 @@ tools["TimUntersberger/neogit"] = {
   end,
 }
 
+tools["ruifm/gitlinker.nvim"] = {
+  keys = "<leader>gy",
+  config = function()
+    require("gitlinker").setup()
+  end,
+}
+
 tools["liuchengxu/vista.vim"] = { cmd = "Vista", setup = conf.vim_vista, opt = true }
 
 ------------- Spelling and Grammer
