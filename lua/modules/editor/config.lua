@@ -427,9 +427,6 @@ function config.side_bar()
       "diagnostics",
       "symbols",
       "todos",
-      "files",
-      "buffers",
-      "containers",
     },
     section_separator = "─────",
     bindings = {

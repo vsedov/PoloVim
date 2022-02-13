@@ -186,6 +186,14 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
   config = conf.dap,
 }
 
+lang['m-demare/hlargs.nvim'] = {
+  ft = {"python", "c", "java", "lua"},
+  requires = { 'nvim-treesitter/nvim-treesitter' },
+  config = function()
+    require('hlargs').setup()
+  end
+}
+
 lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
 lang["jbyuki/one-small-step-for-vimkind"] = { opt = true, ft = { "lua" } }
