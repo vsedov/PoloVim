@@ -402,7 +402,7 @@ end
 
 --- Plugins to be loaded, lazily
 M.neoclip = function()
-  opts = {
+  local opts = {
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",
     prompt_prefix = "  ",
@@ -414,7 +414,7 @@ M.neoclip = function()
 end
 
 M.refactor = function()
-  opts = {
+  local opts = {
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",
     prompt_prefix = "  ",
