@@ -34,7 +34,6 @@ ui["startup-nvim/startup.nvim"] = {
   end,
 }
 
-
 -- Lazy Loading nvim-notify
 ui["rcarriga/nvim-notify"] = {
   opt = true,

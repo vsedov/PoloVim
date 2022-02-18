@@ -271,7 +271,7 @@ lang["vim-test/vim-test"] = {
 
 -- lua testign
 lang["lewis6991/nvim-test"] = {
-  ft = "lua", 
+  ft = "lua",
   opt = true,
 }
 

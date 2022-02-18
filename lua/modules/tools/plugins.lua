@@ -295,8 +295,8 @@ tools["jvgrootveld/telescope-zoxide"] = {
   end,
 }
 
-tools["tami5/sqlite.lua"]={
-  module = "sqlite"
+tools["tami5/sqlite.lua"] = {
+  module = "sqlite",
 }
 -- manual call
 tools["AckslD/nvim-neoclip.lua"] = {

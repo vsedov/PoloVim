@@ -117,9 +117,6 @@ bg("Pmenu", "NONE")
 
 -- fg("ModeMsg", "NONE")
 
-
-
-
 -- bg("PmenuSbar", one_bg)
 -- bg("PmenuSel", blue)
 -- bg("PmenuThumb", nord_blue)
