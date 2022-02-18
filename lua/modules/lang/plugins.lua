@@ -269,6 +269,12 @@ lang["vim-test/vim-test"] = {
   opt = true,
 }
 
+-- lua testign
+lang["lewis6991/nvim-test"] = {
+  ft = "lua",
+  opt = true,
+}
+
 lang["rcarriga/vim-ultest"] = {
   requires = { "vim-test/vim-test", opt = true },
   run = ":UpdateRemotePlugins",

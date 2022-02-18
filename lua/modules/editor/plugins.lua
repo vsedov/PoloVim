@@ -76,7 +76,7 @@ editor["max397574/which-key.nvim"] = {
 --   end,
 -- }
 
-editor["blackCauldron7/surround.nvim"] = {
+editor["Mephistophiles/surround.nvim"] = {
   keys = { "<F3>" },
   config = function()
     require("surround").setup({

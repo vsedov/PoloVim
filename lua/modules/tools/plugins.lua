@@ -295,10 +295,13 @@ tools["jvgrootveld/telescope-zoxide"] = {
   end,
 }
 
+tools["tami5/sqlite.lua"] = {
+  module = "sqlite",
+}
 -- manual call
 tools["AckslD/nvim-neoclip.lua"] = {
   opt = true,
-  requires = { "tami5/sqlite.lua", module = "sqlite" },
+  requires = { "tami5/sqlite.lua" },
   config = conf.neoclip,
 }
 
@@ -314,7 +317,7 @@ tools["nvim-telescope/telescope-frecency.nvim"] = {
   config = function()
     require("telescope").load_extension("frecency")
   end,
-  requires = { "tami5/sqlite.lua", module = "sqlite" },
+  requires = { "tami5/sqlite.lua" },
 }
 
 tools["chentau/marks.nvim"] = {

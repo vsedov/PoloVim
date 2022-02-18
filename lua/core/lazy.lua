@@ -25,6 +25,7 @@ local function daylight()
 end
 
 local function loadscheme()
+  local themes
   if daylight() == "light" then
     themes = { "kanagawa.nvim", "catppuccin", "Sakura.nvim" }
   else
