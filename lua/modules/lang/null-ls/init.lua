@@ -173,6 +173,9 @@ return {
       on_attach = function(client)
         -- I dont want any formating on python files.
         if client.resolved_capabilities.document_formatting then
+          vim.diagnostic.config({
+            virtual_text = false
+          })
           vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
         end
       end,
