@@ -8,15 +8,27 @@ local conf = require("modules.editor.config")
 
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 
-editor["windwp/nvim-autopairs"] = {
-  -- keys = {{'i', '('}},
-  -- keys = {{'i'}},
-  requires = "nvim-treesitter",
-  after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
-  -- event = "InsertEnter",  --InsertCharPre
-  -- after = "hrsh7th/nvim-compe",
-  config = conf.autopairs,
+-- editor["windwp/nvim-autopairs"] = {
+--   -- keys = {{'i', '('}},
+--   -- keys = {{'i'}},
+--   requires = "nvim-treesitter",
+--   after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
+--   -- event = "InsertEnter",  --InsertCharPre
+--   -- after = "hrsh7th/nvim-compe",
+--   config = conf.autopairs,
+--   opt = true,
+-- }
+editor["ZhiyuanLck/smart-pairs"] = {
+  event = "InsertEnter",
   opt = true,
+  config = function()
+    require("pairs"):setup({
+      enter = {
+        enable_mapping = false,
+      },
+    })
+  end,
+  after = { "nvim-cmp" },
 }
 
 editor["kana/vim-niceblock"] = {

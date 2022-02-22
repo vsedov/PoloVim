@@ -144,6 +144,14 @@ ui["rebelot/kanagawa.nvim"] = {
   config = conf.kanagawa,
 }
 
+ui["wadackel/vim-dogrun"] = {
+  opt = true,
+  setup = conf.dogrun,
+  config = function()
+    vim.cmd([[colorscheme dogrun]])
+  end,
+}
+
 -- Might want to manually call this through telescope or something .
 -- ui["~/GitHub/themer/themer.lua"] = {
 ui["ThemerCorp/themer.lua"] = {
