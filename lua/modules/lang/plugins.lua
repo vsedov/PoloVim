@@ -319,6 +319,14 @@ lang["folke/lua-dev.nvim"] = {
   config = conf.lua_dev,
 }
 
+lang["shift-d/scratch.nvim"] = {
+  cmd = { "ScratchNew", "ScratchEval" },
+  opt = true,
+  require = "telescope.nvim",
+  ft = { "lua", "python" },
+  config = conf.scratch,
+}
+
 lang["nanotee/luv-vimdocs"] = {
   opt = true,
 }
