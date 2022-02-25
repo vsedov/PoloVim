@@ -24,7 +24,7 @@ editor["ZhiyuanLck/smart-pairs"] = {
   config = function()
     require("pairs"):setup({
       enter = {
-        enable_mapping = false,
+        -- enable_mapping = false,
       },
     })
   end,
@@ -50,9 +50,9 @@ editor["kana/vim-niceblock"] = {
 --     vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
 --   end
 -- }
-
 editor["ggandor/lightspeed.nvim"] = {
   as = "lightspeed",
+  commit = "4d8359a30b26ee5316d0e7c79af08b10cb17a57b",
   event = "BufReadPost",
   opt = true,
   config = conf.lightspeed,
