@@ -35,9 +35,6 @@ local def_map = {
   ["i|<C-b>"] = map_cmd("<Left>"):with_noremap(),
   ["i|<C-f>"] = map_cmd("<Right>"):with_noremap(),
 
-  -- ["i|<C-s>"] = map_cmd("<Esc>:w<!CR>"),
-  -- ["i|<C-q>"] = map_cmd("<Esc>:wq<CR>"),
-
   ["i|<C-e>"] = map_cmd([[pumvisible() ? "\<C-e>" : "\<End>"]]):with_noremap():with_expr(),
 
   -- command line
@@ -56,27 +53,27 @@ local def_map = {
   ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
 }
 
-local os_map = {
-  ["n|<c-s>"] = map_cu("write"):with_noremap(),
-  ["i|<c-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
-  ["v|<c-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
-  ["i|<C-q>"] = map_cmd("<Esc>:wq<CR>"),
-}
+-- local os_map = {
+--   ["n|<c-s>"] = map_cu("write"):with_noremap(),
+--   ["i|<c-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
+--   ["v|<c-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
+--   ["i|<C-q>"] = map_cmd("<Esc>:wq<CR>"),
+-- }
 
-local global = require("core.global")
-if global.is_mac then
-  os_map = {
-    ["n|<d-s>"] = map_cu("w"):with_silent(),
-    ["i|<d-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
-    ["v|<d-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
+-- local global = require("core.global")
+-- if global.is_mac then
+--   os_map = {
+--     ["n|<d-s>"] = map_cu("w"):with_silent(),
+--     ["i|<d-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
+--     ["v|<d-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
 
-    ["n|<d-w>"] = map_cu("wqa!"):with_silent(),
-    ["i|<d-w>"] = map_cu('"normal :wqa!"'):with_noremap():with_silent(),
-    ["v|<d-w>"] = map_cu('"normal :wqa!"'):with_noremap():with_silent(),
-  }
-end
+--     ["n|<d-w>"] = map_cu("wqa!"):with_silent(),
+--     ["i|<d-w>"] = map_cu('"normal :wqa!"'):with_noremap():with_silent(),
+--     ["v|<d-w>"] = map_cu('"normal :wqa!"'):with_noremap():with_silent(),
+--   }
+-- end
 
 -- def_map = vim.list_extend(def_map, os_map)
-def_map = vim.tbl_extend("keep", def_map, os_map)
+-- def_map = vim.tbl_extend("keep", def_map, os_map)
 
 bind.nvim_load_mapping(def_map)
