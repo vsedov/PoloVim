@@ -6,5 +6,5 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
   \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \ 'python': ['nayvy#ale_fixer','black','isort'],
+      \ 'python': ['nayvy#ale_fixer','yapf','isort'],
 \ }
