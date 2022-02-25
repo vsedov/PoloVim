@@ -57,7 +57,7 @@ end
 
 function config.nvim_cmp()
   local cmp = require("cmp")
-  -- let g;copiol
+  local kind = cmp.lsp.CompletionItemKind
 
   local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -91,7 +91,33 @@ function config.nvim_cmp()
     local col = vim.fn.col(".") - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
   end
-
+  local lspkind_icons = {
+    Text = "",
+    Method = "",
+    Function = "",
+    Constructor = "",
+    Field = "ﰠ",
+    Variable = "",
+    Class = "ﴯ",
+    Interface = "",
+    Module = "",
+    Property = "ﰠ",
+    Unit = "塞",
+    Value = "",
+    Enum = "",
+    Keyword = "",
+    Snippet = "",
+    Color = "",
+    File = "",
+    Reference = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = "פּ",
+    Event = "",
+    Operator = "",
+    TypeParameter = "",
+  }
   local sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
@@ -152,33 +178,6 @@ function config.nvim_cmp()
     },
     formatting = {
       format = function(entry, vim_item)
-        local lspkind_icons = {
-          Text = "",
-          Method = "",
-          Function = "",
-          Constructor = "",
-          Field = "ﰠ",
-          Variable = "",
-          Class = "ﴯ",
-          Interface = "",
-          Module = "",
-          Property = "ﰠ",
-          Unit = "塞",
-          Value = "",
-          Enum = "",
-          Keyword = "",
-          Snippet = "",
-          Color = "",
-          File = "",
-          Reference = "",
-          Folder = "",
-          EnumMember = "",
-          Constant = "",
-          Struct = "פּ",
-          Event = "",
-          Operator = "",
-          TypeParameter = "",
-        }
         -- load lspkind icons
         vim_item.kind = string.format("%s %s", lspkind_icons[vim_item.kind], vim_item.kind)
 
@@ -213,6 +212,12 @@ function config.nvim_cmp()
       ["<C-e>"] = cmp.mapping.abort(),
       ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
       ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
+
+      ["<CR>"] = cmp.mapping(function(fallback)
+        if not cmp.confirm({ select = false }) then
+          require("pairs.enter").type()
+        end
+      end),
 
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -276,9 +281,14 @@ function config.nvim_cmp()
 
     experimental = { ghost_text = true, native_menu = false },
   })
-  require("packer").loader("nvim-autopairs")
-  local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+  -- cmp.event:on("confirm_done", function(event)
+  --   local item = event.entry:get_completion_item()
+  --   local parensDisabled = item.data and item.data.funcParensDisabled or false
+  --   if not parensDisabled and (item.kind == kind.Method or item.kind == kind.Function) then
+  --     print("pairs are now active")
+  --     require("pairs.bracket").type_left("(")
+  --   end
+  -- end)
 
   -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
   if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then

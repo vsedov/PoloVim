@@ -94,7 +94,7 @@ require("luasnip").config.set_config({ history = true, updateevents = "TextChang
 require("luasnip.loaders.from_vscode").load()
 
 require("nvim-autopairs").setup()
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+-- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp = require("cmp")
 
 -- vim.cmd('packadd lsp_signature.nvim')
