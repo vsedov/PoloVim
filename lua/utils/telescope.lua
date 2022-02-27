@@ -20,7 +20,7 @@ local themes = require("telescope.themes")
 local action_layout = require("telescope.actions.layout")
 local actions_layout = require("telescope.actions.layout")
 local utils = require("utils.helper")
-
+local Path = require("plenary.path")
 local action_state = require("telescope.actions.state")
 -- https://github.com/max397574/NeovimConfig/blob/2267d7dfa8a30148516e2f5a6bb0e5ecc5de2c3c/lua/configs/telescope.lua
 local function reloader()
