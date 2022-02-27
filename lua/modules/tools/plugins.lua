@@ -101,6 +101,10 @@ tools["ruifm/gitlinker.nvim"] = {
 }
 
 tools["liuchengxu/vista.vim"] = { cmd = "Vista", setup = conf.vim_vista, opt = true }
+tools["simrat39/symbols-outline.nvim"] = {
+  cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
+  opt = true,
+}
 
 ------------- Spelling and Grammer
 tools["kamykn/spelunker.vim"] = {

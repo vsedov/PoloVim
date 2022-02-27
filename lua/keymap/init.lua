@@ -211,7 +211,7 @@ local plug_map = {
   -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
 
   -- Plugin Vista or SymbolsOutline -- Symbol Breaks for the time .
-  ["n|<Leader>v"] = map_cu("Vista!!"):with_noremap():with_silent(),
+  ["n|<Leader>v"] = map_cu("SymbolsOutline"):with_noremap():with_silent(),
 
   -- Plugin vim_niceblock
   ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
