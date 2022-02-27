@@ -24,16 +24,6 @@ ui["akinsho/bufferline.nvim"] = {
   opt = true,
 }
 
--- TODO MODIFY THIS
-ui["startup-nvim/startup.nvim"] = {
-  opt = true,
-  requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-  config = function()
-    -- require("startup").setup({theme = "dashboard"})
-    require("startup").setup({ theme = "evil" })
-  end,
-}
-
 -- Lazy Loading nvim-notify
 ui["rcarriga/nvim-notify"] = {
   opt = true,
@@ -142,6 +132,14 @@ ui["rebelot/kanagawa.nvim"] = {
   opt = true,
   module = "kanagawa",
   config = conf.kanagawa,
+}
+
+ui["wadackel/vim-dogrun"] = {
+  opt = true,
+  setup = conf.dogrun,
+  config = function()
+    vim.cmd([[colorscheme dogrun]])
+  end,
 }
 
 -- Might want to manually call this through telescope or something .

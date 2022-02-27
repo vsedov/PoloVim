@@ -168,7 +168,7 @@ local plug_map = {
     :with_noremap()
     :with_silent(),
 
-  ["n|<Leader>fh"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
+  ["n|<Leader>fH"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
 
   -- grep
   ["n|<Leader>fw"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])

@@ -254,15 +254,15 @@ require("luasnip.loaders.from_vscode").load({
 }) -- Load snippets from my-snippets folder
 -- these should be inside your snippet-table.
 ls.snippets = {
-  all = {
-    pair("(", ")", neg, char_count_same),
-    pair("{", "}", neg, char_count_same),
-    pair("[", "]", neg, char_count_same),
-    pair("<", ">", neg, char_count_same),
-    pair("'", "'", neg, even_count),
-    pair('"', '"', neg, even_count),
-    pair("`", "`", neg, even_count),
-  },
+  -- all = {
+  --   pair("(", ")", neg, char_count_same),
+  --   pair("{", "}", neg, char_count_same),
+  --   pair("[", "]", neg, char_count_same),
+  --   pair("<", ">", neg, char_count_same),
+  --   pair("'", "'", neg, even_count),
+  --   pair('"', '"', neg, even_count),
+  --   pair("`", "`", neg, even_count),
+  -- },
 
   python = require("modules.completion.snippets.python"),
 

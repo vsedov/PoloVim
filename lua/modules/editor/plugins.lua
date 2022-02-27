@@ -8,15 +8,27 @@ local conf = require("modules.editor.config")
 
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 
-editor["windwp/nvim-autopairs"] = {
-  -- keys = {{'i', '('}},
-  -- keys = {{'i'}},
-  requires = "nvim-treesitter",
-  after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
-  -- event = "InsertEnter",  --InsertCharPre
-  -- after = "hrsh7th/nvim-compe",
-  config = conf.autopairs,
+-- editor["windwp/nvim-autopairs"] = {
+--   -- keys = {{'i', '('}},
+--   -- keys = {{'i'}},
+--   requires = "nvim-treesitter",
+--   after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
+--   -- event = "InsertEnter",  --InsertCharPre
+--   -- after = "hrsh7th/nvim-compe",
+--   config = conf.autopairs,
+--   opt = true,
+-- }
+editor["ZhiyuanLck/smart-pairs"] = {
+  event = "InsertEnter",
   opt = true,
+  config = function()
+    require("pairs"):setup({
+      enter = {
+        -- enable_mapping = false,
+      },
+    })
+  end,
+  after = { "nvim-cmp" },
 }
 
 editor["kana/vim-niceblock"] = {
@@ -39,10 +51,75 @@ editor["kana/vim-niceblock"] = {
 --   end
 -- }
 
+-- editor["ggandor/lightspeed.nvim"] = {
+--   event = "BufReadPost",
+--   opt = true,
+--   config = conf.lightspeed,
+-- }
+
 editor["ggandor/lightspeed.nvim"] = {
-  as = "lightspeed",
-  event = "BufReadPost",
-  opt = true,
+  -- as = "lightspeed",
+  -- commit = "4d8359a30b26ee5316d0e7c79af08b10cb17a57b",
+  keys = {
+    "<Plug>Lightspeed_s",
+    "<Plug>Lightspeed_S",
+    "<Plug>Lightspeed_x",
+    "<Plug>Lightspeed_X",
+    "<Plug>Lightspeed_f",
+    "<Plug>Lightspeed_F",
+    "<Plug>Lightspeed_t",
+    "<Plug>Lightspeed_T",
+    "<Plug>Lightspeed_gs",
+    "<Plug>Lightspeed_gS",
+    "<Plug>Lightspeed_omni_s",
+    "<Plug>Lightspeed_omni_gs",
+  },
+  setup = function()
+    local default_keymaps = {
+      { "n", "s", "<Plug>Lightspeed_s" },
+      { "n", "S", "<Plug>Lightspeed_S" },
+      { "x", "s", "<Plug>Lightspeed_s" },
+      { "x", "S", "<Plug>Lightspeed_S" },
+      { "o", "z", "<Plug>Lightspeed_s" },
+      { "o", "Z", "<Plug>Lightspeed_S" },
+      { "o", "x", "<Plug>Lightspeed_x" },
+      { "o", "X", "<Plug>Lightspeed_X" },
+
+      { "n", "<M-s>", "<Plug>Lightspeed_omni_s" },
+      { "n", "<M-S>", "<Plug>Lightspeed_omni_gs" },
+      { "x", "<M-s>", "<Plug>Lightspeed_omni_s" },
+      { "x", "<M-S>", "<Plug>Lightspeed_omni_gs" },
+      { "o", "<M-s>", "<Plug>Lightspeed_omni_s" },
+      { "o", "<M-S>", "<Plug>Lightspeed_omni_gs" },
+
+      { "n", "gs", "<Plug>Lightspeed_gs" },
+      { "n", "gS", "<Plug>Lightspeed_gS" },
+      { "x", "gs", "<Plug>Lightspeed_gs" },
+      { "x", "gS", "<Plug>Lightspeed_gS" },
+      { "o", "gs", "<Plug>Lightspeed_gs" },
+      { "o", "gS", "<Plug>Lightspeed_gS" },
+
+      { "n", "f", "<Plug>Lightspeed_f" },
+      { "n", "F", "<Plug>Lightspeed_F" },
+      { "x", "f", "<Plug>Lightspeed_f" },
+      { "x", "F", "<Plug>Lightspeed_F" },
+      { "o", "f", "<Plug>Lightspeed_f" },
+      { "o", "F", "<Plug>Lightspeed_F" },
+
+      { "n", "t", "<Plug>Lightspeed_t" },
+      { "n", "T", "<Plug>Lightspeed_T" },
+      { "x", "t", "<Plug>Lightspeed_t" },
+      { "x", "T", "<Plug>Lightspeed_T" },
+      { "o", "t", "<Plug>Lightspeed_t" },
+      { "o", "T", "<Plug>Lightspeed_T" },
+    }
+    for _, m in ipairs(default_keymaps) do
+      vim.keymap.set(m[1], m[2], m[3], { silent = true })
+    end
+  end,
+
+  -- event = "BufReadPost",
+  -- opt = true,
   config = conf.lightspeed,
 }
 
@@ -261,7 +338,7 @@ editor["jbyuki/venn.nvim"] = {
 }
 
 -- fix terminal color
-editor["norcalli/nvim-terminal.lua"] = {
+editor["0xAdk/nvim-terminal.lua"] = {
   opt = true,
   ft = { "log", "terminal" },
   config = function()
@@ -316,7 +393,7 @@ editor["nvim-neorg/neorg"] = {
   end,
 }
 
-editor["psf/black"] = { ft = "python" }
+-- editor["psf/black"] = { ft = "python" }
 
 editor["famiu/bufdelete.nvim"] = {
   opt = true,

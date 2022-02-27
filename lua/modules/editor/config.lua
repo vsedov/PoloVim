@@ -156,7 +156,6 @@ function config.lightspeed()
       next_match_group = "<TAB>",
       prev_match_group = "<S-Tab>",
     },
-
     --- f/t ---
     limit_ft_matches = 10,
     repeat_ft_with_target_char = true,
@@ -451,6 +450,7 @@ function config.side_bar()
     },
   }
   sidebar.setup(opts)
+
   -- vim.cmd.("link SidebarNvimLspDiagnosticsTotalNumber Normal")
 end
 

@@ -195,15 +195,15 @@ require("luasnip.loaders.from_vscode").load({
 }) -- Load snippets from my-snippets folder
 -- these should be inside your snippet-table.
 ls.snippets = {
-  all = {
-    pair("(", ")", neg, char_count_same),
-    pair("{", "}", neg, char_count_same),
-    pair("[", "]", neg, char_count_same),
-    pair("<", ">", neg, char_count_same),
-    pair("'", "'", neg, even_count),
-    pair('"', '"', neg, even_count),
-    pair("`", "`", neg, even_count),
-  },
+  -- all = {
+  --   pair("(", ")", neg, char_count_same),
+  --   pair("{", "}", neg, char_count_same),
+  --   pair("[", "]", neg, char_count_same),
+  --   pair("<", ">", neg, char_count_same),
+  --   pair("'", "'", neg, even_count),
+  --   pair('"', '"', neg, even_count),
+  --   pair("`", "`", neg, even_count),
+  -- },
   python = require("user.snippets.python"),
   lua = {
     ls.parser.parse_snippet("lf", "-- Defined in $TM_FILE\nlocal $1 = function($2)\n\t$0\nend"),

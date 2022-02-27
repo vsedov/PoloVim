@@ -20,6 +20,7 @@ local treesitter = function()
   -- print('load treesitter refactor', vim.fn.line('$'))
   local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
+  parser_configs.markdown.filetype_to_parsername = "octo"
   parser_configs.norg = {
     install_info = {
       url = "https://github.com/nvim-neorg/tree-sitter-norg",
