@@ -120,9 +120,8 @@ end
 
 M.python_repl = function()
   vim.notify("Python REPL Plugins Loaded")
-  loader("magma-nvim")
+  vim.cmd([[packadd magma-nvim]])
   vim.cmd([[UpdateRemotePlugins]])
-
   vim.cmd([[MagmaInit python3]])
   magma_binds()
 end
