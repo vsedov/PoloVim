@@ -3,13 +3,11 @@ local loader = require("packer").loader
 if not packer_plugins["zen-mode.nvim"].loaded then
   vim.cmd([[packadd zen-mode.nvim ]])
 end
-
-if not packer_plugins["telescope.nvim"].loaded then
-  vim.cmd([[packadd telescope.nvim ]])
-end
-
 if not packer_plugins["neorg-telescope"].loaded then
   vim.cmd([[packadd neorg-telescope ]])
+end
+if not packer_plugins["telescope.nvim"].loaded then
+  vim.cmd([[packadd telescope.nvim ]])
 end
 
 if not packer_plugins["nvim-treesitter"].loaded then
@@ -89,35 +87,51 @@ require("neorg").setup({
         neorg_leader = "<Leader>o",
       },
     },
-    ["core.norg.dirman"] = {
-      config = {
-        workspaces = {
-          example_ws = "~/example_workspaces/gtd/",
-          gtd = "~/gtd",
-          notes = "~notes",
-        },
-      },
-    },
-    ["core.gtd.base"] = {
-      config = {
-        workspace = "gtd",
-        -- workspace = "example_ws",
-        -- exclude = { "" },
-      },
-    },
+
     ["core.norg.qol.toc"] = {
       config = {
         close_split_on_jump = false,
         toc_split_placement = "left",
       },
     },
+
+    ["core.norg.dirman"] = { -- Manage your directories with Neorg
+      config = {
+        workspaces = {
+          home = "~/neorg",
+          personal = "~/neorg/personal",
+          work = "~/neorg/work",
+          notes = "~/neorg/notes",
+          recipes = "~/neorg/notes/recipes",
+          prolog = "~/neorg/notes/prolog",
+        },
+        index = "index.norg",
+        --[[ autodetect = true,
+          autochdir = false, ]]
+      },
+    },
+
+    ["core.gtd.base"] = {
+      config = {
+        -- workspace =   "example_gtd" , -- assign the workspace,
+        workspace = "home",
+        exclude = { "notes/" }, -- Optional: all excluded files from the workspace are not part of the gtd workflow
+        projects = {
+          show_completed_projects = false,
+          show_projects_without_tasks = false,
+        },
+        custom_tag_completion = true,
+      },
+    },
+
     ["core.norg.journal"] = {
       config = {
-        journal_folder = "my_journal",
+        journal_folder = "journal",
         use_folders = false,
       },
     },
   },
+
   logger = {
     level = "warn",
   },
