@@ -13,8 +13,6 @@ function autocmd.nvim_create_augroups(definitions)
     vim.api.nvim_command("augroup END")
   end
 end
--- autocmd User LightspeedEnter nohlsearch
--- autocmd User LightspeedLeave let &hlsearch=&hlsearch
 -- "*.v, *.go, *.json, *.js, *.jsx, *.php, *.c, *.h, *.cpp, *.cxx, *.java, *.tml, *.tsx, *.lua, *.ts, *.py, *.sh, *.zsh, *.css, *.html. *.dart"
 function autocmd.load_autocmds()
   local definitions = {
