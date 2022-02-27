@@ -22,7 +22,7 @@ lang["nathom/filetype.nvim"] = {
 
 lang["nvim-treesitter/nvim-treesitter"] = {
   opt = true,
-  run = ':TSUpdate',
+  run = ":TSUpdate",
   config = conf.nvim_treesitter,
 }
 

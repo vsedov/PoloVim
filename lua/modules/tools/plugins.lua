@@ -274,7 +274,7 @@ tools["LhKipp/nvim-git-fixer"] = {
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
   opt = true,
-  ft = 'qf', 
+  ft = "qf",
   event = { "CmdlineEnter", "QuickfixCmdPre" },
   config = conf.bqf,
 }
