@@ -450,6 +450,7 @@ function config.side_bar()
     },
   }
   sidebar.setup(opts)
+
   -- vim.cmd.("link SidebarNvimLspDiagnosticsTotalNumber Normal")
 end
 
