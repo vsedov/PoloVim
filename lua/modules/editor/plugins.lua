@@ -338,7 +338,7 @@ editor["jbyuki/venn.nvim"] = {
 }
 
 -- fix terminal color
-editor["norcalli/nvim-terminal.lua"] = {
+editor["0xAdk/nvim-terminal.lua"] = {
   opt = true,
   ft = { "log", "terminal" },
   config = function()
