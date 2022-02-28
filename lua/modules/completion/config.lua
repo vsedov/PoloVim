@@ -87,7 +87,7 @@ function config.nvim_cmp()
   local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
-  local check_back_space = function()
+  local check_backspace = function()
     local col = vim.fn.col(".") - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
   end
@@ -209,9 +209,16 @@ function config.nvim_cmp()
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-Space>"] = cmp.mapping.complete(),
       -- ["<C-e>"] = cmp.mapping.close(),
-      ["<C-e>"] = cmp.mapping.abort(),
-      -- ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-      ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
+      ["<C-e>"] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+      ["<C-' '>"] = cmp.mapping.confirm({ select = true }),
+      ["<CR>"] = cmp.mapping.confirm({
+        select = true,
+        behavior = cmp.ConfirmBehavior.Insert,
+      }),
 
       ["<CR>"] = cmp.mapping(function(fallback)
         if not cmp.confirm({ select = false }) then
@@ -222,27 +229,63 @@ function config.nvim_cmp()
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
+        elseif luasnip.expandable() then
+          luasnip.expand()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
-        elseif require("neogen").jumpable() then
-          require("neogen").jump_next()
+        elseif check_backspace() then
+          fallback()
         elseif has_words_before() then
           cmp.complete()
         else
           fallback()
         end
-      end, { "i", "s" }),
-      ["<C-k>"] = cmp.mapping(function(fallback)
+      end, {
+        "i",
+        "s",
+      }),
+
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expandable() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, {
+        "i",
+        "s",
+      }),
+
+      ["<C-j>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.mapping.abort()
+          cmp.mapping.close()
+        end
+        if luasnip.expandable() then
           luasnip.expand()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
-        elseif check_back_space() then
+        elseif check_backspace() then
           fallback()
         elseif has_words_before() then
           cmp.complete()
+        else
+          fallback()
+        end
+      end, {
+        "i",
+        "s",
+      }),
+
+      ["<C-k>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.mapping.abort()
+          cmp.mapping.close()
+        end
+        if luasnip.jumpable(-1) then
+          luasnip.jump(-1)
         else
           fallback()
         end
@@ -278,7 +321,10 @@ function config.nvim_cmp()
 
     -- You should specify your *installed* sources.
     sources = sources,
-
+    confirm_opts = {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = false,
+    },
     experimental = { ghost_text = true, native_menu = false },
   })
 

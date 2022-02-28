@@ -324,7 +324,6 @@ tools["nvim-telescope/telescope-frecency.nvim"] = {
 tools["chentau/marks.nvim"] = {
   opt = true,
   event = { "BufReadPost" },
-  branch = "master",
   config = function()
     require("marks").setup({
       default_mappings = true,
