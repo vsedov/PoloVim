@@ -516,4 +516,8 @@ function config.dap()
   require("modules.lang.dap.init")
 end
 
+function config.scratch()
+  require("telescope").load_extension("scratch")
+end
+
 return config

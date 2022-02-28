@@ -19,16 +19,9 @@ editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 --   opt = true,
 -- }
 editor["ZhiyuanLck/smart-pairs"] = {
-  event = "InsertEnter",
-  opt = true,
   config = function()
-    require("pairs"):setup({
-      enter = {
-        enable_mapping = false,
-      },
-    })
+    require("pairs"):setup({})
   end,
-  after = { "nvim-cmp" },
 }
 
 editor["kana/vim-niceblock"] = {
@@ -49,6 +42,12 @@ editor["kana/vim-niceblock"] = {
 --     vim.g.matchup_matchparen_offscreen = {method = 'popup'}
 --     vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
 --   end
+-- }
+
+-- editor["ggandor/lightspeed.nvim"] = {
+--   event = "BufReadPost",
+--   opt = true,
+--   config = conf.lightspeed,
 -- }
 
 editor["ggandor/lightspeed.nvim"] = {
@@ -79,12 +78,13 @@ editor["ggandor/lightspeed.nvim"] = {
       { "o", "x", "<Plug>Lightspeed_x" },
       { "o", "X", "<Plug>Lightspeed_X" },
 
-      { "n", "<M-s>", "<Plug>Lightspeed_omni_s" },
-      { "n", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-      { "x", "<M-s>", "<Plug>Lightspeed_omni_s" },
-      { "x", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-      { "o", "<M-s>", "<Plug>Lightspeed_omni_s" },
-      { "o", "<M-S>", "<Plug>Lightspeed_omni_gs" },
+
+      { "n", "Ds", "<Plug>Lightspeed_omni_s" },
+      { "n", "DS", "<Plug>Lightspeed_omni_gs" },
+      { "x", "Ds", "<Plug>Lightspeed_omni_s" },
+      { "x", "DS", "<Plug>Lightspeed_omni_gs" },
+      { "o", "Ds", "<Plug>Lightspeed_omni_s" },
+      { "o", "DS", "<Plug>Lightspeed_omni_gs" },
 
       { "n", "gs", "<Plug>Lightspeed_gs" },
       { "n", "gS", "<Plug>Lightspeed_gS" },
@@ -112,8 +112,6 @@ editor["ggandor/lightspeed.nvim"] = {
     end
   end,
 
-  -- event = "BufReadPost",
-  -- opt = true,
   config = conf.lightspeed,
 }
 
@@ -136,16 +134,6 @@ editor["max397574/which-key.nvim"] = {
     require("modules.editor.which_key")
   end,
 }
-
--- -- HOP BROKEN
--- editor["indianboy42/hop-extensions"] = { after = "hop", opt = true }
--- editor["phaazon/hop.nvim"] = {
---   as = "hop",
---   cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC", "HopeLine" },
---   config = function()
---     require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
---   end,
--- }
 
 editor["Mephistophiles/surround.nvim"] = {
   keys = { "<F3>" },
@@ -185,12 +173,6 @@ editor["booperlv/nvim-gomove"] = {
   opt = true,
   config = conf.gomove,
 }
-
--- editor["kevinhwang91/nvim-hlslens"] = {
---   -- keys = {"/", "?", '*', '#'}, --'n', 'N', '*', '#', 'g'
---   -- opt = true,
---   -- config = conf.hlslens
--- }
 
 editor["mg979/vim-visual-multi"] = {
   keys = {
@@ -332,7 +314,7 @@ editor["jbyuki/venn.nvim"] = {
 }
 
 -- fix terminal color
-editor["norcalli/nvim-terminal.lua"] = {
+editor["0xAdk/nvim-terminal.lua"] = {
   opt = true,
   ft = { "log", "terminal" },
   config = function()

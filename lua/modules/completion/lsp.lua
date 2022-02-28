@@ -135,61 +135,6 @@ local codes = {
   },
 }
 
-vim.diagnostic.config({
-  virtual_text = false,
-  severity_sort = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  float = {
-    focusable = false,
-    scope = "cursor",
-    -- source = true,
-
-    format = function(diagnostic)
-      local diag = vim.deepcopy(diagnostic)
-      print("diagnostic:")
-      dump(diagnostic)
-
-      if not util.isempty(diagnostic.user_data) then
-        local code = diagnostic.user_data.lsp.code
-
-        for _, table in pairs(codes) do
-          if vim.tbl_contains(table, code) then
-            return table.message
-          end
-        end
-      end
-
-      if diagnostic.code then
-        diag.message = string.format("%s [%s]", diag.message, diag.code):gsub("1. ", "")
-      end
-
-      return diag.message
-    end,
-
-    header = " Diagnostic",
-    pos = 1,
-    prefix = function(diagnostic, i, total)
-      local icon, highlight
-      if diagnostic.severity == 1 then
-        icon = ""
-        highlight = "DiagnosticError"
-      elseif diagnostic.severity == 2 then
-        icon = ""
-        highlight = "DiagnosticWarn"
-      elseif diagnostic.severity == 3 then
-        icon = ""
-        highlight = "DiagnosticInfo"
-      elseif diagnostic.severity == 4 then
-        icon = ""
-        highlight = "DiagnosticHint"
-      end
-      return i .. "/" .. total .. " " .. icon .. "  ", highlight
-    end,
-  },
-})
-
 -- -- -- wrap open_float to inspect diagnostics and use the severity color for border
 -- -- -- https://neovim.discourse.group/t/lsp-diagnostics-how-and-where-to-retrieve-severity-level-to-customise-border-color/1679
 vim.diagnostic.open_float = (function(orig)
@@ -286,6 +231,61 @@ vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 local enhance_attach = function(client, bufnr)
   -- api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   -- I dont want any formating on python files.
+
+  vim.diagnostic.config({
+    virtual_text = false,
+    severity_sort = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    float = {
+      focusable = false,
+      scope = "cursor",
+      -- source = true,
+
+      format = function(diagnostic)
+        local diag = vim.deepcopy(diagnostic)
+        print("diagnostic:")
+        dump(diagnostic)
+
+        if not util.isempty(diagnostic.user_data) then
+          local code = diagnostic.user_data.lsp.code
+
+          for _, table in pairs(codes) do
+            if vim.tbl_contains(table, code) then
+              return table.message
+            end
+          end
+        end
+
+        if diagnostic.code then
+          diag.message = string.format("%s [%s]", diag.message, diag.code):gsub("1. ", "")
+        end
+
+        return diag.message
+      end,
+
+      header = " Diagnostic",
+      pos = 1,
+      prefix = function(diagnostic, i, total)
+        local icon, highlight
+        if diagnostic.severity == 1 then
+          icon = ""
+          highlight = "DiagnosticError"
+        elseif diagnostic.severity == 2 then
+          icon = ""
+          highlight = "DiagnosticWarn"
+        elseif diagnostic.severity == 3 then
+          icon = ""
+          highlight = "DiagnosticInfo"
+        elseif diagnostic.severity == 4 then
+          icon = ""
+          highlight = "DiagnosticHint"
+        end
+        return i .. "/" .. total .. " " .. icon .. "  ", highlight
+      end,
+    },
+  })
   client.resolved_capabilities.document_formatting = false
   client.resolved_capabilities.document_range_formatting = false
 end

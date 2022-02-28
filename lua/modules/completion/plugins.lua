@@ -88,6 +88,9 @@ completion["https://github.com/github/copilot.vim.git"] = {
     end
 
     vim.g["copilot_filetypes"] = copilot_filetypes
+
+    vim.keymap.set("i", "<M-.>", "<Plug>(copilot-next)")
+    vim.keymap.set("i", "<M-,>", "<Plug>(copilot-previous)")
   end,
 }
 
@@ -97,7 +100,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
 completion["Iron-E/nvim-cmp"] = {
   branch = "feat/completion-menu-borders",
   -- opt = true,
-  event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
+  -- event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
   after = { "LuaSnip" }, -- "nvim-snippy",
   requires = {

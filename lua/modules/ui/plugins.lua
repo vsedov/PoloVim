@@ -24,16 +24,6 @@ ui["akinsho/bufferline.nvim"] = {
   opt = true,
 }
 
--- TODO MODIFY THIS
-ui["startup-nvim/startup.nvim"] = {
-  opt = true,
-  requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-  config = function()
-    -- require("startup").setup({theme = "dashboard"})
-    require("startup").setup({ theme = "evil" })
-  end,
-}
-
 -- Lazy Loading nvim-notify
 ui["rcarriga/nvim-notify"] = {
   opt = true,

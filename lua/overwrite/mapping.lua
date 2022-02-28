@@ -242,6 +242,7 @@ K.get_keymaps = function()
 end
 vim.cmd([[command! -nargs=* Keymaps lua require('overwrite.mapping').get_keymaps()]])
 vim.cmd([[command! -nargs=* ColourScheme lua require('utils.telescope').colorscheme()]])
+vim.cmd([[command! -nargs=* Ns :NeorgStart silent=true]])
 
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
 --
