@@ -323,8 +323,7 @@ tools["nvim-telescope/telescope-frecency.nvim"] = {
 
 tools["chentau/marks.nvim"] = {
   opt = true,
-  event = { "BufRead" },
-  branch = "fix_toggle",
+  event = { "BufReadPost" },
   config = function()
     require("marks").setup({
       default_mappings = true,
