@@ -211,6 +211,12 @@ function config.nvim_cmp()
       -- ["<C-e>"] = cmp.mapping.close(),
       ["<C-e>"] = cmp.mapping.abort(),
       ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+      ["<CR>"] = cmp.mapping(function(fallback)
+        if not cmp.confirm({ select = false }) then
+          require("pairs.enter").type()
+        end
+      end),
+
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
