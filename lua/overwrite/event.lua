@@ -17,7 +17,6 @@ function autocmd.nvim_create_augroups(defs)
     end
   end
 end
-
 -- "*.v, *.go, *.json, *.js, *.jsx, *.php, *.c, *.h, *.cpp, *.cxx, *.java, *.tml, *.tsx, *.lua, *.ts, *.py, *.sh, *.zsh, *.css, *.html. *.dart"
 function autocmd.load_autocmds()
   local definitions = {

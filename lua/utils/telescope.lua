@@ -20,7 +20,7 @@ local themes = require("telescope.themes")
 local action_layout = require("telescope.actions.layout")
 local actions_layout = require("telescope.actions.layout")
 local utils = require("utils.helper")
-
+local Path = require("plenary.path")
 local action_state = require("telescope.actions.state")
 -- https://github.com/max397574/NeovimConfig/blob/2267d7dfa8a30148516e2f5a6bb0e5ecc5de2c3c/lua/configs/telescope.lua
 local function reloader()
@@ -105,8 +105,9 @@ local new_maker = function(filepath, bufnr, opts)
       command = "file",
       args = { "--mime-type", "-b", filepath },
       on_exit = function(j)
-        local mime_type = vim.split(j:result()[1], "/")[1]
-        if mime_type == "text" then
+        local mime_class = vim.split(j:result()[1], "/")[1]
+        local mime_type = j:result()[1]
+        if mime_class == "text" or (mime_class == "application" and mime_type ~= "application/x-pie-executable") then
           previewers.buffer_previewer_maker(filepath, bufnr, opts)
         else
           -- maybe we want to write something to the buffer here
@@ -118,7 +119,6 @@ local new_maker = function(filepath, bufnr, opts)
     })
     :sync()
 end
-
 require("telescope").setup({
   defaults = themes.get_ivy({
     -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
