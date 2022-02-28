@@ -255,9 +255,9 @@ local treesitter_ref = function()
       disable = { "ruby" }, -- optional, list of language that will be disabled
     },
     autopairs = { enable = false },
-    autotag = { 
+    autotag = {
       enable = true,
-      filetypes = { "html" , "xml" },
+      filetypes = { "html", "xml" },
     },
   })
 end

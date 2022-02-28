@@ -332,7 +332,6 @@ lang["folke/lua-dev.nvim"] = {
   config = conf.lua_dev,
 }
 
-
 lang["nanotee/luv-vimdocs"] = {
   opt = true,
 }
