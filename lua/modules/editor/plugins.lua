@@ -85,12 +85,12 @@ editor["ggandor/lightspeed.nvim"] = {
       { "o", "x", "<Plug>Lightspeed_x" },
       { "o", "X", "<Plug>Lightspeed_X" },
 
-      { "n", "<M-s>", "<Plug>Lightspeed_omni_s" },
-      { "n", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-      { "x", "<M-s>", "<Plug>Lightspeed_omni_s" },
-      { "x", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-      { "o", "<M-s>", "<Plug>Lightspeed_omni_s" },
-      { "o", "<M-S>", "<Plug>Lightspeed_omni_gs" },
+      { "n", "Ds", "<Plug>Lightspeed_omni_s" },
+      { "n", "DS", "<Plug>Lightspeed_omni_gs" },
+      { "x", "Ds", "<Plug>Lightspeed_omni_s" },
+      { "x", "DS", "<Plug>Lightspeed_omni_gs" },
+      { "o", "Ds", "<Plug>Lightspeed_omni_s" },
+      { "o", "DS", "<Plug>Lightspeed_omni_gs" },
 
       { "n", "gs", "<Plug>Lightspeed_gs" },
       { "n", "gS", "<Plug>Lightspeed_gS" },
@@ -117,9 +117,6 @@ editor["ggandor/lightspeed.nvim"] = {
       vim.keymap.set(m[1], m[2], m[3], { silent = true })
     end
   end,
-
-  -- event = "BufReadPost",
-  -- opt = true,
   config = conf.lightspeed,
 }
 
