@@ -24,7 +24,7 @@ editor["ZhiyuanLck/smart-pairs"] = {
   config = function()
     require("pairs"):setup({
       enter = {
-        enable_mapping = false,
+        -- enable_mapping = false,
       },
     })
   end,
@@ -49,6 +49,12 @@ editor["kana/vim-niceblock"] = {
 --     vim.g.matchup_matchparen_offscreen = {method = 'popup'}
 --     vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
 --   end
+-- }
+
+-- editor["ggandor/lightspeed.nvim"] = {
+--   event = "BufReadPost",
+--   opt = true,
+--   config = conf.lightspeed,
 -- }
 
 editor["ggandor/lightspeed.nvim"] = {
@@ -332,7 +338,7 @@ editor["jbyuki/venn.nvim"] = {
 }
 
 -- fix terminal color
-editor["norcalli/nvim-terminal.lua"] = {
+editor["0xAdk/nvim-terminal.lua"] = {
   opt = true,
   ft = { "log", "terminal" },
   config = function()

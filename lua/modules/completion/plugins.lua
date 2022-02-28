@@ -88,6 +88,9 @@ completion["https://github.com/github/copilot.vim.git"] = {
     end
 
     vim.g["copilot_filetypes"] = copilot_filetypes
+
+    vim.keymap.set("i", "<M-.>", "<Plug>(copilot-next)")
+    vim.keymap.set("i", "<M-,>", "<Plug>(copilot-previous)")
   end,
 }
 

@@ -22,6 +22,7 @@ lang["nathom/filetype.nvim"] = {
 
 lang["nvim-treesitter/nvim-treesitter"] = {
   opt = true,
+  run = ":TSUpdate",
   config = conf.nvim_treesitter,
 }
 
@@ -248,7 +249,19 @@ lang["michaelb/sniprun"] = {
 }
 
 lang["dccsillag/magma-nvim"] = {
+  cmd = {
+    "PyRepl",
+    "MagmaEvaluateOperator",
+    "MagmaEvaluateLine",
+    "<C-u>MagmaEvaluateVisual",
+    "MagmaReevaluateCell",
+    "MagmaDelete",
+    "MagmaShowOutput",
+  },
+
+  ft = "python",
   opt = true,
+  runs = "UpdateRemotePlugins",
   requires = "rcarriga/nvim-notify",
   run = ":UpdateRemotePlugins",
   config = conf.magma,
@@ -317,6 +330,13 @@ lang["folke/lua-dev.nvim"] = {
   -- opt = true,
   ft = { "lua" },
   config = conf.lua_dev,
+}
+
+lang["shift-d/scratch.nvim"] = {
+  cmd = { "ScratchNew", "ScratchEval" },
+  opt = true,
+  require = "telescope.nvim",
+  ft = { "lua", "python" },
 }
 
 lang["nanotee/luv-vimdocs"] = {
