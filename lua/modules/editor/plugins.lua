@@ -133,7 +133,6 @@ editor["max397574/which-key.nvim"] = {
   end,
 }
 
-
 editor["Mephistophiles/surround.nvim"] = {
   keys = { "<F3>" },
   config = function()
@@ -172,7 +171,6 @@ editor["booperlv/nvim-gomove"] = {
   opt = true,
   config = conf.gomove,
 }
-
 
 editor["mg979/vim-visual-multi"] = {
   keys = {

@@ -274,7 +274,6 @@ function config.nvim_cmp()
     experimental = { ghost_text = true, native_menu = false },
   })
 
-
   -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
   if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then
     require("cmp").setup.buffer({ completion = { enable = false } })
