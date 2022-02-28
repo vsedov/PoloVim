@@ -2,15 +2,19 @@ local vim = vim
 
 local autocmd = {}
 
-function autocmd.nvim_create_augroups(definitions)
-  for group_name, definition in pairs(definitions) do
-    vim.api.nvim_command("augroup " .. group_name)
-    vim.api.nvim_command("autocmd!")
+function autocmd.nvim_create_augroups(defs)
+  for group_name, definition in pairs(defs) do
+    vim.api.nvim_create_augroup({ name = group_name, clear = true })
     for _, def in ipairs(definition) do
-      local command = table.concat(vim.tbl_flatten({ "autocmd", def }), " ")
-      vim.api.nvim_command(command)
+      arg = {
+        event = def[1],
+        pattern = def[2],
+        command = def[3],
+        group = group_name,
+        nested = def[4],
+      }
+      vim.api.nvim_create_autocmd(arg)
     end
-    vim.api.nvim_command("augroup END")
   end
 end
 
@@ -19,8 +23,9 @@ function autocmd.load_autocmds()
   local definitions = {
     bufs = {
       { "BufWritePost", "*.json", ":silent :JqxList" },
+      { "BufWritePost", "*.sum,", ":silent :GoModTidy" },
+      { "BufWritePost", "*.mod", ":silent :GoModTidy" },
 
-      { "BufWritePost", "*.sum, *.mod", ":silent :GoModTidy" },
       {
         "TextYankPost",
         "*",

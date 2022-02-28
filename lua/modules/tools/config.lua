@@ -376,6 +376,7 @@ end
 function config.bqf()
   require("bqf").setup({
     auto_enable = true,
+    auto_resize_height = true,
     preview = {
       win_height = 12,
       win_vheight = 12,
