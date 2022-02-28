@@ -393,8 +393,6 @@ editor["nvim-neorg/neorg"] = {
   end,
 }
 
--- editor["psf/black"] = { ft = "python" }
-
 editor["famiu/bufdelete.nvim"] = {
   opt = true,
   cmd = { "Bdelete", "Bwipeout" },
