@@ -211,14 +211,6 @@ function config.nvim_cmp()
       -- ["<C-e>"] = cmp.mapping.close(),
       ["<C-e>"] = cmp.mapping.abort(),
       ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-      ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
-
-      ["<CR>"] = cmp.mapping(function(fallback)
-        if not cmp.confirm({ select = false }) then
-          require("pairs.enter").type()
-        end
-      end),
-
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
@@ -281,14 +273,7 @@ function config.nvim_cmp()
 
     experimental = { ghost_text = true, native_menu = false },
   })
-  -- cmp.event:on("confirm_done", function(event)
-  --   local item = event.entry:get_completion_item()
-  --   local parensDisabled = item.data and item.data.funcParensDisabled or false
-  --   if not parensDisabled and (item.kind == kind.Method or item.kind == kind.Function) then
-  --     print("pairs are now active")
-  --     require("pairs.bracket").type_left("(")
-  --   end
-  -- end)
+
 
   -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
   if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then

@@ -19,16 +19,9 @@ editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 --   opt = true,
 -- }
 editor["ZhiyuanLck/smart-pairs"] = {
-  event = "InsertEnter",
-  opt = true,
   config = function()
-    require("pairs"):setup({
-      enter = {
-        -- enable_mapping = false,
-      },
-    })
+    require("pairs"):setup({})
   end,
-  after = { "nvim-cmp" },
 }
 
 editor["kana/vim-niceblock"] = {
@@ -140,15 +133,6 @@ editor["max397574/which-key.nvim"] = {
   end,
 }
 
--- -- HOP BROKEN
--- editor["indianboy42/hop-extensions"] = { after = "hop", opt = true }
--- editor["phaazon/hop.nvim"] = {
---   as = "hop",
---   cmd = { "HopWord", "HopWordBC", "HopWordAC", "HopLineStartAC", "HopLineStartBC", "HopeLine" },
---   config = function()
---     require("hop").setup({ keys = "adghklqwertyuiopzxcvbnmfjADHKLWERTYUIOPZXCVBNMFJ1234567890" })
---   end,
--- }
 
 editor["Mephistophiles/surround.nvim"] = {
   keys = { "<F3>" },
@@ -189,11 +173,6 @@ editor["booperlv/nvim-gomove"] = {
   config = conf.gomove,
 }
 
--- editor["kevinhwang91/nvim-hlslens"] = {
---   -- keys = {"/", "?", '*', '#'}, --'n', 'N', '*', '#', 'g'
---   -- opt = true,
---   -- config = conf.hlslens
--- }
 
 editor["mg979/vim-visual-multi"] = {
   keys = {
