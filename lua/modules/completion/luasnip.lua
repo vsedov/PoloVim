@@ -271,6 +271,10 @@ ls.snippets = {
     ls.parser.parse_snippet("mf", "-- Defined in $TM_FILE\nlocal $1.$2 = function($3)\n\t$0\nend"),
     s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
   },
+  norg = {
+    ls.parser.parse_snippet("ses", " ** Session $1 [$2]($3->$0)"),
+    ls.parser.parse_snippet("sval", "- [ ] $1 $2 [$3]($4->$0)"),
+  },
   -- julia = require('user.snippets.julia').snippets,
 }
 ls.autosnippets = {
