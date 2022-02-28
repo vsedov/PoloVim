@@ -51,7 +51,6 @@ editor["kana/vim-niceblock"] = {
 --   end
 -- }
 
-
 editor["ggandor/lightspeed.nvim"] = {
   -- as = "lightspeed",
   -- commit = "4d8359a30b26ee5316d0e7c79af08b10cb17a57b",
@@ -117,7 +116,6 @@ editor["ggandor/lightspeed.nvim"] = {
   -- opt = true,
   config = conf.lightspeed,
 }
-
 
 editor["rlane/pounce.nvim"] = {
   cmd = { "Pounce" },
