@@ -89,22 +89,36 @@ require("neorg").setup({
         neorg_leader = "<Leader>o",
       },
     },
-    ["core.norg.dirman"] = {
+    ["core.norg.dirman"] = { -- Manage your directories with Neorg
       config = {
         workspaces = {
-          example_ws = "~/example_workspaces/gtd/",
-          gtd = "~/gtd",
-          notes = "~notes",
+          home = "~/neorg",
+          personal = "~/neorg/personal",
+          work = "~/neorg/work",
+          notes = "~/neorg/notes",
+          recipes = "~/neorg/notes/recipes",
+          prolog = "~/neorg/notes/prolog",
+          example_gtd = "~/example_workspaces/gtd",
         },
+        index = "index.norg",
+        --[[ autodetect = true,
+          autochdir = false, ]]
       },
     },
+
     ["core.gtd.base"] = {
       config = {
-        workspace = "gtd",
-        -- workspace = "example_ws",
-        -- exclude = { "" },
+        -- workspace =   "example_gtd" , -- assign the workspace,
+        workspace = "home",
+        exclude = { "notes/","journal" }, -- Optional: all excluded files from the workspace are not part of the gtd workflow
+        projects = {
+          show_completed_projects = false,
+          show_projects_without_tasks = false,
+        },
+        custom_tag_completion = true,
       },
     },
+
     ["core.norg.qol.toc"] = {
       config = {
         close_split_on_jump = false,
@@ -113,7 +127,7 @@ require("neorg").setup({
     },
     ["core.norg.journal"] = {
       config = {
-        journal_folder = "my_journal",
+        journal_folder = "journal",
         use_folders = false,
       },
     },
