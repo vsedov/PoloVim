@@ -19,7 +19,6 @@ editor["windwp/nvim-autopairs"] = {
   opt = true,
 }
 
-
 -- editor["ZhiyuanLck/smart-pairs"] = {
 --   event = "InsertEnter",
 --   opt = true,
