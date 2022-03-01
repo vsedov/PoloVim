@@ -305,18 +305,6 @@ function config.nvim_cmp()
         "i",
         "s",
       }),
-
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif require("neogen").jumpable(true) then
-          require("neogen").jump_prev()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
     },
 
     -- You should specify your *installed* sources.
