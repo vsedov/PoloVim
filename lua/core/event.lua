@@ -3,16 +3,16 @@ local autocmd = {}
 
 function autocmd.nvim_create_augroups(defs)
   for group_name, definition in pairs(defs) do
-    vim.api.nvim_create_augroup({ name = group_name, clear = true })
+    vim.api.nvim_create_augroup(group_name, { clear = true })
     for _, def in ipairs(definition) do
+      event = def[1]
       arg = {
-        event = def[1],
+        group = group_name,
         pattern = def[2],
         command = def[3],
-        group = group_name,
         nested = def[4],
       }
-      vim.api.nvim_create_autocmd(arg)
+      vim.api.nvim_create_autocmd(event, arg)
     end
   end
 end
