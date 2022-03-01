@@ -131,6 +131,7 @@ completion["Iron-E/nvim-cmp"] = {
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
   event = "InsertEnter",
+  module = "luasnip",
   requires = {
     { "rafamadriz/friendly-snippets", event = "InsertEnter" },
     { "molleweide/LuaSnip-snippets.nvim", event = "InsertEnter" },
