@@ -50,6 +50,7 @@ lang["danymat/neogen"] = {
   requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
   config = function()
     require("neogen").setup({
+      snippet_engine = "luasnip", 
       languages = {
         lua = {
           template = { annotation_convention = "emmylua" },
