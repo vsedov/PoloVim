@@ -321,8 +321,14 @@ function config.nvim_cmp()
     require("cmp").setup.buffer({ completion = { enable = false } })
   end
 
-  vim.cmd("autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }")
-  vim.cmd("autocmd FileType clap_input lua require('cmp').setup.buffer { enabled = false }")
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "TelescopePrompt", "clap_input" },
+    callback = function()
+      require("cmp").setup.buffer({ enabled = false })
+    end,
+    once = false,
+  })
+
   -- if vim.o.ft ~= 'sql' then
   --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
   -- end
