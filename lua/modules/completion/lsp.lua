@@ -128,10 +128,12 @@ local codes = {
     "lowercase-global",
   },
 }
--- vim.diagnostic.config({
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = false,
+})
+
+vim.diagnostic.config({
   severity_sort = true,
   signs = true,
   underline = true,
@@ -208,12 +210,15 @@ vim.diagnostic.open_float = (function(orig)
   end
 end)(vim.diagnostic.open_float)
 
-vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
+-- vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
 
+vim.api.nvim_set_hl(0, 'DiagnosticHeader', { fg = "#56b6c2", bold = true })
 vim.api.nvim_create_autocmd("CursorHold", {
   pattern = "*",
   command = "lua vim.diagnostic.open_float()",
 })
+
+
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
