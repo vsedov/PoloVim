@@ -16,13 +16,6 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
   end,
 }
 
--- tools["camspiers/snap"] = {
---   -- event = {'CursorMoved', 'CursorMovedI'},
---   -- rocks = {'fzy'},
---   opt = true,
---   config = conf.snap,
--- }
-
 tools["editorconfig/editorconfig-vim"] = {
   opt = true,
   cmd = { "EditorConfigReload" },

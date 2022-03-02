@@ -426,59 +426,6 @@ function config.luadev()
   vim.cmd([[vmap <leader><leader>lr <Plug>(Luadev-Run)]])
 end
 
-function config.lua_dev()
-  -- local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
-  -- local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
-  local runtime_path = vim.split(package.path, ";")
-  table.insert(runtime_path, "lua/?.lua")
-  table.insert(runtime_path, "lua/?/init.lua")
-
-  local sumneko_lua_server = {
-    -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-    cmd = { "lua-language-server" },
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-      Lua = {
-        runtime = {
-          runtime = {
-            path = runtime_path,
-          },
-          diagnostics = {
-            globals = { "vim", "dump", "hs", "lvim" },
-          },
-          workspace = {
-            library = {
-              -- vim.api.nvim_get_runtime_file("", true),
-              -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
-              -- vim.api.nvim_get_runtime_file("", false),
-              -- [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
-              -- [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = false,
-              [vim.fn.expand("$VIMRUNTIME/lua")] = false,
-            },
-            maxPreload = 100000,
-            preloadFileSize = 1000,
-          },
-        },
-      },
-    },
-  }
-
-  local lspconfig = require("lspconfig")
-  local luadev = require("lua-dev").setup({
-    library = {
-      vimruntime = true,
-      types = true,
-      -- makes everything lag
-      plugins = false, -- toggle this to get completion for require of all plugins
-      -- plugins = {nvim-notify, telescope}
-    },
-    lspconfig = sumneko_lua_server,
-  })
-
-  lspconfig.sumneko_lua.setup(luadev)
-end
-
 function config.go()
   require("go").setup({
     verbose = plugin_debug(),

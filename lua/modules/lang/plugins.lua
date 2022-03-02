@@ -327,12 +327,6 @@ lang["Tastyep/structlog.nvim"] = {
   end,
 }
 
-lang["folke/lua-dev.nvim"] = {
-  -- opt = true,
-  ft = { "lua" },
-  config = conf.lua_dev,
-}
-
 lang["nanotee/luv-vimdocs"] = {
   opt = true,
 }
