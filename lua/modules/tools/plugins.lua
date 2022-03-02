@@ -82,6 +82,11 @@ tools["pwntester/octo.nvim"] = {
     require("octo").setup()
   end,
 }
+tools["jghauser/mkdir.nvim"] = {
+  opt = true,
+  event = "CmdlineEnter",
+  config = [[require'mkdir']],
+}
 
 -- tools["wellle/targets.vim"] = {}
 tools["TimUntersberger/neogit"] = {
