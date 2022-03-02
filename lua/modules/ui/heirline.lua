@@ -92,8 +92,8 @@ function M.setup()
     },
     git = {
       -- del = utils.get_highlight("diffDeleted").fg,
-      -- add = utils.get_highlight("diffAdded").fg,
-      -- change = utils.get_highlight("diffChanged").fg,
+      -- add = utils.get_highlight("diff_added").fg,
+      -- change = utils.get_highlight("diff_changed").fg,
     },
   }
 
@@ -321,6 +321,7 @@ function M.setup()
   }
 
   local LSPActive = {
+
     condition = conditions.lsp_attached,
     -- Or complicate things a bit and get the servers names
     provider = function(self)
@@ -357,10 +358,10 @@ function M.setup()
       self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
     end,
 
-    -- {
-    --     provider = "!(",
-    --     hl = { fg = colors.gray, style = "bold" },
-    -- },
+    {
+      provider = "!(",
+      hl = { fg = colors.gray, style = "bold" },
+    },
     {
       provider = function(self)
         return self.errors > 0 and (self.error_icon .. self.errors .. " ")
@@ -385,10 +386,11 @@ function M.setup()
       end,
       hl = { fg = colors.diag.hint },
     },
-    -- {
-    --     provider = ")",
-    --     hl = { fg = colors.gray, style = "bold" },
-    -- },
+    ---  I have no clue what this does, but try it out never the less to see
+    {
+      provider = ")",
+      hl = { fg = colors.gray, style = "bold" },
+    },
   }
 
   -- DiagBlock = utils.surround({"![", "]"}, nil, DiagBlock)
@@ -460,6 +462,7 @@ function M.setup()
 
   local UltTest = {
     condition = function()
+      -- Check if ultest does exist or not
       if packer_plugins["vim-ultest"].loaded then
         return vim.api.nvim_call_function("ultest#is_test_file", {}) ~= 0
       end
