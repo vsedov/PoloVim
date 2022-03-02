@@ -15,7 +15,12 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
     }
   end,
 }
-
+tools["j-hui/fidget.nvim"] = {
+  ft = { "python", "lua", "c" },
+  config = function()
+    require("fidget").setup({})
+  end,
+}
 tools["editorconfig/editorconfig-vim"] = {
   opt = true,
   cmd = { "EditorConfigReload" },
