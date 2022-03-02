@@ -114,7 +114,12 @@ return {
     end
 
     if exist("clang-format") then
-      table.insert(sources, null_ls.builtins.formatting.clang_format)
+      table.insert(
+        sources,
+        null_ls.builtins.formatting.clang_format.with({
+          extra_args = { "-style=file" },
+        })
+      )
     end
 
     if exist("cppcheck") then
