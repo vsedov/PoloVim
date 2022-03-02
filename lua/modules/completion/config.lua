@@ -123,6 +123,7 @@ function config.nvim_cmp()
     { name = "luasnip" },
     { name = "treesitter", keyword_length = 2 },
     { name = "look", keyword_length = 4 },
+    { name = "neorg", priority = 6 },
     -- { name = "nvim_lsp_signature_help", priority = 10 },
     -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
@@ -132,12 +133,6 @@ function config.nvim_cmp()
   end
   if vim.o.ft == "python" then
     table.insert(sources, { name = "cmp_tabnine" })
-  end
-  if vim.o.ft == "norg" then
-    table.insert(sources, { name = "neorg" })
-    table.insert(sources, { name = "spell" })
-    table.insert(sources, { name = "look" })
-    table.insert(sources, { name = "latex_symbols" })
   end
 
   if vim.o.ft == "markdown" then
@@ -398,6 +393,19 @@ function config.nvim_cmp()
       },
     },
   })
+  local neorg = require("neorg")
+
+  local function load_completion()
+    neorg.modules.load_module("core.norg.completion", nil, {
+      engine = "nvim-cmp",
+    })
+  end
+
+  if neorg.is_loaded() then
+    load_completion()
+  else
+    neorg.callbacks.on_event("core.started", load_completion)
+  end
 
   vim.cmd([[hi NormalFloat guibg=none]])
 end

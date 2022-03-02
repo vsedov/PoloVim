@@ -8,13 +8,13 @@ completion["neovim/nvim-lspconfig"] = {
 
   requires = {
     { "nvim-lua/lsp_extensions.nvim", opt = true },
-    { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
-    -- {'nathunsmitty/nvim-ale-diagnostic's,opt=true}
+    { "folke/lua-dev.nvim", module = "lua-dev" },
   },
 
   opt = true,
 }
+
 completion["tami5/lspsaga.nvim"] = {
   cmd = "lspsaga",
   module = "lspsaga",
@@ -97,8 +97,8 @@ completion["https://github.com/github/copilot.vim.git"] = {
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th
 -- Iron-E
-completion["Iron-E/nvim-cmp"] = {
-  branch = "feat/completion-menu-borders",
+completion["hrsh7th/nvim-cmp"] = {
+  branch = "dev",
   -- opt = true,
   event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
   -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},

@@ -20,7 +20,7 @@ end
 function autocmd.load_autocmds()
   local definitions = {
     packer = {
-      { "BufWritePost", "*.lua", "lua require('core.pack').auto_compile()" },
+      { "BufWritePost", "plugins.lua", "lua require('core.pack').auto_compile()" },
     },
     bufs = {
       { { "BufRead", "BufNewFile" }, "*.norg", "setlocal filetype=norg" },
