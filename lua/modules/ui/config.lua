@@ -10,6 +10,7 @@ function config.windline()
   -- require('wlfloatline').toggle()
 end
 
+
 local function daylight()
   local h = tonumber(os.date("%H"))
   if h > 6 and h < 18 then
