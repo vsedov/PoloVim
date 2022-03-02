@@ -8,7 +8,6 @@ completion["neovim/nvim-lspconfig"] = {
 
   requires = {
     { "nvim-lua/lsp_extensions.nvim", opt = true },
-    { "folke/lsp-colors.nvim", opt = true },
     { "williamboman/nvim-lsp-installer", opt = true },
     { "folke/lua-dev.nvim", module = "lua-dev" },
   },
