@@ -14,12 +14,6 @@ if not packer_plugins["nvim-lsp-installer"].loaded then
   vim.cmd([[packadd nvim-lsp-installer]])
 end
 
-if not packer_plugins["lsp-colors.nvim"].loaded then
-  vim.cmd([[packadd lsp-colors.nvim]])
-end
-
-require("lsp-colors").setup({})
-
 local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
 
 for type, icon in pairs(signs) do
@@ -134,6 +128,60 @@ local codes = {
     "lowercase-global",
   },
 }
+-- vim.diagnostic.config({
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  virtual_text = false,
+  severity_sort = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  float = {
+    focusable = false,
+    scope = "cursor",
+    format = function(diagnostic)
+      local diag = vim.deepcopy(diagnostic)
+      print("diagnostic:")
+      dump(diagnostic)
+
+      if not util.isempty(diagnostic.user_data) then
+        local code = diagnostic.user_data.lsp.code
+
+        for _, table in pairs(codes) do
+          if vim.tbl_contains(table, code) then
+            return table.message
+          end
+        end
+      end
+
+      if diagnostic.code then
+        diag.message = string.format("%s [%s]", diag.message, diag.code):gsub("1. ", "")
+      end
+
+      return diag.message
+    end,
+
+    header = " Diagnostic",
+    pos = 1,
+    prefix = function(diagnostic, i, total)
+      local icon, highlight
+      if diagnostic.severity == 1 then
+        icon = ""
+        highlight = "DiagnosticError"
+      elseif diagnostic.severity == 2 then
+        icon = ""
+        highlight = "DiagnosticWarn"
+      elseif diagnostic.severity == 3 then
+        icon = ""
+        highlight = "DiagnosticInfo"
+      elseif diagnostic.severity == 4 then
+        icon = ""
+        highlight = "DiagnosticHint"
+      end
+      return i .. "/" .. total .. " " .. icon .. "  ", highlight
+    end,
+  },
+})
 
 -- -- -- wrap open_float to inspect diagnostics and use the severity color for border
 -- -- -- https://neovim.discourse.group/t/lsp-diagnostics-how-and-where-to-retrieve-severity-level-to-customise-border-color/1679
@@ -161,15 +209,11 @@ vim.diagnostic.open_float = (function(orig)
 end)(vim.diagnostic.open_float)
 
 vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
-vim.cmd([[au CursorHold  * lua vim.diagnostic.open_float()]])
 
--- Show line diagnostics in floating popup on hover, except insert mode (CursorHoldI)
--- vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float()]])
-
--- show diagnostics for current line
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
--- show diagnostics for current position
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
+vim.api.nvim_create_autocmd("CursorHold", {
+  pattern = "*",
+  command = "lua vim.diagnostic.open_float()",
+})
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
@@ -233,60 +277,6 @@ local enhance_attach = function(client, bufnr)
   -- I dont want any formating on python files.
   client.resolved_capabilities.document_formatting = false
   client.resolved_capabilities.document_range_formatting = false
-  vim.diagnostic.config({
-    virtual_text = false,
-    severity_sort = true,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    float = {
-      focusable = false,
-      scope = "cursor",
-      -- source = true,
-
-      format = function(diagnostic)
-        local diag = vim.deepcopy(diagnostic)
-        print("diagnostic:")
-        dump(diagnostic)
-
-        if not util.isempty(diagnostic.user_data) then
-          local code = diagnostic.user_data.lsp.code
-
-          for _, table in pairs(codes) do
-            if vim.tbl_contains(table, code) then
-              return table.message
-            end
-          end
-        end
-
-        if diagnostic.code then
-          diag.message = string.format("%s [%s]", diag.message, diag.code):gsub("1. ", "")
-        end
-
-        return diag.message
-      end,
-
-      header = " Diagnostic",
-      pos = 1,
-      prefix = function(diagnostic, i, total)
-        local icon, highlight
-        if diagnostic.severity == 1 then
-          icon = ""
-          highlight = "DiagnosticError"
-        elseif diagnostic.severity == 2 then
-          icon = ""
-          highlight = "DiagnosticWarn"
-        elseif diagnostic.severity == 3 then
-          icon = ""
-          highlight = "DiagnosticInfo"
-        elseif diagnostic.severity == 4 then
-          icon = ""
-          highlight = "DiagnosticHint"
-        end
-        return i .. "/" .. total .. " " .. icon .. "  ", highlight
-      end,
-    },
-  })
 end
 
 lspconfig.gopls.setup({
@@ -393,7 +383,7 @@ lspconfig.vimls.setup({
 
 -- local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
 -- local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
-local runtime_path = vim.split(package.path, ";")
+local runtime_path = {}
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
