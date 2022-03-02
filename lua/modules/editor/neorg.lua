@@ -110,7 +110,7 @@ require("neorg").setup({
       config = {
         -- workspace =   "example_gtd" , -- assign the workspace,
         workspace = "home",
-        exclude = { "notes/","journal" }, -- Optional: all excluded files from the workspace are not part of the gtd workflow
+        exclude = { "notes/", "journal" }, -- Optional: all excluded files from the workspace are not part of the gtd workflow
         projects = {
           show_completed_projects = false,
           show_projects_without_tasks = false,
