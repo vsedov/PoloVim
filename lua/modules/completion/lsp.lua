@@ -366,15 +366,6 @@ lspconfig.rust_analyzer.setup({
   on_attach = enhance_attach,
 })
 
--- use jdtls
--- lspconfig.jdtls.setup({
---   cmd = { "jdtls" },
---   filetypes = { "java" },
---   on_attach = enhance_attach,
---   capabilities = capabilities,
--- })
--- lspconfig.jdtls.setup({ cmd = { "jdtls" } })
-
 lspconfig.vimls.setup({
   on_attach = enhance_attach,
   capabilities = capabilities,
