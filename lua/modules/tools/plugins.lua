@@ -15,14 +15,12 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
     }
   end,
 }
-
--- tools["camspiers/snap"] = {
---   -- event = {'CursorMoved', 'CursorMovedI'},
---   -- rocks = {'fzy'},
---   opt = true,
---   config = conf.snap,
--- }
-
+tools["j-hui/fidget.nvim"] = {
+  ft = { "python", "lua", "c" },
+  config = function()
+    require("fidget").setup({})
+  end,
+}
 tools["editorconfig/editorconfig-vim"] = {
   opt = true,
   cmd = { "EditorConfigReload" },
@@ -81,6 +79,11 @@ tools["pwntester/octo.nvim"] = {
   config = function()
     require("octo").setup()
   end,
+}
+tools["jghauser/mkdir.nvim"] = {
+  opt = true,
+  event = "CmdlineEnter",
+  config = [[require'mkdir']],
 }
 
 -- tools["wellle/targets.vim"] = {}

@@ -255,10 +255,8 @@ function! s:CloseBracket()
         return "{\<Enter>}\<Esc>O"
     endif
 endfunction
-inoremap <expr> {<Enter> <SID>CloseBracket()
-
+" inoremap <expr> {<Enter> <SID>CloseBracket()
 " forma json" also :%!python3 -m json.tool
-
 
 """""""""""""""""""""""maximizer""""""""""""""""""""""""""""
 fun! s:maximize()

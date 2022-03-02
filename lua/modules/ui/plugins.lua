@@ -8,10 +8,14 @@ end
 
 ui["kyazdani42/nvim-web-devicons"] = {}
 
-ui["windwp/windline.nvim"] = {
-  -- event = "UIEntwindlineer",
-  config = conf.windline,
-  -- requires = {'kyazdani42/nvim-web-devicons'},
+-- ui["windwp/windline.nvim"] = {
+--   -- event = "UIEntwindlineer",
+--   config = conf.windline,
+--   -- requires = {'kyazdani42/nvim-web-devicons'},
+--   opt = true,
+-- }
+
+ui["rebelot/heirline.nvim"] = {
   opt = true,
 }
 

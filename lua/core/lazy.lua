@@ -85,7 +85,7 @@ function Lazyload()
 
   -- only works if you are working from one python file .
   if vim.bo.filetype == "lua" then
-    loader("lua-dev.nvim")
+    -- loader("lua-dev.nvim")
     loader("luv-vimdocs")
     loader("nvim-luaref")
     loader("structlog.nvim") -- logging
@@ -164,9 +164,11 @@ vim.cmd([[hi LineNr guifg=#505068]])
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-  loader("windline.nvim")
-  require("modules.ui.eviline")
-  require("wlfloatline").setup()
+  -- loader("windline.nvim")
+  -- require("modules.ui.eviline")
+  -- require("wlfloatline").setup()
+  loader("heirline.nvim")
+  require("modules.ui.heirline")
 
   require("vscripts.cursorhold")
   require("vscripts.tools")

@@ -50,6 +50,7 @@ lang["danymat/neogen"] = {
   requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
   config = function()
     require("neogen").setup({
+      snippet_engine = "luasnip",
       languages = {
         lua = {
           template = { annotation_convention = "emmylua" },
@@ -324,19 +325,6 @@ lang["Tastyep/structlog.nvim"] = {
   config = function()
     require("utils.Log")
   end,
-}
-
-lang["folke/lua-dev.nvim"] = {
-  -- opt = true,
-  ft = { "lua" },
-  config = conf.lua_dev,
-}
-
-lang["shift-d/scratch.nvim"] = {
-  cmd = { "ScratchNew", "ScratchEval" },
-  opt = true,
-  require = "telescope.nvim",
-  ft = { "lua", "python" },
 }
 
 lang["nanotee/luv-vimdocs"] = {

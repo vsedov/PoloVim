@@ -83,7 +83,12 @@ function options:load_options()
   vim.cmd('vmap <LeftRelease> "*ygv')
   vim.cmd("unlet loaded_matchparen")
   vim.g.python_host_prog = "/usr/bin/python2"
-  vim.g.python3_host_prog = "/usr/bin/python3"
+  -- vim.g.python3_host_prog = "/usr/bin/python3"
+  if vim.fn.exists("$VIRTUAL_ENV") == 1 then
+    vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which -a python3 | head -n2 | tail -n1"), "\n", "", "g")
+  else
+    vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
+  end
 end
 
 options:load_options()

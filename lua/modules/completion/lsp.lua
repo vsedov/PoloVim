@@ -14,12 +14,6 @@ if not packer_plugins["nvim-lsp-installer"].loaded then
   vim.cmd([[packadd nvim-lsp-installer]])
 end
 
-if not packer_plugins["lsp-colors.nvim"].loaded then
-  vim.cmd([[packadd lsp-colors.nvim]])
-end
-
-require("lsp-colors").setup({})
-
 local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
 
 for type, icon in pairs(signs) do
@@ -135,8 +129,11 @@ local codes = {
   },
 }
 
-vim.diagnostic.config({
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = false,
+})
+
+vim.diagnostic.config({
   severity_sort = true,
   signs = true,
   underline = true,
@@ -144,8 +141,6 @@ vim.diagnostic.config({
   float = {
     focusable = false,
     scope = "cursor",
-    -- source = true,
-
     format = function(diagnostic)
       local diag = vim.deepcopy(diagnostic)
       print("diagnostic:")
@@ -215,16 +210,13 @@ vim.diagnostic.open_float = (function(orig)
   end
 end)(vim.diagnostic.open_float)
 
-vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
-vim.cmd([[au CursorHold  * lua vim.diagnostic.open_float()]])
+-- vim.cmd([[hi DiagnosticHeader gui=bold,italic guifg=#56b6c2]])
 
--- Show line diagnostics in floating popup on hover, except insert mode (CursorHoldI)
--- vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float()]])
-
--- show diagnostics for current line
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {})]])
--- show diagnostics for current position
--- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {scope="cursor"})]])
+vim.api.nvim_set_hl(0, "DiagnosticHeader", { fg = "#56b6c2", bold = true })
+vim.api.nvim_create_autocmd("CursorHold", {
+  pattern = "*",
+  command = "lua vim.diagnostic.open_float()",
+})
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
@@ -330,56 +322,12 @@ lspconfig.clangd.setup({
   capabilities = capabilities,
 })
 
--- lspconfig.pyright.setup({
---   cmd = { "pyright-langserver", "--stdio" },
---   filetypes = { "python" },
---     on_attach = enhance_attach,
---   capabilities = capabilities,
-
---   settings = {
---     python = {
---       analysis = {
---         diagnosticMode = "openFilesOnly",
---         typeCheckingMode = "basic",
---         --[[ diagnosticSeverityOverrides = {
---           reportGeneralTypeIssues = "warning",
---           reportMissingTypeStubs = "information",
---           reportUnboundVariable = "warning",
---           reportUndefinedVariable = "error",
---           reportUnknownMemberType = "information",
---           reportUnknownVariableType = "information",
---           reportUntypedClassDecorator = "none",
---           reportUntypedFunctionDecorator = "none",
---           reportFunctionMemberAccess = "warning",
---           reportUnknownArgumentType = "warning",
---           reportUnknownParameterType = "warning",
---           reportUnknownLambdaType = "warning",
---           reportUnusedImport = "information",
---           reportUnusedFunction = "information",
---           reportUnusedVariable = "information",
---           reportUnusedClass = "information",
---           strictParameterNoneValue = false,
---           reportOptionalSubscript = "warning",
---           reportOptionalMemberAccess = "warning",
---           reportOptionalIterable = "warning",
---         }, ]]
---       },
---     },
---   },
--- })
 lspconfig.jedi_language_server.setup({
   cmd = { "jedi-language-server" },
   filetypes = { "python" },
   on_attach = enhance_attach,
   capabilities = capabilities,
 })
-
--- Need to setup watchman if you want to use this - have to use venv
--- https://pyre-check.org/docs/getting-started/
--- lspconfig.pyre.setup({
---   cmd = { "pyre","persistent"},
---   filetypes = { "python" },
--- })
 
 lspconfig.sqls.setup({
   filetypes = { "sql", "mysql" },
@@ -410,15 +358,6 @@ lspconfig.rust_analyzer.setup({
   on_attach = enhance_attach,
 })
 
--- use jdtls
--- lspconfig.jdtls.setup({
---   cmd = { "jdtls" },
---   filetypes = { "java" },
---   on_attach = enhance_attach,
---   capabilities = capabilities,
--- })
--- lspconfig.jdtls.setup({ cmd = { "jdtls" } })
-
 lspconfig.vimls.setup({
   on_attach = enhance_attach,
   capabilities = capabilities,
@@ -444,6 +383,54 @@ lspconfig.vimls.setup({
     vimruntime = "",
   },
 })
+
+-- local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
+-- local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
+local runtime_path = {}
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
+local sumneko_lua_server = {
+  -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+  cmd = { "lua-language-server" },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        runtime = {
+          path = runtime_path,
+        },
+        diagnostics = {
+          globals = { "vim", "dump", "hs", "lvim" },
+        },
+        workspace = {
+          library = {
+            -- vim.api.nvim_get_runtime_file("", true),
+            -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
+            -- vim.api.nvim_get_runtime_file("", false),
+            -- [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
+            -- [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = false,
+            [vim.fn.expand("$VIMRUNTIME/lua")] = false,
+          },
+        },
+      },
+    },
+  },
+}
+
+local luadev = require("lua-dev").setup({
+  library = {
+    vimruntime = true,
+    types = true,
+    -- makes everything lag
+    plugins = false, -- toggle this to get completion for require of all plugins
+    -- plugins = {nvim-notify, telescope}
+  },
+  lspconfig = sumneko_lua_server,
+})
+
+lspconfig.sumneko_lua.setup(luadev)
 
 require("nvim-lsp-installer").settings({
   ui = {
@@ -475,40 +462,3 @@ lsp_installer.on_server_ready(function(server)
   server:setup(opts)
   -- vim.cmd([[ do User LspAttachBuffers ]])
 end)
-
--- lspconfig.diagnosticls.setup({
---   filetypes = { "python" },
---   init_options = {
---     filetypes = {
---         python = { "flake8" },
---     },
---     linters = {
---         flake8 = {
---             debounce = 10,
---             sourceName = "flake8",
---             command = "flake8",
---             args = {
---                 "--extend-ignore=E",
---                 "--format",
---                 "%(row)d:%(col)d:%(code)s:%(code)s: %(text)s",
---                 "%file",
---             },
---             formatPattern = {
---                 "^(\\d+):(\\d+):(\\w+):(\\w).+: (.*)$",
---                 {
---                     line = 1,
---                     column = 2,
---                     message = { "[", 3, "] ", 5 },
---                     security = 4,
---                 },
---             },
---             securities = {
---                 E = "error",
---                 W = "warning",
---                 F = "info",
---                 B = "hint",
---             },
---         },
---     },
--- },
--- })

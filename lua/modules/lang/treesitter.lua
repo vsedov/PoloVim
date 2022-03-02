@@ -251,11 +251,14 @@ local treesitter_ref = function()
       },
     },
     matchup = {
-      enable = true, -- mandatory, false will disable the whole extension
+      enable = false, -- mandatory, false will disable the whole extension
       disable = { "ruby" }, -- optional, list of language that will be disabled
     },
-    autopairs = { enable = true },
-    autotag = { enable = true },
+    autopairs = { enable = false },
+    autotag = {
+      enable = true,
+      filetypes = { "html", "xml" },
+    },
   })
 end
 
