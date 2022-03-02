@@ -16,7 +16,7 @@ ui["kyazdani42/nvim-web-devicons"] = {}
 -- }
 
 ui["rebelot/heirline.nvim"] = {
-  opt = true, 
+  opt = true,
 }
 
 ui["akinsho/bufferline.nvim"] = {
