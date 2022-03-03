@@ -19,21 +19,17 @@ ui["rebelot/heirline.nvim"] = {
   opt = true,
 }
 
-ui["mvllow/modes.nvim"]={
+ui["mvllow/modes.nvim"] = {
   event = { "BufRead" },
-    config = function()
-      vim.opt.cursorline = true
-      require('modes').setup({
-        line_opacity = 0.8,
-        set_cursor = true,
-        focus_only = true,
-        plugins = {
-          presets = {
-            operators = false,
-          },
-        },
-      })
-    end,
+  before = "which-key.nvim",
+  config = function()
+    vim.opt.cursorline = true
+    require("modes").setup({
+      line_opacity = 0.2,
+      set_cursor = true,
+      focus_only = true,
+    })
+  end,
 }
 
 ui["akinsho/bufferline.nvim"] = {
@@ -51,7 +47,6 @@ ui["rcarriga/nvim-notify"] = {
   requires = "telescope.nvim", -- this might not be needed
   config = conf.notify,
 }
-
 
 ui["kyazdani42/nvim-tree.lua"] = {
   cmd = { "NvimTreeToggle", "NvimTreeOpen" },
