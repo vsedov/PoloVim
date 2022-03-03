@@ -90,14 +90,14 @@ function pbind.nvim_load_mapping(mapping)
       if type(value) == "table" then
         local rhs = value.cmd
         local options = value.options
-        -- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, rhs, options)
-        vim.keymap.set(mode:sub(i, i), keymap, rhs, options)
+        vim.api.nvim_set_keymap(mode:sub(i, i), keymap, rhs, options)
+        -- vim.keymap.set(mode:sub(i, i), keymap, rhs, options)
 
         rhs = vim.trim(rhs, {}, 0)
         table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. rhs)
       elseif type(value) == "string" then
-        -- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, value, {})
-        vim.keymap.set(mode:sub(i, i), keymap, value, {})
+        vim.api.nvim_set_keymap(mode:sub(i, i), keymap, value, {})
+        -- vim.keymap.set(mode:sub(i, i), keymap, value, {})
 
         value = vim.trim(value, {}, 0)
         table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. value)

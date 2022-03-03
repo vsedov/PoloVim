@@ -30,8 +30,6 @@ local t = termcodes
 _G.tab_complete = function()
   if vim.fn.pumvisible() == 1 then
     return t("<C-n>")
-    -- elseif vim.fn.call("vsnip#available", {1}) == 1 then
-    --   return t "<Plug>(vsnip-expand-or-jump)"
   elseif check_back_space() then
     return t("<Tab>")
   elseif prequire("luasnip") and require("luasnip").expand_or_jumpable() then
@@ -40,6 +38,17 @@ _G.tab_complete = function()
     return require("cmp").mapping.select_next_item()
   end
   return t("<Tab>")
+end
+
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t("<C-p>")
+  elseif prequire("luasnip") and prequire("luasnip").jumpable(-1) then
+    return t("<Plug>luasnip-jump-prev")
+  elseif prequire("cmp") and require("cmp").visible() then
+    return require("cmp").mapping.select_prev_item()
+  end
+  return t("<S-Tab>")
 end
 
 _G.toggle_venn = function()
@@ -59,17 +68,6 @@ _G.toggle_venn = function()
     vim.cmd([[mapclear <buffer>]])
     vim.b.venn_enabled = nil
   end
-end
-
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t("<C-p>")
-  elseif prequire("luasnip") and prequire("luasnip").jumpable(-1) then
-    return t("<Plug>luasnip-jump-prev")
-  elseif prequire("cmp") and require("cmp").visible() then
-    return require("cmp").mapping.select_prev_item()
-  end
-  return t("<S-Tab>")
 end
 
 -- _G.enhance_jk_move = function()

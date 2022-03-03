@@ -19,19 +19,6 @@ ui["rebelot/heirline.nvim"] = {
   opt = true,
 }
 
-ui["mvllow/modes.nvim"] = {
-  event = { "BufRead" },
-  before = "which-key.nvim",
-  config = function()
-    vim.opt.cursorline = true
-    require("modes").setup({
-      line_opacity = 0.2,
-      set_cursor = true,
-      focus_only = true,
-    })
-  end,
-}
-
 ui["akinsho/bufferline.nvim"] = {
   config = conf.nvim_bufferline,
   event = "UIEnter",
