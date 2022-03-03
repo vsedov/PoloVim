@@ -58,6 +58,64 @@ editor["kana/vim-niceblock"] = {
 --   config = conf.lightspeed,
 -- }
 
+-- copy paste failed in block mode when clipboard = unnameplus"
+-- editor["bfredl/nvim-miniyank"] = {
+--   keys = { "p", "y", "<C-v>" },
+--   opt = true,
+--   setup = function()
+--     vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
+--     vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
+--   end,
+-- }
+
+editor["gbprod/yanky.nvim"] = {
+  keys = {
+    "<C-v>",
+    "<Plug>(YankyPutAfter)",
+    "<Plug>(YankyPutBefore)",
+    "<Plug>(YankyPutAfter)",
+    "<Plug>(YankyPutBefore)",
+
+    "<Plug>(YankyGPutAfter)",
+    "<Plug>(YankyGPutBefore)",
+    "<Plug>(YankyGPutAfter)",
+    "<Plug>(YankyGPutBefore)",
+
+    "<Plug>(YankyCycleForward)",
+    "<Plug>(YankyCycleBackward)",
+  },
+  setup = function()
+    local default_keymaps = {
+      { "n", "p", "<Plug>(YankyPutAfter)" },
+      { "n", "P", "<Plug>(YankyPutBefore)" },
+
+      { "n", "p", "<Plug>(YankyPutAfter)" },
+      { "n", "P", "<Plug>(YankyPutBefore)" },
+
+      { "n", "<leader>p", "<Plug>(YankyGPutAfter)" },
+      { "n", "<leader>P", "<Plug>(YankyGPutBefore)" },
+
+      { "x", "<leader>p", "<Plug>(YankyGPutAfter)" },
+      { "x", "<leader>P", "<Plug>(YankyGPutBefore)" },
+
+      { "n", "<Leader>n", "<Plug>(YankyCycleForward)" },
+      { "n", "<Leader>N", "<Plug>(YankyCycleBackward)" },
+    }
+    for _, m in ipairs(default_keymaps) do
+      vim.keymap.set(m[1], m[2], m[3], {})
+    end
+  end,
+  config = function()
+    require("yanky").setup({
+      ring = {
+        -- i have a op pc
+        history_length = 30,
+        storage = "shada",
+      },
+    })
+  end,
+}
+
 editor["ggandor/lightspeed.nvim"] = {
   -- as = "lightspeed",
   -- commit = "4d8359a30b26ee5316d0e7c79af08b10cb17a57b",
@@ -321,15 +379,6 @@ editor["LudoPinelli/comment-box.nvim"] = {
   cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },
   opt = true,
   config = conf.comment_box,
-}
--- copy paste failed in block mode when clipboard = unnameplus"
-editor["bfredl/nvim-miniyank"] = {
-  keys = { "p", "y", "<C-v>" },
-  opt = true,
-  setup = function()
-    vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
-    vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
-  end,
 }
 
 editor["dhruvasagar/vim-table-mode"] = { cmd = { "TableModeToggle" } }

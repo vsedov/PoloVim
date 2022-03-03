@@ -43,7 +43,7 @@ function autocmd.load_autocmds()
       { "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
       { "BufWritePre", "*.tmp", "setlocal noundofile" },
       { "BufWritePre", "*.bak", "setlocal noundofile" },
-      -- { "BufEnter", "*", [[silent! lcd %:p:h]] }, -- Not requried atm
+      -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
     },
 
     wins = {
@@ -97,11 +97,10 @@ function autocmd.load_autocmds()
       {
         "TextYankPost",
         "*",
-        [[lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]],
+        [[lua vim.highlight.on_yank({ higroup = "IncSearch", timeout = 400, on_macro = true, on_visual = true })]],
       },
     },
   }
-
   autocmd.nvim_create_augroups(definitions)
 end
 
