@@ -162,526 +162,526 @@ local tex_begin = [[
 
 local rec_ls
 rec_ls = function()
-  return sn(nil, {
-    c(1, {
-      -- important!! Having the sn(...) as the first choice will cause infinite recursion.
-      t({ "" }),
-      -- The same dynamicNode as in the snippet (also note: self reference).
-      sn(nil, { t({ "", "\t\\item " }), i(1), d(2, rec_ls, {}) }),
-    }),
-  })
+    return sn(nil, {
+        c(1, {
+            -- important!! Having the sn(...) as the first choice will cause infinite recursion.
+            t({ "" }),
+            -- The same dynamicNode as in the snippet (also note: self reference).
+            sn(nil, { t({ "", "\t\\item " }), i(1), d(2, rec_ls, {}) }),
+        }),
+    })
 end
 local function jdocsnip(args, _, old_state)
-  -- !!! old_state is used to preserve user-input here. DON'T DO IT THAT WAY!
-  -- Using a restoreNode instead is much easier.
-  -- View this only as an example on how old_state functions.
-  local nodes = {
-    t({ "/**", " * " }),
-    i(1, "A short Description"),
-    t({ "", "" }),
-  }
+    -- !!! old_state is used to preserve user-input here. DON'T DO IT THAT WAY!
+    -- Using a restoreNode instead is much easier.
+    -- View this only as an example on how old_state functions.
+    local nodes = {
+        t({ "/**", " * " }),
+        i(1, "A short Description"),
+        t({ "", "" }),
+    }
 
-  -- These will be merged with the snippet; that way, should the snippet be updated,
-  -- some user input eg. text can be referred to in the new snippet.
-  local param_nodes = {}
+    -- These will be merged with the snippet; that way, should the snippet be updated,
+    -- some user input eg. text can be referred to in the new snippet.
+    local param_nodes = {}
 
-  if old_state then
-    nodes[2] = i(1, old_state.descr:get_text())
-  end
-  param_nodes.descr = nodes[2]
-
-  -- At least one param.
-  if string.find(args[2][1], ", ") then
-    vim.list_extend(nodes, { t({ " * ", "" }) })
-  end
-
-  local insert = 2
-  for indx, arg in ipairs(vim.split(args[2][1], ", ", true)) do
-    -- Get actual name parameter.
-    arg = vim.split(arg, " ", true)[2]
-    if arg then
-      local inode
-      -- if there was some text in this parameter, use it as static_text for this new snippet.
-      if old_state and old_state[arg] then
-        inode = i(insert, old_state["arg" .. arg]:get_text())
-      else
-        inode = i(insert)
-      end
-      vim.list_extend(nodes, { t({ " * @param " .. arg .. " " }), inode, t({ "", "" }) })
-      param_nodes["arg" .. arg] = inode
-
-      insert = insert + 1
+    if old_state then
+        nodes[2] = i(1, old_state.descr:get_text())
     end
-  end
+    param_nodes.descr = nodes[2]
 
-  if args[1][1] ~= "void" then
-    local inode
-    if old_state and old_state.ret then
-      inode = i(insert, old_state.ret:get_text())
-    else
-      inode = i(insert)
+    -- At least one param.
+    if string.find(args[2][1], ", ") then
+        vim.list_extend(nodes, { t({ " * ", "" }) })
     end
 
-    vim.list_extend(nodes, { t({ " * ", " * @return " }), inode, t({ "", "" }) })
-    param_nodes.ret = inode
-    insert = insert + 1
-  end
+    local insert = 2
+    for indx, arg in ipairs(vim.split(args[2][1], ", ", true)) do
+        -- Get actual name parameter.
+        arg = vim.split(arg, " ", true)[2]
+        if arg then
+            local inode
+            -- if there was some text in this parameter, use it as static_text for this new snippet.
+            if old_state and old_state[arg] then
+                inode = i(insert, old_state["arg" .. arg]:get_text())
+            else
+                inode = i(insert)
+            end
+            vim.list_extend(nodes, { t({ " * @param " .. arg .. " " }), inode, t({ "", "" }) })
+            param_nodes["arg" .. arg] = inode
 
-  if vim.tbl_count(args[3]) ~= 1 then
-    local exc = string.gsub(args[3][2], " throws ", "")
-    local ins
-    if old_state and old_state.ex then
-      ins = i(insert, old_state.ex:get_text())
-    else
-      ins = i(insert)
+            insert = insert + 1
+        end
     end
-    vim.list_extend(nodes, { t({ " * ", " * @throws " .. exc .. " " }), ins, t({ "", "" }) })
-    param_nodes.ex = ins
-    insert = insert + 1
-  end
 
-  vim.list_extend(nodes, { t({ " */" }) })
+    if args[1][1] ~= "void" then
+        local inode
+        if old_state and old_state.ret then
+            inode = i(insert, old_state.ret:get_text())
+        else
+            inode = i(insert)
+        end
 
-  local snip = sn(nil, nodes)
-  -- Error on attempting overwrite.
-  snip.old_state = param_nodes
-  return snip
+        vim.list_extend(nodes, { t({ " * ", " * @return " }), inode, t({ "", "" }) })
+        param_nodes.ret = inode
+        insert = insert + 1
+    end
+
+    if vim.tbl_count(args[3]) ~= 1 then
+        local exc = string.gsub(args[3][2], " throws ", "")
+        local ins
+        if old_state and old_state.ex then
+            ins = i(insert, old_state.ex:get_text())
+        else
+            ins = i(insert)
+        end
+        vim.list_extend(nodes, { t({ " * ", " * @throws " .. exc .. " " }), ins, t({ "", "" }) })
+        param_nodes.ex = ins
+        insert = insert + 1
+    end
+
+    vim.list_extend(nodes, { t({ " */" }) })
+
+    local snip = sn(nil, nodes)
+    -- Error on attempting overwrite.
+    snip.old_state = param_nodes
+    return snip
 end
 
 -- complicated function for dynamicNode.
 local function cppdocsnip(args, _, old_state)
-  dump(args)
-  -- !!! old_state is used to preserve user-input here. DON'T DO IT THAT WAY!
-  -- Using a restoreNode instead is much easier.
-  -- View this only as an example on how old_state functions.
-  local nodes = {
-    t({ "/**", " * " }),
-    i(1, "A short Description"),
-    t({ "", "" }),
-  }
+    dump(args)
+    -- !!! old_state is used to preserve user-input here. DON'T DO IT THAT WAY!
+    -- Using a restoreNode instead is much easier.
+    -- View this only as an example on how old_state functions.
+    local nodes = {
+        t({ "/**", " * " }),
+        i(1, "A short Description"),
+        t({ "", "" }),
+    }
 
-  -- These will be merged with the snippet; that way, should the snippet be updated,
-  -- some user input eg. text can be referred to in the new snippet.
-  local param_nodes = {}
+    -- These will be merged with the snippet; that way, should the snippet be updated,
+    -- some user input eg. text can be referred to in the new snippet.
+    local param_nodes = {}
 
-  if old_state then
-    nodes[2] = i(1, old_state.descr:get_text())
-  end
-  param_nodes.descr = nodes[2]
-
-  -- At least one param.
-  if string.find(args[2][1], ", ") then
-    vim.list_extend(nodes, { t({ " * ", "" }) })
-  end
-
-  local insert = 2
-  for indx, arg in ipairs(vim.split(args[2][1], ", ", true)) do
-    -- Get actual name parameter.
-    arg = vim.split(arg, " ", true)[2]
-    if arg then
-      local inode
-      -- if there was some text in this parameter, use it as static_text for this new snippet.
-      if old_state and old_state[arg] then
-        inode = i(insert, old_state["arg" .. arg]:get_text())
-      else
-        inode = i(insert)
-      end
-      vim.list_extend(nodes, { t({ " * @param " .. arg .. " " }), inode, t({ "", "" }) })
-      param_nodes["arg" .. arg] = inode
-
-      insert = insert + 1
+    if old_state then
+        nodes[2] = i(1, old_state.descr:get_text())
     end
-  end
+    param_nodes.descr = nodes[2]
 
-  if args[1][1] ~= "void" then
-    local inode
-    if old_state and old_state.ret then
-      inode = i(insert, old_state.ret:get_text())
-    else
-      inode = i(insert)
+    -- At least one param.
+    if string.find(args[2][1], ", ") then
+        vim.list_extend(nodes, { t({ " * ", "" }) })
     end
 
-    vim.list_extend(nodes, { t({ " * ", " * @return " }), inode, t({ "", "" }) })
-    param_nodes.ret = inode
-    insert = insert + 1
-  end
+    local insert = 2
+    for indx, arg in ipairs(vim.split(args[2][1], ", ", true)) do
+        -- Get actual name parameter.
+        arg = vim.split(arg, " ", true)[2]
+        if arg then
+            local inode
+            -- if there was some text in this parameter, use it as static_text for this new snippet.
+            if old_state and old_state[arg] then
+                inode = i(insert, old_state["arg" .. arg]:get_text())
+            else
+                inode = i(insert)
+            end
+            vim.list_extend(nodes, { t({ " * @param " .. arg .. " " }), inode, t({ "", "" }) })
+            param_nodes["arg" .. arg] = inode
 
-  if vim.tbl_count(args[3]) ~= 1 then
-    local exc = string.gsub(args[3][2], " throws ", "")
-    local ins
-    if old_state and old_state.ex then
-      ins = i(insert, old_state.ex:get_text())
-    else
-      ins = i(insert)
+            insert = insert + 1
+        end
     end
-    vim.list_extend(nodes, { t({ " * ", " * @throws " .. exc .. " " }), ins, t({ "", "" }) })
-    param_nodes.ex = ins
-    insert = insert + 1
-  end
 
-  vim.list_extend(nodes, { t({ " */" }) })
+    if args[1][1] ~= "void" then
+        local inode
+        if old_state and old_state.ret then
+            inode = i(insert, old_state.ret:get_text())
+        else
+            inode = i(insert)
+        end
 
-  local snip = sn(nil, nodes)
-  -- Error on attempting overwrite.
-  snip.old_state = param_nodes
-  return snip
+        vim.list_extend(nodes, { t({ " * ", " * @return " }), inode, t({ "", "" }) })
+        param_nodes.ret = inode
+        insert = insert + 1
+    end
+
+    if vim.tbl_count(args[3]) ~= 1 then
+        local exc = string.gsub(args[3][2], " throws ", "")
+        local ins
+        if old_state and old_state.ex then
+            ins = i(insert, old_state.ex:get_text())
+        else
+            ins = i(insert)
+        end
+        vim.list_extend(nodes, { t({ " * ", " * @throws " .. exc .. " " }), ins, t({ "", "" }) })
+        param_nodes.ex = ins
+        insert = insert + 1
+    end
+
+    vim.list_extend(nodes, { t({ " */" }) })
+
+    local snip = sn(nil, nodes)
+    -- Error on attempting overwrite.
+    snip.old_state = param_nodes
+    return snip
 end
 ls.snippets = {
-  all = {
-    s(
-      "trig",
-      c(1, {
-        t("Ugh boring, a text node"),
-        i(nil, "At least I can edit something now..."),
-        f(function(args)
-          return "Still only counts as text!!"
-        end, {}),
-      })
-    ),
-  },
-  python = require("modules.completion.snippets.python"),
+    all = {
+        s(
+            "trig",
+            c(1, {
+                t("Ugh boring, a text node"),
+                i(nil, "At least I can edit something now..."),
+                f(function(args)
+                    return "Still only counts as text!!"
+                end, {}),
+            })
+        ),
+    },
+    python = require("modules.completion.snippets.python"),
 
-  lua = {
-    ls.parser.parse_snippet("lf", "-- Defined in $TM_FILE\nlocal $1 = function($2)\n\t$0\nend"),
-    ls.parser.parse_snippet("mf", "-- Defined in $TM_FILE\nlocal $1.$2 = function($3)\n\t$0\nend"),
-    s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
+    lua = {
+        ls.parser.parse_snippet("lf", "-- Defined in $TM_FILE\nlocal $1 = function($2)\n\t$0\nend"),
+        ls.parser.parse_snippet("mf", "-- Defined in $TM_FILE\nlocal $1.$2 = function($3)\n\t$0\nend"),
+        s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
 
-    parse({ trig = "high" }, high),
-    parse({ trig = "time" }, time),
-    parse({ trig = "M" }, module_snippet),
-    parse({ trig = "lf" }, loc_func),
-    parse({ trig = "cmd" }, map_cmd),
-    parse({ trig = "inspect" }, inspect_snippet),
-  },
-  tex = {
-    parse({ trig = "beg" }, tex_begin),
-    parse({ trig = "item" }, tex_itemize),
-    parse({ trig = "table" }, tex_table),
-    parse({ trig = "bd" }, tex_bold),
-    parse({ trig = "it" }, tex_item),
-    parse({ trig = "sec" }, tex_section),
-    parse({ trig = "enum" }, tex_enumerate),
-    parse({ trig = "ssec" }, tex_subsection),
-    parse({ trig = "sssec" }, tex_subsubsection),
-    parse({ trig = "para" }, tex_paragraph),
-    parse({ trig = "->" }, tex_arrow),
-    parse({ trig = "template" }, tex_template),
-    s("ls", {
-      t({ "\\begin{itemize}", "\t\\item " }),
-      i(1),
-      d(2, rec_ls, {}),
-      t({ "", "\\end{itemize}" }),
-      i(0),
-    }),
-  },
-  java = {
-    parse({ trig = "pus" }, public_string),
-    parse({ trig = "puv" }, public_void),
-    -- Very long example for a java class.
-    s("fn", {
-      d(6, jdocsnip, { 2, 4, 5 }),
-      t({ "", "" }),
-      c(1, {
-        t("public "),
-        t("private "),
-      }),
-      c(2, {
-        t("void"),
-        t("char"),
-        t("int"),
-        t("double"),
-        t("boolean"),
-        t("float"),
-        i(nil, ""),
-      }),
-      t(" "),
-      i(3, "myFunc"),
-      t("("),
-      i(4),
-      t(")"),
-      c(5, {
-        t(""),
-        sn(nil, {
-          t({ "", " throws " }),
-          i(1),
+        parse({ trig = "high" }, high),
+        parse({ trig = "time" }, time),
+        parse({ trig = "M" }, module_snippet),
+        parse({ trig = "lf" }, loc_func),
+        parse({ trig = "cmd" }, map_cmd),
+        parse({ trig = "inspect" }, inspect_snippet),
+    },
+    tex = {
+        parse({ trig = "beg" }, tex_begin),
+        parse({ trig = "item" }, tex_itemize),
+        parse({ trig = "table" }, tex_table),
+        parse({ trig = "bd" }, tex_bold),
+        parse({ trig = "it" }, tex_item),
+        parse({ trig = "sec" }, tex_section),
+        parse({ trig = "enum" }, tex_enumerate),
+        parse({ trig = "ssec" }, tex_subsection),
+        parse({ trig = "sssec" }, tex_subsubsection),
+        parse({ trig = "para" }, tex_paragraph),
+        parse({ trig = "->" }, tex_arrow),
+        parse({ trig = "template" }, tex_template),
+        s("ls", {
+            t({ "\\begin{itemize}", "\t\\item " }),
+            i(1),
+            d(2, rec_ls, {}),
+            t({ "", "\\end{itemize}" }),
+            i(0),
         }),
-      }),
-      t({ " {", "\t" }),
-      i(0),
-      t({ "", "}" }),
-    }),
-  },
-  cpp = {
-    s("fn", {
-      d(4, cppdocsnip, { 1, 3, 3 }),
-      t({ "", "" }),
-      c(1, {
-        t("void"),
-        t("String"),
-        t("char"),
-        t("int"),
-        t("double"),
-        t("boolean"),
-        i(nil, ""),
-      }),
-      t(" "),
-      i(2, "myFunc"),
-      t("("),
-      i(3),
-      t(")"),
-      t({ " {", "\t" }),
-      i(0),
-      t({ "", "}" }),
-    }),
-  },
-  gitcommit = {
-    parse({ trig = "docs" }, gitcommit_docs),
-    parse({ trig = "feat" }, gitcommit_feat),
-    parse({ trig = "refactor" }, gitcommit_refactor),
-    parse({ trig = "revert" }, gitcommit_revert),
-    parse({ trig = "cleanup" }, gitcommit_cleanup),
-    parse({ trig = "fix" }, gitcommit_fix),
-    parse({ trig = "stylua" }, gitcommmit_stylua),
-  },
+    },
+    java = {
+        parse({ trig = "pus" }, public_string),
+        parse({ trig = "puv" }, public_void),
+        -- Very long example for a java class.
+        s("fn", {
+            d(6, jdocsnip, { 2, 4, 5 }),
+            t({ "", "" }),
+            c(1, {
+                t("public "),
+                t("private "),
+            }),
+            c(2, {
+                t("void"),
+                t("char"),
+                t("int"),
+                t("double"),
+                t("boolean"),
+                t("float"),
+                i(nil, ""),
+            }),
+            t(" "),
+            i(3, "myFunc"),
+            t("("),
+            i(4),
+            t(")"),
+            c(5, {
+                t(""),
+                sn(nil, {
+                    t({ "", " throws " }),
+                    i(1),
+                }),
+            }),
+            t({ " {", "\t" }),
+            i(0),
+            t({ "", "}" }),
+        }),
+    },
+    cpp = {
+        s("fn", {
+            d(4, cppdocsnip, { 1, 3, 3 }),
+            t({ "", "" }),
+            c(1, {
+                t("void"),
+                t("String"),
+                t("char"),
+                t("int"),
+                t("double"),
+                t("boolean"),
+                i(nil, ""),
+            }),
+            t(" "),
+            i(2, "myFunc"),
+            t("("),
+            i(3),
+            t(")"),
+            t({ " {", "\t" }),
+            i(0),
+            t({ "", "}" }),
+        }),
+    },
+    gitcommit = {
+        parse({ trig = "docs" }, gitcommit_docs),
+        parse({ trig = "feat" }, gitcommit_feat),
+        parse({ trig = "refactor" }, gitcommit_refactor),
+        parse({ trig = "revert" }, gitcommit_revert),
+        parse({ trig = "cleanup" }, gitcommit_cleanup),
+        parse({ trig = "fix" }, gitcommit_fix),
+        parse({ trig = "stylua" }, gitcommmit_stylua),
+    },
 }
 
 ls.autosnippets = {
-  all = {
-    s("autotrigger", {
-      t("autosnippet"),
-    }),
-  },
+    all = {
+        s("autotrigger", {
+            t("autosnippet"),
+        }),
+    },
 }
 
 ls.filetype_set("cpp", { "c" })
 ls.filetype_extend("all", { "_" })
 
 require("luasnip/loaders/from_vscode").load({
-  paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
+    paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
 })
 
 ls.config.set_config({
-  history = true,
-  -- Update more often, :h events for more info.
-  updateevents = "TextChanged,TextChangedI",
-  ext_opts = {
-    [types.choiceNode] = {
-      active = {
-        virt_text = { { "<-", "Error" } },
-      },
+    history = true,
+    -- Update more often, :h events for more info.
+    updateevents = "TextChanged,TextChangedI",
+    ext_opts = {
+        [types.choiceNode] = {
+            active = {
+                virt_text = { { "<-", "Error" } },
+            },
+        },
     },
-  },
-  -- treesitter-hl has 100, use something higher (default is 200).
-  ext_base_prio = 300,
-  -- minimal increase in priority.
-  ext_prio_increase = 1,
-  enable_autosnippets = true,
+    -- treesitter-hl has 100, use something higher (default is 200).
+    ext_base_prio = 300,
+    -- minimal increase in priority.
+    ext_prio_increase = 1,
+    enable_autosnippets = true,
 
-  -- treesitter-hl has 100, use something higher (default is 200).
-  ext_base_prio = 300,
-  -- minimal increase in priority.
-  ext_prio_increase = 1,
-  enable_autosnippets = true,
-  parser_nested_assembler = function(_, snippet)
-    local select = function(snip, no_move)
-      snip.parent:enter_node(snip.indx)
-      -- upon deletion, extmarks of inner nodes should shift to end of
-      -- placeholder-text.
-      for _, node in ipairs(snip.nodes) do
-        node:set_mark_rgrav(true, true)
-      end
+    -- treesitter-hl has 100, use something higher (default is 200).
+    ext_base_prio = 300,
+    -- minimal increase in priority.
+    ext_prio_increase = 1,
+    enable_autosnippets = true,
+    parser_nested_assembler = function(_, snippet)
+        local select = function(snip, no_move)
+            snip.parent:enter_node(snip.indx)
+            -- upon deletion, extmarks of inner nodes should shift to end of
+            -- placeholder-text.
+            for _, node in ipairs(snip.nodes) do
+                node:set_mark_rgrav(true, true)
+            end
 
-      -- SELECT all text inside the snippet.
-      if not no_move then
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
-        local pos_begin, pos_end = snip.mark:pos_begin_end()
-        util.normal_move_on(pos_begin)
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, false, true), "n", true)
-        util.normal_move_before(pos_end)
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("o<C-G>", true, false, true), "n", true)
-      end
-    end
-
-    function snippet:jump_into(dir, no_move)
-      if self.active then
-        -- inside snippet, but not selected.
-        if dir == 1 then
-          self:input_leave()
-          return self.next:jump_into(dir, no_move)
-        else
-          select(self, no_move)
-          return self
+            -- SELECT all text inside the snippet.
+            if not no_move then
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
+                local pos_begin, pos_end = snip.mark:pos_begin_end()
+                util.normal_move_on(pos_begin)
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, false, true), "n", true)
+                util.normal_move_before(pos_end)
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("o<C-G>", true, false, true), "n", true)
+            end
         end
-      else
-        -- jumping in from outside snippet.
-        self:input_enter()
-        if dir == 1 then
-          select(self, no_move)
-          return self
-        else
-          return self.inner_last:jump_into(dir, no_move)
+
+        function snippet:jump_into(dir, no_move)
+            if self.active then
+                -- inside snippet, but not selected.
+                if dir == 1 then
+                    self:input_leave()
+                    return self.next:jump_into(dir, no_move)
+                else
+                    select(self, no_move)
+                    return self
+                end
+            else
+                -- jumping in from outside snippet.
+                self:input_enter()
+                if dir == 1 then
+                    select(self, no_move)
+                    return self
+                else
+                    return self.inner_last:jump_into(dir, no_move)
+                end
+            end
         end
-      end
-    end
-    -- this is called only if the snippet is currently selected.
-    function snippet:jump_from(dir, no_move)
-      if dir == 1 then
-        return self.inner_first:jump_into(dir, no_move)
-      else
-        self:input_leave()
-        return self.prev:jump_into(dir, no_move)
-      end
-    end
-    return snippet
-  end,
+        -- this is called only if the snippet is currently selected.
+        function snippet:jump_from(dir, no_move)
+            if dir == 1 then
+                return self.inner_first:jump_into(dir, no_move)
+            else
+                self:input_leave()
+                return self.prev:jump_into(dir, no_move)
+            end
+        end
+        return snippet
+    end,
 })
 
 local luasnip = require("luasnip")
 
 luasnip.config.set_config({
-  -- Update more often, :h events for more info.
-  history = true,
-  updateevents = "TextChanged , TextChangedI",
+    -- Update more often, :h events for more info.
+    history = true,
+    updateevents = "TextChanged , TextChangedI",
 })
 
 luasnip.config.setup({
-  parser_nested_assembler = function(_, snippet)
-    local select = function(snip, no_move)
-      snip.parent:enter_node(snip.indx)
-      -- upon deletion, extmarks of inner nodes should shift to end of
-      -- placeholder-text.
-      for _, node in ipairs(snip.nodes) do
-        node:set_mark_rgrav(true, true)
-      end
+    parser_nested_assembler = function(_, snippet)
+        local select = function(snip, no_move)
+            snip.parent:enter_node(snip.indx)
+            -- upon deletion, extmarks of inner nodes should shift to end of
+            -- placeholder-text.
+            for _, node in ipairs(snip.nodes) do
+                node:set_mark_rgrav(true, true)
+            end
 
-      -- SELECT all text inside the snippet.
-      if not no_move then
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
-        local pos_begin, pos_end = snip.mark:pos_begin_end()
-        util.normal_move_on(pos_begin)
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, false, true), "n", true)
-        util.normal_move_before(pos_end)
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("o<C-G>", true, false, true), "n", true)
-      end
-    end
-    function snippet:jump_into(dir, no_move)
-      if self.active then
-        -- inside snippet, but not selected.
-        if dir == 1 then
-          self:input_leave()
-          return self.next:jump_into(dir, no_move)
-        else
-          select(self, no_move)
-          return self
+            -- SELECT all text inside the snippet.
+            if not no_move then
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
+                local pos_begin, pos_end = snip.mark:pos_begin_end()
+                util.normal_move_on(pos_begin)
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, false, true), "n", true)
+                util.normal_move_before(pos_end)
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("o<C-G>", true, false, true), "n", true)
+            end
         end
-      else
-        -- jumping in from outside snippet.
-        self:input_enter()
-        if dir == 1 then
-          select(self, no_move)
-          return self
-        else
-          return self.inner_last:jump_into(dir, no_move)
+        function snippet:jump_into(dir, no_move)
+            if self.active then
+                -- inside snippet, but not selected.
+                if dir == 1 then
+                    self:input_leave()
+                    return self.next:jump_into(dir, no_move)
+                else
+                    select(self, no_move)
+                    return self
+                end
+            else
+                -- jumping in from outside snippet.
+                self:input_enter()
+                if dir == 1 then
+                    select(self, no_move)
+                    return self
+                else
+                    return self.inner_last:jump_into(dir, no_move)
+                end
+            end
         end
-      end
-    end
-    -- this is called only if the snippet is currently selected.
-    function snippet:jump_from(dir, no_move)
-      if dir == 1 then
-        return self.inner_first:jump_into(dir, no_move)
-      else
-        self:input_leave()
-        return self.prev:jump_into(dir, no_move)
-      end
-    end
-    return snippet
-  end,
-  ft_func = require("luasnip.extras.filetype_functions").from_cursor_pos,
+        -- this is called only if the snippet is currently selected.
+        function snippet:jump_from(dir, no_move)
+            if dir == 1 then
+                return self.inner_first:jump_into(dir, no_move)
+            else
+                self:input_leave()
+                return self.prev:jump_into(dir, no_move)
+            end
+        end
+        return snippet
+    end,
+    ft_func = require("luasnip.extras.filetype_functions").from_cursor_pos,
 })
 local current_nsid = vim.api.nvim_create_namespace("LuaSnipChoiceListSelections")
 local current_win = nil
 
 local function window_for_choiceNode(choiceNode)
-  local buf = vim.api.nvim_create_buf(false, true)
-  local buf_text = {}
-  local row_selection = 0
-  local row_offset = 0
-  local text
-  for _, node in ipairs(choiceNode.choices) do
-    text = node:get_docstring()
-    -- find one that is currently showing
-    if node == choiceNode.active_choice then
-      -- current line is starter from buffer list which is length usually
-      row_selection = #buf_text
-      -- finding how many lines total within a choice selection
-      row_offset = #text
+    local buf = vim.api.nvim_create_buf(false, true)
+    local buf_text = {}
+    local row_selection = 0
+    local row_offset = 0
+    local text
+    for _, node in ipairs(choiceNode.choices) do
+        text = node:get_docstring()
+        -- find one that is currently showing
+        if node == choiceNode.active_choice then
+            -- current line is starter from buffer list which is length usually
+            row_selection = #buf_text
+            -- finding how many lines total within a choice selection
+            row_offset = #text
+        end
+        vim.list_extend(buf_text, text)
     end
-    vim.list_extend(buf_text, text)
-  end
 
-  vim.api.nvim_buf_set_text(buf, 0, 0, 0, 0, buf_text)
-  local w, h = vim.lsp.util._make_floating_popup_size(buf_text)
+    vim.api.nvim_buf_set_text(buf, 0, 0, 0, 0, buf_text)
+    local w, h = vim.lsp.util._make_floating_popup_size(buf_text)
 
-  -- adding highlight so we can see which one is been selected.
-  local extmark = vim.api.nvim_buf_set_extmark(
-    buf,
-    current_nsid,
-    row_selection,
-    0,
-    { hl_group = "incsearch", end_line = row_selection + row_offset }
-  )
+    -- adding highlight so we can see which one is been selected.
+    local extmark = vim.api.nvim_buf_set_extmark(
+        buf,
+        current_nsid,
+        row_selection,
+        0,
+        { hl_group = "incsearch", end_line = row_selection + row_offset }
+    )
 
-  -- shows window at a beginning of choiceNode.
-  local win = vim.api.nvim_open_win(buf, false, {
-    relative = "win",
-    width = w,
-    height = h,
-    bufpos = choiceNode.mark:pos_begin_end(),
-    style = "minimal",
-    border = "rounded",
-  })
+    -- shows window at a beginning of choiceNode.
+    local win = vim.api.nvim_open_win(buf, false, {
+        relative = "win",
+        width = w,
+        height = h,
+        bufpos = choiceNode.mark:pos_begin_end(),
+        style = "minimal",
+        border = "rounded",
+    })
 
-  -- return with 3 main important so we can use them again
-  return { win_id = win, extmark = extmark, buf = buf }
+    -- return with 3 main important so we can use them again
+    return { win_id = win, extmark = extmark, buf = buf }
 end
 
 function _G.choice_popup(choiceNode)
-  -- build stack for nested choiceNodes.
-  if current_win then
-    vim.api.nvim_win_close(current_win.win_id, true)
-    vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
-  end
-  local create_win = window_for_choiceNode(choiceNode)
-  current_win = {
-    win_id = create_win.win_id,
-    prev = current_win,
-    node = choiceNode,
-    extmark = create_win.extmark,
-    buf = create_win.buf,
-  }
+    -- build stack for nested choiceNodes.
+    if current_win then
+        vim.api.nvim_win_close(current_win.win_id, true)
+        vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
+    end
+    local create_win = window_for_choiceNode(choiceNode)
+    current_win = {
+        win_id = create_win.win_id,
+        prev = current_win,
+        node = choiceNode,
+        extmark = create_win.extmark,
+        buf = create_win.buf,
+    }
 end
 
 function _G.update_choice_popup(choiceNode)
-  vim.api.nvim_win_close(current_win.win_id, true)
-  vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
-  local create_win = window_for_choiceNode(choiceNode)
-  current_win.win_id = create_win.win_id
-  current_win.extmark = create_win.extmark
-  current_win.buf = create_win.buf
-end
-
-function _G.choice_popup_close()
-  vim.api.nvim_win_close(current_win.win_id, true)
-  vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
-  -- now we are checking if we still have previous choice we were in after exit nested choice
-  current_win = current_win.prev
-  if current_win then
-    -- reopen window further down in the stack.
-    local create_win = window_for_choiceNode(current_win.node)
+    vim.api.nvim_win_close(current_win.win_id, true)
+    vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
+    local create_win = window_for_choiceNode(choiceNode)
     current_win.win_id = create_win.win_id
     current_win.extmark = create_win.extmark
     current_win.buf = create_win.buf
-  end
+end
+
+function _G.choice_popup_close()
+    vim.api.nvim_win_close(current_win.win_id, true)
+    vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
+    -- now we are checking if we still have previous choice we were in after exit nested choice
+    current_win = current_win.prev
+    if current_win then
+        -- reopen window further down in the stack.
+        local create_win = window_for_choiceNode(current_win.node)
+        current_win.win_id = create_win.win_id
+        current_win.extmark = create_win.extmark
+        current_win.buf = create_win.buf
+    end
 end
 
 vim.cmd([[

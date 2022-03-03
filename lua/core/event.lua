@@ -17,6 +17,7 @@ function autocmd.nvim_create_augroups(defs)
   end
 end
 
+
 function autocmd.load_autocmds()
   local definitions = {
     packer = {
@@ -74,6 +75,7 @@ function autocmd.load_autocmds()
         "*",
         [[if has('nvim') | wshada! | else | wviminfo! | endif]],
       },
+
       -- Check if file changed when its window is focus, more eager than 'autoread'
       { "FocusGained", "*", "checktime" },
       -- -- {"CmdwinEnter,CmdwinLeave", "*", "lua require'wlfloatline'.toggle()"};
