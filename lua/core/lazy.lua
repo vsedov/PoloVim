@@ -38,10 +38,25 @@ local function loadscheme()
   require("packer").loader(loading_theme)
 end
 
+local function no_file()
+  if vim.fn.bufname("%") ~= "" then
+    return
+  end
+  local byte = vim.fn.line2byte(vim.fn.line("$") + 1)
+
+  if byte ~= -1 or byte > 1 then
+    return
+  end
+  print("this is not a file")
+  vim.bo.buftype = "nofile"
+  vim.bo.swapfile = false
+  vim.bo.fileformat = "unix"
+end
+
 function Lazyload()
   --
   _G.PLoader = loader
-
+  no_file()
   loadscheme()
   if vim.wo.diff then
     -- loader(plugins)
@@ -53,7 +68,6 @@ function Lazyload()
   else
     loader("nvim-treesitter")
   end
-
   lprint("I am lazy")
 
   local disable_ft = {
