@@ -127,6 +127,8 @@ require("neorg").setup({
     },
     ["core.norg.journal"] = {
       config = {
+        workspace = "home",
+
         journal_folder = "journal",
         use_folders = false,
       },
