@@ -56,7 +56,7 @@ end
 function Lazyload()
   --
   _G.PLoader = loader
-  no_file()
+  -- no_file()
   loadscheme()
   if vim.wo.diff then
     -- loader(plugins)
