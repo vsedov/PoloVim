@@ -8,16 +8,20 @@ local global = require("core.global")
 require("keymap.config")
 
 local plug_map = {
-  ["i|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr():with_silent(),
-  ["i|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
-  ["s|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr():with_silent(),
-  ["s|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
+  ["i|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
+  ["i|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
+
+  ["s|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
+  ["s|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
 
   ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
   ["n|<C-]>"] = map_args("Template"),
 
   -- Copilot toggle
   ["n|<localleader>c]"] = map_cmd("v:lua.toggleCopilot()"):with_silent():with_expr(),
+
+  -- Show syntax highlighting groups for word under cursor
+  ["n|<localleader>c{"] = map_cmd("call v:lua.syn_stack()"):with_silent():with_expr(),
 
   -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
   -- -- Lsp mapp work when insertenter and lsp start

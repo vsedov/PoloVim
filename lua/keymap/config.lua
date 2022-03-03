@@ -1,4 +1,19 @@
-local function check_back_space()
+local function prequire(...)
+  local status, lib = pcall(require, ...)
+  if status then
+    return lib
+  end
+  return nil
+end
+
+local luasnip = prequire("luasnip")
+local cmp = prequire("cmp")
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
   local col = vim.fn.col(".") - 1
   if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
     return true
@@ -6,54 +21,43 @@ local function check_back_space()
     return false
   end
 end
-
-local function prequire(name)
-  local module_found, res = pcall(require, name)
-  return module_found and res or nil
-end
-
-local is_prior_char_whitespace = function()
-  local col = vim.fn.col(".") - 1
-  if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-    return true
-  else
-    return false
-  end
-end
-
-local function termcodes(code)
-  return vim.api.nvim_replace_termcodes(code, true, true, true)
-end
-
-local t = termcodes
 
 _G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t("<C-n>")
+  if cmp and cmp.visible() then
+    cmp.select_next_item()
+  elseif luasnip and luasnip.expand_or_jumpable() then
+    return t("<Plug>luasnip-expand-or-jump")
   elseif check_back_space() then
     return t("<Tab>")
-  elseif prequire("luasnip") and require("luasnip").expand_or_jumpable() then
-    return t("<Plug>luasnip-expand-or-jump")
-  elseif prequire("cmp") and require("cmp").visible() then
-    return require("cmp").mapping.select_next_item()
+  else
+    cmp.complete()
   end
-  return t("<Tab>")
+  return ""
+end
+_G.s_tab_complete = function()
+  if cmp and cmp.visible() then
+    cmp.select_prev_item()
+  elseif luasnip and luasnip.jumpable(-1) then
+    return t("<Plug>luasnip-jump-prev")
+  else
+    return t("<S-Tab>")
+  end
+  return ""
 end
 
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t("<C-p>")
-  elseif prequire("luasnip") and prequire("luasnip").jumpable(-1) then
-    return t("<Plug>luasnip-jump-prev")
-  elseif prequire("cmp") and require("cmp").visible() then
-    return require("cmp").mapping.select_prev_item()
+_G.syn_stack = function()
+  local c = vim.api.nvim_win_get_cursor(0)
+  local stack = vim.fn.synstack(c[1], c[2] + 1)
+  for i, l in ipairs(stack) do
+    stack[i] = vim.fn.synIDattr(l, "name")
   end
-  return t("<S-Tab>")
+  print(vim.inspect(stack))
 end
 
 _G.toggle_venn = function()
   local venn_enabled = vim.inspect(vim.b.venn_enabled)
   if venn_enabled == "nil" then
+    print("Venn active")
     vim.b.venn_enabled = true
     vim.cmd([[setlocal ve=all]])
     -- draw a line on HJKL keystokes
@@ -64,6 +68,8 @@ _G.toggle_venn = function()
     -- draw a box by pressing "f" with visual selection
     vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
   else
+    print("Venn inactive")
+
     vim.cmd([[setlocal ve=]])
     vim.cmd([[mapclear <buffer>]])
     vim.b.venn_enabled = nil
