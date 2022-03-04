@@ -399,11 +399,6 @@ end
 
 -- https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
 
-local path = vim.split(package.path, ";")
-
-table.insert(path, "lua/?.lua")
-table.insert(path, "lua/?/init.lua")
-
 function config.context()
   require("treesitter-context.config").setup({
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
