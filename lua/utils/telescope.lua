@@ -119,6 +119,29 @@ local new_maker = function(filepath, bufnr, opts)
     })
     :sync()
 end
+
+local open_in_nvim_tree = function(prompt_bufnr)
+  local action_state = require("telescope.actions.state")
+  local Path = require("plenary.path")
+  local actions = require("telescope.actions")
+
+  local entry = action_state.get_selected_entry()[1]
+  local entry_path = Path:new(entry):parent():absolute()
+  actions._close(prompt_bufnr, true)
+  entry_path = Path:new(entry):parent():absolute()
+  entry_path = entry_path:gsub("\\", "\\\\")
+
+  vim.cmd("NvimTreeClose")
+  vim.cmd("NvimTreeOpen " .. entry_path)
+
+  file_name = nil
+  for s in string.gmatch(entry, "[^/]+") do
+    file_name = s
+  end
+
+  vim.cmd("/" .. file_name)
+end
+
 require("telescope").setup({
   defaults = themes.get_ivy({
     -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
@@ -212,8 +235,11 @@ require("telescope").setup({
           local height = vim.api.nvim_win_get_height(results_win)
           action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
         end,
+        ["<c-S>"] = open_in_nvim_tree,
       },
+
       i = {
+        ["<c-S>"] = open_in_nvim_tree,
         ["<cr>"] = custom_actions.multi_selection_open,
         ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
         ["<c-s>"] = custom_actions.multi_selection_open_split,
@@ -374,18 +400,6 @@ M.multi_selection_open_tab = function(prompt_bufnr)
 end
 M.multi_selection_open = function(prompt_bufnr)
   M._multiopen(prompt_bufnr, "edit")
-end
-
-M.frecency = function()
-  reloader()
-
-  telescope.extensions.frecency.frecency({
-    show_scores = false,
-    show_unindexed = true,
-    ignore_patterns = { "*.git/*", "*/tmp/*" },
-    disable_devicons = false,
-    sorter = telescope.extensions.fzf.native_fzf_sorter(),
-  })
 end
 
 M.projects = function()
