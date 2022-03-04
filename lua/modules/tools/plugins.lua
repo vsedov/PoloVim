@@ -314,16 +314,6 @@ tools["camspiers/animate.vim"] = {
   opt = true,
 }
 
-tools["nvim-telescope/telescope-frecency.nvim"] = {
-  branch = "refactor",
-  module = "telescope-frecency",
-  after = { "telescope.nvim" },
-  config = function()
-    require("telescope").load_extension("frecency")
-  end,
-  requires = { "tami5/sqlite.lua" },
-}
-
 tools["chentau/marks.nvim"] = {
   opt = true,
   event = { "BufReadPost" },
