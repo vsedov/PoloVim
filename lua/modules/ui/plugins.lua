@@ -19,6 +19,8 @@ ui["rebelot/heirline.nvim"] = {
     opt = true,
 }
 
+
+
 ui["akinsho/bufferline.nvim"] = {
     config = conf.nvim_bufferline,
     event = "UIEnter",
@@ -137,6 +139,16 @@ ui["rebelot/kanagawa.nvim"] = {
     module = "kanagawa",
     config = conf.kanagawa,
 }
+
+ui["jabuti-theme/jabuti-nvim"]={
+  opt = true,
+  module = " jabuti-nvim",
+  config = function()
+      -- require("jabuti-nvim").setup()
+      vim.cmd([[colorscheme jabuti]])
+  end
+}
+
 
 ui["wadackel/vim-dogrun"] = {
     opt = true,
