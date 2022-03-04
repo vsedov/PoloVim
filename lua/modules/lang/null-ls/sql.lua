@@ -7,12 +7,12 @@ local FORMATTING = methods.internal.FORMATTING
 
 -- local args = "-l plsql -i 4 -u | sed -e 's/\$ {/\${/g' | sed -e 's/: :/::/g"
 return h.make_builtin({
-  method = FORMATTING,
-  filetypes = { "sql" },
-  generator_opts = {
-    command = "sql-format",
-    args = { "-l", "plsql", "-i", "4", "-u" },
-    to_stdin = true,
-  },
-  factory = h.formatter_factory,
+    method = FORMATTING,
+    filetypes = { "sql" },
+    generator_opts = {
+        command = "sql-format",
+        args = { "-l", "plsql", "-i", "4", "-u" },
+        to_stdin = true,
+    },
+    factory = h.formatter_factory,
 })
