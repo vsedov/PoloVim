@@ -201,10 +201,6 @@ local plug_map = {
   -- lsp implmentation with telescope
   ["n|<Leader>ir"] = map_cmd('<cmd>lua require"utils.telescope".lsp_references()<CR>'):with_noremap():with_silent(),
 
-  ["n|<Leader><Leader><Leader>"] = map_cmd('<cmd>lua require"utils.telescope".frecency()<CR>')
-    :with_noremap()
-    :with_silent(),
-
   -- kitty / mac users, have a nice time >.< || will be changed
   -- ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
   -- ["n|<d-F>"] = map_cmd(

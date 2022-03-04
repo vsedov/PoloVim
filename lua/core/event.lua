@@ -17,7 +17,6 @@ function autocmd.nvim_create_augroups(defs)
   end
 end
 
-
 function autocmd.load_autocmds()
   local definitions = {
     packer = {

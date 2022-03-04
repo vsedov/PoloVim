@@ -38,7 +38,6 @@ local function loadscheme()
   require("packer").loader(loading_theme)
 end
 
-
 function Lazyload()
   --
   _G.PLoader = loader
