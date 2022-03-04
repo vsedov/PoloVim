@@ -43,6 +43,8 @@ tools["ThePrimeagen/harpoon"] = {
         enter_on_sendcmd = false,
         tmux_autoclose_windows = false,
         excluded_filetypes = { "harpoon" },
+         -- set marks specific to each git branch inside git repository
+        mark_branch = true,
       },
     })
     require("telescope").load_extension("harpoon")

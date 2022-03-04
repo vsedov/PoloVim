@@ -107,32 +107,36 @@ local keys = {
   -- -- session
 
   -- Switch from local to Normal for M to test how it tis
+  ["n|<Leader>ma"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]]),
   ["n|<Leader>M"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]),
+
   ["n|<Leader>m1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]),
   ["n|<Leader>m2"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]),
   ["n|<Leader>m3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]),
   ["n|<Leader>m4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]),
 
-  -- Need to load this properly
-  ["n|<Leader>m"] = map_cmd([[<cmd> Telescope harpoon marks <CR>]]),
+
+  ["n|<Leader>mt"] = map_cmd([[Telescope harpoon marks <CR>]]),
+  ["n|<Leader>mq"] = map_cmd([[<cmd> lua require("harpoon.ui").toggle_quick_menu()<CR>]]),
+  ["n|<Leader>mQ"] = map_cmd([[<cmd> lua require('harpoon.cmd-ui').toggle_quick_menu()<Cr>]]),
 
   --- Refactoring
-  ["v|<Leader>re"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function')<cr>"):with_noremap(),
+  ["v|<Leader>re"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]]):with_noremap():with_silent():with_expr(), 
+  ["v|<Leader>rf"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]]):with_noremap():with_silent():with_expr(), 
+  ["v|<Leader>rv"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]]):with_noremap():with_silent():with_expr(), 
+  ["v|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]]):with_noremap():with_silent():with_expr(), 
+  ["n|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]]):with_noremap():with_silent():with_expr(), 
 
-  ["v|<Leader>rf"] = map_cmd("<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<cr>"):with_noremap(),
 
-  ["v|<Leader>rt"] = map_cmd("<esc><cmd>lua require('refactoring').refactor()<cr>"):with_noremap(),
 
-  ["v|<Leader>rp"] = map_cmd("<cmd>lua require('refactoring').debug.printf({below = false})<CR>"):with_noremap(),
+  ["v|<Leader>rr"] = map_cmd([[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]]):with_noremap(),
+  ["n|<Leader>rp"] = map_cmd([[lua require('refactoring').debug.printf({below = false})<CR>]]):with_noremap(),
 
-  ["v|<Leader>rv"] = map_cmd("<cmd>lua require('refactoring').debug.print_var({})<CR>"):with_noremap(),
-
-  ["v|<Leader>rc"] = map_cmd("<cmd>lua require('refactoring').debug.cleanup({})<CR>"):with_noremap(),
-
-  -- Need to be manually called from telescope
-  ["v|<Leader>Rt"] = map_cmd('<Esc><cmd>lua require"utils.telescope".refactor()<CR>'):with_noremap(),
+  ["v|<Leader>ro"] = map_cmd([[<cmd> lua require('refactoring').debug.print_var({})<CR>]]):with_noremap(),
+  ["n|<Leader>rc"] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]]):with_noremap(),
 
   ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
+
 }
 
 --
