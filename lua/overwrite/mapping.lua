@@ -80,11 +80,6 @@ local keys = {
   ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
   ["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
-  -- These are nice but pointless if you have lightspeed
-  -- ["n|<A-a>"] = map_cr("HopWord"):with_silent(),
-  -- ["n|<A-w>"] = map_cr("HopWordBC"):with_silent(),
-  -- ["n|<A-W>"] = map_cr("HopWordAC"):with_silent(),
-
   -- -- Working
   ["n|/"] = map_cmd("<cmd>Pounce<cr>"):with_silent(),
 
@@ -94,24 +89,6 @@ local keys = {
 
   -- clap --
 
-  -- ["xon|f"] = map_cmd("<cmd>lua  Line_ft('f')<cr>"),
-  -- ["xon|F"] = map_cmd("<cmd>lua  Line_ft('F')<cr>"),
-  -- ["xon|t"] = map_cmd("<cmd>lua  Line_ft('t')<cr>"),
-  -- ["xon|T"] = map_cmd("<cmd>lua  Line_ft('T')<cr>"),
-  -- ["n|s"] = map_cmd("<cmd>lua hop1(1)<CR>"):with_silent(),
-  -- ["n|S"] = map_cmd("<cmd>lua hop1()<CR>"):with_silent(),
-  -- ["x|s"] = map_cmd("<cmd>lua hop1(1)<CR>"):with_silent(),
-  -- ["x|S"] = map_cmd("<cmd>lua hop1()<CR>"):with_silent(),
-  -- -- ["v|<M-s>"] = map_cmd("<cmd>lua require'hop'.hint_char1()<cr>"):with_silent():with_expr(),
-  -- -- ["n|<Space>s"] = map_cr("HopChar2"),
-  -- ["n|<M-s>"] = map_cr("HopChar2AC"),
-  -- ["n|<M-S>"] = map_cr("HopChar2BC"),
-  -- ["xv|<M-s>"] = map_cmd("<cmd>HopChar2AC<CR>"):with_silent(),
-  -- ["xv|<M-S>"] = map_cmd("<cmd>HopChar2BC<CR>"):with_silent(),
-  -- ["n|<Space>F"] = map_cr("HopPattern"),
-  -- ["n|<Space>]"] = map_cr("HopPatternAC"),
-  -- ["n|<Space>["] = map_cr("HopPatternBC"),
-  -- -- clap --
   -- ["n|<d-C>"] = map_cu("Clap | startinsert"),
   -- ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
   -- -- ["n|<d-p>"] = map_cu("Clap files | startinsert"),
