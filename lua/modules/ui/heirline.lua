@@ -660,13 +660,11 @@ function M.setup()
     require("heirline").setup(StatusLines)
 end
 
--- Use nvim to parse this forward
-vim.cmd([[
-augroup heirline
-    autocmd!
-    autocmd ColorScheme * lua require'heirline'.reset_highlights(); 
-augroup END
-]])
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    command = "lua require'heirline'.reset_highlights()",
+})
+
 
 M.setup()
 return M
