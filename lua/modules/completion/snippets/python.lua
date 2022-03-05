@@ -193,13 +193,13 @@ M = {
     }),
 
     s("log", {
-        t({ "logging." }),
+        t({ "logging" }),
         c(1, {
-            t({ "info(" }),
-            t({ "debug(" }),
-            t({ "warning(" }),
-            t({ "error(" }),
-            t({ "critical(" }),
+            t({ ".info(" }),
+            t({ ".debug(" }),
+            t({ ".warning(" }),
+            t({ ".error(" }),
+            t({ ".critical(" }),
         }),
         t({ "ic.format(" }),
         i(2, "info"),
