@@ -38,10 +38,11 @@ local current_treesitter_context = function(width)
     if context == "vim.NIL" then
         return " "
     end
-    -- if #context > 200 then
-    --   context = string.format("%-20s", context)
-    --   context = string.format("%.200s", context)
-    -- end
+
+    if #context > 200 then
+        context = string.format("%-20s", context)
+        context = string.format("%.200s", context)
+    end
 
     return " " .. context
 end
@@ -348,6 +349,7 @@ function M.setup()
 
     local Diagnostics = {
         condition = conditions.has_diagnostics,
+
         static = {
             error_icon = vim.fn.sign_getdefined("DiagnosticSignError")[1].text,
             warn_icon = vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text,
@@ -664,7 +666,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     pattern = "*",
     command = "lua require'heirline'.reset_highlights()",
 })
-
 
 M.setup()
 return M

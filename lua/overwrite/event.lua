@@ -40,7 +40,7 @@ function autocmd.load_autocmds()
             {
                 "BufReadPre",
                 "*",
-                'if getfsize(expand("%")) > 1000000 | echo syn off | ownsyntax off | endif',
+                'if getfsize(expand("%")) > 1000000 | ownsyntax off | endif',
             },
             { "BufWritePost", "plugins.lua", "PackerCompile" },
             -- {"UIEnter", "*", ":silent! :lua require('modules.lang.config').syntax_folding()"},

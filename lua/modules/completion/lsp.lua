@@ -329,6 +329,13 @@ lspconfig.jedi_language_server.setup({
     capabilities = capabilities,
 })
 
+lspconfig.jsonls.setup({
+    cmd = { "vscode-json-languageserver", "--stdio" },
+    filetypes = { "json", "jsonc" },
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+})
+
 lspconfig.sqls.setup({
     filetypes = { "sql", "mysql" },
     cmd = { "sql-language-server", "up", "--method", "stdio" },
