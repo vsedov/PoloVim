@@ -664,7 +664,7 @@ end
 vim.cmd([[
 augroup heirline
     autocmd!
-    autocmd ColorScheme * lua require'heirline'.reset_highlights(); require'plugins.heirline'.setup()
+    autocmd ColorScheme * lua require'heirline'.reset_highlights(); 
 augroup END
 ]])
 

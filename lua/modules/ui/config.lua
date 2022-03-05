@@ -457,6 +457,9 @@ function config.catppuccin()
 end
 
 function config.kanagawa()
+    if not packer_plugins["kanagawa.nvim"].loaded then
+        vim.cmd([[packadd kanagawa.nvim ]])
+    end
     require("kanagawa").setup({
         undercurl = true, -- enable undercurls
         commentStyle = "italic",
@@ -633,24 +636,30 @@ function config.buffers_close()
 end
 
 function config.themer()
+    local themes = { "rose_pine", "dracula", "kurai", "everforest", "monokai_pro", "boo", "shado", "darknight" }
+    local cs = themes[math.random(1, #themes)]
+    local cp = require("themer.modules.core.api").get_cp(cs)
+    print(cs)
+
     require("themer").setup({
-        colorscheme = "kanagawa",
+        colorscheme = cs,
+        styles = {
+            ["function"] = { style = "italic" },
+            functionbuiltin = { style = "italic" },
+            -- variable = { style = "italic" },
+            variableBuiltIn = { style = "italic" },
+            -- parameter = { style = "italic" },
+            type = { style = "italic" },
+        },
         dim_inactive = false,
         disable_telescope_themes = {
             "ayu",
             "rose_pine_dawn",
             "github_light",
         },
-        styles = {
-            ["function"] = { style = "italic" },
-            functionbuiltin = { style = "italic" },
-            variable = { style = "italic" },
-            variableBuiltIn = { style = "italic" },
-            parameter = { style = "italic" },
-            type = { style = "italic" },
-        },
     })
     require("telescope").load_extension("themes")
+    vim.api.nvim_set_hl(0, "pythonStatement", { italic = true })
 end
 
 vim.api.nvim_exec(

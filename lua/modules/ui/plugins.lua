@@ -19,8 +19,6 @@ ui["rebelot/heirline.nvim"] = {
     opt = true,
 }
 
-
-
 ui["akinsho/bufferline.nvim"] = {
     config = conf.nvim_bufferline,
     event = "UIEnter",
@@ -136,19 +134,17 @@ ui["~/GitHub/Sakura.nvim"] = {
 -- Use default when loading this .
 ui["rebelot/kanagawa.nvim"] = {
     opt = true,
-    module = "kanagawa",
     config = conf.kanagawa,
 }
 
-ui["jabuti-theme/jabuti-nvim"]={
-  opt = true,
-  module = " jabuti-nvim",
-  config = function()
-      -- require("jabuti-nvim").setup()
-      vim.cmd([[colorscheme jabuti]])
-  end
+ui["jabuti-theme/jabuti-nvim"] = {
+    opt = true,
+    module = " jabuti-nvim",
+    config = function()
+        -- require("jabuti-nvim").setup()
+        vim.cmd([[colorscheme jabuti]])
+    end,
 }
-
 
 ui["wadackel/vim-dogrun"] = {
     opt = true,
@@ -159,10 +155,10 @@ ui["wadackel/vim-dogrun"] = {
 }
 
 -- Might want to manually call this through telescope or something .
--- ui["~/GitHub/themer/themer.lua"] = {
+
 ui["ThemerCorp/themer.lua"] = {
+    opt = true,
     branch = "main",
-    module = "themer",
     config = conf.themer,
 }
 
