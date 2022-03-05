@@ -238,6 +238,11 @@ K.get_keymaps = function()
 end
 vim.cmd([[command! -nargs=* Keymaps lua require('overwrite.mapping').get_keymaps()]])
 vim.cmd([[command! -nargs=* ColourScheme lua require('utils.telescope').colorscheme()]])
+vim.cmd([[
+  iabbrev :rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%d/%m/%y").'):')<CR>
+  iabbrev :todo: <c-r>=printf(&commentstring, ' TODO(vsedov):')<CR>
+  iabbrev funciton function
+]])
 
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
 --
