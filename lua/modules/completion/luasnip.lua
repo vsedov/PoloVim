@@ -342,6 +342,28 @@ ls.snippets = {
     python = require("modules.completion.snippets.python"),
 
     lua = {
+        s("snippet_node", {
+            t('s("'),
+            i(1, "snippet_title"),
+            t({ '", {', "\t" }),
+            i(0, "snippet_body"),
+            t({ "", "})," }),
+        }),
+
+        ----------------------------------
+        ---       FUNCTION NODES       ---
+        ----------------------------------
+
+        s("function_node", {
+            t("f("),
+            i(1, "fn"),
+            t(", "),
+            i(2, "{}"),
+            t(", "),
+            i(3, "arg??"),
+            t("), "),
+        }),
+
         ls.parser.parse_snippet("lf", "-- Defined in $TM_FILE\nlocal $1 = function($2)\n\t$0\nend"),
         ls.parser.parse_snippet("mf", "-- Defined in $TM_FILE\nlocal $1.$2 = function($3)\n\t$0\nend"),
         s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
@@ -352,6 +374,76 @@ ls.snippets = {
         parse({ trig = "lf" }, loc_func),
         parse({ trig = "cmd" }, map_cmd),
         parse({ trig = "inspect" }, inspect_snippet),
+
+        s("lua print var", {
+            t('print("'),
+            i(1, "desrc"),
+            t(': " .. '),
+            i(2, "the_variable"),
+            t(")"),
+        }),
+
+        s("fn basic", {
+            t("-- @param: "),
+            f(require("modules.completion.snippets.sniputils").copy, 2),
+            t({ "", "local " }),
+            i(1),
+            t(" = function("),
+            i(2, "fn param"),
+            t({ ")", "\t" }),
+            i(0), -- Last Placeholder, exit Point of the snippet. EVERY 'outer' SNIPPET NEEDS Placeholder 0.
+            t({ "", "end" }),
+        }),
+
+        s("fn module", {
+            -- make new line into snippet
+            t("-- @param: "),
+            f(require("modules.completion.snippets.sniputils").copy, 3),
+            t({ "", "" }),
+            i(1, "modname"),
+            t("."),
+            i(2, "fnname"),
+            t(" = function("),
+            i(3, "fn param"),
+            t({ ")", "\t" }),
+            i(0), -- Last Placeholder, exit Point of the snippet. EVERY 'outer' SNIPPET NEEDS Placeholder 0.
+            t({ "", "end" }),
+        }),
+
+        s({ trig = "if basic", wordTrig = true }, {
+            t({ "if " }),
+            i(1),
+            t({ " then", "\t" }),
+            i(0),
+            t({ "", "end" }),
+        }),
+
+        s({ trig = "ee", wordTrig = true }, {
+            t({ "else", "\t" }),
+            i(0),
+        }),
+
+        -- LOOPS ----------------------------------------
+
+        s("for", {
+            t("for "),
+            c(1, {
+                sn(nil, {
+                    i(1, "k"),
+                    t(", "),
+                    i(2, "v"),
+                    t(" in "),
+                    c(3, { t("pairs"), t("ipairs") }),
+                    t("("),
+                    i(4),
+                    t(")"),
+                }),
+                sn(nil, { i(1, "i"), t(" = "), i(2), t(", "), i(3) }),
+            }),
+            t({ " do", "\t" }),
+            i(0),
+            t({ "", "end" }),
+        }),
     },
     tex = {
         parse({ trig = "beg" }, tex_begin),
@@ -434,6 +526,99 @@ ls.snippets = {
             t({ "", "}" }),
         }),
     },
+    c = {
+        s("all fn", {
+            -- Simple static text.
+            t("//Parameters: "),
+            -- function, first parameter is the function, second the Placeholders
+            -- whose text it gets as input.
+            f(require("modules.completion.snippets.sniputils").copy, 2),
+            t({ "", "function " }),
+            -- Placeholder/Insert.
+            i(1),
+            t("("),
+            -- Placeholder with initial text.
+            i(2, "int foo"),
+            -- Linebreak
+            t({ ") {", "\t" }),
+            -- Last Placeholder, exit Point of the snippet. EVERY 'outer' SNIPPET NEEDS Placeholder 0.
+            i(0),
+            t({ "", "}" }),
+        }),
+
+        s("class", {
+            -- Choice: Switch between two different Nodes, first parameter is its position, second a list of nodes.
+            c(1, {
+                t("public "),
+                t("private "),
+            }),
+            t("class "),
+            i(2),
+            t(" "),
+            c(3, {
+                t("{"),
+                -- sn: Nested Snippet. Instead of a trigger, it has a position, just like insert-nodes. !!! These don't expect a 0-node!!!!
+                -- Inside Choices, Nodes don't need a position as the choice node is the one being jumped to.
+                sn(nil, {
+                    t("extends "),
+                    i(1),
+                    t(" {"),
+                }),
+                sn(nil, {
+                    t("implements "),
+                    i(1),
+                    t(" {"),
+                }),
+            }),
+            t({ "", "\t" }),
+            i(0),
+            t({ "", "}" }),
+        }),
+
+        s({ trig = "fn" }, {
+            d(6, require("modules.completion.snippets.sniputils").jdocsnip, { 2, 4, 5 }),
+            t({ "", "" }),
+            c(1, {
+                t({ "public " }),
+                t({ "private " }),
+            }),
+            c(2, {
+                t({ "void" }),
+                i(nil, { "" }),
+                t({ "String" }),
+                t({ "char" }),
+                t({ "int" }),
+                t({ "double" }),
+                t({ "boolean" }),
+            }),
+            t({ " " }),
+            i(3, { "myFunc" }),
+            t({ "(" }),
+            i(4),
+            t({ ")" }),
+            c(5, {
+                t({ "" }),
+                sn(nil, {
+                    t({ "", " throws " }),
+                    i(1),
+                }),
+            }),
+            t({ " {", "\t" }),
+            i(0),
+            t({ "", "}" }),
+        }),
+
+        s("#if", {
+            t("#if "),
+            i(1, "1"),
+            t({ "", "" }),
+            i(0),
+            t({ "", "#endif // " }),
+            f(function(args)
+                return args[1]
+            end, 1),
+        }),
+    },
     gitcommit = {
         parse({ trig = "docs" }, gitcommit_docs),
         parse({ trig = "feat" }, gitcommit_feat),
@@ -442,6 +627,34 @@ ls.snippets = {
         parse({ trig = "cleanup" }, gitcommit_cleanup),
         parse({ trig = "fix" }, gitcommit_fix),
         parse({ trig = "stylua" }, gitcommmit_stylua),
+    },
+    norg = {
+        s("ses", {
+            t({ "Session " }),
+            i(1, "1"),
+            t({ " [" }),
+            i(2, "2"),
+            t({ "](" }),
+            i(3, "now"),
+            t({ " ->" }),
+            i(4, "end"),
+            t({ "){" }),
+            i(5, "topic"),
+            t({ "}" }),
+        }),
+
+        ls.parser.parse_snippet(
+            "hajime",
+            "* Pomodoro\n** Sessions\n*** $0\n\n* Breaks\n** Anime\n** Neovim\n\n* Things i've to take care of\n* Things ive done "
+        ),
+        ls.parser.parse_snippet("sesval", "- [ ]  $0"),
+        s("neorg focus area", {
+            t("| $"),
+            i(1, "focus_area_name"),
+            t({ "$", "" }),
+            i(1, "marker body"),
+            t({ "", "| _" }),
+        }),
     },
 }
 

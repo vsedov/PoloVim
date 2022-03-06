@@ -57,7 +57,7 @@ end
 
 function config.nvim_cmp()
     local cmp = require("cmp")
-    local kind = cmp.lsp.CompletionItemKind
+    -- local kind = cmp.lsp.CompletionItemKind
 
     local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -313,7 +313,7 @@ function config.nvim_cmp()
             }),
 
             ["<C-l>"] = cmp.mapping(function(fallback)
-                local copilot_keys = vim.fn["copilot#Accept"]()
+                local copilot_keys = vim.fn["copilot#Accept"]("")
                 if copilot_keys ~= "" then
                     vim.api.nvim_feedkeys(copilot_keys, "i", true)
                 else
