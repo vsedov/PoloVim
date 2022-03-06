@@ -543,10 +543,12 @@ function M.setup()
     }
 
     local TerminalName = {
-        -- condition = function()
-        --     return vim.bo.buftype == 'terminal'
-        -- end,
-        -- icon = ' ', -- 
+
+        condition = function()
+            return vim.bo.buftype == "terminal"
+        end,
+
+        icon = " ", -- 
         provider = function()
             local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
             return " " .. tname

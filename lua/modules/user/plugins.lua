@@ -12,13 +12,14 @@ user["NarutoXY/ytmmusic.lua"] = {
     end,
 }
 
-user["~/GitHub/Generatorg"] = {
-    ft = "python",
-    opt = true,
-    config = function()
-        require("generatorg")
-    end,
-}
+-- user["~/GitHub/Generatorg"] = {
+--     ft = "python",
+--     opt = true,
+--     config = function()
+--         require("generatorg")
+--     end,
+-- }
+
 -- your plugin config
 return user
 
