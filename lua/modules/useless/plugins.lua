@@ -4,13 +4,13 @@ local conf = require("modules.useless.config")
 
 -- True emotional Support
 useless["rtakasuke/vim-neko"] = {
-  cmd = "Neko",
-  opt = true,
+    cmd = "Neko",
+    opt = true,
 }
 
 -- Call :DuckStart then to stop the duck Call DuckKill
 useless["tamton-aquib/duck.nvim"] = {
-  opt = true,
+    opt = true,
 }
 
 -- useless["raghavdoescode/nvim-owoifier"] = {
