@@ -27,7 +27,7 @@ end
 local function loadscheme()
     local themes
     if daylight() == "light" then
-        themes = { "themer.lua", "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
+        themes = { "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
     else
         themes = { "kanagawa.nvim", "tokyonight.nvim", "Sakura.nvim", "vim-dogrun", "jabuti-nvim" }
     end
