@@ -326,8 +326,27 @@ local function cppdocsnip(args, _, old_state)
     snip.old_state = param_nodes
     return snip
 end
+---  update current time, or given time
+---@param time os.date value by h:m - in string formate
+---@param update_value how many minutes 60 = 1 h, 120 = 2 ... use your brain
+---@return new time
+local function update_time(time, update_value)
+    local hour, minute = time:match("(%d+):(%d+)")
+
+    hour = (tonumber(hour)) * 60
+    minute = tonumber(minute)
+    local new_minute = hour + minute + update_value
+    return string.format("%02d:%02d", math.floor(new_minute / 60), new_minute % 60)
+end
+
 ls.snippets = {
     all = {
+
+          s({ trig = "date1" }, {
+            f(function()
+              return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
+            end, {}),
+          }),
         s(
             "trig",
             c(1, {
@@ -655,6 +674,7 @@ ls.snippets = {
             i(5, "topic"),
             t({ "}" }),
         }),
+
         ls.parser.parse_snippet("lec", "  *** Lectures"),
         ls.parser.parse_snippet("work", "  *** work_sheets"),
 
@@ -663,6 +683,7 @@ ls.snippets = {
             "* Pomodoro\n** Sessions\n*** Lectures $0\n***work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* Things i've to take care of\n* Things ive done "
         ),
         ls.parser.parse_snippet("sesval", "- [ ]  $0"),
+
         s("neorg focus area", {
             t("| $"),
             i(1, "focus_area_name"),

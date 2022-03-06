@@ -124,6 +124,7 @@ function config.nvim_cmp()
         { name = "treesitter", keyword_length = 2 },
         { name = "look", keyword_length = 4 },
         { name = "neorg", priority = 6 },
+         { name = 'rg', option = { additional_arguments = "--smart-case" } }
         -- { name = "nvim_lsp_signature_help", priority = 10 },
         -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
         -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
@@ -187,7 +188,7 @@ function config.nvim_cmp()
                     ultisnips = "[UltiSnips]",
                     spell = "[SPELL]",
                     neorg = "norg",
-                    -- rg = "[RG]",
+                    rg = "[RG]",
                 })[entry.source.name]
 
                 return vim_item
