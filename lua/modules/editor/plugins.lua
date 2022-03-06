@@ -463,6 +463,7 @@ editor["folke/zen-mode.nvim"] = {
 }
 
 editor["nvim-neorg/neorg"] = {
+    branch = "neorg-export",
     requires = { "max397574/neorg-zettelkasten" },
     config = function()
         require("modules.editor.neorg")
@@ -497,6 +498,8 @@ editor["monaqa/dial.nvim"] = {
     opt = true,
     setup = conf.dial_setup(),
     config = function()
+          vim.cmd[[packadd dial.nvim]]
+
         local dial = require("dial")
         dial.config.searchlist.normal = {
             "number#decimal",
