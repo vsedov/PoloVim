@@ -71,8 +71,14 @@ tools["ThePrimeagen/git-worktree.nvim"] = {
     config = conf.worktree,
 }
 
--- Packer
-
+tools["nmac427/guess-indent.nvim"] = {
+    module = "guess-indent",
+    event = "BufRead",
+    config = function()
+        require("guess-indent").setup({})
+    end,
+    after = "nvim-treesitter",
+}
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
     cmd = { "Octo" },
