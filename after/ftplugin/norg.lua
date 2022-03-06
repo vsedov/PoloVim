@@ -11,13 +11,13 @@ vim.cmd([[source ~/.config/nvim/clipboard_neorg.vim]])
 
 local neorg = require("neorg")
 local function load_completion()
-  neorg.modules.load_module("core.norg.completion", nil, {
-    engine = "nvim-cmp", -- Choose your completion engine here
-  })
+    neorg.modules.load_module("core.norg.completion", nil, {
+        engine = "nvim-cmp", -- Choose your completion engine here
+    })
 end
 
 if neorg.is_loaded() then
-  load_completion()
+    load_completion()
 else -- Otherwise wait until Neorg gets started and load the completion module then
-  neorg.callbacks.on_event("core.started", load_completion)
+    neorg.callbacks.on_event("core.started", load_completion)
 end
