@@ -646,19 +646,21 @@ ls.snippets = {
             t({ "Session " }),
             i(1, "1"),
             t({ " [" }),
-            i(2, "2"),
+            i(2, "2H"),
             t({ "](" }),
             i(3, "now"),
-            t({ " ->" }),
+            t({ " -> " }),
             i(4, "end"),
             t({ "){" }),
             i(5, "topic"),
             t({ "}" }),
         }),
+        ls.parser.parse_snippet("lec", "  *** Lectures"),
+        ls.parser.parse_snippet("work", "  *** work_sheets"),
 
         ls.parser.parse_snippet(
             "hajime",
-            "* Pomodoro\n** Sessions\n*** $0\n\n* Breaks\n** Anime\n** Neovim\n\n* Things i've to take care of\n* Things ive done "
+            "* Pomodoro\n** Sessions\n*** Lectures $0\n***work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* Things i've to take care of\n* Things ive done "
         ),
         ls.parser.parse_snippet("sesval", "- [ ]  $0"),
         s("neorg focus area", {
