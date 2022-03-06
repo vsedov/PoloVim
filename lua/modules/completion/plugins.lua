@@ -111,7 +111,7 @@ completion["hrsh7th/nvim-cmp"] = {
             config = conf.tabnine,
             opt = true,
         },
-        { "lukas-reineke/cmp-rg", after = "nvim-cmp", opt = true },
+        -- { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
         { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
