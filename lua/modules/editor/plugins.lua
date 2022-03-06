@@ -580,6 +580,7 @@ editor["rmagatti/alternate-toggler"] = {
 
 editor["jbyuki/nabla.nvim"] = {
     opt = true,
+    -- commit = "ba9559798ac5bdb029cbebaa8751f61e2f024f40",
     ft = "norg",
     requires = { "nvim-lua/popup.nvim" },
 }
