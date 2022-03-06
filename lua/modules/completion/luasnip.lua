@@ -340,7 +340,24 @@ ls.snippets = {
         ),
     },
     python = require("modules.completion.snippets.python"),
-
+    help = {
+        s({ trig = "con", wordTrig = true }, {
+            i(1),
+            f(function(args)
+                return { " " .. string.rep(".", 80 - (#args[1][1] + #args[2][1] + 2 + 2)) .. " " }
+            end, { 1, 2 }),
+            t({ "|" }),
+            i(2),
+            t({ "|" }),
+            i(0),
+        }),
+        s({ trig = "*", wordTrig = true }, {
+            t({ "*" }),
+            i(1),
+            t({ "*" }),
+            i(0),
+        }, { cond = require("modules.completion.snippets.sniputils").part(neg, even_count, "%*") }),
+    },
     lua = {
         s("snippet_node", {
             t('s("'),
@@ -349,10 +366,6 @@ ls.snippets = {
             i(0, "snippet_body"),
             t({ "", "})," }),
         }),
-
-        ----------------------------------
-        ---       FUNCTION NODES       ---
-        ----------------------------------
 
         s("function_node", {
             t("f("),
