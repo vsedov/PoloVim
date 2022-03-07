@@ -22,7 +22,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
 
-require("luasnip/loaders/from_vscode").load()
+-- require("luasnip/loaders/from_vscode").load()
 
 local parse = ls.parser.parse_snippet
 
@@ -342,11 +342,11 @@ end
 ls.snippets = {
     all = {
 
-          s({ trig = "date1" }, {
+        s({ trig = "date1" }, {
             f(function()
-              return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
+                return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
             end, {}),
-          }),
+        }),
         s(
             "trig",
             c(1, {
