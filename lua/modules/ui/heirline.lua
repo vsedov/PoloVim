@@ -39,10 +39,10 @@ local current_treesitter_context = function(width)
         return " "
     end
 
-    if #context > 200 then
-        context = string.format("%-20s", context)
-        context = string.format("%.200s", context)
-    end
+    -- if #context > 200 then
+    --     context = string.format("%-20s", context)
+    --     context = string.format("%.200s", context)
+    -- end
 
     return " " .. context
 end
@@ -52,6 +52,7 @@ local current_function = function()
     if width < 50 then
         return ""
     end
+
     local ts = current_treesitter_context(width)
     if string.len(ts) < 4 then
         return " "
