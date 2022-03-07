@@ -498,7 +498,7 @@ editor["monaqa/dial.nvim"] = {
     opt = true,
     setup = conf.dial_setup(),
     config = function()
-          vim.cmd[[packadd dial.nvim]]
+        vim.cmd([[packadd dial.nvim]])
 
         local dial = require("dial")
         dial.config.searchlist.normal = {
