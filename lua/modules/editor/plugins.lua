@@ -568,6 +568,8 @@ editor["sidebar-nvim/sidebar.nvim"] = {
     config = conf.side_bar,
 }
 
+
+
 editor["nyngwang/NeoZoom.lua"] = {
     event = "BufRead",
     after = "which-key.nvim",
