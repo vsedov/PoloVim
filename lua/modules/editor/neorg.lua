@@ -41,7 +41,7 @@ require("neorg").setup({
                 engine = "nvim-cmp",
             },
         },
-        ["external.zettelkasten"] = {},
+        -- ["external.zettelkasten"] = {},
         ["core.norg.concealer"] = {
             config = {
                 markup_preset = "dimmed",

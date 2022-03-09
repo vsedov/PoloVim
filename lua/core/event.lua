@@ -5,11 +5,9 @@ function autocmd.nvim_create_augroups(defs)
     for group_name, definition in pairs(defs) do
         vim.api.nvim_create_augroup(group_name, { clear = true })
         for _, def in ipairs(definition) do
-            event = def[1]
+            local event = def[1]
             -- Check if def[3] is a function or a string
-            local args
             if type(def[3]) == "function" then
-                call = def[3]
                 arg = {
                     group = group_name,
                     pattern = def[2],
@@ -162,7 +160,7 @@ function autocmd.load_autocmds()
                 "BufWritePre",
                 "*",
                 function()
-                    function auto_mkdir(dir, force)
+                    local function auto_mkdir(dir, force)
                         if
                             vim.fn.empty(dir) == 1
                             or string.match(dir, "^%w%+://")

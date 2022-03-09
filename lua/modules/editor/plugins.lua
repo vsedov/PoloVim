@@ -447,8 +447,8 @@ editor["folke/zen-mode.nvim"] = {
 }
 
 editor["nvim-neorg/neorg"] = {
-    branch = "neorg-export",
-    requires = { "max397574/neorg-zettelkasten" },
+    -- branch = "neorg-export",
+    -- requires = { "max397574/neorg-zettelkasten" },
     config = function()
         require("modules.editor.neorg")
     end,
