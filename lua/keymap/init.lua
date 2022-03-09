@@ -215,7 +215,7 @@ local plug_map = {
     -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
 
     -- Plugin Vista or SymbolsOutline -- Symbol Breaks for the time .
-    ["n|<Leader>v"] = map_cu("Vista!!"):with_noremap():with_silent(),
+    ["n|<Leader>v"] = map_cu("SymbolsOutline"):with_noremap():with_silent(),
 
     -- Plugin vim_niceblock
     ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
@@ -268,7 +268,7 @@ local plug_map = {
     -- $ ... $ : inline form
     -- $$ ... $$ : wrapped form
 
-    ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
+    -- ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
 
     -- Neogen
     ["n|<Leader>d"] = map_cr("lua require('neogen').generate()"):with_noremap():with_silent(),
@@ -276,24 +276,11 @@ local plug_map = {
     ["n|<Leader>ds"] = map_cr("lua require('neogen').generate({type = 'type'})"):with_noremap():with_silent(),
 
     -- Spectre
-    ["n|;w"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
+    ["n|;e"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
     ["n|;W"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
+    ["n|;w"] = map_cmd("<cmd>Sad<Cr>"):with_noremap(),
     ["v|;v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
     ["v|;c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
 }
 
 return { map = plug_map }
-
--- Might be used, not sure how .
--- ["n|<Leader>dd"] = map_cu("lua require('dap').continue()"):with_noremap():with_silent(),
--- ["n|<Leader>do"] = map_cr("<cmd> lua require'dap'.step_over()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>di"] = map_cr("<cmd> lua require'dap'.step_into()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>dO"] = map_cr("<cmd> lua require'dap'.step_out()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>b"] = map_cr("<cmd> lua require'dap'.toggle_breakpoint()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>dr"] = map_cr("<cmd> lua require'dap'.repl.open()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>drr"] = map_cr('<cmd> lua require"dap".repl.toggle({width = 50}, "belowright vsplit")<cr>')
---   :with_noremap()
---   :with_silent(),
--- ["n|<Leader>dl"] = map_cr("<cmd> lua require'dap'.repl.run_last()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>xr"] = map_cr("<Cmd>lua require('dapui').eval()<CR>"):with_noremap():with_silent(),
--- ["n|C"] = map_cr('<cmd>lua require"dap".run_to_cursor()<CR>'):with_noremap():with_silent(),
