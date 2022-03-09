@@ -54,6 +54,15 @@ _G.syn_stack = function()
     print(vim.inspect(stack))
 end
 
+-- change case of cword
+_G.caseChange = function()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    vim.api.nvim_feedkeys("b~", "n", true)
+    vim.defer_fn(function()
+        vim.api.nvim_win_set_cursor(0, cursor)
+    end, 1)
+end
+
 _G.toggle_venn = function()
     local venn_enabled = vim.inspect(vim.b.venn_enabled)
     if venn_enabled == "nil" then

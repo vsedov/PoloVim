@@ -16,6 +16,7 @@ local plug_map = {
 
     ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
     ["n|<C-]>"] = map_args("Template"),
+    -- ["n|;E"] = map_cmd('v:lua.caseChange()'):with_silent():with_expr(),
 
     -- Copilot toggle
     ["n|<localleader>c]"] = map_cmd("v:lua.toggleCopilot()"):with_silent():with_expr(),
