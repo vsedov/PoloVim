@@ -6,23 +6,12 @@ function autocmd.nvim_create_augroups(defs)
         vim.api.nvim_create_augroup(group_name, { clear = true })
         for _, def in ipairs(definition) do
             local event = def[1]
-            -- Check if def[3] is a function or a string
-            if type(def[3]) == "function" then
-                arg = {
-                    group = group_name,
-                    pattern = def[2],
-                    callback = def[3],
-                    nested = def[4],
-                }
-            else
-                arg = {
-                    group = group_name,
-                    pattern = def[2],
-                    command = def[3],
-                    nested = def[4],
-                }
-            end
-
+            local arg = {
+                group = group_name,
+                pattern = def[2],
+                [type(def[3]) == "function" and "callback" or type(def[3]) == "string" and "command"] = def[3],
+                nested = def[4],
+            }
             vim.api.nvim_create_autocmd(event, arg)
         end
     end
@@ -139,6 +128,7 @@ function autocmd.load_autocmds()
                     if byte ~= -1 or byte > 1 then
                         return
                     end
+
                     vim.bo.buftype = "nofile"
                     vim.bo.swapfile = false
                     vim.bo.fileformat = "unix"
