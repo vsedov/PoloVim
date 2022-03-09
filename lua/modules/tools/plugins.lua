@@ -219,10 +219,10 @@ tools["windwp/nvim-spectre"] = {
     module = "spectre",
     requires = { "nvim-lua/plenary.nvim" },
     keys = {
-        "<Leader><Leader>Ss",
-        "<Leader><Leader>Sw",
-        "<Leader><Leader>Sv",
-        "<Leader><Leader>Sc",
+        ";w",
+        ";W",
+        ";v",
+        ";c",
     },
 
     config = function()

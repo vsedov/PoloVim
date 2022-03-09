@@ -276,10 +276,10 @@ local plug_map = {
     ["n|<Leader>ds"] = map_cr("lua require('neogen').generate({type = 'type'})"):with_noremap():with_silent(),
 
     -- Spectre
-    ["n|<Leader><Leader>Ss"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
-    ["n|<Leader><Leader>Sw"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
-    ["v|<Leader><Leader>Sv"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
-    ["v|<Leader><Leader>Sc"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
+    ["n|;w"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
+    ["n|;W"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
+    ["v|;v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
+    ["v|;c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
 }
 
 return { map = plug_map }
