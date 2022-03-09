@@ -129,24 +129,21 @@ lang["nvim-treesitter/playground"] = {
 
 -- great plugin but not been maintained
 -- lang["ElPiloto/sidekick.nvim"] = {opt = true, fn = {'SideKickNoReload'}, setup = conf.sidekick}
-lang["stevearc/aerial.nvim"] = {
-    opt = true,
-    cmd = { "AerialToggle" },
-    config = conf.aerial,
-}
-
--- lang["simrat39/symbols-outline.nvim"] = {
---   opt = true,
---   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
---   setup = conf.outline,
+-- lang["stevearc/aerial.nvim"] = {
+--     opt = true,
+--     cmd = { "AerialToggle" },
+--     config = conf.aerial,
 -- }
--- Only for java files help maven.txt
-lang["mikelue/vim-maven-plugin"] = {
-    ft = "java",
+
+lang["simrat39/symbols-outline.nvim"] = {
+    opt = true,
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
+    setup = conf.outline,
 }
 
 lang["mfussenegger/nvim-jdtls"] = {
     ft = "java",
+    opt = true,
 }
 
 -- :lua require'blanket'.start() - start the plugin, useful when filetype property is not set
@@ -156,6 +153,7 @@ lang["mfussenegger/nvim-jdtls"] = {
 -- temp for groupwork will remove soon .
 lang["dsych/blanket.nvim"] = {
     ft = "java",
+    opt = true,
     config = function()
         require("blanket").setup({
             -- can use env variables and anything that could be interpreted by expand(), see :h expandcmd()
@@ -176,6 +174,15 @@ lang["dsych/blanket.nvim"] = {
                 sign_group = "Blanket",
             },
         })
+    end,
+}
+
+lang["andythigpen/nvim-coverage"] = {
+    ft = { "python" },
+    cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
+    opt = true,
+    config = function()
+        require("coverage").setup()
     end,
 }
 
@@ -270,13 +277,6 @@ lang["dccsillag/magma-nvim"] = {
 
 lang["Vimjas/vim-python-pep8-indent"] = {
     ft = "python",
-}
--- Quite nice
-lang["ok97465/pycell_deco.nvim"] = {
-    ft = "python",
-    config = function()
-        require("pycell_deco").setup({ cell_name_fg = "#1abc9c", cell_line_bg = nil })
-    end,
 }
 
 lang["vim-test/vim-test"] = {
