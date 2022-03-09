@@ -52,22 +52,6 @@ editor["kana/vim-niceblock"] = {
 --   end
 -- }
 
--- editor["ggandor/lightspeed.nvim"] = {
---   event = "BufReadPost",
---   opt = true,
---   config = conf.lightspeed,
--- }
-
--- copy paste failed in block mode when clipboard = unnameplus"
--- editor["bfredl/nvim-miniyank"] = {
---   keys = { "p", "y", "<C-v>" },
---   opt = true,
---   setup = function()
---     vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
---     vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
---   end,
--- }
-
 editor["gbprod/yanky.nvim"] = {
     keys = {
         "<C-v>",
@@ -109,7 +93,7 @@ editor["gbprod/yanky.nvim"] = {
         require("yanky").setup({
             ring = {
                 -- i have a op pc
-                history_length = 30,
+                history_length = 50,
                 storage = "shada",
             },
         })
