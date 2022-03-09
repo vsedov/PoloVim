@@ -47,7 +47,7 @@ tools["ThePrimeagen/harpoon"] = {
                 enter_on_sendcmd = true,
                 tmux_autoclose_windows = false,
                 excluded_filetypes = { "harpoon" },
-                mark_branch = false,
+                mark_branch = true,
             },
         })
         require("telescope").load_extension("harpoon")
@@ -108,7 +108,7 @@ tools["TimUntersberger/neogit"] = {
 }
 
 tools["ruifm/gitlinker.nvim"] = {
-    keys = "<leader>gy",
+    keys = { "<leader>gy" },
     config = function()
         require("gitlinker").setup()
     end,
@@ -240,7 +240,7 @@ tools["ray-x/sad.nvim"] = {
     opt = true,
     config = function()
         require("sad").setup({
-            diff = "delta", -- you can use `diff`, `diff-so-fancy`
+            diff = "diff-so-fancy", -- you can use `diff`, `diff-so-fancy`
             ls_file = "fd", -- also git ls_file
             exact = false, -- exact match
         })

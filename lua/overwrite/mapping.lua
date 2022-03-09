@@ -29,11 +29,6 @@ if vim.bo.filetype == "lua" then
 end
 
 local keys = {
-    -- pack?
-    -- ["n|<Leader>tr"]     = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
-    -- ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
-
-    -- Lsp mapp work when insertenter and lsp start
     --
     ["n|<Leader>tc"] = map_cu("Clap colors"):with_noremap():with_silent(),
     ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
@@ -84,29 +79,13 @@ local keys = {
     ["o|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
     ["v|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
 
-    -- clap --
-
-    -- ["n|<d-C>"] = map_cu("Clap | startinsert"),
-    -- ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
-    -- -- ["n|<d-p>"] = map_cu("Clap files | startinsert"),
-    -- -- ["i|<d-p>"] = map_cu("Clap files | startinsert"):with_noremap():with_silent(),
-    -- -- ["n|<d-m>"] = map_cu("Clap files | startinsert"),
-    -- -- ["n|<M-m>"] = map_cu("Clap maps +mode=n | startinsert"),
-    -- -- ["i|<M-m>"] = map_cu("Clap maps +mode=i | startinsert"),
-    -- -- ["v|<M-m>"] = map_cu("Clap maps +mode=v | startinsert"),
-
     -- ["n|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
     ["i|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
     ["i|<C-df>"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
-    -- -- ["n|<F2>"] = map_cr(""):with_expr(),
-    -- ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
-    -- ["n|<F9>"] = map_cr("GoBreakToggle"),
-    -- -- session
 
     -- Switch from local to Normal for M to test how it tis
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]]):with_noremap(),
     ["n|;n"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]):with_noremap(),
-
     ["n|;1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]):with_noremap():with_silent(),
     ["n|;2"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]):with_noremap():with_silent(),
     ["n|;3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]):with_noremap():with_silent(),
