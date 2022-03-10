@@ -76,8 +76,8 @@ local keys = {
     [{ "n", "<localleader>bg" }] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
     -- tshit
-    [{ "o|m" }] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
-    [{ "v|m" }] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
+    [{ "o", "m" }] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
+    [{ "v", "m" }] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
 
     -- ["n", "<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
     [{ "i", "<d-f>" }] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
@@ -96,8 +96,8 @@ local keys = {
     [{ "n", ";8" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(8)<CR>]]):with_noremap():with_silent(),
     [{ "n", ";9" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(9)<CR>]]):with_noremap():with_silent(),
 
-    [{ "n|;t" }] = map_cu([[Telescope harpoon marks]]):with_noremap():with_silent(),
-    [{ "n|;;" }] = map_cmd([[<cmd> lua require("harpoon.ui").toggle_quick_menu()<CR>]]):with_noremap():with_silent(),
+    [{ "n", ";t" }] = map_cu([[Telescope harpoon marks]]):with_noremap():with_silent(),
+    [{ "n", ";;" }] = map_cmd([[<cmd> lua require("harpoon.ui").toggle_quick_menu()<CR>]]):with_noremap():with_silent(),
     [{ "n", "<Leader>n;" }] = map_cmd([[<cmd> lua require('harpoon.cmd-ui').toggle_quick_menu()<Cr>]])
         :with_noremap()
         :with_silent(),
