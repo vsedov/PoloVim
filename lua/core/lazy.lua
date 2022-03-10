@@ -129,10 +129,26 @@ function Lazyload()
     --   vim.cmd([[setlocal syntax=on]])
     -- end
 
-    vim.cmd([[autocmd FileType vista,guihua setlocal syntax=on]])
-    vim.cmd(
-        [[autocmd FileType * silent! lua if vim.fn.wordcount()['bytes'] > 2048000 then print("syntax off") vim.cmd("setlocal syntax=off") end]]
-    )
+    -- vim.cmd([[autocmd FileType vista,guihua setlocal syntax=on]])
+    -- vim.cmd(
+        -- [[autocmd FileType * silent! lua if vim.fn.wordcount()['bytes'] > 2048000 then print("syntax off") vim.cmd("setlocal syntax=off") end]]
+    -- )
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "vista", "guiha" },
+        command = [[setlocal syntax=on]],
+    })
+    
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "*",
+        callback = function()
+            if vim.fn.wordcount()['bytes'] > 2048000 then 
+                print("syntax off")
+                vim.cmd([[setlocal syntax=off]])
+            end
+        end,
+    })
+
+
 end
 
 local lazy_timer = 30

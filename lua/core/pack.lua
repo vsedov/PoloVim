@@ -151,12 +151,37 @@ function plugins.load_compile()
         plugins.magic_compile()
         require("_compiled")
     end
-    vim.cmd([[command! PackerCompile lua require('core.pack').magic_compile()]])
-    vim.cmd([[command! PackerInstall lua require('core.pack').install()]])
-    vim.cmd([[command! PackerUpdate lua require('core.pack').update()]])
-    vim.cmd([[command! PackerSync lua require('core.pack').sync()]])
-    vim.cmd([[command! PackerClean lua require('core.pack').clean()]])
-    vim.cmd([[command! PackerStatus lua require('core.pack').status()]])
+
+    vim.api.nvim_add_user_command("PackerCompile", function()
+        require("core.pack").magic_compile()
+    end, { force = true })
+
+    vim.api.nvim_add_user_command("PackerInstall", function()
+        require("core.pack").install()
+    end, { force = true })
+
+    vim.api.nvim_add_user_command("PackerUpdate", function()
+        require("core.pack").update()
+    end, { force = true })
+
+    vim.api.nvim_add_user_command("PackerSync", function()
+        require("core.pack").sync()
+    end, { force = true })
+
+    vim.api.nvim_add_user_command("PackerClean", function()
+        require("core.pack").clean()
+    end, { force = true })
+
+    vim.api.nvim_add_user_command("PackerStatus", function()
+        require("core.pack").status()
+    end, { force = true })
+    --
+    -- vim.cmd([[command! PackerCompile lua require('core.pack').magic_compile()]])
+    -- vim.cmd([[command! PackerInstall lua require('core.pack').install()]])
+    -- vim.cmd([[command! PackerUpdate lua require('core.pack').update()]])
+    -- vim.cmd([[command! PackerSync lua require('core.pack').sync()]])
+    -- vim.cmd([[command! PackerClean lua require('core.pack').clean()]])
+    -- vim.cmd([[command! PackerStatus lua require('core.pack').status()]])
     vim.cmd([[autocmd User PackerComplete lua require('core.pack').magic_compile()]])
 end
 

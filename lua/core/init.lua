@@ -47,11 +47,6 @@ local leader_map = function()
     vim.g.mapleader = " "
     vim.g.maplocalleader = "."
 
-    -- vim.api.nvim_set_keymap("n", "<SPACE>", "<Nop>", { noremap = true })
-
-    -- vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
-    -- vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
-
     vim.keymap.set("n", "<SPACE>", "<Nop>", { noremap = true })
     vim.keymap.set("n", " ", "", { noremap = true })
     vim.keymap.set("x", " ", "", { noremap = true })
@@ -75,8 +70,8 @@ local load_core = function()
         require("core.options")
         require("core.mapping")
         require("keymap")
-        require("core.event")
         pack.load_compile()
+        require("core.event")
         require("core.lazy")
     else
         print("install all plugins, please wait")

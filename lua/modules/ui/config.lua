@@ -10,19 +10,6 @@ function config.windline()
     -- require('wlfloatline').toggle()
 end
 
-local function daylight()
-    local h = tonumber(os.date("%H"))
-    if h > 6 and h < 18 then
-        return "light"
-    else
-        return "dark"
-    end
-end
-
-local winwidth = function()
-    return vim.api.nvim_call_function("winwidth", { 0 })
-end
-
 function config.nvim_bufferline()
     if not packer_plugins["nvim-web-devicons"].loaded then
         packer_plugins["nvim-web-devicons"].loaded = true
