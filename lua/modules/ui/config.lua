@@ -623,7 +623,7 @@ function config.buffers_close()
 end
 
 function config.themer()
-    local themes = { "rose_pine", "dracula", "kurai", "everforest", "monokai_pro", "boo", "shado", "darknight" }
+    local themes = { "rose_pine", "dracula", "everforest", "monokai_pro", "boo", "darknight" }
     local cs = themes[math.random(1, #themes)]
     local cp = require("themer.modules.core.api").get_cp(cs)
     print(cs)

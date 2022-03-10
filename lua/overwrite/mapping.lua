@@ -190,21 +190,20 @@ vim.api.nvim_add_user_command("DuckStart", function()
     require("modules.useless.config").launch_duck()
 end, { force = true })
 
-
 vim.api.nvim_add_user_command("TestStart", function()
-    require"modules.lang.language_utils".testStart()
+    require("modules.lang.language_utils").testStart()
 end, { force = true })
 
 vim.api.nvim_add_user_command("DebugOpen", function()
-    require"modules.lang.dap".prepare()
+    require("modules.lang.dap").prepare()
 end, { force = true })
 
 vim.api.nvim_add_user_command("HpoonClear", function()
-     require"harpoon.mark".clear_all()
+    require("harpoon.mark").clear_all()
 end, { force = true })
 
 vim.api.nvim_add_user_command("HpoonClear", function()
-     require"harpoon.mark".clear_all()
+    require("harpoon.mark").clear_all()
 end, { force = true })
 
 local plugmap = require("keymap").map
@@ -226,11 +225,11 @@ K.get_keymaps = function()
 end
 
 vim.api.nvim_add_user_command("Keymaps", function()
-     require('overwrite.mapping').get_keymaps()
+    require("overwrite.mapping").get_keymaps()
 end, { force = true })
 
 vim.api.nvim_add_user_command("ColourScheme", function()
-    require('utils.telescope').colorscheme()
+    require("utils.telescope").colorscheme()
 end, { force = true })
 
 vim.cmd([[

@@ -1,15 +1,15 @@
 local M = {}
-local HOME = os.getenv("HOME")
-local api = vim.api
-local async = require("plenary.async")
-local notify = require("notify").async
+-- local HOME = os.getenv("HOME")
+-- local api = vim.api
+-- local async = require("plenary.async")
+-- local notify = require("notify").async
 
 local bind = require("keymap.bind")
 
 local map_cr = bind.map_cr
 local map_cu = bind.map_cu
-local map_cmd = bind.map_cmd
-local map_args = bind.map_args
+-- local map_cmd = bind.map_cmd
+-- local map_args = bind.map_args
 vim.notify = require("notify")
 local loader = require("packer").loader
 
@@ -92,7 +92,6 @@ M.testStart = function()
                         type = "python",
                         request = "launch",
                         module = module,
-                        args = args,
                         cwd = vim.fn.getcwd(),
 
                         pathMappings = {

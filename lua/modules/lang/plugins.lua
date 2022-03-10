@@ -346,33 +346,6 @@ lang["folke/todo-comments.nvim"] = {
     after = "trouble.nvim",
 }
 
--- -- Can Gonna Use jaq for now ?
--- lang["CRAG666/code_runner.nvim"] = {
---   -- ft = {"c", "java"},
---   requires = "nvim-lua/plenary.nvim",
---   config = function()
---     require("code_runner").setup({
---       term = {
---         position = "belowright",
---         size = 8,
---       },
---       filetype = {
---         java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
---         python = "python -U",
---         typescript = "deno run",
---         rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
---       },
---       project = {
---         ["~/GitHub/TeamProject2022_28/ARMS"] = {
---           name = "ARMS",
---           description = "Project with make file",
---           command = "cd ~/GitHub/TeamProject2022_28/ARMS && mvn! compile && mvn test",
---         },
---       },
---     })
---   end,
--- }
-
 lang["is0n/jaq-nvim"] = {
     cmd = "Jaq",
     after = "filetype.nvim",
