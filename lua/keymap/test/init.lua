@@ -6,18 +6,22 @@ local map_args = bind.map_args
 local map_key = bind.map_key
 local global = require("core.global")
 
+local modes = {
+    map_cr = map_cr,
+    map_cu = map_cu,
+    map_cmd = map_cmd,
+    map_args = map_args,
+    map_key = map_key,
+}
+
 local plug_map = {
-    [{ { "i", "n" }, { "<Leader>8" } }] = map_cmd(function()
+    [{ { "i", "n" }, {"<Leader>8", "<Leader>0"} }] = map_cmd(function()
         print("heresdjsdhs")
     end):with_noremap(),
+
+    [{ "n", "<C-]>" }] = map_args("Template"),
+    [{ { "i", "s" }, "<TAB>" ,"test"}] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
 }
--- mode {
---   bind = "x",
---   map = { "i", "n" }
--- }
--- map {
---   bind = "x",
---   map = { "i", "n" }
--- }
+
 bind.nvim_load_mapping(plug_map)
 -- print(vim.tbl_flatten(plug_map))

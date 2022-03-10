@@ -89,9 +89,11 @@ function pbind.nvim_load_mapping(mapping)
         local rhs = value.cmd
         if type(bind[2]) == "string" then
             vim.keymap.set(bind[1], bind[2], rhs, options)
+            table.insert(pbind.all_keys, ("<%s | %s> | %s"):format(vim.inspect(bind[1]), bind[2], vim.inspect(rhs)))
         elseif type(bind[2]) == "table" then
             local function map_wrapper(map_key)
                 vim.keymap.set(bind[1], map_key, rhs, options)
+                table.insert(pbind.all_keys, ("<%s | %s> | %s"):format(vim.inspect(bind[1]), vim.inspect(map_key), vim.inspect(rhs)))
             end
             for _, key in pairs(bind[2]) do
                 map_wrapper(key)
@@ -101,8 +103,3 @@ function pbind.nvim_load_mapping(mapping)
 end
 
 return pbind
-
---         rhs = vim.trim(rhs, {}, 0)
---         table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. rhs)
-
--- end
