@@ -15,12 +15,12 @@ local modes = {
 }
 
 local plug_map = {
-    [{ { "i", "n" }, {"<Leader>8", "<Leader>0"} }] = map_cmd(function()
+    [{ { "i", "n" }, { "<Leader>8", "<Leader>0" } }] = map_cmd(function()
         print("heresdjsdhs")
     end):with_noremap(),
 
     [{ "n", "<C-]>" }] = map_args("Template"),
-    [{ { "i", "s" }, "<TAB>" ,"test"}] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
+    [{ { "i", "s" }, "<TAB>", "test" }] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
 }
 
 bind.nvim_load_mapping(plug_map)

@@ -93,7 +93,10 @@ function pbind.nvim_load_mapping(mapping)
         elseif type(bind[2]) == "table" then
             local function map_wrapper(map_key)
                 vim.keymap.set(bind[1], map_key, rhs, options)
-                table.insert(pbind.all_keys, ("<%s | %s> | %s"):format(vim.inspect(bind[1]), vim.inspect(map_key), vim.inspect(rhs)))
+                table.insert(
+                    pbind.all_keys,
+                    ("<%s | %s> | %s"):format(vim.inspect(bind[1]), vim.inspect(map_key), vim.inspect(rhs))
+                )
             end
             for _, key in pairs(bind[2]) do
                 map_wrapper(key)

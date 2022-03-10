@@ -106,16 +106,17 @@ function pbind.nvim_load_mapping(mapping)
     for bind, value in pairs(mapping) do
         local options = value.options
         local rhs = value.cmd
+        local mode = bind[1]
+        local map = bind[2]
         if type(bind[2]) == "string" then
-            vim.keymap.set(bind[1], bind[2], rhs, options)
+            vim.keymap.set(mode, map, rhs, options)
             -- vim.api.nvim_set_keymap(bind[1], bind[2], rhs, options)
-        elseif type(bind[2]) == "table" then
-            print("i am here")
+        elseif type(map) == "table" then
             local function map_wrapper(map_key)
-                vim.keymap.set(bind[1], map_key, rhs, options)
+                vim.keymap.set(mode, map_key, rhs, options)
                 -- vim.api.nvim_set_keymap(bind[1], map_key, rhs, options)
             end
-            for _, key in pairs(bind[2]) do
+            for _, key in pairs(map) do
                 map_wrapper(key)
             end
         end
