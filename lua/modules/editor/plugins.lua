@@ -467,16 +467,6 @@ editor["raimon49/requirements.txt.vim"] = {
     ft = { "requirements" },
 }
 
--- editor["max397574/better-escape.nvim"] = {
---   event = "InsertEnter",
---   config = function()
---     require("better_escape").setup({
---       timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
---       clear_empty_lines = true, -- clear line after escaping if ther is only whitespace      })
---     })
---   end,
--- }
-
 editor["monaqa/dial.nvim"] = {
     keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" } },
     opt = true,

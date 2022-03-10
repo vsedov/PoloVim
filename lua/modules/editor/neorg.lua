@@ -1,5 +1,3 @@
-local loader = require("packer").loader
-
 if not packer_plugins["zen-mode.nvim"].loaded then
     vim.cmd([[packadd zen-mode.nvim ]])
 end

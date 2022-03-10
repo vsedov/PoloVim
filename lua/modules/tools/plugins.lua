@@ -360,7 +360,8 @@ tools["Krafi2/jeskape.nvim"] = {
     config = function()
         require("jeskape").setup({
             mappings = {
-                ["\\"] = {
+                -- avoid tex values getting in teh way
+                ["\\l"] = {
                     i = "<cmd>Clap | startinsert<cr>",
                     f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
                 },
