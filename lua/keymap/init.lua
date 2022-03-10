@@ -8,7 +8,9 @@ local global = require("core.global")
 require("keymap.config")
 
 local plug_map = {
+
     ["i|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
+
     ["i|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
 
     ["s|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
