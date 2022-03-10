@@ -8,18 +8,16 @@ local global = require("core.global")
 require("keymap.config")
 
 local plug_map = {
-    -- [{ { "i", "s" }, "<S-Tab>" }] = map_cmd("v:lua.tab_complete()"):with_expr(),
-    -- [{ { "i", "s" }, "<Tab>" }] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
-    -- [{ "n", "<CR>" }] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
-    -- [{ "n", "<C-]>" }] = map_args("Template"),
+    [{ { "i", "s" }, "<S-Tab>" }] = map_cmd("v:lua.tab_complete()"):with_expr(),
+    [{ { "i", "s" }, "<Tab>" }] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
+    [{ "n", "<CR>" }] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
+    [{ "n", "<C-]>" }] = map_args("Template"),
 
     -- ["n", ";E"] = map_cmd('v:lua.caseChange()'):with_silent():with_expr(),
 
     -- Copilot toggle
     [{ "n", "<localleader>c]" }] = map_cmd("v:lua.toggleCopilot()"):with_silent():with_expr(),
-    -- -- Show syntax highlighting groups for word under cursor
-    [{ "n", "localleader>c{" }] = map_cmd("call v:lua.syn_stack()"):with_silent():with_expr(),
-    --
+
     -- [{ "n", "<leader>li" }] = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),
     -- [{ "n", "<leader>ll" }] = map_cr("LspLog"):with_noremap():with_silent():with_nowait(),
     -- [{ "n", "<leader>lr" }] = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
@@ -297,6 +295,27 @@ local plug_map = {
     [{ "n", ";w" }] = map_cmd("<cmd>Sad<Cr>"):with_noremap(),
     [{ "v", "'v" }] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
     [{ "v", "'c" }] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
+    
+    -- Show syntax highlighting groups for word under cursor
+    [{ "n", "<localleader>c[" }] = map_cmd(function()
+        local c = vim.api.nvim_win_get_cursor(0)
+        local stack = vim.fn.synstack(c[1], c[2] + 1)
+        for i, l in ipairs(stack) do
+            stack[i] = vim.fn.synIDattr(l, "name")
+        end
+        print(vim.inspect(stack))
+    end):with_silent(), 
+    [{ "n", "<localleader>c]" }] = map_cmd(
+      function()
+        if vim.fn["copilot#Enabled"]() == 1 then
+            vim.cmd([[ Copilot disable ]])
+        else
+            vim.cmd([[ Copilot enable ]])
+        end
+        vim.cmd([[ Copilot status ]])
+    end
+    ):with_silent(),
+
 }
 
 return { map = plug_map }
