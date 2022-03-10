@@ -45,95 +45,6 @@ function autocmd.load_autocmds()
             { "BufWritePre", "*.tmp", "setlocal noundofile" },
             { "BufWritePre", "*.bak", "setlocal noundofile" },
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
-        },
-
-        wins = {
-            -- Highlight current line only on focused window
-            {
-                { "WinEnter", "BufEnter", "InsertLeave" },
-                "*",
-                [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
-            },
-            {
-                { "WinLeave", "BufLeave", "InsertEnter" },
-                "*",
-                [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorline | endif]],
-            },
-            {
-                { "WinLeave", "BufLeave", "InsertEnter" },
-                "*",
-                [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
-            },
-            { "BufEnter", "NvimTree", [[setlocal cursorline]] },
-            { "CmdLineEnter", "*", [[set nosmartcase]] },
-            { "CmdLineLeave", "*", [[set smartcase]] },
-            -- Equalize window dimensions when resizing vim window
-            { "VimResized", "*", [[tabdo wincmd =]] },
-            -- Force write shada on leaving nvim
-            {
-                "VimLeave",
-                "*",
-                [[if has('nvim') | wshada! | else | wviminfo! | endif]],
-            },
-
-            -- Check if file changed when its window is focus, more eager than 'autoread'
-            { "FocusGained", "*", "checktime" },
-            -- -- {"CmdwinEnter,CmdwinLeave", "*", "lua require'wlfloatline'.toggle()"};
-            -- {"CmdlineEnter,CmdlineLeave", "*", "echom 'kkk'"};
-        },
-
-        ft = {
-            {
-                "FileType",
-                { "qf", "help", "man", "ls:pinfo" },
-                "nnoremap <silent> <buffer> q :close<CR>",
-            },
-            {
-                "FileType",
-                "dashboard",
-                "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2",
-            },
-            { { "BufNewFile", "BufRead" }, "*.toml", " setf toml" },
-        },
-        yank = {
-            {
-                "TextYankPost",
-                "*",
-                [[lua vim.highlight.on_yank({ higroup = "IncSearch", timeout = 400, on_macro = true, on_visual = true })]],
-            },
-        },
-        quickfix = {
-            {
-                "QuickfixCmdPost",
-                { "make", "grep", "grepadd", "vimgrep", "vimgrepadd" },
-                [[cwin]],
-            },
-            {
-                "QuickfixCmdPost",
-                { "lmake", "lgrep", "lgrepadd", "lvimgrep", "lvimgrepadd" },
-                [[lwin]],
-            },
-        },
-    }
-    local callbackdefs = {
-        callback = {
-            {
-                "VimEnter",
-                "*",
-                function()
-                    if vim.fn.bufname("%") ~= "" then
-                        return
-                    end
-                    local byte = vim.fn.line2byte(vim.fn.line("$") + 1)
-                    if byte ~= -1 or byte > 1 then
-                        return
-                    end
-
-                    vim.bo.buftype = "nofile"
-                    vim.bo.swapfile = false
-                    vim.bo.fileformat = "unix"
-                end,
-            },
             {
                 "BufWritePost",
                 "*",
@@ -175,9 +86,94 @@ function autocmd.load_autocmds()
                 false,
             },
         },
+
+        wins = {
+            -- Highlight current line only on focused window
+            {
+                { "WinEnter", "BufEnter", "InsertLeave" },
+                "*",
+                [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
+            },
+            {
+                { "WinLeave", "BufLeave", "InsertEnter" },
+                "*",
+                [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorline | endif]],
+            },
+            {
+                { "WinLeave", "BufLeave", "InsertEnter" },
+                "*",
+                [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
+            },
+            { "BufEnter", "NvimTree", [[setlocal cursorline]] },
+            { "CmdLineEnter", "*", [[set nosmartcase]] },
+            { "CmdLineLeave", "*", [[set smartcase]] },
+            -- Equalize window dimensions when resizing vim window
+            { "VimResized", "*", [[tabdo wincmd =]] },
+            -- Force write shada on leaving nvim
+            {
+                "VimLeave",
+                "*",
+                [[if has('nvim') | wshada! | else | wviminfo! | endif]],
+            },
+            {
+                "VimEnter",
+                "*",
+                function()
+                    if vim.fn.bufname("%") ~= "" then
+                        return
+                    end
+                    local byte = vim.fn.line2byte(vim.fn.line("$") + 1)
+                    if byte ~= -1 or byte > 1 then
+                        return
+                    end
+
+                    vim.bo.buftype = "nofile"
+                    vim.bo.swapfile = false
+                    vim.bo.fileformat = "unix"
+                end,
+            },
+
+            -- Check if file changed when its window is focus, more eager than 'autoread'
+            { "FocusGained", "*", "checktime" },
+            -- -- {"CmdwinEnter,CmdwinLeave", "*", "lua require'wlfloatline'.toggle()"};
+            -- {"CmdlineEnter,CmdlineLeave", "*", "echom 'kkk'"};
+        },
+
+        ft = {
+            {
+                "FileType",
+                { "qf", "help", "man", "ls:pinfo" },
+                "nnoremap <silent> <buffer> q :close<CR>",
+            },
+            {
+                "FileType",
+                "dashboard",
+                "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2",
+            },
+            { { "BufNewFile", "BufRead" }, "*.toml", " setf toml" },
+        },
+        yank = {
+            {
+                "TextYankPost",
+                "*",
+                [[lua vim.highlight.on_yank({ higroup = "IncSearch", timeout = 400, on_macro = true, on_visual = true })]],
+            },
+        },
+        quickfix = {
+            {
+                "QuickfixCmdPost",
+                { "make", "grep", "grepadd", "vimgrep", "vimgrepadd" },
+                [[cwin]],
+            },
+            {
+                "QuickfixCmdPost",
+                { "lmake", "lgrep", "lgrepadd", "lvimgrep", "lvimgrepadd" },
+                [[lwin]],
+            },
+        },
     }
+
     autocmd.nvim_create_augroups(definitions)
-    autocmd.nvim_create_augroups(callbackdefs)
 end
 
 autocmd.load_autocmds()
