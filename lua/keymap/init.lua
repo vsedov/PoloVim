@@ -295,7 +295,7 @@ local plug_map = {
     [{ "n", ";w" }] = map_cmd("<cmd>Sad<Cr>"):with_noremap(),
     [{ "v", "'v" }] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
     [{ "v", "'c" }] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
-    
+
     -- Show syntax highlighting groups for word under cursor
     [{ "n", "<localleader>c[" }] = map_cmd(function()
         local c = vim.api.nvim_win_get_cursor(0)
@@ -304,18 +304,15 @@ local plug_map = {
             stack[i] = vim.fn.synIDattr(l, "name")
         end
         print(vim.inspect(stack))
-    end):with_silent(), 
-    [{ "n", "<localleader>c]" }] = map_cmd(
-      function()
+    end):with_silent(),
+    [{ "n", "<localleader>c]" }] = map_cmd(function()
         if vim.fn["copilot#Enabled"]() == 1 then
             vim.cmd([[ Copilot disable ]])
         else
             vim.cmd([[ Copilot enable ]])
         end
         vim.cmd([[ Copilot status ]])
-    end
-    ):with_silent(),
-
+    end):with_silent(),
 }
 
 return { map = plug_map }
