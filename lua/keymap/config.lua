@@ -44,16 +44,6 @@ _G.s_tab_complete = function()
     end
     return ""
 end
-
-_G.syn_stack = function()
-    local c = vim.api.nvim_win_get_cursor(0)
-    local stack = vim.fn.synstack(c[1], c[2] + 1)
-    for i, l in ipairs(stack) do
-        stack[i] = vim.fn.synIDattr(l, "name")
-    end
-    print(vim.inspect(stack))
-end
-
 -- change case of cword
 _G.caseChange = function()
     local cursor = vim.api.nvim_win_get_cursor(0)
@@ -88,15 +78,6 @@ end
 -- _G.enhance_jk_move = function()
 --   return "fo:qP:"
 -- end
-
-_G.toggleCopilot = function()
-    if vim.fn["copilot#Enabled"]() == 1 then
-        vim.cmd([[ Copilot disable ]])
-    else
-        vim.cmd([[ Copilot enable ]])
-    end
-    vim.cmd([[ Copilot status ]])
-end
 
 _G.word_motion_move = function(key)
     if not packer_plugins["vim-wordmotion"] or not packer_plugins["vim-wordmotion"].loaded then
