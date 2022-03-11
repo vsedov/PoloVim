@@ -205,20 +205,54 @@ _G.run_or_test = function(debug)
     end
 end
 
--- Run DebugOpen and then you run Debug
+vim.api.nvim_add_user_command("DuckStart", function()
+    require("modules.useless.config").launch_duck()
+end, { force = true })
 
-vim.cmd([[command! -nargs=*  DuckStart lua require"modules.useless.config".launch_duck()]])
+vim.api.nvim_add_user_command("TestStart", function()
+    require("modules.lang.language_utils").testStart()
+end, { force = true })
 
--- Load Test Case - it will recognise test file - and you can run Template test and a nice
--- Python test suit
-vim.cmd([[command! -nargs=*  TestStart lua require"modules.lang.language_utils".testStart()]])
-vim.cmd([[command! -nargs=*  DebugOpen lua require"modules.lang.dap".prepare()]])
-vim.cmd([[command! -nargs=*  HpoonClear lua require"harpoon.mark".clear_all()]])
--- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
+vim.api.nvim_add_user_command("DebugOpen", function()
+    require("modules.lang.dap").prepare()
+end, { force = true })
 
--- temp for the time being.
-vim.cmd([[command! -nargs=*  Ytmnotify lua require("ytmmusic").notifyCurrentStats()]])
+vim.api.nvim_add_user_command("HpoonClear", function()
+    require("harpoon.mark").clear_all()
+end, { force = true })
 
+vim.api.nvim_add_user_command("HpoonClear", function()
+    require("harpoon.mark").clear_all()
+end, { force = true })
+
+vim.api.nvim_add_user_command("Hashbang", function()
+    local shells = {
+        sh = { "#! /usr/bin/env bash" },
+        py = { "#! /usr/bin/env python3" },
+        scala = { "#! /usr/bin/env scala" },
+        tcl = { "#! /usr/bin/env tclsh" },
+        lua = {
+            "#! /bin/sh",
+            "_=[[",
+            'exec lua "$0" "$@"',
+            "]]",
+        },
+    }
+
+    local extension = vim.fn.expand("%:e")
+
+    if shells[extension] then
+        local hb = shells[extension]
+        hb[#hb + 1] = ""
+
+        vim.api.nvim_buf_set_lines(0, 0, 0, false, hb)
+        vim.api.nvim_create_autocmd("BufWritePost", {
+            buffer = 0,
+            once = true,
+            command = "silent !chmod u+x %",
+        })
+    end
+end, { force = true })
 local plugmap = require("keymap").map
 local merged = vim.tbl_extend("force", plugmap, keys)
 
@@ -236,8 +270,15 @@ K.get_keymaps = function()
         data = key_maps,
     })
 end
-vim.cmd([[command! -nargs=* Keymaps lua require('overwrite.mapping').get_keymaps()]])
-vim.cmd([[command! -nargs=* ColourScheme lua require('utils.telescope').colorscheme()]])
+
+vim.api.nvim_add_user_command("Keymaps", function()
+    require("overwrite.mapping").get_keymaps()
+end, { force = true })
+
+vim.api.nvim_add_user_command("ColourScheme", function()
+    require("utils.telescope").colorscheme()
+end, { force = true })
+
 vim.cmd([[
   iabbrev :rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%d/%m/%y").'):')<CR>
   iabbrev :todo: <c-r>=printf(&commentstring, ' TODO(vsedov):')<CR>

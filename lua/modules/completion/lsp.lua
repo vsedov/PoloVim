@@ -271,13 +271,31 @@ function _G.open_lsp_log()
     local path = vim.lsp.get_log_path()
     vim.cmd("edit " .. path)
 end
-
+local function lsp_highlight_document(client, bufnr)
+    if client.resolved_capabilities.document_highlight then
+        vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+        vim.api.nvim_create_autocmd("CursorHold", {
+            callback = function()
+                vim.lsp.buf.document_highlight()
+            end,
+            buffer = bufnr,
+        })
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            callback = function()
+                vim.lsp.buf.clear_references()
+            end,
+            buffer = bufnr,
+        })
+    end
+end
 vim.cmd("command! -nargs=0 LspLog call v:lua.open_lsp_log()")
 vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 
 local enhance_attach = function(client, bufnr)
     -- api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
     -- I dont want any formating on python files.
+    lsp_highlight_document(client, bufnr)
+
     client.resolved_capabilities.document_formatting = false
     client.resolved_capabilities.document_range_formatting = false
 end

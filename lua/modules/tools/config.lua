@@ -391,6 +391,20 @@ function config.bqf()
             },
         },
     })
+    local function tabDropHandler()
+        require("bqf.qfwin.handler").open(true, "TabDrop")
+    end
+
+    local function setItemMappings()
+        vim.keymap.set({ "n" }, "<2-LeftMouse>", tabDropHandler, { buffer = true })
+    end
+
+    vim.api.nvim_create_augroup("BqfMappings", { clear = true })
+    vim.api.nvim_create_autocmd("FileType", {
+        group = "BqfMappings",
+        pattern = "qf",
+        callback = setItemMappings,
+    })
 end
 
 function config.clipboardimage()
@@ -591,5 +605,7 @@ function config.paperplanes()
         provider = "ix.io",
     })
 end
+
+function config.gina() end
 
 return config

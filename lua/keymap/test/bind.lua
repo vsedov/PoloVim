@@ -84,23 +84,25 @@ end
 
 pbind.all_keys = {}
 function pbind.nvim_load_mapping(mapping)
-    for key, value in pairs(mapping) do
-        local mode, keymap = key:match("([^|]*)|?(.*)")
-        -- print(mode)
-        for i = 1, #mode do
-            if type(value) == "table" then
-                vim.keymap.set(mode:sub(i, i), keymap, value.cmd, value.options)
-                -- rhs = vim.trim(rhs, {}, 0)
-                -- table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. rhs)
-            elseif type(value) == "string" then
-                vim.keymap.set(mode:sub(i, i), keymap, value.cmd, {})
-                -- value = vim.trim(value, {}, 0)
-                -- table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. value)
+    for bind, value in pairs(mapping) do
+        local options = value.options
+        local rhs = value.cmd
+        if type(bind[2]) == "string" then
+            vim.keymap.set(bind[1], bind[2], rhs, options)
+            -- table.insert(pbind.all_keys, ("<%s | %s > --> | %s"):format(vim.inspect(bind[1]), bind[2], vim.inspect(rhs)))
+        elseif type(bind[2]) == "table" then
+            local function map_wrapper(map_key)
+                vim.keymap.set(bind[1], map_key, rhs, options)
+                -- table.insert(
+                --     pbind.all_keys,
+                --     ("<%s | %s > --> | %s"):format(vim.inspect(bind[1]), vim.inspect(map_key), vim.inspect(rhs))
+                -- )
+            end
+            for _, key in pairs(bind[2]) do
+                map_wrapper(key)
             end
         end
     end
 end
-return pbind
 
--- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, rhs, options) 93
--- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, value, {}) 95
+return pbind

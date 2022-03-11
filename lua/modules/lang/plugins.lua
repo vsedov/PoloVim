@@ -129,53 +129,29 @@ lang["nvim-treesitter/playground"] = {
 
 -- great plugin but not been maintained
 -- lang["ElPiloto/sidekick.nvim"] = {opt = true, fn = {'SideKickNoReload'}, setup = conf.sidekick}
-lang["stevearc/aerial.nvim"] = {
-    opt = true,
-    cmd = { "AerialToggle" },
-    config = conf.aerial,
-}
-
--- lang["simrat39/symbols-outline.nvim"] = {
---   opt = true,
---   cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
---   setup = conf.outline,
+-- lang["stevearc/aerial.nvim"] = {
+--     opt = true,
+--     cmd = { "AerialToggle" },
+--     config = conf.aerial,
 -- }
--- Only for java files help maven.txt
-lang["mikelue/vim-maven-plugin"] = {
-    ft = "java",
+
+lang["simrat39/symbols-outline.nvim"] = {
+    opt = true,
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
+    setup = conf.outline,
 }
 
 lang["mfussenegger/nvim-jdtls"] = {
     ft = "java",
+    opt = true,
 }
 
--- :lua require'blanket'.start() - start the plugin, useful when filetype property is not set
--- :lua require'blanket'.stop() - stop displaying coverage and cleanup autocmds, watcher etc.
--- :lua require'blanket'.refresh() - manually trigger a refresh of signs, useful when filetype property is not set
--- :lua require'blanket'.set_report_path() - change report_path to a new value and refresh the gutter based on the new report
--- temp for groupwork will remove soon .
-lang["dsych/blanket.nvim"] = {
-    ft = "java",
+lang["andythigpen/nvim-coverage"] = {
+    ft = { "python" },
+    cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
+    opt = true,
     config = function()
-        require("blanket").setup({
-            -- can use env variables and anything that could be interpreted by expand(), see :h expandcmd()
-            -- REQUIRED
-            report_path = "/home/viv/GitHub/TeamProject2022_28/ARMS/target/site/jacoco/jacoco.xml",
-            -- refresh gutter every time we enter java file
-            -- defauls to empty - no autocmd is created
-            filetypes = "java",
-            -- for debugging purposes to see whether current file is present inside the report
-            -- defaults to false
-            silent = true,
-            -- can set the signs as well
-            signs = {
-                priority = 10,
-                incomplete_branch = "█",
-                uncovered = "█",
-                covered = "█",
-                sign_group = "Blanket",
-            },
-        })
+        require("coverage").setup()
     end,
 }
 
@@ -270,13 +246,6 @@ lang["dccsillag/magma-nvim"] = {
 
 lang["Vimjas/vim-python-pep8-indent"] = {
     ft = "python",
-}
--- Quite nice
-lang["ok97465/pycell_deco.nvim"] = {
-    ft = "python",
-    config = function()
-        require("pycell_deco").setup({ cell_name_fg = "#1abc9c", cell_line_bg = nil })
-    end,
 }
 
 lang["vim-test/vim-test"] = {
@@ -376,33 +345,6 @@ lang["folke/todo-comments.nvim"] = {
     end,
     after = "trouble.nvim",
 }
-
--- -- Can Gonna Use jaq for now ?
--- lang["CRAG666/code_runner.nvim"] = {
---   -- ft = {"c", "java"},
---   requires = "nvim-lua/plenary.nvim",
---   config = function()
---     require("code_runner").setup({
---       term = {
---         position = "belowright",
---         size = 8,
---       },
---       filetype = {
---         java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
---         python = "python -U",
---         typescript = "deno run",
---         rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
---       },
---       project = {
---         ["~/GitHub/TeamProject2022_28/ARMS"] = {
---           name = "ARMS",
---           description = "Project with make file",
---           command = "cd ~/GitHub/TeamProject2022_28/ARMS && mvn! compile && mvn test",
---         },
---       },
---     })
---   end,
--- }
 
 lang["is0n/jaq-nvim"] = {
     cmd = "Jaq",

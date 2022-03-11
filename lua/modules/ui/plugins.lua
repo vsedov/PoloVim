@@ -70,7 +70,13 @@ ui["petertriho/nvim-scrollbar"] = {
     event = { "CursorMoved", "CursorMovedI" },
     config = conf.scrollbar,
 }
-
+ui["narutoxy/dim.lua"] = {
+    event = { "CursorMoved", "CursorMovedI" },
+    requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
+    config = function()
+        require("dim").setup()
+    end,
+}
 -- test fold
 ui["xiyaowong/nvim-transparent"] = {
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },

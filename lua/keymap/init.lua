@@ -3,25 +3,109 @@ local map_cr = bind.map_cr
 local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
 local map_args = bind.map_args
-local map_key = bind.map_key
-local global = require("core.global")
-require("keymap.config")
+-- local map_key = bind.map_key
+-- local global = require("core.global")
+-- require("keymap.config")
+
+local function prequire(...)
+    local status, lib = pcall(require, ...)
+    if status then
+        return lib
+    end
+    return nil
+end
+
+local luasnip = prequire("luasnip")
+local cmp = prequire("cmp")
+
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
+    local col = vim.fn.col(".") - 1
+    if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+        return true
+    else
+        return false
+    end
+end
 
 local plug_map = {
-    ["i|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
-    ["i|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
-
-    ["s|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
-    ["s|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
-
-    ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
-    ["n|<C-]>"] = map_args("Template"),
-
-    -- Copilot toggle
-    ["n|<localleader>c]"] = map_cmd("v:lua.toggleCopilot()"):with_silent():with_expr(),
+    ------------------- Function -------------------
+    ["in|<TAB>"] = map_cmd(function()
+        if cmp and cmp.visible() then
+            cmp.select_next_item()
+        elseif luasnip and luasnip.expand_or_jumpable() then
+            return t("<Plug>luasnip-expand-or-jump")
+        elseif check_back_space() then
+            return t("<Tab>")
+        else
+            cmp.complete()
+        end
+        return ""
+    end):with_expr(),
+    ["in|<S-TAB>"] = map_cmd(function()
+        if cmp and cmp.visible() then
+            cmp.select_prev_item()
+        elseif luasnip and luasnip.jumpable(-1) then
+            return t("<Plug>luasnip-jump-prev")
+        else
+            return t("<S-Tab>")
+        end
+        return ""
+    end):with_expr(),
 
     -- Show syntax highlighting groups for word under cursor
-    ["n|<localleader>c{"] = map_cmd("call v:lua.syn_stack()"):with_silent():with_expr(),
+    ["n|<localleader>c["] = map_cmd(function()
+        local c = vim.api.nvim_win_get_cursor(0)
+        local stack = vim.fn.synstack(c[1], c[2] + 1)
+        for i, l in ipairs(stack) do
+            stack[i] = vim.fn.synIDattr(l, "name")
+        end
+        print(vim.inspect(stack))
+    end):with_silent(),
+
+    ["n|<localleader>c]"] = map_cmd(function()
+        if vim.fn["copilot#Enabled"]() == 1 then
+            print("Copilot is now being disabled")
+            vim.cmd([[ Copilot disable ]])
+        else
+            print("Copilot is now being enabled")
+            vim.cmd([[ Copilot enable ]])
+        end
+        vim.cmd([[ Copilot status ]])
+    end):with_silent(),
+
+    -- Venv
+    ["n|<localleader>V"] = map_cmd(function()
+        local venn_enabled = vim.inspect(vim.b.venn_enabled)
+        if venn_enabled == "nil" then
+            print("Venn active")
+            vim.b.venn_enabled = true
+            vim.cmd([[setlocal ve=all]])
+            -- draw a line on HJKL keystokes
+            vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", { noremap = true })
+            vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", { noremap = true })
+            vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", { noremap = true })
+            vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", { noremap = true })
+            -- draw a box by pressing "f" with visual selection
+            vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
+        else
+            print("Venn inactive")
+
+            vim.cmd([[setlocal ve=]])
+            vim.cmd([[mapclear <buffer>]])
+            vim.b.venn_enabled = nil
+        end
+    end):with_silent(),
+    -- ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
+    -- ["n|B"] = map_cmd('v:lua.word_motion_move_b("B")'):with_silent():with_expr(),
+    -- ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
+
+    --------------- Commands -----------
+    ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
+    ["n|<C-]>"] = map_args("Template"),
 
     -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
     -- -- Lsp mapp work when insertenter and lsp start
@@ -31,10 +115,6 @@ local plug_map = {
 
     -- have this for the time, i might use some root , not usre .
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
-
-    ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
-    ["n|B"] = map_cmd('v:lua.word_motion_move_b("B")'):with_silent():with_expr(),
-    ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
 
     -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
     -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
@@ -155,9 +235,6 @@ local plug_map = {
     -- Swap
     ["n|<leader>sw"] = map_cu("ISwapWith"):with_noremap():with_silent(),
 
-    -- Venv
-    ["n|<localleader>V"] = map_cmd("v:lua.toggle_venn()"):with_noremap():with_silent():with_expr(),
-
     -- Extra telescope commands from utils.telescope
     ["n|<Leader>cl"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
 
@@ -206,8 +283,9 @@ local plug_map = {
     ["n|<Leader>ir"] = map_cmd('<cmd>lua require"utils.telescope".lsp_references()<CR>'):with_noremap():with_silent(),
 
     -- kitty / mac users, have a nice time >.< || will be changed
-    -- ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
+    ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
     -- ["n|<d-F>"] = map_cmd(
+
     --   [['<cmd> lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>' .  ' --type ' . &ft . ' ' . expand('<cword>')]]
     -- ):with_expr():with_silent(),
     -- ["n|<d-f>"] = map_cr("<cmd> lua require'telescope.builtin'.live_grep({defulat_text=vim.fn.expand('cword')})"):with_noremap(),
@@ -276,24 +354,12 @@ local plug_map = {
     ["n|<Leader>ds"] = map_cr("lua require('neogen').generate({type = 'type'})"):with_noremap():with_silent(),
 
     -- Spectre
-    ["n|<Leader><Leader>Ss"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
-    ["n|<Leader><Leader>Sw"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
-    ["v|<Leader><Leader>Sv"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
-    ["v|<Leader><Leader>Sc"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
+    ["n|;e"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
+    ["n|;w"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
+    ["n|;W"] = map_cu("Sad"):with_noremap(),
+
+    ["v|'v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
+    ["v|'c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
 }
 
 return { map = plug_map }
-
--- Might be used, not sure how .
--- ["n|<Leader>dd"] = map_cu("lua require('dap').continue()"):with_noremap():with_silent(),
--- ["n|<Leader>do"] = map_cr("<cmd> lua require'dap'.step_over()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>di"] = map_cr("<cmd> lua require'dap'.step_into()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>dO"] = map_cr("<cmd> lua require'dap'.step_out()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>b"] = map_cr("<cmd> lua require'dap'.toggle_breakpoint()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>dr"] = map_cr("<cmd> lua require'dap'.repl.open()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>drr"] = map_cr('<cmd> lua require"dap".repl.toggle({width = 50}, "belowright vsplit")<cr>')
---   :with_noremap()
---   :with_silent(),
--- ["n|<Leader>dl"] = map_cr("<cmd> lua require'dap'.repl.run_last()<CR>"):with_noremap():with_silent(),
--- ["n|<Leader>xr"] = map_cr("<Cmd>lua require('dapui').eval()<CR>"):with_noremap():with_silent(),
--- ["n|C"] = map_cr('<cmd>lua require"dap".run_to_cursor()<CR>'):with_noremap():with_silent(),

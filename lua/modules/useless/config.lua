@@ -6,7 +6,7 @@ function config.launch_duck()
     require("duck").setup({
         winblend = 100, -- 0 to 100
         speed = 1, -- optimal: 1 to 99
-        width = 2,
+        width = 10,
     })
 
     -- Starts teh duck

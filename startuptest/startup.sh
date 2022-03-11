@@ -14,9 +14,18 @@ echo "Warmup #2"
 nvim -c q
 echo "Warmup #3"
 nvim -c q
+   q
+echo "Warmup #4"
+nvim -c q
+
+echo "Warmup #5"
+nvim -c q
+
+echo "Warmup #5"
+nvim -c q
 
 pf "No config"
-nvim -nu none --startuptime tmp
+nvim -nu NORC --startuptime tmp
 get_time
 pf "With config"
 nvim --startuptime tmp

@@ -3,7 +3,6 @@ local map_cr = bind.map_cr
 local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
 
--- default map
 local def_map = {
     -- Vim map
     ["n|<C-x>k"] = map_cr("bdelete"):with_noremap():with_silent(),
@@ -52,7 +51,6 @@ local def_map = {
     ["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
     ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
 }
-
 -- local os_map = {
 --   ["n|<c-s>"] = map_cu("write"):with_noremap(),
 --   ["i|<c-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),

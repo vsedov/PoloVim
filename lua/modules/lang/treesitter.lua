@@ -25,7 +25,6 @@ local treesitter = function()
         install_info = {
             url = "https://github.com/nvim-neorg/tree-sitter-norg",
             files = { "src/parser.c", "src/scanner.cc" },
-            filetype = "norg",
             branch = "main",
         },
     }
@@ -34,7 +33,6 @@ local treesitter = function()
         install_info = {
             url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
             files = { "src/parser.c" },
-            filetype = "norg",
             branch = "main",
         },
     }
@@ -43,7 +41,6 @@ local treesitter = function()
         install_info = {
             url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
             files = { "src/parser.c" },
-            filetype = "norg",
             branch = "main",
         },
     }
@@ -53,6 +50,15 @@ local treesitter = function()
             url = "https://github.com/Rukiza/tree-sitter-prolog",
             files = { "src/parser.c" },
             filetype = "prolog",
+            branch = "main",
+        },
+    }
+
+    parser_configs.lua = {
+        install_info = {
+            url = "https://github.com/vhyrro/tree-sitter-luap",
+            files = { "src/parser.c", "src/scanner.cc" },
+            filetype = "lua",
             branch = "main",
         },
     }

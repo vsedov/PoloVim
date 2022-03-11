@@ -1,5 +1,3 @@
-local loader = require("packer").loader
-
 if not packer_plugins["zen-mode.nvim"].loaded then
     vim.cmd([[packadd zen-mode.nvim ]])
 end
@@ -41,7 +39,7 @@ require("neorg").setup({
                 engine = "nvim-cmp",
             },
         },
-        ["external.zettelkasten"] = {},
+        -- ["external.zettelkasten"] = {},
         ["core.norg.concealer"] = {
             config = {
                 markup_preset = "dimmed",

@@ -44,10 +44,10 @@ tools["ThePrimeagen/harpoon"] = {
             global_settings = {
                 save_on_toggle = false,
                 save_on_change = true,
-                enter_on_sendcmd = false,
+                enter_on_sendcmd = true,
                 tmux_autoclose_windows = false,
                 excluded_filetypes = { "harpoon" },
-                mark_branch = false,
+                mark_branch = true,
             },
         })
         require("telescope").load_extension("harpoon")
@@ -93,8 +93,21 @@ tools["pwntester/octo.nvim"] = {
 }
 tools["jghauser/mkdir.nvim"] = {
     opt = true,
-    event = "CmdlineEnter",
+    cmd = "new",
     config = [[require'mkdir']],
+}
+
+tools["NFrid/due.nvim"] = {
+    ft = "norg",
+    config = function()
+        vim.cmd([[packadd due.nvim]])
+        require("due_nvim").setup({
+            ft = "*.norg",
+            use_clock_time = true, -- display also hours and minutes
+            use_clock_today = true, -- do it instead of TODAY
+            use_seconds = true, -- if use_clock_time == true, display seconds        ft = '*.norg',
+        })
+    end,
 }
 
 -- tools["wellle/targets.vim"] = {}
@@ -108,7 +121,7 @@ tools["TimUntersberger/neogit"] = {
 }
 
 tools["ruifm/gitlinker.nvim"] = {
-    keys = "<leader>gy",
+    keys = { "<leader>gy" },
     config = function()
         require("gitlinker").setup()
     end,
@@ -219,10 +232,10 @@ tools["windwp/nvim-spectre"] = {
     module = "spectre",
     requires = { "nvim-lua/plenary.nvim" },
     keys = {
-        "<Leader><Leader>Ss",
-        "<Leader><Leader>Sw",
-        "<Leader><Leader>Sv",
-        "<Leader><Leader>Sc",
+        ";w",
+        ";W",
+        ";v",
+        ";c",
     },
 
     config = function()
@@ -240,7 +253,7 @@ tools["ray-x/sad.nvim"] = {
     opt = true,
     config = function()
         require("sad").setup({
-            diff = "delta", -- you can use `diff`, `diff-so-fancy`
+            diff = "diff-so-fancy", -- you can use `diff`, `diff-so-fancy`
             ls_file = "fd", -- also git ls_file
             exact = false, -- exact match
         })
@@ -360,7 +373,8 @@ tools["Krafi2/jeskape.nvim"] = {
     config = function()
         require("jeskape").setup({
             mappings = {
-                ["\\"] = {
+                -- avoid tex values getting in teh way
+                ["\\l"] = {
                     i = "<cmd>Clap | startinsert<cr>",
                     f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
                 },

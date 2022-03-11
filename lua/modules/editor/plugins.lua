@@ -52,22 +52,6 @@ editor["kana/vim-niceblock"] = {
 --   end
 -- }
 
--- editor["ggandor/lightspeed.nvim"] = {
---   event = "BufReadPost",
---   opt = true,
---   config = conf.lightspeed,
--- }
-
--- copy paste failed in block mode when clipboard = unnameplus"
--- editor["bfredl/nvim-miniyank"] = {
---   keys = { "p", "y", "<C-v>" },
---   opt = true,
---   setup = function()
---     vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
---     vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
---   end,
--- }
-
 editor["gbprod/yanky.nvim"] = {
     keys = {
         "<C-v>",
@@ -109,7 +93,7 @@ editor["gbprod/yanky.nvim"] = {
         require("yanky").setup({
             ring = {
                 -- i have a op pc
-                history_length = 30,
+                history_length = 50,
                 storage = "shada",
             },
         })
@@ -463,7 +447,8 @@ editor["folke/zen-mode.nvim"] = {
 }
 
 editor["nvim-neorg/neorg"] = {
-    requires = { "max397574/neorg-zettelkasten" },
+    -- branch = "neorg-export",
+    -- requires = { "max397574/neorg-zettelkasten" },
     config = function()
         require("modules.editor.neorg")
     end,
@@ -482,21 +467,13 @@ editor["raimon49/requirements.txt.vim"] = {
     ft = { "requirements" },
 }
 
--- editor["max397574/better-escape.nvim"] = {
---   event = "InsertEnter",
---   config = function()
---     require("better_escape").setup({
---       timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
---       clear_empty_lines = true, -- clear line after escaping if ther is only whitespace      })
---     })
---   end,
--- }
-
 editor["monaqa/dial.nvim"] = {
     keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" } },
     opt = true,
     setup = conf.dial_setup(),
     config = function()
+        vim.cmd([[packadd dial.nvim]])
+
         local dial = require("dial")
         dial.config.searchlist.normal = {
             "number#decimal",
