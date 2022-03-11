@@ -358,7 +358,7 @@ ls.snippets = {
             })
         ),
     },
-    python = require("modules.completion.snippets.python"),
+    -- python = require("modules.completion.snippets.python"),
     help = {
         s({ trig = "con", wordTrig = true }, {
             i(1),
