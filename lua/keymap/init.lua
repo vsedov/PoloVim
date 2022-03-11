@@ -315,7 +315,6 @@ require("keymap.config")
 --     end):with_silent(),
 -- }
 
-
 local plug_map = {
     ["i|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
     ["i|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
