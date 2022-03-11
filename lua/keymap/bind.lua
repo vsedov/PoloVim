@@ -108,7 +108,7 @@ function pbind.nvim_load_mapping(mapping)
         local rhs = value.cmd
         local mode = bind[1]
         local map = bind[2]
-        if type(bind[2]) == "string" then
+        if type(map) == "string" then
             vim.keymap.set(mode, map, rhs, options)
             -- vim.api.nvim_set_keymap(bind[1], bind[2], rhs, options)
         elseif type(map) == "table" then
