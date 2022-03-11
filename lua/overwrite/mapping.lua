@@ -21,118 +21,137 @@ end
 
 if vim.bo.filetype == "lua" then
     local luakeys = {
-        [{ "n", "<Leader><Leader>r" }] = map_cmd("v:lua.run_or_test()"):with_expr(),
-        [{ "v", "<Leader><Leader>r" }] = map_cmd("v:lua.run_or_test()"):with_expr(),
-        [{ "n", "<F5>" }] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
+        ["n|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+        ["v|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+        ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
     }
     bind.nvim_load_mapping(luakeys)
 end
 
 local keys = {
+    -- pack?
+    -- ["n|<Leader>tr"]     = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
+    -- ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
+
+    -- Lsp mapp work when insertenter and lsp start
     --
-    [{ "n", "<Leader>tc" }] = map_cu("Clap colors"):with_noremap():with_silent(),
-    [{ "n", "<Leader>bB" }] = map_cu("Clap buffers"):with_noremap():with_silent(),
-    [{ "n", "<localleader>ff" }] = map_cu("Clap grep"):with_noremap():with_silent(),
-    [{ "n", "<localleader>fb" }] = map_cu("Clap marks"):with_noremap():with_silent(),
-    [{ "n", "<C-x><C-f>" }] = map_cu("Clap filer"):with_noremap():with_silent(),
-    [{ "n", "<Leader>fF" }] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
-    -- [{"n", "<M-g>"] = map_cu("Clap gfiles"):with_noremap():with_silent(),
-    [{ "n", "<M-h>" }] = map_cu("Clap history"):with_noremap():with_silent(),
+    ["n|<Leader>tc"] = map_cu("Clap colors"):with_noremap():with_silent(),
+    ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
+    ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
+    ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
+    ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
+    ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
+    -- ["n|<M-g>"] = map_cu("Clap gfiles"):with_noremap():with_silent(),
+    ["n|<M-h>"] = map_cu("Clap history"):with_noremap():with_silent(),
 
-    [{ "n", "<Leader>fq" }] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
+    ["n|<Leader>fq"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
 
-    [{ "n", "<Leader>fW" }] = map_cu("Clap windows"):with_noremap():with_silent(),
-    -- [{"n", "<Leader>fl"] = map_cu("Clap loclist"):with_noremap():with_silent(),
-    [{ "n", "<Leader>gd" }] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
-    [{ "n", "<Leader>fv" }] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
+    ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
+    -- ["n|<Leader>fl"] = map_cu("Clap loclist"):with_noremap():with_silent(),
+    ["n|<Leader>gd"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
+    ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
 
     -- Might use telescope ?
-    [{ "n", "<Leader>fh" }] = map_cu("Clap command_history"):with_noremap():with_silent(),
+    ["n|<Leader>fh"] = map_cu("Clap command_history"):with_noremap():with_silent(),
 
-    [{ "n", "<Leader>di" }] = map_cr("<cmd>lua require'dap.ui.variables'.hover()"):with_expr(),
-    [{ "n", "<Leader>dw" }] = map_cr("<cmd>lua require'dap.ui.widgets'.hover()"):with_expr(), -- TODO: another key?
-    [{ "v", "<Leader>di" }] = map_cr("<cmd>lua require'dap.ui.variables'.visual_hover()"):with_expr(),
+    ["n|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.hover()"):with_expr(),
+    ["n|<Leader>dw"] = map_cr("<cmd>lua require'dap.ui.widgets'.hover()"):with_expr(), -- TODO: another key?
+    ["v|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.visual_hover()"):with_expr(),
 
-    [{ "n", "<Leader><Leader>s" }] = map_cr("SplitjoinSplit"),
-    [{ "n", "<Leader><Leader>j" }] = map_cr("SplitjoinJoin"),
+    ["n|<Leader><Leader>s"] = map_cr("SplitjoinSplit"),
+    ["n|<Leader><Leader>j"] = map_cr("SplitjoinJoin"),
 
     -- Plugin Vista
-    [{ "n", "<Leader>v]" }] = map_cu("Vista!!"):with_noremap():with_silent(),
+    ["n|<Leader>v]"] = map_cu("Vista!!"):with_noremap():with_silent(),
 
     -- clap --
-    -- ["n", "<localleader-C>"] = map_cu("Clap | startinsert"),
-    -- ["i", "<localleader-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
+    -- ["n|<localleader-C>"] = map_cu("Clap | startinsert"),
+    -- ["i|<localleader-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
 
-    [{ "n", "<Leader>df" }] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
-    -- ["i", "<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
+    ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
+    -- ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
 
     -- Buffer Line
-    [{ "n", "<localleader>bth" }] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
-    [{ "n", "<localleader>btu" }] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
-    [{ "n", "<localleader>btc" }] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
+    ["n|<localleader>bth"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
+    ["n|<localleader>btu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
+    ["n|<localleader>btc"] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
 
-    [{ "n", "<Leader>b[" }] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
-    [{ "n", "<Leader>b]" }] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
-    [{ "n", "<localleader>bg" }] = map_cr("BufferLinePick"):with_noremap():with_silent(),
+    ["n|<Leader>b["] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
+    ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
+    ["n|<localleader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
 
     -- tshit
-    [{ "o", "m" }] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
-    [{ "v", "m" }] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
+    ["o|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
+    ["v|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
 
-    -- ["n", "<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
-    [{ "i", "<d-f>" }] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
-    [{ "i", "<C-df>" }] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
+    -- clap --
+
+    -- ["n|<d-C>"] = map_cu("Clap | startinsert"),
+    -- ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
+    -- -- ["n|<d-p>"] = map_cu("Clap files | startinsert"),
+    -- -- ["i|<d-p>"] = map_cu("Clap files | startinsert"):with_noremap():with_silent(),
+    -- -- ["n|<d-m>"] = map_cu("Clap files | startinsert"),
+    -- -- ["n|<M-m>"] = map_cu("Clap maps +mode=n | startinsert"),
+    -- -- ["i|<M-m>"] = map_cu("Clap maps +mode=i | startinsert"),
+    -- -- ["v|<M-m>"] = map_cu("Clap maps +mode=v | startinsert"),
+
+    -- ["n|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
+    ["i|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
+    ["i|<C-df>"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
+    -- -- ["n|<F2>"] = map_cr(""):with_expr(),
+    -- ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
+    -- ["n|<F9>"] = map_cr("GoBreakToggle"),
+    -- -- session
 
     -- Switch from local to Normal for M to test how it tis
-    [{ "n", ";a" }] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]]):with_noremap(),
-    [{ "n", ";n" }] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]):with_noremap(),
-    [{ "n", ";1" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]):with_noremap():with_silent(),
-    [{ "n", ";2" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]):with_noremap():with_silent(),
-    [{ "n", ";3" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]):with_noremap():with_silent(),
-    [{ "n", ";4" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]):with_noremap():with_silent(),
-    [{ "n", ";5" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(5)<CR>]]):with_noremap():with_silent(),
-    [{ "n", ";6" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(6)<CR>]]):with_noremap():with_silent(),
-    [{ "n", ";7" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(7)<CR>]]):with_noremap():with_silent(),
-    [{ "n", ";8" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(8)<CR>]]):with_noremap():with_silent(),
-    [{ "n", ";9" }] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(9)<CR>]]):with_noremap():with_silent(),
+    ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]]):with_noremap(),
+    ["n|;n"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]):with_noremap(),
 
-    [{ "n", ";t" }] = map_cu([[Telescope harpoon marks]]):with_noremap():with_silent(),
-    [{ "n", ";;" }] = map_cmd([[<cmd> lua require("harpoon.ui").toggle_quick_menu()<CR>]]):with_noremap():with_silent(),
-    [{ "n", "<Leader>n;" }] = map_cmd([[<cmd> lua require('harpoon.cmd-ui').toggle_quick_menu()<Cr>]])
+    ["n|;1"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(1)<CR>]]):with_noremap():with_silent(),
+    ["n|;2"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(2)<CR>]]):with_noremap():with_silent(),
+    ["n|;3"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(3)<CR>]]):with_noremap():with_silent(),
+    ["n|;4"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(4)<CR>]]):with_noremap():with_silent(),
+    ["n|;5"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(5)<CR>]]):with_noremap():with_silent(),
+    ["n|;6"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(6)<CR>]]):with_noremap():with_silent(),
+    ["n|;7"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(7)<CR>]]):with_noremap():with_silent(),
+    ["n|;8"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(8)<CR>]]):with_noremap():with_silent(),
+    ["n|;9"] = map_cmd([[<cmd> lua require("harpoon.ui").nav_file(9)<CR>]]):with_noremap():with_silent(),
+
+    ["n|;t"] = map_cu([[Telescope harpoon marks]]):with_noremap():with_silent(),
+    ["n|;;"] = map_cmd([[<cmd> lua require("harpoon.ui").toggle_quick_menu()<CR>]]):with_noremap():with_silent(),
+    ["n|<Leader>n;"] = map_cmd([[<cmd> lua require('harpoon.cmd-ui').toggle_quick_menu()<Cr>]])
         :with_noremap()
         :with_silent(),
 
     --- Refactoring
-    [{ "v", "<Leader>re" }] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]])
+    ["v|<Leader>re"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]])
         :with_noremap()
         :with_silent()
         :with_expr(),
-    [{ "v", "<Leader>rf" }] = map_cmd(
-        [[<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]]
-    )
+    ["v|<Leader>rf"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]])
         :with_noremap()
         :with_silent()
         :with_expr(),
-    [{ "v", "<Leader>rv" }] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]])
+    ["v|<Leader>rv"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]])
         :with_noremap()
         :with_silent()
         :with_expr(),
-    [{ "v", "<Leader>ri" }] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
+    ["v|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
         :with_noremap()
         :with_silent()
         :with_expr(),
-    [{ "n", "<Leader>ri" }] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
+    ["n|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
         :with_noremap()
         :with_silent()
         :with_expr(),
 
-    [{ "v", "<Leader>rr" }] = map_cmd([[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]]):with_noremap(),
-    [{ "n", "<Leader>rp" }] = map_cmd([[lua require('refactoring').debug.printf({below = false})<CR>]]):with_noremap(),
+    ["v|<Leader>rr"] = map_cmd([[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]]):with_noremap(),
+    ["n|<Leader>rp"] = map_cmd([[lua require('refactoring').debug.printf({below = false})<CR>]]):with_noremap(),
 
-    [{ "v", "<Leader>ro" }] = map_cmd([[<cmd> lua require('refactoring').debug.print_var({})<CR>]]):with_noremap(),
-    [{ "n", "<Leader>rc" }] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]]):with_noremap(),
+    ["v|<Leader>ro"] = map_cmd([[<cmd> lua require('refactoring').debug.print_var({})<CR>]]):with_noremap(),
+    ["n|<Leader>rc"] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]]):with_noremap(),
 
-    [{ "v", "<Leader>gs" }] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
+    ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 }
 
 --

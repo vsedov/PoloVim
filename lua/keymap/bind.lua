@@ -84,13 +84,18 @@ end
 
 pbind.all_keys = {}
 function pbind.nvim_load_mapping(mapping)
-    for bind, value in pairs(mapping) do
-        if type(bind[2]) == "string" then
-            --              mode     keybind   cmd       options
-            vim.keymap.set(bind[1], bind[2], value.cmd, value.options)
-        elseif type(bind[2]) == "table" then
-            for _, key in pairs(bind[2]) do
-                vim.keymap.set(bind[1], key, value.cmd, value.options)
+    for key, value in pairs(mapping) do
+        local mode, keymap = key:match("([^|]*)|?(.*)")
+        -- print(mode)
+        for i = 1, #mode do
+            if type(value) == "table" then
+                vim.keymap.set(mode:sub(i, i), keymap, value.cmd, value.options)
+                -- rhs = vim.trim(rhs, {}, 0)
+                -- table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. rhs)
+            elseif type(value) == "string" then
+                vim.keymap.set(mode:sub(i, i), keymap, value.cmd, {})
+                -- value = vim.trim(value, {}, 0)
+                -- table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. value)
             end
         end
     end
