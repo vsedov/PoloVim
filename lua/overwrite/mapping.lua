@@ -135,7 +135,6 @@ end
 --     [{ "v", "<Leader>gs" }] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 -- }
 
-
 if vim.bo.filetype == "lua" then
     local luakeys = {
         ["n|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
@@ -270,7 +269,6 @@ local keys = {
 
     ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 }
-
 
 --
 vim.cmd([[vnoremap  <leader>y  "+y]])
