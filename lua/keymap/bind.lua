@@ -82,19 +82,44 @@ function pbind.map_args(cmd_string)
     return ro:map_args(cmd_string)
 end
 
-pbind.all_keys = {}
+-- pbind.all_keys = {}
+-- function pbind.nvim_load_mapping(mapping)
+--     for bind, value in pairs(mapping) do
+--         if type(bind[2]) == "string" then
+--             --              mode     keybind   cmd       options
+--             vim.keymap.set(bind[1], bind[2], value.cmd, value.options)
+--         elseif type(bind[2]) == "table" then
+--             for _, key in pairs(bind[2]) do
+--                 vim.keymap.set(bind[1], key, value.cmd, value.options)
+--             end
+--         end
+--     end
+-- end
+
+-- useing memoisation to avoid duplicate keybinds
 function pbind.nvim_load_mapping(mapping)
+    -- [ {x, y} ] = cmd
+    local memo = {}
     for bind, value in pairs(mapping) do
         if type(bind[2]) == "string" then
             --              mode     keybind   cmd       options
+            if not memo[bind[1]] then
+                memo[bind[1]] = {}
+            end
+            memo[bind[1]][bind[2]] = value
             vim.keymap.set(bind[1], bind[2], value.cmd, value.options)
         elseif type(bind[2]) == "table" then
             for _, key in pairs(bind[2]) do
-                vim.keymap.set(bind[1], key, value.cmd, value.options)
+                if not memo[bind[1]] then
+                    memo[bind[1]] = {}
+                end
+                memo[bind[1]][key] = value
             end
         end
+        -- make bind
     end
 end
+
 return pbind
 
 -- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, rhs, options) 93
