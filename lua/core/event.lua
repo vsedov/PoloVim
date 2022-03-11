@@ -45,46 +45,6 @@ function autocmd.load_autocmds()
             { "BufWritePre", "*.tmp", "setlocal noundofile" },
             { "BufWritePre", "*.bak", "setlocal noundofile" },
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
-            {
-                "BufWritePost",
-                "*",
-                function()
-                    if vim.fn.getline(1) == "^#!" then
-                        if vim.fn.getline(1) == "/bin/" then
-                            vim.cmd([[chmod a+x <afile>]])
-                        end
-                    end
-                end,
-                false,
-            },
-            {
-                "BufWritePre",
-                "*",
-                function()
-                    local function auto_mkdir(dir, force)
-                        if
-                            vim.fn.empty(dir) == 1
-                            or string.match(dir, "^%w%+://")
-                            or vim.fn.isdirectory(dir) == 1
-                            or string.match(dir, "^suda:")
-                        then
-                            return
-                        end
-                        if not force then
-                            vim.fn.inputsave()
-                            local result = vim.fn.input(string.format('"%s" does not exist. Create? [y/N]', dir), "")
-                            if vim.fn.empty(result) == 1 then
-                                print("Canceled")
-                                return
-                            end
-                            vim.fn.inputrestore()
-                        end
-                        vim.fn.mkdir(dir, "p")
-                    end
-                    auto_mkdir(vim.fn.expand("<afile>:p:h"), vim.v.cmdbang)
-                end,
-                false,
-            },
         },
 
         wins = {
@@ -114,23 +74,6 @@ function autocmd.load_autocmds()
                 "VimLeave",
                 "*",
                 [[if has('nvim') | wshada! | else | wviminfo! | endif]],
-            },
-            {
-                "VimEnter",
-                "*",
-                function()
-                    if vim.fn.bufname("%") ~= "" then
-                        return
-                    end
-                    local byte = vim.fn.line2byte(vim.fn.line("$") + 1)
-                    if byte ~= -1 or byte > 1 then
-                        return
-                    end
-
-                    vim.bo.buftype = "nofile"
-                    vim.bo.swapfile = false
-                    vim.bo.fileformat = "unix"
-                end,
             },
 
             -- Check if file changed when its window is focus, more eager than 'autoread'
@@ -172,8 +115,69 @@ function autocmd.load_autocmds()
             },
         },
     }
+    local callbackdefs = {
+        callback = {
+            {
+                "VimEnter",
+                "*",
+                function()
+                    if vim.fn.bufname("%") ~= "" then
+                        return
+                    end
+                    local byte = vim.fn.line2byte(vim.fn.line("$") + 1)
+                    if byte ~= -1 or byte > 1 then
+                        return
+                    end
 
+                    vim.bo.buftype = "nofile"
+                    vim.bo.swapfile = false
+                    vim.bo.fileformat = "unix"
+                end,
+            },
+            {
+                "BufWritePost",
+                "*",
+                function()
+                    if vim.fn.getline(1) == "^#!" then
+                        if vim.fn.getline(1) == "/bin/" then
+                            vim.cmd([[chmod a+x <afile>]])
+                        end
+                    end
+                end,
+                false,
+            },
+            {
+                "BufWritePre",
+                "*",
+                function()
+                    local function auto_mkdir(dir, force)
+                        if
+                            vim.fn.empty(dir) == 1
+                            or string.match(dir, "^%w%+://")
+                            or vim.fn.isdirectory(dir) == 1
+                            or string.match(dir, "^suda:")
+                        then
+                            return
+                        end
+                        if not force then
+                            vim.fn.inputsave()
+                            local result = vim.fn.input(string.format('"%s" does not exist. Create? [y/N]', dir), "")
+                            if vim.fn.empty(result) == 1 then
+                                print("Canceled")
+                                return
+                            end
+                            vim.fn.inputrestore()
+                        end
+                        vim.fn.mkdir(dir, "p")
+                    end
+                    auto_mkdir(vim.fn.expand("<afile>:p:h"), vim.v.cmdbang)
+                end,
+                false,
+            },
+        },
+    }
     autocmd.nvim_create_augroups(definitions)
+    autocmd.nvim_create_augroups(callbackdefs)
 end
 
 autocmd.load_autocmds()

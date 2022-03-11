@@ -6,11 +6,11 @@ function autocmd.nvim_create_augroups(defs)
     for group_name, definition in pairs(defs) do
         vim.api.nvim_create_augroup(group_name, { clear = true })
         for _, def in ipairs(definition) do
-            local event = def[1]
-            local arg = {
+            event = def[1]
+            arg = {
                 group = group_name,
                 pattern = def[2],
-                [type(def[3]) == "function" and "callback" or type(def[3]) == "string" and "command"] = def[3],
+                command = def[3],
                 nested = def[4],
             }
             vim.api.nvim_create_autocmd(event, arg)
