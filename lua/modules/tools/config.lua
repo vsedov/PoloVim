@@ -607,4 +607,6 @@ function config.paperplanes()
     })
 end
 
+function config.gina() end
+
 return config
