@@ -8,7 +8,6 @@ local map_args = bind.map_args
 -- local global = require("core.global")
 require("keymap.config")
 
-
 local plug_map = {
     ["in|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
     ["in|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
@@ -16,7 +15,7 @@ local plug_map = {
     ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
     ["n|<C-]>"] = map_args("Template"),
 
-        -- Show syntax highlighting groups for word under cursor
+    -- Show syntax highlighting groups for word under cursor
     ["n|<localleader>c["] = map_cmd(function()
         local c = vim.api.nvim_win_get_cursor(0)
         local stack = vim.fn.synstack(c[1], c[2] + 1)
