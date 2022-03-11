@@ -58,7 +58,7 @@ return {
                 return false
             end
 
-            return false
+            return true
         end
 
         _G.preserve = function(cmd)
