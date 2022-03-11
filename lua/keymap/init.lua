@@ -348,7 +348,7 @@ local plug_map = {
     -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
 
     -- -- Plugin nvim-tree
-    ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
+    -- ["{n,i}|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
     ["n|<Leader>F"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent(),
 
     -- -- Code actions ?
