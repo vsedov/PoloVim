@@ -1,3 +1,4 @@
+vim.cmd([[
 " Shebang
 syn match shShebang "^#!.*$" containedin=shComment
 
@@ -54,3 +55,4 @@ hi def link shSemicolon Delimiter
 hi def link shShebang PreProc
 hi def link zshDelim Delimiter
 hi def link zshFlag Special
+]])
