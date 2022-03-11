@@ -315,6 +315,7 @@ require("keymap.config")
 --     end):with_silent(),
 -- }
 
+
 local plug_map = {
     ["i|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
     ["i|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
@@ -348,7 +349,7 @@ local plug_map = {
     -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
 
     -- -- Plugin nvim-tree
-    -- ["{n,i}|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
+    ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
     ["n|<Leader>F"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent(),
 
     -- -- Code actions ?
