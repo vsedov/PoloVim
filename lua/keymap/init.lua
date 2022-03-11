@@ -32,7 +32,7 @@ local check_back_space = function()
 end
 
 local plug_map = {
-  ------------------- Function -------------------
+    ------------------- Function -------------------
     ["in|<TAB>"] = map_cmd(function()
         if cmp and cmp.visible() then
             cmp.select_next_item()
@@ -99,9 +99,9 @@ local plug_map = {
             vim.b.venn_enabled = nil
         end
     end):with_silent(),
-  -- ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
-  -- ["n|B"] = map_cmd('v:lua.word_motion_move_b("B")'):with_silent():with_expr(),
-  -- ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
+    -- ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
+    -- ["n|B"] = map_cmd('v:lua.word_motion_move_b("B")'):with_silent():with_expr(),
+    -- ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
 
     --------------- Commands -----------
     ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
@@ -115,7 +115,6 @@ local plug_map = {
 
     -- have this for the time, i might use some root , not usre .
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
-
 
     -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
     -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
@@ -235,8 +234,6 @@ local plug_map = {
 
     -- Swap
     ["n|<leader>sw"] = map_cu("ISwapWith"):with_noremap():with_silent(),
-
-
 
     -- Extra telescope commands from utils.telescope
     ["n|<Leader>cl"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
