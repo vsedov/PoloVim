@@ -8,11 +8,8 @@ local global = require("core.global")
 require("keymap.config")
 
 local plug_map = {
-    ["i|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
-    ["i|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
-
-    ["s|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
-    ["s|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
+    ["in|<TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr(),
+    ["in|<S-TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_expr(),
 
     ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
     ["n|<C-]>"] = map_args("Template"),
