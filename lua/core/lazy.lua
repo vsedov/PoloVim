@@ -34,7 +34,7 @@ local function loadscheme()
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
 
-    print(loading_theme)
+    lprint(loading_theme)
 
     require("packer").loader(loading_theme)
 end
@@ -142,7 +142,7 @@ function Lazyload()
         pattern = "*",
         callback = function()
             if vim.fn.wordcount()["bytes"] > 2048000 then
-                print("syntax off")
+                lprint("syntax off")
                 vim.cmd([[setlocal syntax=off]])
             end
         end,
@@ -151,7 +151,7 @@ end
 
 local lazy_timer = 30
 if _G.packer_plugins == nil or _G.packer_plugins["packer.nvim"] == nil then
-    print("recompile")
+    lprint("recompile")
     vim.cmd([[PackerCompile]])
     vim.defer_fn(function()
         print("Packer recompiled, please run `:PackerCompile` and restart nvim")
@@ -181,9 +181,6 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    -- loader("windline.nvim")
-    -- require("modules.ui.eviline")
-    -- require("wlfloatline").setup()
     loader("heirline.nvim")
     require("modules.ui.heirline")
 

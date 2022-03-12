@@ -16,6 +16,7 @@ function autocmd.nvim_create_augroups(defs)
         end
     end
 end
+
 function autocmd.load_autocmds()
     local definitions = {
         packer = {
@@ -47,7 +48,7 @@ function autocmd.load_autocmds()
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
             {
                 "BufWritePost",
-                "*",
+                {"*.py", "*.lua", "*.sh"},
                 function()
                     if vim.fn.getline(1) == "^#!" then
                         if vim.fn.getline(1) == "/bin/" then
@@ -162,7 +163,7 @@ function autocmd.load_autocmds()
         quickfix = {
             {
                 "QuickfixCmdPost",
-                { "make", "grep", "grepadd", "vimgrep", "vimgrepadd" },
+                { "qf", "make", "grep", "grepadd", "vimgrep", "vimgrepadd" },
                 [[cwin]],
             },
             {
@@ -170,6 +171,24 @@ function autocmd.load_autocmds()
                 { "lmake", "lgrep", "lgrepadd", "lvimgrep", "lvimgrepadd" },
                 [[lwin]],
             },
+        },
+        insert = {
+            -- {
+            --     "InsertCharPre",
+            --     { "*.norg", "*.tex" },
+            --     function()
+            --         require("core.event_helper").reset_timer()
+            --     end,
+            --     false,
+            -- },
+            -- {
+            --     "InsertCharPre",
+            --     { "*" },
+            --     function()
+            --         require("core.event_helper").camelCase_toSnake_case()
+            --     end,
+            --     false,
+            -- },
         },
     }
 
