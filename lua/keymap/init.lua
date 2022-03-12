@@ -5,56 +5,15 @@ local map_cmd = bind.map_cmd
 local map_args = bind.map_args
 -- local map_key = bind.map_key
 -- local global = require("core.global")
--- require("keymap.config")
-
-local function prequire(...)
-    local status, lib = pcall(require, ...)
-    if status then
-        return lib
-    end
-    return nil
-end
-
-local luasnip = prequire("luasnip")
-local cmp = prequire("cmp")
-
-local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
-local check_back_space = function()
-    local col = vim.fn.col(".") - 1
-    if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-        return true
-    else
-        return false
-    end
-end
+require("keymap.config")
 
 local plug_map = {
     ------------------- Function -------------------
-    ["in|<TAB>"] = map_cmd(function()
-        if cmp and cmp.visible() then
-            cmp.select_next_item()
-        elseif luasnip and luasnip.expand_or_jumpable() then
-            return t("<Plug>luasnip-expand-or-jump")
-        elseif check_back_space() then
-            return t("<Tab>")
-        else
-            cmp.complete()
-        end
-        return ""
-    end):with_expr(),
-    ["in|<S-TAB>"] = map_cmd(function()
-        if cmp and cmp.visible() then
-            cmp.select_prev_item()
-        elseif luasnip and luasnip.jumpable(-1) then
-            return t("<Plug>luasnip-jump-prev")
-        else
-            return t("<S-Tab>")
-        end
-        return ""
-    end):with_expr(),
+    ["i|<S-TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr():with_silent(),
+    ["s|<S-TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr():with_silent(),
+
+    ["i|<TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
+    ["s|<TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
 
     -- Show syntax highlighting groups for word under cursor
     ["n|<localleader>c["] = map_cmd(function()
@@ -168,10 +127,6 @@ local plug_map = {
     ["n|<Leader>gr"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
     ["n|ga"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
     ["n|gar"] = map_cmd("<cmd>Lspsaga range_code_action<CR>"):with_noremap():with_silent(),
-
-    -- -- -- SOMETHING WRONG HERE .
-    -- ["n|<Leader>gr"] = map_cmd("<cmd>lua require('renamer').rename()<cr>"):with_noremap():with_silent(),
-    -- ["v|<Leader>gr"] = map_cmd("<cmd>lua require('renamer').rename()<cr>"):with_noremap():with_silent(),
 
     -- Replace word under cursor in Buffer (case-sensitive)
     -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
@@ -337,7 +292,7 @@ local plug_map = {
     ["n|<Leader>vx"] = map_cmd("<Plug>(ultest-stop-file)"):with_silent(),
 
     -- Quick Fix infomation and binds
-    ["n|<Leader>xx"] = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
+    -- ["n|<Leader>xx"] = map_cr("<cmd>Trouble<CR>"):with_noremap():with_silent(),
 
     -- Change map for certain file types: remove this for local . .
     ["n|<F9>"] = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
@@ -355,8 +310,8 @@ local plug_map = {
 
     -- Spectre
     ["n|;e"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
-    ["n|;w"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
-    ["n|;W"] = map_cu("Sad"):with_noremap(),
+    ["n|;W"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),
+    ["n|;w"] = map_cu("Sad"):with_noremap():with_silent(),
 
     ["v|'v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
     ["v|'c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
