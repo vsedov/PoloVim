@@ -74,9 +74,23 @@ end
 completion["https://github.com/github/copilot.vim.git"] = {
     event = "InsertEnter",
     after = "nvim-cmp",
+    keys = {
+        "<Plug>(copilot-next)",
+        "<Plug>(copilot-previous)",
+    },
+    setup = function()
+        local default_keymaps = {
+            { "i", "<A-,>", "<Plug>(copilot-next)" },
+            { "i", "<A-.>", "<Plug>(copilot-previous)" },
+        }
+        for _, m in ipairs(default_keymaps) do
+            vim.keymap.set(m[1], m[2], m[3], { silent = true })
+        end
+    end,
+
     config = function()
         vim.opt.completeopt = "menuone,noselect"
-        vim.g.copilot_enabled = false
+        vim.g.copilot_enabled = true
         -- Have copilot play nice with nvim-cmp.
         vim.g.copilot_no_tab_map = true
         vim.g.copilot_assume_mapped = true
@@ -88,9 +102,6 @@ completion["https://github.com/github/copilot.vim.git"] = {
         end
 
         vim.g["copilot_filetypes"] = copilot_filetypes
-
-        vim.keymap.set("i", "<M-.>", "<Plug>(copilot-next)")
-        vim.keymap.set("i", "<M-,>", "<Plug>(copilot-previous)")
     end,
 }
 

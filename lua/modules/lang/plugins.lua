@@ -315,26 +315,33 @@ lang["p00f/nvim-ts-rainbow"] = {
 }
 
 lang["onsails/diaglist.nvim"] = {
-    cmd = { "DiaglistA", "DiaglistB" },
-    opt = true,
-    ft = { "python", "c", "lua", "cpp" },
+  event = {"BufEnter", "QuickFixCmdPre","CmdlineEnter"},
+  requires = {
+      "neovim/nvim-lspconfig",
+    },
+  module = 'diaglist',
+    setup = function()
+        local map, opts = vim.api.nvim_set_keymap, {}
+        map('n', '<Leader>xX', '<cmd>lua require "diaglist".open_all_diagnostics()<cr>', opts)
+        map('n', '<Leader>xx', '<cmd>lua require "diaglist".open_buffer_diagnostics()<cr>', opts)
+    end,
+    opt = true,    -- opt = true,
     config = function()
         require("diaglist").init({
             debug = false,
             debounce_ms = 150,
         })
-        vim.cmd([[command! -nargs=*  DiaglistA lua require('diaglist').open_all_diagnostics()]])
-        vim.cmd([[command! -nargs=*  DiaglistB lua require('diaglist').open_buffer_diagnostics()]])
     end,
+    after = {"nvim-bqf","nvim-lspconfig"}
 }
 
-lang["folke/trouble.nvim"] = {
-    cmd = { "Trouble", "TroubleToggle" },
-    opt = true,
-    config = function()
-        require("trouble").setup({})
-    end,
-}
+-- lang["folke/trouble.nvim"] = {
+--     cmd = { "Trouble", "TroubleToggle" },
+--     opt = true,
+--     config = function()
+--         require("trouble").setup({})
+--     end,
+-- }
 
 -- Might use this
 lang["folke/todo-comments.nvim"] = {
@@ -343,7 +350,6 @@ lang["folke/todo-comments.nvim"] = {
     config = function()
         require("todo-comments").setup({}) -- Use defualt
     end,
-    after = "trouble.nvim",
 }
 
 lang["is0n/jaq-nvim"] = {
