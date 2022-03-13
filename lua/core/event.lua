@@ -48,7 +48,7 @@ function autocmd.load_autocmds()
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
             {
                 "BufWritePost",
-                {"*.py", "*.lua", "*.sh"},
+                { "*.py", "*.lua", "*.sh" },
                 function()
                     if vim.fn.getline(1) == "^#!" then
                         if vim.fn.getline(1) == "/bin/" then

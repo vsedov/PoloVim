@@ -167,18 +167,20 @@ editor["ggandor/lightspeed.nvim"] = {
 }
 
 editor["hrsh7th/vim-searchx"] = {
-    fn = { "searchx#*" },
     event = { "CmdwinEnter", "CmdlineEnter" },
-    opt = true,
+    fn = { "searchx#*" },
     setup = function()
+        -- Overwrite / and ?.
         vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
         vim.keymap.set({ "n", "x" }, "/", "<Cmd>call searchx#start({ 'dir': 1 })<CR>")
-        vim.keymap.set("n", "'", "<Cmd>call searchx#select()<CR>)")
-        -- Move to next/prev match
+        vim.keymap.set("c", "<A-;>", "<Cmd>call searchx#select()<CR>)")
+
+        -- Move to next/prev match.
         vim.keymap.set({ "n", "x" }, "N", "<Cmd>call searchx#prev_dir()<CR>")
         vim.keymap.set({ "n", "x" }, "n", "<Cmd>call searchx#next_dir()<CR>")
-        vim.keymap.set({ "n", "x", "c" }, "<C-j>", "<Cmd>call searchx#next()<CR>")
-        vim.keymap.set({ "n", "x", "c" }, "<C-k>", "<Cmd>call searchx#prev()<CR>")
+        vim.keymap.set({ "c", "n", "x" }, "<A-z>", "<Cmd>call searchx#next()<CR>")
+        vim.keymap.set({ "c", "n", "x" }, "<A-x>", "<Cmd>call searchx#prev()<CR>")
+
         -- Clear highlights
         vim.keymap.set("n", "<Esc><Esc>", "<Cmd>call searchx#clear()<CR>)")
     end,
@@ -212,7 +214,6 @@ editor["hrsh7th/vim-searchx"] = {
         )
     end,
 }
-
 --max397574
 editor["max397574/which-key.nvim"] = {
     opt = true,

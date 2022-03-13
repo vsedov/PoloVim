@@ -315,24 +315,24 @@ lang["p00f/nvim-ts-rainbow"] = {
 }
 
 lang["onsails/diaglist.nvim"] = {
-  event = {"BufEnter", "QuickFixCmdPre","CmdlineEnter"},
-  requires = {
-      "neovim/nvim-lspconfig",
+    event = { "BufEnter", "QuickFixCmdPre", "CmdlineEnter" },
+    requires = {
+        "neovim/nvim-lspconfig",
     },
-  module = 'diaglist',
+    module = "diaglist",
     setup = function()
         local map, opts = vim.api.nvim_set_keymap, {}
-        map('n', '<Leader>xX', '<cmd>lua require "diaglist".open_all_diagnostics()<cr>', opts)
-        map('n', '<Leader>xx', '<cmd>lua require "diaglist".open_buffer_diagnostics()<cr>', opts)
+        map("n", "<Leader>xX", '<cmd>lua require "diaglist".open_all_diagnostics()<cr>', opts)
+        map("n", "<Leader>xx", '<cmd>lua require "diaglist".open_buffer_diagnostics()<cr>', opts)
     end,
-    opt = true,    -- opt = true,
+    opt = true, -- opt = true,
     config = function()
         require("diaglist").init({
             debug = false,
             debounce_ms = 150,
         })
     end,
-    after = {"nvim-bqf","nvim-lspconfig"}
+    after = { "nvim-bqf", "nvim-lspconfig" },
 }
 
 -- lang["folke/trouble.nvim"] = {

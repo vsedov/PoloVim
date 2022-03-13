@@ -32,11 +32,18 @@ end)
 
 require("neorg").setup({
     load = {
+
         ["core.defaults"] = {}, -- Load all the default modules
         ["core.integrations.telescope"] = {},
+        ["core.export"] = {},
         ["core.norg.completion"] = {
             config = {
                 engine = "nvim-cmp",
+            },
+        },
+        ["core.export.markdown"] = {
+            config = {
+                extensions = "all",
             },
         },
         -- ["external.zettelkasten"] = {},

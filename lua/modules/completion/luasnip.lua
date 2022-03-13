@@ -679,7 +679,7 @@ ls.snippets = {
 
         ls.parser.parse_snippet(
             "hajime",
-            "* Pomodoro\n** $0\n*** Lectures\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* Things i've to take care of\n* Things ive done "
+            "* Pomodoro\n** $0\n*** Lectures\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* Things ive done "
         ),
         ls.parser.parse_snippet("sesval", "- [ ]  $0"),
 
@@ -687,7 +687,7 @@ ls.snippets = {
             t("| $"),
             i(1, "focus_area_name"),
             t({ "$", "" }),
-            i(1, "marker body"),
+            i(2, "marker body"),
             t({ "", "| _" }),
         }),
     },
