@@ -1,9 +1,9 @@
 local lspconfig = require("lspconfig")
-local configs = require("lspconfig/configs")
-local global = require("core.global")
-local lsp = require("vim.lsp")
-local fn = vim.fn
-local api = vim.api
+-- local configs = require("lspconfig/configs")
+-- local global = require("core.global")
+-- local lsp = require("vim.lsp")
+-- local fn = vim.fn
+-- local api = vim.api
 
 local util = require("utils.helper")
 
@@ -418,7 +418,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 local sumneko_lua_server = {
     -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     cmd = { "lua-language-server" },
-    on_attach = on_attach,
+    on_attach = enhance_attach,
     capabilities = capabilities,
     settings = {
         Lua = {

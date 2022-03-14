@@ -372,9 +372,6 @@ function config.nvim_cmp()
                     return false
                 end
             end
-            if vim.tbl_contains(Get_treesitter_hl(), "TSComment") then
-                return false
-            end
             if string.find(vim.api.nvim_buf_get_name(0), "neorg://") then
                 return false
             end

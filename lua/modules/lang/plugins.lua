@@ -1,6 +1,6 @@
 local lang = {}
 local conf = require("modules.lang.config")
-local path = plugin_folder()
+-- local path = plugin_folder() no local plugins
 
 lang["nathom/filetype.nvim"] = {
     -- event = {'BufEnter'},
