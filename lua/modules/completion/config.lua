@@ -1,4 +1,4 @@
-local global = require("core.global")
+-- local global = require("core.global")
 local config = {}
 
 function config.nvim_lsp()
@@ -46,18 +46,11 @@ function config.saga()
     })
 end
 
-local function is_prior_char_whitespace()
-    local col = vim.fn.col(".") - 1
-    if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-        return true
-    else
-        return false
-    end
-end
-
 function config.nvim_cmp()
     local cmp = require("cmp")
     local kind = require("utils.kind")
+    local types = require("cmp.types")
+    local str = require("cmp.utils.str")
 
     -- local kind = cmp.lsp.CompletionItemKind
 
@@ -66,6 +59,7 @@ function config.nvim_cmp()
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
     end
     local luasnip = require("luasnip")
+
     local function tab(fallback)
         if cmp.visible() then
             cmp.select_next_item()
@@ -85,41 +79,14 @@ function config.nvim_cmp()
         return
     end
     -- print("cmp setup")
-    local comp_kind = nil
-    local t = function(str)
-        return vim.api.nvim_replace_termcodes(str, true, true, true)
-    end
+    -- local t = function(str)
+    -- return vim.api.nvim_replace_termcodes(str, true, true, true)
+    -- end
+
     local check_backspace = function()
         local col = vim.fn.col(".") - 1
         return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
     end
-    local lspkind_icons = {
-        Text = "",
-        Method = "",
-        Function = "",
-        Constructor = "",
-        Field = "ﰠ",
-        Variable = "",
-        Class = "ﴯ",
-        Interface = "",
-        Module = "",
-        Property = "ﰠ",
-        Unit = "塞",
-        Value = "",
-        Enum = "",
-        Keyword = "",
-        Snippet = "",
-        Color = "",
-        File = "",
-        Reference = "",
-        Folder = "",
-        EnumMember = "",
-        Constant = "",
-        Struct = "פּ",
-        Event = "",
-        Operator = "",
-        TypeParameter = "",
-    }
     local sources = {
         { name = "nvim_lsp" },
         { name = "luasnip" },
