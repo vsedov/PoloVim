@@ -345,7 +345,7 @@ function M.setup()
         provider = function(self)
             return current_function() .. current_signature()
         end,
-        hl = { fg = colors.gray },
+        hl = { fg = colors.purple },
     }
 
     local Diagnostics = {
