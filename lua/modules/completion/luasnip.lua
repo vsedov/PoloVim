@@ -347,18 +347,6 @@ ls.snippets = {
             end, {}),
         }),
 
-        -- Function to get cowsay text from a snippet
-        -- function that prints the io.popen of cmd = "fortune | cowsay -f vader"
-
-        s("cow", {
-            f(function(args)
-                local cow = io.popen("fortune | cowsay -f vader")
-                local cow_text = cow:read("*a")
-                cow:close()
-                local upgraded_cow = vim.split(cow_text, "\n", true)
-                return upgraded_cow
-            end, {}),
-        }),
         s(
             "trig",
             c(1, {
@@ -673,6 +661,20 @@ ls.snippets = {
         parse({ trig = "stylua" }, gitcommmit_stylua),
     },
     norg = {
+        s("cow", {
+
+            t({ "> Quote of the day" }),
+            t({ "", "" }),
+            t({ "@code comment" }),
+            t({ "", "" }),
+            f(function(args)
+                local cow = io.popen("fortune | cowsay -f vader")
+                local cow_text = cow:read("*a")
+                cow:close()
+                return vim.split(cow_text, "\n", true)
+            end, {}),
+            t({ "@end" }),
+        }),
         s("ses", {
             t({ "Session " }),
             i(1, "1"),
