@@ -8,13 +8,6 @@ local map_args = bind.map_args
 require("keymap.config")
 
 local plug_map = {
-    ------------------- Function -------------------
-    ["i|<S-TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr():with_silent(),
-    ["s|<S-TAB>"] = map_cmd("v:lua.tab_complete()"):with_expr():with_silent(),
-
-    ["i|<TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
-    ["s|<TAB>"] = map_cmd("v:lua.s_tab_complete()"):with_silent():with_expr(),
-
     -- Show syntax highlighting groups for word under cursor
     ["n|<localleader>c["] = map_cmd(function()
         local c = vim.api.nvim_win_get_cursor(0)
