@@ -782,6 +782,7 @@ ls.snippets = {
                 if m < 10 then
                     m = "0" .. m
                 end
+
                 local added_time
                 if plus_hour ~= 00 then
                     added_time = plus_hour .. ":" .. plus_min .. " H"
@@ -789,13 +790,27 @@ ls.snippets = {
                     added_time = plus_min .. "M"
                 end
 
-                return " [" .. added_time .. "]" .. "(" .. t .. " -> " .. h .. ":" .. m .. ")"
+                local session_time = h .. ":" .. m
+
+                local twentry_four_to_twelve_hour = function(t)
+                    local hour, min = t:match("(%d+):(%d+)")
+                    if tonumber(hour) > 12 then
+                        hour = tonumber(hour) - 12
+                        return hour .. ":" .. min .. " PM"
+                    else
+                        return hour .. ":" .. min .. " AM"
+                    end
+                end
+
+                local current_12_hour = twentry_four_to_twelve_hour(t)
+                local session_12_hour = twentry_four_to_twelve_hour(session_time)
+
+                return " [" .. added_time .. "]" .. "(" .. current_12_hour .. " -> " .. session_12_hour .. ")"
             end, {}),
             t({ "{" }),
             i(3, "topic"),
             t({ "}" }),
         }),
-
         ls.parser.parse_snippet("lec", "  *** Lectures"),
         ls.parser.parse_snippet("work", "  *** work_sheets"),
         ls.parser.parse_snippet("1Hour", "  *** First Hour"),
