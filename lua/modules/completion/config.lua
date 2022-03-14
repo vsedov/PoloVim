@@ -57,6 +57,8 @@ end
 
 function config.nvim_cmp()
     local cmp = require("cmp")
+    local kind = require("utils.kind")
+
     -- local kind = cmp.lsp.CompletionItemKind
 
     local has_words_before = function()
@@ -172,30 +174,59 @@ function config.nvim_cmp()
             completeopt = "menu,menuone,noselect",
         },
         formatting = {
-            format = function(entry, vim_item)
-                -- load lspkind icons
-                vim_item.kind = string.format("%s %s", lspkind_icons[vim_item.kind], vim_item.kind)
+            fields = {
+                cmp.ItemField.Kind,
+                cmp.ItemField.Abbr,
+                cmp.ItemField.Menu,
+            },
+            format = kind.cmp_format({
+                with_text = false,
+                before = function(entry, vim_item)
+                    -- Get the full snippet (and only keep first line)
+                    local word = entry:get_insert_text()
+                    if
+                        entry.completion_item.insertTextFormat
+                        --[[  ]]
+                        == types.lsp.InsertTextFormat.Snippet
+                    then
+                        word = vim.lsp.util.parse_snippet(word)
+                    end
+                    word = str.oneline(word)
 
-                vim_item.menu = ({
-                    cmp_tabnine = "[TN]",
-                    nvim_lsp = "[LSP]",
-                    nvim_lua = "[Lua]",
-                    buffer = "[BUF]",
-                    path = "[PATH]",
-                    tmux = "[TMUX]",
-                    luasnip = "[SNIP]",
-                    ultisnips = "[UltiSnips]",
-                    spell = "[SPELL]",
-                    neorg = "norg",
-                    -- rg = "[RG]",
-                })[entry.source.name]
+                    -- concatenates the string
+                    local max = 50
+                    if string.len(word) >= max then
+                        local before = string.sub(word, 1, math.floor((max - 3) / 2))
+                        word = before .. "..."
+                    end
 
-                return vim_item
-            end,
+                    if
+                        entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
+                        and string.sub(vim_item.abbr, -1, -1) == "~"
+                    then
+                        word = word .. "~"
+                    end
+                    vim_item.abbr = word
+
+                    vim_item.dup = ({
+                        buffer = 1,
+                        path = 1,
+                        nvim_lsp = 0,
+                    })[entry.source.name] or 0
+
+                    return vim_item
+                end,
+            }),
+            -- format = function(entry, vim_item)
+            --   vim_item.kind = string.format(
+            --     "%s %s",
+            --     -- "%s",
+            --     get_kind(vim_item.kind),
+            --     vim_item.kind
+            --   )
+
+            -- end
         },
-        -- documentation = {
-        --   border = "rounded",
-        -- },
         -- You must set mapping if you want.
         mapping = {
             ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -238,25 +269,19 @@ function config.nvim_cmp()
                 "s",
             }),
 
-            -- ["<CR>"] = cmp.mapping(function(fallback)
-            --   if not cmp.confirm({ select = false }) then
-            --     require("pairs.enter").type()
-            --   end
-            -- end),
-
-            ["<Tab>"] = cmp.mapping(function(fallback)
+            ["<Tab>"] = cmp.mapping(function(core, fallback)
                 if cmp.visible() then
                     cmp.select_next_item()
                 elseif luasnip.expandable() then
                     luasnip.expand()
                 elseif luasnip.expand_or_jumpable() then
                     luasnip.expand_or_jump()
-                elseif check_backspace() then
-                    fallback()
+                elseif not check_backspace() then
+                    cmp.mapping.complete()(core, fallback)
                 elseif has_words_before() then
                     cmp.complete()
                 else
-                    fallback()
+                    vim.cmd(":>")
                 end
             end, {
                 "i",
@@ -269,7 +294,7 @@ function config.nvim_cmp()
                 elseif luasnip.jumpable(-1) then
                     luasnip.jump(-1)
                 else
-                    fallback()
+                    vim.cmd(":<")
                 end
             end, {
                 "i",
@@ -327,6 +352,38 @@ function config.nvim_cmp()
 
         -- You should specify your *installed* sources.
         sources = sources,
+
+        enabled = function()
+            -- if require"cmp.config.context".in_treesitter_capture("comment")==true or require"cmp.config.context".in_syntax_group("Comment") then
+            --   return false
+            -- else
+            --   return true
+            -- end
+            if vim.bo.ft == "TelescopePrompt" then
+                return false
+            end
+            if vim.bo.ft == "lua" then
+                return true
+            end
+            local lnum, col = vim.fn.line("."), math.min(vim.fn.col("."), #vim.fn.getline("."))
+            for _, syn_id in ipairs(vim.fn.synstack(lnum, col)) do
+                syn_id = vim.fn.synIDtrans(syn_id) -- Resolve :highlight links
+                if vim.fn.synIDattr(syn_id, "name") == "Comment" then
+                    return false
+                end
+            end
+            if vim.tbl_contains(Get_treesitter_hl(), "TSComment") then
+                return false
+            end
+            if string.find(vim.api.nvim_buf_get_name(0), "neorg://") then
+                return false
+            end
+            if string.find(vim.api.nvim_buf_get_name(0), "s_popup:/") then
+                return false
+            end
+            return true
+        end,
+
         confirm_opts = {
             behavior = cmp.ConfirmBehavior.Replace,
             select = false,
