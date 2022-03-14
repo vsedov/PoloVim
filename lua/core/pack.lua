@@ -41,7 +41,17 @@ function Packer:load_packer()
         api.nvim_command("packadd packer.nvim")
         packer = require("packer")
     end
-    packer.init({ compile_path = packer_compiled, git = { clone_timeout = 120 }, disable_commands = true })
+    packer.init({
+        compile_path = packer_compiled,
+        git = {
+            clone_timeout = 120,
+            subcommands = {
+                -- this is more efficient than what Packer is using
+                fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
+            },
+        },
+        disable_commands = true,
+    })
     packer.reset()
     local use = packer.use
     local use_rocks = packer.use_rocks

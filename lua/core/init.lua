@@ -66,7 +66,6 @@ local load_core = function()
     leader_map()
 
     if pcall(require, "impatient") then
-        require("impatient")
         require("impatient").enable_profile()
     end
 
