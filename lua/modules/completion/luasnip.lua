@@ -346,6 +346,19 @@ ls.snippets = {
                 return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
             end, {}),
         }),
+
+        -- Function to get cowsay text from a snippet
+        -- function that prints the io.popen of cmd = "fortune | cowsay -f vader"
+
+        s("cow", {
+            f(function(args)
+                local cow = io.popen("fortune | cowsay -f vader")
+                local cow_text = cow:read("*a")
+                cow:close()
+                local upgraded_cow = vim.split(cow_text, "\n", true)
+                return upgraded_cow
+            end, {}),
+        }),
         s(
             "trig",
             c(1, {
@@ -674,12 +687,43 @@ ls.snippets = {
             t({ "}" }),
         }),
 
+        s({ trig = "1HfromNow" }, {
+            f(function()
+                local t = os.date("%H:%M:%S")
+                local h = tonumber(string.sub(t, 1, 2))
+                local m = tonumber(string.sub(t, 4, 5))
+                local s = tonumber(string.sub(t, 7, 8))
+                local hh = h + 1 -- Minutes you want to add
+                local mm = m -- Minutes you want to add - need to be tested
+                local ss = s -- seconds, which i guess no one really gives a fuck about
+                if hh > 23 then
+                    hh = 0
+                end
+                if mm > 59 then
+                    mm = 0
+                end
+                if ss > 59 then
+                    ss = 0
+                end
+                local return_string = "("
+                    .. t
+                    .. ") -> ("
+                    .. string.format("%02d", hh)
+                    .. ":"
+                    .. string.format("%02d", mm)
+                    .. ":"
+                    .. string.format("%02d", ss)
+                    .. ")"
+                return return_string
+            end, {}),
+        }),
+
         ls.parser.parse_snippet("lec", "  *** Lectures"),
         ls.parser.parse_snippet("work", "  *** work_sheets"),
 
         ls.parser.parse_snippet(
             "hajime",
-            "* Pomodoro\n** $0\n*** Lectures\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* Things ive done "
+            "* Pomodoro\n** $0\n*** Lectures\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* How am i feeling today "
         ),
         ls.parser.parse_snippet("sesval", "- [ ]  $0"),
 
