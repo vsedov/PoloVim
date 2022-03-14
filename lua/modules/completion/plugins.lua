@@ -167,7 +167,7 @@ completion["nvim-telescope/telescope.nvim"] = {
     setup = conf.telescope_preload,
     requires = {
         { "nvim-lua/popup.nvim", opt = true }, -- test
-        { "nvim-neorg/neorg-telescope", opt = true },
+        { "nvim-neorg/neorg-telescope", branch = "feat/gtd_pickers", opt = true },
         { "nvim-lua/plenary.nvim", opt = true },
         { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },

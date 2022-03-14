@@ -346,6 +346,11 @@ ls.snippets = {
                 return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
             end, {}),
         }),
+        s({ trig = "Ctime" }, {
+            f(function()
+                return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date("%H:%M"))
+            end, {}),
+        }),
 
         s(
             "trig",
@@ -661,9 +666,8 @@ ls.snippets = {
         parse({ trig = "stylua" }, gitcommmit_stylua),
     },
     norg = {
-        s("cow", {
-
-            t({ "> Quote of the day" }),
+        s("Cowthsay", {
+            t({ "> Senpai of the pool whats your wisdom ?" }),
             t({ "", "" }),
             t({ "@code comment" }),
             t({ "", "" }),
@@ -675,59 +679,132 @@ ls.snippets = {
             end, {}),
             t({ "@end" }),
         }),
-        s("ses", {
-            t({ "Session " }),
-            i(1, "1"),
-            t({ " [" }),
-            i(2, "2H"),
-            t({ "](" }),
-            i(3, "now"),
-            t({ " -> " }),
-            i(4, "end"),
-            t({ "){" }),
-            i(5, "topic"),
-            t({ "}" }),
+
+        s("weebsay", {
+            t({ "> Senpai of the pool whats your wisdom ?" }),
+            t({ "", "" }),
+            t({ "@code comment" }),
+            t({ "", "" }),
+            f(function(args)
+                local weeb = io.popen("weebsay")
+                local weeb_text = weeb:read("*a")
+                weeb:close()
+                return vim.split(weeb_text, "\n", true)
+            end, {}),
+            t({ "@end" }),
+        }),
+        s("randomsay", {
+            t({ "> Senpai of the pool whats your /Random/ wisdom ?" }),
+            t({ "", "" }),
+            t({ "@code comment" }),
+            t({ "", "" }),
+            f(function(args)
+                local animal_list = {
+                    "beavis.zen",
+                    "default",
+                    "head-in",
+                    "milk",
+                    "small",
+                    "turkey",
+                    "blowfish",
+                    "dragon",
+                    "hellokitty",
+                    "moofasa",
+                    "sodomized",
+                    "turtle",
+                    "bong",
+                    "dragon-and-cow",
+                    "kiss",
+                    "moose",
+                    "stegosaurus",
+                    "tux",
+                    "bud-frogs",
+                    "elephant",
+                    "kitty",
+                    "mutilated",
+                    "stimpy",
+                    "udder",
+                    "bunny",
+                    "elephant-in-snake",
+                    "koala",
+                    "ren",
+                    "surgery",
+                    "vader",
+                    "vader-koala",
+                    "cower",
+                    "flaming-sheep",
+                    "luke-koala",
+                    "sheep",
+                    "skeleton",
+                    "three-eyes",
+                    "daemon",
+                    "ghostbusters",
+                    "meow",
+                    "skeleton",
+                    "three-eyes",
+                }
+
+                local cow_command = "fortune | cowsay -f " .. animal_list[math.random(1, #animal_list)]
+                local cow = io.popen(cow_command)
+                local cow_text = cow:read("*a")
+                cow:close()
+                return vim.split(cow_text, "\n", true)
+            end, {}),
+            t({ "@end" }),
         }),
 
-        s({ trig = "1HfromNow" }, {
+        s({ trig = "Ses" }, {
+            t({ "Session " }),
+            i(1, "1"),
             f(function()
-                local t = os.date("%H:%M:%S")
+                local input = vim.fn.input(" Enter time in HH:MM or MM format: ")
+                local plus_hour, plus_min
+                if input:find(":") == nil then
+                    plus_hour = 00
+                    plus_min = input
+                else
+                    plus_hour, plus_min = input:match("(%d+):(%d+)")
+                end
+                local t = os.date("%H:%M")
                 local h = tonumber(string.sub(t, 1, 2))
                 local m = tonumber(string.sub(t, 4, 5))
-                local s = tonumber(string.sub(t, 7, 8))
-                local hh = h + 1 -- Minutes you want to add
-                local mm = m -- Minutes you want to add - need to be tested
-                local ss = s -- seconds, which i guess no one really gives a fuck about
-                if hh > 23 then
-                    hh = 0
+                -- add plus_hour and plus_min to current time
+                h = h + tonumber(plus_hour)
+                m = m + tonumber(plus_min)
+                -- if minutes are more than 60, add 1 hour and subtract 60 minutes
+                if m > 60 then
+                    h = h + 1
+                    m = m - 60
                 end
-                if mm > 59 then
-                    mm = 0
+                if h > 24 then
+                    h = h - 24
                 end
-                if ss > 59 then
-                    ss = 0
+                if m < 10 then
+                    m = "0" .. m
                 end
-                local return_string = "("
-                    .. t
-                    .. ") -> ("
-                    .. string.format("%02d", hh)
-                    .. ":"
-                    .. string.format("%02d", mm)
-                    .. ":"
-                    .. string.format("%02d", ss)
-                    .. ")"
-                return return_string
+                local added_time
+                if plus_hour ~= 00 then
+                    added_time = plus_hour .. ":" .. plus_min .. " H"
+                else
+                    added_time = plus_min .. "M"
+                end
+
+                return " [" .. added_time .. "]" .. "(" .. t .. " -> " .. h .. ":" .. m .. ")"
             end, {}),
+            t({ "{" }),
+            i(3, "topic"),
+            t({ "}" }),
         }),
 
         ls.parser.parse_snippet("lec", "  *** Lectures"),
         ls.parser.parse_snippet("work", "  *** work_sheets"),
+        ls.parser.parse_snippet("1Hour", "  *** First Hour"),
+        ls.parser.parse_snippet("2Hour", "  *** Second Hour"),
 
         ls.parser.parse_snippet(
             "hajime",
             "* Pomodoro\n** $0\n*** Lectures\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* How am i feeling today "
         ),
-        ls.parser.parse_snippet("sesval", "- [ ]  $0"),
 
         s("neorg focus area", {
             t("| $"),
