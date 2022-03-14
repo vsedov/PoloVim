@@ -34,7 +34,7 @@ local function loadscheme()
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
 
-    lprint(loading_theme)
+    print(loading_theme)
 
     require("packer").loader(loading_theme)
 end
@@ -46,7 +46,7 @@ function Lazyload()
     loadscheme()
     if vim.wo.diff then
         -- loader(plugins)
-        lprint("diffmode")
+        print("diffmode")
         vim.cmd([[packadd nvim-treesitter]])
         require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = false } })
         vim.cmd([[syntax on]])
@@ -54,7 +54,7 @@ function Lazyload()
     else
         loader("nvim-treesitter")
     end
-    lprint("I am lazy")
+    print("I am lazy")
 
     local disable_ft = {
         "NvimTree",
@@ -117,7 +117,7 @@ function Lazyload()
         plugins =
             "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
         loader(plugins)
-        lprint(plugins)
+        print(plugins)
         loader("neogen") -- Load neogen only for active lsp servers
         loader("indent-blankline.nvim")
         loader("refactoring.nvim") -- need to do the same thing for refactoring
@@ -142,7 +142,7 @@ function Lazyload()
         pattern = "*",
         callback = function()
             if vim.fn.wordcount()["bytes"] > 2048000 then
-                lprint("syntax off")
+                print("syntax off")
                 vim.cmd([[setlocal syntax=off]])
             end
         end,
@@ -151,7 +151,7 @@ end
 
 local lazy_timer = 30
 if _G.packer_plugins == nil or _G.packer_plugins["packer.nvim"] == nil then
-    lprint("recompile")
+    print("recompile")
     vim.cmd([[PackerCompile]])
     vim.defer_fn(function()
         print("Packer recompiled, please run `:PackerCompile` and restart nvim")
@@ -168,7 +168,7 @@ end, lazy_timer)
 --   local cmd = "TSEnableAll highlight " .. vim.o.ft
 --   vim.cmd(cmd)
 --   vim.cmd(
---     [[autocmd BufEnter * silent! lua vim.fn.wordcount()['bytes'] < 2048000 then vim.cmd('set syntax=on') local cmd= "TSBufEnable "..vim.o.ft vim.cmd(cmd) lprint(cmd, vim.o.ft, vim.o.syntax) end]]
+--     [[autocmd BufEnter * silent! lua vim.fn.wordcount()['bytes'] < 2048000 then vim.cmd('set syntax=on') local cmd= "TSBufEnable "..vim.o.ft vim.cmd(cmd) print(cmd, vim.o.ft, vim.o.syntax) end]]
 --   )
 --   -- vim.cmd([[doautocmd ColorScheme]])
 --   -- vim.cmd(cmd)
@@ -195,7 +195,7 @@ vim.defer_fn(function()
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
-    lprint("telescope family")
+    print("telescope family")
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
     -- loader("harpoon")
@@ -203,5 +203,5 @@ vim.defer_fn(function()
     loader("nvim-notify")
     vim.notify = require("notify")
 
-    lprint("all done")
+    print("all done")
 end, lazy_timer + 80)
