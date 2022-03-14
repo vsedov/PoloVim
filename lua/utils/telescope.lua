@@ -127,6 +127,7 @@ local open_in_nvim_tree = function(prompt_bufnr)
     local action_state = require("telescope.actions.state")
     local Path = require("plenary.path")
     local actions = require("telescope.actions")
+    local file_name
 
     local entry = action_state.get_selected_entry()[1]
     local entry_path = Path:new(entry):parent():absolute()
