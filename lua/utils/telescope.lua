@@ -211,10 +211,11 @@ require("telescope").setup({
         -- winblend = 20,
         mappings = {
             n = {
+                ["<C-q>"] = actions.close,
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
                 ["<C-o>"] = actions.select_vertical,
-                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                ["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist,
                 ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
                 ["<C-h>"] = "which_key",
                 ["<C-l>"] = actions_layout.toggle_preview,
