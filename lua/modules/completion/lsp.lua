@@ -318,14 +318,6 @@ lspconfig.tsserver.setup({
     end,
 })
 
-local custom_on_attach_num = function(client, bufnr)
-    -- This is the new thing added
-    local opts = {
-        noremap = true,
-        silent = true,
-    }
-end
-
 local clangd_flags = {
     "--background-index",
     "--cross-file-rename",
@@ -432,12 +424,12 @@ local sumneko_lua_server = {
                 workspace = {
                     -- remove all of this, as it slows things down
                     library = {
-                        -- vim.api.nvim_get_runtime_file("", true),
-                        -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
-                        -- vim.api.nvim_get_runtime_file("", false),
-                        -- [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
-                        -- [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = false,
-                        -- [vim.fn.expand("$VIMRUNTIME/lua")] = false,
+                        vim.api.nvim_get_runtime_file("", false),
+                        [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
+                        vim.api.nvim_get_runtime_file("", false),
+                        [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
+                        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = false,
+                        [vim.fn.expand("$VIMRUNTIME/lua")] = false,
                     },
                 },
             },
@@ -451,7 +443,7 @@ local luadev = require("lua-dev").setup({
         types = true,
         -- makes everything lag
         plugins = false, -- toggle this to get completion for require of all plugins
-        -- plugins = {nvim-notify, telescope}
+        plugins = { "nvim-notify" },
     },
     lspconfig = sumneko_lua_server,
 })

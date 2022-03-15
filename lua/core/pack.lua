@@ -44,12 +44,13 @@ function Packer:load_packer()
     packer.init({
         compile_path = packer_compiled,
         git = {
-            clone_timeout = 120,
+            clone_timeout = 500,
             subcommands = {
                 -- this is more efficient than what Packer is using
                 fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
             },
         },
+        -- max_jobs = 10,
         disable_commands = true,
     })
     packer.reset()

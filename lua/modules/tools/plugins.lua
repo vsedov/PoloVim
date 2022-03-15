@@ -140,7 +140,10 @@ tools["kamykn/spelunker.vim"] = {
 tools["lewis6991/spellsitter.nvim"] = {
     ft = { "norg", "markdown" },
     config = function()
-        require("spellsitter").setup()
+        require("spellsitter").setup({
+            filetypes = { "norg" },
+            enable = true,
+        })
     end,
 }
 tools["rhysd/vim-grammarous"] = {

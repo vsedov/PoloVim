@@ -345,7 +345,7 @@ function M.setup()
         provider = function(self)
             return current_function() .. current_signature()
         end,
-        hl = { fg = colors.purple },
+        hl = { fg = colors.purple, style = "italic" },
     }
 
     local Diagnostics = {
@@ -480,10 +480,10 @@ function M.setup()
         init = function(self)
             self.status = vim.api.nvim_call_function("ultest#status", {})
 
-            local passed_icon = vim.fn.sign_getdefined("test_pass")[1].text
-            local failed_icon = vim.fn.sign_getdefined("test_fail")[1].text
-            local passed_hl = { fg = utils.get_highlight("UltestPass").fg }
-            local failed_hl = { fg = utils.get_highlight("UltestFail").fg }
+            passed_icon = vim.fn.sign_getdefined("test_pass")[1].text
+            failed_icon = vim.fn.sign_getdefined("test_fail")[1].text
+            passed_hl = { fg = utils.get_highlight("UltestPass").fg }
+            failed_hl = { fg = utils.get_highlight("UltestFail").fg }
         end,
         {
             provider = function(self)
