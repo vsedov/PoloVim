@@ -763,7 +763,6 @@ ls.snippets = {
             t({ "@end" }),
         }),
 
-
         s({ trig = "Ses" }, {
             t({ "Session " }),
             i(1, "1"),
