@@ -20,7 +20,6 @@ ui["rebelot/heirline.nvim"] = {
 }
 
 ui["akinsho/bufferline.nvim"] = {
-    commit = "d5904e8a3434acb151a4948b1b3d4760a2a12bb1",
     config = conf.nvim_bufferline,
     event = "UIEnter",
     diagnostics_update_in_insert = false,

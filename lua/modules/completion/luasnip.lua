@@ -326,17 +326,15 @@ local function cppdocsnip(args, _, old_state)
     snip.old_state = param_nodes
     return snip
 end
----  update current time, or given time
----@param time os.date value by h:m - in string formate
----@param update_value how many minutes 60 = 1 h, 120 = 2 ... use your brain
----@return new time
-local function update_time(time, update_value)
-    local hour, minute = time:match("(%d+):(%d+)")
 
-    hour = (tonumber(hour)) * 60
-    minute = tonumber(minute)
-    local new_minute = hour + minute + update_value
-    return string.format("%02d:%02d", math.floor(new_minute / 60), new_minute % 60)
+--- Same Function
+---@param index Index of current function_node
+---@param args [TODO:parameter]
+---@return [TODO:return]
+local same = function(index)
+    return f(function(args)
+        print(vim.inspect(args))
+    end, { index })
 end
 
 ls.snippets = {
@@ -383,6 +381,18 @@ ls.snippets = {
         }, { cond = require("modules.completion.snippets.sniputils").part(neg, even_count, "%*") }),
     },
     lua = {
+        -- local _ = require "telescope.pickers.builtin"
+        s(
+            "req",
+            fmt([[local {} = require "{}"]], {
+                f(function(import_name)
+                    local parts = vim.split(import_name[1][1], ".", true)
+                    return parts[#parts] or ""
+                end, { 1 }),
+                i(1),
+            })
+        ),
+
         s("snippet_node", {
             t('s("'),
             i(1, "snippet_title"),
@@ -752,6 +762,7 @@ ls.snippets = {
             end, {}),
             t({ "@end" }),
         }),
+
 
         s({ trig = "Ses" }, {
             t({ "Session " }),

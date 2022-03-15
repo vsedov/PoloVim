@@ -198,6 +198,7 @@ M = {
         }),
         i(0),
     }),
+
     s({ trig = "fn", dscr = "Documented Function Structure" }, {
         t("def "),
         i(1, { "function" }),
@@ -304,6 +305,8 @@ M = {
         t({ ":", "" }),
         d(2, saved_text, {}, { text = "pass", indent = true }),
     }),
+    -- testing
+
     s({ trig = "dcl", regTrig = true }, {
         d(1, python_dataclass, {}, {}),
         t({ "class " }),

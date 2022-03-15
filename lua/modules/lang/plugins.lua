@@ -358,6 +358,11 @@ lang["is0n/jaq-nvim"] = {
     opt = true,
     config = conf.jaq,
 }
+lang["pianocomposer321/yabs.nvim"] = {
+    opt = true,
+    requires = { "nvim-lua/plenary.nvim" },
+    config = conf.yabs,
+}
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
     opt = true,
