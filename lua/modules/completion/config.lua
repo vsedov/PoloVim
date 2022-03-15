@@ -51,6 +51,9 @@ function config.nvim_cmp()
     local kind = require("utils.kind")
     local types = require("cmp.types")
     local str = require("cmp.utils.str")
+
+    -- https://github.com/wincent/wincent/blob/fba0bbb9a81e085f654253926138b6675d3a6ad2/aspects/nvim/files/.config/nvim/after/plugin/nvim-cmp.lua
+    -- local kind = cmp.lsp.CompletionItemKind
     local rhs = function(rhs_str)
         return vim.api.nvim_replace_termcodes(rhs_str, true, true, true)
     end
@@ -175,6 +178,24 @@ function config.nvim_cmp()
         end
 
         vim.api.nvim_feedkeys(rhs(keys), "nt", true)
+    end
+    local has_words_before = function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+    end
+    local luasnip = require("luasnip")
+
+    local function tab(fallback)
+        if cmp.visible() then
+            cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+        elseif has_words_before() then
+            cmp.complete()
+        else
+            -- F("<Tab>")
+            fallback()
+        end
     end
 
     if load_coq() then
@@ -339,44 +360,30 @@ function config.nvim_cmp()
                 "i",
                 "s",
             }),
-
-            -- ["<Tab>"] = cmp.mapping(function(core, fallback)
-            --     if cmp.visible() then
-            --         cmp.select_next_item()
-            --     elseif luasnip.expandable() then
-            --         luasnip.expand()
-            --     elseif luasnip.expand_or_jumpable() then
-            --         luasnip.expand_or_jump()
-            --     elseif not check_backspace() then
-            --         cmp.mapping.complete()(core, fallback)
-            --     elseif has_words_before() then
-            --         cmp.complete()
-            --     elseif in_whitespace() then
-            --         smart_tab()
-            --     else
-            --         cmp.complete()
-
-            --         -- vim.cmd(":>")
-            --     end
-            -- end, {
-            --     "i",
-            --     "s",
-            -- }),
-            ["<Tab>"] = cmp.mapping(function(_fallback)
-                if cmp.visible() then
-                    if #cmp.core.view:_get_entries_view().entries == 1 then
-                        cmp.confirm({ select = true })
-                    else
-                        cmp.select_next_item()
-                    end
-                elseif has_luasnip and luasnip.expand_or_locally_jumpable() then
-                    luasnip.expand_or_jump()
-                elseif in_whitespace() then
-                    smart_tab()
-                else
-                    cmp.complete()
-                end
+            ["<BS>"] = cmp.mapping(function(_fallback)
+                local keys = smart_bs()
+                vim.api.nvim_feedkeys(keys, "nt", true)
             end, { "i", "s" }),
+
+            ["<Tab>"] = cmp.mapping(function(core, fallback)
+                if cmp.visible() then
+                    cmp.select_next_item()
+                elseif luasnip.expandable() then
+                    luasnip.expand()
+                elseif luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                elseif not check_backspace() then
+                    cmp.mapping.complete()(core, fallback)
+                elseif has_words_before() then
+                    cmp.complete()
+                else
+                    smart_tab()
+                    -- vim.cmd(":>")
+                end
+            end, {
+                "i",
+                "s",
+            }),
 
             ["<S-Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
@@ -384,6 +391,7 @@ function config.nvim_cmp()
                 elseif luasnip.jumpable(-1) then
                     luasnip.jump(-1)
                 else
+                    -- smart_bs()
                     vim.cmd(":<")
                 end
             end, {
@@ -442,7 +450,33 @@ function config.nvim_cmp()
 
         -- You should specify your *installed* sources.
         sources = sources,
+        sorting = {
+            -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
+            comparators = {
+                cmp.config.compare.offset,
+                cmp.config.compare.exact,
+                cmp.config.compare.score,
 
+                -- copied from cmp-under, but I don't think I need the plugin for this.
+                -- I might add some more of my own.
+                function(entry1, entry2)
+                    local _, entry1_under = entry1.completion_item.label:find("^_+")
+                    local _, entry2_under = entry2.completion_item.label:find("^_+")
+                    entry1_under = entry1_under or 0
+                    entry2_under = entry2_under or 0
+                    if entry1_under > entry2_under then
+                        return false
+                    elseif entry1_under < entry2_under then
+                        return true
+                    end
+                end,
+
+                cmp.config.compare.kind,
+                cmp.config.compare.sort_text,
+                cmp.config.compare.length,
+                cmp.config.compare.order,
+            },
+        },
         enabled = function()
             -- if require"cmp.config.context".in_treesitter_capture("comment")==true or require"cmp.config.context".in_syntax_group("Comment") then
             --   return false
@@ -495,10 +529,9 @@ function config.nvim_cmp()
         once = false,
     })
 
-    if vim.o.ft ~= "sql" then
-        require("cmp").setup.buffer({ completion = { autocomplete = false } })
-    end
-
+    -- if vim.o.ft ~= 'sql' then
+    --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
+    -- end
     -- cmp.setup.cmdline(":", {
     --     window = {
     --         completion = {
@@ -510,13 +543,10 @@ function config.nvim_cmp()
     --             scrollbar = { "║" },
     --         },
     --     },
-    --     -- view = {
-    --     --     entries = { name = "wildmenu" }, -- the user can also specify the `wildmenu` literal string.
-    --     -- },
     --     sources = cmp.config.sources({
-    --         { name = "fuzzy_path", keyword_length = 2 },
+    --         { name = "path" },
     --     }, {
-    --         { name = "cmdline", keyword_length = 5 },
+    --         { name = "cmdline" },
     --     }),
     --     enabled = function()
     --         return true
@@ -540,7 +570,6 @@ function config.nvim_cmp()
                 scrollbar = { "║" },
             },
         },
-        view = {},
     })
     local neorg = require("neorg")
 

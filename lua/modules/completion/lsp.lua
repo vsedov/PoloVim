@@ -417,8 +417,10 @@ local sumneko_lua_server = {
             runtime = {
                 runtime = {
                     path = runtime_path,
+                    version = "LuaJIT",
                 },
                 diagnostics = {
+                    enable = true,
                     globals = { "vim", "dump", "hs", "lvim" },
                 },
                 workspace = {
