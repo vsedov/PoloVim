@@ -172,24 +172,6 @@ function autocmd.load_autocmds()
                 [[lwin]],
             },
         },
-        insert = {
-            -- {
-            --     "InsertCharPre",
-            --     { "*.norg", "*.tex" },
-            --     function()
-            --         require("core.event_helper").reset_timer()
-            --     end,
-            --     false,
-            -- },
-            -- {
-            --     "InsertCharPre",
-            --     { "*" },
-            --     function()
-            --         require("core.event_helper").camelCase_toSnake_case()
-            --     end,
-            --     false,
-            -- },
-        },
     }
 
     autocmd.nvim_create_augroups(definitions)
