@@ -40,7 +40,6 @@ local function loadscheme()
 end
 
 function Lazyload()
-    --
     _G.PLoader = loader
     -- no_file()
     loadscheme()
@@ -108,8 +107,6 @@ function Lazyload()
 
     if load_lsp or load_ts_plugins then
         loader("guihua.lua")
-        -- loader("Comment.nvim")
-        -- loader("navigator.lua")
     end
 
     -- local bytes = vim.fn.wordcount()['bytes']
@@ -124,15 +121,6 @@ function Lazyload()
     end
 
     loader("popup.nvim")
-
-    -- if bytes < 2 * 1024 * 1024 and syn_on then
-    --   vim.cmd([[setlocal syntax=on]])
-    -- end
-
-    -- vim.cmd([[autocmd FileType vista,guihua setlocal syntax=on]])
-    -- vim.cmd(
-    -- [[autocmd FileType * silent! lua if vim.fn.wordcount()['bytes'] > 2048000 then print("syntax off") vim.cmd("setlocal syntax=off") end]]
-    -- )
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { "vista", "guiha" },
         command = [[setlocal syntax=on]],
@@ -183,15 +171,14 @@ vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 vim.defer_fn(function()
     loader("heirline.nvim")
     require("modules.ui.heirline")
-
-    require("vscripts.cursorhold")
-    require("vscripts.tools")
     require("utils.ui_overwrite")
+    require("vscripts.tools")
 
     vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
     vim.cmd("command! Spell call spelunker#check()")
     loader("animate.vim")
     loader("presence.nvim")
+    print("ui loaded")
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
@@ -202,6 +189,8 @@ vim.defer_fn(function()
     loader("workspaces.nvim")
     loader("nvim-notify")
     vim.notify = require("notify")
-
+    if vim.fn.wordcount()["bytes"] < 2048000 then
+        require("vscripts.cursorhold")
+    end
     print("all done")
 end, lazy_timer + 80)
