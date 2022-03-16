@@ -136,11 +136,10 @@ completion["hrsh7th/nvim-cmp"] = {
         -- {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp", opt=true },
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },
-    config = function() 
-      require("modules.completion.cmp")
-    end 
-
-  }
+    config = function()
+        require("modules.completion.cmp")
+    end,
+}
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
     event = "InsertEnter",

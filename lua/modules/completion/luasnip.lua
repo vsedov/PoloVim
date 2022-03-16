@@ -327,14 +327,38 @@ local function cppdocsnip(args, _, old_state)
     return snip
 end
 
---- Same Function
----@param index Index of current function_node
----@param args [TODO:parameter]
----@return [TODO:return]
-local same = function(index)
-    return f(function(args)
-        print(vim.inspect(args))
-    end, { index })
+local newline = function(text)
+    return t({ "", text })
+end
+
+local require_var = function(args, _)
+    local text = args[1][1] or ""
+    local split = vim.split(text, ".", { plain = true })
+
+    local options = {}
+    for len = 0, #split - 1 do
+        table.insert(options, t(table.concat(vim.list_slice(split, #split - len, #split), "_")))
+    end
+
+    return sn(nil, {
+
+        c(1, options),
+    })
+end
+
+local hour_or_minute = function(args, _)
+    local text = args[1][1] or ""
+
+    -- HH:MM then return H or if it is MM return M
+    if string.find(text, ":") then
+        return sn(nil, {
+            t({ "H" }),
+        })
+    else
+        return sn(nil, {
+            t({ "M" }),
+        })
+    end
 end
 
 ls.snippets = {
@@ -360,6 +384,100 @@ ls.snippets = {
                 end, {}),
             })
         ),
+
+        -- test hour_or_minute
+        s(
+            "BetterSession",
+            fmt([[ Time {} {} Min {} ]], {
+                i(1),
+                d(2, hour_or_minute, { 1 }),
+                i(3, "yourmum"),
+            })
+        ),
+
+        -- Make a snippet that would alow me to enter a value like 2:00 or 3:30 or 30 which is minutes
+        -- then let me enter a time and then update that time so if i have [30](2:00) it will update to 2:30
+        -- and if i have [30](3:00) it will update to 3:30
+
+        -- s(
+        --     "betterFormat",
+        --     fmt([[Session {} [{} {}]({} -> {}) ]], {
+        --         i(1, "1"),
+        --         i(2, "1:00"),
+        --
+        --         f(function(args)
+        --             -- {{1:00}} or {{30}}
+        --             local time = vim.split(args[1][1], ":", true)
+        --             local hour_or_minute = "H"
+        --             if #time == 1 then
+        --                 hour_or_minute = "M"
+        --             end
+        --             return hour_or_minute or "H"
+        --         end, { 2 }),
+        --
+        --         i(3, "2:30"),
+        --         f(function(import_name)
+        --             print(vim.inspect(import_name))
+        --             local update_time = tostring(import_name[1][1])
+        --             local current_time = tostring(import_name[2][1])
+        --
+        --             local plus_hour, plus_min
+        --             if update_time:find(":") == nil then
+        --                 plus_hour = 00
+        --                 plus_min = update_time
+        --             else
+        --                 plus_hour, plus_min = update_time:match("(%d+):(%d+)")
+        --             end
+        --             print(plus_hour, plus_min)
+        --
+        --             local t = current_time
+        --             local h, m = t:match("(%d+):(%d+)") -- h, m = 2, 30
+        --             local h = tonumber(h)
+        --             local m = tonumber(m)
+        --             h = h + tonumber(plus_hour)
+        --             m = m + tonumber(plus_min)
+        --             return h .. ":" .. m
+        --
+        --             -- -- add plus_hour and plus_min to current time
+        --             -- h = h + tonumber(plus_hour)
+        --             -- m = m + tonumber(plus_min)
+        --             -- -- if minutes are more than 60, add 1 hour and subtract 60 minutes
+        --             -- if m > 60 then
+        --             --     h = h + 1
+        --             --     m = m - 60
+        --             -- end
+        --             -- if h > 24 then
+        --             --     h = h - 24
+        --             -- end
+        --             -- if m < 10 then
+        --             --     m = "0" .. m
+        --             -- end
+        --             --
+        --             -- local added_time
+        --             -- if plus_hour ~= 00 then
+        --             --     added_time = plus_hour .. ":" .. plus_min .. " H"
+        --             -- else
+        --             --     added_time = plus_min .. "M"
+        --             -- end
+        --             --
+        --             -- local session_time = h .. ":" .. m
+        --             --
+        --             -- local twentry_four_to_twelve_hour = function(t)
+        --             --     local hour, min = t:match("(%d+):(%d+)")
+        --             --     if tonumber(hour) > 12 then
+        --             --         hour = tonumber(hour) - 12
+        --             --         return hour .. ":" .. min .. " PM"
+        --             --     else
+        --             --         return hour .. ":" .. min .. " AM"
+        --             --     end
+        --             -- end
+        --             --
+        --             -- local session_12_hour = twentry_four_to_twelve_hour(session_time)
+        --             --
+        --             -- return session_12_hour or ""
+        --         end, { 2, 3 }),
+        --     })
+        -- ),
     },
     python = require("modules.completion.snippets.python"),
     help = {
@@ -373,12 +491,6 @@ ls.snippets = {
             t({ "|" }),
             i(0),
         }),
-        s({ trig = "*", wordTrig = true }, {
-            t({ "*" }),
-            i(1),
-            t({ "*" }),
-            i(0),
-        }, { cond = require("modules.completion.snippets.sniputils").part(neg, even_count, "%*") }),
     },
     lua = {
         -- local _ = require "telescope.pickers.builtin"
@@ -389,6 +501,14 @@ ls.snippets = {
                     local parts = vim.split(import_name[1][1], ".", true)
                     return parts[#parts] or ""
                 end, { 1 }),
+                i(1),
+            })
+        ),
+
+        s(
+            "treq",
+            fmt([[local {} = require("telescope.{}")]], {
+                d(2, require_var, { 1 }),
                 i(1),
             })
         ),
