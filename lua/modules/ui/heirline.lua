@@ -342,6 +342,7 @@ function M.setup()
 
     local Gps = {
         condition = conditions.lsp_attached,
+
         provider = function(self)
             return current_function() .. current_signature()
         end,
