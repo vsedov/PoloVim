@@ -163,15 +163,26 @@ local check_backspace = function()
     local col = vim.fn.col(".") - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
 end
+-- local sources = {
+--     { name = "nvim_lsp" },
+--     { name = "luasnip" },
+--     { name = "treesitter", keyword_length = 2 },
+--     { name = "look", keyword_length = 4 },
+--     { name = "neorg", priority = 6 },
+--     -- { name = "nvim_lsp_signature_help", priority = 10 },
+--     -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
+--     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
+-- }
 local sources = {
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-    { name = "treesitter", keyword_length = 2 },
-    { name = "look", keyword_length = 4 },
+    { name = "buffer", priority = 7, keyword_length = 4 },
+    { name = "path", priority = 5 },
+    { name = "calc", priority = 4 },
+    -- causing lag maybe ?
+    -- { name = "treesitter", keyword_length = 2 },
+    { name = "nvim_lsp", priority = 9 },
+    { name = "luasnip", priority = 8 },
     { name = "neorg", priority = 6 },
-    -- { name = "nvim_lsp_signature_help", priority = 10 },
-    -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
-    -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
+    { name = "latex_symbols", priority = 1 },
 }
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
@@ -187,7 +198,7 @@ if vim.o.ft == "markdown" then
 end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
-    table.insert(sources, { name = "cmp_tabnine" })
+    -- table.insert(sources, { name = "cmp_tabnine" })
 end
 if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "proto" then
     table.insert(sources, { name = "path" })

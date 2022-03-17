@@ -10,6 +10,7 @@ completion["neovim/nvim-lspconfig"] = {
         { "nvim-lua/lsp_extensions.nvim", opt = true },
         { "williamboman/nvim-lsp-installer", opt = true },
         { "folke/lua-dev.nvim", module = "lua-dev" },
+        -- { "lewis6991/hover.nvim"}
     },
 
     opt = true,

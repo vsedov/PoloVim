@@ -22,8 +22,8 @@ local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
 
--- require("luasnip/loaders/from_vscode").load()
 
+-- require("luasnip/loaders/from_vscode").load()
 local parse = ls.parser.parse_snippet
 
 local gitcommmit_stylua = [[chore: autoformat with stylua]]
@@ -171,6 +171,7 @@ rec_ls = function()
         }),
     })
 end
+
 local function jdocsnip(args, _, old_state)
     -- !!! old_state is used to preserve user-input here. DON'T DO IT THAT WAY!
     -- Using a restoreNode instead is much easier.
@@ -195,7 +196,6 @@ local function jdocsnip(args, _, old_state)
         vim.list_extend(nodes, { t({ " * ", "" }) })
     end
 
-    local insert = 2
     for indx, arg in ipairs(vim.split(args[2][1], ", ", true)) do
         -- Get actual name parameter.
         arg = vim.split(arg, " ", true)[2]
@@ -327,8 +327,53 @@ local function cppdocsnip(args, _, old_state)
     return snip
 end
 
-local newline = function(text)
-    return t({ "", text })
+local has_treesitter, ts = pcall(require, "vim.treesitter")
+local _, query = pcall(require, "vim.treesitter.query")
+local MATH_ENVIRONMENTS = {
+    displaymath = true,
+    eqnarray = true,
+    equation = true,
+    math = true,
+    array = true,
+}
+local MATH_NODES = {
+    displayed_equation = true,
+    inline_formula = true,
+}
+local function get_node_at_cursor()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local cursor_range = { cursor[1] - 1, cursor[2] }
+    local buf = vim.api.nvim_get_current_buf()
+    local ok, parser = pcall(ts.get_parser, buf, "latex")
+    if not ok or not parser then
+        return
+    end
+    local root_tree = parser:parse()[1]
+    local root = root_tree and root_tree:root()
+    if not root then
+        return
+    end
+    return root:named_descendant_for_range(cursor_range[1], cursor_range[2], cursor_range[1], cursor_range[2])
+end
+local function in_mathzone()
+    if has_treesitter then
+        local buf = vim.api.nvim_get_current_buf()
+        local node = get_node_at_cursor()
+        while node do
+            if MATH_NODES[node:type()] then
+                return true
+            end
+            if node:type() == "environment" then
+                local begin = node:child(0)
+                local names = begin and begin:field("name")
+                if names and names[1] and MATH_ENVIRONMENTS[query.get_node_text(names[1], buf):gsub("[%s*]", "")] then
+                    return true
+                end
+            end
+            node = node:parent()
+        end
+        return false
+    end
 end
 
 local require_var = function(args, _)
@@ -361,13 +406,47 @@ local hour_or_minute = function(args, _)
     end
 end
 
+local get_time = function(args, _)
+    local text = args[1]
+    -- { "HH:MM"}
+    -- convert this 24 hour to 12 hour
+    if string.find(text[1], ":") then
+        local hour = tonumber(string.sub(text[1], 1, 2))
+        local am_pm = "AM"
+        if hour >= 12 then
+            am_pm = "PM"
+        end
+        if hour > 12 then
+            hour = hour - 12
+        end
+        if hour == 0 then
+            hour = 12
+        end
+        -- 01::00 is wrong but 01:00 Am or Pm
+        text[1] = string.format("%02d%s", hour, string.sub(text[1], 3)) .. " " .. am_pm
+    end
+    return sn(nil, {
+        t({ text[1] }),
+    })
+end
+
+local convert_time = function(args, _)
+    print("there is a change here")
+
+    return sn(nil, {
+        t({ "H" }),
+    })
+end
+
 ls.snippets = {
+
     all = {
         s({ trig = "date1" }, {
             f(function()
                 return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
             end, {}),
         }),
+
         s({ trig = "Ctime" }, {
             f(function()
                 return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date("%H:%M"))
@@ -388,96 +467,15 @@ ls.snippets = {
         -- test hour_or_minute
         s(
             "BetterSession",
-            fmt([[ Time {} {} Min {} ]], {
-                i(1),
-                d(2, hour_or_minute, { 1 }),
-                i(3, "yourmum"),
+            fmt([[ Session {} [{} {}][{}] ({} ->  {})]], {
+                i(1, "1"),
+                i(2, "1:00"),
+                d(3, hour_or_minute, { 2 }),
+                i(4, "10:00"),
+                d(5, get_time, { 4 }),
+                d(6, convert_time, { 2, 3, 4 }),
             })
         ),
-
-        -- Make a snippet that would alow me to enter a value like 2:00 or 3:30 or 30 which is minutes
-        -- then let me enter a time and then update that time so if i have [30](2:00) it will update to 2:30
-        -- and if i have [30](3:00) it will update to 3:30
-
-        -- s(
-        --     "betterFormat",
-        --     fmt([[Session {} [{} {}]({} -> {}) ]], {
-        --         i(1, "1"),
-        --         i(2, "1:00"),
-        --
-        --         f(function(args)
-        --             -- {{1:00}} or {{30}}
-        --             local time = vim.split(args[1][1], ":", true)
-        --             local hour_or_minute = "H"
-        --             if #time == 1 then
-        --                 hour_or_minute = "M"
-        --             end
-        --             return hour_or_minute or "H"
-        --         end, { 2 }),
-        --
-        --         i(3, "2:30"),
-        --         f(function(import_name)
-        --             print(vim.inspect(import_name))
-        --             local update_time = tostring(import_name[1][1])
-        --             local current_time = tostring(import_name[2][1])
-        --
-        --             local plus_hour, plus_min
-        --             if update_time:find(":") == nil then
-        --                 plus_hour = 00
-        --                 plus_min = update_time
-        --             else
-        --                 plus_hour, plus_min = update_time:match("(%d+):(%d+)")
-        --             end
-        --             print(plus_hour, plus_min)
-        --
-        --             local t = current_time
-        --             local h, m = t:match("(%d+):(%d+)") -- h, m = 2, 30
-        --             local h = tonumber(h)
-        --             local m = tonumber(m)
-        --             h = h + tonumber(plus_hour)
-        --             m = m + tonumber(plus_min)
-        --             return h .. ":" .. m
-        --
-        --             -- -- add plus_hour and plus_min to current time
-        --             -- h = h + tonumber(plus_hour)
-        --             -- m = m + tonumber(plus_min)
-        --             -- -- if minutes are more than 60, add 1 hour and subtract 60 minutes
-        --             -- if m > 60 then
-        --             --     h = h + 1
-        --             --     m = m - 60
-        --             -- end
-        --             -- if h > 24 then
-        --             --     h = h - 24
-        --             -- end
-        --             -- if m < 10 then
-        --             --     m = "0" .. m
-        --             -- end
-        --             --
-        --             -- local added_time
-        --             -- if plus_hour ~= 00 then
-        --             --     added_time = plus_hour .. ":" .. plus_min .. " H"
-        --             -- else
-        --             --     added_time = plus_min .. "M"
-        --             -- end
-        --             --
-        --             -- local session_time = h .. ":" .. m
-        --             --
-        --             -- local twentry_four_to_twelve_hour = function(t)
-        --             --     local hour, min = t:match("(%d+):(%d+)")
-        --             --     if tonumber(hour) > 12 then
-        --             --         hour = tonumber(hour) - 12
-        --             --         return hour .. ":" .. min .. " PM"
-        --             --     else
-        --             --         return hour .. ":" .. min .. " AM"
-        --             --     end
-        --             -- end
-        --             --
-        --             -- local session_12_hour = twentry_four_to_twelve_hour(session_time)
-        --             --
-        --             -- return session_12_hour or ""
-        --         end, { 2, 3 }),
-        --     })
-        -- ),
     },
     python = require("modules.completion.snippets.python"),
     help = {
@@ -632,6 +630,26 @@ ls.snippets = {
             t({ "", "\\end{itemize}" }),
             i(0),
         }),
+        -- For dynamic nodes allocation
+        s(
+            "//",
+            fmt(
+                [[{}]],
+                d(1, function()
+                    if not in_mathzone() then
+                        return sn(nil, { t({ " " }) })
+                    else
+                        return sn(nil, {
+                            t({ "\\frac{" }),
+                            i(1),
+                            t({ "}{" }),
+                            i(2),
+                            t({ "}" }),
+                        })
+                    end
+                end)
+            )
+        ),
     },
     java = {
         parse({ trig = "pus" }, public_string),
@@ -795,6 +813,7 @@ ls.snippets = {
         parse({ trig = "fix" }, gitcommit_fix),
         parse({ trig = "stylua" }, gitcommmit_stylua),
     },
+
     norg = {
         s("Cowthsay", {
             t({ "> Senpai of the pool whats your wisdom ?" }),
@@ -895,6 +914,7 @@ ls.snippets = {
                 else
                     plus_hour, plus_min = input:match("(%d+):(%d+)")
                 end
+
                 local t = os.date("%H:%M")
                 local h = tonumber(string.sub(t, 1, 2))
                 local m = tonumber(string.sub(t, 4, 5))
@@ -1005,6 +1025,7 @@ luasnip.config.setup({
     -- treesitter-hl has 100, use something higher (default is 200).
     ext_base_prio = 300,
     -- minimal increase in priority.
+
     ext_prio_increase = 1,
     enable_autosnippets = true,
     parser_nested_assembler = function(_, snippet)
