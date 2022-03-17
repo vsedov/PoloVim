@@ -179,6 +179,7 @@ require("telescope").setup({
         preview = {
             hide_on_startup = true,
         },
+        -- preview = true,
         entry_prefix = " ",
         layout_config = {
             width = 0.99,
@@ -212,7 +213,7 @@ require("telescope").setup({
         -- winblend = 20,
         mappings = {
             n = {
-                ["<C-q>"] = actions.close,
+                ["q"] = actions.close,
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
                 ["<C-o>"] = actions.select_vertical,
@@ -293,7 +294,6 @@ require("telescope").setup({
         set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
     }),
 })
-
 telescope.load_extension("dotfiles")
 telescope.load_extension("gosource")
 -- telescope.load_extension("notify")
