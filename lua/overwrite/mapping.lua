@@ -27,7 +27,6 @@ local keys = {
 
     -- Lsp mapp work when insertenter and lsp start
     --
-    ["n|<Leader>tc"] = map_cu("Clap colors"):with_noremap():with_silent(),
     ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
     ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
     ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
@@ -94,7 +93,6 @@ local keys = {
     -- ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
     -- ["n|<F9>"] = map_cr("GoBreakToggle"),
     -- -- session
-
     -- Switch from local to Normal for M to test how it tis
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]]):with_noremap(),
     ["n|;n"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]):with_noremap(),

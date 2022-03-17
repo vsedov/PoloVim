@@ -55,6 +55,7 @@ function options:load_options()
             smartindent = true, -- use intelligent indentation
             showmatch = true, -- highlight matching braces
             numberwidth = 3,
+            laststatus = 3,
         }
 
         self.window_local = {
