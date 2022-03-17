@@ -47,7 +47,7 @@ local function load_options()
         ttimeout = true,
         timeoutlen = 500,
         ttimeoutlen = 10,
-        updatetime = 250,
+        updatetime = 300,
         redrawtime = 100,
         ignorecase = true,
         smartcase = true,
@@ -150,4 +150,14 @@ end
 
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
+vim.opt.fillchars = {
+    eob = " ",
+    vert = "║",
+    horiz = "═",
+    horizup = "╩",
+    horizdown = "╦",
+    vertleft = "╣",
+    vertright = "╠",
+    verthoriz = "╬",
+}
 load_options()

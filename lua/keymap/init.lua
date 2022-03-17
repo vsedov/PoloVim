@@ -60,11 +60,6 @@ local plug_map = {
     ["n|<C-]>"] = map_args("Template"),
 
     -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
-    -- -- Lsp mapp work when insertenter and lsp start
-    ["n|<leader>li"] = map_cr("LspInfo"):with_noremap():with_silent():with_nowait(),
-    ["n|<leader>ll"] = map_cr("LspLog"):with_noremap():with_silent():with_nowait(),
-    ["n|<leader>lr"] = map_cr("LspRestart"):with_noremap():with_silent():with_nowait(),
-
     -- have this for the time, i might use some root , not usre .
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
 
@@ -78,7 +73,7 @@ local plug_map = {
     -- -- Code actions ?
     ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
     -- no longer work .
-    -- ["n|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
+    ["n|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
     ["v|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
 
     -- Back up .
@@ -118,8 +113,7 @@ local plug_map = {
         :with_silent(),
 
     ["n|<Leader>gr"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
-    ["n|ga"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
-    ["n|gar"] = map_cmd("<cmd>Lspsaga range_code_action<CR>"):with_noremap():with_silent(),
+    ["n|gA"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
 
     -- Replace word under cursor in Buffer (case-sensitive)
     -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
@@ -163,7 +157,6 @@ local plug_map = {
     ["n|<Leader>fzu"] = map_cr("Farundo"):with_noremap():with_silent(),
 
     -- -- Plugin Telescope
-
     ["v|<Leader>ga"] = map_cmd("<cmd>lua require('utils.telescope').code_actions()<CR>"):with_noremap():with_silent(),
 
     ["n|<Leader>qf"] = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),

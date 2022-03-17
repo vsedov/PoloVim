@@ -190,7 +190,7 @@ vim.defer_fn(function()
     loader("nvim-notify")
     vim.notify = require("notify")
     if vim.fn.wordcount()["bytes"] < 2048000 then
-        require("vscripts.cursorhold")
+        -- require("vscripts.cursorhold")
     end
     print("all done")
 end, lazy_timer + 80)

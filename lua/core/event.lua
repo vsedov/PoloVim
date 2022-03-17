@@ -25,7 +25,7 @@ function autocmd.load_autocmds()
         bufs = {
             { { "BufRead", "BufNewFile" }, "*.norg", "setlocal filetype=norg" },
             { { "BufEnter", "BufWinEnter" }, "*.norg", [[set foldlevel=1000]] },
-
+            { { "BufNewFile", "BufRead", "BufWinEnter" }, "*.tex", [[set filetype=tex]] },
             -- Reload vim config automatically
             {
                 "BufWritePost",
