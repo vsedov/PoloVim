@@ -144,19 +144,6 @@ require("neorg").setup({
     },
 })
 
-neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, content)
-    content.map_to_mode("traverse-heading", {
-        n = {
-            {
-                "<C-s>",
-                [[<cmd>lua require"telescope".extensions.neorg.search_headings({theme="ivy",border = true,previewer = false,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>]],
-            },
-        },
-    }, {
-        silent = true,
-    })
-end)
-
 local neorg_leader = "<leader>o"
 neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
     -- Map all the below keybinds only when the "norg" mode is active
@@ -276,6 +263,27 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
             { neorg_leader .. "ze", ":Neorg zettel explore<CR>" },
             { neorg_leader .. "zn", ":Neorg zettel new<CR>" },
             { neorg_leader .. "zb", ":Neorg zettel backlinks<CR>" },
+
+            {
+                "<C-s>",
+                ':lua require"telescope".extensions.neorg.search_headings({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+            },
+            {
+                "<leader>tu",
+                ':lua require"telescope".extensions.neorg.find_context_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+            },
+            {
+                "<leader>ti",
+                ':lua require"telescope".extensions.neorg.find_project_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+            },
+            {
+                "<leader>to",
+                ':lua require"telescope".extensions.neorg.find_aof_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+            },
+            {
+                "<leader>tp",
+                ':lua require"telescope".extensions.neorg.find_aof_project_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+            },
         },
     }, {
         silent = true,

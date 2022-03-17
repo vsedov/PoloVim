@@ -145,7 +145,14 @@ lang["mfussenegger/nvim-jdtls"] = {
     ft = "java",
     opt = true,
 }
-
+lang["lervag/vimtex"] = {
+    opt = true,
+    ft = { "tex" },
+    setup = function()
+        vim.g.vimtex_view_method = "zathura"
+        vim.g.vimtex_compiler_method = "latexrun"
+    end,
+}
 lang["andythigpen/nvim-coverage"] = {
     ft = { "python" },
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },

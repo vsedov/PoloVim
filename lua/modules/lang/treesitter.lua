@@ -78,7 +78,7 @@ local treesitter = function()
             query_linter = {
                 enable = true,
                 use_virtual_text = true,
-                lint_events = { "BufWrite", "CursorHold", "CursorMoved" },
+                lint_events = { "BufWrite", "CursorMoved" },
             },
             disable = { "elm" }, -- list of language that will be disabled
             use_languagetree = langtree,
@@ -113,7 +113,13 @@ local treesitter_obj = function()
         print("skip treesitter obj")
         return
     end
-
+    require("nvim-treesitter.highlight").set_custom_captures({
+        -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+        -- ["foo.bar"] = "Identifier",
+        ["require_call"] = "RequireCall",
+        ["function_definition"] = "FunctionDefinition",
+        ["quantifier"] = "Special",
+    })
     require("nvim-treesitter.configs").setup({
 
         indent = { enable = true, disable = { "python", "c", "cpp" } },

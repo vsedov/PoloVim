@@ -51,7 +51,7 @@ function config.vim_vsnip()
 end
 -- packer.nvim: Error running config for LuaSnip: [string "..."]:0: attempt to index global 'ls_types' (a nil value)
 function config.luasnip()
-    require("modules.completion.luasnip")
+    require("modules.completion.snippets")
 end
 
 function config.telescope()

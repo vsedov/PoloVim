@@ -422,7 +422,8 @@ end
 function config.side_bar()
     local sidebar = require("sidebar-nvim")
     local opts = {
-        open = true,
+        -- i dont want this
+        open = false,
         disable_default_keybindings = true,
         side = "left",
         initial_width = 30,

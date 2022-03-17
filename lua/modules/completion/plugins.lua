@@ -10,6 +10,7 @@ completion["neovim/nvim-lspconfig"] = {
         { "nvim-lua/lsp_extensions.nvim", opt = true },
         { "williamboman/nvim-lsp-installer", opt = true },
         { "folke/lua-dev.nvim", module = "lua-dev" },
+        { "p00f/clangd_extensions.nvim", module = "clangd_extensions" },
         -- { "lewis6991/hover.nvim"}
     },
 
@@ -23,6 +24,16 @@ completion["tami5/lspsaga.nvim"] = {
     config = conf.saga,
     after = "nvim-lspconfig",
 }
+
+-- completion["lewis6991/hover.nvim"]={
+--   keys = {""}
+--   opt = true,
+--   config = function()
+--     require('hover.providers.gh')
+--     require('hover.providers.man')
+--     require('hover.providers.dictionary')
+--   end
+-- }
 
 if load_coq() then
     completion["ms-jpq/coq_nvim"] = {
@@ -148,7 +159,6 @@ completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
     requires = {
         { "rafamadriz/friendly-snippets", event = "InsertEnter" },
     }, -- , event = "InsertEnter"
-    config = conf.luasnip,
 }
 completion["kristijanhusak/vim-dadbod-completion"] = {
     event = "InsertEnter",

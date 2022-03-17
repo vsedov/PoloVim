@@ -132,6 +132,8 @@ local codes = {
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
 })
+-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 
 vim.diagnostic.config({
     severity_sort = true,
@@ -214,7 +216,7 @@ vim.api.nvim_set_hl(0, "DiagnosticHeader", { fg = "#56b6c2", bold = true })
 vim.api.nvim_create_autocmd("CursorHold", {
     pattern = "*",
     callback = function()
-        vim.o.updatetime = 300
+        vim.g.cursorhold_updatetime = 100
         -- vim.diagnostic.open_float()
         local current_cursor = vim.api.nvim_win_get_cursor(0)
         local last_popup_cursor = vim.w.lsp_diagnostics_last_cursor or { nil, nil }
@@ -227,9 +229,6 @@ vim.api.nvim_create_autocmd("CursorHold", {
     end,
 })
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities.offsetEncoding = { "utf-16" }
 
@@ -238,9 +237,7 @@ capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
 capabilities.textDocument.completion.completionItem.deprecatedSupport = true
 capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-capabilities.textDocument.completion.completionItem.tagSupport = {
-    valueSet = { 1 },
-}
+
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = { "documentation", "detail", "additionalTextEdits" },
@@ -280,6 +277,7 @@ function _G.open_lsp_log()
     local path = vim.lsp.get_log_path()
     vim.cmd("edit " .. path)
 end
+
 local function lsp_highlight_document(client, bufnr)
     if client.resolved_capabilities.document_highlight then
         vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
@@ -297,6 +295,35 @@ local function lsp_highlight_document(client, bufnr)
         })
     end
 end
+local tex_preview_settings = {}
+local forward_search_executable = "zathura"
+local sumatrapdf_args = {
+    "-reuse-instance",
+    "%p",
+    "-forward-search",
+    "%f",
+    "%l",
+}
+local evince_args = { "-f", "%l", "%p", '"code -g %f:%l"' }
+local okular_args = { "--unique", "file:%p#src:%l%f" }
+local zathura_args = { "--synctex-forward", "%l:1:%f", "%p" }
+local qpdfview_args = { "--unique", "%p#src:%f:%l:1" }
+local skim_args = { "%l", "%p", "%f" }
+
+if forward_search_executable == "C:/Users/{User}/AppData/Local/SumatraPDF/SumatraPDF.exe" then
+    tex_preview_settings = sumatrapdf_args
+elseif forward_search_executable == "evince-synctex" then
+    tex_preview_settings = evince_args
+elseif forward_search_executable == "okular" then
+    tex_preview_settings = okular_args
+elseif forward_search_executable == "zathura" then
+    tex_preview_settings = zathura_args
+elseif forward_search_executable == "qpdfview" then
+    tex_preview_settings = qpdfview_args
+elseif forward_search_executable == "/Applications/Skim.app/Contents/SharedSupport/displayline" then
+    tex_preview_settings = skim_args
+end
+
 vim.cmd("command! -nargs=0 LspLog call v:lua.open_lsp_log()")
 vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 
@@ -326,7 +353,7 @@ lspconfig.tsserver.setup({
         enhance_attach(client)
     end,
 })
-
+require("clangd_extensions").setup({})
 local clangd_flags = {
     "--background-index",
     "--cross-file-rename",
@@ -337,6 +364,58 @@ local clangd_flags = {
 lspconfig.clangd.setup({
     cmd = { "clangd", unpack(clangd_flags) },
     filetypes = { "c", "cpp", "objc", "objcpp" },
+    settings = {
+        texlab = {
+            auxDirectory = nil,
+            bibtexFormatter = "texlab",
+            build = {
+                executable = "latexmk",
+                args = {
+                    "-pdf",
+                    "-interaction=nonstopmode",
+                    "-synctex=1",
+                    "%f",
+                },
+                on_save = false,
+                forward_search_after = false,
+            },
+            chktex = {
+                on_open_and_save = false,
+                on_edit = false,
+            },
+            forward_search = {
+                executable = nil,
+                args = {},
+            },
+            latexindent = {
+                ["local"] = nil,
+                modify_line_breaks = false,
+            },
+            diagnostics = {
+                virtual_text = { spacing = 0, prefix = "" },
+                signs = true,
+                underline = true,
+            },
+            linters = { "chktex" },
+            auto_save = false,
+            ignore_errors = {},
+            diagnosticsDelay = 300,
+            formatterLineLength = 120,
+            forwardSearch = {
+                args = tex_preview_settings,
+                executable = forward_search_executable,
+            },
+            latexFormatter = "latexindent",
+        },
+    },
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+})
+
+lspconfig.texlab.setup({
+    -- cmd = { os.getenv("HOME") .."/.local/share/nvim/lsp_servers//latex/texlab" },
+    cmd = { "texlab" },
+    filetypes = { "tex", "bib" },
     on_attach = enhance_attach,
     capabilities = capabilities,
 })
@@ -442,6 +521,8 @@ local sumneko_lua_server = {
                         [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = false,
                         [vim.fn.expand("$VIMRUNTIME/lua")] = false,
                     },
+                    maxPreload = 100000,
+                    preloadFileSize = 10000,
                 },
             },
         },
@@ -454,7 +535,7 @@ local luadev = require("lua-dev").setup({
         types = true,
         -- makes everything lag
         plugins = false, -- toggle this to get completion for require of all plugins
-        plugins = { "nvim-notify" },
+        plugins = { "nvim-notify", "plenary.nvim" },
     },
     lspconfig = sumneko_lua_server,
 })

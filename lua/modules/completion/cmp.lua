@@ -2,7 +2,7 @@ local cmp = require("cmp")
 local kind = require("utils.kind")
 local types = require("cmp.types")
 local str = require("cmp.utils.str")
-
+require("modules.completion.snippets")
 -- https://github.com/wincent/wincent/blob/fba0bbb9a81e085f654253926138b6675d3a6ad2/aspects/nvim/files/.config/nvim/after/plugin/nvim-cmp.lua
 -- local kind = cmp.lsp.CompletionItemKind
 local rhs = function(rhs_str)
@@ -174,15 +174,14 @@ end
 --     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
 -- }
 local sources = {
+    { name = "nvim_lsp", priority = 9 },
+    { name = "luasnip", priority = 8 },
     { name = "buffer", priority = 7, keyword_length = 4 },
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
     -- causing lag maybe ?
     -- { name = "treesitter", keyword_length = 2 },
-    { name = "nvim_lsp", priority = 9 },
-    { name = "luasnip", priority = 8 },
     { name = "neorg", priority = 6 },
-    { name = "latex_symbols", priority = 1 },
 }
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
@@ -190,7 +189,9 @@ end
 if vim.o.ft == "python" then
     table.insert(sources, { name = "cmp_tabnine" })
 end
-
+if vim.o.ft == "norg" then
+    table.insert(sources, { name = "latex_symbols" })
+end
 if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
     table.insert(sources, { name = "look" })
@@ -198,7 +199,7 @@ if vim.o.ft == "markdown" then
 end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
-    -- table.insert(sources, { name = "cmp_tabnine" })
+    table.insert(sources, { name = "cmp_tabnine" })
 end
 if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "proto" then
     table.insert(sources, { name = "path" })

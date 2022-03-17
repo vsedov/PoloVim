@@ -73,8 +73,8 @@ editor["gbprod/yanky.nvim"] = {
             { "n", "p", "<Plug>(YankyPutAfter)" },
             { "n", "P", "<Plug>(YankyPutBefore)" },
 
-            { "n", "p", "<Plug>(YankyPutAfter)" },
-            { "n", "P", "<Plug>(YankyPutBefore)" },
+            { "x", "p", "<Plug>(YankyPutAfter)" },
+            { "x", "P", "<Plug>(YankyPutBefore)" },
 
             { "n", "<leader>p", "<Plug>(YankyGPutAfter)" },
             { "n", "<leader>P", "<Plug>(YankyGPutBefore)" },
@@ -513,23 +513,6 @@ editor["monaqa/dial.nvim"] = {
             dep_files = {
                 augend.semver.alias.semver,
             },
-        })
-    end,
-}
-
--- Test for now
-editor["ethanholz/nvim-lastplace"] = {
-    event = "BufRead",
-    config = function()
-        require("nvim-lastplace").setup({
-            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-            lastplace_ignore_filetype = {
-                "gitcommit",
-                "gitrebase",
-                "svn",
-                "hgcommit",
-            },
-            lastplace_open_folds = true,
         })
     end,
 }
