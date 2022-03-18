@@ -1,10 +1,9 @@
 local lsp = vim.lsp
-local M = {}
-
+local lsp_conf = {}
 local are_diagnostics_visible = true
 ---Toggle vim.diagnostics (visibility only).
 ---@return nil
-M.toggle_diagnostics_visibility = function()
+lsp_conf.toggle_diagnostics_visibility = function()
     if are_diagnostics_visible then
         vim.diagnostic.hide()
         are_diagnostics_visible = false
@@ -14,11 +13,11 @@ M.toggle_diagnostics_visibility = function()
     end
 end
 
-function M.parse_diagnostic(diagnostic)
+function lsp_conf.parse_diagnostic(diagnostic)
     return diagnostic.message
 end
 
-function M.preview_location(location, context, before_context)
+function lsp_conf.preview_location(location, context, before_context)
     -- location may be LocationLink or Location (more useful for the former)
     context = context or 15
     before_context = before_context or 0
@@ -42,43 +41,43 @@ function M.preview_location(location, context, before_context)
     return vim.lsp.util.open_floating_preview(contents, filetype, { border = "single" })
 end
 
-function M.preview_location_callback(_, result)
+function lsp_conf.preview_location_callback(_, result)
     local context = 15
     if result == nil or vim.tbl_isempty(result) then
         return nil
     end
     if vim.tbl_islist(result) then
-        M.floating_buf, M.floating_win = M.preview_location(result[1], context)
+        lsp_conf.floating_buf, lsp_conf.floating_win = lsp_conf.preview_location(result[1], context)
     else
-        M.floating_buf, M.floating_win = M.preview_location(result, context)
+        lsp_conf.floating_buf, lsp_conf.floating_win = lsp_conf.preview_location(result, context)
     end
 end
 
-function M.PeekDefinition()
-    if vim.tbl_contains(vim.api.nvim_list_wins(), M.floating_win) then
-        vim.api.nvim_set_current_win(M.floating_win)
-    else
-        local params = vim.lsp.util.make_position_params()
-        return vim.lsp.buf_request(0, "textDocument/definition", params, M.preview_location_callback)
-    end
-end
-
-function M.PeekTypeDefinition()
-    if vim.tbl_contains(vim.api.nvim_list_wins(), M.floating_win) then
-        vim.api.nvim_set_current_win(M.floating_win)
+function lsp_conf.PeekDefinition()
+    if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_conf.floating_win) then
+        vim.api.nvim_set_current_win(lsp_conf.floating_win)
     else
         local params = vim.lsp.util.make_position_params()
-        return vim.lsp.buf_request(0, "textDocument/typeDefinition", params, M.preview_location_callback)
+        return vim.lsp.buf_request(0, "textDocument/definition", params, lsp_conf.preview_location_callback)
     end
 end
 
-function M.PeekImplementation()
-    if vim.tbl_contains(vim.api.nvim_list_wins(), M.floating_win) then
-        vim.api.nvim_set_current_win(M.floating_win)
+function lsp_conf.PeekTypeDefinition()
+    if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_conf.floating_win) then
+        vim.api.nvim_set_current_win(lsp_conf.floating_win)
     else
         local params = vim.lsp.util.make_position_params()
-        return vim.lsp.buf_request(0, "textDocument/implementation", params, M.preview_location_callback)
+        return vim.lsp.buf_request(0, "textDocument/typeDefinition", params, lsp_conf.preview_location_callback)
     end
 end
 
-return M
+function lsp_conf.PeekImplementation()
+    if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_conf.floating_win) then
+        vim.api.nvim_set_current_win(lsp_conf.floating_win)
+    else
+        local params = vim.lsp.util.make_position_params()
+        return vim.lsp.buf_request(0, "textDocument/implementation", params, lsp_conf.preview_location_callback)
+    end
+end
+
+return lsp_conf

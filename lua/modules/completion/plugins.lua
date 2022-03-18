@@ -160,6 +160,7 @@ completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
         { "rafamadriz/friendly-snippets", event = "InsertEnter" },
     }, -- , event = "InsertEnter"
 }
+
 completion["kristijanhusak/vim-dadbod-completion"] = {
     event = "InsertEnter",
     ft = { "sql" },
