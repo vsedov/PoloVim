@@ -22,8 +22,13 @@ local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
 
--- prevent loading twice .
-require("luasnip/loaders/from_vscode").load()
+local utils = require("modules.completion.snippets.sniputils")
+local pipe = utils.pipe
+local no_backslash = utils.no_backslash
+local is_math = utils.is_math
+local not_math = utils.not_math
+-- -- prevent loading twice .
+require("luasnip/loaders/from_vscode").lazy_load()
 require("modules.completion.snippets.luasnip")
 
 local parse = ls.parser.parse_snippet
@@ -93,161 +98,7 @@ refactor(${1:scope}): ${2:title}
 
 ${0}]]
 
-local function jdocsnip(args, _, old_state)
-    -- !!! old_state is used to preserve user-input here. DON'T DO IT THAT WAY!
-    -- Using a restoreNode instead is much easier.
-    -- View this only as an example on how old_state functions.
-    local nodes = {
-        t({ "/**", " * " }),
-        i(1, "A short Description"),
-        t({ "", "" }),
-    }
 
-    -- These will be merged with the snippet; that way, should the snippet be updated,
-    -- some user input eg. text can be referred to in the new snippet.
-    local param_nodes = {}
-
-    if old_state then
-        nodes[2] = i(1, old_state.descr:get_text())
-    end
-    param_nodes.descr = nodes[2]
-
-    -- At least one param.
-    if string.find(args[2][1], ", ") then
-        vim.list_extend(nodes, { t({ " * ", "" }) })
-    end
-
-    local insert = 2
-    for indx, arg in ipairs(vim.split(args[2][1], ", ", true)) do
-        -- Get actual name parameter.
-        arg = vim.split(arg, " ", true)[2]
-        if arg then
-            local inode
-            -- if there was some text in this parameter, use it as static_text for this new snippet.
-            if old_state and old_state[arg] then
-                inode = i(insert, old_state["arg" .. arg]:get_text())
-            else
-                inode = i(insert)
-            end
-            vim.list_extend(nodes, { t({ " * @param " .. arg .. " " }), inode, t({ "", "" }) })
-            param_nodes["arg" .. arg] = inode
-
-            insert = insert + 1
-        end
-    end
-
-    if args[1][1] ~= "void" then
-        local inode
-        if old_state and old_state.ret then
-            inode = i(insert, old_state.ret:get_text())
-        else
-            inode = i(insert)
-        end
-
-        vim.list_extend(nodes, { t({ " * ", " * @return " }), inode, t({ "", "" }) })
-        param_nodes.ret = inode
-        insert = insert + 1
-    end
-
-    if vim.tbl_count(args[3]) ~= 1 then
-        local exc = string.gsub(args[3][2], " throws ", "")
-        local ins
-        if old_state and old_state.ex then
-            ins = i(insert, old_state.ex:get_text())
-        else
-            ins = i(insert)
-        end
-        vim.list_extend(nodes, { t({ " * ", " * @throws " .. exc .. " " }), ins, t({ "", "" }) })
-        param_nodes.ex = ins
-        insert = insert + 1
-    end
-
-    vim.list_extend(nodes, { t({ " */" }) })
-
-    local snip = sn(nil, nodes)
-    -- Error on attempting overwrite.
-    snip.old_state = param_nodes
-    return snip
-end
-
--- complicated function for dynamicNode.
-local function cppdocsnip(args, _, old_state)
-    dump(args)
-    -- !!! old_state is used to preserve user-input here. DON'T DO IT THAT WAY!
-    -- Using a restoreNode instead is much easier.
-    -- View this only as an example on how old_state functions.
-    local nodes = {
-        t({ "/**", " * " }),
-        i(1, "A short Description"),
-        t({ "", "" }),
-    }
-
-    -- These will be merged with the snippet; that way, should the snippet be updated,
-    -- some user input eg. text can be referred to in the new snippet.
-    local param_nodes = {}
-
-    if old_state then
-        nodes[2] = i(1, old_state.descr:get_text())
-    end
-    param_nodes.descr = nodes[2]
-
-    -- At least one param.
-    if string.find(args[2][1], ", ") then
-        vim.list_extend(nodes, { t({ " * ", "" }) })
-    end
-
-    local insert = 2
-    for indx, arg in ipairs(vim.split(args[2][1], ", ", true)) do
-        -- Get actual name parameter.
-        arg = vim.split(arg, " ", true)[2]
-        if arg then
-            local inode
-            -- if there was some text in this parameter, use it as static_text for this new snippet.
-            if old_state and old_state[arg] then
-                inode = i(insert, old_state["arg" .. arg]:get_text())
-            else
-                inode = i(insert)
-            end
-            vim.list_extend(nodes, { t({ " * @param " .. arg .. " " }), inode, t({ "", "" }) })
-            param_nodes["arg" .. arg] = inode
-
-            insert = insert + 1
-        end
-    end
-
-    if args[1][1] ~= "void" then
-        local inode
-        if old_state and old_state.ret then
-            inode = i(insert, old_state.ret:get_text())
-        else
-            inode = i(insert)
-        end
-
-        vim.list_extend(nodes, { t({ " * ", " * @return " }), inode, t({ "", "" }) })
-        param_nodes.ret = inode
-        insert = insert + 1
-    end
-
-    if vim.tbl_count(args[3]) ~= 1 then
-        local exc = string.gsub(args[3][2], " throws ", "")
-        local ins
-        if old_state and old_state.ex then
-            ins = i(insert, old_state.ex:get_text())
-        else
-            ins = i(insert)
-        end
-        vim.list_extend(nodes, { t({ " * ", " * @throws " .. exc .. " " }), ins, t({ "", "" }) })
-        param_nodes.ex = ins
-        insert = insert + 1
-    end
-
-    vim.list_extend(nodes, { t({ " */" }) })
-
-    local snip = sn(nil, nodes)
-    -- Error on attempting overwrite.
-    snip.old_state = param_nodes
-    return snip
-end
 
 local require_var = function(args, _)
     local text = args[1][1] or ""
@@ -453,7 +304,7 @@ ls.snippets = {
         parse({ trig = "puv" }, public_void),
         -- Very long example for a java class.
         s("fn", {
-            d(6, jdocsnip, { 2, 4, 5 }),
+            d(6, utils.jdocsnip, { 2, 4, 5 }),
             t({ "", "" }),
             c(1, {
                 t("public "),
@@ -487,7 +338,7 @@ ls.snippets = {
     },
     cpp = {
         s("fn", {
-            d(4, cppdocsnip, { 1, 3, 3 }),
+            d(4, utils.cppdocsnip, { 1, 3, 3 }),
             t({ "", "" }),
             c(1, {
                 t("void"),
@@ -558,7 +409,7 @@ ls.snippets = {
         }),
 
         s({ trig = "fn" }, {
-            d(6, require("modules.completion.snippets.sniputils").jdocsnip, { 2, 4, 5 }),
+            d(6, utils.jdocsnip, { 2, 4, 5 }),
             t({ "", "" }),
             c(1, {
                 t({ "public " }),
@@ -611,40 +462,6 @@ ls.snippets = {
         parse({ trig = "stylua" }, gitcommmit_stylua),
     },
     norg = {
-        -- ls.parser.parse_snippet("ses", "- [ ] session $1 {$2} [$3->to]"),
-        s("programmersay", {
-            t({ "> Great programmer what can u teach me? " }),
-            t({ "", "" }),
-            t({ "@code comment" }),
-            t({ "", "" }),
-            f(function(args)
-                local quotes = require("custom.quotes")
-                math.randomseed(os.clock())
-                local index = math.random() * #quotes
-                local quote = quotes[math.floor(index) + 1]
-                table.insert(quote, "")
-                return quote
-            end),
-            t({ "" }),
-            t({
-                "      /",
-                "     /",
-                "    -",
-                "   / \\",
-                "   | |",
-                "    -",
-                "   /|\\",
-                "  / | \\",
-                "    |",
-                "    |",
-                "   / \\",
-                "  /   \\",
-                " /     \\",
-                "",
-            }),
-            t({ "@end" }),
-        }),
-
         s("Cowthsay", {
             t({ "> Senpai of the pool whats your wisdom ?" }),
             t({ "", "" }),
@@ -809,11 +626,75 @@ ls.snippets = {
             t({ "", "| _" }),
         }),
     },
+    tex = {},
+}
+for _, snip in ipairs(require("modules.completion.snippets.latex.math_i")) do
+    snip.condition = pipe({ is_math })
+    snip.wordTrig = false
+    table.insert(ls.snippets.tex, snip)
+end
+require("modules.completion.snippets.choice_popup")
+
+for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
+    snip.condition = pipe({ is_math })
+    snip.wordTrig = false
+    table.insert(ls.snippets.tex, snip)
+end
+ls.autosnippets = {
+    tex = {},
 }
 
-require("modules.completion.snippets.tex_math")
-require("modules.completion.snippets.choice_popup")
-require("modules.completion.snippets.tex")
+for _, snip in ipairs(require("modules.completion.snippets.latex.tex_math")) do
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+for _, snip in ipairs(require("modules.completion.snippets.latex.math_wRA_no_backslash")) do
+    snip.regTrig = true
+    snip.condition = pipe({ is_math, no_backslash })
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+for _, snip in ipairs(require("modules.completion.snippets.latex.math_rA_no_backslash")) do
+    snip.wordTrig = false
+    snip.regTrig = true
+    snip.condition = pipe({ is_math, no_backslash })
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+for _, snip in ipairs(require("modules.completion.snippets.latex.normal_wA")) do
+    snip.condition = pipe({ not_math })
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+for _, snip in ipairs(require("modules.completion.snippets.latex.math_wrA")) do
+    snip.regTrig = true
+    snip.condition = pipe({ is_math })
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+for _, snip in ipairs(require("modules.completion.snippets.latex.math_wA_no_backslash")) do
+    snip.condition = pipe({ is_math, no_backslash })
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+for _, snip in ipairs(require("modules.completion.snippets.latex.math_iA")) do
+    snip.wordTrig = false
+    snip.condition = pipe({ is_math, no_backslash })
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+for _, snip in ipairs(require("modules.completion.snippets.latex./math_bwA")) do
+    snip.condition = pipe({ conds.line_begin, is_math })
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+for _, snip in ipairs(require("modules.completion.snippets.latex.bwA")) do
+    snip.condition = pipe({ conds.line_begin, not_math })
+    table.insert(ls.autosnippets.tex, snip)
+end
+
+-- require("modules.completion.snippets.latex.tex_math")
+
 require("luasnip/loaders/from_vscode").lazy_load({
     paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
 })

@@ -36,7 +36,8 @@ local tex_template = [[
 
 $0
 \addcontentsline{toc}{section}{Unnumbered Section}
-\end{document}]]
+\end{document}
+]]
 
 local tex_section = [[
 \section{$1}]]
@@ -95,7 +96,7 @@ rec_ls = function()
         }),
     })
 end
-ls.snippets["tex"] = {
+local tex = {
     s("ls", {
         t({ "\\begin{itemize}", "\t\\item " }),
         i(1),
@@ -103,6 +104,8 @@ ls.snippets["tex"] = {
         t({ "", "\\end{itemize}" }),
         i(0),
     }),
+
+    s({ trig = "ali", name = "Align" }, { t({ "\\begin{align*}", "\t" }), i(1), t({ "", ".\\{align*}" }) }),
     parse({ trig = "beg" }, tex_begin),
     parse({ trig = "item" }, tex_itemize),
     parse({ trig = "table" }, tex_table),
@@ -116,7 +119,7 @@ ls.snippets["tex"] = {
     parse({ trig = "para" }, tex_paragraph),
     parse({ trig = "->" }, tex_arrow),
     parse({ trig = "template" }, tex_template),
-    s("ls", {
+    s("ls_test", {
         t({ "\\begin{itemize}", "\t\\item " }),
         i(1),
         d(2, rec_ls, {}),
@@ -124,3 +127,4 @@ ls.snippets["tex"] = {
         i(0),
     }),
 }
+return tex

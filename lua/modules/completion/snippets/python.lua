@@ -173,7 +173,6 @@ local function pycdoc(args, ostate)
 end
 
 M = {
-
     s({ trig = "cls", dscr = "Documented Class Structure" }, {
         t("class "),
         i(1, { "CLASS" }),
@@ -305,8 +304,6 @@ M = {
         t({ ":", "" }),
         d(2, saved_text, {}, { text = "pass", indent = true }),
     }),
-    -- testing
-
     s({ trig = "dcl", regTrig = true }, {
         d(1, python_dataclass, {}, {}),
         t({ "class " }),
@@ -321,6 +318,8 @@ M = {
         t({ '"""', "" }),
         d(5, python_class_init, {}, {}),
     }),
+
 }
+
 
 return M

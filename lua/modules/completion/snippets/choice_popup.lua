@@ -138,4 +138,3 @@ vim.cmd([[
     au User LuasnipChangeChoice lua update_choice_popup(require("luasnip").session.event_node)
     augroup END
 ]])
--- RELOAD("ignis.modules.completion.snippets")
