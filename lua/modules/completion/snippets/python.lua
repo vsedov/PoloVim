@@ -318,8 +318,6 @@ M = {
         t({ '"""', "" }),
         d(5, python_class_init, {}, {}),
     }),
-
 }
-
 
 return M

@@ -9,7 +9,6 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 local r = ls.restore_node
 
-
 local function in_mathzone()
     return vim.fn["vimtex#syntax#in_mathzone"]() == 1
 end

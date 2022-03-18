@@ -98,8 +98,6 @@ refactor(${1:scope}): ${2:title}
 
 ${0}]]
 
-
-
 local require_var = function(args, _)
     local text = args[1][1] or ""
     local split = vim.split(text, ".", { plain = true })
