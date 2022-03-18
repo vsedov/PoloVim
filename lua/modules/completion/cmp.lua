@@ -475,9 +475,9 @@ cmp.setup({
     experimental = { ghost_text = true, native_menu = false },
 })
 
-require("packer").loader("nvim-autopairs")
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+-- require("packer").loader("nvim-autopairs")
+-- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+-- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
 -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
 if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then
