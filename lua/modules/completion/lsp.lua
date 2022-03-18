@@ -364,7 +364,14 @@ local clangd_flags = {
 lspconfig.clangd.setup({
     cmd = { "clangd", unpack(clangd_flags) },
     filetypes = { "c", "cpp", "objc", "objcpp" },
-    settings = {
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+})
+
+lspconfig.texlab.setup({
+    cmd = { "texlab" },
+    filetypes = { "tex", "bib" },
+        settings = {
         texlab = {
             auxDirectory = nil,
             bibtexFormatter = "texlab",
@@ -408,14 +415,6 @@ lspconfig.clangd.setup({
             latexFormatter = "latexindent",
         },
     },
-    on_attach = enhance_attach,
-    capabilities = capabilities,
-})
-
-lspconfig.texlab.setup({
-    -- cmd = { os.getenv("HOME") .."/.local/share/nvim/lsp_servers//latex/texlab" },
-    cmd = { "texlab" },
-    filetypes = { "tex", "bib" },
     on_attach = enhance_attach,
     capabilities = capabilities,
 })

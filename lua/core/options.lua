@@ -150,14 +150,4 @@ end
 
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
-vim.opt.fillchars = {
-    eob = " ",
-    vert = "║",
-    horiz = "═",
-    horizup = "╩",
-    horizdown = "╦",
-    vertleft = "╣",
-    vertright = "╠",
-    verthoriz = "╬",
-}
 load_options()
