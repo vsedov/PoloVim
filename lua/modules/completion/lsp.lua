@@ -132,8 +132,8 @@ local codes = {
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
 })
--- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
--- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 
 vim.diagnostic.config({
     severity_sort = true,
@@ -371,7 +371,7 @@ lspconfig.clangd.setup({
 lspconfig.texlab.setup({
     cmd = { "texlab" },
     filetypes = { "tex", "bib" },
-        settings = {
+    settings = {
         texlab = {
             auxDirectory = nil,
             bibtexFormatter = "texlab",
