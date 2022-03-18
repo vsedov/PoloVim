@@ -47,7 +47,7 @@ function options:load_options()
             diffopt = "filler,iwhite,internal,algorithm:patience",
             completeopt = "menuone,noselect,noinsert", -- Show popup menu, even if there is one entry  menuone?
             pumheight = 15, -- Completion window max size
-            laststatus = 2, -- Show status line always
+            laststatus = 2, -- Show status line always -- can be 3
             listchars = "tab:┊ ,nbsp:+,trail:·,extends:→,precedes:←", -- tab:»·,
             autowrite = true, -- Automatically save before :next, :make etc.
             autoread = true, -- Automatically read changed files
@@ -55,7 +55,6 @@ function options:load_options()
             smartindent = true, -- use intelligent indentation
             showmatch = true, -- highlight matching braces
             numberwidth = 3,
-            laststatus = 3,
         }
 
         self.window_local = {
