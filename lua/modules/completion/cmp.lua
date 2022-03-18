@@ -303,7 +303,7 @@ cmp.setup({
             if luasnip.choice_active() then
                 require("luasnip").change_choice(1)
             elseif cmp.visible() then
-                cmp.mapping.scroll_docs(4)
+                cmp.scroll_docs(4)
             else
                 fallback()
             end
@@ -315,7 +315,7 @@ cmp.setup({
             if luasnip.choice_active() then
                 require("luasnip").change_choice(-1)
             elseif cmp.visible() then
-                cmp.mapping.scroll_docs(-4)
+                cmp.scroll_docs(-4)
             else
                 fallback()
             end
