@@ -145,14 +145,27 @@ lang["mfussenegger/nvim-jdtls"] = {
     ft = "java",
     opt = true,
 }
+
 lang["lervag/vimtex"] = {
     opt = true,
-    ft = { "tex" },
+    ft = { "tex", "latex", "bib", "md" },
     setup = function()
         vim.g.vimtex_view_method = "zathura"
         vim.g.vimtex_compiler_method = "latexrun"
+        vim.g.vimtex_compiler_latexrun = 1
+        vim.g.tex_flavor = "latex"
+        vim.g.vimtex_quickfix_mode = 0
     end,
 }
+
+lang["xuhdev/vim-latex-live-preview"] = {
+    opt = true,
+    ft = { "tex", "latex", "bib", "md" },
+    setup = function()
+        -- vim.g.livepreview_engine = "latexrun"
+    end,
+}
+
 lang["andythigpen/nvim-coverage"] = {
     ft = { "python" },
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
