@@ -19,7 +19,7 @@ function config.autopairs()
         disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
         autopairs = { enable = true },
         ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
-        enable_check_bracket_line = false,
+        enable_check_bracket_line = true,
         html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
         check_ts = true,
         ts_config = {
@@ -29,7 +29,7 @@ function config.autopairs()
             java = false, -- don't check treesitter on java
         },
         fast_wrap = {
-            map = "<M-e>",
+            map = "<c-c>",
             chars = { "{", "[", "(", '"', "'", "`" },
             pattern = string.gsub([[ [%'%"%`%+%)%>%]%)%}%,%s] ]], "%s+", ""),
             end_key = "$",
@@ -39,32 +39,32 @@ function config.autopairs()
         },
     })
 
-    local ts_conds = require("nvim-autopairs.ts-conds")
+    -- local ts_conds = require("nvim-autopairs.ts-conds")
     -- you need setup cmp first put this after cmp.setup()
 
-    npairs.add_rules({
-        Rule(" ", " "):with_pair(function(opts)
-            local pair = opts.line:sub(opts.col - 1, opts.col)
-            return vim.tbl_contains({ "()", "[]", "{}" }, pair)
-        end),
-        Rule("(", ")")
-            :with_pair(function(opts)
-                return opts.prev_char:match(".%)") ~= nil
-            end)
-            :use_key(")"),
-        Rule("{", "}")
-            :with_pair(function(opts)
-                return opts.prev_char:match(".%}") ~= nil
-            end)
-            :use_key("}"),
-        Rule("[", "]")
-            :with_pair(function(opts)
-                return opts.prev_char:match(".%]") ~= nil
-            end)
-            :use_key("]"),
-        Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
-        Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
-    })
+    -- npairs.add_rules({
+    --     Rule(" ", " "):with_pair(function(opts)
+    --         local pair = opts.line:sub(opts.col - 1, opts.col)
+    --         return vim.tbl_contains({ "()", "[]", "{}" }, pair)
+    --     end),
+    --     Rule("(", ")")
+    --         :with_pair(function(opts)
+    --             return opts.prev_char:match(".%)") ~= nil
+    --         end)
+    --         :use_key(")"),
+    --     Rule("{", "}")
+    --         :with_pair(function(opts)
+    --             return opts.prev_char:match(".%}") ~= nil
+    --         end)
+    --         :use_key("}"),
+    --     Rule("[", "]")
+    --         :with_pair(function(opts)
+    --             return opts.prev_char:match(".%]") ~= nil
+    --         end)
+    --         :use_key("]"),
+    --     Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+    --     Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
+    -- })
 
     -- If you want insert `(` after select function or method item
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
@@ -422,7 +422,8 @@ end
 function config.side_bar()
     local sidebar = require("sidebar-nvim")
     local opts = {
-        open = true,
+        -- i dont want this
+        open = false,
         disable_default_keybindings = true,
         side = "left",
         initial_width = 30,

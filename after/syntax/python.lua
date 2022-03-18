@@ -5,7 +5,7 @@ vim.cmd([[
     
     " math related
     syntax match pyOperator " / " conceal cchar=÷
-    -- syntax match pyOperator " \* " conceal cchar=×
+    syntax match pyOperator " \* " conceal cchar=×
     syntax match pyOperator "\<\%(math\.\)\?sqrt\>" conceal cchar=√
     syntax match pyOperator "\<\%(math\.\)\?prod\>" conceal cchar=∏
     syntax match pyOperator "\( \|\)\*\*\( \|\)2\>" conceal cchar=²

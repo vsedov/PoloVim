@@ -16,6 +16,7 @@ function autocmd.nvim_create_augroups(defs)
         end
     end
 end
+
 function autocmd.load_autocmds()
     local definitions = {
         packer = {
@@ -24,7 +25,7 @@ function autocmd.load_autocmds()
         bufs = {
             { { "BufRead", "BufNewFile" }, "*.norg", "setlocal filetype=norg" },
             { { "BufEnter", "BufWinEnter" }, "*.norg", [[set foldlevel=1000]] },
-
+            { { "BufNewFile", "BufRead", "BufWinEnter" }, "*.tex", [[set filetype=tex]] },
             -- Reload vim config automatically
             {
                 "BufWritePost",
@@ -47,7 +48,7 @@ function autocmd.load_autocmds()
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
             {
                 "BufWritePost",
-                "*",
+                { "*.py", "*.lua", "*.sh" },
                 function()
                     if vim.fn.getline(1) == "^#!" then
                         if vim.fn.getline(1) == "/bin/" then
@@ -104,6 +105,14 @@ function autocmd.load_autocmds()
                 "*",
                 [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
             },
+            -- {
+            --     { "InsertLeave", "WinEnter", "CmdlineLeave" },
+            --     "*",
+            --     "set cursorline",
+            -- },
+
+            -- { { "InsertEnter", "WinLeave", "CmdlineEnter" }, "*", "set nocursorline" },
+
             { "BufEnter", "NvimTree", [[setlocal cursorline]] },
             { "CmdLineEnter", "*", [[set nosmartcase]] },
             { "CmdLineLeave", "*", [[set smartcase]] },
@@ -162,7 +171,7 @@ function autocmd.load_autocmds()
         quickfix = {
             {
                 "QuickfixCmdPost",
-                { "make", "grep", "grepadd", "vimgrep", "vimgrepadd" },
+                { "qf", "make", "grep", "grepadd", "vimgrep", "vimgrepadd" },
                 [[cwin]],
             },
             {

@@ -173,7 +173,6 @@ local function pycdoc(args, ostate)
 end
 
 M = {
-
     s({ trig = "cls", dscr = "Documented Class Structure" }, {
         t("class "),
         i(1, { "CLASS" }),
@@ -198,6 +197,7 @@ M = {
         }),
         i(0),
     }),
+
     s({ trig = "fn", dscr = "Documented Function Structure" }, {
         t("def "),
         i(1, { "function" }),

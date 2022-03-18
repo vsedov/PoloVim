@@ -2,14 +2,9 @@ return {
     config = function()
         local null_ls = require("null-ls")
 
-        local user_data = {
-            lsp = {},
-        }
-
         local lspconfig = require("lspconfig")
 
         local diagnostics = null_ls.builtins.diagnostics
-        local hover = null_ls.builtins.hover
         local actions = null_ls.builtins.code_actions
         local sources = {
             null_ls.builtins.formatting.rustfmt,
@@ -94,14 +89,15 @@ return {
                 })
             )
         end
-        if exist("luacheck") then
-            table.insert(
-                sources,
-                null_ls.builtins.diagnostics.luacheck.with({
-                    extra_args = { "--append-config", vim.fn.expand("~/.luacheckrc") },
-                })
-            )
-        end
+        -- Maybe i dont need luacheck for this, im not sure though
+        -- if exist("luacheck") then
+        --     table.insert(
+        --         sources,
+        --         null_ls.builtins.diagnostics.luacheck.with({
+        --             extra_args = { "--append-config", vim.fn.expand("~/.luacheckrc") },
+        --         })
+        --     )
+        -- end
 
         -- python
         if exist("flake8") then
@@ -156,13 +152,12 @@ return {
 
         local cfg = {
             sources = sources,
-            debounce = 1000,
+            debounce = 500,
             default_timeout = 3000,
             fallback_severity = vim.diagnostic.severity.WARN,
             root_dir = lspconfig.util.root_pattern(
                 ".venv", -- for python
                 "Pipfile",
-
                 "_darcs",
                 ".hg",
                 ".bzr",
@@ -185,6 +180,11 @@ return {
                         virtual_text = false,
                     })
                     vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+                    -- Convert this using vim.api.nvim_create_autocmd()
+                    -- vim.api.nvim_create_autocmd("BufWritePre", {
+                    --     pattern = "*",
+                    --     command = "lua vim.lsp.buf.formatting()",
+                    -- })
                 end
             end,
         }

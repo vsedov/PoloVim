@@ -41,7 +41,18 @@ function Packer:load_packer()
         api.nvim_command("packadd packer.nvim")
         packer = require("packer")
     end
-    packer.init({ compile_path = packer_compiled, git = { clone_timeout = 120 }, disable_commands = true })
+    packer.init({
+        compile_path = packer_compiled,
+        git = {
+            clone_timeout = 500,
+            subcommands = {
+                -- this is more efficient than what Packer is using
+                fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
+            },
+        },
+        -- max_jobs = 10,
+        disable_commands = true,
+    })
     packer.reset()
     local use = packer.use
     local use_rocks = packer.use_rocks
@@ -151,6 +162,10 @@ function plugins.load_compile()
         plugins.magic_compile()
         require("_compiled")
     end
+
+    vim.api.nvim_add_user_command("PackerACompile", function()
+        require("core.pack").auto_compile()
+    end, { force = true })
 
     vim.api.nvim_add_user_command("PackerCompile", function()
         require("core.pack").magic_compile()

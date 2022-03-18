@@ -6,14 +6,6 @@ local map_cmd = bind.map_cmd
 
 local loader = require("packer").loader
 local K = {}
-local function check_back_space()
-    local col = vim.fn.col(".") - 1
-    if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-        return true
-    else
-        return false
-    end
-end
 
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -35,7 +27,6 @@ local keys = {
 
     -- Lsp mapp work when insertenter and lsp start
     --
-    ["n|<Leader>tc"] = map_cu("Clap colors"):with_noremap():with_silent(),
     ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
     ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
     ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
@@ -102,7 +93,6 @@ local keys = {
     -- ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
     -- ["n|<F9>"] = map_cr("GoBreakToggle"),
     -- -- session
-
     -- Switch from local to Normal for M to test how it tis
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]]):with_noremap(),
     ["n|;n"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]):with_noremap(),

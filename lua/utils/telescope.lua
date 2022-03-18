@@ -127,6 +127,7 @@ local open_in_nvim_tree = function(prompt_bufnr)
     local action_state = require("telescope.actions.state")
     local Path = require("plenary.path")
     local actions = require("telescope.actions")
+    local file_name
 
     local entry = action_state.get_selected_entry()[1]
     local entry_path = Path:new(entry):parent():absolute()
@@ -178,6 +179,7 @@ require("telescope").setup({
         preview = {
             hide_on_startup = true,
         },
+        -- preview = true,
         entry_prefix = " ",
         layout_config = {
             width = 0.99,
@@ -211,10 +213,11 @@ require("telescope").setup({
         -- winblend = 20,
         mappings = {
             n = {
+                ["q"] = actions.close,
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
                 ["<C-o>"] = actions.select_vertical,
-                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                ["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist,
                 ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
                 ["<C-h>"] = "which_key",
                 ["<C-l>"] = actions_layout.toggle_preview,
@@ -291,7 +294,6 @@ require("telescope").setup({
         set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
     }),
 })
-
 telescope.load_extension("dotfiles")
 telescope.load_extension("gosource")
 -- telescope.load_extension("notify")

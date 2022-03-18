@@ -1,6 +1,6 @@
 local lang = {}
 local conf = require("modules.lang.config")
-local path = plugin_folder()
+-- local path = plugin_folder() no local plugins
 
 lang["nathom/filetype.nvim"] = {
     -- event = {'BufEnter'},
@@ -144,6 +144,26 @@ lang["simrat39/symbols-outline.nvim"] = {
 lang["mfussenegger/nvim-jdtls"] = {
     ft = "java",
     opt = true,
+}
+
+lang["lervag/vimtex"] = {
+    opt = true,
+    ft = { "tex", "latex", "bib", "md" },
+    setup = function()
+        vim.g.vimtex_view_method = "zathura"
+        vim.g.vimtex_compiler_method = "latexrun"
+        vim.g.vimtex_compiler_latexrun = 1
+        vim.g.tex_flavor = "latex"
+        vim.g.vimtex_quickfix_mode = 0
+    end,
+}
+
+lang["xuhdev/vim-latex-live-preview"] = {
+    opt = true,
+    ft = { "tex", "latex", "bib", "md" },
+    setup = function()
+        -- vim.g.livepreview_engine = "latexrun"
+    end,
 }
 
 lang["andythigpen/nvim-coverage"] = {
@@ -315,26 +335,33 @@ lang["p00f/nvim-ts-rainbow"] = {
 }
 
 lang["onsails/diaglist.nvim"] = {
-    cmd = { "DiaglistA", "DiaglistB" },
-    opt = true,
-    ft = { "python", "c", "lua", "cpp" },
+    event = { "BufEnter", "QuickFixCmdPre", "CmdlineEnter" },
+    requires = {
+        "neovim/nvim-lspconfig",
+    },
+    module = "diaglist",
+    setup = function()
+        local map, opts = vim.api.nvim_set_keymap, {}
+        map("n", "<Leader>xX", '<cmd>lua require "diaglist".open_all_diagnostics()<cr>', opts)
+        map("n", "<Leader>xx", '<cmd>lua require "diaglist".open_buffer_diagnostics()<cr>', opts)
+    end,
+    opt = true, -- opt = true,
     config = function()
         require("diaglist").init({
             debug = false,
             debounce_ms = 150,
         })
-        vim.cmd([[command! -nargs=*  DiaglistA lua require('diaglist').open_all_diagnostics()]])
-        vim.cmd([[command! -nargs=*  DiaglistB lua require('diaglist').open_buffer_diagnostics()]])
     end,
+    after = { "nvim-bqf", "nvim-lspconfig" },
 }
 
-lang["folke/trouble.nvim"] = {
-    cmd = { "Trouble", "TroubleToggle" },
-    opt = true,
-    config = function()
-        require("trouble").setup({})
-    end,
-}
+-- lang["folke/trouble.nvim"] = {
+--     cmd = { "Trouble", "TroubleToggle" },
+--     opt = true,
+--     config = function()
+--         require("trouble").setup({})
+--     end,
+-- }
 
 -- Might use this
 lang["folke/todo-comments.nvim"] = {
@@ -343,7 +370,6 @@ lang["folke/todo-comments.nvim"] = {
     config = function()
         require("todo-comments").setup({}) -- Use defualt
     end,
-    after = "trouble.nvim",
 }
 
 lang["is0n/jaq-nvim"] = {
@@ -351,6 +377,11 @@ lang["is0n/jaq-nvim"] = {
     after = "filetype.nvim",
     opt = true,
     config = conf.jaq,
+}
+lang["pianocomposer321/yabs.nvim"] = {
+    opt = true,
+    requires = { "nvim-lua/plenary.nvim" },
+    config = conf.yabs,
 }
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {

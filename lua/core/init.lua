@@ -41,6 +41,10 @@ local disable_distribution_plugins = function()
     vim.g.loaded_netrwPlugin = 1
     vim.g.loaded_netrwSettings = 1
     vim.g.loaded_netrwFileHandlers = 1
+
+    vim.g.loaded_node_provider = 0
+    vim.g.loaded_ruby_provider = 0
+    vim.g.loaded_perl_provider = 0
 end
 
 local leader_map = function()
@@ -62,7 +66,6 @@ local load_core = function()
     leader_map()
 
     if pcall(require, "impatient") then
-        require("impatient")
         require("impatient").enable_profile()
     end
 

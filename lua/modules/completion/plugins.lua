@@ -10,6 +10,8 @@ completion["neovim/nvim-lspconfig"] = {
         { "nvim-lua/lsp_extensions.nvim", opt = true },
         { "williamboman/nvim-lsp-installer", opt = true },
         { "folke/lua-dev.nvim", module = "lua-dev" },
+        { "p00f/clangd_extensions.nvim", module = "clangd_extensions" },
+        -- { "lewis6991/hover.nvim"}
     },
 
     opt = true,
@@ -22,6 +24,16 @@ completion["tami5/lspsaga.nvim"] = {
     config = conf.saga,
     after = "nvim-lspconfig",
 }
+
+-- completion["lewis6991/hover.nvim"]={
+--   keys = {""}
+--   opt = true,
+--   config = function()
+--     require('hover.providers.gh')
+--     require('hover.providers.man')
+--     require('hover.providers.dictionary')
+--   end
+-- }
 
 if load_coq() then
     completion["ms-jpq/coq_nvim"] = {
@@ -74,6 +86,20 @@ end
 completion["https://github.com/github/copilot.vim.git"] = {
     event = "InsertEnter",
     after = "nvim-cmp",
+    keys = {
+        "<Plug>(copilot-next)",
+        "<Plug>(copilot-previous)",
+    },
+    setup = function()
+        local default_keymaps = {
+            { "i", "<A-,>", "<Plug>(copilot-next)" },
+            { "i", "<A-.>", "<Plug>(copilot-previous)" },
+        }
+        for _, m in ipairs(default_keymaps) do
+            vim.keymap.set(m[1], m[2], m[3], { silent = true })
+        end
+    end,
+
     config = function()
         vim.opt.completeopt = "menuone,noselect"
         vim.g.copilot_enabled = false
@@ -88,9 +114,6 @@ completion["https://github.com/github/copilot.vim.git"] = {
         end
 
         vim.g["copilot_filetypes"] = copilot_filetypes
-
-        vim.keymap.set("i", "<M-.>", "<Plug>(copilot-next)")
-        vim.keymap.set("i", "<M-,>", "<Plug>(copilot-previous)")
     end,
 }
 
@@ -125,7 +148,9 @@ completion["hrsh7th/nvim-cmp"] = {
         -- {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp", opt=true },
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },
-    config = conf.nvim_cmp,
+    config = function()
+        require("modules.completion.cmp")
+    end,
 }
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
@@ -134,8 +159,8 @@ completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
     requires = {
         { "rafamadriz/friendly-snippets", event = "InsertEnter" },
     }, -- , event = "InsertEnter"
-    config = conf.luasnip,
 }
+
 completion["kristijanhusak/vim-dadbod-completion"] = {
     event = "InsertEnter",
     ft = { "sql" },
@@ -156,7 +181,7 @@ completion["nvim-telescope/telescope.nvim"] = {
     setup = conf.telescope_preload,
     requires = {
         { "nvim-lua/popup.nvim", opt = true }, -- test
-        { "nvim-neorg/neorg-telescope", opt = true },
+        { "nvim-neorg/neorg-telescope", branch = "feat/gtd_pickers", opt = true },
         { "nvim-lua/plenary.nvim", opt = true },
         { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
