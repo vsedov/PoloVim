@@ -54,6 +54,13 @@ tools["ThePrimeagen/harpoon"] = {
     end,
 }
 
+tools["max397574/tomato.nvim"] = {
+    opt = true,
+    config = function()
+        require("tomato").setup()
+    end,
+}
+
 tools["natecraddock/workspaces.nvim"] = {
     opt = true,
     config = function()
@@ -335,6 +342,7 @@ tools["jvgrootveld/telescope-zoxide"] = {
 tools["nanotee/zoxide.vim"] = { cmd = { "Z", "Lz", "Zi", "Tz" } }
 
 tools["tami5/sqlite.lua"] = {
+    branch = "new/index_access",
     module = "sqlite",
 }
 -- manual call
