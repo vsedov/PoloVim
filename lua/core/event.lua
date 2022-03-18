@@ -105,6 +105,14 @@ function autocmd.load_autocmds()
                 "*",
                 [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
             },
+            -- {
+            --     { "InsertLeave", "WinEnter", "CmdlineLeave" },
+            --     "*",
+            --     "set cursorline",
+            -- },
+
+            -- { { "InsertEnter", "WinLeave", "CmdlineEnter" }, "*", "set nocursorline" },
+
             { "BufEnter", "NvimTree", [[setlocal cursorline]] },
             { "CmdLineEnter", "*", [[set nosmartcase]] },
             { "CmdLineLeave", "*", [[set smartcase]] },

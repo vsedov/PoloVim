@@ -100,10 +100,3 @@ function M.reset_timer(text_changed)
 end
 
 return M
-
--- vim.api.nvim_create_autocmd("InsertCharPre", {
---     pattern = "*.tex",
---     callback = function()
---         reset_timer()
---     end,
--- })

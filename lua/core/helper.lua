@@ -54,7 +54,7 @@ return {
 
         _G.use_nulls = function()
             -- Remove this for norg files
-            if vim.bo.filetype == "norg" then
+            if vim.bo.filetype == "norg" or vim.bo.filetype == "json" then
                 return false
             end
 

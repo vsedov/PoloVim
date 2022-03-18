@@ -163,6 +163,10 @@ function plugins.load_compile()
         require("_compiled")
     end
 
+    vim.api.nvim_add_user_command("PackerACompile", function()
+        require("core.pack").auto_compile()
+    end, { force = true })
+
     vim.api.nvim_add_user_command("PackerCompile", function()
         require("core.pack").magic_compile()
     end, { force = true })
