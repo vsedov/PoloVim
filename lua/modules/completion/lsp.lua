@@ -353,25 +353,35 @@ lspconfig.tsserver.setup({
         enhance_attach(client)
     end,
 })
-require("clangd_extensions").setup({})
-local clangd_flags = {
-    "--j=16",
-    "--background-index",
-    "--clang-tidy",
-    "--fallback-style=llvm",
-    "--all-scopes-completion",
-    "--completion-style=detailed",
-    "--header-insertion=iwyu",
-    "--header-insertion-decorators",
-    "--pch-storage=memory",
-}
-
-lspconfig.clangd.setup({
-    cmd = { "clangd", unpack(clangd_flags) },
-    filetypes = { "c", "cpp", "objc", "objcpp" },
+local clangd_defaults = require("lspconfig.server_configurations.clangd")
+local clangd_configs = vim.tbl_deep_extend(
+    "force",
+    clangd_defaults["default_config"],
+    {
     on_attach = enhance_attach,
     capabilities = capabilities,
-})
+        cmd = {
+            "clangd",
+            "-j=16",
+            "--background-index",
+            "--clang-tidy",
+            "--fallback-style=llvm",
+            "--all-scopes-completion",
+            "--completion-style=detailed",
+            "--header-insertion=iwyu",
+            "--header-insertion-decorators",
+            "--pch-storage=memory",
+        },
+    }
+)
+require("clangd_extensions").setup({
+    server = clangd_configs,
+})-- lspconfig.clangd.setup({
+--     cmd = { "clangd", unpack(clangd_flags) },
+--     filetypes = { "c", "cpp", "objc", "objcpp" },
+--     on_attach = enhance_attach,
+--     capabilities = capabilities,
+-- })
 
 lspconfig.texlab.setup({
     cmd = { "texlab" },
@@ -518,14 +528,14 @@ local sumneko_lua_server = {
                 workspace = {
                     -- remove all of this, as it slows things down
                     library = {
-                        vim.api.nvim_get_runtime_file("", false),
-                        [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
-                        vim.api.nvim_get_runtime_file("", false),
-                        [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
-                        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = false,
-                        [vim.fn.expand("$VIMRUNTIME/lua")] = false,
+                        -- vim.api.nvim_get_runtime_file("", false),
+                        -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
+                        -- vim.api.nvim_get_runtime_file("", false),
+                        -- [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
+                        -- [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+                        -- [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                     },
-                    maxPreload = 100000,
+                    maxPreload = 200000,
                     preloadFileSize = 10000,
                 },
             },

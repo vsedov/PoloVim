@@ -16,8 +16,6 @@ local has_words_before = function()
 end
 local luasnip = require("luasnip")
 
-local has_luasnip, luasnip = pcall(require, "luasnip")
-
 -- Returns the current column number.
 local column = function()
     local _line, col = unpack(vim.api.nvim_win_get_cursor(0))
