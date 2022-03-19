@@ -776,13 +776,66 @@ ls.snippets = {
         }),
         ls.parser.parse_snippet("lec", "  *** Lectures"),
         ls.parser.parse_snippet("work", "  *** work_sheets"),
-        ls.parser.parse_snippet("1Hour", "  *** First Hour"),
-        ls.parser.parse_snippet("2Hour", "  *** Second Hour"),
+        ls.parser.parse_snippet("OneHour", "  *** First Hour"),
+        ls.parser.parse_snippet("TwoHour", "  *** Second Hour"),
 
         ls.parser.parse_snippet(
             "hajime",
             "* Pomodoro\n** $0\n\n*** Lectures\n\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* How am i feeling today "
         ),
+
+        s({
+            trig = "*([2-6])",
+            name = "Heading",
+            dscr = "Add Heading",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("*", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s({
+            trig = "q([2-6])",
+            name = "Quote",
+            dscr = "Add Quote",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep(">", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s({
+            trig = "-([2-6])",
+            name = "Unordered lists",
+            dscr = "Add Unordered lists",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("-", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s({
+            trig = "~([2-6])",
+            name = "Ordered lists",
+            dscr = "Add Ordered lists",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("~", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
     },
     tex = {},
 }
