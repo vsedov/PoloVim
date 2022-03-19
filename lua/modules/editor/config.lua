@@ -39,32 +39,32 @@ function config.autopairs()
         },
     })
 
-    -- local ts_conds = require("nvim-autopairs.ts-conds")
+    local ts_conds = require("nvim-autopairs.ts-conds")
     -- you need setup cmp first put this after cmp.setup()
 
-    -- npairs.add_rules({
-    --     Rule(" ", " "):with_pair(function(opts)
-    --         local pair = opts.line:sub(opts.col - 1, opts.col)
-    --         return vim.tbl_contains({ "()", "[]", "{}" }, pair)
-    --     end),
-    --     Rule("(", ")")
-    --         :with_pair(function(opts)
-    --             return opts.prev_char:match(".%)") ~= nil
-    --         end)
-    --         :use_key(")"),
-    --     Rule("{", "}")
-    --         :with_pair(function(opts)
-    --             return opts.prev_char:match(".%}") ~= nil
-    --         end)
-    --         :use_key("}"),
-    --     Rule("[", "]")
-    --         :with_pair(function(opts)
-    --             return opts.prev_char:match(".%]") ~= nil
-    --         end)
-    --         :use_key("]"),
-    --     Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
-    --     Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
-    -- })
+    npairs.add_rules({
+        Rule(" ", " "):with_pair(function(opts)
+            local pair = opts.line:sub(opts.col - 1, opts.col)
+            return vim.tbl_contains({ "()", "[]", "{}" }, pair)
+        end),
+        Rule("(", ")")
+            :with_pair(function(opts)
+                return opts.prev_char:match(".%)") ~= nil
+            end)
+            :use_key(")"),
+        Rule("{", "}")
+            :with_pair(function(opts)
+                return opts.prev_char:match(".%}") ~= nil
+            end)
+            :use_key("}"),
+        Rule("[", "]")
+            :with_pair(function(opts)
+                return opts.prev_char:match(".%]") ~= nil
+            end)
+            :use_key("]"),
+        -- Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+        -- Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
+    })
 
     -- If you want insert `(` after select function or method item
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")

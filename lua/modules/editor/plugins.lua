@@ -19,22 +19,21 @@ editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 --     opt = true,
 -- }
 
-
 editor["ZhiyuanLck/smart-pairs"] = {
-  -- commit = "045c96b3ac7fce57a12064f98987e916594e5a1b",
-  event = "InsertEnter",
-  opt = true,
-  config = function()
-    require("pairs"):setup({
-      enter = {
-          enable_mapping = false,
-      },
-      space = {
-          enable_mapping = true,
-      },
-  })
-  end,
-  after = { "nvim-cmp" },
+    -- commit = "045c96b3ac7fce57a12064f98987e916594e5a1b",
+    event = "InsertEnter",
+    opt = true,
+    config = function()
+        require("pairs"):setup({
+            enter = {
+                enable_mapping = false,
+            },
+            space = {
+                enable_mapping = true,
+            },
+        })
+    end,
+    after = { "nvim-cmp" },
 }
 
 editor["kana/vim-niceblock"] = {
@@ -474,26 +473,26 @@ editor["raimon49/requirements.txt.vim"] = {
 }
 
 editor["monaqa/dial.nvim"] = {
-    keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" } },
+    keys = { "<C-a>", "<C-x>" },
     opt = true,
-    setup = conf.dial_setup(),
     config = function()
-        vim.cmd([[packadd dial.nvim]])
+        local dial = require("dial.map")
+        local augend = require("dial.augend")
+        require("dial.config").augends:register_group({
+            -- default augends used when no group name is specified
+            default = {
+                augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
+                augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+                augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
+            },
 
-        local dial = require("dial")
-        dial.config.searchlist.normal = {
-            "number#decimal",
-            "number#hex",
-            "number#binary",
-            "date#[%Y/%m/%d]",
-            "markup#markdown#header",
-        }
-        if vim.o.ft == "norg" or vim.o.ft == "markdown" then
-            table.insert(dial.config.searchlist.normal, "date#[%ja]")
-            table.insert(dial.config.searchlist.normal, "char#alph#small#word")
-            table.insert(dial.config.searchlist.normal, "char#alph#small#str")
-            table.insert(dial.config.searchlist.normal, "char#alph#capital#word")
-        end
+            -- augends used when group with name `mygroup` is specified
+            mygroup = {
+                augend.integer.alias.decimal,
+                augend.constant.alias.bool, -- boolean value (true <-> false)
+                augend.date.alias["%m/%d/%Y"], -- date (02/19/2022, etc.)
+            },
+        })
         local augend = require("dial.augend")
         local map = vim.keymap.set
         map("n", "<C-a>", dial.inc_normal(), { remap = false })
@@ -502,23 +501,6 @@ editor["monaqa/dial.nvim"] = {
         map("v", "<C-x>", dial.dec_visual(), { remap = false })
         map("v", "g<C-a>", dial.inc_gvisual(), { remap = false })
         map("v", "g<C-x>", dial.dec_gvisual(), { remap = false })
-        require("dial.config").augends:register_group({
-            -- default augends used when no group name is specified
-            default = {
-                augend.integer.alias.decimal,
-                augend.integer.alias.hex,
-                augend.date.alias["%Y/%m/%d"],
-                augend.constant.alias.bool,
-                augend.constant.new({
-                    elements = { "&&", "||" },
-                    word = false,
-                    cyclic = true,
-                }),
-            },
-            dep_files = {
-                augend.semver.alias.semver,
-            },
-        })
     end,
 }
 
