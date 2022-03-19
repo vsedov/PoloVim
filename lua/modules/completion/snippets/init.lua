@@ -555,6 +555,60 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
     table.insert(ls.snippets.tex, snip)
 end
 ls.autosnippets = {
+    norg = {
+        s({
+            trig = "*([2-6])",
+            name = "Heading",
+            dscr = "Add Heading",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("*", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s({
+            trig = "q([2-6])",
+            name = "Quote",
+            dscr = "Add Quote",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep(">", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s({
+            trig = "-([2-6])",
+            name = "Unordered lists",
+            dscr = "Add Unordered lists",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("-", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s({
+            trig = "~([2-6])",
+            name = "Ordered lists",
+            dscr = "Add Ordered lists",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("~", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+    },
     tex = {},
 }
 

@@ -104,7 +104,7 @@ local norg = {
         t("| $"),
         i(1, "focus_area_name"),
         t({ "$", "" }),
-        i(1, "marker body"),
+        i(2, "marker body"),
         t({ "", "| _" }),
     }),
 
@@ -264,58 +264,7 @@ local norg = {
         "* Pomodoro\n** $0\n\n*** Lectures\n\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* How am i feeling today "
     ),
 
-    s({
-        trig = "*([2-6])",
-        name = "Heading",
-        dscr = "Add Heading",
-        regTrig = true,
-        hidden = true,
-    }, {
-        f(function(_, snip)
-            return string.rep("*", tonumber(snip.captures[1])) .. " "
-        end, {}),
-    }, {
-        condition = conds.line_begin,
-    }),
-    s({
-        trig = "q([2-6])",
-        name = "Quote",
-        dscr = "Add Quote",
-        regTrig = true,
-        hidden = true,
-    }, {
-        f(function(_, snip)
-            return string.rep(">", tonumber(snip.captures[1])) .. " "
-        end, {}),
-    }, {
-        condition = conds.line_begin,
-    }),
-    s({
-        trig = "-([2-6])",
-        name = "Unordered lists",
-        dscr = "Add Unordered lists",
-        regTrig = true,
-        hidden = true,
-    }, {
-        f(function(_, snip)
-            return string.rep("-", tonumber(snip.captures[1])) .. " "
-        end, {}),
-    }, {
-        condition = conds.line_begin,
-    }),
-    s({
-        trig = "~([2-6])",
-        name = "Ordered lists",
-        dscr = "Add Ordered lists",
-        regTrig = true,
-        hidden = true,
-    }, {
-        f(function(_, snip)
-            return string.rep("~", tonumber(snip.captures[1])) .. " "
-        end, {}),
-    }, {
-        condition = conds.line_begin,
-    }),
+
 }
 
 return norg
