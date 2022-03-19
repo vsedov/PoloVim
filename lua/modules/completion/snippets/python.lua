@@ -172,7 +172,7 @@ local function pycdoc(args, ostate)
     return snip
 end
 
-M = {
+local M = {
     s({ trig = "cls", dscr = "Documented Class Structure" }, {
         t("class "),
         i(1, { "CLASS" }),
