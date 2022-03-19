@@ -172,7 +172,6 @@ editor["ggandor/lightspeed.nvim"] = {
 
 editor["hrsh7th/vim-searchx"] = {
     event = { "CmdwinEnter", "CmdlineEnter" },
-    fn = { "searchx#*" },
     setup = function()
         -- Overwrite / and ?.
         vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
@@ -526,7 +525,7 @@ editor["rmagatti/alternate-toggler"] = {
     cmd = "ToggleAlternate",
 }
 
-editor["jbyuki/nabla.nvim"] = {
+editor["max397574/nabla.nvim"] = {
     opt = true,
     -- commit = "ba9559798ac5bdb029cbebaa8751f61e2f024f40",
     ft = "norg",
