@@ -355,12 +355,17 @@ lspconfig.tsserver.setup({
 })
 require("clangd_extensions").setup({})
 local clangd_flags = {
+    "--j=16",
     "--background-index",
-    "--cross-file-rename",
-    "--offset-encoding=utf-16",
-    "--clang-tidy-checks=clang-diagnostic-*,clang-analyzer-*,-*,bugprone*,modernize*,performance*,-modernize-pass-by-value,-modernize-use-auto,-modernize-use-using,-modernize-use-trailing-return-type",
+    "--clang-tidy",
+    "--fallback-style=llvm",
+    "--all-scopes-completion",
+    "--completion-style=detailed",
+    "--header-insertion=iwyu",
+    "--header-insertion-decorators",
+    "--pch-storage=memory",
 }
--- Need to configer this for xmake soon
+
 lspconfig.clangd.setup({
     cmd = { "clangd", unpack(clangd_flags) },
     filetypes = { "c", "cpp", "objc", "objcpp" },
