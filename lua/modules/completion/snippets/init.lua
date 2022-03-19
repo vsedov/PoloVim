@@ -283,6 +283,110 @@ ls.snippets = {
             i(0),
             t({ "", "end" }),
         }),
+
+        s("super", {
+            i(1, "ClassName"),
+            t(".super."),
+            i(2, "method"),
+            t("(self"),
+            i(0),
+            t(")"),
+        }),
+
+        s("s.", {
+            t("self."),
+            i(1, "thing"),
+            t(" = "),
+            i(2),
+            i(0),
+        }),
+
+        s("ld", {
+            t("log.debug("),
+            i(0),
+            t(")"),
+        }),
+
+        s("ldi", {
+            t("log.debug(inspect("),
+            i(0),
+            t("))"),
+        }),
+
+        s("inc", {
+            i(1, "thing"),
+            t(" = "),
+            f(function(args)
+                return args[1][1]
+            end, 1),
+            t(" + "),
+            i(2, "1"),
+            i(0),
+        }),
+
+        s("dec", {
+            i(1, "thing"),
+            t(" = "),
+            f(function(args)
+                return args[1][1]
+            end, 1),
+            t(" - "),
+            i(2, "1"),
+            i(0),
+        }),
+        s(
+            {
+                trig = "use",
+                name = "packer use",
+                dscr = {
+                    "packer use plugin block",
+                    "e.g.",
+                    "use {'author/plugin'}",
+                },
+            },
+            -- = {
+            fmt([[{}[{}]], {
+                c(1, {
+                    t("completion"),
+                    t("editor"),
+                    t("lang"),
+                    t("tools"),
+                    t("ui"),
+                    t("usless"),
+                    t("user"),
+                }),
+                d(2, function()
+                    -- Get the author and URL in the clipboard and auto populate the author and project
+                    local default = s("", { i(1, "author"), t("/"), t(2, "plugin") })
+                    local clip = vim.fn.getreg("*")
+                    if not vim.startswith(clip, "https://github.com/") then
+                        return default
+                    end
+                    local parts = vim.split(clip, "/")
+                    if #parts < 2 then
+                        return default
+                    end
+                    local author, project = parts[#parts - 1], parts[#parts]
+                    return s("", {
+                        t({
+                            "'" .. author .. "/" .. project .. "']={",
+                        }),
+                        t({ "", "" }),
+                        t("    opt = true,"),
+                        t({ "", "" }),
+                        t("    config = function()"),
+                        t({ "", "" }),
+                        t("        require("),
+                        i(1, "module"),
+                        t(")"),
+                        t({ "", "" }),
+                        t("    end,"),
+                        t({ "", "" }),
+                        t("}"),
+                    })
+                end),
+            })
+        ),
     },
     python = require("modules.completion.snippets.python"),
     help = {
@@ -460,6 +564,70 @@ ls.snippets = {
         parse({ trig = "stylua" }, gitcommmit_stylua),
     },
     norg = {
+
+        s("neorg checkbox", {
+            t("- [ ] "),
+            i(1, "todo.."),
+        }),
+
+        -------------------------
+        ---       links       ---
+        -------------------------
+
+        s("neorg link curly", {
+            t("{"),
+            i(1, "name"),
+            t("}["),
+            i(2, "link"),
+            t("]"),
+        }),
+        s("neorg link paren", {
+            t("("),
+            i(1, "name"),
+            t(")["),
+            i(2, "link"),
+            t("]"),
+        }),
+        s("neorg link square", {
+            t("["),
+            i(1, "name"),
+            t("]["),
+            i(2, "link"),
+            t("]"),
+        }),
+        --
+
+        s("neorg project starter", {
+            t("#context $"),
+            i(1, "context name"),
+            t({ "$", "" }),
+            t("#time.start $"),
+            i(2, "date"),
+            t({ "$", "" }),
+            t("#time.due $"),
+            i(3, "date"),
+            t({ "$", "" }),
+            t("* $"),
+            i(4, "project name"),
+            t({ "$", "" }),
+            t("- [ ] $"),
+            i(5, "task description"),
+            t("$"),
+        }),
+
+        -- @code norg
+        -- | §Area Of Focus name§
+        -- marker body
+        -- | _
+        -- @end
+        s("neorg focus area", {
+            t("| $"),
+            i(1, "focus_area_name"),
+            t({ "$", "" }),
+            i(1, "marker body"),
+            t({ "", "| _" }),
+        }),
+
         s("Cowthsay", {
             t({ "> Senpai of the pool whats your wisdom ?" }),
             t({ "", "" }),
@@ -613,16 +781,8 @@ ls.snippets = {
 
         ls.parser.parse_snippet(
             "hajime",
-            "* Pomodoro\n** $0\n*** Lectures\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* How am i feeling today "
+            "* Pomodoro\n** $0\n\n*** Lectures\n\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* How am i feeling today "
         ),
-
-        s("neorg focus area", {
-            t("| $"),
-            i(1, "focus_area_name"),
-            t({ "$", "" }),
-            i(2, "marker body"),
-            t({ "", "| _" }),
-        }),
     },
     tex = {},
 }
