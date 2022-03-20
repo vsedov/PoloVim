@@ -28,7 +28,7 @@ local no_backslash = utils.no_backslash
 local is_math = utils.is_math
 local not_math = utils.not_math
 -- -- prevent loading twice .
-require("luasnip/loaders/from_vscode").lazy_load()
+-- require("luasnip/loaders/from_vscode").lazy_load()
 require("modules.completion.snippets.luasnip")
 
 local parse = ls.parser.parse_snippet
@@ -320,15 +320,42 @@ ls.snippets = {
             },
             -- = {
             fmt([[{}[{}]], {
-                c(1, {
-                    t("completion"),
-                    t("editor"),
-                    t("lang"),
-                    t("tools"),
-                    t("ui"),
-                    t("usless"),
-                    t("user"),
-                }),
+                d(1, function()
+                    local valid = {
+                        "completion",
+                        "editor",
+                        "lang",
+                        "tools",
+                        "ui",
+                        "useless",
+                        "user",
+                    }
+
+                    -- get last dir name so completoin/snippets/init.lua would return snippets
+                    local parts = vim.split(vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h"), "/", true)
+                    local file_dir = parts[#parts]
+
+                    -- check if file_dir is same as values in valid
+                    for _, val in pairs(valid) do
+                        -- if val is file_dir
+                        if file_dir == val then
+                            return s("", { t(val) })
+                        end
+                    end
+
+                    -- default option if the above fails
+                    return s("", {
+                        c(1, {
+                            t("completion"),
+                            t("editor"),
+                            t("lang"),
+                            t("tools"),
+                            t("ui"),
+                            t("usless"),
+                            t("user"),
+                        }),
+                    })
+                end),
                 d(2, function()
                     -- Get the author and URL in the clipboard and auto populate the author and project
                     local default = s("", { i(1, "author"), t("/"), t(2, "plugin") })
@@ -555,60 +582,6 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
     table.insert(ls.snippets.tex, snip)
 end
 ls.autosnippets = {
-    norg = {
-        s({
-            trig = "*([2-6])",
-            name = "Heading",
-            dscr = "Add Heading",
-            regTrig = true,
-            hidden = true,
-        }, {
-            f(function(_, snip)
-                return string.rep("*", tonumber(snip.captures[1])) .. " "
-            end, {}),
-        }, {
-            condition = conds.line_begin,
-        }),
-        s({
-            trig = "q([2-6])",
-            name = "Quote",
-            dscr = "Add Quote",
-            regTrig = true,
-            hidden = true,
-        }, {
-            f(function(_, snip)
-                return string.rep(">", tonumber(snip.captures[1])) .. " "
-            end, {}),
-        }, {
-            condition = conds.line_begin,
-        }),
-        s({
-            trig = "-([2-6])",
-            name = "Unordered lists",
-            dscr = "Add Unordered lists",
-            regTrig = true,
-            hidden = true,
-        }, {
-            f(function(_, snip)
-                return string.rep("-", tonumber(snip.captures[1])) .. " "
-            end, {}),
-        }, {
-            condition = conds.line_begin,
-        }),
-        s({
-            trig = "~([2-6])",
-            name = "Ordered lists",
-            dscr = "Add Ordered lists",
-            regTrig = true,
-            hidden = true,
-        }, {
-            f(function(_, snip)
-                return string.rep("~", tonumber(snip.captures[1])) .. " "
-            end, {}),
-        }, {
-            condition = conds.line_begin,
-        }),
-    },
     tex = {},
 }
 

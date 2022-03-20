@@ -263,8 +263,6 @@ local norg = {
         "hajime",
         "* Pomodoro\n** $0\n\n*** Lectures\n\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* How am i feeling today "
     ),
-
-
 }
 
 return norg
