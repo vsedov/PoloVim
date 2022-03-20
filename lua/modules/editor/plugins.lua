@@ -8,33 +8,33 @@ local conf = require("modules.editor.config")
 
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 
--- editor["windwp/nvim-autopairs"] = {
---     -- keys = {{'i', '('}},
---     -- keys = {{'i'}},
---     requires = "nvim-treesitter",
---     after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
---     -- event = "InsertEnter",  --InsertCharPre
---     -- after = "hrsh7th/nvim-compe",
---     config = conf.autopairs,
---     opt = true,
--- }
-
-editor["ZhiyuanLck/smart-pairs"] = {
-    -- commit = "045c96b3ac7fce57a12064f98987e916594e5a1b",
-    event = "InsertEnter",
+editor["windwp/nvim-autopairs"] = {
+    -- keys = {{'i', '('}},
+    -- keys = {{'i'}},
+    requires = "nvim-treesitter",
+    after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
+    -- event = "InsertEnter",  --InsertCharPre
+    -- after = "hrsh7th/nvim-compe",
+    config = conf.autopairs,
     opt = true,
-    config = function()
-        require("pairs"):setup({
-            enter = {
-                enable_mapping = false,
-            },
-            space = {
-                enable_mapping = true,
-            },
-        })
-    end,
-    after = { "nvim-cmp" },
 }
+
+-- editor["ZhiyuanLck/smart-pairs"] = {
+--     -- commit = "045c96b3ac7fce57a12064f98987e916594e5a1b",
+--     event = "InsertEnter",
+--     opt = true,
+--     config = function()
+--         require("pairs"):setup({
+--             enter = {
+--                 enable_mapping = false,
+--             },
+--             space = {
+--                 enable_mapping = true,
+--             },
+--         })
+--     end,
+--     after = { "nvim-cmp" },
+-- }
 
 editor["kana/vim-niceblock"] = {
     opt = true,
