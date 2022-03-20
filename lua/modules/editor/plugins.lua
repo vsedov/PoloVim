@@ -19,6 +19,13 @@ editor["windwp/nvim-autopairs"] = {
     opt = true,
 }
 
+-- editor['max397574/dyn_help.nvim']={
+--     opt = true,
+--     config = function()
+--         require("dyn_help").setup({})
+--     end,
+-- }
+
 -- editor["ZhiyuanLck/smart-pairs"] = {
 --     -- commit = "045c96b3ac7fce57a12064f98987e916594e5a1b",
 --     event = "InsertEnter",

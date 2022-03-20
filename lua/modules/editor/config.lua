@@ -15,11 +15,12 @@ function config.autopairs()
     end
     local npairs = require("nvim-autopairs")
     local Rule = require("nvim-autopairs.rule")
+    local cond = require("nvim-autopairs.conds")
     npairs.setup({
         disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
         autopairs = { enable = true },
         ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
-        enable_check_bracket_line = true,
+        enable_check_bracket_line = false,
         html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
         check_ts = true,
         ts_config = {
@@ -27,6 +28,7 @@ function config.autopairs()
             -- go = {'string'},
             javascript = { "template_string" },
             java = false, -- don't check treesitter on java
+            -- python = true,
         },
         fast_wrap = {
             map = "<c-c>",
@@ -43,37 +45,68 @@ function config.autopairs()
     -- you need setup cmp first put this after cmp.setup()
 
     npairs.add_rules({
+        Rule("=", "")
+            :with_pair(cond.not_inside_quote())
+            :with_pair(function(opts)
+                local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+                if last_char:match("[%w%=%s]") then
+                    return true
+                end
+                return false
+            end)
+            :replace_endpair(function(opts)
+                local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
+                local next_char = opts.line:sub(opts.col, opts.col)
+                next_char = next_char == " " and "" or " "
+                if prev_2char:match("%w$") then
+                    return "<bs> =" .. next_char
+                end
+                if prev_2char:match("%=$") then
+                    return next_char
+                end
+                if prev_2char:match("=") then
+                    return "<bs><bs>=" .. next_char
+                end
+                return ""
+            end)
+            :set_end_pair_length(0)
+            :with_move(cond.none())
+            :with_del(cond.none()),
         Rule(" ", " "):with_pair(function(opts)
             local pair = opts.line:sub(opts.col - 1, opts.col)
             return vim.tbl_contains({ "()", "[]", "{}" }, pair)
         end),
-        Rule("(", ")")
-            :with_pair(function(opts)
+        Rule("( ", " )")
+            :with_pair(function()
+                return false
+            end)
+            :with_move(function(opts)
                 return opts.prev_char:match(".%)") ~= nil
             end)
             :use_key(")"),
-        Rule("{", "}")
-            :with_pair(function(opts)
+        Rule("{ ", " }")
+            :with_pair(function()
+                return false
+            end)
+            :with_move(function(opts)
                 return opts.prev_char:match(".%}") ~= nil
             end)
             :use_key("}"),
-        Rule("[", "]")
-            :with_pair(function(opts)
+        Rule("[ ", " ]")
+            :with_pair(function()
+                return false
+            end)
+            :with_move(function(opts)
                 return opts.prev_char:match(".%]") ~= nil
             end)
             :use_key("]"),
-        -- Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
-        -- Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
     })
-
-    -- If you want insert `(` after select function or method item
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     local cmp = require("cmp")
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
     if load_coq() then
         local remap = vim.api.nvim_set_keymap
-        local npairs = require("nvim-autopairs")
 
         npairs.setup({ map_bs = false })
 
@@ -113,10 +146,6 @@ function config.autopairs()
     end
 
     -- skip it, if you use another global object
-end
-
-local esc = function(cmd)
-    return vim.api.nvim_replace_termcodes(cmd, true, false, true)
 end
 
 function config.hexokinase()
