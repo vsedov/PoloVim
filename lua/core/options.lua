@@ -115,6 +115,19 @@ local function load_options()
         concealcursor = "niv",
     }
 
+    local bw_global_local = {
+        fillchars = {
+            eob = " ",
+            vert = "║",
+            horiz = "═",
+            horizup = "╩",
+            horizdown = "╦",
+            vertleft = "╣",
+            vertright = "╠",
+            verthoriz = "╬",
+        },
+    }
+
     if global.is_mac then
         vim.g.clipboard = {
             name = "macOS-clipboard",
@@ -146,23 +159,14 @@ local function load_options()
     for name, value in pairs(global_local) do
         vim.o[name] = value
     end
+    -- the cooler vim.o
+    for name, value in pairs(bw_global_local) do
+        vim.opt[name] = value
+    end
 
     bind_option(bw_local)
 end
 
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
-
--- bind options doesnt work for this
-vim.opt.fillchars = {
-    eob = " ",
-    vert = "║",
-    horiz = "═",
-    horizup = "╩",
-    horizdown = "╦",
-    vertleft = "╣",
-    vertright = "╠",
-    verthoriz = "╬",
-}
-
 load_options()

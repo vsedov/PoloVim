@@ -163,9 +163,7 @@ lang["lervag/vimtex"] = {
                 "-synctex=1",
                 "-interaction=nonstopmode",
             },
-
         }
-
     end,
 }
 

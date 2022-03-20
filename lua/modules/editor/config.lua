@@ -16,7 +16,7 @@ function config.autopairs()
     local npairs = require("nvim-autopairs")
     local Rule = require("nvim-autopairs.rule")
     local cond = require("nvim-autopairs.conds")
-    
+
     npairs.setup({
         disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
         autopairs = { enable = true },
