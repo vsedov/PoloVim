@@ -126,6 +126,7 @@ local function load_options()
             vertright = "╠",
             verthoriz = "╬",
         },
+        spellfile = global.home .. ".config/nvim/spell/en.utf-8.add",
     }
 
     if global.is_mac then
