@@ -354,29 +354,25 @@ lspconfig.tsserver.setup({
     end,
 })
 local clangd_defaults = require("lspconfig.server_configurations.clangd")
-local clangd_configs = vim.tbl_deep_extend(
-    "force",
-    clangd_defaults["default_config"],
-    {
+local clangd_configs = vim.tbl_deep_extend("force", clangd_defaults["default_config"], {
     on_attach = enhance_attach,
     capabilities = capabilities,
-        cmd = {
-            "clangd",
-            "-j=16",
-            "--background-index",
-            "--clang-tidy",
-            "--fallback-style=llvm",
-            "--all-scopes-completion",
-            "--completion-style=detailed",
-            "--header-insertion=iwyu",
-            "--header-insertion-decorators",
-            "--pch-storage=memory",
-        },
-    }
-)
+    cmd = {
+        "clangd",
+        "-j=16",
+        "--background-index",
+        "--clang-tidy",
+        "--fallback-style=llvm",
+        "--all-scopes-completion",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu",
+        "--header-insertion-decorators",
+        "--pch-storage=memory",
+    },
+})
 require("clangd_extensions").setup({
     server = clangd_configs,
-})-- lspconfig.clangd.setup({
+}) -- lspconfig.clangd.setup({
 --     cmd = { "clangd", unpack(clangd_flags) },
 --     filetypes = { "c", "cpp", "objc", "objcpp" },
 --     on_attach = enhance_attach,
