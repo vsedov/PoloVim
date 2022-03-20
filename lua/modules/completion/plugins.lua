@@ -38,16 +38,17 @@ if load_coq() then
     completion["ms-jpq/coq_nvim"] = {
         -- opt = true,
         -- ft = {'html','css', 'javascript', 'java', 'typescript', 'typescriptreact','go', 'python', 'cpp', 'c', 'rust'},
-        -- event = "InsertCharPre",
+        event = "InsertCharPre",
         after = { "coq.artifacts" },
         branch = "coq",
         setup = function()
-            vim.g.coq_settings = { auto_start = false }
+            vim.g.coq_settings = { auto_start = true }
             -- vim.g.coq_settings = { auto_start = false, ['display.icons.mode'] = 'short', ['display.pum.kind_context'] = {'',''}, ['display.pum.source_context'] = {'',''} , ['display.pum.fast_close'] = false}
         end,
+
         config = function()
             vim.g.coq_settings = {
-                auto_start = false,
+                auto_start = true,
                 ["display.icons.mode"] = "short",
                 ["display.pum.kind_context"] = { "", "" },
                 ["display.pum.source_context"] = { "", "" },

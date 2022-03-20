@@ -47,6 +47,8 @@ return {
         end
 
         _G.load_coq = function()
+            -- Coq is good for sql, vim and any other languages that
+            -- i dont have a server or snippets for
             if vim.o.ft == "sql" or vim.o.ft == "vim" then
                 return true
             end
