@@ -58,22 +58,33 @@ function config.nvim_bufferline()
 
     require("bufferline").setup({
         options = {
+            view = "multiwindow",
+            numbers = "none", -- function(opts) return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal)) end,
+            close_command = "bdelete! %d",
+            right_mouse_command = "bdelete! %d",
+            left_mouse_command = "buffer %d",
+            -- mappings = true,
+            max_name_length = 14,
+            max_prefix_length = 10,
+            tab_size = 16,
             mode = "buffers", -- tabs
             sort_by = sort_by_mtime,
             right_mouse_command = "vert sbuffer %d",
             show_close_icon = false,
-
+            show_buffer_icons = true,
             show_buffer_close_icons = false,
             show_tab_indicators = true,
             enforce_regular_tabs = false,
             always_show_bufferline = false,
             -- 'extension' | 'directory' |
             ---based on https://github.com/kovidgoyal/kitty/issues/957
-            separator_style = os.getenv("KITTY_WINDOW_ID") and "slant" or "padded_slant",
             diagnostics = "nvim_lsp",
             diagnostics_indicator = diagnostics_indicator,
             diagnostics_update_in_insert = false,
             custom_filter = custom_filter,
+            separator_style = "thin",
+            -- 'extension' | 'directory' |
+
             offsets = {
                 {
                     filetype = "undotree",

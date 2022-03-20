@@ -179,6 +179,10 @@ ls.snippets = {
         parse({ trig = "cmd" }, map_cmd),
         parse({ trig = "inspect" }, inspect_snippet),
 
+        parse("lf", "-- Defined in $TM_FILE\nlocal $1 = function($2)\n\t$0\nend"),
+        parse("mf", "-- Defined in $TM_FILE\nlocal $1.$2 = function($3)\n\t$0\nend"),
+        s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
+
         -- local _ = require "telescope.pickers.builtin"
         s(
             "req",
@@ -216,10 +220,6 @@ ls.snippets = {
             i(3, "arg??"),
             t("), "),
         }),
-
-        ls.parser.parse_snippet("lf", "-- Defined in $TM_FILE\nlocal $1 = function($2)\n\t$0\nend"),
-        ls.parser.parse_snippet("mf", "-- Defined in $TM_FILE\nlocal $1.$2 = function($3)\n\t$0\nend"),
-        s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
 
         s("lua print var", {
             t('print("'),
