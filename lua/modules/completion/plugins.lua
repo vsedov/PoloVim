@@ -42,13 +42,13 @@ if load_coq() then
         after = { "coq.artifacts" },
         branch = "coq",
         setup = function()
-            vim.g.coq_settings = { auto_start = true }
+            vim.g.coq_settings = { auto_start = false }
             -- vim.g.coq_settings = { auto_start = false, ['display.icons.mode'] = 'short', ['display.pum.kind_context'] = {'',''}, ['display.pum.source_context'] = {'',''} , ['display.pum.fast_close'] = false}
         end,
 
         config = function()
             vim.g.coq_settings = {
-                auto_start = true,
+                auto_start = false,
                 ["display.icons.mode"] = "short",
                 ["display.pum.kind_context"] = { "", "" },
                 ["display.pum.source_context"] = { "", "" },
@@ -57,6 +57,7 @@ if load_coq() then
             if not load_coq() then
                 return
             end
+            -- might need to load coq through packadd maybe
             vim.cmd([[COQnow]])
         end,
     }

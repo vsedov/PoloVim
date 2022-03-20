@@ -16,11 +16,12 @@ function config.autopairs()
     local npairs = require("nvim-autopairs")
     local Rule = require("nvim-autopairs.rule")
     local cond = require("nvim-autopairs.conds")
+    
     npairs.setup({
         disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
         autopairs = { enable = true },
         ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
-        enable_check_bracket_line = false,
+        enable_check_bracket_line = true,
         html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
         check_ts = true,
         ts_config = {
@@ -102,9 +103,6 @@ function config.autopairs()
             :use_key("]"),
     })
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-    local cmp = require("cmp")
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
     if load_coq() then
         local remap = vim.api.nvim_set_keymap
 
