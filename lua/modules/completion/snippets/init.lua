@@ -330,12 +330,10 @@ ls.snippets = {
                         "useless",
                         "user",
                     }
-
                     -- get last dir name so completoin/snippets/init.lua would return snippets
                     local parts = vim.split(vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h"), "/", true)
                     local file_dir = parts[#parts]
 
-                    -- check if file_dir is same as values in valid
                     for _, val in pairs(valid) do
                         -- if val is file_dir
                         if file_dir == val then
@@ -343,17 +341,12 @@ ls.snippets = {
                         end
                     end
 
-                    -- default option if the above fails
-                    return s("", {
-                        c(1, {
-                            t("completion"),
-                            t("editor"),
-                            t("lang"),
-                            t("tools"),
-                            t("ui"),
-                            t("usless"),
-                            t("user"),
-                        }),
+                    local options = {}
+                    for len = 0, #valid - 1 do
+                        table.insert(options, t(valid[len + 1]))
+                    end
+                    return sn(nil, {
+                        c(1, options),
                     })
                 end),
                 d(2, function()

@@ -99,17 +99,6 @@ function config.notify()
     require("telescope").load_extension("notify")
 end
 
--- vim.cmd(
---   [[
---   fun! s:disable_statusline(bn)
---     if a:bn == bufname('%')
---       set laststatus=0
---     else
---       set laststatus=2
---     endif
---   endfunction]])
--- vim.cmd([[au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * call s:disable_statusline('NvimTree')]])
-
 function config.nvim_tree_setup()
     vim.g.nvim_tree_indent_markers = 1
     vim.g.nvim_tree_width = 28
