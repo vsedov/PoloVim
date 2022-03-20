@@ -352,7 +352,7 @@ ls.snippets = {
                 d(2, function()
                     -- Get the author and URL in the clipboard and auto populate the author and project
                     local default = s("", { i(1, "author"), t("/"), t(2, "plugin") })
-                    local clip = vim.fn.getreg("*")
+                    local clip = vim.fn.getreg("*") or vim.fn.getreg("+")
                     if not vim.startswith(clip, "https://github.com/") then
                         return default
                     end
