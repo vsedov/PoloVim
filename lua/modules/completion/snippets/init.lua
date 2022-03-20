@@ -132,7 +132,7 @@ ls.snippets = {
             c(1, {
                 t("Ugh boring, a text node"),
                 i(nil, "At least I can edit something now..."),
-                f(function(args)
+                f(function()
                     return "Still only counts as text!!"
                 end, {}),
             })
@@ -361,6 +361,7 @@ ls.snippets = {
                         return default
                     end
                     local author, project = parts[#parts - 1], parts[#parts]
+                    local project_name = vim.split(project, ".", true)[1] -- remove .lua
                     return s("", {
                         t({
                             "'" .. author .. "/" .. project .. "']={",
@@ -370,9 +371,30 @@ ls.snippets = {
                         t({ "", "" }),
                         t("    config = function()"),
                         t({ "", "" }),
-                        t("        require("),
-                        i(1, "module"),
-                        t(")"),
+                        t("        "),
+                        c(1, {
+                            fmt([[require("{}").setup({})]], {
+                                i(1, project_name),
+                                d(2, function()
+                                    return sn(nil, {
+                                        t("{"),
+                                        i(1, ""),
+                                        t("}"),
+                                    })
+                                end),
+                            }),
+                            fmt([[require("{}").setup({})]], {
+
+                                d(1, function()
+                                    return s("", { t(project_name) })
+                                end),
+
+                                d(2, function()
+                                    return s("", { t("{"), i(1, "module"), t("}") })
+                                end),
+                            }),
+                        }),
+
                         t({ "", "" }),
                         t("    end,"),
                         t({ "", "" }),

@@ -16,7 +16,6 @@ completion["neovim/nvim-lspconfig"] = {
 
     opt = true,
 }
-
 completion["tami5/lspsaga.nvim"] = {
     cmd = "lspsaga",
     module = "lspsaga",
