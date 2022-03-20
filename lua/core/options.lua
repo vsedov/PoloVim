@@ -85,7 +85,7 @@ local function load_options()
         cmdheight = 2,
         cmdwinheight = 5,
         equalalways = false,
-        laststatus = 2,
+        laststatus = 3,
         display = "lastline",
         showbreak = "﬌  ", --↳
         listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
@@ -142,12 +142,27 @@ local function load_options()
         end
     end
 
+    -- vim.o
     for name, value in pairs(global_local) do
         vim.o[name] = value
     end
+
     bind_option(bw_local)
 end
 
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
+
+-- bind options doesnt work for this
+vim.opt.fillchars = {
+    eob = " ",
+    vert = "║",
+    horiz = "═",
+    horizup = "╩",
+    horizdown = "╦",
+    vertleft = "╣",
+    vertright = "╠",
+    verthoriz = "╬",
+}
+
 load_options()
