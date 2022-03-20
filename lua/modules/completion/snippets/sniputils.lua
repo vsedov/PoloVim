@@ -360,16 +360,16 @@ utils.env = function(name)
     return x ~= "0" and y ~= "0"
 end
 utils.comment = function()
-    -- return vim.fn["vimtex#syntax#in_comment"]() == 1
-    return in_comment()
+    return vim.fn["vimtex#syntax#in_comment"]() == 1
+    -- return in_comment()
 end
 
 utils.not_math = function()
     return not utils.is_math()
 end
 utils.is_math = function()
-    -- return vim.fn["vimtex#syntax#in_mathzone"]() == 1
-    return in_mathzone()
+    return vim.fn["vimtex#syntax#in_mathzone"]() == 1
+    -- return in_mathzone()
 end
 
 utils.no_backslash = function()
