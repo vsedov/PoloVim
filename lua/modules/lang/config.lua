@@ -133,12 +133,6 @@ function config.jaq()
     })
 end
 
-function config.doge()
-    vim.g.doge_doc_standard_python = "numpy"
-    vim.g.doge_mapping_comment_jump_forward = "<C-n>"
-    vim.g.doge_mapping_comment_jump_backward = "C-p>"
-end
-
 function config.goto_preview()
     vim.cmd([[command! -nargs=* GotoPrev lua require('goto-preview').goto_preview_definition()]])
     vim.cmd([[command! -nargs=* GotoImp lua require('goto-preview').goto_preview_implementation()]])
