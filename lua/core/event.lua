@@ -149,6 +149,16 @@ function autocmd.load_autocmds()
 
         ft = {
             {
+                "CursorHold",
+                { "*.tex", "*.norg" },
+                function()
+                    local is_math = require("modules.completion.snippets.sniputils").is_math
+                    if is_math then
+                        require("nabla").popup()
+                    end
+                end,
+            },
+            {
                 "FileType",
                 { "qf", "help", "man", "ls:pinfo" },
                 "nnoremap <silent> <buffer> q :close<CR>",
