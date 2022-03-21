@@ -10,8 +10,6 @@ editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 
 editor["windwp/nvim-autopairs"] = {
     -- keys = {{'i', '('}},
-    -- keys = {{'i'}},
-    requires = "nvim-treesitter",
     after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
     -- event = "InsertEnter",  --InsertCharPre
     -- after = "hrsh7th/nvim-compe",
@@ -19,49 +17,38 @@ editor["windwp/nvim-autopairs"] = {
     opt = true,
 }
 
--- editor['max397574/dyn_help.nvim']={
---     opt = true,
---     config = function()
---         require("dyn_help").setup({})
---     end,
--- }
-
--- editor["ZhiyuanLck/smart-pairs"] = {
---     -- commit = "045c96b3ac7fce57a12064f98987e916594e5a1b",
---     event = "InsertEnter",
---     opt = true,
---     config = function()
---         require("pairs"):setup({
---             enter = {
---                 enable_mapping = false,
---             },
---             space = {
---                 enable_mapping = true,
---             },
---         })
---     end,
---     after = { "nvim-cmp" },
--- }
-
+-- TODO: Change this with current cursor word
 editor["kana/vim-niceblock"] = {
     opt = true,
 }
 
+editor["max397574/dyn_help.nvim"] = {}
+
 -- I like this plugin, but 1) offscreen context is slow
 -- 2) it not friendly to lazyload and treesitter startup
--- editor["andymass/vim-matchup"] = {
---   opt = true,
---   event = {"CursorMoved", "CursorMovedI"},
---   cmd = {'MatchupWhereAmI?'},
---   config = function()
---     vim.g.matchup_enabled = 1
---     vim.g.matchup_surround_enabled = 1
---     -- vim.g.matchup_transmute_enabled = 1
---     vim.g.matchup_matchparen_deferred = 1
---     vim.g.matchup_matchparen_offscreen = {method = 'popup'}
---     vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
---   end
--- }
+editor["andymass/vim-matchup"] = {
+    opt = true,
+    keys = { "%", "<c-s>k" },
+    -- event = { "CursorMoved", "CursorMovedI" },
+    cmd = { "MatchupWhereAmI?" },
+    after = "nvim-treesitter",
+    config = function()
+        vim.g.matchup_enabled = 1
+        vim.g.matchup_surround_enabled = 1
+        -- vim.g.matchup_transmute_enabled = 1
+        vim.g.matchup_matchparen_deferred = 1
+        vim.g.matchup_matchparen_offscreen = { method = "popup" }
+        vim.keymap.set("n", "<c-s>k", "<cmd><c-u>MatchupWhereAmI?<CR>")
+        -- vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
+        require("nvim-treesitter.configs").setup({
+            matchup = {
+                enable = true, -- mandatory, false will disable the whole extension
+                disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+                -- [options]
+            },
+        })
+    end,
+}
 
 editor["gbprod/yanky.nvim"] = {
     keys = {
@@ -168,7 +155,8 @@ editor["ggandor/lightspeed.nvim"] = {
             { "o", "T", "<Plug>Lightspeed_T" },
         }
         for _, m in ipairs(default_keymaps) do
-            vim.keymap.set(m[1], m[2], m[3], { silent = true })
+            -- remove siletnt = true
+            vim.keymap.set(m[1], m[2], m[3], {})
         end
     end,
 
@@ -429,7 +417,9 @@ editor["simnalamburt/vim-mundo"] = {
         vim.g.mundo_prefer_python3 = 1
     end,
 }
+
 editor["mbbill/undotree"] = { opt = true, cmd = { "UndotreeToggle" } }
+
 editor["AndrewRadev/splitjoin.vim"] = {
     opt = true,
     cmd = { "SplitjoinJoin", "SplitjoinSplit" },
@@ -458,7 +448,7 @@ editor["folke/zen-mode.nvim"] = {
 }
 
 editor["nvim-neorg/neorg"] = {
-    -- branch = "neorg-export",
+    branch = "main",
     -- requires = { "max397574/neorg-zettelkasten" },
     config = function()
         require("modules.editor.neorg")
@@ -533,9 +523,8 @@ editor["rmagatti/alternate-toggler"] = {
 }
 
 editor["max397574/nabla.nvim"] = {
+    ft = { "tex", "norg" },
     opt = true,
-    -- commit = "ba9559798ac5bdb029cbebaa8751f61e2f024f40",
-    ft = "norg",
     requires = { "nvim-lua/popup.nvim" },
 }
 
