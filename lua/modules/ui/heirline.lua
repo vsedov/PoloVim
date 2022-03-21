@@ -1,6 +1,5 @@
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
-local luasnip = require("luasnip")
 
 local winwidth = function()
     -- body
@@ -312,7 +311,12 @@ function M.setup()
         -- %P = percentage through file of displayed window
         provider = "%7(%l/%3L%):%2c %P",
     }
-
+    local dyn_help_available = {
+        provider = function()
+            return require("dynamic_help.extras.statusline").available()
+        end,
+        hl = { fg = colors.yellow },
+    }
     local ScrollBar = {
         static = {
             sbar = { "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" },
@@ -342,7 +346,6 @@ function M.setup()
 
     local Gps = {
         condition = conditions.lsp_attached,
-
         provider = function(self)
             return current_function() .. current_signature()
         end,
@@ -399,6 +402,12 @@ function M.setup()
             provider = ")",
             hl = { fg = colors.gray, style = "bold" },
         },
+    }
+    local option_value = {
+        provider = function()
+            return require("dynamic_help.extras.statusline").value()
+        end,
+        hl = { fg = colors.blue },
     }
 
     -- DiagBlock = utils.surround({"![", "]"}, nil, DiagBlock)
@@ -463,13 +472,35 @@ function M.setup()
             return vim.tbl_contains({ "s", "i" }, vim.fn.mode())
         end,
         provider = function()
-            local forward = (luasnip.expand_or_jumpable() == 1) and "" or ""
-            local backward = (luasnip.jumpable(-1) == 1) and " " or ""
+            local luasnip = require("luasnip")
+            local forward = luasnip.jumpable(1) and " " or ""
+            local backward = luasnip.jumpable(-1) and " " or ""
             return backward .. forward
         end,
         hl = { fg = colors.red, syle = "bold" },
     }
 
+    local DAPMessages = {
+
+        condition = function()
+            if packer_plugins["nvim-dap"].loaded then
+                return false
+            end
+            local session = require("dap").session()
+            if session then
+                local filename = vim.api.nvim_buf_get_name(0)
+                if session.config then
+                    local progname = session.config.program
+                    return filename == progname
+                end
+            end
+            return false
+        end,
+        provider = function()
+            return " " .. require("dap").status()
+        end,
+        hl = { fg = utils.get_highlight("Debug").fg },
+    }
     local UltTest = {
         condition = function()
             -- Check if ultest does exist or not
@@ -580,15 +611,15 @@ function M.setup()
         { provider = "%<" },
         Space,
         Git,
-        -- {
-        --     static = { name = "culo", toggle = true },
-        --     condition = function(self)
-        --         return self.toggle
-        --     end,
-        --     provider = 'culooooo',
-        -- },
         Space,
         Diagnostics,
+        Space,
+        Snippets,
+        Space,
+        -- see if this would reduce the given lag
+        dyn_help_available,
+        -- option_value,
+        Space,
         Align,
         utils.make_flexible_component(3, Gps, { provider = "" }),
         -- DAPMessages,

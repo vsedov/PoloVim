@@ -442,7 +442,6 @@ M.refactor = function()
     telescope.extensions.refactoring.refactors(opts)
 end
 
--- Looks for git files, but falls back to normal files
 M.files = function(opts)
     reloader()
 
