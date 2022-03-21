@@ -49,7 +49,7 @@ require("neorg").setup({
         -- ["external.zettelkasten"] = {},
         ["core.norg.concealer"] = {
             config = {
-                markup_preset = "dimmed",
+                markup_preset = "conceal",
                 icon_preset = "diamond",
                 icons = {
                     marker = {

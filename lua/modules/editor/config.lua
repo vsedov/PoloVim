@@ -23,7 +23,7 @@ function config.autopairs()
         ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
         enable_check_bracket_line = true,
         html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
-        check_ts = true,
+        check_ts = false,
         ts_config = {
             lua = { "string" }, -- it will not add pair on that treesitter node
             -- go = {'string'},
