@@ -262,10 +262,7 @@ local treesitter_ref = function()
                 },
             },
         },
-        matchup = {
-            enable = false, -- mandatory, false will disable the whole extension
-            disable = { "ruby" }, -- optional, list of language that will be disabled
-        },
+
         autopairs = { enable = false },
         autotag = {
             enable = true,

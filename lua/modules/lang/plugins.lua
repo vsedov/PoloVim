@@ -372,7 +372,6 @@ lang["folke/trouble.nvim"] = {
     end,
 }
 
--- Might use this
 lang["folke/todo-comments.nvim"] = {
     cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
     opt = true,
