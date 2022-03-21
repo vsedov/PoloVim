@@ -21,7 +21,6 @@ local dl = require("luasnip.extras").dynamic_lambda
 local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
-
 local utils = require("modules.completion.snippets.sniputils")
 local pipe = utils.pipe
 local no_backslash = utils.no_backslash
@@ -115,6 +114,20 @@ end
 
 ls.snippets = {
     all = {
+        s(
+            -- TODO: can probably make this one much smarter; right now it's basically just syntax reminder
+            { trig = "table", dscr = "Table template" },
+            {
+                t("| "),
+                i(1, "First Header"),
+                t({
+                    "  | Second Header |",
+                    "| ------------- | ------------- |",
+                    "| Content Cell  | Content Cell  |",
+                    "| Content Cell  | Content Cell  |",
+                }),
+            }
+        ),
         -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/
         s({ trig = "td", name = "TODO" }, {
             c(1, {
@@ -148,7 +161,7 @@ ls.snippets = {
                 }
             )
         ),
-        s({ trig = "date1" }, {
+        s({ trig = "date" }, {
             f(function()
                 return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
             end, {}),

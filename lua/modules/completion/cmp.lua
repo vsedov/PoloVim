@@ -74,11 +74,12 @@ local smart_bs = function()
         if in_leading_indent then
             return rhs("<BS>")
         end
+
         local previous_char = prefix:sub(#prefix, #prefix)
         if previous_char ~= " " then
             return rhs("<BS>")
         end
-        -- Delete enough spaces to take us back to the previous tabstop.
+
         --
         -- Originally I was calculating the number of <BS> to send, but
         -- Neovim has some special casing that causes one <BS> to delete
@@ -133,19 +134,6 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 local luasnip = require("luasnip")
-
-local function tab(fallback)
-    if cmp.visible() then
-        cmp.select_next_item()
-    elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-    elseif has_words_before() then
-        cmp.complete()
-    else
-        -- F("<Tab>")
-        fallback()
-    end
-end
 
 if load_coq() then
     local sources = {}
@@ -321,10 +309,10 @@ cmp.setup({
             "i",
             "s",
         }),
-        ["<BS>"] = cmp.mapping(function(_fallback)
-            local keys = smart_bs()
-            vim.api.nvim_feedkeys(keys, "nt", true)
-        end, { "i", "s" }),
+        -- ["<BS>"] = cmp.mapping(function(_fallback)
+        --     local keys = smart_bs()
+        --     vim.api.nvim_feedkeys(keys, "nt", true)
+        -- end, { "i", "s" }),
 
         ["<Tab>"] = cmp.mapping(function(core, fallback)
             if cmp.visible() then
