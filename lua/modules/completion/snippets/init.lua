@@ -27,7 +27,7 @@ local no_backslash = utils.no_backslash
 local is_math = utils.is_math
 local not_math = utils.not_math
 -- -- prevent loading twice .
--- require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip/loaders/from_vscode").lazy_load()
 require("modules.completion.snippets.luasnip")
 
 local parse = ls.parser.parse_snippet
@@ -670,6 +670,26 @@ ls.autosnippets = {
         }, {
             condition = conds.line_begin,
         }),
+        s(
+            {
+                trig = ";l",
+                name = "fast option",
+            },
+            -- = {
+            fmt([[ - [{}] ]], {
+                -- return option "plugin"
+                d(1, function()
+                    local options = { " ", "x", "-", "=", "_", "!", "+", "?" }
+                    -- replace values of option with t(options[i])
+                    for i = 1, #options do
+                        options[i] = t(options[i])
+                    end
+                    return sn(nil, {
+                        c(1, options),
+                    })
+                end),
+            })
+        ),
         s({
             trig = "-([2-6])",
             name = "Unordered lists",
@@ -678,8 +698,9 @@ ls.autosnippets = {
             hidden = true,
         }, {
             f(function(_, snip)
-                return string.rep("-", tonumber(snip.captures[1])) .. " "
+                return string.rep("-", tonumber(snip.captures[1])) .. " ["
             end, {}),
+
         }, {
             condition = conds.line_begin,
         }),

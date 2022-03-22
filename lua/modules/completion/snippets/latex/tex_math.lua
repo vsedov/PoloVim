@@ -34,9 +34,9 @@ local tex_math = {
         "->",
         f(function()
             if not in_mathzone() then
-                return "->"
+                return "-> "
             end
-            return "\\implies"
+            return "\\implies "
         end)
     ),
 
