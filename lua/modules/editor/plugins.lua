@@ -91,7 +91,7 @@ editor["gbprod/yanky.nvim"] = {
         require("yanky").setup({
             ring = {
                 -- i have a op pc
-                history_length = 50,
+                history_length = 10000000000000000000,
                 storage = "shada",
             },
         })

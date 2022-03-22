@@ -680,7 +680,6 @@ ls.autosnippets = {
                 -- return option "plugin"
                 d(1, function()
                     local options = { " ", "x", "-", "=", "_", "!", "+", "?" }
-                    -- replace values of option with t(options[i])
                     for i = 1, #options do
                         options[i] = t(options[i])
                     end
@@ -700,7 +699,6 @@ ls.autosnippets = {
             f(function(_, snip)
                 return string.rep("-", tonumber(snip.captures[1])) .. " ["
             end, {}),
-
         }, {
             condition = conds.line_begin,
         }),
