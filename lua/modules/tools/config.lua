@@ -330,39 +330,136 @@ function config.gitsigns()
     if not packer_plugins["plenary.nvim"].loaded then
         require("packer").loader("plenary.nvim")
     end
-    require("gitsigns").setup({
+    -- require("gitsigns").setup({
+    --     numhl = false,
+    --     keymaps = {
+    --         -- Default keymap options
+    --         noremap = true,
+    --         buffer = true,
+    --         ["n ]c"] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'" },
+    --         ["n [c"] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'" },
+    --         ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+    --         ["v <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+    --         ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+    --         ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+    --         ["v <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+    --         ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+    --         -- ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
+    --         ["n <leader>bs"] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
+    --         ["n <leader>hq"] = '<cmd>lua do vim.cmd("copen") require"gitsigns".setqflist("all") end <CR>', -- hunk qflist with vgit
+    --         ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+    --         ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+    --     },
+    --     watch_gitdir = { interval = 1000, follow_files = true },
+    --     sign_priority = 6,
+    --     status_formatter = nil, -- Use default
+    --     debug_mode = false,
+    --     current_line_blame = false,
+    --     current_line_blame_opts = { delay = 1500 },
+    --     update_debounce = 300,
+    --     word_diff = false,
+    --     diff_opts = { internal = true },
+    -- })
+    local gitsigns = require("gitsigns")
+
+    local line = vim.fn.line
+
+    vim.keymap.set("n", "gts", function()
+        gitsigns.dump_cache()
+    end)
+    vim.keymap.set("n", "gtS", function()
+        gitsigns.debug_messages()
+    end)
+
+    local function on_attach(bufnr)
+        local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+        end
+
+        map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
+        map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+
+        map("n", "<leader>hs", gitsigns.stage_hunk)
+        map("n", "<leader>hr", gitsigns.reset_hunk)
+        map("v", "<leader>hs", function()
+            gitsigns.stage_hunk({ line("."), line("v") })
+        end)
+        map("v", "<leader>hr", function()
+            gitsigns.reset_hunk({ line("."), line("v") })
+        end)
+        map("n", "<leader>hS", gitsigns.stage_buffer)
+        map("n", "<leader>hu", gitsigns.undo_stage_hunk)
+        map("n", "<leader>hR", gitsigns.reset_buffer)
+        map("n", "<leader>hp", gitsigns.preview_hunk)
+        map("n", "<leader>hb", function()
+            gitsigns.blame_line({ full = true })
+        end)
+        map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
+        map("n", "<leader>hd", gitsigns.diffthis)
+        map("n", "<leader>hD", function()
+            gitsigns.diffthis("~")
+        end)
+        map("n", "<leader>td", gitsigns.toggle_deleted)
+
+        map("n", "<leader>hQ", function()
+            gitsigns.setqflist("all")
+        end)
+        map("n", "<leader>hq", function()
+            gitsigns.setqflist()
+        end)
+
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+    end
+
+    gitsigns.setup({
+        debug_mode = true,
+        max_file_length = 1000000000,
         signs = {
-            add = { hl = "GitGutterAdd", text = "│", numhl = "GitSignsAddNr" },
-            change = { hl = "GitGutterChange", text = "│", numhl = "GitSignsChangeNr" },
-            delete = { hl = "GitGutterDelete", text = "ﬠ", numhl = "GitSignsDeleteNr" },
-            topdelete = { hl = "GitGutterDelete", text = "ﬢ", numhl = "GitSignsDeleteNr" },
-            changedelete = { hl = "GitGutterChangeDelete", text = "┊", numhl = "GitSignsChangeNr" },
+            add = { show_count = false, text = "│" },
+            change = { show_count = false, text = "│" },
+            delete = { show_count = true, text = "ﬠ" },
+            topdelete = { show_count = true, text = "ﬢ" },
+            changedelete = { show_count = true, text = "┊" },
         },
-        numhl = false,
-        keymaps = {
-            -- Default keymap options
-            noremap = true,
-            buffer = true,
-            ["n ]c"] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'" },
-            ["n [c"] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'" },
-            ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-            ["v <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-            ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-            ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-            ["v <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-            ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-            -- ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-            ["n <leader>bs"] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
-            ["n <leader>hq"] = '<cmd>lua do vim.cmd("copen") require"gitsigns".setqflist("all") end <CR>', -- hunk qflist with vgit
-            ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-            ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+        on_attach = on_attach,
+        preview_config = {
+            border = "rounded",
         },
+        current_line_blame = true,
+        current_line_blame_formatter_opts = {
+            relative_time = true,
+        },
+        current_line_blame_opts = {
+            delay = 1500,
+        },
+        count_chars = {
+            "⒈",
+            "⒉",
+            "⒊",
+            "⒋",
+            "⒌",
+            "⒍",
+            "⒎",
+            "⒏",
+            "⒐",
+            "⒑",
+            "⒒",
+            "⒓",
+            "⒔",
+            "⒕",
+            "⒖",
+            "⒗",
+            "⒘",
+            "⒙",
+            "⒚",
+            "⒛",
+        },
+        _refresh_staged_on_update = false,
         watch_gitdir = { interval = 1000, follow_files = true },
         sign_priority = 6,
         status_formatter = nil, -- Use default
-        debug_mode = false,
-        current_line_blame = false,
-        current_line_blame_opts = { delay = 1500 },
         update_debounce = 300,
         word_diff = false,
         diff_opts = { internal = true },
