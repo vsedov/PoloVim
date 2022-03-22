@@ -1,18 +1,18 @@
 return {
     config = function()
         local null_ls = require("null-ls")
-
         local lspconfig = require("lspconfig")
 
         local diagnostics = null_ls.builtins.diagnostics
+        local hover = null_ls.builtins.hover
         local actions = null_ls.builtins.code_actions
         local sources = {
+            null_ls.builtins.formatting.autopep8,
             null_ls.builtins.formatting.rustfmt,
             null_ls.builtins.diagnostics.yamllint,
             null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.code_actions.proselint,
             null_ls.builtins.code_actions.refactoring,
-            null_ls.builtins.formatting.prettier,
             -- hover.dictionary,
             diagnostics.misspell.with({
                 filetypes = { "markdown", "text", "txt" },
@@ -36,17 +36,9 @@ return {
         local function exist(bin)
             return vim.fn.exepath(bin) ~= ""
         end
-
-        if exist("goline") then
-            table.insert(
-                sources,
-                null_ls.builtins.formatting.golines.with({
-                    extra_args = {
-                        "--max-len=120",
-                        "--base-formatter=gofumpt",
-                    },
-                })
-            )
+        -- latex script
+        if exist("latexindent") then
+            table.insert(sources, null_ls.builtins.formatting.latexindent)
         end
 
         -- shell script
