@@ -10,10 +10,6 @@ local rhs = function(rhs_str)
 end
 -- local kind = cmp.lsp.CompletionItemKind
 
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
 local luasnip = require("luasnip")
 
 -- Returns the current column number.
@@ -133,7 +129,6 @@ local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-local luasnip = require("luasnip")
 
 if load_coq() then
     local sources = {}
@@ -334,6 +329,7 @@ cmp.setup({
             "s",
         }),
 
+        -- Avoid full fallback as it acts retardedly
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()

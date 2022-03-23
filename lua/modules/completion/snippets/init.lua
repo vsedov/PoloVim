@@ -27,7 +27,6 @@ local no_backslash = utils.no_backslash
 local is_math = utils.is_math
 local not_math = utils.not_math
 -- -- prevent loading twice .
-require("luasnip/loaders/from_vscode").lazy_load()
 require("modules.completion.snippets.luasnip")
 
 local parse = ls.parser.parse_snippet
@@ -770,6 +769,7 @@ end
 
 -- require("modules.completion.snippets.latex.tex_math")
 
+require("luasnip/loaders/from_vscode").load()
 require("luasnip/loaders/from_vscode").lazy_load({
     paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
 })

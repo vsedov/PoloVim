@@ -110,13 +110,6 @@ function config.vim_vista()
     -- vim.g['vista#renderer#icons'] = {['function'] = "", ['method'] = "ℱ", variable = "כֿ"}
 end
 
--- function config.far()
---   -- body
---   -- vim.cmd [[UpdateRemotePlugins]]
---   vim.g["far#source"] = "rgnvim"
---   vim.g["far#cmdparse_mode"] = "shell"
--- end
-
 function config.clap()
     -- require("packer").loader("LuaSnip")
 

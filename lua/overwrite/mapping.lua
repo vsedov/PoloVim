@@ -10,35 +10,22 @@ local K = {}
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
+local keys = { --
 
-if vim.bo.filetype == "lua" then
-    local luakeys = {
-        ["n|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
-        ["v|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
-        ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
-    }
-    bind.nvim_load_mapping(luakeys)
-end
+    ["n|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+    ["v|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+    ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
 
-local keys = {
-    -- pack?
-    -- ["n|<Leader>tr"]     = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
-    -- ["n|<Leader>tf"]     = map_cu('DashboardNewFile'):with_noremap():with_silent(),
 
-    -- Lsp mapp work when insertenter and lsp start
-    --
+
+
     ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
     ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
     ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
     ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
     ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
-    -- ["n|<M-g>"] = map_cu("Clap gfiles"):with_noremap():with_silent(),
-    ["n|<M-h>"] = map_cu("Clap history"):with_noremap():with_silent(),
-
     ["n|<Leader>fq"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
-
     ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
-    -- ["n|<Leader>fl"] = map_cu("Clap loclist"):with_noremap():with_silent(),
     ["n|<Leader>gd"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
     ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
 
@@ -253,23 +240,6 @@ vim.api.nvim_add_user_command("Hashbang", function()
         })
     end
 end, { force = true })
-local plugmap = require("keymap").map
-local merged = vim.tbl_extend("force", plugmap, keys)
-
-bind.nvim_load_mapping(merged)
-local key_maps = bind.all_keys
-
-K.get_keymaps = function()
-    local ListView = require("guihua.listview")
-    local win = ListView:new({
-        loc = "top_center",
-        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-        prompt = true,
-        enter = true,
-        rect = { height = 20, width = 90 },
-        data = key_maps,
-    })
-end
 
 vim.api.nvim_add_user_command("Keymaps", function()
     require("overwrite.mapping").get_keymaps()
@@ -284,6 +254,23 @@ vim.cmd([[
   iabbrev :todo: <c-r>=printf(&commentstring, ' TODO(vsedov):')<CR>
   iabbrev funciton function
 ]])
+
+local plugmap = require("keymap").map
+local merged = vim.tbl_extend("force", plugmap, keys)
+bind.nvim_load_mapping(merged)
+local key_maps = bind.all_keys
+
+K.get_keymaps = function()
+    local ListView = require("guihua.listview")
+    local win = ListView:new({
+        loc = "top_center",
+        border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        prompt = true,
+        enter = true,
+        rect = { height = 20, width = 90 },
+        data = key_maps,
+    })
+end
 
 -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
 --
