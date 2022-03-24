@@ -135,7 +135,6 @@ function autocmd.load_autocmds()
                     if byte ~= -1 or byte > 1 then
                         return
                     end
-
                     vim.bo.buftype = "nofile"
                     vim.bo.swapfile = false
                     vim.bo.fileformat = "unix"
@@ -150,15 +149,33 @@ function autocmd.load_autocmds()
 
         ft = {
             {
+                "CursorHold",
+                { "*.tex", "*.norg" },
+                function()
+                    local is_math = require("modules.completion.snippets.sniputils").is_math
+                    if is_math then
+                        require("nabla").popup()
+                    end
+                end,
+            },
+            {
                 "FileType",
                 { "qf", "help", "man", "ls:pinfo" },
                 "nnoremap <silent> <buffer> q :close<CR>",
             },
+
+            {
+                "FileType",
+                "python",
+                [[setlocal omnifunc=RopeCompleteFunc]],
+            },
+
             {
                 "FileType",
                 "dashboard",
                 "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2",
             },
+
             { { "BufNewFile", "BufRead" }, "*.toml", " setf toml" },
         },
         yank = {

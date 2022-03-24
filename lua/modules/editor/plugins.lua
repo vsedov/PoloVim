@@ -1,5 +1,4 @@
 local editor = {}
-
 local conf = require("modules.editor.config")
 
 -- alternatives: steelsojka/pears.nvim
@@ -10,8 +9,6 @@ editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 
 editor["windwp/nvim-autopairs"] = {
     -- keys = {{'i', '('}},
-    -- keys = {{'i'}},
-    requires = "nvim-treesitter",
     after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
     -- event = "InsertEnter",  --InsertCharPre
     -- after = "hrsh7th/nvim-compe",
@@ -19,84 +16,45 @@ editor["windwp/nvim-autopairs"] = {
     opt = true,
 }
 
--- editor["ZhiyuanLck/smart-pairs"] = {
---   event = "InsertEnter",
---   opt = true,
---   config = function()
---     require("pairs"):setup({
---       enter = {
---         -- enable_mapping = false,
---       },
---     })
---   end,
---   after = { "nvim-cmp" },
--- }
-
+-- TODO: Change this with current cursor word
 editor["kana/vim-niceblock"] = {
     opt = true,
 }
 
+editor["max397574/dyn_help.nvim"] = {}
+
 -- I like this plugin, but 1) offscreen context is slow
 -- 2) it not friendly to lazyload and treesitter startup
--- editor["andymass/vim-matchup"] = {
---   opt = true,
---   event = {"CursorMoved", "CursorMovedI"},
---   cmd = {'MatchupWhereAmI?'},
---   config = function()
---     vim.g.matchup_enabled = 1
---     vim.g.matchup_surround_enabled = 1
---     -- vim.g.matchup_transmute_enabled = 1
---     vim.g.matchup_matchparen_deferred = 1
---     vim.g.matchup_matchparen_offscreen = {method = 'popup'}
---     vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
---   end
--- }
-
-editor["gbprod/yanky.nvim"] = {
-    keys = {
-        "<C-v>",
-        "<Plug>(YankyPutAfter)",
-        "<Plug>(YankyPutBefore)",
-        "<Plug>(YankyPutAfter)",
-        "<Plug>(YankyPutBefore)",
-
-        "<Plug>(YankyGPutAfter)",
-        "<Plug>(YankyGPutBefore)",
-        "<Plug>(YankyGPutAfter)",
-        "<Plug>(YankyGPutBefore)",
-
-        "<Plug>(YankyCycleForward)",
-        "<Plug>(YankyCycleBackward)",
-    },
-    setup = function()
-        local default_keymaps = {
-            { "n", "p", "<Plug>(YankyPutAfter)" },
-            { "n", "P", "<Plug>(YankyPutBefore)" },
-
-            { "x", "p", "<Plug>(YankyPutAfter)" },
-            { "x", "P", "<Plug>(YankyPutBefore)" },
-
-            { "n", "<leader>p", "<Plug>(YankyGPutAfter)" },
-            { "n", "<leader>P", "<Plug>(YankyGPutBefore)" },
-
-            { "x", "<leader>p", "<Plug>(YankyGPutAfter)" },
-            { "x", "<leader>P", "<Plug>(YankyGPutBefore)" },
-
-            { "n", "<Leader>n", "<Plug>(YankyCycleForward)" },
-            { "n", "<Leader>N", "<Plug>(YankyCycleBackward)" },
-        }
-        for _, m in ipairs(default_keymaps) do
-            vim.keymap.set(m[1], m[2], m[3], {})
-        end
-    end,
+editor["andymass/vim-matchup"] = {
+    opt = true,
+    keys = { "%", "<c-s>k" },
+    -- event = { "CursorMoved", "CursorMovedI" },
+    cmd = { "MatchupWhereAmI?" },
+    after = "nvim-treesitter",
     config = function()
-        require("yanky").setup({
-            ring = {
-                -- i have a op pc
-                history_length = 50,
-                storage = "shada",
+        vim.g.matchup_enabled = 1
+        vim.g.matchup_surround_enabled = 1
+        -- vim.g.matchup_transmute_enabled = 1
+        vim.g.matchup_matchparen_deferred = 1
+        vim.g.matchup_matchparen_offscreen = { method = "popup" }
+        vim.keymap.set("n", "<c-s>k", "<cmd><c-u>MatchupWhereAmI?<CR>")
+        -- vim.cmd([[nnoremap <c-s-k> :<c-u>MatchupWhereAmI?<cr>]])
+        require("nvim-treesitter.configs").setup({
+            matchup = {
+                enable = true, -- mandatory, false will disable the whole extension
+                disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+                -- [options]
             },
         })
+    end,
+}
+
+editor["bfredl/nvim-miniyank"] = {
+    keys = { "p", "y", "<C-v>" },
+    opt = true,
+    setup = function()
+        vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
+        vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
     end,
 }
 
@@ -157,7 +115,8 @@ editor["ggandor/lightspeed.nvim"] = {
             { "o", "T", "<Plug>Lightspeed_T" },
         }
         for _, m in ipairs(default_keymaps) do
-            vim.keymap.set(m[1], m[2], m[3], { silent = true })
+            -- remove siletnt = true
+            vim.keymap.set(m[1], m[2], m[3], {})
         end
     end,
 
@@ -165,10 +124,18 @@ editor["ggandor/lightspeed.nvim"] = {
     -- opt = true,
     config = conf.lightspeed,
 }
+--
+--
+
+-- editor["ggandor/leap.nvim"] = {
+--     -- opt = true,
+--     config = function()
+--         require("leap").set_default_keymaps()
+--     end,
+-- }
 
 editor["hrsh7th/vim-searchx"] = {
     event = { "CmdwinEnter", "CmdlineEnter" },
-    fn = { "searchx#*" },
     setup = function()
         -- Overwrite / and ?.
         vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({ 'dir': 0 })<CR>")
@@ -419,7 +386,9 @@ editor["simnalamburt/vim-mundo"] = {
         vim.g.mundo_prefer_python3 = 1
     end,
 }
+
 editor["mbbill/undotree"] = { opt = true, cmd = { "UndotreeToggle" } }
+
 editor["AndrewRadev/splitjoin.vim"] = {
     opt = true,
     cmd = { "SplitjoinJoin", "SplitjoinSplit" },
@@ -448,7 +417,7 @@ editor["folke/zen-mode.nvim"] = {
 }
 
 editor["nvim-neorg/neorg"] = {
-    -- branch = "neorg-export",
+    branch = "main",
     -- requires = { "max397574/neorg-zettelkasten" },
     config = function()
         require("modules.editor.neorg")
@@ -469,27 +438,26 @@ editor["raimon49/requirements.txt.vim"] = {
 }
 
 editor["monaqa/dial.nvim"] = {
-    keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" } },
+    keys = { "<C-a>", "<C-x>" },
     opt = true,
-    setup = conf.dial_setup(),
     config = function()
-        vim.cmd([[packadd dial.nvim]])
-
-        local dial = require("dial")
-        dial.config.searchlist.normal = {
-            "number#decimal",
-            "number#hex",
-            "number#binary",
-            "date#[%Y/%m/%d]",
-            "markup#markdown#header",
-        }
-        if vim.o.ft == "norg" or vim.o.ft == "markdown" then
-            table.insert(dial.config.searchlist.normal, "date#[%ja]")
-            table.insert(dial.config.searchlist.normal, "char#alph#small#word")
-            table.insert(dial.config.searchlist.normal, "char#alph#small#str")
-            table.insert(dial.config.searchlist.normal, "char#alph#capital#word")
-        end
+        local dial = require("dial.map")
         local augend = require("dial.augend")
+        require("dial.config").augends:register_group({
+            -- default augends used when no group name is specified
+            default = {
+                augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
+                augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+                augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
+            },
+
+            -- augends used when group with name `mygroup` is specified
+            mygroup = {
+                augend.integer.alias.decimal,
+                augend.constant.alias.bool, -- boolean value (true <-> false)
+                augend.date.alias["%m/%d/%Y"], -- date (02/19/2022, etc.)
+            },
+        })
         local map = vim.keymap.set
         map("n", "<C-a>", dial.inc_normal(), { remap = false })
         map("n", "<C-x>", dial.dec_normal(), { remap = false })
@@ -497,23 +465,6 @@ editor["monaqa/dial.nvim"] = {
         map("v", "<C-x>", dial.dec_visual(), { remap = false })
         map("v", "g<C-a>", dial.inc_gvisual(), { remap = false })
         map("v", "g<C-x>", dial.dec_gvisual(), { remap = false })
-        require("dial.config").augends:register_group({
-            -- default augends used when no group name is specified
-            default = {
-                augend.integer.alias.decimal,
-                augend.integer.alias.hex,
-                augend.date.alias["%Y/%m/%d"],
-                augend.constant.alias.bool,
-                augend.constant.new({
-                    elements = { "&&", "||" },
-                    word = false,
-                    cyclic = true,
-                }),
-            },
-            dep_files = {
-                augend.semver.alias.semver,
-            },
-        })
     end,
 }
 
@@ -539,10 +490,9 @@ editor["rmagatti/alternate-toggler"] = {
     cmd = "ToggleAlternate",
 }
 
-editor["jbyuki/nabla.nvim"] = {
+editor["max397574/nabla.nvim"] = {
+    ft = { "tex", "norg" },
     opt = true,
-    -- commit = "ba9559798ac5bdb029cbebaa8751f61e2f024f40",
-    ft = "norg",
     requires = { "nvim-lua/popup.nvim" },
 }
 

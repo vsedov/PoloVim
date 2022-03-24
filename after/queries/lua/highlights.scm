@@ -6,6 +6,14 @@
  (set! "priority" 105)
  )
 
+(
+ (function_call
+   (identifier) @pairs
+   (#match? @pairs "pairs")
+   )
+ (set! "priority" 105)
+ )
+
 (function_declaration
   (identifier)@function_definition
   )
@@ -46,3 +54,20 @@
    )
  (set! "priority" 105)
  )
+
+; https://github.com/shift-d/nvim/tree/main/queries
+
+(("return"   @keyword) (#set! conceal ""))
+(("function" @keyword) (#set! conceal "ﬦ"))
+
+;; Function names
+((function_call name: (identifier) @function (#eq? @function "require")) (#set! conceal ""))
+
+;; vim.*;; table.
+((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "math" )) (#set! conceal ""))
+
+(((dot_index_expression) @keyword (#eq? @keyword "vim.cmd"     )) (#set! conceal ""))
+(((dot_index_expression) @keyword (#eq? @keyword "vim.api"     )) (#set! conceal ""))
+(((dot_index_expression) @keyword (#eq? @keyword "vim.fn"      )) (#set! conceal "#"))
+(((dot_index_expression) @keyword (#eq? @keyword "vim.g"       )) (#set! conceal "$"))
+(((dot_index_expression) @keyword (#eq? @keyword "vim.schedule")) (#set! conceal ""))

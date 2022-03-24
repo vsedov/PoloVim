@@ -10,13 +10,7 @@ local rhs = function(rhs_str)
 end
 -- local kind = cmp.lsp.CompletionItemKind
 
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
 local luasnip = require("luasnip")
-
-local has_luasnip, luasnip = pcall(require, "luasnip")
 
 -- Returns the current column number.
 local column = function()
@@ -76,11 +70,12 @@ local smart_bs = function()
         if in_leading_indent then
             return rhs("<BS>")
         end
+
         local previous_char = prefix:sub(#prefix, #prefix)
         if previous_char ~= " " then
             return rhs("<BS>")
         end
-        -- Delete enough spaces to take us back to the previous tabstop.
+
         --
         -- Originally I was calculating the number of <BS> to send, but
         -- Neovim has some special casing that causes one <BS> to delete
@@ -133,20 +128,6 @@ end
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-local luasnip = require("luasnip")
-
-local function tab(fallback)
-    if cmp.visible() then
-        cmp.select_next_item()
-    elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-    elseif has_words_before() then
-        cmp.complete()
-    else
-        -- F("<Tab>")
-        fallback()
-    end
 end
 
 if load_coq() then
@@ -323,10 +304,10 @@ cmp.setup({
             "i",
             "s",
         }),
-        ["<BS>"] = cmp.mapping(function(_fallback)
-            local keys = smart_bs()
-            vim.api.nvim_feedkeys(keys, "nt", true)
-        end, { "i", "s" }),
+        -- ["<BS>"] = cmp.mapping(function(_fallback)
+        --     local keys = smart_bs()
+        --     vim.api.nvim_feedkeys(keys, "nt", true)
+        -- end, { "i", "s" }),
 
         ["<Tab>"] = cmp.mapping(function(core, fallback)
             if cmp.visible() then
@@ -348,6 +329,7 @@ cmp.setup({
             "s",
         }),
 
+        -- Avoid full fallback as it acts retardedly
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
@@ -475,8 +457,9 @@ cmp.setup({
     experimental = { ghost_text = true, native_menu = false },
 })
 
-require("packer").loader("nvim-autopairs")
+-- require("packer").loader("nvim-autopairs")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+local cmp = require("cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
 -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})

@@ -164,8 +164,7 @@ local plug_map = {
     ["n|<Leader>bb"] = map_cu("Telescope buffers"):with_noremap():with_silent(),
     ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
     ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
-
-    -- ["n|<Leader>fz"] = map_cr('<cmd>lua require("telescope").extensions.zoxide.list()'):with_silent(),
+    ["n|<Leader>fZ"] = map_cr('<cmd>lua require("telescope").extensions.zoxide.list()'):with_silent(),
     -- ["n|<Leader>fp"] = map_cr('<cmd>lua require("telescope").extensions.projects.projects()'):with_silent(),
     ["n|<Leader>fl"] = map_cu("Telescope loclist"):with_noremap():with_silent(),
     ["n|<Leader>fc"] = map_cu("Telescope git_commits"):with_noremap():with_silent(),
@@ -190,7 +189,10 @@ local plug_map = {
         :with_noremap()
         :with_silent(),
 
-    ["n|<Leader>fH"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
+    ["n|<Leader>hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
+    ["n|<leader>hw"] = map_cmd("<cmd>lua require'dynamic_help'.float_help(vim.fn.expand('<cword>'))<CR>")
+        :with_noremap()
+        :with_silent(),
 
     -- grep
     ["n|<Leader>fw"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])

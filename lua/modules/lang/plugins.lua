@@ -147,22 +147,23 @@ lang["mfussenegger/nvim-jdtls"] = {
 }
 
 lang["lervag/vimtex"] = {
+    ft = "tex",
     opt = true,
-    ft = { "tex", "latex", "bib", "md" },
     setup = function()
         vim.g.vimtex_view_method = "zathura"
-        vim.g.vimtex_compiler_method = "latexrun"
-        vim.g.vimtex_compiler_latexrun = 1
-        vim.g.tex_flavor = "latex"
-        vim.g.vimtex_quickfix_mode = 0
-    end,
-}
-
-lang["xuhdev/vim-latex-live-preview"] = {
-    opt = true,
-    ft = { "tex", "latex", "bib", "md" },
-    setup = function()
-        -- vim.g.livepreview_engine = "latexrun"
+        vim.g.vimtex_compiler_latexmk = {
+            build_dir = "build",
+            callback = 1,
+            continuous = 1,
+            executable = "latexmk",
+            hooks = {},
+            options = {
+                "-verbose",
+                "-file-line-error",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+            },
+        }
     end,
 }
 
@@ -263,6 +264,14 @@ lang["dccsillag/magma-nvim"] = {
     run = ":UpdateRemotePlugins",
     config = conf.magma,
 }
+lang["python-rope/ropevim"] = {
+    ft = "python",
+    opt = true,
+    config = function()
+        vim.g.ropevim_vim_completion = 1
+        vim.g.ropevim_extended_complete = 1
+    end,
+}
 
 lang["Vimjas/vim-python-pep8-indent"] = {
     ft = "python",
@@ -355,15 +364,14 @@ lang["onsails/diaglist.nvim"] = {
     after = { "nvim-bqf", "nvim-lspconfig" },
 }
 
--- lang["folke/trouble.nvim"] = {
---     cmd = { "Trouble", "TroubleToggle" },
---     opt = true,
---     config = function()
---         require("trouble").setup({})
---     end,
--- }
+lang["folke/trouble.nvim"] = {
+    cmd = { "Trouble", "TroubleToggle" },
+    opt = true,
+    config = function()
+        require("trouble").setup({})
+    end,
+}
 
--- Might use this
 lang["folke/todo-comments.nvim"] = {
     cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
     opt = true,

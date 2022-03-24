@@ -34,38 +34,12 @@ local tex_math = {
         "->",
         f(function()
             if not in_mathzone() then
-                return "->"
+                return "-> "
             end
-            return "\\implies"
+            return "\\implies "
         end)
     ),
-    s(
-        { trig = "sr", wordTrig = false },
-        f(function()
-            if not in_mathzone() then
-                return "sr"
-            end
-            return "^2"
-        end)
-    ),
-    s(
-        { trig = "cb", wordTrig = false },
-        f(function()
-            if not in_mathzone() then
-                return "cb"
-            end
-            return "^3"
-        end)
-    ),
-    s(
-        { trig = "comp", wordTrig = false },
-        f(function()
-            if not in_mathzone() then
-                return "comp"
-            end
-            return "^{c}"
-        end)
-    ),
+
     s(
         { trig = "ss", wordTrig = false },
         d(1, function()
@@ -131,7 +105,7 @@ local tex_math = {
             return in_mathzone()
         end,
     }),
-    s({ trig = "sr", wordTrig = false }, { t("\\sqrt{"), i(1), t("}") }, {
+    s({ trig = "sR", wordTrig = false }, { t("\\sqrt{"), i(1), t("}") }, {
         condition = function()
             return in_mathzone()
         end,

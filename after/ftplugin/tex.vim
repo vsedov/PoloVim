@@ -48,4 +48,3 @@ function! LatexClipboardImage() abort
   " endif
 endfunction
 
-

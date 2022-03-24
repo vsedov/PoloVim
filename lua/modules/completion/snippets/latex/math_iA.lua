@@ -3,34 +3,11 @@ local s = ls.snippet
 local f = ls.function_node
 
 local math_iA = {
-    s(
-        {
-            trig = "(%a)bar",
-            wordTrig = false,
-            regTrig = true,
-            name = "bar",
-        },
-        f(function(_, snip)
-            return string.format("\\overline{%s}", snip.captures[1])
-        end, {})
-    ),
-    s(
-        {
-            trig = "(%a)hat",
-            wordTrig = false,
-            regTrig = true,
-            name = "hat",
-        },
-        f(function(_, snip)
-            return string.format("\\hat{%s}", snip.captures[1])
-        end, {})
-    ),
-
     ls.parser.parse_snippet({ trig = "td", name = "to the ... power ^{}" }, "^{$1}$0 "),
     ls.parser.parse_snippet({ trig = "rd", name = "to the ... power ^{()}" }, "^{($1)}$0 "),
     ls.parser.parse_snippet({ trig = "cb", name = "Cube ^3" }, "^3 "),
     ls.parser.parse_snippet({ trig = "sr", name = "Square ^2" }, "^2"),
-
+    ls.parser.parse_snippet({ trig = "neg", name = "neg" }, "\\neg "),
     ls.parser.parse_snippet({ trig = "EE", name = "exists" }, "\\exists "),
     ls.parser.parse_snippet({ trig = "AA", name = "forall" }, "\\forall "),
     ls.parser.parse_snippet({ trig = "xnn", name = "xn" }, "x_{n}"),
@@ -42,7 +19,6 @@ local math_iA = {
     ls.parser.parse_snippet({ trig = "xp1", name = "x" }, "x_{n+1}"),
     ls.parser.parse_snippet({ trig = "xmm", name = "x" }, "x_{m}"),
     ls.parser.parse_snippet({ trig = "R0+", name = "R0+" }, "\\R_0^+"),
-
     ls.parser.parse_snippet({ trig = "notin", name = "not in " }, "\\not\\in "),
     ls.parser.parse_snippet({ trig = "cc", name = "subset" }, "\\subset "),
     ls.parser.parse_snippet({ trig = "<->", name = "leftrightarrow" }, "\\leftrightarrow"),
@@ -128,7 +104,8 @@ local math_iA = {
     ls.parser.parse_snippet({ trig = "perp", name = "perp postfix" }, "\\perp "),
     ls.parser.parse_snippet({ trig = "pm", name = "pm postfix" }, "\\pm "),
     ls.parser.parse_snippet({ trig = "int", name = "int postfix" }, "\\int "),
-
+    ls.parser.parse_snippet({ trig = "land", name = "and" }, "\\land "),
+    ls.parser.parse_snippet({ trig = "lor", name = "or" }, "\\lor "),
     ls.parser.parse_snippet({ trig = "qquad", name = "maths whitespace qquad" }, "\\qquad "),
     ls.parser.parse_snippet({ trig = "quad", name = "maths whitespace qquad" }, "\\qquad "),
 }

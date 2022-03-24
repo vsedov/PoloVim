@@ -12,7 +12,6 @@ useless["rtakasuke/vim-neko"] = {
 useless["tamton-aquib/duck.nvim"] = {
     opt = true,
 }
-
 -- useless["raghavdoescode/nvim-owoifier"] = {
 --   cmd = "OWOify",
 --   opt = true,

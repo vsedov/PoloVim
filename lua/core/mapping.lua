@@ -34,6 +34,7 @@ local def_map = {
     ["i|<C-b>"] = map_cmd("<Left>"):with_noremap(),
     ["i|<C-f>"] = map_cmd("<Right>"):with_noremap(),
 
+    -- not needed but for coc
     ["i|<C-e>"] = map_cmd([[pumvisible() ? "\<C-e>" : "\<End>"]]):with_noremap():with_expr(),
 
     -- command line

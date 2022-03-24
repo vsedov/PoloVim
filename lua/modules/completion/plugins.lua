@@ -16,7 +16,6 @@ completion["neovim/nvim-lspconfig"] = {
 
     opt = true,
 }
-
 completion["tami5/lspsaga.nvim"] = {
     cmd = "lspsaga",
     module = "lspsaga",
@@ -39,13 +38,14 @@ if load_coq() then
     completion["ms-jpq/coq_nvim"] = {
         -- opt = true,
         -- ft = {'html','css', 'javascript', 'java', 'typescript', 'typescriptreact','go', 'python', 'cpp', 'c', 'rust'},
-        -- event = "InsertCharPre",
+        event = "InsertCharPre",
         after = { "coq.artifacts" },
         branch = "coq",
         setup = function()
             vim.g.coq_settings = { auto_start = false }
             -- vim.g.coq_settings = { auto_start = false, ['display.icons.mode'] = 'short', ['display.pum.kind_context'] = {'',''}, ['display.pum.source_context'] = {'',''} , ['display.pum.fast_close'] = false}
         end,
+
         config = function()
             vim.g.coq_settings = {
                 auto_start = false,
@@ -57,6 +57,7 @@ if load_coq() then
             if not load_coq() then
                 return
             end
+            -- might need to load coq through packadd maybe
             vim.cmd([[COQnow]])
         end,
     }
@@ -211,30 +212,39 @@ completion["mattn/emmet-vim"] = {
     setup = conf.emmet,
 }
 
--- note: part of the code is used in navigator
+-- taken from doom
 completion["ray-x/lsp_signature.nvim"] = {
     opt = true,
     config = function()
-        require("lsp_signature").setup({
+        local cfg = {
             bind = true,
-            -- doc_lines = 4,
-            toggle_key = "<C-x>",
-            floating_window = true,
+            doc_lines = 10,
+            floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
             floating_window_above_cur_line = true,
-            hint_enable = true,
-            use_lspsaga = false,
-            fix_pos = false,
-            -- floating_window_above_first = true,
+            fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
+            hint_enable = true, -- virtual hint enable
+            -- hint_prefix = "🐼 ", -- Panda for parameter
+            hint_prefix = " ",
+            hint_scheme = "String",
+            -- use_lspsaga = false, -- set to true if you want to use lspsaga popup
+            hi_parameter = "Search", -- how your parameter will be highlight
+            max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
+            -- to view the hiding contents
+            max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+            handler_opts = {
+                border = "single", -- double, single, shadow, none
+            },
+            -- transpancy = 80,
+            extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
+            zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
+            debug = false, -- set to true to enable debug logging
             log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-            -- hi_parameter = "Search",
-            zindex = 1002,
-            timer_interval = 100,
-            extra_trigger_chars = {},
-            -- handler_opts = {
-            --   border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            -- },
-            max_height = 4,
-        })
+            padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
+            shadow_blend = 36, -- if you using shadow as border use this set the opacity
+            shadow_guibg = "Black", -- if you using shadow as border use this set the color e.g. 'Green' or '#121315'
+        }
+
+        require("lsp_signature").setup(cfg)
     end,
 }
 

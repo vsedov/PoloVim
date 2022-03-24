@@ -21,14 +21,12 @@ local dl = require("luasnip.extras").dynamic_lambda
 local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
-
 local utils = require("modules.completion.snippets.sniputils")
 local pipe = utils.pipe
 local no_backslash = utils.no_backslash
 local is_math = utils.is_math
 local not_math = utils.not_math
 -- -- prevent loading twice .
-require("luasnip/loaders/from_vscode").lazy_load()
 require("modules.completion.snippets.luasnip")
 
 local parse = ls.parser.parse_snippet
@@ -113,35 +111,56 @@ local require_var = function(args, _)
     })
 end
 
-local hour_or_minute = function(args, _)
-    local text = args[1][1] or ""
-
-    -- HH:MM then return H or if it is MM return M
-    if string.find(text, ":") then
-        return sn(nil, {
-            t({ "H" }),
-        })
-    else
-        return sn(nil, {
-            t({ "M" }),
-        })
-    end
-end
-
-local get_time = function()
-    local options = {}
-    local default_option = os.date("%p")
-    table.insert(options, t(default_option))
-    table.insert(options, t(default_option == "AM" and "PM" or "AM"))
-
-    return sn(nil, {
-        c(1, options),
-    })
-end
-
 ls.snippets = {
     all = {
-        s({ trig = "date1" }, {
+        s(
+            -- TODO: can probably make this one much smarter; right now it's basically just syntax reminder
+            { trig = "table", dscr = "Table template" },
+            {
+                t("| "),
+                i(1, "First Header"),
+                t({
+                    "  | Second Header |",
+                    "| ------------- | ------------- |",
+                    "| Content Cell  | Content Cell  |",
+                    "| Content Cell  | Content Cell  |",
+                }),
+            }
+        ),
+        -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/
+        s({ trig = "td", name = "TODO" }, {
+            c(1, {
+                t("TODO: "),
+                t("FIXME: "),
+                t("HACK: "),
+                t("BUG: "),
+            }),
+            i(0),
+        }),
+        s(
+            { trig = "hr", name = "Header" },
+            fmt(
+                [[
+            {1}
+            {2} {3}
+            {1}
+            {4}
+          ]],
+                {
+                    f(function()
+                        local comment = string.format(vim.bo.commentstring:gsub(" ", "") or "#%s", "-")
+                        local col = vim.bo.textwidth or 80
+                        return comment .. string.rep("-", col - #comment)
+                    end),
+                    f(function()
+                        return vim.bo.commentstring:gsub("%%s", "")
+                    end),
+                    i(1, "HEADER"),
+                    i(0),
+                }
+            )
+        ),
+        s({ trig = "date" }, {
             f(function()
                 return string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), os.date())
             end, {}),
@@ -158,7 +177,7 @@ ls.snippets = {
             c(1, {
                 t("Ugh boring, a text node"),
                 i(nil, "At least I can edit something now..."),
-                f(function(args)
+                f(function()
                     return "Still only counts as text!!"
                 end, {}),
             })
@@ -171,6 +190,10 @@ ls.snippets = {
         parse({ trig = "lf" }, loc_func),
         parse({ trig = "cmd" }, map_cmd),
         parse({ trig = "inspect" }, inspect_snippet),
+
+        parse("lf", "-- Defined in $TM_FILE\nlocal $1 = function($2)\n\t$0\nend"),
+        parse("mf", "-- Defined in $TM_FILE\nlocal $1.$2 = function($3)\n\t$0\nend"),
+        s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
 
         -- local _ = require "telescope.pickers.builtin"
         s(
@@ -209,10 +232,6 @@ ls.snippets = {
             i(3, "arg??"),
             t("), "),
         }),
-
-        ls.parser.parse_snippet("lf", "-- Defined in $TM_FILE\nlocal $1 = function($2)\n\t$0\nend"),
-        ls.parser.parse_snippet("mf", "-- Defined in $TM_FILE\nlocal $1.$2 = function($3)\n\t$0\nend"),
-        s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
 
         s("lua print var", {
             t('print("'),
@@ -283,8 +302,156 @@ ls.snippets = {
             i(0),
             t({ "", "end" }),
         }),
+
+        s("super", {
+            i(1, "ClassName"),
+            t(".super."),
+            i(2, "method"),
+            t("(self"),
+            i(0),
+            t(")"),
+        }),
+
+        s("s.", {
+            t("self."),
+            i(1, "thing"),
+            t(" = "),
+            i(2),
+            i(0),
+        }),
+
+        s("ld", {
+            t("log.debug("),
+            i(0),
+            t(")"),
+        }),
+
+        s("ldi", {
+            t("log.debug(inspect("),
+            i(0),
+            t("))"),
+        }),
+
+        s("inc", {
+            i(1, "thing"),
+            t(" = "),
+            f(function(args)
+                return args[1][1]
+            end, 1),
+            t(" + "),
+            i(2, "1"),
+            i(0),
+        }),
+
+        s("dec", {
+            i(1, "thing"),
+            t(" = "),
+            f(function(args)
+                return args[1][1]
+            end, 1),
+            t(" - "),
+            i(2, "1"),
+            i(0),
+        }),
+        s(
+            {
+                trig = "use",
+                name = "packer use",
+                dscr = {
+                    "packer use plugin block",
+                    "e.g.",
+                    "use {'author/plugin'}",
+                },
+            },
+            -- = {
+            fmt([[{}[{}]], {
+                d(1, function()
+                    local valid = {
+                        "completion",
+                        "editor",
+                        "lang",
+                        "tools",
+                        "ui",
+                        "useless",
+                        "user",
+                    }
+                    -- get last dir name so completoin/snippets/init.lua would return snippets
+                    local parts = vim.split(vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h"), "/", true)
+                    local file_dir = parts[#parts]
+
+                    for _, val in pairs(valid) do
+                        -- if val is file_dir
+                        if file_dir == val then
+                            return s("", { t(val) })
+                        end
+                    end
+
+                    local options = {}
+                    for len = 0, #valid - 1 do
+                        table.insert(options, t(valid[len + 1]))
+                    end
+                    return sn(nil, {
+                        c(1, options),
+                    })
+                end),
+                d(2, function()
+                    -- Get the author and URL in the clipboard and auto populate the author and project
+                    local default = s("", { i(1, "author"), t("/"), t(2, "plugin") })
+                    local clip = vim.fn.getreg("*") or vim.fn.getreg("+")
+                    if not vim.startswith(clip, "https://github.com/") then
+                        return default
+                    end
+                    local parts = vim.split(clip, "/")
+                    if #parts < 2 then
+                        return default
+                    end
+                    local author, project = parts[#parts - 1], parts[#parts]
+                    local project_name = vim.split(project, ".", true)[1] -- remove .lua
+                    return s("", {
+                        t({
+                            "'" .. author .. "/" .. project .. "']={",
+                        }),
+                        t({ "", "" }),
+                        t("    opt = true,"),
+                        t({ "", "" }),
+                        t("    config = function()"),
+                        t({ "", "" }),
+                        t("        "),
+                        c(1, {
+                            fmt([[require("{}").setup({})]], {
+                                i(1, project_name),
+                                d(2, function()
+                                    return sn(nil, {
+                                        t("{"),
+                                        i(1, ""),
+                                        t("}"),
+                                    })
+                                end),
+                            }),
+                            fmt([[require("{}").setup({})]], {
+
+                                d(1, function()
+                                    return s("", { t(project_name) })
+                                end),
+
+                                d(2, function()
+                                    return s("", { t("{"), i(1, "module"), t("}") })
+                                end),
+                            }),
+                        }),
+
+                        t({ "", "" }),
+                        t("    end,"),
+                        t({ "", "" }),
+                        t("}"),
+                    })
+                end),
+            })
+        ),
     },
     python = require("modules.completion.snippets.python"),
+    norg = require("modules.completion.snippets.norg_snip"),
+
     help = {
         s({ trig = "con", wordTrig = true }, {
             i(1),
@@ -459,171 +626,7 @@ ls.snippets = {
         parse({ trig = "fix" }, gitcommit_fix),
         parse({ trig = "stylua" }, gitcommmit_stylua),
     },
-    norg = {
-        s("Cowthsay", {
-            t({ "> Senpai of the pool whats your wisdom ?" }),
-            t({ "", "" }),
-            t({ "@code comment" }),
-            t({ "", "" }),
-            f(function(args)
-                local cow = io.popen("fortune | cowsay -f vader")
-                local cow_text = cow:read("*a")
-                cow:close()
-                return vim.split(cow_text, "\n", true)
-            end, {}),
-            t({ "@end" }),
-        }),
 
-        s("weebsay", {
-            t({ "> Senpai of the pool whats your wisdom ?" }),
-            t({ "", "" }),
-            t({ "@code comment" }),
-            t({ "", "" }),
-            f(function(args)
-                local weeb = io.popen("weebsay")
-                local weeb_text = weeb:read("*a")
-                weeb:close()
-                return vim.split(weeb_text, "\n", true)
-            end, {}),
-            t({ "@end" }),
-        }),
-        s("randomsay", {
-            t({ "> Senpai of the pool whats your /Random/ wisdom ?" }),
-            t({ "", "" }),
-            t({ "@code comment" }),
-            t({ "", "" }),
-            f(function(args)
-                local animal_list = {
-                    "beavis.zen",
-                    "default",
-                    "head-in",
-                    "milk",
-                    "small",
-                    "turkey",
-                    "blowfish",
-                    "dragon",
-                    "hellokitty",
-                    "moofasa",
-                    "sodomized",
-                    "turtle",
-                    "bong",
-                    "dragon-and-cow",
-                    "kiss",
-                    "moose",
-                    "stegosaurus",
-                    "tux",
-                    "bud-frogs",
-                    "elephant",
-                    "kitty",
-                    "mutilated",
-                    "stimpy",
-                    "udder",
-                    "bunny",
-                    "elephant-in-snake",
-                    "koala",
-                    "ren",
-                    "surgery",
-                    "vader",
-                    "vader-koala",
-                    "cower",
-                    "flaming-sheep",
-                    "luke-koala",
-                    "sheep",
-                    "skeleton",
-                    "three-eyes",
-                    "daemon",
-                    "ghostbusters",
-                    "meow",
-                    "skeleton",
-                    "three-eyes",
-                }
-
-                local cow_command = "fortune | cowsay -f " .. animal_list[math.random(1, #animal_list)]
-                local cow = io.popen(cow_command)
-                local cow_text = cow:read("*a")
-                cow:close()
-                return vim.split(cow_text, "\n", true)
-            end, {}),
-            t({ "@end" }),
-        }),
-
-        s({ trig = "Ses" }, {
-            t({ "Session " }),
-            i(1, "1"),
-            f(function()
-                local input = vim.fn.input(" Enter time in HH:MM or MM format: ")
-                local plus_hour, plus_min
-                if input:find(":") == nil then
-                    plus_hour = 00
-                    plus_min = input
-                else
-                    plus_hour, plus_min = input:match("(%d+):(%d+)")
-                end
-
-                local t = os.date("%H:%M")
-                local h = tonumber(string.sub(t, 1, 2))
-                local m = tonumber(string.sub(t, 4, 5))
-                -- add plus_hour and plus_min to current time
-                h = h + tonumber(plus_hour)
-                m = m + tonumber(plus_min)
-                -- if minutes are more than 60, add 1 hour and subtract 60 minutes
-                if m > 60 then
-                    h = h + 1
-                    m = m - 60
-                end
-                if h > 24 then
-                    h = h - 24
-                end
-                if m < 10 then
-                    m = "0" .. m
-                end
-
-                local added_time
-                if plus_hour ~= 00 then
-                    added_time = plus_hour .. ":" .. plus_min .. " H"
-                else
-                    added_time = plus_min .. "M"
-                end
-
-                local session_time = h .. ":" .. m
-
-                local twentry_four_to_twelve_hour = function(t)
-                    local hour, min = t:match("(%d+):(%d+)")
-                    if tonumber(hour) > 12 then
-                        hour = tonumber(hour) - 12
-                        return hour .. ":" .. min .. " PM"
-                    else
-                        return hour .. ":" .. min .. " AM"
-                    end
-                end
-
-                local current_12_hour = twentry_four_to_twelve_hour(t)
-                local session_12_hour = twentry_four_to_twelve_hour(session_time)
-
-                return " [" .. added_time .. "]" .. "(" .. current_12_hour .. " -> " .. session_12_hour .. ")"
-            end, {}),
-            t({ "{" }),
-            i(3, "topic"),
-            t({ "}" }),
-        }),
-        ls.parser.parse_snippet("lec", "  *** Lectures"),
-        ls.parser.parse_snippet("work", "  *** work_sheets"),
-        ls.parser.parse_snippet("1Hour", "  *** First Hour"),
-        ls.parser.parse_snippet("2Hour", "  *** Second Hour"),
-
-        ls.parser.parse_snippet(
-            "hajime",
-            "* Pomodoro\n** $0\n*** Lectures\n*** work_sheets\n\n* Breaks\n** Anime\n** Neovim\n\n* How am i feeling today "
-        ),
-
-        s("neorg focus area", {
-            t("| $"),
-            i(1, "focus_area_name"),
-            t({ "$", "" }),
-            i(2, "marker body"),
-            t({ "", "| _" }),
-        }),
-    },
     tex = {},
 }
 for _, snip in ipairs(require("modules.completion.snippets.latex.math_i")) do
@@ -639,6 +642,79 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
     table.insert(ls.snippets.tex, snip)
 end
 ls.autosnippets = {
+    norg = {
+        s({
+            trig = "*([2-6])",
+            name = "Heading",
+            dscr = "Add Heading",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("*", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s({
+            trig = "q([2-6])",
+            name = "Quote",
+            dscr = "Add Quote",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep(">", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s(
+            {
+                trig = ";l",
+                name = "fast option",
+            },
+            -- = {
+            fmt([[ - [{}] ]], {
+                -- return option "plugin"
+                d(1, function()
+                    local options = { " ", "x", "-", "=", "_", "!", "+", "?" }
+                    for i = 1, #options do
+                        options[i] = t(options[i])
+                    end
+                    return sn(nil, {
+                        c(1, options),
+                    })
+                end),
+            })
+        ),
+        s({
+            trig = "-([2-6])",
+            name = "Unordered lists",
+            dscr = "Add Unordered lists",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("-", tonumber(snip.captures[1])) .. " ["
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+        s({
+            trig = "~([2-6])",
+            name = "Ordered lists",
+            dscr = "Add Ordered lists",
+            regTrig = true,
+            hidden = true,
+        }, {
+            f(function(_, snip)
+                return string.rep("~", tonumber(snip.captures[1])) .. " "
+            end, {}),
+        }, {
+            condition = conds.line_begin,
+        }),
+    },
     tex = {},
 }
 
@@ -693,6 +769,7 @@ end
 
 -- require("modules.completion.snippets.latex.tex_math")
 
+require("luasnip/loaders/from_vscode").load()
 require("luasnip/loaders/from_vscode").lazy_load({
     paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
 })

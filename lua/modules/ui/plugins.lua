@@ -22,7 +22,6 @@ ui["rebelot/heirline.nvim"] = {
 ui["akinsho/bufferline.nvim"] = {
     config = conf.nvim_bufferline,
     event = "UIEnter",
-    diagnostics_update_in_insert = false,
     -- after = {"aurora"}
     -- requires = {'kyazdani42/nvim-web-devicons'}
     opt = true,

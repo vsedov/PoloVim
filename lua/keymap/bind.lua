@@ -85,6 +85,7 @@ end
 pbind.all_keys = {}
 function pbind.nvim_load_mapping(mapping)
     for key, value in pairs(mapping) do
+        --  Regex is faster for some reason than {{..},.. } or {..,{..}}
         local mode, keymap = key:match("([^|]*)|?(.*)")
         -- print(mode)
         for i = 1, #mode do
@@ -101,6 +102,3 @@ function pbind.nvim_load_mapping(mapping)
     end
 end
 return pbind
-
--- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, rhs, options) 93
--- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, value, {}) 95

@@ -207,18 +207,18 @@ tools["liuchengxu/vim-clap"] = {
 }
 
 -- For this to record, cmd might not work
-tools["wakatime/vim-wakatime"] = {
-    event = "InsertEnter",
-    cmd = {
-        "WakaTimeApiKey",
-        "WakaTimeDebugEnable",
-        "WakaTimeDebugDisable",
-        "WakaTimeScreenRedrawEnable",
-        "WakaTimeScreenRedrawEnableAuto",
-        "WakaTimeScreenRedrawDisable",
-        "WakaTimeToday",
-    },
-}
+-- tools["wakatime/vim-wakatime"] = {
+--     event = "InsertEnter",
+--     cmd = {
+--         "WakaTimeApiKey",
+--         "WakaTimeDebugEnable",
+--         "WakaTimeDebugDisable",
+--         "WakaTimeScreenRedrawEnable",
+--         "WakaTimeScreenRedrawEnableAuto",
+--         "WakaTimeScreenRedrawDisable",
+--         "WakaTimeToday",
+--     },
+-- }
 
 tools["sindrets/diffview.nvim"] = {
     cmd = {

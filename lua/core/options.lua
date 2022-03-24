@@ -30,13 +30,13 @@ local function load_options()
         backup = false,
         writebackup = false,
         undofile = true,
-        swapfile = false,
+        swapfile = true,
         directory = global.cache_dir .. "swag/",
         undodir = global.cache_dir .. "undo/",
         backupdir = global.cache_dir .. "backup/",
         viewdir = global.cache_dir .. "view/",
         spellfile = global.cache_dir .. "spell/en.uft-8.add",
-        history = 4000,
+        history = 1000,
         shada = "!,'300,<50,@100,s10,h",
         backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
         smarttab = true,
@@ -85,7 +85,7 @@ local function load_options()
         cmdheight = 2,
         cmdwinheight = 5,
         equalalways = false,
-        laststatus = 2,
+        laststatus = 3,
         display = "lastline",
         showbreak = "﬌  ", --↳
         listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
@@ -115,6 +115,20 @@ local function load_options()
         concealcursor = "niv",
     }
 
+    local bw_global_local = {
+        fillchars = {
+            eob = " ",
+            vert = "║",
+            horiz = "═",
+            horizup = "╩",
+            horizdown = "╦",
+            vertleft = "╣",
+            vertright = "╠",
+            verthoriz = "╬",
+        },
+        spellfile = global.home .. ".config/nvim/spell/en.utf-8.add",
+    }
+
     if global.is_mac then
         vim.g.clipboard = {
             name = "macOS-clipboard",
@@ -142,9 +156,15 @@ local function load_options()
         end
     end
 
+    -- vim.o
     for name, value in pairs(global_local) do
         vim.o[name] = value
     end
+    -- the cooler vim.o
+    for name, value in pairs(bw_global_local) do
+        vim.opt[name] = value
+    end
+
     bind_option(bw_local)
 end
 

@@ -136,36 +136,25 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 
 vim.diagnostic.config({
-    severity_sort = true,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
     float = {
         focusable = false,
+        border = border,
         scope = "cursor",
         format = function(diagnostic)
-            local diag = vim.deepcopy(diagnostic)
-            print("diagnostic:")
-            dump(diagnostic)
-
-            if not util.isempty(diagnostic.user_data) then
-                local code = diagnostic.user_data.lsp.code
-
-                for _, table in pairs(codes) do
-                    if vim.tbl_contains(table, code) then
-                        return table.message
-                    end
+            if diagnostic.user_data == nil then
+                return diagnostic.message
+            elseif vim.tbl_isempty(diagnostic.user_data) then
+                return diagnostic.message
+            end
+            local code = diagnostic.user_data.lsp.code
+            for _, table in pairs(codes) do
+                if vim.tbl_contains(table, code) then
+                    return table.message
                 end
             end
-
-            if diagnostic.code then
-                diag.message = string.format("%s [%s]", diag.message, diag.code):gsub("1. ", "")
-            end
-
-            return diag.message
+            return diagnostic.message
         end,
-
-        header = " Diagnostic",
+        header = { "Cursor Diagnostics:", "DiagnosticHeader" },
         pos = 1,
         prefix = function(diagnostic, i, total)
             local icon, highlight
@@ -185,8 +174,12 @@ vim.diagnostic.config({
             return i .. "/" .. total .. " " .. icon .. "  ", highlight
         end,
     },
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    virtual_text = false,
+    severity_sort = true,
 })
-
 -- -- -- wrap open_float to inspect diagnostics and use the severity color for border
 -- -- -- https://neovim.discourse.group/t/lsp-diagnostics-how-and-where-to-retrieve-severity-level-to-customise-border-color/1679
 vim.diagnostic.open_float = (function(orig)
@@ -295,6 +288,7 @@ local function lsp_highlight_document(client, bufnr)
         })
     end
 end
+
 local tex_preview_settings = {}
 local forward_search_executable = "zathura"
 local sumatrapdf_args = {
@@ -353,20 +347,33 @@ lspconfig.tsserver.setup({
         enhance_attach(client)
     end,
 })
-require("clangd_extensions").setup({})
-local clangd_flags = {
-    "--background-index",
-    "--cross-file-rename",
-    "--offset-encoding=utf-16",
-    "--clang-tidy-checks=clang-diagnostic-*,clang-analyzer-*,-*,bugprone*,modernize*,performance*,-modernize-pass-by-value,-modernize-use-auto,-modernize-use-using,-modernize-use-trailing-return-type",
-}
--- Need to configer this for xmake soon
-lspconfig.clangd.setup({
-    cmd = { "clangd", unpack(clangd_flags) },
-    filetypes = { "c", "cpp", "objc", "objcpp" },
+
+local clangd_defaults = require("lspconfig.server_configurations.clangd")
+local clangd_configs = vim.tbl_deep_extend("force", clangd_defaults["default_config"], {
     on_attach = enhance_attach,
     capabilities = capabilities,
+    cmd = {
+        "clangd",
+        "-j=16",
+        "--background-index",
+        "--clang-tidy",
+        "--fallback-style=llvm",
+        "--all-scopes-completion",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu",
+        "--header-insertion-decorators",
+        "--pch-storage=memory",
+    },
 })
+require("clangd_extensions").setup({
+    server = clangd_configs,
+})
+-- lspconfig.clangd.setup({
+--     cmd = { "clangd", unpack(clangd_flags) },
+--     filetypes = { "c", "cpp", "objc", "objcpp" },
+--     on_attach = enhance_attach,
+--     capabilities = capabilities,
+-- })
 
 lspconfig.texlab.setup({
     cmd = { "texlab" },
@@ -513,14 +520,14 @@ local sumneko_lua_server = {
                 workspace = {
                     -- remove all of this, as it slows things down
                     library = {
-                        vim.api.nvim_get_runtime_file("", false),
-                        [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
-                        vim.api.nvim_get_runtime_file("", false),
-                        [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
-                        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = false,
-                        [vim.fn.expand("$VIMRUNTIME/lua")] = false,
+                        -- vim.api.nvim_get_runtime_file("", false),
+                        -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
+                        -- vim.api.nvim_get_runtime_file("", false),
+                        -- [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,
+                        -- [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+                        -- [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                     },
-                    maxPreload = 100000,
+                    maxPreload = 200000,
                     preloadFileSize = 10000,
                 },
             },
