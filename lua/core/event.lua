@@ -50,9 +50,10 @@ function autocmd.load_autocmds()
                 "BufWritePost",
                 { "*.py", "*.lua", "*.sh" },
                 function()
-                    if vim.fn.getline(1) == "^#!" then
-                        if vim.fn.getline(1) == "/bin/" then
-                            vim.cmd([[chmod a+x <afile>]])
+                    local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
+                    if line:find("#!") then
+                        if line:find("/bin/") then
+                            vim.cmd([[silent !chmod u+x %]])
                         end
                     end
                 end,
