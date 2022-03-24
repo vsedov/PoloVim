@@ -12,6 +12,7 @@ function autocmd.nvim_create_augroups(defs)
                 [type(def[3]) == "function" and "callback" or type(def[3]) == "string" and "command"] = def[3],
                 nested = def[4],
             }
+            -- print(vim.inspect(event), vim.inspect(arg))
             vim.api.nvim_create_autocmd(event, arg)
         end
     end
@@ -19,10 +20,10 @@ end
 
 function autocmd.load_autocmds()
     local definitions = {
-        packer = {
+        packer_call = {
             { "BufWritePost", "plugins.lua", "lua require('core.pack').auto_compile()" },
         },
-        bufs = {
+        buffer = {
             { { "BufRead", "BufNewFile" }, "*.norg", "setlocal filetype=norg" },
             { { "BufEnter", "BufWinEnter" }, "*.norg", [[set foldlevel=1000]] },
             { { "BufNewFile", "BufRead", "BufWinEnter" }, "*.tex", [[set filetype=tex]] },
@@ -46,19 +47,7 @@ function autocmd.load_autocmds()
             { "BufWritePre", "*.tmp", "setlocal noundofile" },
             { "BufWritePre", "*.bak", "setlocal noundofile" },
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
-            {
-                "BufWritePost",
-                { "*.py", "*.lua", "*.sh" },
-                function()
-                    local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
-                    if line:find("#!") then
-                        if line:find("/bin/") then
-                            vim.cmd([[silent !chmod u+x %]])
-                        end
-                    end
-                end,
-                false,
-            },
+
             {
                 "BufWritePre",
                 "*",
@@ -83,7 +72,21 @@ function autocmd.load_autocmds()
                         end
                         vim.fn.mkdir(dir, "p")
                     end
-                    auto_mkdir(vim.fn.expand("<afile>:p:h"), vim.v.cmdbang)
+                    auto_mkdir(vim.fn.expand("%:p:h"), vim.v.cmdbang)
+                end,
+                false,
+            },
+
+            {
+                "BufWritePost",
+                "*",
+                function()
+                    local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
+                    if line:find("#!") then
+                        if line:find("/bin/") then
+                            vim.cmd([[silent !chmod u+x %]])
+                        end
+                    end
                 end,
                 false,
             },
@@ -106,13 +109,6 @@ function autocmd.load_autocmds()
                 "*",
                 [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
             },
-            -- {
-            --     { "InsertLeave", "WinEnter", "CmdlineLeave" },
-            --     "*",
-            --     "set cursorline",
-            -- },
-
-            -- { { "InsertEnter", "WinLeave", "CmdlineEnter" }, "*", "set nocursorline" },
 
             { "BufEnter", "NvimTree", [[setlocal cursorline]] },
             { "CmdLineEnter", "*", [[set nosmartcase]] },
