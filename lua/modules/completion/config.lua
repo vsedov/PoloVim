@@ -2,6 +2,7 @@
 local config = {}
 
 function config.nvim_lsp()
+    -- require("modules.completion.lspp")
     require("modules.completion.lsp")
 end
 
