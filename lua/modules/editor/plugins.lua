@@ -1,5 +1,4 @@
 local editor = {}
-
 local conf = require("modules.editor.config")
 
 -- alternatives: steelsojka/pears.nvim
@@ -50,51 +49,12 @@ editor["andymass/vim-matchup"] = {
     end,
 }
 
-editor["gbprod/yanky.nvim"] = {
-    keys = {
-        "<C-v>",
-        "<Plug>(YankyPutAfter)",
-        "<Plug>(YankyPutBefore)",
-        "<Plug>(YankyPutAfter)",
-        "<Plug>(YankyPutBefore)",
-
-        "<Plug>(YankyGPutAfter)",
-        "<Plug>(YankyGPutBefore)",
-        "<Plug>(YankyGPutAfter)",
-        "<Plug>(YankyGPutBefore)",
-
-        "<Plug>(YankyCycleForward)",
-        "<Plug>(YankyCycleBackward)",
-    },
+editor["bfredl/nvim-miniyank"] = {
+    keys = { "p", "y", "<C-v>" },
+    opt = true,
     setup = function()
-        local default_keymaps = {
-            { "n", "p", "<Plug>(YankyPutAfter)" },
-            { "n", "P", "<Plug>(YankyPutBefore)" },
-
-            { "x", "p", "<Plug>(YankyPutAfter)" },
-            { "x", "P", "<Plug>(YankyPutBefore)" },
-
-            { "n", "<leader>p", "<Plug>(YankyGPutAfter)" },
-            { "n", "<leader>P", "<Plug>(YankyGPutBefore)" },
-
-            { "x", "<leader>p", "<Plug>(YankyGPutAfter)" },
-            { "x", "<leader>P", "<Plug>(YankyGPutBefore)" },
-
-            { "n", "<Leader>n", "<Plug>(YankyCycleForward)" },
-            { "n", "<Leader>N", "<Plug>(YankyCycleBackward)" },
-        }
-        for _, m in ipairs(default_keymaps) do
-            vim.keymap.set(m[1], m[2], m[3], {})
-        end
-    end,
-    config = function()
-        require("yanky").setup({
-            ring = {
-                -- i have a op pc
-                history_length = 10000000000000000000,
-                storage = "shada",
-            },
-        })
+        vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
+        vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
     end,
 }
 
@@ -164,6 +124,15 @@ editor["ggandor/lightspeed.nvim"] = {
     -- opt = true,
     config = conf.lightspeed,
 }
+--
+--
+
+-- editor["ggandor/leap.nvim"] = {
+--     -- opt = true,
+--     config = function()
+--         require("leap").set_default_keymaps()
+--     end,
+-- }
 
 editor["hrsh7th/vim-searchx"] = {
     event = { "CmdwinEnter", "CmdlineEnter" },
@@ -489,7 +458,6 @@ editor["monaqa/dial.nvim"] = {
                 augend.date.alias["%m/%d/%Y"], -- date (02/19/2022, etc.)
             },
         })
-        local augend = require("dial.augend")
         local map = vim.keymap.set
         map("n", "<C-a>", dial.inc_normal(), { remap = false })
         map("n", "<C-x>", dial.dec_normal(), { remap = false })

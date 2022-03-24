@@ -16,9 +16,6 @@ local keys = { --
     ["v|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
     ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
 
-
-
-
     ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
     ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
     ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
