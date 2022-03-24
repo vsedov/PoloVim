@@ -207,18 +207,18 @@ tools["liuchengxu/vim-clap"] = {
 }
 
 -- For this to record, cmd might not work
--- tools["wakatime/vim-wakatime"] = {
---     event = "InsertEnter",
---     cmd = {
---         "WakaTimeApiKey",
---         "WakaTimeDebugEnable",
---         "WakaTimeDebugDisable",
---         "WakaTimeScreenRedrawEnable",
---         "WakaTimeScreenRedrawEnableAuto",
---         "WakaTimeScreenRedrawDisable",
---         "WakaTimeToday",
---     },
--- }
+tools["wakatime/vim-wakatime"] = {
+    event = "InsertEnter",
+    cmd = {
+        "WakaTimeApiKey",
+        "WakaTimeDebugEnable",
+        "WakaTimeDebugDisable",
+        "WakaTimeScreenRedrawEnable",
+        "WakaTimeScreenRedrawEnableAuto",
+        "WakaTimeScreenRedrawDisable",
+        "WakaTimeToday",
+    },
+}
 
 tools["sindrets/diffview.nvim"] = {
     cmd = {
@@ -365,7 +365,7 @@ tools["chentau/marks.nvim"] = {
             default_mappings = true,
             builtin_marks = { ".", "<", ">", "^" },
             cyclic = true,
-            force_write_shada = false,
+            force_write_shada = true,
             refresh_interval = 250,
             sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
             excluded_filetypes = {},
