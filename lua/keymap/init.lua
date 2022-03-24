@@ -95,20 +95,18 @@ local plug_map = {
     ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
 
     ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
-    ["n|<localleader>D"] = map_cmd(
-        '<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'
-    )
+    ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.completion.lsp.peek".toggle_diagnostics_visibility()<CR>')
         :with_noremap()
         :with_silent(),
-    ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekDefinition()<CR>')
-        :with_noremap()
-        :with_silent(),
-
-    ["n|<localleader>dpt"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekTypeDefinition()<CR>')
+    ["n|<localleader>dp"] = map_cmd([[<cmd>lua require"modules.completion.lsp.utils.peek".Peek('definition')<CR>]])
         :with_noremap()
         :with_silent(),
 
-    ["n|<localleader>dpi"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekImplementation()<CR>')
+    ["n|<localleader>dpt"] = map_cmd('<cmd>lua require"modules.completion.lsp.utils.peek".PeekTypeDefinition()<CR>')
+        :with_noremap()
+        :with_silent(),
+
+    ["n|<localleader>dpi"] = map_cmd('<cmd>lua require"modules.completion.lsp.utils.peek".PeekImplementation()<CR>')
         :with_noremap()
         :with_silent(),
 

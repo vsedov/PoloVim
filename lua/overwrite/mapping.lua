@@ -228,7 +228,6 @@ vim.api.nvim_add_user_command("Hashbang", function()
     if shells[extension] then
         local hb = shells[extension]
         hb[#hb + 1] = ""
-
         vim.api.nvim_buf_set_lines(0, 0, 0, false, hb)
         vim.api.nvim_create_autocmd("BufWritePost", {
             buffer = 0,
