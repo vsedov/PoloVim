@@ -195,7 +195,6 @@ M.preview_location = function(location, context, before_context)
     return vim.lsp.util.open_floating_preview(contents, filetype, { border = "single" })
 end
 
-
 M.preview_location_callback = function(_, result)
     local context = 15
     if result == nil or vim.tbl_isempty(result) then

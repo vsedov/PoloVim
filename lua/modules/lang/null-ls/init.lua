@@ -36,7 +36,7 @@ return {
         end
 
         if use_gitsigns() then
-          table.insert(sources, null_ls.builtins.code_actions.gitsigns)
+            table.insert(sources, null_ls.builtins.code_actions.gitsigns)
         end
         -- latex script
         if exist("latexindent") then

@@ -83,7 +83,7 @@ function autocmd.load_autocmds()
                 function()
                     local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
                     if line:find("#!") and line:find("/bin/") then
-                            vim.cmd([[silent !chmod u+x %]])
+                        vim.cmd([[silent !chmod u+x %]])
                     end
                 end,
                 false,

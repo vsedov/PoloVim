@@ -459,7 +459,6 @@ function config.gitsigns()
     })
 end
 
-
 function config.bqf()
     require("bqf").setup({
         auto_enable = true,
