@@ -1,6 +1,5 @@
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
-
 local winwidth = function()
     -- body
     return vim.api.nvim_call_function("winwidth", { 0 })
