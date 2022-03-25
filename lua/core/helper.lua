@@ -64,6 +64,10 @@ return {
             return true
         end
 
+        _G.use_gitsigns = function()
+            return true
+        end
+
         _G.preserve = function(cmd)
             cmd = string.format("keepjumps keeppatterns execute %q", cmd)
             local original_cursor = vim.fn.winsaveview()
