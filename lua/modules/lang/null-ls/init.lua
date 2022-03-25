@@ -106,9 +106,9 @@ return {
                 })
             )
         end
-        
-        if exist("vulture") then 
-          table.insert(sources, null_ls.builtins.diagnostics.vulture)
+
+        if exist("vulture") then
+            table.insert(sources, null_ls.builtins.diagnostics.vulture)
         end
 
         if exist("clang-format") then

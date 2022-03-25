@@ -159,7 +159,7 @@ if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end
 if vim.o.ft == "python" then
-    table.insert(sources, { name = "cmp_tabnine", priority = 8})
+    table.insert(sources, { name = "cmp_tabnine", priority = 8 })
 end
 if vim.o.ft == "norg" then
     table.insert(sources, { name = "latex_symbols" })
@@ -171,7 +171,7 @@ if vim.o.ft == "markdown" then
 end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
-    table.insert(sources, { name = "cmp_tabnine",priority = 7 })
+    table.insert(sources, { name = "cmp_tabnine", priority = 7 })
 end
 if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "proto" then
     table.insert(sources, { name = "path" })
@@ -179,8 +179,8 @@ if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "p
     table.insert(sources, { name = "calc" })
 end
 
-if vim.o.ft == "cpp" or vim.o.ft == "c" then 
-        table.insert(sources, { name = "cmp_tabnine", priority = 8 })
+if vim.o.ft == "cpp" or vim.o.ft == "c" then
+    table.insert(sources, { name = "cmp_tabnine", priority = 8 })
 end
 
 cmp.setup({
@@ -413,7 +413,6 @@ cmp.setup({
             cmp.config.compare.sort_text,
             cmp.config.compare.length,
             cmp.config.compare.order,
-
         },
     },
 

@@ -81,7 +81,7 @@ require("clangd_extensions").setup({
             -- The color of the hints
             highlight = "Comment",
         },
-      },
+    },
 })
 
 lspconfig.texlab.setup(enhance_attach({ require("modules.completion.lsp.providers.latex") }))

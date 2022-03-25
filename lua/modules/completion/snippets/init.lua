@@ -332,7 +332,6 @@ ls.snippets = {
             t("))"),
         }),
 
-
         s("ld", {
             t("log:debug("),
             i(0),
@@ -365,7 +364,6 @@ ls.snippets = {
             i(0),
             t("))"),
         }),
-
 
         s("inc", {
             i(1, "thing"),
