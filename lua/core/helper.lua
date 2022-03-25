@@ -13,7 +13,6 @@ return {
             end
             return Plugin_folder
         end
-
         -- https://www.reddit.com/r/neovim/comments/sg919r/diff_with_clipboard/
         _G.compare_to_clipboard = function()
             local ftype = vim.api.nvim_eval("&filetype")

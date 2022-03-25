@@ -113,6 +113,7 @@ end
 
 ls.snippets = {
     all = {
+
         s(
             -- TODO: can probably make this one much smarter; right now it's basically just syntax reminder
             { trig = "table", dscr = "Table template" },
@@ -321,13 +322,25 @@ ls.snippets = {
         }),
 
         s("ld", {
-            t("log.debug("),
+            t("log:debug("),
             i(0),
             t(")"),
         }),
 
+        s("lw", {
+            t("log:warn("),
+            i(0),
+            t(")"),
+        }),
+
+        s("lwi", {
+            t("log:debug(vim.inspect("),
+            i(0),
+            t("))"),
+        }),
+
         s("ldi", {
-            t("log.debug(inspect("),
+            t("log:debug(vim.inspect("),
             i(0),
             t("))"),
         }),
