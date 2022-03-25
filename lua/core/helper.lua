@@ -65,7 +65,10 @@ return {
         end
 
         _G.use_gitsigns = function()
-            return true
+            if use_nulls() then
+                return true
+            end
+            return false
         end
 
         _G.preserve = function(cmd)
@@ -74,7 +77,6 @@ return {
             vim.api.nvim_command(cmd)
             vim.fn.winrestview(original_cursor)
         end
-
         -- convert word to Snake case
         _G.Snake = function(s)
             if s == nil then

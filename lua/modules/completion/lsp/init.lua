@@ -111,7 +111,6 @@ lspconfig.vimls.setup(enhance_attach({
 local runtime_path = {}
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-
 local sumneko_lua_server = enhance_attach({
     -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     cmd = { "lua-language-server" },
