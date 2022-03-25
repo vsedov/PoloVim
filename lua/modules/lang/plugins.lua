@@ -198,10 +198,15 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
 }
 
 lang["m-demare/hlargs.nvim"] = {
-    ft = { "python", "c", "java", "lua" },
+    ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-        require("hlargs").setup()
+        require("hlargs").setup({
+            performance = {
+                max_iterations = 500,
+                max_concurrent_partial_parses = 50,
+            },
+        })
     end,
 }
 

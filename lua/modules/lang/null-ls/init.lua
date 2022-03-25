@@ -7,7 +7,6 @@ return {
         local hover = null_ls.builtins.hover
         local actions = null_ls.builtins.code_actions
         local sources = {
-            null_ls.builtins.formatting.rustfmt,
             null_ls.builtins.diagnostics.yamllint,
             null_ls.builtins.code_actions.proselint,
             null_ls.builtins.code_actions.refactoring,
@@ -38,6 +37,11 @@ return {
         if use_gitsigns() then
             table.insert(sources, null_ls.builtins.code_actions.gitsigns)
         end
+
+        if exist("rustfmt") then
+            table.insert(sources, null_ls.builtins.formatting.rustfmt)
+        end
+
         -- latex script
         if exist("latexindent") then
             table.insert(sources, null_ls.builtins.formatting.latexindent)
