@@ -320,6 +320,18 @@ ls.snippets = {
             i(2),
             i(0),
         }),
+        s("lt", {
+            t("log:trace("),
+            i(0),
+            t(")"),
+        }),
+
+        s("lti", {
+            t("log:trace(vim.inspect("),
+            i(0),
+            t("))"),
+        }),
+
 
         s("ld", {
             t("log:debug("),
@@ -327,23 +339,33 @@ ls.snippets = {
             t(")"),
         }),
 
-        s("lw", {
-            t("log:warn("),
-            i(0),
-            t(")"),
-        }),
-
-        s("lwi", {
-            t("log:debug(vim.inspect("),
-            i(0),
-            t("))"),
-        }),
-
         s("ldi", {
             t("log:debug(vim.inspect("),
             i(0),
             t("))"),
         }),
+        s("li", {
+            t("log:info("),
+            i(0),
+            t(")"),
+        }),
+
+        s("lii", {
+            t("log:info(vim.inspect("),
+            i(0),
+            t("))"),
+        }),
+        s("lw", {
+            t("log:warn("),
+            i(0),
+            t(")"),
+        }),
+        s("lwi", {
+            t("log:warn(vim.inspect("),
+            i(0),
+            t("))"),
+        }),
+
 
         s("inc", {
             i(1, "thing"),

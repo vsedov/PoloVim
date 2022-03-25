@@ -144,16 +144,7 @@ local check_backspace = function()
     local col = vim.fn.col(".") - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
 end
--- local sources = {
---     { name = "nvim_lsp" },
---     { name = "luasnip" },
---     { name = "treesitter", keyword_length = 2 },
---     { name = "look", keyword_length = 4 },
---     { name = "neorg", priority = 6 },
---     -- { name = "nvim_lsp_signature_help", priority = 10 },
---     -- {name = 'buffer', keyword_length = 4} {name = 'path'}, {name = 'look'},
---     -- {name = 'calc'}, {name = 'ultisnips'} { name = 'snippy' }
--- }
+
 local sources = {
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
@@ -168,7 +159,7 @@ if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end
 if vim.o.ft == "python" then
-    table.insert(sources, { name = "cmp_tabnine" })
+    table.insert(sources, { name = "cmp_tabnine", priority = 8})
 end
 if vim.o.ft == "norg" then
     table.insert(sources, { name = "latex_symbols" })
@@ -180,13 +171,18 @@ if vim.o.ft == "markdown" then
 end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
-    table.insert(sources, { name = "cmp_tabnine" })
+    table.insert(sources, { name = "cmp_tabnine",priority = 7 })
 end
 if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "proto" then
     table.insert(sources, { name = "path" })
     table.insert(sources, { name = "buffer", keyword_length = 3 })
     table.insert(sources, { name = "calc" })
 end
+
+if vim.o.ft == "cpp" or vim.o.ft == "c" then 
+        table.insert(sources, { name = "cmp_tabnine", priority = 8 })
+end
+
 cmp.setup({
 
     window = {
@@ -396,14 +392,12 @@ cmp.setup({
     -- You should specify your *installed* sources.
     sources = sources,
     sorting = {
-        -- TODO: Would be cool to add stuff like "See variable names before method names" in rust, or something like that.
         comparators = {
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
+            require("clangd_extensions.cmp_scores"),
 
-            -- copied from cmp-under, but I don't think I need the plugin for this.
-            -- I might add some more of my own.
             function(entry1, entry2)
                 local _, entry1_under = entry1.completion_item.label:find("^_+")
                 local _, entry2_under = entry2.completion_item.label:find("^_+")
@@ -415,13 +409,14 @@ cmp.setup({
                     return true
                 end
             end,
-
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
             cmp.config.compare.length,
             cmp.config.compare.order,
+
         },
     },
+
     enabled = function()
         -- if require"cmp.config.context".in_treesitter_capture("comment")==true or require"cmp.config.context".in_syntax_group("Comment") then
         --   return false
@@ -457,7 +452,7 @@ cmp.setup({
     experimental = { ghost_text = true, native_menu = false },
 })
 
--- require("packer").loader("nvim-autopairs")
+require("packer").loader("nvim-autopairs")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 local cmp = require("cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))

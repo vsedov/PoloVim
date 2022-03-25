@@ -19,15 +19,10 @@ function config.autopairs()
 
     npairs.setup({
         enable_moveright = true,
-        ---@usage disable when recording or executing a macro
         disable_in_macro = false,
-        ---@usage add bracket pairs after quote
         enable_afterquote = true,
-        ---@usage map the <BS> key
         map_bs = true,
-        ---@usage map <c-w> to delete a pair if possible
         map_c_w = true,
-        ---@usage disable when insert after visual block mode
         disable_in_visualblock = false,
 
         disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },

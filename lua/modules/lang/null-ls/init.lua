@@ -87,15 +87,15 @@ return {
                 })
             )
         end
-        -- Maybe i dont need luacheck for this, im not sure though
-        if exist("luacheck") then
-            table.insert(
-                sources,
-                null_ls.builtins.diagnostics.luacheck.with({
-                    extra_args = { "--append-config", vim.fn.expand("~/.config/.luacheckrc") },
-                })
-            )
-        end
+        -- -- Maybe i dont need luacheck for this, im not sure though
+        -- if exist("luacheck") then
+        --     table.insert(
+        --         sources,
+        --         null_ls.builtins.diagnostics.luacheck.with({
+        --             extra_args = { "--append-config", vim.fn.expand("~/.config/.luacheckrc") },
+        --         })
+        --     )
+        -- end
 
         -- python
         if exist("flake8") then
@@ -105,6 +105,10 @@ return {
                     extra_args = { "--config", vim.fn.expand("~/.config/flake8") },
                 })
             )
+        end
+        
+        if exist("vulture") then 
+          table.insert(sources, null_ls.builtins.diagnostics.vulture)
         end
 
         if exist("clang-format") then
