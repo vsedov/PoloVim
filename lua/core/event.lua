@@ -79,7 +79,7 @@ function autocmd.load_autocmds()
 
             {
                 "BufWritePost",
-                "*",
+                { "*.py", "*.lua", "*sh", "*.scala", "*.tcl" },
                 function()
                     local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
                     if line:find("#!") and line:find("/bin/") then
