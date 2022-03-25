@@ -22,7 +22,6 @@ local keys = { --
     ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
     ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
     ["n|<Leader>fq"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
-    ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
     ["n|<Leader>gd"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
     ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
 
@@ -199,10 +198,6 @@ end, { force = true })
 
 vim.api.nvim_add_user_command("DebugOpen", function()
     require("modules.lang.dap").prepare()
-end, { force = true })
-
-vim.api.nvim_add_user_command("HpoonClear", function()
-    require("harpoon.mark").clear_all()
 end, { force = true })
 
 vim.api.nvim_add_user_command("HpoonClear", function()

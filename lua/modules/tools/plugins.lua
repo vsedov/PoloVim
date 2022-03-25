@@ -279,7 +279,6 @@ tools["ray-x/viewdoc.nvim"] = {
     end,
 }
 
--- early stage...
 tools["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
     setup = function()
         vim.o.updatetime = 2000

@@ -40,6 +40,7 @@ ui["kyazdani42/nvim-tree.lua"] = {
     setup = conf.nvim_tree_setup,
     config = conf.nvim_tree,
 }
+
 -- Use this with nvimtree .
 ui["elihunter173/dirbuf.nvim"] = {
     cmd = { "Dirbuf" },
