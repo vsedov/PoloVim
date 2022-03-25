@@ -195,33 +195,50 @@ M.preview_location = function(location, context, before_context)
     return vim.lsp.util.open_floating_preview(contents, filetype, { border = "single" })
 end
 
+
 M.preview_location_callback = function(_, result)
     local context = 15
     if result == nil or vim.tbl_isempty(result) then
         return nil
     end
     if vim.tbl_islist(result) then
-        lsp_conf.floating_buf, lsp_conf.floating_win = lsp_conf.preview_location(result[1], context)
+        require("modules.completion.lsp.peek").floating_buf, require("modules.completion.lsp.peek").floating_win =
+            require(
+                "modules.completion.lsp.peek"
+            ).preview_location(result[1], context)
     else
-        lsp_conf.floating_buf, lsp_conf.floating_win = lsp_conf.preview_location(result, context)
+        require("modules.completion.lsp.peek").floating_buf, require("modules.completion.lsp.peek").floating_win =
+            require(
+                "modules.completion.lsp.peek"
+            ).preview_location(result, context)
     end
 end
 
 M.PeekTypeDefinition = function()
-    if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_conf.floating_win) then
-        vim.api.nvim_set_current_win(lsp_conf.floating_win)
+    if vim.tbl_contains(vim.api.nvim_list_wins(), require("modules.completion.lsp.peek").floating_win) then
+        vim.api.nvim_set_current_win(require("modules.completion.lsp.peek").floating_win)
     else
         local params = vim.lsp.util.make_position_params()
-        return vim.lsp.buf_request(0, "textDocument/typeDefinition", params, lsp_conf.preview_location_callback)
+        return vim.lsp.buf_request(
+            0,
+            "textDocument/typeDefinition",
+            params,
+            require("modules.completion.lsp.peek").preview_location_callback
+        )
     end
 end
 
 M.PeekImplementation = function()
-    if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_conf.floating_win) then
-        vim.api.nvim_set_current_win(lsp_conf.floating_win)
+    if vim.tbl_contains(vim.api.nvim_list_wins(), require("modules.completion.lsp.peek").floating_win) then
+        vim.api.nvim_set_current_win(require("modules.completion.lsp.peek").floating_win)
     else
         local params = vim.lsp.util.make_position_params()
-        return vim.lsp.buf_request(0, "textDocument/implementation", params, lsp_conf.preview_location_callback)
+        return vim.lsp.buf_request(
+            0,
+            "textDocument/implementation",
+            params,
+            require("modules.completion.lsp.peek").preview_location_callback
+        )
     end
 end
 
