@@ -85,7 +85,7 @@ function Log:init()
                         { level = structlog.formatters.FormatColorizer.color_level() }
                     ),
                 }),
-                structlog.sinks.Console(self.levels.ERROR, {
+                structlog.sinks.Console(self.levels.ERROR, logfile, {
                     async = false,
                     processors = {
                         structlog.processors.Namer(),
