@@ -511,6 +511,7 @@ cmp.setup.cmdline("/", {
         },
     },
 })
+
 local neorg = require("neorg")
 
 local function load_completion()

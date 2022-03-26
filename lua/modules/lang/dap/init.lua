@@ -10,7 +10,7 @@ local HOME = os.getenv("HOME")
 local api = vim.api
 
 -- TODO
--- need to fix debug files and binds, such that when i stop i get my olds binds back ,
+-- need to fix debug files and binds, such that when i stop  i get my olds binds back ,
 local function keybind()
     local keys = {
         -- DAP --

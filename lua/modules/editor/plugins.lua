@@ -347,7 +347,6 @@ editor["numToStr/Comment.nvim"] = {
     config = conf.comment,
 }
 
--- TODO do shit to this
 editor["LudoPinelli/comment-box.nvim"] = {
     keys = { "<Leader>cb", "<Leader>cc", "<Leader>cl", "<M-p>" },
     cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },

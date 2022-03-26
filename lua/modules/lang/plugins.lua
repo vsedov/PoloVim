@@ -13,7 +13,20 @@ lang["nathom/filetype.nvim"] = {
                 literal = {
                     ["kitty.conf"] = "kitty",
                     [".gitignore"] = "conf",
-                    [".env"] = "sh",
+                },
+                complex = {
+                    [".clang*"] = "yaml",
+                    [".*%.env.*"] = "sh",
+                    [".*ignore"] = "conf",
+                },
+                extensions = {
+                    tf = "terraform",
+                    tfvars = "terraform",
+                    hcl = "hcl",
+                    tfstate = "json",
+                    eslintrc = "json",
+                    prettierrc = "json",
+                    mdx = "markdown",
                 },
             },
         })
