@@ -42,6 +42,19 @@ local function lsp_code_lens_refresh(client, bufnr)
     end
 end
 
+local function select_default_formater(client)
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+end
+
+function M.common_on_init(client, bufnr)
+    if config.on_init_callback then
+        config.on_init_callback(client, bufnr)
+        return
+    end
+    select_default_formater(client)
+end
+
 function M.common_capabilities()
     local capabilities = require("modules.completion.lsp.utils.capabilities")
     local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -64,6 +77,7 @@ end
 
 function M.get_common_opts()
     return {
+        on_init = M.common_on_init,
         on_attach = M.common_on_attach,
         capabilities = M.common_capabilities(),
     }

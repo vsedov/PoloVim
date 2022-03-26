@@ -15,8 +15,7 @@ function M.setup()
 end
 
 function M.show_line_diagnostics()
-    local config = config.diagnostics.float
-    return vim.diagnostic.open_float(0, config)
+    return vim.diagnostic.open_float(config.diagnostics.float)
 end
 
 return M
