@@ -10,6 +10,8 @@ return {
             null_ls.builtins.diagnostics.yamllint,
             null_ls.builtins.code_actions.proselint,
             null_ls.builtins.code_actions.refactoring,
+            null_ls.builtins.formatting.isort,
+            null_ls.builtins.formatting.yapf,
             -- hover.dictionary,
             diagnostics.misspell.with({
                 filetypes = { "markdown", "text", "txt" },
@@ -29,7 +31,6 @@ return {
             }),
             actions.proselint.with({ filetypes = { "markdown", "tex" }, command = "proselint", args = { "--json" } }),
         }
-
         local function exist(bin)
             return vim.fn.exepath(bin) ~= ""
         end
@@ -181,7 +182,7 @@ return {
                     vim.diagnostic.config({
                         virtual_text = false,
                     })
-                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
                     -- Convert this using vim.api.nvim_create_autocmd()
                     -- vim.api.nvim_create_autocmd("BufWritePre", {
                     --     pattern = "*",
