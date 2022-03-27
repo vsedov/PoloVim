@@ -674,135 +674,134 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
     snip.wordTrig = false
     table.insert(ls.snippets.tex, snip)
 end
-ls.autosnippets = {
-    norg = {
-        s({
-            trig = "*([2-6])",
-            name = "Heading",
-            dscr = "Add Heading",
-            regTrig = true,
-            hidden = true,
-        }, {
-            f(function(_, snip)
-                return string.rep("*", tonumber(snip.captures[1])) .. " "
-            end, {}),
-        }, {
-            condition = conds.line_begin,
-        }),
-        s({
-            trig = "q([2-6])",
-            name = "Quote",
-            dscr = "Add Quote",
-            regTrig = true,
-            hidden = true,
-        }, {
-            f(function(_, snip)
-                return string.rep(">", tonumber(snip.captures[1])) .. " "
-            end, {}),
-        }, {
-            condition = conds.line_begin,
-        }),
-        s(
-            {
-                trig = ";l",
-                name = "fast option",
-            },
-            -- = {
-            fmt([[ - [{}] ]], {
-                -- return option "plugin"
-                d(1, function()
-                    local options = { " ", "x", "-", "=", "_", "!", "+", "?" }
-                    for i = 1, #options do
-                        options[i] = t(options[i])
-                    end
-                    return sn(nil, {
-                        c(1, options),
-                    })
-                end),
-            })
-        ),
-        s({
-            trig = "-([2-6])",
-            name = "Unordered lists",
-            dscr = "Add Unordered lists",
-            regTrig = true,
-            hidden = true,
-        }, {
-            f(function(_, snip)
-                return string.rep("-", tonumber(snip.captures[1])) .. " ["
-            end, {}),
-        }, {
-            condition = conds.line_begin,
-        }),
-        s({
-            trig = "~([2-6])",
-            name = "Ordered lists",
-            dscr = "Add Ordered lists",
-            regTrig = true,
-            hidden = true,
-        }, {
-            f(function(_, snip)
-                return string.rep("~", tonumber(snip.captures[1])) .. " "
-            end, {}),
-        }, {
-            condition = conds.line_begin,
-        }),
-    },
-    tex = {},
+autosnippets = {
+    s({
+        trig = "*([2-6])",
+        name = "Heading",
+        dscr = "Add Heading",
+        regTrig = true,
+        hidden = true,
+    }, {
+        f(function(_, snip)
+            return string.rep("*", tonumber(snip.captures[1])) .. " "
+        end, {}),
+    }, {
+        condition = conds.line_begin,
+    }),
+    s({
+        trig = "q([2-6])",
+        name = "Quote",
+        dscr = "Add Quote",
+        regTrig = true,
+        hidden = true,
+    }, {
+        f(function(_, snip)
+            return string.rep(">", tonumber(snip.captures[1])) .. " "
+        end, {}),
+    }, {
+        condition = conds.line_begin,
+    }),
+    s(
+        {
+            trig = ";l",
+            name = "fast option",
+        },
+        -- = {
+        fmt([[ - [{}] ]], {
+            -- return option "plugin"
+            d(1, function()
+                local options = { " ", "x", "-", "=", "_", "!", "+", "?" }
+                for i = 1, #options do
+                    options[i] = t(options[i])
+                end
+                return sn(nil, {
+                    c(1, options),
+                })
+            end),
+        })
+    ),
+    s({
+        trig = "-([2-6])",
+        name = "Unordered lists",
+        dscr = "Add Unordered lists",
+        regTrig = true,
+        hidden = true,
+    }, {
+        f(function(_, snip)
+            return string.rep("-", tonumber(snip.captures[1])) .. " ["
+        end, {}),
+    }, {
+        condition = conds.line_begin,
+    }),
+    s({
+        trig = "~([2-6])",
+        name = "Ordered lists",
+        dscr = "Add Ordered lists",
+        regTrig = true,
+        hidden = true,
+    }, {
+        f(function(_, snip)
+            return string.rep("~", tonumber(snip.captures[1])) .. " "
+        end, {}),
+    }, {
+        condition = conds.line_begin,
+    }),
 }
-
+l_autosnippets = {}
 for _, snip in ipairs(require("modules.completion.snippets.latex.tex_math")) do
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
 
 for _, snip in ipairs(require("modules.completion.snippets.latex.math_wRA_no_backslash")) do
     snip.regTrig = true
     snip.condition = pipe({ is_math, no_backslash })
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
 
 for _, snip in ipairs(require("modules.completion.snippets.latex.math_rA_no_backslash")) do
     snip.wordTrig = false
     snip.regTrig = true
     snip.condition = pipe({ is_math, no_backslash })
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
 
 for _, snip in ipairs(require("modules.completion.snippets.latex.normal_wA")) do
     snip.condition = pipe({ not_math })
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
 
 for _, snip in ipairs(require("modules.completion.snippets.latex.math_wrA")) do
     snip.regTrig = true
     snip.condition = pipe({ is_math })
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
 
 for _, snip in ipairs(require("modules.completion.snippets.latex.math_wA_no_backslash")) do
     snip.condition = pipe({ is_math, no_backslash })
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
 
 for _, snip in ipairs(require("modules.completion.snippets.latex.math_iA")) do
     snip.wordTrig = false
     snip.condition = pipe({ is_math, no_backslash })
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
 
 for _, snip in ipairs(require("modules.completion.snippets.latex./math_bwA")) do
     snip.condition = pipe({ conds.line_begin, is_math })
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
 
 for _, snip in ipairs(require("modules.completion.snippets.latex.bwA")) do
     snip.condition = pipe({ conds.line_begin, not_math })
-    table.insert(ls.autosnippets.tex, snip)
+    table.insert(l_autosnippets, snip)
 end
+ls.add_snippets("tex", l_autosnippets, { type = "autosnippets" })
+ls.add_snippets("norg", autosnippets, { type = "autosnippets" })
 
 -- require("modules.completion.snippets.latex.tex_math")
 
 require("luasnip/loaders/from_vscode").load()
-require("luasnip/loaders/from_vscode").lazy_load({
+require("luasnip/loaders/from_vscode").load({
     paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
 })

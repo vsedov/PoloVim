@@ -73,7 +73,7 @@ local math_iA = {
     ls.parser.parse_snippet({ trig = "lll", name = "l" }, "\\ell"),
     ls.parser.parse_snippet(
         { trig = "dint", name = "integral" },
-        "\\int_{${1:-\\infty}}^{${2:\\infty}} ${3:${VISUAL}} $0"
+        "\\int_{${1:-\\infty}}^{${2:\\infty}} ${3:${TM_SELECTED_TEXT}} $0"
     ),
     ls.parser.parse_snippet({ trig = "==", name = "equals" }, "&= $1 \\\\"),
     ls.parser.parse_snippet({ trig = "!=", name = "equals" }, "\\neq "),
