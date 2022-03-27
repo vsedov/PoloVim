@@ -34,7 +34,7 @@ editor["andymass/vim-matchup"] = {
     config = function()
         vim.g.matchup_enabled = 1
         vim.g.matchup_surround_enabled = 1
-        -- vim.g.matchup_transmute_enabled = 1
+        vim.g.matchup_transmute_enabled = 1
         vim.g.matchup_matchparen_deferred = 1
         vim.g.matchup_matchparen_offscreen = { method = "popup" }
         vim.keymap.set("n", "<c-s>k", "<cmd><c-u>MatchupWhereAmI?<CR>")
@@ -42,7 +42,7 @@ editor["andymass/vim-matchup"] = {
         require("nvim-treesitter.configs").setup({
             matchup = {
                 enable = true, -- mandatory, false will disable the whole extension
-                disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+                disable = { "ruby" }, -- optional, list of language that will be disabled
                 -- [options]
             },
         })

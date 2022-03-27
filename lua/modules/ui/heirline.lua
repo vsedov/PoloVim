@@ -354,14 +354,6 @@ function M.setup()
 
     local Diagnostics = {
         condition = conditions.has_diagnostics,
-
-        static = {
-            error_icon = vim.fn.sign_getdefined("DiagnosticSignError")[1].text,
-            warn_icon = vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text,
-            info_icon = vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text,
-            hint_icon = vim.fn.sign_getdefined("DiagnosticSignHint")[1].text,
-        },
-
         init = function(self)
             self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
             self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
@@ -375,25 +367,26 @@ function M.setup()
         },
         {
             provider = function(self)
-                return self.errors > 0 and (self.error_icon .. self.errors .. " ")
+                return self.errors > 0 and (vim.fn.sign_getdefined("DiagnosticSignError")[1].text .. self.errors .. " ")
             end,
             hl = { fg = colors.diag.error },
         },
         {
             provider = function(self)
-                return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
+                return self.warnings > 0
+                    and (vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text .. self.warnings .. " ")
             end,
             hl = { fg = colors.diag.warn },
         },
         {
             provider = function(self)
-                return self.info > 0 and (self.info_icon .. self.info .. " ")
+                return self.info > 0 and (vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text .. self.info .. " ")
             end,
             hl = { fg = colors.diag.info },
         },
         {
             provider = function(self)
-                return self.hints > 0 and (self.hint_icon .. self.hints)
+                return self.hints > 0 and (vim.fn.sign_getdefined("DiagnosticSignHint")[1].text .. self.hints)
             end,
             hl = { fg = colors.diag.hint },
         },
@@ -512,10 +505,10 @@ function M.setup()
         init = function(self)
             self.status = vim.api.nvim_call_function("ultest#status", {})
 
-            passed_icon = vim.fn.sign_getdefined("test_pass")[1].text
-            failed_icon = vim.fn.sign_getdefined("test_fail")[1].text
-            passed_hl = { fg = utils.get_highlight("UltestPass").fg }
-            failed_hl = { fg = utils.get_highlight("UltestFail").fg }
+            self.passed_icon = vim.fn.sign_getdefined("test_pass")[1].text
+            self.failed_icon = vim.fn.sign_getdefined("test_fail")[1].text
+            self.passed_hl = { fg = utils.get_highlight("UltestPass").fg }
+            self.failed_hl = { fg = utils.get_highlight("UltestFail").fg }
         end,
         {
             provider = function(self)
