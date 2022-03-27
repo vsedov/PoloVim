@@ -46,6 +46,7 @@ end
 
 function fs:register_root_pattern()
     self.root_pattern = {
+        python = { "pyproject.toml" },
         go = { "go.mod", ".git" },
         typescript = { "package.json", "tsconfig.json", "node_modules" },
         javascript = { "package.json", "jsconfig.json", "node_modules" },
@@ -56,12 +57,12 @@ function fs:register_root_pattern()
     }
 end
 
-function fs.get_root_dir()
-    local rp = register_root_pattern()
+function fs:get_root_dir()
+    self:register_root_pattern()
     local bufnr = api.nvim_get_current_buf()
     local filetype = vim.bo.filetype
     local root_dir = buffer_find_root_dir(bufnr, function(dir)
-        for _, pattern in pairs(rp[filetype]) do
+        for _, pattern in pairs(self.root_pattern[filetype]) do
             if is_dir(path_join(dir, pattern)) then
                 return true
             elseif vim.fn.filereadable(path_join(dir, pattern)) == 1 then
@@ -80,11 +81,12 @@ function fs.get_root_dir()
     return root_dir
 end
 
-function fs.project_files_list()
-    local file_list = {}
-
-    local p = io.popen("rg --files " .. root_dir)
+function fs:project_files_list()
+    self.file_list = {}
+    local p = io.popen("rg --files " .. self.root_dir)
     for file in p:lines() do
-        table.insert(self.file_list, file:sub(fs.get_root_dir():len() + 2))
+        table.insert(self.file_list, file:sub(self.root_dir:len() + 2))
     end
 end
+
+return fs
