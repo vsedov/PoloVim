@@ -42,6 +42,12 @@ function autocmd.load_autocmds()
                 "*",
                 'if getfsize(expand("%")) > 1000000 | ownsyntax off | endif',
             },
+            {
+                { "WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained" },
+                "*",
+                "silent! checktime",
+            },
+
             { "BufWritePost", "plugins.lua", "PackerCompile" },
             -- {"UIEnter", "*", ":silent! :lua require('modules.lang.config').syntax_folding()"},
             { "BufReadPre", "*", ":silent! :lua require('modules.lang.config').nvim_treesitter()" },

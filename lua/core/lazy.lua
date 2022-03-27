@@ -172,7 +172,7 @@ vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
     loader("heirline.nvim")
-    require("modules.ui.heirline")
+    require("modules.ui.heirline") -- ignore
     require("utils.ui_overwrite")
     require("vscripts.tools")
 

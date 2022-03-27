@@ -137,7 +137,6 @@ function autocmd.load_autocmds()
             },
 
             -- Check if file changed when its window is focus, more eager than 'autoread'
-            { "FocusGained", "*", "checktime" },
             -- -- {"CmdwinEnter,CmdwinLeave", "*", "lua require'wlfloatline'.toggle()"};
             -- {"CmdlineEnter,CmdlineLeave", "*", "echom 'kkk'"};
         },
@@ -184,6 +183,56 @@ function autocmd.load_autocmds()
                 "QuickfixCmdPost",
                 { "lmake", "lgrep", "lgrepadd", "lvimgrep", "lvimgrepadd" },
                 [[lwin]],
+            },
+            {
+                "QuitPre",
+                "qf",
+                function()
+                    if vim.bo.filetype ~= "qf" then
+                        vim.cmd("silent! lclose")
+                    end
+                end,
+                true,
+            },
+            {
+                "BufEnter",
+                "qf",
+                function()
+                    if fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
+                        vim.api.nvim_buf_delete(0, { force = true })
+                    end
+                end,
+            },
+        },
+        highlight = {
+            -- could mess with lightspeed .
+            {
+                "CmdlineEnter",
+                "[/\\?]",
+                ":set hlsearch  | redrawstatus",
+            },
+            {
+                "CmdlineLeave",
+                "[/\\?]",
+                ":set nohlsearch  | redrawstatus",
+            },
+        },
+
+        colorcol = {
+            {
+                { "WinEnter", "BufEnter", "VimResized", "FileType" },
+                "*",
+                function()
+                    require("core.event_helper").check_color_column()
+                end,
+            },
+
+            {
+                "WinLeave",
+                "*",
+                function()
+                    require("core.event_helper").check_color_column(true)
+                end,
             },
         },
     }
