@@ -2,10 +2,15 @@
 
 local M = {}
 
+local blacklist_files = {
+    "c",
+    "norg",
+}
+
 local function should_mkview()
     return vim.bo.buftype == ""
         and vim.fn.getcmdwintype() == ""
-        and M.mkview_filetype_blocklist[vim.bo.filetype] == nil
+        and blacklist_files[vim.bo.filetype] == nil
         and vim.fn.exists("$SUDO_USER") == 0 -- Don't create root-owned files.
 end
 
@@ -115,7 +120,10 @@ local column_clear = {
 -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/plugin/autocommands.lua
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
 ---@param leaving boolean indicates if the function was called on window leave
-function M.check_color_column(leaving)
+function M.check_colour_column(leaving)
+    if not packer_plugins["focus.nvim"].loaded then
+        return
+    end
     if vim.tbl_contains(column_exclude, vim.bo.filetype) then
         return
     end

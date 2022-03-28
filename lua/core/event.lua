@@ -47,6 +47,22 @@ function autocmd.load_autocmds()
             { "BufWritePre", "*.tmp", "setlocal noundofile" },
             { "BufWritePre", "*.bak", "setlocal noundofile" },
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
+            {
+                "BufLeave",
+                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+
+                function()
+                    require("core.event_helper").mkview()
+                end,
+            },
+            {
+                "BufWinEnter",
+                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+
+                function()
+                    require("core.event_helper").loadview()
+                end,
+            },
 
             {
                 "BufWritePre",
@@ -77,17 +93,17 @@ function autocmd.load_autocmds()
                 false,
             },
 
-            {
-                "BufWritePost",
-                { "*.py", "*.lua", "*sh", "*.scala", "*.tcl" },
-                function()
-                    local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
-                    if line:find("#!") and line:find("/bin/") then
-                        vim.cmd([[silent !chmod u+x %]])
-                    end
-                end,
-                false,
-            },
+            -- {
+            --     "BufWritePost",
+            --     { "*.py", "*.lua", "*sh", "*.scala", "*.tcl" },
+            --     function()
+            --         local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
+            --         if line:find("#!") and line:find("/bin/") then
+            --             vim.cmd([[silent !chmod u+x %]])
+            --         end
+            --     end,
+            --     false,
+            -- },
         },
 
         wins = {
@@ -218,23 +234,24 @@ function autocmd.load_autocmds()
             },
         },
 
-        colorcol = {
-            {
-                { "WinEnter", "BufEnter", "VimResized", "FileType" },
-                "*",
-                function()
-                    require("core.event_helper").check_color_column()
-                end,
-            },
+        -- colorcol = {
+        --     {
+        --         { "WinEnter", "BufEnter", "VimResized", "FileType" },
+        --         { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+        --         function()
+        --             require("core.event_helper").check_colour_column()
+        --         end,
+        --     },
+        --
+        --     {
+        --         "WinLeave",
+        --         { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+        --         function()
+        --             require("core.event_helper").check_colour_column(true)
+        --         end,
+        --     },
+        -- },
 
-            {
-                "WinLeave",
-                "*",
-                function()
-                    require("core.event_helper").check_color_column(true)
-                end,
-            },
-        },
     }
 
     autocmd.nvim_create_augroups(definitions)
