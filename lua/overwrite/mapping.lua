@@ -240,6 +240,14 @@ vim.api.nvim_add_user_command("ColourScheme", function()
     require("utils.telescope").colorscheme()
 end, { force = true })
 
+vim.api.nvim_add_user_command("BL", function()
+    require("utils.selfunc").blameVirtualText()
+end, { force = true })
+
+vim.api.nvim_add_user_command("BLR", function()
+    require("utils.selfunc").clearBlameVirtualText()
+end, { force = true })
+
 vim.cmd([[
   iabbrev :rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%d/%m/%y").'):')<CR>
   iabbrev :todo: <c-r>=printf(&commentstring, ' TODO(vsedov):')<CR>

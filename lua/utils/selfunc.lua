@@ -1,5 +1,6 @@
 local vim, api = vim, vim.api
 local window = require("lspsaga.window")
+local terminal_is_open = 0
 local M = {
     go = { "go run ", "ginkgo test -v -count=1 -tags=integration " },
     lua = { "lua " },
@@ -75,24 +76,33 @@ function M.float_terminal(command)
         row = row,
         col = col,
     }
+    local content_opts = {
+        contents = {},
+        filetype = "LspsagaFloaterm",
+        enter = true,
+    }
 
-    local contents_bufnr, contents_winid, border_bufnr, border_winid = window.create_float_window(
-        {},
-        "floaterm",
-        1,
-        true,
-        false,
-        opts
-    )
+    local cb, cw, ow
+    if border_style == 0 then
+        cb, cw, _, ow = window.open_shadow_float_win(content_opts, opts)
+    else
+        local border_opts = {
+            border = border_style,
+        }
+        cb, cw, _, ow = window.create_win_with_border(content_opts, opts)
+    end
     api.nvim_command("terminal " .. cmd)
     api.nvim_command("setlocal nobuflisted")
     api.nvim_command("startinsert!")
-    api.nvim_command("hi LspFloatWinBorder guifg=#c594c5")
-    api.nvim_buf_set_var(contents_bufnr, "float_terminal_win", { contents_winid, border_winid, border_bufnr })
+    api.nvim_buf_set_var(cb, "float_terminal_win", { cw, ow })
+    terminal_is_open = 1
 end
 
 function M.close_float_terminal()
-    local float_terminal_win = api.nvim_buf_get_var(0, "float_terminal_win")
+    local has_var, float_terminal_win = pcall(api.nvim_buf_get_var, 0, "float_terminal_win")
+    if not has_var then
+        return
+    end
     if
         float_terminal_win[1] ~= nil
         and api.nvim_win_is_valid(float_terminal_win[1])
@@ -101,6 +111,7 @@ function M.close_float_terminal()
     then
         api.nvim_win_close(float_terminal_win[1], true)
         api.nvim_win_close(float_terminal_win[2], true)
+        terminal_is_open = 0
     end
 end
 
