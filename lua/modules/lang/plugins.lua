@@ -282,14 +282,6 @@ lang["dccsillag/magma-nvim"] = {
     run = ":UpdateRemotePlugins",
     config = conf.magma,
 }
-lang["python-rope/ropevim"] = {
-    ft = "python",
-    opt = true,
-    config = function()
-        vim.g.ropevim_vim_completion = 1
-        vim.g.ropevim_extended_complete = 1
-    end,
-}
 
 lang["Vimjas/vim-python-pep8-indent"] = {
     ft = "python",

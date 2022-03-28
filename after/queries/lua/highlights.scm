@@ -67,7 +67,3 @@
 ((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "math" )) (#set! conceal ""))
 
 (((dot_index_expression) @keyword (#eq? @keyword "vim.cmd"     )) (#set! conceal ""))
-(((dot_index_expression) @keyword (#eq? @keyword "vim.api"     )) (#set! conceal ""))
-(((dot_index_expression) @keyword (#eq? @keyword "vim.fn"      )) (#set! conceal "#"))
-(((dot_index_expression) @keyword (#eq? @keyword "vim.g"       )) (#set! conceal "$"))
-(((dot_index_expression) @keyword (#eq? @keyword "vim.schedule")) (#set! conceal ""))
