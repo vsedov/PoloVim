@@ -65,7 +65,6 @@ local math_iA = {
     ls.parser.parse_snippet({ trig = "NN", name = "n" }, "\\N"),
     ls.parser.parse_snippet({ trig = "||", name = "mid" }, " \\mid "),
     ls.parser.parse_snippet({ trig = "Nn", name = "cap" }, "\\cap "),
-    ls.parser.parse_snippet({ trig = "pmat", name = "pmat" }, "\\begin{pmatrix} $1 \\end{pmatrix} $0"),
     ls.parser.parse_snippet({ trig = "bmat", name = "bmat" }, "\\begin{bmatrix} $1 \\end{bmatrix} $0"),
     ls.parser.parse_snippet({ trig = "uuu", name = "bigcup" }, "\\bigcup_{${1:i \\in ${2: I}}} $0"),
     ls.parser.parse_snippet({ trig = "DD", name = "D" }, "\\mathbb{D}"),

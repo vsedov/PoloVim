@@ -19,6 +19,8 @@ local math_i = {
     ls.parser.parse_snippet({ trig = "part", name = "d/dx" }, "\\frac{\\partial ${1:V}}{\\partial ${2:x}} $0"),
     ls.parser.parse_snippet({ trig = "ddx", name = "d/dx" }, "\\frac{\\mathrm{d/${1:V}}}{\\mathrm{d${2:x}}} $0"),
 
+    ls.parser.parse_snippet({ trig = "pmat", name = "pmat" }, "\\begin{pmatrix} $1 \\end{pmatrix} $0"),
+
     ls.parser.parse_snippet({ trig = "lr", name = "left( right)" }, "\\left( ${1:${TM_SELECTED_TEXT}} \\right) $0"),
     ls.parser.parse_snippet({ trig = "lr(", name = "left( right)" }, "\\left( ${1:${TM_SELECTED_TEXT}} \\right) $0"),
     ls.parser.parse_snippet({ trig = "lr|", name = "left| right|" }, "\\left| ${1:${TM_SELECTED_TEXT}} \\right| $0"),

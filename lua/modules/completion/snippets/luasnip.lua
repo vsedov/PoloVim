@@ -18,7 +18,7 @@ require("luasnip.config").setup({
     ext_opts = {
         [ls_types.choiceNode] = {
             active = {
-                -- virt_text = { { "●", "Special" } },
+                virt_text = { { "●", "Special" } },
                 -- virt_text = { { "<-", "GitSignsDelete" } },
                 -- virt_text = { { " ", "GitSignsDelete" } },
                 virt_text = { { " ", "Keyword" } },
