@@ -21,6 +21,7 @@ editor["kana/vim-niceblock"] = {
     opt = true,
 }
 
+-- TODO: Lazy Load this
 editor["max397574/dyn_help.nvim"] = {}
 
 -- I like this plugin, but 1) offscreen context is slow
@@ -34,7 +35,7 @@ editor["andymass/vim-matchup"] = {
     config = function()
         vim.g.matchup_enabled = 1
         vim.g.matchup_surround_enabled = 1
-        vim.g.matchup_transmute_enabled = 1
+        -- vim.g.matchup_transmute_enabled = 1
         vim.g.matchup_matchparen_deferred = 1
         vim.g.matchup_matchparen_offscreen = { method = "popup" }
         vim.keymap.set("n", "<c-s>k", "<cmd><c-u>MatchupWhereAmI?<CR>")

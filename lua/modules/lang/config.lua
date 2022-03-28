@@ -78,7 +78,7 @@ function config.jaq()
                 java = "cd $dir && javac $file && java $fileBase",
                 c = "gcc $file -o $fileBase && ./$fileBase",
                 cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
-                python = "python -u %",
+                python = "cd $dir && python3 $file ",
                 shellscript = "bash",
                 csharp = "cd $dir && mcs $fileName && mono $fileNameWithoutExt.exe",
                 typescript = "deno run",

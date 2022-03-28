@@ -159,7 +159,7 @@ local sumneko_lua_server = enhance_attach({
                 workspace = {
                     -- remove all of this, as it slows things down
                     library = {
-                        -- vim.api.nvim_get_runtime_file("", false),
+                        vim.api.nvim_get_runtime_file("", true),
                         -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
                         -- vim.api.nvim_get_runtime_file("", false),
                         -- [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,

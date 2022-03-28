@@ -43,8 +43,18 @@ local function lsp_code_lens_refresh(client, bufnr)
 end
 
 local function select_default_formater(client)
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.config.flags.allow_incremental_sync = true
+    client.config.flags.debounce_text_changes = 200
+    if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
+        vim.diagnostic.config({
+            virtual_text = false,
+        })
+        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+        return
+    else
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+    end
 end
 
 function M.common_on_init(client, bufnr)
@@ -58,6 +68,7 @@ end
 function M.common_capabilities()
     local capabilities = require("modules.completion.lsp.utils.capabilities")
     local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+
     if status_ok then
         capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
     end
@@ -68,9 +79,6 @@ function M.common_on_attach(client, bufnr)
     if config.on_attach_callback then
         config.on_attach_callback(client, bufnr)
     end
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
-
     lsp_highlight_document(client, bufnr)
     lsp_code_lens_refresh(client, bufnr)
 end
