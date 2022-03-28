@@ -46,7 +46,7 @@ end
 
 function fs:register_root_pattern()
     self.root_pattern = {
-        python = { "pyproject.toml" },
+        python = { "pyproject.toml", ".venv", "Pipfile" },
         go = { "go.mod", ".git" },
         typescript = { "package.json", "tsconfig.json", "node_modules" },
         javascript = { "package.json", "jsconfig.json", "node_modules" },
