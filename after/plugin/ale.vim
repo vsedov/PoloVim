@@ -5,5 +5,5 @@ let g:ale_linters = {
 \}
 
 let g:ale_fixers = {
-    \ 'python': ['nayvy#ale_fixer'],
+    \ 'python': ['nayvy#ale_fixer','yapf','isort'],
 \ }

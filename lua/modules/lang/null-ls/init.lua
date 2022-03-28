@@ -10,8 +10,8 @@ return {
             null_ls.builtins.diagnostics.yamllint,
             null_ls.builtins.code_actions.proselint,
             null_ls.builtins.code_actions.refactoring,
-            null_ls.builtins.formatting.isort,
-            null_ls.builtins.formatting.yapf,
+            -- null_ls.builtins.formatting.isort,
+            -- null_ls.builtins.formatting.yapf,
             -- hover.dictionary,
             diagnostics.misspell.with({
                 filetypes = { "markdown", "text", "txt" },
@@ -175,21 +175,21 @@ return {
                 "tsconfig.json",
                 ".git"
             ),
-
-            on_attach = function(client)
-                -- I dont want any formating on python files.
-                if client.resolved_capabilities.document_formatting then
-                    vim.diagnostic.config({
-                        virtual_text = false,
-                    })
-                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
-                    -- Convert this using vim.api.nvim_create_autocmd()
-                    -- vim.api.nvim_create_autocmd("BufWritePre", {
-                    --     pattern = "*",
-                    --     command = "lua vim.lsp.buf.formatting()",
-                    -- })
-                end
-            end,
+            on_attach = require("modules.completion.lsp.utils").get_common_opts,
+            -- on_attach = function(client)
+            --     -- I dont want any formating on python files.
+            --     if client.resolved_capabilities.document_formatting then
+            --         vim.diagnostic.config({
+            --             virtual_text = false,
+            --         })
+            --         vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
+            --         -- Convert this using vim.api.nvim_create_autocmd()
+            --         -- vim.api.nvim_create_autocmd("BufWritePre", {
+            --         --     pattern = "*",
+            --         --     command = "lua vim.lsp.buf.formatting()",
+            --         -- })
+            --     end
+            -- end,
         }
 
         null_ls.setup(cfg)
