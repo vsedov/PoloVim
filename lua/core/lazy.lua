@@ -179,7 +179,7 @@ vim.defer_fn(function()
 
     vim.cmd("command! Spell call spelunker#check()")
     vim.api.nvim_add_user_command("Gram", function()
-        require'modules.tools.config'.grammcheck()
+        require("modules.tools.config").grammcheck()
     end, { force = true })
 
     loader("animate.vim")

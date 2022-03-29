@@ -101,13 +101,6 @@ local plug_map = {
 
     ["n|<Leader>gr"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
 
-    -- Replace word under cursor in Buffer (case-sensitive)
-    -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
-    ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>"),
-    -- Replace word under cursor on Line (case-sensitive)
-    -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
-    ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>"),
-
     ["n|gpd"] = map_cu("GotoPrev"):with_noremap(),
     ["n|gpi"] = map_cu("GotoImp"):with_noremap(),
     ["n|gpt"] = map_cu("GotoTel"):with_noremap(),
@@ -280,6 +273,45 @@ local plug_map = {
 
     ["v|'v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
     ["v|'c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
+
+    -- visual search
+    ["v|//"] = map_cmd([[y/<C-R>"<CR>]]):with_noremap(),
+    -- repeat macro
+    ["n|<leader><cr>"] = map_cmd([[empty(&buftype) ? '@@' : '<CR>']]):with_noremap():with_expr(),
+    -- new files
+    ["n|<localleader>ns"] = map_cmd([[:e <C-R>=expand("%:p:h") . "/" <CR>]]):with_silent(),
+    ["n|<localleader>nf"] = map_cmd([[:vsp <C-R>=expand("%:p:h") . "/" <CR>]]):with_silent(),
+
+    -- Refocus folds
+    ["n|z<space>"] = map_cmd([[zMzvzz]]):with_noremap(),
+    ["n|z0"] = map_cmd([[zCzO]]):with_noremap(),
+    ["n|zz"] = map_cmd([[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']])
+        :with_noremap()
+        :with_expr(),
+
+    -- new lines
+    ["n|[["] = map_cmd([[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]):with_noremap(),
+    ["n|]]"] = map_cmd([[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]):with_noremap(),
+
+    -- Replace word under cursor in Buffer (case-sensitive)
+    -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
+    ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>"),
+    -- Replace word under cursor on Line (case-sensitive)
+    -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
+    ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>"),
+
+    ["n|<leader>["] = map_cmd([[:%s/\<<C-r>=expand("<cword>")<CR>\>/]]):with_noremap(),
+    ["v|<leader>]"] = map_cmd([["zy:%s/<C-r><C-o>"/]]):with_noremap(),
+
+    -- Credit: JGunn Choi ?il | inner line
+    ["x|al"] = map_cmd([[$o0]]):with_noremap(),
+    ["o|al"] = map_cmd([[<cmd>normal val<CR>]]):with_noremap(),
+
+    ["x|il"] = map_cmd([[<Esc>^vg_]]):with_noremap(),
+    ["o|il"] = map_cmd([[<cmd>normal! ^vg_<CR>]]):with_noremap(),
+
+    ["x|ie"] = map_cmd([[gg0oG$]]):with_noremap(),
+    ["o|ie"] = map_cmd([[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]]):with_noremap(),
 }
 
 return { map = plug_map }
