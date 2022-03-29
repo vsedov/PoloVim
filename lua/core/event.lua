@@ -151,10 +151,6 @@ function autocmd.load_autocmds()
                     vim.bo.fileformat = "unix"
                 end,
             },
-
-            -- Check if file changed when its window is focus, more eager than 'autoread'
-            -- -- {"CmdwinEnter,CmdwinLeave", "*", "lua require'wlfloatline'.toggle()"};
-            -- {"CmdlineEnter,CmdlineLeave", "*", "echom 'kkk'"};
         },
 
         ft = {
@@ -234,24 +230,23 @@ function autocmd.load_autocmds()
             },
         },
 
-        -- colorcol = {
-        --     {
-        --         { "WinEnter", "BufEnter", "VimResized", "FileType" },
-        --         { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
-        --         function()
-        --             require("core.event_helper").check_colour_column()
-        --         end,
-        --     },
-        --
-        --     {
-        --         "WinLeave",
-        --         { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
-        --         function()
-        --             require("core.event_helper").check_colour_column(true)
-        --         end,
-        --     },
-        -- },
+        colorcol = {
+            {
+                { "WinEnter", "BufEnter", "VimResized", "FileType" },
+                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+                function()
+                    require("core.event_helper").check_colour_column()
+                end,
+            },
 
+            {
+                "WinLeave",
+                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+                function()
+                    require("core.event_helper").check_colour_column(true)
+                end,
+            },
+        },
     }
 
     autocmd.nvim_create_augroups(definitions)
