@@ -19,3 +19,8 @@ if vim.fn.exists("$VIRTUAL_ENV") == 1 then
 else
     vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python"), "\n", "", "g")
 end
+
+vim.cmd[[
+inoreabbrev <buffer> forr for :<left>
+inoreabbrev <buffer> iff if :<left>
+]]

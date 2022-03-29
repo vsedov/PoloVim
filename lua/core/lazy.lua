@@ -194,5 +194,6 @@ vim.defer_fn(function()
     if vim.fn.wordcount()["bytes"] < 2048000 then
         require("vscripts.cursorhold")
     end
+    require("vscripts.abbreviations")
     lprint("all done")
 end, lazy_timer + 80)
