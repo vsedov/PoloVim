@@ -175,12 +175,16 @@ vim.defer_fn(function()
     require("modules.ui.heirline") -- ignore
     require("utils.ui_overwrite")
     require("vscripts.tools")
+    require("vscripts.race_conditions")
 
-    vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
     vim.cmd("command! Spell call spelunker#check()")
+    vim.api.nvim_add_user_command("Gram", function()
+        require'modules.tools.config'.grammcheck()
+    end, { force = true })
+
     loader("animate.vim")
     loader("presence.nvim")
-    lprint("ui loaded")
+    lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
@@ -194,6 +198,5 @@ vim.defer_fn(function()
     if vim.fn.wordcount()["bytes"] < 2048000 then
         require("vscripts.cursorhold")
     end
-    require("vscripts.abbreviations")
     lprint("all done")
 end, lazy_timer + 80)

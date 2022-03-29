@@ -216,8 +216,8 @@ lang["m-demare/hlargs.nvim"] = {
     config = function()
         require("hlargs").setup({
             performance = {
-                max_iterations = 500,
-                max_concurrent_partial_parses = 50,
+                max_iterations = 1000,
+                max_concurrent_partial_parses = 90,
             },
         })
     end,
