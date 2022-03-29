@@ -39,6 +39,15 @@ local tex_math = {
             return "\\implies "
         end)
     ),
+    s(
+        "=",
+        f(function()
+            if not in_mathzone() then
+                return "= "
+            end
+            return "\\equiv "
+        end)
+    ),
 
     s(
         { trig = "ss", wordTrig = false },

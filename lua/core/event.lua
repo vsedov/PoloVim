@@ -12,6 +12,7 @@ function autocmd.nvim_create_augroups(defs)
                 [type(def[3]) == "function" and "callback" or type(def[3]) == "string" and "command"] = def[3],
                 nested = def[4],
             }
+            -- print(vim.inspect(event), vim.inspect(arg))
             vim.api.nvim_create_autocmd(event, arg)
         end
     end
@@ -19,10 +20,10 @@ end
 
 function autocmd.load_autocmds()
     local definitions = {
-        packer = {
+        packer_call = {
             { "BufWritePost", "plugins.lua", "lua require('core.pack').auto_compile()" },
         },
-        bufs = {
+        buffer = {
             { { "BufRead", "BufNewFile" }, "*.norg", "setlocal filetype=norg" },
             { { "BufEnter", "BufWinEnter" }, "*.norg", [[set foldlevel=1000]] },
             { { "BufNewFile", "BufRead", "BufWinEnter" }, "*.tex", [[set filetype=tex]] },
@@ -47,17 +48,22 @@ function autocmd.load_autocmds()
             { "BufWritePre", "*.bak", "setlocal noundofile" },
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
             {
-                "BufWritePost",
-                { "*.py", "*.lua", "*.sh" },
+                "BufLeave",
+                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+
                 function()
-                    if vim.fn.getline(1) == "^#!" then
-                        if vim.fn.getline(1) == "/bin/" then
-                            vim.cmd([[chmod a+x <afile>]])
-                        end
-                    end
+                    require("core.event_helper").mkview()
                 end,
-                false,
             },
+            {
+                "BufWinEnter",
+                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+
+                function()
+                    require("core.event_helper").loadview()
+                end,
+            },
+
             {
                 "BufWritePre",
                 "*",
@@ -82,10 +88,22 @@ function autocmd.load_autocmds()
                         end
                         vim.fn.mkdir(dir, "p")
                     end
-                    auto_mkdir(vim.fn.expand("<afile>:p:h"), vim.v.cmdbang)
+                    auto_mkdir(vim.fn.expand("%:p:h"), vim.v.cmdbang)
                 end,
                 false,
             },
+
+            -- {
+            --     "BufWritePost",
+            --     { "*.py", "*.lua", "*sh", "*.scala", "*.tcl" },
+            --     function()
+            --         local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
+            --         if line:find("#!") and line:find("/bin/") then
+            --             vim.cmd([[silent !chmod u+x %]])
+            --         end
+            --     end,
+            --     false,
+            -- },
         },
 
         wins = {
@@ -105,13 +123,6 @@ function autocmd.load_autocmds()
                 "*",
                 [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
             },
-            -- {
-            --     { "InsertLeave", "WinEnter", "CmdlineLeave" },
-            --     "*",
-            --     "set cursorline",
-            -- },
-
-            -- { { "InsertEnter", "WinLeave", "CmdlineEnter" }, "*", "set nocursorline" },
 
             { "BufEnter", "NvimTree", [[setlocal cursorline]] },
             { "CmdLineEnter", "*", [[set nosmartcase]] },
@@ -140,11 +151,6 @@ function autocmd.load_autocmds()
                     vim.bo.fileformat = "unix"
                 end,
             },
-
-            -- Check if file changed when its window is focus, more eager than 'autoread'
-            { "FocusGained", "*", "checktime" },
-            -- -- {"CmdwinEnter,CmdwinLeave", "*", "lua require'wlfloatline'.toggle()"};
-            -- {"CmdlineEnter,CmdlineLeave", "*", "echom 'kkk'"};
         },
 
         ft = {
@@ -162,12 +168,6 @@ function autocmd.load_autocmds()
                 "FileType",
                 { "qf", "help", "man", "ls:pinfo" },
                 "nnoremap <silent> <buffer> q :close<CR>",
-            },
-
-            {
-                "FileType",
-                "python",
-                [[setlocal omnifunc=RopeCompleteFunc]],
             },
 
             {
@@ -195,6 +195,56 @@ function autocmd.load_autocmds()
                 "QuickfixCmdPost",
                 { "lmake", "lgrep", "lgrepadd", "lvimgrep", "lvimgrepadd" },
                 [[lwin]],
+            },
+            {
+                "QuitPre",
+                "qf",
+                function()
+                    if vim.bo.filetype ~= "qf" then
+                        vim.cmd("silent! lclose")
+                    end
+                end,
+                true,
+            },
+            {
+                "BufEnter",
+                "qf",
+                function()
+                    if fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
+                        vim.api.nvim_buf_delete(0, { force = true })
+                    end
+                end,
+            },
+        },
+        highlight = {
+            -- could mess with lightspeed .
+            {
+                "CmdlineEnter",
+                "[/\\?]",
+                ":set hlsearch  | redrawstatus",
+            },
+            {
+                "CmdlineLeave",
+                "[/\\?]",
+                ":set nohlsearch  | redrawstatus",
+            },
+        },
+
+        colorcol = {
+            {
+                { "WinEnter", "BufEnter", "VimResized", "FileType" },
+                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+                function()
+                    require("core.event_helper").check_colour_column()
+                end,
+            },
+
+            {
+                "WinLeave",
+                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+                function()
+                    require("core.event_helper").check_colour_column(true)
+                end,
             },
         },
     }

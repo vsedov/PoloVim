@@ -207,18 +207,18 @@ tools["liuchengxu/vim-clap"] = {
 }
 
 -- For this to record, cmd might not work
--- tools["wakatime/vim-wakatime"] = {
---     event = "InsertEnter",
---     cmd = {
---         "WakaTimeApiKey",
---         "WakaTimeDebugEnable",
---         "WakaTimeDebugDisable",
---         "WakaTimeScreenRedrawEnable",
---         "WakaTimeScreenRedrawEnableAuto",
---         "WakaTimeScreenRedrawDisable",
---         "WakaTimeToday",
---     },
--- }
+tools["wakatime/vim-wakatime"] = {
+    event = "InsertEnter",
+    cmd = {
+        "WakaTimeApiKey",
+        "WakaTimeDebugEnable",
+        "WakaTimeDebugDisable",
+        "WakaTimeScreenRedrawEnable",
+        "WakaTimeScreenRedrawEnableAuto",
+        "WakaTimeScreenRedrawDisable",
+        "WakaTimeToday",
+    },
+}
 
 tools["sindrets/diffview.nvim"] = {
     cmd = {
@@ -236,7 +236,20 @@ tools["lewis6991/gitsigns.nvim"] = {
     -- keys = {']c', '[c'},  -- load by lazy.lua
     opt = true,
 }
-
+tools["klen/nvim-config-local"] = {
+    -- ft = {"lua","vim"},
+    cmd = {
+        "ConfigSource",
+        "ConfigEdit",
+        "ConfigTrust",
+        "ConfigIgnore",
+    },
+    config = function()
+        require("config-local").setup({
+            config_files = { "init_paq.lua", ".vimrc", ".vimrc.lua" },
+        })
+    end,
+}
 -- ze black magic
 tools["windwp/nvim-spectre"] = {
     module = "spectre",
@@ -279,7 +292,6 @@ tools["ray-x/viewdoc.nvim"] = {
     end,
 }
 
--- early stage...
 tools["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
     setup = function()
         vim.o.updatetime = 2000
@@ -365,7 +377,7 @@ tools["chentau/marks.nvim"] = {
             default_mappings = true,
             builtin_marks = { ".", "<", ">", "^" },
             cyclic = true,
-            force_write_shada = false,
+            force_write_shada = true,
             refresh_interval = 250,
             sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
             excluded_filetypes = {},

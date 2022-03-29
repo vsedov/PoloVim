@@ -13,7 +13,6 @@ return {
             end
             return Plugin_folder
         end
-
         -- https://www.reddit.com/r/neovim/comments/sg919r/diff_with_clipboard/
         _G.compare_to_clipboard = function()
             local ftype = vim.api.nvim_eval("&filetype")
@@ -64,13 +63,19 @@ return {
             return true
         end
 
+        _G.use_gitsigns = function()
+            if use_nulls() then
+                return true
+            end
+            return false
+        end
+
         _G.preserve = function(cmd)
             cmd = string.format("keepjumps keeppatterns execute %q", cmd)
             local original_cursor = vim.fn.winsaveview()
             vim.api.nvim_command(cmd)
             vim.fn.winrestview(original_cursor)
         end
-
         -- convert word to Snake case
         _G.Snake = function(s)
             if s == nil then

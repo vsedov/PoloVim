@@ -65,7 +65,6 @@ local math_iA = {
     ls.parser.parse_snippet({ trig = "NN", name = "n" }, "\\N"),
     ls.parser.parse_snippet({ trig = "||", name = "mid" }, " \\mid "),
     ls.parser.parse_snippet({ trig = "Nn", name = "cap" }, "\\cap "),
-    ls.parser.parse_snippet({ trig = "pmat", name = "pmat" }, "\\begin{pmatrix} $1 \\end{pmatrix} $0"),
     ls.parser.parse_snippet({ trig = "bmat", name = "bmat" }, "\\begin{bmatrix} $1 \\end{bmatrix} $0"),
     ls.parser.parse_snippet({ trig = "uuu", name = "bigcup" }, "\\bigcup_{${1:i \\in ${2: I}}} $0"),
     ls.parser.parse_snippet({ trig = "DD", name = "D" }, "\\mathbb{D}"),
@@ -73,7 +72,7 @@ local math_iA = {
     ls.parser.parse_snippet({ trig = "lll", name = "l" }, "\\ell"),
     ls.parser.parse_snippet(
         { trig = "dint", name = "integral" },
-        "\\int_{${1:-\\infty}}^{${2:\\infty}} ${3:${VISUAL}} $0"
+        "\\int_{${1:-\\infty}}^{${2:\\infty}} ${3:${TM_SELECTED_TEXT}} $0"
     ),
     ls.parser.parse_snippet({ trig = "==", name = "equals" }, "&= $1 \\\\"),
     ls.parser.parse_snippet({ trig = "!=", name = "equals" }, "\\neq "),

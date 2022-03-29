@@ -69,7 +69,6 @@ function config.nvim_bufferline()
             tab_size = 16,
             mode = "buffers", -- tabs
             sort_by = sort_by_mtime,
-            right_mouse_command = "vert sbuffer %d",
             show_close_icon = false,
             show_buffer_icons = true,
             show_buffer_close_icons = false,
@@ -205,109 +204,165 @@ function config.notify()
     }
 
     notify.setup(default)
-
     require("telescope").load_extension("notify")
 end
 
 function config.nvim_tree_setup()
-    vim.g.nvim_tree_indent_markers = 1
-    vim.g.nvim_tree_width = 28
-    vim.g.nvim_tree_git_hl = 1
-    vim.g.nvim_tree_width_allow_resize = 1
-    vim.g.nvim_tree_highlight_opened_files = 1
-    vim.g.nvim_tree_icons = {
-        default = "",
-        symlink = "",
-        git = {
-            unstaged = "✗",
-            staged = "✓",
-            unmerged = "",
-            renamed = "➜",
-            untracked = "★",
-            deleted = "",
-            ignored = "◌",
-        },
-        folder = {
-            arrow_open = "",
-            arrow_closed = "",
-            default = "",
-            open = "",
-            empty = "",
-            empty_open = "",
-            symlink = "",
-            symlink_open = "",
-        },
-    }
-    vim.cmd([[autocmd Filetype NvimTree set cursorline]])
-end
-
-function config.nvim_tree()
-    -- following options are the default
-    require("nvim-tree").setup({
-        -- disables netrw completely
-        disable_netrw = true,
-        -- hijack netrw window on startup
-        hijack_netrw = true,
-        -- open the tree when running this setup function
-        open_on_setup = false,
-        -- will not open on setup if the filetype is in this list
-        ignore_ft_on_setup = {},
-        -- closes neovim automatically when the tree is the last **WINDOW** in the view
-        auto_close = false,
-        -- opens the tree when changing/opening a new tab if the tree wasn't previously opened
-        open_on_tab = false,
-        -- hijack the cursor in the tree to put it at the start of the filename
-        update_to_buf_dir = {
-            -- enable the feature
-            enable = false,
-            -- allow to open the tree if it was previously closed
-            auto_open = true,
-        },
-        hijack_cursor = false,
-        -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
-        update_cwd = false,
-        -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
-        update_focused_file = {
-            -- enables the feature
-            enable = true,
-            -- update the root directory of the tree to the one of the folder containing the file if the file is not under the current root directory
-            -- only relevant when `update_focused_file.enable` is true
-            update_cwd = false,
-            -- list of buffer names / filetypes that will not update the cwd if the file isn't found under the current root directory
-            -- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
-            ignore_list = {},
-        },
-        -- configuration options for the system open command (`s` in the tree by default)
-        system_open = {
-            -- the command to run this, leaving nil should work in most cases
-            cmd = nil,
-            -- the command arguments as a list
-            args = {},
-        },
-        diagnostics = {
-            enable = true,
-            icons = { hint = "", info = "", warning = "", error = "" },
-        },
-        filters = { dotfiles = true, custom = {} },
-        view = {
-            -- width of the window, can be either a number (columns) or a string in `%`
-            width = 30,
-            -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
-            side = "left",
-            -- if true the tree will resize itself after opening a file
-            auto_resize = false,
-            mappings = {
-                -- custom only false will merge the list with the default mappings
-                -- if true, it will only use your list to set the mappings
-                custom_only = false,
-                -- list of mappings to set on the tree manually
-                list = {},
+    -- https://github.com/LunarVim/LunarVim/blob/e0a71dc40ceb8797ec40dcb9ae59c327e7f6c592/lua/lvim/core/nvimtree.lua
+    local settings = {
+        active = true,
+        on_config_done = nil,
+        setup = {
+            disable_netrw = true,
+            hijack_netrw = true,
+            open_on_setup = false,
+            ignore_buffer_on_setup = false,
+            ignore_ft_on_setup = {
+                "startify",
+                "dashboard",
+                "alpha",
+            },
+            auto_reload_on_write = true,
+            hijack_unnamed_buffer_when_opening = false,
+            hijack_directories = {
+                enable = true,
+                auto_open = true,
+            },
+            -- messes with dirbuf
+            update_to_buf_dir = {
+                enable = false,
+                auto_open = true,
+            },
+            auto_close = false,
+            open_on_tab = false,
+            hijack_cursor = false,
+            update_cwd = true,
+            diagnostics = {
+                enable = true,
+                icons = {
+                    hint = "",
+                    info = "",
+                    warning = "",
+                    error = "",
+                },
+            },
+            update_focused_file = {
+                enable = true,
+                update_cwd = true,
+                ignore_list = {},
+            },
+            system_open = {
+                cmd = nil,
+                args = {},
+            },
+            git = {
+                enable = true,
+                ignore = false,
+                timeout = 200,
+            },
+            view = {
+                width = 28,
+                height = 30,
+                hide_root_folder = false,
+                side = "left",
+                auto_resize = false,
+                mappings = {
+                    custom_only = false,
+                    list = {},
+                },
+                number = false,
+                relativenumber = false,
+                signcolumn = "yes",
+            },
+            filters = {
+                dotfiles = false,
+                custom = { "node_modules", ".cache" },
+            },
+            trash = {
+                cmd = "trash",
+                require_confirm = true,
+            },
+            actions = {
+                change_dir = {
+                    global = false,
+                },
+                open_file = {
+                    resize_window = true,
+                    quit_on_open = false,
+                },
+                window_picker = {
+                    enable = false,
+                    chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+                    exclude = {},
+                },
             },
         },
-    })
-end
+        show_icons = {
+            git = 1,
+            folders = 1,
+            files = 1,
+            folder_arrows = 1,
+        },
+        git_hl = 1,
+        root_folder_modifier = ":t",
+        icons = {
+            default = "",
+            symlink = "",
+            git = {
+                unstaged = "",
+                staged = "S",
+                unmerged = "",
+                renamed = "➜",
+                deleted = "",
+                untracked = "U",
+                ignored = "◌",
+            },
+            folder = {
+                default = "",
+                open = "",
+                empty = "",
+                empty_open = "",
+                symlink = "",
+            },
+        },
+    }
 
--- '▋''▘'
+    for opt, val in pairs(settings) do
+        vim.g["nvim_tree_" .. opt] = val
+    end
+    vim.cmd([[autocmd Filetype NvimTree set cursorline]])
+
+    local function start_telescope(telescope_mode)
+        local node = require("nvim-tree.lib").get_node_at_cursor()
+        local abspath = node.link_to or node.absolute_path
+        local is_folder = node.open ~= nil
+        local basedir = is_folder and abspath or vim.fn.fnamemodify(abspath, ":h")
+        require("telescope.builtin")[telescope_mode]({
+            cwd = basedir,
+        })
+    end
+    local function telescope_find_files(_)
+        start_telescope("find_files")
+    end
+    local function telescope_live_grep(_)
+        start_telescope("live_grep")
+    end
+
+    settings.setup.view.mappings.list = {
+        { key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
+        { key = "h", action = "close_node" },
+        { key = "v", action = "vsplit" },
+        { key = "C", action = "cd" },
+        { key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
+        { key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
+    }
+
+    local _, nvim_tree_config = pcall(require, "nvim-tree.config")
+    if settings.on_config_done then
+        settings.on_config_done(nvim_tree_config)
+    end
+    require("nvim-tree").setup(settings.setup)
+end
 
 function config.scrollbar()
     if vim.wo.diff then
@@ -317,7 +372,6 @@ function config.scrollbar()
     if w < 70 then
         return
     end
-    local vimcmd = vim.api.nvim_command
     require("scrollbar").setup({
         handle = {
             color = "#16161D",

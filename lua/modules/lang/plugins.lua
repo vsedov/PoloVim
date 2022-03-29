@@ -13,7 +13,20 @@ lang["nathom/filetype.nvim"] = {
                 literal = {
                     ["kitty.conf"] = "kitty",
                     [".gitignore"] = "conf",
-                    [".env"] = "sh",
+                },
+                complex = {
+                    [".clang*"] = "yaml",
+                    [".*%.env.*"] = "sh",
+                    [".*ignore"] = "conf",
+                },
+                extensions = {
+                    tf = "terraform",
+                    tfvars = "terraform",
+                    hcl = "hcl",
+                    tfstate = "json",
+                    eslintrc = "json",
+                    prettierrc = "json",
+                    mdx = "markdown",
                 },
             },
         })
@@ -198,10 +211,15 @@ lang["nvim-telescope/telescope-dap.nvim"] = {
 }
 
 lang["m-demare/hlargs.nvim"] = {
-    ft = { "python", "c", "java", "lua" },
+    ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-        require("hlargs").setup()
+        require("hlargs").setup({
+            performance = {
+                max_iterations = 500,
+                max_concurrent_partial_parses = 50,
+            },
+        })
     end,
 }
 
@@ -264,14 +282,6 @@ lang["dccsillag/magma-nvim"] = {
     run = ":UpdateRemotePlugins",
     config = conf.magma,
 }
-lang["python-rope/ropevim"] = {
-    ft = "python",
-    opt = true,
-    config = function()
-        vim.g.ropevim_vim_completion = 1
-        vim.g.ropevim_extended_complete = 1
-    end,
-}
 
 lang["Vimjas/vim-python-pep8-indent"] = {
     ft = "python",
@@ -321,7 +331,7 @@ lang["windwp/nvim-ts-autotag"] = {
 lang["Tastyep/structlog.nvim"] = {
     opt = true,
     config = function()
-        require("utils.Log")
+        require("utils.log")
     end,
 }
 

@@ -18,18 +18,23 @@ function config.autopairs()
     local cond = require("nvim-autopairs.conds")
 
     npairs.setup({
+        enable_moveright = true,
+        disable_in_macro = false,
+        enable_afterquote = true,
+        map_bs = true,
+        map_c_w = true,
+        -- disable_in_visualblock = false,
+
         disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
         autopairs = { enable = true },
         ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
-        enable_check_bracket_line = true,
+        -- enable_check_bracket_line = true, -- Messes with abbrivaitions
         html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
         check_ts = false,
         ts_config = {
-            lua = { "string" }, -- it will not add pair on that treesitter node
-            -- go = {'string'},
-            javascript = { "template_string" },
-            java = false, -- don't check treesitter on java
-            -- python = true,
+            lua = { "string", "source" },
+            javascript = { "string", "template_string" },
+            java = false,
         },
         fast_wrap = {
             map = "<c-c>",
@@ -42,66 +47,68 @@ function config.autopairs()
         },
     })
 
-    local ts_conds = require("nvim-autopairs.ts-conds")
-    -- you need setup cmp first put this after cmp.setup()
+    -- local ts_conds = require("nvim-autopairs.ts-conds")
+    -- -- you need setup cmp first put this after cmp.setup()
+    -- npairs.add_rules({
+    --     Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+    --     Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
+    -- })
 
-    npairs.add_rules({
-        Rule("=", "")
-            :with_pair(cond.not_inside_quote())
-            :with_pair(function(opts)
-                local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
-                if last_char:match("[%w%=%s]") then
-                    return true
-                end
-                return false
-            end)
-            :replace_endpair(function(opts)
-                local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
-                local next_char = opts.line:sub(opts.col, opts.col)
-                next_char = next_char == " " and "" or " "
-                if prev_2char:match("%w$") then
-                    return "<bs> =" .. next_char
-                end
-                if prev_2char:match("%=$") then
-                    return next_char
-                end
-                if prev_2char:match("=") then
-                    return "<bs><bs>=" .. next_char
-                end
-                return ""
-            end)
-            :set_end_pair_length(0)
-            :with_move(cond.none())
-            :with_del(cond.none()),
-        Rule(" ", " "):with_pair(function(opts)
-            local pair = opts.line:sub(opts.col - 1, opts.col)
-            return vim.tbl_contains({ "()", "[]", "{}" }, pair)
-        end),
-        Rule("( ", " )")
-            :with_pair(function()
-                return false
-            end)
-            :with_move(function(opts)
-                return opts.prev_char:match(".%)") ~= nil
-            end)
-            :use_key(")"),
-        Rule("{ ", " }")
-            :with_pair(function()
-                return false
-            end)
-            :with_move(function(opts)
-                return opts.prev_char:match(".%}") ~= nil
-            end)
-            :use_key("}"),
-        Rule("[ ", " ]")
-            :with_pair(function()
-                return false
-            end)
-            :with_move(function(opts)
-                return opts.prev_char:match(".%]") ~= nil
-            end)
-            :use_key("]"),
-    })
+    -- npairs.add_rules({
+    --     Rule("=", "")
+    --         :with_pair(cond.not_inside_quote())
+    --         :with_pair(function(opts)
+    --             local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+    --             if last_char:match("[%w%=%s]") then
+    --                 return true
+    --             end
+    --             return false
+    --         end)
+    --         :replace_endpair(function(opts)
+    --             local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
+    --             local next_char = opts.line:sub(opts.col, opts.col)
+    --             next_char = next_char == " " and "" or " "
+    --             if prev_2char:match("%w$") then
+    --                 return "<bs> =" .. next_char
+    --             end
+    --             if prev_2char:match("%=$") then
+    --                 return next_char
+    --             end
+    --             if prev_2char:match("=") then
+    --                 return "<bs><bs>=" .. next_char
+    --             end
+    --             return ""
+    --         end)
+    --         :set_end_pair_length(0)
+    --         :with_move(cond.none())
+    --         :with_del(cond.none()),
+
+    --     Rule("( ", " )")
+    --         :with_pair(function()
+    --             return false
+    --         end)
+    --         :with_move(function(opts)
+    --             return opts.prev_char:match(".%)") ~= nil
+    --         end)
+    --         :use_key(")"),
+    --     Rule("{ ", " }")
+    --         :with_pair(function()
+    --             return false
+    --         end)
+    --         :with_move(function(opts)
+    --             return opts.prev_char:match(".%}") ~= nil
+    --         end)
+    --         :use_key("}"),
+    --     Rule("[ ", " ]")
+    --         :with_pair(function()
+    --             return false
+    --         end)
+    --         :with_move(function(opts)
+    --             return opts.prev_char:match(".%]") ~= nil
+    --         end)
+    --         :use_key("]"),
+    -- })
+
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     if load_coq() then
         local remap = vim.api.nvim_set_keymap

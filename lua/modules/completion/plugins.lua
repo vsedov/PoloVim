@@ -124,7 +124,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
 completion["hrsh7th/nvim-cmp"] = {
     branch = "dev",
     -- opt = true,
-    event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
+    -- event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
     after = { "LuaSnip" }, -- "nvim-snippy",
     requires = {
@@ -135,7 +135,7 @@ completion["hrsh7th/nvim-cmp"] = {
             config = conf.tabnine,
             opt = true,
         },
-        -- { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
+        { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
         { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },

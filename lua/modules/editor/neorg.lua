@@ -269,19 +269,19 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
                 ':lua require"telescope".extensions.neorg.search_headings({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
             },
             {
-                "<leader>tu",
+                neorg_leader .. "u",
                 ':lua require"telescope".extensions.neorg.find_context_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
             },
             {
-                "<leader>ti",
+                neorg_leader .. "i",
                 ':lua require"telescope".extensions.neorg.find_project_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
             },
             {
-                "<leader>to",
+                neorg_leader .. "o",
                 ':lua require"telescope".extensions.neorg.find_aof_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
             },
             {
-                "<leader>tp",
+                neorg_leader .. "p",
                 ':lua require"telescope".extensions.neorg.find_aof_project_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
             },
         },

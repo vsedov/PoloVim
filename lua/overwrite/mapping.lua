@@ -22,7 +22,6 @@ local keys = { --
     ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
     ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
     ["n|<Leader>fq"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
-    ["n|<Leader>fW"] = map_cu("Clap windows"):with_noremap():with_silent(),
     ["n|<Leader>gd"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
     ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
 
@@ -189,6 +188,10 @@ _G.run_or_test = function(debug)
     end
 end
 
+vim.api.nvim_add_user_command("GodAbbriv", function()
+    vim.cmd([[packadd vim-abbrev]])
+end, { force = true })
+
 vim.api.nvim_add_user_command("DuckStart", function()
     require("modules.useless.config").launch_duck()
 end, { force = true })
@@ -199,10 +202,6 @@ end, { force = true })
 
 vim.api.nvim_add_user_command("DebugOpen", function()
     require("modules.lang.dap").prepare()
-end, { force = true })
-
-vim.api.nvim_add_user_command("HpoonClear", function()
-    require("harpoon.mark").clear_all()
 end, { force = true })
 
 vim.api.nvim_add_user_command("HpoonClear", function()
@@ -228,7 +227,6 @@ vim.api.nvim_add_user_command("Hashbang", function()
     if shells[extension] then
         local hb = shells[extension]
         hb[#hb + 1] = ""
-
         vim.api.nvim_buf_set_lines(0, 0, 0, false, hb)
         vim.api.nvim_create_autocmd("BufWritePost", {
             buffer = 0,
@@ -244,6 +242,14 @@ end, { force = true })
 
 vim.api.nvim_add_user_command("ColourScheme", function()
     require("utils.telescope").colorscheme()
+end, { force = true })
+
+vim.api.nvim_add_user_command("BL", function()
+    require("utils.selfunc").blameVirtualText()
+end, { force = true })
+
+vim.api.nvim_add_user_command("BLR", function()
+    require("utils.selfunc").clearBlameVirtualText()
 end, { force = true })
 
 vim.cmd([[

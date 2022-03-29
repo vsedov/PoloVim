@@ -7,12 +7,11 @@ return {
         local hover = null_ls.builtins.hover
         local actions = null_ls.builtins.code_actions
         local sources = {
-            null_ls.builtins.formatting.autopep8,
-            null_ls.builtins.formatting.rustfmt,
             null_ls.builtins.diagnostics.yamllint,
-            null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.code_actions.proselint,
             null_ls.builtins.code_actions.refactoring,
+            -- null_ls.builtins.formatting.isort,
+            -- null_ls.builtins.formatting.yapf,
             -- hover.dictionary,
             diagnostics.misspell.with({
                 filetypes = { "markdown", "text", "txt" },
@@ -32,10 +31,18 @@ return {
             }),
             actions.proselint.with({ filetypes = { "markdown", "tex" }, command = "proselint", args = { "--json" } }),
         }
-
         local function exist(bin)
             return vim.fn.exepath(bin) ~= ""
         end
+
+        if use_gitsigns() then
+            table.insert(sources, null_ls.builtins.code_actions.gitsigns)
+        end
+
+        if exist("rustfmt") then
+            table.insert(sources, null_ls.builtins.formatting.rustfmt)
+        end
+
         -- latex script
         if exist("latexindent") then
             table.insert(sources, null_ls.builtins.formatting.latexindent)
@@ -81,12 +88,12 @@ return {
                 })
             )
         end
-        -- Maybe i dont need luacheck for this, im not sure though
+        -- -- Maybe i dont need luacheck for this, im not sure though
         -- if exist("luacheck") then
         --     table.insert(
         --         sources,
         --         null_ls.builtins.diagnostics.luacheck.with({
-        --             extra_args = { "--append-config", vim.fn.expand("~/.luacheckrc") },
+        --             extra_args = { "--append-config", vim.fn.expand("~/.config/.luacheckrc") },
         --         })
         --     )
         -- end
@@ -99,6 +106,10 @@ return {
                     extra_args = { "--config", vim.fn.expand("~/.config/flake8") },
                 })
             )
+        end
+
+        if exist("vulture") then
+            table.insert(sources, null_ls.builtins.diagnostics.vulture)
         end
 
         if exist("clang-format") then
@@ -164,14 +175,14 @@ return {
                 "tsconfig.json",
                 ".git"
             ),
-
+            -- on_attach = require("modules.completion.lsp.utils").get_common_opts,
             on_attach = function(client)
                 -- I dont want any formating on python files.
                 if client.resolved_capabilities.document_formatting then
                     vim.diagnostic.config({
                         virtual_text = false,
                     })
-                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
                     -- Convert this using vim.api.nvim_create_autocmd()
                     -- vim.api.nvim_create_autocmd("BufWritePre", {
                     --     pattern = "*",

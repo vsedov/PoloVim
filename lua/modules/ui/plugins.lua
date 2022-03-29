@@ -37,9 +37,9 @@ ui["rcarriga/nvim-notify"] = {
 ui["kyazdani42/nvim-tree.lua"] = {
     cmd = { "NvimTreeToggle", "NvimTreeOpen" },
     -- requires = {'kyazdani42/nvim-web-devicons'},
-    setup = conf.nvim_tree_setup,
-    config = conf.nvim_tree,
+    config = conf.nvim_tree_setup,
 }
+
 -- Use this with nvimtree .
 ui["elihunter173/dirbuf.nvim"] = {
     cmd = { "Dirbuf" },

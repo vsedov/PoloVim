@@ -65,7 +65,7 @@ local function load_options()
         splitright = true,
         switchbuf = "useopen",
         backspace = "indent,eol,start",
-        diffopt = "filler,iwhite,internal,algorithm:patience",
+        diffopt = "filler,hiddenoff,closeoff,iwhite,internal,algorithm:patience",
         completeopt = "menuone,noselect",
         jumpoptions = "stack",
         showmode = false,
@@ -110,7 +110,7 @@ local function load_options()
         number = true,
         colorcolumn = "80",
         foldenable = true,
-        signcolumn = "auto:1", --auto auto:2  "number"
+        signcolumn = "yes:2", --[auto yes] yes:3  auto:2  "number" auto: 2-4
         conceallevel = 2,
         concealcursor = "niv",
     }

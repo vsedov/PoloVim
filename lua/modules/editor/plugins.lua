@@ -21,6 +21,7 @@ editor["kana/vim-niceblock"] = {
     opt = true,
 }
 
+-- TODO: Lazy Load this
 editor["max397574/dyn_help.nvim"] = {}
 
 -- I like this plugin, but 1) offscreen context is slow
@@ -42,50 +43,63 @@ editor["andymass/vim-matchup"] = {
         require("nvim-treesitter.configs").setup({
             matchup = {
                 enable = true, -- mandatory, false will disable the whole extension
-                disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+                disable = { "ruby" }, -- optional, list of language that will be disabled
                 -- [options]
             },
         })
     end,
 }
 
-editor["bfredl/nvim-miniyank"] = {
-    keys = { "p", "y", "<C-v>" },
-    opt = true,
+editor["gbprod/yanky.nvim"] = {
+    keys = {
+        "<C-v>",
+        "<Plug>(YankyPutAfter)",
+        "<Plug>(YankyPutBefore)",
+        "<Plug>(YankyPutAfter)",
+        "<Plug>(YankyPutBefore)",
+
+        "<Plug>(YankyGPutAfter)",
+        "<Plug>(YankyGPutBefore)",
+        "<Plug>(YankyGPutAfter)",
+        "<Plug>(YankyGPutBefore)",
+
+        "<Plug>(YankyCycleForward)",
+        "<Plug>(YankyCycleBackward)",
+    },
     setup = function()
-        vim.api.nvim_command("map p <Plug>(miniyank-autoput)")
-        vim.api.nvim_command("map P <Plug>(miniyank-autoPut)")
+        local default_keymaps = {
+            { "n", "p", "<Plug>(YankyPutAfter)" },
+            { "n", "P", "<Plug>(YankyPutBefore)" },
+
+            { "x", "p", "<Plug>(YankyPutAfter)" },
+            { "x", "P", "<Plug>(YankyPutBefore)" },
+
+            { "n", "<leader>p", "<Plug>(YankyGPutAfter)" },
+            { "n", "<leader>P", "<Plug>(YankyGPutBefore)" },
+
+            { "x", "<leader>p", "<Plug>(YankyGPutAfter)" },
+            { "x", "<leader>P", "<Plug>(YankyGPutBefore)" },
+
+            { "n", "<Leader>n", "<Plug>(YankyCycleForward)" },
+            { "n", "<Leader>N", "<Plug>(YankyCycleBackward)" },
+        }
+        for _, m in ipairs(default_keymaps) do
+            vim.keymap.set(m[1], m[2], m[3], {})
+        end
+    end,
+    config = function()
+        require("yanky").setup({
+            ring = {
+                history_length = 10,
+                storage = "shada",
+            },
+        })
     end,
 }
 
 editor["ggandor/lightspeed.nvim"] = {
-    -- as = "lightspeed",
-    -- commit = "4d8359a30b26ee5316d0e7c79af08b10cb17a57b",
-    keys = {
-        "<Plug>Lightspeed_s",
-        "<Plug>Lightspeed_S",
-        "<Plug>Lightspeed_x",
-        "<Plug>Lightspeed_X",
-        "<Plug>Lightspeed_f",
-        "<Plug>Lightspeed_F",
-        "<Plug>Lightspeed_t",
-        "<Plug>Lightspeed_T",
-        "<Plug>Lightspeed_gs",
-        "<Plug>Lightspeed_gS",
-        "<Plug>Lightspeed_omni_s",
-        "<Plug>Lightspeed_omni_gs",
-    },
     setup = function()
         local default_keymaps = {
-            { "n", "s", "<Plug>Lightspeed_s" },
-            { "n", "S", "<Plug>Lightspeed_S" },
-            { "x", "s", "<Plug>Lightspeed_s" },
-            { "x", "S", "<Plug>Lightspeed_S" },
-            { "o", "z", "<Plug>Lightspeed_s" },
-            { "o", "Z", "<Plug>Lightspeed_S" },
-            { "o", "x", "<Plug>Lightspeed_x" },
-            { "o", "X", "<Plug>Lightspeed_X" },
-
             { "n", "<M-s>", "<Plug>Lightspeed_omni_s" },
             { "n", "<M-S>", "<Plug>Lightspeed_omni_gs" },
             { "x", "<M-s>", "<Plug>Lightspeed_omni_s" },
@@ -99,33 +113,16 @@ editor["ggandor/lightspeed.nvim"] = {
             { "x", "gS", "<Plug>Lightspeed_gS" },
             { "o", "gs", "<Plug>Lightspeed_gs" },
             { "o", "gS", "<Plug>Lightspeed_gS" },
-
-            { "n", "f", "<Plug>Lightspeed_f" },
-            { "n", "F", "<Plug>Lightspeed_F" },
-            { "x", "f", "<Plug>Lightspeed_f" },
-            { "x", "F", "<Plug>Lightspeed_F" },
-            { "o", "f", "<Plug>Lightspeed_f" },
-            { "o", "F", "<Plug>Lightspeed_F" },
-
-            { "n", "t", "<Plug>Lightspeed_t" },
-            { "n", "T", "<Plug>Lightspeed_T" },
-            { "x", "t", "<Plug>Lightspeed_t" },
-            { "x", "T", "<Plug>Lightspeed_T" },
-            { "o", "t", "<Plug>Lightspeed_t" },
-            { "o", "T", "<Plug>Lightspeed_T" },
         }
         for _, m in ipairs(default_keymaps) do
-            -- remove siletnt = true
-            vim.keymap.set(m[1], m[2], m[3], {})
+            vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
         end
     end,
-
-    -- event = "BufReadPost",
-    -- opt = true,
+    --
+    event = "BufReadPost",
+    opt = true,
     config = conf.lightspeed,
 }
---
---
 
 -- editor["ggandor/leap.nvim"] = {
 --     -- opt = true,
@@ -351,7 +348,6 @@ editor["numToStr/Comment.nvim"] = {
     config = conf.comment,
 }
 
--- TODO do shit to this
 editor["LudoPinelli/comment-box.nvim"] = {
     keys = { "<Leader>cb", "<Leader>cc", "<Leader>cl", "<M-p>" },
     cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },

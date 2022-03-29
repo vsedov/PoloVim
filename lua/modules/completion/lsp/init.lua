@@ -51,6 +51,37 @@ local clangd_configs = vim.tbl_deep_extend(
 )
 require("clangd_extensions").setup({
     server = clangd_configs,
+    extensions = {
+        autoSetHints = true,
+        hover_with_actions = true,
+        -- These apply to the default ClangdSetInlayHints command
+        inlay_hints = {
+            -- Only show inlay hints for the current line
+            only_current_line = true,
+            -- Event which triggers a refersh of the inlay hints.
+            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+            -- not that this may cause  higher CPU usage.
+            -- This option is only respected when only_current_line and
+            -- autoSetHints both are true.
+            only_current_line_autocmd = "CursorHold",
+            -- whether to show parameter hints with the inlay hints or not
+            show_parameter_hints = true,
+            -- prefix for parameter hints
+            parameter_hints_prefix = "<- ",
+            -- prefix for all the other hints (type, chaining)
+            other_hints_prefix = "=> ",
+            -- whether to align to the length of the longest line in the file
+            max_len_align = false,
+            -- padding from the left if max_len_align is true
+            max_len_align_padding = 1,
+            -- whether to align to the extreme right or not
+            right_align = false,
+            -- padding from the right if right_align is true
+            right_align_padding = 7,
+            -- The color of the hints
+            highlight = "Comment",
+        },
+    },
 })
 
 lspconfig.texlab.setup(enhance_attach({ require("modules.completion.lsp.providers.latex") }))
@@ -111,7 +142,6 @@ lspconfig.vimls.setup(enhance_attach({
 local runtime_path = {}
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-
 local sumneko_lua_server = enhance_attach({
     -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     cmd = { "lua-language-server" },
@@ -129,7 +159,7 @@ local sumneko_lua_server = enhance_attach({
                 workspace = {
                     -- remove all of this, as it slows things down
                     library = {
-                        -- vim.api.nvim_get_runtime_file("", false),
+                        vim.api.nvim_get_runtime_file("", true),
                         -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
                         -- vim.api.nvim_get_runtime_file("", false),
                         -- [vim.fn.expand("~") .. "/.config/nvim/lua"] = false,

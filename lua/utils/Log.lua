@@ -1,16 +1,16 @@
 -- https://github.com/LunarVim/LunarVim/blob/9017389766ff1ce31c8f0a21fe667653a7ab6b3a/lua/lnvim/core/log.lua
+local global = require("core.global")
 local Log = {}
-
 Log.default = {
 
     ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
     level = "warn",
     -- currently disabled due to instabilities
-    override_notify = false,
+    override_notify = true,
 }
 -- Log:get_logger()
 
-local logfile = string.format("%s/%s.log", "/home/viv/Trash_Stuff", "nvim")
+local logfile = global.log_path
 
 Log.levels = {
     TRACE = 1,
@@ -70,6 +70,32 @@ function Log:init()
                     formatter = structlog.formatters.Format( --
                         "%s [%-5s] %s: %-30s",
                         { "timestamp", "level", "logger_name", "msg" }
+                    ),
+                }),
+                structlog.sinks.Console(self.levels.INFO, {
+                    async = false,
+                    processors = {
+                        structlog.processors.Namer(),
+                        structlog.processors.StackWriter({ "line", "file" }, { max_parents = 0, stack_level = 2 }),
+                        structlog.processors.Timestamper("%H:%M:%S"),
+                    },
+                    formatter = structlog.formatters.FormatColorizer( --
+                        "%s [%-5s] %s: %-30s",
+                        { "timestamp", "level", "logger_name", "msg" },
+                        { level = structlog.formatters.FormatColorizer.color_level() }
+                    ),
+                }),
+                structlog.sinks.Console(self.levels.ERROR, logfile, {
+                    async = false,
+                    processors = {
+                        structlog.processors.Namer(),
+                        structlog.processors.StackWriter({ "line", "file" }, { max_parents = 0, stack_level = 2 }),
+                        structlog.processors.Timestamper("%H:%M:%S"),
+                    },
+                    formatter = structlog.formatters.FormatColorizer( --
+                        "%s [%-5s] %s: %-30s",
+                        { "timestamp", "level", "logger_name", "msg" },
+                        { level = structlog.formatters.FormatColorizer.color_level() }
                     ),
                 }),
 
@@ -208,4 +234,4 @@ end
 
 setmetatable({}, Log)
 
-return Log
+return { setup = Log:init() }

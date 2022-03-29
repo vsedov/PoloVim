@@ -51,9 +51,6 @@ local plug_map = {
             vim.b.venn_enabled = nil
         end
     end):with_silent(),
-    -- ["n|b"] = map_cmd('v:lua.word_motion_move_b("b")'):with_silent():with_expr(),
-    -- ["n|B"] = map_cmd('v:lua.word_motion_move_b("B")'):with_silent():with_expr(),
-    -- ["n|gE"] = map_cmd('v:lua.word_motion_move_gE("gE")'):with_silent():with_expr(),
 
     --------------- Commands -----------
     ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
@@ -62,9 +59,6 @@ local plug_map = {
     -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
     -- have this for the time, i might use some root , not usre .
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
-
-    -- -- ["n|gt"]             = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
-    -- -- ["n|<Leader>cw"]     = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
 
     -- -- Plugin nvim-tree
     ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
@@ -78,42 +72,34 @@ local plug_map = {
 
     -- Back up .
     ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
-
-    ["n|<Leader>gD"] = map_cmd("<cmd>lua vim.lsp.buf.type_definition()<CR>"):with_noremap():with_silent(),
-
     -- -- On n map commands
+    ["n|gA"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
     ["n|gD"] = map_cmd("<cmd>lua vim.lsp.buf.declaration()<CR>"):with_noremap():with_silent(),
-    ["n|gd"] = map_cmd("<cmd>lua vim.lsp.buf.definition()<CR>"):with_noremap():with_silent(),
-
     ["n|K"] = map_cmd("<cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
-    ["n|gi"] = map_cmd("<cmd>lua vim.lsp.buf.implementation()<CR>"):with_noremap():with_silent(),
-
-    ["n|rn"] = map_cmd("<cmd>lua vim.lsp.buf.references()<CR>"):with_noremap():with_silent(),
-
-    -- Depreciated, need to recode this part up.
+    ["n|gI"] = map_cmd("<cmd>lua vim.lsp.buf.implementation()<CR>"):with_noremap():with_silent(),
+    ["n|gr"] = map_cmd("<cmd>lua vim.lsp.buf.references()<CR>"):with_noremap():with_silent(),
     ["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
     ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
 
-    ["n|<localleader>d"] = map_cmd("<cmd>lua vim.diagnostic.open_float(0)<CR>"):with_noremap():with_silent(),
     ["n|<localleader>D"] = map_cmd(
-        '<cmd>lua require"modules.completion.lsp_support".toggle_diagnostics_visibility()<CR>'
+        '<cmd>lua require"modules.completion.lsp.utils.peek".toggle_diagnostics_visibility()<CR>'
     )
         :with_noremap()
         :with_silent(),
-    ["n|<localleader>dp"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekDefinition()<CR>')
+    ["n|gd"] = map_cmd([[<cmd>lua require"modules.completion.lsp.utils.peek".Peek('definition')<CR>]])
         :with_noremap()
         :with_silent(),
 
-    ["n|<localleader>dpt"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekTypeDefinition()<CR>')
+    -- no longer works
+    ["n|dpj"] = map_cmd('<cmd>lua require"modules.completion.lsp.utils.peek".PeekTypeDefinition()<CR>')
         :with_noremap()
         :with_silent(),
 
-    ["n|<localleader>dpi"] = map_cmd('<cmd>lua require"modules.completion.lsp_support".PeekImplementation()<CR>')
+    ["n|dpk"] = map_cmd('<cmd>lua require"modules.completion.lsp.utils.peek".PeekImplementation()<CR>')
         :with_noremap()
         :with_silent(),
 
     ["n|<Leader>gr"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
-    ["n|gA"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
 
     -- Replace word under cursor in Buffer (case-sensitive)
     -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
@@ -195,10 +181,11 @@ local plug_map = {
         :with_silent(),
 
     -- grep
-    ["n|<Leader>fw"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])
+    ["n|<Leader>fW"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])
         :with_expr()
         :with_silent(),
-    ["n|<Leader>fW"] = map_cu("Telescope grep_string"):with_noremap():with_silent(),
+
+    ["n|<Leader>fw"] = map_cu("Telescope grep_string"):with_noremap():with_silent(),
     ["n|<Leader>gw"] = map_cmd('<cmd>lua require"utils.telescope".grep_last_search()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>cb"] = map_cmd('<cmd>lua require"utils.telescope".curbuf()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>gv"] = map_cmd('<cmd>lua require"utils.telescope".grep_string_visual()<CR>')
@@ -224,16 +211,6 @@ local plug_map = {
 
     -- lsp implmentation with telescope
     ["n|<Leader>ir"] = map_cmd('<cmd>lua require"utils.telescope".lsp_references()<CR>'):with_noremap():with_silent(),
-
-    -- kitty / mac users, have a nice time >.< || will be changed
-    ["n|<d-f>"] = map_cmd([[':Telescope live_grep<cr>' . expand('<cword>')]]):with_expr():with_silent():with_expr(),
-    -- ["n|<d-F>"] = map_cmd(
-
-    --   [['<cmd> lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>' .  ' --type ' . &ft . ' ' . expand('<cword>')]]
-    -- ):with_expr():with_silent(),
-    -- ["n|<d-f>"] = map_cr("<cmd> lua require'telescope.builtin'.live_grep({defulat_text=vim.fn.expand('cword')})"):with_noremap(),
-    -- :with_silent(),
-    -- ["n|<Leader>fs"] = map_cu('Telescope gosource'):with_noremap():with_silent(),
 
     -- Plugin Vista or SymbolsOutline -- Symbol Breaks for the time .
     ["n|<Leader>v"] = map_cu("Vista!!"):with_noremap():with_silent(),
