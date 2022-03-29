@@ -12,6 +12,12 @@ user["NarutoXY/ytmmusic.lua"] = {
     end,
 }
 
+user["Pocco81/AbbrevMan.nvim"] = {
+    opt = true,
+    cmd = { "AMLoad" },
+    config = conf.abbrv,
+}
+
 -- holy jesus this makes this thing laggy
 user["~/GitHub/vim-autocorrect/opt/vim-abbrev"] = {
     opt = true,
