@@ -188,6 +188,10 @@ _G.run_or_test = function(debug)
     end
 end
 
+vim.api.nvim_add_user_command("GodAbbriv", function()
+    vim.cmd([[packadd vim-abbrev]])
+end, { force = true })
+
 vim.api.nvim_add_user_command("DuckStart", function()
     require("modules.useless.config").launch_duck()
 end, { force = true })
