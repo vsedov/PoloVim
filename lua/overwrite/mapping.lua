@@ -135,7 +135,6 @@ local keys = { --
     ["n|<Leader>rc"] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]]):with_noremap(),
 
     ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
-
 }
 
 vim.cmd([[nnoremap Q q]])
@@ -237,6 +236,10 @@ vim.api.nvim_add_user_command("Hashbang", function()
             command = "silent !chmod u+x %",
         })
     end
+end, { force = true })
+
+vim.api.nvim_add_user_command("Tags", function()
+    vim.cmd([[!ctags -R -I EXTERN -I INIT --exclude='build*' --exclude='.vim-src/**' --exclude='node_modules/**' --exclude='venv/**' --exclude='**/site-packages/**' --exclude='data/**' --exclude='dist/**' --exclude='notebooks/**' --exclude='Notebooks/**' --exclude='*graphhopper_data/*.json' --exclude='*graphhopper/*.json' --exclude='*.json' --exclude='qgis/**' *]])
 end, { force = true })
 
 vim.api.nvim_add_user_command("Keymaps", function()

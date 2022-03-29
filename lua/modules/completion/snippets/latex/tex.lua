@@ -12,7 +12,6 @@ local tex_arrow = [[\$\implies\$]]
 local tex_paragraph = [[
 \paragraph{$1}]]
 
-
 local custom_title_page = [[ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Define Article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass{article}
