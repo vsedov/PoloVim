@@ -121,6 +121,7 @@ return {
             focusable = false,
             border = border,
             scope = "cursor",
+            source = "always",
             format = function(diagnostic)
                 if diagnostic.user_data == nil then
                     return diagnostic.message
@@ -161,6 +162,7 @@ return {
     float = {
         focusable = true,
         border = border,
+        source = "always",
     },
     open_float = (function(orig)
         return function(bufnr, opts)
