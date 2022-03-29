@@ -152,8 +152,9 @@ local sources = {
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
     -- causing lag maybe ?
-    -- { name = "treesitter", keyword_length = 2 },
+    { name = "treesitter", keyword_length = 2 },
     { name = "neorg", priority = 6 },
+    { name = "nvim_lsp_signature_help", priority = 10 },
 }
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })

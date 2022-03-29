@@ -169,63 +169,23 @@ local snippets = {
             t({ "", "}" }),
         }),
 
-        s("class", {
-            -- Choice: Switch between two different Nodes, first parameter is its position, second a list of nodes.
-            c(1, {
-                t("public "),
-                t("private "),
-            }),
-            t("class "),
-            i(2),
-            t(" "),
-            c(3, {
-                t("{"),
-                -- sn: Nested Snippet. Instead of a trigger, it has a position, just like insert-nodes. !!! These don't expect a 0-node!!!!
-                -- Inside Choices, Nodes don't need a position as the choice node is the one being jumped to.
-                sn(nil, {
-                    t("extends "),
-                    i(1),
-                    t(" {"),
-                }),
-                sn(nil, {
-                    t("implements "),
-                    i(1),
-                    t(" {"),
-                }),
-            }),
-            t({ "", "\t" }),
-            i(0),
-            t({ "", "}" }),
-        }),
-
-        s({ trig = "fn" }, {
-            d(6, utils.jdocsnip, { 2, 4, 5 }),
+        s("fn", {
+            d(4, utils.cppdocsnip, { 1, 3, 3 }),
             t({ "", "" }),
             c(1, {
-                t({ "public " }),
-                t({ "private " }),
+                t("void"),
+                t("String"),
+                t("char"),
+                t("int"),
+                t("double"),
+                t("boolean"),
+                i(nil, ""),
             }),
-            c(2, {
-                t({ "void" }),
-                i(nil, { "" }),
-                t({ "String" }),
-                t({ "char" }),
-                t({ "int" }),
-                t({ "double" }),
-                t({ "boolean" }),
-            }),
-            t({ " " }),
-            i(3, { "myFunc" }),
-            t({ "(" }),
-            i(4),
-            t({ ")" }),
-            c(5, {
-                t({ "" }),
-                sn(nil, {
-                    t({ "", " throws " }),
-                    i(1),
-                }),
-            }),
+            t(" "),
+            i(2, "myFunc"),
+            t("("),
+            i(3),
+            t(")"),
             t({ " {", "\t" }),
             i(0),
             t({ "", "}" }),
@@ -406,6 +366,6 @@ ls.add_snippets("norg", autosnippets, { type = "autosnippets" })
 
 -- HACK: For some reason you have to load it twice
 require("luasnip/loaders/from_vscode").load()
-require("luasnip/loaders/from_vscode").load({
-    paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
-})
+-- require("luasnip/loaders/from_vscode").load({
+--     paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
+-- })
