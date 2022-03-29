@@ -1,14 +1,12 @@
 vim.cmd([[
-	iab Ydate <C-R>=strftime("%d-%b-%Y")<CR>
+	iab :Ydate: <C-R>=strftime("%d-%b-%Y")<CR>
 	iab :rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%d/%m/%y").'):')<CR>
 	iab :todo: <c-r>=printf(&commentstring, ' TODO(vsedov):')<CR>
-	iab tdate <c-r>=strftime("%Y-%m-%d")<cr>
-
-	" Syntax.
+	iab :tdate: <c-r>=strftime("%Y-%m-%d")<cr>
 	inoreabbrev funciton function
-	inoreabbrev asycn     async
+	inoreabbrev asycn async
 	inoreabbrev cosnt     const
-	inoreabbrev ehco      echo
+	inoreabbrev ehco echo
 	inoreabbrev flase     false
 	inoreabbrev functoin  function
 	inoreabbrev ocnst     const
@@ -16,23 +14,19 @@ vim.cmd([[
 	inoreabbrev reutnr    return
 	inoreabbrev reutrn    return
 	inoreabbrev strign    string
-	inoreabbrev treu      true
+	inoreabbrev treu true
 	inoreabbrev undefiend undefined
 	inoreabbrev lod ಠ_ಠ
 	inoreabbrev sadface ʘ︵ʘ
 	inoreabbrev pandaman 🐼
-
-	inoreabbrev lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.<cr><cr>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh.<cr><cr>Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus.
-
-	" English words.
-	inoreabbrev teh       the
-	inoreabbrev Adn       And
-	inoreabbrev adn       and
-	inoreabbrev Execture  Execute
-	inoreabbrev execture  execute
+	inoreabbrev teh the
+	inoreabbrev Adn And
+	inoreabbrev adn and
+	inoreabbrev Execture Execute
+	inoreabbrev execture execute
 	inoreabbrev Exectures Executes
 	inoreabbrev exectures executes
-	inoreabbrev Nubmer    Number
+	inoreabbrev Nubmer Number
 	inoreabbrev nubmer    number
 	inoreabbrev Nubmers   Numbers
 	inoreabbrev nubmers   numbers
@@ -77,9 +71,6 @@ vim.cmd([[
 	inoreabbrev Widnow    Window
 	inoreabbrev widnow    window
 	inoreabbrev WidnoWing Windowing
-	inoreabbrev widnowing 
-	inoreabbrev si is
-
 	inoreabbrev Widnows   Windows
 	inoreabbrev widnows   windows
 	inoreabbrev rtfm read the fucking manual
@@ -406,5 +397,4 @@ vim.cmd([[
 	inoreabbrev sukc suck
 	inoreabbrev zpeling spelling
 	inoreabbrev yuor your
-
 ]])
