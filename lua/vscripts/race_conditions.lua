@@ -1,8 +1,12 @@
 vim.cmd([[
-	iab :Ydate: <C-R>=strftime("%d-%b-%Y")<CR>
-	iab :rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%d/%m/%y").'):')<CR>
-	iab :todo: <c-r>=printf(&commentstring, ' TODO(vsedov):')<CR>
-	iab :tdate: <c-r>=strftime("%Y-%m-%d")<cr>
+	inoreabbrev Ydate <C-R>=strftime("%d-%b-%Y")<CR>
+	inoreabbrev rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%T - %d/%m/%y").'):')<CR>
+	inoreabbrev todo: <c-r>=printf(&commentstring, ' TODO(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
+	inoreabbrev hack: <c-r>=printf(&commentstring, ' HACK(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
+	inoreabbrev fixme: <c-r>=printf(&commentstring, ' FIXME(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
+	inoreabbrev bug: <c-r>=printf(&commentstring, ' BUG(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
+	inoreabbrev :tdate: <c-r>=strftime("%Y-%m-%d")<cr>
+
 	inoreabbrev funciton function
 	inoreabbrev asycn async
 	inoreabbrev cosnt     const
@@ -290,6 +294,7 @@ vim.cmd([[
 	inoreabbrev soze size
 	inoreabbrev stnad stand
 	inoreabbrev stpo stop
+	inoreabbrev si is
 	inoreabbrev syas says
 	inoreabbrev ta at
 	inoreabbrev tahn than
