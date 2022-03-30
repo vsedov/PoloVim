@@ -23,7 +23,7 @@ ls.add_snippets("all", all_a, { type = "autosnippets" })
 local all = {
 
     s(
-        -- TODO: can probably make this one much smarter; right now it's basically just syntax reminder
+        -- TODO(vsedov) (01:30:01 - 30/03/22): can probably make this smarter, need to finish it atm
         { trig = "table", dscr = "Table template" },
         {
             t("| "),

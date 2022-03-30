@@ -137,6 +137,10 @@ function Lazyload()
             end
         end,
     })
+    vim.api.nvim_create_autocmd("Syntax", {
+        pattern = "*",
+        command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
+    })
 end
 
 local lazy_timer = 30
@@ -164,8 +168,6 @@ end, lazy_timer)
 --   -- vim.cmd(cmd)
 -- end, lazy_timer + 20)
 
--- vim.cmd([[hi LineNr guifg=#505068]])
-
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
@@ -175,7 +177,11 @@ vim.defer_fn(function()
     require("modules.ui.heirline") -- ignore
     require("utils.ui_overwrite")
     require("vscripts.tools")
-    require("vscripts.race_conditions")
+    if vim.bo.filetype ~= "tex" or vim.bo.filetype ~= "md" or vim.bo.filetype ~= "norg" then
+        require("vscripts.race_conditions").coding_support()
+    end
+    -- always load this
+    require("vscripts.race_conditions").language_support()
 
     vim.cmd("command! Spell call spelunker#check()")
     vim.api.nvim_add_user_command("Gram", function()

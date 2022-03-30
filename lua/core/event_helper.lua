@@ -146,5 +146,4 @@ function M.check_colour_column(leaving)
         vim.wo.colorcolumn = "+1"
     end
 end
-
 return M

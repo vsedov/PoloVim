@@ -191,7 +191,7 @@ function config.lightspeed()
             prev_match_group = "<S-Tab>",
         },
         --- f/t ---
-        limit_ft_matches = 10,
+        limit_ft_matches = 20,
         repeat_ft_with_target_char = true,
     })
 end

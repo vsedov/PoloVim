@@ -146,6 +146,11 @@ function autocmd.load_autocmds()
                     if byte ~= -1 or byte > 1 then
                         return
                     end
+                    vim.cmd([[
+                        syntax off
+                        filetype off
+                        filetype plugin indent off
+                    ]])
                     vim.bo.buftype = "nofile"
                     vim.bo.swapfile = false
                     vim.bo.fileformat = "unix"

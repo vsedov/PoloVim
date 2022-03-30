@@ -179,7 +179,8 @@ editor["hrsh7th/vim-searchx"] = {
     end,
 }
 --max397574
-editor["max397574/which-key.nvim"] = {
+-- REVISIT viv (13:14:11 - 30/03/22): Change this to maxes branch again if errors happen again
+editor["folke/which-key.nvim"] = {
     opt = true,
     after = "nvim-treesitter",
     config = function()

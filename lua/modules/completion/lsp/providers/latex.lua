@@ -12,20 +12,8 @@ local okular_args = { "--unique", "file:%p#src:%l%f" }
 local zathura_args = { "--synctex-forward", "%l:1:%f", "%p" }
 local qpdfview_args = { "--unique", "%p#src:%f:%l:1" }
 local skim_args = { "%l", "%p", "%f" }
+tex_preview_settings = zathura_args
 
-if forward_search_executable == "C:/Users/{User}/AppData/Local/SumatraPDF/SumatraPDF.exe" then
-    tex_preview_settings = sumatrapdf_args
-elseif forward_search_executable == "evince-synctex" then
-    tex_preview_settings = evince_args
-elseif forward_search_executable == "okular" then
-    tex_preview_settings = okular_args
-elseif forward_search_executable == "zathura" then
-    tex_preview_settings = zathura_args
-elseif forward_search_executable == "qpdfview" then
-    tex_preview_settings = qpdfview_args
-elseif forward_search_executable == "/Applications/Skim.app/Contents/SharedSupport/displayline" then
-    tex_preview_settings = skim_args
-end
 local settings = {
     cmd = { "texlab" },
     filetypes = { "tex", "bib" },
