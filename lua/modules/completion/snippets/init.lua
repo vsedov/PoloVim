@@ -237,79 +237,7 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
     snip.wordTrig = false
     ls.add_snippets("tex", { snip })
 end
-local autosnippets = {
-    s({
-        trig = "*([2-6])",
-        name = "Heading",
-        dscr = "Add Heading",
-        regTrig = true,
-        hidden = true,
-    }, {
-        f(function(_, snip)
-            return string.rep("*", tonumber(snip.captures[1])) .. " "
-        end, {}),
-    }, {
-        condition = conds.line_begin,
-    }),
-    s({
-        trig = "q([2-6])",
-        name = "Quote",
-        dscr = "Add Quote",
-        regTrig = true,
-        hidden = true,
-    }, {
-        f(function(_, snip)
-            return string.rep(">", tonumber(snip.captures[1])) .. " "
-        end, {}),
-    }, {
-        condition = conds.line_begin,
-    }),
-    s(
-        {
-            trig = ";l",
-            name = "fast option",
-        },
-        -- = {
-        fmt([[ - [{}] ]], {
-            -- return option "plugin"
-            d(1, function()
-                local options = { " ", "x", "-", "=", "_", "!", "+", "?" }
-                for i = 1, #options do
-                    options[i] = t(options[i])
-                end
-                return sn(nil, {
-                    c(1, options),
-                })
-            end),
-        })
-    ),
-    s({
-        trig = "-([2-6])",
-        name = "Unordered lists",
-        dscr = "Add Unordered lists",
-        regTrig = true,
-        hidden = true,
-    }, {
-        f(function(_, snip)
-            return string.rep("-", tonumber(snip.captures[1])) .. " ["
-        end, {}),
-    }, {
-        condition = conds.line_begin,
-    }),
-    s({
-        trig = "~([2-6])",
-        name = "Ordered lists",
-        dscr = "Add Ordered lists",
-        regTrig = true,
-        hidden = true,
-    }, {
-        f(function(_, snip)
-            return string.rep("~", tonumber(snip.captures[1])) .. " "
-        end, {}),
-    }, {
-        condition = conds.line_begin,
-    }),
-}
+
 local l_autosnippets = {}
 for _, snip in ipairs(require("modules.completion.snippets.latex.tex_math")) do
     table.insert(l_autosnippets, snip)
@@ -359,8 +287,8 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.bwA")) do
     snip.condition = pipe({ conds.line_begin, not_math })
     table.insert(l_autosnippets, snip)
 end
+
 ls.add_snippets("tex", l_autosnippets, { type = "autosnippets" })
-ls.add_snippets("norg", autosnippets, { type = "autosnippets" })
 
 -- require("modules.completion.snippets.latex.tex_math")
 

@@ -19,6 +19,81 @@ local fmta = require("luasnip.extras.fmt").fmta
 local types = require("luasnip.util.types")
 local conds = require("luasnip.extras.expand_conditions")
 
+local autosnippets = {
+    s({
+        trig = "*([2-6])",
+        name = "Heading",
+        dscr = "Add Heading",
+        regTrig = true,
+        hidden = true,
+    }, {
+        f(function(_, snip)
+            return string.rep("*", tonumber(snip.captures[1])) .. " "
+        end, {}),
+    }, {
+        condition = conds.line_begin,
+    }),
+    s({
+        trig = "q([2-6])",
+        name = "Quote",
+        dscr = "Add Quote",
+        regTrig = true,
+        hidden = true,
+    }, {
+        f(function(_, snip)
+            return string.rep(">", tonumber(snip.captures[1])) .. " "
+        end, {}),
+    }, {
+        condition = conds.line_begin,
+    }),
+    s(
+        {
+            trig = ";l",
+            name = "fast option",
+        },
+        -- = {
+        fmt([[ - [{}] ]], {
+            -- return option "plugin"
+            d(1, function()
+                local options = { " ", "x", "-", "=", "_", "!", "+", "?" }
+                for i = 1, #options do
+                    options[i] = t(options[i])
+                end
+                return sn(nil, {
+                    c(1, options),
+                })
+            end),
+        })
+    ),
+    s({
+        trig = "-([2-6])",
+        name = "Unordered lists",
+        dscr = "Add Unordered lists",
+        regTrig = true,
+        hidden = true,
+    }, {
+        f(function(_, snip)
+            return string.rep("-", tonumber(snip.captures[1])) .. " ["
+        end, {}),
+    }, {
+        condition = conds.line_begin,
+    }),
+    s({
+        trig = "~([2-6])",
+        name = "Ordered lists",
+        dscr = "Add Ordered lists",
+        regTrig = true,
+        hidden = true,
+    }, {
+        f(function(_, snip)
+            return string.rep("~", tonumber(snip.captures[1])) .. " "
+        end, {}),
+    }, {
+        condition = conds.line_begin,
+    }),
+}
+ls.add_snippets("norg", autosnippets, { type = "autosnippets" })
+
 local hour_or_minute = function(args, _)
     local text = args[1][1] or ""
 
