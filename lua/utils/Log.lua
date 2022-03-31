@@ -6,7 +6,7 @@ Log.default = {
     ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
     level = "warn",
     -- currently disabled due to instabilities
-    override_notify = true,
+    override_notify = false,
 }
 -- Log:get_logger()
 
@@ -120,19 +120,6 @@ function Log:init()
                         title = "title",
                     },
                 }),
-
-                ----
-                structlog.sinks.File(Log.levels.TRACE, "./test.log", {
-                    processors = {
-                        structlog.processors.Namer(),
-                        structlog.processors.StackWriter({ "line", "file" }, { max_parents = 3 }),
-                        structlog.processors.Timestamper("%H:%M:%S"),
-                    },
-                    formatter = structlog.formatters.Format( --
-                        "%s [%s] %s: %-30s",
-                        { "timestamp", "level", "logger_name", "msg" }
-                    ),
-                }),
             },
         },
         -- other_logger = {...}
@@ -234,4 +221,4 @@ end
 
 setmetatable({}, Log)
 
-return { setup = Log:init() }
+return Log:init()
