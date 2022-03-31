@@ -98,28 +98,6 @@ function Log:init()
                         { level = structlog.formatters.FormatColorizer.color_level() }
                     ),
                 }),
-
-                --- cba to manually figure this out .
-                structlog.sinks.NvimNotify(log_level, {
-                    processors = {
-                        default_namer,
-                        notify_opts_injecter,
-                    },
-                    formatter = structlog.formatters.Format( --
-                        "%s",
-                        { "msg" },
-                        { blacklist_all = true }
-                    ),
-                    -- This should probably not be hard-coded
-                    params_map = {
-                        icon = "icon",
-                        keep = "keep",
-                        on_open = "on_open",
-                        on_close = "on_close",
-                        timeout = "timeout",
-                        title = "title",
-                    },
-                }),
             },
         },
         -- other_logger = {...}
@@ -149,6 +127,53 @@ function Log:init()
         end
     end
     return logger
+end
+
+--- Configure the sink in charge of logging notifications
+---@param notif_handle table The implementation used by the sink for displaying the notifications
+function Log:configure_notifications(notif_handle)
+    Log:get_logger()
+    local status_ok, structlog = pcall(require, "structlog")
+    if not status_ok then
+        return
+    end
+
+    local default_namer = function(logger, entry)
+        entry["title"] = logger.name
+        return entry
+    end
+
+    local notify_opts_injecter = function(_, entry)
+        for key, value in pairs(notify_opts) do
+            entry[key] = value
+        end
+        notify_opts = {}
+        return entry
+    end
+
+    local sink = structlog.sinks.NvimNotify(Log.levels.INFO, {
+        processors = {
+            default_namer,
+            notify_opts_injecter,
+        },
+        formatter = structlog.formatters.Format( --
+            "%s",
+            { "msg" },
+            { blacklist_all = true }
+        ),
+        -- This should probably not be hard-coded
+        params_map = {
+            icon = "icon",
+            keep = "keep",
+            on_open = "on_open",
+            on_close = "on_close",
+            timeout = "timeout",
+            title = "title",
+        },
+        impl = notif_handle,
+    })
+
+    table.insert(self.__handle.sinks, sink)
 end
 
 --- Adds a log entry using Plenary.log
@@ -221,4 +246,4 @@ end
 
 setmetatable({}, Log)
 
-return Log:init()
+return Log

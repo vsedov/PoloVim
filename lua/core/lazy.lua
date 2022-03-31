@@ -200,7 +200,10 @@ vim.defer_fn(function()
     -- loader("harpoon")
     loader("workspaces.nvim")
     loader("nvim-notify")
-    vim.notify = require("notify")
+
+    local notify = require("notify")
+    vim.notify = notify
+
     if vim.fn.wordcount()["bytes"] < 2048000 then
         require("vscripts.cursorhold")
     end

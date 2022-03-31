@@ -204,6 +204,7 @@ function config.notify()
     }
 
     notify.setup(default)
+
     require("telescope").load_extension("notify")
 end
 

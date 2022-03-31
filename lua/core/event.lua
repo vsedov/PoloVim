@@ -161,12 +161,25 @@ function autocmd.load_autocmds()
         ft = {
             {
                 "CursorHold",
-                { "*.tex", "*.norg" },
+                { "*.tex" },
                 function()
                     local is_math = require("modules.completion.snippets.sniputils").is_math
                     if is_math then
                         require("nabla").popup()
                     end
+                end,
+            },
+            {
+                "FileType",
+                { "tex", "norg", "markdown" },
+                function()
+                    vim.cmd([[
+                  setlocal spell
+                  set spelllang=en,en_gb
+                  nnoremap <C-k> [s1z=<c-o>
+
+                  inoremap <C-k> <c-g>u<Esc>[s1z=`]a<c-g>u
+                ]])
                 end,
             },
             {
