@@ -225,11 +225,6 @@ ls.add_snippets("cpp", snippets.cpp)
 ls.add_snippets("c", snippets.c)
 ls.add_snippets("gitcommit", snippets.gitcommit)
 
-for _, snip in ipairs(require("modules.completion.snippets.latex.math_i")) do
-    snip.condition = pipe({ is_math })
-    snip.wordTrig = false
-    ls.add_snippets("tex", { snip })
-end
 require("modules.completion.snippets.choice_popup")
 
 for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
@@ -237,63 +232,9 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
     snip.wordTrig = false
     ls.add_snippets("tex", { snip })
 end
-
-local l_autosnippets = {}
-for _, snip in ipairs(require("modules.completion.snippets.latex.tex_math")) do
-    table.insert(l_autosnippets, snip)
-end
-
-for _, snip in ipairs(require("modules.completion.snippets.latex.math_wRA_no_backslash")) do
-    snip.regTrig = true
-    snip.condition = pipe({ is_math, no_backslash })
-    table.insert(l_autosnippets, snip)
-end
-
-for _, snip in ipairs(require("modules.completion.snippets.latex.math_rA_no_backslash")) do
-    snip.wordTrig = false
-    snip.regTrig = true
-    snip.condition = pipe({ is_math, no_backslash })
-    table.insert(l_autosnippets, snip)
-end
-
-for _, snip in ipairs(require("modules.completion.snippets.latex.normal_wA")) do
-    snip.condition = pipe({ not_math })
-    table.insert(l_autosnippets, snip)
-end
-
-for _, snip in ipairs(require("modules.completion.snippets.latex.math_wrA")) do
-    snip.regTrig = true
-    snip.condition = pipe({ is_math })
-    table.insert(l_autosnippets, snip)
-end
-
-for _, snip in ipairs(require("modules.completion.snippets.latex.math_wA_no_backslash")) do
-    snip.condition = pipe({ is_math, no_backslash })
-    table.insert(l_autosnippets, snip)
-end
-
-for _, snip in ipairs(require("modules.completion.snippets.latex.math_iA")) do
-    snip.wordTrig = false
-    snip.condition = pipe({ is_math, no_backslash })
-    table.insert(l_autosnippets, snip)
-end
-
-for _, snip in ipairs(require("modules.completion.snippets.latex./math_bwA")) do
-    snip.condition = pipe({ conds.line_begin, is_math })
-    table.insert(l_autosnippets, snip)
-end
-
-for _, snip in ipairs(require("modules.completion.snippets.latex.bwA")) do
-    snip.condition = pipe({ conds.line_begin, not_math })
-    table.insert(l_autosnippets, snip)
-end
-
-ls.add_snippets("tex", l_autosnippets, { type = "autosnippets" })
-
--- require("modules.completion.snippets.latex.tex_math")
+ls.add_snippets("tex", require("modules.completion.snippets.latex.tex_math"), { type = "autosnippets" })
 
 -- HACK: For some reason you have to load it twice
-require("luasnip/loaders/from_vscode").load()
--- require("luasnip/loaders/from_vscode").load({
---     paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
--- })
+require("luasnip/loaders/from_vscode").load({
+    paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
+})

@@ -7,12 +7,12 @@ local f = ls.function_node
 local c = ls.choice_node
 local fmt = require("luasnip.extras.fmt").fmt
 local all_a = {
-    s({ trig = "td:", name = "TODO" }, {
+    s({ trig = ":td:", name = "TODO" }, {
         c(1, {
-            t(string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), "TODO(vsedov): ")),
-            t(string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), "FIXME(vsedov): ")),
-            t(string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), "HACK(vsedov): ")),
-            t(string.format(string.gsub(vim.bo.commentstring, "%%s", " %%s"), "BUG(vsedov): ")),
+            t(string.format(vim.bo.commentstring:gsub("%%s", " TODO(vsedov): "))),
+            t(string.format(vim.bo.commentstring:gsub("%%s", " FIXME(vsedov): "))),
+            t(string.format(vim.bo.commentstring:gsub("%%s", " HACK(vsedov): "))),
+            t(string.format(vim.bo.commentstring:gsub("%%s", " BUG(vsedov): "))),
         }),
         i(0),
     }),

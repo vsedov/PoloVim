@@ -40,10 +40,10 @@ local tex_math = {
         end)
     ),
     s(
-        "=",
+        "===",
         f(function()
             if not in_mathzone() then
-                return "= "
+                return "=== "
             end
             return "\\equiv "
         end)
