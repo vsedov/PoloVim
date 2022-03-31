@@ -1,14 +1,45 @@
 local M = {}
-
 M.coding_support = function()
     vim.cmd([[
+				cnoreabbrev E Explore
+				cnoreabbrev E! Explore!
+				cnoreabbrev H Hexplore
+				cnoreabbrev H! Hexplore!
+				cnoreabbrev V Vexplore
+				cnoreabbrev V! Vexplore!
+
+				cnoreabbrev Vsp vsp
+				cnoreabbrev Ter ter
+
+				cnoreabbrev W! w!
+				cnoreabbrev Q! q!
+				cnoreabbrev Qall! qall!
+				cnoreabbrev Wq wq
+				cnoreabbrev Wa wa
+				cnoreabbrev wQ wq
+				cnoreabbrev WQ wq
+				cnoreabbrev W w
+				cnoreabbrev Q q
+				cnoreabbrev Qall qall
+
     			cnoreabbrev h vertical botright help<CR>
 				cnoreabbrev vsf vert bel sf
 				cnoreabbrev vsp bel vsp
+
 				cnoreabbrev sp bel sp<CR>
 				cnoreabbrev help vert help<CR>
-				cnoreabbrev w!! w !sudo tee > /dev/null %
-				
+
+	            cnoreabbrev grep silent grep  \| copen<left><left><left><left><left><left><left><left>
+
+				cnoreabbrev lgrep silent lgrep  <C-r>=expand('%:p')<cr> \| lopen<C-b><right><right><right><right><right><right><right><right><right><right><right><right><right>
+
+				cnoreabbrev sl s/\v()/\1\r/gc<left><left><left><left><left><left><left><left><left>
+				cnoreabbrev ft set ft=
+
+				" Non Greedy *
+				cnoreabbrev *? <left>\{-}<C-r>=<cr>
+
+
 				inoreabbrev rev <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev todo <c-r>=printf(&commentstring, ' TODO(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev hack <c-r>=printf(&commentstring, ' HACK(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
@@ -52,7 +83,8 @@ M.language_support = function()
 		inoreabbrev :flip: (ﾉಥ益ಥ）ﾉ︵┻━┻
 		inoreabbrev :yuno: ლ(ಠ益ಠლ)
 		inoreabbrev :strong: ᕦ(ò_óˇ)ᕤ
-
+ 		inoreabbrev betwene between
+ 		inoreabbrev nromal normal
 		inoreabbrev teh the
 		inoreabbrev Adn And
 		inoreabbrev adn and
