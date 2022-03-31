@@ -153,6 +153,11 @@ completion["hrsh7th/nvim-cmp"] = {
         require("modules.completion.cmp")
     end,
 }
+
+completion["/home/viv/.config/nvim/lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim"] = {
+    requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+    ft = "tex",
+}
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
     event = "InsertEnter",

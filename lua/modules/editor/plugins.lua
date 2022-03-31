@@ -7,6 +7,8 @@ local conf = require("modules.editor.config")
 
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 
+editor["szw/vim-maximizer"] = { opt = true, cmd = { "MaximizerToggle" } }
+
 editor["windwp/nvim-autopairs"] = {
     -- keys = {{'i', '('}},
     after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
@@ -370,6 +372,7 @@ editor["0xAdk/nvim-terminal.lua"] = {
         require("terminal").setup()
     end,
 }
+editor["tpope/vim-abolish"] = { opt = true, cmd = { "Subvert", "Abolish" } }
 
 editor["simnalamburt/vim-mundo"] = {
     opt = true,

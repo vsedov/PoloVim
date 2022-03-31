@@ -384,10 +384,8 @@ lang["folke/trouble.nvim"] = {
 
 lang["folke/todo-comments.nvim"] = {
     cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
-    opt = true,
-    config = function()
-        require("todo-comments").setup({}) -- Use defualt
-    end,
+    requires = "trouble.nvim",
+    config = conf.todo_comments,
 }
 
 lang["is0n/jaq-nvim"] = {
