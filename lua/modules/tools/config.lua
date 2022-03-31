@@ -693,8 +693,7 @@ function config.paperplanes()
 end
 
 function config.wilder()
-    vim.api.nvim_exec(
-        [[
+    vim.cmd([[
 call wilder#setup({'modes': [':', '/', '?']})
 
 call wilder#set_option('pipeline', [
@@ -728,15 +727,11 @@ call wilder#set_option('pipeline', [
       \   ),
       \ ])
 
-let s:highlighters = [
-      \ wilder#pcre2_highlighter(),
-      \ has('nvim') ? wilder#lua_fzy_highlighter() : wilder#cpsm_highlighter(),
-      \ ]
+
 
 let s:popupmenu_renderer = wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
       \ 'border': 'Normal',
       \ 'empty_message': wilder#popupmenu_empty_message_with_spinner(),
-      \ 'highlighter': s:highlighters,
       \ 'left': [
       \   ' ',
       \   wilder#popupmenu_devicons(),
@@ -752,7 +747,6 @@ let s:popupmenu_renderer = wilder#popupmenu_renderer(wilder#popupmenu_border_the
       \ }))
 
 let s:wildmenu_renderer = wilder#wildmenu_renderer({
-      \ 'highlighter': s:highlighters,
       \ 'separator': ' · ',
       \ 'left': [' ', wilder#wildmenu_spinner(), ' '],
       \ 'right': [' ', wilder#wildmenu_index()],
@@ -762,10 +756,6 @@ call wilder#set_option('renderer', wilder#renderer_mux({
       \ ':': s:popupmenu_renderer,
       \ '/': s:wildmenu_renderer,
       \ 'substitute': s:wildmenu_renderer,
-      \ }))
-      
-]],
-        false
-    )
+      \ }))]])
 end
 return config

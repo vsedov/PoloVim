@@ -132,7 +132,6 @@ end
 --- Configure the sink in charge of logging notifications
 ---@param notif_handle table The implementation used by the sink for displaying the notifications
 function Log:configure_notifications(notif_handle)
-    Log:get_logger()
     local status_ok, structlog = pcall(require, "structlog")
     if not status_ok then
         return
@@ -173,6 +172,7 @@ function Log:configure_notifications(notif_handle)
         impl = notif_handle,
     })
 
+    Log:get_logger()
     table.insert(self.__handle.sinks, sink)
 end
 

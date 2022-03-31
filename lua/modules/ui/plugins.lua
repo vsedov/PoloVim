@@ -172,6 +172,8 @@ ui["kazhala/close-buffers.nvim"] = {
     cmd = { "BDelete", "BWipeout" },
     config = conf.buffers_close,
 }
-
+ui["wiliamks/mechanical.nvim"] = {
+    opt = true,
+}
 return ui
 -- hemer.lua: ...te/pack/packer/opt/themer.lua/lua/themer/core/mapper.lua:64: attempt to index field 'bg' (a string value)

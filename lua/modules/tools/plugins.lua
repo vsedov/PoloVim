@@ -432,6 +432,7 @@ tools["sQVe/sort.nvim"] = {
 tools["gelguy/wilder.nvim"] = {
     requires = { { "romgrk/fzy-lua-native", event = "CmdlineEnter" }, { "nixprime/cpsm", event = "CmdlineEnter" } },
     event = "CmdlineEnter",
+    config = conf.wilder,
     run = ":UpdateRemotePlugins",
 }
 

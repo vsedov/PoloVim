@@ -250,14 +250,6 @@ function autocmd.load_autocmds()
 
         colorcol = {
             {
-                "CmdlineEnter",
-                "*",
-                function()
-                    require("modules.tools.config").wilder()
-                end,
-            },
-
-            {
                 { "WinEnter", "BufEnter", "VimResized", "FileType" },
                 { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
                 function()

@@ -22,10 +22,6 @@ M.coding_support = function()
 			  " vimgrep for 'CWORD'
 			  cnoreabbrev Cg vimgrep /<c-r>=expand("<cWORD>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>
 
-			  " todo and related search mapping
-
-			  " my special "manual scripting" process macro
-			  " and for "from vim command notes"
 				cnoreabbrev fromvim let @a = '0f:wyg_j:"'
 
 				cnoreabbrev Vsp vsp
@@ -62,7 +58,7 @@ M.coding_support = function()
 				inoreabbrev rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev todo: <c-r>=printf(&commentstring, ' TODO(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev hack: <c-r>=printf(&commentstring, ' HACK(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
-				inoreabbrev fixme: <c-r>=printf(&commentstring, ' FIXME(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
+				inoreabbrev fix: <c-r>=printf(&commentstring, ' FIXME(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev bug:  <c-r>=printf(&commentstring, ' BUG(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev perf:  <c-r>=printf(&commentstring, ' PERF(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev optim: <c-r>=printf(&commentstring, ' OPTIM(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
