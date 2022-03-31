@@ -43,6 +43,10 @@ local function lsp_code_lens_refresh(client, bufnr)
 end
 
 local function select_default_formater(client)
+    vim.keymap.set("n", "<leader>*", function()
+        require("modules.completion.lsp.utils.list").change_active("Quickfix")
+        vim.lsp.buf.references()
+    end, { buffer = true })
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
     if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
@@ -95,9 +99,9 @@ function M.setup()
     for _, sign in ipairs(config.signs) do
         vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
     end
-
     require("modules.completion.lsp.utils.handlers").setup()
     require("modules.completion.lsp.utils.autocmd")
+    require("modules.completion.lsp.utils.list")
 end
 
 return M

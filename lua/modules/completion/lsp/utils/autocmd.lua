@@ -4,7 +4,7 @@ function _G.reload_lsp()
 end
 
 function _G.open_lsp_log()
-    print("active custom")
+    log:info("active custom")
     local path = vim.lsp.get_log_path()
     vim.cmd("edit " .. path)
 end
