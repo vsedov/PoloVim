@@ -494,24 +494,24 @@ vim.api.nvim_create_autocmd("FileType", {
 --     end,
 -- })
 
-cmp.setup.cmdline("/", {
-    sources = {
-        { name = "buffer", keyword_length = 1 },
-    },
-    enabled = function()
-        return true
-    end,
-    window = {
-        completion = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
-        },
-        documentation = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
-        },
-    },
-})
+-- cmp.setup.cmdline("/", {
+--     sources = {
+--         { name = "buffer", keyword_length = 1 },
+--     },
+--     enabled = function()
+--         return true
+--     end,
+--     window = {
+--         completion = {
+--             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+--             scrollbar = { "║" },
+--         },
+--         documentation = {
+--             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+--             scrollbar = { "║" },
+--         },
+--     },
+-- })
 
 local neorg = require("neorg")
 

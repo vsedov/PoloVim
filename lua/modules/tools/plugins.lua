@@ -428,4 +428,11 @@ tools["sQVe/sort.nvim"] = {
         require("sort").setup({})
     end,
 }
+
+tools["gelguy/wilder.nvim"] = {
+    requires = { { "romgrk/fzy-lua-native", event = "CmdlineEnter" }, { "nixprime/cpsm", event = "CmdlineEnter" } },
+    event = "CmdlineEnter",
+    run = ":UpdateRemotePlugins",
+}
+
 return tools
