@@ -1,12 +1,32 @@
 local M = {}
 M.coding_support = function()
     vim.cmd([[
-				cnoreabbrev E Explore
-				cnoreabbrev E! Explore!
-				cnoreabbrev H Hexplore
-				cnoreabbrev H! Hexplore!
-				cnoreabbrev V Vexplore
-				cnoreabbrev V! Vexplore!
+			  cnoreabbrev <expr> Cp ((getcmdtype()==':'&&getcmdpos()<=3)?'C p':'Cp')
+			  cnoreabbrev <expr> Cd ((getcmdtype()==':'&&getcmdpos()<=3)?'Cdisplay':'Cd')
+
+			  cnoreabbrev <expr> csa ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs add'  : 'csa')
+			  cnoreabbrev <expr> csf ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs find' : 'csf')
+			  cnoreabbrev <expr> csk ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs kill' : 'csk')
+			  cnoreabbrev <expr> csr ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs reset' : 'csr')
+			  cnoreabbrev <expr> css ((getcmdtype() == ':' && getcmdpos() <= 5)? 'cs show' : 'css')
+			  cnoreabbrev <expr> csh ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs help' : 'csh')
+
+			  " last-vimgrep and -||-
+			  cnoremap <C-G> vimgrep<UP><C-B><Right><Right><Right><Right><Right><Right><Right><Right><Right>
+			  " vimgrep semi-prepared
+			  cnoreabbrev vg vimgrep //j **/*<Left><Left><Left><Left><Left><Left><Left>
+			  " vimgrep for 'resource'
+			  cnoreabbrev rg  vimgrep /<c-r>=expand("%:t:r")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>
+			  " vimgrep for 'cword'
+			  cnoreabbrev cg vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>
+			  " vimgrep for 'CWORD'
+			  cnoreabbrev Cg vimgrep /<c-r>=expand("<cWORD>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>
+
+			  " todo and related search mapping
+
+			  " my special "manual scripting" process macro
+			  " and for "from vim command notes"
+				cnoreabbrev fromvim let @a = '0f:wyg_j:"'
 
 				cnoreabbrev Vsp vsp
 				cnoreabbrev Ter ter
@@ -18,16 +38,15 @@ M.coding_support = function()
 				cnoreabbrev Wa wa
 				cnoreabbrev wQ wq
 				cnoreabbrev WQ wq
-				cnoreabbrev W w
-				cnoreabbrev Q q
+
 				cnoreabbrev Qall qall
 
-    			cnoreabbrev h vertical botright help<CR>
+    			cnoreabbrev h vertical botright help
 				cnoreabbrev vsf vert bel sf
 				cnoreabbrev vsp bel vsp
 
 				cnoreabbrev sp bel sp<CR>
-				cnoreabbrev help vert help<CR>
+				cnoreabbrev help vert help
 
 	            cnoreabbrev grep silent grep  \| copen<left><left><left><left><left><left><left><left>
 
@@ -36,8 +55,9 @@ M.coding_support = function()
 				cnoreabbrev sl s/\v()/\1\r/gc<left><left><left><left><left><left><left><left><left>
 				cnoreabbrev ft set ft=
 
-				" Non Greedy *
-				cnoreabbrev *? <left>\{-}<C-r>=<cr>
+                cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is#'W')?('w'):('W'))
+				cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is#'Q')?('q'):('Q'))
+
 
 				inoreabbrev rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev todo: <c-r>=printf(&commentstring, ' TODO(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
