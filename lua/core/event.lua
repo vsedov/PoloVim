@@ -215,7 +215,7 @@ function autocmd.load_autocmds()
                 "BufEnter",
                 "qf",
                 function()
-                    if fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
+                    if vim.fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
                         vim.api.nvim_buf_delete(0, { force = true })
                     end
                 end,
