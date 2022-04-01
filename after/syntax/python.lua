@@ -10,7 +10,6 @@ vim.cmd([[
     syntax match pyOperator "\<\%(math\.\)\?prod\>" conceal cchar=∏
     syntax match pyOperator "\( \|\)\*\*\( \|\)2\>" conceal cchar=²
     syntax match pyOperator "\( \|\)\*\*\( \|\)3\>" conceal cchar=³
-    syntax match pyKeyword "\<\%(math\.\)\?pi\>" conceal cchar=π
     " keywords
     syntax keyword pyOperator product conceal cchar=∏
     syntax keyword pyOperator sum conceal cchar=∑
