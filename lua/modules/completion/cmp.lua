@@ -454,18 +454,17 @@ cmp.setup({
 
 require("packer").loader("nvim-autopairs")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-local cmp = require("cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
 -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
 if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then
-    require("cmp").setup.buffer({ completion = { enable = false } })
+    cmp.setup.buffer({ completion = { enable = false } })
 end
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "TelescopePrompt", "clap_input" },
     callback = function()
-        require("cmp").setup.buffer({ enabled = false })
+        cmp.setup.buffer({ enabled = false })
     end,
     once = false,
 })

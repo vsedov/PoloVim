@@ -11,15 +11,31 @@ completion["neovim/nvim-lspconfig"] = {
         { "williamboman/nvim-lsp-installer", opt = true },
         { "folke/lua-dev.nvim", module = "lua-dev" },
         { "p00f/clangd_extensions.nvim", module = "clangd_extensions" },
-        -- { "lewis6991/hover.nvim"}
     },
-
     opt = true,
 }
+
+completion["lewis6991/hover.nvim"] = {
+    key = {"K", "gK"},
+    config = function()
+
+    require('hover').setup{
+      init = function()
+        require('hover.providers.lsp')
+        require('hover.providers.gh')
+        require('hover.providers.dictionary')
+        require('hover.providers.man')
+      end
+    }
+    vim.keymap.set('n', 'K', require('hover').hover, {desc='hover.nvim'})
+    vim.keymap.set('n', 'gK', require('hover').hover_select, {desc='hover.nvim (select)'})
+    end,
+}
+
 completion["tami5/lspsaga.nvim"] = {
     cmd = "lspsaga",
     module = "lspsaga",
-    opt = true,
+    opt = tfue,
     config = conf.saga,
     after = "nvim-lspconfig",
 }
