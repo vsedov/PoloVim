@@ -63,7 +63,21 @@ function autocmd.load_autocmds()
                     require("core.event_helper").loadview()
                 end,
             },
-
+            {
+                "BufWinEnter",
+                "*",
+                function()
+                    if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then
+                        local row, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
+                        if { row, col } ~= { 0, 0 } then
+                            local ok, msg = pcall(vim.api.nvim_win_set_cursor, 0, { row, 0 })
+                            if not ok then
+                                vim.notify(msg, "error")
+                            end
+                        end
+                    end
+                end,
+            },
             {
                 "BufWritePre",
                 "*",
@@ -153,6 +167,7 @@ function autocmd.load_autocmds()
                     ]])
                     vim.bo.buftype = "nofile"
                     vim.bo.swapfile = false
+                    vim.bo.undofile = false
                     vim.bo.fileformat = "unix"
                 end,
             },

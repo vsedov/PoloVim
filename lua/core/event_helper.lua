@@ -121,7 +121,8 @@ local column_clear = {
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
 ---@param leaving boolean indicates if the function was called on window leave
 function M.check_colour_column(leaving)
-    if not packer_plugins["focus.nvim"].loaded then
+    local status, FOCUS = pcall(require, "focus.nvim")
+    if status then
         return
     end
     if vim.tbl_contains(column_exclude, vim.bo.filetype) then
