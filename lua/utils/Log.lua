@@ -23,12 +23,11 @@ vim.tbl_add_reverse_lookup(Log.levels)
 
 local notify_opts = {}
 
-
 function Log:init()
-  local status_ok, structlog = pcall(require, "structlog")
-  if not status_ok then
-    return nil
-  end
+    local status_ok, structlog = pcall(require, "structlog")
+    if not status_ok then
+        return nil
+    end
 
     local log_level = Log.levels[(Log.default.level):upper() or "WARN"]
 

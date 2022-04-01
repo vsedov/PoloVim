@@ -14,9 +14,9 @@ useless["tamton-aquib/duck.nvim"] = {
 }
 
 useless["raghavdoescode/nvim-owoifier"] = {
-  cmd = "OWOify",
-  opt = true,
-  run = ":UpdateRemotePlugins",
+    cmd = "OWOify",
+    opt = true,
+    run = ":UpdateRemotePlugins",
 }
 
 -- your plugin config

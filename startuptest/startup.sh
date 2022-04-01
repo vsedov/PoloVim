@@ -14,7 +14,7 @@ echo "Warmup #2"
 nvim -c q
 echo "Warmup #3"
 nvim -c q
-   q
+q
 echo "Warmup #4"
 nvim -c q
 
@@ -39,8 +39,8 @@ get_time
 pf "Opening C File"
 nvim tmp.c --startuptime tmp
 get_time
-pf "Opening norg File"
-nvim tmp.norg --startuptime tmp
-get_time
+# pf "Opening norg File"
+# nvim tmp.norg --startuptime tmp
+# get_time
 
 rm tmp
