@@ -10,6 +10,8 @@ M.coding_support = function()
 			  cnoreabbrev <expr> csr ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs reset' : 'csr')
 			  cnoreabbrev <expr> css ((getcmdtype() == ':' && getcmdpos() <= 5)? 'cs show' : 'css')
 			  cnoreabbrev <expr> csh ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs help' : 'csh')
+              cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is#'W')?('w'):('W'))
+			  cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is#'Q')?('q'):('Q'))
 
 			  " last-vimgrep and -||-
 			  cnoremap <C-G> vimgrep<UP><C-B><Right><Right><Right><Right><Right><Right><Right><Right><Right>
@@ -20,7 +22,7 @@ M.coding_support = function()
 			  " vimgrep for 'cword'
 			  cnoreabbrev cg vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>
 			  " vimgrep for 'CWORD'
-			  cnoreabbrev Cg vimgrep /<c-r>=expand("<cWORD>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>
+			  cnoreabbrev Cg vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>
 
 				cnoreabbrev fromvim let @a = '0f:wyg_j:"'
 
@@ -44,16 +46,14 @@ M.coding_support = function()
 				cnoreabbrev sp bel sp<CR>
 				cnoreabbrev help vert help
 
-	            cnoreabbrev grep silent grep  \| copen<left><left><left><left><left><left><left><left>
+	            cnoreabbrev Wgrep silent grep  \| copen<left><left><left><left><left><left><left><left>
 
-				cnoreabbrev lgrep silent lgrep  <C-r>=expand('%:p')<cr> \| lopen<C-b><right><right><right><right><right><right><right><right><right><right><right><right><right>
+				cnoreabbrev gp silent lgrep <C-r>=expand('%')<cr> \| lopen<C-b><right><right><right><right><right><right><right><right><right><right><right><right><right>
 
 				cnoreabbrev sl s/\v()/\1\r/gc<left><left><left><left><left><left><left><left><left>
+
 				cnoreabbrev ft set ft=
-
-                cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is#'W')?('w'):('W'))
-				cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is#'Q')?('q'):('Q'))
-
+				cnoreabbrev syn set syntax=
 
 				inoreabbrev rev: <c-r>=printf(&commentstring, ' REVISIT '.$USER.' ('.strftime("%T - %d/%m/%y").'):')<CR>
 				inoreabbrev todo: <c-r>=printf(&commentstring, ' TODO(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>
