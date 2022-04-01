@@ -92,7 +92,6 @@ return {
             vim.cmd([[exe "norm! ciw\<C-R>s"]])
             lprint("newstr", n)
         end
-
         -- convert to camel case
         _G.Camel = function()
             local s
@@ -120,6 +119,15 @@ return {
 
             if json then
                 vim.cmd([[Jsonformat]]) -- :%!jq .
+            end
+        end
+
+        _G.lazy_require = function(module)
+            return function(...)
+                local meta = { __index = require(module) }
+                local ret = {}
+                setmetatable(ret, meta)
+                return ret
             end
         end
     end,

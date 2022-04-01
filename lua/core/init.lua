@@ -65,16 +65,16 @@ local load_core = function()
     disable_distribution_plugins()
     leader_map()
 
-    if pcall(require, "impatient") then
-        require("impatient").enable_profile()
-    end
+    -- if pcall(require, "impatient") then
+    --     require("impatient").enable_profile()
+    -- end
 
     if pack.ensure_plugins() == "installed" then
         require("core.options")
-        require("core.mapping")
-        require("keymap")
-        pack.load_compile()
+        lazy_require("core.mapping")()
+        lazy_require("keymap")()
         require("core.event")
+        pack.load_compile()
         require("core.lazy")
     else
         print("install all plugins, please wait")
