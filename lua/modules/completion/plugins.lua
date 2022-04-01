@@ -16,19 +16,18 @@ completion["neovim/nvim-lspconfig"] = {
 }
 
 completion["lewis6991/hover.nvim"] = {
-    key = {"K", "gK"},
+    key = { "K", "gK" },
     config = function()
-
-    require('hover').setup{
-      init = function()
-        require('hover.providers.lsp')
-        require('hover.providers.gh')
-        require('hover.providers.dictionary')
-        require('hover.providers.man')
-      end
-    }
-    vim.keymap.set('n', 'K', require('hover').hover, {desc='hover.nvim'})
-    vim.keymap.set('n', 'gK', require('hover').hover_select, {desc='hover.nvim (select)'})
+        require("hover").setup({
+            init = function()
+                require("hover.providers.lsp")
+                require("hover.providers.gh")
+                require("hover.providers.dictionary")
+                require("hover.providers.man")
+            end,
+        })
+        vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
+        vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
     end,
 }
 
