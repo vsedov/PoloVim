@@ -96,6 +96,11 @@ function config.nvim_bufferline()
                     highlight = "PanelHeading",
                 },
                 {
+                    filetype = "neo-tree",
+                    text = "Explorer",
+                    highlight = "PanelHeading",
+                },
+                {
                     filetype = "DiffviewFiles",
                     text = "Diff View",
                     highlight = "PanelHeading",
@@ -780,7 +785,7 @@ function config.themer()
     local themes = { "rose_pine", "dracula", "everforest", "monokai_pro", "boo", "darknight" }
     local cs = themes[math.random(1, #themes)]
     local cp = require("themer.modules.core.api").get_cp(cs)
-    print(cs)
+    lprint(cs)
 
     require("themer").setup({
         colorscheme = cs,

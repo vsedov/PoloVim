@@ -34,6 +34,14 @@ ui["rcarriga/nvim-notify"] = {
     config = conf.notify,
 }
 
+ui["NarutoXY/dim.lua"] = {
+    ft = { "python", "lua", "rust", "c" },
+    event = { "CursorMovedI" },
+    opt = true,
+    config = function()
+        require("dim").setup({})
+    end,
+}
 ui["kyazdani42/nvim-tree.lua"] = {
     cmd = { "NvimTreeToggle", "NvimTreeOpen" },
     -- requires = {'kyazdani42/nvim-web-devicons'},
