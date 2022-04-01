@@ -5,8 +5,6 @@ local map_cmd = bind.map_cmd
 local map_args = bind.map_args
 -- local map_key = bind.map_key
 -- local global = require("core.global")
-require("keymap.config")
-
 local plug_map = {
     -- Show syntax highlighting groups for word under cursor
     ["n|<localleader>c["] = map_cmd(function()
@@ -15,7 +13,7 @@ local plug_map = {
         for i, l in ipairs(stack) do
             stack[i] = vim.fn.synIDattr(l, "name")
         end
-        print(vim.inspect(stack))
+        log:info(vim.inspect(stack))
     end):with_silent(),
 
     ["n|<localleader>c]"] = map_cmd(function()
@@ -75,7 +73,7 @@ local plug_map = {
     -- -- On n map commands
     ["n|gA"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
     ["n|gD"] = map_cmd("<cmd>lua vim.lsp.buf.declaration()<CR>"):with_noremap():with_silent(),
-    ["n|K"] = map_cmd("<cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
+    -- ["n|K"] = map_cmd("<cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
     ["n|gI"] = map_cmd("<cmd>lua vim.lsp.buf.implementation()<CR>"):with_noremap():with_silent(),
     ["n|gr"] = map_cmd("<cmd>lua vim.lsp.buf.references()<CR>"):with_noremap():with_silent(),
     ["n|[d"] = map_cmd("<cmd>lua vim.diagnostic.goto_prev()()<CR>"):with_noremap():with_silent(),
@@ -169,9 +167,14 @@ local plug_map = {
         :with_silent(),
 
     ["n|<Leader>hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
-    ["n|<leader>hw"] = map_cmd("<cmd>lua require'dynamic_help'.float_help(vim.fn.expand('<cword>'))<CR>")
-        :with_noremap()
-        :with_silent(),
+    ["n|<leader>hw"] = map_cmd(function()
+        if require("dynamic_help.extras.statusline").available() ~= "" then
+            require("dynamic_help").float_help(vim.fn.expand("<cword>"))
+        else
+            local help = vim.fn.input("Help Tag> ")
+            require("dynamic_help").float_help(help)
+        end
+    end):with_noremap():with_silent(),
 
     -- grep
     ["n|<Leader>fW"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])

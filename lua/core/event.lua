@@ -65,7 +65,7 @@ function autocmd.load_autocmds()
             },
             {
                 "BufWinEnter",
-                "*",
+                { "*.py", "*.lua", "*.tex", "*.norg" },
                 function()
                     if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then
                         local row, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
@@ -150,7 +150,7 @@ function autocmd.load_autocmds()
                 [[if has('nvim') | wshada! | else | wviminfo! | endif]],
             },
             {
-                "VimEnter",
+                "BufEnter",
                 "*",
                 function()
                     if vim.fn.bufname("%") ~= "" then
@@ -160,15 +160,12 @@ function autocmd.load_autocmds()
                     if byte ~= -1 or byte > 1 then
                         return
                     end
-                    vim.cmd([[
-                        syntax off
-                        filetype off
-                        filetype plugin indent off
-                    ]])
+
                     vim.bo.buftype = "nofile"
                     vim.bo.swapfile = false
                     vim.bo.undofile = false
                     vim.bo.fileformat = "unix"
+                    vim.bo.bufhidden = "wipe"
                 end,
             },
         },

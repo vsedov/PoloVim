@@ -31,6 +31,7 @@ local function loadscheme()
     else
         themes = { "themer.lua", "kanagawa.nvim", "tokyonight.nvim", "Sakura.nvim", "vim-dogrun", "jabuti-nvim" }
     end
+    -- themes = { "kanagawa.nvim" }
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
 
@@ -80,14 +81,21 @@ function Lazyload()
     end
 
     local plugins = "plenary.nvim" -- nvim-lspconfig navigator.lua   guihua.lua navigator.lua  -- gitsigns.nvim
-    loader("plenary.nvim")
 
+    loader("plenary.nvim")
+    loader("nvim-notify")
+    local notify = require("notify")
+    vim.notify = notify
+
+    -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
+    -- have to work around this for the time
+    if vim.bo.filetype ~= "norg" then
+        log:configure_notifications(notify)
+    end
     -- only works if you are working from one python file .
     if vim.bo.filetype == "lua" then
-        -- loader("lua-dev.nvim")
         loader("luv-vimdocs")
         loader("nvim-luaref")
-        loader("structlog.nvim") -- logging
     end
 
     vim.g.vimsyn_embed = "lPr"
@@ -154,6 +162,11 @@ if _G.packer_plugins == nil or _G.packer_plugins["packer.nvim"] == nil then
 end
 
 vim.defer_fn(function()
+    -- vim.cmd([[
+    --     runtime! plugin/**/*.vim
+    --     runtime! plugin/**/*.lua
+    -- ]])
+
     vim.cmd([[doautocmd User LoadLazyPlugin]])
 end, lazy_timer)
 
@@ -187,11 +200,11 @@ vim.defer_fn(function()
     vim.api.nvim_add_user_command("Gram", function()
         require("modules.tools.config").grammcheck()
     end, { force = true })
-
+    loader("structlog.nvim") -- logging
     loader("animate.vim")
     loader("presence.nvim")
     lprint("ui loaded + abbreviations")
-end, lazy_timer + 60)
+end, lazy_timer + 80)
 
 vim.defer_fn(function()
     lprint("telescope family")
@@ -199,13 +212,9 @@ vim.defer_fn(function()
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
     -- loader("harpoon")
     loader("workspaces.nvim")
-    loader("nvim-notify")
-
-    local notify = require("notify")
-    vim.notify = notify
 
     if vim.fn.wordcount()["bytes"] < 2048000 then
         require("vscripts.cursorhold")
     end
     lprint("all done")
-end, lazy_timer + 80)
+end, lazy_timer + 100)

@@ -12,6 +12,7 @@ end
 
 local function load_options()
     local global_local = {
+        loadplugins = false,
         termguicolors = true,
         mouse = "nv",
         errorbells = true,
@@ -155,7 +156,6 @@ local function load_options()
             vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
         end
     end
-
     -- vim.o
     for name, value in pairs(global_local) do
         vim.o[name] = value
@@ -164,10 +164,8 @@ local function load_options()
     for name, value in pairs(bw_global_local) do
         vim.opt[name] = value
     end
-
     bind_option(bw_local)
 end
-
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
 load_options()

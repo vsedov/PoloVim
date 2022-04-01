@@ -45,6 +45,8 @@ local disable_distribution_plugins = function()
     vim.g.loaded_node_provider = 0
     vim.g.loaded_ruby_provider = 0
     vim.g.loaded_perl_provider = 0
+    vim.g.loaded_python3_provider = 1
+
 end
 
 local leader_map = function()
@@ -65,9 +67,7 @@ local load_core = function()
     disable_distribution_plugins()
     leader_map()
 
-    -- if pcall(require, "impatient") then
-    --     require("impatient").enable_profile()
-    -- end
+    require("impatient").enable_profile()
 
     if pack.ensure_plugins() == "installed" then
         require("core.options")
