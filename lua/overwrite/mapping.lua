@@ -137,8 +137,6 @@ local keys = { --
     ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 }
 
-vim.cmd([[nnoremap Q q]])
-vim.cmd([[vnoremap M :norm @q<CR>]])
 --
 vim.cmd([[vnoremap  <leader>y  "+y]])
 vim.cmd([[nnoremap  <leader>Y  "+yg_]])

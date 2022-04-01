@@ -12,15 +12,12 @@ useless["rtakasuke/vim-neko"] = {
 useless["tamton-aquib/duck.nvim"] = {
     opt = true,
 }
-useless["dundargoc/stalker.nvim"] = {
-    cmd = { "Stalk" },
-    opt = true,
+
+useless["raghavdoescode/nvim-owoifier"] = {
+  cmd = "OWOify",
+  opt = true,
+  run = ":UpdateRemotePlugins",
 }
--- useless["raghavdoescode/nvim-owoifier"] = {
---   cmd = "OWOify",
---   opt = true,
---   run = ":UpdateRemotePlugins",
--- }
 
 -- your plugin config
 return useless
