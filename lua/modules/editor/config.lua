@@ -14,8 +14,8 @@ function config.autopairs()
         end
     end
     local npairs = require("nvim-autopairs")
-    local Rule = require("nvim-autopairs.rule")
-    local cond = require("nvim-autopairs.conds")
+    -- local Rule = require("nvim-autopairs.rule")
+    -- local cond = require("nvim-autopairs.conds")
 
     npairs.setup({
         enable_moveright = true,
@@ -109,7 +109,7 @@ function config.autopairs()
     --         :use_key("]"),
     -- })
 
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+    -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     if load_coq() then
         local remap = vim.api.nvim_set_keymap
 

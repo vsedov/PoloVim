@@ -270,6 +270,9 @@ tools["windwp/nvim-spectre"] = {
     end,
 }
 
+tools["FraserLee/ScratchPad"] = {
+    cmd = { "ScratchPad" },
+}
 tools["ray-x/sad.nvim"] = {
     cmd = { "Sad" },
     requires = "ray-x/guihua.lua",
@@ -430,7 +433,7 @@ tools["sQVe/sort.nvim"] = {
 }
 
 tools["gelguy/wilder.nvim"] = {
-    requires = { { "romgrk/fzy-lua-native", event = "CmdlineEnter" }, { "nixprime/cpsm", event = "CmdlineEnter" } },
+    requires = { { "romgrk/fzy-lua-native", opt = true }, { "nixprime/cpsm", opt = true } },
     event = "CmdlineEnter",
     config = conf.wilder,
     run = ":UpdateRemotePlugins",

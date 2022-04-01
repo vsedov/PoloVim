@@ -388,6 +388,11 @@ lang["folke/todo-comments.nvim"] = {
     config = conf.todo_comments,
 }
 
+lang["vim-scripts/CRefVim"] = {
+    keys = { "<leader>c" },
+    ft = "c",
+}
+
 lang["is0n/jaq-nvim"] = {
     cmd = "Jaq",
     after = "filetype.nvim",

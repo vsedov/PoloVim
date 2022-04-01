@@ -323,36 +323,7 @@ function config.gitsigns()
     if not packer_plugins["plenary.nvim"].loaded then
         require("packer").loader("plenary.nvim")
     end
-    -- require("gitsigns").setup({
-    --     numhl = false,
-    --     keymaps = {
-    --         -- Default keymap options
-    --         noremap = true,
-    --         buffer = true,
-    --         ["n ]c"] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'" },
-    --         ["n [c"] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'" },
-    --         ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    --         ["v <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-    --         ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    --         ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    --         ["v <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-    --         ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    --         -- ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-    --         ["n <leader>bs"] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
-    --         ["n <leader>hq"] = '<cmd>lua do vim.cmd("copen") require"gitsigns".setqflist("all") end <CR>', -- hunk qflist with vgit
-    --         ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-    --         ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-    --     },
-    --     watch_gitdir = { interval = 1000, follow_files = true },
-    --     sign_priority = 6,
-    --     status_formatter = nil, -- Use default
-    --     debug_mode = false,
-    --     current_line_blame = false,
-    --     current_line_blame_opts = { delay = 1500 },
-    --     update_debounce = 300,
-    --     word_diff = false,
-    --     diff_opts = { internal = true },
-    -- })
+
     local gitsigns = require("gitsigns")
 
     local line = vim.fn.line
@@ -421,6 +392,7 @@ function config.gitsigns()
             border = "rounded",
         },
         current_line_blame = true,
+        current_line_blame_formatter = " : <author> | <author_time:%Y-%m-%d> | <summary>",
         current_line_blame_formatter_opts = {
             relative_time = true,
         },
@@ -635,56 +607,6 @@ function config.mkdp()
     )
 end
 
-function config.snap()
-    local snap = require("snap")
-    local limit = snap.get("consumer.limit")
-    local select_vimgrep = snap.get("select.vimgrep")
-    local preview_file = snap.get("preview.file")
-    local preview_vimgrep = snap.get("preview.vimgrep")
-    local producer_vimgrep = snap.get("producer.ripgrep.vimgrep")
-    function _G.snap_grep()
-        snap.run({
-            prompt = "  Grep  ",
-            producer = limit(10000, producer_vimgrep),
-            select = select_vimgrep.select,
-            steps = { { consumer = snap.get("consumer.fzf"), config = { prompt = "FZF>" } } },
-            multiselect = select_vimgrep.multiselect,
-            views = { preview_vimgrep },
-        })
-    end
-
-    function _G.snap_grep_selected_word()
-        snap.run({
-            prompt = "  Grep  ",
-            producer = limit(10000, producer_vimgrep),
-            select = select_vimgrep.select,
-            multiselect = select_vimgrep.multiselect,
-            views = { preview_vimgrep },
-            initial_filter = vim.fn.expand("<cword>"),
-        })
-    end
-
-    snap.maps({
-        { "<Leader>rg", snap.config.file({ producer = "ripgrep.file" }) },
-        -- {"<Leader>fb", snap.config.file {producer = "vim.buffer"}},
-        { "<Leader>fo", snap.config.file({ producer = "vim.oldfile" }) },
-        -- {"<Leader>ff", snap.config.vimgrep {}},
-        {
-            "<Leader>fz",
-            function()
-                snap.run({
-                    prompt = "  Grep  ",
-                    producer = limit(1000, snap.get("producer.ripgrep.vimgrep").args({ "--ignore-case" })),
-                    steps = { { consumer = snap.get("consumer.fzf"), config = { prompt = " Fzf  " } } },
-                    select = snap.get("select.file").select,
-                    multiselect = snap.get("select.file").multiselect,
-                    views = { snap.get("preview.vimgrep") },
-                })
-            end,
-        },
-    })
-end
-
 function config.paperplanes()
     require("paperplanes").setup({
         register = "+",
@@ -693,6 +615,8 @@ function config.paperplanes()
 end
 
 function config.wilder()
+    vim.cmd([[packadd fzy-lua-native]])
+    vim.cmd([[packadd cpsm]])
     vim.cmd([[
 call wilder#setup({'modes': [':', '/', '?']})
 
