@@ -34,7 +34,7 @@ completion["lewis6991/hover.nvim"] = {
 completion["tami5/lspsaga.nvim"] = {
     cmd = "lspsaga",
     module = "lspsaga",
-    opt = tfue,
+    opt = true,
     config = conf.saga,
     after = "nvim-lspconfig",
 }

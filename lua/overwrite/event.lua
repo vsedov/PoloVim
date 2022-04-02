@@ -25,11 +25,6 @@ function autocmd.load_autocmds()
             { "BufWritePost", "*.json", ":silent :JqxList" },
             { "BufWritePost", "*.sum,", ":silent :GoModTidy" },
             { "BufWritePost", "*.mod", ":silent :GoModTidy" },
-            {
-                "TextYankPost",
-                "*",
-                ":silent! :lua vim.highlight.on_yank {higroup='IncSearch', timeout=1500, on_visual=false}",
-            },
             { "FileType", "css,scss", "let b:prettier_exec_cmd = 'prettier-stylelint'" },
             -- {"FileType","lua","nmap <leader><leader>t <Plug>PlenaryTestFile"};
             {
@@ -37,20 +32,16 @@ function autocmd.load_autocmds()
                 "markdown",
                 "let b:prettier_exec_cmd = 'prettier' | let g:prettier#exec_cmd_path = '/usr/local/bin/prettier' | let g:spelunker_check_type = 1",
             },
-            {
-                "BufReadPre",
-                "*",
-                'if getfsize(expand("%")) > 1000000 | ownsyntax off | endif',
-            },
+
             {
                 { "WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained" },
                 "*",
                 "silent! checktime",
             },
 
-            { "BufWritePost", "plugins.lua", "PackerCompile" },
+            -- { "BufWritePost", "plugins.lua", "PackerCompile" },
             -- {"UIEnter", "*", ":silent! :lua require('modules.lang.config').syntax_folding()"},
-            { "BufReadPre", "*", ":silent! :lua require('modules.lang.config').nvim_treesitter()" },
+            -- { "BufReadPre", "*", ":silent! :lua require('modules.lang.config').nvim_treesitter()" },
             -- {"BufWritePre", "*.js,*.rs,*.lua", ":FormatWrite"},
             -- {"BufWritePre", "*.go", ":silent! :lua require('go.format').gofmt()"}
             -- {"InsertEnter", "*", ":silent! :lua require('modules.editor.config').pears_setup()"}
