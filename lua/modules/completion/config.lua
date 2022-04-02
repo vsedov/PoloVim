@@ -6,6 +6,13 @@ function config.nvim_lsp()
     require("modules.completion.lsp")
 end
 
+function config.luadev()
+    require("modules.completion.lsp.providers.luadev")
+end
+function config.lsp_install()
+    require("modules.completion.lsp.providers.lsp_install")
+end
+
 function config.saga()
     local lspsaga = require("lspsaga")
     lspsaga.setup({ -- defaults ...

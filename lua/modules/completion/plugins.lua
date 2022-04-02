@@ -5,14 +5,23 @@ completion["neovim/nvim-lspconfig"] = {
     -- ft = {'html','css', 'javascript', 'java', 'javascriptreact', 'vue','typescript', 'typescriptreact', 'go', 'lua', 'cpp', 'c',
     -- 'markdown', 'makefile','python','bash', 'sh', 'php', 'yaml', 'json', 'sql', 'vim', 'sh'},
     config = conf.nvim_lsp,
-
     requires = {
         { "nvim-lua/lsp_extensions.nvim", opt = true },
-        { "williamboman/nvim-lsp-installer", opt = true },
-        { "folke/lua-dev.nvim", module = "lua-dev" },
         { "p00f/clangd_extensions.nvim", module = "clangd_extensions" },
     },
     opt = true,
+}
+
+completion["williamboman/nvim-lsp-installer"] = {
+    opt = true,
+    cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
+    requires = "nvim-lspconfig",
+    config = conf.lsp_install,
+}
+completion["folke/lua-dev.nvim"] = {
+    opt = true,
+    requires = "nvim-lspconfig",
+    config = conf.luadev,
 }
 
 completion["lewis6991/hover.nvim"] = {
@@ -38,16 +47,6 @@ completion["tami5/lspsaga.nvim"] = {
     config = conf.saga,
     after = "nvim-lspconfig",
 }
-
--- completion["lewis6991/hover.nvim"]={
---   keys = {""}
---   opt = true,
---   config = function()
---     require('hover.providers.gh')
---     require('hover.providers.man')
---     require('hover.providers.dictionary')
---   end
--- }
 
 if load_coq() then
     completion["ms-jpq/coq_nvim"] = {
