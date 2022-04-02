@@ -45,8 +45,6 @@ local disable_distribution_plugins = function()
     vim.g.loaded_node_provider = 0
     vim.g.loaded_ruby_provider = 0
     vim.g.loaded_perl_provider = 0
-    vim.g.loaded_python3_provider = 1
-
 end
 
 local leader_map = function()
@@ -57,12 +55,10 @@ local leader_map = function()
     vim.keymap.set("n", " ", "", { noremap = true })
     vim.keymap.set("x", " ", "", { noremap = true })
 end
+
 local load_core = function()
     require("core.helper").init()
     local pack = require("core.pack")
-
-    -- print(vim.inspect(debug.traceback()))
-
     createdir()
     disable_distribution_plugins()
     leader_map()
@@ -71,11 +67,19 @@ local load_core = function()
 
     if pack.ensure_plugins() == "installed" then
         require("core.options")
-        lazy_require("core.mapping")()
-        lazy_require("keymap")()
         require("core.event")
+        require("core.mapping")
+        require("keymap")
+
         pack.load_compile()
-        require("core.lazy")
+
+        vim.defer_fn(function()
+            vim.cmd([[
+                    runtime! plugin/**/*.vim
+                    runtime! plugin/**/*.lua
+                ]])
+            require("core.lazy")
+        end, 1)
     else
         print("install all plugins, please wait")
     end

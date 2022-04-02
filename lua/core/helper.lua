@@ -121,14 +121,5 @@ return {
                 vim.cmd([[Jsonformat]]) -- :%!jq .
             end
         end
-
-        _G.lazy_require = function(module)
-            return function(...)
-                local meta = { __index = require(module) }
-                local ret = {}
-                setmetatable(ret, meta)
-                return ret
-            end
-        end
     end,
 }

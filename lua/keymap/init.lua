@@ -127,12 +127,6 @@ local plug_map = {
     -- Plugin DadbodUI
     ["n|<Leader>od"] = map_cr("DBUIToggle"):with_noremap():with_silent(),
 
-    -- Far.vim Conflicting
-    ["n|<Leader>fz"] = map_cr("Farf"):with_noremap():with_silent(),
-    ["v|<Leader>fz"] = map_cr("Farr"):with_noremap():with_silent(),
-    ["n|<Leader>fzd"] = map_cr("Fardo"):with_noremap():with_silent(),
-    ["n|<Leader>fzu"] = map_cr("Farundo"):with_noremap():with_silent(),
-
     -- -- Plugin Telescope
     ["v|<Leader>ga"] = map_cmd("<cmd>lua require('utils.telescope').code_actions()<CR>"):with_noremap():with_silent(),
 

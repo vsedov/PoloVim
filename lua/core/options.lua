@@ -12,7 +12,6 @@ end
 
 local function load_options()
     local global_local = {
-        loadplugins = false,
         termguicolors = true,
         mouse = "nv",
         errorbells = true,

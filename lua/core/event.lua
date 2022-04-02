@@ -10,7 +10,7 @@ function autocmd.nvim_create_augroups(defs)
                 group = group_name,
                 pattern = def[2],
                 [type(def[3]) == "function" and "callback" or type(def[3]) == "string" and "command"] = def[3],
-                nested = def[4],
+                nested = def[4] or false,
             }
             -- print(vim.inspect(event), vim.inspect(arg))
             vim.api.nvim_create_autocmd(event, arg)
@@ -46,7 +46,7 @@ function autocmd.load_autocmds()
             { "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
             { "BufWritePre", "*.tmp", "setlocal noundofile" },
             { "BufWritePre", "*.bak", "setlocal noundofile" },
-            -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
+            { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
             {
                 "BufLeave",
                 { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
@@ -160,12 +160,10 @@ function autocmd.load_autocmds()
                     if byte ~= -1 or byte > 1 then
                         return
                     end
-
                     vim.bo.buftype = "nofile"
                     vim.bo.swapfile = false
                     vim.bo.undofile = false
                     vim.bo.fileformat = "unix"
-                    vim.bo.bufhidden = "wipe"
                 end,
             },
         },
