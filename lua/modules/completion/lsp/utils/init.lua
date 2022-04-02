@@ -104,4 +104,14 @@ function M.setup()
     require("modules.completion.lsp.utils.list")
 end
 
+function M.enhance_attach(user_config)
+    M.setup()
+
+    local config = M.get_common_opts()
+    if user_config then
+        config = vim.tbl_deep_extend("force", config, user_config)
+    end
+    return config
+end
+
 return M
