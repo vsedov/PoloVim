@@ -15,19 +15,6 @@ local function load_env_file()
     return env_contents
 end
 
-function config.session()
-    local opts = {
-        log_level = "info",
-        auto_session_suppress_dirs = { "~/", "~/Projects" },
-        auto_session_enable_last_session = false,
-        auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
-        auto_session_enabled = false,
-        auto_save_enabled = nil,
-        auto_restore_enabled = nil,
-    }
-    require("auto-session").setup(opts)
-end
-
 local function load_dbs()
     local env_contents = load_env_file()
     local dbs = {}

@@ -38,9 +38,7 @@ tools["ThePrimeagen/harpoon"] = {
     opt = true,
     config = function()
         require("harpoon").setup({
-            menu = {
-                width = vim.api.nvim_win_get_width(0) - 4,
-            },
+
             global_settings = {
                 save_on_toggle = false,
                 save_on_change = true,
@@ -62,20 +60,19 @@ tools["max397574/tomato.nvim"] = {
 }
 
 tools["natecraddock/workspaces.nvim"] = {
-    opt = true,
+    module = "workspaces",
     config = function()
         require("workspaces").setup({
+            global_cd = true,
+            sort = true,
+            notify_info = true,
+
             hooks = {
                 open = { "Telescope find_files" },
             },
         })
         require("telescope").load_extension("workspaces")
     end,
-}
-
-tools["ThePrimeagen/git-worktree.nvim"] = {
-    event = { "CmdwinEnter", "CmdlineEnter" },
-    config = conf.worktree,
 }
 
 tools["nmac427/guess-indent.nvim"] = {
@@ -118,21 +115,6 @@ tools["NFrid/due.nvim"] = {
 }
 
 -- tools["wellle/targets.vim"] = {}
-tools["TimUntersberger/neogit"] = {
-    opt = true,
-    cmd = { "Neogit" },
-    config = function()
-        local neogit = require("neogit")
-        neogit.setup({})
-    end,
-}
-
-tools["ruifm/gitlinker.nvim"] = {
-    keys = { "<leader>gy" },
-    config = function()
-        require("gitlinker").setup()
-    end,
-}
 
 tools["liuchengxu/vista.vim"] = { cmd = "Vista", setup = conf.vim_vista, opt = true }
 
@@ -220,22 +202,6 @@ tools["wakatime/vim-wakatime"] = {
     },
 }
 
-tools["sindrets/diffview.nvim"] = {
-    cmd = {
-        "DiffviewOpen",
-        "DiffviewFileHistory",
-        "DiffviewFocusFiles",
-        "DiffviewToggleFiles",
-        "DiffviewRefresh",
-    },
-    config = conf.diffview,
-}
-
-tools["lewis6991/gitsigns.nvim"] = {
-    config = conf.gitsigns,
-    -- keys = {']c', '[c'},  -- load by lazy.lua
-    opt = true,
-}
 tools["klen/nvim-config-local"] = {
     -- ft = {"lua","vim"},
     cmd = {
@@ -295,6 +261,48 @@ tools["ray-x/viewdoc.nvim"] = {
     end,
 }
 
+-- ╭────────────────────────────────────────────────────────────────────╮
+-- │ git tools                                                          │
+-- ╰────────────────────────────────────────────────────────────────────╯
+
+tools["ThePrimeagen/git-worktree.nvim"] = {
+    event = { "CmdwinEnter", "CmdlineEnter" },
+    config = conf.worktree,
+}
+
+tools["sindrets/diffview.nvim"] = {
+    cmd = {
+        "DiffviewOpen",
+        "DiffviewFileHistory",
+        "DiffviewFocusFiles",
+        "DiffviewToggleFiles",
+        "DiffviewRefresh",
+    },
+    config = conf.diffview,
+}
+
+tools["lewis6991/gitsigns.nvim"] = {
+    config = conf.gitsigns,
+    -- keys = {']c', '[c'},  -- load by lazy.lua
+    opt = true,
+}
+
+tools["TimUntersberger/neogit"] = {
+    opt = true,
+    cmd = { "Neogit" },
+    config = function()
+        local neogit = require("neogit")
+        neogit.setup({})
+    end,
+}
+
+tools["ruifm/gitlinker.nvim"] = {
+    keys = { "<leader>gy" },
+    config = function()
+        require("gitlinker").setup()
+    end,
+}
+
 tools["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
     setup = function()
         vim.o.updatetime = 2000
@@ -303,6 +311,21 @@ tools["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
     -- after = {"telescope.nvim"},
     opt = true,
     config = conf.vgit,
+}
+
+tools["akinsho/git-conflict.nvim"] = {
+    cmd = {
+        "GitConflictChooseOurs",
+        "GitConflictChooseTheirs",
+        "GitConflictChooseBoth",
+        "GitConflictChooseNone",
+        "GitConflictNextConflict",
+        "GitConflictPrevConflict",
+        "GitConflictListQf",
+    },
+    config = function()
+        require("git-conflict").setup()
+    end,
 }
 
 tools["tpope/vim-fugitive"] = {

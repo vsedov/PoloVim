@@ -219,6 +219,7 @@ function config.nvim_tree_setup()
         active = true,
         on_config_done = nil,
         setup = {
+            nvim_tree_respect_buf_cwd = 1,
             disable_netrw = true,
             hijack_netrw = true,
             open_on_setup = false,
