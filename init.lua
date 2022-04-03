@@ -1,3 +1,5 @@
+--# selene: allow(unscoped_variables)
+--# selene: allow(undefined_variable)
 vim.opt.shadafile = "NONE"
 require("core")
 require("overwrite")
