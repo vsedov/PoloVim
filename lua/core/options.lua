@@ -110,7 +110,7 @@ local function load_options()
         number = true,
         colorcolumn = "80",
         foldenable = true,
-        signcolumn = "auto:2-3", --[auto yes] yes:3  auto:2  "number" auto: 2-4
+        signcolumn = "yes:3", --[auto yes] yes:3  auto:2  "number" auto: 2-4
         conceallevel = 2,
         concealcursor = "niv",
     }

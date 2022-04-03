@@ -150,7 +150,7 @@ function autocmd.load_autocmds()
                 [[if has('nvim') | wshada! | else | wviminfo! | endif]],
             },
             {
-                "BufEnter",
+                "VimEnter",
                 "*",
                 function()
                     if vim.fn.bufname("%") ~= "" then

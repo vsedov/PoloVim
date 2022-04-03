@@ -201,6 +201,8 @@ vim.defer_fn(function()
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
     loader("workspaces.nvim")
     loader("nvim-notify")
+    loader("structlog.nvim")
+
     local notify = require("notify")
     vim.notify = notify
 
