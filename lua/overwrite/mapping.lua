@@ -10,17 +10,17 @@ local K = {}
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
-local keys = { --
 
-    ["n|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
-    ["v|<Leader><Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
+local keys = { --
+    ["n|<Leader>r"] = map_cmd("v:lua.run_or_test()"):with_expr(),
     ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
+    ["n|<F6>"] = map_cu("Jaq qf"):with_noremap():with_silent(),
 
     ["n|<Leader>bB"] = map_cu("Clap buffers"):with_noremap():with_silent(),
     ["n|<localleader>ff"] = map_cu("Clap grep"):with_noremap():with_silent(),
     ["n|<localleader>fb"] = map_cu("Clap marks"):with_noremap():with_silent(),
     ["n|<C-x><C-f>"] = map_cu("Clap filer"):with_noremap():with_silent(),
-    ["n|<Leader>fF"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
+    ["n|<Leader><leader>ff"] = map_cu("Clap files ++finder=rg --ignore --hidden --files"):with_noremap():with_silent(),
     ["n|<Leader>fq"] = map_cu("Clap grep ++query=<cword>"):with_noremap():with_silent(),
     ["n|<Leader>gd"] = map_cu("Clap git_diff_files"):with_noremap():with_silent(),
     ["n|<Leader>fv"] = map_cu("Clap grep ++query=@visual"):with_noremap():with_silent(),
@@ -32,8 +32,8 @@ local keys = { --
     ["n|<Leader>dw"] = map_cr("<cmd>lua require'dap.ui.widgets'.hover()"):with_expr(), -- TODO: another key?
     ["v|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.visual_hover()"):with_expr(),
 
-    ["n|<Leader><Leader>s"] = map_cr("SplitjoinSplit"),
-    ["n|<Leader><Leader>j"] = map_cr("SplitjoinJoin"),
+    ["n|<Leader><Leader>S"] = map_cr("SplitjoinSplit"),
+    ["n|<Leader><Leader>J"] = map_cr("SplitjoinJoin"),
 
     -- Plugin Vista
     ["n|<Leader>v]"] = map_cu("Vista!!"):with_noremap():with_silent(),
@@ -46,9 +46,9 @@ local keys = { --
     -- ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
 
     -- Buffer Line
-    ["n|<leader>bdh"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
-    ["n|<leader>bdu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
-    ["n|<leader>bD"] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
+    ["n|<leader>bh"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
+    ["n|<leader>bu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
+    ["n|<leader>bd"] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
 
     ["n|<Leader>b["] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
     ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
@@ -67,26 +67,9 @@ local keys = { --
     -- tshit
     ["o|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
     ["v|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
-
-    -- clap --
-
-    -- ["n|<d-C>"] = map_cu("Clap | startinsert"),
-    -- ["i|<d-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
-    -- -- ["n|<d-p>"] = map_cu("Clap files | startinsert"),
-    -- -- ["i|<d-p>"] = map_cu("Clap files | startinsert"):with_noremap():with_silent(),
-    -- -- ["n|<d-m>"] = map_cu("Clap files | startinsert"),
-    -- -- ["n|<M-m>"] = map_cu("Clap maps +mode=n | startinsert"),
-    -- -- ["i|<M-m>"] = map_cu("Clap maps +mode=i | startinsert"),
-    -- -- ["v|<M-m>"] = map_cu("Clap maps +mode=v | startinsert"),
-
-    -- ["n|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"),
     ["i|<d-f>"] = map_cu("Clap grep ++query=<cword> |  startinsert"):with_noremap():with_silent(),
     ["i|<C-df>"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),
-    -- -- ["n|<F2>"] = map_cr(""):with_expr(),
-    -- ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
-    -- ["n|<F9>"] = map_cr("GoBreakToggle"),
-    -- -- session
-    -- Switch from local to Normal for M to test how it tis
+
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]]):with_noremap(),
     ["n|;n"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]):with_noremap(),
 
@@ -168,8 +151,7 @@ _G.run_or_test = function(debug)
             return t("<cmd>luafile %<CR>")
         end
         return t("<Plug>PlenaryTestFile")
-    end
-    if ft == "go" then
+    elseif ft == "go" then
         local f = string.find(fn, "test.go")
         if f == nil then
             -- let run lua test
@@ -185,10 +167,12 @@ _G.run_or_test = function(debug)
         else
             return t("<cmd>GoTestFile <CR>")
         end
+    else
+        return t("<cmd>Jaq<CR>")
     end
 end
 
-vim.api.nvim_add_user_command("GodAbbriv", function()
+vim.api.nvim_add_user_command("AbbrivGodMode", function()
     vim.cmd([[packadd vim-abbrev]])
 end, { force = true })
 

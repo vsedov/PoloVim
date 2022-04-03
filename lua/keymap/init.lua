@@ -5,6 +5,7 @@ local map_cmd = bind.map_cmd
 local map_args = bind.map_args
 -- local map_key = bind.map_key
 -- local global = require("core.global")
+
 local plug_map = {
     -- Show syntax highlighting groups for word under cursor
     ["n|<localleader>c["] = map_cmd(function()
@@ -107,14 +108,6 @@ local plug_map = {
     --- WARNING THERE COULD BE AN ISSUE WITH THIS>
     -- --
 
-    -- -- How to run some code .
-    ["n|<Leader>r"] = map_cr("Jaq"):with_noremap():with_silent(),
-    ["n|<Leader>rf"] = map_cr("RunFile"):with_noremap():with_silent(),
-    ["n|<Leader>rp"] = map_cr("RunProject"):with_noremap():with_silent(),
-
-    -- Open with quick fix .
-    ["n|<F6>"] = map_cu("Jaq qf"):with_noremap():with_silent(),
-
     -- -- never go wrong with clap
     -- Figure out the error with clap, giving very annoying error j
     ["n|<F1>"] = map_cr("Clap"):with_noremap():with_silent(),
@@ -149,19 +142,25 @@ local plug_map = {
     -- Extra telescope commands from utils.telescope
     ["n|<Leader>cl"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
 
+    -- Focus
+    ["n|<leader><leader>h"] = map_cmd("<cmd> lua require'focus'.split_command('h')<CR>"):with_noremap():with_silent(),
+    ["n|<leader><leader>j"] = map_cmd("<cmd> lua require'focus'.split_command('j')<CR>"):with_noremap():with_silent(),
+    ["n|<leader><leader>k"] = map_cmd("<cmd> lua require'focus'.split_command('k')<CR>"):with_noremap():with_silent(),
+    ["n|<leader><leader>l"] = map_cmd("<cmd> lua require'focus'.split_command('l')<CR>"):with_noremap():with_silent(),
+
     -------------------------- Find
 
     ["n|<Leader>up"] = map_cmd('<cmd>lua require"utils.telescope".find_updir()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>ff"] = map_cmd('<cmd>lua require"utils.telescope".find_files()<CR>'):with_noremap():with_silent(),
-    ["n|<Leader>fff"] = map_cmd('<cmd>lua require"utils.telescope".files()<CR>'):with_noremap():with_silent(),
+    ["n|<Leader>fF"] = map_cmd('<cmd>lua require"utils.telescope".files()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>fn"] = map_cmd('<cmd>lua require"utils.telescope".find_notes()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>fs"] = map_cmd('<cmd>lua require"utils.telescope".find_string()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>ft"] = map_cmd('<cmd>lua require"utils.telescope".search_only_certain_files()<CR>')
         :with_noremap()
         :with_silent(),
 
-    ["n|<Leader>hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
-    ["n|<leader>hw"] = map_cmd(function()
+    ["n|hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
+    ["n|hw"] = map_cmd(function()
         if require("dynamic_help.extras.statusline").available() ~= "" then
             require("dynamic_help").float_help(vim.fn.expand("<cword>"))
         else
@@ -252,12 +251,6 @@ local plug_map = {
     -- Change map for certain file types: remove this for local . .
     ["n|<F9>"] = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
     ["n|<localleader>b"] = map_cr('<cmd> lua require("nabla").popup()<CR>'):with_noremap(),
-
-    -- $ ... $ : inline form
-    -- $$ ... $$ : wrapped form
-
-    ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
-
     -- Neogen
     ["n|<Leader>d"] = map_cr("lua require('neogen').generate()"):with_noremap():with_silent(),
     ["n|<Leader>dc"] = map_cr("lua require('neogen').generate({type = 'class'})"):with_noremap():with_silent(),

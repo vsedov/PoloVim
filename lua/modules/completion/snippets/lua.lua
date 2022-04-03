@@ -34,6 +34,26 @@ print("${1:variable}:")
 dump($1)]]
 
 local map_cmd = [[<cmd>${0}<CR>]]
+local function highlight_choice()
+    return sn(nil, {
+        t({ "" }),
+        c(1, {
+            t({ "" }),
+            sn(nil, {
+                c(1, {
+                    sn(nil, { t({ "fg=" }), i(1), t({ "," }) }),
+                    sn(nil, { t({ "bg=" }), i(1), t({ "," }) }),
+                    sn(nil, { t({ "sp=" }), i(1), t({ "," }) }),
+                    sn(nil, { t({ "italic=true," }), i(1) }),
+                    sn(nil, { t({ "bold=true," }), i(1) }),
+                    sn(nil, { t({ "underline=true," }), i(1) }),
+                    sn(nil, { t({ "undercurl=true," }), i(1) }),
+                }),
+                d(2, highlight_choice, {}),
+            }),
+        }),
+    })
+end
 
 local require_var = function(args, _)
     local text = args[1][1] or ""
@@ -49,9 +69,9 @@ local require_var = function(args, _)
         c(1, options),
     })
 end
-
+vim.api.nvim_set_hl(0, "lasjdf", { sp = "#FF0000", bold = true })
 local lua = {
-    parse({ trig = "high" }, high),
+
     parse({ trig = "time" }, time),
     parse({ trig = "M" }, module_snippet),
     parse({ trig = "lf" }, loc_func),
@@ -63,6 +83,15 @@ local lua = {
     s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
 
     -- local _ = require "telescope.pickers.builtin"
+    s("high", {
+        t({ 'vim.api.nvim_set_hl(0,"' }),
+        i(1, "group-name"),
+        t({ '",{' }),
+        d(2, highlight_choice, {}),
+        t({ "})" }),
+        i(0),
+    }),
+    s("lreq", fmt("local {} = require('{}')", { i(1, "default"), rep(1) })), -- to lreq, bind parse the list
     s(
         "req",
         fmt([[local {} = require "{}"]], {

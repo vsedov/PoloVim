@@ -456,7 +456,8 @@ tools["sQVe/sort.nvim"] = {
 }
 
 tools["gelguy/wilder.nvim"] = {
-    requires = { { "romgrk/fzy-lua-native", opt = true }, { "nixprime/cpsm", opt = true } },
+    opt = true,
+    requires = { "romgrk/fzy-lua-native", opt = true, after = "wilder.nvim" },
     event = "CmdlineEnter",
     config = conf.wilder,
     run = ":UpdateRemotePlugins",

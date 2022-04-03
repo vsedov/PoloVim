@@ -269,10 +269,24 @@ editor["andweeb/presence.nvim"] = {
 
 -- bad on startup time but i can change this i think.
 editor["beauwilliams/focus.nvim"] = {
-    cmd = { "FocusNicely", "FocusToggle", "FocusEnable" },
+    cmd = {
+        "FocusDisable",
+        "FocusEnable",
+        "FocusToggle",
+        "FocusSplitNicely",
+        "FocusSplitCycle",
+        "FocusSplitLeft",
+        "FocusSplitDown",
+        "FocusSplitUp",
+        "FocusSplitRight",
+        "FocusEqualise",
+        "FocusMaximise",
+        "FocusMaxOrEqual",
+    },
     module = "focus",
     config = function()
         require("focus").setup({
+            winhighlight = true,
             cursorline = false,
             number = false,
             signcolumn = false,

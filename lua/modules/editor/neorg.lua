@@ -2,14 +2,6 @@ if not packer_plugins["zen-mode.nvim"].loaded then
     vim.cmd([[packadd zen-mode.nvim ]])
 end
 
-if not packer_plugins["telescope.nvim"].loaded then
-    vim.cmd([[packadd telescope.nvim ]])
-end
-
-if not packer_plugins["neorg-telescope"].loaded then
-    vim.cmd([[packadd neorg-telescope ]])
-end
-
 if not packer_plugins["nvim-treesitter"].loaded then
     vim.cmd([[packadd nvim-treesitter ]])
     vim.cmd([[packadd plenary.nvim ]])
