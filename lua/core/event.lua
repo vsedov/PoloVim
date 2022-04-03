@@ -257,24 +257,6 @@ function autocmd.load_autocmds()
                 ":set nohlsearch  | redrawstatus",
             },
         },
-
-        colorcol = {
-            {
-                { "WinEnter", "BufEnter", "VimResized", "FileType" },
-                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
-                function()
-                    require("core.event_helper").check_colour_column()
-                end,
-            },
-
-            {
-                "WinLeave",
-                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
-                function()
-                    require("core.event_helper").check_colour_column(true)
-                end,
-            },
-        },
     }
 
     autocmd.nvim_create_augroups(definitions)

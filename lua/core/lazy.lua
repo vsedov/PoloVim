@@ -195,9 +195,10 @@ end, lazy_timer + 60)
 
 vim.defer_fn(function()
     lprint("telescope family")
+    -- HACK(vsedov) (23:13:18 - 02/04/22): I do not think this affects startup
+    -- All of these require telescope irc
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
-    -- loader("harpoon")
     loader("workspaces.nvim")
     loader("nvim-notify")
     local notify = require("notify")

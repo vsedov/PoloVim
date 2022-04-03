@@ -63,8 +63,9 @@ local load_core = function()
     disable_distribution_plugins()
     leader_map()
 
-    require("impatient").enable_profile()
-
+    if pcall(require, "impatient") then
+        require("impatient").enable_profile()
+    end
     if pack.ensure_plugins() == "installed" then
         require("core.options")
         require("core.event")
@@ -72,14 +73,7 @@ local load_core = function()
         require("keymap")
 
         pack.load_compile()
-
-        vim.defer_fn(function()
-            vim.cmd([[
-                    runtime! plugin/**/*.vim
-                    runtime! plugin/**/*.lua
-                ]])
-            require("core.lazy")
-        end, 1)
+        require("core.lazy")
     else
         print("install all plugins, please wait")
     end

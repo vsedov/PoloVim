@@ -62,7 +62,9 @@ return {
 
             return true
         end
-
+        _G.dump = function(...)
+            print(vim.inspect(...))
+        end
         _G.use_gitsigns = function()
             if use_nulls() then
                 return true
