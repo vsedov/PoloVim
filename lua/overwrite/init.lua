@@ -22,10 +22,11 @@ local overwrite = function()
         vim.cmd([[NeoraySet BoxDrawingOn    TRUE]])
     end
 end
-
+-- selene: allow(global_usage)
 _G.lprint = require("utils.log").lprint
 
 if vim.bo.filetype ~= "norg" then
+    -- selene: allow(global_usage)
     _G.log = require("utils.Log")
 end
 

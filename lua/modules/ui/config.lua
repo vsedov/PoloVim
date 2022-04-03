@@ -1,6 +1,5 @@
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
-
 function config.windline()
     if not packer_plugins["nvim-web-devicons"].loaded then
         packer_plugins["nvim-web-devicons"].loaded = true
@@ -144,7 +143,7 @@ function config.nvim_bufferline()
                         end,
                     },
                     {
-                        highlight = { guisp = "#C678DD", gui = "underline" },
+                        highlight = { guisp = "#ff6c6b", gui = "underline" },
                         name = "docs",
                         matcher = function(buf)
                             for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
