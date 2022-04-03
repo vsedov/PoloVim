@@ -19,7 +19,7 @@ end
 
 M.toggle_active = function()
     vim.g.active_list = _if(vim.g.active_list == quickfix, location, quickfix)
-    log:warn(string.format("%s list", vim.g.active_list))
+    Log:warn(string.format("%s list", vim.g.active_list))
 end
 
 M.move = function(direction)

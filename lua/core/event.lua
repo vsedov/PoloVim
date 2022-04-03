@@ -46,7 +46,7 @@ function autocmd.load_autocmds()
             { "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
             { "BufWritePre", "*.tmp", "setlocal noundofile" },
             { "BufWritePre", "*.bak", "setlocal noundofile" },
-            { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
+            -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
             {
                 "BufLeave",
                 { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },

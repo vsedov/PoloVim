@@ -614,46 +614,46 @@ local lua = {
         i(0),
     }),
     s("lt", {
-        t("log:trace("),
+        t("Log:trace("),
         i(0),
         t(")"),
     }),
 
     s("lti", {
-        t("log:trace(vim.inspect("),
+        t("Log:trace(vim.inspect("),
         i(0),
         t("))"),
     }),
 
     s("ld", {
-        t("log:debug("),
+        t("Log:debug("),
         i(0),
         t(")"),
     }),
 
     s("ldi", {
-        t("log:debug(vim.inspect("),
+        t("Log:debug(vim.inspect("),
         i(0),
         t("))"),
     }),
     s("li", {
-        t("log:info("),
+        t("Log:info("),
         i(0),
         t(")"),
     }),
 
     s("lii", {
-        t("log:info(vim.inspect("),
+        t("Log:info(vim.inspect("),
         i(0),
         t("))"),
     }),
     s("lw", {
-        t("log:warn("),
+        t("Log:warn("),
         i(0),
         t(")"),
     }),
     s("lwi", {
-        t("log:warn(vim.inspect("),
+        t("Log:warn(vim.inspect("),
         i(0),
         t("))"),
     }),

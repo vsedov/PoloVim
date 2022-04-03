@@ -1,4 +1,3 @@
-lprint(debug.traceback)
 require("utils.helper")
 local loader = require("packer").loader
 local telescope = require("telescope")

@@ -14,7 +14,7 @@ local plug_map = {
         for i, l in ipairs(stack) do
             stack[i] = vim.fn.synIDattr(l, "name")
         end
-        log:info(vim.inspect(stack))
+        Log:info(vim.inspect(stack))
     end):with_silent(),
 
     ["n|<localleader>c]"] = map_cmd(function()

@@ -27,7 +27,7 @@ _G.lprint = require("utils.log").lprint
 
 if vim.bo.filetype ~= "norg" then
     -- selene: allow(global_usage)
-    _G.log = require("utils.Log")
+    _G.Log = require("utils.Log")
 end
 
 if vim.g.neovide then

@@ -27,9 +27,18 @@ end
 local function loadscheme()
     local themes
     if daylight() == "light" then
-        themes = { "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
+        -- increase chances for kanagawa x2
+        themes = { "kanagawa.nvim", "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
     else
-        themes = { "themer.lua", "kanagawa.nvim", "tokyonight.nvim", "Sakura.nvim", "vim-dogrun", "jabuti-nvim" }
+        themes = {
+            "themer.lua",
+            "kanagawa.nvim",
+            "kanagawa.nvim",
+            "tokyonight.nvim",
+            "Sakura.nvim",
+            "vim-dogrun",
+            "jabuti-nvim",
+        }
     end
     -- themes = { "kanagawa.nvim" }
     local v = math.random(1, #themes)
@@ -41,9 +50,11 @@ local function loadscheme()
 end
 
 function Lazyload()
+    -- selene: allow(global_usage)
     _G.PLoader = loader
     -- no_file()
-    loadscheme()
+    -- loadscheme()
+    PLoader("kanagawa.nvim")
     if vim.wo.diff then
         -- loader(plugins)
         lprint("diffmode")
@@ -144,6 +155,7 @@ function Lazyload()
 end
 
 local lazy_timer = 30
+-- selene: allow(global_usage)
 if _G.packer_plugins == nil or _G.packer_plugins["packer.nvim"] == nil then
     lprint("recompile")
     vim.cmd([[PackerCompile]])
@@ -202,14 +214,13 @@ vim.defer_fn(function()
     loader("workspaces.nvim")
     loader("nvim-notify")
     loader("structlog.nvim")
-
     local notify = require("notify")
     vim.notify = notify
 
     -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
     -- have to work around this for the time
     if vim.bo.filetype ~= "norg" then
-        log:configure_notifications(notify)
+        Log:configure_notifications(notify)
     end
     if vim.fn.wordcount()["bytes"] < 2048000 then
         require("vscripts.cursorhold")
