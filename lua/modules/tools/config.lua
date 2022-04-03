@@ -329,8 +329,21 @@ function config.gitsigns()
             vim.keymap.set(mode, l, r, opts)
         end
 
-        map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
-        map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+        map("n", "]c", function()
+            if vim.wo.diff then
+                return "]c"
+            end
+            vim.schedule(gitsigns.next_hunk)
+            return "<Ignore>"
+        end, { expr = true })
+
+        map("n", "[c", function()
+            if vim.wo.diff then
+                return "[c"
+            end
+            vim.schedule(gitsigns.prev_hunk)
+            return "<Ignore>"
+        end, { expr = true })
 
         map("n", "<leader>hs", gitsigns.stage_hunk)
         map("n", "<leader>hr", gitsigns.reset_hunk)
@@ -363,7 +376,6 @@ function config.gitsigns()
 
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
     end
-
     gitsigns.setup({
         debug_mode = true,
         max_file_length = 1000000000,
@@ -384,7 +396,7 @@ function config.gitsigns()
             relative_time = true,
         },
         current_line_blame_opts = {
-            delay = 1500,
+            delay = 0,
         },
         count_chars = {
             "⒈",
@@ -412,8 +424,8 @@ function config.gitsigns()
         watch_gitdir = { interval = 1000, follow_files = true },
         sign_priority = 6,
         status_formatter = nil, -- Use default
-        update_debounce = 300,
-        word_diff = false,
+        update_debounce = 0,
+        word_diff = true,
         diff_opts = { internal = true },
     })
 end
