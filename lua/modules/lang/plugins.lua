@@ -142,11 +142,6 @@ lang["nvim-treesitter/playground"] = {
 
 -- great plugin but not been maintained
 -- lang["ElPiloto/sidekick.nvim"] = {opt = true, fn = {'SideKickNoReload'}, setup = conf.sidekick}
--- lang["stevearc/aerial.nvim"] = {
---     opt = true,
---     cmd = { "AerialToggle" },
---     config = conf.aerial,
--- }
 
 lang["simrat39/symbols-outline.nvim"] = {
     opt = true,

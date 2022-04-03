@@ -4,14 +4,14 @@ return {
         local lspconfig = require("lspconfig")
 
         local diagnostics = null_ls.builtins.diagnostics
-        local hover = null_ls.builtins.hover
         local actions = null_ls.builtins.code_actions
+        -- local hover = null_ls.builtins.hover
         local sources = {
+            null_ls.builtins.formatting.rustfmt,
             null_ls.builtins.diagnostics.yamllint,
+            null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.code_actions.proselint,
             null_ls.builtins.code_actions.refactoring,
-            -- null_ls.builtins.formatting.isort,
-            -- null_ls.builtins.formatting.yapf,
             -- hover.dictionary,
             diagnostics.misspell.with({
                 filetypes = { "markdown", "text", "txt" },
@@ -31,6 +31,7 @@ return {
             }),
             actions.proselint.with({ filetypes = { "markdown", "tex" }, command = "proselint", args = { "--json" } }),
         }
+
         local function exist(bin)
             return vim.fn.exepath(bin) ~= ""
         end
@@ -89,14 +90,14 @@ return {
             )
         end
         -- -- Maybe i dont need luacheck for this, im not sure though
-        -- if exist("luacheck") then
-        --     table.insert(
-        --         sources,
-        --         null_ls.builtins.diagnostics.luacheck.with({
-        --             extra_args = { "--append-config", vim.fn.expand("~/.config/.luacheckrc") },
-        --         })
-        --     )
-        -- end
+        if exist("luacheck") then
+            table.insert(
+                sources,
+                null_ls.builtins.diagnostics.luacheck.with({
+                    extra_args = { "--append-config", vim.fn.expand("~/.config/.luacheckrc") },
+                })
+            )
+        end
 
         -- python
         if exist("flake8") then
@@ -125,14 +126,14 @@ return {
             table.insert(sources, null_ls.builtins.diagnostics.cppcheck)
         end
 
-        table.insert(
-            sources,
-            null_ls.builtins.formatting.trim_newlines.with({ disabled_filetypes = { "norg", "python" } })
-        )
-        table.insert(
-            sources,
-            null_ls.builtins.formatting.trim_whitespace.with({ disabled_filetypes = { "norg", "python" } })
-        )
+        -- table.insert(
+        --     sources,
+        --     null_ls.builtins.formatting.trim_newlines.with({ disabled_filetypes = { "norg", "python" } })
+        -- )
+        -- table.insert(
+        --     sources,
+        --     null_ls.builtins.formatting.trim_whitespace.with({ disabled_filetypes = { "norg", "python" } })
+        -- )
 
         -- Messes with maven >.<
 
@@ -175,21 +176,21 @@ return {
                 "tsconfig.json",
                 ".git"
             ),
-            -- on_attach = require("modules.completion.lsp.utils").get_common_opts,
-            on_attach = function(client)
-                -- I dont want any formating on python files.
-                if client.resolved_capabilities.document_formatting then
-                    vim.diagnostic.config({
-                        virtual_text = false,
-                    })
-                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
-                    -- Convert this using vim.api.nvim_create_autocmd()
-                    -- vim.api.nvim_create_autocmd("BufWritePre", {
-                    --     pattern = "*",
-                    --     command = "lua vim.lsp.buf.formatting()",
-                    -- })
-                end
-            end,
+            on_attach = require("modules.completion.lsp.utils").get_common_opts,
+            -- on_attach = function(client)
+            --     -- I dont want any formating on python files.
+            --     if client.resolved_capabilities.document_formatting then
+            --         vim.diagnostic.config({
+            --             virtual_text = false,
+            --         })
+            --         vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
+            --         -- Convert this using vim.api.nvim_create_autocmd()
+            --         -- vim.api.nvim_create_autocmd("BufWritePre", {
+            --         --     pattern = "*",
+            --         --     command = "lua vim.lsp.buf.formatting()",
+            --         -- })
+            --     end
+            -- end,
         }
 
         null_ls.setup(cfg)
