@@ -197,8 +197,6 @@ completion["nvim-lua/plenary.nvim"] = {
 
 completion["nvim-telescope/telescope.nvim"] = {
     module = { "telescope", "utils.telescope" },
-    cmd = "Telescope",
-    opt = true,
     config = conf.telescope,
     setup = conf.telescope_preload,
     requires = {
