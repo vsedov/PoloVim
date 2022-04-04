@@ -41,24 +41,13 @@ function Packer:load_packer()
         api.nvim_command("packadd packer.nvim")
         packer = require("packer")
     end
-    packer.init({
-        compile_path = packer_compiled,
-        git = {
-            clone_timeout = 500,
-            subcommands = {
-                -- this is more efficient than what Packer is using
-                fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
-            },
-        },
-        -- max_jobs = 10,
-        disable_commands = true,
-    })
+    packer.init({ compile_path = packer_compiled, git = { clone_timeout = 120 }, disable_commands = true })
     packer.reset()
     local use = packer.use
     local use_rocks = packer.use_rocks
     self:load_plugins()
     use({ "wbthomason/packer.nvim" })
-    use({ "lewis6991/impatient.nvim" })
+    use {'lewis6991/impatient.nvim'}
     for _, repo in ipairs(self.repos) do
         use(repo)
     end
@@ -180,7 +169,9 @@ function plugins.load_compile()
     end, { force = true })
 
     vim.api.nvim_add_user_command("PackerSync", function()
+        require("core.pack").magic_compile()
         require("core.pack").sync()
+        require("core.pack").magic_compile()
     end, { force = true })
 
     vim.api.nvim_add_user_command("PackerClean", function()
@@ -190,13 +181,6 @@ function plugins.load_compile()
     vim.api.nvim_add_user_command("PackerStatus", function()
         require("core.pack").status()
     end, { force = true })
-
-    -- vim.cmd([[command! PackerCompile lua require('core.pack').magic_compile()]])
-    -- vim.cmd([[command! PackerInstall lua require('core.pack').install()]])
-    -- vim.cmd([[command! PackerUpdate lua require('core.pack').update()]])
-    -- vim.cmd([[command! PackerSync lua require('core.pack').sync()]])
-    -- vim.cmd([[command! PackerClean lua require('core.pack').clean()]])
-    -- vim.cmd([[command! PackerStatus lua require('core.pack').status()]])
 end
 
 return plugins

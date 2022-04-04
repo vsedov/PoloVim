@@ -143,14 +143,14 @@ local plug_map = {
     ["n|<Leader>cl"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
 
     -- Focus
-    ["n|<leader><leader>h"] = map_cmd("<cmd> lua require'focus'.split_command('h')<CR>"):with_noremap():with_silent(),
-    ["n|<leader><leader>j"] = map_cmd("<cmd> lua require'focus'.split_command('j')<CR>"):with_noremap():with_silent(),
-    ["n|<leader><leader>k"] = map_cmd("<cmd> lua require'focus'.split_command('k')<CR>"):with_noremap():with_silent(),
-    ["n|<leader><leader>l"] = map_cmd("<cmd> lua require'focus'.split_command('l')<CR>"):with_noremap():with_silent(),
+    ["n|<leader><leader>h"] = map_cmd("<cmd> lua require'focus'.split_command('h')<CR>"):with_silent(),
+    ["n|<leader><leader>j"] = map_cmd("<cmd> lua require'focus'.split_command('j')<CR>"):with_silent(),
+    ["n|<leader><leader>k"] = map_cmd("<cmd> lua require'focus'.split_command('k')<CR>"):with_silent(),
+    ["n|<leader><leader>l"] = map_cmd("<cmd> lua require'focus'.split_command('l')<CR>"):with_silent(),
 
-    ["n|<C-M-H>"] = map_cmd("<cmd>WinShift left<CR>"):with_noremap(),
-    ["n|<C-M-J>"] = map_cmd("<cmd>WinShift down<CR>"):with_noremap(),
-    ["n|<C-M-K>"] = map_cmd("<cmd>WinShift up<CR>"):with_noremap(),
+    ["n|<C-M>-H>"] = map_cmd("<cmd>WinShift left<CR>"):with_noremap(),
+    ["n|<C-M>-J>"] = map_cmd("<cmd>WinShift down<CR>"):with_noremap(),
+    ["n|<C-M>-K>"] = map_cmd("<cmd>WinShift up<CR>"):with_noremap(),
     ["n|<C-M-L>"] = map_cmd("<cmd>WinShift right<CR>"):with_noremap(),
     ["n|<C-M-P>"] = map_cmd("<cmd>WinShift swap<CR>"):with_noremap(),
 

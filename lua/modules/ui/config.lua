@@ -80,7 +80,7 @@ function config.nvim_bufferline()
             diagnostics_indicator = diagnostics_indicator,
             diagnostics_update_in_insert = false,
             custom_filter = custom_filter,
-            separator_style = "slant", -- "thin",
+            separator_style = "thin", -- "thin",
             -- 'extension' | 'directory' |
             offsets = {
                 {
@@ -121,7 +121,7 @@ function config.nvim_bufferline()
                 items = {
                     groups.builtin.ungrouped,
                     {
-                        highlight = { guisp = "#51AFEF", gui = "underline" },
+                        -- highlight = { guisp = "#51AFEF", gui = "underline" },
                         name = "tests",
                         icon = "",
                         matcher = function(buf)
@@ -130,7 +130,7 @@ function config.nvim_bufferline()
                     },
                     {
                         name = "view models",
-                        highlight = { guisp = "#03589C", gui = "underline" },
+                        -- highlight = { guisp = "#03589C", gui = "underline" },
                         matcher = function(buf)
                             return buf.filename:match("view_model%.dart")
                         end,
@@ -142,7 +142,7 @@ function config.nvim_bufferline()
                         end,
                     },
                     {
-                        highlight = { guisp = "#ff6c6b", gui = "underline" },
+                        -- highlight = { guisp = "#ff6c6b", gui = "underline" },
                         name = "docs",
                         matcher = function(buf)
                             for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do

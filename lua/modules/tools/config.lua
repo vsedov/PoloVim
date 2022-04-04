@@ -271,7 +271,9 @@ function config.neogit()
         disable_signs = false,
         disable_context_highlighting = false,
         disable_commit_confirmation = false,
-        -- customize displayed signs
+        auto_refresh = true,
+        disable_builtin_notifications = true,
+        use_magit_keybindings = true,
         signs = {
             -- { CLOSED, OPENED }
             section = { ">", "v" },
@@ -279,18 +281,6 @@ function config.neogit()
             hunk = { "", "" },
         },
         integrations = {
-            -- Neogit only provides inline diffs. If you want a more traditional way to look at diffs, you can use `sindrets/diffview.nvim`.
-            -- The diffview integration enables the diff popup, which is a wrapper around `sindrets/diffview.nvim`.
-            --
-            -- Requires you to have `sindrets/diffview.nvim` installed.
-            -- use {
-            --   'TimUntersberger/neogit',
-            --   requires = {
-            --     'nvim-lua/plenary.nvim',
-            --     'sindrets/diffview.nvim'
-            --   }
-            -- }
-            --
             diffview = true,
         },
         -- override/add mappings

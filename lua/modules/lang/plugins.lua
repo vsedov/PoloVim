@@ -350,9 +350,6 @@ lang["p00f/nvim-ts-rainbow"] = {
 
 lang["onsails/diaglist.nvim"] = {
     event = { "QuickFixCmdPre", "CmdlineEnter" },
-    requires = {
-        "neovim/nvim-lspconfig",
-    },
     module = "diaglist",
     setup = function()
         local map, opts = vim.api.nvim_set_keymap, {}

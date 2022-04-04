@@ -286,11 +286,6 @@ editor["beauwilliams/focus.nvim"] = {
     module = "focus",
     config = function()
         require("focus").setup({
-            winhighlight = true,
-            cursorline = false,
-            number = false,
-            signcolumn = false,
-            colorcolumn = { enable = true, width = tonumber(vim.o.colorcolumn) },
             excluded_filetypes = {
                 "TelescopePrompt",
                 "toggleterm",
