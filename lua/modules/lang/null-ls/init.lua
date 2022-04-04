@@ -8,6 +8,8 @@ return {
         -- local hover = null_ls.builtins.hover
         local sources = {
             null_ls.builtins.formatting.rustfmt,
+            null_ls.builtins.formatting.yapf,
+            null_ls.builtins.formatting.isort,
             null_ls.builtins.diagnostics.yamllint,
             null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.code_actions.proselint,
@@ -77,9 +79,9 @@ return {
             table.insert(sources, null_ls.builtins.formatting.prettierd)
         end
         -- lua
-        if exist("selene") then
-            table.insert(sources, null_ls.builtins.diagnostics.selene)
-        end
+        -- if exist("selene") then
+        --     table.insert(sources, null_ls.builtins.diagnostics.selene)
+        -- end
 
         if exist("stylua") then
             table.insert(
@@ -89,14 +91,10 @@ return {
                 })
             )
         end
+
         -- -- Maybe i dont need luacheck for this, im not sure though
         if exist("luacheck") then
-            table.insert(
-                sources,
-                null_ls.builtins.diagnostics.luacheck.with({
-                    extra_args = { "--append-config", vim.fn.expand("~/.config/.luacheckrc") },
-                })
-            )
+            table.insert(sources, null_ls.builtins.diagnostics.luacheck)
         end
 
         -- python

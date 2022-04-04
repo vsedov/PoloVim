@@ -274,16 +274,16 @@ completion["weilbith/nvim-code-action-menu"] = {
     ft = { "python", "lua", "c", "java", "prolog", "lisp", "cpp" },
 }
 
-completion["dense-analysis/ale"] = {
-    -- Maybe just for python and C ? - not sure
-    ft = {
-        "python",
-        "norg",
-    },
-    opt = true,
-    -- Test out norg files
-    config = conf.ale,
-}
+-- completion["dense-analysis/ale"] = {
+--     -- Maybe just for python and C ? - not sure
+--     ft = {
+--         "python",
+--         "norg",
+--     },
+--     opt = true,
+--     -- Test out norg files
+--     config = conf.ale,
+-- }
 
 completion["~/GitHub/vim-sonictemplate"] = {
     cmd = "Template",
