@@ -488,11 +488,8 @@ editor["sidebar-nvim/sidebar.nvim"] = {
 }
 
 editor["nyngwang/NeoZoom.lua"] = {
-    event = "BufRead",
-    after = "which-key.nvim",
-    config = function()
-        require("which-key").register({ g = { z = { "<Cmd>NeoZoomToggle<CR>", "Toggle Zoom" } } }, { prefix = "<c-w>" })
-    end,
+    opt = true,
+    cmd = { "NeoZoomToggle" },
 }
 
 editor["rmagatti/alternate-toggler"] = {
@@ -504,6 +501,12 @@ editor["max397574/nabla.nvim"] = {
     ft = { "tex", "norg" },
     opt = true,
     requires = { "nvim-lua/popup.nvim" },
+}
+
+editor["sindrets/winshift.nvim"] = {
+    cmd = "WinShift",
+    opt = true,
+    config = conf.win_shift,
 }
 
 return editor
