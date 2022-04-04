@@ -241,7 +241,7 @@ tools["FraserLee/ScratchPad"] = {
 }
 tools["ray-x/sad.nvim"] = {
     cmd = { "Sad" },
-    requires = "ray-x/guihua.lua",
+    requires = {"ray-x/guihua.lua", opt = true, after = "sad.nvim"},
     opt = true,
     config = function()
         require("sad").setup({
@@ -251,16 +251,6 @@ tools["ray-x/sad.nvim"] = {
         })
     end,
 }
-
-tools["ray-x/viewdoc.nvim"] = {
-    requires = "ray-x/guihua.lua",
-    cmd = { "Viewdoc" },
-    opt = true,
-    config = function()
-        require("viewdoc").setup({ debug = true, log_path = "~/tmp/neovim_debug.log" })
-    end,
-}
-
 -- ╭────────────────────────────────────────────────────────────────────╮
 -- │ git tools                                                          │
 -- ╰────────────────────────────────────────────────────────────────────╯

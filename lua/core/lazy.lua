@@ -117,11 +117,6 @@ function Lazyload()
             loader("null-ls.nvim")
         end
     end
-
-    if load_lsp or load_ts_plugins then
-        loader("guihua.lua")
-    end
-
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
         plugins =
@@ -133,7 +128,6 @@ function Lazyload()
         loader("refactoring.nvim") -- need to do the same thing for refactoring
     end
 
-    loader("popup.nvim")
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { "vista", "guiha" },
         command = [[setlocal syntax=on]],

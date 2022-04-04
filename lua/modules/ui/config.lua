@@ -80,7 +80,7 @@ function config.nvim_bufferline()
             diagnostics_indicator = diagnostics_indicator,
             diagnostics_update_in_insert = false,
             custom_filter = custom_filter,
-            separator_style = "thin",
+            separator_style = "slant", -- "thin",
             -- 'extension' | 'directory' |
 
             offsets = {

@@ -290,8 +290,8 @@ end, {
     force = true,
     nargs = "*",
 })
-vim.api.nvim_add_user_command("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|DEV/", {})
-vim.api.nvim_add_user_command("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|DEV/ *<CR>", {})
+vim.api.nvim_add_user_command("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|PERF/", {})
+vim.api.nvim_add_user_command("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|PERF/ *<CR>", {})
 
 vim.cmd("command! -nargs=+ -complete=file Grep " .. "lua vim.api.nvim_exec([[grep! <args> | redraw! | copen]], true)")
 vim.cmd("command! -nargs=+ -complete=file LGrep " .. "lua vim.api.nvim_exec([[lgrep! <args> | redraw! | lopen]], true)")

@@ -64,7 +64,7 @@ local load_core = function()
     leader_map()
 
     if pcall(require, "impatient") then
-        require("impatient").enable_profile()
+        require("impatient")
     end
     if pack.ensure_plugins() == "installed" then
         require("core.options")

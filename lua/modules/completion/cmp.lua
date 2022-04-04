@@ -278,7 +278,6 @@ if vim.o.ft == "gitcommit" then
     })
 
     table.insert(sources, { name = "cmp_git" })
-    table.insert(sources, { name = "cmp_git" })
 end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })

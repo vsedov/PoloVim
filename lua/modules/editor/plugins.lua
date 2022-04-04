@@ -443,10 +443,6 @@ editor["famiu/bufdelete.nvim"] = {
     cmd = { "Bdelete", "Bwipeout" },
 }
 
-editor["nvim-lua/popup.nvim"] = {
-    opt = true,
-}
-
 editor["raimon49/requirements.txt.vim"] = {
     ft = { "requirements" },
 }
