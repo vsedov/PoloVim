@@ -1,7 +1,6 @@
 _G = _G or {}
 return {
     init = function()
-        -- selene: allow(global_usage)
         _G.plugin_folder = function()
             if Plugin_folder then
                 return Plugin_folder
@@ -15,7 +14,6 @@ return {
             return Plugin_folder
         end
         -- https://www.reddit.com/r/neovim/comments/sg919r/diff_with_clipboard/
-        -- selene: allow(global_usage)
         _G.compare_to_clipboard = function()
             local ftype = vim.api.nvim_eval("&filetype")
             vim.cmd(string.format(
@@ -34,7 +32,6 @@ return {
             ))
         end
 
-        -- selene: allow(global_usage)
         _G.plugin_debug = function()
             if Plugin_debug ~= nil then
                 return Plugin_debug
@@ -48,7 +45,6 @@ return {
             return Plugin_debug
         end
 
-        -- selene: allow(global_usage)
         _G.load_coq = function()
             -- Coq is good for sql, vim and any other languages that
             -- i dont have a server or snippets for
@@ -58,7 +54,6 @@ return {
             return false
         end
 
-        -- selene: allow(global_usage)
         _G.use_nulls = function()
             -- Remove this for norg files
             if vim.bo.filetype == "norg" or vim.bo.filetype == "json" then
@@ -67,11 +62,9 @@ return {
 
             return true
         end
-        -- selene: allow(global_usage)
         _G.dump = function(...)
             print(vim.inspect(...))
         end
-        -- selene: allow(global_usage)
         _G.use_gitsigns = function()
             if use_nulls() then
                 return true
@@ -79,7 +72,6 @@ return {
             return false
         end
 
-        -- selene: allow(global_usage)
         _G.preserve = function(cmd)
             cmd = string.format("keepjumps keeppatterns execute %q", cmd)
             local original_cursor = vim.fn.winsaveview()
@@ -87,7 +79,6 @@ return {
             vim.fn.winrestview(original_cursor)
         end
         -- convert word to Snake case
-        -- selene: allow(global_usage)
         _G.Snake = function(s)
             if s == nil then
                 s = vim.fn.expand("<cword>")
@@ -104,7 +95,6 @@ return {
             lprint("newstr", n)
         end
         -- convert to camel case
-        -- selene: allow(global_usage)
         _G.Camel = function()
             local s
             if s == nil then
@@ -118,7 +108,7 @@ return {
             vim.fn.setreg("s", n)
             vim.cmd([[exe "norm! ciw\<C-R>s"]])
         end
-        -- selene: allow(global_usage)
+
         _G.PASTE = function(data)
             if not vim.tbl_islist(data) then
                 if type(data) == type("") then
@@ -130,14 +120,12 @@ return {
             vim.paste(data, -1)
         end
 
-        -- selene: allow(global_usage)
         _G.p = function(...)
             local vars = vim.tbl_map(vim.inspect, { ... })
             print(unpack(vars))
             return { ... }
         end
 
-        -- selene: allow(global_usage)
         _G.PERF = function(msg, ...)
             local args = { ... }
             vim.validate({ func = { args[1], "function" }, message = { msg, "string", true } })
@@ -153,7 +141,6 @@ return {
         end
 
         -- reformat file by remove \n\t and pretty if it is json
-        -- selene: allow(global_usage)
         _G.Format = function(json)
             pcall(vim.cmd, [[%s/\\n/\r/g]])
             pcall(vim.cmd, [[%s/\\t/  /g]])

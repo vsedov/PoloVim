@@ -6,7 +6,7 @@ local blacklist_files = {
     "c",
     "norg",
     "tex",
-    "md"
+    "md",
 }
 
 local function should_mkview()
