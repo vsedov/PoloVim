@@ -242,6 +242,60 @@ vim.api.nvim_add_user_command("BLR", function()
     require("utils.selfunc").clearBlameVirtualText()
 end, { force = true })
 
+vim.api.nvim_add_user_command("Diagnostics", function()
+    vim.cmd("silent lmake! %")
+    if #vim.fn.getloclist(0) == 0 then
+        vim.cmd("lopen")
+    else
+        vim.cmd("lclose")
+    end
+end, {
+    force = true,
+})
+vim.api.nvim_add_user_command("Format", "silent normal! mxgggqG`x<CR>", {
+    force = true,
+})
+
+-- Adjust Spacing:
+vim.api.nvim_add_user_command("Spaces", function(args)
+    local wv = vim.fn.winsaveview()
+    vim.opt_local.expandtab = true
+    vim.cmd("silent execute '%!expand -it" .. args.args .. "'")
+    vim.fn.winrestview(wv)
+    vim.cmd("setlocal ts? sw? sts? et?")
+end, {
+    force = true,
+    nargs = 1,
+})
+vim.api.nvim_add_user_command("Tabs", function(args)
+    local wv = vim.fn.winsaveview()
+    vim.opt_local.expandtab = false
+    vim.cmd("silent execute '%!unexpand -t" .. args.args .. "'")
+    vim.fn.winrestview(wv)
+    vim.cmd("setlocal ts? sw? sts? et?")
+end, {
+    force = true,
+    nargs = 1,
+})
+
+vim.api.nvim_add_user_command("NvimEditInit", function(args)
+    vim.cmd("split | edit $MYVIMRC")
+end, {
+    force = true,
+    nargs = "*",
+})
+vim.api.nvim_add_user_command("NvimSourceInit", function(args)
+    vim.cmd("luafile $MYVIMRC")
+end, {
+    force = true,
+    nargs = "*",
+})
+vim.api.nvim_add_user_command("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|DEV/", {})
+vim.api.nvim_add_user_command("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|DEV/ *<CR>", {})
+
+vim.cmd("command! -nargs=+ -complete=file Grep " .. "lua vim.api.nvim_exec([[grep! <args> | redraw! | copen]], true)")
+vim.cmd("command! -nargs=+ -complete=file LGrep " .. "lua vim.api.nvim_exec([[lgrep! <args> | redraw! | lopen]], true)")
+
 local plugmap = require("keymap").map
 local merged = vim.tbl_extend("force", plugmap, keys)
 bind.nvim_load_mapping(merged)
