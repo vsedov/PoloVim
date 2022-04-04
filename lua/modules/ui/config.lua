@@ -82,7 +82,6 @@ function config.nvim_bufferline()
             custom_filter = custom_filter,
             separator_style = "slant", -- "thin",
             -- 'extension' | 'directory' |
-
             offsets = {
                 {
                     filetype = "undotree",

@@ -143,6 +143,7 @@ lang["nvim-treesitter/playground"] = {
 -- great plugin but not been maintained
 -- lang["ElPiloto/sidekick.nvim"] = {opt = true, fn = {'SideKickNoReload'}, setup = conf.sidekick}
 
+
 lang["simrat39/symbols-outline.nvim"] = {
     opt = true,
     cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
@@ -349,7 +350,7 @@ lang["p00f/nvim-ts-rainbow"] = {
 }
 
 lang["onsails/diaglist.nvim"] = {
-    event = { "BufEnter", "QuickFixCmdPre", "CmdlineEnter" },
+    event = {"QuickFixCmdPre", "CmdlineEnter" },
     requires = {
         "neovim/nvim-lspconfig",
     },
@@ -383,10 +384,11 @@ lang["folke/todo-comments.nvim"] = {
     config = conf.todo_comments,
 }
 
-lang["vim-scripts/CRefVim"] = {
-    keys = { "<leader>c" },
-    ft = "c",
+lang["vim-scripts/CRefVim"]={ 
+  keys = {"<leader>c"},
+  ft = "c", 
 }
+
 
 lang["is0n/jaq-nvim"] = {
     cmd = "Jaq",
