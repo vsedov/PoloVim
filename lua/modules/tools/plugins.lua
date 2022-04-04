@@ -27,6 +27,22 @@ tools["editorconfig/editorconfig-vim"] = {
     -- ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
 }
 
+tools["olimorris/persisted.nvim"] = {
+    event = "VimLeavePre",
+    module = "persisted",
+    setup = function()
+        vim.keymap.set("n", "<leader>R", function()
+            require("persisted").load({ last = true })
+        end)
+        vim.keymap.set("n", "<leader>L", function()
+            require("persisted").start()
+        end)
+    end,
+    config = function()
+        require("persisted").setup()
+    end,
+}
+
 tools["rktjmp/paperplanes.nvim"] = {
     cmd = { "PP" },
     opt = true,
@@ -241,7 +257,7 @@ tools["FraserLee/ScratchPad"] = {
 }
 tools["ray-x/sad.nvim"] = {
     cmd = { "Sad" },
-    requires = {"ray-x/guihua.lua", opt = true, after = "sad.nvim"},
+    requires = { "ray-x/guihua.lua", opt = true, after = "sad.nvim" },
     opt = true,
     config = function()
         require("sad").setup({
