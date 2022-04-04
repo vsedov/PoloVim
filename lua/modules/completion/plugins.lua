@@ -160,6 +160,7 @@ completion["hrsh7th/nvim-cmp"] = {
         { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", opt = true },
         { "f3fora/cmp-spell", after = "nvim-cmp", opt = true },
         { "octaltree/cmp-look", after = "nvim-cmp", opt = true },
+        { "petertriho/cmp-git", after = "nvim-cmp", opt = true },
         -- {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp", opt=true },
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },

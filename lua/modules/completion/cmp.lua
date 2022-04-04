@@ -170,6 +170,116 @@ if vim.o.ft == "markdown" then
     table.insert(sources, { name = "look" })
     table.insert(sources, { name = "latex_symbols" })
 end
+if vim.o.ft == "gitcommit" then
+    vim.cmd([[packadd cmp-git]])
+    require("cmp_git").setup({
+        remotes = { "upstream", "origin", "b0o" },
+        github = {
+            issues = {
+                filter = "all",
+                limit = 250,
+                state = "all",
+                sort_by = function(issue)
+                    local kind_rank = issue.pull_request and 1 or 0
+                    local state_rank = issue.state == "open" and 0 or 1
+                    local age = os.difftime(os.time(), require("cmp_git.utils").parse_github_date(issue.updatedAt))
+                    return string.format("%d%d%010d", kind_rank, state_rank, age)
+                end,
+                filter_fn = function(trigger_char, issue)
+                    return string.format("%s %s %s", trigger_char, issue.number, issue.title)
+                end,
+            },
+            mentions = {
+                limit = 250,
+                sort_by = nil,
+                filter_fn = function(trigger_char, mention)
+                    return string.format("%s %s %s", trigger_char, mention.username)
+                end,
+            },
+            pull_requests = {
+                limit = 250,
+                state = "all",
+                sort_by = function(pr)
+                    local state_rank = pr.state == "open" and 0 or 1
+                    local age = os.difftime(os.time(), require("cmp_git.utils").parse_github_date(pr.updatedAt))
+                    return string.format("%d%010d", state_rank, age)
+                end,
+                filter_fn = function(trigger_char, pr)
+                    return string.format("%s %s %s", trigger_char, pr.number, pr.title)
+                end,
+            },
+        },
+        trigger_actions = {
+            {
+                debug_name = "git_commits",
+                trigger_character = ":",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.git:get_commits(callback, params, trigger_char)
+                end,
+            },
+            {
+                debug_name = "github_issues",
+                trigger_character = "#",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.github:get_issues(
+                        cmp_git_extend_gh_callback(callback, "issues"),
+                        git_info,
+                        trigger_char
+                    )
+                end,
+            },
+            {
+                debug_name = "github_pulls",
+                trigger_character = "!",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.github:get_pull_requests(
+                        cmp_git_extend_gh_callback(callback, "pulls"),
+                        git_info,
+                        trigger_char
+                    )
+                end,
+            },
+            {
+                debug_name = "github_mentions",
+                trigger_character = "@",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.github:get_mentions(callback, git_info, trigger_char)
+                end,
+            },
+            {
+                debug_name = "gitlab_issues",
+                trigger_character = "#",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.gitlab:get_issues(callback, git_info, trigger_char)
+                end,
+            },
+            {
+                debug_name = "gitlab_mentions",
+                trigger_character = "@",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.gitlab:get_mentions(callback, git_info, trigger_char)
+                end,
+            },
+            {
+                debug_name = "gitlab_mrs",
+                trigger_character = "!",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.gitlab:get_merge_requests(callback, git_info, trigger_char)
+                end,
+            },
+        },
+    })
+
+    table.insert(sources, { name = "cmp_git" })
+    table.insert(sources, { name = "cmp_git" })
+end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
     table.insert(sources, { name = "cmp_tabnine", priority = 7 })
