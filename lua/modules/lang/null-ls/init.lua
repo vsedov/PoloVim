@@ -176,21 +176,22 @@ return {
                 "tsconfig.json",
                 ".git"
             ),
-            on_attach = require("modules.completion.lsp.utils").get_common_opts,
-            -- on_attach = function(client)
-            --     -- I dont want any formating on python files.
-            --     if client.resolved_capabilities.document_formatting then
-            --         vim.diagnostic.config({
-            --             virtual_text = false,
-            --         })
-            --         vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
-            --         -- Convert this using vim.api.nvim_create_autocmd()
-            --         -- vim.api.nvim_create_autocmd("BufWritePre", {
-            --         --     pattern = "*",
-            --         --     command = "lua vim.lsp.buf.formatting()",
-            --         -- })
-            --     end
-            -- end,
+            diagnostics_format = "#{s}: #{m} (#{c})",
+            -- on_attach = require("modules.completion.lsp.utils").get_common_opts,
+            on_attach = function(client, bufnr)
+                -- I dont want any formating on python files.
+                if client.resolved_capabilities.document_formatting then
+                    vim.diagnostic.config({
+                        virtual_text = false,
+                    })
+                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
+                    -- Convert this using vim.api.nvim_create_autocmd()
+                    -- vim.api.nvim_create_autocmd("BufWritePre", {
+                    --     pattern = "*",
+                    --     command = "lua vim.lsp.buf.formatting()",
+                    -- })
+                end
+            end,
         }
 
         null_ls.setup(cfg)
