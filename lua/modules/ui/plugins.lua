@@ -34,14 +34,6 @@ ui["rcarriga/nvim-notify"] = {
     config = conf.notify,
 }
 
-ui["NarutoXY/dim.lua"] = {
-    ft = { "python", "lua", "rust", "c" },
-    event = { "CursorMovedI" },
-    opt = true,
-    config = function()
-        require("dim").setup({})
-    end,
-}
 ui["kyazdani42/nvim-tree.lua"] = {
     cmd = { "NvimTreeToggle", "NvimTreeOpen" },
     -- requires = {'kyazdani42/nvim-web-devicons'},
@@ -77,15 +69,7 @@ ui["petertriho/nvim-scrollbar"] = {
     event = { "CursorMoved", "CursorMovedI" },
     config = conf.scrollbar,
 }
--- ui["narutoxy/dim.lua"] = {
---     event = { "CursorMoved", "CursorMovedI" },
---     requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
---     config = function()
---         require("dim").setup()
---     end,
---     after = "nvim-treesitter"
--- }
--- test fold
+
 ui["xiyaowong/nvim-transparent"] = {
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
     config = function()
