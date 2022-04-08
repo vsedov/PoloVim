@@ -392,7 +392,7 @@ lang["is0n/jaq-nvim"] = {
     config = conf.jaq,
 }
 lang["pianocomposer321/yabs.nvim"] = {
-    opt = true,
+    ft = "python",
     requires = { "nvim-lua/plenary.nvim" },
     config = conf.yabs,
 }

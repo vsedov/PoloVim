@@ -53,7 +53,10 @@ return {
             end
             return false
         end
-
+        _G.use_efm = function()
+            return false
+            -- return true
+        end
         _G.use_nulls = function()
             -- Remove this for norg files
             if vim.bo.filetype == "norg" or vim.bo.filetype == "json" then

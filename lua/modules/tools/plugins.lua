@@ -358,13 +358,13 @@ tools["kevinhwang91/nvim-bqf"] = {
     config = conf.bqf,
 }
 
-tools["ahmedkhalf/project.nvim"] = {
-    module = "project",
-    ft = { "python", "java", "c", "cpp", "lua" },
-    opt = true,
-    after = { "telescope.nvim" },
-    config = conf.project,
-}
+-- tools["ahmedkhalf/project.nvim"] = {
+--     module = "project",
+--     ft = { "python", "java", "c", "cpp", "lua" },
+--     opt = true,
+--     after = { "telescope.nvim" },
+--     config = conf.project,
+-- }
 
 -- config this better https://github.com/jvgrootveld/telescope-zoxide
 tools["jvgrootveld/telescope-zoxide"] = {
