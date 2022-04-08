@@ -108,14 +108,14 @@ end
 local auto_snippets = {
 
     s(
-        { trig = "fro(m?)", regTrig = true },
+        { trig = "fro(m ?)", regTrig = false },
         fmt([[from {} import {}]], {
             i(1, "sys"),
             i(2, "path"),
         })
     ),
     s(
-        { trig = "if(e?)", regTrig = true },
+        { trig = "if(e ?)", regTrig = true },
         fmt(
             [[
     if {}:
@@ -183,6 +183,12 @@ local M = {
     s(
         "pr",
         fmt([[print({})]], {
+            i(1, "msg"),
+        })
+    ),
+    s(
+        "ic",
+        fmt([[ic({})]], {
             i(1, "msg"),
         })
     ),

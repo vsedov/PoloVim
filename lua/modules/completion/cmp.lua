@@ -160,7 +160,7 @@ if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end
 if vim.o.ft == "python" then
-    table.insert(sources, { name = "cmp_tabnine", priority = 8 })
+    table.insert(sources, { name = "cmp_tabnine", priority = 9 })
 end
 if vim.o.ft == "norg" then
     table.insert(sources, { name = "latex_symbols" })

@@ -148,11 +148,11 @@ local plug_map = {
     ["n|<leader><leader>k"] = map_cmd("<cmd> lua require'focus'.split_command('k')<CR>"):with_silent(),
     ["n|<leader><leader>l"] = map_cmd("<cmd> lua require'focus'.split_command('l')<CR>"):with_silent(),
 
-    ["n|<C-M>-H>"] = map_cmd("<cmd>WinShift left<CR>"):with_noremap(),
-    ["n|<C-M>-J>"] = map_cmd("<cmd>WinShift down<CR>"):with_noremap(),
-    ["n|<C-M>-K>"] = map_cmd("<cmd>WinShift up<CR>"):with_noremap(),
-    ["n|<C-M-L>"] = map_cmd("<cmd>WinShift right<CR>"):with_noremap(),
-    ["n|<C-M-P>"] = map_cmd("<cmd>WinShift swap<CR>"):with_noremap(),
+    ["n|<C-M>h"] = map_cmd("<cmd>WinShift left<CR>"):with_noremap(),
+    ["n|<C-M>j"] = map_cmd("<cmd>WinShift down<CR>"):with_noremap(),
+    ["n|<C-M>k"] = map_cmd("<cmd>WinShift up<CR>"):with_noremap(),
+    ["n|<C-M>l"] = map_cmd("<cmd>WinShift right<CR>"):with_noremap(),
+    ["n|<C-M>p"] = map_cmd("<cmd>WinShift swap<CR>"):with_noremap(),
 
     -------------------------- Find
 
@@ -284,7 +284,7 @@ local plug_map = {
     ["n|<localleader>nf"] = map_cmd([[:vsp <C-R>=expand("%:p:h") . "/" <CR>]]):with_silent(),
 
     -- Refocus folds
-    ["n|z<space>"] = map_cmd([[zMzvzz]]):with_noremap(),
+    ["n|z<leader>"] = map_cmd([[zMzvzz]]):with_noremap(),
     ["n|z0"] = map_cmd([[zCzO]]):with_noremap(),
     ["n|zz"] = map_cmd([[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']])
         :with_noremap()
