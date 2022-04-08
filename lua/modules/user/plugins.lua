@@ -19,13 +19,10 @@ user["~/GitHub/vim-autocorrect/opt/vim-abbrev"] = {
         vim.g.abbrev_file = "/home/viv/GitHub/vim-autocorrect/opt/vim-abbrev/plugin/abbrev"
     end,
 }
--- user["~/GitHub/Generatorg"] = {
---     ft = "python",
---     opt = true,
---     config = function()
---         require("generatorg")
---     end,
--- }
+user["~/GitHub/Generatorg"] = {
+    ft = "python",
+    opt = true,
+}
 
 -- your plugin config
 return user

@@ -296,10 +296,7 @@ tools["lewis6991/gitsigns.nvim"] = {
 tools["TimUntersberger/neogit"] = {
     opt = true,
     cmd = { "Neogit" },
-    config = function()
-        local neogit = require("neogit")
-        neogit.setup({})
-    end,
+    config = conf.neogit,
 }
 
 tools["ruifm/gitlinker.nvim"] = {
@@ -343,7 +340,18 @@ tools["LhKipp/nvim-git-fixer"] = {
     cmd = { "FixUp", "Ammend" },
     opt = true,
     config = function()
-        require("fixer").setup({})
+        -- defaults shown --
+        require("fixer").setup({
+            stage_hunk_action = function()
+                require("gitsigns").stage_hunk()
+            end,
+            undo_stage_hunk_action = function()
+                require("gitsigns").undo_stage_hunk()
+            end,
+            refresh_hunks_action = function()
+                require("gitsigns").refresh()
+            end,
+        })
         vim.cmd(
             [[command! -nargs=*  FixUp lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]]
         )
