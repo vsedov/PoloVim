@@ -1954,7 +1954,7 @@ packer.startup({
 })
 
 if packer_bootstrap then
-       packer.sync()
+    packer.sync()
 end
 pcall(require, setup("42header"))
 pcall(require, setup("42norm"))
