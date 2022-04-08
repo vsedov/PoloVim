@@ -165,6 +165,23 @@ local M = {
         t({ "):", "\t" }),
         d(3, pyfdoc, { 2 }, { 1 }),
     }),
+    s(
+        "shebang",
+        fmt(
+            [[
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# vim:fenc=utf-8
+#
+# File Name: {}
+    ]],
+            {
+                f(function()
+                    return vim.fn.expand("%:p:t")
+                end),
+            }
+        )
+    ),
 
     s(
         "for",
