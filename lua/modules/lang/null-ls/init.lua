@@ -11,7 +11,6 @@ return {
             null_ls.builtins.formatting.yapf,
             null_ls.builtins.formatting.isort,
             null_ls.builtins.diagnostics.yamllint,
-            null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.code_actions.proselint,
             null_ls.builtins.code_actions.refactoring,
             -- hover.dictionary,
