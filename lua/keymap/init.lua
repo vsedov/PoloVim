@@ -66,20 +66,12 @@ local plug_map = {
     -- -- Code actions ?
     ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
     -- no longer work .
-    ["n|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
-    ["v|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
+    ["n|ga"] = map_cmd("<Cmd>CodeActionMenu<cr>"):with_noremap():with_silent(),
+    ["v|ga"] = map_cmd("<cmd>CodeActionMenu<Cr>"):with_noremap():with_silent(),
 
     -- Back up .
     ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
-    -- -- On n map commands
     ["n|gA"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
-    ["n|gD"] = map_cmd("<cmd>lua vim.lsp.buf.declaration()<CR>"):with_noremap():with_silent(),
-    -- ["n|K"] = map_cmd("<cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
-    ["n|gI"] = map_cmd("<cmd>lua vim.lsp.buf.implementation()<CR>"):with_noremap():with_silent(),
-    ["n|gr"] = map_cmd("<cmd>lua vim.lsp.buf.references()<CR>"):with_noremap():with_silent(),
-    ["n|[d"] = map_cmd("<cmd>lua vim.diagnostic.goto_prev()()<CR>"):with_noremap():with_silent(),
-    ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
-
     ["n|<localleader>D"] = map_cmd(
         '<cmd>lua require"modules.completion.lsp.utils.peek".toggle_diagnostics_visibility()<CR>'
     )

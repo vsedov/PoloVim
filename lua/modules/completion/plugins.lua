@@ -6,6 +6,7 @@ completion["neovim/nvim-lspconfig"] = {
     -- 'markdown', 'makefile','python','bash', 'sh', 'php', 'yaml', 'json', 'sql', 'vim', 'sh'},
     config = conf.nvim_lsp,
     requires = {
+        { "aspeddro/lsp_menu.nvim", opt = true },
         { "nvim-lua/lsp_extensions.nvim", opt = true },
         { "p00f/clangd_extensions.nvim", module = "clangd_extensions" },
     },
@@ -35,8 +36,6 @@ completion["lewis6991/hover.nvim"] = {
                 require("hover.providers.man")
             end,
         })
-        vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
-        vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
     end,
 }
 
