@@ -117,6 +117,9 @@ function Lazyload()
             loader("null-ls.nvim")
         end
     end
+    if load_lsp and use_efm() then
+        loader("efm.nvim")
+    end
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
         plugins =

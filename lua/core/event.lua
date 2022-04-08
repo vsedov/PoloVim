@@ -260,7 +260,23 @@ function autocmd.load_autocmds()
             },
         },
     }
-
+    if vim.env.TERM == "xterm-kitty" then
+        local kitty_fix = {
+            ui = {
+                {
+                    "UIEnter",
+                    "*",
+                    [[if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]],
+                },
+                {
+                    "UILeave",
+                    "*",
+                    [[if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]],
+                },
+            },
+        }
+        autocmd.nvim_create_augroups(kitty_fix)
+    end
     autocmd.nvim_create_augroups(definitions)
 end
 
