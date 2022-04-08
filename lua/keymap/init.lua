@@ -140,11 +140,14 @@ local plug_map = {
     ["n|<leader><leader>k"] = map_cmd("<cmd> lua require'focus'.split_command('k')<CR>"):with_silent(),
     ["n|<leader><leader>l"] = map_cmd("<cmd> lua require'focus'.split_command('l')<CR>"):with_silent(),
 
-    ["n|<C-M>h"] = map_cmd("<cmd>WinShift left<CR>"):with_noremap(),
-    ["n|<C-M>j"] = map_cmd("<cmd>WinShift down<CR>"):with_noremap(),
-    ["n|<C-M>k"] = map_cmd("<cmd>WinShift up<CR>"):with_noremap(),
-    ["n|<C-M>l"] = map_cmd("<cmd>WinShift right<CR>"):with_noremap(),
-    ["n|<C-M>p"] = map_cmd("<cmd>WinShift swap<CR>"):with_noremap(),
+    ["n|<C-W><C-M>"] = map_cmd("<cmd>WinShift<CR>"):with_noremap(),
+    ["n|<C-W>m"] = map_cmd("<cmd>WinShift<CR>"):with_noremap(),
+
+    ["n|<C-W>X"] = map_cmd("<cmd>WinShift left<CR>"):with_noremap(),
+    ["n|<C-M>H"] = map_cmd("<cmd>WinShift swap<CR>"):with_noremap(),
+    ["n|<C-M>J"] = map_cmd("<cmd>WinShift down<CR>"):with_noremap(),
+    ["n|<C-M>K"] = map_cmd("<cmd>WinShift up<CR>"):with_noremap(),
+    ["n|<C-M>L"] = map_cmd("<cmd>WinShift right<CR>"):with_noremap(),
 
     -------------------------- Find
 

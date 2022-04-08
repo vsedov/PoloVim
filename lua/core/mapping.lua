@@ -22,8 +22,10 @@ local def_map = {
     ["n|<C-j>"] = map_cmd("<C-w>j"):with_noremap(),
     ["n|<C-k>"] = map_cmd("<C-w>k"):with_noremap(),
 
-    ["n|<A-[>"] = map_cr("vertical resize -5"):with_silent(),
-    ["n|<A-]>"] = map_cr("vertical resize +5"):with_silent(),
+    ["n|<A-[>"] = map_cmd("<cmd>vertical resize +2<CR>"):with_silent(),
+    ["n|<A-;>"] = map_cmd("<cmd>resize -2<CR>"):with_silent(),
+    ["n|<A-#>"] = map_cmd("<cmd>resize +2<CR>"):with_silent(),
+    ["n|<A-]>"] = map_cmd("<cmd>vertical resize -2<CR>"):with_silent(),
     ["n|<C-q>"] = map_cmd(":wq<CR>"),
 
     -- Insert

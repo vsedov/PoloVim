@@ -55,6 +55,7 @@ editor["andymass/vim-matchup"] = {
 editor["gbprod/yanky.nvim"] = {
     keys = {
         "<C-v>",
+        "<Plug>(YankyYank)",
         "<Plug>(YankyPutAfter)",
         "<Plug>(YankyPutBefore)",
         "<Plug>(YankyPutAfter)",
@@ -70,17 +71,20 @@ editor["gbprod/yanky.nvim"] = {
     },
     setup = function()
         local default_keymaps = {
+            { "n", "y", "<Plug>(YankyYank)" },
+            { "x", "y", "<Plug>(YankyYank)" },
+
             { "n", "p", "<Plug>(YankyPutAfter)" },
             { "n", "P", "<Plug>(YankyPutBefore)" },
 
             { "x", "p", "<Plug>(YankyPutAfter)" },
             { "x", "P", "<Plug>(YankyPutBefore)" },
 
-            { "n", "<leader>p", "<Plug>(YankyGPutAfter)" },
-            { "n", "<leader>P", "<Plug>(YankyGPutBefore)" },
+            { "n", "gp", "<Plug>(YankyGPutAfter)" },
+            { "n", "gP", "<Plug>(YankyGPutBefore)" },
 
-            { "x", "<leader>p", "<Plug>(YankyGPutAfter)" },
-            { "x", "<leader>P", "<Plug>(YankyGPutBefore)" },
+            { "x", "gp", "<Plug>(YankyGPutAfter)" },
+            { "x", "gP", "<Plug>(YankyGPutBefore)" },
 
             { "n", "<Leader>n", "<Plug>(YankyCycleForward)" },
             { "n", "<Leader>N", "<Plug>(YankyCycleBackward)" },
@@ -91,9 +95,16 @@ editor["gbprod/yanky.nvim"] = {
     end,
     config = function()
         require("yanky").setup({
+            preserve_cursor_position = {
+                enabled = true,
+            },
+            system_clipboard = {
+                sync_with_ring = true,
+            },
             ring = {
                 history_length = 10,
                 storage = "shada",
+                sync_with_numbered_registers = true,
             },
         })
     end,
