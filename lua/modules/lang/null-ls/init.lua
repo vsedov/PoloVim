@@ -99,12 +99,7 @@ return {
 
         -- python
         if exist("flake8") then
-            table.insert(
-                sources,
-                null_ls.builtins.diagnostics.flake8.with({
-                    extra_args = { "--config", vim.fn.expand("~/.config/flake8") },
-                })
-            )
+            table.insert(sources, null_ls.builtins.diagnostics.flake8)
         end
 
         if exist("vulture") then
