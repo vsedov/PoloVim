@@ -101,14 +101,25 @@ tools["nmac427/guess-indent.nvim"] = {
 }
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
-    cmd = { "Octo" },
     requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
         "kyazdani42/nvim-web-devicons",
     },
+    cmd = "Octo",
+    keys = { "<leader>Oli", "<leader>Olp" },
     config = function()
         require("octo").setup()
+        require("which-key").register({
+            O = {
+                name = "+octo",
+                l = {
+                    name = "+list",
+                    i = { "<Cmd>Octo issue list<CR>", "issues" },
+                    p = { "<Cmd>Octo pr list<CR>", "pull requests" },
+                },
+            },
+        }, { prefix = "<leader>" })
     end,
 }
 tools["jghauser/mkdir.nvim"] = {

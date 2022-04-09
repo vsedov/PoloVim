@@ -60,8 +60,13 @@ local plug_map = {
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
 
     -- -- Plugin nvim-tree
-    ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
-    ["n|<Leader>F"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent(),
+    -- ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
+    -- ["n|<Leader>F"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent(),
+    
+    ["n|<Leader>e"] = map_cr("NeoTreeFocusToggle"):with_noremap():with_silent(),
+    ["n|<Leader>F"] = map_cr("NeoTreeFocus"):with_noremap():with_silent(),
+    ["n|<Leader>cf"] = map_cr("Neotree float reveal_file=<cfile> reveal_force_cwd"):with_noremap():with_silent(),
+
 
     -- -- Code actions ?
     ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
@@ -132,7 +137,7 @@ local plug_map = {
     ["n|<leader>sw"] = map_cu("ISwapWith"):with_noremap():with_silent(),
 
     -- Extra telescope commands from utils.telescope
-    ["n|<Leader>cl"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
+    ["n|<Leader>y"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
 
     -- Focus
     ["n|<leader><leader>h"] = map_cmd("<cmd> lua require'focus'.split_command('h')<CR>"):with_silent(),

@@ -70,11 +70,19 @@ function autocmd.load_autocmds()
                 { "*.py", "*.lua", "*.tex", "*.norg" },
                 function()
                     if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then
-                        local row, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
-                        if { row, col } ~= { 0, 0 } then
-                            local ok, msg = pcall(vim.api.nvim_win_set_cursor, 0, { row, 0 })
-                            if not ok then
-                                vim.notify(msg, "error")
+                        if vim.fn.line([['"]]) > 0 and vim.fn.line([['"]]) <= vim.fn.line("$") then
+                            -- Check if the last line of the buffer is the same as the window
+                            if vim.fn.line("w$") == vim.fn.line("$") then
+                                -- Set line to last line edited
+                                vim.cmd([[normal! g`"]])
+                                -- Try to center
+                            elseif
+                                vim.fn.line("$") - vim.fn.line([['"]])
+                                > ((vim.fn.line("w$") - vim.fn.line("w0")) / 2) - 1
+                            then
+                                vim.cmd([[normal! g`"zz]])
+                            else
+                                vim.cmd([[normal! G'"<c-e>]])
                             end
                         end
                     end

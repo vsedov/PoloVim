@@ -34,10 +34,38 @@ ui["rcarriga/nvim-notify"] = {
     config = conf.notify,
 }
 
-ui["kyazdani42/nvim-tree.lua"] = {
-    cmd = { "NvimTreeToggle", "NvimTreeOpen" },
-    -- requires = {'kyazdani42/nvim-web-devicons'},
-    config = conf.nvim_tree_setup,
+-- ui["kyazdani42/nvim-tree.lua"] = {
+--     cmd = { "NvimTreeToggle", "NvimTreeOpen" },
+--     -- requires = {'kyazdani42/nvim-web-devicons'},
+--     config = conf.nvim_tree_setup,
+-- }
+ui["MunifTanjim/nui.nvim"] = {
+    opt = true, 
+}
+ui["s1n7ax/nvim-window-picker"]={
+opt = true, 
+        config = function()
+          require'window-picker'.setup({
+            autoselect_one = false,
+            include_current = false,
+            filter_rules = {
+              -- filter using buffer options
+              bo = {
+                -- if the file type is one of following, the window will be ignored
+                filetype = { 'neo-tree', "neo-tree-popup", "notify", "quickfix" },
+
+                -- if the buffer type is one of following, the window will be ignored
+                buftype = { 'terminal' },
+              },
+            },
+            other_win_hl_color = '#e35e4f',
+          })
+        end,
+}
+ui["nvim-neo-tree/neo-tree.nvim"]={
+    branch = "v2.x",
+    cmd = {"Neotree","NeoTreeShow","NeoTreeFocus","NeoTreeFocusToggle"},
+    config = conf.neo_tree
 }
 
 -- Use this with nvimtree .
