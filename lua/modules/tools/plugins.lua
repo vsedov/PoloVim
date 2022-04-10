@@ -16,9 +16,84 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
     end,
 }
 tools["j-hui/fidget.nvim"] = {
-    ft = { "python", "lua", "c" },
+    opt = true,
+    -- ft = { "python", "lua", "c" },
     config = function()
-        require("fidget").setup({})
+        local relative = "editor"
+        require("fidget").setup({
+            text = {
+                spinner = {
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                },
+                done = "", -- character shown when all tasks are complete
+                commenced = " ", -- message shown when task starts
+                completed = " ", -- message shown when task completes
+            },
+            align = {
+                bottom = true, -- align fidgets along bottom edge of buffer
+                right = true, -- align fidgets along right edge of buffer
+            },
+            timer = {
+                spinner_rate = 100, -- frame rate of spinner animation, in ms
+                fidget_decay = 500, -- how long to keep around empty fidget, in ms
+                task_decay = 300, -- how long to keep around completed task, in ms
+            },
+            window = {
+                relative = relative, -- where to anchor the window, either `"win"` or `"editor"`
+                blend = 100, -- `&winblend` for the window
+                zindex = nil, -- the `zindex` value for the window
+            },
+            fmt = {
+                leftpad = true, -- right-justify text in fidget box
+                stack_upwards = true, -- list of tasks grows upwards
+                max_width = 0, -- maximum width of the fidget box
+                -- function to format fidget title
+                fidget = function(fidget_name, spinner)
+                    return string.format("%s %s", spinner, fidget_name)
+                end,
+                -- function to format each task line
+                task = function(task_name, message, percentage)
+                    return string.format(
+                        "%s%s [%s]",
+                        message,
+                        percentage and string.format(" (%s%%)", percentage) or "",
+                        task_name
+                    )
+                end,
+            },
+
+            debug = {
+                logging = false, -- whether to enable logging, for debugging
+                strict = false, -- whether to interpret LSP strictly
+            },
+        })
     end,
 }
 tools["editorconfig/editorconfig-vim"] = {
@@ -107,16 +182,22 @@ tools["pwntester/octo.nvim"] = {
         "kyazdani42/nvim-web-devicons",
     },
     cmd = "Octo",
-    keys = { "<leader>Oli", "<leader>Olp" },
+    keys = { "<Leader>Op", "<Leader>Opl", "<Leader>Ope", "<Leader>Oil", "<Leader>Oic", "<Leader>Oie" },
     config = function()
         require("octo").setup()
         require("which-key").register({
             O = {
                 name = "+octo",
-                l = {
-                    name = "+list",
-                    i = { "<Cmd>Octo issue list<CR>", "issues" },
-                    p = { "<Cmd>Octo pr list<CR>", "pull requests" },
+                p = {
+                    name = "+pr",
+                    l = { "<Cmd>Octo pr list<CR>", "pull requests List" },
+                    e = { "<Cmd>Octo pr edit<CR>", "pull requests edit" },
+                },
+                i = {
+                    name = "+issues",
+                    l = { "<Cmd>Octo issue list<CR>", "Issue List" },
+                    c = { "<Cmd>Octo issue create<CR>", "Issue Create" },
+                    e = { "<Cmd>Octo issue edit<CR>", "Issue Edit" },
                 },
             },
         }, { prefix = "<leader>" })
@@ -229,20 +310,6 @@ tools["wakatime/vim-wakatime"] = {
     },
 }
 
-tools["klen/nvim-config-local"] = {
-    -- ft = {"lua","vim"},
-    cmd = {
-        "ConfigSource",
-        "ConfigEdit",
-        "ConfigTrust",
-        "ConfigIgnore",
-    },
-    config = function()
-        require("config-local").setup({
-            config_files = { "init_paq.lua", ".vimrc", ".vimrc.lua" },
-        })
-    end,
-}
 -- ze black magic
 tools["windwp/nvim-spectre"] = {
     module = "spectre",
@@ -377,13 +444,12 @@ tools["kevinhwang91/nvim-bqf"] = {
     config = conf.bqf,
 }
 
--- tools["ahmedkhalf/project.nvim"] = {
---     module = "project",
---     ft = { "python", "java", "c", "cpp", "lua" },
---     opt = true,
---     after = { "telescope.nvim" },
---     config = conf.project,
--- }
+tools["ahmedkhalf/project.nvim"] = {
+    module = "project",
+    ft = { "python", "java", "c", "cpp", "lua" },
+    opt = true,
+    config = conf.project,
+}
 
 -- config this better https://github.com/jvgrootveld/telescope-zoxide
 tools["jvgrootveld/telescope-zoxide"] = {
@@ -419,7 +485,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
 tools["camspiers/animate.vim"] = {
     opt = true,
 }
-
+-- interferes with nui and popus
 tools["chentau/marks.nvim"] = {
     opt = true,
     event = { "BufReadPost" },
@@ -431,7 +497,10 @@ tools["chentau/marks.nvim"] = {
             force_write_shada = true,
             refresh_interval = 250,
             sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-            excluded_filetypes = {},
+            excluded_filetypes = {
+                "neo-tree",
+                "neo-tree-popup",
+            },
             bookmark_0 = {
                 sign = "⚑",
                 virt_text = "BookMark",
@@ -452,6 +521,7 @@ tools["Krafi2/jeskape.nvim"] = {
                     f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
                 },
                 j = {
+                    h = "<esc>O",
                     k = "<esc>",
                     j = "<esc>o",
                 },
