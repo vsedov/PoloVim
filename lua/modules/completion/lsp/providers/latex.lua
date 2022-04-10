@@ -1,18 +1,5 @@
-local tex_preview_settings = {}
 local forward_search_executable = "zathura"
-local sumatrapdf_args = {
-    "-reuse-instance",
-    "%p",
-    "-forward-search",
-    "%f",
-    "%l",
-}
-local evince_args = { "-f", "%l", "%p", '"code -g %f:%l"' }
-local okular_args = { "--unique", "file:%p#src:%l%f" }
 local zathura_args = { "--synctex-forward", "%l:1:%f", "%p" }
-local qpdfview_args = { "--unique", "%p#src:%f:%l:1" }
-local skim_args = { "%l", "%p", "%f" }
-tex_preview_settings = zathura_args
 
 local settings = {
     cmd = { "texlab" },
@@ -55,7 +42,7 @@ local settings = {
             diagnosticsDelay = 300,
             formatterLineLength = 120,
             forwardSearch = {
-                args = tex_preview_settings,
+                args = zathura_args,
                 executable = forward_search_executable,
             },
             latexFormatter = "latexindent",
