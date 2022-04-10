@@ -78,9 +78,9 @@ return {
             table.insert(sources, null_ls.builtins.formatting.prettierd)
         end
         -- lua
-        -- if exist("selene") then
-        --     table.insert(sources, null_ls.builtins.diagnostics.selene)
-        -- end
+        if exist("selene") then
+            table.insert(sources, null_ls.builtins.diagnostics.selene)
+        end
 
         if exist("stylua") then
             table.insert(
@@ -91,10 +91,10 @@ return {
             )
         end
 
-        -- -- Maybe i dont need luacheck for this, im not sure though
-        if exist("luacheck") then
-            table.insert(sources, null_ls.builtins.diagnostics.luacheck)
-        end
+        -- luaccheck feels a bit heavy i do not know why
+        -- if exist("luacheck") then
+        --     table.insert(sources, null_ls.builtins.diagnostics.luacheck)
+        -- end
 
         -- python
         if exist("flake8") then
