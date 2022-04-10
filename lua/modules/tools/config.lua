@@ -170,6 +170,7 @@ function config.project()
         silent_chdir = true, -- fucking annoying thing
         detection_methods = { "lsp", "pattern" },
         patterns = {
+            "pyproject.toml", 
             "pom.xml", --
             "Pipfile",
             ".venv", -- for python
@@ -187,10 +188,6 @@ function config.project()
             "tsconfig.json",
             ".git",
         },
-
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
     })
     require("telescope").load_extension("projects")
 end

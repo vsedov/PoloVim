@@ -28,10 +28,9 @@ local function loadscheme()
     local themes
     if daylight() == "light" then
         -- increase chances for kanagawa x2
-        themes = { "kanagawa.nvim", "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
+        themes = { "kanagawa.nvim", "kanagawa.nvim", "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
     else
         themes = {
-            "themer.lua",
             "kanagawa.nvim",
             "kanagawa.nvim",
             "tokyonight.nvim",
@@ -50,11 +49,11 @@ local function loadscheme()
 end
 
 function Lazyload()
-    -- selene: allow(global_usage)
+    -- selene:allow(global_usage)
     _G.PLoader = loader
     -- no_file()
-    -- loadscheme()
-    PLoader("kanagawa.nvim")
+    loadscheme()
+    -- PLoader("kanagawa.nvim")
     if vim.wo.diff then
         -- loader(plugins)
         lprint("diffmode")
