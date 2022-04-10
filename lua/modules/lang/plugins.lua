@@ -349,7 +349,7 @@ lang["p00f/nvim-ts-rainbow"] = {
 }
 
 lang["onsails/diaglist.nvim"] = {
-    event = { "QuickFixCmdPre", "CmdlineEnter" },
+    event = { "QuickFixCmdPre" },
     module = "diaglist",
     setup = function()
         local map, opts = vim.api.nvim_set_keymap, {}
@@ -358,12 +358,12 @@ lang["onsails/diaglist.nvim"] = {
     end,
     opt = true, -- opt = true,
     config = function()
+        vim.cmd([[packadd nvim-bqf]])
         require("diaglist").init({
             debug = false,
             debounce_ms = 150,
         })
     end,
-    after = { "nvim-bqf", "nvim-lspconfig" },
 }
 
 lang["folke/trouble.nvim"] = {
