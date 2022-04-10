@@ -17,7 +17,7 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
 }
 tools["j-hui/fidget.nvim"] = {
     opt = true,
-    -- ft = { "python", "lua", "c" },
+    ft = { "python", "lua", "c" },
     config = function()
         local relative = "editor"
         require("fidget").setup({
