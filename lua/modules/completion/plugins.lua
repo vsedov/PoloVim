@@ -5,12 +5,14 @@ completion["neovim/nvim-lspconfig"] = {
     -- ft = {'html','css', 'javascript', 'java', 'javascriptreact', 'vue','typescript', 'typescriptreact', 'go', 'lua', 'cpp', 'c',
     -- 'markdown', 'makefile','python','bash', 'sh', 'php', 'yaml', 'json', 'sql', 'vim', 'sh'},
     config = conf.nvim_lsp,
-    requires = {
-        { "aspeddro/lsp_menu.nvim", opt = true },
-        { "nvim-lua/lsp_extensions.nvim", opt = true },
-        { "p00f/clangd_extensions.nvim", module = "clangd_extensions" },
-    },
+    -- requires = {    },
     opt = true,
+}
+completion["p00f/clangd_extensions.nvim"] = {
+    opt = true,
+    ft = { "c", "cpp" },
+    requires = "nvim-lspconfig",
+    config = conf.clangd,
 }
 
 completion["williamboman/nvim-lsp-installer"] = {
@@ -200,7 +202,6 @@ completion["nvim-telescope/telescope.nvim"] = {
     config = conf.telescope,
     setup = conf.telescope_preload,
     requires = {
-        { "nvim-lua/popup.nvim", opt = true }, -- test
         { "nvim-neorg/neorg-telescope", opt = true },
         { "nvim-lua/plenary.nvim", opt = true },
         { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
