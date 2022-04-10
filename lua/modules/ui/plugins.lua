@@ -40,32 +40,41 @@ ui["rcarriga/nvim-notify"] = {
 --     config = conf.nvim_tree_setup,
 -- }
 ui["MunifTanjim/nui.nvim"] = {
-    opt = true, 
+    opt = true,
 }
-ui["s1n7ax/nvim-window-picker"]={
-opt = true, 
-        config = function()
-          require'window-picker'.setup({
-            autoselect_one = false,
-            include_current = false,
-            filter_rules = {
-              -- filter using buffer options
-              bo = {
-                -- if the file type is one of following, the window will be ignored
-                filetype = { 'neo-tree', "neo-tree-popup", "notify", "quickfix" },
 
-                -- if the buffer type is one of following, the window will be ignored
-                buftype = { 'terminal' },
-              },
-            },
-            other_win_hl_color = '#e35e4f',
-          })
-        end,
-}
-ui["nvim-neo-tree/neo-tree.nvim"]={
+-- Feels slow, might revert backto nvim tree
+ui["nvim-neo-tree/neo-tree.nvim"] = {
     branch = "v2.x",
-    cmd = {"Neotree","NeoTreeShow","NeoTreeFocus","NeoTreeFocusToggle"},
-    config = conf.neo_tree
+    requires = {
+        "MunifTanjim/nui.nvim",
+        {
+            -- only needed if you want to use the "open_window_picker" command
+            "s1n7ax/nvim-window-picker",
+            tag = "1.*",
+            opt = true,
+            after = "neo-tree.nvim",
+            config = function()
+                require("window-picker").setup({
+                    autoselect_one = true,
+                    include_current = false,
+                    filter_rules = {
+                        -- filter using buffer options
+                        bo = {
+                            -- if the file type is one of following, the window will be ignored
+                            filetype = { "neo-tree", "neo-tree-popup", "notify", "quickfix" },
+
+                            -- if the buffer type is one of following, the window will be ignored
+                            buftype = { "terminal" },
+                        },
+                    },
+                    other_win_hl_color = "#e35e4f",
+                })
+            end,
+        },
+    },
+    cmd = { "Neotree", "NeoTreeShow", "NeoTreeFocus", "NeoTreeFocusToggle" },
+    config = conf.neo_tree,
 }
 
 -- Use this with nvimtree .
@@ -180,18 +189,17 @@ ui["wadackel/vim-dogrun"] = {
     end,
 }
 
--- Might want to manually call this through telescope or something .
-
-ui["ThemerCorp/themer.lua"] = {
-    opt = true,
-    branch = "main",
-    config = conf.themer,
-}
+-- ui["ThemerCorp/themer.lua"] = {
+--     opt = true,
+--     branch = "main",
+--     config = conf.themer,
+-- }
 
 ui["kazhala/close-buffers.nvim"] = {
     cmd = { "BDelete", "BWipeout" },
     config = conf.buffers_close,
 }
+
 ui["wiliamks/mechanical.nvim"] = {
     opt = true,
 }

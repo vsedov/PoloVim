@@ -152,6 +152,18 @@ function config.nvim_bufferline()
                             end
                         end,
                     },
+                    {
+                        name = "plugins",
+                        matcher = function(buf)
+                            return buf.filename:match("plugins")
+                        end,
+                    },
+                    {
+                        name = "config",
+                        matcher = function(buf)
+                            return buf.filename:match("config")
+                        end,
+                    },
                 },
             },
         },
@@ -212,7 +224,6 @@ function config.notify()
 end
 
 function config.neo_tree()
-    
     if not packer_plugins["nui.nvim"].loaded then
         vim.cmd([[packadd nui.nvim ]])
     end
@@ -220,149 +231,147 @@ function config.neo_tree()
         vim.cmd([[packadd nvim-window-picker ]])
     end
 
+    vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
-
-      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
-      require("neo-tree").setup({
-        close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
-        popup_border_style = "single", -- "double", "none", "rounded", "shadow", "single" or "solid
+    require("neo-tree").setup({
+        close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+        popup_border_style = "solid", -- "double", "none", "rounded", "shadow", "single" or "solid
         enable_git_status = true,
         enable_diagnostics = true,
         event_handlers = {
-          {
-            event = 'neo_tree_buffer_enter',
-            handler = function()
-              vim.wo.signcolumn = 'no'
-            end,
-          },
+            {
+                event = "neo_tree_buffer_enter",
+                handler = function()
+                    vim.wo.signcolumn = "no"
+                end,
+            },
         },
+        use_popups_for_input = false,
         default_component_configs = {
-          indent = {
-            indent_size = 2,
-            padding = 1, -- extra padding on left hand side
-            -- indent guides
-            with_markers = true,
-            indent_marker = "│",
-            last_indent_marker = "└",
-            highlight = "NeoTreeIndentMarker",
-            -- expander config, needed for nesting files
-            with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-            expander_collapsed = "",
-            expander_expanded = "",
-            expander_highlight = "NeoTreeExpander",
-          },
-          icon = {
-            folder_closed = "",
-            folder_open = "",
-            folder_empty = "ﰊ",
-            default = "*",
-          },
-          modified = {
-            symbol = "[+]",
-            highlight = "NeoTreeModified",
-          },
-          name = {
-            trailing_slash = false,
-            use_git_status_colors = true,
-          },
-          git_status = {
-            symbols = {
-              -- Change type
-              added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-              modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
-              deleted   = "✖",-- this can only be used in the git_status source
-              renamed   = "",-- this can only be used in the git_status source
-              -- Status type
-              untracked = "",
-              ignored   = "",
-              unstaged  = "",
-              staged    = "",
-              conflict  = "",
-            }
-          },
+            indent = {
+                indent_size = 2,
+                padding = 1, -- extra padding on left hand side
+                -- indent guides
+                with_markers = true,
+                indent_marker = "│",
+                last_indent_marker = "└",
+                highlight = "NeoTreeIndentMarker",
+                -- expander config, needed for nesting files
+                with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+                expander_collapsed = "",
+                expander_expanded = "",
+                expander_highlight = "NeoTreeExpander",
+            },
+            icon = {
+                folder_closed = "",
+                folder_open = "",
+                folder_empty = "ﰊ",
+                default = "*",
+            },
+            modified = {
+                symbol = "[+]",
+                highlight = "NeoTreeModified",
+            },
+            name = {
+                trailing_slash = false,
+                use_git_status_colors = true,
+            },
+            git_status = {
+                symbols = {
+                    -- Change type
+                    added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+                    modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+                    deleted = "✖", -- this can only be used in the git_status source
+                    renamed = "", -- this can only be used in the git_status source
+                    -- Status type
+                    untracked = "",
+                    ignored = "",
+                    unstaged = "",
+                    staged = "",
+                    conflict = "",
+                },
+            },
         },
         window = {
-          position = "left",
-          width = 35,
-          mappings = {
-            ["<space>"] = "toggle_node",
-            ["<2-LeftMouse>"] = "open",
-            ["<cr>"] = "open",
-            ["S"] = "open_split",
-            ["s"] = "open_vsplit",
-            ["t"] = "open_tabnew",
-            -- ["w"] = "open_with_window_picker",
-            ["C"] = "close_node",
-            ["a"] = "add",
-            ["A"] = "add_directory",
-            ["d"] = "delete",
-            ["r"] = "rename",
-            ["y"] = "copy_to_clipboard",
-            ["x"] = "cut_to_clipboard",
-            ["p"] = "paste_from_clipboard",
-            ["c"] = "copy", -- takes text input for destination
-            ["m"] = "move", -- takes text input for destination
-            ["q"] = "close_window",
-            ["R"] = "refresh",
-          }
+            position = "left",
+            width = 35,
+            mappings = {
+                ["<space>"] = "toggle_node",
+                ["<2-LeftMouse>"] = "open",
+                ["<cr>"] = "open",
+                ["S"] = "open_split",
+                ["s"] = "open_vsplit",
+                ["t"] = "open_tabnew",
+                ["w"] = "open_with_window_picker",
+                ["C"] = "close_node",
+                ["a"] = "add",
+                ["A"] = "add_directory",
+                ["d"] = "delete",
+                ["r"] = "rename",
+                ["y"] = "copy_to_clipboard",
+                ["x"] = "cut_to_clipboard",
+                ["p"] = "paste_from_clipboard",
+                ["c"] = "copy", -- takes text input for destination
+                ["m"] = "move", -- takes text input for destination
+                ["q"] = "close_window",
+                ["R"] = "refresh",
+            },
         },
         nesting_rules = {},
         filesystem = {
-          filtered_items = {
-            visible = false, -- when true, they will just be displayed differently than normal items
-            hide_dotfiles = false,
-            hide_gitignored = false,
-            hide_by_name = {
-              ".DS_Store",
-              "thumbs.db"
-              --"node_modules"
+            filtered_items = {
+                visible = false, -- when true, they will just be displayed differently than normal items
+                hide_dotfiles = false,
+                hide_gitignored = false,
+                hide_by_name = {
+                    ".DS_Store",
+                    "thumbs.db",
+                    --"node_modules"
+                },
+                never_show = { -- remains hidden even if visible is toggled to true
+                    --".DS_Store",
+                    --"thumbs.db"
+                },
             },
-            never_show = { -- remains hidden even if visible is toggled to true
-              --".DS_Store",
-              --"thumbs.db"
+            follow_current_file = true, -- This will find and focus the file in the active buffer every
+            hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
+            use_libuv_file_watcher = true,
+            window = {
+                mappings = {
+                    ["<bs>"] = "navigate_up",
+                    ["."] = "set_root",
+                    ["H"] = "toggle_hidden",
+                    ["/"] = "fuzzy_finder",
+                    ["f"] = "filter_on_submit",
+                    ["<c-x>"] = "clear_filter",
+                },
             },
-          },
-          follow_current_file = true, -- This will find and focus the file in the active buffer every
-          hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-          use_libuv_file_watcher = false, 
-          window = {
-            mappings = {
-              ["<bs>"] = "navigate_up",
-              ["."] = "set_root",
-              ["H"] = "toggle_hidden",
-              ["/"] = "fuzzy_finder",
-              ["f"] = "filter_on_submit",
-              ["<c-x>"] = "clear_filter",
-            }
-          }
         },
         buffers = {
-          show_unloaded = true,
-          window = {
-            mappings = {
-              ["bd"] = "buffer_delete",
-              ["<bs>"] = "navigate_up",
-              ["."] = "set_root",
-            }
-          },
+            show_unloaded = true,
+            window = {
+                mappings = {
+                    ["bd"] = "buffer_delete",
+                    ["<bs>"] = "navigate_up",
+                    ["."] = "set_root",
+                },
+            },
         },
         git_status = {
-          window = {
-            position = "float",
-            mappings = {
-              ["A"]  = "git_add_all",
-              ["gu"] = "git_unstage_file",
-              ["ga"] = "git_add_file",
-              ["gr"] = "git_revert_file",
-              ["gc"] = "git_commit",
-              ["gp"] = "git_push",
-              ["gg"] = "git_commit_and_push",
-            }
-          }
-        }
-      })
-
+            window = {
+                position = "float",
+                mappings = {
+                    ["A"] = "git_add_all",
+                    ["gu"] = "git_unstage_file",
+                    ["ga"] = "git_add_file",
+                    ["gr"] = "git_revert_file",
+                    ["gc"] = "git_commit",
+                    ["gp"] = "git_push",
+                    ["gg"] = "git_commit_and_push",
+                },
+            },
+        },
+    })
 end
 
 function config.scrollbar()
@@ -674,7 +683,16 @@ function config.blankline()
         enabled = true,
         -- char = "|",
         char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
-        filetype_exclude = { "help", "startify", "dashboard", "packer", "guihua", "NvimTree", "sidekick" },
+        filetype_exclude = {
+            "neo-tree-popup",
+            "help",
+            "startify",
+            "dashboard",
+            "packer",
+            "guihua",
+            "NvimTree",
+            "sidekick",
+        },
         show_trailing_blankline_indent = false,
         show_first_indent_level = false,
         buftype_exclude = { "terminal" },
