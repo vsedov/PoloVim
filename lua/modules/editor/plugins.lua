@@ -506,7 +506,7 @@ editor["rmagatti/alternate-toggler"] = {
 editor["max397574/nabla.nvim"] = {
     ft = { "tex", "norg" },
     opt = true,
-    requires = { "nvim-lua/popup.nvim" },
+    requires = { "nvim-lua/popup.nvim", opt = true, after = "nabla.nvim" },
 }
 
 editor["sindrets/winshift.nvim"] = {
