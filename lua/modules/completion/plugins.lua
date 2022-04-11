@@ -5,8 +5,12 @@ completion["neovim/nvim-lspconfig"] = {
     -- ft = {'html','css', 'javascript', 'java', 'javascriptreact', 'vue','typescript', 'typescriptreact', 'go', 'lua', 'cpp', 'c',
     -- 'markdown', 'makefile','python','bash', 'sh', 'php', 'yaml', 'json', 'sql', 'vim', 'sh'},
     config = conf.nvim_lsp,
-    -- requires = {    },
     opt = true,
+}
+completion["ii14/lsp-command"]={
+    opt = true, 
+    cmd = {"Lsp", "lsp"}, 
+    after = "nvim-lspconfig",
 }
 completion["p00f/clangd_extensions.nvim"] = {
     opt = true,

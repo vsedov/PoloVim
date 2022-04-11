@@ -11,6 +11,11 @@ end
 lspconfig.jedi_language_server.setup(enhance_attach({
     cmd = { "jedi-language-server" },
     filetypes = { "python" },
+    -- init_options = {
+    --     jediSettings = {
+    --         autoImportModules = { "fastai", "fastcore" }
+    --     }
+    -- },
 }))
 
 lspconfig.gopls.setup(enhance_attach({
