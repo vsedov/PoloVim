@@ -542,6 +542,56 @@ function config.dogrun()
     vim.g.clap_theme = "dogrun"
 end
 
+function config.chalk()
+    local chalklines = require("chalklines")
+    chalklines.setup({
+        integration = {
+            neotree = {
+                enabled = true,
+                show_root = true, -- makes the root folder not transparent
+                transparent_panel = false, -- make the panel transparent
+            },
+        },
+        modules = {
+            barbar = true,
+            bufferline = true,
+            cmp = true,
+            dashboard = true,
+            diagnostic = {
+                enable = true,
+                background = true,
+            },
+            fern = true,
+            fidget = true,
+            gitgutter = true,
+            gitsigns = true,
+            glyph_palette = true,
+            hop = true,
+            indent_blankline = true,
+            illuminate = true,
+            lightspeed = true,
+            lsp_saga = true,
+            lsp_trouble = true,
+            modes = true,
+            native_lsp = true,
+            neogit = true,
+            neorg = true,
+            neotree = true,
+            notify = true,
+            nvimtree = true,
+            pounce = true,
+            sneak = true,
+            symbol_outline = true,
+            telescope = true,
+            treesitter = true,
+            tsrainbow = true,
+            vimwiki = true,
+            whichkey = true,
+        },
+    })
+    vim.cmd([[colorscheme chalklines]])
+end
+
 function config.catppuccin()
     local catppuccin = require("catppuccin")
 

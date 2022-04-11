@@ -156,6 +156,11 @@ ui["catppuccin/nvim"] = {
     opt = true,
     config = conf.catppuccin,
 }
+ui["jzone1366/chalklines.nvim"] = {
+    as = "chalklines",
+    opt = true,
+    config = conf.chalk,
+}
 
 -- fix annoying strikethrough issue as that was not a valid key apparently .
 ui["~/GitHub/Sakura.nvim"] = {
