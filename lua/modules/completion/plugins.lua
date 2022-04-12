@@ -7,9 +7,9 @@ completion["neovim/nvim-lspconfig"] = {
     config = conf.nvim_lsp,
     opt = true,
 }
-completion["ii14/lsp-command"]={
-    opt = true, 
-    cmd = {"Lsp", "lsp"}, 
+completion["ii14/lsp-command"] = {
+    opt = true,
+    cmd = { "Lsp", "lsp" },
     after = "nvim-lspconfig",
 }
 completion["p00f/clangd_extensions.nvim"] = {

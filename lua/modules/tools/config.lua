@@ -411,6 +411,7 @@ function config.gitsigns()
         status_formatter = nil, -- Use default
         update_debounce = 0,
         word_diff = true,
+        _threaded_diff = true, -- no clue what this does
         diff_opts = { internal = true },
     })
 end

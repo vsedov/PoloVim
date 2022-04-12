@@ -1,5 +1,6 @@
 -- local leader = wincent.mappings.leader
-
+local fn = vim.fn
+local api = vim.api
 local M = {}
 
 local blacklist_files = {
@@ -21,11 +22,11 @@ function M.mkview()
         local success, err = pcall(function()
             if vim.fn.exists("*haslocaldir") and vim.fn.haslocaldir() then
                 -- We never want to save an :lcd command, so hack around it...
-                vim.api.nvim_command("cd -")
-                vim.api.nvim_command("mkview")
-                vim.api.nvim_command("lcd -")
+                api.nvim_command("cd -")
+                api.nvim_command("mkview")
+                api.nvim_command("lcd -")
             else
-                vim.api.nvim_command("mkview")
+                api.nvim_command("mkview")
             end
         end)
         if not success then
@@ -42,8 +43,8 @@ end
 
 function M.loadview()
     if should_mkview() then
-        vim.api.nvim_command("silent! loadview")
-        vim.api.nvim_command("silent! " .. vim.fn.line(".") .. "foldopen!")
+        api.nvim_command("silent! loadview")
+        api.nvim_command("silent! " .. vim.fn.line(".") .. "foldopen!")
     end
 end
 
@@ -54,7 +55,7 @@ function M.disable_heavy_plugins()
         or vim.fn.getfsize(vim.fn.expand("%")) > 200000
     then
         if vim.fn.exists(":ALEDisableBuffer") == 2 then
-            vim.api.nvim_command(":ALEDisableBuffer")
+            api.nvim_command(":ALEDisableBuffer")
         end
     end
 end
@@ -93,7 +94,7 @@ function M.reset_timer(text_changed)
     timer = vim.defer_fn(function()
         called_func = true
         local function feed(keys)
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, true, true), "n", false)
+            api.nvim_feedkeys(api.nvim_replace_termcodes(keys, true, true, true), "n", false)
         end
 
         if vim.tbl_contains({ 1, 2, 0 }, #vim.fn.expand("<cword>")) then
@@ -106,4 +107,23 @@ function M.reset_timer(text_changed)
     end, 100)
 end
 
+-- https://github.com/akinsho/dotfiles/blob/479e11e71c6bc042c3987f159da9457acc565121/.config/nvim/plugin/autocommands.lua
+vim.keymap.set({ "n", "v", "o", "i", "c" }, "<Plug>(StopHL)", 'execute("nohlsearch")[-1]', { expr = true })
+
+function M.stop_hl()
+    if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
+        return
+    end
+    api.nvim_feedkeys(api.nvim_replace_termcodes("<Plug>(StopHL)", true, true, true), "m", false)
+end
+
+function M.hl_search()
+    local col = api.nvim_win_get_cursor(0)[2]
+    local curr_line = api.nvim_get_current_line()
+    local _, p_start, p_end = unpack(vim.fn.matchstrpos(curr_line, vim.fn.getreg("/"), 0))
+    -- if the cursor is in a search result, leave highlighting on
+    if col < p_start or col > p_end then
+        M.stop_hl()
+    end
+end
 return M

@@ -71,7 +71,8 @@ local load_core = function()
         require("core.event")
         require("core.mapping")
         require("keymap")
-
+        -- selene: allow(global_usage)
+        _G.lprint = require("utils.log").lprint
         pack.load_compile()
         require("core.lazy")
     else

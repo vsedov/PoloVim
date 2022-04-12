@@ -1,9 +1,11 @@
 local vim = vim
+local fn = vim.fn
+local api = vim.api
 local autocmd = {}
 
 function autocmd.nvim_create_augroups(defs)
     for group_name, definition in pairs(defs) do
-        vim.api.nvim_create_augroup(group_name, { clear = true })
+        api.nvim_create_augroup(group_name, { clear = true })
         for _, def in ipairs(definition) do
             local event = def[1]
             local arg = {
@@ -13,7 +15,7 @@ function autocmd.nvim_create_augroups(defs)
                 nested = def[4] or false,
             }
             -- print(vim.inspect(event), vim.inspect(arg))
-            vim.api.nvim_create_autocmd(event, arg)
+            api.nvim_create_autocmd(event, arg)
         end
     end
 end
@@ -121,7 +123,7 @@ function autocmd.load_autocmds()
             --     "BufWritePost",
             --     { "*.py", "*.lua", "*sh", "*.scala", "*.tcl" },
             --     function()
-            --         local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
+            --         local line = (vim.inspect(api.nvim_buf_get_lines(0, 0, 1, true)))
             --         if line:find("#!") and line:find("/bin/") then
             --             vim.cmd([[silent !chmod u+x %]])
             --         end
@@ -249,22 +251,25 @@ function autocmd.load_autocmds()
                 "qf",
                 function()
                     if vim.fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
-                        vim.api.nvim_buf_delete(0, { force = true })
+                        api.nvim_buf_delete(0, { force = true })
                     end
                 end,
             },
         },
-        highlight = {
-            -- could mess with lightspeed .
+        VimrcIncSearchHighlight = {
             {
-                "CmdlineEnter",
-                "[/\\?]",
-                ":set hlsearch  | redrawstatus",
+                "CursorMoved",
+                "*",
+                function()
+                    require("core.event_helper").hl_search()
+                end,
             },
             {
-                "CmdlineLeave",
-                "[/\\?]",
-                ":set nohlsearch  | redrawstatus",
+                "InsertEnter",
+                "*",
+                function()
+                    require("core.event_helper").stop_hl()
+                end,
             },
         },
     }

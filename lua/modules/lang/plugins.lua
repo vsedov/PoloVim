@@ -59,7 +59,7 @@ lang["RRethy/nvim-treesitter-endwise"] = {
 }
 
 lang["danymat/neogen"] = {
-    opt = true,
+    module = { "neogen" },
     requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
     config = function()
         require("neogen").setup({

@@ -125,7 +125,6 @@ function Lazyload()
             "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
         loader(plugins)
         lprint(plugins)
-        loader("neogen") -- Load neogen only for active lsp servers
         loader("indent-blankline.nvim")
         loader("refactoring.nvim") -- need to do the same thing for refactoring
     end
