@@ -19,17 +19,6 @@ if not packer_plugins["nvim-cmp"].loaded then
     vim.cmd([[packadd nvim-cmp]])
 end
 
-local neorg_callbacks = require("neorg.callbacks")
--- neorg_callbacks.on_event("core.autocommands.events.bufenter", function(event, event_content)
-neorg_callbacks.on_event("core.started", function(event, event_content)
-    require("neorg").setup({
-        load = {
-            ["core.integrations.telescope"] = {},
-        },
-    })
-    require("telescope").setup({})
-end)
-
 require("neorg").setup({
     load = {
 
@@ -143,6 +132,8 @@ require("neorg").setup({
         level = "warn",
     },
 })
+
+local neorg_callbacks = require("neorg.callbacks")
 
 local neorg_leader = "<leader>o"
 neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)

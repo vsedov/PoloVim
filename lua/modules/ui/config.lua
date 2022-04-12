@@ -1,6 +1,5 @@
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
-
 function config.windline()
     if not packer_plugins["nvim-web-devicons"].loaded then
         packer_plugins["nvim-web-devicons"].loaded = true
@@ -81,9 +80,8 @@ function config.nvim_bufferline()
             diagnostics_indicator = diagnostics_indicator,
             diagnostics_update_in_insert = false,
             custom_filter = custom_filter,
-            separator_style = "thin",
+            separator_style = "thin", -- "thin",
             -- 'extension' | 'directory' |
-
             offsets = {
                 {
                     filetype = "undotree",
@@ -92,6 +90,11 @@ function config.nvim_bufferline()
                 },
                 {
                     filetype = "NvimTree",
+                    text = "Explorer",
+                    highlight = "PanelHeading",
+                },
+                {
+                    filetype = "neo-tree",
                     text = "Explorer",
                     highlight = "PanelHeading",
                 },
@@ -118,7 +121,7 @@ function config.nvim_bufferline()
                 items = {
                     groups.builtin.ungrouped,
                     {
-                        highlight = { guisp = "#51AFEF", gui = "underline" },
+                        -- highlight = { guisp = "#51AFEF", gui = "underline" },
                         name = "tests",
                         icon = "",
                         matcher = function(buf)
@@ -127,7 +130,7 @@ function config.nvim_bufferline()
                     },
                     {
                         name = "view models",
-                        highlight = { guisp = "#03589C", gui = "underline" },
+                        -- highlight = { guisp = "#03589C", gui = "underline" },
                         matcher = function(buf)
                             return buf.filename:match("view_model%.dart")
                         end,
@@ -139,7 +142,7 @@ function config.nvim_bufferline()
                         end,
                     },
                     {
-                        highlight = { guisp = "#C678DD", gui = "underline" },
+                        -- highlight = { guisp = "#ff6c6b", gui = "underline" },
                         name = "docs",
                         matcher = function(buf)
                             for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
@@ -147,6 +150,18 @@ function config.nvim_bufferline()
                                     return true
                                 end
                             end
+                        end,
+                    },
+                    {
+                        name = "plugins",
+                        matcher = function(buf)
+                            return buf.filename:match("plugins")
+                        end,
+                    },
+                    {
+                        name = "config",
+                        matcher = function(buf)
+                            return buf.filename:match("config")
                         end,
                     },
                 },
@@ -204,164 +219,159 @@ function config.notify()
     }
 
     notify.setup(default)
+
     require("telescope").load_extension("notify")
 end
 
-function config.nvim_tree_setup()
-    -- https://github.com/LunarVim/LunarVim/blob/e0a71dc40ceb8797ec40dcb9ae59c327e7f6c592/lua/lvim/core/nvimtree.lua
-    local settings = {
-        active = true,
-        on_config_done = nil,
-        setup = {
-            disable_netrw = true,
-            hijack_netrw = true,
-            open_on_setup = false,
-            ignore_buffer_on_setup = false,
-            ignore_ft_on_setup = {
-                "startify",
-                "dashboard",
-                "alpha",
+function config.neo_tree()
+    if not packer_plugins["nui.nvim"].loaded then
+        vim.cmd([[packadd nui.nvim ]])
+    end
+    if not packer_plugins["nvim-window-picker"].loaded then
+        vim.cmd([[packadd nvim-window-picker ]])
+    end
+
+    vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+    require("neo-tree").setup({
+        close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+        popup_border_style = "solid", -- "double", "none", "rounded", "shadow", "single" or "solid
+        enable_git_status = true,
+        enable_diagnostics = true,
+        event_handlers = {
+            {
+                event = "neo_tree_buffer_enter",
+                handler = function()
+                    vim.wo.signcolumn = "no"
+                end,
             },
-            auto_reload_on_write = true,
-            hijack_unnamed_buffer_when_opening = false,
-            hijack_directories = {
-                enable = true,
-                auto_open = true,
+        },
+        use_popups_for_input = false,
+        default_component_configs = {
+            indent = {
+                indent_size = 2,
+                padding = 1, -- extra padding on left hand side
+                -- indent guides
+                with_markers = true,
+                indent_marker = "│",
+                last_indent_marker = "└",
+                highlight = "NeoTreeIndentMarker",
+                -- expander config, needed for nesting files
+                with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+                expander_collapsed = "",
+                expander_expanded = "",
+                expander_highlight = "NeoTreeExpander",
             },
-            -- messes with dirbuf
-            update_to_buf_dir = {
-                enable = false,
-                auto_open = true,
+            icon = {
+                folder_closed = "",
+                folder_open = "",
+                folder_empty = "ﰊ",
+                default = "*",
             },
-            auto_close = false,
-            open_on_tab = false,
-            hijack_cursor = false,
-            update_cwd = true,
-            diagnostics = {
-                enable = true,
-                icons = {
-                    hint = "",
-                    info = "",
-                    warning = "",
-                    error = "",
+            modified = {
+                symbol = "[+]",
+                highlight = "NeoTreeModified",
+            },
+            name = {
+                trailing_slash = false,
+                use_git_status_colors = true,
+            },
+            git_status = {
+                symbols = {
+                    -- Change type
+                    added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+                    modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+                    deleted = "✖", -- this can only be used in the git_status source
+                    renamed = "", -- this can only be used in the git_status source
+                    -- Status type
+                    untracked = "",
+                    ignored = "",
+                    unstaged = "",
+                    staged = "",
+                    conflict = "",
                 },
             },
-            update_focused_file = {
-                enable = true,
-                update_cwd = true,
-                ignore_list = {},
+        },
+        window = {
+            position = "left",
+            width = 35,
+            mappings = {
+                ["<space>"] = "toggle_node",
+                ["<2-LeftMouse>"] = "open",
+                ["<cr>"] = "open",
+                ["S"] = "open_split",
+                ["s"] = "open_vsplit",
+                ["t"] = "open_tabnew",
+                ["w"] = "open_with_window_picker",
+                ["C"] = "close_node",
+                ["a"] = "add",
+                ["A"] = "add_directory",
+                ["d"] = "delete",
+                ["r"] = "rename",
+                ["y"] = "copy_to_clipboard",
+                ["x"] = "cut_to_clipboard",
+                ["p"] = "paste_from_clipboard",
+                ["c"] = "copy", -- takes text input for destination
+                ["m"] = "move", -- takes text input for destination
+                ["q"] = "close_window",
+                ["R"] = "refresh",
             },
-            system_open = {
-                cmd = nil,
-                args = {},
+        },
+        nesting_rules = {},
+        filesystem = {
+            filtered_items = {
+                visible = false, -- when true, they will just be displayed differently than normal items
+                hide_dotfiles = false,
+                hide_gitignored = false,
+                hide_by_name = {
+                    ".DS_Store",
+                    "thumbs.db",
+                    --"node_modules"
+                },
+                never_show = { -- remains hidden even if visible is toggled to true
+                    --".DS_Store",
+                    --"thumbs.db"
+                },
             },
-            git = {
-                enable = true,
-                ignore = false,
-                timeout = 200,
-            },
-            view = {
-                width = 28,
-                height = 30,
-                hide_root_folder = false,
-                side = "left",
-                auto_resize = false,
+            follow_current_file = true, -- This will find and focus the file in the active buffer every
+            hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
+            use_libuv_file_watcher = true,
+            window = {
                 mappings = {
-                    custom_only = false,
-                    list = {},
-                },
-                number = false,
-                relativenumber = false,
-                signcolumn = "yes",
-            },
-            filters = {
-                dotfiles = false,
-                custom = { "node_modules", ".cache" },
-            },
-            trash = {
-                cmd = "trash",
-                require_confirm = true,
-            },
-            actions = {
-                change_dir = {
-                    global = false,
-                },
-                open_file = {
-                    resize_window = true,
-                    quit_on_open = false,
-                },
-                window_picker = {
-                    enable = false,
-                    chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-                    exclude = {},
+                    ["<bs>"] = "navigate_up",
+                    ["."] = "set_root",
+                    ["H"] = "toggle_hidden",
+                    ["/"] = "fuzzy_finder",
+                    ["f"] = "filter_on_submit",
+                    ["<c-x>"] = "clear_filter",
                 },
             },
         },
-        show_icons = {
-            git = 1,
-            folders = 1,
-            files = 1,
-            folder_arrows = 1,
-        },
-        git_hl = 1,
-        root_folder_modifier = ":t",
-        icons = {
-            default = "",
-            symlink = "",
-            git = {
-                unstaged = "",
-                staged = "S",
-                unmerged = "",
-                renamed = "➜",
-                deleted = "",
-                untracked = "U",
-                ignored = "◌",
-            },
-            folder = {
-                default = "",
-                open = "",
-                empty = "",
-                empty_open = "",
-                symlink = "",
+        buffers = {
+            show_unloaded = true,
+            window = {
+                mappings = {
+                    ["bd"] = "buffer_delete",
+                    ["<bs>"] = "navigate_up",
+                    ["."] = "set_root",
+                },
             },
         },
-    }
-
-    for opt, val in pairs(settings) do
-        vim.g["nvim_tree_" .. opt] = val
-    end
-    vim.cmd([[autocmd Filetype NvimTree set cursorline]])
-
-    local function start_telescope(telescope_mode)
-        local node = require("nvim-tree.lib").get_node_at_cursor()
-        local abspath = node.link_to or node.absolute_path
-        local is_folder = node.open ~= nil
-        local basedir = is_folder and abspath or vim.fn.fnamemodify(abspath, ":h")
-        require("telescope.builtin")[telescope_mode]({
-            cwd = basedir,
-        })
-    end
-    local function telescope_find_files(_)
-        start_telescope("find_files")
-    end
-    local function telescope_live_grep(_)
-        start_telescope("live_grep")
-    end
-
-    settings.setup.view.mappings.list = {
-        { key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
-        { key = "h", action = "close_node" },
-        { key = "v", action = "vsplit" },
-        { key = "C", action = "cd" },
-        { key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
-        { key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
-    }
-
-    local _, nvim_tree_config = pcall(require, "nvim-tree.config")
-    if settings.on_config_done then
-        settings.on_config_done(nvim_tree_config)
-    end
-    require("nvim-tree").setup(settings.setup)
+        git_status = {
+            window = {
+                position = "float",
+                mappings = {
+                    ["A"] = "git_add_all",
+                    ["gu"] = "git_unstage_file",
+                    ["ga"] = "git_add_file",
+                    ["gr"] = "git_revert_file",
+                    ["gc"] = "git_commit",
+                    ["gp"] = "git_push",
+                    ["gg"] = "git_commit_and_push",
+                },
+            },
+        },
+    })
 end
 
 function config.scrollbar()
@@ -532,6 +542,56 @@ function config.dogrun()
     vim.g.clap_theme = "dogrun"
 end
 
+function config.chalk()
+    local chalklines = require("chalklines")
+    chalklines.setup({
+        integration = {
+            neotree = {
+                enabled = true,
+                show_root = true, -- makes the root folder not transparent
+                transparent_panel = false, -- make the panel transparent
+            },
+        },
+        modules = {
+            barbar = true,
+            bufferline = true,
+            cmp = true,
+            dashboard = true,
+            diagnostic = {
+                enable = true,
+                background = true,
+            },
+            fern = true,
+            fidget = true,
+            gitgutter = true,
+            gitsigns = true,
+            glyph_palette = true,
+            hop = true,
+            indent_blankline = true,
+            illuminate = true,
+            lightspeed = true,
+            lsp_saga = true,
+            lsp_trouble = true,
+            modes = true,
+            native_lsp = true,
+            neogit = true,
+            neorg = true,
+            neotree = true,
+            notify = true,
+            nvimtree = true,
+            pounce = true,
+            sneak = true,
+            symbol_outline = true,
+            telescope = true,
+            treesitter = true,
+            tsrainbow = true,
+            vimwiki = true,
+            whichkey = true,
+        },
+    })
+    vim.cmd([[colorscheme chalklines]])
+end
+
 function config.catppuccin()
     local catppuccin = require("catppuccin")
 
@@ -673,7 +733,16 @@ function config.blankline()
         enabled = true,
         -- char = "|",
         char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
-        filetype_exclude = { "help", "startify", "dashboard", "packer", "guihua", "NvimTree", "sidekick" },
+        filetype_exclude = {
+            "neo-tree-popup",
+            "help",
+            "startify",
+            "dashboard",
+            "packer",
+            "guihua",
+            "NvimTree",
+            "sidekick",
+        },
         show_trailing_blankline_indent = false,
         show_first_indent_level = false,
         buftype_exclude = { "terminal" },
@@ -779,7 +848,7 @@ function config.themer()
     local themes = { "rose_pine", "dracula", "everforest", "monokai_pro", "boo", "darknight" }
     local cs = themes[math.random(1, #themes)]
     local cp = require("themer.modules.core.api").get_cp(cs)
-    print(cs)
+    lprint(cs)
 
     require("themer").setup({
         colorscheme = cs,

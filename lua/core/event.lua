@@ -1,19 +1,21 @@
 local vim = vim
+local fn = vim.fn
+local api = vim.api
 local autocmd = {}
 
 function autocmd.nvim_create_augroups(defs)
     for group_name, definition in pairs(defs) do
-        vim.api.nvim_create_augroup(group_name, { clear = true })
+        api.nvim_create_augroup(group_name, { clear = true })
         for _, def in ipairs(definition) do
             local event = def[1]
             local arg = {
                 group = group_name,
                 pattern = def[2],
                 [type(def[3]) == "function" and "callback" or type(def[3]) == "string" and "command"] = def[3],
-                nested = def[4],
+                nested = def[4] or false,
             }
             -- print(vim.inspect(event), vim.inspect(arg))
-            vim.api.nvim_create_autocmd(event, arg)
+            api.nvim_create_autocmd(event, arg)
         end
     end
 end
@@ -34,6 +36,8 @@ function autocmd.load_autocmds()
                 [[source $MYVIMRC | redraw]],
                 true,
             },
+            { "BufWritePre", "*.py", "NayvyImports" },
+
             -- Reload Vim script automatically if setlocal autoread
             {
                 { "BufWritePost", "FileWritePost" },
@@ -63,7 +67,29 @@ function autocmd.load_autocmds()
                     require("core.event_helper").loadview()
                 end,
             },
-
+            {
+                "BufWinEnter",
+                { "*.py", "*.lua", "*.tex", "*.norg" },
+                function()
+                    if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then
+                        if vim.fn.line([['"]]) > 0 and vim.fn.line([['"]]) <= vim.fn.line("$") then
+                            -- Check if the last line of the buffer is the same as the window
+                            if vim.fn.line("w$") == vim.fn.line("$") then
+                                -- Set line to last line edited
+                                vim.cmd([[normal! g`"]])
+                                -- Try to center
+                            elseif
+                                vim.fn.line("$") - vim.fn.line([['"]])
+                                > ((vim.fn.line("w$") - vim.fn.line("w0")) / 2) - 1
+                            then
+                                vim.cmd([[normal! g`"zz]])
+                            else
+                                vim.cmd([[normal! G'"<c-e>]])
+                            end
+                        end
+                    end
+                end,
+            },
             {
                 "BufWritePre",
                 "*",
@@ -97,7 +123,7 @@ function autocmd.load_autocmds()
             --     "BufWritePost",
             --     { "*.py", "*.lua", "*sh", "*.scala", "*.tcl" },
             --     function()
-            --         local line = (vim.inspect(vim.api.nvim_buf_get_lines(0, 0, 1, true)))
+            --         local line = (vim.inspect(api.nvim_buf_get_lines(0, 0, 1, true)))
             --         if line:find("#!") and line:find("/bin/") then
             --             vim.cmd([[silent !chmod u+x %]])
             --         end
@@ -148,6 +174,7 @@ function autocmd.load_autocmds()
                     end
                     vim.bo.buftype = "nofile"
                     vim.bo.swapfile = false
+                    vim.bo.undofile = false
                     vim.bo.fileformat = "unix"
                 end,
             },
@@ -156,12 +183,25 @@ function autocmd.load_autocmds()
         ft = {
             {
                 "CursorHold",
-                { "*.tex", "*.norg" },
+                { "*.tex" },
                 function()
                     local is_math = require("modules.completion.snippets.sniputils").is_math
                     if is_math then
                         require("nabla").popup()
                     end
+                end,
+            },
+            {
+                "FileType",
+                { "tex", "norg", "markdown" },
+                function()
+                    vim.cmd([[
+                  setlocal spell
+                  set spelllang=en,en_gb
+                  nnoremap <C-k> [s1z=<c-o>
+
+                  inoremap <C-k> <c-g>u<Esc>[s1z=`]a<c-g>u
+                ]])
                 end,
             },
             {
@@ -210,45 +250,46 @@ function autocmd.load_autocmds()
                 "BufEnter",
                 "qf",
                 function()
-                    if fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
-                        vim.api.nvim_buf_delete(0, { force = true })
+                    if vim.fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
+                        api.nvim_buf_delete(0, { force = true })
                     end
                 end,
             },
         },
-        highlight = {
-            -- could mess with lightspeed .
+        VimrcIncSearchHighlight = {
             {
-                "CmdlineEnter",
-                "[/\\?]",
-                ":set hlsearch  | redrawstatus",
-            },
-            {
-                "CmdlineLeave",
-                "[/\\?]",
-                ":set nohlsearch  | redrawstatus",
-            },
-        },
-
-        colorcol = {
-            {
-                { "WinEnter", "BufEnter", "VimResized", "FileType" },
-                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+                "CursorMoved",
+                "*",
                 function()
-                    require("core.event_helper").check_colour_column()
+                    require("core.event_helper").hl_search()
                 end,
             },
-
             {
-                "WinLeave",
-                { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
+                "InsertEnter",
+                "*",
                 function()
-                    require("core.event_helper").check_colour_column(true)
+                    require("core.event_helper").stop_hl()
                 end,
             },
         },
     }
-
+    if vim.env.TERM == "xterm-kitty" then
+        local kitty_fix = {
+            ui = {
+                {
+                    "UIEnter",
+                    "*",
+                    [[if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]],
+                },
+                {
+                    "UILeave",
+                    "*",
+                    [[if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]],
+                },
+            },
+        }
+        autocmd.nvim_create_augroups(kitty_fix)
+    end
     autocmd.nvim_create_augroups(definitions)
 end
 

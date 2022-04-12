@@ -1,5 +1,5 @@
 [selene]
-base = "lua53"
+base = "lua51"
 name = "vim"
 
 [vim]
@@ -23,6 +23,12 @@ type = "function"
 [assert.is_not]
 any = true
 
+[assert.matches]
+any = true
+
+[assert.has_error]
+any = true
+
 [[assert.equals.args]]
 type = "any"
 [[assert.equals.args]]
@@ -37,6 +43,9 @@ type = "any"
 type = "any"
 
 [[assert.truthy.args]]
+type = "any"
+
+[[assert.falsy.args]]
 type = "any"
 
 [[assert.spy.args]]

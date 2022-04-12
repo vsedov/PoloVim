@@ -14,8 +14,8 @@ function config.autopairs()
         end
     end
     local npairs = require("nvim-autopairs")
-    local Rule = require("nvim-autopairs.rule")
-    local cond = require("nvim-autopairs.conds")
+    -- local Rule = require("nvim-autopairs.rule")
+    -- local cond = require("nvim-autopairs.conds")
 
     npairs.setup({
         enable_moveright = true,
@@ -109,7 +109,7 @@ function config.autopairs()
     --         :use_key("]"),
     -- })
 
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+    -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     if load_coq() then
         local remap = vim.api.nvim_set_keymap
 
@@ -191,7 +191,7 @@ function config.lightspeed()
             prev_match_group = "<S-Tab>",
         },
         --- f/t ---
-        limit_ft_matches = 10,
+        limit_ft_matches = 20,
         repeat_ft_with_target_char = true,
     })
 end
@@ -500,4 +500,31 @@ function config.dial_setup()
     vim.keymap.set("x", "<C-x>", "<Plug>(dial-decrement-additional)")
 end
 
+function config.winshift()
+    require("winshift").setup({
+        highlight_moving_win = true, -- Highlight the window being moved
+        focused_hl_group = "Visual", -- The highlight group used for the moving window
+        moving_win_options = {
+            wrap = false,
+            cursorline = false,
+            cursorcolumn = false,
+            colorcolumn = "",
+        },
+        window_picker_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        window_picker_ignore = {
+            -- This table allows you to indicate to the window picker that a window
+            -- should be ignored if its buffer matches any of the following criteria.
+            filetype = { -- List of ignored file types
+                "NvimTree",
+            },
+            buftype = { -- List of ignored buftypes
+                "terminal",
+                "quickfix",
+            },
+            bufname = { -- List of regex patterns matching ignored buffer names
+                [[.*foo/bar/baz\.qux]],
+            },
+        },
+    })
+end
 return config

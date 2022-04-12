@@ -1,7 +1,5 @@
+require("utils.helper")
 local loader = require("packer").loader
-if not packer_plugins["telescope.nvim"].loaded then
-    loader("telescope.nvim")
-end
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 local conf = require("telescope.config").values
@@ -19,7 +17,6 @@ local action_set = require("telescope.actions.set")
 local themes = require("telescope.themes")
 local action_layout = require("telescope.actions.layout")
 local actions_layout = require("telescope.actions.layout")
-local utils = require("utils.helper")
 local Path = require("plenary.path")
 local action_state = require("telescope.actions.state")
 -- https://github.com/max397574/NeovimConfig/blob/2267d7dfa8a30148516e2f5a6bb0e5ecc5de2c3c/lua/configs/telescope.lua
@@ -419,14 +416,25 @@ end
 --- Plugins to be loaded, lazily
 M.neoclip = function()
     local opts = {
-        sorting_strategy = "ascending",
-        scroll_strategy = "cycle",
-        prompt_prefix = "  ",
+        winblend = 10,
+        layout_strategy = "flex",
         layout_config = {
             prompt_position = "top",
+            width = 0.8,
+            height = 0.6,
+            horizontal = { width = { padding = 0.15 } },
+            vertical = { preview_height = 0.70 },
         },
+        borderchars = {
+            prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+            results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
+            preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        },
+        border = {},
+        shorten_path = false,
     }
-    telescope.extensions.neoclip.default(opts)
+    local dropdown = require("telescope.themes").get_dropdown(opts)
+    telescope.extensions.neoclip.default(dropdown)
 end
 
 M.refactor = function()

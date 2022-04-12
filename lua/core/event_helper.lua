@@ -1,10 +1,13 @@
 -- local leader = wincent.mappings.leader
-
+local fn = vim.fn
+local api = vim.api
 local M = {}
 
 local blacklist_files = {
     "c",
     "norg",
+    "tex",
+    "md",
 }
 
 local function should_mkview()
@@ -19,11 +22,11 @@ function M.mkview()
         local success, err = pcall(function()
             if vim.fn.exists("*haslocaldir") and vim.fn.haslocaldir() then
                 -- We never want to save an :lcd command, so hack around it...
-                vim.api.nvim_command("cd -")
-                vim.api.nvim_command("mkview")
-                vim.api.nvim_command("lcd -")
+                api.nvim_command("cd -")
+                api.nvim_command("mkview")
+                api.nvim_command("lcd -")
             else
-                vim.api.nvim_command("mkview")
+                api.nvim_command("mkview")
             end
         end)
         if not success then
@@ -40,8 +43,8 @@ end
 
 function M.loadview()
     if should_mkview() then
-        vim.api.nvim_command("silent! loadview")
-        vim.api.nvim_command("silent! " .. vim.fn.line(".") .. "foldopen!")
+        api.nvim_command("silent! loadview")
+        api.nvim_command("silent! " .. vim.fn.line(".") .. "foldopen!")
     end
 end
 
@@ -52,7 +55,7 @@ function M.disable_heavy_plugins()
         or vim.fn.getfsize(vim.fn.expand("%")) > 200000
     then
         if vim.fn.exists(":ALEDisableBuffer") == 2 then
-            vim.api.nvim_command(":ALEDisableBuffer")
+            api.nvim_command(":ALEDisableBuffer")
         end
     end
 end
@@ -91,7 +94,7 @@ function M.reset_timer(text_changed)
     timer = vim.defer_fn(function()
         called_func = true
         local function feed(keys)
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, true, true), "n", false)
+            api.nvim_feedkeys(api.nvim_replace_termcodes(keys, true, true, true), "n", false)
         end
 
         if vim.tbl_contains({ 1, 2, 0 }, #vim.fn.expand("<cword>")) then
@@ -104,47 +107,23 @@ function M.reset_timer(text_changed)
     end, 100)
 end
 
-local column_exclude = { "gitcommit" }
-local column_clear = {
-    "startify",
-    "vimwiki",
-    "vim-plug",
-    "help",
-    "fugitive",
-    "mail",
-    "norg",
-    "orgagenda",
-    "NeogitStatus",
-}
+-- https://github.com/akinsho/dotfiles/blob/479e11e71c6bc042c3987f159da9457acc565121/.config/nvim/plugin/autocommands.lua
+vim.keymap.set({ "n", "v", "o", "i", "c" }, "<Plug>(StopHL)", 'execute("nohlsearch")[-1]', { expr = true })
 
--- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/plugin/autocommands.lua
---- Set or unset the color column depending on the filetype of the buffer and its eligibility
----@param leaving boolean indicates if the function was called on window leave
-function M.check_colour_column(leaving)
-    if not packer_plugins["focus.nvim"].loaded then
+function M.stop_hl()
+    if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
         return
     end
-    if vim.tbl_contains(column_exclude, vim.bo.filetype) then
-        return
-    end
-
-    local not_eligible = not vim.bo.modifiable or vim.wo.previewwindow or vim.bo.buftype ~= "" or not vim.bo.buflisted
-
-    local small_window = vim.api.nvim_win_get_width(0) <= vim.bo.textwidth + 1
-    local is_last_win = #vim.api.nvim_list_wins() == 1
-
-    if
-        vim.tbl_contains(column_clear, vim.bo.filetype)
-        or not_eligible
-        or (leaving and not is_last_win)
-        or small_window
-    then
-        vim.wo.colorcolumn = ""
-        return
-    end
-    if vim.wo.colorcolumn == "" then
-        vim.wo.colorcolumn = "+1"
-    end
+    api.nvim_feedkeys(api.nvim_replace_termcodes("<Plug>(StopHL)", true, true, true), "m", false)
 end
 
+function M.hl_search()
+    local col = api.nvim_win_get_cursor(0)[2]
+    local curr_line = api.nvim_get_current_line()
+    local _, p_start, p_end = unpack(vim.fn.matchstrpos(curr_line, vim.fn.getreg("/"), 0))
+    -- if the cursor is in a search result, leave highlighting on
+    if col < p_start or col > p_end then
+        M.stop_hl()
+    end
+end
 return M

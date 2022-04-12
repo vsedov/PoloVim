@@ -12,7 +12,7 @@ elseif vim.fn.has("unix") == 1 then
     WORKSPACE_PATH = home .. "/GitHub/"
     CONFIG = "linux"
 else
-    print("Unsupported system")
+    Log:info("Unsupported system")
 end
 
 -- Find root of project

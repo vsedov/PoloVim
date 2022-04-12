@@ -6,11 +6,24 @@ local i = ls.insert_node
 local f = ls.function_node
 local c = ls.choice_node
 local fmt = require("luasnip.extras.fmt").fmt
+local all_a = {
+    s({ trig = ":td:", name = "TODO" }, {
+        c(1, {
+            t(string.format(vim.bo.commentstring:gsub("%%s", " TODO(vsedov): "))),
+            t(string.format(vim.bo.commentstring:gsub("%%s", " FIXME(vsedov): "))),
+            t(string.format(vim.bo.commentstring:gsub("%%s", " HACK(vsedov): "))),
+            t(string.format(vim.bo.commentstring:gsub("%%s", " BUG(vsedov): "))),
+        }),
+        i(0),
+    }),
+}
+
+ls.add_snippets("all", all_a, { type = "autosnippets" })
 
 local all = {
 
     s(
-        -- TODO: can probably make this one much smarter; right now it's basically just syntax reminder
+        -- TODO(vsedov) (01:30:01 - 30/03/22): can probably make this smarter, need to finish it atm
         { trig = "table", dscr = "Table template" },
         {
             t("| "),
@@ -23,16 +36,7 @@ local all = {
             }),
         }
     ),
-    -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/
-    s({ trig = "td", name = "TODO" }, {
-        c(1, {
-            t("TODO: "),
-            t("FIXME: "),
-            t("HACK: "),
-            t("BUG: "),
-        }),
-        i(0),
-    }),
+
     s(
         { trig = "hr", name = "Header" },
         fmt(

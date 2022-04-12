@@ -10,7 +10,11 @@ local function bind_option(opts)
         end
     end
 end
-
+local function executable(exec)
+    vim.validate({ exec = { exec, "string" } })
+    assert(exec ~= "", debug.traceback("Empty executable string"))
+    return vim.fn.executable(exec) == 1
+end
 function options:load_options()
     self.global_local = {}
     self.window_local = {}
@@ -83,17 +87,17 @@ function options:load_options()
     vim.cmd('vmap <LeftRelease> "*ygv')
     vim.cmd("unlet loaded_matchparen")
     vim.g.python_host_prog = "/usr/bin/python2"
-    -- vim.g.python3_host_prog = "/usr/bin/python3"
-    if vim.fn.exists("$VIRTUAL_ENV") == 1 then
-        vim.g.python3_host_prog = vim.fn.substitute(
-            vim.fn.system("which -a python3 | head -n2 | tail -n1"),
-            "\n",
-            "",
-            "g"
-        )
-    else
-        vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
-    end
+    vim.g.python3_host_prog = "/usr/bin/python3"
+    -- if executable("python3") and executable("pip3") then
+    --     vim.g.python3_host_prog = vim.fn.exepath("python3")
+    --     vim.g.loaded_python_provider = 0
+    -- elseif executable("python2") and executable("pip2") then
+    --     vim.g.python_host_prog = vim.fn.exepath("python2")
+    --     vim.g.loaded_python3_provider = 0
+    -- else
+    --     vim.g.loaded_python_provider = 0
+    --     vim.g.loaded_python3_provider = 0
+    -- end
 end
 
 options:load_options()

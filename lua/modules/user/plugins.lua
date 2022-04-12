@@ -19,16 +19,10 @@ user["~/GitHub/vim-autocorrect/opt/vim-abbrev"] = {
         vim.g.abbrev_file = "/home/viv/GitHub/vim-autocorrect/opt/vim-abbrev/plugin/abbrev"
     end,
 }
--- user["~/GitHub/Generatorg"] = {
---     ft = "python",
---     opt = true,
---     config = function()
---         require("generatorg")
---     end,
--- }
+user["~/GitHub/Generatorg"] = {
+    ft = "python",
+    opt = true,
+}
 
 -- your plugin config
 return user
-
--- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, rhs, options) 93
--- vim.api.nvim_set_keymap(mode:sub(i, i), keymap, value, {}) 95

@@ -16,15 +16,106 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
     end,
 }
 tools["j-hui/fidget.nvim"] = {
+    opt = true,
     ft = { "python", "lua", "c" },
     config = function()
-        require("fidget").setup({})
+        local relative = "editor"
+        require("fidget").setup({
+            text = {
+                spinner = {
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                    " ",
+                },
+                done = "", -- character shown when all tasks are complete
+                commenced = " ", -- message shown when task starts
+                completed = " ", -- message shown when task completes
+            },
+            align = {
+                bottom = true, -- align fidgets along bottom edge of buffer
+                right = true, -- align fidgets along right edge of buffer
+            },
+            timer = {
+                spinner_rate = 100, -- frame rate of spinner animation, in ms
+                fidget_decay = 500, -- how long to keep around empty fidget, in ms
+                task_decay = 300, -- how long to keep around completed task, in ms
+            },
+            window = {
+                relative = relative, -- where to anchor the window, either `"win"` or `"editor"`
+                blend = 100, -- `&winblend` for the window
+                zindex = nil, -- the `zindex` value for the window
+            },
+            fmt = {
+                leftpad = true, -- right-justify text in fidget box
+                stack_upwards = true, -- list of tasks grows upwards
+                max_width = 0, -- maximum width of the fidget box
+                -- function to format fidget title
+                fidget = function(fidget_name, spinner)
+                    return string.format("%s %s", spinner, fidget_name)
+                end,
+                -- function to format each task line
+                task = function(task_name, message, percentage)
+                    return string.format(
+                        "%s%s [%s]",
+                        message,
+                        percentage and string.format(" (%s%%)", percentage) or "",
+                        task_name
+                    )
+                end,
+            },
+
+            debug = {
+                logging = false, -- whether to enable logging, for debugging
+                strict = false, -- whether to interpret LSP strictly
+            },
+        })
     end,
 }
 tools["editorconfig/editorconfig-vim"] = {
     opt = true,
     cmd = { "EditorConfigReload" },
     -- ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
+}
+
+tools["olimorris/persisted.nvim"] = {
+    event = "VimLeavePre",
+    module = "persisted",
+    setup = function()
+        vim.keymap.set("n", "<leader>R", function()
+            require("persisted").load({ last = true })
+        end)
+        vim.keymap.set("n", "<leader>L", function()
+            require("persisted").start()
+        end)
+    end,
+    config = function()
+        require("persisted").setup()
+    end,
 }
 
 tools["rktjmp/paperplanes.nvim"] = {
@@ -38,16 +129,14 @@ tools["ThePrimeagen/harpoon"] = {
     opt = true,
     config = function()
         require("harpoon").setup({
-            menu = {
-                width = vim.api.nvim_win_get_width(0) - 4,
-            },
+
             global_settings = {
-                save_on_toggle = false,
+                save_on_toggle = true,
                 save_on_change = true,
                 enter_on_sendcmd = true,
                 tmux_autoclose_windows = false,
                 excluded_filetypes = { "harpoon" },
-                mark_branch = true,
+                mark_branch = false,
             },
         })
         require("telescope").load_extension("harpoon")
@@ -62,20 +151,19 @@ tools["max397574/tomato.nvim"] = {
 }
 
 tools["natecraddock/workspaces.nvim"] = {
-    opt = true,
+    module = "workspaces",
     config = function()
         require("workspaces").setup({
+            global_cd = true,
+            sort = true,
+            notify_info = true,
+
             hooks = {
                 open = { "Telescope find_files" },
             },
         })
         require("telescope").load_extension("workspaces")
     end,
-}
-
-tools["ThePrimeagen/git-worktree.nvim"] = {
-    event = { "CmdwinEnter", "CmdlineEnter" },
-    config = conf.worktree,
 }
 
 tools["nmac427/guess-indent.nvim"] = {
@@ -88,14 +176,31 @@ tools["nmac427/guess-indent.nvim"] = {
 }
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
-    cmd = { "Octo" },
     requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
         "kyazdani42/nvim-web-devicons",
     },
+    cmd = "Octo",
+    keys = { "<Leader>Op", "<Leader>Opl", "<Leader>Ope", "<Leader>Oil", "<Leader>Oic", "<Leader>Oie" },
     config = function()
         require("octo").setup()
+        require("which-key").register({
+            O = {
+                name = "+octo",
+                p = {
+                    name = "+pr",
+                    l = { "<Cmd>Octo pr list<CR>", "pull requests List" },
+                    e = { "<Cmd>Octo pr edit<CR>", "pull requests edit" },
+                },
+                i = {
+                    name = "+issues",
+                    l = { "<Cmd>Octo issue list<CR>", "Issue List" },
+                    c = { "<Cmd>Octo issue create<CR>", "Issue Create" },
+                    e = { "<Cmd>Octo issue edit<CR>", "Issue Edit" },
+                },
+            },
+        }, { prefix = "<leader>" })
     end,
 }
 tools["jghauser/mkdir.nvim"] = {
@@ -118,21 +223,6 @@ tools["NFrid/due.nvim"] = {
 }
 
 -- tools["wellle/targets.vim"] = {}
-tools["TimUntersberger/neogit"] = {
-    opt = true,
-    cmd = { "Neogit" },
-    config = function()
-        local neogit = require("neogit")
-        neogit.setup({})
-    end,
-}
-
-tools["ruifm/gitlinker.nvim"] = {
-    keys = { "<leader>gy" },
-    config = function()
-        require("gitlinker").setup()
-    end,
-}
 
 tools["liuchengxu/vista.vim"] = { cmd = "Vista", setup = conf.vim_vista, opt = true }
 
@@ -220,36 +310,6 @@ tools["wakatime/vim-wakatime"] = {
     },
 }
 
-tools["sindrets/diffview.nvim"] = {
-    cmd = {
-        "DiffviewOpen",
-        "DiffviewFileHistory",
-        "DiffviewFocusFiles",
-        "DiffviewToggleFiles",
-        "DiffviewRefresh",
-    },
-    config = conf.diffview,
-}
-
-tools["lewis6991/gitsigns.nvim"] = {
-    config = conf.gitsigns,
-    -- keys = {']c', '[c'},  -- load by lazy.lua
-    opt = true,
-}
-tools["klen/nvim-config-local"] = {
-    -- ft = {"lua","vim"},
-    cmd = {
-        "ConfigSource",
-        "ConfigEdit",
-        "ConfigTrust",
-        "ConfigIgnore",
-    },
-    config = function()
-        require("config-local").setup({
-            config_files = { "init_paq.lua", ".vimrc", ".vimrc.lua" },
-        })
-    end,
-}
 -- ze black magic
 tools["windwp/nvim-spectre"] = {
     module = "spectre",
@@ -270,9 +330,12 @@ tools["windwp/nvim-spectre"] = {
     end,
 }
 
+tools["FraserLee/ScratchPad"] = {
+    cmd = { "ScratchPad" },
+}
 tools["ray-x/sad.nvim"] = {
     cmd = { "Sad" },
-    requires = "ray-x/guihua.lua",
+    requires = { "ray-x/guihua.lua", opt = true, after = "sad.nvim" },
     opt = true,
     config = function()
         require("sad").setup({
@@ -282,13 +345,42 @@ tools["ray-x/sad.nvim"] = {
         })
     end,
 }
+-- ╭────────────────────────────────────────────────────────────────────╮
+-- │ git tools                                                          │
+-- ╰────────────────────────────────────────────────────────────────────╯
 
-tools["ray-x/viewdoc.nvim"] = {
-    requires = "ray-x/guihua.lua",
-    cmd = { "Viewdoc" },
+tools["ThePrimeagen/git-worktree.nvim"] = {
+    event = { "CmdwinEnter", "CmdlineEnter" },
+    config = conf.worktree,
+}
+
+tools["sindrets/diffview.nvim"] = {
+    cmd = {
+        "DiffviewOpen",
+        "DiffviewFileHistory",
+        "DiffviewFocusFiles",
+        "DiffviewToggleFiles",
+        "DiffviewRefresh",
+    },
+    config = conf.diffview,
+}
+
+tools["lewis6991/gitsigns.nvim"] = {
+    config = conf.gitsigns,
+    -- keys = {']c', '[c'},  -- load by lazy.lua
     opt = true,
+}
+
+tools["TimUntersberger/neogit"] = {
+    opt = true,
+    cmd = { "Neogit" },
+    config = conf.neogit,
+}
+
+tools["ruifm/gitlinker.nvim"] = {
+    keys = { "<leader>gy" },
     config = function()
-        require("viewdoc").setup({ debug = true, log_path = "~/tmp/neovim_debug.log" })
+        require("gitlinker").setup()
     end,
 }
 
@@ -302,6 +394,21 @@ tools["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
     config = conf.vgit,
 }
 
+tools["akinsho/git-conflict.nvim"] = {
+    cmd = {
+        "GitConflictChooseOurs",
+        "GitConflictChooseTheirs",
+        "GitConflictChooseBoth",
+        "GitConflictChooseNone",
+        "GitConflictNextConflict",
+        "GitConflictPrevConflict",
+        "GitConflictListQf",
+    },
+    config = function()
+        require("git-conflict").setup()
+    end,
+}
+
 tools["tpope/vim-fugitive"] = {
     cmd = { "Gvsplit", "Git", "Gedit", "Gstatus", "Gdiffsplit", "Gvdiffsplit" },
     opt = true,
@@ -311,7 +418,18 @@ tools["LhKipp/nvim-git-fixer"] = {
     cmd = { "FixUp", "Ammend" },
     opt = true,
     config = function()
-        require("fixer").setup({})
+        -- defaults shown --
+        require("fixer").setup({
+            stage_hunk_action = function()
+                require("gitsigns").stage_hunk()
+            end,
+            undo_stage_hunk_action = function()
+                require("gitsigns").undo_stage_hunk()
+            end,
+            refresh_hunks_action = function()
+                require("gitsigns").refresh()
+            end,
+        })
         vim.cmd(
             [[command! -nargs=*  FixUp lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]]
         )
@@ -330,7 +448,6 @@ tools["ahmedkhalf/project.nvim"] = {
     module = "project",
     ft = { "python", "java", "c", "cpp", "lua" },
     opt = true,
-    after = { "telescope.nvim" },
     config = conf.project,
 }
 
@@ -368,7 +485,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
 tools["camspiers/animate.vim"] = {
     opt = true,
 }
-
+-- interferes with nui and popus
 tools["chentau/marks.nvim"] = {
     opt = true,
     event = { "BufReadPost" },
@@ -380,7 +497,10 @@ tools["chentau/marks.nvim"] = {
             force_write_shada = true,
             refresh_interval = 250,
             sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-            excluded_filetypes = {},
+            excluded_filetypes = {
+                "neo-tree",
+                "neo-tree-popup",
+            },
             bookmark_0 = {
                 sign = "⚑",
                 virt_text = "BookMark",
@@ -401,6 +521,7 @@ tools["Krafi2/jeskape.nvim"] = {
                     f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
                 },
                 j = {
+                    h = "<esc>O",
                     k = "<esc>",
                     j = "<esc>o",
                 },
@@ -428,4 +549,13 @@ tools["sQVe/sort.nvim"] = {
         require("sort").setup({})
     end,
 }
+
+tools["gelguy/wilder.nvim"] = {
+    opt = true,
+    requires = { "romgrk/fzy-lua-native", opt = true, after = "wilder.nvim" },
+    event = "CmdlineEnter",
+    config = conf.wilder,
+    run = ":UpdateRemotePlugins",
+}
+
 return tools

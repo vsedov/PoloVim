@@ -5,7 +5,6 @@ local map_cmd = bind.map_cmd
 local map_args = bind.map_args
 -- local map_key = bind.map_key
 -- local global = require("core.global")
-require("keymap.config")
 
 local plug_map = {
     -- Show syntax highlighting groups for word under cursor
@@ -15,7 +14,7 @@ local plug_map = {
         for i, l in ipairs(stack) do
             stack[i] = vim.fn.synIDattr(l, "name")
         end
-        print(vim.inspect(stack))
+        Log:info(vim.inspect(stack))
     end):with_silent(),
 
     ["n|<localleader>c]"] = map_cmd(function()
@@ -61,26 +60,22 @@ local plug_map = {
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
 
     -- -- Plugin nvim-tree
-    ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
-    ["n|<Leader>F"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent(),
+    -- ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
+    -- ["n|<Leader>F"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent(),
+
+    ["n|<Leader>e"] = map_cr("NeoTreeFocusToggle"):with_noremap():with_silent(),
+    ["n|<Leader>F"] = map_cr("NeoTreeFocus"):with_noremap():with_silent(),
+    ["n|<Leader>cf"] = map_cr("Neotree float reveal_file=<cfile> reveal_force_cwd"):with_noremap():with_silent(),
 
     -- -- Code actions ?
     ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
     -- no longer work .
-    ["n|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
-    ["v|ga"] = map_cu("CodeActionMenu"):with_noremap():with_silent(),
+    ["n|ga"] = map_cmd("<Cmd>CodeActionMenu<cr>"):with_noremap():with_silent(),
+    ["v|ga"] = map_cmd("<cmd>CodeActionMenu<Cr>"):with_noremap():with_silent(),
 
     -- Back up .
     ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
-    -- -- On n map commands
     ["n|gA"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
-    ["n|gD"] = map_cmd("<cmd>lua vim.lsp.buf.declaration()<CR>"):with_noremap():with_silent(),
-    ["n|K"] = map_cmd("<cmd>lua vim.lsp.buf.hover()<CR>"):with_noremap():with_silent(),
-    ["n|gI"] = map_cmd("<cmd>lua vim.lsp.buf.implementation()<CR>"):with_noremap():with_silent(),
-    ["n|gr"] = map_cmd("<cmd>lua vim.lsp.buf.references()<CR>"):with_noremap():with_silent(),
-    ["n|[d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"):with_noremap():with_silent(),
-    ["n|]d"] = map_cmd("<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"):with_noremap():with_silent(),
-
     ["n|<localleader>D"] = map_cmd(
         '<cmd>lua require"modules.completion.lsp.utils.peek".toggle_diagnostics_visibility()<CR>'
     )
@@ -101,13 +96,6 @@ local plug_map = {
 
     ["n|<Leader>gr"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
 
-    -- Replace word under cursor in Buffer (case-sensitive)
-    -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
-    ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>"),
-    -- Replace word under cursor on Line (case-sensitive)
-    -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
-    ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>"),
-
     ["n|gpd"] = map_cu("GotoPrev"):with_noremap(),
     ["n|gpi"] = map_cu("GotoImp"):with_noremap(),
     ["n|gpt"] = map_cu("GotoTel"):with_noremap(),
@@ -115,14 +103,6 @@ local plug_map = {
     -- -- Goto prev mapping
     --- WARNING THERE COULD BE AN ISSUE WITH THIS>
     -- --
-
-    -- -- How to run some code .
-    ["n|<Leader>r"] = map_cr("Jaq"):with_noremap():with_silent(),
-    ["n|<Leader>rf"] = map_cr("RunFile"):with_noremap():with_silent(),
-    ["n|<Leader>rp"] = map_cr("RunProject"):with_noremap():with_silent(),
-
-    -- Open with quick fix .
-    ["n|<F6>"] = map_cu("Jaq qf"):with_noremap():with_silent(),
 
     -- -- never go wrong with clap
     -- Figure out the error with clap, giving very annoying error j
@@ -135,12 +115,6 @@ local plug_map = {
     ["n|<Leader>om"] = map_cu("MarkdownPreview"):with_noremap():with_silent(),
     -- Plugin DadbodUI
     ["n|<Leader>od"] = map_cr("DBUIToggle"):with_noremap():with_silent(),
-
-    -- Far.vim Conflicting
-    ["n|<Leader>fz"] = map_cr("Farf"):with_noremap():with_silent(),
-    ["v|<Leader>fz"] = map_cr("Farr"):with_noremap():with_silent(),
-    ["n|<Leader>fzd"] = map_cr("Fardo"):with_noremap():with_silent(),
-    ["n|<Leader>fzu"] = map_cr("Farundo"):with_noremap():with_silent(),
 
     -- -- Plugin Telescope
     ["v|<Leader>ga"] = map_cmd("<cmd>lua require('utils.telescope').code_actions()<CR>"):with_noremap():with_silent(),
@@ -162,23 +136,43 @@ local plug_map = {
     ["n|<leader>sw"] = map_cu("ISwapWith"):with_noremap():with_silent(),
 
     -- Extra telescope commands from utils.telescope
-    ["n|<Leader>cl"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
+    ["n|<Leader>y"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
+
+    -- Focus
+    ["n|<leader><leader>h"] = map_cmd("<cmd> lua require'focus'.split_command('h')<CR>"):with_silent(),
+    ["n|<leader><leader>j"] = map_cmd("<cmd> lua require'focus'.split_command('j')<CR>"):with_silent(),
+    ["n|<leader><leader>k"] = map_cmd("<cmd> lua require'focus'.split_command('k')<CR>"):with_silent(),
+    ["n|<leader><leader>l"] = map_cmd("<cmd> lua require'focus'.split_command('l')<CR>"):with_silent(),
+
+    ["n|<C-W><C-M>"] = map_cmd("<cmd>WinShift<CR>"):with_noremap(),
+    ["n|<C-W>m"] = map_cmd("<cmd>WinShift<CR>"):with_noremap(),
+
+    ["n|<C-W>X"] = map_cmd("<cmd>WinShift left<CR>"):with_noremap(),
+    ["n|<C-M>H"] = map_cmd("<cmd>WinShift swap<CR>"):with_noremap(),
+    ["n|<C-M>J"] = map_cmd("<cmd>WinShift down<CR>"):with_noremap(),
+    ["n|<C-M>K"] = map_cmd("<cmd>WinShift up<CR>"):with_noremap(),
+    ["n|<C-M>L"] = map_cmd("<cmd>WinShift right<CR>"):with_noremap(),
 
     -------------------------- Find
 
     ["n|<Leader>up"] = map_cmd('<cmd>lua require"utils.telescope".find_updir()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>ff"] = map_cmd('<cmd>lua require"utils.telescope".find_files()<CR>'):with_noremap():with_silent(),
-    ["n|<Leader>fff"] = map_cmd('<cmd>lua require"utils.telescope".files()<CR>'):with_noremap():with_silent(),
+    ["n|<Leader>fF"] = map_cmd('<cmd>lua require"utils.telescope".files()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>fn"] = map_cmd('<cmd>lua require"utils.telescope".find_notes()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>fs"] = map_cmd('<cmd>lua require"utils.telescope".find_string()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>ft"] = map_cmd('<cmd>lua require"utils.telescope".search_only_certain_files()<CR>')
         :with_noremap()
         :with_silent(),
 
-    ["n|<Leader>hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
-    ["n|<leader>hw"] = map_cmd("<cmd>lua require'dynamic_help'.float_help(vim.fn.expand('<cword>'))<CR>")
-        :with_noremap()
-        :with_silent(),
+    ["n|hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
+    ["n|hw"] = map_cmd(function()
+        if require("dynamic_help.extras.statusline").available() ~= "" then
+            require("dynamic_help").float_help(vim.fn.expand("<cword>"))
+        else
+            local help = vim.fn.input("Help Tag> ")
+            require("dynamic_help").float_help(help)
+        end
+    end):with_noremap():with_silent(),
 
     -- grep
     ["n|<Leader>fW"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])
@@ -219,6 +213,11 @@ local plug_map = {
     ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
     ["x|gI"] = map_cmd("v:lua.enhance_nice_block('gI')"):with_expr(),
     ["x|A"] = map_cmd("v:lua.enhance_nice_block('A')"):with_expr(),
+    ["n|k"] = map_cmd([[v:count == 0 ? 'gk' : 'k']]):with_expr(),
+    ["n|j"] = map_cmd([[v:count == 0 ? 'gj' : 'j']]):with_expr(),
+
+    ["n||"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']]):with_silent():with_expr(),
+    ["n|_"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']]):with_silent():with_expr(),
 
     -- Plugin for debugigng
 
@@ -262,12 +261,6 @@ local plug_map = {
     -- Change map for certain file types: remove this for local . .
     ["n|<F9>"] = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
     ["n|<localleader>b"] = map_cr('<cmd> lua require("nabla").popup()<CR>'):with_noremap(),
-
-    -- $ ... $ : inline form
-    -- $$ ... $$ : wrapped form
-
-    ["n|<F8>"] = map_cu("AerialToggle"):with_silent(),
-
     -- Neogen
     ["n|<Leader>d"] = map_cr("lua require('neogen').generate()"):with_noremap():with_silent(),
     ["n|<Leader>dc"] = map_cr("lua require('neogen').generate({type = 'class'})"):with_noremap():with_silent(),
@@ -280,6 +273,45 @@ local plug_map = {
 
     ["v|'v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
     ["v|'c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
+
+    -- visual search
+    ["v|//"] = map_cmd([[y/<C-R>"<CR>]]):with_noremap(),
+    -- repeat macro
+    ["n|<leader><cr>"] = map_cmd([[empty(&buftype) ? '@@' : '<CR>']]):with_noremap():with_expr(),
+    -- new files
+    ["n|<localleader>ns"] = map_cmd([[:e <C-R>=expand("%:p:h") . "/" <CR>]]):with_silent(),
+    ["n|<localleader>nf"] = map_cmd([[:vsp <C-R>=expand("%:p:h") . "/" <CR>]]):with_silent(),
+
+    -- Refocus folds
+    ["n|z<leader>"] = map_cmd([[zMzvzz]]):with_noremap(),
+    ["n|z0"] = map_cmd([[zCzO]]):with_noremap(),
+    ["n|zz"] = map_cmd([[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']])
+        :with_noremap()
+        :with_expr(),
+
+    -- new lines
+    ["n|[["] = map_cmd([[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]):with_noremap(),
+    ["n|]]"] = map_cmd([[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]):with_noremap(),
+
+    -- Replace word under cursor in Buffer (case-sensitive)
+    -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
+    ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>"),
+    -- Replace word under cursor on Line (case-sensitive)
+    -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
+    ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>"),
+
+    ["n|<leader>["] = map_cmd([[:%s/\<<C-r>=expand("<cword>")<CR>\>/]]):with_noremap(),
+    ["v|<leader>]"] = map_cmd([["zy:%s/<C-r><C-o>"/]]):with_noremap(),
+
+    -- Credit: JGunn Choi ?il | inner line
+    ["x|al"] = map_cmd([[$o0]]):with_noremap(),
+    ["o|al"] = map_cmd([[<cmd>normal val<CR>]]):with_noremap(),
+
+    ["x|il"] = map_cmd([[<Esc>^vg_]]):with_noremap(),
+    ["o|il"] = map_cmd([[<cmd>normal! ^vg_<CR>]]):with_noremap(),
+
+    ["x|ie"] = map_cmd([[gg0oG$]]):with_noremap(),
+    ["o|ie"] = map_cmd([[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]]):with_noremap(),
 }
 
 return { map = plug_map }

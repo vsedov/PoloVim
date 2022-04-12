@@ -55,26 +55,25 @@ local leader_map = function()
     vim.keymap.set("n", " ", "", { noremap = true })
     vim.keymap.set("x", " ", "", { noremap = true })
 end
+
 local load_core = function()
     require("core.helper").init()
     local pack = require("core.pack")
-
-    -- print(vim.inspect(debug.traceback()))
-
     createdir()
     disable_distribution_plugins()
     leader_map()
 
     if pcall(require, "impatient") then
-        require("impatient").enable_profile()
+        require("impatient")
     end
-
     if pack.ensure_plugins() == "installed" then
         require("core.options")
+        require("core.event")
         require("core.mapping")
         require("keymap")
+        -- selene: allow(global_usage)
+        _G.lprint = require("utils.log").lprint
         pack.load_compile()
-        require("core.event")
         require("core.lazy")
     else
         print("install all plugins, please wait")

@@ -53,7 +53,10 @@ return {
             end
             return false
         end
-
+        _G.use_efm = function()
+            return false
+            -- return true
+        end
         _G.use_nulls = function()
             -- Remove this for norg files
             if vim.bo.filetype == "norg" or vim.bo.filetype == "json" then
@@ -62,7 +65,9 @@ return {
 
             return true
         end
-
+        _G.dump = function(...)
+            print(vim.inspect(...))
+        end
         _G.use_gitsigns = function()
             if use_nulls() then
                 return true
@@ -92,7 +97,6 @@ return {
             vim.cmd([[exe "norm! ciw\<C-R>s"]])
             lprint("newstr", n)
         end
-
         -- convert to camel case
         _G.Camel = function()
             local s
@@ -106,6 +110,37 @@ return {
             end)
             vim.fn.setreg("s", n)
             vim.cmd([[exe "norm! ciw\<C-R>s"]])
+        end
+
+        _G.PASTE = function(data)
+            if not vim.tbl_islist(data) then
+                if type(data) == type("") then
+                    data = vim.split(data, "\n")
+                else
+                    data = vim.split(vim.inspect(data), "\n")
+                end
+            end
+            vim.paste(data, -1)
+        end
+
+        _G.p = function(...)
+            local vars = vim.tbl_map(vim.inspect, { ... })
+            print(unpack(vars))
+            return { ... }
+        end
+
+        _G.PERF = function(msg, ...)
+            local args = { ... }
+            vim.validate({ func = { args[1], "function" }, message = { msg, "string", true } })
+            local func = args[1]
+            table.remove(args, 1)
+            -- local start = os.time()
+            local start = os.clock()
+            local data = func(unpack(args))
+            msg = msg or "Func reference elpse time:"
+            print(msg, ("%.2f s"):format(os.clock() - start))
+            -- print(msg, ('%.2f s'):format(os.difftime(os.time(), start)))
+            return data
         end
 
         -- reformat file by remove \n\t and pretty if it is json

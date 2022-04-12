@@ -42,6 +42,30 @@ local function lsp_code_lens_refresh(client, bufnr)
     end
 end
 
+local function add_lsp_buffer_keybindings(client, bufnr)
+    local border = config.float.border
+    vim.keymap.set("n", "<leader>*", function()
+        require("modules.completion.lsp.utils.list").change_active("Quickfix")
+        vim.lsp.buf.references()
+    end, { buffer = true })
+
+    vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
+    vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
+
+    local lsp_map = {
+        ["<Leader>cw"] = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
+        ["gA"] = "<cmd>Lspsaga code_action<CR>",
+        ["gD"] = "<cmd>lua vim.lsp.buf.declaration()<CR>",
+        ["gI"] = "<cmd>lua vim.lsp.buf.implementation()<CR>",
+        ["gr"] = "<cmd>lua vim.lsp.buf.references()<CR>",
+        ["[d"] = "<cmd>lua vim.diagnostic.goto_prev()()<CR>",
+        ["]d"] = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+    }
+    for mode_name, mode_char in pairs(lsp_map) do
+        vim.keymap.set("n", mode_name, mode_char, { noremap = true, silent = true, buffer = bufnr })
+    end
+end
+
 local function select_default_formater(client)
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
@@ -81,6 +105,7 @@ function M.common_on_attach(client, bufnr)
     end
     lsp_highlight_document(client, bufnr)
     lsp_code_lens_refresh(client, bufnr)
+    add_lsp_buffer_keybindings(client, bufnr)
 end
 
 function M.get_common_opts()
@@ -95,9 +120,19 @@ function M.setup()
     for _, sign in ipairs(config.signs) do
         vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
     end
-
     require("modules.completion.lsp.utils.handlers").setup()
     require("modules.completion.lsp.utils.autocmd")
+    require("modules.completion.lsp.utils.list")
+end
+
+function M.enhance_attach(user_config)
+    M.setup()
+
+    local config = M.get_common_opts()
+    if user_config then
+        config = vim.tbl_deep_extend("force", config, user_config)
+    end
+    return config
 end
 
 return M

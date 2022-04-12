@@ -5,17 +5,46 @@ completion["neovim/nvim-lspconfig"] = {
     -- ft = {'html','css', 'javascript', 'java', 'javascriptreact', 'vue','typescript', 'typescriptreact', 'go', 'lua', 'cpp', 'c',
     -- 'markdown', 'makefile','python','bash', 'sh', 'php', 'yaml', 'json', 'sql', 'vim', 'sh'},
     config = conf.nvim_lsp,
-
-    requires = {
-        { "nvim-lua/lsp_extensions.nvim", opt = true },
-        { "williamboman/nvim-lsp-installer", opt = true },
-        { "folke/lua-dev.nvim", module = "lua-dev" },
-        { "p00f/clangd_extensions.nvim", module = "clangd_extensions" },
-        -- { "lewis6991/hover.nvim"}
-    },
-
     opt = true,
 }
+completion["ii14/lsp-command"] = {
+    opt = true,
+    cmd = { "Lsp", "lsp" },
+    after = "nvim-lspconfig",
+}
+completion["p00f/clangd_extensions.nvim"] = {
+    opt = true,
+    ft = { "c", "cpp" },
+    requires = "nvim-lspconfig",
+    config = conf.clangd,
+}
+
+completion["williamboman/nvim-lsp-installer"] = {
+    opt = true,
+    cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
+    requires = "nvim-lspconfig",
+    config = conf.lsp_install,
+}
+completion["folke/lua-dev.nvim"] = {
+    opt = true,
+    requires = "nvim-lspconfig",
+    config = conf.luadev,
+}
+
+completion["lewis6991/hover.nvim"] = {
+    key = { "K", "gK" },
+    config = function()
+        require("hover").setup({
+            init = function()
+                require("hover.providers.lsp")
+                require("hover.providers.gh")
+                require("hover.providers.dictionary")
+                require("hover.providers.man")
+            end,
+        })
+    end,
+}
+
 completion["tami5/lspsaga.nvim"] = {
     cmd = "lspsaga",
     module = "lspsaga",
@@ -23,16 +52,6 @@ completion["tami5/lspsaga.nvim"] = {
     config = conf.saga,
     after = "nvim-lspconfig",
 }
-
--- completion["lewis6991/hover.nvim"]={
---   keys = {""}
---   opt = true,
---   config = function()
---     require('hover.providers.gh')
---     require('hover.providers.man')
---     require('hover.providers.dictionary')
---   end
--- }
 
 if load_coq() then
     completion["ms-jpq/coq_nvim"] = {
@@ -146,12 +165,18 @@ completion["hrsh7th/nvim-cmp"] = {
         { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", opt = true },
         { "f3fora/cmp-spell", after = "nvim-cmp", opt = true },
         { "octaltree/cmp-look", after = "nvim-cmp", opt = true },
+        { "petertriho/cmp-git", after = "nvim-cmp", opt = true },
         -- {"quangnguyen30192/cmp-nvim-ultisnips", event = "InsertCharPre", after = "nvim-cmp", opt=true },
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },
     config = function()
         require("modules.completion.cmp")
     end,
+}
+
+completion["/home/viv/.config/nvim/lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim"] = {
+    requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+    ft = "tex",
 }
 -- can not lazyload, it is also slow...
 completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
@@ -181,8 +206,7 @@ completion["nvim-telescope/telescope.nvim"] = {
     config = conf.telescope,
     setup = conf.telescope_preload,
     requires = {
-        { "nvim-lua/popup.nvim", opt = true }, -- test
-        { "nvim-neorg/neorg-telescope", branch = "feat/gtd_pickers", opt = true },
+        { "nvim-neorg/neorg-telescope", opt = true },
         { "nvim-lua/plenary.nvim", opt = true },
         { "nvim-telescope/telescope-fzy-native.nvim", opt = true },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make", opt = true },
@@ -254,16 +278,16 @@ completion["weilbith/nvim-code-action-menu"] = {
     ft = { "python", "lua", "c", "java", "prolog", "lisp", "cpp" },
 }
 
-completion["dense-analysis/ale"] = {
-    -- Maybe just for python and C ? - not sure
-    ft = {
-        "python",
-        "norg",
-    },
-    opt = true,
-    -- Test out norg files
-    config = conf.ale,
-}
+-- completion["dense-analysis/ale"] = {
+--     -- Maybe just for python and C ? - not sure
+--     ft = {
+--         "python",
+--         "norg",
+--     },
+--     opt = true,
+--     -- Test out norg files
+--     config = conf.ale,
+-- }
 
 completion["~/GitHub/vim-sonictemplate"] = {
     cmd = "Template",

@@ -621,6 +621,8 @@ function M.setup()
         Space,
         UltTest,
         Space,
+        utils.make_flexible_component(3, FileLastModified, { provider = "" }),
+        Space,
         FileType,
         Space,
         Ruler,

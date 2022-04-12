@@ -22,8 +22,10 @@ local def_map = {
     ["n|<C-j>"] = map_cmd("<C-w>j"):with_noremap(),
     ["n|<C-k>"] = map_cmd("<C-w>k"):with_noremap(),
 
-    ["n|<A-[>"] = map_cr("vertical resize -5"):with_silent(),
-    ["n|<A-]>"] = map_cr("vertical resize +5"):with_silent(),
+    ["n|<A-[>"] = map_cmd("<cmd>vertical resize +2<CR>"):with_silent(),
+    ["n|<A-;>"] = map_cmd("<cmd>resize -2<CR>"):with_silent(),
+    ["n|<A-#>"] = map_cmd("<cmd>resize +2<CR>"):with_silent(),
+    ["n|<A-]>"] = map_cmd("<cmd>vertical resize -2<CR>"):with_silent(),
     ["n|<C-q>"] = map_cmd(":wq<CR>"),
 
     -- Insert
@@ -51,6 +53,10 @@ local def_map = {
     ["n|<Down>"] = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
     ["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
     ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
+
+    ["n|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^']]):with_noremap(),
+    -- when going to the end of the line in visual mode ignore whitespace characters
+    ["n|$"] = map_cmd([[g_]]):with_noremap(),
 }
 -- local os_map = {
 --   ["n|<c-s>"] = map_cu("write"):with_noremap(),

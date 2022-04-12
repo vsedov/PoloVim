@@ -34,10 +34,47 @@ ui["rcarriga/nvim-notify"] = {
     config = conf.notify,
 }
 
-ui["kyazdani42/nvim-tree.lua"] = {
-    cmd = { "NvimTreeToggle", "NvimTreeOpen" },
-    -- requires = {'kyazdani42/nvim-web-devicons'},
-    config = conf.nvim_tree_setup,
+-- ui["kyazdani42/nvim-tree.lua"] = {
+--     cmd = { "NvimTreeToggle", "NvimTreeOpen" },
+--     -- requires = {'kyazdani42/nvim-web-devicons'},
+--     config = conf.nvim_tree_setup,
+-- }
+ui["MunifTanjim/nui.nvim"] = {
+    opt = true,
+}
+
+-- Feels slow, might revert backto nvim tree
+ui["nvim-neo-tree/neo-tree.nvim"] = {
+    branch = "v2.x",
+    requires = {
+        "MunifTanjim/nui.nvim",
+        {
+            -- only needed if you want to use the "open_window_picker" command
+            "s1n7ax/nvim-window-picker",
+            tag = "1.*",
+            opt = true,
+            after = "neo-tree.nvim",
+            config = function()
+                require("window-picker").setup({
+                    autoselect_one = true,
+                    include_current = false,
+                    filter_rules = {
+                        -- filter using buffer options
+                        bo = {
+                            -- if the file type is one of following, the window will be ignored
+                            filetype = { "neo-tree", "neo-tree-popup", "notify", "quickfix" },
+
+                            -- if the buffer type is one of following, the window will be ignored
+                            buftype = { "terminal" },
+                        },
+                    },
+                    other_win_hl_color = "#e35e4f",
+                })
+            end,
+        },
+    },
+    cmd = { "Neotree", "NeoTreeShow", "NeoTreeFocus", "NeoTreeFocusToggle" },
+    config = conf.neo_tree,
 }
 
 -- Use this with nvimtree .
@@ -69,15 +106,7 @@ ui["petertriho/nvim-scrollbar"] = {
     event = { "CursorMoved", "CursorMovedI" },
     config = conf.scrollbar,
 }
--- ui["narutoxy/dim.lua"] = {
---     event = { "CursorMoved", "CursorMovedI" },
---     requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
---     config = function()
---         require("dim").setup()
---     end,
---     after = "nvim-treesitter"
--- }
--- test fold
+
 ui["xiyaowong/nvim-transparent"] = {
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
     config = function()
@@ -127,6 +156,11 @@ ui["catppuccin/nvim"] = {
     opt = true,
     config = conf.catppuccin,
 }
+ui["jzone1366/chalklines.nvim"] = {
+    as = "chalklines",
+    opt = true,
+    config = conf.chalk,
+}
 
 -- fix annoying strikethrough issue as that was not a valid key apparently .
 ui["~/GitHub/Sakura.nvim"] = {
@@ -160,18 +194,19 @@ ui["wadackel/vim-dogrun"] = {
     end,
 }
 
--- Might want to manually call this through telescope or something .
-
-ui["ThemerCorp/themer.lua"] = {
-    opt = true,
-    branch = "main",
-    config = conf.themer,
-}
+-- ui["ThemerCorp/themer.lua"] = {
+--     opt = true,
+--     branch = "main",
+--     config = conf.themer,
+-- }
 
 ui["kazhala/close-buffers.nvim"] = {
     cmd = { "BDelete", "BWipeout" },
     config = conf.buffers_close,
 }
 
+ui["wiliamks/mechanical.nvim"] = {
+    opt = true,
+}
 return ui
 -- hemer.lua: ...te/pack/packer/opt/themer.lua/lua/themer/core/mapper.lua:64: attempt to index field 'bg' (a string value)

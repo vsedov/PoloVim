@@ -27,10 +27,19 @@ end
 local function loadscheme()
     local themes
     if daylight() == "light" then
-        themes = { "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
+        -- increase chances for kanagawa x2
+        themes = { "kanagawa.nvim", "kanagawa.nvim", "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
     else
-        themes = { "themer.lua", "kanagawa.nvim", "tokyonight.nvim", "Sakura.nvim", "vim-dogrun", "jabuti-nvim" }
+        themes = {
+            "kanagawa.nvim",
+            "kanagawa.nvim",
+            "tokyonight.nvim",
+            "Sakura.nvim",
+            "vim-dogrun",
+            "jabuti-nvim",
+        }
     end
+    -- themes = { "kanagawa.nvim" }
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
 
@@ -40,9 +49,11 @@ local function loadscheme()
 end
 
 function Lazyload()
+    -- selene:allow(global_usage)
     _G.PLoader = loader
     -- no_file()
     loadscheme()
+    -- PLoader("kanagawa.nvim")
     if vim.wo.diff then
         -- loader(plugins)
         lprint("diffmode")
@@ -84,10 +95,9 @@ function Lazyload()
 
     -- only works if you are working from one python file .
     if vim.bo.filetype == "lua" then
-        -- loader("lua-dev.nvim")
+        loader("lua-dev.nvim")
         loader("luv-vimdocs")
         loader("nvim-luaref")
-        loader("structlog.nvim") -- logging
     end
 
     vim.g.vimsyn_embed = "lPr"
@@ -106,23 +116,19 @@ function Lazyload()
             loader("null-ls.nvim")
         end
     end
-
-    if load_lsp or load_ts_plugins then
-        loader("guihua.lua")
+    if load_lsp and use_efm() then
+        loader("efm.nvim")
     end
-
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
         plugins =
             "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
         loader(plugins)
         lprint(plugins)
-        loader("neogen") -- Load neogen only for active lsp servers
         loader("indent-blankline.nvim")
         loader("refactoring.nvim") -- need to do the same thing for refactoring
     end
 
-    loader("popup.nvim")
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { "vista", "guiha" },
         command = [[setlocal syntax=on]],
@@ -137,9 +143,14 @@ function Lazyload()
             end
         end,
     })
+    vim.api.nvim_create_autocmd("Syntax", {
+        pattern = "*",
+        command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
+    })
 end
 
 local lazy_timer = 30
+-- selene: allow(global_usage)
 if _G.packer_plugins == nil or _G.packer_plugins["packer.nvim"] == nil then
     lprint("recompile")
     vim.cmd([[PackerCompile]])
@@ -164,8 +175,6 @@ end, lazy_timer)
 --   -- vim.cmd(cmd)
 -- end, lazy_timer + 20)
 
--- vim.cmd([[hi LineNr guifg=#505068]])
-
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
@@ -175,25 +184,41 @@ vim.defer_fn(function()
     require("modules.ui.heirline") -- ignore
     require("utils.ui_overwrite")
     require("vscripts.tools")
+    if vim.bo.filetype ~= "tex" or vim.bo.filetype ~= "md" or vim.bo.filetype ~= "norg" then
+        require("vscripts.race_conditions").coding_support()
+    end
+    -- always load this
+    require("vscripts.race_conditions").language_support()
 
-    vim.cmd("command! Gram lua require'modules.tools.config'.grammcheck()")
     vim.cmd("command! Spell call spelunker#check()")
+    vim.api.nvim_add_user_command("Gram", function()
+        require("modules.tools.config").grammcheck()
+    end, { force = true })
+
     loader("animate.vim")
     loader("presence.nvim")
-    lprint("ui loaded")
+    lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
     lprint("telescope family")
+    -- HACK(vsedov) (23:13:18 - 02/04/22): I do not think this affects startup
+    -- All of these require telescope irc
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
-    -- loader("harpoon")
     loader("workspaces.nvim")
     loader("nvim-notify")
-    vim.notify = require("notify")
+    loader("structlog.nvim")
+    local notify = require("notify")
+    vim.notify = notify
+
+    -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
+    -- have to work around this for the time
+    if vim.bo.filetype ~= "norg" then
+        Log:configure_notifications(notify)
+    end
     if vim.fn.wordcount()["bytes"] < 2048000 then
         require("vscripts.cursorhold")
     end
-    require("vscripts.abbreviations")
     lprint("all done")
 end, lazy_timer + 80)

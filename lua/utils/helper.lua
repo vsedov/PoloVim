@@ -217,10 +217,6 @@ function M.getArgs(inputstr)
     return cmd, t
 end
 
-function M.p(t)
-    print(vim.inspect(t))
-end
-
 function M.printError(msg)
     vim.cmd("echohl ErrorMsg")
     vim.cmd(string.format([[echomsg '%s']], msg))
@@ -267,11 +263,6 @@ function M.newbinsource(cmd)
         return output
     end
 end
-
-function _G.dump(...)
-    print(vim.inspect(...))
-end
-
 ---Reloads a module
 ---@param module string Name of the module
 function RELOAD(module)

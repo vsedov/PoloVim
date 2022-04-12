@@ -151,7 +151,6 @@ local sources = {
     { name = "buffer", priority = 7, keyword_length = 4 },
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
-    -- causing lag maybe ?
     { name = "treesitter", keyword_length = 2 },
     { name = "neorg", priority = 6 },
     { name = "nvim_lsp_signature_help", priority = 10 },
@@ -160,7 +159,7 @@ if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end
 if vim.o.ft == "python" then
-    table.insert(sources, { name = "cmp_tabnine", priority = 8 })
+    table.insert(sources, { name = "cmp_tabnine", priority = 9 })
 end
 if vim.o.ft == "norg" then
     table.insert(sources, { name = "latex_symbols" })
@@ -169,6 +168,115 @@ if vim.o.ft == "markdown" then
     table.insert(sources, { name = "spell" })
     table.insert(sources, { name = "look" })
     table.insert(sources, { name = "latex_symbols" })
+end
+if vim.o.ft == "gitcommit" then
+    vim.cmd([[packadd cmp-git]])
+    require("cmp_git").setup({
+        remotes = { "upstream", "origin", "b0o" },
+        github = {
+            issues = {
+                filter = "all",
+                limit = 250,
+                state = "all",
+                sort_by = function(issue)
+                    local kind_rank = issue.pull_request and 1 or 0
+                    local state_rank = issue.state == "open" and 0 or 1
+                    local age = os.difftime(os.time(), require("cmp_git.utils").parse_github_date(issue.updatedAt))
+                    return string.format("%d%d%010d", kind_rank, state_rank, age)
+                end,
+                filter_fn = function(trigger_char, issue)
+                    return string.format("%s %s %s", trigger_char, issue.number, issue.title)
+                end,
+            },
+            mentions = {
+                limit = 250,
+                sort_by = nil,
+                filter_fn = function(trigger_char, mention)
+                    return string.format("%s %s %s", trigger_char, mention.username)
+                end,
+            },
+            pull_requests = {
+                limit = 250,
+                state = "all",
+                sort_by = function(pr)
+                    local state_rank = pr.state == "open" and 0 or 1
+                    local age = os.difftime(os.time(), require("cmp_git.utils").parse_github_date(pr.updatedAt))
+                    return string.format("%d%010d", state_rank, age)
+                end,
+                filter_fn = function(trigger_char, pr)
+                    return string.format("%s %s %s", trigger_char, pr.number, pr.title)
+                end,
+            },
+        },
+        trigger_actions = {
+            {
+                debug_name = "git_commits",
+                trigger_character = ":",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.git:get_commits(callback, params, trigger_char)
+                end,
+            },
+            {
+                debug_name = "github_issues",
+                trigger_character = "#",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.github:get_issues(
+                        cmp_git_extend_gh_callback(callback, "issues"),
+                        git_info,
+                        trigger_char
+                    )
+                end,
+            },
+            {
+                debug_name = "github_pulls",
+                trigger_character = "!",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.github:get_pull_requests(
+                        cmp_git_extend_gh_callback(callback, "pulls"),
+                        git_info,
+                        trigger_char
+                    )
+                end,
+            },
+            {
+                debug_name = "github_mentions",
+                trigger_character = "@",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.github:get_mentions(callback, git_info, trigger_char)
+                end,
+            },
+            {
+                debug_name = "gitlab_issues",
+                trigger_character = "#",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.gitlab:get_issues(callback, git_info, trigger_char)
+                end,
+            },
+            {
+                debug_name = "gitlab_mentions",
+                trigger_character = "@",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.gitlab:get_mentions(callback, git_info, trigger_char)
+                end,
+            },
+            {
+                debug_name = "gitlab_mrs",
+                trigger_character = "!",
+                ---@diagnostic disable-next-line: unused-local
+                action = function(sources, trigger_char, callback, params, git_info)
+                    return sources.gitlab:get_merge_requests(callback, git_info, trigger_char)
+                end,
+            },
+        },
+    })
+
+    table.insert(sources, { name = "cmp_git" })
 end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
@@ -397,7 +505,11 @@ cmp.setup({
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
-            require("clangd_extensions.cmp_scores"),
+            function()
+                if vim.o.filetype == "c" or vim.o.filetype == "cpp" then
+                    require("clangd_extensions.cmp_scores")
+                end
+            end,
 
             function(entry1, entry2)
                 local _, entry1_under = entry1.completion_item.label:find("^_+")
@@ -454,18 +566,17 @@ cmp.setup({
 
 require("packer").loader("nvim-autopairs")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-local cmp = require("cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
 -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
 if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then
-    require("cmp").setup.buffer({ completion = { enable = false } })
+    cmp.setup.buffer({ completion = { enable = false } })
 end
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "TelescopePrompt", "clap_input" },
     callback = function()
-        require("cmp").setup.buffer({ enabled = false })
+        cmp.setup.buffer({ enabled = false })
     end,
     once = false,
 })
@@ -494,24 +605,24 @@ vim.api.nvim_create_autocmd("FileType", {
 --     end,
 -- })
 
-cmp.setup.cmdline("/", {
-    sources = {
-        { name = "buffer", keyword_length = 1 },
-    },
-    enabled = function()
-        return true
-    end,
-    window = {
-        completion = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
-        },
-        documentation = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
-        },
-    },
-})
+-- cmp.setup.cmdline("/", {
+--     sources = {
+--         { name = "buffer", keyword_length = 1 },
+--     },
+--     enabled = function()
+--         return true
+--     end,
+--     window = {
+--         completion = {
+--             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+--             scrollbar = { "║" },
+--         },
+--         documentation = {
+--             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+--             scrollbar = { "║" },
+--         },
+--     },
+-- })
 
 local neorg = require("neorg")
 

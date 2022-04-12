@@ -59,7 +59,7 @@ lang["RRethy/nvim-treesitter-endwise"] = {
 }
 
 lang["danymat/neogen"] = {
-    opt = true,
+    module = { "neogen" },
     requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
     config = function()
         require("neogen").setup({
@@ -142,11 +142,6 @@ lang["nvim-treesitter/playground"] = {
 
 -- great plugin but not been maintained
 -- lang["ElPiloto/sidekick.nvim"] = {opt = true, fn = {'SideKickNoReload'}, setup = conf.sidekick}
--- lang["stevearc/aerial.nvim"] = {
---     opt = true,
---     cmd = { "AerialToggle" },
---     config = conf.aerial,
--- }
 
 lang["simrat39/symbols-outline.nvim"] = {
     opt = true,
@@ -216,8 +211,8 @@ lang["m-demare/hlargs.nvim"] = {
     config = function()
         require("hlargs").setup({
             performance = {
-                max_iterations = 500,
-                max_concurrent_partial_parses = 50,
+                max_iterations = 1000,
+                max_concurrent_partial_parses = 90,
             },
         })
     end,
@@ -354,10 +349,7 @@ lang["p00f/nvim-ts-rainbow"] = {
 }
 
 lang["onsails/diaglist.nvim"] = {
-    event = { "BufEnter", "QuickFixCmdPre", "CmdlineEnter" },
-    requires = {
-        "neovim/nvim-lspconfig",
-    },
+    event = { "QuickFixCmdPre" },
     module = "diaglist",
     setup = function()
         local map, opts = vim.api.nvim_set_keymap, {}
@@ -366,12 +358,12 @@ lang["onsails/diaglist.nvim"] = {
     end,
     opt = true, -- opt = true,
     config = function()
+        vim.cmd([[packadd nvim-bqf]])
         require("diaglist").init({
             debug = false,
             debounce_ms = 150,
         })
     end,
-    after = { "nvim-bqf", "nvim-lspconfig" },
 }
 
 lang["folke/trouble.nvim"] = {
@@ -384,10 +376,13 @@ lang["folke/trouble.nvim"] = {
 
 lang["folke/todo-comments.nvim"] = {
     cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
-    opt = true,
-    config = function()
-        require("todo-comments").setup({}) -- Use defualt
-    end,
+    requires = "trouble.nvim",
+    config = conf.todo_comments,
+}
+
+lang["vim-scripts/CRefVim"] = {
+    keys = { "<leader>c" },
+    ft = "c",
 }
 
 lang["is0n/jaq-nvim"] = {
@@ -397,7 +392,7 @@ lang["is0n/jaq-nvim"] = {
     config = conf.jaq,
 }
 lang["pianocomposer321/yabs.nvim"] = {
-    opt = true,
+    ft = "python",
     requires = { "nvim-lua/plenary.nvim" },
     config = conf.yabs,
 }

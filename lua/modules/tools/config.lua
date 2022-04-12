@@ -15,19 +15,6 @@ local function load_env_file()
     return env_contents
 end
 
-function config.session()
-    local opts = {
-        log_level = "info",
-        auto_session_suppress_dirs = { "~/", "~/Projects" },
-        auto_session_enable_last_session = false,
-        auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
-        auto_session_enabled = false,
-        auto_save_enabled = nil,
-        auto_restore_enabled = nil,
-    }
-    require("auto-session").setup(opts)
-end
-
 local function load_dbs()
     local env_contents = load_env_file()
     local dbs = {}
@@ -183,6 +170,7 @@ function config.project()
         silent_chdir = true, -- fucking annoying thing
         detection_methods = { "lsp", "pattern" },
         patterns = {
+            "pyproject.toml",
             "pom.xml", --
             "Pipfile",
             ".venv", -- for python
@@ -200,12 +188,7 @@ function config.project()
             "tsconfig.json",
             ".git",
         },
-
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
     })
-    require("telescope").load_extension("projects")
 end
 
 function config.worktree()
@@ -284,7 +267,9 @@ function config.neogit()
         disable_signs = false,
         disable_context_highlighting = false,
         disable_commit_confirmation = false,
-        -- customize displayed signs
+        auto_refresh = true,
+        disable_builtin_notifications = true,
+        use_magit_keybindings = true,
         signs = {
             -- { CLOSED, OPENED }
             section = { ">", "v" },
@@ -292,18 +277,6 @@ function config.neogit()
             hunk = { "", "" },
         },
         integrations = {
-            -- Neogit only provides inline diffs. If you want a more traditional way to look at diffs, you can use `sindrets/diffview.nvim`.
-            -- The diffview integration enables the diff popup, which is a wrapper around `sindrets/diffview.nvim`.
-            --
-            -- Requires you to have `sindrets/diffview.nvim` installed.
-            -- use {
-            --   'TimUntersberger/neogit',
-            --   requires = {
-            --     'nvim-lua/plenary.nvim',
-            --     'sindrets/diffview.nvim'
-            --   }
-            -- }
-            --
             diffview = true,
         },
         -- override/add mappings
@@ -313,7 +286,6 @@ function config.neogit()
                 -- Adds a mapping with "B" as key that does the "BranchPopup" command
                 ["B"] = "BranchPopup",
                 -- Removes the default mapping of "s"
-                ["s"] = "",
             },
         },
     })
@@ -323,36 +295,7 @@ function config.gitsigns()
     if not packer_plugins["plenary.nvim"].loaded then
         require("packer").loader("plenary.nvim")
     end
-    -- require("gitsigns").setup({
-    --     numhl = false,
-    --     keymaps = {
-    --         -- Default keymap options
-    --         noremap = true,
-    --         buffer = true,
-    --         ["n ]c"] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'" },
-    --         ["n [c"] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'" },
-    --         ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    --         ["v <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-    --         ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    --         ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    --         ["v <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-    --         ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    --         -- ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-    --         ["n <leader>bs"] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
-    --         ["n <leader>hq"] = '<cmd>lua do vim.cmd("copen") require"gitsigns".setqflist("all") end <CR>', -- hunk qflist with vgit
-    --         ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-    --         ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-    --     },
-    --     watch_gitdir = { interval = 1000, follow_files = true },
-    --     sign_priority = 6,
-    --     status_formatter = nil, -- Use default
-    --     debug_mode = false,
-    --     current_line_blame = false,
-    --     current_line_blame_opts = { delay = 1500 },
-    --     update_debounce = 300,
-    --     word_diff = false,
-    --     diff_opts = { internal = true },
-    -- })
+
     local gitsigns = require("gitsigns")
 
     local line = vim.fn.line
@@ -371,8 +314,21 @@ function config.gitsigns()
             vim.keymap.set(mode, l, r, opts)
         end
 
-        map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
-        map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+        map("n", "]c", function()
+            if vim.wo.diff then
+                return "]c"
+            end
+            vim.schedule(gitsigns.next_hunk)
+            return "<Ignore>"
+        end, { expr = true })
+
+        map("n", "[c", function()
+            if vim.wo.diff then
+                return "[c"
+            end
+            vim.schedule(gitsigns.prev_hunk)
+            return "<Ignore>"
+        end, { expr = true })
 
         map("n", "<leader>hs", gitsigns.stage_hunk)
         map("n", "<leader>hr", gitsigns.reset_hunk)
@@ -405,7 +361,6 @@ function config.gitsigns()
 
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
     end
-
     gitsigns.setup({
         debug_mode = true,
         max_file_length = 1000000000,
@@ -421,11 +376,12 @@ function config.gitsigns()
             border = "rounded",
         },
         current_line_blame = true,
+        current_line_blame_formatter = " : <author> | <author_time:%Y-%m-%d> | <summary>",
         current_line_blame_formatter_opts = {
             relative_time = true,
         },
         current_line_blame_opts = {
-            delay = 1500,
+            delay = 0,
         },
         count_chars = {
             "⒈",
@@ -453,8 +409,9 @@ function config.gitsigns()
         watch_gitdir = { interval = 1000, follow_files = true },
         sign_priority = 6,
         status_formatter = nil, -- Use default
-        update_debounce = 300,
-        word_diff = false,
+        update_debounce = 0,
+        word_diff = true,
+        _threaded_diff = true, -- no clue what this does
         diff_opts = { internal = true },
     })
 end
@@ -635,56 +592,6 @@ function config.mkdp()
     )
 end
 
-function config.snap()
-    local snap = require("snap")
-    local limit = snap.get("consumer.limit")
-    local select_vimgrep = snap.get("select.vimgrep")
-    local preview_file = snap.get("preview.file")
-    local preview_vimgrep = snap.get("preview.vimgrep")
-    local producer_vimgrep = snap.get("producer.ripgrep.vimgrep")
-    function _G.snap_grep()
-        snap.run({
-            prompt = "  Grep  ",
-            producer = limit(10000, producer_vimgrep),
-            select = select_vimgrep.select,
-            steps = { { consumer = snap.get("consumer.fzf"), config = { prompt = "FZF>" } } },
-            multiselect = select_vimgrep.multiselect,
-            views = { preview_vimgrep },
-        })
-    end
-
-    function _G.snap_grep_selected_word()
-        snap.run({
-            prompt = "  Grep  ",
-            producer = limit(10000, producer_vimgrep),
-            select = select_vimgrep.select,
-            multiselect = select_vimgrep.multiselect,
-            views = { preview_vimgrep },
-            initial_filter = vim.fn.expand("<cword>"),
-        })
-    end
-
-    snap.maps({
-        { "<Leader>rg", snap.config.file({ producer = "ripgrep.file" }) },
-        -- {"<Leader>fb", snap.config.file {producer = "vim.buffer"}},
-        { "<Leader>fo", snap.config.file({ producer = "vim.oldfile" }) },
-        -- {"<Leader>ff", snap.config.vimgrep {}},
-        {
-            "<Leader>fz",
-            function()
-                snap.run({
-                    prompt = "  Grep  ",
-                    producer = limit(1000, snap.get("producer.ripgrep.vimgrep").args({ "--ignore-case" })),
-                    steps = { { consumer = snap.get("consumer.fzf"), config = { prompt = " Fzf  " } } },
-                    select = snap.get("select.file").select,
-                    multiselect = snap.get("select.file").multiselect,
-                    views = { snap.get("preview.vimgrep") },
-                })
-            end,
-        },
-    })
-end
-
 function config.paperplanes()
     require("paperplanes").setup({
         register = "+",
@@ -692,6 +599,39 @@ function config.paperplanes()
     })
 end
 
-function config.gina() end
+function config.wilder()
+    vim.cmd([[packadd fzy-lua-native]])
+    vim.cmd([[packadd cpsm]])
+    vim.cmd([[
+call wilder#setup({'modes': [':', '/', '?']})
 
+let s:popupmenu_renderer = wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+      \ 'border': 'Normal',
+      \ 'empty_message': wilder#popupmenu_empty_message_with_spinner(),
+      \ 'left': [
+      \   ' ',
+      \   wilder#popupmenu_devicons(),
+      \   wilder#popupmenu_buffer_flags({
+      \     'flags': ' a + ',
+      \     'icons': {'+': '', 'a': '', 'h': ''},
+      \   }),
+      \ ],
+      \ 'right': [
+      \   ' ',
+      \   wilder#popupmenu_scrollbar(),
+      \ ],
+      \ }))
+
+let s:wildmenu_renderer = wilder#wildmenu_renderer({
+      \ 'separator': ' · ',
+      \ 'left': [' ', wilder#wildmenu_spinner(), ' '],
+      \ 'right': [' ', wilder#wildmenu_index()],
+      \ })
+
+call wilder#set_option('renderer', wilder#renderer_mux({
+      \ ':': s:popupmenu_renderer,
+      \ '/': s:wildmenu_renderer,
+      \ 'substitute': s:wildmenu_renderer,
+      \ }))]])
+end
 return config

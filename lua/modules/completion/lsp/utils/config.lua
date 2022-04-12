@@ -118,7 +118,7 @@ return {
         underline = true,
         severity_sort = true,
         float = {
-            focusable = false,
+            focusable = true,
             border = border,
             scope = "cursor",
             source = "always",

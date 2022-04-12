@@ -7,6 +7,8 @@ local conf = require("modules.editor.config")
 
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 
+editor["szw/vim-maximizer"] = { opt = true, cmd = { "MaximizerToggle" } }
+
 editor["windwp/nvim-autopairs"] = {
     -- keys = {{'i', '('}},
     after = { "nvim-cmp" }, -- "nvim-treesitter", nvim-cmp "nvim-treesitter", coq_nvim
@@ -53,6 +55,7 @@ editor["andymass/vim-matchup"] = {
 editor["gbprod/yanky.nvim"] = {
     keys = {
         "<C-v>",
+        "<Plug>(YankyYank)",
         "<Plug>(YankyPutAfter)",
         "<Plug>(YankyPutBefore)",
         "<Plug>(YankyPutAfter)",
@@ -68,17 +71,20 @@ editor["gbprod/yanky.nvim"] = {
     },
     setup = function()
         local default_keymaps = {
+            { "n", "y", "<Plug>(YankyYank)" },
+            { "x", "y", "<Plug>(YankyYank)" },
+
             { "n", "p", "<Plug>(YankyPutAfter)" },
             { "n", "P", "<Plug>(YankyPutBefore)" },
 
             { "x", "p", "<Plug>(YankyPutAfter)" },
             { "x", "P", "<Plug>(YankyPutBefore)" },
 
-            { "n", "<leader>p", "<Plug>(YankyGPutAfter)" },
-            { "n", "<leader>P", "<Plug>(YankyGPutBefore)" },
+            { "n", "gp", "<Plug>(YankyGPutAfter)" },
+            { "n", "gP", "<Plug>(YankyGPutBefore)" },
 
-            { "x", "<leader>p", "<Plug>(YankyGPutAfter)" },
-            { "x", "<leader>P", "<Plug>(YankyGPutBefore)" },
+            { "x", "gp", "<Plug>(YankyGPutAfter)" },
+            { "x", "gP", "<Plug>(YankyGPutBefore)" },
 
             { "n", "<Leader>n", "<Plug>(YankyCycleForward)" },
             { "n", "<Leader>N", "<Plug>(YankyCycleBackward)" },
@@ -89,9 +95,16 @@ editor["gbprod/yanky.nvim"] = {
     end,
     config = function()
         require("yanky").setup({
+            preserve_cursor_position = {
+                enabled = true,
+            },
+            system_clipboard = {
+                sync_with_ring = true,
+            },
             ring = {
                 history_length = 10,
                 storage = "shada",
+                sync_with_numbered_registers = true,
             },
         })
     end,
@@ -179,7 +192,8 @@ editor["hrsh7th/vim-searchx"] = {
     end,
 }
 --max397574
-editor["max397574/which-key.nvim"] = {
+-- REVISIT viv (13:14:11 - 30/03/22): Change this to maxes branch again if errors happen again
+editor["folke/which-key.nvim"] = {
     opt = true,
     after = "nvim-treesitter",
     config = function()
@@ -266,14 +280,23 @@ editor["andweeb/presence.nvim"] = {
 
 -- bad on startup time but i can change this i think.
 editor["beauwilliams/focus.nvim"] = {
-    cmd = { "FocusNicely", "FocusToggle", "FocusEnable" },
+    cmd = {
+        "FocusDisable",
+        "FocusEnable",
+        "FocusToggle",
+        "FocusSplitNicely",
+        "FocusSplitCycle",
+        "FocusSplitLeft",
+        "FocusSplitDown",
+        "FocusSplitUp",
+        "FocusSplitRight",
+        "FocusEqualise",
+        "FocusMaximise",
+        "FocusMaxOrEqual",
+    },
     module = "focus",
     config = function()
         require("focus").setup({
-            cursorline = false,
-            number = false,
-            signcolumn = false,
-            colorcolumn = { enable = true, width = tonumber(vim.o.colorcolumn) },
             excluded_filetypes = {
                 "TelescopePrompt",
                 "toggleterm",
@@ -369,6 +392,7 @@ editor["0xAdk/nvim-terminal.lua"] = {
         require("terminal").setup()
     end,
 }
+editor["tpope/vim-abolish"] = { opt = true, cmd = { "Subvert", "Abolish" } }
 
 editor["simnalamburt/vim-mundo"] = {
     opt = true,
@@ -425,10 +449,6 @@ editor["famiu/bufdelete.nvim"] = {
     cmd = { "Bdelete", "Bwipeout" },
 }
 
-editor["nvim-lua/popup.nvim"] = {
-    opt = true,
-}
-
 editor["raimon49/requirements.txt.vim"] = {
     ft = { "requirements" },
 }
@@ -474,11 +494,8 @@ editor["sidebar-nvim/sidebar.nvim"] = {
 }
 
 editor["nyngwang/NeoZoom.lua"] = {
-    event = "BufRead",
-    after = "which-key.nvim",
-    config = function()
-        require("which-key").register({ g = { z = { "<Cmd>NeoZoomToggle<CR>", "Toggle Zoom" } } }, { prefix = "<c-w>" })
-    end,
+    opt = true,
+    cmd = { "NeoZoomToggle" },
 }
 
 editor["rmagatti/alternate-toggler"] = {
@@ -489,7 +506,13 @@ editor["rmagatti/alternate-toggler"] = {
 editor["max397574/nabla.nvim"] = {
     ft = { "tex", "norg" },
     opt = true,
-    requires = { "nvim-lua/popup.nvim" },
+    requires = { "nvim-lua/popup.nvim", opt = true, after = "nabla.nvim" },
+}
+
+editor["sindrets/winshift.nvim"] = {
+    cmd = "WinShift",
+    opt = true,
+    config = conf.win_shift,
 }
 
 return editor
