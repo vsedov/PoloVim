@@ -10,7 +10,7 @@ completion["neovim/nvim-lspconfig"] = {
 completion["ii14/lsp-command"] = {
     opt = true,
     cmd = { "Lsp", "lsp" },
-    after = "nvim-lspconfig",
+    requires = "nvim-lspconfig",
 }
 completion["p00f/clangd_extensions.nvim"] = {
     opt = true,
@@ -46,11 +46,10 @@ completion["lewis6991/hover.nvim"] = {
 }
 
 completion["tami5/lspsaga.nvim"] = {
-    cmd = "lspsaga",
-    module = "lspsaga",
+    cmd = "Lspsaga",
     opt = true,
     config = conf.saga,
-    after = "nvim-lspconfig",
+    requires = "nvim-lspconfig",
 }
 
 if load_coq() then
@@ -103,39 +102,39 @@ else
     completion["ms-jpq/coq.artifacts"] = { opt = true }
 end
 
--- completion["https://github.com/github/copilot.vim.git"] = {
---     event = "InsertEnter",
---     after = "nvim-cmp",
---     keys = {
---         "<Plug>(copilot-next)",
---         "<Plug>(copilot-previous)",
---     },
---     setup = function()
---         local default_keymaps = {
---             { "i", "<A-,>", "<Plug>(copilot-next)" },
---             { "i", "<A-.>", "<Plug>(copilot-previous)" },
---         }
---         for _, m in ipairs(default_keymaps) do
---             vim.keymap.set(m[1], m[2], m[3], { silent = true })
---         end
---     end,
+completion["https://github.com/github/copilot.vim.git"] = {
+    event = "InsertEnter",
+    after = "nvim-cmp",
+    keys = {
+        "<Plug>(copilot-next)",
+        "<Plug>(copilot-previous)",
+    },
+    setup = function()
+        local default_keymaps = {
+            { "i", "<A-,>", "<Plug>(copilot-next)" },
+            { "i", "<A-.>", "<Plug>(copilot-previous)" },
+        }
+        for _, m in ipairs(default_keymaps) do
+            vim.keymap.set(m[1], m[2], m[3], { silent = true })
+        end
+    end,
 
---     config = function()
---         vim.opt.completeopt = "menuone,noselect"
---         vim.g.copilot_enabled = false
---         -- Have copilot play nice with nvim-cmp.
---         vim.g.copilot_no_tab_map = true
---         vim.g.copilot_assume_mapped = true
---         vim.g.copilot_tab_fallback = ""
---         local excluded_filetypes = { "norg", "nofile", "prompt" }
---         local copilot_filetypes = {}
---         for _, ft in pairs(excluded_filetypes) do
---             copilot_filetypes[ft] = false
---         end
+    config = function()
+        vim.opt.completeopt = "menuone,noselect"
+        vim.g.copilot_enabled = false
+        -- Have copilot play nice with nvim-cmp.
+        vim.g.copilot_no_tab_map = true
+        vim.g.copilot_assume_mapped = true
+        vim.g.copilot_tab_fallback = ""
+        local excluded_filetypes = { "norg", "nofile", "prompt" }
+        local copilot_filetypes = {}
+        for _, ft in pairs(excluded_filetypes) do
+            copilot_filetypes[ft] = false
+        end
 
---         vim.g["copilot_filetypes"] = copilot_filetypes
---     end,
--- }
+        vim.g["copilot_filetypes"] = copilot_filetypes
+    end,
+}
 
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th

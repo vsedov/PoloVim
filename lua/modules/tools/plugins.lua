@@ -281,6 +281,7 @@ tools["turbio/bracey.vim"] = {
 }
 
 tools["akinsho/toggleterm.nvim"] = {
+    cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm" },
     keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr" },
     config = function()
         require("modules.tools.toggleterm")

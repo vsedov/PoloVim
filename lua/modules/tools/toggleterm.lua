@@ -101,7 +101,7 @@ _G.toggleterm_wrap = function(arg, count)
 end
 
 vim.cmd("command! -count FocusTerm lua focus_toggleterm(<count>)")
---vim.cmd("command! -count -nargs=* ToggleTerm lua toggleterm_wrap(<q-args>, <count>)")
+vim.cmd("command! -count -nargs=* ToggleTerm lua toggleterm_wrap(<q-args>, <count>)")
 
 _G.toggleterm_exec = function(count)
     if count == 0 or not count then
@@ -228,3 +228,7 @@ _G.toggleterm_jump_traceback = function(count)
     -- })
     -- split:mount()
 end
+vim.cmd("command! -count FocusTerm lua focus_toggleterm(<count>)")
+vim.cmd("command! -count TermTrace lua toggleterm_jump_traceback(<count>)")
+vim.cmd("command! -count TermExec lua toggleterm_exec(<count>)")
+vim.cmd("command! -count -nargs=* ToggleTerm lua toggleterm_wrap(<q-args>, <count>)")

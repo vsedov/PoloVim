@@ -137,6 +137,56 @@ editor["ggandor/lightspeed.nvim"] = {
     config = conf.lightspeed,
 }
 
+-- pretty neat
+editor["mizlan/iswap.nvim"] = {
+    cmd = { "ISwap", "ISwapWith" },
+    config = function()
+        require("iswap").setup({
+            keys = "qwertyuiop",
+            autoswap = true,
+        })
+    end,
+}
+
+editor["ziontee113/syntax-tree-surfer"] = {
+    keys = {
+        { "n", "vd" },
+        { "n", "vu" },
+        { "n", "vx" },
+        { "n", "vn" },
+
+        { "x", "J" },
+        { "x", "K" },
+        { "x", "H" },
+        { "x", "L" },
+
+        { "x", "<A-j>" },
+        { "x", "<A-k>" },
+    },
+
+    config = function()
+        local default_keymaps = {
+            { "n", "vd", '<cmd>lua require("syntax-tree-surfer").move("n", false)<cr>' },
+            { "n", "vu", '<cmd>lua require("syntax-tree-surfer").move("n", true)<cr>' },
+            -- .select() will show you what you will be swapping with .move(), you'll get used to .select() and .move() behavior quite soon!
+            { "n", "vx", '<cmd>lua require("syntax-tree-surfer").select()<cr>' },
+            -- .select_current_node() will select the current node at your cursor
+            { "n", "vn", '<cmd>lua require("syntax-tree-surfer").select_current_node()<cr>' },
+
+            { "x", "J", '<cmd>lua require("syntax-tree-surfer").surf("next", "visual")<cr>' },
+            { "x", "K", '<cmd>lua require("syntax-tree-surfer").surf("prev", "visual")<cr>' },
+            { "x", "H", '<cmd>lua require("syntax-tree-surfer").surf("parent", "visual")<cr>' },
+            { "x", "L", '<cmd>lua require("syntax-tree-surfer").surf("child", "visual")<cr>' },
+
+            { "x", "<A-j>", '<cmd>lua require("syntax-tree-surfer").surf("next", "visual", true)<cr>' },
+            { "x", "<A-k>", '<cmd>lua require("syntax-tree-surfer").surf("prev", "visual", true)<cr>' },
+        }
+        for _, m in ipairs(default_keymaps) do
+            vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
+        end
+    end,
+}
+
 -- editor["ggandor/leap.nvim"] = {
 --     -- opt = true,
 --     config = function()
@@ -240,11 +290,11 @@ editor["booperlv/nvim-gomove"] = {
     config = conf.gomove,
 }
 
--- editor["kevinhwang91/nvim-hlslens"] = {
---   -- keys = {"/", "?", '*', '#'}, --'n', 'N', '*', '#', 'g'
---   -- opt = true,
---   -- config = conf.hlslens
--- }
+editor["kevinhwang91/nvim-hlslens"] = {
+    keys = { "/", "?", "*", "#" }, --'n', 'N', '*', '#', 'g'
+    opt = true,
+    config = conf.hlslens,
+}
 
 editor["mg979/vim-visual-multi"] = {
     keys = {
@@ -307,17 +357,6 @@ editor["beauwilliams/focus.nvim"] = {
                 "dapui_stacks",
                 "diffview",
             },
-        })
-    end,
-}
-
--- pretty neat
-editor["mizlan/iswap.nvim"] = {
-    cmd = { "ISwap", "ISwapWith" },
-    config = function()
-        require("iswap").setup({
-            keys = "qwertyuiop",
-            autoswap = true,
         })
     end,
 }
@@ -513,6 +552,11 @@ editor["sindrets/winshift.nvim"] = {
     cmd = "WinShift",
     opt = true,
     config = conf.win_shift,
+}
+
+editor["declancm/cinnamon.nvim"] = {
+    keys = { "<C-U>", "<C-D>", "<C-B>", "<C-F>", "<PageUp>", "<PageDown>" },
+    config = function() end,
 }
 
 return editor

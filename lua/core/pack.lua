@@ -152,33 +152,33 @@ function plugins.load_compile()
         require("_compiled")
     end
 
-    vim.api.nvim_create_user_command("PackerACompile", function()
+    vim.api.nvim_add_user_command("PackerACompile", function()
         require("core.pack").auto_compile()
     end, { force = true })
 
-    vim.api.nvim_create_user_command("PackerCompile", function()
+    vim.api.nvim_add_user_command("PackerCompile", function()
         require("core.pack").magic_compile()
     end, { force = true })
 
-    vim.api.nvim_create_user_command("PackerInstall", function()
+    vim.api.nvim_add_user_command("PackerInstall", function()
         require("core.pack").install()
     end, { force = true })
 
-    vim.api.nvim_create_user_command("PackerUpdate", function()
+    vim.api.nvim_add_user_command("PackerUpdate", function()
         require("core.pack").update()
     end, { force = true })
 
-    vim.api.nvim_create_user_command("PackerSync", function()
+    vim.api.nvim_add_user_command("PackerSync", function()
         require("core.pack").magic_compile()
         require("core.pack").sync()
         require("core.pack").magic_compile()
     end, { force = true })
 
-    vim.api.nvim_create_user_command("PackerClean", function()
+    vim.api.nvim_add_user_command("PackerClean", function()
         require("core.pack").clean()
     end, { force = true })
 
-    vim.api.nvim_create_user_command("PackerStatus", function()
+    vim.api.nvim_add_user_command("PackerStatus", function()
         require("core.pack").status()
     end, { force = true })
 end

@@ -177,7 +177,7 @@ local auto_snippets = {
         d(3, else_clause, {}, {}),
         t({ "", "end" }),
     }),
-    s({ trig = "(l?)req(f?)", regTrig = true }, {
+    s({ trig = "l(l?)req(f?)", regTrig = true }, {
         d(1, require_import, {}, {}),
     }),
     s(
