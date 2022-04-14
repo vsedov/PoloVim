@@ -5,6 +5,37 @@ local conf = require("modules.editor.config")
 -- windwp/nvim-ts-autotag  'html', 'javascript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue'
 -- windwp/nvim-autopairs
 
+editor["rainbowhxch/accelerated-jk.nvim"] = {
+    keys = {
+        "<Plug>(accelerated_jk_gj)",
+        "<Plug>(accelerated_jk_gk)",
+    },
+    setup = {
+        function()
+            local default_keymaps = {
+                { "n", "j", "<Plug>(accelerated_jk_gj)" },
+                { "n", "k", "<Plug>(accelerated_jk_gk)" },
+            }
+
+            for _, m in ipairs(default_keymaps) do
+                vim.keymap.set(m[1], m[2], m[3], {})
+            end
+        end,
+    },
+
+    config = function()
+        require("accelerated-jk").setup({
+            mode = "time_driven",
+            enable_deceleration = false,
+            acceleration_limit = 150,
+            acceleration_table = { 7, 12, 17, 21, 24, 26, 28, 30 },
+            deceleration_table = { { 150, 9999 } },
+        })
+    end,
+}
+
+editor["rainbowhxch/beacon.nvim"] = {}
+
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
 
 editor["szw/vim-maximizer"] = { opt = true, cmd = { "MaximizerToggle" } }
@@ -556,11 +587,11 @@ editor["sindrets/winshift.nvim"] = {
 
 editor["declancm/cinnamon.nvim"] = {
     keys = { "<C-U>", "<C-D>", "<C-B>", "<C-F>", "<PageUp>", "<PageDown>" },
-    config = function() 
-    require('cinnamon').setup {
-      extra_keymaps = true,
-      scroll_limit = 100,
-    }
+    config = function()
+        require("cinnamon").setup({
+            extra_keymaps = true,
+            scroll_limit = 100,
+        })
     end,
 }
 

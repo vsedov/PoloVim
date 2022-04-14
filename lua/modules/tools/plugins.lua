@@ -102,10 +102,47 @@ tools["editorconfig/editorconfig-vim"] = {
     -- ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
 }
 
+tools["is0n/fm-nvim"] = {
+    cmd = {
+        "Neomutt",
+        "Lazygit",
+        "Joshuto",
+        "Ranger",
+        "Gitui",
+        "Xplr",
+        "Vifm",
+        "Skim",
+        "Nnn",
+        "Fff",
+        "Fzf",
+        "Fzy",
+        "Fm",
+    },
+    config = function()
+        require("fm-nvim").setup({
+
+            ui = {
+
+                float = {
+                    border = "single",
+                },
+            },
+        })
+    end,
+}
+
 tools["olimorris/persisted.nvim"] = {
     event = "VimLeavePre",
     module = "persisted",
-    cmd = {"SessionStart", "SessionStop", "SessionSave", "SessionLoad", "SessionLoadLast", "SessionDelete", "SessionToggle"},
+    cmd = {
+        "SessionStart",
+        "SessionStop",
+        "SessionSave",
+        "SessionLoad",
+        "SessionLoadLast",
+        "SessionDelete",
+        "SessionToggle",
+    },
     setup = function()
         vim.keymap.set("n", "<leader>R", function()
             require("persisted").load({ last = true })
@@ -144,19 +181,19 @@ tools["ThePrimeagen/harpoon"] = {
     end,
 }
 
-  -- -- IPython Mappings
-  -- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
-  -- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
-  -- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
-  -- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
+-- -- IPython Mappings
+-- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
+-- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
+-- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
+-- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
 
-  -- -- Pytest Mappings
-  -- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
-  -- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
+-- -- Pytest Mappings
+-- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
+-- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
 
-  -- -- Poetry Mappings
-  -- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
-  -- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
+-- -- Poetry Mappings
+-- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
+-- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
 tools["KCaverly/py.nvim"] = {
     ft = { "python" },
     config = function()
@@ -262,7 +299,7 @@ tools["lewis6991/spellsitter.nvim"] = {
 tools["rhysd/vim-grammarous"] = {
     opt = true,
     cmd = { "GrammarousCheck" },
-    ft = { "markdown", "txt", "norg" },
+    ft = { "markdown", "txt", "norg", "tex" },
     setup = conf.grammarous,
 }
 -------------
