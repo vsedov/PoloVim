@@ -556,7 +556,12 @@ editor["sindrets/winshift.nvim"] = {
 
 editor["declancm/cinnamon.nvim"] = {
     keys = { "<C-U>", "<C-D>", "<C-B>", "<C-F>", "<PageUp>", "<PageDown>" },
-    config = function() end,
+    config = function() 
+    require('cinnamon').setup {
+      extra_keymaps = true,
+      scroll_limit = 100,
+    }
+    end,
 }
 
 return editor
