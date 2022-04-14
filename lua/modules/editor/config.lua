@@ -305,7 +305,7 @@ function config.hlslens()
 end
 
 function config.beacon()
-    require('beacon').setup({
+    require("beacon").setup({
         enable = false,
         size = 40,
         fade = true,

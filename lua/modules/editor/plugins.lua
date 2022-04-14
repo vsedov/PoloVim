@@ -35,8 +35,8 @@ editor["rainbowhxch/accelerated-jk.nvim"] = {
 }
 
 editor["rainbowhxch/beacon.nvim"] = {
-    cmd = {"Beacon", "BeaconToggle"}, 
-    confg = conf.beacon
+    cmd = { "Beacon", "BeaconToggle" },
+    confg = conf.beacon,
 }
 
 editor["junegunn/vim-easy-align"] = { opt = true, cmd = "EasyAlign" }
@@ -589,7 +589,7 @@ editor["sindrets/winshift.nvim"] = {
 }
 
 editor["declancm/cinnamon.nvim"] = {
-    keys = { "<C-U>", "<C-D>","<C-d>", "<C-B>", "<C-F>", "<PageUp>", "<PageDown>" },
+    keys = { "<C-U>", "<C-D>", "<C-d>", "<C-B>", "<C-F>", "<PageUp>", "<PageDown>" },
     config = function()
         require("cinnamon").setup({
             extra_keymaps = true,
