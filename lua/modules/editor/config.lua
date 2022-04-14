@@ -304,6 +304,20 @@ function config.hlslens()
     vim.cmd([[aug END]])
 end
 
+function config.beacon()
+    require('beacon').setup({
+        enable = false,
+        size = 40,
+        fade = true,
+        minimal_jump = 10,
+        show_jumps = true,
+        focus_gained = false,
+        shrink = true,
+        timeout = 500,
+        ignore_buffers = {},
+        ignore_filetypes = {},
+    })
+end
 -- Exit                  <Esc>       quit VM
 -- Find Under            <C-n>       select the word under cursor
 -- Find Subword Under    <C-n>       from visual mode, without word boundaries
