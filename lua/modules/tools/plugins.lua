@@ -18,83 +18,7 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
 tools["j-hui/fidget.nvim"] = {
     opt = true,
     ft = { "python", "lua", "c" },
-    config = function()
-        local relative = "editor"
-        require("fidget").setup({
-            text = {
-                spinner = {
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                    " ",
-                },
-                done = "", -- character shown when all tasks are complete
-                commenced = " ", -- message shown when task starts
-                completed = " ", -- message shown when task completes
-            },
-            align = {
-                bottom = true, -- align fidgets along bottom edge of buffer
-                right = true, -- align fidgets along right edge of buffer
-            },
-            timer = {
-                spinner_rate = 100, -- frame rate of spinner animation, in ms
-                fidget_decay = 500, -- how long to keep around empty fidget, in ms
-                task_decay = 300, -- how long to keep around completed task, in ms
-            },
-            window = {
-                relative = relative, -- where to anchor the window, either `"win"` or `"editor"`
-                blend = 100, -- `&winblend` for the window
-                zindex = nil, -- the `zindex` value for the window
-            },
-            fmt = {
-                leftpad = true, -- right-justify text in fidget box
-                stack_upwards = true, -- list of tasks grows upwards
-                max_width = 0, -- maximum width of the fidget box
-                -- function to format fidget title
-                fidget = function(fidget_name, spinner)
-                    return string.format("%s %s", spinner, fidget_name)
-                end,
-                -- function to format each task line
-                task = function(task_name, message, percentage)
-                    return string.format(
-                        "%s%s [%s]",
-                        message,
-                        percentage and string.format(" (%s%%)", percentage) or "",
-                        task_name
-                    )
-                end,
-            },
-
-            debug = {
-                logging = false, -- whether to enable logging, for debugging
-                strict = false, -- whether to interpret LSP strictly
-            },
-        })
-    end,
+    config = conf.fidget,
 }
 tools["editorconfig/editorconfig-vim"] = {
     opt = true,
@@ -102,9 +26,47 @@ tools["editorconfig/editorconfig-vim"] = {
     -- ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp' }
 }
 
+tools["is0n/fm-nvim"] = {
+    cmd = {
+        "Neomutt",
+        "Lazygit",
+        "Joshuto",
+        "Ranger",
+        "Gitui",
+        "Xplr",
+        "Vifm",
+        "Skim",
+        "Nnn",
+        "Fff",
+        "Fzf",
+        "Fzy",
+        "Fm",
+    },
+    config = function()
+        require("fm-nvim").setup({
+
+            ui = {
+
+                float = {
+                    border = "single",
+                },
+            },
+        })
+    end,
+}
+
 tools["olimorris/persisted.nvim"] = {
     event = "VimLeavePre",
     module = "persisted",
+    cmd = {
+        "SessionStart",
+        "SessionStop",
+        "SessionSave",
+        "SessionLoad",
+        "SessionLoadLast",
+        "SessionDelete",
+        "SessionToggle",
+    },
     setup = function()
         vim.keymap.set("n", "<leader>R", function()
             require("persisted").load({ last = true })
@@ -143,10 +105,25 @@ tools["ThePrimeagen/harpoon"] = {
     end,
 }
 
-tools["max397574/tomato.nvim"] = {
-    opt = true,
+-- -- IPython Mappings
+-- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
+-- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
+-- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
+-- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
+
+-- -- Pytest Mappings
+-- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
+-- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
+
+-- -- Poetry Mappings
+-- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
+-- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
+tools["~/GitHub/active_development/py.nvim"] = {
+    ft = { "python" },
     config = function()
-        require("tomato").setup()
+        require("py").setup({
+            leader = "<leader><leader>",
+        })
     end,
 }
 
@@ -246,7 +223,7 @@ tools["lewis6991/spellsitter.nvim"] = {
 tools["rhysd/vim-grammarous"] = {
     opt = true,
     cmd = { "GrammarousCheck" },
-    ft = { "markdown", "txt", "norg" },
+    ft = { "markdown", "txt", "norg", "tex" },
     setup = conf.grammarous,
 }
 -------------
@@ -281,6 +258,7 @@ tools["turbio/bracey.vim"] = {
 }
 
 tools["akinsho/toggleterm.nvim"] = {
+    cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm" },
     keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr" },
     config = function()
         require("modules.tools.toggleterm")

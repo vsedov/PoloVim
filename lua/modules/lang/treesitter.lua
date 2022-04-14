@@ -45,24 +45,6 @@ local treesitter = function()
         },
     }
 
-    parser_configs.prolog = {
-        install_info = {
-            url = "https://github.com/Rukiza/tree-sitter-prolog",
-            files = { "src/parser.c" },
-            filetype = "prolog",
-            branch = "main",
-        },
-    }
-
-    parser_configs.lua = {
-        install_info = {
-            url = "https://github.com/vhyrro/tree-sitter-luap",
-            files = { "src/parser.c", "src/scanner.cc" },
-            filetype = "lua",
-            branch = "main",
-        },
-    }
-
     require("nvim-treesitter.configs").setup({
         autopairs = { enable = true },
 

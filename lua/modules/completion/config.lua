@@ -56,10 +56,6 @@ function config.saga()
         diagnostic_prefix_format = "%d. ",
     })
 end
-
-function config.vim_vsnip()
-    vim.g.vsnip_snippet_dir = os.getenv("HOME") .. "/.config/nvim/snippets"
-end
 -- packer.nvim: Error running config for LuaSnip: [string "..."]:0: attempt to index global 'ls_types' (a nil value)
 function config.luasnip()
     require("modules.completion.snippets")
@@ -83,7 +79,6 @@ end
 function config.tabnine()
     local tabnine = require("cmp_tabnine.config")
     tabnine:setup({
-
         max_line = 1000,
         max_num_results = 20,
         sort = true,

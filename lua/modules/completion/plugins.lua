@@ -10,7 +10,7 @@ completion["neovim/nvim-lspconfig"] = {
 completion["ii14/lsp-command"] = {
     opt = true,
     cmd = { "Lsp", "lsp" },
-    after = "nvim-lspconfig",
+    requires = "nvim-lspconfig",
 }
 completion["p00f/clangd_extensions.nvim"] = {
     opt = true,
@@ -46,11 +46,10 @@ completion["lewis6991/hover.nvim"] = {
 }
 
 completion["tami5/lspsaga.nvim"] = {
-    cmd = "lspsaga",
-    module = "lspsaga",
+    cmd = "Lspsaga",
     opt = true,
     config = conf.saga,
-    after = "nvim-lspconfig",
+    requires = "nvim-lspconfig",
 }
 
 if load_coq() then

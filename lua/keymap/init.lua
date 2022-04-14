@@ -213,8 +213,8 @@ local plug_map = {
     ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
     ["x|gI"] = map_cmd("v:lua.enhance_nice_block('gI')"):with_expr(),
     ["x|A"] = map_cmd("v:lua.enhance_nice_block('A')"):with_expr(),
-    ["n|k"] = map_cmd([[v:count == 0 ? 'gk' : 'k']]):with_expr(),
-    ["n|j"] = map_cmd([[v:count == 0 ? 'gj' : 'j']]):with_expr(),
+    -- ["n|k"] = map_cmd([[v:count == 0 ? 'gk' : 'k']]):with_expr(),
+    -- ["n|j"] = map_cmd([[v:count == 0 ? 'gj' : 'j']]):with_expr(),
 
     ["n||"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']]):with_silent():with_expr(),
     ["n|_"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']]):with_silent():with_expr(),
