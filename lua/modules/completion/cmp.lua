@@ -297,11 +297,11 @@ cmp.setup({
     window = {
         completion = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
+            -- scrollbar = { "║" },
         },
         documentation = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
+            -- scrollbar = { "║" },
         },
     },
 

@@ -140,7 +140,6 @@ completion["https://github.com/github/copilot.vim.git"] = {
 -- hrsh7th
 -- Iron-E
 completion["hrsh7th/nvim-cmp"] = {
-    branch = "dev",
     -- opt = true,
     -- event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},

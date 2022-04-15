@@ -305,7 +305,7 @@ function config.hlslens()
 end
 
 function config.beacon()
-    require('beacon').setup({
+    require("beacon").setup({
         enable = false,
         size = 40,
         fade = true,
@@ -314,8 +314,15 @@ function config.beacon()
         focus_gained = false,
         shrink = true,
         timeout = 500,
-        ignore_buffers = {},
-        ignore_filetypes = {},
+        ignore_buffers = { "terminal", "nofile" },
+        ignore_filetypes = {
+            "neo-tree",
+            "qf",
+            "NeogitCommitMessage",
+            "NeogitStatus",
+            "packer",
+            "trouble",
+        },
     })
 end
 -- Exit                  <Esc>       quit VM

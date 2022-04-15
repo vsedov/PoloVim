@@ -191,7 +191,7 @@ vim.defer_fn(function()
     require("vscripts.race_conditions").language_support()
 
     vim.cmd("command! Spell call spelunker#check()")
-    vim.api.nvim_add_user_command("Gram", function()
+    vim.api.nvim_create_user_command("Gram", function()
         require("modules.tools.config").grammcheck()
     end, { force = true })
 

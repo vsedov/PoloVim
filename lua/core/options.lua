@@ -66,6 +66,7 @@ local function load_options()
         switchbuf = "useopen",
         backspace = "indent,eol,start",
         diffopt = "filler,hiddenoff,closeoff,iwhite,internal,algorithm:patience",
+        cscopequickfix = "s-,c-,d-,i-,t-,e-,a-",
         completeopt = "menuone,noselect",
         jumpoptions = "stack",
         showmode = false,

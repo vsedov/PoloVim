@@ -7,30 +7,7 @@ lang["nathom/filetype.nvim"] = {
     setup = function()
         vim.g.did_load_filetypes = 1
     end,
-    config = function()
-        require("filetype").setup({
-            overrides = {
-                literal = {
-                    ["kitty.conf"] = "kitty",
-                    [".gitignore"] = "conf",
-                },
-                complex = {
-                    [".clang*"] = "yaml",
-                    [".*%.env.*"] = "sh",
-                    [".*ignore"] = "conf",
-                },
-                extensions = {
-                    tf = "terraform",
-                    tfvars = "terraform",
-                    hcl = "hcl",
-                    tfstate = "json",
-                    eslintrc = "json",
-                    prettierrc = "json",
-                    mdx = "markdown",
-                },
-            },
-        })
-    end,
+    config = conf.filetype,
 }
 
 lang["nvim-treesitter/nvim-treesitter"] = {
@@ -61,22 +38,7 @@ lang["RRethy/nvim-treesitter-endwise"] = {
 lang["danymat/neogen"] = {
     module = { "neogen" },
     requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
-    config = function()
-        require("neogen").setup({
-            snippet_engine = "luasnip",
-            languages = {
-                lua = {
-                    template = { annotation_convention = "emmylua" },
-                },
-                python = {
-                    template = { annotation_convention = "numpydoc" },
-                },
-                c = {
-                    template = { annotation_convention = "doxygen" },
-                },
-            },
-        })
-    end,
+    config = conf.neogen,
 }
 
 -- Inline functions dont seem to work .
@@ -115,13 +77,6 @@ lang["ray-x/guihua.lua"] = {
     run = "cd lua/fzy && make",
     opt = true,
 }
-
--- lang["gcmt/wildfire.vim"] = {
---   setup = function()
---     vim.cmd([[nmap <leader>s <Plug>(wildfire-quick-select)]])
---   end,
---   fn = {'<Plug>(wildfire-fuel)', '<Plug>(wildfire-water)', '<Plug>(wildfire-quick-select)'}
--- }
 
 lang["romgrk/nvim-treesitter-context"] = {
     event = "InsertEnter",
@@ -175,7 +130,7 @@ lang["lervag/vimtex"] = {
     end,
 }
 
-lang["andythigpen/nvim-coverage"] = {
+lang["vsedov/nvim-coverage"] = {
     ft = { "python" },
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
     opt = true,
@@ -287,9 +242,13 @@ lang["vim-test/vim-test"] = {
 }
 
 -- lua testign
-lang["lewis6991/nvim-test"] = {
+lang["neovim/nvimdev.nvim"] = {
     ft = "lua",
     opt = true,
+    config = function()
+        vim.g.nvimdev_auto_ctags = 1
+        vim.g.nvimdev_auto_lint = 1
+    end
 }
 
 lang["rcarriga/vim-ultest"] = {

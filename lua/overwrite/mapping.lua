@@ -172,27 +172,27 @@ _G.run_or_test = function(debug)
     end
 end
 
-vim.api.nvim_add_user_command("AbbrivGodMode", function()
+vim.api.nvim_create_user_command("AbbrivGodMode", function()
     vim.cmd([[packadd vim-abbrev]])
 end, { force = true })
 
-vim.api.nvim_add_user_command("DuckStart", function()
+vim.api.nvim_create_user_command("DuckStart", function()
     require("modules.useless.config").launch_duck()
 end, { force = true })
 
-vim.api.nvim_add_user_command("TestStart", function()
+vim.api.nvim_create_user_command("TestStart", function()
     require("modules.lang.language_utils").testStart()
 end, { force = true })
 
-vim.api.nvim_add_user_command("DebugOpen", function()
+vim.api.nvim_create_user_command("DebugOpen", function()
     require("modules.lang.dap").prepare()
 end, { force = true })
 
-vim.api.nvim_add_user_command("HpoonClear", function()
+vim.api.nvim_create_user_command("HpoonClear", function()
     require("harpoon.mark").clear_all()
 end, { force = true })
 
-vim.api.nvim_add_user_command("Hashbang", function()
+vim.api.nvim_create_user_command("Hashbang", function()
     local shells = {
         sh = { "#! /usr/bin/env bash" },
         py = { "#! /usr/bin/env python3" },
@@ -220,29 +220,29 @@ vim.api.nvim_add_user_command("Hashbang", function()
     end
 end, { force = true })
 
-vim.api.nvim_add_user_command("Tags", function()
+vim.api.nvim_create_user_command("Tags", function()
     vim.cmd(
         [[!ctags -R -I EXTERN -I INIT --exclude='build*' --exclude='.vim-src/**' --exclude='node_modules/**' --exclude='venv/**' --exclude='**/site-packages/**' --exclude='data/**' --exclude='dist/**' --exclude='notebooks/**' --exclude='Notebooks/**' --exclude='*graphhopper_data/*.json' --exclude='*graphhopper/*.json' --exclude='*.json' --exclude='qgis/**' *]]
     )
 end, { force = true })
 
-vim.api.nvim_add_user_command("Keymaps", function()
+vim.api.nvim_create_user_command("Keymaps", function()
     require("overwrite.mapping").get_keymaps()
 end, { force = true })
 
-vim.api.nvim_add_user_command("ColourScheme", function()
+vim.api.nvim_create_user_command("ColourScheme", function()
     require("utils.telescope").colorscheme()
 end, { force = true })
 
-vim.api.nvim_add_user_command("BL", function()
+vim.api.nvim_create_user_command("BL", function()
     require("utils.selfunc").blameVirtualText()
 end, { force = true })
 
-vim.api.nvim_add_user_command("BLR", function()
+vim.api.nvim_create_user_command("BLR", function()
     require("utils.selfunc").clearBlameVirtualText()
 end, { force = true })
 
-vim.api.nvim_add_user_command("Diagnostics", function()
+vim.api.nvim_create_user_command("Diagnostics", function()
     vim.cmd("silent lmake! %")
     if #vim.fn.getloclist(0) == 0 then
         vim.cmd("lopen")
@@ -252,12 +252,12 @@ vim.api.nvim_add_user_command("Diagnostics", function()
 end, {
     force = true,
 })
-vim.api.nvim_add_user_command("Format", "silent normal! mxgggqG`x<CR>", {
+vim.api.nvim_create_user_command("Format", "silent normal! mxgggqG`x<CR>", {
     force = true,
 })
 
 -- Adjust Spacing:
-vim.api.nvim_add_user_command("Spaces", function(args)
+vim.api.nvim_create_user_command("Spaces", function(args)
     local wv = vim.fn.winsaveview()
     vim.opt_local.expandtab = true
     vim.cmd("silent execute '%!expand -it" .. args.args .. "'")
@@ -267,7 +267,7 @@ end, {
     force = true,
     nargs = 1,
 })
-vim.api.nvim_add_user_command("Tabs", function(args)
+vim.api.nvim_create_user_command("Tabs", function(args)
     local wv = vim.fn.winsaveview()
     vim.opt_local.expandtab = false
     vim.cmd("silent execute '%!unexpand -t" .. args.args .. "'")
@@ -278,20 +278,20 @@ end, {
     nargs = 1,
 })
 
-vim.api.nvim_add_user_command("NvimEditInit", function(args)
+vim.api.nvim_create_user_command("NvimEditInit", function(args)
     vim.cmd("split | edit $MYVIMRC")
 end, {
     force = true,
     nargs = "*",
 })
-vim.api.nvim_add_user_command("NvimSourceInit", function(args)
+vim.api.nvim_create_user_command("NvimSourceInit", function(args)
     vim.cmd("luafile $MYVIMRC")
 end, {
     force = true,
     nargs = "*",
 })
-vim.api.nvim_add_user_command("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|PERF/", {})
-vim.api.nvim_add_user_command("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|PERF/ *<CR>", {})
+vim.api.nvim_create_user_command("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|PERF/", {})
+vim.api.nvim_create_user_command("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|PERF/ *<CR>", {})
 
 vim.cmd("command! -nargs=+ -complete=file Grep " .. "lua vim.api.nvim_exec([[grep! <args> | redraw! | copen]], true)")
 vim.cmd("command! -nargs=+ -complete=file LGrep " .. "lua vim.api.nvim_exec([[lgrep! <args> | redraw! | lopen]], true)")

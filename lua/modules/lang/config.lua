@@ -4,7 +4,30 @@ local config = {}
 -- local map_cu = bind.map_cu
 -- local map_cmd = bind.map_cmd
 -- local loader = require"packer".loader
-
+function config.filetype()
+    require("filetype").setup({
+        overrides = {
+            literal = {
+                ["kitty.conf"] = "kitty",
+                [".gitignore"] = "conf",
+            },
+            complex = {
+                [".clang*"] = "yaml",
+                [".*%.env.*"] = "sh",
+                [".*ignore"] = "conf",
+            },
+            extensions = {
+                tf = "terraform",
+                tfvars = "terraform",
+                hcl = "hcl",
+                tfstate = "json",
+                eslintrc = "json",
+                prettierrc = "json",
+                mdx = "markdown",
+            },
+        },
+    })
+end
 function config.nvim_treesitter()
     require("modules.lang.treesitter").treesitter()
 end
@@ -23,6 +46,23 @@ end
 
 function config.pyfold()
     require("modules.lang.treesitter").pyfold()
+end
+
+function config.neogen()
+    require("neogen").setup({
+        snippet_engine = "luasnip",
+        languages = {
+            lua = {
+                template = { annotation_convention = "emmylua" },
+            },
+            python = {
+                template = { annotation_convention = "numpydoc" },
+            },
+            c = {
+                template = { annotation_convention = "doxygen" },
+            },
+        },
+    })
 end
 
 function config.refactor()

@@ -32,7 +32,6 @@ tools["is0n/fm-nvim"] = {
         "Lazygit",
         "Joshuto",
         "Ranger",
-        "Gitui",
         "Xplr",
         "Vifm",
         "Skim",
@@ -46,9 +45,8 @@ tools["is0n/fm-nvim"] = {
         require("fm-nvim").setup({
 
             ui = {
-
                 float = {
-                    border = "single",
+                    border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
                 },
             },
         })
