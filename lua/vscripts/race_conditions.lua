@@ -8,6 +8,8 @@ M.coding_support = function()
     		cnoreabbrev pu PackerUpdate<CR>
     		cnoreabbrev ps PackerSync<CR>
 
+    		cnoreabbrev lcc LuaCacheClear<CR>
+
 			  cnoreabbrev <expr> csa ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs add'  : 'csa')
 			  cnoreabbrev <expr> csf ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs find' : 'csf')
 			  cnoreabbrev <expr> csk ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs kill' : 'csk')
