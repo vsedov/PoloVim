@@ -3,10 +3,11 @@ M.coding_support = function()
     vim.cmd([[
 			  cnoreabbrev <expr> Cp ((getcmdtype()==':'&&getcmdpos()<=3)?'C p':'Cp')
 			  cnoreabbrev <expr> Cd ((getcmdtype()==':'&&getcmdpos()<=3)?'Cdisplay':'Cd')
-    		  
-    		  cnoreabbrev C PackerCompile
-    		  cnoreabbrev U PackerUpdate
-    		  
+
+    		cnoreabbrev pc PackerCompile<CR>
+    		cnoreabbrev pu PackerUpdate<CR>
+    		cnoreabbrev ps PackerSync<CR>
+
 			  cnoreabbrev <expr> csa ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs add'  : 'csa')
 			  cnoreabbrev <expr> csf ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs find' : 'csf')
 			  cnoreabbrev <expr> csk ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs kill' : 'csk')
