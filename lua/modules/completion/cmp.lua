@@ -297,11 +297,11 @@ cmp.setup({
     window = {
         completion = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            -- scrollbar = { "║" },
+            scrollbar = { "║" },
         },
         documentation = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            -- scrollbar = { "║" },
+            scrollbar = { "║" },
         },
     },
 
@@ -584,45 +584,37 @@ vim.api.nvim_create_autocmd("FileType", {
 -- if vim.o.ft ~= 'sql' then
 --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
 -- end
--- cmp.setup.cmdline(":", {
---     window = {
---         completion = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
---             scrollbar = { "║" },
---         },
---         documentation = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
---             scrollbar = { "║" },
---         },
---     },
---     sources = cmp.config.sources({
---         { name = "path" },
---     }, {
---         { name = "cmdline" },
---     }),
---     enabled = function()
---         return true
---     end,
--- })
+cmp.setup.cmdline(":", {
+    window = {
+        completion = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+            scrollbar = { "║" },
+        },
+        documentation = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+            scrollbar = { "║" },
+        },
+    },
+    sources = cmp.config.sources({
 
--- cmp.setup.cmdline("/", {
---     sources = {
---         { name = "buffer", keyword_length = 1 },
---     },
---     enabled = function()
---         return true
---     end,
---     window = {
---         completion = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
---             scrollbar = { "║" },
---         },
---         documentation = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
---             scrollbar = { "║" },
---         },
---     },
--- })
+        { name = "cmdline", group_index = 1 },
+        { name = "cmdline_history", group_index = 2 },
+
+    }),
+    enabled = function()
+        return true
+    end,
+})
+
+cmp.setup.cmdline("/", {
+    sources = {
+        { name = "cmdline_history" },
+        { name = "buffer" },
+    },
+    view = {
+        entries = { name = "wildmenu", separator = " | " },
+    },
+})
 
 local neorg = require("neorg")
 

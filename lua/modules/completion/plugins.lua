@@ -141,7 +141,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
 -- Iron-E
 completion["hrsh7th/nvim-cmp"] = {
     -- opt = true,
-    -- event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
+    event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
     after = { "LuaSnip" }, -- "nvim-snippy",
     requires = {
@@ -158,7 +158,8 @@ completion["hrsh7th/nvim-cmp"] = {
         { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-calc", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-path", after = "nvim-cmp", opt = true },
-        { "hrsh7th/cmp-cmdline", after = "nvim-cmp", opt = true },
+        { "dmitmel/cmp-cmdline-history", after = "nvim-cmp", opt = true },
+        { "max397574/cmp-cmdline", branch = "patch-1", after = "nvim-cmp", opt = true },
         { "ray-x/cmp-treesitter", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", opt = true },
         { "f3fora/cmp-spell", after = "nvim-cmp", opt = true },
