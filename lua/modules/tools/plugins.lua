@@ -103,7 +103,6 @@ tools["ThePrimeagen/harpoon"] = {
     end,
 }
 
-
 tools["natecraddock/workspaces.nvim"] = {
     module = "workspaces",
     config = function()
@@ -121,12 +120,10 @@ tools["natecraddock/workspaces.nvim"] = {
 }
 
 tools["nmac427/guess-indent.nvim"] = {
-    module = "guess-indent",
     event = "BufRead",
     config = function()
         require("guess-indent").setup({})
     end,
-    after = "nvim-treesitter",
 }
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
@@ -436,7 +433,6 @@ tools["AckslD/nvim-neoclip.lua"] = {
     config = conf.neoclip,
 }
 
--- This can be lazy loaded probably, figure out how ?
 tools["camspiers/animate.vim"] = {
     opt = true,
 }
@@ -503,14 +499,6 @@ tools["sQVe/sort.nvim"] = {
     config = function()
         require("sort").setup({})
     end,
-}
-
-tools["gelguy/wilder.nvim"] = {
-    opt = true,
-    requires = { "romgrk/fzy-lua-native", opt = true, after = "wilder.nvim" },
-    event = "CmdlineEnter",
-    config = conf.wilder,
-    run = ":UpdateRemotePlugins",
 }
 
 return tools

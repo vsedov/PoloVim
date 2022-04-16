@@ -675,39 +675,4 @@ function config.paperplanes()
     })
 end
 
-function config.wilder()
-    vim.cmd([[packadd fzy-lua-native]])
-    vim.cmd([[packadd cpsm]])
-    vim.cmd([[
-call wilder#setup({'modes': [':', '/', '?']})
-
-let s:popupmenu_renderer = wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
-      \ 'border': 'Normal',
-      \ 'empty_message': wilder#popupmenu_empty_message_with_spinner(),
-      \ 'left': [
-      \   ' ',
-      \   wilder#popupmenu_devicons(),
-      \   wilder#popupmenu_buffer_flags({
-      \     'flags': ' a + ',
-      \     'icons': {'+': '', 'a': '', 'h': ''},
-      \   }),
-      \ ],
-      \ 'right': [
-      \   ' ',
-      \   wilder#popupmenu_scrollbar(),
-      \ ],
-      \ }))
-
-let s:wildmenu_renderer = wilder#wildmenu_renderer({
-      \ 'separator': ' · ',
-      \ 'left': [' ', wilder#wildmenu_spinner(), ' '],
-      \ 'right': [' ', wilder#wildmenu_index()],
-      \ })
-
-call wilder#set_option('renderer', wilder#renderer_mux({
-      \ ':': s:popupmenu_renderer,
-      \ '/': s:wildmenu_renderer,
-      \ 'substitute': s:wildmenu_renderer,
-      \ }))]])
-end
 return config
