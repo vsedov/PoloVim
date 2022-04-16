@@ -207,10 +207,13 @@ vim.defer_fn(function()
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
     loader("workspaces.nvim")
+    -- Notify
     loader("nvim-notify")
     loader("structlog.nvim")
     local notify = require("notify")
     vim.notify = notify
+    loader("desktop-notify.nvim")
+    require("desktop-notify").override_vim_notify()
 
     -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
     -- have to work around this for the time
