@@ -7,8 +7,8 @@ local f = ls.function_node
 local c = ls.choice_node
 local fmt = require("luasnip.extras.fmt").fmt
 
--- For some reason, this just doesnt work 
-if vim.bo.filetype ~="tex" then
+-- For some reason, this just doesnt work
+if vim.bo.filetype ~= "tex" then
     local all_a = {
         s({ trig = ":td:", name = "TODO" }, {
             c(1, {
