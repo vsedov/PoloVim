@@ -599,7 +599,6 @@ cmp.setup.cmdline(":", {
 
         { name = "cmdline", group_index = 1 },
         { name = "cmdline_history", group_index = 2 },
-
     }),
     enabled = function()
         return true

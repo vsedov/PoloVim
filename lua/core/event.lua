@@ -24,6 +24,14 @@ function autocmd.load_autocmds()
     local definitions = {
         packer_call = {
             { "BufWritePost", "plugins.lua", "lua require('core.pack').auto_compile()" },
+            {
+                "User",
+                "PackerCompileDone",
+                function()
+                    vim.api.nvim_chan_send(vim.v.stderr, "\027]99;i=1:d=0;Packer.nvim\027\\")
+                    vim.api.nvim_chan_send(vim.v.stderr, "\027]99;i=1:d=1:p=body;Compile finished\027\\")
+                end,
+            },
         },
         buffer = {
             { { "BufRead", "BufNewFile" }, "*.norg", "setlocal filetype=norg" },

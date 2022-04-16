@@ -27,7 +27,6 @@ user["~/GitHub/Generatorg"] = {
 -- test: see how it goes
 user["simrat39/desktop-notify.nvim"] = {
     opt = true,
-
 }
 
 -- your plugin config

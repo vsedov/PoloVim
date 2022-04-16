@@ -590,7 +590,7 @@ function M.setup()
         hl = { style = "bold", fg = colors.orange },
     }
 
-    ViMode = utils.surround({ "", "" }, colors.bright_bg, { ViMode})
+    ViMode = utils.surround({ "", "" }, colors.bright_bg, { ViMode })
 
     local Align = { provider = "%=" }
     local Space = { provider = " " }
@@ -620,7 +620,8 @@ function M.setup()
         UltTest,
         Space,
         FileType,
-        utils.make_flexible_component(3, {Space, FileEncoding}, { provider = "" }),        Space,
+        utils.make_flexible_component(3, { Space, FileEncoding }, { provider = "" }),
+        Space,
         Ruler,
         Space,
         ScrollBar,

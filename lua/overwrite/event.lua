@@ -32,7 +32,6 @@ function autocmd.load_autocmds()
                 "markdown",
                 "let b:prettier_exec_cmd = 'prettier' | let g:prettier#exec_cmd_path = '/usr/local/bin/prettier' | let g:spelunker_check_type = 1",
             },
-
             {
                 { "WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained" },
                 "*",

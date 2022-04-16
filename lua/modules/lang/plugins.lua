@@ -251,7 +251,7 @@ lang["Vimjas/vim-python-pep8-indent"] = {
 -- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
 lang["~/GitHub/active_development/py.nvim"] = {
     ft = { "python" },
-    opt = true, 
+    opt = true,
     config = function()
         require("py").setup({
             leader = "<leader><leader>",
@@ -270,11 +270,11 @@ lang["neovim/nvimdev.nvim"] = {
     config = function()
         vim.g.nvimdev_auto_ctags = 1
         vim.g.nvimdev_auto_lint = 1
-    end
+    end,
 }
 
 lang["rcarriga/vim-ultest"] = {
-    requires = { "vim-test/vim-test", opt = true, after = "vim-ultest"},
+    requires = { "vim-test/vim-test", opt = true, after = "vim-ultest" },
     run = ":UpdateRemotePlugins",
     opt = true,
 }

@@ -25,7 +25,7 @@ completion["williamboman/nvim-lsp-installer"] = {
     requires = "nvim-lspconfig",
     config = conf.lsp_install,
 }
-completion["folke/lua-dev.nvim"] = {
+completion["max397574/lua-dev.nvim"] = {
     opt = true,
     requires = "nvim-lspconfig",
     config = conf.luadev,
