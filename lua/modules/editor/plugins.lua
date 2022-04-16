@@ -7,22 +7,9 @@ local conf = require("modules.editor.config")
 
 editor["rainbowhxch/accelerated-jk.nvim"] = {
     keys = {
-        "<Plug>(accelerated_jk_gj)",
-        "<Plug>(accelerated_jk_gk)",
+        "j",
+        "k",
     },
-    setup = {
-        function()
-            local default_keymaps = {
-                { "n", "j", "<Plug>(accelerated_jk_gj)" },
-                { "n", "k", "<Plug>(accelerated_jk_gk)" },
-            }
-
-            for _, m in ipairs(default_keymaps) do
-                vim.keymap.set(m[1], m[2], m[3], {})
-            end
-        end,
-    },
-
     config = function()
         require("accelerated-jk").setup({
             mode = "time_driven",
@@ -31,9 +18,10 @@ editor["rainbowhxch/accelerated-jk.nvim"] = {
             acceleration_table = { 7, 12, 17, 21, 24, 26, 28, 30 },
             deceleration_table = { { 150, 9999 } },
         })
+        vim.keymap.set("n", "j", "<Plug>(accelerated_jk_gj)", {})
+        vim.keymap.set("n", "k", "<Plug>(accelerated_jk_gk)", {})
     end,
 }
-
 editor["rainbowhxch/beacon.nvim"] = {
     cmd = { "Beacon", "BeaconToggle" },
     confg = conf.beacon,

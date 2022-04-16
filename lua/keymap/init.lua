@@ -58,6 +58,8 @@ local plug_map = {
     -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
     -- have this for the time, i might use some root , not usre .
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
+    -- ["n|j"] = map_cmd("<Plug>(accelerated_jk_gj)"):with_noremap()::with_silent(),
+    -- ["n|k"] = map_cmd("<Plug>(accelerated_jk_gk)"):with_noremap()::with_silent(),
 
     -- -- Plugin nvim-tree
     -- ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
