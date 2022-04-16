@@ -236,6 +236,28 @@ lang["dccsillag/magma-nvim"] = {
 lang["Vimjas/vim-python-pep8-indent"] = {
     ft = "python",
 }
+-- -- IPython Mappings
+-- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
+-- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
+-- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
+-- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
+
+-- -- Pytest Mappings
+-- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
+-- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
+
+-- -- Poetry Mappings
+-- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
+-- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
+lang["~/GitHub/active_development/py.nvim"] = {
+    ft = { "python" },
+    opt = true, 
+    config = function()
+        require("py").setup({
+            leader = "<leader><leader>",
+        })
+    end,
+}
 
 lang["vim-test/vim-test"] = {
     opt = true,
@@ -252,7 +274,7 @@ lang["neovim/nvimdev.nvim"] = {
 }
 
 lang["rcarriga/vim-ultest"] = {
-    requires = { "vim-test/vim-test", opt = true },
+    requires = { "vim-test/vim-test", opt = true, after = "vim-ultest"},
     run = ":UpdateRemotePlugins",
     opt = true,
 }
