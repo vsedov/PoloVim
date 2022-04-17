@@ -32,15 +32,8 @@ local keys = { --
     ["n|<Leader>dw"] = map_cr("<cmd>lua require'dap.ui.widgets'.hover()"):with_expr(), -- TODO: another key?
     ["v|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.visual_hover()"):with_expr(),
 
-    ["n|<Leader><Leader>S"] = map_cr("SplitjoinSplit"),
-    ["n|<Leader><Leader>J"] = map_cr("SplitjoinJoin"),
-
     -- Plugin Vista
     ["n|<Leader>v]"] = map_cu("Vista!!"):with_noremap():with_silent(),
-
-    -- clap --
-    -- ["n|<localleader-C>"] = map_cu("Clap | startinsert"),
-    -- ["i|<localleader-C>"] = map_cu("Clap | startinsert"):with_noremap():with_silent(),
 
     ["n|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"),
     -- ["i|<Leader>df"] = map_cu("Clap dumb_jump ++query=<cword> | startinsert"):with_noremap():with_silent(),

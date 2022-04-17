@@ -470,14 +470,16 @@ editor["simnalamburt/vim-mundo"] = {
 
 editor["mbbill/undotree"] = { opt = true, cmd = { "UndotreeToggle" } }
 
-editor["AndrewRadev/splitjoin.vim"] = {
-    opt = true,
-    cmd = { "SplitjoinJoin", "SplitjoinSplit" },
+editor["AckslD/nvim-trevJ.lua"] = {
+    module = "trevj",
     setup = function()
-        vim.g.splitjoin_split_mapping = ""
-        vim.g.splitjoin_join_mapping = ""
+        vim.keymap.set("n", "<leader><leader>a", function()
+            require("trevj").format_at_cursor()
+        end)
     end,
-    -- keys = {'<space>S', '<space>J'}
+    config = function()
+        require("trevj").setup()
+    end,
 }
 
 editor["chaoren/vim-wordmotion"] = {
