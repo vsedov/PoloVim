@@ -31,6 +31,9 @@ return {
                 ftype
             ))
         end
+        _G.overide_notify_desktop = function()
+            return false
+        end
 
         _G.plugin_debug = function()
             if Plugin_debug ~= nil then

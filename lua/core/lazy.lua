@@ -212,8 +212,11 @@ vim.defer_fn(function()
     loader("structlog.nvim")
     local notify = require("notify")
     vim.notify = notify
-    loader("desktop-notify.nvim")
-    require("desktop-notify").override_vim_notify()
+    if overide_notify_desktop then
+        loader("desktop-notify.nvim")
+
+        require("desktop-notify").override_vim_notify()
+    end
 
     -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
     -- have to work around this for the time
