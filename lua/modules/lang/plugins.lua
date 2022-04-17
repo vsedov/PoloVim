@@ -129,6 +129,7 @@ lang["lervag/vimtex"] = {
         }
     end,
 }
+------------------------------------------------------------------------------------------------------
 
 lang["vsedov/nvim-coverage"] = {
     ft = { "python" },
@@ -138,6 +139,12 @@ lang["vsedov/nvim-coverage"] = {
         require("coverage").setup()
     end,
 }
+lang["mgedmin/coverage-highlight.vim"] = {
+    ft = "python",
+    opt = true,
+    run = ":UpdateRemotePlugins",
+}
+------------------------------------------------------------------------------------------------------
 
 lang["mfussenegger/nvim-dap"] = {
     opt = true,
@@ -205,7 +212,7 @@ lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
 -- lang["RRethy/vim-illuminate"] = {opt=true, ft = {"go"}}
 
---
+------------------------------------------------------------------------------------------------------
 lang["michaelb/sniprun"] = {
     cmd = { "'<,'>SnipRun", "SnipRun" },
     opt = true,
@@ -227,7 +234,6 @@ lang["dccsillag/magma-nvim"] = {
 
     ft = "python",
     opt = true,
-    runs = "UpdateRemotePlugins",
     requires = "rcarriga/nvim-notify",
     run = ":UpdateRemotePlugins",
     config = conf.magma,
@@ -236,6 +242,8 @@ lang["dccsillag/magma-nvim"] = {
 lang["Vimjas/vim-python-pep8-indent"] = {
     ft = "python",
 }
+------------------------------------------------------------------------------------------------------
+
 -- -- IPython Mappings
 -- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
 -- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
@@ -258,7 +266,7 @@ lang["~/GitHub/active_development/py.nvim"] = {
         })
     end,
 }
-
+------------------------------------------------------------------------------------------------------
 lang["vim-test/vim-test"] = {
     opt = true,
 }
@@ -279,17 +287,7 @@ lang["rcarriga/vim-ultest"] = {
     opt = true,
 }
 
--- This might not be needed
-lang["mgedmin/coverage-highlight.vim"] = {
-    ft = "python",
-    opt = true,
-    run = ":UpdateRemotePlugins",
-}
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
 
 -- JqxList and JqxQuery json browsing, format
 lang["gennaro-tedesco/nvim-jqx"] = {

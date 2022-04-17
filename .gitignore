@@ -1,2 +1,6 @@
 .DS_Store
 *.log
+log
+tags
+*.ti
+ytmmusic_auth

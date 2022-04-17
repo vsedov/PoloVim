@@ -176,7 +176,7 @@ return {
                     vim.diagnostic.config({
                         virtual_text = false,
                     })
-                    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+                    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
                     vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
                     -- Convert this using vim.api.nvim_create_autocmd()
                     -- vim.api.nvim_create_autocmd("BufWritePre", {

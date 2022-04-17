@@ -501,7 +501,7 @@ editor["folke/zen-mode.nvim"] = {
 
 editor["nvim-neorg/neorg"] = {
     branch = "main",
-    -- requires = { "max397574/neorg-zettelkasten" },
+    requires = { "max397574/neorg-contexts", ft = "norg" },
     config = function()
         require("modules.editor.neorg")
     end,

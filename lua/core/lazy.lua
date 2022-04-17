@@ -77,6 +77,7 @@ function Lazyload()
         "txt",
         "defx",
         "sidekick",
+        "neo-tree", 
     }
 
     local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
@@ -214,7 +215,6 @@ vim.defer_fn(function()
     vim.notify = notify
     if overide_notify_desktop then
         loader("desktop-notify.nvim")
-
         require("desktop-notify").override_vim_notify()
     end
 

@@ -60,6 +60,10 @@ local function add_lsp_buffer_keybindings(client, bufnr)
         ["gr"] = "<cmd>lua vim.lsp.buf.references()<CR>",
         ["[d"] = "<cmd>lua vim.diagnostic.goto_prev()()<CR>",
         ["]d"] = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+
+        ["<leader>="] = "<cmd>lua vim.lsp.buf.formatting()<CR>",
+        ["<leader>ai"] = "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
+        ["<leader>ao"] = "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",
     }
     for mode_name, mode_char in pairs(lsp_map) do
         vim.keymap.set("n", mode_name, mode_char, { noremap = true, silent = true, buffer = bufnr })

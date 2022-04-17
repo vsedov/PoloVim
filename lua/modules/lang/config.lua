@@ -337,12 +337,16 @@ function config.yabs()
                 default_task = "run",
                 tasks = {
                     run = {
-                        command = "python %", -- The command to run (% and other
-                        output = "terminal",
+                        command = "poetry run python %", -- The command to run (% and other
+                        output = "quickfix",
                         -- wildcards will be automatically
                         -- expanded)
                         type = "shell", -- The type of command (can be `vim`, `lua`, or
                         -- `shell`, default `shell`)
+                    },
+                    build = {
+                        command = "poetry run task lint", -- The command to run (% and other
+                        output = "quickfix", -- Where to show output of the
                     },
                 },
             },

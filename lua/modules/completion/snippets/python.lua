@@ -7,7 +7,7 @@ local i = ls.insert_node
 local f = ls.function_node
 local c = ls.choice_node
 local d = ls.dynamic_node
--- local r = ls.restore_node
+local r = ls.restore_node
 local l = require("luasnip.extras").lambda
 -- local rep = require("luasnip.extras").rep
 local p = require("luasnip.extras").partial
@@ -106,7 +106,25 @@ local function pycdoc(args, ostate)
 end
 
 local auto_snippets = {
-
+    s(
+        { trig = "(d?)cla", regTrig = true },
+        fmt(
+            [[
+        {}class {}({}):
+            {}
+        ]],
+            {
+                d(1, python_dataclass, {}, {}),
+                i(2, "Class"),
+                c(3, {
+                    t({ "" }),
+                    i(1, "object"),
+                }),
+                -- dl(4, l._1 .. ': docstring', { 2 }),
+                d(4, python_class_init, {}, {}),
+            }
+        )
+    ),
     s(
         { trig = "fro(m ?)", regTrig = false },
         fmt([[from {} import {}]], {
@@ -197,6 +215,22 @@ local M = {
             }
         )
     ),
+    
+    
+    s(
+        "imp",
+        fmt([[import {}]], {
+            i(1, "sys"),
+        })
+    ),
+    s(
+        { trig = "fro(m?)", regTrig = true },
+        fmt([[from {} import {}]], {
+            i(1, "sys"),
+            i(2, "path"),
+        })
+    ),
+
     s(
         "pr",
         fmt([[print({})]], {
@@ -250,18 +284,28 @@ local M = {
         )
     ),
 
-    s("try", {
-        t({ "try:", "" }),
-        d(1, saved_text, {}, { text = "pass", indent = true }),
-        t({ "", "except " }),
-        c(2, {
-            t({ "Exception as e" }),
-            t({ "KeyboardInterrupt as e" }),
-            sn(nil, { i(1, "Exception") }),
-        }),
-        t({ ":", "\t" }),
-        i(3, "pass"),
-    }),
+    s(
+        "try",
+        fmt(
+            [[
+    try:
+    {}
+    except {}:
+        {}
+    ]],
+            {
+                d(1, saved_text, {}, { user_args = { { text = "pass", indent = true } } }),
+                c(2, {
+                    t({ "Exception as e" }),
+                    t({ "KeyboardInterrupt as e" }),
+                    sn(nil, { i(1, "Exception") }),
+                }),
+                i(3, "pass"),
+            }
+        )
+    ),
+
+
     s("ifmain", {
         t({ 'if __name__ == "__main__":', "\t" }),
         c(1, {
@@ -306,6 +350,8 @@ local M = {
         t({ ":", "" }),
         d(2, saved_text, {}, { text = "pass", indent = true }),
     }),
+
+
     s({ trig = "dcl", regTrig = true }, {
         d(1, python_dataclass, {}, {}),
         t({ "class " }),
@@ -335,6 +381,44 @@ local M = {
         fmt([[pi.search({}, name='{}')]], {
             i(1, "what"),
             i(2, "name"),
+        })
+    ),
+
+    s(
+        "raise",
+        fmt([[raise {}({})]], {
+            c(1, {
+                i(1, "Exception"),
+                i(1, "KeyboardInterrupt"),
+                i(1, "IOException"),
+            }),
+            i(2, "message"),
+        })
+    ),
+    s(
+        "clist",
+        fmt("[{} for {} in {}{}]", {
+            r(1),
+            i(1, "i"),
+            i(2, "Iterator"),
+            c(3, {
+                t({ "" }),
+                sn(nil, { t(" if "), i(1, "condition") }),
+            }),
+        })
+    ),
+    s(
+        "cdict",
+        fmt("{{ {}:{} for ({},{}) in {}{}}}", {
+            r(1),
+            r(2),
+            i(1, "k"),
+            i(2, "v"),
+            i(3, "Iterator"),
+            c(4, {
+                t({ "" }),
+                sn(nil, { t(" if "), i(1, "condition") }),
+            }),
         })
     ),
 }

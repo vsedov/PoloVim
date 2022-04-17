@@ -15,6 +15,7 @@ globals = {
   "preserve",
   "Snake",
   "Camel",
+  "overide_notify_desktop ",
   "PASTE",
   "PERF",
   "Format",
