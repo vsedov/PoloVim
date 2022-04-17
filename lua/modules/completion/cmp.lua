@@ -598,7 +598,7 @@ cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
 
         { name = "cmdline", group_index = 1 },
-        { name = "cmdline_history", group_index = 2 },
+        -- { name = "cmdline_history", group_index = 2 },
     }),
     enabled = function()
         return true
@@ -607,7 +607,7 @@ cmp.setup.cmdline(":", {
 
 cmp.setup.cmdline("/", {
     sources = {
-        { name = "cmdline_history" },
+        -- { name = "cmdline_history" },
         { name = "buffer" },
     },
     view = {
