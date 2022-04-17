@@ -78,7 +78,7 @@ lang["ray-x/guihua.lua"] = {
     opt = true,
 }
 
-lang["romgrk/nvim-treesitter-context"] = {
+lang["lewis6991/nvim-treesitter-context"] = {
     event = "InsertEnter",
     config = conf.context,
 }
