@@ -166,8 +166,8 @@ local plug_map = {
         :with_noremap()
         :with_silent(),
 
-    ["n|hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
-    ["n|hw"] = map_cmd(function()
+    ["n|<leader>hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
+    ["n|<leader>hw"] = map_cmd(function()
         if require("dynamic_help.extras.statusline").available() ~= "" then
             require("dynamic_help").float_help(vim.fn.expand("<cword>"))
         else
