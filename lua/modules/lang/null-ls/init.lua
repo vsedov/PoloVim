@@ -78,9 +78,9 @@ return {
             table.insert(sources, null_ls.builtins.formatting.prettierd)
         end
         -- lua
-        if exist("selene") then
-            table.insert(sources, null_ls.builtins.diagnostics.selene)
-        end
+        -- if exist("selene") then
+        --     table.insert(sources, null_ls.builtins.diagnostics.selene)
+        -- end
 
         if exist("stylua") then
             table.insert(
@@ -92,9 +92,9 @@ return {
         end
 
         -- luaccheck feels a bit heavy i do not know why
-        -- if exist("luacheck") then
-        --     table.insert(sources, null_ls.builtins.diagnostics.luacheck)
-        -- end
+        if exist("luacheck") then
+            table.insert(sources, null_ls.builtins.diagnostics.luacheck)
+        end
 
         -- python
         if exist("flake8") then
@@ -176,7 +176,8 @@ return {
                     vim.diagnostic.config({
                         virtual_text = false,
                     })
-                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting(nil, 800)")
+                    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+                    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
                     -- Convert this using vim.api.nvim_create_autocmd()
                     -- vim.api.nvim_create_autocmd("BufWritePre", {
                     --     pattern = "*",
