@@ -120,9 +120,6 @@ local plug_map = {
 
     -- -- Plugin Telescope
     ["v|<Leader>ga"] = map_cmd("<cmd>lua require('utils.telescope').code_actions()<CR>"):with_noremap():with_silent(),
-
-    ["n|<Leader>qf"] = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
-
     ["n|<Leader>bb"] = map_cu("Telescope buffers"):with_noremap():with_silent(),
     ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
     ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
@@ -210,16 +207,6 @@ local plug_map = {
 
     -- Plugin Vista or SymbolsOutline -- Symbol Breaks for the time .
     ["n|<Leader>v"] = map_cu("Vista!!"):with_noremap():with_silent(),
-
-    -- Plugin vim_niceblock
-    ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
-    ["x|gI"] = map_cmd("v:lua.enhance_nice_block('gI')"):with_expr(),
-    ["x|A"] = map_cmd("v:lua.enhance_nice_block('A')"):with_expr(),
-    -- ["n|k"] = map_cmd([[v:count == 0 ? 'gk' : 'k']]):with_expr(),
-    -- ["n|j"] = map_cmd([[v:count == 0 ? 'gj' : 'j']]):with_expr(),
-
-    ["n||"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']]):with_silent():with_expr(),
-    ["n|_"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']]):with_silent():with_expr(),
 
     -- Plugin for debugigng
 
@@ -314,6 +301,26 @@ local plug_map = {
 
     ["x|ie"] = map_cmd([[gg0oG$]]):with_noremap(),
     ["o|ie"] = map_cmd([[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]]):with_noremap(),
+
+    ["n|<leader>q"] = map_cmd([[:let @q='<c-r><c-r>q]]):with_silent(),
+
+    ["n|<C-U>"] = map_cmd(function()
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        vim.api.nvim_feedkeys("b~", "n", true)
+        vim.defer_fn(function()
+            vim.api.nvim_win_set_cursor(0, cursor)
+        end, 1)
+    end):with_silent():with_noremap(),
+
+    ["n||"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']]):with_silent():with_expr(),
+    ["n|_"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']]):with_silent():with_expr(),
+
+    ["i|!"] = map_cmd([[!<c-g>u]]):with_noremap(),
+    ["i|."] = map_cmd([[.<c-g>u]]):with_noremap(),
+    ["i|?"] = map_cmd([[?<c-g>u]]):with_noremap(),
+
+    ["n|n"] = map_cmd([[nzzzv]]):with_noremap():with_silent(),
+    ["n|N"] = map_cmd([[Nzzzv]]):with_noremap():with_silent(),
 }
 
 return { map = plug_map }
