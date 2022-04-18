@@ -146,14 +146,17 @@ local check_backspace = function()
 end
 
 local sources = {
+    { name = "nvim_lsp_signature_help", priority = 10 },
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
     { name = "buffer", priority = 7, keyword_length = 4 },
+    { name = "copilot", priority = 7 }, -- test priority should be less than tabnine
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
+    { name = "cmdline", priority = 4 },
     { name = "treesitter", keyword_length = 2 },
     { name = "neorg", priority = 6 },
-    { name = "nvim_lsp_signature_help", priority = 10 },
+    { name = "latex_symbols", priority = 1 },
 }
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
@@ -408,6 +411,7 @@ cmp.setup({
         end, {
             "i",
             "s",
+
         }),
         -- ["<BS>"] = cmp.mapping(function(_fallback)
         --     local keys = smart_bs()
@@ -432,6 +436,7 @@ cmp.setup({
         end, {
             "i",
             "s",
+            "c",
         }),
 
         -- Avoid full fallback as it acts retardedly
@@ -447,6 +452,7 @@ cmp.setup({
         end, {
             "i",
             "s",
+            "c",
         }),
 
         ["<C-j>"] = cmp.mapping(function(fallback)
@@ -588,11 +594,11 @@ cmp.setup.cmdline(":", {
     window = {
         completion = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            -- scrollbar = { "║" },
+            scrollbar = { "║" },
         },
         documentation = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            -- scrollbar = { "║" },
+            scrollbar = { "║" },
         },
     },
     sources = cmp.config.sources({
@@ -606,12 +612,20 @@ cmp.setup.cmdline(":", {
 })
 
 cmp.setup.cmdline("/", {
+    window = {
+        completion = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+            scrollbar = { "║" },
+        },
+        documentation = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+            scrollbar = { "║" },
+        },
+    },
     sources = {
         -- { name = "cmdline_history" },
         { name = "buffer" },
-    },
-    view = {
-        entries = { name = "wildmenu", separator = " | " },
+        { name = "nvim_lsp_document_symbol" },
     },
 })
 
@@ -629,4 +643,4 @@ else
     neorg.callbacks.on_event("core.started", load_completion)
 end
 -- TODO(vsedov) (18:06:44 - 17/04/22): Use vim.highlight to set this insterad
-vim.cmd([[hi NormalFloat guibg=none]])
+-- vim.cmd([[hi NormalFloat guibg=none]])

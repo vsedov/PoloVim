@@ -13,6 +13,7 @@ lang["nathom/filetype.nvim"] = {
 lang["nvim-treesitter/nvim-treesitter"] = {
     opt = true,
     run = ":TSUpdate",
+    commit = "bca65c068b92f19174dbba15d538315e8c89a5d6",
     config = conf.nvim_treesitter,
 }
 
