@@ -137,11 +137,13 @@ end
 -- }
 
 completion["zbirenbaum/copilot.lua"] = {
-  "zbirenbaum/copilot.lua",
-  event = "InsertEnter",
-  config = function ()
-    vim.schedule(function() require("copilot").setup() end)
-  end,
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
+    config = function()
+        vim.schedule(function()
+            require("copilot").setup()
+        end)
+    end,
 }
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th

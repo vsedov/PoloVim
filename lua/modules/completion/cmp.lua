@@ -411,7 +411,6 @@ cmp.setup({
         end, {
             "i",
             "s",
-
         }),
         -- ["<BS>"] = cmp.mapping(function(_fallback)
         --     local keys = smart_bs()
