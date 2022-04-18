@@ -215,8 +215,7 @@ local M = {
             }
         )
     ),
-    
-    
+
     s(
         "imp",
         fmt([[import {}]], {
@@ -305,7 +304,6 @@ local M = {
         )
     ),
 
-
     s("ifmain", {
         t({ 'if __name__ == "__main__":', "\t" }),
         c(1, {
@@ -350,7 +348,6 @@ local M = {
         t({ ":", "" }),
         d(2, saved_text, {}, { text = "pass", indent = true }),
     }),
-
 
     s({ trig = "dcl", regTrig = true }, {
         d(1, python_dataclass, {}, {}),
