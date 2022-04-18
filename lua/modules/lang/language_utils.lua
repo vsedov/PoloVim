@@ -66,6 +66,7 @@ end
 
 -- Call :TestStart on any test file for python
 M.testStart = function()
+    vim.cmd([[UpdateRemotePlugins]])
     loader("vim-test")
     loader("vim-ultest")
     vim.g["test#python#pytest#executable"] = "pytest"
