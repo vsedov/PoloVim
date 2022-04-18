@@ -44,7 +44,6 @@ function autocmd.load_autocmds()
                 [[source $MYVIMRC | redraw]],
                 true,
             },
-            { "BufWritePre", "*.py", "NayvyImports" },
 
             -- Reload Vim script automatically if setlocal autoread
             {

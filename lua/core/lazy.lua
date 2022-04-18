@@ -77,7 +77,7 @@ function Lazyload()
         "txt",
         "defx",
         "sidekick",
-        "neo-tree", 
+        "neo-tree",
     }
 
     local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
@@ -213,7 +213,9 @@ vim.defer_fn(function()
     loader("structlog.nvim")
     local notify = require("notify")
     vim.notify = notify
-    if overide_notify_desktop then
+
+    if overide_notify_desktop() then
+        print("why is this getting activated, when this isnt supposed to even be on")
         loader("desktop-notify.nvim")
         require("desktop-notify").override_vim_notify()
     end
