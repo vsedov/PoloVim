@@ -34,6 +34,17 @@ function autocmd.load_autocmds()
             },
         },
         buffer = {
+            {
+                { "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
+                "*",
+                "if &nu && mode() != 'i' | set rnu | endif",
+            },
+            {
+                { "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
+                "*",
+                "if &nu | set nornu | endif",
+            },
+
             { { "BufRead", "BufNewFile" }, "*.norg", "setlocal filetype=norg" },
             { { "BufEnter", "BufWinEnter" }, "*.norg", [[set foldlevel=1000]] },
             { { "BufNewFile", "BufRead", "BufWinEnter" }, "*.tex", [[set filetype=tex]] },
