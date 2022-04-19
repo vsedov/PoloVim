@@ -443,8 +443,20 @@ function config.bqf()
 end
 
 function config.clipboardimage()
-    vim.cmd([[packadd clipboard-image.nvim]])
-    require("clipboard-image").setup({})
+    require("clipboard-image").setup({
+        default = {
+            img_name = function()
+                vim.fn.inputsave()
+                local name = vim.fn.input("Name: ")
+                vim.fn.inputrestore()
+
+                if name == nil or name == "" then
+                    return os.date("%y-%m-%d-%H-%M-%S")
+                end
+                return name
+            end,
+        },
+    })
 end
 
 function config.dapui()

@@ -212,6 +212,7 @@ tools["plasticboy/vim-markdown"] = {
 
 tools["ekickx/clipboard-image.nvim"] = {
     ft = { "norg", "markdown" },
+    cmd = { "PasteImg" },
     opt = true,
     config = conf.clipboardimage,
 }
