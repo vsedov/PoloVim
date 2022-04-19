@@ -31,9 +31,6 @@ return {
                 ftype
             ))
         end
-        _G.overide_notify_desktop = function()
-            return false
-        end
 
         _G.plugin_debug = function()
             if Plugin_debug ~= nil then
@@ -46,6 +43,14 @@ return {
                 Plugin_debug = false
             end
             return Plugin_debug
+        end
+
+        _G.overide_notify_desktop = function()
+            return false
+        end
+
+        _G.sell_your_soul = function()
+            return false
         end
 
         _G.load_coq = function()

@@ -137,11 +137,12 @@ end
 -- }
 
 completion["zbirenbaum/copilot.lua"] = {
-    "zbirenbaum/copilot.lua",
-    event = "InsertEnter",
+    opt = true,
     config = function()
         vim.schedule(function()
-            require("copilot").setup()
+            require("copilot").setup({
+                ft_disable = { "markdown", "norg", "tex", "txt" },
+            })
         end)
     end,
 }
@@ -157,7 +158,7 @@ completion["hrsh7th/nvim-cmp"] = {
         {
             "tzachar/cmp-tabnine",
             run = "./install.sh",
-            after = "nvim-cmp",
+            -- after = "nvim-cmp",
             config = conf.tabnine,
             opt = true,
         },

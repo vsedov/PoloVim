@@ -48,9 +48,7 @@ return {
             ["eslint_d"] = null_ls.builtins.diagnostics.eslint_d,
             ["prettierd"] = null_ls.builtins.formatting.prettierd,
             -- ["selene"]= null_ls.builtins.diagnostics.selene,
-            ["stylua"] = null_ls.builtins.formatting.stylua.with({
-                extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml") },
-            }),
+            ["stylua"] = null_ls.builtins.formatting.stylua,
             ["luacheck"] = null_ls.builtins.diagnostics.luacheck,
             ["vulture"] = null_ls.builtins.diagnostics.vulture,
             ["clang-format"] = null_ls.builtins.formatting.clang_format.with({

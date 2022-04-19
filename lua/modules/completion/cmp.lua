@@ -150,7 +150,6 @@ local sources = {
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
     { name = "buffer", priority = 7, keyword_length = 4 },
-    { name = "copilot", priority = 7 }, -- test priority should be less than tabnine
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
     { name = "cmdline", priority = 4 },
@@ -158,10 +157,27 @@ local sources = {
     { name = "neorg", priority = 6 },
     { name = "latex_symbols", priority = 1 },
 }
+
+local function use_tabnine()
+    local valid_files = { "python", "c", "lua", "cpp", "rust" }
+    for _, i in pairs(valid_files) do
+        if vim.o.ft == i then
+            return true
+        end
+    end
+    return false
+end
+
+if sell_your_soul() then
+    require("packer").loader("copilot.lua")
+    table.insert(sources, { name = "copilot", priority = 7 })
+end
+
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end
-if vim.o.ft == "python" then
+if use_tabnine() then
+    require("packer").loader("cmp-tabnine")
     table.insert(sources, { name = "cmp_tabnine", priority = 9 })
 end
 if vim.o.ft == "norg" then
@@ -283,7 +299,6 @@ if vim.o.ft == "gitcommit" then
 end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
-    table.insert(sources, { name = "cmp_tabnine", priority = 7 })
 end
 if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "proto" then
     table.insert(sources, { name = "path" })
@@ -291,9 +306,6 @@ if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "p
     table.insert(sources, { name = "calc" })
 end
 
-if vim.o.ft == "cpp" or vim.o.ft == "c" then
-    table.insert(sources, { name = "cmp_tabnine", priority = 8 })
-end
 
 cmp.setup({
 
