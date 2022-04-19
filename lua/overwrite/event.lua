@@ -1,19 +1,21 @@
 local vim = vim
+local api = vim.api
 
 local autocmd = {}
 
 function autocmd.nvim_create_augroups(defs)
     for group_name, definition in pairs(defs) do
-        vim.api.nvim_create_augroup(group_name, { clear = true })
+        api.nvim_create_augroup(group_name, { clear = true })
         for _, def in ipairs(definition) do
             local event = def[1]
             local arg = {
                 group = group_name,
                 pattern = def[2],
                 [type(def[3]) == "function" and "callback" or type(def[3]) == "string" and "command"] = def[3],
-                nested = def[4],
+                nested = def[4] or false,
             }
-            vim.api.nvim_create_autocmd(event, arg)
+            -- print(vim.inspect(event), vim.inspect(arg))
+            api.nvim_create_autocmd(event, arg)
         end
     end
 end
@@ -45,6 +47,18 @@ function autocmd.load_autocmds()
             -- {"BufWritePre", "*.go", ":silent! :lua require('go.format').gofmt()"}
             -- {"InsertEnter", "*", ":silent! :lua require('modules.editor.config').pears_setup()"}
         },
+        -- numbertoggle = {
+        --     {
+        --         { "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
+        --         "*",
+        --          "if &nu | set nornu | endif",
+        --     },
+        --     {
+        --         { "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
+        --         "*",
+        --         "if &nu | set nornu | endif",
+        --     },
+        -- },
     }
 
     autocmd.nvim_create_augroups(definitions)
