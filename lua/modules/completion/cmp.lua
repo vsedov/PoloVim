@@ -172,14 +172,15 @@ if sell_your_soul() then
     require("packer").loader("copilot.lua")
     table.insert(sources, { name = "copilot", priority = 7 })
 end
-
-if vim.o.ft == "sql" then
-    table.insert(sources, { name = "vim-dadbod-completion" })
-end
 if use_tabnine() then
     require("packer").loader("cmp-tabnine")
     table.insert(sources, { name = "cmp_tabnine", priority = 9 })
 end
+
+if vim.o.ft == "sql" then
+    table.insert(sources, { name = "vim-dadbod-completion" })
+end
+
 if vim.o.ft == "norg" then
     table.insert(sources, { name = "latex_symbols" })
 end
@@ -305,7 +306,6 @@ if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "p
     table.insert(sources, { name = "buffer", keyword_length = 3 })
     table.insert(sources, { name = "calc" })
 end
-
 
 cmp.setup({
 
