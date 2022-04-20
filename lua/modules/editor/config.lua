@@ -473,47 +473,6 @@ function config.gomove()
     })
 end
 
---- to be updated  - better way of doing this im sure .
-function config.side_bar()
-    local sidebar = require("sidebar-nvim")
-    local opts = {
-        -- i dont want this
-        open = false,
-        disable_default_keybindings = true,
-        side = "left",
-        initial_width = 30,
-        update_interval = 900,
-        sections = {
-            "datetime",
-            "git",
-            "diagnostics",
-            "symbols",
-            "todos",
-        },
-        section_separator = "─────",
-        bindings = {
-            ["q"] = function()
-                require("sidebar-nvim").close()
-            end,
-
-            ["<C-q>"] = function()
-                require("sidebar-nvim").close()
-            end,
-        },
-        datetime = { format = "%a %b %d, %H:%M", clocks = { { name = "こんにちは" } } },
-        todos = { ignored_paths = { "~" } },
-        disable_closing_prompt = false,
-        dap = {
-            breakpoints = {
-                icon = "",
-            },
-        },
-    }
-    sidebar.setup(opts)
-
-    -- vim.cmd.("link SidebarNvimLspDiagnosticsTotalNumber Normal")
-end
-
 function config.dial_setup()
     vim.keymap.set({ "n", "x" }, "<C-a>", "<Plug>(dial-increment)")
     vim.keymap.set({ "n", "x" }, "<C-x>", "<Plug>(dial-decrement)")
@@ -521,6 +480,24 @@ function config.dial_setup()
     vim.keymap.set("x", "<C-x>", "<Plug>(dial-decrement-additional)")
 end
 
+function config.autosave()
+    local autosave = require("autosave")
+    autosave.setup({
+        enabled = false,
+        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+        events = { "InsertLeave", "TextChanged" },
+        conditions = {
+            exists = true,
+            filename_is_not = {},
+            filetype_is_not = {},
+            modifiable = true,
+        },
+        write_all_buffers = false,
+        on_off_commands = true,
+        clean_command_line_interval = 0,
+        debounce_delay = 135,
+    })
+end
 function config.winshift()
     require("winshift").setup({
         highlight_moving_win = true, -- Highlight the window being moved

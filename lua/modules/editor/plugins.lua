@@ -40,11 +40,6 @@ editor["windwp/nvim-autopairs"] = {
     opt = true,
 }
 
--- TODO: Change this with current cursor word
-editor["kana/vim-niceblock"] = {
-    opt = true,
-}
-
 -- TODO: Lazy Load this
 editor["max397574/dyn_help.nvim"] = {}
 
@@ -547,12 +542,10 @@ editor["monaqa/dial.nvim"] = {
     end,
 }
 
-editor["sidebar-nvim/sidebar.nvim"] = {
-    ft = { "python", "lua", "c", "cpp", "prolog" },
-    -- Section is loaded through cache .
+editor["Pocco81/AutoSave.nvim"] = {
+    cmd = { "ASToggle", "ASOn", "ASOff" },
     opt = true,
-    branch = "dev",
-    config = conf.side_bar,
+    config = conf.autosave,
 }
 
 editor["nyngwang/NeoZoom.lua"] = {
@@ -578,7 +571,7 @@ editor["sindrets/winshift.nvim"] = {
 }
 
 editor["declancm/cinnamon.nvim"] = {
-    keys = { "<C-U>", "<C-D>", "<C-d>", "<C-B>", "<C-F>", "<PageUp>", "<PageDown>" },
+    event = "Winscrolled",
     config = function()
         require("cinnamon").setup({
             extra_keymaps = true,
