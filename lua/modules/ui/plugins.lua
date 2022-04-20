@@ -19,6 +19,15 @@ ui["rebelot/heirline.nvim"] = {
     opt = true,
 }
 
+ui["b0o/incline.nvim"] = {
+    opt = true,
+    ft = { "python", "lua", "c", "cpp", "rust" },
+    after = "heirline.nvim",
+    config = function()
+        require("incline").setup()
+    end,
+}
+
 ui["akinsho/bufferline.nvim"] = {
     config = conf.nvim_bufferline,
     event = "UIEnter",
