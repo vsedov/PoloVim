@@ -3,7 +3,6 @@ M.coding_support = function()
     vim.cmd([[
 			  cnoreabbrev <expr> Cp ((getcmdtype()==':'&&getcmdpos()<=3)?'C p':'Cp')
 			  cnoreabbrev <expr> Cd ((getcmdtype()==':'&&getcmdpos()<=3)?'Cdisplay':'Cd')
-
     		cnoreabbrev pc PackerCompile<CR>
     		cnoreabbrev pu PackerUpdate<CR>
     		cnoreabbrev ps PackerSync<CR>
@@ -377,6 +376,7 @@ M.language_support = function()
 		inoreabbrev sitll still
 		inoreabbrev sleect select
 		inoreabbrev smae same
+		inoreabbrev somethign something
 		inoreabbrev smoe some
 		inoreabbrev sned send
 		inoreabbrev soem some
