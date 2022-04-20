@@ -491,14 +491,14 @@ tools["marekzidek/vim-nayvy"] = {
     ft = "python",
     run = ":UpdateRemotePlugins",
     config = function()
-        vim.g.nayvy_import_config_path = "$HOME/nayvy.py"
+        -- vim.g.nayvy_import_config_path = "$HOME/nayvy.py"
         vim.g.nayvy_pyproject_root_markers = {
             "pyproject.toml",
             "setup.py",
             "setup.cfg",
             "requirements.txt",
         }
-        vim.g.nayvy_linter_for_fix = "flake8"
+        -- vim.g.nayvy_linter_for_fix = "flake8"
     end,
 }
 
