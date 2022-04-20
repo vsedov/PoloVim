@@ -317,6 +317,14 @@ add_cmd("LangTree", function()
     ShowLangTree()
 end, {})
 
+
+add_cmd("ClearUndo", function()
+    local old = vim.opt.undolevels
+    vim.opt.undolevels = -1
+    vim.cmd([[exe "normal a \<BS>\<Esc>"]])
+    vim.opt.undolevels = old
+end, {})
+
 vim.cmd("command! -nargs=+ -complete=file Grep " .. "lua vim.api.nvim_exec([[grep! <args> | redraw! | copen]], true)")
 vim.cmd("command! -nargs=+ -complete=file LGrep " .. "lua vim.api.nvim_exec([[lgrep! <args> | redraw! | lopen]], true)")
 
