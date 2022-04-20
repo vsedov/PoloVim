@@ -159,13 +159,8 @@ local sources = {
 }
 
 local function use_tabnine()
-    local valid_files = { "python", "c", "lua", "cpp", "rust" }
-    for _, i in pairs(valid_files) do
-        if vim.o.ft == i then
-            return true
-        end
-    end
-    return false
+    local valid_file_type = { "python", "lua", "cpp", "c", "rust" }
+    return (vim.tbl_contains(valid_file_type, vim.o.filetype))
 end
 
 if sell_your_soul() then
