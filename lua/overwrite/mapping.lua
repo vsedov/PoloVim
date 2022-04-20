@@ -4,7 +4,6 @@ local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
 -- local map_args = bind.map_args
 local add_cmd = vim.api.nvim_create_user_command
-
 local loader = require("packer").loader
 local K = {}
 
@@ -316,7 +315,6 @@ end
 add_cmd("LangTree", function()
     ShowLangTree()
 end, {})
-
 
 add_cmd("ClearUndo", function()
     local old = vim.opt.undolevels

@@ -47,7 +47,7 @@ return {
             ["hadolint"] = null_ls.builtins.diagnostics.hadolint, -- docker
             ["eslint_d"] = null_ls.builtins.diagnostics.eslint_d,
             ["prettierd"] = null_ls.builtins.formatting.prettierd,
-            -- ["selene"]= null_ls.builtins.diagnostics.selene,
+            -- ["selene"]= null_ls.builtins.diagnostics.selene, -- doesnt like gobals and i cant shut it up .
             ["stylua"] = null_ls.builtins.formatting.stylua.with({
                 extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml") },
             }),
@@ -100,7 +100,9 @@ return {
                     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
                     -- vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
                     -- Convert this using vim.api.nvim_create_autocmd()
+                    vim.api.nvim_create_augroup("LspFormatting", { clear = true })
                     vim.api.nvim_create_autocmd("BufWritePre", {
+                        group = "LspFormatting",
                         callback = function()
                             if vim.bo.filetype == "python" then
                                 vim.cmd([[NayvyImports]])
