@@ -1,7 +1,6 @@
 local enable = true
 local langtree = true
 local lines = vim.fn.line("$")
-_G.lprint = require("utils.log").lprint
 
 local treesitter = function()
     lprint("loading treesitter")

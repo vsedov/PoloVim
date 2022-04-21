@@ -8,6 +8,7 @@ require("modules.completion.snippets")
 local rhs = function(rhs_str)
     return vim.api.nvim_replace_termcodes(rhs_str, true, true, true)
 end
+
 -- local kind = cmp.lsp.CompletionItemKind
 
 local luasnip = require("luasnip")
@@ -146,21 +147,36 @@ local check_backspace = function()
 end
 
 local sources = {
+    { name = "nvim_lsp_signature_help", priority = 10 },
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
     { name = "buffer", priority = 7, keyword_length = 4 },
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
+    { name = "cmdline", priority = 4 },
     { name = "treesitter", keyword_length = 2 },
     { name = "neorg", priority = 6 },
-    { name = "nvim_lsp_signature_help", priority = 10 },
+    { name = "latex_symbols", priority = 1 },
 }
+
+local function use_tabnine()
+    local valid_file_type = { "python", "lua", "cpp", "c", "rust" }
+    return (vim.tbl_contains(valid_file_type, vim.o.filetype))
+end
+
+if sell_your_soul() then
+    require("packer").loader("copilot.lua")
+    table.insert(sources, { name = "copilot", priority = 10 })
+end
+if use_tabnine() then
+    require("packer").loader("cmp-tabnine")
+    table.insert(sources, { name = "cmp_tabnine", priority = 10 })
+end
+
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end
-if vim.o.ft == "python" then
-    table.insert(sources, { name = "cmp_tabnine", priority = 9 })
-end
+
 if vim.o.ft == "norg" then
     table.insert(sources, { name = "latex_symbols" })
 end
@@ -280,7 +296,6 @@ if vim.o.ft == "gitcommit" then
 end
 if vim.o.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
-    table.insert(sources, { name = "cmp_tabnine", priority = 7 })
 end
 if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "proto" then
     table.insert(sources, { name = "path" })
@@ -288,20 +303,16 @@ if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "p
     table.insert(sources, { name = "calc" })
 end
 
-if vim.o.ft == "cpp" or vim.o.ft == "c" then
-    table.insert(sources, { name = "cmp_tabnine", priority = 8 })
-end
-
 cmp.setup({
-
+    preselect = cmp.PreselectMode.Item,
     window = {
         completion = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
+            -- scrollbar = { "║" },
         },
         documentation = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
+            -- scrollbar = { "║" },
         },
     },
 
@@ -432,6 +443,7 @@ cmp.setup({
         end, {
             "i",
             "s",
+            "c",
         }),
 
         -- Avoid full fallback as it acts retardedly
@@ -447,6 +459,7 @@ cmp.setup({
         end, {
             "i",
             "s",
+            "c",
         }),
 
         ["<C-j>"] = cmp.mapping(function(fallback)
@@ -584,45 +597,44 @@ vim.api.nvim_create_autocmd("FileType", {
 -- if vim.o.ft ~= 'sql' then
 --   require'cmp'.setup.buffer { completion = {autocomplete = false} }
 -- end
--- cmp.setup.cmdline(":", {
---     window = {
---         completion = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
---             scrollbar = { "║" },
---         },
---         documentation = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
---             scrollbar = { "║" },
---         },
---     },
---     sources = cmp.config.sources({
---         { name = "path" },
---     }, {
---         { name = "cmdline" },
---     }),
---     enabled = function()
---         return true
---     end,
--- })
+cmp.setup.cmdline(":", {
+    window = {
+        completion = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+            scrollbar = { "║" },
+        },
+        documentation = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+            scrollbar = { "║" },
+        },
+    },
+    sources = cmp.config.sources({
 
--- cmp.setup.cmdline("/", {
---     sources = {
---         { name = "buffer", keyword_length = 1 },
---     },
---     enabled = function()
---         return true
---     end,
---     window = {
---         completion = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
---             scrollbar = { "║" },
---         },
---         documentation = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
---             scrollbar = { "║" },
---         },
---     },
--- })
+        { name = "cmdline", group_index = 1 },
+        -- { name = "cmdline_history", group_index = 2 },
+    }),
+    enabled = function()
+        return true
+    end,
+})
+
+cmp.setup.cmdline("/", {
+    window = {
+        completion = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+            scrollbar = { "║" },
+        },
+        documentation = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+            scrollbar = { "║" },
+        },
+    },
+    sources = {
+        -- { name = "cmdline_history" },
+        { name = "buffer" },
+        { name = "nvim_lsp_document_symbol" },
+    },
+})
 
 local neorg = require("neorg")
 
@@ -637,5 +649,5 @@ if neorg.is_loaded() then
 else
     neorg.callbacks.on_event("core.started", load_completion)
 end
-
-vim.cmd([[hi NormalFloat guibg=none]])
+-- TODO(vsedov) (18:06:44 - 17/04/22): Use vim.highlight to set this insterad
+-- vim.cmd([[hi NormalFloat guibg=none]])

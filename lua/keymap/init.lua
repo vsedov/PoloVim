@@ -5,6 +5,12 @@ local map_cmd = bind.map_cmd
 local map_args = bind.map_args
 -- local map_key = bind.map_key
 -- local global = require("core.global")
+vim.cmd([[
+  function! ExecuteMacroOverVisualRange()
+    echo "@".getcmdline()
+    execute ":'<,'>normal @".nr2char(getchar())
+  endfunction
+]])
 
 local plug_map = {
     -- Show syntax highlighting groups for word under cursor
@@ -51,13 +57,16 @@ local plug_map = {
         end
     end):with_silent(),
 
+    ["x|@"] = map_cmd(":<C-u>call ExecuteMacroOverVisualRange()<CR>"):with_noremap(),
+
     --------------- Commands -----------
     ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
     ["n|<C-]>"] = map_args("Template"),
-
     -- -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
     -- have this for the time, i might use some root , not usre .
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
+    -- ["n|j"] = map_cmd("<Plug>(accelerated_jk_gj)"):with_noremap()::with_silent(),
+    -- ["n|k"] = map_cmd("<Plug>(accelerated_jk_gk)"):with_noremap()::with_silent(),
 
     -- -- Plugin nvim-tree
     -- ["n|<Leader>e"] = map_cr("NvimTreeToggle"):with_noremap():with_silent(),
@@ -118,9 +127,6 @@ local plug_map = {
 
     -- -- Plugin Telescope
     ["v|<Leader>ga"] = map_cmd("<cmd>lua require('utils.telescope').code_actions()<CR>"):with_noremap():with_silent(),
-
-    ["n|<Leader>qf"] = map_cu("Telescope lsp_workspace_diagnostics"):with_noremap():with_silent(),
-
     ["n|<Leader>bb"] = map_cu("Telescope buffers"):with_noremap():with_silent(),
     ["n|<Leader><C-r>"] = map_cu("Telescope registers"):with_noremap():with_silent(),
     ["n|<Leader>fr"] = map_cmd("<cmd>Telescope registers<cr>"):with_noremap():with_silent(),
@@ -164,8 +170,8 @@ local plug_map = {
         :with_noremap()
         :with_silent(),
 
-    ["n|hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
-    ["n|hw"] = map_cmd(function()
+    ["n|<leader>hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>'):with_noremap():with_silent(),
+    ["n|<leader>hw"] = map_cmd(function()
         if require("dynamic_help.extras.statusline").available() ~= "" then
             require("dynamic_help").float_help(vim.fn.expand("<cword>"))
         else
@@ -208,16 +214,6 @@ local plug_map = {
 
     -- Plugin Vista or SymbolsOutline -- Symbol Breaks for the time .
     ["n|<Leader>v"] = map_cu("Vista!!"):with_noremap():with_silent(),
-
-    -- Plugin vim_niceblock
-    ["x|I"] = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
-    ["x|gI"] = map_cmd("v:lua.enhance_nice_block('gI')"):with_expr(),
-    ["x|A"] = map_cmd("v:lua.enhance_nice_block('A')"):with_expr(),
-    -- ["n|k"] = map_cmd([[v:count == 0 ? 'gk' : 'k']]):with_expr(),
-    -- ["n|j"] = map_cmd([[v:count == 0 ? 'gj' : 'j']]):with_expr(),
-
-    ["n||"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']]):with_silent():with_expr(),
-    ["n|_"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']]):with_silent():with_expr(),
 
     -- Plugin for debugigng
 
@@ -274,6 +270,11 @@ local plug_map = {
     ["v|'v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>"):with_noremap(),
     ["v|'c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>"):with_noremap(),
 
+    -- Greatest remap ever
+    ["v|<leader>p"] = map_cmd("_dP"):with_noremap():with_silent(),
+    -- Reverse Line
+    ["v|<leader>r"] = map_cmd([[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]):with_noremap():with_silent(),
+
     -- visual search
     ["v|//"] = map_cmd([[y/<C-R>"<CR>]]):with_noremap(),
     -- repeat macro
@@ -283,35 +284,75 @@ local plug_map = {
     ["n|<localleader>nf"] = map_cmd([[:vsp <C-R>=expand("%:p:h") . "/" <CR>]]):with_silent(),
 
     -- Refocus folds
-    ["n|z<leader>"] = map_cmd([[zMzvzz]]):with_noremap(),
+    ["n|z<leader>"] = map_cmd([[zMzvzz]]):with_noremap(), -- Refocus folds
+    -- Make zO recursively open whatever top level fold we're in, no matter where the
+    -- cursor happens to be.
     ["n|z0"] = map_cmd([[zCzO]]):with_noremap(),
+
+    -- Toggle top/center/bottom
     ["n|zz"] = map_cmd([[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']])
         :with_noremap()
         :with_expr(),
 
-    -- new lines
+    -- -- new lines
     ["n|[["] = map_cmd([[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]):with_noremap(),
     ["n|]]"] = map_cmd([[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]):with_noremap(),
+    ["n|il"] = map_cmd([[i <ESC>l]]):with_noremap(),
+    ["n|ih"] = map_cmd([[i <ESC>h]]):with_noremap(),
 
     -- Replace word under cursor in Buffer (case-sensitive)
     -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
-    ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>"),
+    ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>"):with_noremap():with_silent(),
     -- Replace word under cursor on Line (case-sensitive)
     -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
-    ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>"),
+    ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>"):with_noremap():with_silent(),
 
     ["n|<leader>["] = map_cmd([[:%s/\<<C-r>=expand("<cword>")<CR>\>/]]):with_noremap(),
     ["v|<leader>]"] = map_cmd([["zy:%s/<C-r><C-o>"/]]):with_noremap(),
 
     -- Credit: JGunn Choi ?il | inner line
-    ["x|al"] = map_cmd([[$o0]]):with_noremap(),
-    ["o|al"] = map_cmd([[<cmd>normal val<CR>]]):with_noremap(),
+    ["x|al"] = map_cmd([[$o0]]):with_noremap():with_silent(),
+    ["o|al"] = map_cmd([[<cmd>normal val<CR>]]):with_noremap():with_silent(),
 
-    ["x|il"] = map_cmd([[<Esc>^vg_]]):with_noremap(),
-    ["o|il"] = map_cmd([[<cmd>normal! ^vg_<CR>]]):with_noremap(),
+    ["x|il"] = map_cmd([[<Esc>^vg_]]):with_noremap():with_silent(),
+    ["o|il"] = map_cmd([[<cmd>normal! ^vg_<CR>]]):with_noremap():with_silent(),
 
-    ["x|ie"] = map_cmd([[gg0oG$]]):with_noremap(),
-    ["o|ie"] = map_cmd([[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]]):with_noremap(),
+    -- ?ie | entire object
+    ["x|ie"] = map_cmd([[gg0oG$]]):with_noremap():with_silent(),
+    ["o|ie"] = map_cmd([[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]]):with_expr():with_noremap(),
+
+    ["o|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
+    ["n|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
+    ["x|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
+
+    ["n|<C-U>"] = map_cmd(function()
+        local cursor = vim.api.nvim_win_get_cursor("0")
+        vim.api.nvim_feedkeys("b~", "n", true)
+        vim.defer_fn(function()
+            vim.api.nvim_win_set_cursor(0, cursor)
+        end, 1)
+    end):with_silent():with_noremap(),
+
+    ["i|<C-U>"] = map_cmd([[<ESC>b~A]]):with_silent():with_noremap(),
+    ["n|¢"] = map_cmd([[bl~lhe]]):with_silent():with_noremap(),
+    ["n||"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']]):with_silent():with_expr(),
+    ["n|_"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']]):with_silent():with_expr(),
+
+    ["i|!"] = map_cmd([[!<c-g>u]]):with_silent():with_noremap(),
+    ["i|."] = map_cmd([[.<c-g>u]]):with_silent():with_noremap(),
+    ["i|?"] = map_cmd([[?<c-g>u]]):with_silent():with_noremap(),
+
+    ["n|n"] = map_cmd([[nzzzv]]):with_noremap():with_silent(),
+    ["n|N"] = map_cmd([[Nzzzv]]):with_noremap():with_silent(),
+    -- Change two horizontally split windows to vertical splits
+    ["n|<localleader>wh"] = map_cmd([[<C-W>t <C-W>K]]):with_noremap():with_silent(),
+    -- Change two vertically split windows to horizontal splits
+    ["n|<localleader>wv"] = map_cmd([[<C-W>t <C-W>H]]):with_noremap():with_silent(),
+    ["n|<C-w>f"] = map_cmd([[<C-w>vgf]]):with_noremap():with_silent(),
+    -- -- Start new line from any cursor position
+    ["i|<S-Return>"] = map_cmd([[<C-o>o]]):with_noremap():with_silent(),
+    -- -- visually select the block of text I just pasted in Vim
+    ["n|gV"] = map_cmd([[`[v`]]):with_noremap():with_silent(),
 }
 
 return { map = plug_map }

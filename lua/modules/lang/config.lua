@@ -4,7 +4,30 @@ local config = {}
 -- local map_cu = bind.map_cu
 -- local map_cmd = bind.map_cmd
 -- local loader = require"packer".loader
-
+function config.filetype()
+    require("filetype").setup({
+        overrides = {
+            literal = {
+                ["kitty.conf"] = "kitty",
+                [".gitignore"] = "conf",
+            },
+            complex = {
+                [".clang*"] = "yaml",
+                [".*%.env.*"] = "sh",
+                [".*ignore"] = "conf",
+            },
+            extensions = {
+                tf = "terraform",
+                tfvars = "terraform",
+                hcl = "hcl",
+                tfstate = "json",
+                eslintrc = "json",
+                prettierrc = "json",
+                mdx = "markdown",
+            },
+        },
+    })
+end
 function config.nvim_treesitter()
     require("modules.lang.treesitter").treesitter()
 end
@@ -23,6 +46,23 @@ end
 
 function config.pyfold()
     require("modules.lang.treesitter").pyfold()
+end
+
+function config.neogen()
+    require("neogen").setup({
+        snippet_engine = "luasnip",
+        languages = {
+            lua = {
+                template = { annotation_convention = "emmylua" },
+            },
+            python = {
+                template = { annotation_convention = "numpydoc" },
+            },
+            c = {
+                template = { annotation_convention = "doxygen" },
+            },
+        },
+    })
 end
 
 function config.refactor()
@@ -252,8 +292,10 @@ end
 -- https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
 
 function config.context()
-    require("treesitter-context.config").setup({
+    require("treesitter-context").setup({
         enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        throttle = true, -- Throttles plugin updates (may improve performance)
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
     })
 end
 
@@ -295,12 +337,16 @@ function config.yabs()
                 default_task = "run",
                 tasks = {
                     run = {
-                        command = "python %", -- The command to run (% and other
-                        output = "terminal",
+                        command = "poetry run python %", -- The command to run (% and other
+                        output = "quickfix",
                         -- wildcards will be automatically
                         -- expanded)
                         type = "shell", -- The type of command (can be `vim`, `lua`, or
                         -- `shell`, default `shell`)
+                    },
+                    build = {
+                        command = "poetry run task lint", -- The command to run (% and other
+                        output = "quickfix", -- Where to show output of the
                     },
                 },
             },

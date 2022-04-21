@@ -31,8 +31,8 @@ tools["is0n/fm-nvim"] = {
         "Neomutt",
         "Lazygit",
         "Joshuto",
+        "Broot",
         "Ranger",
-        "Gitui",
         "Xplr",
         "Vifm",
         "Skim",
@@ -46,9 +46,8 @@ tools["is0n/fm-nvim"] = {
         require("fm-nvim").setup({
 
             ui = {
-
                 float = {
-                    border = "single",
+                    border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
                 },
             },
         })
@@ -105,28 +104,6 @@ tools["ThePrimeagen/harpoon"] = {
     end,
 }
 
--- -- IPython Mappings
--- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
--- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
--- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
--- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
-
--- -- Pytest Mappings
--- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
--- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
-
--- -- Poetry Mappings
--- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
--- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
-tools["~/GitHub/active_development/py.nvim"] = {
-    ft = { "python" },
-    config = function()
-        require("py").setup({
-            leader = "<leader><leader>",
-        })
-    end,
-}
-
 tools["natecraddock/workspaces.nvim"] = {
     module = "workspaces",
     config = function()
@@ -144,12 +121,10 @@ tools["natecraddock/workspaces.nvim"] = {
 }
 
 tools["nmac427/guess-indent.nvim"] = {
-    module = "guess-indent",
     event = "BufRead",
     config = function()
         require("guess-indent").setup({})
     end,
-    after = "nvim-treesitter",
 }
 -- github GH ui
 tools["pwntester/octo.nvim"] = {
@@ -238,6 +213,7 @@ tools["plasticboy/vim-markdown"] = {
 
 tools["ekickx/clipboard-image.nvim"] = {
     ft = { "norg", "markdown" },
+    cmd = { "PasteImg" },
     opt = true,
     config = conf.clipboardimage,
 }
@@ -265,6 +241,7 @@ tools["akinsho/toggleterm.nvim"] = {
     end,
 }
 
+-- think is this valid ?
 tools["liuchengxu/vim-clap"] = {
     cmd = { "Clap" },
     run = function()
@@ -459,7 +436,6 @@ tools["AckslD/nvim-neoclip.lua"] = {
     config = conf.neoclip,
 }
 
--- This can be lazy loaded probably, figure out how ?
 tools["camspiers/animate.vim"] = {
     opt = true,
 }
@@ -516,7 +492,14 @@ tools["marekzidek/vim-nayvy"] = {
     ft = "python",
     run = ":UpdateRemotePlugins",
     config = function()
-        vim.g.nayvy_import_config_path = "$HOME/nayvy.py"
+        -- vim.g.nayvy_import_config_path = "$HOME/nayvy.py"
+        vim.g.nayvy_pyproject_root_markers = {
+            "pyproject.toml",
+            "setup.py",
+            "setup.cfg",
+            "requirements.txt",
+        }
+        -- vim.g.nayvy_linter_for_fix = "flake8"
     end,
 }
 
@@ -526,14 +509,6 @@ tools["sQVe/sort.nvim"] = {
     config = function()
         require("sort").setup({})
     end,
-}
-
-tools["gelguy/wilder.nvim"] = {
-    opt = true,
-    requires = { "romgrk/fzy-lua-native", opt = true, after = "wilder.nvim" },
-    event = "CmdlineEnter",
-    config = conf.wilder,
-    run = ":UpdateRemotePlugins",
 }
 
 return tools

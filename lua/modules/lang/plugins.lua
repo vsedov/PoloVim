@@ -7,35 +7,13 @@ lang["nathom/filetype.nvim"] = {
     setup = function()
         vim.g.did_load_filetypes = 1
     end,
-    config = function()
-        require("filetype").setup({
-            overrides = {
-                literal = {
-                    ["kitty.conf"] = "kitty",
-                    [".gitignore"] = "conf",
-                },
-                complex = {
-                    [".clang*"] = "yaml",
-                    [".*%.env.*"] = "sh",
-                    [".*ignore"] = "conf",
-                },
-                extensions = {
-                    tf = "terraform",
-                    tfvars = "terraform",
-                    hcl = "hcl",
-                    tfstate = "json",
-                    eslintrc = "json",
-                    prettierrc = "json",
-                    mdx = "markdown",
-                },
-            },
-        })
-    end,
+    config = conf.filetype,
 }
 
 lang["nvim-treesitter/nvim-treesitter"] = {
     opt = true,
     run = ":TSUpdate",
+    commit = "bca65c068b92f19174dbba15d538315e8c89a5d6",
     config = conf.nvim_treesitter,
 }
 
@@ -61,22 +39,7 @@ lang["RRethy/nvim-treesitter-endwise"] = {
 lang["danymat/neogen"] = {
     module = { "neogen" },
     requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
-    config = function()
-        require("neogen").setup({
-            snippet_engine = "luasnip",
-            languages = {
-                lua = {
-                    template = { annotation_convention = "emmylua" },
-                },
-                python = {
-                    template = { annotation_convention = "numpydoc" },
-                },
-                c = {
-                    template = { annotation_convention = "doxygen" },
-                },
-            },
-        })
-    end,
+    config = conf.neogen,
 }
 
 -- Inline functions dont seem to work .
@@ -116,14 +79,7 @@ lang["ray-x/guihua.lua"] = {
     opt = true,
 }
 
--- lang["gcmt/wildfire.vim"] = {
---   setup = function()
---     vim.cmd([[nmap <leader>s <Plug>(wildfire-quick-select)]])
---   end,
---   fn = {'<Plug>(wildfire-fuel)', '<Plug>(wildfire-water)', '<Plug>(wildfire-quick-select)'}
--- }
-
-lang["romgrk/nvim-treesitter-context"] = {
+lang["lewis6991/nvim-treesitter-context"] = {
     event = "InsertEnter",
     config = conf.context,
 }
@@ -174,8 +130,9 @@ lang["lervag/vimtex"] = {
         }
     end,
 }
+------------------------------------------------------------------------------------------------------
 
-lang["andythigpen/nvim-coverage"] = {
+lang["vsedov/nvim-coverage"] = {
     ft = { "python" },
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
     opt = true,
@@ -183,6 +140,12 @@ lang["andythigpen/nvim-coverage"] = {
         require("coverage").setup()
     end,
 }
+lang["mgedmin/coverage-highlight.vim"] = {
+    ft = "python",
+    opt = true,
+    run = ":UpdateRemotePlugins",
+}
+------------------------------------------------------------------------------------------------------
 
 lang["mfussenegger/nvim-dap"] = {
     opt = true,
@@ -197,8 +160,7 @@ lang["mfussenegger/nvim-dap"] = {
     config = conf.dap,
 } -- cmd = "Luadev",
 
--- better python indent
-
+-- manual load when needs to be called
 lang["nvim-telescope/telescope-dap.nvim"] = {
     opt = true,
     requires = { "telescope.nvim", "nvim-dap" },
@@ -222,6 +184,7 @@ lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
 lang["jbyuki/one-small-step-for-vimkind"] = { opt = true, ft = { "lua" } }
 
+-- not the same as folkes version
 lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
 
 lang["rafcamlet/nvim-luapad"] = {
@@ -250,7 +213,7 @@ lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
 
 -- lang["RRethy/vim-illuminate"] = {opt=true, ft = {"go"}}
 
---
+------------------------------------------------------------------------------------------------------
 lang["michaelb/sniprun"] = {
     cmd = { "'<,'>SnipRun", "SnipRun" },
     opt = true,
@@ -272,7 +235,6 @@ lang["dccsillag/magma-nvim"] = {
 
     ft = "python",
     opt = true,
-    runs = "UpdateRemotePlugins",
     requires = "rcarriga/nvim-notify",
     run = ":UpdateRemotePlugins",
     config = conf.magma,
@@ -281,34 +243,52 @@ lang["dccsillag/magma-nvim"] = {
 lang["Vimjas/vim-python-pep8-indent"] = {
     ft = "python",
 }
+------------------------------------------------------------------------------------------------------
 
+-- -- IPython Mappings
+-- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
+-- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
+-- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
+-- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
+
+-- -- Pytest Mappings
+-- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
+-- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
+
+-- -- Poetry Mappings
+-- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
+-- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
+lang["~/GitHub/active_development/py.nvim"] = {
+    ft = { "python" },
+    opt = true,
+    config = function()
+        require("py").setup({
+            leader = "<leader><leader>",
+        })
+    end,
+}
+------------------------------------------------------------------------------------------------------
 lang["vim-test/vim-test"] = {
     opt = true,
 }
 
 -- lua testign
-lang["lewis6991/nvim-test"] = {
+lang["neovim/nvimdev.nvim"] = {
     ft = "lua",
     opt = true,
+    config = function()
+        vim.g.nvimdev_auto_ctags = 1
+        vim.g.nvimdev_auto_lint = 1
+    end,
 }
 
 lang["rcarriga/vim-ultest"] = {
-    requires = { "vim-test/vim-test", opt = true },
+    requires = { "vim-test/vim-test", opt = true, after = "vim-ultest" },
     run = ":UpdateRemotePlugins",
     opt = true,
 }
 
--- This might not be needed
-lang["mgedmin/coverage-highlight.vim"] = {
-    ft = "python",
-    opt = true,
-    run = ":UpdateRemotePlugins",
-}
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
 
 -- JqxList and JqxQuery json browsing, format
 lang["gennaro-tedesco/nvim-jqx"] = {

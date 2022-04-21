@@ -39,6 +39,7 @@ GetTsxIndent	after/indent/typescriptreact.vim	/^fu! GetTsxIndent()$/;"	f
 H	after/ftplugin/qf.vim	/^nnoremap <buffer> H :colder<CR>$/;"	m
 Hex	scripts/tools.vim	/^command Hex :%!xxd$/;"	c
 I love speed, I love plugins, Speed implies Plugins	README.md	/^## I love speed, I love plugins, Speed implies Plugins$/;"	s	chapter:A Full Neovim IDE
+Installation	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/README.md	/^## Installation$/;"	s	chapter:luasnip-latex-snippets
 Jsonformat	scripts/tools.vim	/^command Jsonformat %!python -m json.tool$/;"	c
 K.get_keymaps	lua/overwrite/mapping.lua	/^K.get_keymaps = function()$/;"	f
 Kwbd	scripts/tools.vim	/^command! Kwbd call s:Kwbd(1)$/;"	c
@@ -77,12 +78,14 @@ M.code_actions	lua/utils/telescope.lua	/^M.code_actions = function()$/;"	f
 M.coding_support	lua/vscripts/race_conditions.lua	/^M.coding_support = function()$/;"	f
 M.colorscheme	lua/utils/telescope.lua	/^function M.colorscheme()$/;"	f
 M.command_history	lua/utils/telescope.lua	/^M.command_history = function()$/;"	f
+M.comment	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/util/utils.lua	/^M.comment = function()$/;"	f
 M.common_capabilities	lua/modules/completion/lsp/utils/init.lua	/^function M.common_capabilities()$/;"	f
 M.common_on_attach	lua/modules/completion/lsp/utils/init.lua	/^function M.common_on_attach(client, bufnr)$/;"	f
 M.common_on_init	lua/modules/completion/lsp/utils/init.lua	/^function M.common_on_init(client, bufnr)$/;"	f
 M.curbuf	lua/utils/telescope.lua	/^M.curbuf = function()$/;"	f
 M.disable_heavy_plugins	lua/core/event_helper.lua	/^function M.disable_heavy_plugins()$/;"	f
 M.enhance_attach	lua/modules/completion/lsp/utils/init.lua	/^function M.enhance_attach(user_config)$/;"	f
+M.env	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/util/utils.lua	/^M.env = function(name)$/;"	f
 M.exists	lua/utils/helper.lua	/^function M.exists(var)$/;"	f
 M.file_browser	lua/utils/telescope.lua	/^M.file_browser = function()$/;"	f
 M.files	lua/utils/telescope.lua	/^M.files = function(opts)$/;"	f
@@ -108,7 +111,10 @@ M.grep_string_visual	lua/utils/telescope.lua	/^M.grep_string_visual = function()
 M.handleGlobalVariable	lua/utils/helper.lua	/^function M.handleGlobalVariable(var, opts)$/;"	f
 M.has_ts	lua/utils/treesitter_utils.lua	/^function M.has_ts(buf)$/;"	f
 M.help_tags	lua/utils/telescope.lua	/^M.help_tags = function()$/;"	f
+M.hl_search	lua/core/event_helper.lua	/^function M.hl_search()$/;"	f
+M.init	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/init.lua	/^M.init = function()$/;"	f
 M.installed_plugins	lua/utils/telescope.lua	/^M.installed_plugins = function()$/;"	f
+M.is_math	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/util/utils.lua	/^M.is_math = function()$/;"	f
 M.is_node	lua/utils/treesitter_utils.lua	/^function M.is_node(range, node, buf)$/;"	f
 M.isempty	lua/utils/helper.lua	/^function M.isempty(s)$/;"	f
 M.jump	lua/utils/telescope.lua	/^M.jump = function()$/;"	f
@@ -132,9 +138,12 @@ M.multi_selection_open_tab	lua/utils/telescope.lua	/^M.multi_selection_open_tab 
 M.multi_selection_open_vsplit	lua/utils/telescope.lua	/^M.multi_selection_open_vsplit = function(prompt_bufnr)$/;"	f
 M.neoclip	lua/utils/telescope.lua	/^M.neoclip = function()$/;"	f
 M.newbinsource	lua/utils/helper.lua	/^function M.newbinsource(cmd)$/;"	f
+M.no_backslash	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/util/utils.lua	/^M.no_backslash = function(line_to_cursor, matched_trigger)$/;"	f
+M.not_math	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/util/utils.lua	/^M.not_math = function()$/;"	f
 M.open_file	lua/modules/completion/lsp/utils/peek.lua	/^M.open_file = function()$/;"	f
 M.open_log	lua/utils/helper.lua	/^function M.open_log()$/;"	f
 M.parse_diagnostic	lua/modules/completion/lsp/utils/peek.lua	/^M.parse_diagnostic = function(diagnostic)$/;"	f
+M.pipe	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/util/utils.lua	/^M.pipe = function(fns)$/;"	f
 M.prepare	lua/modules/lang/dap/init.lua	/^M.prepare = function()$/;"	f
 M.preview_location	lua/modules/completion/lsp/utils/peek.lua	/^M.preview_location = function(location, context, before_context)$/;"	f
 M.preview_location_callback	lua/modules/completion/lsp/utils/peek.lua	/^M.preview_location_callback = function(_, result)$/;"	f
@@ -157,14 +166,17 @@ M.setup	lua/modules/completion/lsp/utils/list.lua	/^M.setup = function()$/;"	f
 M.setup	lua/modules/ui/heirline.lua	/^function M.setup()$/;"	f
 M.show_line_diagnostics	lua/modules/completion/lsp/utils/handlers.lua	/^function M.show_line_diagnostics()$/;"	f
 M.split	lua/utils/helper.lua	/^function M.split(inputstr, sep)$/;"	f
+M.stop_hl	lua/core/event_helper.lua	/^function M.stop_hl()$/;"	f
 M.testStart	lua/modules/lang/language_utils.lua	/^M.testStart = function()$/;"	f
 M.theme	lua/utils/telescope.lua	/^M.theme = function(opts)$/;"	f
 M.toggle_active	lua/modules/completion/lsp/utils/list.lua	/^M.toggle_active = function()$/;"	f
 M.toggle_diagnostics_visibility	lua/modules/completion/lsp/utils/peek.lua	/^M.toggle_diagnostics_visibility = function()$/;"	f
+M.with_priority	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/util/utils.lua	/^M.with_priority = function(snip, priority)$/;"	f
 M.x86	lua/utils/helper.lua	/^function M.x86()$/;"	f
 MUtils.BS	lua/modules/editor/config.lua	/^        MUtils.BS = function()$/;"	f
 MUtils.CR	lua/modules/editor/config.lua	/^        MUtils.CR = function()$/;"	f
 MaximizerToggle	scripts/tools.vim	/^command! -bang -nargs=0 -range MaximizerToggle :call s:toggle(<bang>0)/;"	c
+Misc	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/README.md	/^## Misc$/;"	s	chapter:luasnip-latex-snippets
 NeorgClipboardImage	clipboard_neorg.vim	/^function! NeorgClipboardImage() abort$/;"	f
 PackClean	min/minipac.vim	/^command! PackClean  call PackInit() | call minpac#clean()$/;"	c
 PackInit	min/minipac.vim	/^function! PackInit() abort$/;"	f
@@ -175,6 +187,7 @@ Packer:load_packer	lua/core/pack.lua	/^function Packer:load_packer()$/;"	f
 Packer:load_plugins	lua/core/pack.lua	/^function Packer:load_plugins()$/;"	f
 R	lua/utils/helper.lua	/^R = function(name)$/;"	f
 RELOAD	lua/utils/helper.lua	/^function RELOAD(module)$/;"	f
+Roadmap	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/README.md	/^## Roadmap$/;"	s	chapter:luasnip-latex-snippets
 Run_file	lua/modules/tools/toggleterm.lua	/^local function Run_file()$/;"	f
 SUM:                           104           1519           1748           9523	README.md	/^SUM:                           104           1519           1748           9523$/;"	s	chapter:A Full Neovim IDE
 Scratch	scripts/tools.vim	/^command! Scratch new | setlocal bt=nofile bh=wipe nobl noswapfile nu$/;"	c
@@ -187,12 +200,12 @@ SynTSXBlockEnd	after/indent/typescriptreact.vim	/^fu! SynTSXBlockEnd(syns)$/;"	f
 SynTSXContinues	after/indent/typescriptreact.vim	/^fu! SynTSXContinues(cursyn, prevsyn)$/;"	f
 SynTSXDepth	after/indent/typescriptreact.vim	/^fu! SynTSXDepth(syns)$/;"	f
 SynXMLish	after/indent/typescriptreact.vim	/^fu! SynXMLish(syns)$/;"	f
-This folder is used for testing my plugins (lsp_signature, go.nvim, navigator) in different setup	min/README.md	/^## This folder is used for testing my plugins (lsp_signature, go.nvim, navigator) in different s/;"	s
 TrimmedDirectory	usefull_dead_files/eviline.lua	/^local TrimmedDirectory = function(dir)$/;"	f
 WRAP	lua/utils/profiler.lua	/^WRAP = function(fn)$/;"	f
 WhitespaceErase	plugin/whitespace.vim	/^command! -range=% WhitespaceErase call <SID>WhitespaceErase(<line1>, <line2>)$/;"	c
 WhitespaceNext	plugin/whitespace.vim	/^command! -range=% WhitespaceNext call <SID>WhitespaceJump(1, <line1>, <line2>)$/;"	c
 WhitespacePrev	plugin/whitespace.vim	/^command! -range=% WhitespacePrev call <SID>WhitespaceJump(-1, <line1>, <line2>)$/;"	c
+Why?	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/README.md	/^## Why?$/;"	s	chapter:luasnip-latex-snippets
 ["<C-d>"]	lua/modules/completion/cmp.lua	/^        ["<C-d>"] = cmp.mapping(function(fallback)$/;"	f
 ["<C-f>"]	lua/modules/completion/cmp.lua	/^        ["<C-f>"] = cmp.mapping(function(fallback)$/;"	f
 ["<C-j>"]	lua/modules/completion/cmp.lua	/^        ["<C-j>"] = cmp.mapping(function(fallback)$/;"	f
@@ -251,6 +264,7 @@ _G.toggleterm_jump_traceback	lua/modules/tools/toggleterm.lua	/^_G.toggleterm_ju
 _G.toggleterm_wrap	lua/modules/tools/toggleterm.lua	/^_G.toggleterm_wrap = function(arg, count)$/;"	f
 _G.ts_refactors	lua/modules/lang/config.lua	/^    _G.ts_refactors = function()$/;"	f
 _G.update_choice_popup	lua/modules/completion/snippets/choice_popup.lua	/^function _G.update_choice_popup(choiceNode)$/;"	f
+_G.use_efm	lua/core/helper.lua	/^        _G.use_efm = function()$/;"	f
 _G.use_gitsigns	lua/core/helper.lua	/^        _G.use_gitsigns = function()$/;"	f
 _G.use_nulls	lua/core/helper.lua	/^        _G.use_nulls = function()$/;"	f
 __author__	startuptest/tmp.py	/^__author__ = "Vivian Sedov"$/;"	v
@@ -263,7 +277,9 @@ _refactor	lua/modules/lang/config.lua	/^        local function _refactor(prompt_
 ```	README.md	/^```$/;"	s	chapter:A Full Neovim IDE
 a	lua/modules/completion/snippets/python.lua	/^            local a = vim.tbl_map(function(item)$/;"	f
 a	lua/modules/completion/snippets/python.lua	/^    local a = vim.tbl_map(function(item)$/;"	f
+action	lua/modules/completion/cmp.lua	/^                action = function(sources, trigger_char, callback, params, git_info)$/;"	f
 add	lua/core/timer.lua	/^    add = function(fn)$/;"	f
+add_lsp_buffer_keybindings	lua/modules/completion/lsp/utils/init.lua	/^local function add_lsp_buffer_keybindings(client, bufnr)$/;"	f
 attach	lua/modules/lang/dap/debugHelper.lua	/^local function attach()$/;"	f
 attach	lua/modules/lang/dap/jest.lua	/^local function attach()$/;"	f
 attachToRemote	lua/modules/lang/dap/debugHelper.lua	/^local function attachToRemote()$/;"	f
@@ -285,6 +301,8 @@ bind_option	lua/overwrite/options.lua	/^local function bind_option(opts)$/;"	f
 buf_only	lua/internal/bufonly.lua	/^local function buf_only()$/;"	f
 buffer_find_root_dir	lua/internal/fsevent.lua	/^local function buffer_find_root_dir(bufnr, is_root_path)$/;"	f
 buffer_not_empty	usefull_dead_files/eviline.lua	/^local buffer_not_empty = function()$/;"	f
+build_snippet	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_rA_no_backslash.lua	/^local build_snippet = function(trig, node, match, priority, name)$/;"	f
+build_with_priority	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_rA_no_backslash.lua	/^local build_with_priority = function(trig, node, priority, name)$/;"	f
 builtin.dotfiles	lua/utils/telescope.lua	/^        builtin.dotfiles = function(opts)$/;"	f
 buttons	lua/modules/editor/config.lua	/^        buttons = true, -- Configure Rich Presence button(s), either a boolean to enable\/disabl/;"	f
 callback	lua/core/lazy.lua	/^        callback = function()$/;"	f
@@ -311,17 +329,19 @@ config	lua/modules/editor/plugins.lua	/^    config = function()$/;"	f
 config	lua/modules/lang/null-ls/init.lua	/^    config = function()$/;"	f
 config	lua/modules/lang/plugins.lua	/^    config = function()$/;"	f
 config	lua/modules/tools/plugins.lua	/^    config = function()$/;"	f
+config	lua/modules/ui/plugins.lua	/^            config = function()$/;"	f
 config	lua/modules/ui/plugins.lua	/^    config = function()$/;"	f
 config	lua/modules/user/plugins.lua	/^    config = function()$/;"	f
 config	min/init_paq.lua	/^config = function()$/;"	f
-config.aerial	lua/modules/lang/config.lua	/^function config.aerial()$/;"	f
-config.ale	lua/modules/completion/config.lua	/^function config.ale()$/;"	f
 config.aurora	lua/modules/ui/config.lua	/^function config.aurora()$/;"	f
 config.autopairs	lua/modules/editor/config.lua	/^function config.autopairs()$/;"	f
+config.beacon	lua/modules/editor/config.lua	/^function config.beacon()$/;"	f
 config.blankline	lua/modules/ui/config.lua	/^function config.blankline()$/;"	f
 config.bqf	lua/modules/tools/config.lua	/^function config.bqf()$/;"	f
 config.buffers_close	lua/modules/ui/config.lua	/^function config.buffers_close()$/;"	f
 config.catppuccin	lua/modules/ui/config.lua	/^function config.catppuccin()$/;"	f
+config.chalk	lua/modules/ui/config.lua	/^function config.chalk()$/;"	f
+config.clangd	lua/modules/completion/config.lua	/^function config.clangd()$/;"	f
 config.clap	lua/modules/tools/config.lua	/^function config.clap()$/;"	f
 config.clap_after	lua/modules/tools/config.lua	/^function config.clap_after()$/;"	f
 config.clipboardimage	lua/modules/tools/config.lua	/^function config.clipboardimage()$/;"	f
@@ -338,6 +358,8 @@ config.discord	lua/modules/editor/config.lua	/^function config.discord()$/;"	f
 config.dogrun	lua/modules/ui/config.lua	/^function config.dogrun()$/;"	f
 config.emmet	lua/modules/completion/config.lua	/^function config.emmet()$/;"	f
 config.endwise	lua/modules/lang/config.lua	/^function config.endwise()$/;"	f
+config.fidget	lua/modules/tools/config.lua	/^function config.fidget()$/;"	f
+config.filetype	lua/modules/lang/config.lua	/^function config.filetype()$/;"	f
 config.floaterm	lua/modules/tools/config.lua	/^function config.floaterm()$/;"	f
 config.gitsigns	lua/modules/tools/config.lua	/^function config.gitsigns()$/;"	f
 config.gomove	lua/modules/editor/config.lua	/^function config.gomove()$/;"	f
@@ -359,7 +381,9 @@ config.magma	lua/modules/lang/config.lua	/^function config.magma()$/;"	f
 config.markdown	lua/modules/tools/config.lua	/^function config.markdown()$/;"	f
 config.minimap	lua/modules/ui/config.lua	/^function config.minimap()$/;"	f
 config.mkdp	lua/modules/tools/config.lua	/^function config.mkdp()$/;"	f
+config.neo_tree	lua/modules/ui/config.lua	/^function config.neo_tree()$/;"	f
 config.neoclip	lua/modules/tools/config.lua	/^function config.neoclip()$/;"	f
+config.neogen	lua/modules/lang/config.lua	/^function config.neogen()$/;"	f
 config.neogit	lua/modules/tools/config.lua	/^function config.neogit()$/;"	f
 config.neorunner	lua/modules/lang/config.lua	/^function config.neorunner()$/;"	f
 config.nightfly	lua/modules/ui/config.lua	/^function config.nightfly()$/;"	f
@@ -367,7 +391,6 @@ config.notify	lua/modules/ui/config.lua	/^function config.notify()$/;"	f
 config.nvcode	lua/modules/ui/config.lua	/^function config.nvcode()$/;"	f
 config.nvim_bufferline	lua/modules/ui/config.lua	/^function config.nvim_bufferline()$/;"	f
 config.nvim_lsp	lua/modules/completion/config.lua	/^function config.nvim_lsp()$/;"	f
-config.nvim_tree_setup	lua/modules/ui/config.lua	/^function config.nvim_tree_setup()$/;"	f
 config.nvim_treesitter	lua/modules/lang/config.lua	/^function config.nvim_treesitter()$/;"	f
 config.outline	lua/modules/lang/config.lua	/^function config.outline()$/;"	f
 config.paperplanes	lua/modules/tools/config.lua	/^function config.paperplanes()$/;"	f
@@ -405,10 +428,10 @@ config.vim_dadbod_ui	lua/modules/tools/config.lua	/^function config.vim_dadbod_u
 config.vim_sonictemplate	lua/modules/completion/config.lua	/^function config.vim_sonictemplate()$/;"	f
 config.vim_test	lua/modules/tools/config.lua	/^function config.vim_test()$/;"	f
 config.vim_vista	lua/modules/tools/config.lua	/^function config.vim_vista()$/;"	f
-config.vim_vsnip	lua/modules/completion/config.lua	/^function config.vim_vsnip()$/;"	f
 config.vmulti	lua/modules/editor/config.lua	/^function config.vmulti()$/;"	f
 config.wilder	lua/modules/tools/config.lua	/^function config.wilder()$/;"	f
 config.windline	lua/modules/ui/config.lua	/^function config.windline()$/;"	f
+config.winshift	lua/modules/editor/config.lua	/^function config.winshift()$/;"	f
 config.worktree	lua/modules/tools/config.lua	/^function config.worktree()$/;"	f
 config.yabs	lua/modules/lang/config.lua	/^function config.yabs()$/;"	f
 config.zen	lua/modules/editor/config.lua	/^function config.zen()$/;"	f
@@ -454,6 +477,11 @@ expand	min/init_pack.lua	/^        expand = function(args)$/;"	f
 expand	min/init_paq.lua	/^        expand = function(args)$/;"	f
 f	lua/modules/completion/snippets/all.lua	/^local f = ls.function_node$/;"	f
 f	lua/modules/completion/snippets/init.lua	/^local f = ls.function_node$/;"	f
+f	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_bwA.lua	/^local f = ls.function_node$/;"	f
+f	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_iA.lua	/^local f = ls.function_node$/;"	f
+f	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_rA_no_backslash.lua	/^local f = ls.function_node$/;"	f
+f	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_wRA_no_backslash.lua	/^local f = ls.function_node$/;"	f
+f	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_wrA.lua	/^local f = ls.function_node$/;"	f
 f	lua/modules/completion/snippets/latex/tex_math.lua	/^local f = ls.function_node$/;"	f
 f	lua/modules/completion/snippets/lua.lua	/^local f = ls.function_node$/;"	f
 f	lua/modules/completion/snippets/norg_snip.lua	/^local f = ls.function_node$/;"	f
@@ -462,7 +490,12 @@ f	lua/modules/completion/snippets/sniputils.lua	/^local f = ls.function_node$/;"
 feed	lua/core/event_helper.lua	/^        local function feed(keys)$/;"	f
 fg	lua/utils/ui_overwrite.lua	/^local function fg(group, color, args)$/;"	f
 fg_bg	lua/utils/ui_overwrite.lua	/^local function fg_bg(group, fgcol, bgcol, args)$/;"	f
+fidget	lua/modules/tools/config.lua	/^            fidget = function(fidget_name, spinner)$/;"	f
 file_explorer_text	lua/modules/editor/config.lua	/^        file_explorer_text = "Browsing %s", -- Format string rendered when browsing a file explo/;"	f
+filter_fn	lua/modules/completion/cmp.lua	/^                filter_fn = function(trigger_char, issue)$/;"	f
+filter_fn	lua/modules/completion/cmp.lua	/^                filter_fn = function(trigger_char, mention)$/;"	f
+filter_fn	lua/modules/completion/cmp.lua	/^                filter_fn = function(trigger_char, pr)$/;"	f
+find	after/ftplugin/lua.lua	/^local function find(word, ...)$/;"	f
 format	lua/modules/completion/lsp/utils/config.lua	/^            format = function(diagnostic)$/;"	f
 format	usefull_dead_files/lspp.lua	/^        format = function(diagnostic)$/;"	f
 formatCommand	lua/modules/lang/efm.lua	/^                    formatCommand = "lua-format --indent-width 2 --tab-width 2 --no-use-tab --co/;"	f
@@ -493,6 +526,8 @@ git_worktree	lua/modules/tools/config.lua	/^    function git_worktree(arg)$/;"	f
 global:load_variables	lua/core/global.lua	/^function global:load_variables()$/;"	f
 golang_source	lua/telescope/_extensions/gosource.lua	/^local golang_source = function()$/;"	f
 gosource	lua/telescope/_extensions/gosource.lua	/^local gosource = function(opts)$/;"	f
+greek_postfix_completions	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_rA_no_backslash.lua	/^local greek_postfix_completions = function()$/;"	f
+handler	lua/modules/ui/config.lua	/^                handler = function()$/;"	f
 has_words_before	lua/modules/completion/cmp.lua	/^local has_words_before = function()$/;"	f
 has_words_before	min/init_pack.lua	/^local has_words_before = function()$/;"	f
 height_dropdown_nopreview	lua/utils/telescope.lua	/^local height_dropdown_nopreview = function(_, _, rows)$/;"	f
@@ -516,6 +551,7 @@ is_in_range	lua/utils/treesitter_utils.lua	/^local function is_in_range(linenr, 
 jls_extract_var	startuptest/test.py	/^jls_extract_var = pointer$/;"	v
 keep	lua/modules/completion/lsp/utils/handlers.lua	/^            keep = function()$/;"	f
 keybind	lua/modules/lang/dap/init.lua	/^local function keybind()$/;"	f
+keyword	after/ftplugin/lua.lua	/^local function keyword(word, callback)$/;"	f
 layout.custom	lua/utils/telescope.lua	/^layout.custom = function(self, columns, lines)$/;"	f
 leader_map	lua/core/init.lua	/^local leader_map = function()$/;"	f
 line_number_text	lua/modules/editor/config.lua	/^        line_number_text = "Line %s out of %s", -- Format string rendered when `enable_line_numb/;"	f
@@ -539,6 +575,7 @@ lspkind.cmp_format	lua/utils/kind.lua	/^function lspkind.cmp_format(opts)$/;"	f
 lspkind.init	lua/utils/kind.lua	/^function lspkind.init(opts)$/;"	f
 lspkind.setup	lua/utils/kind.lua	/^function lspkind.setup()$/;"	f
 lspkind.symbolic	lua/utils/kind.lua	/^function lspkind.symbolic(kind, opts)$/;"	f
+luasnip-latex-snippets	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/README.md	/^# luasnip-latex-snippets$/;"	c
 magma_binds	lua/modules/lang/language_utils.lua	/^local function magma_binds()$/;"	f
 main	startuptest/test.py	/^def main() -> None:$/;"	f	typeref:typename:None
 main	startuptest/tmp.c	/^main(int argc, char* argv[]) {$/;"	f	typeref:typename:int
@@ -564,6 +601,7 @@ notify_opts_injecter	lua/utils/Log.lua	/^    local notify_opts_injecter = functi
 numbers	lua/modules/ui/config.lua	/^            numbers = "none", -- function(opts) return string.format('%s·%s', opts.raise(opts.i/;"	f
 on_attach	after/ftplugin/java.lua	/^    on_attach = function(client, bufnr)$/;"	f
 on_attach	lua/modules/lang/efm.lua	/^    on_attach = function(client)$/;"	f
+on_attach	lua/modules/lang/null-ls/init.lua	/^            on_attach = function(client, bufnr)$/;"	f
 on_attach	lua/modules/tools/config.lua	/^    local function on_attach(bufnr)$/;"	f
 on_attach	min/init_paq.lua	/^            on_attach = function(client, bufnr)$/;"	f
 on_attach	usefull_dead_files/lspp.lua	/^    on_attach = function(client)$/;"	f
@@ -611,6 +649,9 @@ port	lua/modules/lang/dap/dap.lua	/^        port = function()$/;"	f
 port	lua/modules/lang/dap/lua.lua	/^        port = function()$/;"	f
 post_hook	lua/modules/editor/config.lua	/^        post_hook = function(ctx)$/;"	f
 post_open_hook	lua/modules/lang/config.lua	/^        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ra/;"	f
+postfix_completions	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_rA_no_backslash.lua	/^local postfix_completions = function()$/;"	f
+postfix_node	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_rA_no_backslash.lua	/^local postfix_node = f(function(_, snip)$/;"	f
+postfix_trig	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_rA_no_backslash.lua	/^local postfix_trig = function(match)$/;"	f
 pre_hook	lua/modules/editor/config.lua	/^        pre_hook = function(ctx)$/;"	f
 prefix	lua/modules/completion/lsp/utils/config.lua	/^            prefix = function(diagnostic, i, total)$/;"	f
 prefix	usefull_dead_files/lspp.lua	/^        prefix = function(diagnostic, i, total)$/;"	f
@@ -634,6 +675,7 @@ python_dataclass	lua/modules/completion/snippets/python.lua	/^local function pyt
 reading_text	lua/modules/editor/config.lua	/^        reading_text = "Reading %s", -- Format string rendered when a read-only or unmodifiable /;"	f
 rec_ls	lua/modules/completion/snippets/latex/tex.lua	/^rec_ls = function()$/;"	f
 rec_val	lua/modules/completion/snippets/lua.lua	/^local function rec_val()$/;"	f
+refresh_hunks_action	lua/modules/tools/plugins.lua	/^            refresh_hunks_action = function()$/;"	f
 reloader	lua/utils/telescope.lua	/^local function reloader()$/;"	f
 require_import	lua/modules/completion/snippets/lua.lua	/^local function require_import(_, parent, old_state)$/;"	f
 require_var	lua/modules/completion/snippets/lua.lua	/^local require_var = function(args, _)$/;"	f
@@ -705,15 +747,16 @@ smart_tab	lua/modules/completion/cmp.lua	/^local smart_tab = function(opts)$/;"	
 snip_run_binds	lua/modules/lang/language_utils.lua	/^local function snip_run_binds()$/;"	f
 snippet:jump_from	lua/modules/completion/snippets/luasnip.lua	/^        function snippet:jump_from(dir, no_move)$/;"	f
 snippet:jump_into	lua/modules/completion/snippets/luasnip.lua	/^        function snippet:jump_into(dir, no_move)$/;"	f
+sort_by	lua/modules/completion/cmp.lua	/^                sort_by = function(issue)$/;"	f
+sort_by	lua/modules/completion/cmp.lua	/^                sort_by = function(pr)$/;"	f
 sort_by_mtime	lua/modules/ui/config.lua	/^    local function sort_by_mtime(a, b)$/;"	f
 sort_order	lua/modules/ui/config.lua	/^        sort_order = function(l, r)$/;"	f
 split	usefull_dead_files/eviline.lua	/^local split = function(str, pat)$/;"	f
 split_path	usefull_dead_files/eviline.lua	/^local split_path = function(str)$/;"	f
-start_telescope	lua/modules/ui/config.lua	/^    local function start_telescope(telescope_mode)$/;"	f
+stage_hunk_action	lua/modules/tools/plugins.lua	/^            stage_hunk_action = function()$/;"	f
 t	lua/overwrite/mapping.lua	/^local t = function(str)$/;"	f
 tabDropHandler	lua/modules/tools/config.lua	/^    local function tabDropHandler()$/;"	f
-telescope_find_files	lua/modules/ui/config.lua	/^    local function telescope_find_files(_)$/;"	f
-telescope_live_grep	lua/modules/ui/config.lua	/^    local function telescope_live_grep(_)$/;"	f
+task	lua/modules/tools/config.lua	/^            task = function(task_name, message, percentage)$/;"	f
 text	usefull_dead_files/eviline.lua	/^    text = function()$/;"	f
 text	usefull_dead_files/eviline.lua	/^    text = function(_, winnr)$/;"	f
 text	usefull_dead_files/eviline.lua	/^    text = function(_, winnr, width, is_float)$/;"	f
@@ -725,7 +768,10 @@ toggleterm_winnr	lua/modules/tools/toggleterm.lua	/^local function toggleterm_wi
 treesitter	lua/modules/lang/treesitter.lua	/^local treesitter = function()$/;"	f
 treesitter_obj	lua/modules/lang/treesitter.lua	/^local treesitter_obj = function()$/;"	f
 treesitter_ref	lua/modules/lang/treesitter.lua	/^local treesitter_ref = function()$/;"	f
+trig	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/bwA.lua	/^    s({ trig = "bigfun", name = "Big function" }, {$/;"	f
+trig	lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim/lua/luasnip-latex-snippets/math_wA_no_backslash.lua	/^    ls.parser.parse_snippet({ trig = "fun", name = "function map" }, "f : $1 \\\\R \\\\to \\\\R /;"	f
 twentry_four_to_twelve_hour	lua/modules/completion/snippets/norg_snip.lua	/^            local twentry_four_to_twelve_hour = function(t)$/;"	f
+undo_stage_hunk_action	lua/modules/tools/plugins.lua	/^            undo_stage_hunk_action = function()$/;"	f
 utils.bash	lua/modules/completion/snippets/sniputils.lua	/^utils.bash = function(_, _, command)$/;"	f
 utils.comment	lua/modules/completion/snippets/sniputils.lua	/^utils.comment = function()$/;"	f
 utils.copy	lua/modules/completion/snippets/sniputils.lua	/^function utils.copy(args)$/;"	f

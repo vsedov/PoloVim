@@ -47,6 +47,15 @@ local def_map = {
     ["c|<C-d>"] = map_cmd("<Del>"):with_noremap(),
     ["c|<C-h>"] = map_cmd("<BS>"):with_noremap(),
     ["c|<C-t>"] = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]]):with_noremap(),
+    ["c|::"] = map_cmd([[<C-r>=fnameescape(expand('%:p:h'))<cr>/]]):with_noremap():with_silent(),
+    ["c|/"] = map_cmd([[getcmdtype() == "/" ? "\/" : "/"]]):with_noremap():with_silent():with_expr(),
+    ["c|<C-f>"] = map_cmd([[getcmdpos() > strlen(getcmdline())? &cedit: "\<Lt>Right>"]])
+        :with_noremap()
+        :with_silent()
+        :with_expr(),
+    ["c|<C-k>"] = map_cmd([[<C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2]<CR>]])
+        :with_noremap()
+        :with_silent(),
 
     -- Nice animation
     ["n|<Up>"] = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
@@ -54,7 +63,6 @@ local def_map = {
     ["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
     ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
 
-    ["n|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^']]):with_noremap(),
     -- when going to the end of the line in visual mode ignore whitespace characters
     ["n|$"] = map_cmd([[g_]]):with_noremap(),
 }

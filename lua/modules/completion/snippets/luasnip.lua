@@ -18,7 +18,7 @@ require("luasnip.config").setup({
     ext_opts = {
         [ls_types.choiceNode] = {
             active = {
-                virt_text = { { "●", "Special" } },
+                -- virt_text = { { "●", "Special" } },
                 -- virt_text = { { "<-", "GitSignsDelete" } },
                 -- virt_text = { { " ", "GitSignsDelete" } },
                 virt_text = { { " ", "Keyword" } },
@@ -83,5 +83,6 @@ require("luasnip.config").setup({
 
         return snippet
     end,
+    -- im not sure what this thing does
     -- ft_func = require("luasnip.extras.filetype_functions").from_cursor_pos,
 })

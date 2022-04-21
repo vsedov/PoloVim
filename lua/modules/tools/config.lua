@@ -201,7 +201,7 @@ function config.worktree()
     end
 
     require("git-worktree").setup({})
-    vim.api.nvim_add_user_command("Worktree", "lua git_worktree(<f-args>)", {
+    vim.api.nvim_create_user_command("Worktree", "lua git_worktree(<f-args>)", {
         nargs = "*",
         complete = function()
             return { "create" }
@@ -295,17 +295,21 @@ function config.gitsigns()
     if not packer_plugins["plenary.nvim"].loaded then
         require("packer").loader("plenary.nvim")
     end
-
     local gitsigns = require("gitsigns")
 
     local line = vim.fn.line
 
-    vim.keymap.set("n", "gts", function()
-        gitsigns.dump_cache()
-    end)
-    vim.keymap.set("n", "gtS", function()
-        gitsigns.debug_messages()
-    end)
+    local function wrap(fn, ...)
+        local args = { ... }
+        local nargs = select("#", ...)
+        return function()
+            fn(unpack(args, nargs))
+        end
+    end
+
+    --  TODO(lewis6991): doesn't work properly
+    vim.keymap.set("n", "M", "<cmd>Gitsigns debug_messages<cr>")
+    vim.keymap.set("n", "m", "<cmd>Gitsigns dump_cache<cr>")
 
     local function on_attach(bufnr)
         local function map(mode, l, r, opts)
@@ -332,32 +336,20 @@ function config.gitsigns()
 
         map("n", "<leader>hs", gitsigns.stage_hunk)
         map("n", "<leader>hr", gitsigns.reset_hunk)
-        map("v", "<leader>hs", function()
-            gitsigns.stage_hunk({ line("."), line("v") })
-        end)
-        map("v", "<leader>hr", function()
-            gitsigns.reset_hunk({ line("."), line("v") })
-        end)
+        map("v", "<leader>hs", wrap(gitsigns.stage_hunk, { line("."), line("v") }))
+        map("v", "<leader>hr", wrap(gitsigns.reset_hunk, { line("."), line("v") }))
         map("n", "<leader>hS", gitsigns.stage_buffer)
         map("n", "<leader>hu", gitsigns.undo_stage_hunk)
         map("n", "<leader>hR", gitsigns.reset_buffer)
         map("n", "<leader>hp", gitsigns.preview_hunk)
-        map("n", "<leader>hb", function()
-            gitsigns.blame_line({ full = true })
-        end)
+        map("n", "<leader>hb", wrap(gitsigns.blame_line, { full = true }))
         map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
         map("n", "<leader>hd", gitsigns.diffthis)
-        map("n", "<leader>hD", function()
-            gitsigns.diffthis("~")
-        end)
+        map("n", "<leader>hD", wrap(gitsigns.diffthis, "~"))
         map("n", "<leader>td", gitsigns.toggle_deleted)
 
-        map("n", "<leader>hQ", function()
-            gitsigns.setqflist("all")
-        end)
-        map("n", "<leader>hq", function()
-            gitsigns.setqflist()
-        end)
+        map("n", "<leader>hQ", wrap(gitsigns.setqflist, "all"))
+        map("n", "<leader>hq", wrap(gitsigns.setqflist))
 
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
     end
@@ -451,8 +443,20 @@ function config.bqf()
 end
 
 function config.clipboardimage()
-    vim.cmd([[packadd clipboard-image.nvim]])
-    require("clipboard-image").setup({})
+    require("clipboard-image").setup({
+        default = {
+            img_name = function()
+                vim.fn.inputsave()
+                local name = vim.fn.input("Name: ")
+                vim.fn.inputrestore()
+
+                if name == nil or name == "" then
+                    return os.date("%y-%m-%d-%H-%M-%S")
+                end
+                return name
+            end,
+        },
+    })
 end
 
 function config.dapui()
@@ -675,39 +679,4 @@ function config.paperplanes()
     })
 end
 
-function config.wilder()
-    vim.cmd([[packadd fzy-lua-native]])
-    vim.cmd([[packadd cpsm]])
-    vim.cmd([[
-call wilder#setup({'modes': [':', '/', '?']})
-
-let s:popupmenu_renderer = wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
-      \ 'border': 'Normal',
-      \ 'empty_message': wilder#popupmenu_empty_message_with_spinner(),
-      \ 'left': [
-      \   ' ',
-      \   wilder#popupmenu_devicons(),
-      \   wilder#popupmenu_buffer_flags({
-      \     'flags': ' a + ',
-      \     'icons': {'+': '', 'a': '', 'h': ''},
-      \   }),
-      \ ],
-      \ 'right': [
-      \   ' ',
-      \   wilder#popupmenu_scrollbar(),
-      \ ],
-      \ }))
-
-let s:wildmenu_renderer = wilder#wildmenu_renderer({
-      \ 'separator': ' · ',
-      \ 'left': [' ', wilder#wildmenu_spinner(), ' '],
-      \ 'right': [' ', wilder#wildmenu_index()],
-      \ })
-
-call wilder#set_option('renderer', wilder#renderer_mux({
-      \ ':': s:popupmenu_renderer,
-      \ '/': s:wildmenu_renderer,
-      \ 'substitute': s:wildmenu_renderer,
-      \ }))]])
-end
 return config

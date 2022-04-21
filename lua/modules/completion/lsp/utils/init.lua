@@ -60,21 +60,36 @@ local function add_lsp_buffer_keybindings(client, bufnr)
         ["gr"] = "<cmd>lua vim.lsp.buf.references()<CR>",
         ["[d"] = "<cmd>lua vim.diagnostic.goto_prev()()<CR>",
         ["]d"] = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+
+        ["<leader>="] = "<cmd>lua vim.lsp.buf.formatting()<CR>",
+        ["<leader>ai"] = "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
+        ["<leader>ao"] = "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",
     }
     for mode_name, mode_char in pairs(lsp_map) do
         vim.keymap.set("n", mode_name, mode_char, { noremap = true, silent = true, buffer = bufnr })
     end
 end
 
-local function select_default_formater(client)
+local function select_default_formater(client, bufnr)
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
     if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
         vim.diagnostic.config({
             virtual_text = false,
         })
-        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
-        return
+        vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+        vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = "LspFormatting",
+            callback = function()
+                -- I dont know why this is here, but why not .
+                if vim.bo.filetype == "python" then
+                    vim.cmd([[NayvyImports]])
+                end
+                vim.lsp.buf.formatting()
+            end,
+            buffer = bufnr,
+        })
     else
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
@@ -86,7 +101,7 @@ function M.common_on_init(client, bufnr)
         config.on_init_callback(client, bufnr)
         return
     end
-    select_default_formater(client)
+    select_default_formater(client, bufnr)
 end
 
 function M.common_capabilities()

@@ -590,7 +590,7 @@ function M.setup()
         hl = { style = "bold", fg = colors.orange },
     }
 
-    ViMode = utils.surround({ "", "" }, colors.bright_bg, { ViMode, Snippets })
+    ViMode = utils.surround({ "", "" }, colors.bright_bg, { ViMode })
 
     local Align = { provider = "%=" }
     local Space = { provider = " " }
@@ -609,9 +609,7 @@ function M.setup()
         Space,
         Snippets,
         Space,
-        -- see if this would reduce the given lag
         dyn_help_available,
-        -- option_value,
         Space,
         Align,
         utils.make_flexible_component(3, Gps, { provider = "" }),
@@ -621,9 +619,8 @@ function M.setup()
         Space,
         UltTest,
         Space,
-        utils.make_flexible_component(3, FileLastModified, { provider = "" }),
-        Space,
         FileType,
+        utils.make_flexible_component(3, { Space, FileEncoding }, { provider = "" }),
         Space,
         Ruler,
         Space,

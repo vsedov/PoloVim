@@ -9,8 +9,7 @@ completion["neovim/nvim-lspconfig"] = {
 }
 completion["ii14/lsp-command"] = {
     opt = true,
-    cmd = { "Lsp", "lsp" },
-    requires = "nvim-lspconfig",
+    after = "nvim-lspconfig",
 }
 completion["p00f/clangd_extensions.nvim"] = {
     opt = true,
@@ -25,7 +24,7 @@ completion["williamboman/nvim-lsp-installer"] = {
     requires = "nvim-lspconfig",
     config = conf.lsp_install,
 }
-completion["folke/lua-dev.nvim"] = {
+completion["max397574/lua-dev.nvim"] = {
     opt = true,
     requires = "nvim-lspconfig",
     config = conf.luadev,
@@ -102,64 +101,75 @@ else
     completion["ms-jpq/coq.artifacts"] = { opt = true }
 end
 
-completion["https://github.com/github/copilot.vim.git"] = {
-    event = "InsertEnter",
-    after = "nvim-cmp",
-    keys = {
-        "<Plug>(copilot-next)",
-        "<Plug>(copilot-previous)",
-    },
-    setup = function()
-        local default_keymaps = {
-            { "i", "<A-,>", "<Plug>(copilot-next)" },
-            { "i", "<A-.>", "<Plug>(copilot-previous)" },
-        }
-        for _, m in ipairs(default_keymaps) do
-            vim.keymap.set(m[1], m[2], m[3], { silent = true })
-        end
-    end,
+-- completion["https://github.com/github/copilot.vim.git"] = {
+--     event = "InsertEnter",
+--     after = "nvim-cmp",
+--     keys = {
+--         "<Plug>(copilot-next)",
+--         "<Plug>(copilot-previous)",
+--     },
+--     setup = function()
+--         local default_keymaps = {
+--             { "i", "<A-,>", "<Plug>(copilot-next)" },
+--             { "i", "<A-.>", "<Plug>(copilot-previous)" },
+--         }
+--         for _, m in ipairs(default_keymaps) do
+--             vim.keymap.set(m[1], m[2], m[3], { silent = true })
+--         end
+--     end,
 
+--     config = function()
+--         vim.opt.completeopt = "menuone,noselect"
+--         vim.g.copilot_enabled = false
+--         -- Have copilot play nice with nvim-cmp.
+--         vim.g.copilot_no_tab_map = true
+--         vim.g.copilot_assume_mapped = true
+--         vim.g.copilot_tab_fallback = ""
+--         local excluded_filetypes = { "norg", "nofile", "prompt" }
+--         local copilot_filetypes = {}
+--         for _, ft in pairs(excluded_filetypes) do
+--             copilot_filetypes[ft] = false
+--         end
+
+--         vim.g["copilot_filetypes"] = copilot_filetypes
+--     end,
+-- }
+
+completion["zbirenbaum/copilot.lua"] = {
+    opt = true,
     config = function()
-        vim.opt.completeopt = "menuone,noselect"
-        vim.g.copilot_enabled = false
-        -- Have copilot play nice with nvim-cmp.
-        vim.g.copilot_no_tab_map = true
-        vim.g.copilot_assume_mapped = true
-        vim.g.copilot_tab_fallback = ""
-        local excluded_filetypes = { "norg", "nofile", "prompt" }
-        local copilot_filetypes = {}
-        for _, ft in pairs(excluded_filetypes) do
-            copilot_filetypes[ft] = false
-        end
-
-        vim.g["copilot_filetypes"] = copilot_filetypes
+        vim.schedule(function()
+            require("copilot").setup({
+                ft_disable = { "markdown", "norg", "tex", "txt" },
+            })
+        end)
     end,
 }
-
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th
 -- Iron-E
 completion["hrsh7th/nvim-cmp"] = {
-    branch = "dev",
     -- opt = true,
-    -- event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
+    event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
     after = { "LuaSnip" }, -- "nvim-snippy",
     requires = {
         {
             "tzachar/cmp-tabnine",
             run = "./install.sh",
-            after = "nvim-cmp",
+            -- after = "nvim-cmp",
             config = conf.tabnine,
             opt = true,
         },
+        { "zbirenbaum/copilot-cmp", after = { "copilot.lua", "nvim-cmp" }, opt = true },
         { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
         { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-calc", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-path", after = "nvim-cmp", opt = true },
-        { "hrsh7th/cmp-cmdline", after = "nvim-cmp", opt = true },
+        { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp", opt = true },
+        { "max397574/cmp-cmdline", branch = "patch-1", after = "nvim-cmp", opt = true },
         { "ray-x/cmp-treesitter", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", opt = true },
         { "f3fora/cmp-spell", after = "nvim-cmp", opt = true },

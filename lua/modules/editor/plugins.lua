@@ -7,22 +7,9 @@ local conf = require("modules.editor.config")
 
 editor["rainbowhxch/accelerated-jk.nvim"] = {
     keys = {
-        "<Plug>(accelerated_jk_gj)",
-        "<Plug>(accelerated_jk_gk)",
+        "j",
+        "k",
     },
-    setup = {
-        function()
-            local default_keymaps = {
-                { "n", "j", "<Plug>(accelerated_jk_gj)" },
-                { "n", "k", "<Plug>(accelerated_jk_gk)" },
-            }
-
-            for _, m in ipairs(default_keymaps) do
-                vim.keymap.set(m[1], m[2], m[3], {})
-            end
-        end,
-    },
-
     config = function()
         require("accelerated-jk").setup({
             mode = "time_driven",
@@ -31,9 +18,10 @@ editor["rainbowhxch/accelerated-jk.nvim"] = {
             acceleration_table = { 7, 12, 17, 21, 24, 26, 28, 30 },
             deceleration_table = { { 150, 9999 } },
         })
+        vim.keymap.set("n", "j", "<Plug>(accelerated_jk_gj)", {})
+        vim.keymap.set("n", "k", "<Plug>(accelerated_jk_gk)", {})
     end,
 }
-
 editor["rainbowhxch/beacon.nvim"] = {
     cmd = { "Beacon", "BeaconToggle" },
     confg = conf.beacon,
@@ -49,11 +37,6 @@ editor["windwp/nvim-autopairs"] = {
     -- event = "InsertEnter",  --InsertCharPre
     -- after = "hrsh7th/nvim-compe",
     config = conf.autopairs,
-    opt = true,
-}
-
--- TODO: Change this with current cursor word
-editor["kana/vim-niceblock"] = {
     opt = true,
 }
 
@@ -482,14 +465,16 @@ editor["simnalamburt/vim-mundo"] = {
 
 editor["mbbill/undotree"] = { opt = true, cmd = { "UndotreeToggle" } }
 
-editor["AndrewRadev/splitjoin.vim"] = {
-    opt = true,
-    cmd = { "SplitjoinJoin", "SplitjoinSplit" },
+editor["AckslD/nvim-trevJ.lua"] = {
+    module = "trevj",
     setup = function()
-        vim.g.splitjoin_split_mapping = ""
-        vim.g.splitjoin_join_mapping = ""
+        vim.keymap.set("n", "<leader><leader>a", function()
+            require("trevj").format_at_cursor()
+        end)
     end,
-    -- keys = {'<space>S', '<space>J'}
+    config = function()
+        require("trevj").setup()
+    end,
 }
 
 editor["chaoren/vim-wordmotion"] = {
@@ -511,7 +496,7 @@ editor["folke/zen-mode.nvim"] = {
 
 editor["nvim-neorg/neorg"] = {
     branch = "main",
-    -- requires = { "max397574/neorg-zettelkasten" },
+    requires = { "max397574/neorg-contexts", ft = "norg" },
     config = function()
         require("modules.editor.neorg")
     end,
@@ -557,13 +542,10 @@ editor["monaqa/dial.nvim"] = {
     end,
 }
 
--- Latest dont work .
-editor["sidebar-nvim/sidebar.nvim"] = {
-    ft = { "python", "lua", "c", "cpp", "prolog" },
-    -- Section is loaded through cache .
+editor["Pocco81/AutoSave.nvim"] = {
+    cmd = { "ASToggle", "ASOn", "ASOff" },
     opt = true,
-    branch = "dev",
-    config = conf.side_bar,
+    config = conf.autosave,
 }
 
 editor["nyngwang/NeoZoom.lua"] = {
@@ -589,7 +571,7 @@ editor["sindrets/winshift.nvim"] = {
 }
 
 editor["declancm/cinnamon.nvim"] = {
-    keys = { "<C-U>", "<C-D>", "<C-d>", "<C-B>", "<C-F>", "<PageUp>", "<PageDown>" },
+    event = "WinScrolled",
     config = function()
         require("cinnamon").setup({
             extra_keymaps = true,

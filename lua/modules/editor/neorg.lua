@@ -1,7 +1,3 @@
-if not packer_plugins["zen-mode.nvim"].loaded then
-    vim.cmd([[packadd zen-mode.nvim ]])
-end
-
 if not packer_plugins["telescope.nvim"].loaded then
     vim.cmd([[packadd telescope.nvim ]])
 end
@@ -18,7 +14,13 @@ end
 if not packer_plugins["nvim-cmp"].loaded then
     vim.cmd([[packadd nvim-cmp]])
 end
-
+local neorg_callbacks = require("neorg.callbacks")
+-- neorg_callbacks.on_event("core.autocommands.events.bufenter", function(event, event_content)
+neorg_callbacks.on_event("core.started", function(event, event_content)
+    if not packer_plugins["zen-mode.nvim"].loaded then
+        vim.cmd([[packadd zen-mode.nvim ]])
+    end
+end)
 require("neorg").setup({
     load = {
 
@@ -36,12 +38,16 @@ require("neorg").setup({
             },
         },
         -- ["external.zettelkasten"] = {},
+        ["external.context"] = {},
         ["core.norg.concealer"] = {
             config = {
+                -- markup_preset = "dimmed",
                 markup_preset = "conceal",
-                icon_preset = "diamond",
+                -- icon_preset = "diamond",
+                -- icon_preset = "varied",
                 icons = {
                     marker = {
+                        enabled = true,
                         icon = " ",
                     },
                     todo = {
@@ -63,6 +69,40 @@ require("neorg").setup({
                             icon = "",
                         },
                     },
+                    heading = {
+                        enabled = true,
+                        level_1 = {
+                            icon = "◈",
+                        },
+
+                        level_2 = {
+                            icon = " ◇",
+                        },
+
+                        level_3 = {
+                            icon = "  ◆",
+                        },
+                        level_4 = {
+                            icon = "   ❖",
+                        },
+                        level_5 = {
+                            icon = "    ⟡",
+                        },
+                        level_6 = {
+                            icon = "     ⋄",
+                        },
+                    },
+                },
+            },
+        },
+        ["external.context"] = {},
+        ["core.presenter"] = {
+            config = {
+                zen_mode = "zen-mode",
+                slide_count = {
+                    enable = true,
+                    position = "top",
+                    count_format = "[%d/%d]",
                 },
             },
         },
@@ -72,11 +112,7 @@ require("neorg").setup({
                 type = "auto",
             },
         },
-        ["core.presenter"] = {
-            config = {
-                zen_mode = "zen-mode",
-            },
-        },
+
         ["core.keybinds"] = {
             config = {
                 default_keybinds = false,

@@ -15,7 +15,6 @@ function config.nvim_bufferline()
         vim.cmd([[packadd nvim-web-devicons]])
     end
     local fn = vim.fn
-
     local function diagnostics_indicator(_, _, diagnostics)
         local symbols = { error = " ", warning = " ", info = " " }
         local result = {}
@@ -121,7 +120,7 @@ function config.nvim_bufferline()
                 items = {
                     groups.builtin.ungrouped,
                     {
-                        -- highlight = { guisp = "#51AFEF", gui = "underline" },
+                        highlight = { guisp = "#D27E99", gui = "underline" },
                         name = "tests",
                         icon = "",
                         matcher = function(buf)
@@ -130,19 +129,20 @@ function config.nvim_bufferline()
                     },
                     {
                         name = "view models",
-                        -- highlight = { guisp = "#03589C", gui = "underline" },
+                        highlight = { guisp = "#54546D", gui = "underline" },
                         matcher = function(buf)
                             return buf.filename:match("view_model%.dart")
                         end,
                     },
                     {
                         name = "screens",
+                        highlight = { guisp = "#D27E99", gui = "underline" },
                         matcher = function(buf)
                             return buf.path:match("screen")
                         end,
                     },
                     {
-                        -- highlight = { guisp = "#ff6c6b", gui = "underline" },
+                        highlight = { guisp = "#938AA9", gui = "underline" },
                         name = "docs",
                         matcher = function(buf)
                             for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
@@ -154,12 +154,16 @@ function config.nvim_bufferline()
                     },
                     {
                         name = "plugins",
+                        highlight = { guisp = "#54546D", gui = "underline" },
+
                         matcher = function(buf)
                             return buf.filename:match("plugins")
                         end,
                     },
                     {
                         name = "config",
+                        highlight = { guisp = "#54546D", gui = "underline" },
+
                         matcher = function(buf)
                             return buf.filename:match("config")
                         end,
@@ -231,7 +235,7 @@ function config.neo_tree()
         vim.cmd([[packadd nvim-window-picker ]])
     end
 
-    vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+    vim.g.neo_tree_remove_legacy_commands = 1
 
     require("neo-tree").setup({
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
@@ -643,8 +647,8 @@ function config.catppuccin()
             neogit = true,
             vim_sneak = true,
             fern = true,
-            barbar = true,
-            bufferline = true,
+            barbar = false,
+            bufferline = false, -- see how this effects our bar
             markdown = true,
             lightspeed = true,
             ts_rainbow = true,
@@ -847,9 +851,7 @@ end
 function config.themer()
     local themes = { "rose_pine", "dracula", "everforest", "monokai_pro", "boo", "darknight" }
     local cs = themes[math.random(1, #themes)]
-    local cp = require("themer.modules.core.api").get_cp(cs)
     lprint(cs)
-
     require("themer").setup({
         colorscheme = cs,
         styles = {

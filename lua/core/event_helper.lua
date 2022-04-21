@@ -120,10 +120,15 @@ end
 function M.hl_search()
     local col = api.nvim_win_get_cursor(0)[2]
     local curr_line = api.nvim_get_current_line()
-    local _, p_start, p_end = unpack(vim.fn.matchstrpos(curr_line, vim.fn.getreg("/"), 0))
+    local ok, match = pcall(fn.matchstrpos, curr_line, fn.getreg("/"), 0)
+    if not ok then
+        return vim.notify(match, "error", { title = "HL SEARCH" })
+    end
+    local _, p_start, p_end = unpack(match)
     -- if the cursor is in a search result, leave highlighting on
     if col < p_start or col > p_end then
         M.stop_hl()
     end
 end
+
 return M

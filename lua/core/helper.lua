@@ -45,6 +45,14 @@ return {
             return Plugin_debug
         end
 
+        _G.overide_notify_desktop = function()
+            return false
+        end
+
+        _G.sell_your_soul = function()
+            return false
+        end
+
         _G.load_coq = function()
             -- Coq is good for sql, vim and any other languages that
             -- i dont have a server or snippets for

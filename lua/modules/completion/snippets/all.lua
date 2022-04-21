@@ -6,20 +6,23 @@ local i = ls.insert_node
 local f = ls.function_node
 local c = ls.choice_node
 local fmt = require("luasnip.extras.fmt").fmt
-local all_a = {
-    s({ trig = ":td:", name = "TODO" }, {
-        c(1, {
-            t(string.format(vim.bo.commentstring:gsub("%%s", " TODO(vsedov): "))),
-            t(string.format(vim.bo.commentstring:gsub("%%s", " FIXME(vsedov): "))),
-            t(string.format(vim.bo.commentstring:gsub("%%s", " HACK(vsedov): "))),
-            t(string.format(vim.bo.commentstring:gsub("%%s", " BUG(vsedov): "))),
+
+-- For some reason, this just doesnt work
+if vim.bo.filetype ~= "tex" then
+    local all_a = {
+        s({ trig = ":td:", name = "TODO" }, {
+            c(1, {
+                t(string.format(vim.bo.commentstring:gsub("%%s", " TODO(vsedov): "))),
+                t(string.format(vim.bo.commentstring:gsub("%%s", " FIXME(vsedov): "))),
+                t(string.format(vim.bo.commentstring:gsub("%%s", " HACK(vsedov): "))),
+                t(string.format(vim.bo.commentstring:gsub("%%s", " BUG(vsedov): "))),
+            }),
+            i(0),
         }),
-        i(0),
-    }),
-}
+    }
 
-ls.add_snippets("all", all_a, { type = "autosnippets" })
-
+    ls.add_snippets("all", all_a, { type = "autosnippets" })
+end
 local all = {
 
     s(

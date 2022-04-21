@@ -77,6 +77,7 @@ function Lazyload()
         "txt",
         "defx",
         "sidekick",
+        "neo-tree",
     }
 
     local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
@@ -191,7 +192,7 @@ vim.defer_fn(function()
     require("vscripts.race_conditions").language_support()
 
     vim.cmd("command! Spell call spelunker#check()")
-    vim.api.nvim_add_user_command("Gram", function()
+    vim.api.nvim_create_user_command("Gram", function()
         require("modules.tools.config").grammcheck()
     end, { force = true })
 
@@ -207,10 +208,17 @@ vim.defer_fn(function()
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
     loader("workspaces.nvim")
+    -- Notify
     loader("nvim-notify")
     loader("structlog.nvim")
     local notify = require("notify")
     vim.notify = notify
+
+    if overide_notify_desktop() then
+        print("why is this getting activated, when this isnt supposed to even be on")
+        loader("desktop-notify.nvim")
+        require("desktop-notify").override_vim_notify()
+    end
 
     -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
     -- have to work around this for the time

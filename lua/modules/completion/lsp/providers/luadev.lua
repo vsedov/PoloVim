@@ -17,8 +17,21 @@ local sumneko_lua_server = enhance_attach({
                 },
                 diagnostics = {
                     enable = true,
-                    globals = { "vim", "dump", "hs", "lvim" },
+                    globals = {
+                        "vim",
+                        "dump",
+                        "hs",
+                        "lvim",
+                        "describe",
+                        "it",
+                        "before_each",
+                        "after_each",
+                        "pending",
+                        "teardown",
+                        "packer_plugins",
+                    },
                 },
+                completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
                 workspace = {
                     -- remove all of this, as it slows things down
                     library = {
@@ -26,7 +39,7 @@ local sumneko_lua_server = enhance_attach({
                         -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
                         -- vim.api.nvim_get_runtime_file("", false),
                         -- [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                        -- [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                     },
                     maxPreload = 1000,
                     preloadFileSize = 10000,
@@ -40,7 +53,6 @@ local luadev = require("lua-dev").setup({
     library = {
         vimruntime = true,
         types = true,
-        -- makes everything lag
         plugins = { "nvim-notify", "plenary.nvim" },
     },
     lspconfig = sumneko_lua_server,
