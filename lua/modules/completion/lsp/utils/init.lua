@@ -70,15 +70,26 @@ local function add_lsp_buffer_keybindings(client, bufnr)
     end
 end
 
-local function select_default_formater(client)
+local function select_default_formater(client, bufnr)
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
     if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
         vim.diagnostic.config({
             virtual_text = false,
         })
-        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
-        return
+        vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+        vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = "LspFormatting",
+            callback = function()
+                -- I dont know why this is here, but why not .
+                if vim.bo.filetype == "python" then
+                    vim.cmd([[NayvyImports]])
+                end
+                vim.lsp.buf.formatting()
+            end,
+            buffer = bufnr,
+        })
     else
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
@@ -90,7 +101,7 @@ function M.common_on_init(client, bufnr)
         config.on_init_callback(client, bufnr)
         return
     end
-    select_default_formater(client)
+    select_default_formater(client, bufnr)
 end
 
 function M.common_capabilities()

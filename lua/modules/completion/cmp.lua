@@ -8,6 +8,7 @@ require("modules.completion.snippets")
 local rhs = function(rhs_str)
     return vim.api.nvim_replace_termcodes(rhs_str, true, true, true)
 end
+
 -- local kind = cmp.lsp.CompletionItemKind
 
 local luasnip = require("luasnip")
@@ -303,7 +304,7 @@ if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "p
 end
 
 cmp.setup({
-
+    preselect = cmp.PreselectMode.Item,
     window = {
         completion = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
