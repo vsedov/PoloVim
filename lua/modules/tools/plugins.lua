@@ -31,6 +31,7 @@ tools["is0n/fm-nvim"] = {
         "Neomutt",
         "Lazygit",
         "Joshuto",
+        "Broot",
         "Ranger",
         "Xplr",
         "Vifm",

@@ -571,7 +571,7 @@ editor["sindrets/winshift.nvim"] = {
 }
 
 editor["declancm/cinnamon.nvim"] = {
-    event = "Winscrolled",
+    event = "WinScrolled",
     config = function()
         require("cinnamon").setup({
             extra_keymaps = true,

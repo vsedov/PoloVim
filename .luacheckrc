@@ -1,5 +1,6 @@
 -- Global objects
 globals = {
+  "packer_plugins",
   "_",
   "vim",
   "neorg",

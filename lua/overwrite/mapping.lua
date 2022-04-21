@@ -316,6 +316,10 @@ add_cmd("LangTree", function()
     ShowLangTree()
 end, {})
 
+add_cmd("ReloadModule", function(args)
+    require("plenary.reload").reload_module(args)
+end, { nargs = 1 })
+
 add_cmd("ClearUndo", function()
     local old = vim.opt.undolevels
     vim.opt.undolevels = -1

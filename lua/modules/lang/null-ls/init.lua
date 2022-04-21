@@ -90,29 +90,29 @@ return {
                 ".git"
             ),
             diagnostics_format = "#{s}: #{m} (#{c})",
-            -- on_attach = require("modules.completion.lsp.utils").get_common_opts,
-            on_attach = function(client, bufnr)
-                -- I dont want any formating on python files.
-                if client.resolved_capabilities.document_formatting then
-                    vim.diagnostic.config({
-                        virtual_text = false,
-                    })
-                    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-                    -- vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
-                    -- Convert this using vim.api.nvim_create_autocmd()
-                    vim.api.nvim_create_augroup("LspFormatting", { clear = true })
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        group = "LspFormatting",
-                        callback = function()
-                            if vim.bo.filetype == "python" then
-                                vim.cmd([[NayvyImports]])
-                            end
-                            vim.lsp.buf.formatting()
-                        end,
-                        buffer = bufnr,
-                    })
-                end
-            end,
+            on_attach = require("modules.completion.lsp.utils").common_on_init,
+            -- on_attach = function(client, bufnr)
+            --     -- I dont want any formating on python files.
+            --     if client.resolved_capabilities.document_formatting then
+            --         vim.diagnostic.config({
+            --             virtual_text = false,
+            --         })
+            --         vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+            --         -- vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+            --         -- Convert this using vim.api.nvim_create_autocmd()
+            --         vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+            --         vim.api.nvim_create_autocmd("BufWritePre", {
+            --             group = "LspFormatting",
+            --             callback = function()
+            --                 if vim.bo.filetype == "python" then
+            --                     vim.cmd([[NayvyImports]])
+            --                 end
+            --                 vim.lsp.buf.formatting()
+            --             end,
+            --             buffer = bufnr,
+            --         })
+            --     end
+            -- end,
         }
 
         null_ls.setup(cfg)
