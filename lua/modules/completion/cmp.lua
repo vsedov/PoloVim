@@ -166,11 +166,11 @@ end
 
 if sell_your_soul() then
     require("packer").loader("copilot.lua")
-    table.insert(sources, { name = "copilot", priority = 7 })
+    table.insert(sources, { name = "copilot", priority = 10 })
 end
 if use_tabnine() then
     require("packer").loader("cmp-tabnine")
-    table.insert(sources, { name = "cmp_tabnine", priority = 9 })
+    table.insert(sources, { name = "cmp_tabnine", priority = 10 })
 end
 
 if vim.o.ft == "sql" then
