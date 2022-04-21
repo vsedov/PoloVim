@@ -14,7 +14,7 @@ function autocmd.nvim_create_augroups(defs)
                 [type(def[3]) == "function" and "callback" or type(def[3]) == "string" and "command"] = def[3],
                 nested = def[4] or false,
             }
-            -- print(vim.inspect(event), vim.inspect(arg))
+            -- Log:info(vim.inspect(event), vim.inspect(arg))
             api.nvim_create_autocmd(event, arg)
         end
     end
@@ -218,7 +218,7 @@ function autocmd.load_autocmds()
                   set spelllang=en,en_gb
                   nnoremap <C-k> [s1z=<c-o>
 
-                  inoremap <C-k> <c-g>u<Esc>[s1z=`]a<c-g>u
+                  inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
                 ]])
                 end,
             },
