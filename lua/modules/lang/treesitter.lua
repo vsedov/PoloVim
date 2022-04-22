@@ -45,7 +45,7 @@ local treesitter = function()
     }
 
     require("nvim-treesitter.configs").setup({
-        autopairs = { enable = true },
+        autopairs = { enable = enable },
 
         highlight = {
             enable = true, -- false will disable the whole extension
@@ -83,15 +83,6 @@ local treesitter = function()
         ["require_call"] = "RequireCall",
         ["function_definition"] = "FunctionDefinition",
         ["quantifier"] = "Special",
-    })
-end
-
-local pyfold = function()
-    require("nvim-treesitter.configs").setup({
-        pyfold = {
-            enable = true,
-            custom_foldtext = true, -- Sets provided foldtext on window where module is active
-        },
     })
 end
 
