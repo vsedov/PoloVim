@@ -325,7 +325,7 @@ local plug_map = {
     ["n|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
     ["x|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
 
-    ["n|<C-U>"] = map_cmd(function()
+    ["n|<leader><C-U>"] = map_cmd(function()
         local cursor = vim.api.nvim_win_get_cursor("0")
         vim.api.nvim_feedkeys("b~", "n", true)
         vim.defer_fn(function()
