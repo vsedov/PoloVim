@@ -95,7 +95,6 @@ require("neorg").setup({
                 },
             },
         },
-        ["external.context"] = {},
         ["core.presenter"] = {
             config = {
                 zen_mode = "zen-mode",

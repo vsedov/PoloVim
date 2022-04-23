@@ -49,6 +49,7 @@ completion["tami5/lspsaga.nvim"] = {
     opt = true,
     config = conf.saga,
     requires = "nvim-lspconfig",
+    after = "hover.nvim",
 }
 
 if load_coq() then
@@ -152,7 +153,7 @@ completion["hrsh7th/nvim-cmp"] = {
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
-    after = { "LuaSnip" }, -- "nvim-snippy",
+    -- after = { "LuaSnip" }, -- "nvim-snippy",
     requires = {
         {
             "tzachar/cmp-tabnine",
