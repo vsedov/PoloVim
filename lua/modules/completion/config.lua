@@ -22,10 +22,10 @@ function config.saga()
         debug = false,
         use_saga_diagnostic_sign = false,
         -- code action title icon
-        code_action_icon = "",
+        code_action_icon = "",
         code_action_prompt = {
-            enable = false,
-            sign = false,
+            enable = true,
+            sign = true,
             sign_priority = 40,
             virtual_text = false,
         },
