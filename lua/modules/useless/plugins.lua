@@ -10,12 +10,7 @@ useless["rtakasuke/vim-neko"] = {
 useless["kwakzalver/duckytype.nvim"] = {
     cmd = { "DuckType" },
     opt = true,
-    config = function()
-        require("duckytype").setup({})
-        vim.api.nvim_create_user_command("DuckType", "lua require('duckytype').Start()", {
-            force = true,
-        })
-    end,
+    config = conf.duck_type,
 }
 -- Call :DuckStart then to stop the duck Call DuckKill
 useless["tamton-aquib/duck.nvim"] = {

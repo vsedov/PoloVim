@@ -29,11 +29,11 @@ tools["editorconfig/editorconfig-vim"] = {
 tools["is0n/fm-nvim"] = {
     cmd = {
         "Neomutt",
-        "Lazygit",
-        "Joshuto",
+        "Lazygit", -- 3 [ neogit + fugative + lazygit depends how i feel.]
+        "Joshuto", -- 2
         "Broot",
         "Ranger",
-        "Xplr",
+        "Xplr", -- 1
         "Vifm",
         "Skim",
         "Nnn",
