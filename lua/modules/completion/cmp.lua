@@ -167,7 +167,7 @@ end
 
 if use_tabnine() then
     require("packer").loader("cmp-tabnine")
-    table.insert(sources, { name = "cmp_tabnine", priority = 10 })
+    table.insert(sources, { name = "cmp_tabnine", priority = 9 })
 end
 
 if vim.o.ft == "sql" then

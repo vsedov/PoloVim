@@ -392,6 +392,12 @@ tools["LhKipp/nvim-git-fixer"] = {
     end,
 }
 
+tools["ilAYAli/scMRU.nvim"] = {
+    cmd = { "Mfu", "Mru", "MruRepos", "MruAdd", "MruDel" },
+    setup = function()
+        vim.keymap.set("n", "<leader>fm", "<Cmd>Mfu<Cr>", { noremap = true })
+    end,
+}
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
     opt = true,
