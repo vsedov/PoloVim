@@ -323,8 +323,10 @@ add_cmd("ClearUndo", function()
     vim.opt.undolevels = old
 end, {})
 
-vim.cmd("command! -nargs=+ -complete=file Grep " .. "lua vim.api.nvim_exec([[grep! <args> | redraw! | copen]], true)")
-vim.cmd("command! -nargs=+ -complete=file LGrep " .. "lua vim.api.nvim_exec([[lgrep! <args> | redraw! | lopen]], true)")
+add_cmd("NeorgToMd", function()
+    -- File name without extension .
+    vim.cmd("Neorg export to-file " .. vim.fn.expand("%:t:r") .. ".md")
+end, { force = true })
 
 local plugmap = require("keymap").map
 local merged = vim.tbl_extend("force", plugmap, keys)
