@@ -105,7 +105,7 @@ local keys = { --
         :with_expr(),
 
     ["v|<Leader>rr"] = map_cmd([[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]]):with_noremap(),
-    ["n|<Leader>rp"] = map_cmd([[lua require('refactoring').debug.printf({below = false})<CR>]]):with_noremap(),
+    ["n|<Leader>rp"] = map_cmd([[<cmd>lua require('refactoring').debug.printf({below = false})<CR>]]):with_noremap(),
 
     ["v|<Leader>ro"] = map_cmd([[<cmd> lua require('refactoring').debug.print_var({})<CR>]]):with_noremap(),
     ["n|<Leader>rc"] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]]):with_noremap(),
