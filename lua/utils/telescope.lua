@@ -496,7 +496,6 @@ M.installed_plugins = function()
     })
 end
 
-
 M.ag = function(text_to_find)
     local default_opts = {
         entry_maker = function(entry)
@@ -563,7 +562,6 @@ M.theme = function(opts)
         },
     }, opts or {})
 end
-
 
 M.search_only_certain_files = function()
     builtin.find_files({

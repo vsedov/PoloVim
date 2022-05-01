@@ -71,7 +71,7 @@ return {
                 return false
             end
 
-            return true
+            return false
         end
         _G.dump = function(...)
             print(vim.inspect(...))

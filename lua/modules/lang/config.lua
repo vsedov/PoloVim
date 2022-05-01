@@ -68,13 +68,12 @@ end
 function config.refactor()
     local refactor = require("refactoring")
     refactor.setup({
-      print_var_statements = {
-          -- add a custom print var statement for cpp
-          python = {
-            'log.info(ic.format(f"{%%s} %s , %s")'
-          }
-      }
-
+        print_var_statements = {
+            -- add a custom print var statement for cpp
+            python = {
+                'log.info(ic.format(f"{%%s} %s , %s")',
+            },
+        },
     })
 
     lprint("refactor")

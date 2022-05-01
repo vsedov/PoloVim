@@ -441,7 +441,7 @@ function config.scrollbar()
 end
 
 function config.pretty_fold()
-    require("pretty-fold.preview").setup_keybinding("l")
+    require("pretty-fold.preview").setup()
     require("pretty-fold").setup({
         keep_indentation = true,
         fill_char = "•",
