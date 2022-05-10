@@ -272,7 +272,7 @@ function _G.open_lsp_log()
 end
 
 local function lsp_highlight_document(client, bufnr)
-    if client.resolved_capabilities.document_highlight then
+    if client.server_capabilities.document_highlight then
         vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
         vim.api.nvim_create_autocmd("CursorHold", {
             callback = function()
@@ -326,8 +326,8 @@ local enhance_attach = function(client, bufnr)
     -- I dont want any formating on python files.
     lsp_highlight_document(client, bufnr)
 
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.document_formatting = false
+    client.server_capabilities.document_range_formatting = false
 end
 
 lspconfig.gopls.setup({
@@ -343,7 +343,7 @@ lspconfig.gopls.setup({
 
 lspconfig.tsserver.setup({
     on_attach = function(client)
-        client.resolved_capabilities.document_formatting = false
+        client.server_capabilities.document_formatting = false
         enhance_attach(client)
     end,
 })
