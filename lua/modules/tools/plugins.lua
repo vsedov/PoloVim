@@ -155,6 +155,47 @@ tools["pwntester/octo.nvim"] = {
         }, { prefix = "<leader>" })
     end,
 }
+
+tools["ldelossa/gh.nvim"] = {
+    cmd = {
+        "GHOpenPR",
+        "GHClosePR",
+        "GHADDLabel",
+        "GHExpandPR",
+        "GHOpenToPR",
+        "GHPopOutPR",
+        "GHPRDetails",
+        "GHRefreshPR",
+        "GHCollapsePR",
+        "GHNextThread",
+        "GHCloseCommit",
+        "GHCloseReview",
+        "GHStartReview",
+        "GHCreateThread",
+        "GHDeleteReview",
+        "GHExpandCommit",
+        "GHExpandReview",
+        "GHOpenToCommit",
+        "GHPopOutCommit",
+        "GHPreviewIssue",
+        "GHSubmitReview",
+        "GHToggleThreads",
+        "GhCollapseCommit",
+        "GHRefreshComments",
+    },
+    requires = { "ldelossa/litee.nvim", opt = true, after = "gh.nvim" },
+    config = function()
+        require("litee.lib").setup()
+        require("litee.gh").setup()
+    end,
+}
+
+tools["axieax/urlview.nvim"] = {
+    cmd = { "UrlView", "UrlView packer" },
+    config = conf.urlview,
+    after = "telescope.nvim",
+}
+
 tools["jghauser/mkdir.nvim"] = {
     opt = true,
     cmd = "new",
@@ -393,10 +434,7 @@ tools["LhKipp/nvim-git-fixer"] = {
 }
 
 tools["ilAYAli/scMRU.nvim"] = {
-    cmd = { "Mfu", "Mru", "MruRepos", "MruAdd", "MruDel" },
-    setup = function()
-        vim.keymap.set("n", "<leader>fm", "<Cmd>Mfu<Cr>", { noremap = true })
-    end,
+    module = "mru",
 }
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
