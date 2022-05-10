@@ -91,8 +91,8 @@ local config = {
 
     on_attach = function(client, bufnr)
         -- Enable formating for java cause no other decent alternative
-        client.resolved_capabilities.document_formatting = true
-        client.resolved_capabilities.document_range_formatting = true
+        client.server_capabilities.document_formatting = true
+        client.server_capabilities.document_range_formatting = true
         require("jdtls").setup_dap({ hotcodereplace = "auto" })
     end,
 

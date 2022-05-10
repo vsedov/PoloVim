@@ -150,13 +150,27 @@ local sources = {
     { name = "nvim_lsp_signature_help", priority = 10 },
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
-    { name = "buffer", priority = 7, keyword_length = 4 },
+    {
+        name = "buffer",
+        priority = 7,
+        keyword_length = 4,
+        options = {
+            get_bufnrs = function()
+                local bufs = {}
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    bufs[vim.api.nvim_win_get_buf(win)] = true
+                end
+                return vim.tbl_keys(bufs)
+            end,
+        },
+    },
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
     { name = "cmdline", priority = 4 },
     { name = "treesitter", keyword_length = 2 },
     { name = "neorg", priority = 6 },
     { name = "latex_symbols", priority = 1 },
+    { name = "Dictionary" },
 }
 
 -- todo make this better too many if statmenets

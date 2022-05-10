@@ -5,41 +5,48 @@ local M = {}
 local config = require("modules.completion.lsp.utils.config")
 
 local function lsp_highlight_document(client, bufnr)
-    if config.document_highlight == false then
-        return -- we don't need further
+    local status_ok, highlight_supported = pcall(function()
+        return client.supports_method("textDocument/documentHighlight")
+    end)
+    if not status_ok or not highlight_supported then
+        return
     end
-    if client.resolved_capabilities.document_highlight then
-        vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-        vim.api.nvim_create_autocmd("CursorHold", {
-            callback = function()
-                vim.lsp.buf.document_highlight()
-            end,
-            buffer = bufnr,
-        })
-        vim.api.nvim_create_autocmd("CursorMoved", {
-            callback = function()
-                vim.lsp.buf.clear_references()
-            end,
-            buffer = bufnr,
-        })
+    local augroup_exist, _ = pcall(vim.api.nvim_get_autocmds, {
+        group = "lsp_document_highlight",
+    })
+    if not augroup_exist then
+        vim.api.nvim_create_augroup("lsp_document_highlight", {})
     end
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        group = "lsp_document_highlight",
+        buffer = bufnr,
+        callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd("CursorMoved", {
+        group = "lsp_document_highlight",
+        buffer = bufnr,
+        callback = vim.lsp.buf.clear_references,
+    })
 end
 
 local function lsp_code_lens_refresh(client, bufnr)
-    if config.code_lens_refresh == false then
+    local status_ok, codelens_supported = pcall(function()
+        return client.supports_method("textDocument/codeLens")
+    end)
+    if not status_ok or not codelens_supported then
         return
     end
-
-    if client.resolved_capabilities.code_lens then
-        vim.api.nvim_create_autocmd("InsertLeave", {
-            command = [[lua vim.lsp.codelens.refresh()]],
-            buffer = bufnr,
-        })
-        vim.api.nvim_create_autocmd("InsertLeave", {
-            command = [[lua vim.lsp.codelens.display()]],
-            buffer = bufnr,
-        })
+    local augroup_exist, _ = pcall(vim.api.nvim_get_autocmds, {
+        group = "lsp_code_lens_refresh",
+    })
+    if not augroup_exist then
+        vim.api.nvim_create_augroup("lsp_code_lens_refresh", {})
     end
+    vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+        group = "lsp_code_lens_refresh",
+        buffer = bufnr,
+        callback = vim.lsp.codelens.refresh,
+    })
 end
 
 local function add_lsp_buffer_keybindings(client, bufnr)
@@ -70,10 +77,11 @@ local function add_lsp_buffer_keybindings(client, bufnr)
     end
 end
 
+-- this could change ove ra period of time . 1
 local function select_default_formater(client, bufnr)
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
-    if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
+    if client.name == "null-ls" or not client.server_capabilities.document_formatting then
         vim.diagnostic.config({
             virtual_text = false,
         })
@@ -91,8 +99,8 @@ local function select_default_formater(client, bufnr)
             buffer = bufnr,
         })
     else
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
     end
 end
 
