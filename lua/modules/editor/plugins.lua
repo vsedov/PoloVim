@@ -496,7 +496,10 @@ editor["folke/zen-mode.nvim"] = {
 
 editor["nvim-neorg/neorg"] = {
     branch = "main",
-    requires = { "max397574/neorg-contexts", ft = "norg" },
+    requires = {
+        { "max397574/neorg-contexts", ft = "norg" },
+        { "max397574/neorg-kanban", ft = "norg", after = "neorg" },
+    },
     config = function()
         require("modules.editor.neorg")
     end,

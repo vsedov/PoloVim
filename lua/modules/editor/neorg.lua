@@ -37,6 +37,7 @@ require("neorg").setup({
                 extensions = "all",
             },
         },
+        ["external.kanban"] = {},
         -- ["external.zettelkasten"] = {},
         ["external.context"] = {},
         ["core.norg.concealer"] = {
