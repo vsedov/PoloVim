@@ -16,9 +16,7 @@ ui["b0o/incline.nvim"] = {
     opt = true,
     ft = { "python", "lua", "c", "cpp", "rust" },
     after = "heirline.nvim",
-    config = function()
-        require("incline").setup()
-    end,
+    config = conf.incline,
 }
 
 ui["mvllow/modes.nvim"] = {
@@ -111,6 +109,14 @@ ui["nvim-neo-tree/neo-tree.nvim"] = {
     config = conf.neo_tree,
 }
 
+ui["tamton-aquib/keys.nvim"] = {
+    cmd = "KeysToggle",
+    opt = true,
+    config = function()
+        require("keys").setup()
+    end,
+}
+
 -- Use this with nvimtree .
 ui["elihunter173/dirbuf.nvim"] = {
     cmd = { "Dirbuf" },
@@ -134,6 +140,11 @@ ui["lukas-reineke/virt-column.nvim"] = {
 -- ui["dstein64/nvim-scrollview"] = {
 --   event = { "CursorMoved", "CursorMovedI" },
 --   config = conf.scrollview,
+-- }
+
+-- ui["lewis6991/satellite.nvim"] = {
+--     event = { "CursorMoved", "CursorMovedI" },
+--     config = conf.satellite,
 -- }
 
 ui["petertriho/nvim-scrollbar"] = {
