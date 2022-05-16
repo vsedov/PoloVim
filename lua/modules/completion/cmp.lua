@@ -432,19 +432,18 @@ local mappings = {
         "i",
         "s",
     }),
-        ["<C-l>"] = cmp.mapping(function(fallback)
-            local copilot_keys = vim.fn["copilot#Accept"]("")
-            if copilot_keys ~= "" then
-                vim.api.nvim_feedkeys(copilot_keys, "i", true)
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        })
+    ["<C-l>"] = cmp.mapping(function(fallback)
+        local copilot_keys = vim.fn["copilot#Accept"]("")
+        if copilot_keys ~= "" then
+            vim.api.nvim_feedkeys(copilot_keys, "i", true)
+        else
+            fallback()
+        end
+    end, {
+        "i",
+        "s",
+    }),
 }
-
 
 cmp.setup({
     preselect = cmp.PreselectMode.Item,

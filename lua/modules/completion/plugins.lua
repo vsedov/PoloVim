@@ -136,7 +136,6 @@ completion["https://github.com/github/copilot.vim.git"] = {
     end,
 }
 
-
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th
 -- Iron-E

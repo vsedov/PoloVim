@@ -498,7 +498,7 @@ editor["nvim-neorg/neorg"] = {
     branch = "main",
     requires = {
         { "max397574/neorg-contexts", ft = "norg" },
-        { "max397574/neorg-kanban", ft = "norg"},
+        { "max397574/neorg-kanban", ft = "norg" },
     },
     config = function()
         require("modules.editor.neorg")
