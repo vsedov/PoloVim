@@ -50,7 +50,7 @@ return {
         end
 
         _G.sell_your_soul = function()
-            return false
+            return true
         end
 
         _G.load_coq = function()

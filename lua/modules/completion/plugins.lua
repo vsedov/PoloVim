@@ -136,16 +136,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
     end,
 }
 
-completion["zbirenbaum/copilot.lua"] = {
-    opt = true,
-    config = function()
-        vim.schedule(function()
-            require("copilot").setup({
-                ft_disable = { "markdown", "norg", "tex", "txt" },
-            })
-        end)
-    end,
-}
+
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th
 -- Iron-E
@@ -162,7 +153,6 @@ completion["hrsh7th/nvim-cmp"] = {
             config = conf.tabnine,
             opt = true,
         },
-        { "zbirenbaum/copilot-cmp", after = { "copilot.lua", "nvim-cmp" }, opt = true },
         { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
         { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },

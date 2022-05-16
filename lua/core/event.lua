@@ -63,6 +63,13 @@ function autocmd.load_autocmds()
                 [[if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
                 true,
             },
+            -- {
+            --     { "BufWritePre", },
+            --     "*.py",
+            --     function()
+            --     vim.cmd([[NayvyImports]])
+            --     end
+            -- },
             { "BufWritePre", "/tmp/*", "setlocal noundofile" },
             { "BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile" },
             { "BufWritePre", "MERGE_MSG", "setlocal noundofile" },

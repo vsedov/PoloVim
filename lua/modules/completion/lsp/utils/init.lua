@@ -90,10 +90,6 @@ local function select_default_formater(client, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             group = "LspFormatting",
             callback = function()
-                -- I dont know why this is here, but why not .
-                if vim.bo.filetype == "python" then
-                    vim.cmd([[NayvyImports]])
-                end
                 vim.lsp.buf.formatting()
             end,
             buffer = bufnr,

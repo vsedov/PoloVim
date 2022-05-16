@@ -432,24 +432,19 @@ local mappings = {
         "i",
         "s",
     }),
+        ["<C-l>"] = cmp.mapping(function(fallback)
+            local copilot_keys = vim.fn["copilot#Accept"]("")
+            if copilot_keys ~= "" then
+                vim.api.nvim_feedkeys(copilot_keys, "i", true)
+            else
+                fallback()
+            end
+        end, {
+            "i",
+            "s",
+        })
 }
 
-if sell_your_soul() then
-    require("packer").loader("copilot.lua")
-    table.insert(sources, { name = "copilot", priority = 10 })
-    -- table.insert(mappings,
-    --     ["<C-l>"] = cmp.mapping(function(fallback)
-    --         local copilot_keys = vim.fn["copilot#Accept"]("")
-    --         if copilot_keys ~= "" then
-    --             vim.api.nvim_feedkeys(copilot_keys, "i", true)
-    --         else
-    --             fallback()
-    --         end
-    --     end, {
-    --         "i",
-    --         "s",
-    --     }))
-end
 
 cmp.setup({
     preselect = cmp.PreselectMode.Item,

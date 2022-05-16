@@ -484,7 +484,7 @@ tools["camspiers/animate.vim"] = {
     opt = true,
 }
 -- interferes with nui and popus
-tools["chentau/marks.nvim"] = {
+tools["chentoast/marks.nvim"] = {
     opt = true,
     event = { "BufReadPost" },
     config = function()
