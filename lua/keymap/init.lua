@@ -57,6 +57,16 @@ local plug_map = {
         end
     end):with_silent(),
 
+    ["n|<leader>fm"] = map_cmd(function()
+        require("mru").display_cache(dropdown({
+            previewer = false,
+        }))
+    end):with_noremap():with_silent(),
+
+    ["n|<leader>fF"] = map_cmd(function()
+        require("mru").display_cache(vim.tbl_extend("keep", { algorithm = "mfu" }, dropdown({ previewer = false })))
+    end):with_noremap():with_silent(),
+
     ["x|@"] = map_cmd(":<C-u>call ExecuteMacroOverVisualRange()<CR>"):with_noremap(),
 
     --------------- Commands -----------
@@ -325,7 +335,13 @@ local plug_map = {
     ["n|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
     ["x|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
 
-    ["n|<C-U>"] = map_cmd(function()
+    -- This line allows the current file to source the vimrc allowing me use bindings as they're added
+    ["n|<Leader>sv"] = map_cmd([[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]])
+        :with_silent()
+        :with_noremap(),
+    ["n|<leader>cp"] = map_cmd([[:let @"=expand("%:p")<CR>]]):with_silent():with_noremap(),
+
+    ["n|<leader><C-U>"] = map_cmd(function()
         local cursor = vim.api.nvim_win_get_cursor("0")
         vim.api.nvim_feedkeys("b~", "n", true)
         vim.defer_fn(function()

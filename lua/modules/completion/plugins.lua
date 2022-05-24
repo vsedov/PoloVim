@@ -49,6 +49,7 @@ completion["tami5/lspsaga.nvim"] = {
     opt = true,
     config = conf.saga,
     requires = "nvim-lspconfig",
+    after = "hover.nvim",
 }
 
 if load_coq() then
@@ -101,50 +102,40 @@ else
     completion["ms-jpq/coq.artifacts"] = { opt = true }
 end
 
--- completion["https://github.com/github/copilot.vim.git"] = {
---     event = "InsertEnter",
---     after = "nvim-cmp",
---     keys = {
---         "<Plug>(copilot-next)",
---         "<Plug>(copilot-previous)",
---     },
---     setup = function()
---         local default_keymaps = {
---             { "i", "<A-,>", "<Plug>(copilot-next)" },
---             { "i", "<A-.>", "<Plug>(copilot-previous)" },
---         }
---         for _, m in ipairs(default_keymaps) do
---             vim.keymap.set(m[1], m[2], m[3], { silent = true })
---         end
---     end,
+completion["https://github.com/github/copilot.vim.git"] = {
+    event = "InsertEnter",
+    after = "nvim-cmp",
+    keys = {
+        "<Plug>(copilot-next)",
+        "<Plug>(copilot-previous)",
+    },
+    setup = function()
+        local default_keymaps = {
+            { "i", "<A-,>", "<Plug>(copilot-next)" },
+            { "i", "<A-.>", "<Plug>(copilot-previous)" },
+        }
+        for _, m in ipairs(default_keymaps) do
+            vim.keymap.set(m[1], m[2], m[3], { silent = true })
+        end
+    end,
 
---     config = function()
---         vim.opt.completeopt = "menuone,noselect"
---         vim.g.copilot_enabled = false
---         -- Have copilot play nice with nvim-cmp.
---         vim.g.copilot_no_tab_map = true
---         vim.g.copilot_assume_mapped = true
---         vim.g.copilot_tab_fallback = ""
---         local excluded_filetypes = { "norg", "nofile", "prompt" }
---         local copilot_filetypes = {}
---         for _, ft in pairs(excluded_filetypes) do
---             copilot_filetypes[ft] = false
---         end
-
---         vim.g["copilot_filetypes"] = copilot_filetypes
---     end,
--- }
-
-completion["zbirenbaum/copilot.lua"] = {
-    opt = true,
     config = function()
-        vim.schedule(function()
-            require("copilot").setup({
-                ft_disable = { "markdown", "norg", "tex", "txt" },
-            })
-        end)
+        vim.opt.completeopt = "menuone,noselect"
+        vim.g.copilot_enabled = false
+        -- Have copilot play nice with nvim-cmp.
+        vim.g.copilot_no_tab_map = true
+        vim.g.copilot_assume_mapped = true
+        vim.g.copilot_tab_fallback = ""
+        local excluded_filetypes = { "norg", "nofile", "prompt" }
+        local copilot_filetypes = {}
+        for _, ft in pairs(excluded_filetypes) do
+            copilot_filetypes[ft] = false
+        end
+
+        vim.g["copilot_filetypes"] = copilot_filetypes
     end,
 }
+
 -- loading sequence LuaSnip -> nvim-cmp -> cmp_luasnip -> cmp-nvim-lua -> cmp-nvim-lsp ->cmp-buffer -> friendly-snippets
 -- hrsh7th
 -- Iron-E
@@ -152,7 +143,7 @@ completion["hrsh7th/nvim-cmp"] = {
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
-    after = { "LuaSnip" }, -- "nvim-snippy",
+    -- after = { "LuaSnip" }, -- "nvim-snippy",
     requires = {
         {
             "tzachar/cmp-tabnine",
@@ -161,7 +152,6 @@ completion["hrsh7th/nvim-cmp"] = {
             config = conf.tabnine,
             opt = true,
         },
-        { "zbirenbaum/copilot-cmp", after = { "copilot.lua", "nvim-cmp" }, opt = true },
         { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
         { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },

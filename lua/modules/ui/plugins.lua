@@ -8,13 +8,6 @@ end
 
 ui["kyazdani42/nvim-web-devicons"] = {}
 
--- ui["windwp/windline.nvim"] = {
---   -- event = "UIEntwindlineer",
---   config = conf.windline,
---   -- requires = {'kyazdani42/nvim-web-devicons'},
---   opt = true,
--- }
-
 ui["rebelot/heirline.nvim"] = {
     opt = true,
 }
@@ -23,8 +16,38 @@ ui["b0o/incline.nvim"] = {
     opt = true,
     ft = { "python", "lua", "c", "cpp", "rust" },
     after = "heirline.nvim",
+    config = conf.incline,
+}
+
+ui["mvllow/modes.nvim"] = {
+    event = "BufEnter",
+
     config = function()
-        require("incline").setup()
+        require("modes").setup({
+            colors = {
+                copy = "#f5c359",
+                delete = "#c75c6a",
+                insert = "#78ccc5",
+                visual = "#9745be",
+            },
+
+            -- Set opacity for cursorline and number background
+            line_opacity = 0.15,
+
+            -- Enable cursor highlights
+            set_cursor = true,
+
+            -- Enable cursorline initially, and disable cursorline for inactive windows
+            -- or ignored filetypes
+            set_cursorline = true,
+
+            -- Enable line number highlights to match cursorline
+            set_number = true,
+
+            -- Disable modes highlights in specified filetypes
+            -- Please PR commonly ignored filetypes
+            ignore_filetypes = { "NvimTree", "TelescopePrompt", "NeoTree" },
+        })
     end,
 }
 
@@ -86,6 +109,14 @@ ui["nvim-neo-tree/neo-tree.nvim"] = {
     config = conf.neo_tree,
 }
 
+ui["tamton-aquib/keys.nvim"] = {
+    cmd = "KeysToggle",
+    opt = true,
+    config = function()
+        require("keys").setup()
+    end,
+}
+
 -- Use this with nvimtree .
 ui["elihunter173/dirbuf.nvim"] = {
     cmd = { "Dirbuf" },
@@ -109,6 +140,11 @@ ui["lukas-reineke/virt-column.nvim"] = {
 -- ui["dstein64/nvim-scrollview"] = {
 --   event = { "CursorMoved", "CursorMovedI" },
 --   config = conf.scrollview,
+-- }
+
+-- ui["lewis6991/satellite.nvim"] = {
+--     event = { "CursorMoved", "CursorMovedI" },
+--     config = conf.satellite,
 -- }
 
 ui["petertriho/nvim-scrollbar"] = {
@@ -139,6 +175,7 @@ ui["xiyaowong/nvim-transparent"] = {
 
 ui["anuvyklack/pretty-fold.nvim"] = {
     ft = { "python", "c", "lua", "cpp", "java" },
+    requires = { "anuvyklack/nvim-keymap-amend", opt = true, after = "pretty-fold.nvim" },
     config = conf.pretty_fold,
 }
 

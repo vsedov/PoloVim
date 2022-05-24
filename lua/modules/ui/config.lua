@@ -227,6 +227,27 @@ function config.notify()
     require("telescope").load_extension("notify")
 end
 
+function config.incline()
+    require("incline").setup({
+        window = {
+            winhighlight = {
+                inactive = {
+                    Normal = "Normal",
+                },
+            },
+            width = "fill",
+            padding = { left = 2, right = 1 },
+            margin = {
+                horizontal = 0,
+            },
+            placement = {
+                horizontal = "center",
+            },
+        },
+        hide = { focused_win = true },
+    })
+end
+
 function config.neo_tree()
     if not packer_plugins["nui.nvim"].loaded then
         vim.cmd([[packadd nui.nvim ]])
@@ -378,6 +399,10 @@ function config.neo_tree()
     })
 end
 
+function config.satellite()
+    require("satellite").setup()
+end
+
 function config.scrollbar()
     if vim.wo.diff then
         return
@@ -439,9 +464,8 @@ function config.scrollbar()
     -- vim.g.sb_default_behavior = "never"
     -- vim.g.sb_bar_style = "solid"
 end
-
 function config.pretty_fold()
-    require("pretty-fold.preview").setup_keybinding("l")
+    require("pretty-fold.preview").setup()
     require("pretty-fold").setup({
         keep_indentation = true,
         fill_char = "•",

@@ -94,7 +94,7 @@ require"navigator".setup({
     gopls = {
       on_attach = function(client)
         -- print("i am a hook")
-        client.resolved_capabilities.document_formatting = false
+        client.server_capabilities.document_formatting = false
         -- require 'illuminate'.on_attach(client)
       end,
       settings = {
@@ -268,7 +268,7 @@ EOF
 " local on_attach = function(client, bufnr)
 "   require'lsp_signature'.on_attach()
 " 
-"   if client.resolved_capabilities.document_formatting then
+"   if client.server_capabilities.document_formatting then
 "     format.lsp_before_save()
 "   end
 "   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')

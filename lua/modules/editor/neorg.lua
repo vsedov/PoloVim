@@ -37,6 +37,7 @@ require("neorg").setup({
                 extensions = "all",
             },
         },
+        ["external.kanban"] = {},
         -- ["external.zettelkasten"] = {},
         ["external.context"] = {},
         ["core.norg.concealer"] = {
@@ -95,7 +96,6 @@ require("neorg").setup({
                 },
             },
         },
-        ["external.context"] = {},
         ["core.presenter"] = {
             config = {
                 zen_mode = "zen-mode",

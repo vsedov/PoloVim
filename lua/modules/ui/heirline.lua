@@ -1,6 +1,8 @@
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
 
+local M = {}
+
 local winwidth = function()
     -- body
     return vim.api.nvim_call_function("winwidth", { 0 })
@@ -72,8 +74,6 @@ local current_signature = function()
     return sig.label .. "🐼" .. sig.hint
 end
 
-local M = {}
-
 function M.setup()
     local colors = {
         bright_bg = utils.get_highlight("Folded").bg,
@@ -93,8 +93,8 @@ function M.setup()
         },
         git = {
             -- del = utils.get_highlight("diffDeleted").fg,
-            -- add = utils.get_highlight("diff_added").fg,
-            -- change = utils.get_highlight("diff_changed").fg,
+            -- add = utils.get_highlight("diffAdded").fg,
+            -- change = utils.get_highlight("diffChanged").fg,
         },
     }
 
@@ -162,7 +162,7 @@ function M.setup()
             },
         },
         -- We can now access the value of mode() that, by now, would have been
-        -- computed by `init()` and use it to index our sGtrings dictionary.
+        -- computed by `init()` and use it to index our strings dictionary.
         -- note how `static` fields become just regular attributes once the
         -- component is instantiated.
         -- To be extra meticulous, we can also add some vim statusline syntax to
@@ -174,7 +174,7 @@ function M.setup()
         -- Same goes for the highlight. Now the foreground will change according to the current mode.
         hl = function(self)
             local mode = self.mode:sub(1, 1) -- get only the first mode character
-            return { fg = self.mode_colors[mode], style = "bold" }
+            return { fg = self.mode_colors[mode], bold = true }
         end,
     }
 
@@ -209,6 +209,9 @@ function M.setup()
             self.lfilename = vim.fn.fnamemodify(self.filename, ":.")
             if self.lfilename == "" then
                 self.lfilename = "[No Name]"
+            end
+            if not conditions.width_percent_below(#self.lfilename, 0.27) then
+                self.lfilename = vim.fn.pathshorten(self.lfilename)
             end
         end,
         hl = { fg = utils.get_highlight("Directory").fg },
@@ -247,7 +250,7 @@ function M.setup()
         hl = function()
             if vim.bo.modified then
                 -- use `force` because we need to override the child's hl foreground
-                return { fg = colors.cyan, style = "bold", force = true }
+                return { fg = colors.cyan, bold = true, force = true }
             end
         end,
     }
@@ -331,29 +334,51 @@ function M.setup()
     }
 
     local LSPActive = {
-
         condition = conditions.lsp_attached,
+
+        -- You can keep it simple,
+        provider = " [LSP]",
+
         -- Or complicate things a bit and get the servers names
-        provider = function(self)
-            local names = {}
-            for i, server in ipairs(vim.lsp.buf_get_clients(0)) do
-                table.insert(names, server.name)
-            end
-            return " [" .. table.concat(names, " ") .. "]"
-        end,
-        hl = { fg = colors.green, style = "bold" },
+        -- provider  = function(self)
+        --     local names = {}
+        --     for i, server in ipairs(vim.lsp.buf_get_clients(0)) do
+        --         table.insert(names, server.name)
+        --     end
+        --     return " [" .. table.concat(names, " ") .. "]"
+        -- end,
+        hl = { fg = colors.green, bold = true },
     }
+
+    -- local LSPMessages = {
+    --     provider = function()
+    --         local status = require("lsp-status").status()
+    --         if status ~= " " then
+    --             return status
+    --         end
+    --     end,
+    --     hl = { fg = colors.gray },
+    -- }
 
     local Gps = {
         condition = conditions.lsp_attached,
         provider = function(self)
             return current_function() .. current_signature()
         end,
-        hl = { fg = colors.purple, style = "italic" },
+        hl = { fg = colors.gray },
     }
 
     local Diagnostics = {
+
         condition = conditions.has_diagnostics,
+
+        static = {
+            error_icon = vim.fn.sign_getdefined("DiagnosticSignError")[1].text,
+            warn_icon = vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text,
+            info_icon = vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text,
+            hint_icon = vim.fn.sign_getdefined("DiagnosticSignHint")[1].text,
+        },
+
         init = function(self)
             self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
             self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
@@ -361,46 +386,38 @@ function M.setup()
             self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
         end,
 
-        {
-            provider = "!(",
-            hl = { fg = colors.gray, style = "bold" },
-        },
+        -- {
+        --     provider = "!(",
+        --     hl = { fg = colors.gray, bold = true },
+        -- },
         {
             provider = function(self)
-                return self.errors > 0 and (vim.fn.sign_getdefined("DiagnosticSignError")[1].text .. self.errors .. " ")
+                return self.errors > 0 and (self.error_icon .. self.errors .. " ")
             end,
             hl = { fg = colors.diag.error },
         },
         {
             provider = function(self)
-                return self.warnings > 0
-                    and (vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text .. self.warnings .. " ")
+                return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
             end,
             hl = { fg = colors.diag.warn },
         },
         {
             provider = function(self)
-                return self.info > 0 and (vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text .. self.info .. " ")
+                return self.info > 0 and (self.info_icon .. self.info .. " ")
             end,
             hl = { fg = colors.diag.info },
         },
         {
             provider = function(self)
-                return self.hints > 0 and (vim.fn.sign_getdefined("DiagnosticSignHint")[1].text .. self.hints)
+                return self.hints > 0 and (self.hint_icon .. self.hints)
             end,
             hl = { fg = colors.diag.hint },
         },
-        ---  I have no clue what this does, but try it out never the less to see
-        {
-            provider = ")",
-            hl = { fg = colors.gray, style = "bold" },
-        },
-    }
-    local option_value = {
-        provider = function()
-            return require("dynamic_help.extras.statusline").value()
-        end,
-        hl = { fg = colors.blue },
+        -- {
+        --     provider = ")",
+        --     hl = { fg = colors.gray, bold = true },
+        -- },
     }
 
     -- DiagBlock = utils.surround({"![", "]"}, nil, DiagBlock)
@@ -422,7 +439,7 @@ function M.setup()
             provider = function(self)
                 return " " .. self.status_dict.head
             end,
-            hl = { style = "bold" },
+            hl = { bold = true },
         },
         {
             condition = function(self)
@@ -470,11 +487,10 @@ function M.setup()
             local backward = luasnip.jumpable(-1) and " " or ""
             return backward .. forward
         end,
-        hl = { fg = colors.red, syle = "bold" },
+        hl = { fg = colors.red, bold = true },
     }
 
     local DAPMessages = {
-
         condition = function()
             if packer_plugins["nvim-dap"].loaded then
                 return false
@@ -494,6 +510,7 @@ function M.setup()
         end,
         hl = { fg = utils.get_highlight("Debug").fg },
     }
+
     local UltTest = {
         condition = function()
             -- Check if ultest does exist or not
@@ -501,7 +518,6 @@ function M.setup()
                 return vim.api.nvim_call_function("ultest#is_test_file", {}) ~= 0
             end
         end,
-        -- static = {},
         init = function(self)
             self.status = vim.api.nvim_call_function("ultest#status", {})
 
@@ -538,8 +554,11 @@ function M.setup()
             self.icon = (vim.fn.haslocaldir(0) == 1 and "l" or "g") .. " " .. " "
             local cwd = vim.fn.getcwd(0)
             self.cwd = vim.fn.fnamemodify(cwd, ":~")
+            if not conditions.width_percent_below(#self.cwd, 0.27) then
+                self.cwd = vim.fn.pathshorten(self.cwd)
+            end
         end,
-        hl = { fg = colors.blue, style = "bold" },
+        hl = { fg = colors.blue, bold = true },
 
         utils.make_flexible_component(1, {
             provider = function(self)
@@ -569,17 +588,23 @@ function M.setup()
     }
 
     local TerminalName = {
-
-        condition = function()
-            return vim.bo.buftype == "terminal"
-        end,
-
-        icon = " ", -- 
-        provider = function()
-            local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
-            return " " .. tname
-        end,
-        hl = { fg = colors.blue, style = "bold" },
+        -- condition = function()
+        --     return vim.bo.buftype == 'terminal'
+        -- end,
+        -- icon = ' ', -- 
+        {
+            provider = function()
+                local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
+                return " " .. tname
+            end,
+            hl = { fg = colors.blue, bold = true },
+        },
+        { provider = " - " },
+        {
+            provider = function()
+                return vim.b.term_title
+            end,
+        },
     }
 
     local Spell = {
@@ -587,10 +612,10 @@ function M.setup()
             return vim.wo.spell
         end,
         provider = "SPELL ",
-        hl = { style = "bold", fg = colors.orange },
+        hl = { bold = true, fg = colors.orange },
     }
 
-    ViMode = utils.surround({ "", "" }, colors.bright_bg, { ViMode })
+    ViMode = utils.surround({ "", "" }, colors.bright_bg, { ViMode, Snippets })
 
     local Align = { provider = "%=" }
     local Space = { provider = " " }
@@ -626,7 +651,6 @@ function M.setup()
         Space,
         ScrollBar,
     }
-
     local InactiveStatusline = {
         condition = function()
             return not conditions.is_active()
@@ -645,6 +669,7 @@ function M.setup()
             })
         end,
         FileType,
+        { provider = "%q" },
         Space,
         HelpFilename,
         Align,
@@ -688,11 +713,6 @@ function M.setup()
 
     require("heirline").setup(StatusLines)
 end
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    command = "lua require'heirline'.reset_highlights()",
-})
 
 M.setup()
 return M

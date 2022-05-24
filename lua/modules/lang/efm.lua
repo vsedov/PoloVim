@@ -41,9 +41,9 @@ local efm_cfg = {
     init_options = { documentFormatting = true, codeAction = false, document_formatting = true },
     root_dir = require("lspconfig").util.root_pattern({ ".git/", "package.json", "." }),
     on_attach = function(client)
-        client.resolved_capabilities.document_formatting = true
-        client.resolved_capabilities.goto_definition = false
-        -- client.resolved_capabilities.code_action = nil
+        client.server_capabilities.document_formatting = true
+        client.server_capabilities.goto_definition = false
+        -- client.server_capabilities.code_action = nil
         local log = require("guihua.log").new({ level = "info" }, true)
 
         vim.cmd([[

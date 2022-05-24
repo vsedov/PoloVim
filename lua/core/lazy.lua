@@ -209,16 +209,16 @@ vim.defer_fn(function()
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
     loader("workspaces.nvim")
     -- Notify
-    loader("nvim-notify")
-    loader("structlog.nvim")
-    local notify = require("notify")
-    vim.notify = notify
+    -- loader("nvim-notify")
+    -- loader("structlog.nvim")
+    -- local notify = require("notify")
+    -- vim.notify = notify
 
-    if overide_notify_desktop() then
-        print("why is this getting activated, when this isnt supposed to even be on")
-        loader("desktop-notify.nvim")
-        require("desktop-notify").override_vim_notify()
-    end
+    -- if overide_notify_desktop() then
+    --     print("why is this getting activated, when this isnt supposed to even be on")
+    --     loader("desktop-notify.nvim")
+    --     require("desktop-notify").override_vim_notify()
+    -- end
 
     -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
     -- have to work around this for the time

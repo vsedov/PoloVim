@@ -150,27 +150,38 @@ local sources = {
     { name = "nvim_lsp_signature_help", priority = 10 },
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
-    { name = "buffer", priority = 7, keyword_length = 4 },
+    {
+        name = "buffer",
+        priority = 7,
+        keyword_length = 4,
+        options = {
+            get_bufnrs = function()
+                local bufs = {}
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    bufs[vim.api.nvim_win_get_buf(win)] = true
+                end
+                return vim.tbl_keys(bufs)
+            end,
+        },
+    },
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
     { name = "cmdline", priority = 4 },
     { name = "treesitter", keyword_length = 2 },
     { name = "neorg", priority = 6 },
     { name = "latex_symbols", priority = 1 },
+    { name = "Dictionary" },
 }
 
+-- todo make this better too many if statmenets
 local function use_tabnine()
     local valid_file_type = { "python", "lua", "cpp", "c", "rust" }
     return (vim.tbl_contains(valid_file_type, vim.o.filetype))
 end
 
-if sell_your_soul() then
-    require("packer").loader("copilot.lua")
-    table.insert(sources, { name = "copilot", priority = 10 })
-end
 if use_tabnine() then
     require("packer").loader("cmp-tabnine")
-    table.insert(sources, { name = "cmp_tabnine", priority = 10 })
+    table.insert(sources, { name = "cmp_tabnine", priority = 9 })
 end
 
 if vim.o.ft == "sql" then
@@ -303,6 +314,137 @@ if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "p
     table.insert(sources, { name = "calc" })
 end
 
+local mappings = {
+
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<C-e>"] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+    }),
+
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-' '>"] = cmp.mapping.confirm({ select = true }),
+
+    ["<CR>"] = cmp.mapping.confirm({
+        select = true,
+        behavior = cmp.ConfirmBehavior.Insert,
+    }),
+
+    ["<C-f>"] = cmp.mapping(function(fallback)
+        if luasnip.choice_active() then
+            require("luasnip").change_choice(1)
+        elseif cmp.visible() then
+            cmp.scroll_docs(4)
+        else
+            fallback()
+        end
+    end, {
+        "i",
+        "s",
+    }),
+    ["<C-d>"] = cmp.mapping(function(fallback)
+        if luasnip.choice_active() then
+            require("luasnip").change_choice(-1)
+        elseif cmp.visible() then
+            cmp.scroll_docs(-4)
+        else
+            fallback()
+        end
+    end, {
+        "i",
+        "s",
+    }),
+    -- ["<BS>"] = cmp.mapping(function(_fallback)
+    --     local keys = smart_bs()
+    --     vim.api.nvim_feedkeys(keys, "nt", true)
+    -- end, { "i", "s" }),
+
+    ["<Tab>"] = cmp.mapping(function(core, fallback)
+        if cmp.visible() then
+            cmp.select_next_item()
+        elseif luasnip.expandable() then
+            luasnip.expand()
+        elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+        elseif not check_backspace() then
+            cmp.mapping.complete()(core, fallback)
+        elseif has_words_before() then
+            cmp.complete()
+        else
+            smart_tab()
+            -- vim.cmd(":>")
+        end
+    end, {
+        "i",
+        "s",
+        "c",
+    }),
+
+    -- Avoid full fallback as it acts retardedly
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+        else
+            -- smart_bs()
+            vim.cmd(":<")
+        end
+    end, {
+        "i",
+        "s",
+        "c",
+    }),
+
+    ["<C-j>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.mapping.abort()
+            cmp.mapping.close()
+        end
+        if luasnip.expandable() then
+            luasnip.expand()
+        elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+        elseif check_backspace() then
+            fallback()
+        elseif has_words_before() then
+            cmp.complete()
+        else
+            fallback()
+        end
+    end, {
+        "i",
+        "s",
+    }),
+
+    ["<C-k>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.mapping.abort()
+            cmp.mapping.close()
+        end
+        if luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+        else
+            fallback()
+        end
+    end, {
+        "i",
+        "s",
+    }),
+    ["<C-l>"] = cmp.mapping(function(fallback)
+        local copilot_keys = vim.fn["copilot#Accept"]("")
+        if copilot_keys ~= "" then
+            vim.api.nvim_feedkeys(copilot_keys, "i", true)
+        else
+            fallback()
+        end
+    end, {
+        "i",
+        "s",
+    }),
+}
+
 cmp.setup({
     preselect = cmp.PreselectMode.Item,
     window = {
@@ -380,137 +522,7 @@ cmp.setup({
         -- end
     },
     -- You must set mapping if you want.
-    mapping = {
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-e>"] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-        }),
-
-        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-        ["<C-' '>"] = cmp.mapping.confirm({ select = true }),
-
-        ["<CR>"] = cmp.mapping.confirm({
-            select = true,
-            behavior = cmp.ConfirmBehavior.Insert,
-        }),
-
-        ["<C-f>"] = cmp.mapping(function(fallback)
-            if luasnip.choice_active() then
-                require("luasnip").change_choice(1)
-            elseif cmp.visible() then
-                cmp.scroll_docs(4)
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        }),
-        ["<C-d>"] = cmp.mapping(function(fallback)
-            if luasnip.choice_active() then
-                require("luasnip").change_choice(-1)
-            elseif cmp.visible() then
-                cmp.scroll_docs(-4)
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        }),
-        -- ["<BS>"] = cmp.mapping(function(_fallback)
-        --     local keys = smart_bs()
-        --     vim.api.nvim_feedkeys(keys, "nt", true)
-        -- end, { "i", "s" }),
-
-        ["<Tab>"] = cmp.mapping(function(core, fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expandable() then
-                luasnip.expand()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif not check_backspace() then
-                cmp.mapping.complete()(core, fallback)
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                smart_tab()
-                -- vim.cmd(":>")
-            end
-        end, {
-            "i",
-            "s",
-            "c",
-        }),
-
-        -- Avoid full fallback as it acts retardedly
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                -- smart_bs()
-                vim.cmd(":<")
-            end
-        end, {
-            "i",
-            "s",
-            "c",
-        }),
-
-        ["<C-j>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.mapping.abort()
-                cmp.mapping.close()
-            end
-            if luasnip.expandable() then
-                luasnip.expand()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif check_backspace() then
-                fallback()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        }),
-
-        ["<C-k>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.mapping.abort()
-                cmp.mapping.close()
-            end
-            if luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        }),
-
-        ["<C-l>"] = cmp.mapping(function(fallback)
-            local copilot_keys = vim.fn["copilot#Accept"]("")
-            if copilot_keys ~= "" then
-                vim.api.nvim_feedkeys(copilot_keys, "i", true)
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        }),
-    },
-
+    mapping = mappings,
     -- You should specify your *installed* sources.
     sources = sources,
     sorting = {

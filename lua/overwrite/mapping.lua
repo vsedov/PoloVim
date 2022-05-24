@@ -105,7 +105,7 @@ local keys = { --
         :with_expr(),
 
     ["v|<Leader>rr"] = map_cmd([[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]]):with_noremap(),
-    ["n|<Leader>rp"] = map_cmd([[lua require('refactoring').debug.printf({below = false})<CR>]]):with_noremap(),
+    ["n|<Leader>rp"] = map_cmd([[<cmd>lua require('refactoring').debug.printf({below = false})<CR>]]):with_noremap(),
 
     ["v|<Leader>ro"] = map_cmd([[<cmd> lua require('refactoring').debug.print_var({})<CR>]]):with_noremap(),
     ["n|<Leader>rc"] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]]):with_noremap(),
@@ -167,10 +167,6 @@ end
 
 add_cmd("AbbrivGodMode", function()
     vim.cmd([[packadd vim-abbrev]])
-end, { force = true })
-
-add_cmd("DuckStart", function()
-    require("modules.useless.config").launch_duck()
 end, { force = true })
 
 add_cmd("TestStart", function()
@@ -327,8 +323,10 @@ add_cmd("ClearUndo", function()
     vim.opt.undolevels = old
 end, {})
 
-vim.cmd("command! -nargs=+ -complete=file Grep " .. "lua vim.api.nvim_exec([[grep! <args> | redraw! | copen]], true)")
-vim.cmd("command! -nargs=+ -complete=file LGrep " .. "lua vim.api.nvim_exec([[lgrep! <args> | redraw! | lopen]], true)")
+add_cmd("NeorgToMd", function()
+    -- File name without extension .
+    vim.cmd("Neorg export to-file " .. vim.fn.expand("%:t:r") .. ".md")
+end, { force = true })
 
 local plugmap = require("keymap").map
 local merged = vim.tbl_extend("force", plugmap, keys)

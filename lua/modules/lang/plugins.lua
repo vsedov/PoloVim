@@ -132,7 +132,7 @@ lang["lervag/vimtex"] = {
 }
 ------------------------------------------------------------------------------------------------------
 
-lang["vsedov/nvim-coverage"] = {
+lang["andythigpen/nvim-coverage"] = {
     ft = { "python" },
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
     opt = true,
@@ -267,6 +267,12 @@ lang["~/GitHub/active_development/py.nvim"] = {
         })
     end,
 }
+
+-- Test custom commands
+lang["mtikekar/nvim-send-to-term"] = {
+    ft = "python",
+}
+
 ------------------------------------------------------------------------------------------------------
 lang["vim-test/vim-test"] = {
     opt = true,

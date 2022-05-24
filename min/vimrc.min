@@ -105,9 +105,9 @@ end
     init_options = {documentFormatting = true, codeAction = false, document_formatting = true},
     root_dir = require'lspconfig'.util.root_pattern({'.git/', 'package.json', '.'}),
     on_attach = function(client)
-      client.resolved_capabilities.document_formatting = true
-      client.resolved_capabilities.goto_definition = false
-      -- client.resolved_capabilities.code_action = nil
+      client.server_capabilities.document_formatting = true
+      client.server_capabilities.goto_definition = false
+      -- client.server_capabilities.code_action = nil
       local log = require("guihua.log").new({level = "info"}, true)
       vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()]])
       -- print ("efm attached")
@@ -436,7 +436,7 @@ EOF
 " local on_attach = function(client, bufnr)
 "   require'lsp_signature'.on_attach()
 "
-"   if client.resolved_capabilities.document_formatting then
+"   if client.server_capabilities.document_formatting then
 "     format.lsp_before_save()
 "   end
 "   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')

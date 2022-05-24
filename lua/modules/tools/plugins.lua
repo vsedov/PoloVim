@@ -29,11 +29,11 @@ tools["editorconfig/editorconfig-vim"] = {
 tools["is0n/fm-nvim"] = {
     cmd = {
         "Neomutt",
-        "Lazygit",
-        "Joshuto",
+        "Lazygit", -- 3 [ neogit + fugative + lazygit depends how i feel.]
+        "Joshuto", -- 2
         "Broot",
         "Ranger",
-        "Xplr",
+        "Xplr", -- 1
         "Vifm",
         "Skim",
         "Nnn",
@@ -155,6 +155,47 @@ tools["pwntester/octo.nvim"] = {
         }, { prefix = "<leader>" })
     end,
 }
+
+tools["ldelossa/gh.nvim"] = {
+    cmd = {
+        "GHOpenPR",
+        "GHClosePR",
+        "GHADDLabel",
+        "GHExpandPR",
+        "GHOpenToPR",
+        "GHPopOutPR",
+        "GHPRDetails",
+        "GHRefreshPR",
+        "GHCollapsePR",
+        "GHNextThread",
+        "GHCloseCommit",
+        "GHCloseReview",
+        "GHStartReview",
+        "GHCreateThread",
+        "GHDeleteReview",
+        "GHExpandCommit",
+        "GHExpandReview",
+        "GHOpenToCommit",
+        "GHPopOutCommit",
+        "GHPreviewIssue",
+        "GHSubmitReview",
+        "GHToggleThreads",
+        "GhCollapseCommit",
+        "GHRefreshComments",
+    },
+    requires = { "ldelossa/litee.nvim", opt = true, after = "gh.nvim" },
+    config = function()
+        require("litee.lib").setup()
+        require("litee.gh").setup()
+    end,
+}
+
+tools["axieax/urlview.nvim"] = {
+    cmd = { "UrlView", "UrlView packer" },
+    config = conf.urlview,
+    after = "telescope.nvim",
+}
+
 tools["jghauser/mkdir.nvim"] = {
     opt = true,
     cmd = "new",
@@ -392,6 +433,9 @@ tools["LhKipp/nvim-git-fixer"] = {
     end,
 }
 
+tools["ilAYAli/scMRU.nvim"] = {
+    module = "mru",
+}
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools["kevinhwang91/nvim-bqf"] = {
     opt = true,
@@ -440,7 +484,7 @@ tools["camspiers/animate.vim"] = {
     opt = true,
 }
 -- interferes with nui and popus
-tools["chentau/marks.nvim"] = {
+tools["chentoast/marks.nvim"] = {
     opt = true,
     event = { "BufReadPost" },
     config = function()
