@@ -98,4 +98,8 @@ function config.hover()
         end,
     })
 end
+
+function config.null_ls()
+    require("modules.lsp.lsp.null_ls")
+end
 return config

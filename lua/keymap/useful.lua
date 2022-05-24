@@ -25,20 +25,18 @@ local plug_map = {
     ["v|ga"] = map_cmd("<cmd>CodeActionMenu<Cr>"):with_noremap():with_silent(),
     ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
     ["n|gA"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
-    ["n|<localleader>D"] = map_cmd(
-        '<cmd>lua require"modules.completion.lsp.utils.peek".toggle_diagnostics_visibility()<CR>'
-    )
+    ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.lsp.lsp.utils.peek".toggle_diagnostics_visibility()<CR>')
         :with_noremap()
         :with_silent(),
-    ["n|gd"] = map_cmd([[<cmd>lua require"modules.completion.lsp.utils.peek".Peek('definition')<CR>]])
-        :with_noremap()
-        :with_silent(),
-
-    ["n|dpj"] = map_cmd('<cmd>lua require"modules.completion.lsp.utils.peek".PeekTypeDefinition()<CR>')
+    ["n|gd"] = map_cmd([[<cmd>lua require"modules.lsp.lsp.utils.peek".Peek('definition')<CR>]])
         :with_noremap()
         :with_silent(),
 
-    ["n|dpk"] = map_cmd('<cmd>lua require"modules.completion.lsp.utils.peek".PeekImplementation()<CR>')
+    ["n|dpj"] = map_cmd('<cmd>lua require"modules.lsp.lsp.utils.peek".PeekTypeDefinition()<CR>')
+        :with_noremap()
+        :with_silent(),
+
+    ["n|dpk"] = map_cmd('<cmd>lua require"modules.lsp.lsp.utils.peek".PeekImplementation()<CR>')
         :with_noremap()
         :with_silent(),
 

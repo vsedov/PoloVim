@@ -1,6 +1,14 @@
 local lang = {}
 local conf = require("modules.lang.config")
 
+lang["nathom/filetype.nvim"] = {
+    -- event = {'BufEnter'},
+    setup = function()
+        vim.g.did_load_filetypes = 1
+    end,
+    config = conf.filetype,
+}
+
 lang["nvim-treesitter/nvim-treesitter"] = {
     opt = true,
     run = ":TSUpdate",
@@ -80,11 +88,6 @@ lang["pianocomposer321/yabs.nvim"] = {
     ft = "python",
     requires = { "nvim-lua/plenary.nvim" },
     config = conf.yabs,
-}
-
-lang["jose-elias-alvarez/null-ls.nvim"] = {
-    opt = true,
-    config = require("modules.lang.null-ls").config,
 }
 
 lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }

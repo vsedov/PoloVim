@@ -50,17 +50,9 @@ return {
         end
 
         _G.sell_your_soul = function()
-            return true
-        end
-
-        _G.load_coq = function()
-            -- Coq is good for sql, vim and any other languages that
-            -- i dont have a server or snippets for
-            if vim.o.ft == "sql" or vim.o.ft == "vim" then
-                return true
-            end
             return false
         end
+
         _G.use_efm = function()
             return false
             -- return true
@@ -71,7 +63,7 @@ return {
                 return false
             end
 
-            return false
+            return true
         end
         _G.dump = function(...)
             print(vim.inspect(...))

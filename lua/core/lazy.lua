@@ -35,8 +35,6 @@ local function loadscheme()
             "kanagawa.nvim",
             "tokyonight.nvim",
             "Sakura.nvim",
-            "vim-dogrun",
-            "jabuti-nvim",
         }
     end
     -- themes = { "kanagawa.nvim" }
