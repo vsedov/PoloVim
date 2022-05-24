@@ -1,2 +1,2 @@
 require("core")
-require("overwrite")
+require("core.cmd")

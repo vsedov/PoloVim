@@ -1,80 +1,145 @@
 local config = {}
-
-local function load_env_file()
-    local env_file = require("core.global").home .. "/.env"
-    local env_contents = {}
-    if vim.fn.filereadable(env_file) ~= 1 then
-        print(".env file does not exist")
-        return
-    end
-    local contents = vim.fn.readfile(env_file)
-    for _, item in pairs(contents) do
-        local line_content = vim.fn.split(item, "=")
-        env_contents[line_content[1]] = line_content[2]
-    end
-    return env_contents
-end
-
-local function load_dbs()
-    local env_contents = load_env_file()
-    local dbs = {}
-    for key, value in pairs(env_contents) do
-        if vim.fn.stridx(key, "DB_CONNECTION_") >= 0 then
-            local db_name = vim.fn.split(key, "_")[3]:lower()
-            dbs[db_name] = value
-        end
-    end
-    return dbs
-end
-
-function config.diffview()
-    local cb = require("diffview.config").diffview_callback
-    require("diffview").setup({
-        diff_binaries = false, -- Show diffs for binaries
-        use_icons = true, -- Requires nvim-web-devicons
-        enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
-        signs = { fold_closed = "", fold_open = "" },
-        file_panel = {
-            position = "left", -- One of 'left', 'right', 'top', 'bottom'
-            width = 35, -- Only applies when position is 'left' or 'right'
-            height = 10, -- Only applies when position is 'top' or 'bottom'
+function config.outline()
+    vim.g.symbols_outline = {
+        highlight_hovered_item = true,
+        show_guides = true,
+        auto_preview = true,
+        position = "right",
+        relative_width = true,
+        width = 25,
+        show_numbers = false,
+        show_relative_numbers = false,
+        show_symbol_details = true,
+        preview_bg_highlight = "Pmenu",
+        keymaps = { -- These keymaps can be a string or a table for multiple keys
+            close = { "<Esc>", "q" },
+            goto_location = "<Cr>",
+            focus_location = "o",
+            hover_symbol = "<C-space>",
+            toggle_preview = "K",
+            rename_symbol = "r",
+            code_actions = "a",
         },
-        key_bindings = {
-            -- The `view` bindings are active in the diff buffers, only when the current
-            -- tabpage is a Diffview.
-            view = {
-                ["<tab>"] = cb("select_next_entry"), -- Open the diff for the next file
-                ["<s-tab>"] = cb("select_prev_entry"), -- Open the diff for the previous file
-                ["<leader>e"] = cb("focus_files"), -- Bring focus to the files panel
-                ["<leader>b"] = cb("toggle_files"), -- Toggle the files panel.
-            },
-            file_panel = {
-                ["j"] = cb("next_entry"), -- Bring the cursor to the next file entry
-                ["<down>"] = cb("next_entry"),
-                ["k"] = cb("prev_entry"), -- Bring the cursor to the previous file entry.
-                ["<up>"] = cb("prev_entry"),
-                ["<cr>"] = cb("select_entry"), -- Open the diff for the selected entry.
-                ["o"] = cb("select_entry"),
-                ["R"] = cb("refresh_files"), -- Update stats and entries in the file list.
-                ["<tab>"] = cb("select_next_entry"),
-                ["<s-tab>"] = cb("select_prev_entry"),
-                ["<leader>e"] = cb("focus_files"),
-                ["<leader>b"] = cb("toggle_files"),
+        lsp_blacklist = {},
+        symbol_blacklist = {},
+        symbols = {
+            File = { icon = "", hl = "TSURI" },
+            Module = { icon = "", hl = "TSNamespace" },
+            Namespace = { icon = "", hl = "TSNamespace" },
+            Package = { icon = "", hl = "TSNamespace" },
+            Class = { icon = "𝓒", hl = "TSType" },
+            Method = { icon = "ƒ", hl = "TSMethod" },
+            Property = { icon = "", hl = "TSMethod" },
+            Field = { icon = "", hl = "TSField" },
+            Constructor = { icon = "", hl = "TSConstructor" },
+            Enum = { icon = "ℰ", hl = "TSType" },
+            Interface = { icon = "ﰮ", hl = "TSType" },
+            Function = { icon = "", hl = "TSFunction" },
+            Variable = { icon = "", hl = "TSConstant" },
+            Constant = { icon = "", hl = "TSConstant" },
+            String = { icon = "𝓐", hl = "TSString" },
+            Number = { icon = "#", hl = "TSNumber" },
+            Boolean = { icon = "⊨", hl = "TSBoolean" },
+            Array = { icon = "", hl = "TSConstant" },
+            Object = { icon = "⦿", hl = "TSType" },
+            Key = { icon = "🔐", hl = "TSType" },
+            Null = { icon = "NULL", hl = "TSType" },
+            EnumMember = { icon = "", hl = "TSField" },
+            Struct = { icon = "𝓢", hl = "TSType" },
+            Event = { icon = "🗲", hl = "TSType" },
+            Operator = { icon = "+", hl = "TSOperator" },
+            TypeParameter = { icon = "𝙏", hl = "TSParameter" },
+        },
+    }
+end
+function config.coverage()
+    require("coverage").setup()
+end
+function config.python_dev()
+    require("py").setup({
+        leader = "<leader><leader>",
+    })
+end
+function config.nvimdev()
+    vim.g.nvimdev_auto_ctags = 1
+    vim.g.nvimdev_auto_lint = 1
+end
+
+function config.fm()
+    require("fm-nvim").setup({
+
+        ui = {
+            float = {
+                border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
             },
         },
     })
 end
 
-function config.vim_dadbod_ui()
-    if packer_plugins["vim-dadbod"] and not packer_plugins["vim-dadbod"].loaded then
-        require("packer").loader("vim-dadbod")
-    end
-    vim.g.db_ui_show_help = 0
-    vim.g.db_ui_win_position = "left"
-    vim.g.db_ui_use_nerd_fonts = 1
-    vim.g.db_ui_winwidth = 35
-    vim.g.db_ui_save_location = require("core.global").home .. "/.cache/vim/db_ui_queries"
-    vim.g.dbs = load_dbs()
+function config.harpoon()
+    require("harpoon").setup({
+
+        global_settings = {
+            save_on_toggle = true,
+            save_on_change = true,
+            enter_on_sendcmd = true,
+            tmux_autoclose_windows = false,
+            excluded_filetypes = { "harpoon" },
+            mark_branch = false,
+        },
+    })
+    require("telescope").load_extension("harpoon")
+end
+
+function config.workspace()
+    require("workspaces").setup({
+        global_cd = true,
+        sort = true,
+        notify_info = true,
+
+        hooks = {
+            open = { "Telescope find_files" },
+        },
+    })
+    require("telescope").load_extension("workspaces")
+end
+
+function config.paperplanes()
+    require("paperplanes").setup({
+        register = "+",
+        provider = "ix.io",
+    })
+end
+
+function config.urlview()
+    require("urlview").setup({
+        -- Prompt title (`<context> <default_title>`, e.g. `Buffer Links:`)
+        default_title = "Links:",
+        -- Default picker to display links with
+        -- Options: "native" (vim.ui.select) or "telescope"
+        default_picker = "telescope",
+        -- Set the default protocol for us to prefix URLs with if they don't start with http/https
+        default_prefix = "https://",
+        -- Command or method to open links with
+        -- Options: "netrw", "system" (default OS browser); or "firefox", "chromium" etc.
+        navigate_method = "netrw",
+        -- Ensure links shown in the picker are unique (no duplicates)
+        unique = true,
+        -- Ensure links shown in the picker are sorted alphabetically
+        sorted = true,
+        -- Logs user warnings (recommended for error detection)
+        debug = true,
+        -- Custom search captures
+        -- NOTE: captures follow Lua pattern matching (https://riptutorial.com/lua/example/20315/lua-pattern-matching)
+        custom_searches = {
+            -- KEY: search source name
+            -- VALUE: custom search function or table (map with keys capture, format)
+            jira = {
+                capture = "AXIE%-%d+",
+                format = "https://jira.axieax.com/browse/%s",
+            },
+        },
+    })
 end
 
 function config.vim_vista()
@@ -97,314 +162,94 @@ function config.vim_vista()
     -- vim.g['vista#renderer#icons'] = {['function'] = "", ['method'] = "ℱ", variable = "כֿ"}
 end
 
-function config.clap()
-    -- require("packer").loader("LuaSnip")
+function config.spelunker()
+    -- vim.cmd("command! Spell call spelunker#check()")
+    vim.g.enable_spelunker_vim_on_readonly = 0
+    vim.g.spelunker_target_min_char_len = 5
+    vim.g.spelunker_check_type = 2
+    vim.g.spelunker_highlight_type = 2
+    vim.g.spelunker_disable_uri_checking = 1
+    vim.g.spelunker_disable_account_name_checking = 1
+    vim.g.spelunker_disable_email_checking = 1
+    -- vim.cmd("highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=undercurl guifg=#F3206e guisp=#EF3050")
+    -- vim.cmd("highlight SpelunkerComplexOrCompoundWord cterm=underline gui=undercurl guisp=#EF3050")
+    vim.cmd("highlight def link SpelunkerSpellBad SpellBad")
+    vim.cmd("highlight def link SpelunkerComplexOrCompoundWord Rare")
+end
 
-    vim.g.clap_preview_size = 10
-    vim.g.airline_powerline_fonts = 1
-    vim.g.clap_layout = { width = "80%", row = "8%", col = "10%", height = "34%" } -- height = "40%", row = "17%", relative = "editor",
-    -- vim.g.clap_popup_border = "rounded"
-    vim.g.clap_selected_sign = { text = "", texthl = "ClapSelectedSign", linehl = "ClapSelected" }
-    vim.g.clap_current_selection_sign = {
-        text = "",
-        texthl = "ClapCurrentSelectionSign",
-        linehl = "ClapCurrentSelection",
+function config.spellcheck()
+    vim.cmd("highlight def link SpelunkerSpellBad SpellBad")
+    vim.cmd("highlight def link SpelunkerComplexOrCompoundWord Rare")
+
+    vim.fn["spelunker#check"]()
+end
+
+function config.grammcheck()
+    -- body
+    if not packer_plugins["rhysd/vim-grammarous"] or not packer_plugins["rhysd/vim-grammarous"].loaded then
+        require("packer").loader("vim-grammarous")
+    end
+    vim.cmd([[GrammarousCheck]])
+end
+
+function config.markdown()
+    vim.g.vim_markdown_frontmatter = 1
+    vim.g.vim_markdown_strikethrough = 1
+    vim.g.vim_markdown_folding_level = 6
+    vim.g.vim_markdown_override_foldtext = 1
+    vim.g.vim_markdown_folding_style_pythonic = 1
+    vim.g.vim_markdown_conceal = 1
+    vim.g.vim_markdown_conceal_code_blocks = 1
+    vim.g.vim_markdown_new_list_item_indent = 0
+    vim.g.vim_markdown_toc_autofit = 0
+    vim.g.vim_markdown_edit_url_in = "vsplit"
+    vim.g.vim_markdown_strikethrough = 1
+    vim.g.vim_markdown_fenced_languages = {
+        "c++=javascript",
+        "js=javascript",
+        "json=javascript",
+        "jsx=javascript",
+        "tsx=javascript",
     }
-    -- vim.g.clap_always_open_preview = true
-    vim.g.clap_preview_direction = "UD"
-    -- if vim.g.colors_name == 'zephyr' then
-    vim.g.clap_theme = "material_design_dark"
-    vim.api.nvim_command(
-        "autocmd FileType clap_input lua require'cmp'.setup.buffer { completion = {autocomplete = false} }"
+end
+function config.clipboardimage()
+    require("clipboard-image").setup({
+        default = {
+            img_name = function()
+                vim.fn.inputsave()
+                local name = vim.fn.input("Name: ")
+                vim.fn.inputrestore()
+
+                if name == nil or name == "" then
+                    return os.date("%y-%m-%d-%H-%M-%S")
+                end
+                return name
+            end,
+        },
+    })
+end
+
+function config.mkdp()
+    -- print("mkdp")
+    vim.g.mkdp_command_for_global = 1
+    vim.cmd(
+        [[let g:mkdp_preview_options = { 'mkit': {}, 'katex': {}, 'uml': {}, 'maid': {}, 'disable_sync_scroll': 0, 'sync_scroll_type': 'middle', 'hide_yaml_meta': 1, 'sequence_diagrams': {}, 'flowchart_diagrams': {}, 'content_editable': v:true, 'disable_filename': 0 }]]
     )
-    -- end
-    -- vim.api.nvim_command("autocmd FileType clap_input call compe#setup({ 'enabled': v:false }, 0)")
 end
 
-function config.clap_after()
-    if not packer_plugins["LuaSnip"].loaded then
-        require("packer").loader("LuaSnip")
+function config.spectre()
+    local status_ok, spectre = pcall(require, "spectre")
+    if not status_ok then
+        return
     end
-
-    if not packer_plugins["nvim-cmp"].loaded then
-        require("packer").loader("nvim-cmp")
-    end
+    spectre.setup()
 end
 
-function config.vgit()
-    -- use this as a diff tool (faster than Diffview)
-    -- there are overlaps with gitgutter. following are nice features
-    require("vgit").setup({
-        keymaps = {
-            ["n <leader>ga"] = "actions", -- show all commands in telescope
-            ["n <leader>ba"] = "buffer_gutter_blame_preview", -- show all blames
-            ["n <leader>bp"] = "buffer_blame_preview", -- buffer diff
-            ["n <leader>bh"] = "buffer_history_preview", -- buffer commit history DiffviewFileHistory
-            ["n <leader>gp"] = "buffer_staged_diff_preview", -- diff for staged changes
-            ["n <leader>pd"] = "project_diff_preview", -- diffview is slow
-        },
-        controller = {
-            hunks_enabled = false, -- gitsigns
-            blames_enabled = false,
-            diff_strategy = "index",
-            diff_preference = "vertical",
-            predict_hunk_signs = true,
-            predict_hunk_throttle_ms = 500,
-            predict_hunk_max_lines = 50000,
-            blame_line_throttle_ms = 250,
-            show_untracked_file_signs = true,
-            action_delay_ms = 500,
-        },
-    })
-    require("packer").loader("telescope.nvim")
-    -- print('vgit')
-    -- require("vgit")._buf_attach()
-end
-
--- Nice
-function config.project()
-    require("project_nvim").setup({
-        datapath = vim.fn.stdpath("data"),
-        ignore_lsp = { "efm" },
-        exclude_dirs = { "~/.cargo/*", "~/.conf/nvim/" },
-        silent_chdir = true, -- fucking annoying thing
-        detection_methods = { "lsp", "pattern" },
-        patterns = {
-            "pyproject.toml",
-            "pom.xml", --
-            "Pipfile",
-            ".venv", -- for python
-            "_darcs",
-            ".hg",
-            ".bzr",
-            ".svn",
-            "node_modules",
-            "xmake.lua",
-            "pom.xml", -- java
-            "CMakeLists.txt",
-            ".null-ls-root",
-            "Makefile",
-            "package.json",
-            "tsconfig.json",
-            ".git",
-        },
-    })
-end
-
-function config.worktree()
-    function git_worktree(arg)
-        if arg == "create" then
-            require("telescope").extensions.git_worktree.create_git_worktree()
-        else
-            require("telescope").extensions.git_worktree.git_worktrees()
-        end
-    end
-
-    require("git-worktree").setup({})
-    vim.api.nvim_create_user_command("Worktree", "lua git_worktree(<f-args>)", {
-        nargs = "*",
-        complete = function()
-            return { "create" }
-        end,
-    })
-
-    local Worktree = require("git-worktree")
-    Worktree.on_tree_change(function(op, metadata)
-        if op == Worktree.Operations.Switch then
-            print("Switched from " .. metadata.prev_path .. " to " .. metadata.path)
-        end
-
-        if op == Worktree.Operations.Create then
-            print("Create worktree " .. metadata.path)
-        end
-
-        if op == Worktree.Operations.Delete then
-            print("Delete worktree " .. metadata.path)
-        end
-    end)
-end
-
-function config.neoclip()
-    require("neoclip").setup({
-        history = 2000,
-        enable_persistent_history = true,
-        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-        filter = nil,
-        preview = true,
-        default_register = "a extra=star,plus,unnamed,b",
-        default_register_macros = "q",
-        enable_macro_history = true,
-        content_spec_column = true,
-        on_paste = {
-            set_reg = false,
-        },
-        on_replay = {
-            set_reg = false,
-        },
-        keys = {
-            telescope = {
-                i = {
-                    select = "<cr>",
-                    paste = "<c-p>",
-                    paste_behind = "<c-k>",
-                    replay = "<c-q>",
-                    custom = {},
-                },
-                n = {
-                    select = "<cr>",
-                    paste = "p",
-                    paste_behind = "P",
-                    replay = "q",
-                    custom = {},
-                },
-            },
-        },
-    })
-end
-
-function config.neogit()
-    require("neogit").setup({
-        disable_signs = false,
-        disable_context_highlighting = false,
-        disable_commit_confirmation = false,
-        auto_refresh = true,
-        disable_builtin_notifications = true,
-        use_magit_keybindings = true,
-        signs = {
-            -- { CLOSED, OPENED }
-            section = { ">", "v" },
-            item = { ">", "v" },
-            hunk = { "", "" },
-        },
-        integrations = {
-            diffview = true,
-        },
-        -- override/add mappings
-        mappings = {
-            -- modify status buffer mappings
-            status = {
-                -- Adds a mapping with "B" as key that does the "BranchPopup" command
-                ["B"] = "BranchPopup",
-                -- Removes the default mapping of "s"
-            },
-        },
-    })
-end
-
-function config.gitsigns()
-    if not packer_plugins["plenary.nvim"].loaded then
-        require("packer").loader("plenary.nvim")
-    end
-    local gitsigns = require("gitsigns")
-
-    local line = vim.fn.line
-
-    local function wrap(fn, ...)
-        local args = { ... }
-        local nargs = select("#", ...)
-        return function()
-            fn(unpack(args, nargs))
-        end
-    end
-
-    --  TODO(lewis6991): doesn't work properly
-    vim.keymap.set("n", "M", "<cmd>Gitsigns debug_messages<cr>")
-    vim.keymap.set("n", "m", "<cmd>Gitsigns dump_cache<cr>")
-
-    local function on_attach(bufnr)
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
-
-        map("n", "]c", function()
-            if vim.wo.diff then
-                return "]c"
-            end
-            vim.schedule(gitsigns.next_hunk)
-            return "<Ignore>"
-        end, { expr = true })
-
-        map("n", "[c", function()
-            if vim.wo.diff then
-                return "[c"
-            end
-            vim.schedule(gitsigns.prev_hunk)
-            return "<Ignore>"
-        end, { expr = true })
-
-        map("n", "<leader>hs", gitsigns.stage_hunk)
-        map("n", "<leader>hr", gitsigns.reset_hunk)
-        map("v", "<leader>hs", wrap(gitsigns.stage_hunk, { line("."), line("v") }))
-        map("v", "<leader>hr", wrap(gitsigns.reset_hunk, { line("."), line("v") }))
-        map("n", "<leader>hS", gitsigns.stage_buffer)
-        map("n", "<leader>hu", gitsigns.undo_stage_hunk)
-        map("n", "<leader>hR", gitsigns.reset_buffer)
-        map("n", "<leader>hp", gitsigns.preview_hunk)
-        map("n", "<leader>hb", wrap(gitsigns.blame_line, { full = true }))
-        map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
-        map("n", "<leader>hd", gitsigns.diffthis)
-        map("n", "<leader>hD", wrap(gitsigns.diffthis, "~"))
-        map("n", "<leader>td", gitsigns.toggle_deleted)
-
-        map("n", "<leader>hQ", wrap(gitsigns.setqflist, "all"))
-        map("n", "<leader>hq", wrap(gitsigns.setqflist))
-
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
-    end
-    gitsigns.setup({
-        debug_mode = true,
-        max_file_length = 1000000000,
-        signs = {
-            add = { show_count = false, text = "│" },
-            change = { show_count = false, text = "│" },
-            delete = { show_count = true, text = "ﬠ" },
-            topdelete = { show_count = true, text = "ﬢ" },
-            changedelete = { show_count = true, text = "┊" },
-        },
-        on_attach = on_attach,
-        preview_config = {
-            border = "rounded",
-        },
-        current_line_blame = true,
-        current_line_blame_formatter = " : <author> | <author_time:%Y-%m-%d> | <summary>",
-        current_line_blame_formatter_opts = {
-            relative_time = true,
-        },
-        current_line_blame_opts = {
-            delay = 0,
-        },
-        count_chars = {
-            "⒈",
-            "⒉",
-            "⒊",
-            "⒋",
-            "⒌",
-            "⒍",
-            "⒎",
-            "⒏",
-            "⒐",
-            "⒑",
-            "⒒",
-            "⒓",
-            "⒔",
-            "⒕",
-            "⒖",
-            "⒗",
-            "⒘",
-            "⒙",
-            "⒚",
-            "⒛",
-        },
-        _refresh_staged_on_update = false,
-        watch_gitdir = { interval = 1000, follow_files = true },
-        sign_priority = 6,
-        status_formatter = nil, -- Use default
-        update_debounce = 0,
-        word_diff = true,
-        _threaded_diff = true, -- no clue what this does
-        diff_opts = { internal = true },
+function config.sad()
+    require("sad").setup({
+        diff = "diff-so-fancy", -- you can use `diff`, `diff-so-fancy`
+        ls_file = "fd", -- also git ls_file
+        exact = false, -- exact match
     })
 end
 
@@ -442,269 +287,39 @@ function config.bqf()
     })
 end
 
-function config.clipboardimage()
-    require("clipboard-image").setup({
-        default = {
-            img_name = function()
-                vim.fn.inputsave()
-                local name = vim.fn.input("Name: ")
-                vim.fn.inputrestore()
-
-                if name == nil or name == "" then
-                    return os.date("%y-%m-%d-%H-%M-%S")
-                end
-                return name
-            end,
+function config.neoclip()
+    require("neoclip").setup({
+        history = 2000,
+        enable_persistent_history = true,
+        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+        filter = nil,
+        preview = true,
+        default_register = "a extra=star,plus,unnamed,b",
+        default_register_macros = "q",
+        enable_macro_history = true,
+        content_spec_column = true,
+        on_paste = {
+            set_reg = false,
         },
-    })
-end
-
-function config.dapui()
-    vim.cmd([[let g:dbs = {
-  \ 'eraser': 'postgres://postgres:password@localhost:5432/eraser_local',
-  \ 'staging': 'postgres://postgres:password@localhost:5432/my-staging-db',
-  \ 'wp': 'mysql://root@localhost/wp_awesome' }]])
-    require("dapui").setup({
-        icons = { expanded = "⯆", collapsed = "⯈", circular = "↺" },
-
-        mappings = {
-            -- Use a table to apply multiple mappings
-            expand = { "<CR>", "<2-LeftMouse>" },
-            open = "o",
-            remove = "d",
-            edit = "e",
+        on_replay = {
+            set_reg = false,
         },
-        sidebar = {
-            elements = {
-                -- You can change the order of elements in the sidebar
-                "scopes",
-                "stacks",
-                "watches",
-            },
-            width = 40,
-            position = "left", -- Can be "left" or "right"
-        },
-        tray = {
-            elements = { "repl" },
-            height = 10,
-            position = "bottom", -- Can be "bottom" or "top"
-        },
-        floating = {
-            max_height = nil, -- These can be integers or a float between 0 and 1.
-            max_width = nil, -- Floats will be treated as percentage of your screen.
-        },
-    })
-end
-
-function config.markdown()
-    vim.g.vim_markdown_frontmatter = 1
-    vim.g.vim_markdown_strikethrough = 1
-    vim.g.vim_markdown_folding_level = 6
-    vim.g.vim_markdown_override_foldtext = 1
-    vim.g.vim_markdown_folding_style_pythonic = 1
-    vim.g.vim_markdown_conceal = 1
-    vim.g.vim_markdown_conceal_code_blocks = 1
-    vim.g.vim_markdown_new_list_item_indent = 0
-    vim.g.vim_markdown_toc_autofit = 0
-    vim.g.vim_markdown_edit_url_in = "vsplit"
-    vim.g.vim_markdown_strikethrough = 1
-    vim.g.vim_markdown_fenced_languages = {
-        "c++=javascript",
-        "js=javascript",
-        "json=javascript",
-        "jsx=javascript",
-        "tsx=javascript",
-    }
-end
-
---[[
-Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
-]]
---
-
-function config.floaterm()
-    -- Set floaterm window's background to black
-    -- Set floating window border line color to cyan, and background to orange
-    vim.g.floaterm_wintype = "float"
-    vim.g.floaterm_width = 0.9
-    vim.g.floaterm_height = 0.9
-    vim.cmd("hi Floaterm guibg=black")
-    -- vim.cmd('hi FloatermBorder guibg=orange guifg=cyan')
-    vim.cmd("command! FZF FloatermNew fzf --autoclose=1")
-    vim.cmd("command! NNN FloatermNew --autoclose=1 --height=0.96 --width=0.96 nnn")
-    vim.cmd("command! FN FloatermNew --autoclose=1 --height=0.96 --width=0.96")
-    vim.cmd("command! LG FloatermNew --autoclose=1 --height=0.96 --width=0.96 lazygit")
-    vim.cmd("command! Ranger FloatermNew --autoclose=1 --height=0.96 --width=0.96 ranger")
-
-    vim.g.floaterm_gitcommit = "split"
-    vim.g.floaterm_keymap_new = "<F19>" -- S-f7
-    vim.g.floaterm_keymap_prev = "<F20>"
-    vim.g.floaterm_keymap_next = "<F21>"
-    vim.g.floaterm_keymap_toggle = "<F24>"
-    -- Use `git ls-files` for git files, use `find ./ *` for all files under work directory.
-    -- vim.cmd([[ command! Sad lua Sad()]])
-    -- grep -rli 'old-word' * | xargs -i@ sed -i 's/old-word/new-word/g' @
-    --  rg -l 'old-word' * | xargs -i@ sed -i 's/old-word/new-word/g' @
-end
-
-function config.spelunker()
-    -- vim.cmd("command! Spell call spelunker#check()")
-    vim.g.enable_spelunker_vim_on_readonly = 0
-    vim.g.spelunker_target_min_char_len = 5
-    vim.g.spelunker_check_type = 2
-    vim.g.spelunker_highlight_type = 2
-    vim.g.spelunker_disable_uri_checking = 1
-    vim.g.spelunker_disable_account_name_checking = 1
-    vim.g.spelunker_disable_email_checking = 1
-    -- vim.cmd("highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=undercurl guifg=#F3206e guisp=#EF3050")
-    -- vim.cmd("highlight SpelunkerComplexOrCompoundWord cterm=underline gui=undercurl guisp=#EF3050")
-    vim.cmd("highlight def link SpelunkerSpellBad SpellBad")
-    vim.cmd("highlight def link SpelunkerComplexOrCompoundWord Rare")
-end
-
-function config.spellcheck()
-    vim.cmd("highlight def link SpelunkerSpellBad SpellBad")
-    vim.cmd("highlight def link SpelunkerComplexOrCompoundWord Rare")
-
-    vim.fn["spelunker#check"]()
-end
-
-function config.grammcheck()
-    -- body
-    if not packer_plugins["rhysd/vim-grammarous"] or not packer_plugins["rhysd/vim-grammarous"].loaded then
-        require("packer").loader("vim-grammarous")
-    end
-    vim.cmd([[GrammarousCheck]])
-end
-
-function config.vim_test()
-    vim.g["test#strategy"] = { nearest = "neovim", file = "neovim", suite = "neovim" }
-    vim.g["test#neovim#term_position"] = "vert botright 60"
-    vim.g["test#go#runner"] = "ginkgo"
-    -- nmap <silent> t<C-n> :TestNearest<CR>
-    -- nmap <silent> t<C-f> :TestFile<CR>
-    -- nmap <silent> t<C-s> :TestSuite<CR>
-    -- nmap <silent> t<C-l> :TestLast<CR>
-    -- nmap <silent> t<C-g> :TestVisit<CR>
-end
-function config.fidget()
-    local relative = "editor"
-    require("fidget").setup({
-        text = {
-            spinner = {
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-            },
-            done = "", -- character shown when all tasks are complete
-            commenced = " ", -- message shown when task starts
-            completed = " ", -- message shown when task completes
-        },
-        align = {
-            bottom = true, -- align fidgets along bottom edge of buffer
-            right = true, -- align fidgets along right edge of buffer
-        },
-        timer = {
-            spinner_rate = 100, -- frame rate of spinner animation, in ms
-            fidget_decay = 500, -- how long to keep around empty fidget, in ms
-            task_decay = 300, -- how long to keep around completed task, in ms
-        },
-        window = {
-            relative = relative, -- where to anchor the window, either `"win"` or `"editor"`
-            blend = 100, -- `&winblend` for the window
-            zindex = nil, -- the `zindex` value for the window
-        },
-        fmt = {
-            leftpad = true, -- right-justify text in fidget box
-            stack_upwards = true, -- list of tasks grows upwards
-            max_width = 0, -- maximum width of the fidget box
-            -- function to format fidget title
-            fidget = function(fidget_name, spinner)
-                return string.format("%s %s", spinner, fidget_name)
-            end,
-            -- function to format each task line
-            task = function(task_name, message, percentage)
-                return string.format(
-                    "%s%s [%s]",
-                    message,
-                    percentage and string.format(" (%s%%)", percentage) or "",
-                    task_name
-                )
-            end,
-        },
-
-        debug = {
-            logging = false, -- whether to enable logging, for debugging
-            strict = false, -- whether to interpret LSP strictly
-        },
-    })
-end
-function config.mkdp()
-    -- print("mkdp")
-    vim.g.mkdp_command_for_global = 1
-    vim.cmd(
-        [[let g:mkdp_preview_options = { 'mkit': {}, 'katex': {}, 'uml': {}, 'maid': {}, 'disable_sync_scroll': 0, 'sync_scroll_type': 'middle', 'hide_yaml_meta': 1, 'sequence_diagrams': {}, 'flowchart_diagrams': {}, 'content_editable': v:true, 'disable_filename': 0 }]]
-    )
-end
-
-function config.paperplanes()
-    require("paperplanes").setup({
-        register = "+",
-        provider = "ix.io",
-    })
-end
-
-function config.urlview()
-    require("urlview").setup({
-        -- Prompt title (`<context> <default_title>`, e.g. `Buffer Links:`)
-        default_title = "Links:",
-        -- Default picker to display links with
-        -- Options: "native" (vim.ui.select) or "telescope"
-        default_picker = "telescope",
-        -- Set the default protocol for us to prefix URLs with if they don't start with http/https
-        default_prefix = "https://",
-        -- Command or method to open links with
-        -- Options: "netrw", "system" (default OS browser); or "firefox", "chromium" etc.
-        navigate_method = "netrw",
-        -- Ensure links shown in the picker are unique (no duplicates)
-        unique = true,
-        -- Ensure links shown in the picker are sorted alphabetically
-        sorted = true,
-        -- Logs user warnings (recommended for error detection)
-        debug = true,
-        -- Custom search captures
-        -- NOTE: captures follow Lua pattern matching (https://riptutorial.com/lua/example/20315/lua-pattern-matching)
-        custom_searches = {
-            -- KEY: search source name
-            -- VALUE: custom search function or table (map with keys capture, format)
-            jira = {
-                capture = "AXIE%-%d+",
-                format = "https://jira.axieax.com/browse/%s",
+        keys = {
+            telescope = {
+                i = {
+                    select = "<cr>",
+                    paste = "<c-p>",
+                    paste_behind = "<c-k>",
+                    replay = "<c-q>",
+                    custom = {},
+                },
+                n = {
+                    select = "<cr>",
+                    paste = "p",
+                    paste_behind = "P",
+                    replay = "q",
+                    custom = {},
+                },
             },
         },
     })

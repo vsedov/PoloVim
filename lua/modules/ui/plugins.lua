@@ -1,10 +1,13 @@
 local ui = {}
 local conf = require("modules.ui.config")
-
---
-local winwidth = function()
-    return vim.api.nvim_call_function("winwidth", { 0 })
-end
+ui["j-hui/fidget.nvim"] = {
+    opt = true,
+    ft = { "python", "lua", "c" },
+    config = conf.fidget,
+}
+ui["camspiers/animate.vim"] = {
+    opt = true,
+}
 
 ui["kyazdani42/nvim-web-devicons"] = {}
 
@@ -12,43 +15,10 @@ ui["rebelot/heirline.nvim"] = {
     opt = true,
 }
 
-ui["b0o/incline.nvim"] = {
-    opt = true,
-    ft = { "python", "lua", "c", "cpp", "rust" },
-    after = "heirline.nvim",
-    config = conf.incline,
-}
-
 ui["mvllow/modes.nvim"] = {
     event = "BufEnter",
 
-    config = function()
-        require("modes").setup({
-            colors = {
-                copy = "#f5c359",
-                delete = "#c75c6a",
-                insert = "#78ccc5",
-                visual = "#9745be",
-            },
-
-            -- Set opacity for cursorline and number background
-            line_opacity = 0.15,
-
-            -- Enable cursor highlights
-            set_cursor = true,
-
-            -- Enable cursorline initially, and disable cursorline for inactive windows
-            -- or ignored filetypes
-            set_cursorline = true,
-
-            -- Enable line number highlights to match cursorline
-            set_number = true,
-
-            -- Disable modes highlights in specified filetypes
-            -- Please PR commonly ignored filetypes
-            ignore_filetypes = { "NvimTree", "TelescopePrompt", "NeoTree" },
-        })
-    end,
+    config = conf.modes,
 }
 
 ui["akinsho/bufferline.nvim"] = {
@@ -137,40 +107,19 @@ ui["lukas-reineke/virt-column.nvim"] = {
     end,
 }
 
--- ui["dstein64/nvim-scrollview"] = {
---   event = { "CursorMoved", "CursorMovedI" },
---   config = conf.scrollview,
--- }
-
--- ui["lewis6991/satellite.nvim"] = {
---     event = { "CursorMoved", "CursorMovedI" },
---     config = conf.satellite,
--- }
-
-ui["petertriho/nvim-scrollbar"] = {
-    event = { "CursorMoved", "CursorMovedI" },
-    config = conf.scrollbar,
+-- No longer getting lazy loaded, i like this though
+ui["lewis6991/satellite.nvim"] = {
+    config = conf.satellite,
 }
+
+-- ui["petertriho/nvim-scrollbar"] = {
+--     event = { "CursorMoved", "CursorMovedI" },
+--     config = conf.scrollbar,
+-- }
 
 ui["xiyaowong/nvim-transparent"] = {
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
-    config = function()
-        require("transparent").setup({
-            enable = false,
-            -- additional groups that should be clear
-            extra_groups = {
-                -- example of akinsho/nvim-bufferline.lua
-                "BufferLineTabClose",
-                "BufferlineBufferSelected",
-                "BufferLineFill",
-                "BufferLineBackground",
-                "BufferLineSeparator",
-                "BufferLineIndicatorSelected",
-            },
-            -- groups you don't want to clear
-            exclude = {},
-        })
-    end,
+    config = conf.transparent,
 }
 
 ui["anuvyklack/pretty-fold.nvim"] = {
@@ -251,8 +200,4 @@ ui["kazhala/close-buffers.nvim"] = {
     config = conf.buffers_close,
 }
 
-ui["wiliamks/mechanical.nvim"] = {
-    opt = true,
-}
 return ui
--- hemer.lua: ...te/pack/packer/opt/themer.lua/lua/themer/core/mapper.lua:64: attempt to index field 'bg' (a string value)

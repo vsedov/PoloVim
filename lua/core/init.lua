@@ -68,7 +68,7 @@ local load_core = function()
     end
     if pack.ensure_plugins() == "installed" then
         require("core.options")
-        require("core.event")
+        require("core.autocmd")
         require("core.mapping")
         require("keymap")
         -- selene: allow(global_usage)

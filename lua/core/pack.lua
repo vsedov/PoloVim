@@ -45,9 +45,13 @@ function Packer:load_packer()
     packer.reset()
     local use = packer.use
     local use_rocks = packer.use_rocks
+
     self:load_plugins()
-    use({ "wbthomason/packer.nvim" })
-    use({ "lewis6991/impatient.nvim" })
+    -- require("packer").startup(function()
+    use("wbthomason/packer.nvim") -- Package manager
+    use("lewis6991/impatient.nvim")
+    -- end)
+
     for _, repo in ipairs(self.repos) do
         use(repo)
     end
@@ -151,6 +155,7 @@ function plugins.load_compile()
         plugins.magic_compile()
         require("_compiled")
     end
+    require("core.pack").make_commands()
 
     vim.api.nvim_create_user_command("PackerACompile", function()
         require("core.pack").auto_compile()
@@ -159,28 +164,5 @@ function plugins.load_compile()
     vim.api.nvim_create_user_command("PackerCompile", function()
         require("core.pack").magic_compile()
     end, { force = true })
-
-    vim.api.nvim_create_user_command("PackerInstall", function()
-        require("core.pack").install()
-    end, { force = true })
-
-    vim.api.nvim_create_user_command("PackerUpdate", function()
-        require("core.pack").update()
-    end, { force = true })
-
-    vim.api.nvim_create_user_command("PackerSync", function()
-        require("core.pack").magic_compile()
-        require("core.pack").sync()
-        require("core.pack").magic_compile()
-    end, { force = true })
-
-    vim.api.nvim_create_user_command("PackerClean", function()
-        require("core.pack").clean()
-    end, { force = true })
-
-    vim.api.nvim_create_user_command("PackerStatus", function()
-        require("core.pack").status()
-    end, { force = true })
 end
-
 return plugins

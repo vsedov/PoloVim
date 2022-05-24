@@ -44,37 +44,29 @@ function config.treesitter_ref()
     require("modules.lang.treesitter").treesitter_ref()
 end
 
-function config.pyfold()
-    require("modules.lang.treesitter").pyfold()
+function config.tsubject()
+    require("nvim-treesitter.configs").setup({
+        textsubjects = {
+            enable = true,
+            keymaps = { ["<CR>"] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
+        },
+    })
 end
 
-function config.neogen()
-    require("neogen").setup({
-        snippet_engine = "luasnip",
-        languages = {
-            lua = {
-                template = { annotation_convention = "emmylua" },
-            },
-            python = {
-                template = { annotation_convention = "numpydoc" },
-            },
-            c = {
-                template = { annotation_convention = "doxygen" },
-            },
+function config.playground()
+    require("nvim-treesitter.configs").setup({
+        playground = {
+            enable = true,
+            disable = {},
+            updatetime = 50, -- Debounced time for highlighting nodes in the playground from source code
+            persist_queries = true, -- Whether the query persists across vim sessions
         },
     })
 end
 
 function config.refactor()
     local refactor = require("refactoring")
-    refactor.setup({
-        print_var_statements = {
-            -- add a custom print var statement for cpp
-            python = {
-                'log.info(ic.format(f"{%%s} %s , %s")',
-            },
-        },
-    })
+    refactor.setup({})
 
     lprint("refactor")
     _G.ts_refactors = function()
@@ -105,11 +97,12 @@ function config.refactor()
     -- vim.api.nvim_set_keymap("v", "<Leader>rt", [[ <Esc><Cmd>lua M.refactors()<CR>]], {noremap = true, silent = true, expr = false})
 end
 
-function config.neorunner()
-    vim.g.runner_c_compiler = "gcc"
-    vim.g.runner_cpp_compiler = "g++"
-    vim.g.runner_c_options = "-Wall"
-    vim.g.runner_cpp_options = "-std=c++11 -Wall"
+function config.context()
+    require("treesitter-context").setup({
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        throttle = true, -- Throttles plugin updates (may improve performance)
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    })
 end
 
 function config.jaq()
@@ -178,152 +171,6 @@ function config.jaq()
             },
         },
     })
-end
-
-function config.goto_preview()
-    vim.cmd([[command! -nargs=* GotoPrev lua require('goto-preview').goto_preview_definition()]])
-    vim.cmd([[command! -nargs=* GotoImp lua require('goto-preview').goto_preview_implementation()]])
-    vim.cmd([[command! -nargs=* GotoTel lua require('goto-preview').goto_preview_references()]])
-
-    require("goto-preview").setup({
-        width = 120, -- Width of the floating window
-        height = 15, -- Height of the floating window
-        border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
-        default_mappings = false, -- Bind default mappings
-        debug = false, -- Print debug information
-        opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
-        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-        -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
-        focus_on_open = true, -- Focus the floating window when opening it.
-        dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
-        force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-        bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
-    })
-end
-
-function config.tsubject()
-    require("nvim-treesitter.configs").setup({
-        textsubjects = {
-            enable = true,
-            keymaps = { ["<CR>"] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
-        },
-    })
-end
-
-function config.outline()
-    vim.g.symbols_outline = {
-        highlight_hovered_item = true,
-        show_guides = true,
-        auto_preview = true,
-        position = "right",
-        relative_width = true,
-        width = 25,
-        show_numbers = false,
-        show_relative_numbers = false,
-        show_symbol_details = true,
-        preview_bg_highlight = "Pmenu",
-        keymaps = { -- These keymaps can be a string or a table for multiple keys
-            close = { "<Esc>", "q" },
-            goto_location = "<Cr>",
-            focus_location = "o",
-            hover_symbol = "<C-space>",
-            toggle_preview = "K",
-            rename_symbol = "r",
-            code_actions = "a",
-        },
-        lsp_blacklist = {},
-        symbol_blacklist = {},
-        symbols = {
-            File = { icon = "", hl = "TSURI" },
-            Module = { icon = "", hl = "TSNamespace" },
-            Namespace = { icon = "", hl = "TSNamespace" },
-            Package = { icon = "", hl = "TSNamespace" },
-            Class = { icon = "𝓒", hl = "TSType" },
-            Method = { icon = "ƒ", hl = "TSMethod" },
-            Property = { icon = "", hl = "TSMethod" },
-            Field = { icon = "", hl = "TSField" },
-            Constructor = { icon = "", hl = "TSConstructor" },
-            Enum = { icon = "ℰ", hl = "TSType" },
-            Interface = { icon = "ﰮ", hl = "TSType" },
-            Function = { icon = "", hl = "TSFunction" },
-            Variable = { icon = "", hl = "TSConstant" },
-            Constant = { icon = "", hl = "TSConstant" },
-            String = { icon = "𝓐", hl = "TSString" },
-            Number = { icon = "#", hl = "TSNumber" },
-            Boolean = { icon = "⊨", hl = "TSBoolean" },
-            Array = { icon = "", hl = "TSConstant" },
-            Object = { icon = "⦿", hl = "TSType" },
-            Key = { icon = "🔐", hl = "TSType" },
-            Null = { icon = "NULL", hl = "TSType" },
-            EnumMember = { icon = "", hl = "TSField" },
-            Struct = { icon = "𝓢", hl = "TSType" },
-            Event = { icon = "🗲", hl = "TSType" },
-            Operator = { icon = "+", hl = "TSOperator" },
-            TypeParameter = { icon = "𝙏", hl = "TSParameter" },
-        },
-    }
-end
-
-function config.sqls() end
-
-function config.ultest()
-    require("modules.lang.language_utils").testStart()
-end
-
-function config.magma()
-    vim.g.magma_automatically_open_output = false
-end
-
-function config.sniprun()
-    require("modules.lang.language_utils").load_snip_run()
-end
-
-function config.syntax_folding()
-    local fname = vim.fn.expand("%:p:f")
-    local fsize = vim.fn.getfsize(fname)
-    if fsize > 1024 * 1024 then
-        print("disable syntax_folding")
-        vim.api.nvim_command("setlocal foldmethod=indent")
-        return
-    end
-    vim.wo.foldmethod = "expr"
-    vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
-    vim.o.foldtext =
-        [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
-    vim.opt.fillchars = "fold: "
-    vim.wo.foldnestmax = 3
-    vim.wo.foldminlines = 1
-end
-
--- https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
-
-function config.context()
-    require("treesitter-context").setup({
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        throttle = true, -- Throttles plugin updates (may improve performance)
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-    })
-end
-
--- function config.treehopper() end
-
-function config.playground()
-    require("nvim-treesitter.configs").setup({
-        playground = {
-            enable = true,
-            disable = {},
-            updatetime = 50, -- Debounced time for highlighting nodes in the playground from source code
-            persist_queries = true, -- Whether the query persists across vim sessions
-        },
-    })
-end
-function config.luadev()
-    vim.cmd([[vmap <leader><leader>lr <Plug>(Luadev-Run)]])
-end
-
-function config.dap()
-    require("modules.lang.dap.init")
 end
 
 function config.yabs()
@@ -433,7 +280,9 @@ function config.yabs()
         },
     })
 end
-
+function config.trouble()
+    require("trouble").setup({})
+end
 function config.todo_comments()
     require("todo-comments").setup({
 
@@ -491,6 +340,30 @@ function config.todo_comments()
             -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
         },
     })
+end
+function config.luadev()
+    vim.cmd([[vmap <leader><leader>lr <Plug>(Luadev-Run)]])
+end
+function config.luapad()
+    require("luapad").setup({
+        count_limit = 150000,
+        error_indicator = true,
+        eval_on_move = true,
+        error_highlight = "WarningMsg",
+        on_init = function()
+            print("Hello from Luapad!")
+        end,
+        context = {
+            the_answer = 42,
+            shout = function(str)
+                return (string.upper(str) .. "!")
+            end,
+        },
+    })
+end
+
+function config.dap()
+    require("modules.lang.dap.init")
 end
 
 return config

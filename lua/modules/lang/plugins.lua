@@ -1,6 +1,5 @@
 local lang = {}
 local conf = require("modules.lang.config")
--- local path = plugin_folder() no local plugins
 
 lang["nathom/filetype.nvim"] = {
     -- event = {'BufEnter'},
@@ -13,7 +12,6 @@ lang["nathom/filetype.nvim"] = {
 lang["nvim-treesitter/nvim-treesitter"] = {
     opt = true,
     run = ":TSUpdate",
-    commit = "bca65c068b92f19174dbba15d538315e8c89a5d6",
     config = conf.nvim_treesitter,
 }
 
@@ -35,13 +33,6 @@ lang["RRethy/nvim-treesitter-endwise"] = {
     opt = true,
     config = conf.endwise,
 }
-
-lang["danymat/neogen"] = {
-    module = { "neogen" },
-    requires = { "nvim-treesitter/nvim-treesitter", "rcarriga/nvim-notify" },
-    config = conf.neogen,
-}
-
 -- Inline functions dont seem to work .
 lang["ThePrimeagen/refactoring.nvim"] = {
     opt = true,
@@ -52,6 +43,12 @@ lang["ThePrimeagen/refactoring.nvim"] = {
     config = conf.refactor,
 }
 
+lang["nvim-treesitter/nvim-treesitter-refactor"] = {
+    after = "nvim-treesitter-textobjects", -- manual loading
+    config = conf.treesitter_ref, -- let the last loaded config treesitter
+    opt = true,
+}
+
 -- Yay gotopreview lazy loaded
 lang["rmagatti/goto-preview"] = {
     cmd = { "GotoPrev", "GotoImp", "GotoTel" },
@@ -59,93 +56,62 @@ lang["rmagatti/goto-preview"] = {
     config = conf.goto_preview,
 }
 
-lang["nvim-treesitter/nvim-treesitter-refactor"] = {
-    after = "nvim-treesitter-textobjects", -- manual loading
-    config = conf.treesitter_ref, -- let the last loaded config treesitter
-    opt = true,
-}
+lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
 lang["yardnsm/vim-import-cost"] = { cmd = "ImportCost", opt = true }
 
--- lang['scalameta/nvim-metals'] = {requires = {"nvim-lua/plenary.nvim"}}
-lang["lifepillar/pgsql.vim"] = { ft = { "sql", "pgsql" } }
-
-lang["nanotee/sqls.nvim"] = { ft = { "sql", "pgsql" }, setup = conf.sqls, opt = true }
-
-lang["ray-x/go.nvim"] = { ft = { "go", "gomod" }, config = conf.go }
-
-lang["ray-x/guihua.lua"] = {
-    run = "cd lua/fzy && make",
+lang["windwp/nvim-ts-autotag"] = {
     opt = true,
 }
 
-lang["lewis6991/nvim-treesitter-context"] = {
-    event = "InsertEnter",
-    config = conf.context,
-}
-
-lang["max397574/nvim-treehopper"] = {
-    module = "tsht",
-    config = conf.treehopper,
-}
-
-lang["nvim-treesitter/playground"] = {
-    -- after = "nvim-treesitter",
-    opt = true,
-    cmd = "TSPlaygroundToggle",
-    config = conf.playground,
-}
-
--- great plugin but not been maintained
--- lang["ElPiloto/sidekick.nvim"] = {opt = true, fn = {'SideKickNoReload'}, setup = conf.sidekick}
-
-lang["simrat39/symbols-outline.nvim"] = {
-    opt = true,
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
-    setup = conf.outline,
-}
-
-lang["mfussenegger/nvim-jdtls"] = {
-    ft = "java",
-    opt = true,
-}
-
-lang["lervag/vimtex"] = {
-    ft = "tex",
-    opt = true,
-    setup = function()
-        vim.g.vimtex_view_method = "zathura"
-        vim.g.vimtex_compiler_latexmk = {
-            build_dir = "build",
-            callback = 1,
-            continuous = 1,
-            executable = "latexmk",
-            hooks = {},
-            options = {
-                "-verbose",
-                "-file-line-error",
-                "-synctex=1",
-                "-interaction=nonstopmode",
-            },
-        }
-    end,
-}
-------------------------------------------------------------------------------------------------------
-
-lang["andythigpen/nvim-coverage"] = {
-    ft = { "python" },
-    cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
+lang["Tastyep/structlog.nvim"] = {
     opt = true,
     config = function()
-        require("coverage").setup()
+        require("utils.log")
     end,
 }
-lang["mgedmin/coverage-highlight.vim"] = {
-    ft = "python",
+
+lang["nanotee/luv-vimdocs"] = {
     opt = true,
-    run = ":UpdateRemotePlugins",
 }
-------------------------------------------------------------------------------------------------------
+
+-- builtin lua functions
+lang["milisims/nvim-luaref"] = {
+    opt = true,
+}
+lang["is0n/jaq-nvim"] = {
+    cmd = "Jaq",
+    opt = true,
+    config = conf.jaq,
+}
+lang["pianocomposer321/yabs.nvim"] = {
+    ft = "python",
+    requires = { "nvim-lua/plenary.nvim" },
+    config = conf.yabs,
+}
+
+lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
+
+lang["folke/trouble.nvim"] = {
+    cmd = { "Trouble", "TroubleToggle" },
+    opt = true,
+    config = conf.trouble,
+}
+
+lang["folke/todo-comments.nvim"] = {
+    cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
+    requires = "trouble.nvim",
+    config = conf.todo_comments,
+}
+
+-- not the same as folkes version
+lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
+
+lang["rafcamlet/nvim-luapad"] = {
+    cmd = { "LuaRun", "Lua", "Luapad" },
+    ft = { "lua" },
+    config = conf.luapad,
+}
 
 lang["mfussenegger/nvim-dap"] = {
     opt = true,
@@ -160,232 +126,23 @@ lang["mfussenegger/nvim-dap"] = {
     config = conf.dap,
 } -- cmd = "Luadev",
 
--- manual load when needs to be called
-lang["nvim-telescope/telescope-dap.nvim"] = {
-    opt = true,
-    requires = { "telescope.nvim", "nvim-dap" },
-    config = conf.dap,
+lang["max397574/nvim-treehopper"] = {
+    module = "tsht",
 }
 
-lang["m-demare/hlargs.nvim"] = {
-    ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
-    requires = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-        require("hlargs").setup({
-            performance = {
-                max_iterations = 1000,
-                max_concurrent_partial_parses = 90,
-            },
-        })
-    end,
+lang["lewis6991/nvim-treesitter-context"] = {
+    event = "InsertEnter",
+    config = conf.context,
 }
 
-lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
-
-lang["jbyuki/one-small-step-for-vimkind"] = { opt = true, ft = { "lua" } }
-
--- not the same as folkes version
-lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
-
-lang["rafcamlet/nvim-luapad"] = {
-    cmd = { "LuaRun", "Lua", "Luapad" },
-    ft = { "lua" },
-    config = function()
-        require("luapad").setup({
-            count_limit = 150000,
-            error_indicator = true,
-            eval_on_move = true,
-            error_highlight = "WarningMsg",
-            on_init = function()
-                print("Hello from Luapad!")
-            end,
-            context = {
-                the_answer = 42,
-                shout = function(str)
-                    return (string.upper(str) .. "!")
-                end,
-            },
-        })
-    end,
-}
-
-lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
-
--- lang["RRethy/vim-illuminate"] = {opt=true, ft = {"go"}}
-
-------------------------------------------------------------------------------------------------------
-lang["michaelb/sniprun"] = {
-    cmd = { "'<,'>SnipRun", "SnipRun" },
-    opt = true,
-    run = "bash install.sh",
-    requires = "rcarriga/nvim-notify",
-    config = conf.sniprun,
-}
-
-lang["dccsillag/magma-nvim"] = {
-    cmd = {
-        "PyRepl",
-        "MagmaEvaluateOperator",
-        "MagmaEvaluateLine",
-        "<C-u>MagmaEvaluateVisual",
-        "MagmaReevaluateCell",
-        "MagmaDelete",
-        "MagmaShowOutput",
-    },
-
-    ft = "python",
-    opt = true,
-    requires = "rcarriga/nvim-notify",
-    run = ":UpdateRemotePlugins",
-    config = conf.magma,
-}
-
-lang["Vimjas/vim-python-pep8-indent"] = {
-    ft = "python",
-}
-------------------------------------------------------------------------------------------------------
-
--- -- IPython Mappings
--- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
--- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
--- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
--- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
-
--- -- Pytest Mappings
--- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
--- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
-
--- -- Poetry Mappings
--- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
--- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
-lang["~/GitHub/active_development/py.nvim"] = {
-    ft = { "python" },
-    opt = true,
-    config = function()
-        require("py").setup({
-            leader = "<leader><leader>",
-        })
-    end,
-}
-
--- Test custom commands
-lang["mtikekar/nvim-send-to-term"] = {
-    ft = "python",
-}
-
-------------------------------------------------------------------------------------------------------
-lang["vim-test/vim-test"] = {
+lang["ray-x/guihua.lua"] = {
+    run = "cd lua/fzy && make",
     opt = true,
 }
 
--- lua testign
-lang["neovim/nvimdev.nvim"] = {
-    ft = "lua",
+lang["mfussenegger/nvim-jdtls"] = {
+    ft = "java",
     opt = true,
-    config = function()
-        vim.g.nvimdev_auto_ctags = 1
-        vim.g.nvimdev_auto_lint = 1
-    end,
-}
-
-lang["rcarriga/vim-ultest"] = {
-    requires = { "vim-test/vim-test", opt = true, after = "vim-ultest" },
-    run = ":UpdateRemotePlugins",
-    opt = true,
-}
-
-------------------------------------------------------------------------------------------------------
-
--- JqxList and JqxQuery json browsing, format
-lang["gennaro-tedesco/nvim-jqx"] = {
-    ft = "json",
-    cmd = { "JqxList", "JqxQuery" },
-    opt = true,
-}
-
-lang["windwp/nvim-ts-autotag"] = {
-    opt = true,
-    -- after = "nvim-treesitter",
-    -- config = function() require"nvim-treesitter.configs".setup {autotag = {enable = true}} end
-}
-
-lang["Tastyep/structlog.nvim"] = {
-    opt = true,
-    config = function()
-        require("utils.log")
-    end,
-}
-
-lang["nanotee/luv-vimdocs"] = {
-    opt = true,
-}
--- builtin lua functions
-lang["milisims/nvim-luaref"] = {
-    opt = true,
-}
-
-lang["p00f/nvim-ts-rainbow"] = {
-    opt = true,
-    -- after = "nvim-treesitter",
-    -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
-    cmd = "Rainbow",
-    config = function()
-        require("nvim-treesitter.configs").setup({ rainbow = { enable = true, extended_mode = true } })
-    end,
-}
-
-lang["onsails/diaglist.nvim"] = {
-    event = { "QuickFixCmdPre" },
-    module = "diaglist",
-    setup = function()
-        local map, opts = vim.api.nvim_set_keymap, {}
-        map("n", "<Leader>xX", '<cmd>lua require "diaglist".open_all_diagnostics()<cr>', opts)
-        map("n", "<Leader>xx", '<cmd>lua require "diaglist".open_buffer_diagnostics()<cr>', opts)
-    end,
-    opt = true, -- opt = true,
-    config = function()
-        vim.cmd([[packadd nvim-bqf]])
-        require("diaglist").init({
-            debug = false,
-            debounce_ms = 150,
-        })
-    end,
-}
-
-lang["folke/trouble.nvim"] = {
-    cmd = { "Trouble", "TroubleToggle" },
-    opt = true,
-    config = function()
-        require("trouble").setup({})
-    end,
-}
-
-lang["folke/todo-comments.nvim"] = {
-    cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
-    requires = "trouble.nvim",
-    config = conf.todo_comments,
-}
-
-lang["vim-scripts/CRefVim"] = {
-    keys = { "<leader>c" },
-    ft = "c",
-}
-
-lang["is0n/jaq-nvim"] = {
-    cmd = "Jaq",
-    after = "filetype.nvim",
-    opt = true,
-    config = conf.jaq,
-}
-lang["pianocomposer321/yabs.nvim"] = {
-    ft = "python",
-    requires = { "nvim-lua/plenary.nvim" },
-    config = conf.yabs,
-}
-
-lang["jose-elias-alvarez/null-ls.nvim"] = {
-    opt = true,
-    config = require("modules.lang.null-ls").config,
 }
 
 return lang

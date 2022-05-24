@@ -131,11 +131,6 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-if load_coq() then
-    local sources = {}
-    cmp.setup.buffer({ completion = { autocomplete = false } })
-    return
-end
 -- print("cmp setup")
 -- local t = function(str)
 -- return vim.api.nvim_replace_termcodes(str, true, true, true)

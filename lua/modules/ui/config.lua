@@ -1,12 +1,81 @@
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
-function config.windline()
-    if not packer_plugins["nvim-web-devicons"].loaded then
-        packer_plugins["nvim-web-devicons"].loaded = true
-        require("packer").loader("nvim-web-devicons")
-    end
+function config.fidget()
+    local relative = "editor"
+    require("fidget").setup({
+        text = {
+            spinner = {
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+            },
+            done = "", -- character shown when all tasks are complete
+            commenced = " ", -- message shown when task starts
+            completed = " ", -- message shown when task completes
+        },
+        align = {
+            bottom = true, -- align fidgets along bottom edge of buffer
+            right = true, -- align fidgets along right edge of buffer
+        },
+        timer = {
+            spinner_rate = 100, -- frame rate of spinner animation, in ms
+            fidget_decay = 500, -- how long to keep around empty fidget, in ms
+            task_decay = 300, -- how long to keep around completed task, in ms
+        },
+        window = {
+            relative = relative, -- where to anchor the window, either `"win"` or `"editor"`
+            blend = 100, -- `&winblend` for the window
+            zindex = nil, -- the `zindex` value for the window
+        },
+        fmt = {
+            leftpad = true, -- right-justify text in fidget box
+            stack_upwards = true, -- list of tasks grows upwards
+            max_width = 0, -- maximum width of the fidget box
+            -- function to format fidget title
+            fidget = function(fidget_name, spinner)
+                return string.format("%s %s", spinner, fidget_name)
+            end,
+            -- function to format each task line
+            task = function(task_name, message, percentage)
+                return string.format(
+                    "%s%s [%s]",
+                    message,
+                    percentage and string.format(" (%s%%)", percentage) or "",
+                    task_name
+                )
+            end,
+        },
 
-    -- require('wlfloatline').toggle()
+        debug = {
+            logging = false, -- whether to enable logging, for debugging
+            strict = false, -- whether to interpret LSP strictly
+        },
+    })
 end
 
 function config.nvim_bufferline()
@@ -225,27 +294,6 @@ function config.notify()
     notify.setup(default)
 
     require("telescope").load_extension("notify")
-end
-
-function config.incline()
-    require("incline").setup({
-        window = {
-            winhighlight = {
-                inactive = {
-                    Normal = "Normal",
-                },
-            },
-            width = "fill",
-            padding = { left = 2, right = 1 },
-            margin = {
-                horizontal = 0,
-            },
-            placement = {
-                horizontal = "center",
-            },
-        },
-        hide = { focused_win = true },
-    })
 end
 
 function config.neo_tree()
@@ -510,43 +558,6 @@ function config.dir_buff()
             return l.fname:lower() < r.fname:lower()
         end,
     })
-end
-
-function config.default()
-    vim.cmd("set cursorcolumn")
-    vim.cmd("augroup vimrc_todo")
-    vim.cmd("au!")
-    vim.cmd(
-        [[au Syntax * syn match MyTodo /\v<(FIXME|Fixme|NOTE|Note|TODO|ToDo|OPTIMIZE|XXX):/ containedin=.*Comment,vimCommentTitle]]
-    )
-    vim.cmd("augroup END")
-    vim.cmd("hi def link MyTodo Todo")
-    -- theme()
-end
-
-function config.aurora()
-    -- print("aurora")
-    vim.cmd("colorscheme aurora")
-    vim.cmd("hi Normal guibg=NONE ctermbg=NONE") -- remove background
-    vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE") -- remove background
-end
-
-function config.starry()
-    -- local opt = {"oceanic", "darker", "palenight", "deep ocean", "moonlight", "dracula", "dracula_blood", "monokai", "mariana", "ceramic"}
-    -- local v = math.random(1, #opt)
-    -- vim.g.starry_style = opt[v]
-    vim.g.starry_italic_comments = true
-    vim.g.starry_italic_keywords = false
-    vim.g.starry_italic_functions = false
-    vim.g.starry_italic_variables = false
-    vim.g.starry_italic_string = false
-    vim.g.starry_contrast = true
-    vim.g.starry_borders = true
-    vim.g.starry_disable_background = false
-    vim.g.starry_daylight_switch = true
-    -- vim.g.starry_style = "earlysummer" -- 'moonlight' emerald middlenight_blue earlysummer
-    -- vim.g.starry_style_fix = true
-    -- config.default()
 end
 
 function config.tokyonight()
@@ -872,29 +883,49 @@ function config.buffers_close()
     })
 end
 
-function config.themer()
-    local themes = { "rose_pine", "dracula", "everforest", "monokai_pro", "boo", "darknight" }
-    local cs = themes[math.random(1, #themes)]
-    lprint(cs)
-    require("themer").setup({
-        colorscheme = cs,
-        styles = {
-            ["function"] = { style = "italic" },
-            functionbuiltin = { style = "italic" },
-            -- variable = { style = "italic" },
-            variableBuiltIn = { style = "italic" },
-            -- parameter = { style = "italic" },
-            type = { style = "italic" },
+function config.modes()
+    require("modes").setup({
+        colors = {
+            copy = "#f5c359",
+            delete = "#c75c6a",
+            insert = "#78ccc5",
+            visual = "#9745be",
         },
-        dim_inactive = false,
-        disable_telescope_themes = {
-            "ayu",
-            "rose_pine_dawn",
-            "github_light",
-        },
+
+        -- Set opacity for cursorline and number background
+        line_opacity = 0.15,
+
+        -- Enable cursor highlights
+        set_cursor = true,
+
+        -- Enable cursorline initially, and disable cursorline for inactive windows
+        -- or ignored filetypes
+        set_cursorline = true,
+
+        -- Enable line number highlights to match cursorline
+        set_number = true,
+
+        -- Disable modes highlights in specified filetypes
+        -- Please PR commonly ignored filetypes
+        ignore_filetypes = { "NvimTree", "TelescopePrompt", "NeoTree" },
     })
-    require("telescope").load_extension("themes")
-    vim.api.nvim_set_hl(0, "pythonStatement", { italic = true })
+end
+function config.transparent()
+    require("transparent").setup({
+        enable = false,
+        -- additional groups that should be clear
+        extra_groups = {
+            -- example of akinsho/nvim-bufferline.lua
+            "BufferLineTabClose",
+            "BufferlineBufferSelected",
+            "BufferLineFill",
+            "BufferLineBackground",
+            "BufferLineSeparator",
+            "BufferLineIndicatorSelected",
+        },
+        -- groups you don't want to clear
+        exclude = {},
+    })
 end
 
 vim.api.nvim_exec(
@@ -909,8 +940,4 @@ vim.api.nvim_exec(
   ]],
     true
 )
-
--- local cmd = [[au VimEnter * ++once lua require("packer.load")({']] .. loading_theme
---                 .. [['}, { event = "VimEnter *" }, _G.packer_plugins)]]
--- vim.cmd(cmd)
 return config
