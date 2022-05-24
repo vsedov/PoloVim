@@ -35,14 +35,11 @@ lang["ThePrimeagen/refactoring.nvim"] = {
     config = conf.refactor,
 }
 
-
 lang["nvim-treesitter/nvim-treesitter-refactor"] = {
     after = "nvim-treesitter-textobjects", -- manual loading
     config = conf.treesitter_ref, -- let the last loaded config treesitter
     opt = true,
 }
-
-
 
 -- Yay gotopreview lazy loaded
 lang["rmagatti/goto-preview"] = {

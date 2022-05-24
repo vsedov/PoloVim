@@ -37,7 +37,6 @@ tools["~/GitHub/active_development/py.nvim"] = {
     config = conf.python_dev,
 }
 
-
 tools["vim-test/vim-test"] = {
     opt = true,
 }

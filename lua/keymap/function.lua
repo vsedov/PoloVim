@@ -56,7 +56,6 @@ local plug_map = {
         end, 1)
     end):with_silent():with_noremap(),
 
-
     ["n|<leader>hw"] = map_cmd(function()
         if require("dynamic_help.extras.statusline").available() ~= "" then
             require("dynamic_help").float_help(vim.fn.expand("<cword>"))
@@ -65,9 +64,6 @@ local plug_map = {
             require("dynamic_help").float_help(help)
         end
     end):with_noremap():with_silent(),
-
-
-
 }
 
 return plug_map

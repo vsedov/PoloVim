@@ -8,7 +8,6 @@ local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-
 _G.run_or_test = function(debug)
     local ft = vim.bo.filetype
     local fn = vim.fn.expand("%")
@@ -75,7 +74,6 @@ local plug_map = {
         :with_silent(),
     ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>"),
 
-
     --- Refactoring
     ["v|<Leader>re"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]])
         :with_noremap()
@@ -98,6 +96,5 @@ local plug_map = {
 
     ["v|<Leader>ro"] = map_cmd([[<cmd> lua require('refactoring').debug.print_var({})<CR>]]):with_noremap(),
     ["n|<Leader>rc"] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]]):with_noremap(),
-
 }
 return plug_map
