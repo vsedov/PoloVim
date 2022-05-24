@@ -2,7 +2,7 @@
 -- Modified though
 local M = {}
 -- local autocmds = require("lvim.core.autocmds")
-local config = require("modules.completion.lsp.utils.config")
+local config = require("modules.lsp.lsp.utils.config")
 
 local function lsp_highlight_document(client, bufnr)
     local status_ok, highlight_supported = pcall(function()
@@ -52,7 +52,7 @@ end
 local function add_lsp_buffer_keybindings(client, bufnr)
     local border = config.float.border
     vim.keymap.set("n", "<leader>*", function()
-        require("modules.completion.lsp.utils.list").change_active("Quickfix")
+        require("modules.lsp.lsp.utils.list").change_active("Quickfix")
         vim.lsp.buf.references()
     end, { buffer = true })
 
@@ -109,7 +109,7 @@ function M.common_on_init(client, bufnr)
 end
 
 function M.common_capabilities()
-    local capabilities = require("modules.completion.lsp.utils.capabilities")
+    local capabilities = require("modules.lsp.lsp.utils.capabilities")
     local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 
     if status_ok then
@@ -139,9 +139,9 @@ function M.setup()
     for _, sign in ipairs(config.signs) do
         vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
     end
-    require("modules.completion.lsp.utils.handlers").setup()
-    require("modules.completion.lsp.utils.autocmd")
-    require("modules.completion.lsp.utils.list")
+    require("modules.lsp.lsp.utils.handlers").setup()
+    require("modules.lsp.lsp.utils.autocmd")
+    require("modules.lsp.lsp.utils.list")
 end
 
 function M.enhance_attach(user_config)

@@ -1,4 +1,4 @@
-local enhance_attach = require("modules.completion.lsp.utils").enhance_attach
+local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 local clangd_defaults = require("lspconfig.server_configurations.clangd")
 local clangd_configs = vim.tbl_deep_extend(
     "force",

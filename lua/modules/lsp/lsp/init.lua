@@ -1,5 +1,5 @@
 local lspconfig = require("lspconfig")
-local enhance_attach = require("modules.completion.lsp.utils").enhance_attach
+local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 
 if use_efm() then
     lspconfig.efm.setup(enhance_attach({
@@ -29,7 +29,7 @@ lspconfig.gopls.setup(enhance_attach({
 
 lspconfig.tsserver.setup(enhance_attach())
 
-lspconfig.texlab.setup(enhance_attach({ require("modules.completion.lsp.providers.latex") }))
+lspconfig.texlab.setup(enhance_attach({ require("modules.lsp.lsp.providers.latex") }))
 
 lspconfig.jsonls.setup(enhance_attach({
     cmd = { "vscode-json-languageserver", "--stdio" },

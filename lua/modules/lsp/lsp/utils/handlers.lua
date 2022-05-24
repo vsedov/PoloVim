@@ -1,7 +1,7 @@
 -- Set Default Prefix.
 -- Note: You can set a prefix per lsp server in the lv-globals.lua file
 local M = {}
-local config = require("modules.completion.lsp.utils.config")
+local config = require("modules.lsp.lsp.utils.config")
 -- TODO: Change this to fit config - call config from config.lua
 function M.setup()
     vim.diagnostic.config({ config.diagnostics })

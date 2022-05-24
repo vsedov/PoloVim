@@ -1,4 +1,4 @@
-local enhance_attach = require("modules.completion.lsp.utils").enhance_attach
+local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 
 -- local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
 -- local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"

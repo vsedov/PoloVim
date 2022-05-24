@@ -1,79 +1,13 @@
 -- local global = require("core.global")
 local config = {}
 
-function config.nvim_lsp()
-    require("modules.completion.lsp")
+function config.cmp()
+    require("modules.completion.cmp")
 end
 
-function config.clangd()
-    require("modules.completion.lsp.providers.c")
-end
-
-function config.luadev()
-    require("modules.completion.lsp.providers.luadev")
-end
-function config.lsp_install()
-    require("modules.completion.lsp.providers.lsp_install")
-end
-
-function config.saga()
-    local lspsaga = require("lspsaga")
-    lspsaga.setup({ -- defaults ...
-        debug = false,
-        use_saga_diagnostic_sign = false,
-        -- code action title icon
-        code_action_icon = "",
-        code_action_prompt = {
-            enable = true,
-            sign = true,
-            sign_priority = 40,
-            virtual_text = false,
-        },
-
-        finder_definition_icon = "  ",
-        finder_reference_icon = "  ",
-        max_preview_lines = 10,
-        finder_action_keys = {
-            open = "o",
-            vsplit = "s",
-            split = "i",
-            quit = "q",
-            scroll_down = "<C-f>",
-            scroll_up = "<C-b>",
-        },
-        code_action_keys = {
-            quit = "q",
-            exec = "<CR>",
-        },
-        rename_action_keys = {
-            quit = "<C-c>",
-            exec = "<CR>",
-        },
-        definition_preview_icon = "  ",
-        border_style = "single",
-        rename_prompt_prefix = "➤",
-        server_filetype_map = {},
-        diagnostic_prefix_format = "%d. ",
-    })
-end
 -- packer.nvim: Error running config for LuaSnip: [string "..."]:0: attempt to index global 'ls_types' (a nil value)
 function config.luasnip()
     require("modules.completion.snippets")
-end
-
-function config.telescope()
-    require("utils.telescope")
-end
-
-function config.emmet()
-    vim.g.user_emmet_complete_tag = 1
-    -- vim.g.user_emmet_install_global = 1
-    vim.g.user_emmet_install_command = 0
-    vim.g.user_emmet_mode = "a"
-end
-function config.vim_sonictemplate()
-    vim.g.sonictemplate_postfix_key = "<C-,>"
-    vim.g.sonictemplate_vim_template_dir = os.getenv("HOME") .. "/.config/nvim/template"
 end
 
 function config.tabnine()
@@ -83,6 +17,71 @@ function config.tabnine()
         max_num_results = 20,
         sort = true,
         run_on_every_keystroke = true,
+    })
+end
+
+function config.autopair()
+    local has_autopairs, autopairs = pcall(require, "nvim-autopairs")
+    if not has_autopairs then
+        print("autopairs not loaded")
+
+        local loader = require("packer").loader
+        loader("nvim-autopairs")
+        has_autopairs, autopairs = pcall(require, "nvim-autopairs")
+        if not has_autopairs then
+            print("autopairs not installed")
+            return
+        end
+    end
+    local npairs = require("nvim-autopairs")
+    -- local Rule = require("nvim-autopairs.rule")
+    -- local cond = require("nvim-autopairs.conds")
+
+    npairs.setup({
+        enable_moveright = true,
+        disable_in_macro = false,
+        enable_afterquote = true,
+        map_bs = true,
+        map_c_w = true,
+        -- disable_in_visualblock = false,
+
+        disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
+        autopairs = { enable = true },
+        ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
+        -- enable_check_bracket_line = true, -- Messes with abbrivaitions
+        html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
+        check_ts = false,
+        ts_config = {
+            lua = { "string", "source" },
+            javascript = { "string", "template_string" },
+            java = false,
+        },
+        fast_wrap = {
+            map = "<c-c>",
+            chars = { "{", "[", "(", '"', "'", "`" },
+            pattern = string.gsub([[ [%'%"%`%+%)%>%]%)%}%,%s] ]], "%s+", ""),
+            end_key = "$",
+            keys = "qwertyuiopzxcvbnmasdfghjkl",
+            check_comma = true,
+            hightlight = "Search",
+        },
+    })
+end
+
+function config.neogen()
+    require("neogen").setup({
+        snippet_engine = "luasnip",
+        languages = {
+            lua = {
+                template = { annotation_convention = "emmylua" },
+            },
+            python = {
+                template = { annotation_convention = "numpydoc" },
+            },
+            c = {
+                template = { annotation_convention = "doxygen" },
+            },
+        },
     })
 end
 

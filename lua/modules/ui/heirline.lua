@@ -173,8 +173,9 @@ function M.setup()
         end,
         -- Same goes for the highlight. Now the foreground will change according to the current mode.
         hl = function(self)
-            local mode = self.mode:sub(1, 1) -- get only the first mode character
-            return { fg = self.mode_colors[mode], bold = true }
+            local color = self:mode_color()
+            -- return { fg = self.mode_colors[mode], bold = true }
+            return { fg = color, bold = true }
         end,
     }
 
@@ -301,10 +302,10 @@ function M.setup()
 
     local FileLastModified = {
         -- did you know? Vim is full of functions!
-        provider = function()
-            local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
-            return (ftime > 0) and os.date("%c", ftime)
-        end,
+        -- provider = function()
+        --     local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
+        --     return (ftime > 0) and os.date("%c", ftime)
+        -- end,
     }
 
     local Ruler = {
@@ -651,6 +652,7 @@ function M.setup()
         Space,
         ScrollBar,
     }
+
     local InactiveStatusline = {
         condition = function()
             return not conditions.is_active()
@@ -703,6 +705,28 @@ function M.setup()
             end
         end,
 
+        static = {
+            mode_colors = {
+                n = colors.red,
+                i = colors.green,
+                v = colors.cyan,
+                V = colors.cyan,
+                ["\22"] = colors.cyan, -- this is an actual ^V, type <C-v><C-v> in insert mode
+                c = colors.orange,
+                s = colors.purple,
+                S = colors.purple,
+                ["\19"] = colors.purple, -- this is an actual ^S, type <C-v><C-s> in insert mode
+                R = colors.orange,
+                r = colors.orange,
+                ["!"] = colors.red,
+                t = colors.green,
+            },
+            mode_color = function(self)
+                local mode = conditions.is_active() and vim.fn.mode() or "n"
+                return self.mode_colors[mode]
+            end,
+        },
+
         init = utils.pick_child_on_condition,
 
         SpecialStatusline,
@@ -711,7 +735,37 @@ function M.setup()
         DefaultStatusline,
     }
 
-    require("heirline").setup(StatusLines)
+    local WinBar = {
+        init = utils.pick_child_on_condition,
+        {
+            condition = function()
+                return conditions.buffer_matches({
+                    buftype = { "nofile", "prompt", "help", "quickfix" },
+                    filetype = { "^git.*", "fugitive" },
+                })
+            end,
+            provider = "",
+        },
+        {
+            condition = function()
+                return conditions.buffer_matches({ buftype = { "terminal" } })
+            end,
+            utils.surround({ "", "" }, colors.dark_red, {
+                FileType,
+                Space,
+                TerminalName,
+            }),
+        },
+        {
+            condition = function()
+                return not conditions.is_active()
+            end,
+            utils.surround({ "", "" }, colors.bright_bg, { hl = { fg = "gray", force = true }, FileNameBlock }),
+        },
+        utils.surround({ "", "" }, colors.bright_bg, FileNameBlock),
+    }
+
+    require("heirline").setup(StatusLines, WinBar)
 end
 
 M.setup()

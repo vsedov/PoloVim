@@ -122,12 +122,12 @@ function Lazyload()
     end
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
-        plugins =
-            "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
-        loader(plugins)
-        lprint(plugins)
-        loader("indent-blankline.nvim")
-        loader("refactoring.nvim") -- need to do the same thing for refactoring
+        -- plugins =
+        --     "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
+        -- loader(plugins)
+        -- lprint(plugins)
+        -- loader("indent-blankline.nvim")
+        -- -- loader("refactoring.nvim") -- need to do the same thing for refactoring
     end
 
     vim.api.nvim_create_autocmd("FileType", {
@@ -222,9 +222,7 @@ vim.defer_fn(function()
 
     -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
     -- have to work around this for the time
-    if vim.bo.filetype ~= "norg" then
-        Log:configure_notifications(notify)
-    end
+
     if vim.fn.wordcount()["bytes"] < 2048000 then
         require("vscripts.cursorhold")
     end
