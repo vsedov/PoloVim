@@ -37,10 +37,6 @@ tools["~/GitHub/active_development/py.nvim"] = {
     config = conf.python_dev,
 }
 
--- Test custom commands
-tools["mtikekar/nvim-send-to-term"] = {
-    ft = "python",
-}
 
 tools["vim-test/vim-test"] = {
     opt = true,
@@ -99,7 +95,6 @@ tools["natecraddock/workspaces.nvim"] = {
     config = conf.workspace,
 }
 
-
 tools["axieax/urlview.nvim"] = {
     cmd = { "UrlView", "UrlView packer" },
     config = conf.urlview,
@@ -111,7 +106,6 @@ tools["jghauser/mkdir.nvim"] = {
     cmd = "new",
     config = [[require'mkdir']],
 }
-
 
 -- tools["wellle/targets.vim"] = {}
 
@@ -180,7 +174,6 @@ tools["akinsho/toggleterm.nvim"] = {
     end,
 }
 
-
 -- For this to record, cmd might not work
 tools["wakatime/vim-wakatime"] = {
     event = "InsertEnter",
@@ -206,15 +199,14 @@ tools["windwp/nvim-spectre"] = {
         ";c",
     },
 
-    config = conf.spectre
+    config = conf.spectre,
 }
-
 
 tools["ray-x/sad.nvim"] = {
     cmd = { "Sad" },
     requires = { "ray-x/guihua.lua", opt = true, after = "sad.nvim" },
     opt = true,
-    config = conf.sad
+    config = conf.sad,
 }
 
 tools["ilAYAli/scMRU.nvim"] = {
@@ -226,9 +218,6 @@ tools["kevinhwang91/nvim-bqf"] = {
     event = { "CmdlineEnter", "QuickfixCmdPre" },
     config = conf.bqf,
 }
-
-
-
 
 -- :Z {query}: cd to the highest ranked directory matching your query. If {query} is omitted, cd to the home directory
 -- :Lz {query}: same as :Z, but local to the current window
@@ -249,11 +238,5 @@ tools["AckslD/nvim-neoclip.lua"] = {
     requires = { "tami5/sqlite.lua" },
     config = conf.neoclip,
 }
-
-
-
-
-
-
 
 return tools

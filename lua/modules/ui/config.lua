@@ -78,7 +78,6 @@ function config.fidget()
     })
 end
 
-
 function config.nvim_bufferline()
     if not packer_plugins["nvim-web-devicons"].loaded then
         packer_plugins["nvim-web-devicons"].loaded = true
@@ -561,7 +560,6 @@ function config.dir_buff()
     })
 end
 
-
 function config.tokyonight()
     local opt = { "storm", "night" }
     local v = math.random(1, #opt)
@@ -913,21 +911,21 @@ function config.modes()
     })
 end
 function config.transparent()
-        require("transparent").setup({
-            enable = false,
-            -- additional groups that should be clear
-            extra_groups = {
-                -- example of akinsho/nvim-bufferline.lua
-                "BufferLineTabClose",
-                "BufferlineBufferSelected",
-                "BufferLineFill",
-                "BufferLineBackground",
-                "BufferLineSeparator",
-                "BufferLineIndicatorSelected",
-            },
-            -- groups you don't want to clear
-            exclude = {},
-        })
+    require("transparent").setup({
+        enable = false,
+        -- additional groups that should be clear
+        extra_groups = {
+            -- example of akinsho/nvim-bufferline.lua
+            "BufferLineTabClose",
+            "BufferlineBufferSelected",
+            "BufferLineFill",
+            "BufferLineBackground",
+            "BufferLineSeparator",
+            "BufferLineIndicatorSelected",
+        },
+        -- groups you don't want to clear
+        exclude = {},
+    })
 end
 
 vim.api.nvim_exec(

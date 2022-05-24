@@ -35,6 +35,15 @@ lang["ThePrimeagen/refactoring.nvim"] = {
     config = conf.refactor,
 }
 
+
+lang["nvim-treesitter/nvim-treesitter-refactor"] = {
+    after = "nvim-treesitter-textobjects", -- manual loading
+    config = conf.treesitter_ref, -- let the last loaded config treesitter
+    opt = true,
+}
+
+
+
 -- Yay gotopreview lazy loaded
 lang["rmagatti/goto-preview"] = {
     cmd = { "GotoPrev", "GotoImp", "GotoTel" },
@@ -44,9 +53,7 @@ lang["rmagatti/goto-preview"] = {
 
 lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
 
-
 lang["yardnsm/vim-import-cost"] = { cmd = "ImportCost", opt = true }
-
 
 lang["windwp/nvim-ts-autotag"] = {
     opt = true,
@@ -128,18 +135,14 @@ lang["lewis6991/nvim-treesitter-context"] = {
     config = conf.context,
 }
 
-
 lang["ray-x/guihua.lua"] = {
     run = "cd lua/fzy && make",
     opt = true,
 }
 
-
 lang["mfussenegger/nvim-jdtls"] = {
     ft = "java",
     opt = true,
 }
-
-
 
 return lang

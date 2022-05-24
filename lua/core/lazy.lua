@@ -122,12 +122,12 @@ function Lazyload()
     end
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
-        -- plugins =
-        --     "nvim-treesitter-textobjects nvim-treesitter-refactor nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
-        -- loader(plugins)
-        -- lprint(plugins)
-        -- loader("indent-blankline.nvim")
-        -- -- loader("refactoring.nvim") -- need to do the same thing for refactoring
+        plugins =
+            "nvim-treesitter-textobjects  nvim-ts-autotag nvim-ts-context-commentstring nvim-treesitter-textsubjects"
+        loader(plugins)
+        lprint(plugins)
+        loader("indent-blankline.nvim")
+        loader("refactoring.nvim") -- need to do the same thing for refactoring
     end
 
     vim.api.nvim_create_autocmd("FileType", {

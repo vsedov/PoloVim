@@ -192,7 +192,6 @@ function config.grammcheck()
     vim.cmd([[GrammarousCheck]])
 end
 
-
 function config.markdown()
     vim.g.vim_markdown_frontmatter = 1
     vim.g.vim_markdown_strikethrough = 1
@@ -230,7 +229,6 @@ function config.clipboardimage()
     })
 end
 
-
 function config.mkdp()
     -- print("mkdp")
     vim.g.mkdp_command_for_global = 1
@@ -240,21 +238,20 @@ function config.mkdp()
 end
 
 function config.spectre()
-        local status_ok, spectre = pcall(require, "spectre")
-        if not status_ok then
-            return
-        end
-        spectre.setup()
+    local status_ok, spectre = pcall(require, "spectre")
+    if not status_ok then
+        return
+    end
+    spectre.setup()
 end
 
 function config.sad()
-        require("sad").setup({
-            diff = "diff-so-fancy", -- you can use `diff`, `diff-so-fancy`
-            ls_file = "fd", -- also git ls_file
-            exact = false, -- exact match
-        })
-    end
-
+    require("sad").setup({
+        diff = "diff-so-fancy", -- you can use `diff`, `diff-so-fancy`
+        ls_file = "fd", -- also git ls_file
+        exact = false, -- exact match
+    })
+end
 
 function config.bqf()
     require("bqf").setup({

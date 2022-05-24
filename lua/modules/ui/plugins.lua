@@ -12,14 +12,13 @@ ui["camspiers/animate.vim"] = {
 ui["kyazdani42/nvim-web-devicons"] = {}
 
 ui["rebelot/heirline.nvim"] = {
-    opt = true, 
+    opt = true,
 }
-
 
 ui["mvllow/modes.nvim"] = {
     event = "BufEnter",
 
-    config = conf.modes
+    config = conf.modes,
 }
 
 ui["akinsho/bufferline.nvim"] = {
@@ -108,9 +107,8 @@ ui["lukas-reineke/virt-column.nvim"] = {
     end,
 }
 
-
+-- No longer getting lazy loaded, i like this though
 ui["lewis6991/satellite.nvim"] = {
-    -- event = { "CursorMoved", "CursorMovedI" },
     config = conf.satellite,
 }
 
@@ -121,7 +119,7 @@ ui["lewis6991/satellite.nvim"] = {
 
 ui["xiyaowong/nvim-transparent"] = {
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
-    config = conf.transparent
+    config = conf.transparent,
 }
 
 ui["anuvyklack/pretty-fold.nvim"] = {
@@ -201,7 +199,5 @@ ui["kazhala/close-buffers.nvim"] = {
     cmd = { "BDelete", "BWipeout" },
     config = conf.buffers_close,
 }
-
-
 
 return ui

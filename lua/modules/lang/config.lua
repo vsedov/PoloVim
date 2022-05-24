@@ -68,8 +68,6 @@ function config.refactor()
     -- vim.api.nvim_set_keymap("v", "<Leader>rt", [[ <Esc><Cmd>lua M.refactors()<CR>]], {noremap = true, silent = true, expr = false})
 end
 
-
-
 function config.context()
     require("treesitter-context").setup({
         enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -77,8 +75,6 @@ function config.context()
         max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
     })
 end
-
-
 
 function config.jaq()
     require("jaq-nvim").setup({

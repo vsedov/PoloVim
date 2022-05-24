@@ -48,8 +48,8 @@ function Packer:load_packer()
 
     self:load_plugins()
     -- require("packer").startup(function()
-        use("wbthomason/packer.nvim") -- Package manager
-        use("lewis6991/impatient.nvim")
+    use("wbthomason/packer.nvim") -- Package manager
+    use("lewis6991/impatient.nvim")
     -- end)
 
     for _, repo in ipairs(self.repos) do
@@ -164,8 +164,5 @@ function plugins.load_compile()
     vim.api.nvim_create_user_command("PackerCompile", function()
         require("core.pack").magic_compile()
     end, { force = true })
-
-
-
 end
 return plugins
