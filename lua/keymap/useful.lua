@@ -14,7 +14,8 @@ vim.cmd([[
 
 local plug_map = {
     ["x|@"] = map_cmd(":<C-u>call ExecuteMacroOverVisualRange()<CR>"):with_noremap(),
-    ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>"):with_noremap():with_silent():with_nowait(),
+    ["n|<M-w>"] = map_cmd("<cmd>NeoNoNameBufferline<CR>"):with_noremap():with_silent():with_nowait(),
+
     ["n|<C-]>"] = map_args("Template"),
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
     ["n|<Leader>e"] = map_cr("NeoTreeFocusToggle"):with_noremap():with_silent(),

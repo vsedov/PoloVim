@@ -108,6 +108,12 @@ editor["LudoPinelli/comment-box.nvim"] = {
     config = conf.comment_box,
 }
 
+-- trying to figure out why this does not work .
+editor["nyngwang/NeoZoom.lua"] = {
+    opt = true
+}
+
+
 editor["chaoren/vim-wordmotion"] = {
     opt = true,
     fn = {

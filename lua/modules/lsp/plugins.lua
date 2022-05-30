@@ -49,9 +49,4 @@ lsp["weilbith/nvim-code-action-menu"] = {
     cmd = "CodeActionMenu",
     ft = { "python", "lua", "c", "java", "prolog", "lisp", "cpp" },
 }
-
-lsp["jose-elias-alvarez/null-ls.nvim"] = {
-    opt = true,
-    config = conf.null_ls,
-}
 return lsp

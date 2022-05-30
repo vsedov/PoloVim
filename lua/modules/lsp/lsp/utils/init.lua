@@ -90,13 +90,13 @@ local function select_default_formater(client, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             group = "LspFormatting",
             callback = function()
-                vim.lsp.buf.formatting()
+                vim.lsp.buf.format()
             end,
             buffer = bufnr,
         })
-    else
-        client.server_capabilities.document_formatting = false
-        client.server_capabilities.document_range_formatting = false
+        -- else
+        --     client.server_capabilities.document_formatting = false
+        --     client.server_capabilities.document_range_formatting = false
     end
 end
 

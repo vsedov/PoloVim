@@ -206,16 +206,7 @@ function autocmd.load_autocmds()
         },
 
         ft = {
-            {
-                "CursorHold",
-                { "*.tex" },
-                function()
-                    local is_math = require("modules.completion.snippets.sniputils").is_math
-                    if is_math then
-                        require("nabla").popup()
-                    end
-                end,
-            },
+    
             {
                 "FileType",
                 { "tex", "norg", "markdown" },

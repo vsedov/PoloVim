@@ -1,13 +1,6 @@
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 
-if use_efm() then
-    lspconfig.efm.setup(enhance_attach({
-        require("modules.lang.efm").efm,
-    }))
-    vim.lsp.set_log_level("error")
-end
-
 lspconfig.jedi_language_server.setup(enhance_attach({
     cmd = { "jedi-language-server" },
     filetypes = { "python" },

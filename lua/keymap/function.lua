@@ -64,6 +64,13 @@ local plug_map = {
             require("dynamic_help").float_help(help)
         end
     end):with_noremap():with_silent(),
+    -- Scuffed way of doing this, but this works . 
+
+    ["n|<M-l>"] = map_cmd(function()
+        require('neo-zoom').setup {}
+        vim.cmd[[NeoZoomToggle]]
+    end):with_noremap():with_silent():with_nowait(),
+
 }
 
 return plug_map

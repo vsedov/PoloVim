@@ -45,18 +45,10 @@ return {
             return Plugin_debug
         end
 
-        _G.overide_notify_desktop = function()
-            return false
-        end
-
         _G.sell_your_soul = function()
             return false
         end
 
-        _G.use_efm = function()
-            return false
-            -- return true
-        end
         _G.use_nulls = function()
             -- Remove this for norg files
             if vim.bo.filetype == "norg" or vim.bo.filetype == "json" then
@@ -65,9 +57,11 @@ return {
 
             return true
         end
+
         _G.dump = function(...)
             print(vim.inspect(...))
         end
+
         _G.use_gitsigns = function()
             if use_nulls() then
                 return true
