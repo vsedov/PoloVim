@@ -153,21 +153,13 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
 
 
 lang["dense-analysis/ale"] ={
-    ft = "python",
-    config = function()
-        vim.g.ale_sign_error = "✗✗"  -- make error indicator look prettier
-        vim.g.ale_sign_column_always = 1  -- prevent text jumping around
-        vim.g.ale_fix_on_save = 1
-        vim.g.ale_fixers = {
-          python = { "yapf", "isort" },
-        }
-        vim.g.ale_linters_explicit = 1
+  config = function ()
 
-        vim.g.ale_pattern_options = {
-          [".md$"] = { ale_linters = {}, ale_fixers = {} },
-        }
-    end
+
+  end
 }
+
+
 lang["jose-elias-alvarez/null-ls.nvim"] = {
     opt = true,
     config = require("modules.lang.null-ls").config,

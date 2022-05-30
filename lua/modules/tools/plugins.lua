@@ -37,6 +37,13 @@ tools["~/GitHub/active_development/py.nvim"] = {
     config = conf.python_dev,
 }
 
+tools['relastle/vim-nayvy'] ={
+
+  config = function ()
+    vim.g.nayvy_import_config_path = '$HOME/.config/nayvy/nayvy.py'
+  end
+}
+
 tools["vim-test/vim-test"] = {
     opt = true,
 }
