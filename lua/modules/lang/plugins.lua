@@ -151,20 +151,14 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
     requires = "nvim-lspconfig",
 }
 
-
-lang["dense-analysis/ale"] ={
-  config = function ()
-
-
-  end
+lang["dense-analysis/ale"] = {
+    config = function() end,
 }
-
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
     opt = true,
     config = require("modules.lang.null-ls").config,
     requires = "nvim-lspconfig",
 }
-
 
 return lang

@@ -206,7 +206,7 @@ function autocmd.load_autocmds()
         },
 
         ft = {
-    
+
             {
                 "FileType",
                 { "tex", "norg", "markdown" },
