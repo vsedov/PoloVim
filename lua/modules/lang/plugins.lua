@@ -145,6 +145,4 @@ lang["mfussenegger/nvim-jdtls"] = {
     opt = true,
 }
 
-
-
 return lang

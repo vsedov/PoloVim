@@ -40,9 +40,8 @@ local function make_diagnostic_qf_updater()
     end
 end
 
-
 local LspFormatting = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
-vim.api.nvim_create_autocmd({"BufWrite"}, {
+vim.api.nvim_create_autocmd({ "BufWrite" }, {
     pattern = "*",
     group = LspFormatting,
     callback = function()
@@ -72,7 +71,6 @@ vim.api.nvim_create_autocmd("InsertEnter", {
         vim.diagnostic.config({ virtual_lines = false })
     end,
 })
-
 
 vim.api.nvim_set_hl(0, "DiagnosticHeader", { fg = "#56b6c2", bold = true })
 vim.api.nvim_create_autocmd("CursorHold", {

@@ -112,7 +112,7 @@ function Lazyload()
         loader(plugins)
         lprint(plugins)
         loader("indent-blankline.nvim")
-        loader("refactoring.nvim") 
+        loader("refactoring.nvim")
     end
 
     vim.api.nvim_create_autocmd("FileType", {
