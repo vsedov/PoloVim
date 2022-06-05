@@ -162,13 +162,13 @@ function plugins.load_compile()
     vim.cmd([[command! PackerClean lua require('core.pack').clean()]])
     vim.cmd([[autocmd User PackerComplete lua require('core.pack').magic_compile()]])
 
-    vim.api.nvim_create_autocmd("BufWritePost",{
+    vim.api.nvim_create_autocmd("BufWritePost", {
         pattern = "*.lua",
         callback = function()
-          plugins.auto_compile()
+            plugins.auto_compile()
         end,
         desc = "Auto Compile the neovim config which write in lua",
-      })
+    })
 end
 
 return plugins

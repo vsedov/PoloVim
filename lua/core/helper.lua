@@ -30,6 +30,5 @@ return {
         _G.use_gitsigns = function()
             return true
         end
-
     end,
 }
