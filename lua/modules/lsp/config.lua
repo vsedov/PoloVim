@@ -99,7 +99,34 @@ function config.hover()
     })
 end
 
-function config.null_ls()
-    require("modules.lsp.lsp.null_ls")
+function config.lsp_lines()
+    require("lsp_lines").register_lsp_virtual_lines()
 end
+
+function  config.format() 
+        local util = require("formatter.util")
+        require("formatter").setup({
+            -- All formatter configurations are opt-in
+            filetype = {
+                lua = {
+                    -- Pick from defaults:
+                    require("formatter.filetypes.lua").stylua,
+                },
+                python = {
+                    require("formatter.filetypes.python").yapf,
+                    require("formatter.filetypes.python").isort,
+                },
+            },
+        })
+
+end
+
+function config.lint()
+        require("lint").linters_by_ft = {
+            lua = { "luacheck" },
+            markdown = { "vale" },
+            python = { "flake8", "vulture" },
+        }
+end
+
 return config

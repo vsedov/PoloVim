@@ -40,6 +40,7 @@ git["ldelossa/gh.nvim"] = {
         "GhCollapseCommit",
         "GHRefreshComments",
     },
+    opt = true, 
     requires = { "ldelossa/litee.nvim", opt = true, after = "gh.nvim" },
     config = conf.gh,
 }

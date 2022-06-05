@@ -72,4 +72,8 @@ completion["danymat/neogen"] = {
     config = conf.neogen,
 }
 
+completion["~/GitHub/vim-sonictemplate"] = {
+    cmd = "Template",
+    config = conf.vim_sonictemplate,
+}
 return completion

@@ -40,6 +40,40 @@ local function make_diagnostic_qf_updater()
     end
 end
 
+
+local LspFormatting = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+vim.api.nvim_create_autocmd({"BufWrite"}, {
+    pattern = "*",
+    group = LspFormatting,
+    callback = function()
+        require("lint").try_lint()
+    end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = "*",
+    group = LspFormatting,
+    callback = function()
+        vim.cmd([[FormatWrite]])
+    end,
+})
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+    pattern = "*",
+    group = LspFormatting,
+    callback = function()
+        vim.diagnostic.config({ virtual_lines = true })
+    end,
+})
+vim.api.nvim_create_autocmd("InsertEnter", {
+    pattern = "*",
+    group = LspFormatting,
+    callback = function()
+        vim.diagnostic.config({ virtual_lines = false })
+    end,
+})
+
+
 vim.api.nvim_set_hl(0, "DiagnosticHeader", { fg = "#56b6c2", bold = true })
 vim.api.nvim_create_autocmd("CursorHold", {
     pattern = "*",
@@ -56,9 +90,6 @@ vim.api.nvim_create_autocmd("CursorHold", {
         end
     end,
 })
-
--- vim.cmd("command! -nargs=0 LspLog call v:lua.open_lsp_log()")
--- vim.cmd("command! -nargs=0 LspRestart call v:lua.reload_lsp()")
 
 add_cmd("LspLog", function()
     open_lsp_log()

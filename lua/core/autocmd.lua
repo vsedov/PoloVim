@@ -310,5 +310,4 @@ function autocmd.load_autocmds()
 end
 
 autocmd.load_autocmds()
-require("core.cmd")
 return autocmd

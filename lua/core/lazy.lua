@@ -47,13 +47,9 @@ local function loadscheme()
 end
 
 function Lazyload()
-    -- selene:allow(global_usage)
     _G.PLoader = loader
-    -- no_file()
     loadscheme()
-    -- PLoader("kanagawa.nvim")
     if vim.wo.diff then
-        -- loader(plugins)
         lprint("diffmode")
         vim.cmd([[packadd nvim-treesitter]])
         require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = false } })
@@ -88,10 +84,6 @@ function Lazyload()
         vim.cmd([[syntax off]])
         return
     end
-
-    local plugins = "plenary.nvim" -- nvim-lspconfig navigator.lua   guihua.lua navigator.lua  -- gitsigns.nvim
-    loader("plenary.nvim")
-
     -- only works if you are working from one python file .
     if vim.bo.filetype == "lua" then
         loader("lua-dev.nvim")
@@ -111,9 +103,7 @@ function Lazyload()
     if load_lsp then
         loader("nvim-lspconfig") -- null-ls.nvim
         loader("lsp_signature.nvim")
-        if use_nulls() then
-            loader("null-ls.nvim")
-        end
+        loader("nvim-lint formatter.nvim")
     end
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
@@ -122,7 +112,7 @@ function Lazyload()
         loader(plugins)
         lprint(plugins)
         loader("indent-blankline.nvim")
-        loader("refactoring.nvim") -- need to do the same thing for refactoring
+        loader("refactoring.nvim") 
     end
 
     vim.api.nvim_create_autocmd("FileType", {
@@ -160,17 +150,6 @@ vim.defer_fn(function()
     vim.cmd([[doautocmd User LoadLazyPlugin]])
 end, lazy_timer)
 
--- vim.defer_fn(function()
---   -- lazyload()
---   local cmd = "TSEnableAll highlight " .. vim.o.ft
---   vim.cmd(cmd)
---   vim.cmd(
---     [[autocmd BufEnter * silent! lua vim.fn.wordcount()['bytes'] < 2048000 then vim.cmd('set syntax=on') local cmd= "TSBufEnable "..vim.o.ft vim.cmd(cmd) lprint(cmd, vim.o.ft, vim.o.syntax) end]]
---   )
---   -- vim.cmd([[doautocmd ColorScheme]])
---   -- vim.cmd(cmd)
--- end, lazy_timer + 20)
-
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
@@ -183,9 +162,7 @@ vim.defer_fn(function()
     if vim.bo.filetype ~= "tex" or vim.bo.filetype ~= "md" or vim.bo.filetype ~= "norg" then
         require("vscripts.race_conditions").coding_support()
     end
-    -- always load this
     require("vscripts.race_conditions").language_support()
-
     vim.cmd("command! Spell call spelunker#check()")
     vim.api.nvim_create_user_command("Gram", function()
         require("modules.tools.config").grammcheck()
@@ -198,26 +175,14 @@ end, lazy_timer + 60)
 
 vim.defer_fn(function()
     lprint("telescope family")
-    -- HACK(vsedov) (23:13:18 - 02/04/22): I do not think this affects startup
-    -- All of these require telescope irc
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
     loader("workspaces.nvim")
     -- Notify
-    -- loader("nvim-notify")
-    -- loader("structlog.nvim")
-    -- local notify = require("notify")
-    -- vim.notify = notify
-
-    -- if overide_notify_desktop() then
-    --     print("why is this getting activated, when this isnt supposed to even be on")
-    --     loader("desktop-notify.nvim")
-    --     require("desktop-notify").override_vim_notify()
-    -- end
-
-    -- HACK(vsedov) (21:22:38 - 01/04/22): till vhyro fixes norg log configs, i
-    -- have to work around this for the time
-
+    loader("nvim-notify")
+    loader("structlog.nvim")
+    local notify = require("notify")
+    vim.notify = notify
     if vim.fn.wordcount()["bytes"] < 2048000 then
         require("vscripts.cursorhold")
     end

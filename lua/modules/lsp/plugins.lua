@@ -49,4 +49,21 @@ lsp["weilbith/nvim-code-action-menu"] = {
     cmd = "CodeActionMenu",
     ft = { "python", "lua", "c", "java", "prolog", "lisp", "cpp" },
 }
+
+
+lsp["Maan2003/lsp_lines.nvim"] = {
+    -- opt = true, 
+    config = conf.lsp_lines
+}
+
+lsp["mhartington/formatter.nvim"] = {
+    opt = true,
+    config = conf.format
+}
+
+lsp["mfussenegger/nvim-lint"] = {
+    opt = true,
+    config = conf.lint
+}
+
 return lsp
