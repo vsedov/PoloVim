@@ -38,16 +38,6 @@ local plug_map = {
         end
     end):with_silent(),
 
-    ["n|<leader>fm"] = map_cmd(function()
-        require("mru").display_cache(dropdown({
-            previewer = false,
-        }))
-    end):with_noremap():with_silent(),
-
-    ["n|<leader>fF"] = map_cmd(function()
-        require("mru").display_cache(vim.tbl_extend("keep", { algorithm = "mfu" }, dropdown({ previewer = false })))
-    end):with_noremap():with_silent(),
-
     ["n|<leader><C-U>"] = map_cmd(function()
         local cursor = vim.api.nvim_win_get_cursor("0")
         vim.api.nvim_feedkeys("b~", "n", true)

@@ -140,7 +140,6 @@ local open_in_nvim_tree = function(prompt_bufnr)
 
     vim.cmd("/" .. file_name)
 end
-
 require("telescope").setup({
     defaults = themes.get_ivy({
         -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
