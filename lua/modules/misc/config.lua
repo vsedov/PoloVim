@@ -98,4 +98,45 @@ function config.vmulti()
   ]])
 end
 
+function config.surround()
+    require("surround").setup({
+        mappings_style = "sandwich",
+        pairs = {
+            nestable = {
+                { "(", ")" },
+                { "[", "]" },
+                { "{", "}" },
+                { "/", "/" },
+                {
+                    "*",
+                    "*",
+                },
+            },
+            linear = { { "'", "'" }, { "`", "`" }, { '"', '"' } },
+        },
+        prefix = "<F3>",
+    })
+end
+
+function config.jetscape()
+    require("jeskape").setup({
+        mappings = {
+            -- avoid tex values getting in teh way
+            ["\\l"] = {
+                i = "<cmd>Clap | startinsert<cr>",
+                f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
+            },
+            j = {
+                h = "<esc>O",
+                k = "<esc>",
+                j = "<esc>o",
+            },
+        },
+    })
+end
+
+function text_case()
+    require("textcase").setup({})
+end
+
 return config

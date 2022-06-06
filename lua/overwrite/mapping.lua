@@ -22,26 +22,6 @@ local keys = { --
 
     -- Plugin Vista
     ["n|<Leader>v]"] = map_cu("Vista!!"):with_noremap():with_silent(),
-
-    -- Buffer Line
-    ["n|<leader>bh"] = map_cr("BDelete hidden"):with_silent():with_nowait():with_noremap(),
-    ["n|<leader>bu"] = map_cr("BDelete! nameless"):with_silent():with_nowait():with_noremap(),
-    ["n|<leader>bd"] = map_cr("BDelete! this"):with_silent():with_nowait():with_noremap(),
-
-    ["n|<Leader>b["] = map_cr("BufferLineMoveNext"):with_noremap():with_silent(),
-    ["n|<Leader>b]"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent(),
-    ["n|<leader>bg"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
-    ["n|<localleader>1"] = map_cr("BufferLineGoToBuffer 1 "):with_silent(),
-    ["n|<localleader>2"] = map_cr("BufferLineGoToBuffer 2"):with_silent(),
-    ["n|<localleader>3"] = map_cr("BufferLineGoToBuffer 3 "):with_silent(),
-    ["n|<localleader>4"] = map_cr("BufferLineGoToBuffer 4 "):with_silent(),
-    ["n|<localleader>5"] = map_cr("BufferLineGoToBuffer 5 "):with_silent(),
-    ["n|<localleader>6"] = map_cr("BufferLineGoToBuffer 6 "):with_silent(),
-    ["n|<localleader>7"] = map_cr("BufferLineGoToBuffer 7 "):with_silent(),
-    ["n|<localleader>8"] = map_cr("BufferLineGoToBuffer 8 "):with_silent(),
-    ["n|<localleader>9"] = map_cr("BufferLineGoToBuffer 9 "):with_silent(),
-    ["n|<localleader>q"] = map_cr("BufferLinePickClose"):with_silent(),
-
     -- tshit
     ["o|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
     ["v|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),

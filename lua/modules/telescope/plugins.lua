@@ -23,4 +23,5 @@ telescope["jvgrootveld/telescope-zoxide"] = {
         require("telescope").load_extension("zoxide")
     end,
 }
+
 return telescope

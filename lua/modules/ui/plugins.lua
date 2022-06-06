@@ -11,6 +11,17 @@ ui["camspiers/animate.vim"] = {
 
 ui["kyazdani42/nvim-web-devicons"] = {}
 
+ui["SmiteshP/nvim-gps"] = {
+    opt = true,
+    requires = "nvim-treesitter/nvim-treesitter",
+    config = conf.gps,
+}
+
+ui["fgheng/winbar.nvim"] = {
+    opt = true,
+    requires = "nvim-gps",
+}
+
 ui["rebelot/heirline.nvim"] = {
     opt = true,
 }
@@ -32,6 +43,13 @@ ui["akinsho/bufferline.nvim"] = {
 -- Lazy Loading nvim-notify
 ui["rcarriga/nvim-notify"] = {
     opt = true,
+    setup = function()
+        vim.notify = function(msg, level, opts)
+            require("packer").loader("nvim-notify")
+            vim.notify = require("notify")
+            vim.notify(msg, level, opts)
+        end
+    end,
     requires = "telescope.nvim", -- this might not be needed
     config = conf.notify,
 }

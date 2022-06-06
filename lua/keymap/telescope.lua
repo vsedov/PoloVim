@@ -18,12 +18,17 @@ local plug_map = {
     ["n|<Leader>fW"] = map_cmd([['<cmd>lua require"telescope.builtin".live_grep()<cr>' . expand('<cword>')]])
         :with_expr()
         :with_silent(),
+    ["n|<Leader>hwd"] = map_cmd('<cmd>lua require"utils.telescope".howdoi()<CR>')
+        :with_noremap()
+        :with_silent(),
+
     ["n|<Leader>fw"] = map_cu("Telescope grep_string"):with_noremap():with_silent(),
     ["n|<Leader>gw"] = map_cmd('<cmd>lua require"utils.telescope".grep_last_search()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>cb"] = map_cmd('<cmd>lua require"utils.telescope".curbuf()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>gv"] = map_cmd('<cmd>lua require"utils.telescope".grep_string_visual()<CR>')
         :with_noremap()
         :with_silent(),
+
     -- git
     ["n|<Leader>fg"] = map_cu("Telescope git_files"):with_noremap():with_silent(),
     ["n|<Leader>fu"] = map_cmd('<cmd>lua require"utils.telescope".git_diff()<CR>'):with_noremap():with_silent(),

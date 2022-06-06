@@ -413,6 +413,64 @@ M.project_search = function()
     })
 end
 
+M.howdoi = function()
+
+local has_howdoi = vim.fn.executable('howdoi') == 1
+
+if not has_howdoi then
+    error('howdoi requires howdoi (https://github.com/gleitz/howdoi)')
+end
+
+local opts = {
+    num_answers = 3,
+    explain_answer = false,
+}
+
+local queries = {}
+    local finder = function(table)
+        return finders.new_table({
+            results = table,
+            entry_maker = function(entry)
+                return {
+                    value = entry,
+                    display = entry,
+                    ordinal = entry,
+                }
+            end,
+        })
+    end
+
+    pickers.new(opts, {
+        prompt_title = 'howdoi',
+        finder = finder(queries),
+        previewer = previewers.new_termopen_previewer({
+            get_command = function(entry)
+                local command = { 'howdoi', '-c', '-n', opts.num_answers }
+
+                if opts.explain_answer then
+                    table.insert(command, '-x')
+                end
+
+                table.insert(command, entry.value)
+                return command
+            end,
+        }),
+        attach_mappings = function(prompt_bufnr, _)
+            actions.select_default:replace(function()
+                local query = action_state.get_current_line()
+
+                if query ~= '' then
+                    table.insert(queries, 1, query)
+                    action_state.get_current_picker(prompt_bufnr):refresh(finder(queries), { reset_prompt = true })
+                end
+            end)
+            return true
+        end,
+    }):find()
+
+
+end
+
 --- Plugins to be loaded, lazily
 M.neoclip = function()
     local opts = {

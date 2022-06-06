@@ -93,7 +93,7 @@ function autocmd.load_autocmds()
                 end,
             },
             {
-                "BufWinEnter",
+                "BufReadPost",
                 { "*.py", "*.lua", "*.tex", "*.norg" },
                 function()
                     if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then

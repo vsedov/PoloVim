@@ -87,16 +87,11 @@ function pbind.nvim_load_mapping(mapping)
     for key, value in pairs(mapping) do
         --  Regex is faster for some reason than {{..},.. } or {..,{..}}
         local mode, keymap = key:match("([^|]*)|?(.*)")
-        -- print(mode)
         for i = 1, #mode do
             if type(value) == "table" then
                 vim.keymap.set(mode:sub(i, i), keymap, value.cmd, value.options)
-                -- rhs = vim.trim(rhs, {}, 0)
-                -- table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. rhs)
             elseif type(value) == "string" then
                 vim.keymap.set(mode:sub(i, i), keymap, value.cmd, {})
-                -- value = vim.trim(value, {}, 0)
-                -- table.insert(pbind.all_keys, mode:sub(i, i) .. " | " .. keymap .. " : " .. value)
             end
         end
     end

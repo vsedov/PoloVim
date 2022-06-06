@@ -128,4 +128,8 @@ function config.lint()
     }
 end
 
+function config.rename()
+    require("inc_rename").setup()
+end
+
 return config

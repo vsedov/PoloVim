@@ -73,48 +73,19 @@ misc["mizlan/iswap.nvim"] = {
 
 misc["Mephistophiles/surround.nvim"] = {
     keys = { "<F3>" },
-    config = function()
-        require("surround").setup({
-            mappings_style = "sandwich",
-            pairs = {
-                nestable = {
-                    { "(", ")" },
-                    { "[", "]" },
-                    { "{", "}" },
-                    { "/", "/" },
-                    {
-                        "*",
-                        "*",
-                    },
-                },
-                linear = { { "'", "'" }, { "`", "`" }, { '"', '"' } },
-            },
-            prefix = "<F3>",
-        })
-    end,
+    config = conf.surround,
 }
 misc["Krafi2/jeskape.nvim"] = {
     event = "InsertEnter",
-    config = function()
-        require("jeskape").setup({
-            mappings = {
-                -- avoid tex values getting in teh way
-                ["\\l"] = {
-                    i = "<cmd>Clap | startinsert<cr>",
-                    f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
-                },
-                j = {
-                    h = "<esc>O",
-                    k = "<esc>",
-                    j = "<esc>o",
-                },
-            },
-        })
-    end,
+    config = conf.jetscape,
 }
 
 misc["fladson/vim-kitty"] = {
     ft = { "*.conf" },
 }
 
+-- Need to lazyload
+misc["johmsalas/text-case.nvim"] = {
+    config = conf.text_case,
+}
 return misc

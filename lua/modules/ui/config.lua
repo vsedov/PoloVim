@@ -78,6 +78,92 @@ function config.fidget()
     })
 end
 
+function config.gps()
+    require("nvim-gps").setup({
+
+        disable_icons = false, -- Setting it to true will disable all icons
+
+        icons = {
+            ["class-name"] = " ", -- Classes and class-like objects
+            ["function-name"] = " ", -- Functions
+            ["method-name"] = " ", -- Methods (functions inside class-like objects)
+            ["container-name"] = "⛶ ", -- Containers (example: lua tables)
+            ["tag-name"] = "炙",         -- Tags (example: html tags)
+        },
+        languages = {
+            ["json"] = {
+                icons = {
+                    ["array-name"] = " ",
+                    ["object-name"] = " ",
+                    ["null-name"] = "[] ",
+                    ["boolean-name"] = "ﰰﰴ ",
+                    ["number-name"] = "# ",
+                    ["string-name"] = " ",
+                },
+            },
+            ["latex"] = {
+                icons = {
+                    ["title-name"] = "# ",
+                    ["label-name"] = " ",
+                },
+            },
+            ["norg"] = {
+                icons = {
+                    ["title-name"] = " ",
+                },
+            },
+            ["toml"] = {
+                icons = {
+                    ["table-name"] = " ",
+                    ["array-name"] = " ",
+                    ["boolean-name"] = "ﰰﰴ ",
+                    ["date-name"] = " ",
+                    ["date-time-name"] = " ",
+                    ["float-name"] = " ",
+                    ["inline-table-name"] = " ",
+                    ["integer-name"] = "# ",
+                    ["string-name"] = " ",
+                    ["time-name"] = " ",
+                },
+            },
+            ["verilog"] = {
+                icons = {
+                    ["module-name"] = " ",
+                },
+            },
+            ["yaml"] = {
+                icons = {
+                    ["mapping-name"] = " ",
+                    ["sequence-name"] = " ",
+                    ["null-name"] = "[] ",
+                    ["boolean-name"] = "ﰰﰴ ",
+                    ["integer-name"] = "# ",
+                    ["float-name"] = " ",
+                    ["string-name"] = " ",
+                },
+            },
+            ["yang"] = {
+                icons = {
+                    ["module-name"] = " ",
+                    ["augment-path"] = " ",
+                    ["container-name"] = " ",
+                    ["grouping-name"] = " ",
+                    ["typedef-name"] = " ",
+                    ["identity-name"] = " ",
+                    ["list-name"] = "﬘ ",
+                    ["leaf-list-name"] = " ",
+                    ["leaf-name"] = " ",
+                    ["action-name"] = " ",
+                },
+            },
+        },
+
+        separator = " > ",
+        depth = 0,
+        depth_limit_indicator = "..",
+    })
+end
+
 function config.nvim_bufferline()
     if not packer_plugins["nvim-web-devicons"].loaded then
         packer_plugins["nvim-web-devicons"].loaded = true
@@ -248,51 +334,28 @@ function config.notify()
         -- no need to configure notifications in headless
         return
     end
-    local notify = require("notify")
-    local default = {
-        -- Animation style (see below for details)
-        stages = "fade_in_slide_out", -- "slide",
-
-        -- Function called when a new window is opened, use for changing win settings/config
-        on_open = nil,
-
-        -- Function called when a window is closed
-        on_close = nil,
-
-        -- Render function for notifications. See notify-render()
-        render = "default",
-
-        -- Default timeout for notifications
-        timeout = 5000,
-
-        -- For stages that change opacity this is treated as the highlight behind the window
-        -- Set this to either a highlight group or an RGB hex value e.g. "#000000"
-        background_colour = function()
-            local group_bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Normal")), "bg#")
-            if group_bg == "" or group_bg == "none" then
-                group_bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Float")), "bg#")
-                if group_bg == "" or group_bg == "none" then
-                    return "#000000"
-                end
-            end
-            return group_bg
+      local notify = require('notify')
+      notify.setup({
+        timeout = 3000,
+        stages = 'fade_in_slide_out',
+        max_width = function()
+          return math.floor(vim.o.columns * 0.8)
         end,
-
-        -- Minimum width for notification windows
-        minimum_width = 50,
-
-        -- Icons for the different levels
-        icons = {
-            ERROR = "",
-            WARN = "",
-            INFO = "",
-            DEBUG = "",
-            TRACE = "✎",
-        },
-    }
-
-    notify.setup(default)
-
+        max_height = function()
+          return math.floor(vim.o.lines * 0.8)
+        end,
+        on_open = function(win)
+          if vim.api.nvim_win_is_valid(win) then
+            vim.api.nvim_win_set_config(win, { border = "single" })
+          end
+        end,
+        render = function(bufnr, notif, highlights, config)
+          local style = notif.title[1] == '' and 'minimal' or 'default'
+          require('notify.render')[style](bufnr, notif, highlights, config)
+        end,
+      })
+      vim.notify = notify
+      vim.keymap.set("n", "-+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
     require("telescope").load_extension("notify")
 end
 

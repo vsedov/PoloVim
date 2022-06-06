@@ -155,7 +155,7 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    loader("heirline.nvim")
+    loader("nvim-gps winbar.nvim heirline.nvim")
     require("modules.ui.heirline") -- ignore
     require("utils.ui_overwrite")
     require("vscripts.tools")

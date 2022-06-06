@@ -166,6 +166,7 @@ local sources = {
     { name = "neorg", priority = 6 },
     { name = "latex_symbols", priority = 1 },
     { name = "Dictionary" },
+    { name = "events", priority = 10 },
 }
 
 -- todo make this better too many if statmenets
@@ -462,6 +463,7 @@ cmp.setup({
         autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
         completeopt = "menu,menuone,noselect",
     },
+
     formatting = {
         fields = {
             cmp.ItemField.Kind,
@@ -473,11 +475,7 @@ cmp.setup({
             before = function(entry, vim_item)
                 -- Get the full snippet (and only keep first line)
                 local word = entry:get_insert_text()
-                if
-                    entry.completion_item.insertTextFormat
-                    --[[  ]]
-                    == types.lsp.InsertTextFormat.Snippet
-                then
+                if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
                     word = vim.lsp.util.parse_snippet(word)
                 end
                 word = str.oneline(word)
@@ -506,15 +504,6 @@ cmp.setup({
                 return vim_item
             end,
         }),
-        -- format = function(entry, vim_item)
-        --   vim_item.kind = string.format(
-        --     "%s %s",
-        --     -- "%s",
-        --     get_kind(vim_item.kind),
-        --     vim_item.kind
-        --   )
-
-        -- end
     },
     -- You must set mapping if you want.
     mapping = mappings,
@@ -548,16 +537,13 @@ cmp.setup({
             cmp.config.compare.order,
         },
     },
-
     enabled = function()
-        -- if require"cmp.config.context".in_treesitter_capture("comment")==true or require"cmp.config.context".in_syntax_group("Comment") then
-        --   return false
-        -- else
-        --   return true
-        -- end
         if vim.bo.ft == "TelescopePrompt" then
             return false
         end
+        -- if vim.bo.ft == "dashboard" then
+        --     return false
+        -- end
         if vim.bo.ft == "lua" then
             return true
         end

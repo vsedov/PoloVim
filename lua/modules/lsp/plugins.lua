@@ -65,4 +65,9 @@ lsp["mfussenegger/nvim-lint"] = {
     config = conf.lint,
 }
 
+lsp["smjonas/inc-rename.nvim"] = {
+    cmd = "IncRename",
+    config = conf.rename,
+}
+
 return lsp

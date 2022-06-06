@@ -153,7 +153,17 @@ function plugins.load_compile()
         plugins.magic_compile()
         require("_compiled")
     end
-    require("core.pack").make_commands()
+    vim.cmd([[command! PackerStatus lua require('core.pack').status()]])
+    vim.cmd([[command! PackerProfile lua require('core.pack').profile_output()]])
+    vim.cmd(
+        [[command! -nargs=+ -complete=customlist,v:lua.require'core.pack.snapshot'.completion.create PackerSnapshot  lua require('packer').snapshot(<f-args>)]]
+    )
+    vim.cmd(
+        [[command! -nargs=+ -complete=customlist,v:lua.require'core.pack.snapshot'.completion.rollback PackerSnapshotRollback  lua require('packer').rollback(<f-args>)]]
+    )
+    vim.cmd(
+        [[command! -nargs=+ -complete=customlist,v:lua.require'core.pack.snapshot'.completion.snapshot PackerSnapshotDelete lua require('packer.snapshot').delete(<f-args>)]]
+    )
 
     vim.cmd([[command! PackerCompile lua require('core.pack').magic_compile()]])
     vim.cmd([[command! PackerInstall lua require('core.pack').install()]])
