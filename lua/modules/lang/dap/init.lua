@@ -82,7 +82,7 @@ M.prepare = function()
     loader("nvim-dap-ui")
     loader("nvim-dap-virtual-text")
 
-    require('telescope').load_extension('dap')
+    require("telescope").load_extension("dap")
     local ft_call = {
         ["python"] = function()
             loader("nvim-dap-python")

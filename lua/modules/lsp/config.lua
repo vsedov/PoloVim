@@ -10,7 +10,6 @@ end
 
 function config.rust_tools()
     require("modules.lsp.lsp.providers.rust")
-
 end
 
 function config.luadev()

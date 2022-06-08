@@ -16,13 +16,12 @@ lsp["p00f/clangd_extensions.nvim"] = {
     config = conf.clangd,
 }
 
-lsp["simrat39/rust-tools.nvim"]={
+lsp["simrat39/rust-tools.nvim"] = {
     opt = true,
     ft = { "rust" },
     requires = "nvim-lspconfig",
     config = conf.rust_tools,
 }
-
 
 lsp["williamboman/nvim-lsp-installer"] = {
     opt = true,

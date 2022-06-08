@@ -133,13 +133,13 @@ lang["mfussenegger/nvim-dap"] = {
         {
             "mfussenegger/nvim-dap-python",
             after = "nvim-dap",
-            ft = "python"
+            ft = "python",
         },
         {
-            "nvim-telescope/telescope-dap.nvim", 
-            requires = "telescope.nvim", 
-            after = "nvim-dap"
-        }
+            "nvim-telescope/telescope-dap.nvim",
+            requires = "telescope.nvim",
+            after = "nvim-dap",
+        },
     },
 }
 
