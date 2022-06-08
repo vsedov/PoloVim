@@ -59,8 +59,6 @@ local plug_map = {
     ["n|<C-ScrollWheelDown>"] = map_cmd("<C-o>"):with_noremap():with_silent(),
     ["n|<Leader>ta"] = map_cr("ToggleAlternate"):with_noremap():with_silent(),
     ["n|<Leader><Leader>1"] = map_cu("ZenMode"):with_noremap():with_silent(),
-    ["n|<F9>"] = map_cr('<cmd> lua require("nabla").action()<CR>'):with_noremap(),
-    ["n|<localleader>b"] = map_cr('<cmd> lua require("nabla").popup()<CR>'):with_noremap(),
 
     ["n|;e"] = map_cmd("<cmd>lua require('spectre').open()<CR>"):with_noremap(),
     ["n|;W"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>"):with_noremap(),

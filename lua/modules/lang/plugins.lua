@@ -114,17 +114,34 @@ lang["rafcamlet/nvim-luapad"] = {
 }
 
 lang["mfussenegger/nvim-dap"] = {
-    opt = true,
+    module = "dap",
+    setup = conf.dap_setup,
+    config = conf.dap_config,
     requires = {
-        { "theHamsta/nvim-dap-virtual-text", cmd = "Luadev", opt = true },
-        { "mfussenegger/nvim-dap-python", ft = "python" },
-        { "rcarriga/nvim-dap-ui", opt = true },
+        {
+            "rcarriga/nvim-dap-ui",
+            after = "nvim-dap",
+            config = conf.dapui,
+        },
+        {
+            "theHamsta/nvim-dap-virtual-text",
+            after = "nvim-dap",
+            config = function()
+                require("nvim-dap-virtual-text").setup({ all_frames = true })
+            end,
+        },
+        {
+            "mfussenegger/nvim-dap-python",
+            after = "nvim-dap",
+            ft = "python"
+        },
+        {
+            "nvim-telescope/telescope-dap.nvim", 
+            requires = "telescope.nvim", 
+            after = "nvim-dap"
+        }
     },
-
-    run = ":UpdateRemotePlugins",
-
-    config = conf.dap,
-} -- cmd = "Luadev",
+}
 
 lang["max397574/nvim-treehopper"] = {
     module = "tsht",
@@ -143,6 +160,24 @@ lang["ray-x/guihua.lua"] = {
 lang["mfussenegger/nvim-jdtls"] = {
     ft = "java",
     opt = true,
+}
+
+lang["rcarriga/neotest"] = {
+    opt = true,
+    requires = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-treesitter/nvim-treesitter" },
+        { "rcarriga/neotest-python", opt = true },
+        { "rcarriga/neotest-plenary", opt = true },
+        {
+            "rcarriga/neotest-vim-test",
+            cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
+            opt = true,
+            requires = { "vim-test/vim-test", opt = true, after = "neotest" },
+        },
+    },
+    setup = conf.neotest_setup,
+    config = conf.neotest,
 }
 
 return lang

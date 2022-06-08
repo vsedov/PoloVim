@@ -19,6 +19,4 @@ dap.configurations.rust = {
         program = vim.fn.expand("$HOME") .. "/workspace/development/rust-app/target/debug/myapp1",
     },
 }
-
-require("telescope").load_extension("dap")
 require("dbg.rust")

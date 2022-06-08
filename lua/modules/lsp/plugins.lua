@@ -16,6 +16,14 @@ lsp["p00f/clangd_extensions.nvim"] = {
     config = conf.clangd,
 }
 
+lsp["simrat39/rust-tools.nvim"]={
+    opt = true,
+    ft = { "rust" },
+    requires = "nvim-lspconfig",
+    config = conf.rust_tools,
+}
+
+
 lsp["williamboman/nvim-lsp-installer"] = {
     opt = true,
     cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
@@ -51,7 +59,8 @@ lsp["weilbith/nvim-code-action-menu"] = {
 }
 
 lsp["Maan2003/lsp_lines.nvim"] = {
-    -- opt = true,
+    event = { "BufEnter" },
+    after = "nvim-lspconfig",
     config = conf.lsp_lines,
 }
 

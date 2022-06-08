@@ -42,7 +42,7 @@ completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
 }
 
 completion["/home/viv/.config/nvim/lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim"] = {
-    requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+    requires = { "L3MON4D3/LuaSnip", { "lervag/vimtex", ft = { "tex" } } },
     ft = "tex",
 }
 

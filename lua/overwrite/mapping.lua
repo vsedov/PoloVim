@@ -132,10 +132,6 @@ add_cmd("AbbrivGodMode", function()
     vim.cmd([[packadd vim-abbrev]])
 end, { force = true })
 
-add_cmd("TestStart", function()
-    require("modules.lang.language_utils").testStart()
-end, { force = true })
-
 add_cmd("DebugOpen", function()
     require("modules.lang.dap").prepare()
 end, { force = true })

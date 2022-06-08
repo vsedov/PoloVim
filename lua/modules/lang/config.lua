@@ -280,9 +280,11 @@ function config.yabs()
         },
     })
 end
+
 function config.trouble()
     require("trouble").setup({})
 end
+
 function config.todo_comments()
     require("todo-comments").setup({
 
@@ -341,9 +343,11 @@ function config.todo_comments()
         },
     })
 end
+
 function config.luadev()
     vim.cmd([[vmap <leader><leader>lr <Plug>(Luadev-Run)]])
 end
+
 function config.luapad()
     require("luapad").setup({
         count_limit = 150000,
@@ -362,8 +366,149 @@ function config.luapad()
     })
 end
 
-function config.dap()
-    require("modules.lang.dap.init")
+function config.dap_setup()
+    require("modules.lang.dap.init").setup()
+end
+
+function config.dap_config()
+    require("modules.lang.dap.init").config()
+end
+
+function config.dapui()
+    require("modules.lang.dap.init").dapui()
+end
+
+function config.neotest_setup()
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*",
+        callback = function()
+            if vim.fn.bufname("%"):match("test") then
+                require("packer").loader("neotest")
+            end
+        end,
+        once = true,
+    })
+end
+
+function config.neotest()
+    vim.cmd([[packadd neotest-python]])
+    vim.cmd([[packadd neotest-plenary]])
+    vim.cmd([[packadd neotest-vim-test]])
+
+    local add_cmd = vim.api.nvim_create_user_command
+
+    require("neotest").setup({
+        adapters = {
+            require("neotest-python")({
+                dap = { justMyCode = false },
+            }),
+            require("neotest-plenary"),
+            require("neotest-vim-test")({
+                ignore_file_types = { "python", "vim", "lua" },
+            }),
+        },
+        diagnostic = {
+            enabled = true,
+        },
+        highlights = {
+            adapter_name = "NeotestAdapterName",
+            border = "NeotestBorder",
+            dir = "NeotestDir",
+            expand_marker = "NeotestExpandMarker",
+            failed = "NeotestFailed",
+            file = "NeotestFile",
+            focused = "NeotestFocused",
+            indent = "NeotestIndent",
+            namespace = "NeotestNamespace",
+            passed = "NeotestPassed",
+            running = "NeotestRunning",
+            skipped = "NeotestSkipped",
+            test = "NeotestTest",
+        },
+        icons = {
+            child_indent = "│",
+            child_prefix = "├",
+            collapsed = "─",
+            expanded = "╮",
+            failed = "✖",
+            final_child_indent = " ",
+            final_child_prefix = "╰",
+            non_collapsible = "─",
+            passed = "✔",
+            running = "🗘",
+            skipped = "ﰸ",
+            unknown = "?",
+        },
+        output = {
+            enabled = true,
+            open_on_run = "short",
+        },
+        run = {
+            enabled = true,
+        },
+        status = {
+            enabled = true,
+        },
+        strategies = {
+            integrated = {
+                height = 40,
+                width = 120,
+            },
+        },
+        summary = {
+            enabled = true,
+            expand_errors = true,
+            follow = true,
+            mappings = {
+                attach = "a",
+                expand = { "<CR>", "<2-LeftMouse>" },
+                expand_all = "e",
+                jumpto = "i",
+                output = "o",
+                run = "r",
+                short = "O",
+                stop = "u",
+            },
+        },
+    })
+
+    -- cmd = { "TestNear", "TestCurrent", "TestSummary", "TestOutput", "TestStrat" , "TestStop"},
+    -- test nearest file
+    add_cmd("TestNear", function()
+        require("neotest").run.run()
+    end, { force = true })
+
+    add_cmd("TestCurrent", function()
+        require("neotest").run.run(vim.fn.expand("%"))
+    end, { force = true })
+
+    add_cmd("TestSummary", function()
+        require("neotest").summary.toggle()
+    end, { force = true })
+
+    add_cmd("TestOutput", function()
+        require("neotest").output.open({ enter = true })
+    end, { force = true })
+
+    add_cmd("TestStrat", function(args)
+        local options = { "dap", "integrated" }
+        if vim.tbl_contains(options, args.arg) then
+            require("neotest").run.run({ strategy = args.args })
+        else
+            require("neotest").run.run({ strategy = "integrated" })
+        end
+    end, {
+        force = true,
+        nargs = 1,
+    })
+
+    add_cmd("TestStop", function()
+        require("neotest").run.stop()
+    end, { force = true })
+
+    add_cmd("TestAttach", function()
+        require("neotest").run.attach()
+    end, { force = true })
 end
 
 return config

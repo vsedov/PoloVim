@@ -1,6 +1,4 @@
 def jls_extract_def():
-    test = 10
-
     return test
 
 

@@ -44,7 +44,6 @@ M.coding_support = function()
 
 				cnoreabbrev Qall qall
 
-    			cnoreabbrev h vertical botright help
 				cnoreabbrev vsf vert bel sf
 				cnoreabbrev vsp bel vsp
 

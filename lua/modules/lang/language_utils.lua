@@ -64,60 +64,6 @@ M.load_snip_run = function()
     snip_run_binds()
 end
 
--- Call :TestStart on any test file for python
-M.testStart = function()
-    vim.cmd([[UpdateRemotePlugins]])
-    loader("vim-test")
-    loader("vim-ultest")
-    vim.g["test#python#pytest#executable"] = "pytest"
-    vim.g["test#python#pytest#options"] = "--disable-warnings --color=yes"
-
-    vim.g["test#strategy"] = { nearest = "neovim", file = "neovim", suite = "neovim" }
-    vim.g["test#neovim#term_position"] = "vert botright 60"
-    vim.g["test#go#runner"] = "ginkgo"
-
-    require("ultest").setup({
-        builders = {
-            ["python#pytest"] = function(cmd)
-                local non_modules = { "python", "pipenv", "poetry" }
-                -- Index of the python module to run the test.
-                local module
-                if vim.tbl_contains(non_modules, cmd[1]) then
-                    module = cmd[3]
-                else
-                    module = cmd[1]
-                end
-                -- Remaining elements are arguments to the module
-                return {
-                    dap = {
-                        type = "python",
-                        request = "launch",
-                        module = module,
-                        cwd = vim.fn.getcwd(),
-
-                        pathMappings = {
-                            {
-                                localRoot = vim.fn.getcwd(), -- Wherever your Python code lives locally.
-                            },
-                        },
-                    },
-                }
-            end,
-        },
-    })
-
-    -- Auto attach, very nice to have around .
-    vim.api.nvim_exec(
-        [[
-    augroup UltestRunner
-        au!
-        au BufWritePost * UltestNearest
-    augroup END
-    ]],
-        false
-    )
-end
-
 M.python_repl = function()
     vim.notify("Python REPL Plugins Loaded")
     vim.cmd([[packadd magma-nvim]])

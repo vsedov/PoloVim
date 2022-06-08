@@ -45,20 +45,10 @@ tools["relastle/vim-nayvy"] = {
     end,
 }
 
-tools["vim-test/vim-test"] = {
-    opt = true,
-}
-
 tools["neovim/nvimdev.nvim"] = {
     ft = "lua",
     opt = true,
     config = conf.nvimdev,
-}
-
-tools["rcarriga/vim-ultest"] = {
-    requires = { "vim-test/vim-test", opt = true, after = "vim-ultest" },
-    run = ":UpdateRemotePlugins",
-    opt = true,
 }
 
 tools["gennaro-tedesco/nvim-jqx"] = {

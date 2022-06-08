@@ -35,8 +35,6 @@ ui["mvllow/modes.nvim"] = {
 ui["akinsho/bufferline.nvim"] = {
     config = conf.nvim_bufferline,
     event = "UIEnter",
-    -- after = {"aurora"}
-    -- requires = {'kyazdani42/nvim-web-devicons'}
     opt = true,
 }
 

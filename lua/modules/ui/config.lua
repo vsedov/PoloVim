@@ -88,7 +88,7 @@ function config.gps()
             ["function-name"] = " ", -- Functions
             ["method-name"] = " ", -- Methods (functions inside class-like objects)
             ["container-name"] = "⛶ ", -- Containers (example: lua tables)
-            ["tag-name"] = "炙",         -- Tags (example: html tags)
+            ["tag-name"] = "炙", -- Tags (example: html tags)
         },
         languages = {
             ["json"] = {
@@ -334,28 +334,28 @@ function config.notify()
         -- no need to configure notifications in headless
         return
     end
-      local notify = require('notify')
-      notify.setup({
+    local notify = require("notify")
+    notify.setup({
         timeout = 3000,
-        stages = 'fade_in_slide_out',
+        stages = "fade_in_slide_out",
         max_width = function()
-          return math.floor(vim.o.columns * 0.8)
+            return math.floor(vim.o.columns * 0.8)
         end,
         max_height = function()
-          return math.floor(vim.o.lines * 0.8)
+            return math.floor(vim.o.lines * 0.8)
         end,
         on_open = function(win)
-          if vim.api.nvim_win_is_valid(win) then
-            vim.api.nvim_win_set_config(win, { border = "single" })
-          end
+            if vim.api.nvim_win_is_valid(win) then
+                vim.api.nvim_win_set_config(win, { border = "single" })
+            end
         end,
         render = function(bufnr, notif, highlights, config)
-          local style = notif.title[1] == '' and 'minimal' or 'default'
-          require('notify.render')[style](bufnr, notif, highlights, config)
+            local style = notif.title[1] == "" and "minimal" or "default"
+            require("notify.render")[style](bufnr, notif, highlights, config)
         end,
-      })
-      vim.notify = notify
-      vim.keymap.set("n", "-+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
+    })
+    vim.notify = notify
+    vim.keymap.set("n", "-+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
     require("telescope").load_extension("notify")
 end
 

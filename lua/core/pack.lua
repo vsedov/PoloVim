@@ -175,7 +175,9 @@ function plugins.load_compile()
     vim.api.nvim_create_autocmd("BufWritePost", {
         pattern = "*.lua",
         callback = function()
+            vim.api.nvim_chan_send(vim.v.stderr, "\027]99;i=1:d=0;Packer.nvim\027\\")
             plugins.auto_compile()
+            vim.api.nvim_chan_send(vim.v.stderr, "\027]99;i=1:d=1:p=body;Compile finished\027\\")
         end,
         desc = "Auto Compile the neovim config which write in lua",
     })

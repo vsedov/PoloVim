@@ -22,17 +22,6 @@ end
 
 function autocmd.load_autocmds()
     local definitions = {
-        packer_call = {
-            { "BufWritePost", "plugins.lua", "lua require('core.pack').auto_compile()" },
-            {
-                "User",
-                "PackerCompileDone",
-                function()
-                    vim.api.nvim_chan_send(vim.v.stderr, "\027]99;i=1:d=0;Packer.nvim\027\\")
-                    vim.api.nvim_chan_send(vim.v.stderr, "\027]99;i=1:d=1:p=body;Compile finished\027\\")
-                end,
-            },
-        },
         buffer = {
             {
                 { "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
@@ -63,13 +52,13 @@ function autocmd.load_autocmds()
                 [[if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
                 true,
             },
-            -- {
-            --     { "BufWritePre", },
-            --     "*.py",
-            --     function()
-            --     vim.cmd([[NayvyImports]])
-            --     end
-            -- },
+            {
+                "BufWritePre",
+                "*.py",
+                function()
+                    vim.cmd([[NayvyImports]])
+                end,
+            },
             { "BufWritePre", "/tmp/*", "setlocal noundofile" },
             { "BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile" },
             { "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
@@ -174,8 +163,6 @@ function autocmd.load_autocmds()
                 "*",
                 [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
             },
-
-            { "BufEnter", "NvimTree", [[setlocal cursorline]] },
             { "CmdLineEnter", "*", [[set nosmartcase]] },
             { "CmdLineLeave", "*", [[set smartcase]] },
             -- Equalize window dimensions when resizing vim window
