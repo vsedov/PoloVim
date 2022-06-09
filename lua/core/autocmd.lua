@@ -20,6 +20,31 @@ function autocmd.nvim_create_augroups(defs)
     end
 end
 
+local smart_close_filetypes = {
+    "help",
+    "git-status",
+    "git-log",
+    "gitcommit",
+    "dbui",
+    "fugitive",
+    "fugitiveblame",
+    "LuaTree",
+    "log",
+    "tsplayground",
+    "qf",
+    "startuptime",
+    "lspinfo",
+    "neotest-summary",
+}
+
+local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
+
+local function smart_close()
+    if fn.winnr("$") ~= 1 then
+        api.nvim_win_close(0, true)
+    end
+end
+
 function autocmd.load_autocmds()
     local definitions = {
         buffer = {
@@ -272,6 +297,30 @@ function autocmd.load_autocmds()
                 "*",
                 function()
                     require("core.event_helper").stop_hl()
+                end,
+            },
+        },
+        SmartClose = {
+            {
+                "QuickFixCmdPost",
+                "*grep*",
+                "cwindow",
+            },
+            {
+                "FileType",
+                "*",
+
+                function()
+                    local is_unmapped = fn.hasmapto("q", "n") == 0
+
+                    local is_eligible = is_unmapped
+                        or vim.wo.previewwindow
+                        or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
+                        or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
+
+                    if is_eligible then
+                        vim.keymap.set("n", "q", smart_close, { buffer = 0, nowait = true })
+                    end
                 end,
             },
         },

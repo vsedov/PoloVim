@@ -33,11 +33,9 @@ local function loadscheme()
         themes = {
             "kanagawa.nvim",
             "kanagawa.nvim",
-            "tokyonight.nvim",
-            "Sakura.nvim",
+            -- "tokyonight.nvim",
         }
     end
-    -- themes = { "kanagawa.nvim" }
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
 

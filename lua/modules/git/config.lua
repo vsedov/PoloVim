@@ -110,11 +110,6 @@ function config.gitsigns()
             fn(unpack(args, nargs))
         end
     end
-
-    --  TODO(lewis6991): doesn't work properly
-    vim.keymap.set("n", "M", "<cmd>Gitsigns debug_messages<cr>")
-    vim.keymap.set("n", "m", "<cmd>Gitsigns dump_cache<cr>")
-
     local function on_attach(bufnr)
         local function map(mode, l, r, opts)
             opts = opts or {}

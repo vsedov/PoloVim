@@ -135,8 +135,33 @@ function config.jetscape()
     })
 end
 
-function text_case()
+function config.text_case()
     require("textcase").setup({})
 end
 
+function config.marks()
+    require("which-key").register({
+        m = {
+            name = "+marks",
+            b = { "<Cmd>MarksListBuf<CR>", "list buffer" },
+            g = { "<Cmd>MarksQFListGlobal<CR>", "list global" },
+            ["0"] = { "<Cmd>BookmarksQFList 0<CR>", "list bookmark" },
+        },
+    }, { prefix = "<leader>" })
+
+    require("marks").setup({
+        default_mappings = true,
+        builtin_marks = { ".", "<", ">", "^" },
+        cyclic = true,
+        force_write_shada = false,
+        refresh_interval = 250,
+        sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
+        excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
+        bookmark_0 = {
+            sign = "⚑",
+            virt_text = "BookMark",
+        },
+        mappings = {},
+    })
+end
 return config

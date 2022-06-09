@@ -511,7 +511,24 @@ function config.neo_tree()
 end
 
 function config.satellite()
-    require("satellite").setup()
+    require("satellite").setup({
+        handlers = {
+            gitsigns = {
+                enable = false,
+            },
+            marks = {
+                enable = true,
+            },
+        },
+        excluded_filetypes = {
+            "packer",
+            "neo-tree",
+            "norg",
+            "neo-tree-popup",
+            "dapui_scopes",
+            "dapui_stacks",
+        },
+    })
 end
 
 function config.scrollbar()
