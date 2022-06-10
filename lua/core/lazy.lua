@@ -1,5 +1,4 @@
 local loader = require("packer").loader
-
 local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
 if fsize == nil or fsize < 0 then
     fsize = 1
@@ -27,15 +26,16 @@ end
 local function loadscheme()
     local themes
     if daylight() == "light" then
-        -- increase chances for kanagawa x2
-        themes = { "kanagawa.nvim", "kanagawa.nvim", "kanagawa.nvim", "catppuccin", "Sakura.nvim", "vim-dogrun" }
+        themes = { "kanagawa.nvim", "catppuccin" }
     else
         themes = {
             "kanagawa.nvim",
             "kanagawa.nvim",
+            "catppuccin",
             -- "tokyonight.nvim",
         }
     end
+
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
 
