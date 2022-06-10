@@ -188,32 +188,14 @@ ui["rebelot/kanagawa.nvim"] = {
     config = conf.kanagawa,
 }
 
-ui["jabuti-theme/jabuti-nvim"] = {
-    opt = true,
-    module = " jabuti-nvim",
-    config = function()
-        -- require("jabuti-nvim").setup()
-        vim.cmd([[colorscheme jabuti]])
-    end,
-}
-
-ui["wadackel/vim-dogrun"] = {
-    opt = true,
-    setup = conf.dogrun,
-    config = function()
-        vim.cmd([[colorscheme dogrun]])
-    end,
-}
-
--- ui["ThemerCorp/themer.lua"] = {
---     opt = true,
---     branch = "main",
---     config = conf.themer,
--- }
-
 ui["kazhala/close-buffers.nvim"] = {
     cmd = { "BDelete", "BWipeout" },
     config = conf.buffers_close,
 }
 
+ui["narutoxy/dim.lua"] = {
+    ft = { "python", "lua" },
+    requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
+    config = conf.dim,
+}
 return ui

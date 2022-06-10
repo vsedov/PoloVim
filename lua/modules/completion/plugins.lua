@@ -56,6 +56,29 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
     end,
 }
 
+completion["https://github.com/github/copilot.vim.git"] = {
+    event = "InsertEnter",
+    after = "nvim-cmp",
+    config = function()
+        vim.opt.completeopt = "menuone,noselect"
+        vim.g.copilot_enabled = false
+        -- Have copilot play nice with nvim-cmp.
+        vim.g.copilot_no_tab_map = true
+        vim.g.copilot_assume_mapped = true
+        vim.g.copilot_tab_fallback = ""
+        local excluded_filetypes = { "norg", "nofile", "prompt" }
+        local copilot_filetypes = {}
+        for _, ft in pairs(excluded_filetypes) do
+            copilot_filetypes[ft] = false
+        end
+
+        vim.g["copilot_filetypes"] = copilot_filetypes
+
+        vim.keymap.set("i", "<M-.>", "<Plug>(copilot-next)")
+        vim.keymap.set("i", "<M-,>", "<Plug>(copilot-previous)")
+    end,
+}
+
 completion["windwp/nvim-autopairs"] = {
     event = {
         "InsertEnter",

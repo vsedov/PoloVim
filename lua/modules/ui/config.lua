@@ -770,12 +770,12 @@ function config.kanagawa()
     end
     require("kanagawa").setup({
         undercurl = true, -- enable undercurls
-        commentStyle = "italic",
-        functionStyle = "italic",
-        keywordStyle = "italic",
-        statementStyle = "bold",
-        typeStyle = "NONE",
-        variablebuiltinStyle = "italic",
+        commentStyle = { italic = true },
+        functionStyle = { italic = true },
+        keywordStyle = { italic = true },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        variablebuiltinStyle = { italic = true },
         specialReturn = true, -- special highlight for the return keyword
         specialException = true, -- special highlight for exception handling keywords
         transparent = false, -- do not set background color
@@ -995,6 +995,10 @@ function config.transparent()
         -- groups you don't want to clear
         exclude = {},
     })
+end
+
+function config.dim()
+    require("dim").setup({ disable_lsp_decorations = true })
 end
 
 vim.api.nvim_exec(

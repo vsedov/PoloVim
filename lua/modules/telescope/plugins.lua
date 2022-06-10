@@ -36,7 +36,7 @@ telescope["Zane-/cder.nvim"] = {
                         .. "-a "
                         .. "--color=always "
                         .. "-T "
-                        .. "--level=3 "
+                        .. "--level=4 "
                         .. "--icons "
                         .. "--git-ignore "
                         .. "--long "

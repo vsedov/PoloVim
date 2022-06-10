@@ -5,7 +5,7 @@ local loader = require("packer").loader
 
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
-
+local wk = require("which-key")
 M.setup = function()
     local fn = vim.fn
     local function repl_toggle()
@@ -32,7 +32,19 @@ M.setup = function()
     local function set_breakpoint()
         require("dap").set_breakpoint(fn.input("Breakpoint condition: "))
     end
-    require("which-key").register({
+
+    local function up()
+        require("dap").up()
+    end
+    local function down()
+        require("dap").down()
+    end
+
+    local function run_to_cursor()
+        require("dap").run_to_cursor()
+    end
+
+    wk.register({
         d = {
             name = "+debugger",
             b = { toggle_breakpoint, "dap: toggle breakpoint" },
@@ -43,6 +55,9 @@ M.setup = function()
             o = { step_over, "dap: step over" },
             l = { run_last, "dap REPL: run last" },
             t = { repl_toggle, "dap REPL: toggle" },
+            c = { run_to_cursor, "dap: To cursor" },
+            uu = { up, "dap Up: up" },
+            ud = { down, "dap down: down" },
         },
     }, {
         prefix = "<localleader>",
@@ -51,42 +66,81 @@ end
 
 M.config = function()
     local dap = require("dap")
+
+    vim.fn.sign_define("DapBreakpoint", { text = "⧐", texthl = "Error", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapStopped", { text = "⧐", texthl = "Success", linehl = "", numhl = "" })
 end
 
 M.dapui = function()
     require("dapui").setup()
 
-    vim.keymap.set("n", "<localleader>duc", function()
-        require("dapui").close()
-    end, { noremap = true, silent = true })
+    local function eval()
+        require("dapui").eval()
+    end
 
-    vim.keymap.set("n", "<localleader>dut", function()
+    local function dap_ui_toggle()
         require("dapui").toggle()
-    end, { noremap = true, silent = true })
+    end
 
-    local dap = require("dap")
-    dap.listeners.before.event_terminated["dapui_config"] = function()
+    local function dap_ui_close()
         require("dapui").close()
     end
 
+    local function float_element()
+        require("dapui").eval()
+    end
+    local function float_breakpoint()
+        require("dapui").float_element("breakpoints")
+    end
+    local function float_repl()
+        require("dapui").float_element("repl")
+    end
+    local function float_scopes()
+        require("dapui").float_element("scopes")
+    end
+    local function float_stacks()
+        require("dapui").float_element("stacks")
+    end
+    local function float_watches()
+        require("dapui").float_element("watches")
+    end
+    wk.register({
+        d = {
+            name = "+debugger",
+            d = { float_element, "dap ui: evaluate item" },
+            z = { float_breakpoint, "dap ui: float breakpoint" },
+            r = { float_repl, "dap ui: float repl" },
+            a = { float_scopes, "dap ui: float scopes" },
+            f = { float_stacks, "dap ui: float stacks" },
+            w = { float_watches, "dap ui: float watches" },
+            ut = { dap_ui_close, "dap ui: ui close" },
+            ux = { dap_ui_toggle, "dap ui: ui toggle" },
+        },
+    }, {
+        prefix = "<localleader>",
+    })
+
+    local dap, dapui = require("dap"), require("dapui")
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+    end
+    dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+    end
     dap.listeners.before.event_exited["dapui_config"] = function()
-        require("dapui").close()
+        dapui.close()
     end
 end
 
 M.prepare = function()
-    local ft = vim.bo.filetype
-
     loader("nvim-dap")
-    loader("telescope-dap.nvim")
     loader("nvim-dap-ui")
-    loader("nvim-dap-virtual-text")
-
-    require("telescope").load_extension("dap")
     local ft_call = {
         ["python"] = function()
             loader("nvim-dap-python")
-            require("dap-python").setup("/bin/python")
+            require("dap-python").setup("/bin/python3")
+            -- require("dap-python").setup("/home/viv/.cache/pypoetry/virtualenvs/neorgbot-aidSKrkk-py3.10/bin/python")
+
             require("dap-python").test_runner = "pytest"
 
             vim.keymap.set("n", "<localleader>dn", function()
@@ -100,6 +154,7 @@ M.prepare = function()
             vim.keymap.set("n", "<localleader>ds", function()
                 require("dap-python").debug_selection()
             end, { noremap = true, silent = true })
+            -- require("modules.lang.dap.py")
         end,
 
         ["lua"] = function()

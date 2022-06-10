@@ -124,21 +124,9 @@ lang["mfussenegger/nvim-dap"] = {
             config = conf.dapui,
         },
         {
-            "theHamsta/nvim-dap-virtual-text",
-            after = "nvim-dap",
-            config = function()
-                require("nvim-dap-virtual-text").setup({ all_frames = true })
-            end,
-        },
-        {
             "mfussenegger/nvim-dap-python",
             after = "nvim-dap",
             ft = "python",
-        },
-        {
-            "nvim-telescope/telescope-dap.nvim",
-            requires = "telescope.nvim",
-            after = "nvim-dap",
         },
     },
 }

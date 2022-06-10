@@ -60,6 +60,10 @@ local plug_map = {
         require("neo-zoom").setup({})
         vim.cmd([[NeoZoomToggle]])
     end):with_noremap():with_silent():with_nowait(),
+
+    ["n|<Leader>gr"] = map_cmd(function()
+        return ":IncRename " .. vim.fn.expand("<cword>")
+    end):with_expr():with_noremap(),
 }
 
 return plug_map
