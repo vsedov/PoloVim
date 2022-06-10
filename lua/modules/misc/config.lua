@@ -98,6 +98,13 @@ function config.vmulti()
   ]])
 end
 
+function config.iswap()
+    require("iswap").setup({
+        keys = "qwertyuiop",
+        autoswap = true,
+    })
+end
+
 function config.surround()
     require("surround").setup({
         mappings_style = "sandwich",
