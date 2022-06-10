@@ -164,8 +164,8 @@ tools["turbio/bracey.vim"] = {
 }
 
 tools["akinsho/toggleterm.nvim"] = {
-    cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm" },
-    keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr" },
+    cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm", "Htop" },
+    keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr", "<leader>ld" },
     config = function()
         require("modules.tools.toggleterm")
     end,
