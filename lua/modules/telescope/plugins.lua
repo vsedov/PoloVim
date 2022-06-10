@@ -24,4 +24,33 @@ telescope["jvgrootveld/telescope-zoxide"] = {
     end,
 }
 
+telescope["Zane-/cder.nvim"] = {
+    opt = true,
+    after = "telescope.nvim",
+    config = function()
+        require("utils.telescope")
+        require("telescope").setup({
+            extensions = {
+                cder = {
+                    previewer_command = "exa "
+                        .. "-a "
+                        .. "--color=always "
+                        .. "-T "
+                        .. "--level=3 "
+                        .. "--icons "
+                        .. "--git-ignore "
+                        .. "--long "
+                        .. "--no-permissions "
+                        .. "--no-user "
+                        .. "--no-filesize "
+                        .. "--git "
+                        .. "--ignore-glob=.git",
+                },
+            },
+        })
+
+        require("telescope").load_extension("cder")
+    end,
+}
+
 return telescope

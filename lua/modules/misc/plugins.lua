@@ -63,12 +63,7 @@ misc["mbbill/undotree"] = { opt = true, cmd = { "UndotreeToggle" } }
 
 misc["mizlan/iswap.nvim"] = {
     cmd = { "ISwap", "ISwapWith" },
-    config = function()
-        require("iswap").setup({
-            keys = "qwertyuiop",
-            autoswap = true,
-        })
-    end,
+    config = conf.iswap,
 }
 
 misc["Mephistophiles/surround.nvim"] = {
