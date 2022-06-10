@@ -87,9 +87,9 @@ local function setup_colors()
         diag_error = utils.get_highlight("DiagnosticError").fg,
         diag_hint = utils.get_highlight("DiagnosticHint").fg,
         diag_info = utils.get_highlight("DiagnosticInfo").fg,
-        git_del = utils.get_highlight("diffDeleted").fg,
         git_add = utils.get_highlight("diffAdded").fg,
         git_change = utils.get_highlight("diffChanged").fg,
+        git_del = utils.get_highlight("diffRemoved").fg,
     }
 end
 
@@ -432,7 +432,8 @@ local Git = {
             local count = self.status_dict.removed or 0
             return count > 0 and ("-" .. count)
         end,
-        hl = "diffDeleted",
+
+        hl = "diffRemoved",
     },
     {
         provider = function(self)
@@ -521,27 +522,17 @@ local HelpFilename = {
 }
 
 local TerminalName = {
-    -- icon = ' ', -- 
-    {
-        provider = function()
-            local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
-            return " " .. tname
-        end,
-        hl = { fg = "blue", bold = true },
-    },
-    { provider = " - " },
-    {
-        provider = function()
-            return vim.b.term_title
-        end,
-    },
-    {
-        provider = function()
-            local id = require("terminal"):current_term_index()
-            return " " .. (id or "Exited")
-        end,
-        hl = { bold = true, fg = "blue" },
-    },
+
+    -- condition = function()
+    --     return vim.bo.buftype == "terminal"
+    -- end,
+
+    -- icon = " ", -- 
+    provider = function()
+        local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
+        return " " .. tname
+    end,
+    hl = { fg = "blue", bold = true },
 }
 
 local Spell = {

@@ -573,25 +573,8 @@ function config.scrollbar()
             search = false,
         },
     })
-
-    -- vim.cmd([[
-    --     augroup scrollbar_search_hide
-    --       autocmd!
-    --       autocmd CmdlineLeave : lua require('scrollbar').search_handler.hide()
-    --     augroup END
-    -- ]])
-
-    -- vimcmd("augroup " .. "ScrollbarInit")
-    -- vimcmd("autocmd!")
-    -- vimcmd("autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()")
-    -- vimcmd("autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()")
-    -- vimcmd("autocmd WinLeave,FocusLost,BufLeave    * silent! lua require('scrollbar').clear()")
-    -- vimcmd("autocmd WinLeave,BufLeave    * silent! DiffviewClose")
-    -- vimcmd("augroup end")
-    -- vimcmd("highlight link Scrollbar Comment")
-    -- vim.g.sb_default_behavior = "never"
-    -- vim.g.sb_bar_style = "solid"
 end
+
 function config.pretty_fold()
     require("pretty-fold.preview").setup()
     require("pretty-fold").setup({
@@ -712,9 +695,8 @@ function config.chalk()
 end
 
 function config.catppuccin()
+    local colors = require("catppuccin.api.colors").get_colors() -- fetch colors with API
     local catppuccin = require("catppuccin")
-
-    -- configure it
     catppuccin.setup({
         transparent_background = false,
         term_colors = true,
@@ -753,25 +735,32 @@ function config.catppuccin()
                 show_root = true,
                 transparent_panel = true,
             },
+            neotree = {
+                enabled = true,
+                show_root = true,
+                transparent_panel = true,
+            },
             which_key = true,
             indent_blankline = {
                 enabled = true,
                 colored_indent_levels = true,
             },
-            dashboard = false,
+            dashboard = true,
             neogit = true,
             vim_sneak = true,
             fern = true,
-            barbar = false,
-            bufferline = false, -- see how this effects our bar
+            barbar = true,
+            bufferline = true,
             markdown = true,
             lightspeed = true,
             ts_rainbow = true,
             hop = false,
             notify = true,
             telekasten = true,
+            symbols_outline = true,
         },
     })
+    vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
     vim.cmd([[colorscheme catppuccin]])
 end
 
