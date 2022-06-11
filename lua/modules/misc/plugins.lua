@@ -1,6 +1,5 @@
 local misc = {}
 local conf = require("modules.misc.config")
-
 misc["ziontee113/syntax-tree-surfer"] = {
     keys = {
         { "n", "vd" },
