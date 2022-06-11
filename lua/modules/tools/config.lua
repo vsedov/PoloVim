@@ -52,14 +52,7 @@ function config.outline()
         },
     }
 end
-function config.coverage()
-    require("coverage").setup()
-end
-function config.python_dev()
-    require("py").setup({
-        leader = "<leader><leader>",
-    })
-end
+
 function config.nvimdev()
     vim.g.nvimdev_auto_ctags = 1
     vim.g.nvimdev_auto_lint = 1

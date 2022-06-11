@@ -1001,6 +1001,10 @@ function config.dim()
     require("dim").setup({ disable_lsp_decorations = true })
 end
 
+function config.colourutils()
+    require("colortils").setup()
+end
+
 vim.api.nvim_exec(
     [[
     set nocursorcolumn

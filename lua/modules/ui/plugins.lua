@@ -52,11 +52,6 @@ ui["rcarriga/nvim-notify"] = {
     config = conf.notify,
 }
 
--- ui["kyazdani42/nvim-tree.lua"] = {
---     cmd = { "NvimTreeToggle", "NvimTreeOpen" },
---     -- requires = {'kyazdani42/nvim-web-devicons'},
---     config = conf.nvim_tree_setup,
--- }
 ui["MunifTanjim/nui.nvim"] = {
     opt = true,
 }
@@ -128,11 +123,6 @@ ui["lewis6991/satellite.nvim"] = {
     config = conf.satellite,
 }
 
--- ui["petertriho/nvim-scrollbar"] = {
---     event = { "CursorMoved", "CursorMovedI" },
---     config = conf.scrollbar,
--- }
-
 ui["xiyaowong/nvim-transparent"] = {
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
     config = conf.transparent,
@@ -198,4 +188,10 @@ ui["narutoxy/dim.lua"] = {
     requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
     config = conf.dim,
 }
+
+ui["max397574/colortils.nvim"] = {
+    cmd = "Colortils",
+    config = conf.colourutils,
+}
+
 return ui
