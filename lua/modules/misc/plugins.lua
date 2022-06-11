@@ -85,7 +85,7 @@ misc["johmsalas/text-case.nvim"] = {
 
 misc["chentoast/marks.nvim"] = {
     opt = true,
-    event = { "BufReadPost" },
+    keys = { "mx", "m", "m,", "m;" },
     config = conf.marks,
 }
 return misc

@@ -31,7 +31,7 @@ local function loadscheme()
         themes = {
             "kanagawa.nvim",
             "kanagawa.nvim",
-            -- "catppuccin",
+            "catppuccin",
             -- "tokyonight.nvim",
         }
     end
@@ -92,10 +92,8 @@ function Lazyload()
     vim.g.vimsyn_embed = "lPr"
 
     local gitrepo = vim.fn.isdirectory(".git/index")
-    if gitrepo then
-        if use_gitsigns() then
-            loader("gitsigns.nvim") -- neogit vgit.nvim
-        end
+    if gitrepo and use_gitsigns() then
+        loader("gitsigns.nvim") -- neogit vgit.nvim
     end
 
     if load_lsp then

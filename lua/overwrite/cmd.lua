@@ -139,9 +139,7 @@ local function ShowLangTree(langtree, indent)
     end
 end
 
-add_cmd("LangTree", function()
-    ShowLangTree()
-end, {})
+add_cmd("LangTree", ShowLangTree, {})
 
 add_cmd("ReloadModule", function(args)
     require("plenary.reload").reload_module(args)
@@ -158,3 +156,82 @@ add_cmd("NeorgToMd", function()
     -- File name without extension .
     vim.cmd("Neorg export to-file " .. vim.fn.expand("%:t:r") .. ".md")
 end, { force = true })
+
+local ini_config = [[
+[tox]
+skipsdist = true
+envlist =  py310,pre-commit
+
+[testenv]
+whitelist_externals = poetry
+setenv = PYTHONPATH = ""
+commands =
+    poetry install
+    poetry run task test
+
+[testenv:generate-badge]
+whitelist_externals =
+    poetry
+    interrogate
+commands =
+    poetry install
+    interrogate --config {toxinidir}/pyproject.toml --generate-badge {toxinidir}/docs/_static
+
+[testenv:pre-commit]
+deps = pre-commit
+whitelist_externals = pre-commit
+commands =
+    pre-commit run --all-files
+
+[pytest]
+addopts = -v --cov=interrogate --cov-report=xml:coverage.xml --cov-report=term-missing
+testpaths = tests
+
+[flake8]
+max-line-length=120
+docstring-convention=all
+import-order-style=pycharm
+application_import_names= MNAME,tests
+exclude=.cache,.venv,.git,constants.py
+ignore=
+    B311,W503,E226,S311,T000,E731
+    # Missing Docstrings
+    D100,D104,D105,D107,
+    # Docstring Whitespace
+    D203,D212,D214,D215,D107
+    # Docstring Quotes
+    D301,D302,
+    # Docstring Content
+    D400,D401,D402,D404,D405,D406,D407,D408,D409,D410,D411,D412,D413,D414,D416,D417,P103,E124
+    # Type Annotations
+    ANN002,ANN003,ANN101,ANN102,ANN204,ANN206
+per-file-ignores=tests/*:D,ANN]]
+ini_config:gsub("MNAME", vim.fn.expand("%:p:h:t"))
+local Path = require("plenary.path")
+local scan = require("plenary.scandir")
+
+local function findPoetry()
+    local cwd = vim.fn.getcwd()
+    local current_path = vim.api.nvim_exec(":echo @%", 1)
+
+    local parents = Path:new(current_path):parents()
+    for _, parent in pairs(parents) do
+        local files = scan.scan_dir(parent, { hidden = false, depth = 1 })
+        for _, file in pairs(files) do
+            if file == parent .. "/" .. "pyproject.toml" then
+                local file_write = io.open("tox.ini", "w")
+                file_write:write(ini_config:gsub("MNAME", vim.fn.expand("%:p:h:t")))
+                file_write:close()
+                return true
+            end
+        end
+
+        if parent == cwd then
+            break
+        end
+    end
+
+    vim.notify("Poetry Environment Not Found", "error", { title = "py.nvim" })
+end
+
+add_cmd("ToxSetup", findPoetry, { force = true })

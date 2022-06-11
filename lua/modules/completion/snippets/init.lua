@@ -76,6 +76,7 @@ local snippets = {
     lua = require("modules.completion.snippets.lua"),
     python = require("modules.completion.snippets.python"),
     norg = require("modules.completion.snippets.norg_snip"),
+    toml = require("modules.completion.snippets.toml"),
 
     help = {
         s({ trig = "con", wordTrig = true }, {
@@ -219,6 +220,7 @@ ls.add_snippets("all", snippets.all)
 ls.add_snippets("lua", snippets.lua)
 ls.add_snippets("python", snippets.python)
 ls.add_snippets("norg", snippets.norg)
+ls.add_snippets("toml", snippets.toml)
 ls.add_snippets("help", snippets.help)
 ls.add_snippets("java", snippets.java)
 ls.add_snippets("cpp", snippets.cpp)
