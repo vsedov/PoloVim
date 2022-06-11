@@ -128,7 +128,7 @@ function config.lint()
     require("lint").linters_by_ft = {
         lua = { "luacheck" },
         markdown = { "vale" },
-        python = { "flake8" }, -- Vulture can be fucking anonying
+        python = { "flake8", "codespell" }, --  can be fucking anonying
     }
 end
 
