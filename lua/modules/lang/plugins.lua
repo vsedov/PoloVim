@@ -167,5 +167,34 @@ lang["rcarriga/neotest"] = {
     setup = conf.neotest_setup,
     config = conf.neotest,
 }
+lang["andythigpen/nvim-coverage"] = {
+    ft = { "python" },
+    cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
+    opt = true,
+    config = conf.coverage,
+}
+lang["mgedmin/coverage-highlight.vim"] = {
+    ft = "python",
+    opt = true,
+    run = ":UpdateRemotePlugins",
+}
 
+-- -- IPython Mappings
+-- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
+-- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
+-- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
+-- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
+
+-- -- Pytest Mappings
+-- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
+-- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
+
+-- -- Poetry Mappings
+-- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
+-- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
+lang["~/GitHub/active_development/py.nvim"] = {
+    ft = "python",
+    opt = true,
+    config = conf.python_dev,
+}
 return lang

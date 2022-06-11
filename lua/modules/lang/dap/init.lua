@@ -143,17 +143,26 @@ M.prepare = function()
 
             require("dap-python").test_runner = "pytest"
 
-            vim.keymap.set("n", "<localleader>dn", function()
+            local function test_method()
                 require("dap-python").test_method()
-            end, { noremap = true, silent = true })
-
-            vim.keymap.set("n", "<localleader>df", function()
+            end
+            local function test_class()
                 require("dap-python").test_class()
-            end, { noremap = true, silent = true })
-
-            vim.keymap.set("n", "<localleader>ds", function()
+            end
+            local function debug_selection()
                 require("dap-python").debug_selection()
-            end, { noremap = true, silent = true })
+            end
+            wk.register({
+                d = {
+                    name = "+debugger",
+                    ff = { test_class, "python test class" },
+                    n = { test_method, "python test method" },
+                    s = { debug_selection, "python debug_selection" },
+                },
+            }, {
+                prefix = "<localleader>",
+            })
+
             -- require("modules.lang.dap.py")
         end,
 

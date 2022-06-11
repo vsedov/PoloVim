@@ -511,4 +511,13 @@ function config.neotest()
     end, { force = true })
 end
 
+function config.coverage()
+    require("coverage").setup()
+end
+function config.python_dev()
+    require("py").setup({
+        leader = "<leader><leader>",
+    })
+end
+
 return config
