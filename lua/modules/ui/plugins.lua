@@ -17,11 +17,6 @@ ui["SmiteshP/nvim-gps"] = {
     config = conf.gps,
 }
 
-ui["fgheng/winbar.nvim"] = {
-    opt = true,
-    requires = "nvim-gps",
-}
-
 ui["rebelot/heirline.nvim"] = {
     opt = true,
 }
