@@ -88,4 +88,21 @@ misc["chentoast/marks.nvim"] = {
     keys = { "mx", "m", "m,", "m;" },
     config = conf.marks,
 }
+
+misc["sidebar-nvim/sidebar.nvim"] = {
+    module = "sidebar-nvim",
+    cmd = {
+        "SidebarNvimToggle",
+        "SidebarNvimClose",
+        "SidebarNvimOpen",
+        "SidebarNvimUpdate",
+        "SidebarNvimFocus",
+    },
+    config = conf.sidebar,
+}
+
+misc["onsails/diaglist.nvim"] = {
+    cmd = { "Qfa", "Qfb" },
+    config = conf.diaglist,
+}
 return misc
