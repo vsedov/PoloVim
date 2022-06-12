@@ -138,7 +138,7 @@ M.prepare = function()
     local ft_call = {
         ["python"] = function()
             loader("nvim-dap-python")
-            require("dap-python").setup("/bin/python3")
+            require("dap-python").setup(vim.fn.exepath("python3"))
             -- require("dap-python").setup("/home/viv/.cache/pypoetry/virtualenvs/neorgbot-aidSKrkk-py3.10/bin/python")
 
             require("dap-python").test_runner = "pytest"
