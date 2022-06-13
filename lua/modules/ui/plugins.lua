@@ -11,12 +11,6 @@ ui["camspiers/animate.vim"] = {
 
 ui["kyazdani42/nvim-web-devicons"] = {}
 
-ui["SmiteshP/nvim-gps"] = {
-    opt = true,
-    requires = "nvim-treesitter/nvim-treesitter",
-    config = conf.gps,
-}
-
 ui["rebelot/heirline.nvim"] = {
     opt = true,
 }
@@ -125,7 +119,6 @@ ui["xiyaowong/nvim-transparent"] = {
 
 ui["anuvyklack/pretty-fold.nvim"] = {
     ft = { "python", "c", "lua", "cpp", "java" },
-    requires = { "anuvyklack/nvim-keymap-amend", opt = true, after = "pretty-fold.nvim" },
     config = conf.pretty_fold,
 }
 

@@ -215,26 +215,26 @@ require("telescope").setup({
                 ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
                 ["<C-h>"] = "which_key",
                 ["<C-l>"] = actions_layout.toggle_preview,
-                ["<C-y>"] = set_prompt_to_entry_value,
-                ["<C-d>"] = actions.preview_scrolling_up,
-                ["<C-f>"] = actions.preview_scrolling_down,
-                ["<C-u>"] = require("telescope.actions").cycle_history_prev,
+                -- ["<C-y>"] = set_prompt_to_entry_value,
+                ["<C-u>"] = actions.preview_scrolling_up,
+                ["<C-d>"] = actions.preview_scrolling_down,
+                ["<C-f>"] = require("telescope.actions").cycle_history_prev,
 
                 ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
                 ["<c-s>"] = custom_actions.multi_selection_open_split,
                 ["<c-t>"] = custom_actions.multi_selection_open_tab,
 
-                ["<C-n>"] = function(prompt_bufnr)
-                    local results_win = state.get_status(prompt_bufnr).results_win
-                    local height = vim.api.nvim_win_get_height(results_win)
-                    action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
-                end,
+                -- ["<C-n>"] = function(prompt_bufnr)
+                --     local results_win = state.get_status(prompt_bufnr).results_win
+                --     local height = vim.api.nvim_win_get_height(results_win)
+                --     action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
+                -- end,
 
-                ["<C-p>"] = function(prompt_bufnr)
-                    local results_win = state.get_status(prompt_bufnr).results_win
-                    local height = vim.api.nvim_win_get_height(results_win)
-                    action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
-                end,
+                -- ["<C-p>"] = function(prompt_bufnr)
+                --     local results_win = state.get_status(prompt_bufnr).results_win
+                --     local height = vim.api.nvim_win_get_height(results_win)
+                --     action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
+                -- end,
                 ["<c-S>"] = open_in_nvim_tree,
             },
 
@@ -252,11 +252,12 @@ require("telescope").setup({
                 ["<C-o>"] = actions.select_vertical,
                 ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
                 ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
+
                 ["<C-h>"] = "which_key",
                 ["<C-l>"] = actions_layout.toggle_preview,
-                ["<C-d>"] = actions.preview_scrolling_up,
-                ["<C-f>"] = actions.preview_scrolling_down,
-                ["<C-u>"] = require("telescope.actions").cycle_history_prev,
+
+                ["<C-d>"] = actions.preview_scrolling_down,
+                ["<C-u>"] = actions.preview_scrolling_up,
 
                 ["<C-n>"] = function(prompt_bufnr)
                     local results_win = state.get_status(prompt_bufnr).results_win
@@ -291,7 +292,6 @@ require("telescope").setup({
 telescope.load_extension("dotfiles")
 telescope.load_extension("gosource")
 -- telescope.load_extension("notify")
-
 loader("telescope-fzy-native.nvim telescope-fzf-native.nvim telescope-live-grep-raw.nvim")
 -- loader("project.nvim") -- telescope-frecency.nvim nvim-neoclip.lua telescope-zoxide
 telescope.load_extension("fzf")
@@ -413,61 +413,6 @@ M.project_search = function()
     })
 end
 
-M.howdoi = function()
-    local has_howdoi = vim.fn.executable("howdoi") == 1
-
-    if not has_howdoi then
-        error("howdoi requires howdoi (https://github.com/gleitz/howdoi)")
-    end
-
-    local opts = {
-        num_answers = 3,
-        explain_answer = false,
-    }
-
-    local queries = {}
-    local finder = function(table)
-        return finders.new_table({
-            results = table,
-            entry_maker = function(entry)
-                return {
-                    value = entry,
-                    display = entry,
-                    ordinal = entry,
-                }
-            end,
-        })
-    end
-
-    pickers.new(opts, {
-        prompt_title = "howdoi",
-        finder = finder(queries),
-        previewer = previewers.new_termopen_previewer({
-            get_command = function(entry)
-                local command = { "howdoi", "-c", "-n", opts.num_answers }
-
-                if opts.explain_answer then
-                    table.insert(command, "-x")
-                end
-
-                table.insert(command, entry.value)
-                return command
-            end,
-        }),
-        attach_mappings = function(prompt_bufnr, _)
-            actions.select_default:replace(function()
-                local query = action_state.get_current_line()
-
-                if query ~= "" then
-                    table.insert(queries, 1, query)
-                    action_state.get_current_picker(prompt_bufnr):refresh(finder(queries), { reset_prompt = true })
-                end
-            end)
-            return true
-        end,
-    }):find()
-end
-
 --- Plugins to be loaded, lazily
 M.neoclip = function()
     local opts = {
@@ -503,6 +448,17 @@ M.refactor = function()
     }
 
     telescope.extensions.refactoring.refactors(opts)
+end
+
+M.howdoi = function()
+    telescope.setup({
+        extensions = {
+            howdoi = vim.tbl_deep_extend("force", { num_answers = 10 }, themes.get_dropdown()),
+        },
+    })
+    reloader()
+    local dropdown = require("telescope.themes").get_dropdown({})
+    telescope.extensions.howdoi.howdoi(dropdown)
 end
 
 M.files = function(opts)

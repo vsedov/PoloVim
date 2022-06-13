@@ -16,40 +16,18 @@ telescope["nvim-telescope/telescope.nvim"] = {
 }
 -- config this better https://github.com/jvgrootveld/telescope-zoxide
 telescope["jvgrootveld/telescope-zoxide"] = {
-    opt = true,
-    after = { "telescope.nvim" },
+    module = "telescope",
     config = function()
-        require("utils.telescope")
         require("telescope").load_extension("zoxide")
     end,
 }
 
-telescope["Zane-/cder.nvim"] = {
-    opt = true,
-    after = "telescope.nvim",
+telescope["zane-/howdoi.nvim"] = {
+    cmd = "Howdoi",
     config = function()
-        require("utils.telescope")
-        require("telescope").setup({
-            extensions = {
-                cder = {
-                    previewer_command = "exa "
-                        .. "-a "
-                        .. "--color=always "
-                        .. "-T "
-                        .. "--level=4 "
-                        .. "--icons "
-                        .. "--git-ignore "
-                        .. "--long "
-                        .. "--no-permissions "
-                        .. "--no-user "
-                        .. "--no-filesize "
-                        .. "--git "
-                        .. "--ignore-glob=.git",
-                },
-            },
-        })
-
-        require("telescope").load_extension("cder")
+        vim.api.nvim_create_user_command("Howdoi", function()
+            require("utils.telescope").howdoi()
+        end, { force = true })
     end,
 }
 

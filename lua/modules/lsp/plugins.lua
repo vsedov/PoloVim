@@ -46,9 +46,11 @@ lsp["tami5/lspsaga.nvim"] = {
     config = conf.saga,
     requires = "nvim-lspconfig",
 }
+-- 4852d99f9511d090745d3cc1f09a75772b9e07e9 -- working
 
 lsp["ray-x/lsp_signature.nvim"] = {
     opt = true,
+    -- commit = "4852d99f9511d090745d3cc1f09a75772b9e07e9",
     config = conf.lsp_sig,
 }
 
@@ -76,6 +78,12 @@ lsp["mfussenegger/nvim-lint"] = {
 lsp["smjonas/inc-rename.nvim"] = {
     cmd = "IncRename",
     config = conf.rename,
+}
+
+lsp["SmiteshP/nvim-navic"] = {
+    event = "BufEnter",
+    after = "nvim-lspconfig",
+    config = conf.navic,
 }
 
 return lsp

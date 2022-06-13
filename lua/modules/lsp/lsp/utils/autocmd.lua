@@ -57,21 +57,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     end,
 })
 
-vim.api.nvim_create_autocmd("InsertLeave", {
-    pattern = "*",
-    group = LspFormatting,
-    callback = function()
-        vim.diagnostic.config({ virtual_lines = true })
-    end,
-})
-vim.api.nvim_create_autocmd("InsertEnter", {
-    pattern = "*",
-    group = LspFormatting,
-    callback = function()
-        vim.diagnostic.config({ virtual_lines = false })
-    end,
-})
-
 vim.api.nvim_set_hl(0, "DiagnosticHeader", { fg = "#56b6c2", bold = true })
 vim.api.nvim_create_autocmd("CursorHold", {
     pattern = "*",
@@ -91,11 +76,33 @@ vim.api.nvim_create_autocmd("CursorHold", {
 
 add_cmd("LspLog", function()
     open_lsp_log()
-end, {})
+end, { force = true })
+
 add_cmd("LspRestart", function()
     reload_lsp()
-end, {})
+end, { force = true })
 
 add_cmd("LspDiagnostics", function()
     make_diagnostic_qf_updater()
-end, {})
+end, { force = true })
+
+add_cmd("DiagnosticEnable", function()
+    vim.api.nvim_create_autocmd("InsertLeave", {
+        pattern = "*",
+        group = LspFormatting,
+        callback = function()
+            vim.diagnostic.config({ virtual_lines = true })
+        end,
+    })
+    vim.api.nvim_create_autocmd("InsertEnter", {
+        pattern = "*",
+        group = LspFormatting,
+        callback = function()
+            vim.diagnostic.config({ virtual_lines = false })
+        end,
+    })
+end, { force = true })
+
+add_cmd("DiagnosticDisable", function()
+    vim.diagnostic.config({ virtual_lines = false })
+end, { force = true })

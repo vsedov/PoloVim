@@ -2,9 +2,9 @@ local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 local lspconfig = require("lspconfig")
 -- local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
 -- local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
--- local runtime_path = {}
--- table.insert(runtime_path, "lua/?.lua")
--- table.insert(runtime_path, "lua/?/init.lua")
+local runtime_path = {}
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
 local sumneko_lua_server = enhance_attach({
     -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     cmd = { "lua-language-server" },
@@ -32,8 +32,8 @@ local sumneko_lua_server = enhance_attach({
                     -- vim.api.nvim_get_runtime_file("", true),
                     -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
                     -- vim.api.nvim_get_runtime_file("", false),
-                    -- [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                    -- [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                 },
                 maxPreload = 1000,
                 preloadFileSize = 10000,
@@ -50,8 +50,7 @@ local runtime_path_completion = true
 if not runtime_path_completion then
     sumneko_lua_server.settings.Lua.runtime = {
         version = "LuaJIT",
-        path = vim.split(package.path, ";"),
-        vim.fn.expand("~") .. "/.config/nvim//lua/?.lua",
+        path = runtime_path,
     }
 end
 local luadev = require("lua-dev").setup({

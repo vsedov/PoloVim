@@ -5,7 +5,6 @@
 # File Name: test.py
 import logging
 
-import pyinspect as pi
 from rich.logging import RichHandler
 
 root = logging.getLogger()
@@ -21,14 +20,11 @@ logging.basicConfig(level="INFO",
 
 
 def main() -> None:
-    print()
-    for i in range(10, 1000):
-        print("i am here")
-        print(10)
+    list = list(range(100))
+    # get values from 50 to 75 only
+    list = list[50:75]
+    print(list)
 
-
-print("for i in range(1, 10)")
 
 if __name__ == "__main__":
-    pi.install_traceback(enable_prompt=True)
     main()

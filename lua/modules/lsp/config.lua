@@ -72,17 +72,18 @@ function config.lsp_sig()
         hint_prefix = " ",
         hint_scheme = "String",
         -- use_lspsaga = false, -- set to true if you want to use lspsaga popup
-        hi_parameter = "Search", -- how your parameter will be highlight
+        hi_parameter = "LspSignatureActiveParameter", -- how your parameter will be highlight
         max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
         -- to view the hiding contents
         max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
         handler_opts = {
-            border = "single", -- double, single, shadow, none
+            border = "none", -- double, single, shadow, none
         },
         -- transpancy = 80,
         extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-        zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
-        debug = false, -- set to true to enable debug logging
+        zindex = 1002, -- by default it will be on top of all floating windows, set to 50 send it to bottom
+        debug = plugin_debug(),
+        verbose = plugin_debug(),
         log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
         padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
         shadow_blend = 36, -- if you using shadow as border use this set the opacity
@@ -151,4 +152,40 @@ function config.rename()
     require("inc_rename").setup()
 end
 
+function config.navic()
+    require("nvim-navic").setup({
+        icons = {
+            File = " ",
+            Module = " ",
+            Namespace = " ",
+            Package = " ",
+            Class = " ",
+            Method = " ",
+            Property = " ",
+            Field = " ",
+            Constructor = " ",
+            Enum = "練",
+            Interface = "練",
+            Function = " ",
+            Variable = " ",
+            Constant = " ",
+            String = " ",
+            Number = " ",
+            Boolean = "◩ ",
+            Array = " ",
+            Object = " ",
+            Key = " ",
+            Null = "ﳠ ",
+            EnumMember = " ",
+            Struct = " ",
+            Event = " ",
+            Operator = " ",
+            TypeParameter = " ",
+        },
+        highlight = true,
+        separator = " > ",
+        depth_limit = 0,
+        depth_limit_indicator = "..",
+    })
+end
 return config

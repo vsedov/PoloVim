@@ -169,7 +169,7 @@ local auto_snippets = {
         )
     ),
 
-    s({ trig = "if(e?)", regTrig = true }, {
+    s({ trig = "iff(e?)", regTrig = true }, {
         t({ "if " }),
         i(1, "condition"),
         t({ " then", "" }),

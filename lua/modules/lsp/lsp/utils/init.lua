@@ -3,7 +3,6 @@
 local M = {}
 -- local autocmds = require("lvim.core.autocmds")
 local config = require("modules.lsp.lsp.utils.config")
-
 local function lsp_highlight_document(client, bufnr)
     local status_ok, highlight_supported = pcall(function()
         return client.supports_method("textDocument/documentHighlight")
@@ -122,6 +121,8 @@ function M.common_on_attach(client, bufnr)
     if config.on_attach_callback then
         config.on_attach_callback(client, bufnr)
     end
+    require("nvim-navic").attach(client, bufnr)
+
     lsp_highlight_document(client, bufnr)
     lsp_code_lens_refresh(client, bufnr)
     add_lsp_buffer_keybindings(client, bufnr)

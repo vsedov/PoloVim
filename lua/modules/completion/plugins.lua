@@ -59,7 +59,7 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
 completion["https://github.com/github/copilot.vim.git"] = {
     event = "InsertEnter",
     after = "nvim-cmp",
-    config = function()
+    setup = function()
         vim.opt.completeopt = "menuone,noselect"
         vim.g.copilot_enabled = false
         -- Have copilot play nice with nvim-cmp.

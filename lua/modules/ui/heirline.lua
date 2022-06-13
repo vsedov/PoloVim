@@ -143,12 +143,12 @@ local ViMode = {
         local color = self:mode_color()
         return { fg = color, bold = true }
     end,
-    -- update = {
-    --     "ModeChanged",
-    --     callback = function()
-    --         -- vim.cmd("redrawstatus")
-    --     end,
-    -- },
+    update = {
+        "ModeChanged",
+        callback = function()
+            vim.cmd("redrawstatus")
+        end,
+    },
 }
 
 local FileNameBlock = {
@@ -279,9 +279,9 @@ local Ruler = {
 
 local dyn_help_available = {
     provider = function()
-        return require("dynamic_help.extras.statusline").available()
+        return " " .. require("dynamic_help.extras.statusline").available()
     end,
-    hl = { fg = "yellow" },
+    hl = { fg = "blue" },
 }
 
 local ScrollBar = {
@@ -324,20 +324,20 @@ local LSPActive = {
 --     hl = { fg = "gray" },
 -- }
 
--- local Gps = {
---     condition = require("nvim-gps").is_available,
---     provider = require("nvim-gps").get_location,
+-- local Gps2 = {
+--     condition = require("nvim-navic").is_available,
+--     provider = require("nvim-navic").get_location,
 --     hl = { fg = "gray" },
 -- }
-local Gps = {
-    condition = conditions.lsp_attached,
-    provider = function(self)
-        return current_function() .. current_signature()
-    end,
-    hl = { fg = "gray" },
-}
+-- local Gps = {
+--     condition = conditions.lsp_attached,
+--     provider = function(self)
+--         return current_function() .. current_signature()
+--     end,
+--     hl = { fg = "gray" },
+-- }
 local Gps2 = {
-    condition = require("nvim-gps").is_available,
+    condition = require("nvim-navic").is_available,
     static = {
         type_map = {
             ["container-name"] = "Identifier",
@@ -348,29 +348,36 @@ local Gps2 = {
         },
     },
     init = function(self)
-        local data = require("nvim-gps").get_data()
+        local data = require("nvim-navic").get_data() or {}
         local children = {}
-        for i, d in ipairs(data) do
+
+        for index, value in ipairs(data) do
+            local seperator
+
+            if index == 1 then
+                seperator = "> "
+            else
+                seperator = " > "
+            end
             local child = {
                 {
-                    provider = d.icon,
-                    hl = self.type_map[d.type],
+                    provider = seperator,
                 },
                 {
-                    provider = d.text,
+                    provider = value.icon,
+                    hl = self.type_map[value.type],
+                },
+                {
+                    provider = value.name,
                 },
             }
-            if #data > 1 and i < #data then
-                table.insert(child, {
-                    provider = " > ",
-                })
-            end
             table.insert(children, child)
         end
         self[1] = self:new(children, 1)
     end,
     hl = { fg = "gray" },
 }
+
 local Diagnostics = {
 
     condition = conditions.has_diagnostics,

@@ -42,7 +42,7 @@ function options:load_options()
             grepformat = "%f:%l:%m,%m\\ %f\\ match%ts,%f", -- "%f:%l:%c:%m";
             shortmess = "aotTIcF",
             -- showcmd        = false;
-            cmdheight = 1,
+            cmdheight = 0,
             splitbelow = true, -- Horizontal windows should split to bottom
             splitright = true, -- Vertical windows should be split to right
             backspace = "indent,eol,start", -- Makes backspace key more powerful.
