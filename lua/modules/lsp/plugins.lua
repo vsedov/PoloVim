@@ -1,89 +1,71 @@
 local lsp = {}
 local conf = require("modules.lsp.config")
+local package = require("core.pack").package
 
-lsp["neovim/nvim-lspconfig"] = {
-    config = conf.nvim_lsp,
-    opt = true,
-}
-lsp["ii14/lsp-command"] = {
-    opt = true,
-    after = "nvim-lspconfig",
-}
-lsp["p00f/clangd_extensions.nvim"] = {
+package({ "neovim/nvim-lspconfig", config = conf.nvim_lsp, opt = true })
+package({ "ii14/lsp-command", opt = true, after = "nvim-lspconfig" })
+package({
+    "p00f/clangd_extensions.nvim",
     opt = true,
     ft = { "c", "cpp" },
     requires = "nvim-lspconfig",
     config = conf.clangd,
-}
+})
 
-lsp["simrat39/rust-tools.nvim"] = {
+package({
+    "simrat39/rust-tools.nvim",
     opt = true,
     ft = { "rust" },
     requires = "nvim-lspconfig",
     config = conf.rust_tools,
-}
+})
 
-lsp["williamboman/nvim-lsp-installer"] = {
+package({
+    "williamboman/nvim-lsp-installer",
     opt = true,
     cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
     requires = "nvim-lspconfig",
     config = conf.lsp_install,
-}
-lsp["max397574/lua-dev.nvim"] = {
-    opt = true,
-    requires = "nvim-lspconfig",
-    config = conf.luadev,
-}
+})
+package({ "max397574/lua-dev.nvim", opt = true, requires = "nvim-lspconfig", config = conf.luadev })
 
-lsp["lewis6991/hover.nvim"] = {
-    key = { "K", "gK" },
-    config = conf.hover,
-}
+package({ "lewis6991/hover.nvim", key = { "K", "gK" }, config = conf.hover })
 
-lsp["tami5/lspsaga.nvim"] = {
+package({
+    "tami5/lspsaga.nvim",
     cmd = "Lspsaga",
     opt = true,
     config = conf.saga,
     requires = "nvim-lspconfig",
-}
+})
 -- 4852d99f9511d090745d3cc1f09a75772b9e07e9 -- working
 
-lsp["ray-x/lsp_signature.nvim"] = {
+package({
+    "ray-x/lsp_signature.nvim",
     opt = true,
     -- commit = "4852d99f9511d090745d3cc1f09a75772b9e07e9",
     config = conf.lsp_sig,
-}
+})
 
-lsp["weilbith/nvim-code-action-menu"] = {
+package({
+    "weilbith/nvim-code-action-menu",
     cmd = "CodeActionMenu",
     ft = { "python", "lua", "c", "java", "prolog", "lisp", "cpp" },
-}
+})
 
-lsp["Maan2003/lsp_lines.nvim"] = {
+package({
+    "Maan2003/lsp_lines.nvim",
     event = { "BufEnter" },
     after = "nvim-lspconfig",
     config = conf.lsp_lines,
-}
+})
 
-lsp["mhartington/formatter.nvim"] = {
-    opt = true,
-    config = conf.format,
-}
+package({ "mhartington/formatter.nvim", opt = true, config = conf.format })
 
-lsp["mfussenegger/nvim-lint"] = {
-    opt = true,
-    config = conf.lint,
-}
+package({ "mfussenegger/nvim-lint", opt = true, config = conf.lint })
 
-lsp["smjonas/inc-rename.nvim"] = {
-    cmd = "IncRename",
-    config = conf.rename,
-}
+package({ "smjonas/inc-rename.nvim", cmd = "IncRename", config = conf.rename })
 
-lsp["SmiteshP/nvim-navic"] = {
-    event = "BufEnter",
-    after = "nvim-lspconfig",
-    config = conf.navic,
-}
+package({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
-return lsp
+-- return lsp

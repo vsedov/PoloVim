@@ -1,32 +1,29 @@
 local tools = {}
 local conf = require("modules.tools.config")
-tools["simrat39/symbols-outline.nvim"] = {
+local package = require("core.pack").package
+
+package({
+    "simrat39/symbols-outline.nvim",
     opt = true,
     cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
     setup = conf.outline,
-}
+})
 
-tools["relastle/vim-nayvy"] = {
+package({
+    "relastle/vim-nayvy",
     ft = { "python" },
     opt = true,
     config = function()
         vim.g.nayvy_import_config_path = "$HOME/.config/nayvy/nayvy.py"
     end,
-}
+})
 
-tools["neovim/nvimdev.nvim"] = {
-    ft = "lua",
-    opt = true,
-    config = conf.nvimdev,
-}
+package({ "neovim/nvimdev.nvim", ft = "lua", opt = true, config = conf.nvimdev })
 
-tools["gennaro-tedesco/nvim-jqx"] = {
-    ft = "json",
-    cmd = { "JqxList", "JqxQuery" },
-    opt = true,
-}
+package({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }, opt = true })
 
-tools["is0n/fm-nvim"] = {
+package({
+    "is0n/fm-nvim",
     cmd = {
         "Neomutt",
         "Lazygit", -- 3 [ neogit + fugative + lazygit depends how i feel.]
@@ -43,49 +40,37 @@ tools["is0n/fm-nvim"] = {
         "Fm",
     },
     config = conf.fm,
-}
-tools["rktjmp/paperplanes.nvim"] = {
-    cmd = { "PP" },
-    opt = true,
-    config = conf.paperplanes,
-}
+})
+package({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, opt = true, config = conf.paperplanes })
 
-tools["ThePrimeagen/harpoon"] = {
-    module = "harpoon",
-    opt = true,
-    config = conf.harpoon,
-}
+package({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
 
-tools["natecraddock/workspaces.nvim"] = {
-    module = "workspaces",
-    config = conf.workspace,
-}
+package({ "natecraddock/workspaces.nvim", module = "workspaces", config = conf.workspace })
 
-tools["axieax/urlview.nvim"] = {
+package({
+    "axieax/urlview.nvim",
     cmd = { "UrlView", "UrlView packer" },
     config = conf.urlview,
     after = "telescope.nvim",
-}
+})
 
-tools["jghauser/mkdir.nvim"] = {
-    opt = true,
-    cmd = "new",
-    config = [[require'mkdir']],
-}
+package({ "jghauser/mkdir.nvim", opt = true, cmd = "new", config = [[require'mkdir']] })
 
--- tools["wellle/targets.vim"] = {}
+-- package{"wellle/targets.vim", }
 
-tools["liuchengxu/vista.vim"] = { cmd = "Vista", setup = conf.vim_vista, opt = true }
+package({ "liuchengxu/vista.vim", cmd = "Vista", setup = conf.vim_vista, opt = true })
 
 ------------- Spelling and Grammer
-tools["kamykn/spelunker.vim"] = {
+package({
+    "kamykn/spelunker.vim",
     opt = true,
     fn = { "spelunker#check" },
     setup = conf.spelunker,
     config = conf.spellcheck,
-}
+})
 
-tools["lewis6991/spellsitter.nvim"] = {
+package({
+    "lewis6991/spellsitter.nvim",
     ft = { "norg", "markdown" },
     config = function()
         require("spellsitter").setup({
@@ -93,55 +78,62 @@ tools["lewis6991/spellsitter.nvim"] = {
             enable = true,
         })
     end,
-}
-tools["rhysd/vim-grammarous"] = {
+})
+package({
+    "rhysd/vim-grammarous",
     opt = true,
     cmd = { "GrammarousCheck" },
     ft = { "markdown", "txt", "norg", "tex" },
     setup = conf.grammarous,
-}
+})
 -------------
 
-tools["plasticboy/vim-markdown"] = {
+package({
+    "plasticboy/vim-markdown",
     ft = "markdown",
     requires = { "godlygeek/tabular" },
     cmd = { "Toc" },
     setup = conf.markdown,
     opt = true,
-}
+})
 
-tools["ekickx/clipboard-image.nvim"] = {
+package({
+    "ekickx/clipboard-image.nvim",
     ft = { "norg", "markdown" },
     cmd = { "PasteImg" },
     opt = true,
     config = conf.clipboardimage,
-}
+})
 
-tools["iamcco/markdown-preview.nvim"] = {
+package({
+    "iamcco/markdown-preview.nvim",
     ft = { "markdown", "pandoc.markdown", "rmd" },
     cmd = { "MarkdownPreview" },
     setup = conf.mkdp,
     run = [[sh -c "cd app && yarn install"]],
     opt = true,
-}
+})
 
-tools["turbio/bracey.vim"] = {
+package({
+    "turbio/bracey.vim",
     ft = { "html", "javascript", "typescript" },
     cmd = { "Bracey", "BraceyEval" },
     run = 'sh -c "npm install --prefix server"',
     opt = true,
-}
+})
 
-tools["akinsho/toggleterm.nvim"] = {
+package({
+    "akinsho/toggleterm.nvim",
     cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm", "Htop" },
     keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr", "<leader>ld" },
     config = function()
         require("modules.tools.toggleterm")
     end,
-}
+})
 
 -- For this to record, cmd might not work
-tools["wakatime/vim-wakatime"] = {
+package({
+    "wakatime/vim-wakatime",
     event = "InsertEnter",
     cmd = {
         "WakaTimeApiKey",
@@ -152,10 +144,11 @@ tools["wakatime/vim-wakatime"] = {
         "WakaTimeScreenRedrawDisable",
         "WakaTimeToday",
     },
-}
+})
 
 -- ze black magic
-tools["windwp/nvim-spectre"] = {
+package({
+    "windwp/nvim-spectre",
     module = "spectre",
     requires = { "nvim-lua/plenary.nvim" },
     keys = {
@@ -166,24 +159,24 @@ tools["windwp/nvim-spectre"] = {
     },
 
     config = conf.spectre,
-}
+})
 
-tools["ray-x/sad.nvim"] = {
+package({
+    "ray-x/sad.nvim",
     cmd = { "Sad" },
     requires = { "ray-x/guihua.lua", opt = true, after = "sad.nvim" },
     opt = true,
     config = conf.sad,
-}
+})
 
-tools["ilAYAli/scMRU.nvim"] = {
-    module = "mru",
-}
+package({ "ilAYAli/scMRU.nvim", module = "mru" })
 -- need quick fix  :vimgrep /\w\+/j % | copen
-tools["kevinhwang91/nvim-bqf"] = {
+package({
+    "kevinhwang91/nvim-bqf",
     opt = true,
     event = { "CmdlineEnter", "QuickfixCmdPre" },
     config = conf.bqf,
-}
+})
 
 -- :Z {query}: cd to the highest ranked directory matching your query. If {query} is omitted, cd to the home directory
 -- :Lz {query}: same as :Z, but local to the current window
@@ -192,17 +185,14 @@ tools["kevinhwang91/nvim-bqf"] = {
 -- :Lzi {query}: same as :Zi, but local to the current window
 -- :Tzi {query}: same as :Zi, but local to the current tab
 
-tools["nanotee/zoxide.vim"] = { cmd = { "Z", "Lz", "Zi", "Tz" } }
+package({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz" } })
 
-tools["tami5/sqlite.lua"] = {
-    branch = "new/index_access",
-    module = "sqlite",
-}
+package({ "tami5/sqlite.lua", branch = "new/index_access", module = "sqlite" })
 -- manual call
-tools["AckslD/nvim-neoclip.lua"] = {
+package({
+    "AckslD/nvim-neoclip.lua",
     opt = true,
     requires = { "tami5/sqlite.lua" },
     config = conf.neoclip,
-}
-
-return tools
+})
+-- return tools

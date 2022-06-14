@@ -1,7 +1,9 @@
 local completion = {}
 local conf = require("modules.completion.config")
+local package = require("core.pack").package
+package({ "max397574/dyn_help.nvim" })
 
-completion["hrsh7th/nvim-cmp"] = {
+package{"hrsh7th/nvim-cmp",
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
@@ -33,7 +35,7 @@ completion["hrsh7th/nvim-cmp"] = {
     config = conf.cmp,
 }
 
-completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
+package{"L3MON4D3/LuaSnip", -- need to be the first to load
     event = "InsertEnter",
     module = "luasnip",
     requires = {
@@ -41,12 +43,12 @@ completion["L3MON4D3/LuaSnip"] = { -- need to be the first to load
     }, -- , event = "InsertEnter"
 }
 
-completion["/home/viv/.config/nvim/lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim"] = {
+package{"/home/viv/.config/nvim/lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim",
     requires = { "L3MON4D3/LuaSnip", { "lervag/vimtex", ft = { "tex" } } },
     ft = "tex",
 }
 
-completion["kristijanhusak/vim-dadbod-completion"] = {
+package{"kristijanhusak/vim-dadbod-completion",
     event = "InsertEnter",
     ft = { "sql" },
     setup = function()
@@ -56,7 +58,7 @@ completion["kristijanhusak/vim-dadbod-completion"] = {
     end,
 }
 
-completion["https://github.com/github/copilot.vim.git"] = {
+package{"https://github.com/github/copilot.vim.git",
     event = "InsertEnter",
     after = "nvim-cmp",
     setup = function()
@@ -79,7 +81,7 @@ completion["https://github.com/github/copilot.vim.git"] = {
     end,
 }
 
-completion["windwp/nvim-autopairs"] = {
+package{"windwp/nvim-autopairs",
     event = {
         "InsertEnter",
         "CmdLineEnter",
@@ -89,13 +91,13 @@ completion["windwp/nvim-autopairs"] = {
     config = conf.autopair,
 }
 
-completion["danymat/neogen"] = {
+package{"danymat/neogen",
     module = { "neogen" },
     requires = { "LuaSnip" },
     config = conf.neogen,
 }
 
-completion["~/GitHub/vim-sonictemplate"] = {
+package{"~/GitHub/vim-sonictemplate",
     cmd = "Template",
     config = conf.vim_sonictemplate,
 }

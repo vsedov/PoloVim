@@ -1,6 +1,8 @@
 local misc = {}
 local conf = require("modules.misc.config")
-misc["ziontee113/syntax-tree-surfer"] = {
+local package = require("core.pack").package
+package({
+    "ziontee113/syntax-tree-surfer",
     keys = {
         { "n", "vd" },
         { "n", "vu" },
@@ -16,25 +18,28 @@ misc["ziontee113/syntax-tree-surfer"] = {
         { "x", "<A-k>" },
     },
     config = conf.syntax_surfer,
-}
+})
 
 -- nvim-colorizer replacement
-misc["rrethy/vim-hexokinase"] = {
+package({
+    "rrethy/vim-hexokinase",
     -- ft = { 'html','css','sass','vim','typescript','typescriptreact'},
     config = conf.hexokinase,
     run = "make hexokinase",
     opt = true,
     cmd = { "HexokinaseTurnOn", "HexokinaseToggle" },
-}
+})
 
 -- Its hard for this because binds are weird
-misc["booperlv/nvim-gomove"] = {
+package({
+    "booperlv/nvim-gomove",
     event = { "CursorMoved", "CursorMovedI" },
     opt = true,
     config = conf.gomove,
-}
+})
 
-misc["mg979/vim-visual-multi"] = {
+package({
+    "mg979/vim-visual-multi",
     keys = {
         "<Ctrl>",
         "<M>",
@@ -57,39 +62,23 @@ misc["mg979/vim-visual-multi"] = {
     },
     opt = true,
     setup = conf.vmulti,
-}
-misc["mbbill/undotree"] = { opt = true, cmd = { "UndotreeToggle" } }
+})
+package({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
 
-misc["mizlan/iswap.nvim"] = {
-    cmd = { "ISwap", "ISwapWith" },
-    config = conf.iswap,
-}
+package({ "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, config = conf.iswap })
 
-misc["Mephistophiles/surround.nvim"] = {
-    keys = { "<F3>" },
-    config = conf.surround,
-}
-misc["Krafi2/jeskape.nvim"] = {
-    event = "InsertEnter",
-    config = conf.jetscape,
-}
+package({ "Mephistophiles/surround.nvim", keys = { "<F3>" }, config = conf.surround })
+package({ "Krafi2/jeskape.nvim", event = "InsertEnter", config = conf.jetscape })
 
-misc["fladson/vim-kitty"] = {
-    ft = { "*.conf" },
-}
+package({ "fladson/vim-kitty", ft = { "*.conf" } })
 
 -- Need to lazyload
-misc["johmsalas/text-case.nvim"] = {
-    config = conf.text_case,
-}
+package({ "johmsalas/text-case.nvim", config = conf.text_case })
 
-misc["chentoast/marks.nvim"] = {
-    opt = true,
-    keys = { "mx", "m", "m,", "m;" },
-    config = conf.marks,
-}
+package({ "chentoast/marks.nvim", opt = true, keys = { "mx", "m", "m,", "m;" }, config = conf.marks })
 
-misc["sidebar-nvim/sidebar.nvim"] = {
+package({
+    "sidebar-nvim/sidebar.nvim",
     module = "sidebar-nvim",
     cmd = {
         "SidebarNvimToggle",
@@ -99,10 +88,7 @@ misc["sidebar-nvim/sidebar.nvim"] = {
         "SidebarNvimFocus",
     },
     config = conf.sidebar,
-}
+})
 
-misc["onsails/diaglist.nvim"] = {
-    cmd = { "Qfa", "Qfb" },
-    config = conf.diaglist,
-}
-return misc
+package({ "onsails/diaglist.nvim", cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+-- return misc

@@ -25,16 +25,15 @@ end
 
 local function loadscheme()
     local themes
-    if daylight() == "light" then
-        themes = { "kanagawa.nvim", "catppuccin" }
-    else
-        themes = {
-            "kanagawa.nvim",
-            "kanagawa.nvim",
-            "catppuccin",
-            -- "tokyonight.nvim",
-        }
-    end
+    -- if daylight() == "light" then
+    --     themes = { "kanagawa.nvim" }
+    -- else
+    --     themes = {
+    --         "kanagawa.nvim",
+    --         "kanagawa.nvim",
+    --     }
+    -- end
+    themes = { "kanagawa.nvim" }
 
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
@@ -151,7 +150,7 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    loader("nvim-gps heirline.nvim")
+    loader("heirline.nvim")
     require("modules.ui.heirline") -- ignore
     require("utils.ui_overwrite")
     require("vscripts.tools")

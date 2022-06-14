@@ -1,13 +1,9 @@
-local core = {}
+-- local core = {}
 local conf = require("modules.core.config")
+local package = require("core.pack").package
 
-core["nvim-lua/plenary.nvim"] = {
-    module = "plenary",
-}
+package({ "nvim-lua/plenary.nvim", module = "plenary" })
 
-core["mjlbach/projects.nvim"] = {
-    after = "nvim-lspconfig",
-    config = conf.projects,
-}
+package({ "mjlbach/projects.nvim", after = "nvim-lspconfig", config = conf.projects })
 
-return core
+-- return core

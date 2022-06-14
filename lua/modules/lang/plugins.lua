@@ -1,119 +1,113 @@
 local lang = {}
 local conf = require("modules.lang.config")
-
-lang["nathom/filetype.nvim"] = {
+local package = require("core.pack").package
+package({
+    "nathom/filetype.nvim",
     -- event = {'BufEnter'},
     setup = function()
         vim.g.did_load_filetypes = 1
     end,
     config = conf.filetype,
-}
+})
 
-lang["nvim-treesitter/nvim-treesitter"] = {
-    opt = true,
-    run = ":TSUpdate",
-    config = conf.nvim_treesitter,
-}
+package({ "nvim-treesitter/nvim-treesitter", opt = true, run = ":TSUpdate", config = conf.nvim_treesitter })
 
-lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
+package({
+    "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
     config = conf.treesitter_obj,
     opt = true,
-}
--- lang["eddiebergman/nvim-treesitter-pyfold"] = {config = conf.pyfold}
-lang["RRethy/nvim-treesitter-textsubjects"] = {
+})
+-- package{"eddiebergman/nvim-treesitter-pyfold",config = conf.pyfold}
+package({
+    "RRethy/nvim-treesitter-textsubjects",
     ft = { "lua", "rust", "go", "python", "javascript" },
     opt = true,
     config = conf.tsubject,
-}
+})
 
-lang["RRethy/nvim-treesitter-endwise"] = {
+package({
+    "RRethy/nvim-treesitter-endwise",
     ft = { "lua", "ruby", "vim" },
     event = "InsertEnter",
     opt = true,
     config = conf.endwise,
-}
+})
 -- Inline functions dont seem to work .
-lang["ThePrimeagen/refactoring.nvim"] = {
+package({
+    "ThePrimeagen/refactoring.nvim",
     opt = true,
     requires = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
     },
     config = conf.refactor,
-}
+})
 
-lang["nvim-treesitter/nvim-treesitter-refactor"] = {
+package({
+    "nvim-treesitter/nvim-treesitter-refactor",
     after = "nvim-treesitter-textobjects", -- manual loading
     config = conf.treesitter_ref, -- let the last loaded config treesitter
     opt = true,
-}
+})
 
 -- Yay gotopreview lazy loaded
-lang["rmagatti/goto-preview"] = {
+package({
+    "rmagatti/goto-preview",
     cmd = { "GotoPrev", "GotoImp", "GotoTel" },
     requires = "telescope.nvim",
     config = conf.goto_preview,
-}
+})
 
-lang["JoosepAlviste/nvim-ts-context-commentstring"] = { opt = true }
+package({ "JoosepAlviste/nvim-ts-context-commentstring", opt = true })
 
-lang["yardnsm/vim-import-cost"] = { cmd = "ImportCost", opt = true }
+package({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
 
-lang["windwp/nvim-ts-autotag"] = {
-    opt = true,
-}
+package({ "windwp/nvim-ts-autotag", opt = true })
 
-lang["Tastyep/structlog.nvim"] = {
+package({
+    "Tastyep/structlog.nvim",
     opt = true,
     config = function()
         require("utils.log")
     end,
-}
+})
 
-lang["nanotee/luv-vimdocs"] = {
-    opt = true,
-}
+package({ "nanotee/luv-vimdocs", opt = true })
 
 -- builtin lua functions
-lang["milisims/nvim-luaref"] = {
-    opt = true,
-}
-lang["is0n/jaq-nvim"] = {
-    cmd = "Jaq",
-    opt = true,
-    config = conf.jaq,
-}
-lang["pianocomposer321/yabs.nvim"] = {
+package({ "milisims/nvim-luaref", opt = true })
+package({ "is0n/jaq-nvim", cmd = "Jaq", opt = true, config = conf.jaq })
+package({
+    "pianocomposer321/yabs.nvim",
     ft = "python",
     requires = { "nvim-lua/plenary.nvim" },
     config = conf.yabs,
-}
+})
 
-lang["mtdl9/vim-log-highlighting"] = { ft = { "text", "log" } }
+package({ "mtdl9/vim-log-highlighting", ft = { "text", "log" } })
 
-lang["folke/trouble.nvim"] = {
-    cmd = { "Trouble", "TroubleToggle" },
-    opt = true,
-    config = conf.trouble,
-}
+package({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
 
-lang["folke/todo-comments.nvim"] = {
+package({
+    "folke/todo-comments.nvim",
     cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
     requires = "trouble.nvim",
     config = conf.todo_comments,
-}
+})
 
 -- not the same as folkes version
-lang["bfredl/nvim-luadev"] = { opt = true, ft = "lua", setup = conf.luadev }
+package({ "bfredl/nvim-luadev", opt = true, ft = "lua", setup = conf.luadev })
 
-lang["rafcamlet/nvim-luapad"] = {
+package({
+    "rafcamlet/nvim-luapad",
     cmd = { "LuaRun", "Lua", "Luapad" },
     ft = { "lua" },
     config = conf.luapad,
-}
+})
 
-lang["mfussenegger/nvim-dap"] = {
+package({
+    "mfussenegger/nvim-dap",
     module = "dap",
     setup = conf.dap_setup,
     config = conf.dap_config,
@@ -129,28 +123,18 @@ lang["mfussenegger/nvim-dap"] = {
             ft = "python",
         },
     },
-}
+})
 
-lang["max397574/nvim-treehopper"] = {
-    module = "tsht",
-}
+package({ "max397574/nvim-treehopper", module = "tsht" })
 
-lang["lewis6991/nvim-treesitter-context"] = {
-    event = "InsertEnter",
-    config = conf.context,
-}
+package({ "lewis6991/nvim-treesitter-context", event = "InsertEnter", config = conf.context })
 
-lang["ray-x/guihua.lua"] = {
-    run = "cd lua/fzy && make",
-    opt = true,
-}
+package({ "ray-x/guihua.lua", run = "cd lua/fzy && make", opt = true })
 
-lang["mfussenegger/nvim-jdtls"] = {
-    ft = "java",
-    opt = true,
-}
+package({ "mfussenegger/nvim-jdtls", ft = "java", opt = true })
 
-lang["rcarriga/neotest"] = {
+package({
+    "rcarriga/neotest",
     opt = true,
     requires = {
         { "nvim-lua/plenary.nvim" },
@@ -166,18 +150,15 @@ lang["rcarriga/neotest"] = {
     },
     setup = conf.neotest_setup,
     config = conf.neotest,
-}
-lang["andythigpen/nvim-coverage"] = {
+})
+package({
+    "andythigpen/nvim-coverage",
     ft = { "python" },
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
     opt = true,
     config = conf.coverage,
-}
-lang["mgedmin/coverage-highlight.vim"] = {
-    ft = "python",
-    opt = true,
-    run = ":UpdateRemotePlugins",
-}
+})
+package({ "mgedmin/coverage-highlight.vim", ft = "python", opt = true, run = ":UpdateRemotePlugins" })
 
 -- -- IPython Mappings
 -- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
@@ -192,9 +173,5 @@ lang["mgedmin/coverage-highlight.vim"] = {
 -- -- Poetry Mappings
 -- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
 -- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
-lang["~/GitHub/active_development/py.nvim"] = {
-    ft = "python",
-    opt = true,
-    config = conf.python_dev,
-}
-return lang
+package({ "~/GitHub/active_development/py.nvim", ft = "python", opt = true, config = conf.python_dev })
+-- return lang

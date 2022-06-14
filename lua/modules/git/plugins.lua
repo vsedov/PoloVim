@@ -1,8 +1,10 @@
 local git = {}
 local conf = require("modules.git.config")
+local package = require("core.pack").package
 
 -- github GH ui
-git["pwntester/octo.nvim"] = {
+package({
+    "pwntester/octo.nvim",
     requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
@@ -11,9 +13,10 @@ git["pwntester/octo.nvim"] = {
     cmd = "Octo",
     keys = { "<Leader>Op", "<Leader>Opl", "<Leader>Ope", "<Leader>Oil", "<Leader>Oic", "<Leader>Oie" },
     config = conf.octo,
-}
+})
 
-git["ldelossa/gh.nvim"] = {
+package({
+    "ldelossa/gh.nvim",
     cmd = {
         "GHOpenPR",
         "GHClosePR",
@@ -43,14 +46,12 @@ git["ldelossa/gh.nvim"] = {
     opt = true,
     requires = { "ldelossa/litee.nvim", opt = true, after = "gh.nvim" },
     config = conf.gh,
-}
+})
 
-git["ThePrimeagen/git-worktree.nvim"] = {
-    event = { "CmdwinEnter", "CmdlineEnter" },
-    config = conf.worktree,
-}
+package({ "ThePrimeagen/git-worktree.nvim", event = { "CmdwinEnter", "CmdlineEnter" }, config = conf.worktree })
 
-git["sindrets/diffview.nvim"] = {
+package({
+    "sindrets/diffview.nvim",
     cmd = {
         "DiffviewOpen",
         "DiffviewFileHistory",
@@ -59,26 +60,21 @@ git["sindrets/diffview.nvim"] = {
         "DiffviewRefresh",
     },
     config = conf.diffview,
-}
+})
 
-git["lewis6991/gitsigns.nvim"] = {
+package({
+    "lewis6991/gitsigns.nvim",
     config = conf.gitsigns,
     -- keys = {']c', '[c'},  -- load by lazy.lua
     opt = true,
-}
+})
 
-git["TimUntersberger/neogit"] = {
-    opt = true,
-    cmd = { "Neogit" },
-    config = conf.neogit,
-}
+package({ "TimUntersberger/neogit", opt = true, cmd = { "Neogit" }, config = conf.neogit })
 
-git["ruifm/gitlinker.nvim"] = {
-    keys = { "<leader>gy" },
-    config = conf.gitlinker,
-}
+package({ "ruifm/gitlinker.nvim", keys = { "<leader>gy" }, config = conf.gitlinker })
 
-git["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
+package({
+    "tanvirtin/vgit.nvim", -- gitsign has similar features
     setup = function()
         vim.o.updatetime = 2000
     end,
@@ -86,9 +82,10 @@ git["tanvirtin/vgit.nvim"] = { -- gitsign has similar features
     -- after = {"telescope.nvim"},
     opt = true,
     config = conf.vgit,
-}
+})
 
-git["akinsho/git-conflict.nvim"] = {
+package({
+    "akinsho/git-conflict.nvim",
     cmd = {
         "GitConflictChooseOurs",
         "GitConflictChooseTheirs",
@@ -99,17 +96,14 @@ git["akinsho/git-conflict.nvim"] = {
         "GitConflictListQf",
     },
     config = conf.git_conflict,
-}
+})
 
-git["tpope/vim-fugitive"] = {
+package({
+    "tpope/vim-fugitive",
     cmd = { "Gvsplit", "Git", "Gedit", "Gstatus", "Gdiffsplit", "Gvdiffsplit" },
     opt = true,
-}
+})
 
-git["LhKipp/nvim-git-fixer"] = {
-    cmd = { "FixUp", "Ammend" },
-    opt = true,
-    config = conf.git_fixer,
-}
+package({ "LhKipp/nvim-git-fixer", cmd = { "FixUp", "Ammend" }, opt = true, config = conf.git_fixer })
 
-return git
+-- return git
