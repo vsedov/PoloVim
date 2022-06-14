@@ -1,7 +1,6 @@
-local misc = {}
 local conf = require("modules.misc.config")
-local package = require("core.pack").package
-package({
+local misc = require("core.pack").package
+misc({
     "ziontee113/syntax-tree-surfer",
     keys = {
         { "n", "vd" },
@@ -21,7 +20,7 @@ package({
 })
 
 -- nvim-colorizer replacement
-package({
+misc({
     "rrethy/vim-hexokinase",
     -- ft = { 'html','css','sass','vim','typescript','typescriptreact'},
     config = conf.hexokinase,
@@ -31,14 +30,14 @@ package({
 })
 
 -- Its hard for this because binds are weird
-package({
+misc({
     "booperlv/nvim-gomove",
     event = { "CursorMoved", "CursorMovedI" },
     opt = true,
     config = conf.gomove,
 })
 
-package({
+misc({
     "mg979/vim-visual-multi",
     keys = {
         "<Ctrl>",
@@ -63,21 +62,21 @@ package({
     opt = true,
     setup = conf.vmulti,
 })
-package({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
+misc({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
 
-package({ "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, config = conf.iswap })
+misc({ "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, config = conf.iswap })
 
-package({ "Mephistophiles/surround.nvim", keys = { "<F3>" }, config = conf.surround })
-package({ "Krafi2/jeskape.nvim", event = "InsertEnter", config = conf.jetscape })
+misc({ "Mephistophiles/surround.nvim", keys = { "<F3>" }, config = conf.surround })
+misc({ "Krafi2/jeskape.nvim", event = "InsertEnter", config = conf.jetscape })
 
-package({ "fladson/vim-kitty", ft = { "*.conf" } })
+misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
 -- Need to lazyload
-package({ "johmsalas/text-case.nvim", config = conf.text_case })
+misc({ "johmsalas/text-case.nvim", config = conf.text_case })
 
-package({ "chentoast/marks.nvim", opt = true, keys = { "mx", "m", "m,", "m;" }, config = conf.marks })
+misc({ "chentoast/marks.nvim", opt = true, keys = { "mx", "m", "m,", "m;" }, config = conf.marks })
 
-package({
+misc({
     "sidebar-nvim/sidebar.nvim",
     module = "sidebar-nvim",
     cmd = {
@@ -90,5 +89,5 @@ package({
     config = conf.sidebar,
 })
 
-package({ "onsails/diaglist.nvim", cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+misc({ "onsails/diaglist.nvim", cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 -- return misc

@@ -1,7 +1,6 @@
--- local telescope = {}
 local conf = require("modules.telescope.config")
-local package = require("core.pack").package
-package({
+local telescope = require("core.pack").package
+telescope({
     "nvim-telescope/telescope.nvim",
     module = { "telescope", "utils.telescope" },
     config = conf.telescope,
@@ -16,7 +15,7 @@ package({
     opt = true,
 })
 -- config this better https://github.com/jvgrootveld/telescope-zoxide
-package({
+telescope({
     "jvgrootveld/telescope-zoxide",
     module = "telescope",
     config = function()
@@ -24,7 +23,7 @@ package({
     end,
 })
 
-package({
+telescope({
     "zane-/howdoi.nvim",
     cmd = "Howdoi",
     config = function()
@@ -34,4 +33,3 @@ package({
     end,
 })
 
--- return telescope

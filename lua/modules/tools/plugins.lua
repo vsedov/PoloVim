@@ -1,15 +1,14 @@
-local tools = {}
 local conf = require("modules.tools.config")
-local package = require("core.pack").package
+local tools = require("core.pack").package
 
-package({
+tools({
     "simrat39/symbols-outline.nvim",
     opt = true,
     cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
     setup = conf.outline,
 })
 
-package({
+tools({
     "relastle/vim-nayvy",
     ft = { "python" },
     opt = true,
@@ -18,11 +17,11 @@ package({
     end,
 })
 
-package({ "neovim/nvimdev.nvim", ft = "lua", opt = true, config = conf.nvimdev })
+tools({ "neovim/nvimdev.nvim", ft = "lua", opt = true, config = conf.nvimdev })
 
-package({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }, opt = true })
+tools({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }, opt = true })
 
-package({
+tools({
     "is0n/fm-nvim",
     cmd = {
         "Neomutt",
@@ -41,27 +40,25 @@ package({
     },
     config = conf.fm,
 })
-package({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, opt = true, config = conf.paperplanes })
+tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, opt = true, config = conf.paperplanes })
 
-package({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
+tools({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
 
-package({ "natecraddock/workspaces.nvim", module = "workspaces", config = conf.workspace })
+tools({ "natecraddock/workspaces.nvim", module = "workspaces", config = conf.workspace })
 
-package({
+tools({
     "axieax/urlview.nvim",
     cmd = { "UrlView", "UrlView packer" },
     config = conf.urlview,
     after = "telescope.nvim",
 })
 
-package({ "jghauser/mkdir.nvim", opt = true, cmd = "new", config = [[require'mkdir']] })
+tools({ "jghauser/mkdir.nvim", opt = true, cmd = "new", config = [[require'mkdir']] })
 
--- package{"wellle/targets.vim", }
-
-package({ "liuchengxu/vista.vim", cmd = "Vista", setup = conf.vim_vista, opt = true })
+tools({ "liuchengxu/vista.vim", cmd = "Vista", setup = conf.vim_vista, opt = true })
 
 ------------- Spelling and Grammer
-package({
+tools({
     "kamykn/spelunker.vim",
     opt = true,
     fn = { "spelunker#check" },
@@ -69,7 +66,7 @@ package({
     config = conf.spellcheck,
 })
 
-package({
+tools({
     "lewis6991/spellsitter.nvim",
     ft = { "norg", "markdown" },
     config = function()
@@ -79,7 +76,7 @@ package({
         })
     end,
 })
-package({
+tools({
     "rhysd/vim-grammarous",
     opt = true,
     cmd = { "GrammarousCheck" },
@@ -88,7 +85,7 @@ package({
 })
 -------------
 
-package({
+tools({
     "plasticboy/vim-markdown",
     ft = "markdown",
     requires = { "godlygeek/tabular" },
@@ -97,7 +94,7 @@ package({
     opt = true,
 })
 
-package({
+tools({
     "ekickx/clipboard-image.nvim",
     ft = { "norg", "markdown" },
     cmd = { "PasteImg" },
@@ -105,7 +102,7 @@ package({
     config = conf.clipboardimage,
 })
 
-package({
+tools({
     "iamcco/markdown-preview.nvim",
     ft = { "markdown", "pandoc.markdown", "rmd" },
     cmd = { "MarkdownPreview" },
@@ -114,7 +111,7 @@ package({
     opt = true,
 })
 
-package({
+tools({
     "turbio/bracey.vim",
     ft = { "html", "javascript", "typescript" },
     cmd = { "Bracey", "BraceyEval" },
@@ -122,7 +119,7 @@ package({
     opt = true,
 })
 
-package({
+tools({
     "akinsho/toggleterm.nvim",
     cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm", "Htop" },
     keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr", "<leader>ld" },
@@ -132,7 +129,7 @@ package({
 })
 
 -- For this to record, cmd might not work
-package({
+tools({
     "wakatime/vim-wakatime",
     event = "InsertEnter",
     cmd = {
@@ -147,7 +144,7 @@ package({
 })
 
 -- ze black magic
-package({
+tools({
     "windwp/nvim-spectre",
     module = "spectre",
     requires = { "nvim-lua/plenary.nvim" },
@@ -161,7 +158,7 @@ package({
     config = conf.spectre,
 })
 
-package({
+tools({
     "ray-x/sad.nvim",
     cmd = { "Sad" },
     requires = { "ray-x/guihua.lua", opt = true, after = "sad.nvim" },
@@ -169,9 +166,9 @@ package({
     config = conf.sad,
 })
 
-package({ "ilAYAli/scMRU.nvim", module = "mru" })
+tools({ "ilAYAli/scMRU.nvim", module = "mru" })
 -- need quick fix  :vimgrep /\w\+/j % | copen
-package({
+tools({
     "kevinhwang91/nvim-bqf",
     opt = true,
     event = { "CmdlineEnter", "QuickfixCmdPre" },
@@ -185,14 +182,13 @@ package({
 -- :Lzi {query}: same as :Zi, but local to the current window
 -- :Tzi {query}: same as :Zi, but local to the current tab
 
-package({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz" } })
+tools({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz" } })
 
-package({ "tami5/sqlite.lua", branch = "new/index_access", module = "sqlite" })
+tools({ "tami5/sqlite.lua", branch = "new/index_access", module = "sqlite" })
 -- manual call
-package({
+tools({
     "AckslD/nvim-neoclip.lua",
     opt = true,
     requires = { "tami5/sqlite.lua" },
     config = conf.neoclip,
 })
--- return tools

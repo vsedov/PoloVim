@@ -1,9 +1,8 @@
-local git = {}
 local conf = require("modules.git.config")
-local package = require("core.pack").package
+local git = require("core.pack").package
 
 -- github GH ui
-package({
+git({
     "pwntester/octo.nvim",
     requires = {
         "nvim-lua/plenary.nvim",
@@ -15,7 +14,7 @@ package({
     config = conf.octo,
 })
 
-package({
+git({
     "ldelossa/gh.nvim",
     cmd = {
         "GHOpenPR",
@@ -48,9 +47,9 @@ package({
     config = conf.gh,
 })
 
-package({ "ThePrimeagen/git-worktree.nvim", event = { "CmdwinEnter", "CmdlineEnter" }, config = conf.worktree })
+git({ "ThePrimeagen/git-worktree.nvim", event = { "CmdwinEnter", "CmdlineEnter" }, config = conf.worktree })
 
-package({
+git({
     "sindrets/diffview.nvim",
     cmd = {
         "DiffviewOpen",
@@ -62,18 +61,18 @@ package({
     config = conf.diffview,
 })
 
-package({
+git({
     "lewis6991/gitsigns.nvim",
     config = conf.gitsigns,
     -- keys = {']c', '[c'},  -- load by lazy.lua
     opt = true,
 })
 
-package({ "TimUntersberger/neogit", opt = true, cmd = { "Neogit" }, config = conf.neogit })
+git({ "TimUntersberger/neogit", opt = true, cmd = { "Neogit" }, config = conf.neogit })
 
-package({ "ruifm/gitlinker.nvim", keys = { "<leader>gy" }, config = conf.gitlinker })
+git({ "ruifm/gitlinker.nvim", keys = { "<leader>gy" }, config = conf.gitlinker })
 
-package({
+git({
     "tanvirtin/vgit.nvim", -- gitsign has similar features
     setup = function()
         vim.o.updatetime = 2000
@@ -84,7 +83,7 @@ package({
     config = conf.vgit,
 })
 
-package({
+git({
     "akinsho/git-conflict.nvim",
     cmd = {
         "GitConflictChooseOurs",
@@ -98,12 +97,12 @@ package({
     config = conf.git_conflict,
 })
 
-package({
+git({
     "tpope/vim-fugitive",
     cmd = { "Gvsplit", "Git", "Gedit", "Gstatus", "Gdiffsplit", "Gvdiffsplit" },
     opt = true,
 })
 
-package({ "LhKipp/nvim-git-fixer", cmd = { "FixUp", "Ammend" }, opt = true, config = conf.git_fixer })
+git({ "LhKipp/nvim-git-fixer", cmd = { "FixUp", "Ammend" }, opt = true, config = conf.git_fixer })
 
 -- return git

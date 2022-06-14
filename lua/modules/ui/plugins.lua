@@ -1,19 +1,18 @@
-local ui = {}
 local conf = require("modules.ui.config")
-local package = require("core.pack").package
-package({ "j-hui/fidget.nvim", opt = true, ft = { "python", "lua", "c" }, config = conf.fidget })
-package({ "camspiers/animate.vim", opt = true })
+local ui = require("core.pack").package
+ui({ "j-hui/fidget.nvim", opt = true, ft = { "python", "lua", "c" }, config = conf.fidget })
+ui({ "camspiers/animate.vim", opt = true })
 
-package({ "kyazdani42/nvim-web-devicons" })
+ui({ "kyazdani42/nvim-web-devicons" })
 
-package({ "rebelot/heirline.nvim", opt = true })
+ui({ "rebelot/heirline.nvim", opt = true })
 
-package({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
+ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
 
-package({ "akinsho/bufferline.nvim", config = conf.nvim_bufferline, event = "UIEnter", opt = true })
+ui({ "akinsho/bufferline.nvim", config = conf.nvim_bufferline, event = "UIEnter", opt = true })
 
 -- Lazy Loading nvim-notify
-package({
+ui({
     "rcarriga/nvim-notify",
     opt = true,
     setup = function()
@@ -27,10 +26,10 @@ package({
     config = conf.notify,
 })
 
-package({ "MunifTanjim/nui.nvim", opt = true })
+ui({ "MunifTanjim/nui.nvim", opt = true })
 
 -- Feels slow, might revert backto nvim tree
-package({
+ui({
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
     requires = {
@@ -64,7 +63,7 @@ package({
     config = conf.neo_tree,
 })
 
-package({
+ui({
     "tamton-aquib/keys.nvim",
     cmd = "KeysToggle",
     opt = true,
@@ -74,12 +73,12 @@ package({
 })
 
 -- Use this with nvimtree .
-package({ "elihunter173/dirbuf.nvim", cmd = { "Dirbuf" }, config = conf.dir_buff })
+ui({ "elihunter173/dirbuf.nvim", cmd = { "Dirbuf" }, config = conf.dir_buff })
 
-package({ "lukas-reineke/indent-blankline.nvim", opt = true, config = conf.blankline }) -- after="nvim-treesitter",
+ui({ "lukas-reineke/indent-blankline.nvim", opt = true, config = conf.blankline }) -- after="nvim-treesitter",
 
 -- disabled does not work with muliti split
-package({
+ui({
     "lukas-reineke/virt-column.nvim",
     opt = true,
     -- event = {"CursorMoved", "CursorMovedI"},
@@ -92,21 +91,21 @@ package({
 })
 
 -- No longer getting lazy loaded, i like this though
-package({ "lewis6991/satellite.nvim", config = conf.satellite })
+ui({ "lewis6991/satellite.nvim", config = conf.satellite })
 
-package({
+ui({
     "xiyaowong/nvim-transparent",
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
     config = conf.transparent,
 })
 
-package({
+ui({
     "anuvyklack/pretty-fold.nvim",
     ft = { "python", "c", "lua", "cpp", "java" },
     config = conf.pretty_fold,
 })
 
-package({
+ui({
     "folke/tokyonight.nvim",
     opt = true,
     setup = conf.tokyonight,
@@ -116,7 +115,7 @@ package({
     end,
 })
 
-package({
+ui({
     "tiagovla/tokyodark.nvim",
     opt = true,
     setup = conf.tokyodark,
@@ -126,11 +125,11 @@ package({
     end,
 })
 
-package({ "catppuccin/nvim", as = "catppuccin", opt = true, config = conf.catppuccin })
-package({ "jzone1366/chalklines.nvim", as = "chalklines", opt = true, config = conf.chalk })
+ui({ "catppuccin/nvim", as = "catppuccin", opt = true, config = conf.catppuccin })
+ui({ "jzone1366/chalklines.nvim", as = "chalklines", opt = true, config = conf.chalk })
 
 -- fix annoying strikethrough issue as that was not a valid key apparently .
-package({
+ui({
     "~/GitHub/Sakura.nvim",
     module = "Sakura",
     opt = true,
@@ -140,17 +139,16 @@ package({
 })
 
 -- Use default when loading this .
-package({ "rebelot/kanagawa.nvim", opt = true, config = conf.kanagawa })
+ui({ "rebelot/kanagawa.nvim", opt = true, config = conf.kanagawa })
 
-package({ "kazhala/close-buffers.nvim", cmd = { "BDelete", "BWipeout" }, config = conf.buffers_close })
+ui({ "kazhala/close-buffers.nvim", cmd = { "BDelete", "BWipeout" }, config = conf.buffers_close })
 
-package({
+ui({
     "narutoxy/dim.lua",
     ft = { "python", "lua" },
     requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
     config = conf.dim,
 })
 
-package({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
+ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
 
--- return ui
