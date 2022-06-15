@@ -270,9 +270,11 @@ end
 
 function config.hlargs()
     require("hlargs").setup({
-        performance = {
-            max_iterations = 1000,
-            max_concurrent_partial_parses = 90,
+        excluded_argnames = {
+            declarations = { "use", "use_rocks", "_" },
+            usages = {
+                lua = { "self", "use", "use_rocks", "_" },
+            },
         },
     })
 end

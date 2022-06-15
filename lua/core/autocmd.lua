@@ -176,12 +176,20 @@ function autocmd.load_autocmds()
             {
                 { "WinEnter", "BufEnter", "InsertLeave" },
                 "*",
-                [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
+                function()
+                    if vim.bo.filetype ~= "dashboard" and not vim.opt_local.cursorline:get() then
+                        vim.opt_local.cursorline = true
+                    end
+                end,
             },
             {
                 { "WinLeave", "BufLeave", "InsertEnter" },
                 "*",
-                [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorline | endif]],
+                function()
+                    if vim.bo.filetype ~= "dashboard" and vim.opt_local.cursorline:get() then
+                        vim.opt_local.cursorline = false
+                    end
+                end,
             },
             {
                 { "WinLeave", "BufLeave", "InsertEnter" },

@@ -12,24 +12,23 @@ local Packer = {}
 Packer.__index = Packer
 
 function Packer:load_plugins()
-  self.repos = {}
-  self.rocks = {}
-  local get_plugins_list = function ()
-    local list = {}
-    local tmp = vim.split(fn.globpath(modules_dir,'*/plugins.lua'),'\n')
-    for _,f in ipairs(tmp) do
-      list[#list+1] = f:sub(#modules_dir - 6,-1)
+    self.repos = {}
+    self.rocks = {}
+    local get_plugins_list = function()
+        local list = {}
+        local tmp = vim.split(fn.globpath(modules_dir, "*/plugins.lua"), "\n")
+        for _, f in ipairs(tmp) do
+            list[#list + 1] = f:sub(#modules_dir - 6, -1)
+        end
+        return list
     end
-    return list
-  end
 
-  local plugins_file = get_plugins_list()
-  for _,m in ipairs(plugins_file) do
-    require(m:sub(0,#m-4))
-  end
-  self.rocks = require("modules.rocks")
+    local plugins_file = get_plugins_list()
+    for _, m in ipairs(plugins_file) do
+        require(m:sub(0, #m - 4))
+    end
+    self.rocks = require("modules.rocks")
 end
-
 
 function Packer:load_packer()
     if not packer then
@@ -50,7 +49,6 @@ function Packer:load_packer()
         use_rocks(rock)
     end
 end
-
 
 function Packer:init_ensure_plugins()
     local packer_dir = data_dir .. "pack" .. path_sep .. "packer" .. path_sep .. "start" .. path_sep .. "packer.nvim"
@@ -82,9 +80,8 @@ function plugins.ensure_plugins()
 end
 
 function plugins.package(repo)
-  table.insert(Packer.repos,repo)
+    table.insert(Packer.repos, repo)
 end
-
 
 function plugins.convert_compile_file()
     local lines = {}
