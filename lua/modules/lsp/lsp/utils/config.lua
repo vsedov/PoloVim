@@ -123,6 +123,7 @@ return {
             scope = "cursor",
             source = "always",
             format = function(diagnostic)
+                require("utils.helper").dump(diagnostic)
                 if diagnostic.user_data == nil then
                     return diagnostic.message
                 elseif vim.tbl_isempty(diagnostic.user_data) then
@@ -137,7 +138,6 @@ return {
                 return diagnostic.message
             end,
             header = { "Cursor Diagnostics:", "DiagnosticHeader" },
-            pos = 1,
             prefix = function(diagnostic, i, total)
                 local icon, highlight
                 if diagnostic.severity == 1 then

@@ -80,23 +80,6 @@ end
 local function select_default_formater(client, bufnr)
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
-    if client.name == "null-ls" or not client.server_capabilities.document_formatting then
-        vim.diagnostic.config({
-            virtual_text = false,
-        })
-        vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-        vim.api.nvim_create_augroup("LspFormatting", { clear = true })
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            group = "LspFormatting",
-            callback = function()
-                vim.lsp.buf.format()
-            end,
-            buffer = bufnr,
-        })
-        -- else
-        --     client.server_capabilities.document_formatting = false
-        --     client.server_capabilities.document_range_formatting = false
-    end
 end
 
 function M.common_on_init(client, bufnr)
@@ -146,8 +129,6 @@ function M.setup()
 end
 
 function M.enhance_attach(user_config)
-    M.setup()
-
     local config = M.get_common_opts()
     if user_config then
         config = vim.tbl_deep_extend("force", config, user_config)

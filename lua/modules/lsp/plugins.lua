@@ -1,7 +1,7 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 
-lsp({ "neovim/nvim-lspconfig", config = conf.nvim_lsp, opt = true })
+lsp({ "neovim/nvim-lspconfig", setup = conf.nvim_lsp_setup, config = conf.nvim_lsp, opt = true })
 lsp({ "ii14/lsp-command", opt = true, after = "nvim-lspconfig" })
 lsp({
     "p00f/clangd_extensions.nvim",
@@ -56,6 +56,7 @@ lsp({
     "Maan2003/lsp_lines.nvim",
     event = { "BufEnter" },
     after = "nvim-lspconfig",
+    setup = conf.lps_lines_setup,
     config = conf.lsp_lines,
 })
 

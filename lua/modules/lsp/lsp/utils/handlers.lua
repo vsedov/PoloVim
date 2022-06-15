@@ -4,7 +4,7 @@ local M = {}
 local config = require("modules.lsp.lsp.utils.config")
 -- TODO: Change this to fit config - call config from config.lua
 function M.setup()
-    vim.diagnostic.config({ config.diagnostics })
+    vim.diagnostic.config(config.diagnostics)
     vim.diagnostic.open_float = config.open_float
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, config.float)
     vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
