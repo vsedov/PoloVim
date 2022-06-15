@@ -514,9 +514,11 @@ end
 function config.coverage()
     require("coverage").setup()
 end
+
 function config.python_dev()
     require("py").setup({
         leader = "<leader><leader>",
+        mappings = true,
     })
 end
 
