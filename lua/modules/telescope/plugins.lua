@@ -32,4 +32,3 @@ telescope({
         end, { force = true })
     end,
 })
-

@@ -144,11 +144,10 @@ ui({ "rebelot/kanagawa.nvim", opt = true, config = conf.kanagawa })
 ui({ "kazhala/close-buffers.nvim", cmd = { "BDelete", "BWipeout" }, config = conf.buffers_close })
 
 ui({
-    "narutoxy/dim.lua",
+    "zbirenbaum/neodim",
     ft = { "python", "lua" },
     requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
     config = conf.dim,
 })
 
 ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
-

@@ -1,9 +1,9 @@
-local completion = {}
 local conf = require("modules.completion.config")
-local package = require("core.pack").package
-package({ "max397574/dyn_help.nvim" })
+local completion = require("core.pack").package
+completion({ "max397574/dyn_help.nvim" })
 
-package{"hrsh7th/nvim-cmp",
+completion({
+    "hrsh7th/nvim-cmp",
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
@@ -16,7 +16,7 @@ package{"hrsh7th/nvim-cmp",
             config = conf.tabnine,
             opt = true,
         },
-        { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
+        -- { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
         { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", opt = true },
@@ -33,22 +33,25 @@ package{"hrsh7th/nvim-cmp",
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },
     config = conf.cmp,
-}
+})
 
-package{"L3MON4D3/LuaSnip", -- need to be the first to load
+completion({
+    "L3MON4D3/LuaSnip", -- need to be the first to load
     event = "InsertEnter",
     module = "luasnip",
     requires = {
         { "rafamadriz/friendly-snippets", event = "InsertEnter" },
     }, -- , event = "InsertEnter"
-}
+})
 
-package{"/home/viv/.config/nvim/lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim",
+completion({
+    "/home/viv/.config/nvim/lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim",
     requires = { "L3MON4D3/LuaSnip", { "lervag/vimtex", ft = { "tex" } } },
     ft = "tex",
-}
+})
 
-package{"kristijanhusak/vim-dadbod-completion",
+completion({
+    "kristijanhusak/vim-dadbod-completion",
     event = "InsertEnter",
     ft = { "sql" },
     setup = function()
@@ -56,9 +59,10 @@ package{"kristijanhusak/vim-dadbod-completion",
         -- vim.cmd([[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
         -- body
     end,
-}
+})
 
-package{"https://github.com/github/copilot.vim.git",
+completion({
+    "https://github.com/github/copilot.vim.git",
     event = "InsertEnter",
     after = "nvim-cmp",
     setup = function()
@@ -79,9 +83,10 @@ package{"https://github.com/github/copilot.vim.git",
         vim.keymap.set("i", "<M-.>", "<Plug>(copilot-next)")
         vim.keymap.set("i", "<M-,>", "<Plug>(copilot-previous)")
     end,
-}
+})
 
-package{"windwp/nvim-autopairs",
+completion({
+    "windwp/nvim-autopairs",
     event = {
         "InsertEnter",
         "CmdLineEnter",
@@ -89,16 +94,8 @@ package{"windwp/nvim-autopairs",
     after = "nvim-cmp",
 
     config = conf.autopair,
-}
+})
 
-package{"danymat/neogen",
-    module = { "neogen" },
-    requires = { "LuaSnip" },
-    config = conf.neogen,
-}
+completion({ "danymat/neogen", module = { "neogen" }, requires = { "LuaSnip" }, config = conf.neogen })
 
-package{"~/GitHub/vim-sonictemplate",
-    cmd = "Template",
-    config = conf.vim_sonictemplate,
-}
-return completion
+completion({ "~/GitHub/vim-sonictemplate", cmd = "Template", config = conf.vim_sonictemplate })

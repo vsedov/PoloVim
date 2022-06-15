@@ -1,9 +1,6 @@
--- local completion= {}
 local conf = require("modules.editor.config")
-local completion = require("core.pack").package
-completion({ "max397574/dyn_help.nvim" })
-
-completion({
+local editor = require("core.pack").package
+editor({
     "nvim-neorg/neorg",
     branch = "main",
     requires = {
@@ -13,7 +10,7 @@ completion({
     config = conf.norg,
 })
 
-completion({
+editor({
     "folke/zen-mode.nvim",
     opt = true,
     requires = { "folke/twilight.nvim", opt = true, config = conf.twilight },
@@ -21,12 +18,12 @@ completion({
     config = conf.zen,
 })
 
-completion({ "rainbowhxch/accelerated-jk.nvim", keys = {
+editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
     "j",
     "k",
 }, config = conf.acc_jk })
 
-completion({
+editor({
     "gbprod/yanky.nvim",
     keys = {
         "<C-v>",
@@ -48,7 +45,7 @@ completion({
     config = conf.config_yanky,
 })
 
-completion({
+editor({
     "ggandor/lightspeed.nvim",
     setup = conf.lightspeed_setup,
     event = "BufReadPost",
@@ -98,9 +95,9 @@ completion({
 -- -- -- `gbaf` - Toggle comment around a function (w/ LSP/treesitter support)
 -- -- -- `gbac` - Toggle comment around a class (w/ LSP/treesitter support)
 
-completion({ "numToStr/Comment.nvim", keys = { "g", "<ESC>" }, config = conf.comment })
+editor({ "numToStr/Comment.nvim", keys = { "g", "<ESC>" }, config = conf.comment })
 
-completion({
+editor({
     "LudoPinelli/comment-box.nvim",
     keys = { "<Leader>cb", "<Leader>cc", "<Leader>cl", "<M-p>" },
     cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },
@@ -109,9 +106,9 @@ completion({
 })
 
 -- trying to figure out why this does not work .
-completion({ "nyngwang/NeoZoom.lua", opt = true })
+editor({ "nyngwang/NeoZoom.lua", opt = true })
 
-completion({
+editor({
     "chaoren/vim-wordmotion",
     opt = true,
     fn = {
@@ -122,22 +119,22 @@ completion({
     keys = { "w", "W", "gE", "b", "B" },
 })
 
-completion({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
+editor({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
 
-completion({ "declancm/cinnamon.nvim", event = "WinScrolled", config = conf.neoscroll })
+editor({ "declancm/cinnamon.nvim", event = "WinScrolled", config = conf.neoscroll })
 
 -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
-completion({ "andweeb/presence.nvim", opt = true, config = conf.discord })
+editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
 
-completion({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = conf.dial })
+editor({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = conf.dial })
 
-completion({
+editor({
     "m-demare/hlargs.nvim",
     ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
 })
-completion({
+editor({
     "folke/which-key.nvim",
     opt = true,
     after = "nvim-treesitter",
@@ -145,4 +142,3 @@ completion({
         require("modules.editor.which_key")
     end,
 })
--- return completion{

@@ -142,7 +142,7 @@ local check_backspace = function()
 end
 
 local sources = {
-    { name = "nvim_lsp_signature_help", priority = 10 },
+    -- { name = "nvim_lsp_signature_help", priority = 10 },
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
     {
