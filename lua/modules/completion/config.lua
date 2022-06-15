@@ -1,6 +1,13 @@
 -- local global = require("core.global")
 local config = {}
 
+function config.nvim_doc_help()
+    require("docs-view").setup({
+        position = "right",
+        width = 60,
+    })
+end
+
 function config.cmp()
     require("modules.completion.cmp")
 end

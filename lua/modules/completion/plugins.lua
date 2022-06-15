@@ -1,6 +1,12 @@
 local conf = require("modules.completion.config")
 local completion = require("core.pack").package
 completion({ "max397574/dyn_help.nvim" })
+completion({
+    "amrbashir/nvim-docs-view",
+    opt = true,
+    cmd = { "DocsViewToggle" },
+    config = conf.nvim_doc_help,
+})
 
 completion({
     "hrsh7th/nvim-cmp",
