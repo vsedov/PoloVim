@@ -16,16 +16,20 @@ local plug_map = {
     ["x|@"] = map_cmd(":<C-u>call ExecuteMacroOverVisualRange()<CR>"):with_noremap(),
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoNameBufferline<CR>"):with_noremap():with_silent():with_nowait(),
 
+    -- check whats actually loaded
+    ["n|<localleader>ps"] = map_cmd("<cmd>PackerStatus<cr>"):with_noremap():with_silent(),
+
     ["n|<C-]>"] = map_args("Template"),
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>"):with_noremap():with_silent(),
     ["n|<Leader>e"] = map_cr("NeoTreeFocusToggle"):with_noremap():with_silent(),
     ["n|<Leader>F"] = map_cr("NeoTreeFocus"):with_noremap():with_silent(),
     ["n|<Leader>cf"] = map_cr("Neotree float reveal_file=<cfile> reveal_force_cwd"):with_noremap():with_silent(),
     ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
-    ["n|ga"] = map_cmd("<Cmd>CodeActionMenu<cr>"):with_noremap():with_silent(),
+    ["n|gA"] = map_cmd("<Cmd>CodeActionMenu<cr>"):with_noremap():with_silent(),
     ["v|ga"] = map_cmd("<cmd>CodeActionMenu<Cr>"):with_noremap():with_silent(),
     ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
-    ["n|gA"] = map_cmd("<cmd>Lspsaga code_action<CR>"):with_noremap():with_silent(),
+
+    ---- private peek
     ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.lsp.lsp.utils.peek".toggle_diagnostics_visibility()<CR>')
         :with_noremap()
         :with_silent(),
@@ -40,6 +44,7 @@ local plug_map = {
     ["n|dpk"] = map_cmd('<cmd>lua require"modules.lsp.lsp.utils.peek".PeekImplementation()<CR>')
         :with_noremap()
         :with_silent(),
+    ---- private peek
 
     ["n|<Leader>gR"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
 

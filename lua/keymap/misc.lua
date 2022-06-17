@@ -6,9 +6,6 @@ local map_args = bind.map_args
 
 local plug_map = {
 
-    ["n|gpd"] = map_cu("GotoPrev"):with_noremap(),
-    ["n|gpi"] = map_cu("GotoImp"):with_noremap(),
-    ["n|gpt"] = map_cu("GotoTel"):with_noremap(),
     ["n|<Leader><F2>"] = map_cu("UndotreeToggle"):with_noremap():with_silent(),
     ["n|<Leader>om"] = map_cu("MarkdownPreview"):with_noremap():with_silent(),
     ["n|<leader>sw"] = map_cu("ISwapWith"):with_noremap():with_silent(),
