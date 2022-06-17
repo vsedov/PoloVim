@@ -107,29 +107,6 @@ function autocmd.load_autocmds()
                 end,
             },
             {
-                "BufReadPost",
-                { "*.py", "*.lua", "*.tex", "*.norg" },
-                function()
-                    if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then
-                        if vim.fn.line([['"]]) > 0 and vim.fn.line([['"]]) <= vim.fn.line("$") then
-                            -- Check if the last line of the buffer is the same as the window
-                            if vim.fn.line("w$") == vim.fn.line("$") then
-                                -- Set line to last line edited
-                                vim.cmd([[normal! g`"]])
-                                -- Try to center
-                            elseif
-                                vim.fn.line("$") - vim.fn.line([['"]])
-                                > ((vim.fn.line("w$") - vim.fn.line("w0")) / 2) - 1
-                            then
-                                vim.cmd([[normal! g`"zz]])
-                            else
-                                vim.cmd([[normal! G'"<c-e>]])
-                            end
-                        end
-                    end
-                end,
-            },
-            {
                 "BufWritePre",
                 "*",
                 function()
@@ -242,12 +219,6 @@ function autocmd.load_autocmds()
             },
             {
                 "FileType",
-                { "qf", "help", "man", "ls:pinfo" },
-                "nnoremap <silent> <buffer> q :close<CR>",
-            },
-
-            {
-                "FileType",
                 "dashboard",
                 "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2",
             },
@@ -328,6 +299,36 @@ function autocmd.load_autocmds()
 
                     if is_eligible then
                         vim.keymap.set("n", "q", smart_close, { buffer = 0, nowait = true })
+                    end
+                end,
+            },
+        },
+        Utilities = {
+            {
+                "BufReadCmd",
+                "file:///*",
+                function(args)
+                    vim.cmd(fmt("bd!|edit %s", vim.uri_to_fname(args.file)))
+                end,
+            },
+            {
+                -- last place
+                "BufRead",
+                "*",
+                function()
+                    if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
+                        -- check if filetype isn't one of the listed
+                        if not vim.tbl_contains({ "gitcommit", "help", "packer", "toggleterm" }, vim.bo.ft) then
+                            -- check if mark `"` is inside the current file (can be false if at end of file and stuff got deleted outside neovim)
+                            -- if it is go to it
+                            vim.cmd([[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]])
+                            -- get cursor position
+                            local cursor = vim.api.nvim_win_get_cursor(0)
+                            -- if there are folds under the cursor open them
+                            if vim.fn.foldclosed(cursor[1]) ~= -1 then
+                                vim.cmd([[silent normal! zO]])
+                            end
+                        end
                     end
                 end,
             },
