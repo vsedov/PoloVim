@@ -62,15 +62,13 @@ local plug_map = {
 
     ["i|<C-U>"] = map_cmd([[<ESC>b~A]]):with_silent():with_noremap(),
     ["n|¢"] = map_cmd([[bl~lhe]]):with_silent():with_noremap(),
-    ["n||"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']]):with_silent():with_expr(),
-    ["n|_"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']]):with_silent():with_expr(),
+    ["n||_"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']]):with_silent():with_expr(),
+    ["n|||"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']]):with_silent():with_expr(),
 
     ["i|!"] = map_cmd([[!<c-g>u]]):with_silent():with_noremap(),
     ["i|."] = map_cmd([[.<c-g>u]]):with_silent():with_noremap(),
     ["i|?"] = map_cmd([[?<c-g>u]]):with_silent():with_noremap(),
 
-    ["n|n"] = map_cmd([[nzzzv]]):with_noremap():with_silent(),
-    ["n|N"] = map_cmd([[Nzzzv]]):with_noremap():with_silent(),
     -- Change two horizontally split windows to vertical splits
     ["n|<localleader>wh"] = map_cmd([[<C-W>t <C-W>K]]):with_noremap():with_silent(),
     -- Change two vertically split windows to horizontal splits
