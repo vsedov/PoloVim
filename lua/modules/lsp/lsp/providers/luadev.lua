@@ -1,13 +1,13 @@
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 local lspconfig = require("lspconfig")
--- local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
--- local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
+local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
+local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
 local runtime_path = {}
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
+-- Log:info(sumneko_binary, "-E", sumneko_root_path .. "/main.lua")
 local sumneko_lua_server = enhance_attach({
-    -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-    cmd = { "lua-language-server" },
+    cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     settings = {
         Lua = {
             diagnostics = {
@@ -26,11 +26,13 @@ local sumneko_lua_server = enhance_attach({
                 },
             },
             completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
+            hint = {
+                enable = true,
+            },
             workspace = {
                 -- remove all of this, as it slows things down
                 library = {
-                    -- vim.api.nvim_get_runtime_file("", true),
-                    -- [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = false,
+                    [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = true,
                     -- vim.api.nvim_get_runtime_file("", false),
                     [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
