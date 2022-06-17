@@ -41,63 +41,44 @@ function config.setup_yanky()
 end
 
 function config.config_yanky()
+    local mapping = require("yanky.telescope.mapping")
     require("yanky").setup({
-        preserve_cursor_position = {
-            enabled = true,
+        ring = {
+            history_length = 50,
+            storage = "shada",
+            sync_with_numbered_registers = true,
+        },
+        picker = {
+            telescope = {
+                mappings = {
+                    default = mapping.put("p"),
+                    i = {
+                        ["<c-p>"] = mapping.put("p"),
+                        ["<c-k>"] = mapping.put("P"),
+                        ["<c-x>"] = mapping.delete(),
+                    },
+                    n = {
+                        p = mapping.put("p"),
+                        P = mapping.put("P"),
+                        d = mapping.delete(),
+                    },
+                },
+            },
         },
         system_clipboard = {
             sync_with_ring = true,
         },
-        ring = {
-            history_length = 10,
-            storage = "shada",
-            sync_with_numbered_registers = true,
+        highlight = {
+            on_put = true,
+            on_yank = true,
+            timer = 500,
+        },
+        preserve_cursor_position = {
+            enabled = true,
         },
     })
-end
-
-function config.lightspeed_setup()
-    local default_keymaps = {
-        { "n", "<M-s>", "<Plug>Lightspeed_omni_s" },
-        { "n", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-        { "x", "<M-s>", "<Plug>Lightspeed_omni_s" },
-        { "x", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-        { "o", "<M-s>", "<Plug>Lightspeed_omni_s" },
-        { "o", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-
-        { "n", "gs", "<Plug>Lightspeed_gs" },
-        { "n", "gS", "<Plug>Lightspeed_gS" },
-        { "x", "gs", "<Plug>Lightspeed_gs" },
-        { "x", "gS", "<Plug>Lightspeed_gS" },
-        { "o", "gs", "<Plug>Lightspeed_gs" },
-        { "o", "gS", "<Plug>Lightspeed_gS" },
-    }
-    for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
-    end
-end
-function config.lightspeed()
-    require("lightspeed").setup({
-        ignore_case = false,
-        exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
-
-        --- s/x ---
-        jump_to_unique_chars = { safety_timeout = 400 },
-        match_only_the_start_of_same_char_seqs = true,
-        force_beacons_into_match_width = false,
-        -- Display characters in a custom way in the highlighted matches.
-        substitute_chars = { ["\r"] = "¬" },
-        -- Leaving the appropriate list empty effectively disables "smart" mode,
-        -- and forces auto-jump to be on or off.
-        -- These keys are captured directly by the plugin at runtime.
-        special_keys = {
-            next_match_group = "<TAB>",
-            prev_match_group = "<S-Tab>",
-        },
-        --- f/t ---
-        limit_ft_matches = 20,
-        repeat_ft_with_target_char = true,
-    })
+    require("telescope").load_extension("yank_history")
+    vim.keymap.set("n", "<leader>yu", "<cmd>Telescope yank_history<cr>", {})
 end
 
 function config.comment()

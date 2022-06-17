@@ -40,17 +40,11 @@ editor({
 
         "<Plug>(YankyCycleForward)",
         "<Plug>(YankyCycleBackward)",
+        "<leader>u",
     },
     setup = conf.setup_yanky,
     config = conf.config_yanky,
-})
-
-editor({
-    "ggandor/lightspeed.nvim",
-    setup = conf.lightspeed_setup,
-    event = "BufReadPost",
-    opt = true,
-    config = conf.lightspeed,
+    requires = "telescope.nvim",
 })
 
 -- -- -- NORMAL mode:
@@ -110,13 +104,23 @@ editor({ "nyngwang/NeoZoom.lua", opt = true })
 
 editor({
     "chaoren/vim-wordmotion",
-    opt = true,
-    fn = {
-        "<Plug>WordMotion_w",
-        "<Plug>WordMotion_b",
-        "<Plug>WordMotion_gE",
+    keys = {
+        { "n", "<Plug>WordMotion_" },
+        { "x", "<Plug>WordMotion_" },
+        { "o", "<Plug>WordMotion_" },
+        { "c", "<Plug>WordMotion_" },
     },
-    keys = { "w", "W", "gE", "b", "B" },
+    setup = function()
+        vim.g.wordmotion_uppercase_spaces = { "-" }
+        vim.g.wordmotion_nomap = 1
+        for _, key in ipairs({ "e", "b", "w", "ge", "E", "B", "W", "gE" }) do
+            vim.keymap.set({ "n", "x", "o" }, key, "<Plug>WordMotion_" .. key)
+        end
+        vim.keymap.set({ "x", "o" }, "aW", "<Plug>WordMotion_aW")
+        vim.keymap.set({ "x", "o" }, "iW", "<Plug>WordMotion_iW")
+        vim.keymap.set("c", "<C-R><C-W>", "<Plug>WordMotion_<C-R><C-W>")
+        vim.keymap.set("c", "<C-R><C-A>", "<Plug>WordMotion_<C-R><C-A>")
+    end,
 })
 
 editor({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
