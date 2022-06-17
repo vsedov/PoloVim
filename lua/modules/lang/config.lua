@@ -386,7 +386,6 @@ function config.neotest_setup()
                 require("packer").loader("neotest")
             end
         end,
-        once = true,
     })
 end
 
@@ -509,6 +508,19 @@ function config.neotest()
     add_cmd("TestAttach", function()
         require("neotest").run.attach()
     end, { force = true })
+
+    local cmd = {
+        ["<leader>ur"] = "TestNear",
+        ["<leader>uc"] = "TestCurrent",
+        ["<leader>us"] = "TestSummary",
+        ["<leader>uo"] = "TestOutput",
+        ["<leader>uS"] = "TestStrat",
+        ["<leader>uh"] = "TestStop",
+    }
+
+    for i, v in pairs(cmd) do
+        vim.keymap.set("n", i, "<cmd>" .. v .. "<cr>", { buffer = 0 })
+    end
 end
 
 function config.coverage()
@@ -519,7 +531,69 @@ function config.python_dev()
     require("py").setup({
         leader = "<leader><leader>",
         mappings = true,
+        taskipy = true,
+        poetry_install_every = 1,
+        ipython_in_vsplit = 1,
+        ipython_auto_install = 1,
+        ipython_auto_reload = 1,
+        ipython_send_imports = 1,
+        envrc = {
+            "layout_poetry",
+            "export PYTHONPATH=$(pwd)",
+            '#eval "$(register-python-argcomplete cz)"',
+        },
+        use_direnv = true,
     })
+end
+
+function config.goto_preview()
+    local telescope = require("telescope.themes")
+
+    require("goto-preview").setup({
+        width = 80, -- Width of the floating window
+        height = 15, -- Height of the floating window
+        border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
+        default_mappings = false, -- Bind default mappings
+        debug = false, -- Print debug information
+        opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+        resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
+        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        references = { -- Configure the telescope UI for slowing the references cycling window.
+            telescope = {
+                require("telescope.themes").get_dropdown({
+                    winblend = 15,
+                    layout_config = {
+                        prompt_position = "top",
+                        width = 64,
+                        height = 15,
+                    },
+                    border = {},
+                    previewer = false,
+                    shorten_path = false,
+                }),
+            },
+        },
+        -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+        focus_on_open = true, -- Focus the floating window when opening it.
+        dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
+        force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+        bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
+    })
+    vim.keymap.set("n", "gt", function()
+        require("goto-preview").goto_preview_definition()
+    end, { noremap = true })
+
+    vim.keymap.set("n", "gi", function()
+        require("goto-preview").goto_preview_implementation()
+    end, { noremap = true })
+
+    vim.keymap.set("n", "gr", function()
+        require("goto-preview").goto_preview_references()
+    end, { noremap = true })
+
+    vim.keymap.set("n", "gC", function()
+        require("goto-preview").close_all_win()
+    end, { noremap = true })
 end
 
 return config

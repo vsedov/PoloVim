@@ -50,14 +50,6 @@ lang({
     opt = true,
 })
 
--- Yay gotopreview lazy loaded
-lang({
-    "rmagatti/goto-preview",
-    cmd = { "GotoPrev", "GotoImp", "GotoTel" },
-    requires = "telescope.nvim",
-    config = conf.goto_preview,
-})
-
 lang({ "JoosepAlviste/nvim-ts-context-commentstring", opt = true })
 
 lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
@@ -173,4 +165,11 @@ lang({ "mgedmin/coverage-highlight.vim", ft = "python", opt = true, run = ":Upda
 -- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
 -- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
 lang({ "~/GitHub/active_development/py.nvim", ft = "python", opt = true, config = conf.python_dev })
--- return lang
+
+lang({
+    "rmagatti/goto-preview",
+    keys = { "gi", "gt", "gr", "gC" },
+    requires = "telescope.nvim",
+    after = "nvim-lspconfig",
+    config = conf.goto_preview,
+})
