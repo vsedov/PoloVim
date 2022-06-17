@@ -13,6 +13,7 @@ tools({
     ft = { "python" },
     opt = true,
     config = function()
+        vim.g.nayvy_import_path_format = "all_relative"
         vim.g.nayvy_import_config_path = "$HOME/.config/nayvy/nayvy.py"
     end,
 })
@@ -24,7 +25,6 @@ tools({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }
 tools({
     "is0n/fm-nvim",
     cmd = {
-        "Neomutt",
         "Lazygit", -- 3 [ neogit + fugative + lazygit depends how i feel.]
         "Joshuto", -- 2
         "Broot",

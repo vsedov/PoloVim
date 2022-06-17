@@ -314,7 +314,7 @@ function config.notify()
         end,
     })
     vim.notify = notify
-    vim.keymap.set("n", "-+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "|+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
     require("telescope").load_extension("notify")
 end
 
@@ -335,9 +335,11 @@ function config.neo_tree()
         enable_diagnostics = true,
         event_handlers = {
             {
-                event = "neo_tree_buffer_enter",
-                handler = function()
-                    vim.wo.signcolumn = "no"
+                event = "vim_buffer_enter",
+                handler = function(_)
+                    if vim.bo.filetype == "neo-tree" then
+                        vim.wo.signcolumn = "auto"
+                    end
                 end,
             },
         },
