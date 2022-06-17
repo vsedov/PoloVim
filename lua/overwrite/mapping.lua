@@ -19,8 +19,6 @@ local keys = { --
     ["n|<Leader>dw"] = map_cr("<cmd>lua require'dap.ui.widgets'.hover()"):with_expr(), -- TODO: another key?
     ["v|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.visual_hover()"):with_expr(),
 
-    -- Plugin Vista
-    ["n|<Leader>v]"] = map_cu("Vista!!"):with_noremap():with_silent(),
     -- tshit
     ["o|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
     ["v|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),

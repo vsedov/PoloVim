@@ -77,6 +77,7 @@ vim.keymap.set("x", "L", "<cmd>STSSelectFirstChildNode<cr>", opts)
 vim.keymap.set("n", "gv", function() -- only jump to variable_declarations
     sts.targeted_jump({ "variable_declaration" })
 end, opts)
+
 vim.keymap.set("n", "gfu", function() -- only jump to functions
     sts.targeted_jump({ "function", "function_definition" })
     --> In this example, the Lua language schema uses "function",
