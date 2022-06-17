@@ -15,13 +15,8 @@ local keys = { --
     ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)"):with_expr(),
     ["n|<F6>"] = map_cu("Jaq qf"):with_noremap():with_silent(),
 
-    ["n|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.hover()"):with_expr(),
-    ["n|<Leader>dw"] = map_cr("<cmd>lua require'dap.ui.widgets'.hover()"):with_expr(), -- TODO: another key?
-    ["v|<Leader>di"] = map_cr("<cmd>lua require'dap.ui.variables'.visual_hover()"):with_expr(),
-
-    -- tshit
-    ["o|m"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
-    ["v|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
+    ["o|n"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_silent(),
+    ["v|N"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>"):with_noremap():with_silent(),
 
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]]):with_noremap(),
     ["n|;n"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]]):with_noremap(),
