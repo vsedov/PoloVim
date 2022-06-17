@@ -5,7 +5,7 @@ local map_cmd = bind.map_cmd
 local map_args = bind.map_args
 
 local plug_map = {
-    ["n|<Leader>up"] = map_cmd('<cmd>lua require"utils.telescope".find_updir()<CR>'):with_noremap():with_silent(),
+    ["n|<Leader>U"] = map_cmd('<cmd>lua require"utils.telescope".find_updir()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>ff"] = map_cmd('<cmd>lua require"utils.telescope".find_files()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>fF"] = map_cmd('<cmd>lua require"utils.telescope".files()<CR>'):with_noremap():with_silent(),
     ["n|<Leader>fn"] = map_cmd('<cmd>lua require"utils.telescope".find_notes()<CR>'):with_noremap():with_silent(),
@@ -51,7 +51,8 @@ local plug_map = {
     ["n|<Leader>fl"] = map_cu("Telescope loclist"):with_noremap():with_silent(),
     ["n|<Leader>fc"] = map_cu("Telescope git_commits"):with_noremap():with_silent(),
     ["n|<Leader>vv"] = map_cu("Telescope treesitter"):with_noremap():with_silent(),
-    ["n|<Leader>y"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
+
+    ["n|<Leader>yy"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>'):with_noremap():with_silent(),
 }
 
 return plug_map

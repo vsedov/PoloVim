@@ -437,6 +437,10 @@ M.neoclip = function()
     telescope.extensions.neoclip.default(dropdown)
 end
 
+M.yank = function()
+    vim.cmd([[packadd yanky.nvim]])
+end
+
 M.refactor = function()
     local opts = {
         sorting_strategy = "ascending",
