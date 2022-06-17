@@ -1,24 +1,20 @@
 local conf = require("modules.misc.config")
 local misc = require("core.pack").package
+
 misc({
     "ziontee113/syntax-tree-surfer",
-    keys = {
-        { "n", "vd" },
-        { "n", "vu" },
-        { "n", "vx" },
-        { "n", "vn" },
-
-        { "x", "J" },
-        { "x", "K" },
-        { "x", "H" },
-        { "x", "L" },
-
-        { "x", "<A-j>" },
-        { "x", "<A-k>" },
-    },
+    branch = "2.1",
+    -- event = "BufEnter",
     config = conf.syntax_surfer,
 })
 
+misc({
+    "ggandor/lightspeed.nvim",
+    setup = conf.lightspeed_setup,
+    event = "BufReadPost",
+    opt = true,
+    config = conf.lightspeed,
+})
 -- nvim-colorizer replacement
 misc({
     "rrethy/vim-hexokinase",

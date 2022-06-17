@@ -1,25 +1,51 @@
 local config = {}
 
 function config.syntax_surfer()
+    require("modules.misc.syntax_surfer")
+end
+
+function config.lightspeed_setup()
     local default_keymaps = {
-        { "n", "vd", '<cmd>lua require("syntax-tree-surfer").move("n", false)<cr>' },
-        { "n", "vu", '<cmd>lua require("syntax-tree-surfer").move("n", true)<cr>' },
-        -- .select() will show you what you will be swapping with .move(), you'll get used to .select() and .move() behavior quite soon!
-        { "n", "vx", '<cmd>lua require("syntax-tree-surfer").select()<cr>' },
-        -- .select_current_node() will select the current node at your cursor
-        { "n", "vn", '<cmd>lua require("syntax-tree-surfer").select_current_node()<cr>' },
+        { "n", "<M-s>", "<Plug>Lightspeed_omni_s" },
+        { "n", "<M-S>", "<Plug>Lightspeed_omni_gs" },
+        { "x", "<M-s>", "<Plug>Lightspeed_omni_s" },
+        { "x", "<M-S>", "<Plug>Lightspeed_omni_gs" },
+        { "o", "<M-s>", "<Plug>Lightspeed_omni_s" },
+        { "o", "<M-S>", "<Plug>Lightspeed_omni_gs" },
 
-        { "x", "J", '<cmd>lua require("syntax-tree-surfer").surf("next", "visual")<cr>' },
-        { "x", "K", '<cmd>lua require("syntax-tree-surfer").surf("prev", "visual")<cr>' },
-        { "x", "H", '<cmd>lua require("syntax-tree-surfer").surf("parent", "visual")<cr>' },
-        { "x", "L", '<cmd>lua require("syntax-tree-surfer").surf("child", "visual")<cr>' },
-
-        { "x", "<A-j>", '<cmd>lua require("syntax-tree-surfer").surf("next", "visual", true)<cr>' },
-        { "x", "<A-k>", '<cmd>lua require("syntax-tree-surfer").surf("prev", "visual", true)<cr>' },
+        { "n", "gs", "<Plug>Lightspeed_gs" },
+        { "n", "gS", "<Plug>Lightspeed_gS" },
+        { "x", "gs", "<Plug>Lightspeed_gs" },
+        { "x", "gS", "<Plug>Lightspeed_gS" },
+        { "o", "gs", "<Plug>Lightspeed_gs" },
+        { "o", "gS", "<Plug>Lightspeed_gS" },
     }
     for _, m in ipairs(default_keymaps) do
         vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
     end
+end
+function config.lightspeed()
+    require("lightspeed").setup({
+        ignore_case = false,
+        exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
+
+        --- s/x ---
+        jump_to_unique_chars = { safety_timeout = 400 },
+        match_only_the_start_of_same_char_seqs = true,
+        force_beacons_into_match_width = false,
+        -- Display characters in a custom way in the highlighted matches.
+        substitute_chars = { ["\r"] = "¬" },
+        -- Leaving the appropriate list empty effectively disables "smart" mode,
+        -- and forces auto-jump to be on or off.
+        -- These keys are captured directly by the plugin at runtime.
+        special_keys = {
+            next_match_group = "<TAB>",
+            prev_match_group = "<S-Tab>",
+        },
+        --- f/t ---
+        limit_ft_matches = 20,
+        repeat_ft_with_target_char = true,
+    })
 end
 
 function config.hexokinase()
@@ -173,22 +199,34 @@ function config.marks()
 end
 
 function config.sidebar()
+    if not packer_plugins["neogit"].loaded then
+        require("packer").loader("neogit")
+    end
     require("sidebar-nvim").setup({
-        disable_default_keybindings = 0,
-        bindings = nil,
         open = true,
         side = "left",
-        initial_width = 35,
+        initial_width = 32,
         hide_statusline = false,
+        bindings = {
+            ["q"] = function(a, b) end,
+        },
         update_interval = 1000,
-        sections = { "datetime", "git", "diagnostics" },
-        section_separator = { "", "-----", "" },
+        section_separator = { "────────────────" },
+        sections = { "files", "git", "symbols", "containers" },
+
+        git = {
+            icon = "",
+        },
+        symbols = {
+            icon = "ƒ",
+        },
         containers = {
+            icon = "",
             attach_shell = "/bin/sh",
             show_all = true,
             interval = 5000,
         },
-        datetime = { format = "%a %b %d, %H:%M", clocks = { { name = "local" } } },
+        datetime = { format = "%a%b%d|%H:%M", clocks = { { name = "local" } } },
         todos = { ignored_paths = { "~" } },
     })
 end
