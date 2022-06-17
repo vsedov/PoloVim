@@ -60,11 +60,10 @@ local function add_lsp_buffer_keybindings(client, bufnr)
 
     local lsp_map = {
         ["<Leader>cw"] = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
-        ["gA"] = "<cmd>Lspsaga code_action<CR>",
         ["gX"] = "<cmd>Lspsaga range_code_action<CR>",
         ["gD"] = "<cmd>lua vim.lsp.buf.declaration()<CR>",
         ["gI"] = "<cmd>lua vim.lsp.buf.implementation()<CR>",
-        ["gr"] = "<cmd>lua vim.lsp.buf.references()<CR>",
+        ["gR"] = "<cmd>lua vim.lsp.buf.references()<CR>",
         ["[d"] = "<cmd>Lspsaga diagnostic_jump_prev<CR>",
         ["]d"] = "<cmd>Lspsaga diagnostic_jump_next<CR>",
         ["<leader>="] = "<cmd>lua vim.lsp.buf.formatting()<CR>",

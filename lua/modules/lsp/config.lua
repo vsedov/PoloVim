@@ -175,6 +175,7 @@ function config.lint()
         ignore_exitcode = true,
         parser = require("lint.parser").from_pattern(pattern, groups, severities, { ["source"] = "luacheck" }),
     }
+
     require("lint").linters.luacheck = commands
     require("lint").linters_by_ft = {
         lua = { "luacheck" },
