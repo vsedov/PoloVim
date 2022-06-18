@@ -4,7 +4,7 @@ local misc = require("core.pack").package
 misc({
     "ziontee113/syntax-tree-surfer",
     branch = "2.1",
-    -- event = "BufEnter",
+    event = "InsertEnter",
     config = conf.syntax_surfer,
 })
 
@@ -68,13 +68,12 @@ misc({ "Krafi2/jeskape.nvim", event = "InsertEnter", config = conf.jetscape })
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
 -- Need to lazyload
-misc({ "johmsalas/text-case.nvim", config = conf.text_case })
+misc({ "johmsalas/text-case.nvim", event = "CursorMoved", config = conf.text_case })
 
 misc({ "chentoast/marks.nvim", opt = true, keys = { "mx", "m", "m,", "m;" }, config = conf.marks })
 
 misc({
     "sidebar-nvim/sidebar.nvim",
-    module = "sidebar-nvim",
     cmd = {
         "SidebarNvimToggle",
         "SidebarNvimClose",
@@ -86,4 +85,3 @@ misc({
 })
 
 misc({ "onsails/diaglist.nvim", cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
--- return misc

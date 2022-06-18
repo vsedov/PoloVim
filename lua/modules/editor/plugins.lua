@@ -113,7 +113,7 @@ editor({
     setup = function()
         vim.g.wordmotion_uppercase_spaces = { "-" }
         vim.g.wordmotion_nomap = 1
-        for _, key in ipairs({ "e", "b", "w", "ge", "E", "B", "W", "gE" }) do
+        for _, key in ipairs({ "e", "b", "w", "E", "B", "W", "ge", "gE" }) do
             vim.keymap.set({ "n", "x", "o" }, key, "<Plug>WordMotion_" .. key)
         end
         vim.keymap.set({ "x", "o" }, "aW", "<Plug>WordMotion_aW")

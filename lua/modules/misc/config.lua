@@ -170,6 +170,8 @@ end
 
 function config.text_case()
     require("textcase").setup({})
+    vim.keymap.set("n", "gaw", "<cmd>lua require('textcase').current_word('to_snake_case')<cr>", { noremap = true })
+    vim.keymap.set("n", "gaW", "<cmd>lua require('textcase').lsp_rename('to_snake_case')<cr>", { noremap = true })
 end
 
 function config.marks()
