@@ -35,7 +35,6 @@ completion({
         { "f3fora/cmp-spell", after = "nvim-cmp", opt = true },
         { "octaltree/cmp-look", after = "nvim-cmp", opt = true },
         { "petertriho/cmp-git", after = "nvim-cmp", opt = true },
-        { "XXiaoA/cmp-events", after = "nvim-cmp", opt = true },
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },
     config = conf.cmp,

@@ -166,7 +166,6 @@ local sources = {
     { name = "neorg", priority = 6 },
     { name = "latex_symbols", priority = 1 },
     { name = "Dictionary" },
-    { name = "events", priority = 10 },
 }
 
 -- todo make this better too many if statmenets
