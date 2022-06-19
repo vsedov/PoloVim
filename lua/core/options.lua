@@ -114,8 +114,9 @@ local function load_options()
         signcolumn = "yes:3", --[auto yes] yes:3  auto:2  "number" auto: 2-4
         conceallevel = 2,
         concealcursor = "niv",
+        foldcolumn = "1", -- nice folds
+        -- wait for https://github.com/neovim/neovim/pull/17446 to be merged
     }
-
     local bw_global_local = {
         fillchars = {
             eob = " ",
@@ -126,6 +127,10 @@ local function load_options()
             vertleft = "╣",
             vertright = "╠",
             verthoriz = "╬",
+            fold = " ",
+            foldopen = "",
+            -- foldsep = " ",
+            foldclose = "",
         },
         spellfile = global.home .. ".config/nvim/spell/en.utf-8.add",
     }
