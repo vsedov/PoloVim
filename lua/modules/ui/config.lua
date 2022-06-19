@@ -550,8 +550,8 @@ function config.pretty_fold()
                 ": ",
                 "percentage",
                 " ",
-                function(config)
-                    return config.fill_char:rep(3)
+                function(fold_config)
+                    return fold_config.fill_char:rep(3)
                 end,
             },
         },
@@ -957,11 +957,51 @@ function config.transparent()
 end
 
 function config.dim()
-    require("neodim").setup()
+    require("neodim").setup({
+        hide = {
+            underline = true,
+        },
+    })
 end
 
 function config.colourutils()
     require("colortils").setup()
+end
+
+function config.clock_setup()
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*",
+        callback = function()
+            local f = vim.fn
+            if f.getcwd():match(f.stdpath("config")) then
+                require("packer").loader("clock.nvim")
+            end
+        end,
+    })
+end
+
+function config.clock()
+    local c = require("clock")
+    local f = vim.fn
+
+    c.setup({
+        border = {
+            "🭽",
+            "▔",
+            "🭾",
+            "▕",
+            "🭿",
+            "▁",
+            "🭼",
+            "▏",
+        },
+    })
+    if f.getcwd():match(f.stdpath("config")) then
+        c.Clock:new():count_up({
+            duration = { minutes = 30 },
+            threshold = { late = "00:15" }, -- at 15mins the clock will become red
+        })
+    end
 end
 
 vim.api.nvim_exec(

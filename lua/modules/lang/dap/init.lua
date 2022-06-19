@@ -1,8 +1,5 @@
-local api = vim.api
 local M = {}
-local HOME = os.getenv("HOME")
 local loader = require("packer").loader
-
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local wk = require("which-key")
@@ -55,7 +52,7 @@ M.setup = function()
             o = { step_over, "dap: step over" },
             l = { run_last, "dap REPL: run last" },
             t = { repl_toggle, "dap REPL: toggle" },
-            c = { run_to_cursor, "dap: To cursor" },
+            C = { run_to_cursor, "dap: To cursor" },
             uu = { up, "dap Up: up" },
             ud = { down, "dap down: down" },
         },
@@ -65,8 +62,6 @@ M.setup = function()
 end
 
 M.config = function()
-    local dap = require("dap")
-
     vim.fn.sign_define("DapBreakpoint", { text = "⧐", texthl = "Error", linehl = "", numhl = "" })
     vim.fn.sign_define("DapStopped", { text = "⧐", texthl = "Success", linehl = "", numhl = "" })
 end
@@ -108,6 +103,7 @@ M.dapui = function()
         d = {
             name = "+debugger",
             d = { float_element, "dap ui: evaluate item" },
+            s = { eval, "dap ui: eval" }, -- test this for the time
             z = { float_breakpoint, "dap ui: float breakpoint" },
             r = { float_repl, "dap ui: float repl" },
             a = { float_scopes, "dap ui: float scopes" },
