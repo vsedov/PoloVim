@@ -78,7 +78,7 @@ function config.gh()
 end
 
 function config.worktree()
-    function git_worktree(arg)
+    local function git_worktree(arg)
         if arg == "create" then
             require("telescope").extensions.git_worktree.create_git_worktree()
         else
@@ -87,7 +87,7 @@ function config.worktree()
     end
 
     require("git-worktree").setup({})
-    vim.api.nvim_create_user_command("Worktree", "lua git_worktree(<f-args>)", {
+    vim.api.nvim_create_user_command("Worktree", "lua require'modules.git.config'.worktree()(<f-args>)", {
         nargs = "*",
         complete = function()
             return { "create" }
@@ -108,37 +108,38 @@ function config.worktree()
             print("Delete worktree " .. metadata.path)
         end
     end)
+    return { git_worktree = git_worktree }
 end
 
 function config.diffview()
     local cb = require("diffview.config").diffview_callback
     require("diffview").setup({
-        diff_binaries = false, -- Show diffs for binaries
-        use_icons = true, -- Requires nvim-web-devicons
-        enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
+        diff_binaries = false, -- show diffs for binaries
+        use_icons = true, -- requires nvim-web-devicons
+        enhanced_diff_hl = false, -- see ':h diffview-config-enhanced_diff_hl'
         signs = { fold_closed = "", fold_open = "" },
         file_panel = {
-            position = "left", -- One of 'left', 'right', 'top', 'bottom'
-            width = 35, -- Only applies when position is 'left' or 'right'
-            height = 10, -- Only applies when position is 'top' or 'bottom'
+            position = "left", -- one of 'left', 'right', 'top', 'bottom'
+            width = 35, -- only applies when position is 'left' or 'right'
+            height = 10, -- only applies when position is 'top' or 'bottom'
         },
         key_bindings = {
-            -- The `view` bindings are active in the diff buffers, only when the current
-            -- tabpage is a Diffview.
+            -- the `view` bindings are active in the diff buffers, only when the current
+            -- tabpage is a diffview.
             view = {
-                ["<tab>"] = cb("select_next_entry"), -- Open the diff for the next file
-                ["<s-tab>"] = cb("select_prev_entry"), -- Open the diff for the previous file
-                ["<leader>e"] = cb("focus_files"), -- Bring focus to the files panel
-                ["<leader>b"] = cb("toggle_files"), -- Toggle the files panel.
+                ["<tab>"] = cb("select_next_entry"), -- open the diff for the next file
+                ["<s-tab>"] = cb("select_prev_entry"), -- open the diff for the previous file
+                ["<leader>e"] = cb("focus_files"), -- bring focus to the files panel
+                ["<leader>b"] = cb("toggle_files"), -- toggle the files panel.
             },
             file_panel = {
-                ["j"] = cb("next_entry"), -- Bring the cursor to the next file entry
+                ["j"] = cb("next_entry"), -- bring the cursor to the next file entry
                 ["<down>"] = cb("next_entry"),
-                ["k"] = cb("prev_entry"), -- Bring the cursor to the previous file entry.
+                ["k"] = cb("prev_entry"), -- bring the cursor to the previous file entry.
                 ["<up>"] = cb("prev_entry"),
-                ["<cr>"] = cb("select_entry"), -- Open the diff for the selected entry.
+                ["<cr>"] = cb("select_entry"), -- open the diff for the selected entry.
                 ["o"] = cb("select_entry"),
-                ["R"] = cb("refresh_files"), -- Update stats and entries in the file list.
+                ["r"] = cb("refresh_files"), -- update stats and entries in the file list.
                 ["<tab>"] = cb("select_next_entry"),
                 ["<s-tab>"] = cb("select_prev_entry"),
                 ["<leader>e"] = cb("focus_files"),
@@ -174,7 +175,7 @@ function config.gitsigns()
                 return "]c"
             end
             vim.schedule(gitsigns.next_hunk)
-            return "<Ignore>"
+            return "<ignore>"
         end, { expr = true })
 
         map("n", "[c", function()
@@ -182,27 +183,27 @@ function config.gitsigns()
                 return "[c"
             end
             vim.schedule(gitsigns.prev_hunk)
-            return "<Ignore>"
+            return "<ignore>"
         end, { expr = true })
 
         map("n", "<leader>hs", gitsigns.stage_hunk)
         map("n", "<leader>hr", gitsigns.reset_hunk)
         map("v", "<leader>hs", wrap(gitsigns.stage_hunk, { line("."), line("v") }))
         map("v", "<leader>hr", wrap(gitsigns.reset_hunk, { line("."), line("v") }))
-        map("n", "<leader>hS", gitsigns.stage_buffer)
+        map("n", "<leader>hs", gitsigns.stage_buffer)
         map("n", "<leader>hu", gitsigns.undo_stage_hunk)
-        map("n", "<leader>hR", gitsigns.reset_buffer)
+        map("n", "<leader>hr", gitsigns.reset_buffer)
         map("n", "<leader>hp", gitsigns.preview_hunk)
         map("n", "<leader>hb", wrap(gitsigns.blame_line, { full = true }))
         map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
         map("n", "<leader>hd", gitsigns.diffthis)
-        map("n", "<leader>hD", wrap(gitsigns.diffthis, "~"))
+        map("n", "<leader>hd", wrap(gitsigns.diffthis, "~"))
         map("n", "<leader>td", gitsigns.toggle_deleted)
 
-        map("n", "<leader>hQ", wrap(gitsigns.setqflist, "all"))
+        map("n", "<leader>hq", wrap(gitsigns.setqflist, "all"))
         map("n", "<leader>hq", wrap(gitsigns.setqflist))
 
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+        map({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>")
     end
     gitsigns.setup({
         debug_mode = true,
@@ -219,7 +220,7 @@ function config.gitsigns()
             border = "rounded",
         },
         current_line_blame = true,
-        current_line_blame_formatter = " : <author> | <author_time:%Y-%m-%d> | <summary>",
+        current_line_blame_formatter = " : <author> | <author_time:%y-%m-%d> | <summary>",
         current_line_blame_formatter_opts = {
             relative_time = true,
         },
@@ -251,7 +252,7 @@ function config.gitsigns()
         _refresh_staged_on_update = false,
         watch_gitdir = { interval = 1000, follow_files = true },
         sign_priority = 6,
-        status_formatter = nil, -- Use default
+        status_formatter = nil, -- use default
         update_debounce = 0,
         word_diff = true,
         _threaded_diff = true, -- no clue what this does
@@ -267,7 +268,7 @@ function config.neogit()
         disable_builtin_notifications = true,
         use_magit_keybindings = true,
         signs = {
-            -- { CLOSED, OPENED }
+            -- { closed, opened }
             section = { ">", "v" },
             item = { ">", "v" },
             hunk = { "", "" },
@@ -279,9 +280,9 @@ function config.neogit()
         mappings = {
             -- modify status buffer mappings
             status = {
-                -- Adds a mapping with "B" as key that does the "BranchPopup" command
-                ["B"] = "BranchPopup",
-                -- Removes the default mapping of "s"
+                -- adds a mapping with "b" as key that does the "branchpopup" command
+                ["b"] = "branchpopup",
+                -- removes the default mapping of "s"
             },
         },
     })
@@ -290,14 +291,14 @@ function config.gitlinker()
     require("gitlinker").setup()
 end
 function config.vgit()
-    -- use this as a diff tool (faster than Diffview)
+    -- use this as a diff tool (faster than diffview)
     -- there are overlaps with gitgutter. following are nice features
     require("vgit").setup({
         keymaps = {
             ["n <leader>ga"] = "actions", -- show all commands in telescope
             ["n <leader>ba"] = "buffer_gutter_blame_preview", -- show all blames
             ["n <leader>bp"] = "buffer_blame_preview", -- buffer diff
-            ["n <leader>bh"] = "buffer_history_preview", -- buffer commit history DiffviewFileHistory
+            ["n <leader>bh"] = "buffer_history_preview", -- buffer commit history diffviewfilehistory
             ["n <leader>gp"] = "buffer_staged_diff_preview", -- diff for staged changes
             ["n <leader>pd"] = "project_diff_preview", -- diffview is slow
         },
@@ -335,7 +336,7 @@ function config.git_fixer()
             require("gitsigns").refresh()
         end,
     })
-    vim.cmd([[command! -nargs=*  FixUp lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]])
-    vim.cmd([[command! -nargs=*  Ammend lua require('fixer/picker/telescope').commit{type="amend"} ]])
+    vim.cmd([[command! -nargs=*  fixup lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]])
+    vim.cmd([[command! -nargs=*  ammend lua require('fixer/picker/telescope').commit{type="amend"} ]])
 end
 return config

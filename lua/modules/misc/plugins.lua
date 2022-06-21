@@ -4,7 +4,7 @@ local misc = require("core.pack").package
 misc({
     "ziontee113/syntax-tree-surfer",
     branch = "2.1",
-    event = "InsertEnter",
+    -- event = "InsertEnter",
     config = conf.syntax_surfer,
 })
 
@@ -84,5 +84,4 @@ misc({
     config = conf.sidebar,
 })
 
-misc({ "onsails/diaglist.nvim"
-, keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })

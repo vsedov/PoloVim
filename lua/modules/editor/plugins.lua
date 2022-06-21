@@ -139,7 +139,7 @@ editor({
     config = conf.hlargs,
 })
 editor({
-    "folke/which-key.nvim",
+    "max397574/which-key.nvim",
     opt = true,
     after = "nvim-treesitter",
     config = function()
