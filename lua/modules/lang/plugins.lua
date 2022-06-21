@@ -173,3 +173,26 @@ lang({
     after = "nvim-lspconfig",
     config = conf.goto_preview,
 })
+
+-- Live coding
+lang({
+    "metakirby5/codi.vim",
+    cmd = { "CodiScratch", "CodiLiveBuf", "Codi", "Codi!", "CodiNew" },
+    setup = conf.codi_setup,
+})
+
+lang({
+    "michaelb/sniprun",
+    run = "bash ./install.sh",
+    cmd = {
+        "SnipRun",
+        "'<,'>SnipRun",
+        "SnipLive",
+        "SnipClose",
+        "SnipReset",
+        "SnipTerminate",
+        "SnipReplMemoryClean",
+        "SnipLive",
+    },
+    config = conf.sniprun,
+})
