@@ -75,7 +75,12 @@ ui({
 -- Use this with nvimtree .
 ui({ "elihunter173/dirbuf.nvim", cmd = { "Dirbuf" }, config = conf.dir_buff })
 
-ui({ "lukas-reineke/indent-blankline.nvim", opt = true, config = conf.blankline }) -- after="nvim-treesitter",
+ui({
+    "lukas-reineke/indent-blankline.nvim",
+    branch = "feature/extmark-priority",
+    opt = true,
+    config = conf.blankline,
+}) -- after="nvim-treesitter",
 
 -- disabled does not work with muliti split
 ui({

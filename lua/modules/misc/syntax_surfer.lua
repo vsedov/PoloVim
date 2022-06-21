@@ -38,14 +38,13 @@ sts.setup({
     },
 })
 
--- Syntax Tree Surfer
-
--- Normal Mode Swapping:
--- Swap The Master Node relative to the cursor with it's siblings, Dot Repeatable
+-- -- Normal Mode Swapping:
+-- -- Swap The Master Node relative to the cursor with it's siblings, Dot Repeatable
 vim.keymap.set("n", "vU", function()
     vim.opt.opfunc = "v:lua.STSSwapUpNormal_Dot"
     return "g@l"
 end, { silent = true, expr = true })
+
 vim.keymap.set("n", "vD", function()
     vim.opt.opfunc = "v:lua.STSSwapDownNormal_Dot"
     return "g@l"
@@ -93,7 +92,7 @@ vim.keymap.set("n", "gfo", function() -- only jump to for_statements
     sts.targeted_jump({ "for_statement", "do_clause", "while_statement" })
 end, opts)
 
-vim.keymap.set("n", "gj", function() -- jump to all that you specify
+vim.keymap.set("n", "J", function() -- jump to all that you specify
     sts.targeted_jump({
         "function",
         "function_definition",
