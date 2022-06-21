@@ -244,8 +244,21 @@ function config.diaglist()
         require("diaglist").open_all_diagnostics()
     end, { force = true })
     vim.api.nvim_create_user_command("Qfb", function()
-        require("diaglist").open_buffer_diagnostics()
+        vim.cmd([[lua require("diaglist").open_buffer_diagnostics()]])
     end, { force = true })
+
+    vim.keymap.set(
+        "n",
+        ";qw",
+        "<cmd>lua require('diaglist').open_all_diagnostics()<cr>",
+        { noremap = true, silent = true }
+    )
+    vim.keymap.set(
+        "n",
+        ";qq",
+        "<cmd>lua require('diaglist').open_buffer_diagnostics()<cr>",
+        { noremap = true, silent = true }
+    )
 end
 
 return config

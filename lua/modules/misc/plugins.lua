@@ -84,4 +84,5 @@ misc({
     config = conf.sidebar,
 })
 
-misc({ "onsails/diaglist.nvim", cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+misc({ "onsails/diaglist.nvim"
+, keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
