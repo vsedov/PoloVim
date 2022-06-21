@@ -249,6 +249,20 @@ local M = {
             i(2, "10"),
         })
     ),
+
+    s(
+        "typecheck",
+        fmt(
+            [[
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    {}]],
+            {
+                i(1, "..."),
+            }
+        )
+    ),
+
     s(
         "imp",
         fmt([[import {}]], {
