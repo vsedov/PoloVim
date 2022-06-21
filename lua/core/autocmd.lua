@@ -229,7 +229,13 @@ function autocmd.load_autocmds()
             {
                 "TextYankPost",
                 "*",
-                [[lua vim.highlight.on_yank({ higroup = "IncSearch", timeout = 400, on_macro = true, on_visual = true })]],
+                function()
+                    vim.highlight.on_yank({
+                        timeout = 500,
+                        on_visual = false,
+                        higroup = "Visual",
+                    })
+                end,
             },
         },
         quickfix = {
@@ -329,6 +335,15 @@ function autocmd.load_autocmds()
                                 vim.cmd([[silent normal! zO]])
                             end
                         end
+                    end
+                end,
+            },
+            {
+                "BufLeave",
+                "*",
+                function()
+                    if require("core.event_helper").can_save() then
+                        vim.cmd("silent! update")
                     end
                 end,
             },

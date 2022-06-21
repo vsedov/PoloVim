@@ -131,4 +131,30 @@ function M.hl_search()
     end
 end
 
+function M.empty(item)
+    if not item then
+        return true
+    end
+    local item_type = type(item)
+    if item_type == "string" then
+        return item == ""
+    elseif item_type == "table" then
+        return vim.tbl_isempty(item)
+    end
+end
+
+local save_excluded = {
+    "neo-tree",
+    "neo-tree-popup",
+    "lua.luapad",
+    "gitcommit",
+    "NeogitCommitMessage",
+}
+function M.can_save()
+    return M.empty(vim.bo.buftype)
+        and not M.empty(vim.bo.filetype)
+        and vim.bo.modifiable
+        and not vim.tbl_contains(save_excluded, vim.bo.filetype)
+end
+
 return M

@@ -150,8 +150,6 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    loader("heirline.nvim")
-    require("modules.ui.heirline") -- ignore
     require("utils.ui_overwrite")
     require("vscripts.tools")
     if vim.bo.filetype ~= "tex" or vim.bo.filetype ~= "md" or vim.bo.filetype ~= "norg" then
@@ -165,6 +163,9 @@ vim.defer_fn(function()
 
     loader("animate.vim")
     loader("presence.nvim")
+    loader("heirline.nvim")
+    require("modules.ui.heirline") -- ignore
+
     lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
