@@ -170,8 +170,7 @@ tools({ "ilAYAli/scMRU.nvim", module = "mru" })
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools({
     "kevinhwang91/nvim-bqf",
-    opt = true,
-    event = { "CmdlineEnter", "QuickfixCmdPre" },
+    event = "BufReadPost",
     config = conf.bqf,
 })
 
