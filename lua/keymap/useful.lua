@@ -25,7 +25,8 @@ local plug_map = {
     ["n|<Leader>F"] = map_cr("NeoTreeFocus"):with_noremap():with_silent(),
     ["n|<Leader>cf"] = map_cr("Neotree float reveal_file=<cfile> reveal_force_cwd"):with_noremap():with_silent(),
     ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
-    ["n|gA"] = map_cmd("<Cmd>CodeActionMenu<cr>"):with_noremap():with_silent(),
+
+    ["n|cc"] = map_cmd("<Cmd>CodeActionMenu<cr>"):with_noremap():with_silent(),
     ["v|ga"] = map_cmd("<cmd>CodeActionMenu<Cr>"):with_noremap():with_silent(),
     ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>"):with_noremap():with_silent(),
 
