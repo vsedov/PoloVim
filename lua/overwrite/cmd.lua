@@ -46,10 +46,6 @@ add_cmd("Tags", function()
     )
 end, { force = true })
 
-add_cmd("Keymaps", function()
-    require("overwrite.mapping").get_keymaps()
-end, { force = true })
-
 add_cmd("ColourScheme", function()
     require("utils.telescope").colorscheme()
 end, { force = true })

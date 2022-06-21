@@ -40,24 +40,20 @@ local keys = { --
     --- Refactoring
     ["v|<Leader>re"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]])
         :with_noremap()
-        :with_silent()
-        :with_expr(),
+        :with_silent(),
+
     ["v|<Leader>rf"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]])
         :with_noremap()
-        :with_silent()
-        :with_expr(),
+        :with_silent(),
     ["v|<Leader>rv"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]])
         :with_noremap()
-        :with_silent()
-        :with_expr(),
+        :with_silent(),
     ["v|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
         :with_noremap()
-        :with_silent()
-        :with_expr(),
+        :with_silent(),
     ["n|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]])
         :with_noremap()
-        :with_silent()
-        :with_expr(),
+        :with_silent(),
 
     ["v|<Leader>rr"] = map_cmd([[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]]):with_noremap(),
     ["n|<Leader>rp"] = map_cmd([[<cmd>lua require('refactoring').debug.printf({below = false})<CR>]]):with_noremap(),
