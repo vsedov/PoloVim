@@ -161,6 +161,7 @@ function config.format()
 end
 
 function config.lint()
+    local lint = require("lint")
     local pattern = "[^:]+:(%d+):(%d+)-(%d+): %((%a)(%d+)%) (.*)"
     local groups = { "lnum", "col", "end_col", "severity", "code", "message" }
     local severities = {
@@ -168,24 +169,25 @@ function config.lint()
         E = vim.diagnostic.severity.ERROR,
     }
 
-    local commands = {
+    local custom_lua_check = {
         cmd = "luacheck",
         stdin = true,
         args = { "--formatter", "plain", "--codes", "--ranges", "--config", "/home/viv/.config/.luacheckrc", "-" },
         ignore_exitcode = true,
         parser = require("lint.parser").from_pattern(pattern, groups, severities, { ["source"] = "luacheck" }),
     }
-
-    require("lint").linters.luacheck = commands
-    require("lint").linters_by_ft = {
+    lint.linters.luacheck = custom_lua_check
+    lint.linters_by_ft = {
         lua = { "luacheck" },
         markdown = { "vale" },
-        python = { "flake8", "codespell", "vulture" }, --  can be fucking anonying
+        python = { "flake8", "codespell" }, --  can be fucking anonying
     }
 end
 
 function config.rename()
-    require("inc_rename").setup()
+    require("inc_rename").setup({
+        hl_group = "Visual",
+    })
 end
 
 function config.navic()
