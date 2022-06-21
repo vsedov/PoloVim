@@ -1,5 +1,6 @@
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
+
 function config.fidget()
     local relative = "editor"
     require("fidget").setup({
@@ -478,7 +479,8 @@ function config.satellite()
                 enable = false,
             },
             marks = {
-                enable = true,
+                enable = false,
+                show_builtins = false, -- shows the builtin marks like [ ] < >
             },
         },
         excluded_filetypes = {
@@ -958,8 +960,19 @@ end
 
 function config.dim()
     require("neodim").setup({
+        alpha = 0.5,
+        blend_color = "#000000",
+        update_in_insert = {
+            enable = true,
+            delay = 100,
+        },
         hide = {
+            virtual_text = true,
+            signs = true,
             underline = true,
+        },
+        update_in_insert = {
+            enable = true, -- disable updates in insert mode
         },
     })
 end

@@ -37,7 +37,7 @@ ui({
         {
             -- only needed if you want to use the "open_window_picker" command
             "s1n7ax/nvim-window-picker",
-            tag = "1.*",
+            tag = "v1.2",
             opt = true,
             after = "neo-tree.nvim",
             config = function()
