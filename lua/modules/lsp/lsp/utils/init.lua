@@ -3,50 +3,6 @@
 local M = {}
 -- local autocmds = require("lvim.core.autocmds")
 local config = require("modules.lsp.lsp.utils.config")
-local function lsp_highlight_document(client, bufnr)
-    local status_ok, highlight_supported = pcall(function()
-        return client.supports_method("textDocument/documentHighlight")
-    end)
-    if not status_ok or not highlight_supported then
-        return
-    end
-    local augroup_exist, _ = pcall(vim.api.nvim_get_autocmds, {
-        group = "lsp_document_highlight",
-    })
-    if not augroup_exist then
-        vim.api.nvim_create_augroup("lsp_document_highlight", {})
-    end
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        group = "lsp_document_highlight",
-        buffer = bufnr,
-        callback = vim.lsp.buf.document_highlight,
-    })
-    vim.api.nvim_create_autocmd("CursorMoved", {
-        group = "lsp_document_highlight",
-        buffer = bufnr,
-        callback = vim.lsp.buf.clear_references,
-    })
-end
-
-local function lsp_code_lens_refresh(client, bufnr)
-    local status_ok, codelens_supported = pcall(function()
-        return client.supports_method("textDocument/codeLens")
-    end)
-    if not status_ok or not codelens_supported then
-        return
-    end
-    local augroup_exist, _ = pcall(vim.api.nvim_get_autocmds, {
-        group = "lsp_code_lens_refresh",
-    })
-    if not augroup_exist then
-        vim.api.nvim_create_augroup("lsp_code_lens_refresh", {})
-    end
-    vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-        group = "lsp_code_lens_refresh",
-        buffer = bufnr,
-        callback = vim.lsp.codelens.refresh,
-    })
-end
 
 local function add_lsp_buffer_keybindings(client, bufnr)
     local border = config.float.border
@@ -104,9 +60,7 @@ function M.common_on_attach(client, bufnr)
         config.on_attach_callback(client, bufnr)
     end
     require("nvim-navic").attach(client, bufnr)
-
-    lsp_highlight_document(client, bufnr)
-    lsp_code_lens_refresh(client, bufnr)
+    require("modules.lsp.lsp.utils.autocmd").setup_autocommands(client, bufnr)
     add_lsp_buffer_keybindings(client, bufnr)
 end
 
@@ -123,7 +77,6 @@ function M.setup()
         vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
     end
     require("modules.lsp.lsp.utils.handlers").setup()
-    require("modules.lsp.lsp.utils.autocmd")
     require("modules.lsp.lsp.utils.list")
 end
 
