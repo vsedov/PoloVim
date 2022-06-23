@@ -76,18 +76,6 @@ local smart_bs = function()
         if previous_char ~= " " then
             return rhs("<BS>")
         end
-
-        --
-        -- Originally I was calculating the number of <BS> to send, but
-        -- Neovim has some special casing that causes one <BS> to delete
-        -- multiple characters even when 'expandtab' is off (eg. if you hit
-        -- <BS> after pressing <CR> on a line with trailing whitespace and
-        -- Neovim inserts whitespace to match.
-        --
-        -- So, turn 'expandtab' on temporarily and let Neovim figure out
-        -- what a single <BS> should do.
-        --
-        -- See `:h i_CTRL-\_CTRL-O`.
         return rhs("<C-\\><C-o>:set expandtab<CR><BS><C-\\><C-o>:set noexpandtab<CR>")
     end
 end

@@ -46,9 +46,6 @@ local plug_map = {
         :with_noremap()
         :with_silent(),
     ---- private peek
-
-    ["n|<Leader>gR"] = map_cmd("<cmd>Lspsaga rename<CR>"):with_noremap():with_silent(),
-
     ["n|<Leader>v"] = map_cu("Vista!!"):with_noremap():with_silent(),
     ["n|<Leader>gt"] = map_cr(
         '<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>'

@@ -63,7 +63,7 @@ local plug_map = {
 
     ["n|<Leader>gr"] = map_cmd(function()
         return ":IncRename " .. vim.fn.expand("<cword>")
-    end):with_expr():with_noremap(),
+    end):with_expr(),
 }
 
 return plug_map
