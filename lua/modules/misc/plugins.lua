@@ -4,7 +4,39 @@ local misc = require("core.pack").package
 misc({
     "ziontee113/syntax-tree-surfer",
     branch = "2.1",
-    -- event = "InsertEnter",
+    keys = {
+        { "n", "vU" },
+        { "n", "vD" },
+        { "n", "vd" },
+        { "n", "vu" },
+        { "n", "vx" },
+        { "n", "vn" },
+
+        { "x", "J" },
+        { "x", "K" },
+        { "x", "H" },
+        { "x", "L" },
+
+        { "n", "gv" },
+        { "n", "gfu" },
+        { "n", "gif" },
+        { "n", "gfo" },
+        { "n", "J" },
+        { "n", "gv" },
+        { "x", "<A-j>" },
+        { "x", "<A-k>" },
+
+        { "n", "<C-o>" },
+        { "n", "<C-p>" },
+
+        { "n", "<c-;>" },
+        { "n", "<c-'>" },
+
+        { "n", "-" },
+        { "n", "=" },
+        { "n", "_" },
+        { "n", "+" },
+    },
     config = conf.syntax_surfer,
 })
 
