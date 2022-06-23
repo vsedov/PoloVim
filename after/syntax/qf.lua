@@ -19,4 +19,7 @@ vim.cmd([[
     hi def link qfNote DiagnosticHint
 
     let b:current_syntax = 'qf'
+
+    hi default link BqfPreviewFloat Normal
+    
 ]])
