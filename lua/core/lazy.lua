@@ -43,6 +43,7 @@ local function loadscheme()
     require("packer").loader(loading_theme)
 end
 loadscheme()
+loader("heirline.nvim")
 
 function Lazyload()
     _G.PLoader = loader

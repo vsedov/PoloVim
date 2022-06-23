@@ -17,14 +17,6 @@ local plug_map = {
     ["n|<C-M>K"] = map_cmd("<cmd>WinShift up<CR>"):with_noremap(),
     ["n|<C-M>L"] = map_cmd("<cmd>WinShift right<CR>"):with_noremap(),
 
-    ["n|<Leader>vf"] = map_cmd("<Plug>(ultest-run-file)"):with_silent(),
-    ["n|<Leader>vn"] = map_cmd("<Plug>(ultest-run-nearest)"):with_silent(),
-    ["n|<Leader>vg"] = map_cmd("<Plug>(ultest-output-jump)"):with_silent(),
-    ["n|<Leader>vo"] = map_cmd("<Plug>(ultest-output-show)"):with_silent(),
-    ["n|<Leader>vs"] = map_cmd("<Plug>(ultest-summary-toggle)"):with_silent(),
-    ["n|<Leader>va"] = map_cmd("<Plug>(ultest-attach)"):with_silent(),
-    ["n|<Leader>vx"] = map_cmd("<Plug>(ultest-stop-file)"):with_silent(),
-
     ["n|<Leader>d"] = map_cr("lua require('neogen').generate()"):with_noremap():with_silent(),
     ["n|<Leader>dc"] = map_cr("lua require('neogen').generate({type = 'class'})"):with_noremap():with_silent(),
     ["n|<Leader>ds"] = map_cr("lua require('neogen').generate({type = 'type'})"):with_noremap():with_silent(),

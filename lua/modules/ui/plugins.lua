@@ -7,7 +7,7 @@ ui({ "kyazdani42/nvim-web-devicons" })
 
 ui({
     "rebelot/heirline.nvim",
-    event = "ColorScheme",
+    opt = true,
     config = function()
         require("modules.ui.heirline")
     end,
@@ -83,7 +83,7 @@ ui({ "elihunter173/dirbuf.nvim", cmd = { "Dirbuf" }, config = conf.dir_buff })
 
 ui({
     "lukas-reineke/indent-blankline.nvim",
-    branch = "develop",
+    branch = "feature/extmark-priority",
     opt = true,
     config = conf.blankline,
 }) -- after="nvim-treesitter",
