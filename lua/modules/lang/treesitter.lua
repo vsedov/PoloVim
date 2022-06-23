@@ -219,9 +219,9 @@ local treesitter_ref = function()
             highlight_definitions = { enable = enable },
             highlight_current_scope = { enable = false },
             smart_rename = {
-                enable = false,
+                enable = true,
                 keymaps = {
-                    smart_rename = "<Leader>gr", -- mapping to rename reference under cursor
+                    smart_rename = "<Leader>gR", -- mapping to rename reference under cursor
                 },
             },
             navigation = {
