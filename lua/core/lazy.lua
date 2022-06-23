@@ -42,10 +42,10 @@ local function loadscheme()
 
     require("packer").loader(loading_theme)
 end
+loadscheme()
 
 function Lazyload()
     _G.PLoader = loader
-    loadscheme()
     if vim.wo.diff then
         lprint("diffmode")
         vim.cmd([[packadd nvim-treesitter]])
@@ -163,9 +163,6 @@ vim.defer_fn(function()
 
     loader("animate.vim")
     loader("presence.nvim")
-    loader("heirline.nvim")
-    require("modules.ui.heirline") -- ignore
-
     lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
