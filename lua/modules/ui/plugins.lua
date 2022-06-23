@@ -5,7 +5,13 @@ ui({ "camspiers/animate.vim", opt = true })
 
 ui({ "kyazdani42/nvim-web-devicons" })
 
-ui({ "rebelot/heirline.nvim", opt = true })
+ui({
+    "rebelot/heirline.nvim",
+    event = "ColorScheme",
+    config = function()
+        require("modules.ui.heirline")
+    end,
+})
 
 ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
 
@@ -77,7 +83,7 @@ ui({ "elihunter173/dirbuf.nvim", cmd = { "Dirbuf" }, config = conf.dir_buff })
 
 ui({
     "lukas-reineke/indent-blankline.nvim",
-    branch = "feature/extmark-priority",
+    branch = "develop",
     opt = true,
     config = conf.blankline,
 }) -- after="nvim-treesitter",
