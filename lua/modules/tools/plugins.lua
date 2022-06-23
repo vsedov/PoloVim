@@ -46,13 +46,6 @@ tools({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.ha
 
 tools({ "natecraddock/workspaces.nvim", module = "workspaces", config = conf.workspace })
 
-tools({
-    "axieax/urlview.nvim",
-    cmd = { "UrlView", "UrlView packer" },
-    config = conf.urlview,
-    after = "telescope.nvim",
-})
-
 tools({ "jghauser/mkdir.nvim", opt = true, cmd = "new", config = [[require'mkdir']] })
 
 tools({ "liuchengxu/vista.vim", cmd = "Vista", setup = conf.vim_vista, opt = true })
