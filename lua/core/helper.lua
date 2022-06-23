@@ -30,5 +30,7 @@ return {
         _G.use_gitsigns = function()
             return true
         end
+
+        _G.config_test = true
     end,
 }

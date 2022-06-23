@@ -5,28 +5,28 @@ local map_cmd = bind.map_cmd
 
 local def_map = {
     -- Vim map
-    ["n|<C-x>k"] = map_cr("bdelete"):with_noremap():with_silent(),
-    ["n|Y"] = map_cmd("y$"),
-    ["n|]w"] = map_cu("WhitespaceNext"):with_noremap(),
-    ["n|[w"] = map_cu("WhitespacePrev"):with_noremap(),
-    ["n|]b"] = map_cu("bp"):with_noremap(),
-    ["n|[b"] = map_cu("bn"):with_noremap(),
+    ["n|<C-x>k"] = map_cr("bdelete", "Buffer Delete"):with_noremap():with_silent(),
+    ["n|Y"] = map_cmd("y$", "Yank on $"),
+    ["n|]w"] = map_cu("WhitespaceNext","White space next"):with_noremap(),
+    ["n|[w"] = map_cu("WhitespacePrev", "White space prev"):with_noremap(),
+    ["n|]b"] = map_cu("bp", "buf prev"):with_noremap(),
+    ["n|[b"] = map_cu("bn", "buf next"):with_noremap(),
 
-    ["n|<Leader>w"] = map_cu("write"):with_noremap(),
-    ["n|<Leader>q"] = map_cmd(":q!<CR>"):with_noremap(),
+    ["n|<Leader>w"] = map_cu("write", "save"):with_noremap(),
+    ["n|<Leader>q"] = map_cmd(":q!<CR>", "exit"):with_noremap(),
 
-    ["n|<Space>cw"] = map_cu([[silent! keeppatterns %substitute/\s\+$//e]]):with_noremap():with_silent(),
+    ["n|<Space>cw"] = map_cu([[silent! keeppatterns %substitute/\s\+$//e]], "Subsitute"):with_noremap():with_silent(),
 
-    ["n|<C-h>"] = map_cmd("<C-w>h"):with_noremap(),
-    ["n|<C-l>"] = map_cmd("<C-w>l"):with_noremap(),
-    ["n|<C-j>"] = map_cmd("<C-w>j"):with_noremap(),
-    ["n|<C-k>"] = map_cmd("<C-w>k"):with_noremap(),
+    ["n|<C-h>"] = map_cmd("<C-w>h","Jump h"):with_noremap(),
+    ["n|<C-l>"] = map_cmd("<C-w>l", "Jump l"):with_noremap(),
+    ["n|<C-j>"] = map_cmd("<C-w>j", "Jump j"):with_noremap(),
+    ["n|<C-k>"] = map_cmd("<C-w>k", "Jump k"):with_noremap(),
 
-    ["n|<A-[>"] = map_cmd("<cmd>vertical resize +2<CR>"):with_silent(),
-    ["n|<A-;>"] = map_cmd("<cmd>resize -2<CR>"):with_silent(),
-    ["n|<A-#>"] = map_cmd("<cmd>resize +2<CR>"):with_silent(),
-    ["n|<A-]>"] = map_cmd("<cmd>vertical resize -2<CR>"):with_silent(),
-    ["n|<C-q>"] = map_cmd(":wq<CR>"),
+    ["n|<A-[>"] = map_cmd("<cmd>vertical resize +2<CR>", "resize +2 V"):with_silent(),
+    ["n|<A-;>"] = map_cmd("<cmd>resize -2<CR>", "resize -2"):with_silent(),
+    ["n|<A-#>"] = map_cmd("<cmd>resize +2<CR>", "resize +2"):with_silent(),
+    ["n|<A-]>"] = map_cmd("<cmd>vertical resize -2<CR>", "resize -2 V"):with_silent(),
+    ["n|<C-q>"] = map_cmd(":wq<CR>","save exit"),
 
     -- Insert
     ["i|<C-w>"] = map_cmd("<C-[>diwa"):with_noremap(),
@@ -36,9 +36,6 @@ local def_map = {
     ["i|<C-b>"] = map_cmd("<Left>"):with_noremap(),
     ["i|<C-f>"] = map_cmd("<Right>"):with_noremap(),
 
-    -- not needed but for coc
-    ["i|<C-e>"] = map_cmd([[pumvisible() ? "\<C-e>" : "\<End>"]]):with_noremap():with_expr(),
-
     -- command line
     ["c|<C-b>"] = map_cmd("<Left>"):with_noremap(),
     ["c|<C-f>"] = map_cmd("<Right>"):with_noremap(),
@@ -46,8 +43,8 @@ local def_map = {
     ["c|<C-e>"] = map_cmd("<End>"):with_noremap(),
     ["c|<C-d>"] = map_cmd("<Del>"):with_noremap(),
     ["c|<C-h>"] = map_cmd("<BS>"):with_noremap(),
-    ["c|<C-t>"] = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]]):with_noremap(),
-    ["c|::"] = map_cmd([[<C-r>=fnameescape(expand('%:p:h'))<cr>/]]):with_noremap():with_silent(),
+    ["c|<C-t>"] = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]],"current dir expand"):with_noremap(),
+    ["c|::"] = map_cmd([[<C-r>=fnameescape(expand('%:p:h'))<cr>/]], "fnameescape"):with_noremap():with_silent(),
     ["c|/"] = map_cmd([[getcmdtype() == "/" ? "\/" : "/"]]):with_noremap():with_silent():with_expr(),
     ["c|<C-f>"] = map_cmd([[getcmdpos() > strlen(getcmdline())? &cedit: "\<Lt>Right>"]])
         :with_noremap()

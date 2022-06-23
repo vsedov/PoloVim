@@ -13,7 +13,9 @@ local plug_map = {
             stack[i] = vim.fn.synIDattr(l, "name")
         end
         Log:info(vim.inspect(stack))
-    end):with_silent(),
+    end,
+    "Debug / Inspect"
+    ):with_silent(),
 
     -- Venv
     ["n|<localleader>V"] = map_cmd(function()
@@ -36,15 +38,9 @@ local plug_map = {
             vim.cmd([[mapclear <buffer>]])
             vim.b.venn_enabled = nil
         end
-    end):with_silent(),
-
-    ["n|<leader><C-U>"] = map_cmd(function()
-        local cursor = vim.api.nvim_win_get_cursor("0")
-        vim.api.nvim_feedkeys("b~", "n", true)
-        vim.defer_fn(function()
-            vim.api.nvim_win_set_cursor(0, cursor)
-        end, 1)
-    end):with_silent():with_noremap(),
+    end,
+    "Venn Toggle"
+    ):with_silent(),
 
     ["n|<leader>hw"] = map_cmd(function()
         if require("dynamic_help.extras.statusline").available() ~= "" then
@@ -53,17 +49,16 @@ local plug_map = {
             local help = vim.fn.input("Help Tag> ")
             require("dynamic_help").float_help(help)
         end
-    end):with_noremap():with_silent(),
+    end,
+    "Dynamic Help"
+    ):with_noremap():with_silent(),
     -- Scuffed way of doing this, but this works .
-
-    ["n|<M-l>"] = map_cmd(function()
-        require("neo-zoom").setup({})
-        vim.cmd([[NeoZoomToggle]])
-    end):with_noremap():with_silent():with_nowait(),
 
     ["n|<Leader>gr"] = map_cmd(function()
         return ":IncRename " .. vim.fn.expand("<cword>")
-    end):with_expr(),
+    end,
+    "rename"
+    ):with_expr(),
 }
 
 return plug_map
