@@ -83,7 +83,7 @@ ui({ "elihunter173/dirbuf.nvim", cmd = { "Dirbuf" }, config = conf.dir_buff })
 
 ui({
     "lukas-reineke/indent-blankline.nvim",
-    branch = "feature/extmark-priority",
+    branch = "develop",
     opt = true,
     config = conf.blankline,
 }) -- after="nvim-treesitter",

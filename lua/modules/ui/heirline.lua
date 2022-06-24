@@ -143,12 +143,6 @@ local ViMode = {
         local color = self:mode_color()
         return { fg = color, bold = true }
     end,
-    update = {
-        "ModeChanged",
-        callback = function()
-            vim.cmd("redrawstatus")
-        end,
-    },
 }
 
 local FileNameBlock = {

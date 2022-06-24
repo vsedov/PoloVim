@@ -1,0 +1,5 @@
+local cmp = require("cmp")
+local kind = require("utils.kind")
+local types = require("cmp.types")
+local str = require("cmp.utils.str")
+require("modules.completion.snippets")

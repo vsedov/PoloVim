@@ -574,47 +574,39 @@ vim.api.nvim_create_autocmd("FileType", {
     once = false,
 })
 
--- if vim.o.ft ~= 'sql' then
---   require'cmp'.setup.buffer { completion = {autocomplete = false} }
--- end
-cmp.setup.cmdline(":", {
-    window = {
-        completion = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
-        },
-        documentation = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
-        },
-    },
-    sources = cmp.config.sources({
+-- cmp.setup.cmdline("/", {
+--     window = {
+--         completion = {
+--             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+--             scrollbar = { "║" },
+--         },
+--         documentation = {
+--             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+--             scrollbar = { "║" },
+--         },
+--     },
+--     sources = {
+--         { name = "buffer" },
+--         { name = "nvim_lsp_document_symbol", priority = 10 },
+--     },
+-- })
 
-        { name = "cmdline", group_index = 1 },
-        -- { name = "cmdline_history", group_index = 2 },
-    }),
-    enabled = function()
-        return true
-    end,
-})
-
-cmp.setup.cmdline("/", {
-    window = {
-        completion = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
-        },
-        documentation = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            scrollbar = { "║" },
-        },
-    },
-    sources = {
-        -- { name = "cmdline_history" },
-        { name = "buffer" },
-        { name = "nvim_lsp_document_symbol" },
-    },
-})
+-- cmp.setup.cmdline(":", {
+--   completion = { keyword_length = 1 },
+--   formatting = {
+--     fields = { "abbr" },
+--     format = function(_, item)
+--       item.kind = nil
+--       return item
+--     end,
+--   },
+--   sources = { { name = "cmdline" }, { name = "path" } },
+--   window = {
+--     completion = {
+--       side_padding = 1,
+--     },
+--   },
+-- })
 
 local neorg = require("neorg")
 
