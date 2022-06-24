@@ -13,9 +13,7 @@ local plug_map = {
             stack[i] = vim.fn.synIDattr(l, "name")
         end
         Log:info(vim.inspect(stack))
-    end,
-    "Debug / Inspect"
-    ):with_silent(),
+    end, "Debug / Inspect"):with_silent(),
 
     -- Venv
     ["n|<localleader>V"] = map_cmd(function()
@@ -38,9 +36,7 @@ local plug_map = {
             vim.cmd([[mapclear <buffer>]])
             vim.b.venn_enabled = nil
         end
-    end,
-    "Venn Toggle"
-    ):with_silent(),
+    end, "Venn Toggle"):with_silent(),
 
     ["n|<leader>hw"] = map_cmd(function()
         if require("dynamic_help.extras.statusline").available() ~= "" then
@@ -49,16 +45,12 @@ local plug_map = {
             local help = vim.fn.input("Help Tag> ")
             require("dynamic_help").float_help(help)
         end
-    end,
-    "Dynamic Help"
-    ):with_noremap():with_silent(),
+    end, "Dynamic Help"):with_noremap():with_silent(),
     -- Scuffed way of doing this, but this works .
 
     ["n|<Leader>gr"] = map_cmd(function()
         return ":IncRename " .. vim.fn.expand("<cword>")
-    end,
-    "rename"
-    ):with_expr(),
+    end, "rename"):with_expr(),
 }
 
 return plug_map

@@ -1,15 +1,5 @@
 local global = require("core.global")
 
-local function bind_option(options)
-    for k, v in pairs(options) do
-        if v == true or v == false then
-            vim.cmd("set " .. k)
-        else
-            vim.cmd("set " .. k .. "=" .. v)
-        end
-    end
-end
-
 local function load_options()
     local global_local = {
         termguicolors = true,
@@ -35,14 +25,13 @@ local function load_options()
         undodir = global.cache_dir .. "undo/",
         backupdir = global.cache_dir .. "backup/",
         viewdir = global.cache_dir .. "view/",
-        spellfile = global.cache_dir .. "spell/en.uft-8.add",
-        history = 1000,
+        history = 2000,
         shada = "!,'300,<50,@100,s10,h",
         backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
         smarttab = true,
         smartindent = true,
         shiftround = true,
-        -- lazyredraw     = true;
+        lazyredraw = true,
         timeout = true,
         ttimeout = true,
         timeoutlen = 500,
@@ -94,9 +83,7 @@ local function load_options()
         winblend = 10,
         syntax = "off",
         background = "dark",
-    }
 
-    local bw_local = {
         synmaxcol = 1000,
         formatoptions = "1jcroql",
         textwidth = 80,
@@ -115,9 +102,6 @@ local function load_options()
         conceallevel = 2,
         concealcursor = "niv",
         foldcolumn = "1", -- nice folds
-        -- wait for https://github.com/neovim/neovim/pull/17446 to be merged
-    }
-    local bw_global_local = {
         fillchars = {
             eob = " ",
             vert = "║",
@@ -161,16 +145,13 @@ local function load_options()
             vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
         end
     end
-    -- vim.o
+
     for name, value in pairs(global_local) do
-        vim.o[name] = value
-    end
-    -- the cooler vim.o
-    for name, value in pairs(bw_global_local) do
         vim.opt[name] = value
     end
-    bind_option(bw_local)
 end
+vim.g.python_host_prog = "/usr/bin/python2"
+vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
 load_options()

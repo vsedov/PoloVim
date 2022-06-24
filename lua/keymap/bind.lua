@@ -19,7 +19,7 @@ function rhs_options:map_cmd(cmd_string, description)
 end
 
 function rhs_options:map_cr(cmd_string, description)
-        description = description or nil
+    description = description or nil
 
     self.cmd = (":%s<CR>"):format(cmd_string)
     self.description = description
@@ -27,7 +27,7 @@ function rhs_options:map_cr(cmd_string, description)
 end
 
 function rhs_options:map_args(cmd_string, description)
-        description = description or nil
+    description = description or nil
 
     self.cmd = (":%s<Space>"):format(cmd_string)
     self.description = description
@@ -35,7 +35,7 @@ function rhs_options:map_args(cmd_string, description)
 end
 
 function rhs_options:map_cu(cmd_string, description)
-        description = description or nil
+    description = description or nil
 
     self.cmd = (":<C-u>%s<CR>"):format(cmd_string)
     self.description = description
@@ -43,7 +43,7 @@ function rhs_options:map_cu(cmd_string, description)
 end
 
 function rhs_options:map_key(key_string, description)
-        description = description or nil
+    description = description or nil
 
     self.cmd = ("%s"):format(key_string)
     self.description = description
@@ -102,10 +102,10 @@ function pbind.nvim_load_mapping(mapping)
     for key, value in pairs(mapping) do
         --  Regex is faster for some reason than {{..},.. } or {..,{..}}
         local mode, keymap = key:match("([^|]*)|?(.*)")
-        local opts 
-        if value.description ~= nil then 
-             opts = vim.tbl_extend("keep", value.options, { desc = value.description })
-        else 
+        local opts
+        if value.description ~= nil then
+            opts = vim.tbl_extend("keep", value.options, { desc = value.description })
+        else
             opts = value.options
         end
         for i = 1, #mode do

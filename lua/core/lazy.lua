@@ -25,16 +25,17 @@ end
 
 local function loadscheme()
     local themes
-    -- if daylight() == "light" then
-    --     themes = { "kanagawa.nvim" }
-    -- else
-    --     themes = {
-    --         "kanagawa.nvim",
-    --         "kanagawa.nvim",
-    --     }
-    -- end
-    themes = { "kanagawa.nvim" }
+    if daylight() == "light" then
+        themes = { "kanagawa.nvim" }
+    else
+        themes = {
+            "kanagawa.nvim",
+            "catppuccin",
+            "tokyonight.nvim",
 
+ 
+        }
+    end
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
 
@@ -42,6 +43,8 @@ local function loadscheme()
 
     require("packer").loader(loading_theme)
 end
+require("vscripts.cursorhold")
+vim.g.cursorhold_updatetime = 100
 loadscheme()
 loader("heirline.nvim")
 
@@ -177,8 +180,5 @@ vim.defer_fn(function()
     loader("structlog.nvim")
     local notify = require("notify")
     vim.notify = notify
-    if vim.fn.wordcount()["bytes"] < 2048000 then
-        require("vscripts.cursorhold")
-    end
     lprint("all done")
 end, lazy_timer + 80)
