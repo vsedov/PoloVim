@@ -997,7 +997,6 @@ function config.clock_setup()
             if not config_test and f.getcwd():match(f.stdpath("config")) then
                 require("packer").loader("clock.nvim")
             end
-            
         end,
     })
 end
