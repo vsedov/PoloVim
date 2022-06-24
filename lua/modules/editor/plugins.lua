@@ -100,7 +100,7 @@ editor({
 })
 
 -- trying to figure out why this does not work .
-editor({ "nyngwang/NeoNoName.lua",cmd = "NeoNoName", opt = true })
+editor({ "nyngwang/NeoNoName.lua", cmd = "NeoNoName", opt = true })
 
 editor({
     "chaoren/vim-wordmotion",
