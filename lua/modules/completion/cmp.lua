@@ -157,16 +157,16 @@ local sources = {
 }
 
 -- todo make this better too many if statmenets
-local function use_tabnine()
-    local valid_file_type = { "python", "lua", "cpp", "c", "rust" }
-    return (vim.tbl_contains(valid_file_type, vim.o.filetype))
-end
-
-if use_tabnine() then
-    require("packer").loader("cmp-tabnine")
-    table.insert(sources, { name = "cmp_tabnine", priority = 9 })
-end
-
+-- local function use_tabnine()
+--     local valid_file_type = { "python", "lua", "cpp", "c", "rust" }
+--     return (vim.tbl_contains(valid_file_type, vim.o.filetype))
+-- end
+--
+-- if use_tabnine() then
+--     require("packer").loader("cmp-tabnine")
+--     table.insert(sources, { name = "cmp_tabnine", priority = 9 })
+-- end
+--
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end
