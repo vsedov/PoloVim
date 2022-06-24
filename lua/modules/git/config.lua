@@ -260,7 +260,7 @@ function config.gitsigns()
     })
 end
 function config.neogit()
-    vim.cmd[[packadd diffview.nvim]]
+    vim.cmd([[packadd diffview.nvim]])
     require("neogit").setup({
         disable_signs = false,
         disable_context_highlighting = false,
