@@ -1,4 +1,9 @@
 _G = _G or {}
+_G.praestrictus = {}
+praestrictus.config = {
+    colorscheme = "catppuccin_frappe",
+    cmp_theme = "no-border",
+}
 return {
     init = function()
         _G.plugin_folder = function()
