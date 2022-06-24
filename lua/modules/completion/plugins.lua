@@ -9,7 +9,7 @@ completion({
 })
 
 completion({
-    "hrsh7th/nvim-cmp",
+    "max397574/nvim-cmp",
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},

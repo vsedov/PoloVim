@@ -2,7 +2,68 @@ local cmp = require("cmp")
 local kind = require("utils.kind")
 local types = require("cmp.types")
 local str = require("cmp.utils.str")
+local border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }
 require("modules.completion.snippets")
+
+local function get_abbr(vim_item, entry)
+    local word = entry:get_insert_text()
+    if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
+        word = vim.lsp.util.parse_snippet(word)
+    end
+    word = str.oneline(word)
+
+    -- concatenates the string
+    local max = 50
+    if string.len(word) >= max then
+        local before = string.sub(word, 1, math.floor((max - 3) / 2))
+        word = before .. "..."
+    end
+
+    if
+        entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
+        and string.sub(vim_item.abbr, -1, -1) == "~"
+    then
+        word = word .. "~"
+    end
+    return word
+end
+--- Gets red, green and blue values for color
+---@param color string @#RRGGBB
+---@return string,string,string
+function get_color_values(color)
+    local red = tonumber(color:sub(2, 3), 16)
+    local green = tonumber(color:sub(4, 5), 16)
+    local blue = tonumber(color:sub(6, 7), 16)
+    return { red, green, blue }
+end
+
+--- Inspired from https://github.com/fitrh/init.nvim
+--- Blends top color over bottom color
+---@param top string @#RRGGBB
+---@param bottom string @#RRGGBB
+---@param alpha float
+function blend_colors(top, bottom, alpha)
+    local top_rgb = get_color_values(top)
+    local bottom_rgb = get_color_values(bottom)
+    local function blend(c)
+        c = (alpha * top_rgb[c] + ((1 - alpha) * bottom_rgb[c]))
+        return math.floor(math.min(math.max(0, c), 255) + 0.5)
+    end
+    return ("#%02X%02X%02X"):format(blend(1), blend(2), blend(3))
+end
+
+local COMPLETION_KIND = require("utils.test").Completion
+require("utils.colors").colorscheme(function(h)
+    local base = h.bg("Normal")
+    for kind, _ in pairs(COMPLETION_KIND) do
+        local inherit = ("CmpItemKind%s"):format(kind)
+        local group = ("%sIcon"):format(inherit)
+        local fallback = { ("TS%s"):format(kind), "CmpItemKindDefault" }
+        local bg = h.blend(h.fg(inherit, fallback), base, 0.15)
+        h.set(group, { inherit = inherit, bg = bg })
+    end
+end)
+
 -- https://github.com/wincent/wincent/blob/fba0bbb9a81e085f654253926138b6675d3a6ad2/aspects/nvim/files/.config/nvim/after/plugin/nvim-cmp.lua
 -- local kind = cmp.lsp.CompletionItemKind
 local rhs = function(rhs_str)
@@ -155,17 +216,15 @@ local sources = {
     { name = "latex_symbols", priority = 1 },
     { name = "Dictionary" },
 }
+local function use_tabnine()
+    local valid_file_type = { "python", "lua", "cpp", "c", "rust" }
+    return (vim.tbl_contains(valid_file_type, vim.o.filetype))
+end
 
--- todo make this better too many if statmenets
--- local function use_tabnine()
---     local valid_file_type = { "python", "lua", "cpp", "c", "rust" }
---     return (vim.tbl_contains(valid_file_type, vim.o.filetype))
--- end
---
--- if use_tabnine() then
---     require("packer").loader("cmp-tabnine")
---     table.insert(sources, { name = "cmp_tabnine", priority = 9 })
--- end
+if use_tabnine() then
+    require("packer").loader("cmp-tabnine")
+    table.insert(sources, { name = "cmp_tabnine", priority = 9 })
+end
 --
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
@@ -181,110 +240,7 @@ if vim.o.ft == "markdown" then
 end
 if vim.o.ft == "gitcommit" then
     vim.cmd([[packadd cmp-git]])
-    require("cmp_git").setup({
-        remotes = { "upstream", "origin", "b0o" },
-        github = {
-            issues = {
-                filter = "all",
-                limit = 250,
-                state = "all",
-                sort_by = function(issue)
-                    local kind_rank = issue.pull_request and 1 or 0
-                    local state_rank = issue.state == "open" and 0 or 1
-                    local age = os.difftime(os.time(), require("cmp_git.utils").parse_github_date(issue.updatedAt))
-                    return string.format("%d%d%010d", kind_rank, state_rank, age)
-                end,
-                filter_fn = function(trigger_char, issue)
-                    return string.format("%s %s %s", trigger_char, issue.number, issue.title)
-                end,
-            },
-            mentions = {
-                limit = 250,
-                sort_by = nil,
-                filter_fn = function(trigger_char, mention)
-                    return string.format("%s %s %s", trigger_char, mention.username)
-                end,
-            },
-            pull_requests = {
-                limit = 250,
-                state = "all",
-                sort_by = function(pr)
-                    local state_rank = pr.state == "open" and 0 or 1
-                    local age = os.difftime(os.time(), require("cmp_git.utils").parse_github_date(pr.updatedAt))
-                    return string.format("%d%010d", state_rank, age)
-                end,
-                filter_fn = function(trigger_char, pr)
-                    return string.format("%s %s %s", trigger_char, pr.number, pr.title)
-                end,
-            },
-        },
-        trigger_actions = {
-            {
-                debug_name = "git_commits",
-                trigger_character = ":",
-                ---@diagnostic disable-next-line: unused-local
-                action = function(sources, trigger_char, callback, params, git_info)
-                    return sources.git:get_commits(callback, params, trigger_char)
-                end,
-            },
-            {
-                debug_name = "github_issues",
-                trigger_character = "#",
-                ---@diagnostic disable-next-line: unused-local
-                action = function(sources, trigger_char, callback, params, git_info)
-                    return sources.github:get_issues(
-                        cmp_git_extend_gh_callback(callback, "issues"),
-                        git_info,
-                        trigger_char
-                    )
-                end,
-            },
-            {
-                debug_name = "github_pulls",
-                trigger_character = "!",
-                ---@diagnostic disable-next-line: unused-local
-                action = function(sources, trigger_char, callback, params, git_info)
-                    return sources.github:get_pull_requests(
-                        cmp_git_extend_gh_callback(callback, "pulls"),
-                        git_info,
-                        trigger_char
-                    )
-                end,
-            },
-            {
-                debug_name = "github_mentions",
-                trigger_character = "@",
-                ---@diagnostic disable-next-line: unused-local
-                action = function(sources, trigger_char, callback, params, git_info)
-                    return sources.github:get_mentions(callback, git_info, trigger_char)
-                end,
-            },
-            {
-                debug_name = "gitlab_issues",
-                trigger_character = "#",
-                ---@diagnostic disable-next-line: unused-local
-                action = function(sources, trigger_char, callback, params, git_info)
-                    return sources.gitlab:get_issues(callback, git_info, trigger_char)
-                end,
-            },
-            {
-                debug_name = "gitlab_mentions",
-                trigger_character = "@",
-                ---@diagnostic disable-next-line: unused-local
-                action = function(sources, trigger_char, callback, params, git_info)
-                    return sources.gitlab:get_mentions(callback, git_info, trigger_char)
-                end,
-            },
-            {
-                debug_name = "gitlab_mrs",
-                trigger_character = "!",
-                ---@diagnostic disable-next-line: unused-local
-                action = function(sources, trigger_char, callback, params, git_info)
-                    return sources.gitlab:get_merge_requests(callback, git_info, trigger_char)
-                end,
-            },
-        },
-    })
+    require("cmp_git").setup()
 
     table.insert(sources, { name = "cmp_git" })
 end
@@ -428,71 +384,17 @@ local mappings = {
     }),
 }
 
-cmp.setup({
+local config = {
     preselect = cmp.PreselectMode.Item,
-    window = {
-        completion = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            -- scrollbar = { "║" },
-        },
-        documentation = {
-            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
-            -- scrollbar = { "║" },
-        },
+    completion = {
+        autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
+        completeopt = "menu,menuone,noselect",
     },
-
     snippet = {
         expand = function(args)
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    completion = {
-        autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
-        completeopt = "menu,menuone,noselect",
-    },
-
-    formatting = {
-        fields = {
-            cmp.ItemField.Kind,
-            cmp.ItemField.Abbr,
-            cmp.ItemField.Menu,
-        },
-        format = kind.cmp_format({
-            with_text = false,
-            before = function(entry, vim_item)
-                -- Get the full snippet (and only keep first line)
-                local word = entry:get_insert_text()
-                if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-                    word = vim.lsp.util.parse_snippet(word)
-                end
-                word = str.oneline(word)
-
-                -- concatenates the string
-                local max = 50
-                if string.len(word) >= max then
-                    local before = string.sub(word, 1, math.floor((max - 3) / 2))
-                    word = before .. "..."
-                end
-
-                if
-                    entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
-                    and string.sub(vim_item.abbr, -1, -1) == "~"
-                then
-                    word = word .. "~"
-                end
-                vim_item.abbr = word
-
-                vim_item.dup = ({
-                    buffer = 1,
-                    path = 1,
-                    nvim_lsp = 0,
-                })[entry.source.name] or 0
-
-                return vim_item
-            end,
-        }),
-    },
-    -- You must set mapping if you want.
     mapping = mappings,
     -- You should specify your *installed* sources.
     sources = sources,
@@ -555,7 +457,62 @@ cmp.setup({
         select = false,
     },
     experimental = { ghost_text = true, native_menu = false },
-})
+    window = {},
+    formatting = {},
+}
+
+local source_hl = {
+    nvim_lua = "TSConstBuiltin",
+    luasnip = "TSComment",
+    buffer = "TSString",
+    path = "Directory",
+}
+local formatting = {}
+formatting.fields = { "kind", "abbr", "menu" }
+formatting.format = function(entry, item)
+    local kind = item.kind
+    local kind_hl_group = ("CmpItemKind%s"):format(kind)
+
+    item.kind_hl_group = ("%sIcon"):format(kind_hl_group)
+    item.kind = (" %s "):format(COMPLETION_KIND[kind].icon)
+
+    item.menu_hl_group = source_hl[entry.source.name] or kind_hl_group
+    item.menu = kind
+    item.dup = vim.tbl_contains(
+        { "path", "buffer" },
+        entry.source.name
+    )
+    item.abbr = get_abbr(item, entry)
+    item.padding = " "
+    local half_win_width = math.floor(vim.api.nvim_win_get_width(0) / 2)
+    if vim.api.nvim_strwidth(item.abbr) > half_win_width then
+        item.abbr = ("%s…"):format(item.abbr:sub(1, half_win_width))
+    end
+
+    return item
+end
+config.formatting = formatting
+
+local max = vim.api.nvim_get_option("pumheight")
+local half = math.floor(max / 2)
+
+config.window = {
+    completion = {
+        winhighlight = "Normal:Pmenu,FloatBorder:CmpDocumentationBorder,Search:None",
+        left_side_padding = 0,
+        right_side_padding = 1,
+        col_offset = 1,
+    },
+    documentation = {
+        border = border,
+        winhighlight = "FloatBorder:CmpDocumentationBorder,Search:None",
+        max_width = 80,
+        col_offset = -1,
+        max_height = 12,
+    },
+}
+
+cmp.setup(config)
 
 require("packer").loader("nvim-autopairs")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
@@ -577,7 +534,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- cmp.setup.cmdline("/", {
 --     window = {
 --         completion = {
---             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+--             f
 --             scrollbar = { "║" },
 --         },
 --         documentation = {
