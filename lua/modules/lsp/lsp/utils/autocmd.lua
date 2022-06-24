@@ -14,6 +14,18 @@ local function open_lsp_log()
     vim.cmd("edit " .. path)
 end
 
+local function is_vim_list_open()
+    for _, win in ipairs(api.nvim_list_wins()) do
+        local buf = api.nvim_win_get_buf(win)
+        local location_list = fn.getloclist(0, { filewinid = 0 })
+        local is_loc_list = location_list.filewinid > 0
+        if vim.bo[buf].filetype == "qf" or is_loc_list then
+            return true
+        end
+    end
+    return false
+end
+
 local function toggle_list(list_type)
     local is_location_target = list_type == "location"
     local prefix = is_location_target and "l" or "c"
@@ -33,18 +45,6 @@ local function toggle_list(list_type)
     if fn.winnr() ~= winnr then
         vim.cmd("wincmd p")
     end
-end
-
-local function is_vim_list_open()
-    for _, win in ipairs(api.nvim_list_wins()) do
-        local buf = api.nvim_win_get_buf(win)
-        local location_list = fn.getloclist(0, { filewinid = 0 })
-        local is_loc_list = location_list.filewinid > 0
-        if vim.bo[buf].filetype == "qf" or is_loc_list then
-            return true
-        end
-    end
-    return false
 end
 
 -- -- A helper function to auto-update the quickfix list when new diagnostics come
@@ -90,7 +90,8 @@ function M.setup_autocommands(client, bufnr)
 
     api.nvim_create_autocmd({ "BufWrite" }, {
         group = LspFormatting,
-        buffer = bufnr,
+        -- buffer = bufnr,
+        pattern = "*",
         desc = "Lint the current buffer on save",
         callback = function()
             require("lint").try_lint()
@@ -99,7 +100,7 @@ function M.setup_autocommands(client, bufnr)
 
     api.nvim_create_autocmd("BufWritePost", {
         group = LspFormatting,
-        buffer = bufnr,
+        pattern = "*",
         desc = "Format the current buffer on save",
         callback = function()
             vim.cmd([[FormatWrite]])
@@ -112,15 +113,14 @@ function M.setup_autocommands(client, bufnr)
         api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
             group = LspCodeLens,
             buffer = bufnr,
-            buffer = bufnr,
             callback = function()
                 vim.lsp.codelens.refresh()
             end,
         })
     end
     if client and client.server_capabilities.documentHighlightProvider then
-        vim.g.cursorhold_updatetime = 100
         local LspCursorCommands = api.nvim_create_augroup("LspCursorCommands", { clear = true })
+        vim.api.nvim_set_hl(0, "DiagnosticHeader", { link = "Special" })
         api.nvim_create_autocmd("CursorHold", {
             pattern = "*",
             callback = function()
@@ -131,7 +131,7 @@ function M.setup_autocommands(client, bufnr)
                 -- but only once for the current cursor location (unless moved afterwards).
                 if not (current_cursor[1] == last_popup_cursor[1] and current_cursor[2] == last_popup_cursor[2]) then
                     vim.w.lsp_diagnostics_last_cursor = current_cursor
-                    vim.diagnostic.open_float()
+                    vim.diagnostic.open_float(0, { scope = "cursor", focus = false })
                 end
             end,
         })
@@ -146,7 +146,6 @@ function M.setup_autocommands(client, bufnr)
         })
         api.nvim_create_autocmd("CursorMoved", {
             group = LspCursorCommands,
-            buffer = bufnr,
             desc = "LSP: Document Highlight (Clear)",
             buffer = bufnr,
             callback = function()

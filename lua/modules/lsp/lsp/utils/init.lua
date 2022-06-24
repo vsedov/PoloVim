@@ -81,11 +81,11 @@ function M.setup()
 end
 
 function M.enhance_attach(user_config)
-    local config = M.get_common_opts()
+    local attach_config = M.get_common_opts()
     if user_config then
-        config = vim.tbl_deep_extend("force", config, user_config)
+        attach_config = vim.tbl_deep_extend("force", attach_config, user_config)
     end
-    return config
+    return attach_config
 end
 
 return M
