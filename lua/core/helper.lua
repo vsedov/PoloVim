@@ -1,8 +1,7 @@
 _G = _G or {}
 _G.praestrictus = {}
 praestrictus.config = {
-    colorscheme = "catppuccin_frappe",
-    cmp_theme = "no-border",
+    cmp_theme = "no-border", -- no-border , border
 }
 return {
     init = function()

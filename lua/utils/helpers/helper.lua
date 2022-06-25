@@ -168,30 +168,6 @@ function M.setFiletype(buffer, type)
     vim.api.nvim_buf_set_option(buffer, "filetype", type)
 end
 
--- add log to you lsp.log
-function M.log(...)
-    local arg = { ... }
-    if vim.g.codeagent_verbose == true then
-        local str = "[CAT]"
-        for i, v in ipairs(arg) do
-            if v ~= nil then
-                str = str .. " | " .. vim.inspect(v) .. "\n"
-            else
-                str = str .. " | " .. "nil"
-            end
-        end
-        if #str > 5 then
-            if #M.log_path > 3 then
-                local f = io.open(M.log_path, "a+")
-                io.output(f)
-                io.write(str)
-                io.close(f)
-            end
-        end
-        print(str)
-    end
-end
-
 function M.split(inputstr, sep)
     if sep == nil then
         sep = "%s"

@@ -152,7 +152,7 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    require("utils.ui_overwrite")
+    require("utils.ui.ui_overwrite")
     require("vscripts.tools")
     if vim.bo.filetype ~= "tex" or vim.bo.filetype ~= "md" or vim.bo.filetype ~= "norg" then
         require("vscripts.race_conditions").coding_support()
@@ -175,7 +175,6 @@ vim.defer_fn(function()
     loader("workspaces.nvim")
     -- Notify
     loader("nvim-notify")
-    loader("structlog.nvim")
     local notify = require("notify")
     vim.notify = notify
     lprint("all done")

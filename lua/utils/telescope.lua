@@ -1,4 +1,4 @@
-require("utils.helper")
+require("utils.helpers.helper")
 local loader = require("packer").loader
 local telescope = require("telescope")
 local actions = require("telescope.actions")

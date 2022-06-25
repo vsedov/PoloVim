@@ -72,7 +72,7 @@ local load_core = function()
         require("core.mapping")
         require("keymap")
         -- -- selene: allow(global_usage)
-        _G.lprint = require("utils.log").lprint
+        _G.lprint = require("utils.logs.log").lprint
         pack.load_compile()
         require("core.lazy")
     else
