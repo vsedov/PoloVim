@@ -22,11 +22,6 @@ local overwrite = function()
     end
 end
 
-if vim.bo.filetype ~= "norg" then
-    -- selene: allow(global_usage)
-    _G.Log = require("utils.Log")
-end
-
 if vim.g.neovide then
     vim.g.neovide_cursor_animation_length = 0.01
     vim.g.neovide_cursor_trail_length = 0.05
