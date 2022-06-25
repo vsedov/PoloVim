@@ -123,7 +123,7 @@ return {
             scope = "cursor",
             source = "always",
             format = function(diagnostic)
-                require("utils.helper").dump(diagnostic)
+                require("utils.helpers.helper").dump(diagnostic)
                 if diagnostic.user_data == nil then
                     return diagnostic.message
                 elseif vim.tbl_isempty(diagnostic.user_data) then

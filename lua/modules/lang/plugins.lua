@@ -56,14 +56,6 @@ lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
 
 lang({ "windwp/nvim-ts-autotag", opt = true })
 
-lang({
-    "Tastyep/structlog.nvim",
-    opt = true,
-    config = function()
-        require("utils.log")
-    end,
-})
-
 lang({ "nanotee/luv-vimdocs", opt = true })
 
 -- builtin lua functions
