@@ -259,4 +259,8 @@ function config.hlargs()
         },
     })
 end
+
+function config.hydra()
+    require("modules.editor.hydra")
+end
 return config

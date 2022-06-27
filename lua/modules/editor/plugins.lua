@@ -146,3 +146,11 @@ editor({
         require("modules.editor.which_key")
     end,
 })
+
+editor({
+    "anuvyklack/hydra.nvim",
+    requires = "anuvyklack/keymap-layer.nvim",
+    event = { "CmdwinEnter", "CmdlineEnter", "CursorMoved" },
+    config = conf.hydra,
+    opt = true,
+})
