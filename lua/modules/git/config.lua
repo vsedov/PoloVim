@@ -291,35 +291,44 @@ end
 function config.gitlinker()
     require("gitlinker").setup()
 end
+
 function config.vgit()
-    -- use this as a diff tool (faster than diffview)
+    -- use this as a diff tool (faster than Diffview)
     -- there are overlaps with gitgutter. following are nice features
     require("vgit").setup({
         keymaps = {
-            ["n <leader>ga"] = "actions", -- show all commands in telescope
-            ["n <leader>ba"] = "buffer_gutter_blame_preview", -- show all blames
-            ["n <leader>bp"] = "buffer_blame_preview", -- buffer diff
-            ["n <leader>bh"] = "buffer_history_preview", -- buffer commit history diffviewfilehistory
-            ["n <leader>gp"] = "buffer_staged_diff_preview", -- diff for staged changes
-            ["n <leader>pd"] = "project_diff_preview", -- diffview is slow
+            -- ["n <leader>ga"] = "actions", -- show all commands in telescope
+            -- ["n <leader>ba"] = "buffer_gutter_blame_preview", -- show all blames
+            -- ["n <leader>bp"] = "buffer_blame_preview", -- buffer diff
+            -- ["n <leader>bh"] = "buffer_history_preview", -- buffer commit history DiffviewFileHistory
+            -- ["n <leader>gp"] = "buffer_staged_diff_preview", -- diff for staged changes
+            -- ["n <leader>pd"] = "project_diff_preview", -- diffview is slow
         },
-        controller = {
-            hunks_enabled = false, -- gitsigns
-            blames_enabled = false,
-            diff_strategy = "index",
-            diff_preference = "vertical",
-            predict_hunk_signs = true,
-            predict_hunk_throttle_ms = 500,
-            predict_hunk_max_lines = 50000,
-            blame_line_throttle_ms = 250,
-            show_untracked_file_signs = true,
-            action_delay_ms = 500,
+        settings = {
+            live_gutter = {
+                enabled = false,
+                edge_navigation = false, -- This allows users to navigate within a hunk
+            },
+            scene = {
+                diff_preference = "unified",
+            },
+            live_blame = {
+                enabled = false,
+            },
+            diff_preview = {
+                keymaps = {
+                    buffer_stage = "S",
+                    buffer_unstage = "U",
+                    buffer_hunk_stage = "s",
+                    buffer_hunk_unstage = "u",
+                    toggle_view = "t",
+                },
+            },
         },
     })
     require("packer").loader("telescope.nvim")
-    -- print('vgit')
-    -- require("vgit")._buf_attach()
 end
+
 function config.git_conflict()
     require("git-conflict").setup()
 end
