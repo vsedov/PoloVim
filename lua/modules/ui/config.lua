@@ -736,6 +736,7 @@ function config.kanagawa()
         functionStyle = { italic = true },
         keywordStyle = { italic = true },
         statementStyle = { bold = true },
+        globalStatus = true,
         typeStyle = {},
         variablebuiltinStyle = { italic = true },
         specialReturn = true, -- special highlight for the return keyword

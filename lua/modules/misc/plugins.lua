@@ -117,3 +117,5 @@ misc({
 })
 
 misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+
+misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
