@@ -21,7 +21,10 @@ function blend_colors(top, bottom, alpha)
 end
 
 local function define_highlights()
-    local values = string.format("#%x", vim.api.nvim_get_hl_by_name("Normal", true).background )
+    vim.api.nvim_set_hl(0, "CmpDocumentationBorder", {
+        bg = "None",
+    })
+    local values = string.format("#%x", vim.api.nvim_get_hl_by_name("Normal", true).background)
     for kind, _ in pairs(require("utils.ui.kind_symbols").Completion) do
         local inherit = ("CmpItemKind%s"):format(kind)
         local fg = vim.api.nvim_get_hl_by_name(inherit, true).foreground
@@ -39,9 +42,7 @@ local function define_highlights()
                 vim.api.nvim_set_hl(0, ("CmpItemKindMenu%s"):format(kind), {
                     fg = foreground,
                 })
-
             end
-
         end
     end
 end
