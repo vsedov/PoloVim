@@ -306,6 +306,14 @@ local LSPActive = {
     --     return " [" .. table.concat(names, " ") .. "]"
     -- end,
     hl = { fg = "green", bold = true },
+    on_click = {
+        name = "heirline_LSP",
+        callback = function()
+            vim.defer_fn(function()
+                vim.cmd("LspInfo")
+            end, 100)
+        end,
+    },
 }
 
 -- local LSPMessages = {
@@ -330,41 +338,57 @@ local LSPActive = {
 --     end,
 --     hl = { fg = "gray" },
 -- }
-local Gps2 = {
+local Navic = {
     condition = require("nvim-navic").is_available,
     static = {
-        type_map = {
-            ["container-name"] = "Identifier",
-            ["method-name"] = "Method",
-            ["function-name"] = "Function",
-            ["class-name"] = "Type",
-            ["tag-name"] = "Tag",
+        type_hl = {
+            File = "Directory",
+            Module = "Include",
+            Namespace = "TSNamespace",
+            Package = "Include",
+            Class = "Struct",
+            Method = "Method",
+            Property = "TSProperty",
+            Field = "TSField",
+            Constructor = "TSConstructor ",
+            Enum = "TSField",
+            Interface = "Type",
+            Function = "Function",
+            Variable = "TSVariable",
+            Constant = "Constant",
+            String = "String",
+            Number = "Number",
+            Boolean = "Boolean",
+            Array = "TSField",
+            Object = "Type",
+            Key = "TSKeyword",
+            Null = "Comment",
+            EnumMember = "TSField",
+            Struct = "Struct",
+            Event = "Keyword",
+            Operator = "Operator",
+            TypeParameter = "Type",
         },
     },
     init = function(self)
         local data = require("nvim-navic").get_data() or {}
         local children = {}
-
-        for index, value in ipairs(data) do
-            local seperator
-
-            if index == 1 then
-                seperator = "> "
-            else
-                seperator = " > "
-            end
+        for i, d in ipairs(data) do
             local child = {
                 {
-                    provider = seperator,
+                    provider = d.icon .. " ",
+                    -- hl = self.type_hl[d.type],
                 },
                 {
-                    provider = value.icon,
-                    hl = self.type_map[value.type],
-                },
-                {
-                    provider = value.name,
+                    provider = d.name,
+                    -- hl = self.type_hl[d.type],
                 },
             }
+            if #data > 1 and i < #data then
+                table.insert(child, {
+                    provider = " > ",
+                })
+            end
             table.insert(children, child)
         end
         self[1] = self:new(children, 1)
@@ -528,7 +552,12 @@ local WorkDir = {
         end
     end,
     hl = { fg = "blue", bold = true },
-
+    on_click = {
+        callback = function()
+            vim.cmd("NvimTreeToggle")
+        end,
+        name = "heirline_workdir",
+    },
     utils.make_flexible_component(1, {
         provider = function(self)
             local trail = self.cwd:sub(-1) == "/" and "" or "/"
@@ -596,7 +625,7 @@ local DefaultStatusline = {
     Space,
     Diagnostics,
     Align,
-    utils.make_flexible_component(3, Gps2, { provider = "" }),
+    utils.make_flexible_component(3, Navic, { provider = "" }),
     -- space,
     DAPMessages,
     Align,
