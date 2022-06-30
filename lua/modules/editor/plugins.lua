@@ -132,12 +132,13 @@ editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
 
 editor({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = conf.dial })
 
-editor({
-    "m-demare/hlargs.nvim",
-    ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
-    requires = { "nvim-treesitter/nvim-treesitter" },
-    config = conf.hlargs,
-})
+-- editor({
+--     "m-demare/hlargs.nvim",
+--     ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
+--     requires = { "nvim-treesitter/nvim-treesitter" },
+--     config = conf.hlargs,
+-- })
+
 editor({
     "max397574/which-key.nvim",
     opt = true,
