@@ -18,6 +18,7 @@ local themes = require("telescope.themes")
 local action_layout = require("telescope.actions.layout")
 local actions_layout = require("telescope.actions.layout")
 local Path = require("plenary.path")
+local scan = require("plenary.scandir")
 local action_state = require("telescope.actions.state")
 local utils = require("telescope.utils")
 -- https://github.com/max397574/NeovimConfig/blob/2267d7dfa8a30148516e2f5a6bb0e5ecc5de2c3c/lua/configs/telescope.lua
@@ -437,10 +438,6 @@ M.neoclip = function()
     telescope.extensions.neoclip.default(dropdown)
 end
 
-M.yank = function()
-    vim.cmd([[packadd yanky.nvim]])
-end
-
 M.refactor = function()
     local opts = {
         sorting_strategy = "ascending",
@@ -609,6 +606,47 @@ M.find_updir = function()
     }
 
     builtin.find_files(opts)
+end
+
+M.folder_grep = function(opts)
+    local os_sep = Path.path.sep
+    opts = opts or {}
+    local data = {}
+
+    scan.scan_dir(vim.loop.cwd(), {
+        hidden = opts.hidden,
+        only_dirs = true,
+        respect_gitignore = opts.respect_gitignore,
+        on_insert = function(entry)
+            table.insert(data, entry .. os_sep)
+        end,
+    })
+
+    table.insert(data, 1, "." .. os_sep)
+
+    pickers.new(opts, {
+        prompt_title = "Folders for Live Grep",
+        finder = finders.new_table({ results = data, entry_maker = make_entry.gen_from_file(opts) }),
+        previewer = conf.file_previewer(opts),
+        sorter = conf.file_sorter(opts),
+        attach_mappings = function(prompt_bufnr)
+            action_set.select:replace(function()
+                local current_picker = action_state.get_current_picker(prompt_bufnr)
+                local dirs = {}
+                local selections = current_picker:get_multi_selection()
+                if vim.tbl_isempty(selections) then
+                    table.insert(dirs, action_state.get_selected_entry().value)
+                else
+                    for _, selection in ipairs(selections) do
+                        table.insert(dirs, selection.value)
+                    end
+                end
+                actions._close(prompt_bufnr, current_picker.initial_mode == "insert")
+                require("telescope.builtin").live_grep({ search_dirs = dirs })
+            end)
+            return true
+        end,
+    }):find()
 end
 
 -- show implementations of the current thingy using language server
