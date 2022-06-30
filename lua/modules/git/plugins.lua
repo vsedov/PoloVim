@@ -74,9 +74,6 @@ git({ "ruifm/gitlinker.nvim", keys = { "<leader>gy" }, config = conf.gitlinker }
 
 git({
     "tanvirtin/vgit.nvim", -- gitsign has similar features
-    setup = function()
-        vim.o.updatetime = 2000
-    end,
     cmd = { "VGit" },
     -- after = {"telescope.nvim"},
     opt = true,

@@ -315,6 +315,9 @@ function config.vgit()
             live_blame = {
                 enabled = false,
             },
+            authorship_code_lens = {
+                enabled = false,
+            },
             diff_preview = {
                 keymaps = {
                     buffer_stage = "S",
