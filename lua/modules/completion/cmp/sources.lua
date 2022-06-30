@@ -1,5 +1,5 @@
 local sources = {
-    -- { name = "nvim_lsp_signature_help", priority = 10 },
+    { name = "nvim_lsp_signature_help", priority = 10 },
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
     {
@@ -19,10 +19,11 @@ local sources = {
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
     { name = "cmdline", priority = 4 },
-    { name = "treesitter", keyword_length = 2 },
     { name = "neorg", priority = 6 },
-    { name = "latex_symbols", priority = 1 },
-    { name = "Dictionary" },
+    -- { name = "copilot", priority = 8 },
+    -- { name = "cmp_tabnine", priority = 9 },
+    -- { name = "latex_symbols", priority = 1 },
+    -- { name = "Dictionary" },
 }
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
