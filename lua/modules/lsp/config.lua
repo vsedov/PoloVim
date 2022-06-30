@@ -67,7 +67,7 @@ function config.lsp_sig()
     local cfg = {
         bind = true,
         doc_lines = 10,
-        floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
+        floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
         toggle_key = "<C-x>",
         floating_window_above_cur_line = true,
         fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters

@@ -1,16 +1,21 @@
+if vim.g.lsp_config_complete then
+    return
+end
+vim.g.lsp_config_complete = true
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 
 lspconfig.jedi_language_server.setup(enhance_attach({
     cmd = { "jedi-language-server" },
     filetypes = { "python" },
+
     -- init_options = {
     --     jediSettings = {
-    --         autoImportModules = { "fastai", "fastcore" }
+    --         -- autoImportModules = { "" }
+    --         "debug" = false
     --     }
     -- },
 }))
-
 lspconfig.gopls.setup(enhance_attach({
     filetypes = { "go" },
     cmd = { "gopls", "--remote=auto" },
@@ -19,8 +24,6 @@ lspconfig.gopls.setup(enhance_attach({
         completeUnimported = true,
     },
 }))
-
-lspconfig.tsserver.setup(enhance_attach())
 
 lspconfig.texlab.setup(enhance_attach({ require("modules.lsp.lsp.providers.latex") }))
 
