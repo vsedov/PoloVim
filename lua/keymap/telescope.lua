@@ -12,13 +12,11 @@ local plug_map = {
         :with_noremap()
         :with_silent(),
 
-    ["n|<Leader>hwd"] = map_cmd('<cmd>lua require"utils.telescope".howdoi()<CR>', "Howdoi search")
-        :with_noremap()
-        :with_silent(),
     ["n|<Leader>gw"] = map_cmd('<cmd>lua require"utils.telescope".grep_last_search()<CR>', "Grep last word")
         :with_noremap()
         :with_silent(),
-    ["n|<Leader>cb"] = map_cmd('<cmd>lua require"utils.telescope".curbuf()<CR>', "Show current buffer")
+
+    ["v|<Leader>gw"] = map_cmd('<cmd>lua require"utils.telescope".grep_string_visual()<CR>', "Grep last word")
         :with_noremap()
         :with_silent(),
 
