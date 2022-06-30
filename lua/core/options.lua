@@ -133,7 +133,7 @@ local function load_options()
             cache_enabled = 0,
         }
         vim.g.python_host_prog = "/usr/bin/python2"
-        -- vim.g.python3_host_prog = "/usr/bin/python3"
+        vim.g.python3_host_prog = "/usr/bin/python3"
         if vim.fn.exists("$VIRTUAL_ENV") == 1 then
             vim.g.python3_host_prog = vim.fn.substitute(
                 vim.fn.system("which -a python3 | head -n2 | tail -n1"),
@@ -150,8 +150,8 @@ local function load_options()
         vim.opt[name] = value
     end
 end
-vim.g.python_host_prog = "/usr/bin/python2"
-vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
+-- vim.g.python_host_prog = "/usr/bin/python2"
+-- vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
 load_options()
