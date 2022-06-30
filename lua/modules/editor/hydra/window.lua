@@ -17,7 +17,7 @@ Hydra({
         invoke_on_body = true,
         hint = {
             position = "bottom",
-            border = "rounded",
+            border = "single",
         },
     },
     mode = "n",
@@ -30,10 +30,10 @@ Hydra({
         { "l", "<C-w>l" },
 
         -- float movement
-        { "wh", "<C-w>wh" },
-        { "wj", "<C-w>wj" },
-        { "wk", "<C-w>wk" },
-        { "wl", "<C-w>wl" },
+        { "wh", "<C-w>wh", { exit = true } },
+        { "wj", "<C-w>wj", { exit = true } },
+        { "wk", "<C-w>wk", { exit = true } },
+        { "wl", "<C-w>wl", { exit = true } },
         -- Move window
         { "H", "<Cmd>WinShift left<CR>" },
         { "J", "<Cmd>WinShift down<CR>" },
@@ -50,7 +50,7 @@ Hydra({
         { "=", "<C-w>=", { desc = "equalize" } },
         { "b", "<Cmd>BufExplorer<CR>", { exit = true, desc = "choose buffer" } },
         { "<Esc>", nil, { exit = true } },
-        { "q", nil, { exit = true, nowait = true } },
+        { "q", "<Cmd>Bwipeout<CR>", { desc = "close window" } },
     },
 })
 

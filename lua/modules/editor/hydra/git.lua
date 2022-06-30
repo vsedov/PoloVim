@@ -18,10 +18,12 @@ if gitrepo then
   ^^^^                           Git Files                              ^^^^
   ^^^^------------------------------------------------------------------^^^^  
   _d_: diftree  _s_ stagehunk    _x_ show del   _b_ gutterView  _r_ reset_hunk
-  _K_ proj diff _u_ unstage hunk _p_ view hunk  _B_ blameFull   _dd_ diffthis
-  
+  _k_ proj diff _u_ unstage hunk _p_ view hunk  _B_ blameFull   _dd_ diffthis
+  _J_: next hunk <--------------------------------------> _K_: prev hunk
   _D_ buf diff   _g_ diff staged _P_ projStaged _f_ proj hunkQF  _U_ unstagebuf
-  _S_ stage buf  _G_ stage diff  _/_ show base  _<Enter>_ Neogit _q_ exit
+  _S_ stage buf  _G_ stage diff  _/_ show base  
+
+  _<Enter>_ Neogit _q_ exit
 ]]
 
     local gitsigns = require("gitsigns")
@@ -33,7 +35,7 @@ if gitrepo then
             invoke_on_body = true,
             hint = {
                 position = "bottom",
-                border = "rounded",
+                border = "single",
             },
             on_enter = function()
                 vim.bo.modifiable = false
@@ -50,8 +52,35 @@ if gitrepo then
         mode = { "n", "x" },
         body = "<leader>h",
         heads = {
+            {
+                "J",
+                function()
+                    if vim.wo.diff then
+                        return "]c"
+                    end
+                    vim.schedule(function()
+                        gitsigns.next_hunk()
+                    end)
+                    return "<Ignore>"
+                end,
+                { expr = true },
+            },
+            {
+                "K",
+                function()
+                    if vim.wo.diff then
+                        return "[c"
+                    end
+                    vim.schedule(function()
+                        gitsigns.prev_hunk()
+                    end)
+                    return "<Ignore>"
+                end,
+                { expr = true },
+            },
+
             { "d", ":DiffviewOpen<CR>", { silent = true, exit = true } },
-            { "K", vgit.project_diff_preview, { exit = true } },
+            { "k", vgit.project_diff_preview, { exit = true } },
             { "s", ":Gitsigns stage_hunk<CR>", { silent = true } },
             { "u", gitsigns.undo_stage_hunk },
             { "S", gitsigns.stage_buffer },

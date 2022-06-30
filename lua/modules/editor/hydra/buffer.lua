@@ -17,15 +17,14 @@ Hydra({
         invoke_on_body = true,
         hint = {
             position = "bottom",
-            border = "rounded",
+            border = "single",
         },
     },
     mode = "n",
     body = "<leader>b",
     heads = {
         { "g", "<cmd>BufferLinePick<CR>" },
-        { "q", "<cmd>BufferLinePickClose <CR>" },
-
+        { "q", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close", exit = true } },
         { "1", "<cmd>BufferLineGoToBuffer 1<CR>" },
         { "2", "<cmd>BufferLineGoToBuffer 2<CR>" },
         { "3", "<cmd>BufferLineGoToBuffer 3<CR>" },
