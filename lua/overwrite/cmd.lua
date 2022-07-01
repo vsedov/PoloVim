@@ -1,4 +1,7 @@
 local add_cmd = vim.api.nvim_create_user_command
+local api = vim.api
+local fn = vim.fn
+local fmt = string.format
 
 add_cmd("AbbrivGodMode", function()
     vim.cmd([[packadd vim-abbrev]])
@@ -26,13 +29,13 @@ add_cmd("Hashbang", function()
         },
     }
 
-    local extension = vim.fn.expand("%:e")
+    local extension = fn.expand("%:e")
 
     if shells[extension] then
         local hb = shells[extension]
         hb[#hb + 1] = ""
-        vim.api.nvim_buf_set_lines(0, 0, 0, false, hb)
-        vim.api.nvim_create_autocmd("BufWritePost", {
+        api.nvim_buf_set_lines(0, 0, 0, false, hb)
+        api.nvim_create_autocmd("BufWritePost", {
             buffer = 0,
             once = true,
             command = "silent !chmod u+x %",
@@ -74,10 +77,10 @@ add_cmd("Format", "silent normal! mxgggqG`x<CR>", {
 
 -- Adjust Spacing:
 add_cmd("Spaces", function(args)
-    local wv = vim.fn.winsaveview()
+    local wv = fn.winsaveview()
     vim.opt_local.expandtab = true
     vim.cmd("silent execute '%!expand -it" .. args.args .. "'")
-    vim.fn.winrestview(wv)
+    fn.winrestview(wv)
     vim.cmd("setlocal ts? sw? sts? et?")
 end, {
     force = true,
@@ -150,7 +153,7 @@ end, {})
 
 add_cmd("NeorgToMd", function()
     -- File name without extension .
-    vim.cmd("Neorg export to-file " .. vim.fn.expand("%:t:r") .. ".md")
+    vim.cmd("Neorg export to-file " .. fn.expand("%:t:r") .. ".md")
 end, { force = true })
 
 local ini_config = [[
@@ -202,12 +205,12 @@ ignore=
     # Type Annotations
     ANN002,ANN003,ANN101,ANN102,ANN204,ANN206
 per-file-ignores=tests/*:D,ANN]]
-ini_config:gsub("MNAME", vim.fn.expand("%:p:h:t"))
+ini_config:gsub("MNAME", fn.expand("%:p:h:t"))
 local Path = require("plenary.path")
 local scan = require("plenary.scandir")
 
 local function findPoetry()
-    local cwd = vim.fn.getcwd()
+    local cwd = fn.getcwd()
     local current_path = vim.api.nvim_exec(":echo @%", 1)
 
     local parents = Path:new(current_path):parents()
@@ -216,7 +219,7 @@ local function findPoetry()
         for _, file in pairs(files) do
             if file == parent .. "/" .. "pyproject.toml" then
                 local file_write = io.open("tox.ini", "w")
-                file_write:write(ini_config:gsub("MNAME", vim.fn.expand("%:p:h:t")))
+                file_write:write(ini_config:gsub("MNAME", fn.expand("%:p:h:t")))
                 file_write:close()
                 return true
             end
@@ -231,3 +234,39 @@ local function findPoetry()
 end
 
 add_cmd("ToxSetup", findPoetry, { force = true })
+
+local function read_file(file, line_handler)
+    for line in io.lines(file) do
+        line_handler(line)
+    end
+end
+
+add_cmd("DotEnv", function()
+    local files = vim.fs.find(".env", {
+        upward = true,
+        stop = fn.fnamemodify(fn.getcwd(), ":p:h:h"),
+        path = fn.expand("%:p:h"),
+    })
+    if vim.tbl_isempty(files) then
+        return
+    end
+    local filename = files[1]
+    local lines = {}
+    read_file(filename, function(line)
+        if #line > 0 then
+            table.insert(lines, line)
+        end
+        if not vim.startswith(line, "#") then
+            local name, value = unpack(vim.split(line, "="))
+            fn.setenv(name, value)
+        end
+    end)
+    local markdown = table.concat(vim.tbl_flatten({ "", "```sh", lines, "```", "" }), "\n")
+    vim.notify(fmt("Read **%s**\n", filename) .. markdown, "info", {
+        title = "Nvim Env",
+        on_open = function(win)
+            local buf = vim.api.nvim_win_get_buf(win)
+            vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+        end,
+    })
+end, {})
