@@ -4,9 +4,9 @@ local hint_telescope = [[
   ^^     Git         ^^^^           Surfing             ^^^^
   ^^---------------  ^^^^-------------------------------^^^^  
   _g_: Git Files      _w_: live G    _a_: Silver Surf 
-  _u_: Git Diff       _W_: CurBuf    _p_: Workspaces/project
+  _u_: Git Diff       _W_: CurBuf    _e_: L grep ++
   _S_: Git Status     _z_: zoxide    _M_: Marks 
-  _h_: Git Conflict   _l_: Lsp       
+  _h_: Git Conflict   _l_: Lsp       _p_: Workspaces/project     
   ^^^^-------------------------------------------------^^^^
   ^^ Register and Buffer^^         Commands              
   ^^--------------------^^----------------------------^^^^
@@ -17,14 +17,38 @@ local hint_telescope = [[
   ^^^^                     Files                       ^^^^
   ^^^^-------------------------------------------------^^^^
   _f_: Find Files                   _s_: find string  
-  _F_: Files                        _t_: search file     
+  _F_: Files                       _t_: search file     
   _b_: browse files                 _d_: DotFiles    
- 
+  
+  _L_: MRU                          _K_: MFU    
+
   _q_ exit
 
 ]]
 
 local telescope = require("telescope")
+local function rectangular_border(opts)
+    return vim.tbl_deep_extend("force", opts or {}, {
+        borderchars = {
+            prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
+            results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
+            preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        },
+    })
+end
+local function dropdown(opts)
+    return require("telescope.themes").get_dropdown(rectangular_border(opts))
+end
+
+local function MRU()
+    require("mru").display_cache(dropdown({
+        previewer = false,
+    }))
+end
+
+local function MFU()
+    require("mru").display_cache(vim.tbl_extend("keep", { algorithm = "mfu" }, dropdown({ previewer = false })))
+end
 
 Hydra({
     hint = hint_telescope,
@@ -54,7 +78,7 @@ Hydra({
         { "w", ":Telescope grep_string<CR>", { exit = true } }, -- grep string
         { "W", require("utils.telescope").curbuf, { exit = true } }, -- pass
         { "l", require("telescope.builtin").lsp_dynamic_workspace_symbols, { exit = true } }, -- pass
-        -- { "e", require("utils.telescope").folder_grep, { exit = true } }, -- pass
+        { "e", require("telescope").extensions.live_grep_args.live_grep_args, { exit = true } }, -- pass
 
         -- misc
         { "p", ":Telescope Workspaces<CR>", { exit = true } }, -- pass
@@ -78,6 +102,9 @@ Hydra({
         { "b", require("utils.telescope").file_browser, { exit = true } },
         { "d", require("utils.telescope").load_dotfiles, { exit = true } },
         { "z", telescope.extensions.zoxide.list },
+
+        { "L", MRU, { exit = true, desc = "Most recently used files" } },
+        { "K", MFU, { exit = true, desc = "Most frequently used files" } },
     },
 })
 
