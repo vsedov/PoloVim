@@ -35,6 +35,6 @@ return {
             return true
         end
 
-        _G.config_test = true
+        _G.config_test = false
     end,
 }

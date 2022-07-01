@@ -84,11 +84,15 @@ function autocmd.load_autocmds()
                     vim.cmd([[NayvyImports]])
                 end,
             },
-            { "BufWritePre", "/tmp/*", "setlocal noundofile" },
-            { "BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile" },
-            { "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
-            { "BufWritePre", "*.tmp", "setlocal noundofile" },
-            { "BufWritePre", "*.bak", "setlocal noundofile" },
+
+            {
+                "BufWritePre",
+                { "/tmp/*", "COMMIT_EDITMSG", "MERGE_MSG", "*.tmp", "*.bak" },
+                function()
+                    vim.opt_local.undofile = false
+                end,
+            },
+
             -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
             {
                 "BufLeave",
