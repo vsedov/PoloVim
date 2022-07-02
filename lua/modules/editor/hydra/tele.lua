@@ -1,15 +1,15 @@
 local Hydra = require("hydra")
 
 local hint_telescope = [[
-  ^^     Git         ^^^^           Surfing             ^^^^
-  ^^---------------  ^^^^-------------------------------^^^^  
+  ^^     Git         ^^^^           Surfing            ^^^^
+  ^^^^-------------------------------------------------^^^^ 
   _g_: Git Files      _w_: live G    _a_: Silver Surf 
   _u_: Git Diff       _W_: CurBuf    _e_: L grep ++
   _S_: Git Status     _z_: zoxide    _M_: Marks 
-  _h_: Git Conflict   _l_: Lsp       _p_: Workspaces/project     
+  _h_: Git Conflict   _l_: Lsp       _p_: Workspaces 
   ^^^^-------------------------------------------------^^^^
   ^^ Register and Buffer^^         Commands              
-  ^^--------------------^^----------------------------^^^^
+  ^^^^-------------------------------------------------^^^^
   _r_: registers          _/_: Search His _o_: oldfiles
   _R_: reloader           _c_: Com His    _k_: keymaps
   _j_: Jump               _m_: commands   _<Enter>_: Tele
@@ -19,7 +19,9 @@ local hint_telescope = [[
   _f_: Find Files                   _s_: find string  
   _F_: Files                       _t_: search file     
   _b_: browse files                 _d_: DotFiles    
-  
+  ^^^^-------------------------------------------------^^^^
+  ^^^^                     MRU                         ^^^^
+  ^^^^-------------------------------------------------^^^^
   _L_: MRU                          _K_: MFU    
 
   _q_ exit
