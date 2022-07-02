@@ -25,23 +25,7 @@ editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
 
 editor({
     "gbprod/yanky.nvim",
-    keys = {
-        "<C-v>",
-        "<Plug>(YankyYank)",
-        "<Plug>(YankyPutAfter)",
-        "<Plug>(YankyPutBefore)",
-        "<Plug>(YankyPutAfter)",
-        "<Plug>(YankyPutBefore)",
-
-        "<Plug>(YankyGPutAfter)",
-        "<Plug>(YankyGPutBefore)",
-        "<Plug>(YankyGPutAfter)",
-        "<Plug>(YankyGPutBefore)",
-
-        "<Plug>(YankyCycleForward)",
-        "<Plug>(YankyCycleBackward)",
-        "<leader>u",
-    },
+    event = { "CursorMoved", "CmdlineEnter" },
     setup = conf.setup_yanky,
     config = conf.config_yanky,
     requires = "telescope.nvim",
@@ -155,3 +139,12 @@ editor({
     config = conf.hydra,
     opt = true,
 })
+
+editor({
+    "gbprod/substitute.nvim",
+    event = { "CursorMoved", "CmdlineEnter" },
+    config = conf.substitute,
+    opt = true,
+})
+
+editor({ "tpope/vim-abolish", event = { "CursorMoved", "CmdlineEnter" }, opt = true })

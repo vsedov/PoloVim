@@ -263,4 +263,45 @@ end
 function config.hydra()
     require("modules.editor.hydra")
 end
+
+function config.substitute()
+    vim.cmd([[packadd yanky.nvim]])
+    require("substitute").setup({
+        yank_substituted_text = true,
+        on_substitute = function(event)
+            require("yanky").init_ring("p", event.register, event.count, event.vmode:match("[vV�]"))
+        end,
+        motion1 = true,
+        motion2 = true,
+    })
+
+    vim.keymap.set(
+        "n",
+        "Jo",
+        "<cmd>lua require('substitute').operator()<cr>",
+        { desc = "Sub Operator", noremap = true }
+    )
+    vim.keymap.set("n", "Jl", "<cmd>lua require('substitute').line()<cr>", { desc = "Sub Operator", noremap = true })
+    vim.keymap.set("n", "Ji", "<cmd>lua require('substitute').eol()<cr>", { desc = "Sum Eol", noremap = true })
+    vim.keymap.set("x", "J", "<cmd>lua require('substitute').visual()<cr>", { desc = "Sub Visual", noremap = true })
+    vim.keymap.set(
+        "n",
+        "J",
+        "<cmd>lua require('substitute.range').operator({ prefix = 'S' })<cr>",
+        { desc = "Sub Operator abolish", noremap = true }
+    )
+    vim.keymap.set(
+        "n",
+        "Jj",
+        "<cmd>lua require('substitute.range').operator({ motion1='iw', motion2 = 'ap' })",
+        { desc = "Sub Inner Line", noremap = true }
+    )
+    vim.keymap.set("n", "Jw", "<cmd>lua require('substitute.range').word()<cr>", { desc = "Sub Word", noremap = true })
+
+    vim.keymap.set("n", "Jx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
+    vim.keymap.set("n", "Jxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
+    vim.keymap.set("x", "JX", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
+    vim.keymap.set("n", "Jxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
+end
+
 return config
