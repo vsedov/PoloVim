@@ -29,16 +29,16 @@ local plug_map = {
     ["n|[["] = map_cmd([[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], "New Lines top"):with_noremap(),
     ["n|]]"] = map_cmd([[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], "New Lines bottom"):with_noremap(),
 
-    -- Replace word under cursor in Buffer (case-sensitive)
-    -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
-    ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor")
-        :with_noremap()
-        :with_silent(),
-    -- Replace word under cursor on Line (case-sensitive)
-    -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
-    ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor on Line")
-        :with_noremap()
-        :with_silent(),
+    -- -- Replace word under cursor in Buffer (case-sensitive)
+    -- -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
+    -- ["n|<Leader>sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor")
+    --     :with_noremap()
+    --     :with_silent(),
+    -- -- Replace word under cursor on Line (case-sensitive)
+    -- -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
+    -- ["n|<Leader>sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor on Line")
+    --     :with_noremap()
+    --     :with_silent(),
 
     ["n|<leader>["] = map_cmd([[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], "replace current"):with_noremap(),
 
@@ -58,7 +58,7 @@ local plug_map = {
     ["x|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
 
     -- This line allows the current file to source the vimrc allowing me use bindings as they're added
-    ["n|<Leader>sv"] = map_cmd(
+    ["n|<Leader>so"] = map_cmd(
         [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]],
         "Source init.lua"
     )
