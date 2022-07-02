@@ -50,10 +50,5 @@ local function keyword(word, callback)
 end
 
 vim.keymap.set("n", "gK", keyword, { buffer = 0 })
-vim.keymap.set("n", "<leader>so", function()
-    vim.cmd("luafile %")
-    vim.notify("Sourced " .. fn.expand("%"))
-end, { buffer = 0 })
-
 vim.opt_local.textwidth = 100
 vim.opt_local.formatoptions:remove("o")
