@@ -1,8 +1,6 @@
 --https://github.com/antoinemadec/FixCursorHold.nvim/blob/master/plugin/fix_cursorhold_nvim.vim
 vim.api.nvim_exec(
     [[
-" Maintainer:   Antoine Madec <aja.madec@gmail.com>
-
 if exists('g:loaded_fix_cursorhold_nvim')
   finish
 else
@@ -48,7 +46,6 @@ function CursorHoldITimer() abort
   call timer_stop(g:fix_cursorhold_nvim_timer)
   let g:fix_cursorhold_nvim_timer = timer_start(g:cursorhold_updatetime, 'CursorHoldI_Cb')
 endfunction
-
 ]],
     true
 )
