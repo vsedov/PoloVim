@@ -130,7 +130,7 @@ misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
 
 misc({
     "kylechui/nvim-surround",
-    keys = { "ys", "<localleader>s", "<localleader>S", "yc" },
+    keys = { "<C-v>", "<localleader>s", "<localleader>S", "yc" },
     config = conf.surround,
 })
 
@@ -148,4 +148,11 @@ misc({
     "NMAC427/guess-indent.nvim",
     event = "BufEnter",
     config = conf.guess_indent,
+})
+
+
+misc({
+    "ahmedkhalf/project.nvim",
+    ft = {"python"},
+    config = conf.project
 })

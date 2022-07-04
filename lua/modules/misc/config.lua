@@ -280,8 +280,8 @@ end
 function config.surround()
     require("nvim-surround").setup({
         keymaps = { -- vim-surround style keymaps
-            insert = "ys",
-            visual = "<localleader>s",
+            insert = "<C-v>",
+            visual = "<C-v>",
             delete = "<localleader>S",
             change = "yc",
         },
@@ -331,6 +331,13 @@ function config.guess_indent()
             "prompt",
         },
     })
+end
+
+function config.projects()
+        require('project_nvim').setup({
+          silent_chdir = false,
+          patterns = { '.git' },
+        })
 end
 
 return config

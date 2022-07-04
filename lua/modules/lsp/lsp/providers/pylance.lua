@@ -86,6 +86,7 @@ require("lspconfig.configs").pylance = {
             },
             telemetry = {
                 telemetryLevel = "off",
+                enable = false,
             },
         },
         docs = {
@@ -148,7 +149,7 @@ end
 local function change_python_interpreter(path)
     local client = lsputil.get_active_client_by_name(0, "pylance")
     client.stop()
-    local config = require("lsp.server_configurations.pylance")
+    local config = require("modules.lsp.lsp.providers.pylance")
     config.settings.python.pythonPath = path
     lspconfig.pylance.setup(config)
     vim.cmd("LspStart pylance")
@@ -198,6 +199,28 @@ return {
                 stubPath = vim.fn.expand("$HOME/typings"),
                 diagnosticSeverityOverrides = {
                     reportMissingTypeStubs = "information",
+                    
+                    reportGeneralTypeIssues = "warning",
+                    reportUnboundVariable = "warning",
+                    reportUndefinedVariable = "error",
+                    reportUnknownMemberType = "information",
+                    reportUnknownVariableType = "information",
+                    reportUntypedClassDecorator = "none",
+                    reportUntypedFunctionDecorator = "none",
+                    reportFunctionMemberAccess = "warning",
+                    reportUnknownArgumentType = "warning",
+                    reportUnknownParameterType = "warning",
+                    reportUnknownLambdaType = "warning",
+                    reportUnusedImport = "information",
+                    reportUnusedFunction = "information",
+                    reportUnusedVariable = "information",
+                    reportUnusedClass = "information",
+                    strictParameterNoneValue = false,
+                    reportOptionalSubscript = "warning",
+                    reportOptionalMemberAccess = "warning",
+                    reportOptionalIterable = "warning",
+                    reportOptionalCall = "none"
+
                 },
             },
         },

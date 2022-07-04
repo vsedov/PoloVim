@@ -30,11 +30,12 @@ local function python_config()
         require("modules.lsp.lsp.utils").common_on_attach(client, bufnr)
         client_on_attach(client, bufnr)
     end
-
+    -- print(vim.inspect(config))
     return config
 end
 
 lspconfig.pyright.setup(enhance_attach(python_config()))
+lspconfig.julials.setup(enhance_attach({require("modules.lsp.lsp.providers.julials")}))
 
 lspconfig.gopls.setup(enhance_attach({
     filetypes = { "go" },
