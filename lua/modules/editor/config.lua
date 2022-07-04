@@ -82,6 +82,7 @@ function config.config_yanky()
 end
 
 function config.comment()
+    vim.cmd([[packadd nvim-ts-context-commentstring ]])
     require("Comment").setup({
         padding = true,
         sticky = true,
