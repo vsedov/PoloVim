@@ -35,7 +35,7 @@ local function python_config()
 end
 
 lspconfig.pyright.setup(enhance_attach(python_config()))
-lspconfig.julials.setup(enhance_attach({require("modules.lsp.lsp.providers.julials")}))
+lspconfig.julials.setup(enhance_attach({ require("modules.lsp.lsp.providers.julials") }))
 
 lspconfig.gopls.setup(enhance_attach({
     filetypes = { "go" },
