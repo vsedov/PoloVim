@@ -1,4 +1,4 @@
-require("utils.helpers.helper")
+local utils_main = require("utils.helpers.helper")
 local loader = require("packer").loader
 local telescope = require("telescope")
 local actions = require("telescope.actions")
@@ -122,25 +122,6 @@ local new_maker = function(filepath, bufnr, opts)
         :sync()
 end
 
-local open_in_nvim_tree = function(prompt_bufnr)
-    local file_name
-
-    local entry = action_state.get_selected_entry()[1]
-    local entry_path = Path:new(entry):parent():absolute()
-    actions._close(prompt_bufnr, true)
-    entry_path = Path:new(entry):parent():absolute()
-    entry_path = entry_path:gsub("\\", "\\\\")
-
-    vim.cmd("NvimTreeClose")
-    vim.cmd("NvimTreeOpen " .. entry_path)
-
-    file_name = nil
-    for s in string.gmatch(entry, "[^/]+") do
-        file_name = s
-    end
-
-    vim.cmd("/" .. file_name)
-end
 require("telescope").setup({
     defaults = themes.get_ivy({
         -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
@@ -222,7 +203,7 @@ require("telescope").setup({
                 ["<C-f>"] = require("telescope.actions").cycle_history_prev,
 
                 ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
-                ["<c-s>"] = custom_actions.multi_selection_open_split,
+                ["<c-S>"] = custom_actions.multi_selection_open_split,
                 ["<c-t>"] = custom_actions.multi_selection_open_tab,
 
                 -- ["<C-n>"] = function(prompt_bufnr)
@@ -236,11 +217,9 @@ require("telescope").setup({
                 --     local height = vim.api.nvim_win_get_height(results_win)
                 --     action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
                 -- end,
-                ["<c-S>"] = open_in_nvim_tree,
             },
 
             i = {
-                ["<c-S>"] = open_in_nvim_tree,
                 ["<cr>"] = custom_actions.multi_selection_open,
                 ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
                 ["<c-s>"] = custom_actions.multi_selection_open_split,
@@ -508,6 +487,7 @@ M.installed_plugins = function()
 end
 
 M.ag = function(text_to_find)
+    text_to_find = text_to_find or vim.fn.input(" Enter item you want to surf: ")
     local default_opts = {
         entry_maker = function(entry)
             local split = vim.split(entry, ":")
@@ -529,6 +509,7 @@ M.ag = function(text_to_find)
                     end
                 end,
                 ordinal = rel_filepath,
+                filename = rel_filepath,
                 path = abs_filepath,
                 lnum = line_num,
             }
@@ -1021,7 +1002,6 @@ M.git_diff = function()
 end
 
 M.find_files = function()
-    reloader()
     local opts = {
         prompt_title = "~ Find Files ~",
         find_command = { "rg", "-g", "!.git", "--files", "--hidden", "--no-ignore" },

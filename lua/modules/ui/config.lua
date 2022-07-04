@@ -480,7 +480,6 @@ function config.satellite()
             },
             marks = {
                 enable = false,
-                show_builtins = false, -- shows the builtin marks like [ ] < >
             },
         },
         excluded_filetypes = {
