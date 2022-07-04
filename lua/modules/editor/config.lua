@@ -193,6 +193,8 @@ function config.neoscroll()
         extra_keymaps = true,
         scroll_limit = 150,
     })
+    vim.keymap.set({ "n", "x" }, "gg", "<Cmd>lua Scroll('gg', 0, 0, 1)<CR>")
+    vim.keymap.set({ "n", "x" }, "G", "<Cmd>lua Scroll('G', 0, 1, 1)<CR>")
 end
 
 function config.discord()
@@ -274,7 +276,6 @@ function config.substitute()
         motion1 = true,
         motion2 = true,
     })
-
     vim.keymap.set(
         "n",
         "Lo",
@@ -287,13 +288,7 @@ function config.substitute()
         "<cmd>lua require('substitute').line()<cr><space>",
         { desc = "Sub Operator", noremap = true }
     )
-    vim.keymap.set("n", "Lk", "<cmd>lua require('substitute').eol()<cr><space>", { desc = "Sum Eol", noremap = true })
-    vim.keymap.set(
-        "x",
-        "L",
-        "<cmd>lua require('substitute').visual()<cr><space>",
-        { desc = "Sub Visual", noremap = true }
-    )
+    vim.keymap.set("n", "LS", "<cmd>lua require('substitute').eol()<cr><space>", { desc = "Sum Eol", noremap = true })
     vim.keymap.set(
         "n",
         "L",
@@ -325,17 +320,18 @@ function config.substitute()
         "<cmd>lua require('substitute.exchange').line()<cr><space>",
         { desc = "Sub exchange line", noremap = true }
     )
+
     vim.keymap.set(
         "x",
-        "LC",
+        "[C",
         "<cmd>lua require('substitute.exchange').visual()<cr><space>",
         { desc = "Sub exchange visual", noremap = true }
     )
     vim.keymap.set(
-        "n",
-        "Lcc",
-        "<cmd>lua require('substitute.exchange').cancel()<cr><space>",
-        { desc = "Sub exchange cancel", noremap = true }
+        "x",
+        "]]",
+        "<cmd>lua require('substitute').visual()<cr><space>",
+        { desc = "Sub Visual", noremap = true }
     )
 end
 

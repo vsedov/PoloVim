@@ -14,7 +14,7 @@ Hydra({
     hint = hint,
     config = {
         color = "pink",
-        invoke_on_body = true,
+        invoke_on_body = false,
         hint = {
             position = "bottom",
             border = "single",
@@ -29,11 +29,6 @@ Hydra({
         { "k", "<C-w>k" },
         { "l", "<C-w>l" },
 
-        -- float movement
-        { "wh", "<C-w>wh", { exit = true } },
-        { "wj", "<C-w>wj", { exit = true } },
-        { "wk", "<C-w>wk", { exit = true } },
-        { "wl", "<C-w>wl", { exit = true } },
         -- Move window
         { "H", "<Cmd>WinShift left<CR>" },
         { "J", "<Cmd>WinShift down<CR>" },

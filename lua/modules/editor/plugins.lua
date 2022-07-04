@@ -140,11 +140,12 @@ editor({
     opt = true,
 })
 
+editor({ "tpope/vim-abolish", event = { "CursorMoved", "CmdlineEnter" }, opt = true })
+
 editor({
     "gbprod/substitute.nvim",
     event = { "CursorMoved", "CmdlineEnter" },
+    require = "gbprod/yanky.nvim",
     config = conf.substitute,
     opt = true,
 })
-
-editor({ "tpope/vim-abolish", event = { "CursorMoved", "CmdlineEnter" }, opt = true })
