@@ -121,179 +121,180 @@ local new_maker = function(filepath, bufnr, opts)
         })
         :sync()
 end
+vim.defer_fn(function() -- defer loading
+    require("telescope").setup({
+        defaults = themes.get_ivy({
+            -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
+            selection_caret = "  ",
+            get_status_text = function(self)
+                local xx = (self.stats.processed or 0) - (self.stats.filtered or 0)
+                local yy = self.stats.processed or 0
+                if xx == 0 and yy == 0 then
+                    return ""
+                end
 
-require("telescope").setup({
-    defaults = themes.get_ivy({
-        -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
-        selection_caret = "  ",
-        get_status_text = function(self)
-            local xx = (self.stats.processed or 0) - (self.stats.filtered or 0)
-            local yy = self.stats.processed or 0
-            if xx == 0 and yy == 0 then
-                return ""
-            end
-
-            -- local status_icon
-            -- if opts.completed then
-            --   status_icon = "✔️"
-            -- else
-            --   status_icon = "*"
-            -- end
-            return string.format("%s / %s", xx, yy)
-            -- return ""
-        end,
-        buffer_previewer_maker = new_maker,
-        file_ignore_patterns = { "node_modules", "vendor" },
-        layout_strategy = "horizontal",
-        selection_strategy = "reset",
-        -- layout_strategy = layout_strategies.bottom_pane,
-        path_display = { "shorten" },
-        -- file_ignore_patterns = { "^.git" },
-        -- prompt_prefix = " ",
-        prompt_prefix = "  ",
-        shorten_path = true,
-        preview = {
-            hide_on_startup = true,
-        },
-        -- preview = true,
-        entry_prefix = " ",
-        layout_config = {
-            width = 0.99,
-            height = 0.5,
-            anchor = "S",
-            preview_cutoff = 20,
-            prompt_position = "top",
-            horizontal = {
-                preview_width = function(_, cols, _)
-                    if cols > 200 then
-                        return math.floor(cols * 0.5)
-                    else
-                        return math.floor(cols * 0.6)
-                    end
-                end,
+                -- local status_icon
+                -- if opts.completed then
+                --   status_icon = "✔️"
+                -- else
+                --   status_icon = "*"
+                -- end
+                return string.format("%s / %s", xx, yy)
+                -- return ""
+            end,
+            buffer_previewer_maker = new_maker,
+            file_ignore_patterns = { "node_modules", "vendor" },
+            layout_strategy = "horizontal",
+            selection_strategy = "reset",
+            -- layout_strategy = layout_strategies.bottom_pane,
+            path_display = { "shorten" },
+            -- file_ignore_patterns = { "^.git" },
+            -- prompt_prefix = " ",
+            prompt_prefix = "  ",
+            shorten_path = true,
+            preview = {
+                hide_on_startup = true,
             },
-            vertical = {
-                preview_width = 0.65,
-                width = 0.9,
-                height = 0.95,
-                preview_height = 0.5,
-            },
-
-            flex = {
-                preview_width = 0.65,
+            -- preview = true,
+            entry_prefix = " ",
+            layout_config = {
+                width = 0.99,
+                height = 0.5,
+                anchor = "S",
+                preview_cutoff = 20,
+                prompt_position = "top",
                 horizontal = {
-                    -- preview_width = 0.9,
+                    preview_width = function(_, cols, _)
+                        if cols > 200 then
+                            return math.floor(cols * 0.5)
+                        else
+                            return math.floor(cols * 0.6)
+                        end
+                    end,
+                },
+                vertical = {
+                    preview_width = 0.65,
+                    width = 0.9,
+                    height = 0.95,
+                    preview_height = 0.5,
+                },
+
+                flex = {
+                    preview_width = 0.65,
+                    horizontal = {
+                        -- preview_width = 0.9,
+                    },
                 },
             },
-        },
-        -- winblend = 20,
-        mappings = {
-            n = {
-                ["q"] = actions.close,
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-o>"] = actions.select_vertical,
-                ["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-                ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
-                ["<C-h>"] = "which_key",
-                ["<C-l>"] = actions_layout.toggle_preview,
-                -- ["<C-y>"] = set_prompt_to_entry_value,
-                ["<C-u>"] = actions.preview_scrolling_up,
-                ["<C-d>"] = actions.preview_scrolling_down,
-                ["<C-f>"] = require("telescope.actions").cycle_history_prev,
+            -- winblend = 20,
+            mappings = {
+                n = {
+                    ["q"] = actions.close,
+                    ["<C-j>"] = actions.move_selection_next,
+                    ["<C-k>"] = actions.move_selection_previous,
+                    ["<C-o>"] = actions.select_vertical,
+                    ["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                    ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
+                    ["<C-h>"] = "which_key",
+                    ["<C-l>"] = actions_layout.toggle_preview,
+                    -- ["<C-y>"] = set_prompt_to_entry_value,
+                    ["<C-u>"] = actions.preview_scrolling_up,
+                    ["<C-d>"] = actions.preview_scrolling_down,
+                    ["<C-f>"] = require("telescope.actions").cycle_history_prev,
 
-                ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
-                ["<c-S>"] = custom_actions.multi_selection_open_split,
-                ["<c-t>"] = custom_actions.multi_selection_open_tab,
+                    ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
+                    ["<c-S>"] = custom_actions.multi_selection_open_split,
+                    ["<c-t>"] = custom_actions.multi_selection_open_tab,
 
-                -- ["<C-n>"] = function(prompt_bufnr)
-                --     local results_win = state.get_status(prompt_bufnr).results_win
-                --     local height = vim.api.nvim_win_get_height(results_win)
-                --     action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
-                -- end,
+                    -- ["<C-n>"] = function(prompt_bufnr)
+                    --     local results_win = state.get_status(prompt_bufnr).results_win
+                    --     local height = vim.api.nvim_win_get_height(results_win)
+                    --     action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
+                    -- end,
 
-                -- ["<C-p>"] = function(prompt_bufnr)
-                --     local results_win = state.get_status(prompt_bufnr).results_win
-                --     local height = vim.api.nvim_win_get_height(results_win)
-                --     action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
-                -- end,
+                    -- ["<C-p>"] = function(prompt_bufnr)
+                    --     local results_win = state.get_status(prompt_bufnr).results_win
+                    --     local height = vim.api.nvim_win_get_height(results_win)
+                    --     action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
+                    -- end,
+                },
+
+                i = {
+                    ["<cr>"] = custom_actions.multi_selection_open,
+                    ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
+                    ["<c-s>"] = custom_actions.multi_selection_open_split,
+                    ["<c-t>"] = custom_actions.multi_selection_open_tab,
+
+                    ["<C-j>"] = actions.move_selection_next,
+                    ["<c-p>"] = action_layout.toggle_prompt_position,
+                    ["<C-k>"] = actions.move_selection_previous,
+                    ["<C-y>"] = set_prompt_to_entry_value,
+                    ["<C-o>"] = actions.select_vertical,
+                    ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                    ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
+
+                    ["<C-h>"] = "which_key",
+                    ["<C-l>"] = actions_layout.toggle_preview,
+
+                    ["<C-d>"] = actions.preview_scrolling_down,
+                    ["<C-u>"] = actions.preview_scrolling_up,
+
+                    ["<C-n>"] = function(prompt_bufnr)
+                        local results_win = state.get_status(prompt_bufnr).results_win
+                        local height = vim.api.nvim_win_get_height(results_win)
+                        action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
+                    end,
+                    ["<C-p>"] = function(prompt_bufnr)
+                        local results_win = state.get_status(prompt_bufnr).results_win
+                        local height = vim.api.nvim_win_get_height(results_win)
+                        action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
+                    end,
+                },
             },
-
-            i = {
-                ["<cr>"] = custom_actions.multi_selection_open,
-                ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
-                ["<c-s>"] = custom_actions.multi_selection_open_split,
-                ["<c-t>"] = custom_actions.multi_selection_open_tab,
-
-                ["<C-j>"] = actions.move_selection_next,
-                ["<c-p>"] = action_layout.toggle_prompt_position,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-y>"] = set_prompt_to_entry_value,
-                ["<C-o>"] = actions.select_vertical,
-                ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-                ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
-
-                ["<C-h>"] = "which_key",
-                ["<C-l>"] = actions_layout.toggle_preview,
-
-                ["<C-d>"] = actions.preview_scrolling_down,
-                ["<C-u>"] = actions.preview_scrolling_up,
-
-                ["<C-n>"] = function(prompt_bufnr)
-                    local results_win = state.get_status(prompt_bufnr).results_win
-                    local height = vim.api.nvim_win_get_height(results_win)
-                    action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
-                end,
-                ["<C-p>"] = function(prompt_bufnr)
-                    local results_win = state.get_status(prompt_bufnr).results_win
-                    local height = vim.api.nvim_win_get_height(results_win)
-                    action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
-                end,
+            extensions = {
+                file_browser = {
+                    -- theme = "ivy",
+                    mappings = {
+                        ["i"] = {},
+                        ["n"] = {},
+                    },
+                },
+                fzf = {
+                    fuzzy = true, -- false will only do exact matching
+                    override_generic_sorter = false, -- override the generic sorter
+                    override_file_sorter = true, -- override the file sorter
+                    case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                },
             },
-        },
+            set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+        }),
+    })
+    telescope.load_extension("dotfiles")
+    telescope.load_extension("gosource")
+    -- telescope.load_extension("notify")
+    loader("telescope-fzy-native.nvim telescope-fzf-native.nvim telescope-live-grep-raw.nvim")
+    -- loader("project.nvim") -- telescope-frecency.nvim nvim-neoclip.lua telescope-zoxide
+    telescope.load_extension("fzf")
+
+    telescope.setup({
         extensions = {
-            file_browser = {
-                -- theme = "ivy",
-                mappings = {
-                    ["i"] = {},
-                    ["n"] = {},
-                },
-            },
             fzf = {
                 fuzzy = true, -- false will only do exact matching
-                override_generic_sorter = false, -- override the generic sorter
+                override_generic_sorter = true, -- override the generic sorter
                 override_file_sorter = true, -- override the file sorter
                 case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                -- the default case_mode is "smart_case"
             },
         },
-        set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-    }),
-})
-telescope.load_extension("dotfiles")
-telescope.load_extension("gosource")
--- telescope.load_extension("notify")
-loader("telescope-fzy-native.nvim telescope-fzf-native.nvim telescope-live-grep-raw.nvim")
--- loader("project.nvim") -- telescope-frecency.nvim nvim-neoclip.lua telescope-zoxide
-telescope.load_extension("fzf")
+    })
 
-telescope.setup({
-    extensions = {
-        fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-            -- the default case_mode is "smart_case"
-        },
-    },
-})
-
-telescope.load_extension("fzf")
-telescope.setup({
-    extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
-})
-telescope.load_extension("fzy_native")
-
+    telescope.load_extension("fzf")
+    telescope.setup({
+        extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
+    })
+    telescope.load_extension("fzy_native")
+end, 200)
+-- telescope.load_extension("smart_history")
 layout.custom = function(self, columns, lines)
     local initial_options = self:_get_initial_window_options()
     local preview = initial_options.preview
