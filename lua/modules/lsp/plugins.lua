@@ -54,8 +54,7 @@ lsp({
 
 lsp({
     "Maan2003/lsp_lines.nvim",
-    event = { "BufEnter" },
-    after = "nvim-lspconfig",
+    opt = true,
     setup = conf.lps_lines_setup,
     config = conf.lsp_lines,
 })

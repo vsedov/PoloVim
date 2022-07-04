@@ -1,6 +1,3 @@
--- """ Il figure a better way of doing this for now, just a decent way to load modules .
-vim.cmd([[command! -nargs=*  PyRepl lua require"modules.lang.language_utils".python_repl()]])
-
 local options = {
     tabstop = 4,
     shiftwidth = 4,
@@ -20,11 +17,6 @@ if vim.fn.exists("$VIRTUAL_ENV") == 1 then
 else
     vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python"), "\n", "", "g")
 end
-
-vim.cmd([[
-inoreabbrev <buffer> forr for :<left>
-inoreabbrev <buffer> iff if :<left>
-]])
 
 local ts_utils = require("nvim-treesitter.ts_utils")
 
@@ -62,4 +54,4 @@ local toggle_fstring = function()
     vim.api.nvim_win_set_cursor(winnr, cursor)
 end
 
-vim.keymap.set("n", "F", toggle_fstring, { noremap = true })
+vim.keymap.set("n", "<localleader>f", toggle_fstring, { noremap = true })

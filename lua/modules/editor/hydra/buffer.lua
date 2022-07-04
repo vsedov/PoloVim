@@ -1,42 +1,39 @@
 local Hydra = require("hydra")
 
 local hint = [[
-  ^^^^                Bufferline      			  ^^^^
+  ^^^^                Bufferline                  ^^^^
   ^^^^--------------------------------------------^^^^  
-   _g_: Bufferline Pick 				_q_: Buf del
+   _l_: BufferLineCycleNext _h_: BufferLineCyclePrev
+   _p_: BufferLineTogglePin _c_: BufferLinePick
   ^^^^--------------------------------------------^^^^  
-  ^^^^                Delete  	      			  ^^^^
+  ^^^^                Delete                      ^^^^
   ^^^^--------------------------------------------^^^^  
-   _h_: Del Hidden _u_: Del NameLess _d_: Del This
+   _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
+
+   _d_: Bwipeout   _D_: BufferLinePickClose 
 ]]
 
 Hydra({
     hint = hint,
-    config = {
-        color = "pink",
-        invoke_on_body = true,
-        hint = {
-            position = "bottom",
-            border = "single",
-        },
-    },
+    name = "Buffer management",
     mode = "n",
     body = "<leader>b",
+    color = "teal",
+    config = {
+        hint = { border = "single" },
+        invoke_on_body = true,
+    },
     heads = {
-        { "g", "<cmd>BufferLinePick<CR>" },
-        { "q", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close", exit = true } },
-        { "1", "<cmd>BufferLineGoToBuffer 1<CR>" },
-        { "2", "<cmd>BufferLineGoToBuffer 2<CR>" },
-        { "3", "<cmd>BufferLineGoToBuffer 3<CR>" },
-        { "4", "<cmd>BufferLineGoToBuffer 4<CR>" },
-        { "5", "<cmd>BufferLineGoToBuffer 5<CR>" },
-        { "6", "<cmd>BufferLineGoToBuffer 6<CR>" },
-        { "7", "<cmd>BufferLineGoToBuffer 7<CR>" },
-        { "8", "<cmd>BufferLineGoToBuffer 8<CR>" },
-        { "9", "<cmd>BufferLineGoToBuffer 9<CR>" },
+        { "l", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" } },
+        { "h", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
+        { "p", "<Cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" } },
+        { "c", "<Cmd>BufferLinePick<CR>", { desc = "Pin buffer" } },
+        { "d", "<Cmd>Bwipeout<CR>", { desc = "delete buffer" } },
+        { "D", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close", exit = true } },
+        { "<Esc>", nil, { exit = true, desc = "Quit" } },
 
-        { "h", "<cmd>BDelete hidden<CR>" },
-        { "u", "<cmd>BDelete! nameless<CR>" },
-        { "d", "<cmd>BDelete! this<CR>" },
+        { "qh", "<cmd>BDelete hidden<CR>" },
+        { "qn", "<cmd>BDelete! nameless<CR>" },
+        { "qt", "<cmd>BDelete! this<CR>" },
     },
 })

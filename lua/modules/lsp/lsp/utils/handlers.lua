@@ -21,8 +21,7 @@ function M.setup()
             title = "LSP | " .. client.name,
             timeout = 10000,
             keep = function()
-                -- return lvl == "ERROR" or lvl == "WARN"
-                return lvl == "ERROR"
+                return lvl == "ERROR" or lvl == "WARN"
             end,
         })
     end
@@ -54,6 +53,14 @@ function M.setup()
         show = max_diagnostic(signs_handler.show),
         hide = function(_, bufnr)
             signs_handler.hide(ns, bufnr)
+        end,
+    }
+
+    local virt_text_handler = vim.diagnostic.handlers.virtual_text
+    vim.diagnostic.handlers.virtual_text = {
+        show = max_diagnostic(virt_text_handler.show),
+        hide = function(_, bufnr)
+            virt_text_handler.hide(ns, bufnr)
         end,
     }
 end

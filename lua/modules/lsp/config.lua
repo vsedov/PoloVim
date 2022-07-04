@@ -133,10 +133,9 @@ function config.lps_lines_setup()
     end, { force = true })
 
     vim.api.nvim_create_user_command("DiagnosticEnable", function()
+        vim.cmd([[packadd lsp_lines.nvim]])
         create_auto_cmd()
     end, { force = true })
-
-    create_auto_cmd()
 end
 
 function config.lsp_lines()
