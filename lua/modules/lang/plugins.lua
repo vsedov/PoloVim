@@ -163,3 +163,20 @@ lang({
     after = "nvim-lspconfig",
     config = conf.goto_preview,
 })
+
+lang({
+    "bennypowers/nvim-regexplainer",
+    opt = true,
+    requires = {
+        "nvim-treesitter/nvim-treesitter",
+        "MunifTanjim/nui.nvim",
+    },
+    cmd = {
+        "RegexplainerShow",
+        "RegexplainerShowSplit",
+        "RegexplainerShowPopup",
+        "RegexplainerHide",
+        "RegexplainerToggle",
+    },
+    config = conf.regexplainer,
+})

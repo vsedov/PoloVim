@@ -596,53 +596,45 @@ function config.goto_preview()
     end, { desc = "goto close all", noremap = true })
 end
 
--- Fix irb not working with default settings
--- https://github.com/metakirby5/codi.vim/issues/133#issuecomment-912868183
--- Prepare the Codi buffer with some text, if necessary.
-local preparatory_lines_by_filetype = {
-    ruby = { "# frozen_string_literal: true" },
-}
-local add_cmd = vim.api.nvim_create_user_command
+function config.regexplainer()
+    vim.cmd([[packadd nui.nvim]])
+    require("regexplainer").setup({
+        -- 'narrative'
+        mode = "narrative", -- TODO: 'ascii', 'graphical'
 
-add_cmd("CodiScratch", function()
-    local filetype = vim.opt.filetype
+        -- automatically show the explainer when the cursor enters a regexp
+        auto = false,
 
-    -- Temp file to open
-    local temp_file = vim.api.nvim_eval("tempname()") .. "_codi." .. vim.fn.expand("%:e") .. "asdf"
+        -- filetypes (i.e. extensions) in which to run the autocommand
+        filetypes = {
+            "html",
+            "js",
+            "cjs",
+            "mjs",
+            "ts",
+            "jsx",
+            "tsx",
+            "cjsx",
+            "mjsx",
+            "go",
+            "lua",
+            "vim",
+            "python",
+        },
 
-    -- get the preparatory lines
-    local preparatory_lines = vim.list_extend({}, preparatory_lines_by_filetype[filetype] or {})
-    vim.list_extend(preparatory_lines, { "" }) -- This is the line where we will start the insert
+        mappings = {
+            toggle = "<localleader><localleader>",
+            -- examples, not defaults:
+            -- show = 'gS',
+            -- hide = 'gH',
+            -- show_split = 'gP',
+            -- show_popup = 'gU',
+        },
 
-    --  Open split buffer
-    vim.api.nvim_exec("botright vsplit " .. temp_file, false)
-
-    -- Execute things in new buffer
-    vim.opt.filetype = filetype
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, preparatory_lines)
-    vim.api.nvim_win_set_cursor(0, { #preparatory_lines, 0 }) -- Prepare for :startinsert
-    vim.api.nvim_exec("startinsert", false)
-    vim.cmd([[Codi]])
-end, { force = true })
-
-add_cmd("CodiLiveBuf", function()
-    vim.g["codi#width"] = 40
-    vim.g["codi#rightsplit"] = 1
-    vim.g["codi#rightalign"] = 0
-    vim.g["codi#autoclose"] = 0
-    vim.g["codi#virtual_text"] = 0
-    vim.cmd([[Codi]])
-end, { force = true })
-
-vim.g["codi#interpreters"] = {
-    python = {
-        bin = "ipython",
-        prompt = "In \\[[0-9]\\]: ",
-    },
-    lua = {
-        bin = "lua",
-        prompt = "In \\[[0-9]\\]: ",
-    },
-}
+        narrative = {
+            separator = "\n",
+        },
+    })
+end
 
 return config
