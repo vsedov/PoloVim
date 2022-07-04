@@ -54,8 +54,6 @@ lang({ "JoosepAlviste/nvim-ts-context-commentstring", opt = true })
 
 lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
 
-lang({ "windwp/nvim-ts-autotag", opt = true })
-
 lang({ "nanotee/luv-vimdocs", opt = true })
 
 -- builtin lua functions

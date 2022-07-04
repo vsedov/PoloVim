@@ -237,10 +237,6 @@ local treesitter_ref = function()
         },
 
         autopairs = { enable = false },
-        autotag = {
-            enable = true,
-            filetypes = { "html", "xml" },
-        },
     })
 end
 
