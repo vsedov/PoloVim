@@ -18,6 +18,7 @@ local config = {
     sources = require("modules.completion.cmp.sources"),
     sorting = {
         comparators = {
+            require("cmp_tabnine.compare"),
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
@@ -97,7 +98,6 @@ if praestrictus.config.cmp_theme == "border" then
             with_text = false,
             before = function(entry, vim_item)
                 vim_item.abbr = utils.get_abbr(vim_item, entry)
-
                 vim_item.dup = ({
                     buffer = 1,
                     path = 1,
