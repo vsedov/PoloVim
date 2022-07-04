@@ -632,7 +632,7 @@ function config.chalk()
             hop = true,
             indent_blankline = true,
             illuminate = true,
-            lightspeed = true,
+            lightspeed = false, --true normally
             lsp_saga = true,
             lsp_trouble = true,
             modes = true,
@@ -713,7 +713,7 @@ function config.catppuccin()
             barbar = true,
             bufferline = true,
             markdown = true,
-            lightspeed = true,
+            lightspeed = false,
             ts_rainbow = true,
             hop = false,
             notify = true,
