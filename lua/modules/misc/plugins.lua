@@ -150,9 +150,8 @@ misc({
     config = conf.guess_indent,
 })
 
-
 misc({
     "ahmedkhalf/project.nvim",
-    ft = {"python"},
-    config = conf.project
+    ft = { "python" },
+    config = conf.project,
 })

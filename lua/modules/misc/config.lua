@@ -334,10 +334,10 @@ function config.guess_indent()
 end
 
 function config.projects()
-        require('project_nvim').setup({
-          silent_chdir = false,
-          patterns = { '.git' },
-        })
+    require("project_nvim").setup({
+        silent_chdir = false,
+        patterns = { ".git" },
+    })
 end
 
 return config
