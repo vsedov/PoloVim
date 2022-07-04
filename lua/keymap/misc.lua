@@ -16,5 +16,9 @@ local plug_map = {
     ["n|<Leader>ds"] = map_cr("lua require('neogen').generate({type = 'type'})", "Neogen Type")
         :with_noremap()
         :with_silent(),
+
+    ["n|<f8>"] = map_cu("MruRepos", "MruRepos"):with_noremap():with_silent(),
+    ["n|<f9>"] = map_cu("Mru", "Mru"):with_noremap():with_silent(),
+    ["n|<f0>"] = map_cu("Mfu", "Mfu"):with_noremap():with_silent(),
 }
 return plug_map
