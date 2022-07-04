@@ -5,17 +5,38 @@ vim.g.lsp_config_complete = true
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 
-lspconfig.jedi_language_server.setup(enhance_attach({
-    cmd = { "jedi-language-server" },
-    filetypes = { "python" },
+-- lspconfig.jedi_language_server.setup(enhance_attach({
+--     cmd = { "jedi-language-server" },
+--     filetypes = { "python" },
 
-    -- init_options = {
-    --     jediSettings = {
-    --         -- autoImportModules = { "" }
-    --         "debug" = false
-    --     }
-    -- },
-}))
+--     -- init_options = {
+--     --     jediSettings = {
+--     --         -- autoImportModules = { "" }
+--     --         "debug" = false
+--     --     }
+--     -- },
+-- }))
+
+local python = require("modules.lsp.lsp.providers.pylance")
+
+local function python_config()
+    local ok, config = pcall(require, "modules.lsp.lsp.providers.pylance")
+
+    if not ok then
+        config = {}
+    end
+    local client_on_attach = config.on_attach
+    -- wrap client-specific on_attach with default custom on_attach
+    config.on_attach = function(client, bufnr)
+        require("modules.lsp.lsp.utils").common_on_attach(client, bufnr)
+        client_on_attach(client, bufnr)
+    end
+
+    return config
+end
+
+lspconfig.pyright.setup(enhance_attach(python_config()))
+
 lspconfig.gopls.setup(enhance_attach({
     filetypes = { "go" },
     cmd = { "gopls", "--remote=auto" },
