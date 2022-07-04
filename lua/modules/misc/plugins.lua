@@ -40,13 +40,22 @@ misc({
     config = conf.syntax_surfer,
 })
 
+-- misc({
+--     "ggandor/lightspeed.nvim",
+--     setup = conf.lightspeed_setup,
+--     event = "BufReadPost",
+--     opt = true,
+--     config = conf.lightspeed,
+-- })
+
 misc({
-    "ggandor/lightspeed.nvim",
-    setup = conf.lightspeed_setup,
+    "ggandor/leap.nvim",
+    setup = conf.leap_setup,
     event = "BufReadPost",
     opt = true,
-    config = conf.lightspeed,
+    config = conf.leap,
 })
+
 -- nvim-colorizer replacement
 misc({
     "rrethy/vim-hexokinase",
