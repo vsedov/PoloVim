@@ -40,21 +40,21 @@ misc({
     config = conf.syntax_surfer,
 })
 
--- misc({
---     "ggandor/lightspeed.nvim",
---     setup = conf.lightspeed_setup,
---     event = "BufReadPost",
---     opt = true,
---     config = conf.lightspeed,
--- })
-
 misc({
-    "ggandor/leap.nvim",
-    setup = conf.leap_setup,
+    "ggandor/lightspeed.nvim",
+    setup = conf.lightspeed_setup,
     event = "BufReadPost",
     opt = true,
-    config = conf.leap,
+    config = conf.lightspeed,
 })
+
+-- misc({
+--     "ggandor/leap.nvim",
+--     setup = conf.leap_setup,
+--     event = "BufReadPost",
+--     opt = true,
+--     config = conf.leap,
+-- })
 
 -- nvim-colorizer replacement
 misc({
@@ -154,4 +154,10 @@ misc({
     "ahmedkhalf/project.nvim",
     ft = { "python" },
     config = conf.project,
+})
+
+misc({
+    "lukas-reineke/headlines.nvim",
+    ft = { "norg", "md" },
+    config = conf.headers,
 })

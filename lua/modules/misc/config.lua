@@ -6,12 +6,12 @@ end
 
 function config.lightspeed_setup()
     local default_keymaps = {
-        { "n", "<M-s>", "<Plug>Lightspeed_omni_s" },
-        { "n", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-        { "x", "<M-s>", "<Plug>Lightspeed_omni_s" },
-        { "x", "<M-S>", "<Plug>Lightspeed_omni_gs" },
-        { "o", "<M-s>", "<Plug>Lightspeed_omni_s" },
-        { "o", "<M-S>", "<Plug>Lightspeed_omni_gs" },
+        { "n", "cS", "<Plug>Lightspeed_omni_s" },
+        { "n", "cs", "<Plug>Lightspeed_omni_gs" },
+        { "x", "cS", "<Plug>Lightspeed_omni_s" },
+        { "x", "cs", "<Plug>Lightspeed_omni_gs" },
+        { "o", "cS", "<Plug>Lightspeed_omni_s" },
+        { "o", "cs", "<Plug>Lightspeed_omni_gs" },
 
         { "n", "gs", "<Plug>Lightspeed_gs" },
         { "n", "gS", "<Plug>Lightspeed_gS" },
@@ -48,41 +48,41 @@ function config.lightspeed()
     })
 end
 
-function config.leap_setup()
-    local default_keymaps = {
-        { "n", "cs", "<Plug>leap-forward" },
-        { "n", "cS", "<Plug>leap-backward" },
-        { "x", "cs", "<Plug>leap-forward-x" },
-        { "x", "cS", "<Plug>leap-backward-x" },
-        { "n", "gS", "<Plug>leap-cross-window" },
-    }
-    for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
-    end
-end
-function config.leap()
-    require("leap").set_default_keymaps()
-    require("leap").setup({
-        highlight_ahead_of_time = true,
-        highlight_unlabeled = true,
-        case_sensitive = false,
-        character_classes = {
-            ")]}>",
-            "([{<",
-            { '"', "'", "`" },
-        },
-        -- -- These keys are captured directly by the plugin at runtime.
-        special_keys = {
-            repeat_search = "<enter>",
-            next_match = "<enter>",
-            prev_match = "<tab>",
-            next_group = "<space>",
-            prev_group = "<tab>",
-            eol = "<space>",
-        },
-    })
-    require("leap").init_highlight(true)
-end
+-- function config.leap_setup()
+--     local default_keymaps = {
+--         { "n", "cs", "<Plug>leap-forward" },
+--         { "n", "cS", "<Plug>leap-backward" },
+--         { "x", "cs", "<Plug>leap-forward-x" },
+--         { "x", "cS", "<Plug>leap-backward-x" },
+--         { "n", "gS", "<Plug>leap-cross-window" },
+--     }
+--     for _, m in ipairs(default_keymaps) do
+--         vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
+--     end
+-- end
+-- function config.leap()
+--     require("leap").set_default_keymaps()
+--     require("leap").setup({
+--         highlight_ahead_of_time = true,
+--         highlight_unlabeled = true,
+--         case_sensitive = false,
+--         character_classes = {
+--             ")]}>",
+--             "([{<",
+--             { '"', "'", "`" },
+--         },
+--         -- -- These keys are captured directly by the plugin at runtime.
+--         special_keys = {
+--             repeat_search = "<enter>",
+--             next_match = "<enter>",
+--             prev_match = "<tab>",
+--             next_group = "<space>",
+--             prev_group = "<tab>",
+--             eol = "<space>",
+--         },
+--     })
+--     require("leap").init_highlight(true)
+-- end
 
 function config.hexokinase()
     vim.g.Hexokinase_optInPatterns = {
@@ -338,6 +338,10 @@ function config.projects()
         silent_chdir = false,
         patterns = { ".git" },
     })
+end
+
+function config.headers()
+    require("headlines").setup()
 end
 
 return config
