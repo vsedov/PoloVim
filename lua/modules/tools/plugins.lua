@@ -185,3 +185,24 @@ tools({
     requires = { "tami5/sqlite.lua" },
     config = conf.neoclip,
 })
+
+tools({
+    "voldikss/vim-translator",
+
+    opt = true,
+    fn = { "<Plug>TranslateW", "<Plug>TranslateWV" },
+    setup = function()
+        vim.keymap.set(
+            "n",
+            "<Leader>ts",
+            "<Plug>TranslateW",
+            { desc = "translate word", noremap = true, silent = true }
+        )
+        vim.keymap.set(
+            "v",
+            "<Leader>ts",
+            "<Plug>TranslateWV",
+            { desc = "translate word vis", noremap = true, silent = true }
+        )
+    end,
+})
