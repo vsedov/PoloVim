@@ -94,7 +94,6 @@ misc({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
 
 misc({ "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, config = conf.iswap })
 
-misc({ "Mephistophiles/surround.nvim", keys = { "<F3>" }, config = conf.surround })
 misc({ "Krafi2/jeskape.nvim", event = "InsertEnter", config = conf.jetscape })
 
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
@@ -119,3 +118,25 @@ misc({
 misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 
 misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
+
+misc({
+    "kylechui/nvim-surround",
+    keys = { "ys", "<localleader>s", "<localleader>S", "yc" },
+    config = conf.surround,
+})
+
+misc({
+    "abecodes/tabout.nvim",
+    after = { "nvim-cmp" },
+    wants = { "nvim-treesitter" }, -- or require if not used so far
+    keys = { "<Tab>", "<S-Tab>" },
+    config = function()
+        require("tabout").setup({ completion = false })
+    end,
+})
+
+misc({
+    "NMAC427/guess-indent.nvim",
+    event = "BufEnter",
+    config = conf.guess_indent,
+})

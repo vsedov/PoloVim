@@ -131,26 +131,6 @@ function config.iswap()
     })
 end
 
-function config.surround()
-    require("surround").setup({
-        mappings_style = "sandwich",
-        pairs = {
-            nestable = {
-                { "(", ")" },
-                { "[", "]" },
-                { "{", "}" },
-                { "/", "/" },
-                {
-                    "*",
-                    "*",
-                },
-            },
-            linear = { { "'", "'" }, { "`", "`" }, { '"', '"' } },
-        },
-        prefix = "<F3>",
-    })
-end
-
 function config.jetscape()
     require("jeskape").setup({
         mappings = {
@@ -259,6 +239,62 @@ function config.diaglist()
         "<cmd>lua require('diaglist').open_buffer_diagnostics()<cr>",
         { noremap = true, silent = true }
     )
+end
+
+function config.surround()
+    require("nvim-surround").setup({
+        keymaps = { -- vim-surround style keymaps
+            insert = "ys",
+            visual = "<localleader>s",
+            delete = "<localleader>S",
+            change = "yc",
+        },
+
+        delimiters = {
+            pairs = {
+                ["("] = { "( ", " )" },
+                [")"] = { "(", ")" },
+                ["{"] = { "{ ", " }" },
+                ["}"] = { "{", "}" },
+                ["<"] = { "< ", " >" },
+                [">"] = { "<", ">" },
+                ["["] = { "[ ", " ]" },
+                ["]"] = { "[", "]" },
+            },
+            separators = {
+                ["'"] = { "'", "'" },
+                ['"'] = { '"', '"' },
+                ["`"] = { "`", "`" },
+            },
+            HTML = {
+                ["t"] = true, -- Use "t" for HTML-style mappings
+            },
+            aliases = {
+                ["b"] = ">", -- Single character aliases apply everywhere
+                ["a"] = ")",
+                ["s"] = "}",
+                ["r"] = "]",
+                ["q"] = { '"', "'", "`" }, -- Table aliases only apply for changes/deletions
+            },
+        },
+    })
+end
+
+function config.guess_indent()
+    require("guess-indent").setup({
+        auto_cmd = true, -- Set to false to disable automatic execution
+        filetype_exclude = { -- A list of filetypes for which the auto command gets disabled
+            "netrw",
+            "neo-tree",
+            "tutor",
+        },
+        buftype_exclude = { -- A list of buffer types for which the auto command gets disabled
+            "help",
+            "nofile",
+            "terminal",
+            "prompt",
+        },
+    })
 end
 
 return config
