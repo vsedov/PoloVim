@@ -159,7 +159,7 @@ tools({
     config = conf.sad,
 })
 
-tools({ "ilAYAli/scMRU.nvim", module = "mru" })
+tools({ "ilAYAli/scMRU.nvim", cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" }, module = "mru" })
 
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools({
