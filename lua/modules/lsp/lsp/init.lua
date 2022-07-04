@@ -17,8 +17,7 @@ local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 --     -- },
 -- }))
 
-local python = require("modules.lsp.lsp.providers.pylance")
-
+require("modules.lsp.lsp.providers.pylance")
 local function python_config()
     local ok, config = pcall(require, "modules.lsp.lsp.providers.pylance")
 

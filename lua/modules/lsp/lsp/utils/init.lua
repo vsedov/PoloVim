@@ -78,6 +78,7 @@ function M.setup()
     end
     require("modules.lsp.lsp.utils.handlers").setup()
     require("modules.lsp.lsp.utils.list")
+    require("modules.lsp.lsp.utils.inlay_hints")
 end
 
 function M.enhance_attach(user_config)
