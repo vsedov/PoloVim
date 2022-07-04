@@ -74,7 +74,7 @@ function autocmd.load_autocmds()
             {
                 { "BufWritePost", "FileWritePost" },
                 "*.vim",
-                [[if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
+                [[ if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
                 true,
             },
             {
