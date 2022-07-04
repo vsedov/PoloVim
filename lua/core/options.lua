@@ -65,6 +65,7 @@ local function load_options()
         foldlevelstart = 99,
         ruler = false,
         list = true,
+
         showtabline = 2,
         winwidth = 30,
         winminwidth = 10,
@@ -72,7 +73,7 @@ local function load_options()
         helpheight = 12,
         previewheight = 12,
         showcmd = false,
-        cmdheight = 0,
+        cmdheight = 1,
         cmdwinheight = 5,
         equalalways = false,
         laststatus = 3,
@@ -150,8 +151,6 @@ local function load_options()
         vim.opt[name] = value
     end
 end
-vim.opt.jumpoptions:append("view")
-
 -- vim.g.python_host_prog = "/usr/bin/python2"
 -- vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
 vim.cmd([[syntax off]])

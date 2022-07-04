@@ -29,7 +29,7 @@ local function loadscheme()
         themes = { "kanagawa.nvim" }
     else
         themes = {
-            -- "kanagawa.nvim",
+            "kanagawa.nvim",
             "catppuccin",
             "tokyonight.nvim",
         }
