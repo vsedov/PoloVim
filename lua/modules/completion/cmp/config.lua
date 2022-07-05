@@ -13,7 +13,7 @@ local config = {
         autocomplete = { types.cmp.TriggerEvent.TextChanged },
         completeopt = "menu,menuone,noselect",
     },
-    preselect = cmp.PreselectMode.Item,
+    preselect = cmp.PreselectMode.None, -- None | Item
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
     sorting = {

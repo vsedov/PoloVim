@@ -68,8 +68,7 @@ completion({
 completion({
     "https://github.com/github/copilot.vim.git",
     cmd = "Copilot",
-    after = "nvim-cmp",
-
+    opt = true,
     setup = function()
         vim.opt.completeopt = "menuone,noselect"
         vim.g.copilot_enabled = false
