@@ -42,6 +42,7 @@ function Packer:load_packer()
     self:load_plugins()
     use({ "wbthomason/packer.nvim" })
     use({ "lewis6991/impatient.nvim" })
+
     for _, repo in ipairs(self.repos) do
         use(repo)
     end

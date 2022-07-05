@@ -2,12 +2,12 @@ local Hydra = require("hydra")
 
 local hint = [[
 ^^^^^^           Move         ^^^^^^   ^^     Split         ^^^^    Size
-^^^^^^------------------------^^^^^^   ^^---------------    ^^^^------------- 
-^ ^ _k_ ^ ^   ^ ^ _K_ ^ ^   ^ ^ _wk_ ^ ^     _s_: horizontally    _+_ _-_: height
-_h_ ^ ^ _l_   _H_ ^ ^ _L_   _wh_ ^ ^ _wl_    _v_: vertically      _>_ _<_: width
-^ ^ _j_ ^ ^   ^ ^ _J_ ^ ^   ^  ^ _wj_^  ^    _q_: exit           ^ _=_ ^: equalize
-focus^^^^^^   window^^^^^^  float ^^^^^^
-^ ^ ^ ^ ^ ^   ^ ^ ^ ^ ^ ^    _b_: choose buffer   ^ ^ ^ ^    _<Esc>_ 
+^^^^^^------------------------^^^^^^   ^^---------------    ^^^^-------------
+^ ^ _k_ ^ ^   ^ ^   _wk_ ^ ^            _s_: horizontally    _+_ _-_: height
+_h_ ^ ^ _l_   _wh_ _<cr>_ _wl_          _v_: vertically      _>_ _<_: width
+^ ^ _j_ ^ ^   ^  ^  _wj_ ^  ^           _q_: exit           ^ _=_ ^: equalize
+focus^^^^^^       winshift ^^^^^^
+^ ^ ^ ^ ^ ^   ^ ^ ^ ^ ^ ^    _b_: choose buffer   ^ ^ ^ ^    _<Esc>_
 ]]
 
 Hydra({
@@ -30,10 +30,12 @@ Hydra({
         { "l", "<C-w>l" },
 
         -- Move window
-        { "H", "<Cmd>WinShift left<CR>" },
-        { "J", "<Cmd>WinShift down<CR>" },
-        { "K", "<Cmd>WinShift up<CR>" },
-        { "L", "<Cmd>WinShift right<CR>" },
+        { "wh", "<Cmd>WinShift left<CR>" },
+        { "wj", "<Cmd>WinShift down<CR>" },
+        { "wk", "<Cmd>WinShift up<CR>" },
+        { "wl", "<Cmd>WinShift right<CR>" },
+        { "<cr>", "<Cmd>WinShift<CR>" },
+
         -- Split
         { "s", "<C-w>s" },
         { "v", "<C-w>v" },
