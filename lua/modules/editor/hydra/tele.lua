@@ -2,13 +2,13 @@ local Hydra = require("hydra")
 
 local hint_telescope = [[
   ^^     Git         ^^^^           Surfing            ^^^^
-  ^^^^-------------------------------------------------^^^^ 
-  _g_: Git Files      _w_: live G    _a_: Silver Surf 
-  _u_: Git Diff       _W_: CurBuf    _e_: L grep ++
-  _S_: Git Status     _z_: zoxide    _M_: Marks 
-  _h_: Git Conflict   _l_: Lsp       _p_: Workspaces 
   ^^^^-------------------------------------------------^^^^
-  ^^ Register and Buffer^^         Commands              
+  _g_: Git Files      _w_: live G    _a_: Silver Surf
+  _u_: Git Diff       _W_: CurBuf    _e_: L grep ++
+  _S_: Git Status     _z_: zoxide    _M_: Marks
+  _h_: Git Conflict   _l_: Lsp       _p_: Workspaces
+  ^^^^-------------------------------------------------^^^^
+  ^^ Register and Buffer^^         Commands
   ^^^^-------------------------------------------------^^^^
   _r_: registers          _/_: Search His _o_: oldfiles
   _R_: reloader           _c_: Com His    _k_: keymaps
@@ -16,13 +16,17 @@ local hint_telescope = [[
   ^^^^-------------------------------------------------^^^^
   ^^^^                     Files                       ^^^^
   ^^^^-------------------------------------------------^^^^
-  _f_: Find Files                   _s_: find string  
-  _F_: Files                       _t_: search file     
-  _b_: browse files                 _d_: DotFiles    
+  _f_: Find Files                   _s_: find string
+  _F_: Files                        _t_: search file
+  _b_: browse files                 _d_: DotFiles
   ^^^^-------------------------------------------------^^^^
   ^^^^                     MRU                         ^^^^
   ^^^^-------------------------------------------------^^^^
-  _L_: MRU                          _K_: MFU    
+  _L_: MRU                          _K_: MFU
+  ^^^^-------------------------------------------------^^^^
+  ^^^^                     DevDoc                      ^^^^
+  ^^^^-------------------------------------------------^^^^
+      _xt_: search ft    _xd_: search     _xo_: browse
 
   _q_ exit
 
@@ -107,7 +111,9 @@ Hydra({
 
         { "L", MRU, { exit = true, desc = "Most recently used files" } },
         { "K", MFU, { exit = true, desc = "Most frequently used files" } },
+
+        { "xt", require("utils.telescope").devdocs_ft, { exit = true, desc = "Dev Doc search ft" } },
+        { "xd", require("utils.telescope").devdocs_search, { exit = true, desc = "Dev Doc search" } },
+        { "xo", require("utils.telescope").google_search, { exit = true, desc = "Google search" } },
     },
 })
-
--- require("telescope.builtin").current_buffer_fuzzy_find()
