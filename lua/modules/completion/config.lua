@@ -7,22 +7,7 @@ function config.nvim_doc_help()
         width = 60,
     })
 end
-function config.zeal()
-    vim.g.zv_disable_mapping = 1
-    local wk = require("which-key")
-    wk.register({
-        ["<F1>"] = { "<Plug>Zeavim", "Find in Zeal" },
-        gzz = { "<Plug>Zeavim", "Find in Zeal" },
-        gZ = { "<Plug>ZVKeyDocset<CR>", "Find Docset" },
-        gz = { "<Plug>ZVOperator", "Zeal in..." },
-    })
 
-    wk.register({
-        gz = { "<Plug>ZVVisSelection", "Find in Zeal" },
-    }, {
-        mode = "x",
-    })
-end
 function config.cmp()
     require("modules.completion.cmp")
 end
