@@ -32,17 +32,3 @@ telescope({
         end, { force = true })
     end,
 })
-
-telescope({
-    "lalitmee/browse.nvim",
-    cmd = {
-        "BrowseInputSearch",
-        "Browse",
-        "BrowseBookmarks",
-        "DevDocs",
-        "DevDocsFT",
-        "BrowseMdnSearch", --  Documenting web technologies, including CSS, HTML, and JavaScript, since 2005.
-    },
-    requires = { "nvim-telescope/telescope.nvim" },
-    config = conf.browse,
-})

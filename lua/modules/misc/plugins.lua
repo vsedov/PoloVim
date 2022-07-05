@@ -144,11 +144,11 @@ misc({
     end,
 })
 
-misc({
-    "NMAC427/guess-indent.nvim",
-    event = "BufEnter",
-    config = conf.guess_indent,
-})
+-- misc({
+--     "NMAC427/guess-indent.nvim",
+--     event = "BufEnter",
+--     config = conf.guess_indent,
+-- })
 
 misc({
     "ahmedkhalf/project.nvim",

@@ -1,3 +1,4 @@
+
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 
@@ -67,4 +68,4 @@ lsp({ "smjonas/inc-rename.nvim", cmd = "IncRename", config = conf.rename })
 
 lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
--- return lsp
+lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", requires = { "MunifTanjim/nui.nvim" } })

@@ -1044,7 +1044,7 @@ local function preview(prompt_bufnr)
     vim.cmd(cmd)
 end
 
-function M.colorscheme()
+M.colorscheme = function()
     -- loader("tokyodark.nvim tokyonight.nvim")
     local before_color = vim.api.nvim_exec("colorscheme", true)
     local need_restore = true
@@ -1091,6 +1091,32 @@ function M.colorscheme()
     }
     local colorschemes = pickers.new(themes.get_ivy(), opts)
     colorschemes:find()
+end
+
+-- get os name
+local open_cmd = "xdg-open"
+
+M.devdocs_ft = function()
+    local input = vim.fn.input("Search String: ")
+    if input == nil or input == "" then
+        return
+    end
+    local input_with_filetype = vim.bo.filetype .. " " .. input
+    vim.fn.jobstart(string.format("%s 'https://devdocs.io/#q=%s'", open_cmd, input_with_filetype))
+end
+
+M.devdocs_search = function()
+    local input = vim.fn.input("Search String: ")
+    vim.fn.jobstart(string.format("%s 'https://devdocs.io/#q=%s'", open_cmd, input))
+end
+
+M.google_search = function()
+    local input = vim.fn.input("Search String: ")
+    if input == nil or input == "" then
+        return
+    end
+    local path = "https://www.google.com/search?q=" .. input
+    vim.fn.jobstart({ open_cmd, path }, { detach = true })
 end
 
 return M

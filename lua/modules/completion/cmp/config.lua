@@ -76,6 +76,13 @@ local config = {
     },
     experimental = { ghost_text = true, native_menu = false },
 }
+local source_mapping = {
+    buffer = "[Buffer]",
+    nvim_lsp = "[LSP]",
+    nvim_lua = "[Lua]",
+    cmp_tabnine = "[TN]",
+    path = "[Path]",
+}
 
 if praestrictus.config.cmp_theme == "border" then
     config.window = {
@@ -141,6 +148,15 @@ elseif praestrictus.config.cmp_theme == "no-border" then
             item.test = "test"
             item.test_hl_group = "String"
 
+            local menu = source_mapping[entry.source.name]
+            if entry.source.name == "cmp_tabnine" then
+                if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+                    menu = entry.completion_item.data.detail .. " " .. menu
+                end
+                item.kind = ""
+            end
+
+            item.menu = menu
             return item
         end,
     }

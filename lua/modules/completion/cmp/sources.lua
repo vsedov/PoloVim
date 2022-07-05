@@ -20,12 +20,11 @@ local sources = {
     -- { name = "calc", priority = 4 },
     -- { name = "cmdline", priority = 4 },
     { name = "neorg", priority = 6 },
-    { name = "copilot", group_index = 2, priority = 9 },
     { name = "cmp_tabnine", keyword_length = 0, priority = 8 },
     -- { name = "treesitter", keyword_length = 2 },
     -- { name = "spell" },
     -- { name = "look", keyword_length = 2 },
-    -- { name = "treesitter", keyword_length = 2 },
+    { name = "treesitter", keyword_length = 2 },
 }
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })

@@ -16,12 +16,12 @@ if gitrepo then
 
     local hint = [[
   ^^^^                           Git Files                              ^^^^
-  ^^^^------------------------------------------------------------------^^^^  
+  ^^^^------------------------------------------------------------------^^^^
   _d_: diftree  _s_ stagehunk    _x_ show del   _b_ gutterView  _r_ reset_hunk
   _k_ proj diff _u_ unstage hunk _p_ view hunk  _B_ blameFull   _dd_ diffthis
   _J_: next hunk <--------------------------------------> _K_: prev hunk
   _D_ buf diff   _g_ diff staged _P_ projStaged _f_ proj hunkQF  _U_ unstagebuf
-  _S_ stage buf  _G_ stage diff  _/_ show base  
+  _S_ stage buf  _G_ stage diff  _/_ show base
 
   _<Enter>_ Neogit _q_ exit
 ]]

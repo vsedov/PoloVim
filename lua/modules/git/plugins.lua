@@ -70,7 +70,7 @@ git({
 
 git({ "TimUntersberger/neogit", opt = true, cmd = { "Neogit" }, config = conf.neogit })
 
-git({ "ruifm/gitlinker.nvim", keys = { "<leader>gy" }, config = conf.gitlinker })
+git({ "ruifm/gitlinker.nvim", module = "gitlinker", config = conf.gitlinker })
 
 git({
     "tanvirtin/vgit.nvim", -- gitsign has similar features

@@ -28,6 +28,7 @@ function config.tabnine()
         ignored_file_types = { -- default is not to ignore
             -- uncomment to ignore in lua:
             -- lua = true
+            norg = "true",
         },
         show_prediction_strength = true,
     })
