@@ -1,4 +1,3 @@
-
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 
