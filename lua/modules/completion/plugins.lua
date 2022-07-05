@@ -10,6 +10,13 @@ completion({
 })
 
 completion({
+    "KabbAmine/zeavim.vim",
+    cmd = { "ZeavimV", "Zeavim", "Zeavim!", "Docset" },
+    keys = { "<F1>", "gzz", "gZ", "gz" },
+    config = conf.zeal,
+})
+
+completion({
     "max397574/nvim-cmp",
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
