@@ -1,7 +1,29 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 
-lsp({ "neovim/nvim-lspconfig", setup = conf.nvim_lsp_setup, config = conf.nvim_lsp, opt = true })
+-- lsp({ "neovim/nvim-lspconfig", setup = conf.nvim_lsp_setup, config = conf.nvim_lsp, opt = true })
+
+lsp({
+    {
+        "williamboman/mason.nvim",
+        event = "BufRead",
+        branch = "alpha",
+        config = function()
+            require("mason").setup({ ui = { border = "single" } })
+            require("mason-lspconfig").setup({
+                automatic_installation = true,
+            })
+        end,
+    },
+    -- lspconfig is abominably slow to load and if loaded on BufReadPre seems to interact with nvim-treesitter
+    {
+        "neovim/nvim-lspconfig",
+        after = "mason.nvim",
+        -- opt = true,
+        config = conf.nvim_lsp,
+    },
+})
+
 lsp({ "ii14/lsp-command", opt = true, after = "nvim-lspconfig" })
 lsp({
     "p00f/clangd_extensions.nvim",
@@ -31,7 +53,7 @@ lsp({ "max397574/lua-dev.nvim", opt = true, requires = "nvim-lspconfig", config 
 lsp({ "lewis6991/hover.nvim", key = { "K", "gK" }, config = conf.hover })
 
 lsp({
-    "tami5/lspsaga.nvim",
+    "glepnir/lspsaga.nvim",
     cmd = "Lspsaga",
     opt = true,
     config = conf.saga,

@@ -8,6 +8,7 @@ local kind_presets = {
         Constant = "  ",
         Constructor = "  ",
         Enum = " 了 ",
+        -- Tn = "  ",
         EnumMember = "  ",
         Event = "  ",
         Field = " ﰠ ",

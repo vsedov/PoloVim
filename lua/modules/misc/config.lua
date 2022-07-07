@@ -338,6 +338,7 @@ function config.projects()
         silent_chdir = false,
         patterns = { ".git" },
     })
+    require('telescope').load_extension('projects')
 end
 
 function config.headers()
