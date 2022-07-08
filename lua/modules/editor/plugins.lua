@@ -25,7 +25,7 @@ editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
 
 editor({
     "gbprod/yanky.nvim",
-    event = { "CursorMoved", "CmdlineEnter" },
+    -- event = { "CursorMoved", "CmdlineEnter" },
     setup = conf.setup_yanky,
     config = conf.config_yanky,
     requires = "telescope.nvim",
@@ -116,12 +116,12 @@ editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
 
 editor({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = conf.dial })
 
--- editor({
---     "m-demare/hlargs.nvim",
---     ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
---     requires = { "nvim-treesitter/nvim-treesitter" },
---     config = conf.hlargs,
--- })
+editor({
+    "m-demare/hlargs.nvim",
+    ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
+    requires = { "nvim-treesitter/nvim-treesitter" },
+    config = conf.hlargs,
+})
 
 editor({
     "max397574/which-key.nvim",
@@ -135,17 +135,14 @@ editor({
 editor({
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim",
-    event = { "CmdwinEnter", "CmdlineEnter", "CursorMoved" },
+    keys = { "<leader>b", "<leader>f", "<c-w>", "\\z", "<leader>h" },
     config = conf.hydra,
     opt = true,
 })
 
-editor({ "tpope/vim-abolish", event = { "CursorMoved", "CmdlineEnter" }, opt = true })
-
 editor({
     "gbprod/substitute.nvim",
-    event = { "CursorMoved", "CmdlineEnter" },
     require = "gbprod/yanky.nvim",
+    keys = { "_", "c_" },
     config = conf.substitute,
-    opt = true,
 })

@@ -254,10 +254,28 @@ end
 
 function config.hlargs()
     require("hlargs").setup({
+        color = "#ef9062",
+        excluded_filetypes = {},
+        paint_arg_declarations = true,
+        paint_arg_usages = true,
+        hl_priority = 10000,
         excluded_argnames = {
-            declarations = { "use", "use_rocks", "_" },
+            declarations = {},
             usages = {
-                lua = { "self", "use", "use_rocks", "_" },
+                python = { "self", "cls" },
+                lua = { "self" },
+            },
+        },
+        performance = {
+            parse_delay = 1,
+            slow_parse_delay = 50,
+            max_iterations = 400,
+            max_concurrent_partial_parses = 30,
+            debounce = {
+                partial_parse = 3,
+                partial_insert_mode = 100,
+                total_parse = 700,
+                slow_parse = 5000,
             },
         },
     })
@@ -277,62 +295,54 @@ function config.substitute()
         motion1 = true,
         motion2 = true,
     })
+    -- pasting
+    vim.keymap.set("n", "_", "<cmd>lua require('substitute').operator()<cr>", { desc = "sub operator", noremap = true })
+    vim.keymap.set("n", "__", "<cmd>lua require('substitute').line()<cr>", { desc = "sub line", noremap = true })
+    vim.keymap.set("n", "<S-_>", "<cmd>lua require('substitute').eol()<cr>", { desc = "sub eol", noremap = true })
+    vim.keymap.set("x", "_", "<cmd>lua require('substitute').visual()<cr>", { desc = "sub visual", noremap = true })
+
     vim.keymap.set(
         "n",
-        "Lo",
-        "<cmd>lua require('substitute').operator()<cr><space>",
-        { desc = "Sub Operator", noremap = true }
+        "c_",
+        "<cmd>lua require('substitute.range').operator()<cr>",
+        { desc = "sub range op", noremap = true }
+    )
+    vim.keymap.set(
+        "x",
+        "c_",
+        "<cmd>lua require('substitute.range').visual()<cr>",
+        { desc = "sub range visual", noremap = true }
     )
     vim.keymap.set(
         "n",
-        "Lp",
-        "<cmd>lua require('substitute').line()<cr><space>",
-        { desc = "Sub Operator", noremap = true }
-    )
-    vim.keymap.set("n", "LS", "<cmd>lua require('substitute').eol()<cr><space>", { desc = "Sum Eol", noremap = true })
-    vim.keymap.set(
-        "n",
-        "L",
-        "<cmd>lua require('substitute.range').operator({ prefix = 'S' })<cr><space>",
-        { desc = "Sub Operator abolish", noremap = true }
-    )
-    vim.keymap.set(
-        "n",
-        "LL",
-        "<cmd>lua require('substitute.range').operator({ motion1='iw', motion2 = 'ap' })<cr><space>",
-        { desc = "Sub Inner Line", noremap = true }
-    )
-    vim.keymap.set(
-        "n",
-        "Lw",
-        "<cmd>lua require('substitute.range').word()<cr><space>",
-        { desc = "Sub Word", noremap = true }
+        "_w",
+        "<cmd>lua require('substitute.range').word()<cr>",
+        { desc = "sub range word", noremap = true }
     )
 
     vim.keymap.set(
         "n",
-        "Lc",
-        "<cmd>lua require('substitute.exchange').operator()<cr><space>",
-        { desc = "Sub exchange op", noremap = true }
+        "_s",
+        "<cmd>lua require('substitute.exchange').operator()<cr>",
+        { desc = "sub exchange operator", noremap = true }
     )
     vim.keymap.set(
         "n",
-        "Lcx",
-        "<cmd>lua require('substitute.exchange').line()<cr><space>",
-        { desc = "Sub exchange line", noremap = true }
-    )
-
-    vim.keymap.set(
-        "x",
-        "[C",
-        "<cmd>lua require('substitute.exchange').visual()<cr><space>",
-        { desc = "Sub exchange visual", noremap = true }
+        "_sx",
+        "<cmd>lua require('substitute.exchange').line()<cr>",
+        { desc = "sub exchange line", noremap = true }
     )
     vim.keymap.set(
         "x",
-        "]]",
-        "<cmd>lua require('substitute').visual()<cr><space>",
-        { desc = "Sub Visual", noremap = true }
+        "_X",
+        "<cmd>lua require('substitute.exchange').visual()<cr>",
+        { desc = "sub exchange visual", noremap = true }
+    )
+    vim.keymap.set(
+        "n",
+        "_sc",
+        "<cmd>lua require('substitute.exchange').cancel()<cr>",
+        { desc = "sub exchange cancel", noremap = true }
     )
 end
 
