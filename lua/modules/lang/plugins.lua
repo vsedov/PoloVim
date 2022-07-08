@@ -68,10 +68,10 @@ lang({
 
 lang({ "mtdl9/vim-log-highlighting", ft = { "text", "log" } })
 
-lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
+lang({ "bellini666/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
 
 lang({
-    "folke/todo-comments.nvim",
+    "edementyev/todo-comments.nvim",
     cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
     requires = "trouble.nvim",
     config = conf.todo_comments,
