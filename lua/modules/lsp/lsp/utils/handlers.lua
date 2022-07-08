@@ -49,20 +49,20 @@ function M.setup()
     end
 
     local signs_handler = vim.diagnostic.handlers.signs
-    vim.diagnostic.handlers.signs = {
+    vim.diagnostic.handlers.signs = vim.tbl_extend("force", signs_handler, {
         show = max_diagnostic(signs_handler.show),
         hide = function(_, bufnr)
             signs_handler.hide(ns, bufnr)
         end,
-    }
+    })
 
     local virt_text_handler = vim.diagnostic.handlers.virtual_text
-    vim.diagnostic.handlers.virtual_text = {
+    vim.diagnostic.handlers.virtual_text = vim.tbl_extend("force", virt_text_handler, {
         show = max_diagnostic(virt_text_handler.show),
         hide = function(_, bufnr)
             virt_text_handler.hide(ns, bufnr)
         end,
-    }
+    })
 end
 
 function M.show_line_diagnostics()
