@@ -150,8 +150,8 @@ misc({
 })
 
 misc({
-    "ahmedkhalf/project.nvim",
-    ft = { "python" },
+    Abstract-IDE/penvim,
+    event = "BufEnter",
     config = conf.project,
 })
 

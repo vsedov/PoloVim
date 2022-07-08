@@ -80,6 +80,16 @@ local plug_map = {
     -- feel like these needs to change
     ["v|'v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>", "Spectre visual"):with_noremap(),
     ["v|'c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>", "Spectre file search"):with_noremap(),
+
+    ["n|<leader>xx"] = map_cmd("<cmd>Trouble<cr>", "Spectre file search"):with_noremap():with_silent(),
+    ["n|<leader>xw"] = map_cmd("<cmd>Trouble workspace_diagnostics<cr>", "trouble workspace")
+        :with_noremap()
+        :with_silent(),
+    ["n|<leader>xd"] = map_cmd("<cmd>Trouble document_diagnostics<cr>", "trouble document diag")
+        :with_noremap()
+        :with_silent(),
+    ["n|<leader>xl"] = map_cmd("<cmd>Trouble loclist<cr>", "trouble loclist"):with_noremap():with_silent(),
+    ["n|<leader>xq"] = map_cmd("<cmd>Trouble quickfix<cr>", "trouble quickfix"):with_noremap():with_silent(),
 }
 
 return plug_map
