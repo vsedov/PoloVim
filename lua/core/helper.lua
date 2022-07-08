@@ -1,7 +1,7 @@
 _G = _G or {}
 _G.praestrictus = {}
 praestrictus.config = {
-    cmp_theme = "no-border", -- no-border , border
+    cmp_theme = "border", -- no-border , border
 }
 return {
     init = function()

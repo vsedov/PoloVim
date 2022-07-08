@@ -87,7 +87,7 @@ Hydra({
         { "e", require("telescope").extensions.live_grep_args.live_grep_args, { exit = true } }, -- pass
 
         -- misc
-        { "p", ":Telescope Workspaces<CR>", { exit = true } }, -- pass
+        { "p", ":Telescope workspaces<CR>", { exit = true } }, -- pass
         { "M", ":Telescope marks<CR>", { exit = true } }, -- pass
 
         -- -- -- commands

@@ -23,8 +23,13 @@ function config.lsp_install()
 end
 
 function config.saga()
-    local lspsaga = require("lspsaga")
-    lspsaga.setup()
+    local saga = require("lspsaga")
+    saga.init_lsp_saga({
+        -- symbols in winbar
+        symbol_in_winbar = {
+            enable = true,
+        },
+    })
 end
 
 function config.lsp_sig()

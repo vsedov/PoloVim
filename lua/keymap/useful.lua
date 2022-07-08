@@ -38,9 +38,6 @@ local plug_map = {
         '<cmd>lua require"modules.lsp.lsp.utils.peek".toggle_diagnostics_visibility()<CR>',
         "Toggle diagnostic Temp"
     ):with_noremap():with_silent(),
-    ["n|gd"] = map_cmd([[<cmd>lua require"modules.lsp.lsp.utils.peek".Peek('definition')<CR>]], "Peek definition")
-        :with_noremap()
-        :with_silent(),
 
     ["n|dpj"] = map_cmd(
         '<cmd>lua require"modules.lsp.lsp.utils.peek".PeekTypeDefinition()<CR>',

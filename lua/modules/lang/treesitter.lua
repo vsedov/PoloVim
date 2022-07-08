@@ -20,29 +20,29 @@ local treesitter = function()
     local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
     parser_configs.markdown.filetype_to_parsername = "octo"
-    parser_configs.norg = {
-        install_info = {
-            url = "https://github.com/nvim-neorg/tree-sitter-norg",
-            files = { "src/parser.c", "src/scanner.cc" },
-            branch = "main",
-        },
-    }
-
-    parser_configs.norg_meta = {
-        install_info = {
-            url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
-            files = { "src/parser.c" },
-            branch = "main",
-        },
-    }
-
-    parser_configs.norg_table = {
-        install_info = {
-            url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
-            files = { "src/parser.c" },
-            branch = "main",
-        },
-    }
+    -- parser_configs.norg = {
+    --     install_info = {
+    --         url = "https://github.com/nvim-neorg/tree-sitter-norg",
+    --         files = { "src/parser.c", "src/scanner.cc" },
+    --         branch = "main",
+    --     },
+    -- }
+    --
+    -- parser_configs.norg_meta = {
+    --     install_info = {
+    --         url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+    --         files = { "src/parser.c" },
+    --         branch = "main",
+    --     },
+    -- }
+    --
+    -- parser_configs.norg_table = {
+    --     install_info = {
+    --         url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
+    --         files = { "src/parser.c" },
+    --         branch = "main",
+    --     },
+    -- }
 
     require("nvim-treesitter.configs").setup({
         autopairs = { enable = enable },

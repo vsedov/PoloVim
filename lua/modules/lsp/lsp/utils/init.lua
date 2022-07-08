@@ -22,12 +22,18 @@ local function add_lsp_buffer_keybindings(client, bufnr)
         ["gI"] = "<cmd>lua vim.lsp.buf.implementation()<CR>",
         ["gR"] = "<cmd>lua vim.lsp.buf.references()<CR>",
 
-        ["[d"] = "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-        ["]d"] = "<cmd>Lspsaga diagnostic_jump_next<CR>",
-
         ["<leader>="] = "<cmd>lua vim.lsp.buf.formatting()<CR>",
         ["<leader>ai"] = "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
         ["<leader>ao"] = "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",
+
+        ["<C-f>"] = "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>",
+        ["<C-b>"] = "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
+
+        ["[e"] = "<cmd> Lspsaga diagnostic_jump_next<cr>",
+        ["]e"] = "<cmd> Lspsaga diagnostic_jump_prev<cr>",
+
+        ["gd"] = "<cmd> Lspsaga preview_definition<cr>",
+        ["gh"] = "<cmd> Lspsaga lsp_finder<cr>",
     }
     for mode_name, mode_char in pairs(lsp_map) do
         vim.keymap.set("n", mode_name, mode_char, { noremap = true, silent = true, buffer = bufnr })

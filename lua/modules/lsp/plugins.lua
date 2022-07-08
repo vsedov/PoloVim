@@ -42,7 +42,6 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     opt = true,
-    -- commit = "4852d99f9511d090745d3cc1f09a75772b9e07e9",
     config = conf.lsp_sig,
 })
 
