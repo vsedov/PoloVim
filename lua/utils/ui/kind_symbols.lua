@@ -27,7 +27,6 @@ LspKind.Symbol = {
     Event = { text = "Event", icon = "ﯓ" },
     Operator = { text = "Operator", icon = "" },
     TypeParameter = { text = "TypeParameter", icon = "" },
-
 }
 
 LspKind.Completion = {

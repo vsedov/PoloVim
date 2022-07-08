@@ -14,7 +14,7 @@ vim.cmd([[
 
 local plug_map = {
     ["x|@"] = map_cmd(":<C-u>call ExecuteMacroOverVisualRange()<CR>", "Macro Execute"):with_noremap(),
-    ["n|<M-w>"] = map_cmd("<cmd>NeoNoNameBufferline<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
+    ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
 
     -- check whats actually loaded
     ["n|<localleader>ps"] = map_cmd("<cmd>PackerStatus<cr>", "PackerStatus"):with_noremap():with_silent(),
@@ -26,7 +26,6 @@ local plug_map = {
     ["n|<Leader>cf"] = map_cr("Neotree float reveal_file=<cfile> reveal_force_cwd", "Float reveal file")
         :with_noremap()
         :with_silent(),
-    ["n|<Leader>cw"] = map_cmd("<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"):with_noremap():with_silent(),
 
     ["n|cc"] = map_cmd("<Cmd>CodeActionMenu<cr>", "Code action Menu"):with_noremap():with_silent(),
     ["v|ga"] = map_cmd("<cmd>CodeActionMenu<Cr>", "Code action Menu"):with_noremap():with_silent(),

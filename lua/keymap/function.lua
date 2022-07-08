@@ -12,7 +12,6 @@ local plug_map = {
         for i, l in ipairs(stack) do
             stack[i] = vim.fn.synIDattr(l, "name")
         end
-        Log:info(vim.inspect(stack))
     end, "Debug / Inspect"):with_silent(),
 
     -- Venv

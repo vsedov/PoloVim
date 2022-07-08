@@ -7,7 +7,6 @@ if not packer_plugins["neorg-telescope"].loaded then
 end
 
 if not packer_plugins["nvim-treesitter"].loaded then
-    vim.cmd([[packadd nvim-treesitter ]])
     vim.cmd([[packadd plenary.nvim ]])
 end
 

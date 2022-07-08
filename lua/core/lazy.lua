@@ -44,7 +44,7 @@ end
 require("vscripts.cursorhold")
 vim.g.cursorhold_updatetime = 100
 loadscheme()
--- loader("heirline.nvim")
+loader("heirline.nvim")
 
 function Lazyload()
     _G.PLoader = loader
