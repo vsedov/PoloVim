@@ -280,38 +280,10 @@ end
 function config.surround()
     require("nvim-surround").setup({
         keymaps = { -- vim-surround style keymaps
-            insert = "<C-v>",
-            visual = "<C-v>",
-            delete = "<localleader>S",
-            change = "yc",
-        },
-
-        delimiters = {
-            pairs = {
-                ["("] = { "( ", " )" },
-                [")"] = { "(", ")" },
-                ["{"] = { "{ ", " }" },
-                ["}"] = { "{", "}" },
-                ["<"] = { "< ", " >" },
-                [">"] = { "<", ">" },
-                ["["] = { "[ ", " ]" },
-                ["]"] = { "[", "]" },
-            },
-            separators = {
-                ["'"] = { "'", "'" },
-                ['"'] = { '"', '"' },
-                ["`"] = { "`", "`" },
-            },
-            HTML = {
-                ["t"] = true, -- Use "t" for HTML-style mappings
-            },
-            aliases = {
-                ["b"] = ">", -- Single character aliases apply everywhere
-                ["a"] = ")",
-                ["s"] = "}",
-                ["r"] = "]",
-                ["q"] = { '"', "'", "`" }, -- Table aliases only apply for changes/deletions
-            },
+            insert = "ys",
+            visual = "z",
+            delete = "cd",
+            change = "cs",
         },
     })
 end
@@ -338,7 +310,7 @@ function config.projects()
         silent_chdir = false,
         patterns = { ".git" },
     })
-    require('telescope').load_extension('projects')
+    require("telescope").load_extension("projects")
 end
 
 function config.headers()

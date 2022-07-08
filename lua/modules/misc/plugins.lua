@@ -3,7 +3,6 @@ local misc = require("core.pack").package
 
 misc({
     "ziontee113/syntax-tree-surfer",
-    branch = "2.1",
     keys = {
         { "n", "vU" },
         { "n", "vD" },
@@ -22,7 +21,7 @@ misc({
         { "n", "gif" },
         { "n", "gfo" },
         { "n", "J" },
-        { "n", "gv" },
+        -- { "n", "gv" },
         { "x", "<A-j>" },
         { "x", "<A-k>" },
 
@@ -34,7 +33,7 @@ misc({
 
         { "n", "-" },
         { "n", "=" },
-        { "n", "_" },
+        { "n", "<S-+>" },
         { "n", "+" },
     },
     config = conf.syntax_surfer,
@@ -69,7 +68,7 @@ misc({
 -- Its hard for this because binds are weird
 misc({
     "booperlv/nvim-gomove",
-    event = { "CursorMoved", "CursorMovedI" },
+    keys = { "<A>" },
     opt = true,
     config = conf.gomove,
 })
@@ -130,7 +129,7 @@ misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
 
 misc({
     "kylechui/nvim-surround",
-    keys = { "<C-v>", "<localleader>s", "<localleader>S", "yc" },
+    keys = { "ys", "z", "cd", "cs" },
     config = conf.surround,
 })
 
@@ -144,11 +143,11 @@ misc({
     end,
 })
 
--- misc({
---     "NMAC427/guess-indent.nvim",
---     event = "BufEnter",
---     config = conf.guess_indent,
--- })
+misc({
+    "NMAC427/guess-indent.nvim",
+    cmd = "GuessIndent",
+    config = conf.guess_indent,
+})
 
 misc({
     "ahmedkhalf/project.nvim",

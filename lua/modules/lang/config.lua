@@ -624,11 +624,6 @@ function config.regexplainer()
 
         mappings = {
             toggle = "<localleader><localleader>",
-            -- examples, not defaults:
-            -- show = 'gS',
-            -- hide = 'gH',
-            -- show_split = 'gP',
-            -- show_popup = 'gU',
         },
 
         narrative = {

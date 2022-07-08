@@ -69,13 +69,7 @@ vim.keymap.set("n", "vn", "<cmd>STSSelectCurrentNode<cr>", opts)
 vim.keymap.set("x", "J", "<cmd>STSSelectNextSiblingNode<cr>", opts)
 vim.keymap.set("x", "K", "<cmd>STSSelectPrevSiblingNode<cr>", opts)
 vim.keymap.set("x", "H", "<cmd>STSSelectParentNode<cr>", opts)
-vim.keymap.set("x", "L", "<cmd>STSSelectFirstChildNode<cr>", opts)
-
--- Syntax Tree Surfer V2 Mappings
--- Targeted Jump with virtual_text
-vim.keymap.set("n", "gv", function() -- only jump to variable_declarations
-    sts.targeted_jump({ "variable_declaration" })
-end, opts)
+vim.keymap.set("x", "L", "<cmd>STSSelectChildNode<cr>", opts)
 
 vim.keymap.set("n", "gfu", function() -- only jump to functions
     sts.targeted_jump({ "function", "function_definition" })
@@ -163,8 +157,8 @@ vim.keymap.set("n", "=", function()
     )
 end, opts)
 
--- jump to parent or child nodes only
-vim.keymap.set("n", "_", function()
+-- -- jump to parent or child nodes only
+vim.keymap.set("n", "+", function()
     sts.filtered_jump({
         "if_statement",
         "else_clause",
@@ -173,7 +167,7 @@ vim.keymap.set("n", "_", function()
     }, false, { destination = "parent" })
 end, opts)
 
-vim.keymap.set("n", "+", function()
+vim.keymap.set("n", "<S-+>", function()
     sts.filtered_jump({
         "if_statement",
         "else_clause",
