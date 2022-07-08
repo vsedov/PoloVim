@@ -188,21 +188,15 @@ tools({
 
 tools({
     "voldikss/vim-translator",
-
     opt = true,
-    fn = { "<Plug>TranslateW", "<Plug>TranslateWV" },
     setup = function()
-        vim.keymap.set(
-            "n",
-            "<Leader>ts",
-            "<Plug>TranslateW",
-            { desc = "translate word", noremap = true, silent = true }
-        )
-        vim.keymap.set(
-            "v",
-            "<Leader>ts",
-            "<Plug>TranslateWV",
-            { desc = "translate word vis", noremap = true, silent = true }
-        )
+        vim.g.translator_source_lang = "jp"
     end,
+    cmd = { "Translate", "TranslateW", "TranslateR", "TranslateH", "TranslateL" },
+})
+
+tools({
+    "rmagatti/alternate-toggler",
+    opt = true,
+    cmd = "ToggleAlternate",
 })

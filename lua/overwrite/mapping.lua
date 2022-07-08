@@ -15,8 +15,8 @@ local keys = { --
     ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)", "run file debug"):with_expr(),
     ["n|<F6>"] = map_cu("Jaq qf", "jaq run"):with_noremap():with_silent(),
 
-    ["o|n"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>", "tsht search"):with_silent(),
-    ["v|N"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>", "tsht search"):with_noremap():with_silent(),
+    ["o|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>", "tsht search"):with_silent(),
+    ["v|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>", "tsht search"):with_noremap():with_silent(),
 
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]], "Harppon Add file"):with_noremap(),
     ["n|;n"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]], "Harpoon Toggle File"):with_noremap(),
