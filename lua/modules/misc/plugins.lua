@@ -149,10 +149,16 @@ misc({
     config = conf.guess_indent,
 })
 
+-- misc({
+--     "ahmedkhalf/project.nvim",
+--     event = "BufRead",
+--     config = conf.project,
+-- })
+--
 misc({
-    Abstract-IDE/penvim,
-    event = "BufEnter",
-    config = conf.project,
+    "Abstract-IDE/penvim",
+    event = "BufRead",
+    config = conf.pen,
 })
 
 misc({
