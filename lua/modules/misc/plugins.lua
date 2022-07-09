@@ -129,7 +129,7 @@ misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
 
 misc({
     "kylechui/nvim-surround",
-    keys = { "ys", "z", "cd", "cs" },
+    keys = { "ys", "z", "Ld", "Ls" },
     config = conf.surround,
 })
 

@@ -282,8 +282,8 @@ function config.surround()
         keymaps = { -- vim-surround style keymaps
             insert = "ys",
             visual = "z",
-            delete = "cd",
-            change = "cs",
+            delete = "Ld",
+            change = "Ls",
         },
     })
 end
