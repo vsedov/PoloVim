@@ -29,7 +29,7 @@ local toggle_fstring = function()
         node = node:parent()
     end
     if node == nil then
-        log:info("f-string: not in string node :(")
+        print("f-string: not in string node :(")
         return
     end
 
@@ -39,13 +39,13 @@ local toggle_fstring = function()
     local is_fstring = (char == "f")
 
     if is_fstring then
-        vim.cmd("normal x")
+        vim.cmd("normal mzx")
         -- if cursor is in the same line as text change
         if srow == cursor[1] then
             cursor[2] = cursor[2] - 1 -- negative offset to cursor
         end
     else
-        vim.cmd("normal if")
+        vim.cmd("normal mzif")
         -- if cursor is in the same line as text change
         if srow == cursor[1] then
             cursor[2] = cursor[2] + 1 -- positive offset to cursor
