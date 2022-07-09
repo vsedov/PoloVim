@@ -6,6 +6,10 @@ _G.praestrictus = {}
 praestrictus.config = {
     cmp_theme = "border", -- no-border , border
     config_test = true,
+    python = {
+        lint = "flake8", -- "pylint "
+        lsp = "pylsp", -- jedi pylsp and pyright
+    },
 }
 ----------------------------------------------------------------------------------------------------
 -- Global namespace

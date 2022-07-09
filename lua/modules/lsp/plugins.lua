@@ -1,7 +1,24 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
-
-lsp({ "neovim/nvim-lspconfig", setup = conf.nvim_lsp_setup, config = conf.nvim_lsp, opt = true })
+lsp({
+    "williamboman/mason.nvim",
+    event = "BufRead",
+    branch = "alpha",
+    config = function()
+        require("mason").setup({ ui = { border = "single" } })
+        require("mason-lspconfig").setup({
+            automatic_installation = true,
+        })
+    end,
+})
+lsp({
+    "neovim/nvim-lspconfig",
+    after = "mason.nvim",
+    requires = { "mason.nvim" },
+    setup = conf.nvim_lsp_setup,
+    config = conf.nvim_lsp,
+    opt = true,
+})
 lsp({ "ii14/lsp-command", opt = true, after = "nvim-lspconfig" })
 lsp({
     "p00f/clangd_extensions.nvim",
@@ -58,7 +75,7 @@ lsp({
     config = conf.lsp_lines,
 })
 
-lsp({ "mhartington/formatter.nvim", ft = { "lua", "c" }, opt = true, config = conf.format })
+lsp({ "mhartington/formatter.nvim", ft = { "python", "lua", "c" }, opt = true, config = conf.format })
 
 lsp({ "mfussenegger/nvim-lint", ft = { "lua", "c" }, opt = true, config = conf.lint })
 

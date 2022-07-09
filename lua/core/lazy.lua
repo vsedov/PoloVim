@@ -22,7 +22,6 @@ local function daylight()
         return "dark"
     end
 end
-
 local function loadscheme()
     local themes
     if daylight() == "light" then
@@ -99,7 +98,7 @@ function Lazyload()
     end
 
     if load_lsp then
-        loader("nvim-lspconfig") -- null-ls.nvim
+        -- loader("nvim-lspconfig") -- null-ls.nvim
         loader("lsp_signature.nvim")
     end
     -- local bytes = vim.fn.wordcount()['bytes']
@@ -146,7 +145,7 @@ vim.defer_fn(function()
     vim.cmd([[doautocmd User LoadLazyPlugin]])
 end, lazy_timer)
 
-vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
+-- vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 

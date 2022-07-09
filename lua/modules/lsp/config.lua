@@ -135,7 +135,11 @@ function config.format()
         pattern = "*",
         desc = "Format the current buffer on save",
         callback = function()
-            vim.cmd([[FormatWrite]])
+            if praestrictus.config.python.lsp == "pylsp" and vim.bo.filetype == "python" then
+                vim.lsp.buf.format(nil, 1000)
+            else
+                vim.cmd([[FormatWrite]])
+            end
         end,
     })
 end
@@ -160,8 +164,13 @@ function config.lint()
     lint.linters_by_ft = {
         lua = { "luacheck" },
         markdown = { "vale" },
-        -- python = { "flake8", "codespell" }, --  can be fucking anonying
+        python = { "codespell" }, --  "flake8",
     }
+
+    if praestrictus.config.python.lsp ~= "pylsp" then
+        vim.tbl_extend(lint.linters_by_ft.python, praestrictus.config.python.lint)
+    end
+
     vim.api.nvim_create_autocmd({ "BufWrite" }, {
         pattern = "*",
         desc = "Lint the current buffer on save",

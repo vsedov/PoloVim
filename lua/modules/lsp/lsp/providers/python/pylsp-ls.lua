@@ -8,15 +8,22 @@ return {
     cmd = { python_path, pylsp_path },
     settings = {
         pylsp = {
-            configurationSources = { "pycodestyle" },
+            configurationSources = { "flake8" },
             plugins = {
-                jedi_completion = { enabled = true },
+                jedi_completion = {
+                    enabled = true,
+                    include_params = true,
+                    cache_for = { "numpy", "discord.py" },
+                },
                 jedi_hover = { enabled = true },
+                jedi_definition = { enabled = true },
                 jedi_references = { enabled = true },
                 jedi_signature_help = { enabled = true },
                 jedi_symbols = { enabled = true, all_scopes = true },
+
                 yapf = { enabled = true },
                 flake8 = { enabled = true },
+                isort = { enabled = true },
                 rope_completion = { enabled = true },
 
                 mccabe = { enabled = false, threshold = 15 },
