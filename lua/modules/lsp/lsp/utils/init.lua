@@ -16,11 +16,8 @@ local function add_lsp_buffer_keybindings(client, bufnr)
 
     local lsp_map = {
         ["<Leader>cw"] = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
-        ["gX"] = "<cmd>Lspsaga range_code_action<CR>",
-
         ["gD"] = "<cmd>lua vim.lsp.buf.declaration()<CR>",
         ["gI"] = "<cmd>lua vim.lsp.buf.implementation()<CR>",
-        ["gR"] = "<cmd>lua vim.lsp.buf.references()<CR>",
 
         ["<leader>="] = "<cmd>lua vim.lsp.buf.formatting()<CR>",
         ["<leader>ai"] = "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
@@ -29,15 +26,19 @@ local function add_lsp_buffer_keybindings(client, bufnr)
         ["<C-f>"] = "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>",
         ["<C-b>"] = "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
 
+        ["gr"] = "<cmd>Lspsaga rename<CR>",
         ["[e"] = "<cmd> Lspsaga diagnostic_jump_next<cr>",
         ["]e"] = "<cmd> Lspsaga diagnostic_jump_prev<cr>",
 
         ["gd"] = "<cmd> Lspsaga preview_definition<cr>",
         ["gh"] = "<cmd> Lspsaga lsp_finder<cr>",
+        ["ca"] = "<cmd> Lspsaga code_action<cr>",
     }
     for mode_name, mode_char in pairs(lsp_map) do
         vim.keymap.set("n", mode_name, mode_char, { noremap = true, silent = true, buffer = bufnr })
     end
+
+    vim.keymap.set("v", "ca", "<cmd>Lspsaga range_code_action<cr>", { noremap = true, silent = true, buffer = bufnr })
 end
 
 -- this could change ove ra period of time . 1
@@ -82,11 +83,13 @@ function M.get_common_opts()
 end
 
 function M.setup()
+    local fn = vim.fn
     for _, sign in ipairs(config.signs) do
-        vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
+        fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
     end
     require("modules.lsp.lsp.utils.handlers").setup()
     require("modules.lsp.lsp.utils.list")
+
     -- require("modules.lsp.lsp.utils.inlay_hints")
 end
 

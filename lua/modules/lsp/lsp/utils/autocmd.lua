@@ -88,25 +88,6 @@ function M.setup_autocommands(client, bufnr)
 
     local LspFormatting = api.nvim_create_augroup("LspFormatting", { clear = true })
 
-    api.nvim_create_autocmd({ "BufWrite" }, {
-        group = LspFormatting,
-        -- buffer = bufnr,
-        pattern = "*",
-        desc = "Lint the current buffer on save",
-        callback = function()
-            require("lint").try_lint()
-        end,
-    })
-
-    api.nvim_create_autocmd("BufWritePost", {
-        group = LspFormatting,
-        pattern = "*",
-        desc = "Format the current buffer on save",
-        callback = function()
-            vim.cmd([[FormatWrite]])
-        end,
-    })
-
     if client and client.server_capabilities.codeLensProvider then
         local LspCodeLens = api.nvim_create_augroup("LspCodeLens", { clear = true })
 
