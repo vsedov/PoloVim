@@ -32,6 +32,7 @@ local function add_lsp_buffer_keybindings(client, bufnr)
 
         ["gd"] = "<cmd> Lspsaga preview_definition<cr>",
         ["gh"] = "<cmd> Lspsaga lsp_finder<cr>",
+        ["gj"] = "<cmd> Lspsaga signature_help<cr>",
         ["ca"] = "<cmd> Lspsaga code_action<cr>",
     }
     for mode_name, mode_char in pairs(lsp_map) do
@@ -89,8 +90,6 @@ function M.setup()
     end
     require("modules.lsp.lsp.utils.handlers").setup()
     require("modules.lsp.lsp.utils.list")
-
-    -- require("modules.lsp.lsp.utils.inlay_hints")
 end
 
 function M.enhance_attach(user_config)

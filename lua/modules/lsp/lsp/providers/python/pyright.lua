@@ -1,7 +1,4 @@
 return {
-    handlers = {
-        ["textDocument/inlayHint"] = require("modules.lsp.lsp.utils.inlay_hints").handler,
-    },
     settings = {
         python = {
             analysis = {

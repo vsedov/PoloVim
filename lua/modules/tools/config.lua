@@ -94,7 +94,6 @@ function config.workspace()
             open = { "Telescope find_files" },
         },
     })
-    require("telescope").load_extension("workspaces")
 end
 
 function config.paperplanes()

@@ -44,7 +44,14 @@ tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, opt = true, config = conf.pap
 
 tools({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
 
-tools({ "natecraddock/workspaces.nvim", module = "workspaces", config = conf.workspace })
+tools({
+    "natecraddock/workspaces.nvim",
+    module = "workspaces",
+    setup = function()
+        require("telescope").load_extension("workspaces")
+    end,
+    config = conf.workspace,
+})
 
 tools({ "jghauser/mkdir.nvim", opt = true, cmd = "new", config = [[require'mkdir']] })
 

@@ -291,7 +291,7 @@ local function general_overrides()
         Folded = { inherit = "Comment", italic = true, bold = true },
         -- Add undercurl to existing spellbad highlight
         SpellBad = { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" },
-        SpellRare = { undercurl = true },
+        -- SpellRare = { undercurl = true }, -- a bit annoying
         PmenuSbar = { background = P.grey },
 
         -----------------------------------------------------------------------------//
@@ -328,11 +328,12 @@ local function general_overrides()
         -- LSP
         -----------------------------------------------------------------------------//
         LspCodeLens = { link = "NonText" },
-        LspReferenceText = { underline = true, background = "NONE" },
-        LspReferenceRead = { underline = true, background = "NONE" },
+        LspReferenceText = { underline = false, background = "NONE" },
+        LspReferenceRead = { underline = false, background = "NONE" },
         -- This represents when a reference is assigned which is more interesting than regular
         -- occurrences so should be highlighted more distinctly
-        LspReferenceWrite = { underline = true, bold = true, italic = true, background = "NONE" },
+        LspReferenceWrite = { underline = false, bold = true, italic = true, background = "NONE" },
+
         DiagnosticHint = { foreground = L.hint },
         DiagnosticError = { foreground = L.error },
         DiagnosticWarning = { foreground = L.warn },
