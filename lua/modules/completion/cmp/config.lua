@@ -18,7 +18,6 @@ local config = {
     sources = require("modules.completion.cmp.sources"),
     sorting = {
         comparators = {
-            require("cmp_tabnine.compare"),
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
