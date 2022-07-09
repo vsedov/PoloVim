@@ -8,6 +8,7 @@ ui({ "kyazdani42/nvim-web-devicons" })
 ui({
     "rebelot/heirline.nvim",
     opt = true,
+    after = "nvim-lspconfig",
     config = function()
         require("modules.ui.heirline")
     end,

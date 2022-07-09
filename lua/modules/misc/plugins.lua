@@ -68,7 +68,7 @@ misc({
 -- Its hard for this because binds are weird
 misc({
     "booperlv/nvim-gomove",
-    keys = { "<A>" },
+    keys = { "<M>" },
     opt = true,
     config = conf.gomove,
 })
@@ -107,7 +107,7 @@ misc({ "Krafi2/jeskape.nvim", event = "InsertEnter", config = conf.jetscape })
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
 -- Need to lazyload
-misc({ "johmsalas/text-case.nvim", event = "CursorMoved", config = conf.text_case })
+misc({ "johmsalas/text-case.nvim", keys = { "g" }, config = conf.text_case })
 
 misc({ "chentoast/marks.nvim", opt = true, keys = { "mx", "m", "m,", "m;" }, config = conf.marks })
 
@@ -149,11 +149,6 @@ misc({
     config = conf.guess_indent,
 })
 
--- misc({
---     "ahmedkhalf/project.nvim",
---     event = "BufRead",
---     config = conf.project,
--- })
 --
 misc({
     "Abstract-IDE/penvim",

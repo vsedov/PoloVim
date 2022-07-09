@@ -946,6 +946,11 @@ function config.modes()
         -- Disable modes highlights in specified filetypes
         -- Please PR commonly ignored filetypes
         ignore_filetypes = { "NvimTree", "TelescopePrompt", "NeoTree" },
+        plugins = {
+            presets = {
+                operators = false,
+            },
+        },
     })
 end
 function config.transparent()
@@ -994,7 +999,8 @@ function config.clock_setup()
         pattern = "*",
         callback = function()
             local f = vim.fn
-            if not config_test and f.getcwd():match(f.stdpath("config")) then
+            if not praestrictus.config.config_test and f.getcwd():match(f.stdpath("config")) then
+                print(praestrictus.config.config_test)
                 require("packer").loader("clock.nvim")
             end
         end,
