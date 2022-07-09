@@ -17,7 +17,7 @@ lang({
     config = conf.treesitter_obj,
     opt = true,
 })
--- lang{"eddiebergman/nvim-treesitter-pyfold",config = conf.pyfold}
+
 lang({
     "RRethy/nvim-treesitter-textsubjects",
     ft = { "lua", "rust", "go", "python", "javascript" },
@@ -158,7 +158,7 @@ lang({ "~/GitHub/active_development/py.nvim", ft = "python", opt = true, config 
 
 lang({
     "rmagatti/goto-preview",
-    keys = { "gi", "gt", "gr", "gC" },
+    keys = { "gi", "gt", "gR", "gC" },
     requires = "telescope.nvim",
     after = "nvim-lspconfig",
     config = conf.goto_preview,

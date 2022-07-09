@@ -587,7 +587,7 @@ function config.goto_preview()
         require("goto-preview").goto_preview_implementation()
     end, { desc = "goto imp", noremap = true })
 
-    vim.keymap.set("n", "gr", function()
+    vim.keymap.set("n", "gR", function()
         require("goto-preview").goto_preview_references()
     end, { desc = "goto referece", noremap = true })
 
