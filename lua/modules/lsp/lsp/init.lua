@@ -5,19 +5,10 @@ vim.g.lsp_config_complete = true
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 
-lspconfig.jedi_language_server.setup(enhance_attach({
-    cmd = { "jedi-language-server" },
-    filetypes = { "python" },
+lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
 
-    -- init_options = {
-    --     jediSettings = {
-    --         -- autoImportModules = { "" }
-    --         "debug" = false
-    --     }
-    -- },
-}))
-
--- lspconfig.pyright.setup(enhance_attach(python_config(require("modules.lsp.lsp.providers.pyright"))))
+-- lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright"))))
+-- lspconfig.pylsp.setup(enhance_attach({ require("modules.lsp.lsp.providers.python.pylsp-ls") }))
 
 lspconfig.julials.setup(enhance_attach({ require("modules.lsp.lsp.providers.julials") }))
 

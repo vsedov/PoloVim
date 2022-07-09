@@ -27,8 +27,13 @@ function config.saga()
     saga.init_lsp_saga({
         -- symbols in winbar
         symbol_in_winbar = {
+            in_custom = true,
             enable = true,
+            separator = " ",
+            show_file = true,
+            click_support = true,
         },
+        code_action_icon = "",
     })
 end
 
@@ -112,7 +117,6 @@ function config.lsp_lines()
 end
 
 function config.format()
-    local util = require("formatter.util")
     require("formatter").setup({
         -- All formatter configurations are opt-in
         filetype = {
@@ -125,6 +129,14 @@ function config.format()
                 require("formatter.filetypes.python").isort,
             },
         },
+    })
+
+    vim.api.nvim_create_autocmd("BufWritePost", {
+        pattern = "*",
+        desc = "Format the current buffer on save",
+        callback = function()
+            vim.cmd([[FormatWrite]])
+        end,
     })
 end
 
@@ -150,6 +162,13 @@ function config.lint()
         markdown = { "vale" },
         python = { "flake8", "codespell" }, --  can be fucking anonying
     }
+    vim.api.nvim_create_autocmd({ "BufWrite" }, {
+        pattern = "*",
+        desc = "Lint the current buffer on save",
+        callback = function()
+            require("lint").try_lint()
+        end,
+    })
 end
 
 function config.rename()
