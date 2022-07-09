@@ -306,13 +306,13 @@ function config.substitute()
 
     vim.keymap.set(
         "n",
-        "c_",
+        "L_",
         "<cmd>lua require('substitute.range').operator()<cr>",
         { desc = "sub range op", noremap = true }
     )
     vim.keymap.set(
         "x",
-        "c_",
+        "L_",
         "<cmd>lua require('substitute.range').visual()<cr>",
         { desc = "sub range visual", noremap = true }
     )

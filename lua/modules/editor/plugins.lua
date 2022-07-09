@@ -172,6 +172,6 @@ editor({
 editor({
     "gbprod/substitute.nvim",
     require = "gbprod/yanky.nvim",
-    keys = { "_", "c_" },
+    keys = { "_", "L_" },
     config = conf.substitute,
 })
