@@ -34,15 +34,11 @@ local plug_map = {
         :with_silent(),
 
     ---- private peek
-    ["n|<localleader>D"] = map_cmd(
-        '<cmd>lua require"modules.lsp.lsp.utils.peek".toggle_diagnostics_visibility()<CR>',
-        "Toggle diagnostic Temp"
-    ):with_noremap():with_silent(),
+    ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.lsp.lsp.utils.peek".toggle_diagnostics_visibility()<CR>', "Toggle diagnostic Temp")
+        :with_noremap()
+        :with_silent(),
 
-    ["n|dpj"] = map_cmd(
-        '<cmd>lua require"modules.lsp.lsp.utils.peek".PeekTypeDefinition()<CR>',
-        "Peek Type definition"
-    )
+    ["n|dpj"] = map_cmd('<cmd>lua require"modules.lsp.lsp.utils.peek".PeekTypeDefinition()<CR>', "Peek Type definition")
         :with_noremap()
         :with_silent(),
 
