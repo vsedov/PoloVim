@@ -52,9 +52,20 @@ local function load_options()
         whichwrap = "h,l,<,>,[,],~",
         splitbelow = true,
         splitright = true,
-        switchbuf = "useopen",
+        eadirection = "hor",
+
+        switchbuf = "useopen,uselast",
         backspace = "indent,eol,start",
-        diffopt = "filler,hiddenoff,closeoff,iwhite,internal,algorithm:patience",
+        --        diffopt = "filler,hiddenoff,closeoff,iwhite,internal,algorithm:patience",
+        diffopt = vim.opt.diffopt + {
+            "vertical",
+            "iwhite",
+            "hiddenoff",
+            "foldcolumn:0",
+            "context:4",
+            "algorithm:histogram",
+            "indent-heuristic",
+        },
         cscopequickfix = "s-,c-,d-,i-,t-,e-,a-",
         completeopt = "menuone,noselect",
         jumpoptions = "stack",
@@ -65,6 +76,7 @@ local function load_options()
         foldlevelstart = 99,
         ruler = false,
         list = true,
+        mousefocus = true,
 
         showtabline = 2,
         winwidth = 30,
@@ -85,7 +97,7 @@ local function load_options()
         syntax = "off",
         background = "dark",
 
-        synmaxcol = 1000,
+        synmaxcol = 1024,
         formatoptions = "1jcroql",
         textwidth = 80,
         expandtab = true,
@@ -118,6 +130,10 @@ local function load_options()
             foldclose = "",
         },
         spellfile = global.home .. ".config/nvim/spell/en.utf-8.add",
+        spelloptions = "camel",
+        fileformats = { "unix", "mac", "dos" },
+        secure = true,
+        exrc = true,
     }
 
     if global.is_mac then
@@ -151,8 +167,12 @@ local function load_options()
         vim.opt[name] = value
     end
 end
--- vim.g.python_host_prog = "/usr/bin/python2"
--- vim.g.python3_host_prog = vim.fn.substitute(vim.fn.system("which python3"), "\n", "", "g")
+if vim.fn.executable("nvr") > 0 then
+    vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+    vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+end
+vim.g.python_host_prog = "/usr/bin/python2"
+vim.g.python3_host_prog = "/usr/bin/python3"
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
 load_options()

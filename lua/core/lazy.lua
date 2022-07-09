@@ -44,6 +44,7 @@ end
 require("vscripts.cursorhold")
 vim.g.cursorhold_updatetime = 100
 loadscheme()
+require("utils.ui.highlights")
 loader("heirline.nvim")
 
 function Lazyload()
@@ -100,7 +101,6 @@ function Lazyload()
     if load_lsp then
         loader("nvim-lspconfig") -- null-ls.nvim
         loader("lsp_signature.nvim")
-        loader("nvim-lint formatter.nvim")
     end
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
@@ -151,7 +151,6 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    require("utils.ui.ui_overwrite")
     require("vscripts.tools")
     if vim.bo.filetype ~= "tex" or vim.bo.filetype ~= "md" or vim.bo.filetype ~= "norg" then
         require("vscripts.race_conditions").coding_support()

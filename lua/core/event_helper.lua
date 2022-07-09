@@ -48,18 +48,6 @@ function M.loadview()
     end
 end
 
-function M.disable_heavy_plugins()
-    if
-        M.heavy_plugins_blocklist[vim.bo.filetype] ~= nil
-        or vim.regex("\\.min\\..*$"):match_str(vim.fn.expand("%:t")) ~= nil
-        or vim.fn.getfsize(vim.fn.expand("%")) > 200000
-    then
-        if vim.fn.exists(":ALEDisableBuffer") == 2 then
-            api.nvim_command(":ALEDisableBuffer")
-        end
-    end
-end
-
 local called_func = false
 local timer = nil
 local space_used
