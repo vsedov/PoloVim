@@ -78,6 +78,15 @@ local function make_diagnostic_qf_updater()
         })
     end
 end
+-- Show the popup diagnostics window, but only once for the current cursor location
+-- by checking whether the word under the cursor has changed.
+local function diagnostic_popup()
+    local cword = vim.fn.expand("<cword>")
+    if cword ~= vim.w.lsp_diagnostics_cword then
+        vim.w.lsp_diagnostics_cword = cword
+        vim.diagnostic.open_float(0, { scope = "cursor", focus = false })
+    end
+end
 
 local M = {}
 --- Add lsp autocommands
@@ -101,21 +110,34 @@ function M.setup_autocommands(client, bufnr)
     end
     if client and client.server_capabilities.documentHighlightProvider then
         local LspCursorCommands = api.nvim_create_augroup("LspCursorCommands", { clear = true })
+
+        local diagnostic_pop
+        local diagnostic_pop_setup = function()
+            diagnostic_pop = api.nvim_create_autocmd("CursorHold", {
+                pattern = "*",
+                callback = function()
+                    diagnostic_popup()
+                end,
+            })
+        end
+        diagnostic_pop_setup()
         vim.api.nvim_set_hl(0, "DiagnosticHeader", { link = "Special" })
-        api.nvim_create_autocmd("CursorHold", {
-            pattern = "*",
-            callback = function()
-                -- vim.diagnostic.open_float()
-                local current_cursor = vim.api.nvim_win_get_cursor(0)
-                local last_popup_cursor = vim.w.lsp_diagnostics_last_cursor or { nil, nil }
-                -- Show the popup diagnostics window,
-                -- but only once for the current cursor location (unless moved afterwards).
-                if not (current_cursor[1] == last_popup_cursor[1] and current_cursor[2] == last_popup_cursor[2]) then
-                    vim.w.lsp_diagnostics_last_cursor = current_cursor
-                    vim.diagnostic.open_float(0, { scope = "cursor", focus = false })
+        vim.g.lsp_popup = nil
+        add_cmd("ToggleDiagnosticPopup", function()
+            vim.g.lsp_popup = not vim.g.lsp_popup -- toggle
+            if vim.g.lsp_pop then
+                vim.api.nvim_set_hl(0, "DiagnosticHeader", { link = "Special" })
+                if diagnostic_pop == nil then
+                    diagnostic_pop_setup()
                 end
-            end,
-        })
+            else
+                vim.api.nvim_set_hl(0, "DiagnosticHeader", { fg = "#56b6c2", bold = true })
+                if diagnostic_pop then
+                    api.nvim_del_autocmd(diagnostic_pop)
+                    diagnostic_pop = nil
+                end
+            end
+        end, { force = true })
 
         api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
             group = LspCursorCommands,

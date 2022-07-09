@@ -12,7 +12,6 @@ return {
                 stubPath = vim.fn.expand("$HOME/typings"),
                 diagnosticSeverityOverrides = {
                     reportMissingTypeStubs = "information",
-
                     reportGeneralTypeIssues = "warning",
                     reportUnboundVariable = "warning",
                     reportUndefinedVariable = "error",
