@@ -16,8 +16,3 @@ aucmd("User", {
     pattern = "NeorgStarted",
     desc = "Send desktop notification",
 })
-
-aucmd("BufReadPre", {
-    pattern = "*",
-    command = "silent! :lua require('modules.lang.config').nvim_treesitter()",
-})

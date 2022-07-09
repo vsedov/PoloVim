@@ -26,7 +26,7 @@ lsp({
     requires = "nvim-lspconfig",
     config = conf.lsp_install,
 })
-lsp({ "max397574/lua-dev.nvim", opt = true, requires = "nvim-lspconfig", config = conf.luadev })
+lsp({ "max397574/lua-dev.nvim", ft = "lua", opt = true, requires = "nvim-lspconfig", config = conf.luadev })
 
 lsp({ "lewis6991/hover.nvim", key = { "K", "gK" }, config = conf.hover })
 

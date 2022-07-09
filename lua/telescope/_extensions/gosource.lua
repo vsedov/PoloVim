@@ -33,18 +33,16 @@ local gosource = function(opts)
     opts = opts or {}
     local results = golang_source()
 
-    pickers
-        .new(opts, {
-            prompt_title = "Find In Go Root",
-            results_title = "Go Source Code",
-            finder = finders.new_table({
-                results = results,
-                entry_maker = make_entry.gen_from_file(opts),
-            }),
-            previewer = conf.file_previewer(opts),
-            sorter = conf.file_sorter(opts),
-        })
-        :find()
+    pickers.new(opts, {
+        prompt_title = "Find In Go Root",
+        results_title = "Go Source Code",
+        finder = finders.new_table({
+            results = results,
+            entry_maker = make_entry.gen_from_file(opts),
+        }),
+        previewer = conf.file_previewer(opts),
+        sorter = conf.file_sorter(opts),
+    }):find()
 end
 
 return telescope.register_extension({ exports = { gosource = gosource } })

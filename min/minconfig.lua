@@ -14,20 +14,17 @@ local function load_plugins()
                 },
             },
             { "nvim-treesitter/nvim-treesitter" },
-            {"rebelot/kanagawa.nvim"},
+            { "rebelot/kanagawa.nvim" },
 
-
- {
-  "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    requires = { 
-      "nvim-lua/plenary.nvim",
-      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    }
-  }          ,
-
-
+            {
+                "nvim-neo-tree/neo-tree.nvim",
+                branch = "v2.x",
+                requires = {
+                    "nvim-lua/plenary.nvim",
+                    "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+                    "MunifTanjim/nui.nvim",
+                },
+            },
         },
 
         config = {
@@ -39,7 +36,7 @@ local function load_plugins()
 end
 
 _G.load_config = function()
-   if not packer_plugins["kanagawa.nvim"].loaded then
+    if not packer_plugins["kanagawa.nvim"].loaded then
         vim.cmd([[packadd kanagawa.nvim ]])
     end
     require("kanagawa").setup({

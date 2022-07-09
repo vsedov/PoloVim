@@ -5,10 +5,10 @@ vim.g.lsp_config_complete = true
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 
-lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
+-- lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
 
 -- lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
--- lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
+lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
 
 lspconfig.julials.setup(enhance_attach({ require("modules.lsp.lsp.providers.julials") }))
 

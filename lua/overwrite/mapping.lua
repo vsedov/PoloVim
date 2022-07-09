@@ -58,25 +58,27 @@ local keys = { --
         :with_silent(),
 
     --- Refactoring
-    ["v|<Leader>re"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], "Refactor Extract Function")
-        :with_noremap()
-        :with_silent(),
+    ["v|<Leader>re"] = map_cmd(
+        [[<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]],
+        "Refactor Extract Function"
+    ):with_noremap():with_silent(),
 
     ["v|<Leader>rf"] = map_cmd(
-            [[<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
-            "Refactor Extract Function to File"
-        )
-        :with_noremap()
-        :with_silent(),
-    ["v|<Leader>rv"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], "Refactor Extract Variable")
-        :with_noremap()
-        :with_silent(),
-    ["v|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], "Refactor Inline Variable")
-        :with_noremap()
-        :with_silent(),
-    ["n|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], "Refactor Inline Variable")
-        :with_noremap()
-        :with_silent(),
+        [[<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
+        "Refactor Extract Function to File"
+    ):with_noremap():with_silent(),
+    ["v|<Leader>rv"] = map_cmd(
+        [[<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]],
+        "Refactor Extract Variable"
+    ):with_noremap():with_silent(),
+    ["v|<Leader>ri"] = map_cmd(
+        [[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+        "Refactor Inline Variable"
+    ):with_noremap():with_silent(),
+    ["n|<Leader>ri"] = map_cmd(
+        [[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+        "Refactor Inline Variable"
+    ):with_noremap():with_silent(),
 
     ["v|<Leader>rr"] = map_cmd(
         [[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]],

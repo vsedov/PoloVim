@@ -99,25 +99,27 @@ end
 local Job = require("plenary.job")
 local new_maker = function(filepath, bufnr, opts)
     filepath = vim.fn.expand(filepath)
-    Job:new({
-        command = "file",
-        args = { "--mime-type", "-b", filepath },
-        on_exit = function(j)
-            local mime_class = vim.split(j:result()[1], "/")[1]
-            local mime_type = j:result()[1]
-            if
-                mime_class == "text"
-                or (mime_class == "application" and mime_type ~= "application/x-pie-executable")
-            then
-                previewers.buffer_previewer_maker(filepath, bufnr, opts)
-            else
-                -- maybe we want to write something to the buffer here
-                vim.schedule(function()
-                    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
-                end)
-            end
-        end,
-    }):sync()
+    Job
+        :new({
+            command = "file",
+            args = { "--mime-type", "-b", filepath },
+            on_exit = function(j)
+                local mime_class = vim.split(j:result()[1], "/")[1]
+                local mime_type = j:result()[1]
+                if
+                    mime_class == "text"
+                    or (mime_class == "application" and mime_type ~= "application/x-pie-executable")
+                then
+                    previewers.buffer_previewer_maker(filepath, bufnr, opts)
+                else
+                    -- maybe we want to write something to the buffer here
+                    vim.schedule(function()
+                        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
+                    end)
+                end
+            end,
+        })
+        :sync()
 end
 require("telescope").setup({
     defaults = themes.get_ivy({
@@ -462,14 +464,12 @@ M.files = function(opts)
     -- we ensure the maker uses the cwd options when being created.
     opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
 
-    pickers
-        .new(opts, {
-            prompt_title = "Git File",
-            finder = finders.new_oneshot_job({ "git", "ls-files", "--recurse-submodules" }, opts),
-            previewer = previewers.cat.new(opts),
-            sorter = conf.file_sorter(opts),
-        })
-        :find()
+    pickers.new(opts, {
+        prompt_title = "Git File",
+        finder = finders.new_oneshot_job({ "git", "ls-files", "--recurse-submodules" }, opts),
+        previewer = previewers.cat.new(opts),
+        sorter = conf.file_sorter(opts),
+    }):find()
 end
 
 M.jump = function()
@@ -526,14 +526,12 @@ M.ag = function(text_to_find)
     local opts = default_opts
 
     local args = { "ag", text_to_find }
-    pickers
-        .new(opts, {
-            prompt_title = "Silver Searcher",
-            finder = finders.new_oneshot_job(args, opts),
-            previewer = conf.grep_previewer(opts),
-            sorter = conf.file_sorter(opts),
-        })
-        :find()
+    pickers.new(opts, {
+        prompt_title = "Silver Searcher",
+        finder = finders.new_oneshot_job(args, opts),
+        previewer = conf.grep_previewer(opts),
+        sorter = conf.file_sorter(opts),
+    }):find()
 end
 
 M.theme = function(opts)
@@ -607,31 +605,29 @@ M.folder_grep = function(opts)
 
     table.insert(data, 1, "." .. os_sep)
 
-    pickers
-        .new(opts, {
-            prompt_title = "Folders for Live Grep",
-            finder = finders.new_table({ results = data, entry_maker = make_entry.gen_from_file(opts) }),
-            previewer = conf.file_previewer(opts),
-            sorter = conf.file_sorter(opts),
-            attach_mappings = function(prompt_bufnr)
-                action_set.select:replace(function()
-                    local current_picker = action_state.get_current_picker(prompt_bufnr)
-                    local dirs = {}
-                    local selections = current_picker:get_multi_selection()
-                    if vim.tbl_isempty(selections) then
-                        table.insert(dirs, action_state.get_selected_entry().value)
-                    else
-                        for _, selection in ipairs(selections) do
-                            table.insert(dirs, selection.value)
-                        end
+    pickers.new(opts, {
+        prompt_title = "Folders for Live Grep",
+        finder = finders.new_table({ results = data, entry_maker = make_entry.gen_from_file(opts) }),
+        previewer = conf.file_previewer(opts),
+        sorter = conf.file_sorter(opts),
+        attach_mappings = function(prompt_bufnr)
+            action_set.select:replace(function()
+                local current_picker = action_state.get_current_picker(prompt_bufnr)
+                local dirs = {}
+                local selections = current_picker:get_multi_selection()
+                if vim.tbl_isempty(selections) then
+                    table.insert(dirs, action_state.get_selected_entry().value)
+                else
+                    for _, selection in ipairs(selections) do
+                        table.insert(dirs, selection.value)
                     end
-                    actions._close(prompt_bufnr, current_picker.initial_mode == "insert")
-                    require("telescope.builtin").live_grep({ search_dirs = dirs })
-                end)
-                return true
-            end,
-        })
-        :find()
+                end
+                actions._close(prompt_bufnr, current_picker.initial_mode == "insert")
+                require("telescope.builtin").live_grep({ search_dirs = dirs })
+            end)
+            return true
+        end,
+    }):find()
 end
 
 -- show implementations of the current thingy using language server
@@ -667,9 +663,7 @@ local function lsp_ref_from_qf(opts)
 
         local line_info = {
             -- table.concat({ entry.lnum, entry.col }, ":"),
-            "("
-                .. entry.lnum
-                .. ")",
+            "(" .. entry.lnum .. ")",
             "TelescopeResultsLineNr",
         }
         -- if #filename > 20 then
@@ -742,16 +736,14 @@ M.lsp_references = function()
         -- print("locations:")
         -- dump(locations)
 
-        pickers
-            .new(opts, {
-                finder = finders.new_table({
-                    results = locations,
-                    entry_maker = lsp_ref_from_qf(),
-                }),
-                previewer = conf.qflist_previewer(opts),
-                sorter = conf.generic_sorter(opts),
-            })
-            :find()
+        pickers.new(opts, {
+            finder = finders.new_table({
+                results = locations,
+                entry_maker = lsp_ref_from_qf(),
+            }),
+            previewer = conf.qflist_previewer(opts),
+            sorter = conf.generic_sorter(opts),
+        }):find()
     end)
 end
 
@@ -783,14 +775,12 @@ M.load_dotfiles = function()
 
         builtin.dotfiles = function(opts)
             opts = themes.get_dropdown({})
-            pickers
-                .new(opts, {
-                    prompt = "dotfiles",
-                    finder = finders.new_table({ results = results }),
-                    previewer = previewers.cat.new(opts),
-                    sorter = sorters.get_generic_fuzzy_sorter(),
-                })
-                :find()
+            pickers.new(opts, {
+                prompt = "dotfiles",
+                finder = finders.new_table({ results = results }),
+                previewer = previewers.cat.new(opts),
+                sorter = sorters.get_generic_fuzzy_sorter(),
+            }):find()
         end
     end
     builtin.dotfiles()
@@ -799,17 +789,12 @@ end
 M.git_conflicts = function(opts)
     opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
 
-    pickers
-        .new(opts, {
-            prompt_title = "Git Conflicts",
-            finder = finders.new_oneshot_job(
-                vim.tbl_flatten({ "git", "diff", "--name-only", "--diff-filter=U" }),
-                opts
-            ),
-            previewer = conf.file_previewer(opts),
-            sorter = conf.file_sorter(opts),
-        })
-        :find()
+    pickers.new(opts, {
+        prompt_title = "Git Conflicts",
+        finder = finders.new_oneshot_job(vim.tbl_flatten({ "git", "diff", "--name-only", "--diff-filter=U" }), opts),
+        previewer = conf.file_previewer(opts),
+        sorter = conf.file_sorter(opts),
+    }):find()
 end
 
 -- Path grep

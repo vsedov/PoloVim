@@ -185,8 +185,12 @@ M.preview_location = function(location, context, before_context)
     end
 
     local range = location.targetRange or location.range
-    local contents =
-        vim.api.nvim_buf_get_lines(bufnr, range.start.line - before_context, range["end"].line + 1 + context, false)
+    local contents = vim.api.nvim_buf_get_lines(
+        bufnr,
+        range.start.line - before_context,
+        range["end"].line + 1 + context,
+        false
+    )
     local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
     return vim.lsp.util.open_floating_preview(contents, filetype, { border = "single" })
 end
@@ -198,10 +202,14 @@ M.preview_location_callback = function(_, result)
     end
     if vim.tbl_islist(result) then
         require("modules.lsp.lsp.utils.peek").floating_buf, require("modules.lsp.lsp.utils.peek").floating_win =
-            require("modules.lsp.lsp.utils.peek").preview_location(result[1], context)
+            require(
+                "modules.lsp.lsp.utils.peek"
+            ).preview_location(result[1], context)
     else
         require("modules.lsp.lsp.utils.peek").floating_buf, require("modules.lsp.lsp.utils.peek").floating_win =
-            require("modules.lsp.lsp.utils.peek").preview_location(result, context)
+            require(
+                "modules.lsp.lsp.utils.peek"
+            ).preview_location(result, context)
     end
 end
 
