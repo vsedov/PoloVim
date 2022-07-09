@@ -25,6 +25,23 @@ editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
 
 editor({
     "gbprod/yanky.nvim",
+    keys = {
+        { "n", "y" },
+        { "x", "y" },
+
+        { "n", "p" },
+        { "n", "P" },
+        { "x", "p" },
+        { "x", "P" },
+
+        { "n", "gp" },
+        { "n", "gP" },
+        { "x", "gp" },
+        { "x", "gP" },
+
+        { "n", "<Leader>n" },
+        { "n", "<Leader>N" },
+    },
     -- event = { "CursorMoved", "CmdlineEnter" },
     setup = conf.setup_yanky,
     config = conf.config_yanky,
@@ -109,7 +126,19 @@ editor({
 
 editor({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
 
-editor({ "declancm/cinnamon.nvim", event = "WinScrolled", config = conf.neoscroll })
+-- temp
+editor({
+    "declancm/cinnamon.nvim",
+    keys = {
+        "<C-U>",
+        "<C-D>",
+        "<C-B>",
+        "<C-F>",
+        "gg",
+        "G",
+    },
+    config = conf.neoscroll,
+})
 
 -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
