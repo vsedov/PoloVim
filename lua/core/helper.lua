@@ -2,8 +2,8 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 _G = _G or {}
-_G.praestrictus = {}
-praestrictus.config = {
+_G.lamda = {}
+lamda.config = {
     cmp_theme = "border", -- no-border , border
     config_test = true,
     python = {
@@ -30,7 +30,7 @@ P = vim.pretty_print
 ---@param name string
 ---@param commands Autocommand[]
 ---@return number
-praestrictus.augroup = function(name, commands)
+lamda.augroup = function(name, commands)
     local id = api.nvim_create_augroup(name, { clear = true })
     for _, autocmd in ipairs(commands) do
         local is_callback = type(autocmd.command) == "function"
@@ -57,7 +57,7 @@ end
 ---@param name any
 ---@param rhs string|fun(args: CommandArgs)
 ---@param opts table?
-praestrictus.command = function(name, rhs, opts)
+lamda.command = function(name, rhs, opts)
     opts = opts or {}
     api.nvim_create_user_command(name, rhs, opts)
 end
@@ -65,7 +65,7 @@ end
 ---Source a lua or vimscript file
 ---@param path string path relative to the nvim directory
 ---@param prefix boolean?
-praestrictus.source = function(path, prefix)
+lamda.source = function(path, prefix)
     if not prefix then
         vim.cmd(fmt("source %s", path))
     else
@@ -74,7 +74,7 @@ praestrictus.source = function(path, prefix)
 end
 
 -- https://www.reddit.com/r/neovim/comments/sg919r/diff_with_clipboard/
-praestrictus.compare_to_clipboard = function()
+lamda.compare_to_clipboard = function()
     local ftype = vim.api.nvim_eval("&filetype")
     vim.cmd(string.format(
         [[
@@ -91,18 +91,18 @@ praestrictus.compare_to_clipboard = function()
         ftype
     ))
 end
-praestrictus.dump = function(...)
+lamda.dump = function(...)
     print(vim.inspect(...))
 end
 
-praestrictus.preserve = function(cmd)
+lamda.preserve = function(cmd)
     cmd = string.format("keepjumps keeppatterns execute %q", cmd)
     local original_cursor = vim.fn.winsaveview()
     vim.api.nvim_command(cmd)
     vim.fn.winrestview(original_cursor)
 end
 
-praestrictus.PASTE = function(data)
+lamda.PASTE = function(data)
     if not vim.tbl_islist(data) then
         if type(data) == type("") then
             data = vim.split(data, "\n")
@@ -113,13 +113,13 @@ praestrictus.PASTE = function(data)
     vim.paste(data, -1)
 end
 
-praestrictus.p = function(...)
+lamda.p = function(...)
     local vars = vim.tbl_map(vim.inspect, { ... })
     print(unpack(vars))
     return { ... }
 end
 
-praestrictus.PERF = function(msg, ...)
+lamda.PERF = function(msg, ...)
     local args = { ... }
     vim.validate({ func = { args[1], "function" }, message = { msg, "string", true } })
     local func = args[1]
@@ -134,7 +134,7 @@ praestrictus.PERF = function(msg, ...)
 end
 
 -- reformat file by remove \n\t and pretty if it is json
-praestrictus.Format = function(json)
+lamda.Format = function(json)
     pcall(vim.cmd, [[%s/\\n/\r/g]])
     pcall(vim.cmd, [[%s/\\t/  /g]])
     pcall(vim.cmd, [[%s/\\"/"/g]])

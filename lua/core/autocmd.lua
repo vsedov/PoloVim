@@ -28,7 +28,7 @@ local function smart_close()
     end
 end
 
-praestrictus.augroup("VimrcIncSearchHighlight", {
+lamda.augroup("VimrcIncSearchHighlight", {
     {
         event = { "CursorMoved" },
         command = function()
@@ -51,7 +51,7 @@ praestrictus.augroup("VimrcIncSearchHighlight", {
         end,
     },
 })
-praestrictus.augroup("SmartClose", {
+lamda.augroup("SmartClose", {
     {
         -- Auto open grep quickfix window
         event = { "QuickFixCmdPost" },
@@ -97,7 +97,7 @@ praestrictus.augroup("SmartClose", {
         end,
     },
 })
-praestrictus.augroup("TextYankHighlight", {
+lamda.augroup("TextYankHighlight", {
     {
         -- don't execute silently in case of errors
         event = { "TextYankPost" },
@@ -111,7 +111,7 @@ praestrictus.augroup("TextYankHighlight", {
         end,
     },
 })
-praestrictus.augroup("Utilities", {
+lamda.augroup("Utilities", {
     {
         -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
         event = { "BufReadCmd" },
@@ -172,7 +172,7 @@ praestrictus.augroup("Utilities", {
     },
 })
 
-praestrictus.augroup("buffer", {
+lamda.augroup("buffer", {
     {
         event = { "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
         pattern = "*",
@@ -257,7 +257,7 @@ praestrictus.augroup("buffer", {
     },
 })
 
-praestrictus.augroup("WindowBehaviours", {
+lamda.augroup("WindowBehaviours", {
     {
         -- map q to close command window on quit
         event = { "CmdwinEnter" },
@@ -329,7 +329,7 @@ praestrictus.augroup("WindowBehaviours", {
     },
 })
 if vim.env.TERM == "xterm-kitty" then
-    praestrictus.augroup("VimrcIncSearchHighlight", {
+    lamda.augroup("VimrcIncSearchHighlight", {
         {
             event = "UIEnter",
             pattern = "*",

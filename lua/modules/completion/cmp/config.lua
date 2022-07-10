@@ -82,7 +82,7 @@ local source_mapping = {
     path = "[Path]",
 }
 
-if praestrictus.config.cmp_theme == "border" then
+if lamda.config.cmp_theme == "border" then
     config.window = {
         completion = {
             border = border,
@@ -113,7 +113,7 @@ if praestrictus.config.cmp_theme == "border" then
             end,
         }),
     }
-elseif praestrictus.config.cmp_theme == "no-border" then
+elseif lamda.config.cmp_theme == "no-border" then
     config.window = {
         completion = {
             -- border = border,

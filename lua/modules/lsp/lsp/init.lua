@@ -5,12 +5,12 @@ vim.g.lsp_config_complete = true
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 
-if praestrictus.config.python.lsp == "pylsp" then
+if lamda.config.python.lsp == "pylsp" then
     vim.g.navic_silence = true
     lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
-elseif praestrictus.config.python.lsp == "jedi" then
+elseif lamda.config.python.lsp == "jedi" then
     lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
-elseif praestrictus.config.python.lsp == "pyright" then
+elseif lamda.config.python.lsp == "pyright" then
     lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
 end
 

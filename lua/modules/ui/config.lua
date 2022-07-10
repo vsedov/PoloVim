@@ -951,7 +951,7 @@ function config.clock_setup()
         pattern = "*",
         callback = function()
             local f = vim.fn
-            if not praestrictus.config.config_test and f.getcwd():match(f.stdpath("config")) then
+            if not lamda.config.config_test and f.getcwd():match(f.stdpath("config")) then
                 require("packer").loader("clock.nvim")
             end
         end,

@@ -246,7 +246,7 @@ end
 function M.plugin(name, hls)
     name = name:gsub("^%l", string.upper) -- capitalise the name for autocommand convention sake
     M.all(hls)
-    praestrictus.augroup(fmt("%sHighlightOverrides", name), {
+    lamda.augroup(fmt("%sHighlightOverrides", name), {
         {
             event = "ColorScheme",
             command = function()
@@ -289,7 +289,7 @@ local function general_overrides()
         FoldColumn = { background = "background" },
         Folded = { inherit = "Comment", italic = true, bold = true },
         -- Add undercurl to existing spellbad highlight
-        SpellBad = { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" },
+        -- SpellBad = { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" },
         -- SpellRare = { undercurl = true }, -- a bit annoying
         PmenuSbar = { background = P.grey },
 
@@ -460,7 +460,7 @@ local function user_highlights()
     set_sidebar_highlight()
 end
 
-praestrictus.augroup("UserHighlights", {
+lamda.augroup("UserHighlights", {
     {
         event = "BufEnter",
         command = function()
