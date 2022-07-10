@@ -5,7 +5,7 @@ local M = {}
 local config = require("modules.lsp.lsp.utils.config")
 
 local function add_lsp_buffer_keybindings(client, bufnr)
-    local border = config.float.border
+    -- local border = config.float.border
     vim.keymap.set("n", "<leader>*", function()
         require("modules.lsp.lsp.utils.list").change_active("Quickfix")
         vim.lsp.buf.references()
