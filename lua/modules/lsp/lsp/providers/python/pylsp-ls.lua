@@ -19,12 +19,12 @@ return {
                 jedi_definition = { enabled = true },
                 jedi_references = { enabled = true },
                 jedi_signature_help = { enabled = true },
-                jedi_symbols = { enabled = true, all_scopes = true },
+                jedi_symbols = { enabled = true, all_scopes = true, include_import_symbols = true },
 
                 yapf = { enabled = true },
                 flake8 = { enabled = true },
                 isort = { enabled = true },
-                rope_completion = { enabled = true },
+                -- rope_completion = { enabled = true },
 
                 mccabe = { enabled = false, threshold = 15 },
                 pylint = { enabled = false },
@@ -33,6 +33,7 @@ return {
                 pydocstyle = { enabled = false },
                 pyflakes = { enabled = false },
             },
+            rope = { enable = true },
         },
     },
     root_dir = function(fname)
