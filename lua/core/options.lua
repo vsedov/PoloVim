@@ -131,6 +131,8 @@ local function load_options()
         },
         spellfile = global.home .. ".config/nvim/spell/en.utf-8.add",
         spelloptions = "camel",
+        spellcapcheck = "",
+        spelllang = "en_gb,programming",
         secure = true,
         exrc = true,
     }
