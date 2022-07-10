@@ -1,6 +1,5 @@
 local util = require("lspconfig/util")
-local venv_path = os.getenv("VIRTUAL_ENV") -- could be nil
-local home = os.getenv("HOME")
+-- local venv_path = os.getenv("VIRTUAL_ENV") -- could be nil
 local python_path = "/usr/bin/python"
 local pylsp_path = "/home/viv/.local/bin/pylsp"
 
@@ -13,7 +12,7 @@ return {
                 jedi_completion = {
                     enabled = true,
                     include_params = true,
-                    cache_for = { "numpy", "discord.py" },
+                    cache_for = { "numpy", "discord.py", "fastapi" },
                 },
                 jedi_hover = { enabled = true },
                 jedi_definition = { enabled = true },

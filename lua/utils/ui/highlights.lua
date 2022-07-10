@@ -289,6 +289,7 @@ local function general_overrides()
         FoldColumn = { background = "background" },
         Folded = { inherit = "Comment", italic = true, bold = true },
         -- Add undercurl to existing spellbad highlight
+        -- TODO(vsedov) (20:35:02 - 10/07/22): revert when this is stable
         -- SpellBad = { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" },
         -- SpellRare = { undercurl = true }, -- a bit annoying
         PmenuSbar = { background = P.grey },
@@ -319,7 +320,9 @@ local function general_overrides()
         TSNamespace = { link = "TypeBuiltin" },
         TSKeywordReturn = { italic = true, foreground = keyword_fg },
         TSParameter = { italic = true, bold = true },
-        TSError = { undercurl = true, sp = "DarkRed" },
+        -- this happens way to often so , gonna disable for the time
+        -- -- TODO(vsedov) (20:34:49 - 10/07/22): revet
+        -- TSError = { undercurl = true, sp = "DarkRed" },
 
         -- highlight FIXME comments
         commentTSWarning = { background = P.light_red, foreground = "fg", bold = true },

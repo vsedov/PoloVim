@@ -43,7 +43,7 @@ git({
         "GHRefreshComments",
     },
     opt = true,
-    requires = { "ldelossa/litee.nvim", opt = true, after = "gh.nvim" },
+    requires = { "ldelossa/litee.nvim" },
     config = conf.gh,
 })
 

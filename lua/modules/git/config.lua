@@ -21,6 +21,7 @@ function config.octo()
 end
 
 function config.gh()
+    vim.cmd[[packadd litee.nvim]]
     require("litee.lib").setup()
 
     local wk = require("which-key")
@@ -87,7 +88,7 @@ function config.worktree()
     end
 
     require("git-worktree").setup({})
-    vim.api.nvim_create_user_command("Worktree", "lua require'modules.git.config'.worktree()(<f-args>)", {
+    vim.api.nvim_create_user_command("Worktree", "lua require'modules.git.config'.worktree(<f-args>)", {
         nargs = "*",
         complete = function()
             return { "create" }
@@ -109,6 +110,8 @@ function config.worktree()
         end
     end)
     return { git_worktree = git_worktree }
+    -- vim.cmd[[packadd telescope.nvim]]
+    -- require("telescope").load_extension("git_worktree")
 end
 
 function config.diffview()
@@ -220,7 +223,7 @@ function config.gitsigns()
             border = "rounded",
         },
         current_line_blame = true,
-        current_line_blame_formatter = " : <author> | <author_time:%y-%m-%d> | <summary>",
+        current_line_blame_formatter = " : <author> | <author_time:%d-%m-%y> | <summary>",
         current_line_blame_formatter_opts = {
             relative_time = true,
         },
