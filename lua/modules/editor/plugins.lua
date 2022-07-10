@@ -176,3 +176,11 @@ editor({
     keys = { "_", "L_" },
     config = conf.substitute,
 })
+
+editor({
+    "knubie/vim-kitty-navigator",
+    run = "cp ./*.py ~/.config/kitty/",
+    cond = function()
+        return vim.env.TMUX == nil
+    end,
+})
