@@ -28,7 +28,7 @@ local plug_map = {
         :with_silent(),
 
     ["n|cc"] = map_cmd("<Cmd>CodeActionMenu<cr>", "Code action Menu"):with_noremap():with_silent(),
-    ["v|ga"] = map_cmd("<cmd>CodeActionMenu<Cr>", "Code action Menu"):with_noremap():with_silent(),
+    ["v|cc"] = map_cmd("<cmd>CodeActionMenu<Cr>", "Code action Menu"):with_noremap():with_silent(),
     ["n|<Leader>ca"] = map_cu("<cmd>lua vim.lsp.buf.code_action()<CR>", "lsp code actions")
         :with_noremap()
         :with_silent(),
