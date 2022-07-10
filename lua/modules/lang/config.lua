@@ -78,18 +78,20 @@ function config.refactor()
         end
 
         local opts = require("telescope.themes").get_cursor() -- set personal telescope options
-        require("telescope.pickers").new(opts, {
-            prompt_title = "refactors",
-            finder = require("telescope.finders").new_table({
-                results = require("refactoring").get_refactors(),
-            }),
-            sorter = require("telescope.config").values.generic_sorter(opts),
-            attach_mappings = function(_, map)
-                map("i", "<CR>", _refactor)
-                map("n", "<CR>", _refactor)
-                return true
-            end,
-        }):find()
+        require("telescope.pickers")
+            .new(opts, {
+                prompt_title = "refactors",
+                finder = require("telescope.finders").new_table({
+                    results = require("refactoring").get_refactors(),
+                }),
+                sorter = require("telescope.config").values.generic_sorter(opts),
+                attach_mappings = function(_, map)
+                    map("i", "<CR>", _refactor)
+                    map("n", "<CR>", _refactor)
+                    return true
+                end,
+            })
+            :find()
     end
 
     -- vim.api.nvim_set_keymap("v", "<Leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})

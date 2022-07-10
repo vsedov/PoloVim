@@ -38,13 +38,15 @@ local plug_map = {
     end, "Venn Toggle"):with_silent(),
 
     ["n|<leader>hw"] = map_cmd(function()
-        if require("dynamic_help.extras.statusline").available() ~= "" then
-            require("dynamic_help").float_help(vim.fn.expand("<cword>"))
-        else
-            local help = vim.fn.input("Help Tag> ")
-            require("dynamic_help").float_help(help)
-        end
-    end, "Dynamic Help"):with_noremap():with_silent(),
+            if require("dynamic_help.extras.statusline").available() ~= "" then
+                require("dynamic_help").float_help(vim.fn.expand("<cword>"))
+            else
+                local help = vim.fn.input("Help Tag> ")
+                require("dynamic_help").float_help(help)
+            end
+        end, "Dynamic Help")
+        :with_noremap()
+        :with_silent(),
     -- Scuffed way of doing this, but this works .
 
     ["n|<Leader>gr"] = map_cmd(function()
