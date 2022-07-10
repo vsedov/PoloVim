@@ -51,7 +51,7 @@ end
 -- -- in and close it once everything is resolved. This functionality only runs whilst
 -- -- the list is open.
 -- -- similar functionality is provided by: https://github.com/onsails/diaglist.nvim
-local function make_diagnostic_qf_updater()
+local make_diagnostic_qf_updater = function()
     local cmd_id = nil
     return function()
         if not api.nvim_buf_is_valid(0) then
@@ -78,6 +78,7 @@ local function make_diagnostic_qf_updater()
         })
     end
 end
+
 -- Show the popup diagnostics window, but only once for the current cursor location
 -- by checking whether the word under the cursor has changed.
 local function diagnostic_popup()
