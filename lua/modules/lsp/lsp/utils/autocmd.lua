@@ -104,8 +104,10 @@ function M.setup_autocommands(client, bufnr)
         api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
             group = LspCodeLens,
             buffer = bufnr,
-            callback = function()
-                vim.lsp.codelens.refresh()
+            callback = function(args)
+                if api.nvim_buf_is_valid(args.buf) then
+                    vim.lsp.codelens.refresh()
+                end
             end,
         })
     end

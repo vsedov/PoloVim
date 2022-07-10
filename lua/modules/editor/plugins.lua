@@ -147,6 +147,7 @@ editor({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = c
 
 editor({
     "m-demare/hlargs.nvim",
+    brach = "expected_lua_number",
     ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
