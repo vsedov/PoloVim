@@ -131,7 +131,6 @@ local function load_options()
         },
         spellfile = global.home .. ".config/nvim/spell/en.utf-8.add",
         spelloptions = "camel",
-        fileformats = { "unix", "mac", "dos" },
         secure = true,
         exrc = true,
     }
@@ -167,6 +166,8 @@ if vim.fn.executable("nvr") > 0 then
     vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
     vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end
+
+vim.opt.jumpoptions:append({ "view" })
 vim.g.python_host_prog = "/usr/bin/python2"
 vim.g.python3_host_prog = "/usr/bin/python3"
 vim.cmd([[syntax off]])
