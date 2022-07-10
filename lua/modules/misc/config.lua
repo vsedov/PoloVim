@@ -185,9 +185,24 @@ function config.jetscape()
 end
 
 function config.text_case()
+    vim.cmd([[packadd which-key.nvim]])
+    vim.cmd([[packadd telescope.nvim]])
     require("textcase").setup({})
-    vim.keymap.set("n", "gaw", "<cmd>lua require('textcase').current_word('to_snake_case')<cr>", { noremap = true })
-    vim.keymap.set("n", "gaW", "<cmd>lua require('textcase').lsp_rename('to_snake_case')<cr>", { noremap = true })
+    require("telescope").load_extension("textcase")
+    vim.keymap.set(
+        "n",
+        "gaw",
+        "<cmd>lua require('textcase').current_word('to_snake_case')<cr>",
+        { desc = "to snake case", noremap = true }
+    )
+    vim.keymap.set(
+        "n",
+        "gaW",
+        "<cmd>lua require('textcase').lsp_rename('to_snake_case')<cr>",
+        { desc = "lsp rename to snake_case", noremap = true }
+    )
+    vim.api.nvim_set_keymap("n", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+    vim.api.nvim_set_keymap("v", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
 end
 
 function config.marks()

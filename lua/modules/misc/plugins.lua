@@ -106,8 +106,47 @@ misc({ "Krafi2/jeskape.nvim", event = "InsertEnter", config = conf.jetscape })
 
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
--- Need to lazyload
-misc({ "johmsalas/text-case.nvim", keys = { "g" }, config = conf.text_case })
+misc({
+    "johmsalas/text-case.nvim",
+    keys = {
+        "ga",
+        "gau",
+        "gal",
+        "gas",
+        "gad",
+        "gan",
+        "gad",
+        "gaa",
+        "gac",
+        "gap",
+        "gat",
+        "gaf",
+        "gaU",
+        "gaL",
+        "gaS",
+        "gaD",
+        "gaN",
+        "gaD",
+        "gaA",
+        "gaC",
+        "gaP",
+        "gaT",
+        "gaF",
+        "geu",
+        "gel",
+        "ges",
+        "ged",
+        "gen",
+        "ged",
+        "gea",
+        "gec",
+        "gep",
+        "get",
+        "gef",
+        "ga.",
+    },
+    config = conf.text_case,
+})
 
 misc({ "chentoast/marks.nvim", opt = true, keys = { "mx", "m", "m,", "m;" }, config = conf.marks })
 
@@ -120,6 +159,7 @@ misc({
         "SidebarNvimUpdate",
         "SidebarNvimFocus",
     },
+
     config = conf.sidebar,
 })
 
@@ -161,3 +201,13 @@ misc({
     ft = { "norg", "md" },
     config = conf.headers,
 })
+misc({
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+    config = function()
+        vim.g.startuptime_tries = 15
+        vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
+    end,
+})
+-- programming spell
+misc({ "psliwka/vim-dirtytalk", run = ":DirtytalkUpdate" })
