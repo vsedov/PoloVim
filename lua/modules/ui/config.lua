@@ -939,9 +939,6 @@ function config.dim()
             signs = true,
             underline = true,
         },
-        update_in_insert = {
-            enable = true, -- disable updates in insert mode
-        },
     })
 end
 
@@ -955,7 +952,6 @@ function config.clock_setup()
         callback = function()
             local f = vim.fn
             if not praestrictus.config.config_test and f.getcwd():match(f.stdpath("config")) then
-                print(praestrictus.config.config_test)
                 require("packer").loader("clock.nvim")
             end
         end,
