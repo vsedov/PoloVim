@@ -292,6 +292,9 @@ function config.bqf()
         pattern = "qf",
         callback = setItemMappings,
     })
+    require("utils.ui.highlights").plugin("bqf", {
+        BqfPreviewBorder = { link = "WinSeparator" },
+    })
 end
 
 function config.neoclip()

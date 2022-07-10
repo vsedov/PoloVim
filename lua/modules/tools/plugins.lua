@@ -171,8 +171,16 @@ tools({ "ilAYAli/scMRU.nvim", cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDe
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools({
     "kevinhwang91/nvim-bqf",
-    event = "BufReadPost",
+    ft = "qf",
     config = conf.bqf,
+})
+tools({
+    "https://gitlab.com/yorickpeterse/nvim-pqf",
+    event = "BufReadPre",
+    config = function()
+        require("utils.ui.highlights").plugin("pqf", { qfPosition = { link = "Todo" } })
+        require("pqf").setup()
+    end,
 })
 
 -- :Z {query}: cd to the highest ranked directory matching your query. If {query} is omitted, cd to the home directory
