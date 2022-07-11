@@ -19,21 +19,21 @@ local function dap_uirun(method, args)
 end
 
 local hint = [[
-  ^^^^-------------------------------------------------^^^^
-  ^^^^                     BreakPoints                 ^^^^
-  ^^^^-------------------------------------------------^^^^
+  ^^^^---------------------------------------------------^^^^
+  ^^^^                     BreakPoints                   ^^^^
+  ^^^^---------------------------------------------------^^^^
   _bt_: Toggle BP                    _bb_: set breakpoint
   _bc_: clear bp                     _z_: float bp
-  ^^^^-------------------------------------------------^^^^
-  ^^^^                     Debug                       ^^^^
-  ^^^^-------------------------------------------------^^^^
-  _S_: Continue                         _c_: run to cursor 
+  ^^^^---------------------------------------------------^^^^
+  ^^^^                     Debug                         ^^^^
+  ^^^^---------------------------------------------------^^^^
+  _C_: Continue                         _c_: run to cursor 
 
   _n_: step over                        _x_: exit debug
   _i_: step into                        _X_: Close
-  _o_: step out                         _C_: dapui close
-  ^^^^                     Hover                       ^^^^
-  ^^^^-------------------------------------------------^^^^
+  _o_: step out                         _F_: Close Refresh
+  ^^^^                     Hover                         ^^^^
+  ^^^^---------------------------------------------------^^^^
   _K_: widget hover                     _w_: float watches
   _d_: dap eval                         _f_: float stacks
   _a_: float scope                      _r_: float repl
@@ -55,7 +55,7 @@ local dap_hydra = Hydra({
     },
     name = "dap",
     mode = { "n", "x" },
-    body = "<localleader>d",
+    body = "<localleader>b",
     heads = {
         {
             "bt",
@@ -73,7 +73,7 @@ local dap_hydra = Hydra({
             { silent = true },
         },
 
-        { "S", run("continue"), { silent = true } },
+        { "C", run("continue"), { silent = true } },
         { "c", run("run_to_cursor"), { silent = true } },
         { "n", run("step_over"), { silent = true } },
         { "i", run("step_into"), { silent = true } },
@@ -81,7 +81,7 @@ local dap_hydra = Hydra({
         { "x", run("disconnect", { terminateDebuggee = false }), { exit = true, silent = true } },
         { "X", run("close"), { silent = true } },
         {
-            "C",
+            "F",
             ":lua require('dapui').close()<cr>:DapVirtualTextForceRefresh<CR>",
             { silent = true },
         },
