@@ -3,7 +3,6 @@ local loader = require("packer").loader
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 local conf = require("telescope.config").values
-
 local layout = require("telescope.pickers.layout_strategies")
 local resolve = require("telescope.config.resolve")
 local make_entry = require("telescope.make_entry")
@@ -27,6 +26,7 @@ local function reloader()
     RELOAD("telescope")
     RELOAD("utils.telescope")
 end
+local open_cmd = "xdg-open"
 
 -- https://github.com/AshineFoster/nvim/blob/master/lua/plugins/telescope.lua
 local horizontal_preview_width = function(_, cols, _)
@@ -1106,9 +1106,6 @@ M.colorscheme = function()
     local colorschemes = pickers.new(themes.get_ivy(), opts)
     colorschemes:find()
 end
-
--- get os name
-local open_cmd = "xdg-open"
 
 M.devdocs_ft = function()
     local input = vim.fn.input("Search String: ")

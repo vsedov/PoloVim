@@ -26,7 +26,7 @@ local hint_telescope = [[
   ^^^^-------------------------------------------------^^^^
   ^^^^                     DevDoc                      ^^^^
   ^^^^-------------------------------------------------^^^^
-      _xt_: search ft    _xd_: search     _xo_: browse
+      _;_: search ft    _'_: search     _#_: browse
 
   _q_ exit
 
@@ -112,8 +112,8 @@ Hydra({
         { "L", MRU, { exit = true, desc = "Most recently used files" } },
         { "K", MFU, { exit = true, desc = "Most frequently used files" } },
 
-        { "xt", require("utils.telescope").devdocs_ft, { exit = true, desc = "Dev Doc search ft" } },
-        { "xd", require("utils.telescope").devdocs_search, { exit = true, desc = "Dev Doc search" } },
-        { "xo", require("utils.telescope").google_search, { exit = true, desc = "Google search" } },
+        { ";", require("utils.telescope").devdocs_ft, { exit = true, desc = "Dev Doc search ft" } },
+        { "'", require("utils.telescope").devdocs_search, { exit = true, desc = "Dev Doc search" } },
+        { "#", require("utils.telescope").google_search, { exit = true, desc = "Google search" } },
     },
 })
