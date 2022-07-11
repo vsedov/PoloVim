@@ -3,63 +3,7 @@ local loader = require("packer").loader
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local wk = require("which-key")
-M.setup = function()
-    local fn = vim.fn
-    local function repl_toggle()
-        require("dap").repl.toggle(nil, "botright split")
-    end
-    local function continue()
-        require("dap").continue()
-    end
-    local function step_out()
-        require("dap").step_out()
-    end
-    local function step_into()
-        require("dap").step_into()
-    end
-    local function step_over()
-        require("dap").step_over()
-    end
-    local function run_last()
-        require("dap").run_last()
-    end
-    local function toggle_breakpoint()
-        require("dap").toggle_breakpoint()
-    end
-    local function set_breakpoint()
-        require("dap").set_breakpoint(fn.input("Breakpoint condition: "))
-    end
-
-    local function up()
-        require("dap").up()
-    end
-    local function down()
-        require("dap").down()
-    end
-
-    local function run_to_cursor()
-        require("dap").run_to_cursor()
-    end
-
-    wk.register({
-        d = {
-            name = "+debugger",
-            b = { toggle_breakpoint, "dap: toggle breakpoint" },
-            B = { set_breakpoint, "dap: set breakpoint" },
-            c = { continue, "dap: continue or start debugging" },
-            e = { step_out, "dap: step out" },
-            i = { step_into, "dap: step into" },
-            o = { step_over, "dap: step over" },
-            l = { run_last, "dap REPL: run last" },
-            t = { repl_toggle, "dap REPL: toggle" },
-            C = { run_to_cursor, "dap: To cursor" },
-            uu = { up, "dap Up: up" },
-            ud = { down, "dap down: down" },
-        },
-    }, {
-        prefix = "<localleader>",
-    })
-end
+M.setup = function() end
 
 M.config = function()
     vim.fn.sign_define("DapBreakpoint", { text = "⧐", texthl = "Error", linehl = "", numhl = "" })
@@ -68,57 +12,10 @@ end
 
 M.dapui = function()
     require("dapui").setup()
-
-    local function eval()
-        require("dapui").eval()
-    end
-
-    local function dap_ui_toggle()
-        require("dapui").toggle()
-    end
-
-    local function dap_ui_close()
-        require("dapui").close()
-    end
-
-    local function float_element()
-        require("dapui").eval()
-    end
-    local function float_breakpoint()
-        require("dapui").float_element("breakpoints")
-    end
-    local function float_repl()
-        require("dapui").float_element("repl")
-    end
-    local function float_scopes()
-        require("dapui").float_element("scopes")
-    end
-    local function float_stacks()
-        require("dapui").float_element("stacks")
-    end
-    local function float_watches()
-        require("dapui").float_element("watches")
-    end
-    wk.register({
-        d = {
-            name = "+debugger",
-            d = { float_element, "dap ui: evaluate item" },
-            s = { eval, "dap ui: eval" }, -- test this for the time
-            z = { float_breakpoint, "dap ui: float breakpoint" },
-            r = { float_repl, "dap ui: float repl" },
-            a = { float_scopes, "dap ui: float scopes" },
-            f = { float_stacks, "dap ui: float stacks" },
-            w = { float_watches, "dap ui: float watches" },
-            ut = { dap_ui_close, "dap ui: ui close" },
-            ux = { dap_ui_toggle, "dap ui: ui toggle" },
-        },
-    }, {
-        prefix = "<localleader>",
-    })
-
     local dap, dapui = require("dap"), require("dapui")
     dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open()
+        require("dapui").open()
+        vim.api.nvim_exec_autocmds("User", { pattern = "DapStarted" })
     end
     dap.listeners.before.event_terminated["dapui_config"] = function()
         dapui.close()

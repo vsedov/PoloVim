@@ -195,10 +195,13 @@ function config.neoscroll()
         scroll_limit = 150,
         always_scroll = true,
     })
-    vim.keymap.set({ "n", "x" }, "gg", "<Cmd>lua Scroll('gg', 0, 0, 1)<CR>")
-    vim.keymap.set({ "n", "x" }, "G", "<Cmd>lua Scroll('G', 0, 1, 1)<CR>")
-    vim.keymap.set({ "n", "x" }, "<ScrollWheelUp>", "<Cmd>lua Scroll('<c-e>', 0, 0, 3)<CR>")
-    vim.keymap.set({ "n", "x" }, "<ScrollWheelDown>", "<Cmd>lua Scroll('<c-y>', 0, 0, 3)<CR>")
+    local map = vim.keymap.set
+
+    map({ "n", "x" }, "gg", "<Cmd>lua Scroll('gg', 0, 0, 1)<CR>")
+    map({ "n", "x" }, "G", "<Cmd>lua Scroll('G', 0, 1, 1)<CR>")
+
+    map({ "n", "x" }, "<ScrollWheelUp>", "<Cmd>lua Scroll('<ScrollWheelUp>')<CR>")
+    map({ "n", "x" }, "<ScrollWheelDown>", "<Cmd>lua Scroll('<ScrollWheelDown>')<CR>")
 end
 
 function config.discord()

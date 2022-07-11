@@ -29,8 +29,8 @@ local function loadscheme()
     else
         themes = {
             "kanagawa.nvim",
-            "catppuccin",
-            "tokyonight.nvim",
+            -- "catppuccin",
+            -- "tokyonight.nvim",
         }
     end
     local v = math.random(1, #themes)

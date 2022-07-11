@@ -96,16 +96,24 @@ local M = {}
 ---@param client table<string, any>
 ---@param bufnr number
 function M.setup_autocommands(client, bufnr)
+    -- show line diagnostics
     vim.keymap.set("n", "D", function()
-        diagnostic_popup()
+        vim.diagnostic.open_float(0, { scope = "line" })
     end, { noremap = true, silent = true, buffer = bufnr })
+    local popup_toggle = false
+
+    add_cmd("TD", function()
+        popup_toggle = not popup_toggle
+    end, { desc = "toggle popup diagnostic", force = true })
 
     lambda.augroup("LspCursorCommands", {
         {
             event = { "CursorHold" },
             buffer = bufnr,
             command = function()
-                -- diagnostic_popup()
+                if popup_toggle then
+                    diagnostic_popup()
+                end
             end,
         },
         {

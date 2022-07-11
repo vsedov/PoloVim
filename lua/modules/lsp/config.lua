@@ -163,17 +163,17 @@ function config.lint()
     lint.linters_by_ft = {
         lua = { "luacheck" },
         markdown = { "vale" },
-        python = { "codespell" }, --  "flake8",
-    }
 
-    if lambda.config.python.lsp ~= "pylsp" then
-        vim.tbl_extend(lint.linters_by_ft.python, lambda.config.python.lint)
-    end
+        python = { "codespell", "flake8" }, --  "flake8",
+    }
 
     vim.api.nvim_create_autocmd({ "BufWrite" }, {
         pattern = "*",
         desc = "Lint the current buffer on save",
         callback = function()
+            if lambda.config.python.lsp == "pylsp" then
+                return
+            end
             require("lint").try_lint()
         end,
     })

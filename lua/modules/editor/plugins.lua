@@ -165,7 +165,7 @@ editor({
 editor({
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim",
-    keys = { "<leader>b", "<leader>f", "<c-w>", "\\z", "<leader>h" },
+    keys = { "<leader>b", "<leader>f", "<c-w>", "\\z", "<leader>h", "<localleader>d" },
     config = conf.hydra,
     opt = true,
 })

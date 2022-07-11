@@ -88,6 +88,14 @@ lang({
 })
 
 lang({
+    "Weissle/persistent-breakpoints.nvim",
+    requires = "mfussenegger/nvim-dap",
+    module = "persistent-breakpoints",
+    config = function()
+        require("persistent-breakpoints").setup({})
+    end,
+})
+lang({
     "mfussenegger/nvim-dap",
     module = "dap",
     setup = conf.dap_setup,

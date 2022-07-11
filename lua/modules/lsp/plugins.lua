@@ -77,7 +77,7 @@ lsp({
 
 lsp({ "mhartington/formatter.nvim", ft = { "python", "lua", "c" }, opt = true, config = conf.format })
 
-lsp({ "mfussenegger/nvim-lint", ft = { "lua", "c" }, opt = true, config = conf.lint })
+lsp({ "mfussenegger/nvim-lint", ft = { "python", "lua", "c" }, opt = true, config = conf.lint })
 
 lsp({ "smjonas/inc-rename.nvim", cmd = "IncRename", config = conf.rename })
 

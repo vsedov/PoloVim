@@ -325,9 +325,14 @@ local function general_overrides()
         -- TSError = { undercurl = true, sp = "DarkRed" },
 
         -- highlight FIXME comments
-        commentTSWarning = { background = P.light_red, foreground = "fg", bold = true },
-        commentTSDanger = { background = L.hint, foreground = "#1B2229", bold = true },
-        commentTSNote = { background = L.info, foreground = "#1B2229", bold = true },
+
+        commentTSWarning = { background = P.springBlue, foreground = "bg", bold = true },
+        commentTSDanger = { background = L.hint, foreground = "bg", bold = true },
+        commentTSNote = { background = P.green, foreground = "bg", bold = true },
+        CommentTasksTodo = { link = "commentTSWarning" },
+        CommentTasksFixme = { link = "commentTSDanger" },
+        CommentTasksNote = { link = "commentTSNote" },
+
         -----------------------------------------------------------------------------//
         -- LSP
         -----------------------------------------------------------------------------//
