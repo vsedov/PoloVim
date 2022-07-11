@@ -380,17 +380,6 @@ function config.dapui()
     require("modules.lang.dap.init").dapui()
 end
 
-function config.neotest_setup()
-    vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-            if vim.fn.bufname("%"):match("test") then
-                require("packer").loader("neotest")
-            end
-        end,
-    })
-end
-
 function config.neotest()
     vim.cmd([[packadd neotest-python]])
     vim.cmd([[packadd neotest-plenary]])
@@ -518,6 +507,7 @@ function config.neotest()
         ["<leader>uo"] = "TestOutput",
         ["<leader>uS"] = "TestStrat",
         ["<leader>uh"] = "TestStop",
+
     }
 
     for i, v in pairs(cmd) do

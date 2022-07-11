@@ -125,6 +125,14 @@ lang({ "mfussenegger/nvim-jdtls", ft = "java", opt = true })
 lang({
     "rcarriga/neotest",
     opt = true,
+    keys = {
+        "<leader>ur",
+        "<leader>uc",
+        "<leader>us",
+        "<leader>uo",
+        "<leader>uS",
+        "<leader>uh",
+    },
     requires = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
