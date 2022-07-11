@@ -173,7 +173,22 @@ editor({
 editor({
     "gbprod/substitute.nvim",
     require = "gbprod/yanky.nvim",
-    keys = { "_", "L_" },
+    keys = {
+        -- normal sub
+        { "n", "L" },
+        { "n", "LL" },
+        { "n", "Ll" },
+        { "x", "L" },
+        -- range
+        { "n", "<leader>l" },
+        { "x", "<leader>l" },
+        { "n", "<leader>lr" },
+        -- Sub
+        { "n", "Lx" },
+        { "n", "Lxx" },
+        { "x", "Lx" },
+        { "n", "Lxc" },
+    },
     config = conf.substitute,
 })
 
