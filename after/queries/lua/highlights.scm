@@ -60,6 +60,7 @@
 (("return"   @keyword) (#set! conceal ""))
 (("function" @keyword) (#set! conceal "ﬦ"))
 
+
 ;; Function names
 ((function_call name: (identifier) @function (#eq? @function "require")) (#set! conceal ""))
 
@@ -67,3 +68,7 @@
 ((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "math" )) (#set! conceal ""))
 
 (((dot_index_expression) @keyword (#eq? @keyword "vim.cmd"     )) (#set! conceal ""))
+
+(((dot_index_expression) @keyword (#eq? @keyword "lambda"     )) (#set! conceal "ﬦ"))
+
+((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "lambda" )) (#set! conceal "ﬦ"))
