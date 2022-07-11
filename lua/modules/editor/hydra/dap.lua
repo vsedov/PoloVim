@@ -19,21 +19,21 @@ local function dap_uirun(method, args)
 end
 
 local hint = [[
-  ^^^^---------------------------------------------------^^^^
-  ^^^^                     BreakPoints                   ^^^^
-  ^^^^---------------------------------------------------^^^^
+  ^^^^----------------------------------------------------^^^^
+  ^^^^                      BreakPoints                  ^^^^
+  ^^^^----------------------------------------------------^^^^
   _bt_: Toggle BP                    _bb_: set breakpoint
   _bc_: clear bp                     _z_: float bp
-  ^^^^---------------------------------------------------^^^^
-  ^^^^                     Debug                         ^^^^
-  ^^^^---------------------------------------------------^^^^
+  ^^^^----------------------------------------------------^^^^
+  ^^^^                      Debug                         ^^^^
+  ^^^^----------------------------------------------------^^^^
   _C_: Continue                         _c_: run to cursor 
 
   _n_: step over                        _x_: exit debug
   _i_: step into                        _X_: Close
   _o_: step out                         _F_: Close Refresh
-  ^^^^                     Hover                         ^^^^
-  ^^^^---------------------------------------------------^^^^
+  ^^^^                      Hover                        ^^^^
+  ^^^^----------------------------------------------------^^^^
   _K_: widget hover                     _w_: float watches
   _d_: dap eval                         _f_: float stacks
   _a_: float scope                      _r_: float repl
@@ -89,7 +89,7 @@ local dap_hydra = Hydra({
 
         {
             "d",
-            require("dapui").eval(),
+            dap_uirun("eval"),
             { silent = true },
         },
         { "z", dap_uirun("float_element", "breakpoints"), { silent = true } },
