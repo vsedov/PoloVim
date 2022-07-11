@@ -22,8 +22,8 @@ local hint = [[
   ^^^^----------------------------------------------------^^^^
   ^^^^                      BreakPoints                  ^^^^
   ^^^^----------------------------------------------------^^^^
-  _bt_: Toggle BP                    _bb_: set breakpoint
-  _bc_: clear bp                     _z_: float bp
+  _bb_: Toggle BP                    _bc_: cond set BP
+  _bC_: clear BP                     _z_: float BP
   ^^^^----------------------------------------------------^^^^
   ^^^^                      Debug                         ^^^^
   ^^^^----------------------------------------------------^^^^
@@ -58,17 +58,17 @@ local dap_hydra = Hydra({
     body = "<localleader>b",
     heads = {
         {
-            "bt",
+            "bb",
             "<cmd>lua require('dap').toggle_breakpoint(); require('persistent-breakpoints.api').store_breakpoints(false)<cr>",
             { silent = true },
         },
         {
-            "bb",
+            "bc",
             "<cmd>lua require('dap').set_breakpoint(vim.fn.input '[Condition] > '); require('persistent-breakpoints.api').store_breakpoints(false)<cr>",
             { silent = true },
         },
         {
-            "bc",
+            "bC",
             "<cmd>lua require('dap').clear_breakpoints(); require('persistent-breakpoints.api').store_breakpoints(true)<cr>",
             { silent = true },
         },

@@ -507,7 +507,6 @@ function config.neotest()
         ["<leader>uo"] = "TestOutput",
         ["<leader>uS"] = "TestStrat",
         ["<leader>uh"] = "TestStop",
-
     }
 
     for i, v in pairs(cmd) do
