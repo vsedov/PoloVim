@@ -9,7 +9,6 @@ local function reload_lsp()
 end
 
 local function open_lsp_log()
-    Log:info("active custom")
     local path = vim.lsp.get_log_path()
     vim.cmd("edit " .. path)
 end
@@ -82,10 +81,13 @@ end
 -- Show the popup diagnostics window, but only once for the current cursor location
 -- by checking whether the word under the cursor has changed.
 local function diagnostic_popup()
-    local cword = vim.fn.expand("<cword>")
-    if cword ~= vim.w.lsp_diagnostics_cword then
-        vim.w.lsp_diagnostics_cword = cword
-        vim.diagnostic.open_float(0, { scope = "cursor", focus = false })
+    local current_cursor = vim.api.nvim_win_get_cursor(0)
+    local last_popup_cursor = vim.w.lsp_diagnostics_last_cursor or { nil, nil }
+    -- Show the popup diagnostics window,
+    -- but only once for the current cursor location (unless moved afterwards).
+    if not (current_cursor[1] == last_popup_cursor[1] and current_cursor[2] == last_popup_cursor[2]) then
+        vim.w.lsp_diagnostics_last_cursor = current_cursor
+        vim.diagnostic.open_float()
     end
 end
 
@@ -94,72 +96,35 @@ local M = {}
 ---@param client table<string, any>
 ---@param bufnr number
 function M.setup_autocommands(client, bufnr)
-    api.nvim_set_hl(0, "DiagnosticHeader", { fg = "#56b6c2", bold = true })
+    vim.keymap.set("n", "D", function()
+        diagnostic_popup()
+    end, { noremap = true, silent = true, buffer = bufnr })
 
-    local LspFormatting = api.nvim_create_augroup("LspFormatting", { clear = true })
-
-    if client and client.server_capabilities.codeLensProvider then
-        local LspCodeLens = api.nvim_create_augroup("LspCodeLens", { clear = true })
-
-        api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-            group = LspCodeLens,
+    lambda.augroup("LspCursorCommands", {
+        {
+            event = { "CursorHold" },
             buffer = bufnr,
-            callback = function(args)
-                if api.nvim_buf_is_valid(args.buf) then
-                    vim.lsp.codelens.refresh()
-                end
+            command = function()
+                -- diagnostic_popup()
             end,
-        })
-    end
-    if client and client.server_capabilities.documentHighlightProvider then
-        local LspCursorCommands = api.nvim_create_augroup("LspCursorCommands", { clear = true })
-
-        local diagnostic_pop
-        local diagnostic_pop_setup = function()
-            diagnostic_pop = api.nvim_create_autocmd("CursorHold", {
-                pattern = "*",
-                callback = function()
-                    diagnostic_popup()
-                end,
-            })
-        end
-        diagnostic_pop_setup()
-        vim.api.nvim_set_hl(0, "DiagnosticHeader", { link = "Special" })
-        vim.g.lsp_popup = nil
-        add_cmd("ToggleDiagnosticPopup", function()
-            vim.g.lsp_popup = not vim.g.lsp_popup -- toggle
-            if vim.g.lsp_pop then
-                vim.api.nvim_set_hl(0, "DiagnosticHeader", { link = "Special" })
-                if diagnostic_pop == nil then
-                    diagnostic_pop_setup()
-                end
-            else
-                vim.api.nvim_set_hl(0, "DiagnosticHeader", { fg = "#56b6c2", bold = true })
-                if diagnostic_pop then
-                    api.nvim_del_autocmd(diagnostic_pop)
-                    diagnostic_pop = nil
-                end
-            end
-        end, { force = true })
-
-        api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-            group = LspCursorCommands,
+        },
+        {
+            event = { "CursorHold", "CursorHoldI" },
             buffer = bufnr,
-            desc = "LSP: Document Highlight",
-            callback = function()
-                vim.lsp.buf.document_highlight()
+            description = "LSP: Document Highlight",
+            command = function()
+                pcall(vim.lsp.buf.document_highlight)
             end,
-        })
-        api.nvim_create_autocmd("CursorMoved", {
-            group = LspCursorCommands,
-            desc = "LSP: Document Highlight (Clear)",
+        },
+        {
+            event = "CursorMoved",
+            description = "LSP: Document Highlight (Clear)",
             buffer = bufnr,
-            callback = function()
+            command = function()
                 vim.lsp.buf.clear_references()
             end,
-        })
-    end
-
+        },
+    })
     -- commands
     add_cmd("LspLog", function()
         open_lsp_log()

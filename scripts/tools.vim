@@ -6,7 +6,7 @@ fun! <SID>StripTrailingWhitespace()
     %s/\($\n\s*\)\+\%$//e
     call cursor(l, c)
 endfun
-autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
+" autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
 
 "
 "

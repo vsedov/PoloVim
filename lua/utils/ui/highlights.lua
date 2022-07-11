@@ -246,7 +246,7 @@ end
 function M.plugin(name, hls)
     name = name:gsub("^%l", string.upper) -- capitalise the name for autocommand convention sake
     M.all(hls)
-    lamda.augroup(fmt("%sHighlightOverrides", name), {
+    lambda.augroup(fmt("%sHighlightOverrides", name), {
         {
             event = "ColorScheme",
             command = function()
@@ -338,6 +338,7 @@ local function general_overrides()
         -- occurrences so should be highlighted more distinctly
         LspReferenceWrite = { underline = false, bold = true, italic = true, background = "NONE" },
 
+        DiagnosticHeader = { link = "Special", fg = "#56b6c2", bold = true },
         DiagnosticHint = { foreground = L.hint },
         DiagnosticError = { foreground = L.error },
         DiagnosticWarning = { foreground = L.warn },
@@ -463,7 +464,7 @@ local function user_highlights()
     set_sidebar_highlight()
 end
 
-lamda.augroup("UserHighlights", {
+lambda.augroup("UserHighlights", {
     {
         event = "BufEnter",
         command = function()

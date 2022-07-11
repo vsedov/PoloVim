@@ -21,7 +21,7 @@ function config.octo()
 end
 
 function config.gh()
-    vim.cmd[[packadd litee.nvim]]
+    vim.cmd([[packadd litee.nvim]])
     require("litee.lib").setup()
 
     local wk = require("which-key")

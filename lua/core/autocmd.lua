@@ -1,8 +1,9 @@
 local vim = vim
 local fn = vim.fn
 local api = vim.api
-local autocmd = {}
+local fmt = string.format
 
+local autocmd = {}
 local smart_close_filetypes = {
     "help",
     "git-status",
@@ -28,7 +29,7 @@ local function smart_close()
     end
 end
 
-lamda.augroup("VimrcIncSearchHighlight", {
+lambda.augroup("VimrcIncSearchHighlight", {
     {
         event = { "CursorMoved" },
         command = function()
@@ -51,7 +52,7 @@ lamda.augroup("VimrcIncSearchHighlight", {
         end,
     },
 })
-lamda.augroup("SmartClose", {
+lambda.augroup("SmartClose", {
     {
         -- Auto open grep quickfix window
         event = { "QuickFixCmdPost" },
@@ -97,7 +98,7 @@ lamda.augroup("SmartClose", {
         end,
     },
 })
-lamda.augroup("TextYankHighlight", {
+lambda.augroup("TextYankHighlight", {
     {
         -- don't execute silently in case of errors
         event = { "TextYankPost" },
@@ -111,7 +112,7 @@ lamda.augroup("TextYankHighlight", {
         end,
     },
 })
-lamda.augroup("Utilities", {
+lambda.augroup("Utilities", {
     {
         -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
         event = { "BufReadCmd" },
@@ -172,7 +173,7 @@ lamda.augroup("Utilities", {
     },
 })
 
-lamda.augroup("buffer", {
+lambda.augroup("buffer", {
     {
         event = { "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
         pattern = "*",
@@ -257,7 +258,7 @@ lamda.augroup("buffer", {
     },
 })
 
-lamda.augroup("WindowBehaviours", {
+lambda.augroup("WindowBehaviours", {
     {
         -- map q to close command window on quit
         event = { "CmdwinEnter" },
@@ -328,8 +329,46 @@ lamda.augroup("WindowBehaviours", {
         end,
     },
 })
+
+lambda.augroup("CheckOutsideTime", {
+    {
+        -- automatically check for changed files outside vim
+        event = { "WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained" },
+        pattern = "*",
+        command = "silent! checktime",
+    },
+})
+
+--- automatically clear commandline messages after a few seconds delay
+--- source: http://unix.stackexchange.com/a/613645
+---@return function
+local function clear_commandline()
+    --- Track the timer object and stop any previous timers before setting
+    --- a new one so that each change waits for 10secs and that 10secs is
+    --- deferred each time
+    local timer
+    return function()
+        if timer then
+            timer:stop()
+        end
+        timer = vim.defer_fn(function()
+            if fn.mode() == "n" then
+                vim.cmd([[echon '']])
+            end
+        end, 10000)
+    end
+end
+
+lambda.augroup("ClearCommandMessages", {
+    {
+        event = { "CmdlineLeave", "CmdlineChanged" },
+        pattern = { ":" },
+        command = clear_commandline(),
+    },
+})
+
 if vim.env.TERM == "xterm-kitty" then
-    lamda.augroup("VimrcIncSearchHighlight", {
+    lambda.augroup("VimrcIncSearchHighlight", {
         {
             event = "UIEnter",
             pattern = "*",

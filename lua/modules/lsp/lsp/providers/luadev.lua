@@ -12,6 +12,7 @@ local sumneko_lua_server = enhance_attach({
         Lua = {
             diagnostics = {
                 globals = {
+                    "lambda",
                     "vim",
                     "dump",
                     "hs",

@@ -30,11 +30,11 @@ local function define_highlights()
         local fg = vim.api.nvim_get_hl_by_name(inherit, true).foreground
         if fg then
             local foreground = string.format("#%x", fg)
-            if lamda.config.cmp_theme == "border" then
+            if lambda.config.cmp_theme == "border" then
                 vim.api.nvim_set_hl(0, ("CmpItemKind%s"):format(kind_name), {
                     fg = foreground,
                 })
-            elseif lamda.config.cmp_theme == "no-border" then
+            elseif lambda.config.cmp_theme == "no-border" then
                 vim.api.nvim_set_hl(0, inherit, {
                     fg = foreground,
                     bg = blend_colors(foreground, values, 0.15),

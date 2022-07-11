@@ -25,13 +25,12 @@ end
 function config.saga()
     local saga = require("lspsaga")
     saga.init_lsp_saga({
-        -- symbols in winbar
         symbol_in_winbar = {
             in_custom = true,
             enable = true,
             separator = " ",
-            show_file = true,
-            click_support = true,
+            show_file = false,
+            click_support = false,
         },
         code_action_icon = "",
     })
@@ -135,7 +134,7 @@ function config.format()
         pattern = "*",
         desc = "Format the current buffer on save",
         callback = function()
-            if lamda.config.python.lsp == "pylsp" and vim.bo.filetype == "python" then
+            if lambda.config.python.lsp == "pylsp" and vim.bo.filetype == "python" then
                 vim.lsp.buf.format(nil, 1000)
             else
                 vim.cmd([[FormatWrite]])
@@ -167,8 +166,8 @@ function config.lint()
         python = { "codespell" }, --  "flake8",
     }
 
-    if lamda.config.python.lsp ~= "pylsp" then
-        vim.tbl_extend(lint.linters_by_ft.python, lamda.config.python.lint)
+    if lambda.config.python.lsp ~= "pylsp" then
+        vim.tbl_extend(lint.linters_by_ft.python, lambda.config.python.lint)
     end
 
     vim.api.nvim_create_autocmd({ "BufWrite" }, {

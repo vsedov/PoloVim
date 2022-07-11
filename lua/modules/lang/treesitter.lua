@@ -103,7 +103,11 @@ local treesitter_obj = function()
             disable = { "elm" },
             lsp_interop = {
                 enable = enable,
-                peek_definition_code = { ["DF"] = "@function.outer", ["CF"] = "@class.outer" },
+                border = "single",
+                peek_definition_code = {
+                    ["gl"] = "@function.outer",
+                    ["gk"] = "@class.outer",
+                },
             },
             keymaps = {
                 ["af"] = "@function.outer",
@@ -248,7 +252,7 @@ local endwise = function()
     })
 end
 
-function textsubjects()
+local function textsubjects()
     require("nvim-treesitter.configs").setup({
         textsubjects = {
             enable = true,

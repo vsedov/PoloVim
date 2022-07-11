@@ -6,7 +6,8 @@ local config = require("modules.lsp.lsp.utils.config")
 
 local function add_lsp_buffer_keybindings(client, bufnr)
     -- local border = config.float.border
-    vim.keymap.set("n", "<leader>*", function()
+    -- TODO(vsedov) (14:29:40 - 11/07/22): Change this later
+    vim.keymap.set("n", "<leader>;", function()
         require("modules.lsp.lsp.utils.list").change_active("Quickfix")
         vim.lsp.buf.references()
     end, { buffer = true })
@@ -27,6 +28,7 @@ local function add_lsp_buffer_keybindings(client, bufnr)
         ["<C-b>"] = "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
 
         ["gr"] = "<cmd>Lspsaga rename<CR>",
+
         ["[e"] = "<cmd> Lspsaga diagnostic_jump_next<cr>",
         ["]e"] = "<cmd> Lspsaga diagnostic_jump_prev<cr>",
 
@@ -38,7 +40,6 @@ local function add_lsp_buffer_keybindings(client, bufnr)
     for mode_name, mode_char in pairs(lsp_map) do
         vim.keymap.set("n", mode_name, mode_char, { noremap = true, silent = true, buffer = bufnr })
     end
-
     vim.keymap.set("v", "ca", "<cmd>Lspsaga range_code_action<cr>", { noremap = true, silent = true, buffer = bufnr })
 end
 

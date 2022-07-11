@@ -2,10 +2,10 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 _G = _G or {}
-_G.lamda = {}
-lamda.config = {
+_G.lambda = {}
+lambda.config = {
     cmp_theme = "border", -- no-border , border
-    config_test = true,
+    config_test = false,
     python = {
         lint = "flake8", -- "pylint "
         lsp = "pylsp", -- jedi pylsp and pyright
@@ -30,7 +30,7 @@ P = vim.pretty_print
 ---@param name string
 ---@param commands Autocommand[]
 ---@return number
-lamda.augroup = function(name, commands)
+lambda.augroup = function(name, commands)
     local id = api.nvim_create_augroup(name, { clear = true })
     for _, autocmd in ipairs(commands) do
         local is_callback = type(autocmd.command) == "function"
@@ -57,7 +57,7 @@ end
 ---@param name any
 ---@param rhs string|fun(args: CommandArgs)
 ---@param opts table?
-lamda.command = function(name, rhs, opts)
+lambda.command = function(name, rhs, opts)
     opts = opts or {}
     api.nvim_create_user_command(name, rhs, opts)
 end
@@ -65,7 +65,7 @@ end
 ---Source a lua or vimscript file
 ---@param path string path relative to the nvim directory
 ---@param prefix boolean?
-lamda.source = function(path, prefix)
+lambda.source = function(path, prefix)
     if not prefix then
         vim.cmd(fmt("source %s", path))
     else
@@ -74,7 +74,7 @@ lamda.source = function(path, prefix)
 end
 
 -- https://www.reddit.com/r/neovim/comments/sg919r/diff_with_clipboard/
-lamda.compare_to_clipboard = function()
+lambda.compare_to_clipboard = function()
     local ftype = vim.api.nvim_eval("&filetype")
     vim.cmd(string.format(
         [[
@@ -91,18 +91,18 @@ lamda.compare_to_clipboard = function()
         ftype
     ))
 end
-lamda.dump = function(...)
+lambda.dump = function(...)
     print(vim.inspect(...))
 end
 
-lamda.preserve = function(cmd)
+lambda.preserve = function(cmd)
     cmd = string.format("keepjumps keeppatterns execute %q", cmd)
     local original_cursor = vim.fn.winsaveview()
     vim.api.nvim_command(cmd)
     vim.fn.winrestview(original_cursor)
 end
 
-lamda.PASTE = function(data)
+lambda.PASTE = function(data)
     if not vim.tbl_islist(data) then
         if type(data) == type("") then
             data = vim.split(data, "\n")
@@ -113,13 +113,13 @@ lamda.PASTE = function(data)
     vim.paste(data, -1)
 end
 
-lamda.p = function(...)
+lambda.p = function(...)
     local vars = vim.tbl_map(vim.inspect, { ... })
     print(unpack(vars))
     return { ... }
 end
 
-lamda.PERF = function(msg, ...)
+lambda.PERF = function(msg, ...)
     local args = { ... }
     vim.validate({ func = { args[1], "function" }, message = { msg, "string", true } })
     local func = args[1]
@@ -134,7 +134,7 @@ lamda.PERF = function(msg, ...)
 end
 
 -- reformat file by remove \n\t and pretty if it is json
-lamda.Format = function(json)
+lambda.Format = function(json)
     pcall(vim.cmd, [[%s/\\n/\r/g]])
     pcall(vim.cmd, [[%s/\\t/  /g]])
     pcall(vim.cmd, [[%s/\\"/"/g]])
