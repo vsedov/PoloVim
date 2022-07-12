@@ -101,7 +101,6 @@ editor({
 })
 
 -- trying to figure out why this does not work .
-editor({ "nyngwang/NeoNoName.lua", cmd = "NeoNoName", opt = true })
 
 editor({
     "chaoren/vim-wordmotion",
@@ -198,4 +197,11 @@ editor({
     cond = function()
         return vim.env.TMUX == nil
     end,
+})
+
+editor({
+    "moll/vim-bbye",
+    cmd = { "Bdelete", "Bwipeout" },
+    keys = { "_q" },
+    config = conf.bbye,
 })

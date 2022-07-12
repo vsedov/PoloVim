@@ -318,5 +318,7 @@ function config.substitute()
     vim.keymap.set("x", "Lx", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
     vim.keymap.set("n", "Lxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
 end
-
+function config.bbye()
+    vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
+end
 return config

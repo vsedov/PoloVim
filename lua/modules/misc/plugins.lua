@@ -211,3 +211,28 @@ misc({
 })
 -- programming spell
 misc({ "psliwka/vim-dirtytalk", run = ":DirtytalkUpdate" })
+
+----
+misc({
+    "nyngwang/NeoWell.lua",
+    cmd = {
+        "NeoWellToggle",
+        "NeoWellAppend",
+        "NeoWellJump",
+        "NeoWellEdit",
+        "NeoWellOut",
+        "NeoWellWipeOut",
+    },
+    keys = { "__", "_a", "_j", "_r", "_d", "_D" },
+    config = conf.NeoWell,
+})
+
+misc({
+    "nyngwang/NeoZoom.lua",
+    branch = "neo-zoom-original", -- UNCOMMENT THIS, if you prefer the old one
+    cmd = { "NeoZoomToggle" },
+})
+misc({
+    "nyngwang/NeoNoName.lua",
+    cmd = { "NeoNoName" },
+})

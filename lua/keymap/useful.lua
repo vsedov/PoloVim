@@ -14,7 +14,16 @@ vim.cmd([[
 
 local plug_map = {
     ["x|@"] = map_cmd(":<C-u>call ExecuteMacroOverVisualRange()<CR>", "Macro Execute"):with_noremap(),
+
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
+    ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>", "NeoZoomToggle"):with_noremap():with_silent():with_nowait(),
+
+    ["n|__"] = map_cmd("<cmd>NeoWellToggle<CR>", "NeoWellToggle"):with_noremap():with_silent():with_nowait(),
+    ["n|_a"] = map_cmd("<cmd>NeoWellAppend<CR>", "NeoWellAppend"):with_noremap():with_silent():with_nowait(),
+    ["n|_j"] = map_cmd("<cmd>NeoWellJump<CR>", "NeoWellJump"):with_noremap():with_silent():with_nowait(),
+    ["n|_r"] = map_cmd("<cmd>NeoWellEdit<CR>", "NeoWellEdit"):with_noremap():with_silent():with_nowait(),
+    ["n|_d"] = map_cmd("<cmd>NeoWellOut<CR>", "NeoWellOut"):with_noremap():with_silent():with_nowait(),
+    ["n|_D"] = map_cmd("<cmd>NeoWellWipeOut<CR>", "NeoWellWipeOut"):with_noremap():with_silent():with_nowait(),
 
     -- check whats actually loaded
     ["n|<localleader>ps"] = map_cmd("<cmd>PackerStatus<cr>", "PackerStatus"):with_noremap():with_silent(),

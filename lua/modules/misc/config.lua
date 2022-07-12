@@ -345,4 +345,10 @@ function config.headers()
     require("headlines").setup()
 end
 
+function config.NeoWell()
+    require("neo-well").setup({
+        height = 10,
+    })
+end
+
 return config
