@@ -32,8 +32,8 @@ local function add_lsp_buffer_keybindings(client, bufnr)
         -- ["[e"] = "<cmd> Lspsaga diagnostic_jump_next<cr>",
         -- ["]e"] = "<cmd> Lspsaga diagnostic_jump_prev<cr>",
 
-        ["[e"] = "<cmd> vim.diagnostic.goto_prev({ float = false })<cr>",
-        ["]e"] = "<cmd> vim.diagnostic.goto_next({ float = false })<cr>",
+        ["[e"] = "<cmd> lua vim.diagnostic.goto_prev({ float = false })<cr>",
+        ["]e"] = "<cmd> lua vim.diagnostic.goto_next({ float = false })<cr>",
 
         ["gd"] = "<cmd> Lspsaga preview_definition<cr>",
         ["gh"] = "<cmd> Lspsaga lsp_finder<cr>",
