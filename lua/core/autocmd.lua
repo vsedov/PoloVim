@@ -4,15 +4,23 @@ local api = vim.api
 local fmt = string.format
 
 local autocmd = {}
-
+local function replace_termcodes(str)
+    return api.nvim_replace_termcodes(str, true, true, true)
+end
 vim.keymap.set({ "n", "v", "o", "i", "c" }, "<Plug>(StopHL)", 'execute("nohlsearch")[-1]', { expr = true })
 
 local function stop_hl()
     if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
         return
     end
-    api.nvim_feedkeys(api.nvim_replace_termcodes("<Plug>(StopHL)"), "m", false)
+    api.nvim_feedkeys(replace_termcodes("<Plug>(StopHL)"), "m", false)
 end
+
+-- [C]: in function 'nvim_replace_termcodes'
+--         /home/viv/.config/nvim/lua/core/autocmd.lua:14: in function 'stop_hl'
+--         /home/viv/.config/nvim/lua/core/autocmd.lua:27: in function 'hl_search'
+--         /home/viv/.config/nvim/lua/core/autocmd.lua:35: in function </home/viv/.config/nvim/lua/core/autocmd.lua:34>
+-- Press ENTER or type command to continue
 
 local function hl_search()
     local col = api.nvim_win_get_cursor(0)[2]
