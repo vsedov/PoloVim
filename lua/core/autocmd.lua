@@ -4,6 +4,54 @@ local api = vim.api
 local fmt = string.format
 
 local autocmd = {}
+
+vim.keymap.set({ "n", "v", "o", "i", "c" }, "<Plug>(StopHL)", 'execute("nohlsearch")[-1]', { expr = true })
+
+local function stop_hl()
+    if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
+        return
+    end
+    api.nvim_feedkeys(api.nvim_replace_termcodes("<Plug>(StopHL)"), "m", false)
+end
+
+local function hl_search()
+    local col = api.nvim_win_get_cursor(0)[2]
+    local curr_line = api.nvim_get_current_line()
+    local ok, match = pcall(fn.matchstrpos, curr_line, fn.getreg("/"), 0)
+    if not ok then
+        return vim.notify(match, "error", { title = "HL SEARCH" })
+    end
+    local _, p_start, p_end = unpack(match)
+    -- if the cursor is in a search result, leave highlighting on
+    if col < p_start or col > p_end then
+        stop_hl()
+    end
+end
+
+lambda.augroup("VimrcIncSearchHighlight", {
+    {
+        event = { "CursorMoved" },
+        command = function()
+            hl_search()
+        end,
+    },
+    {
+        event = { "InsertEnter" },
+        command = function()
+            stop_hl()
+        end,
+    },
+    {
+        event = { "OptionSet" },
+        pattern = { "hlsearch" },
+        command = function()
+            vim.schedule(function()
+                vim.cmd("redrawstatus")
+            end)
+        end,
+    },
+})
+
 local smart_close_filetypes = {
     "help",
     "git-status",
@@ -28,30 +76,6 @@ local function smart_close()
         api.nvim_win_close(0, true)
     end
 end
-
-lambda.augroup("VimrcIncSearchHighlight", {
-    {
-        event = { "CursorMoved" },
-        command = function()
-            require("core.event_helper").hl_search()
-        end,
-    },
-    {
-        event = { "InsertEnter" },
-        command = function()
-            require("core.event_helper").stop_hl()
-        end,
-    },
-    {
-        event = { "OptionSet" },
-        pattern = { "hlsearch" },
-        command = function()
-            vim.schedule(function()
-                vim.cmd("redrawstatus")
-            end)
-        end,
-    },
-})
 lambda.augroup("SmartClose", {
     {
         -- Auto open grep quickfix window
@@ -125,15 +149,21 @@ lambda.augroup("Utilities", {
     {
         -- When editing a file, always jump to the last known cursor position.
         -- Don't do it for commit messages, when the position is invalid.
-        event = { "BufReadPost" },
+        event = { "BufRead" },
+        patter = "*",
         command = function()
-            if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then
-                local last_place_mark = vim.api.nvim_buf_get_mark(0, '"')
-                local line_nr = last_place_mark[1]
-                local last_line = vim.api.nvim_buf_line_count(0)
-
-                if line_nr > 0 and line_nr <= last_line then
-                    vim.api.nvim_win_set_cursor(0, last_place_mark)
+            if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
+                -- check if filetype isn't one of the listed
+                if not vim.tbl_contains({ "gitcommit", "help", "packer", "toggleterm" }, vim.bo.ft) then
+                    -- check if mark `"` is inside the current file (can be false if at end of file and stuff got deleted outside neovim)
+                    -- if it is go to it
+                    vim.cmd([[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]])
+                    -- get cursor position
+                    local cursor = api.nvim_win_get_cursor(0)
+                    -- if there are folds under the cursor open them
+                    if fn.foldclosed(cursor[1]) ~= -1 then
+                        vim.cmd([[silent normal! zO]])
+                    end
                 end
             end
         end,

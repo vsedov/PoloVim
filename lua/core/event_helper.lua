@@ -95,30 +95,6 @@ function M.reset_timer(text_changed)
     end, 100)
 end
 
--- https://github.com/akinsho/dotfiles/blob/479e11e71c6bc042c3987f159da9457acc565121/.config/nvim/plugin/autocommands.lua
-vim.keymap.set({ "n", "v", "o", "i", "c" }, "<Plug>(StopHL)", 'execute("nohlsearch")[-1]', { expr = true })
-
-function M.stop_hl()
-    if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
-        return
-    end
-    api.nvim_feedkeys(api.nvim_replace_termcodes("<Plug>(StopHL)", true, true, true), "m", false)
-end
-
-function M.hl_search()
-    local col = api.nvim_win_get_cursor(0)[2]
-    local curr_line = api.nvim_get_current_line()
-    local ok, match = pcall(fn.matchstrpos, curr_line, fn.getreg("/"), 0)
-    if not ok then
-        return vim.notify(match, "error", { title = "HL SEARCH" })
-    end
-    local _, p_start, p_end = unpack(match)
-    -- if the cursor is in a search result, leave highlighting on
-    if col < p_start or col > p_end then
-        M.stop_hl()
-    end
-end
-
 function M.empty(item)
     if not item then
         return true
