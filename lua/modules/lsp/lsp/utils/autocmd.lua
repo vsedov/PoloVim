@@ -50,13 +50,13 @@ end
 -- -- in and close it once everything is resolved. This functionality only runs whilst
 -- -- the list is open.
 -- -- similar functionality is provided by: https://github.com/onsails/diaglist.nvim
-local make_diagnostic_qf_updater = function()
+local function make_diagnostic_qf_updater()
     local cmd_id = nil
     return function()
         if not api.nvim_buf_is_valid(0) then
             return
         end
-        vim.diagnostic.setqflist({ open = false })
+        pcall(vim.diagnostic.setqflist, { open = false })
         toggle_list("quickfix")
         if not is_vim_list_open() and cmd_id then
             api.nvim_del_autocmd(cmd_id)
@@ -68,8 +68,8 @@ local make_diagnostic_qf_updater = function()
         cmd_id = api.nvim_create_autocmd("DiagnosticChanged", {
             callback = function()
                 if is_vim_list_open() then
-                    vim.diagnostic.setqflist({ open = false })
-                    if #vim.fn.getqflist() == 0 then
+                    pcall(vim.diagnostic.setqflist, { open = false })
+                    if #fn.getqflist() == 0 then
                         toggle_list("quickfix")
                     end
                 end
@@ -77,7 +77,6 @@ local make_diagnostic_qf_updater = function()
         })
     end
 end
-
 -- Show the popup diagnostics window, but only once for the current cursor location
 -- by checking whether the word under the cursor has changed.
 local function diagnostic_popup()
@@ -110,9 +109,10 @@ function M.setup_autocommands(client, bufnr)
         {
             event = { "CursorHold" },
             buffer = bufnr,
-            command = function()
+            command = function(args)
                 if popup_toggle then
-                    diagnostic_popup()
+                    -- diagnostic_popup()
+                    vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
                 end
             end,
         },

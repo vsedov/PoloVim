@@ -20,7 +20,7 @@ return {
                 jedi_signature_help = { enabled = true },
                 jedi_symbols = { enabled = true, all_scopes = true, include_import_symbols = true },
                 yapf = { enabled = false },
-                flake8 = { enabled = true },
+                flake8 = { enabled = false },
                 isort = { enabled = false },
                 rope_completion = { enabled = false },
                 mccabe = { enabled = false, threshold = 15 },
@@ -31,7 +31,8 @@ return {
                 pyflakes = { enabled = false },
             },
             rope = { enable = true },
-            flake8 = { enable = true },
+            flake8 = { enable = false },
+            yapf = { enable = false },
         },
     },
     root_dir = function(fname)

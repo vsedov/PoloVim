@@ -29,8 +29,11 @@ local function add_lsp_buffer_keybindings(client, bufnr)
 
         ["gr"] = "<cmd>Lspsaga rename<CR>",
 
-        ["[e"] = "<cmd> Lspsaga diagnostic_jump_next<cr>",
-        ["]e"] = "<cmd> Lspsaga diagnostic_jump_prev<cr>",
+        -- ["[e"] = "<cmd> Lspsaga diagnostic_jump_next<cr>",
+        -- ["]e"] = "<cmd> Lspsaga diagnostic_jump_prev<cr>",
+
+        ["[e"] = "<cmd> vim.diagnostic.goto_prev({ float = false })<cr>",
+        ["]e"] = "<cmd> vim.diagnostic.goto_next({ float = false })<cr>",
 
         ["gd"] = "<cmd> Lspsaga preview_definition<cr>",
         ["gh"] = "<cmd> Lspsaga lsp_finder<cr>",
@@ -40,6 +43,7 @@ local function add_lsp_buffer_keybindings(client, bufnr)
     for mode_name, mode_char in pairs(lsp_map) do
         vim.keymap.set("n", mode_name, mode_char, { noremap = true, silent = true, buffer = bufnr })
     end
+
     vim.keymap.set("v", "ca", "<cmd>Lspsaga range_code_action<cr>", { noremap = true, silent = true, buffer = bufnr })
 end
 

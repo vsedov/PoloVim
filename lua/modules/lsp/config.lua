@@ -18,21 +18,19 @@ end
 function config.luadev()
     require("modules.lsp.lsp.providers.luadev")
 end
-function config.lsp_install()
-    require("modules.lsp.lsp.providers.lsp_install")
-end
 
 function config.saga()
     local saga = require("lspsaga")
     saga.init_lsp_saga({
+        -- Not need for the time.  > maybe later though
         symbol_in_winbar = {
-            in_custom = true,
-            enable = true,
+            in_custom = false,
+            enable = false,
             separator = " ",
             show_file = false,
             click_support = false,
         },
-        code_action_icon = "",
+        code_action_icon = "", -- this nice feature
     })
 end
 
@@ -171,9 +169,6 @@ function config.lint()
         pattern = "*",
         desc = "Lint the current buffer on save",
         callback = function()
-            if lambda.config.python.lsp == "pylsp" then
-                return
-            end
             require("lint").try_lint()
         end,
     })

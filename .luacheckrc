@@ -2,13 +2,15 @@
 stds.nvim = {
   globals = {
     "vim",
-    "lamda"
+    "lambda"
+    "plugin_debug"
 
     },
 
   read_globals  = {
-    "lamda"
+    "lambda"
     "packer_plugins",
+    "plugin_debug"
     "_",
     "vim",
     "neorg",

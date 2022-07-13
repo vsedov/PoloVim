@@ -296,6 +296,7 @@ function config.neo_tree()
                     if vim.bo.filetype == "neo-tree" then
                         vim.wo.signcolumn = "auto"
                     end
+                    vim.cmd("highlight! Cursor blend=100")
                 end,
             },
         },
