@@ -31,6 +31,10 @@ function config.saga()
             click_support = false,
         },
         code_action_icon = "", -- this nice feature
+        -- diable this for the time, seems to lag things up
+        code_action_lightbulb = {
+            enable = false,
+        },
     })
 end
 
@@ -127,18 +131,6 @@ function config.format()
             },
         },
     })
-
-    vim.api.nvim_create_autocmd("BufWritePost", {
-        pattern = "*",
-        desc = "Format the current buffer on save",
-        callback = function()
-            if lambda.config.python.lsp == "pylsp" and vim.bo.filetype == "python" then
-                vim.lsp.buf.format(nil, 1000)
-            else
-                vim.cmd([[FormatWrite]])
-            end
-        end,
-    })
 end
 
 function config.lint()
@@ -164,14 +156,6 @@ function config.lint()
 
         python = { "codespell", "flake8" }, --  "flake8",
     }
-
-    vim.api.nvim_create_autocmd({ "BufWrite" }, {
-        pattern = "*",
-        desc = "Lint the current buffer on save",
-        callback = function()
-            require("lint").try_lint()
-        end,
-    })
 end
 
 function config.rename()
