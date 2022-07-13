@@ -196,3 +196,14 @@ lang({
     },
     config = conf.regexplainer,
 })
+
+-- ig finds the diagnostic under or after the cursor (including any diagnostic the cursor is sitting on)
+-- ]g finds the diagnostic after the cursor (excluding any diagnostic the cursor is sitting on)
+-- [g finds the diagnostic before the cursor (excluding any diagnostic the cursor is sitting on)
+lang({
+    "andrewferrier/textobj-diagnostic.nvim",
+    event = "InsertEnter",
+    config = function()
+        require("textobj-diagnostic").setup()
+    end,
+})
