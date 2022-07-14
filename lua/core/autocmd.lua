@@ -212,17 +212,6 @@ lambda.augroup("Utilities", {
 })
 
 lambda.augroup("buffer", {
-    {
-        event = { "BufEnter", "FocusGained", "InsertLeave", "WinEnter" },
-        pattern = "*",
-        command = "if &nu && mode() != 'i' | set rnu | endif",
-    },
-
-    {
-        event = { "BufLeave", "FocusLost", "InsertEnter", "WinLeave" },
-        pattern = "*",
-        command = "if &nu | set nornu | endif",
-    },
     { event = { "BufRead", "BufNewFile" }, pattern = "*.norg", command = "setlocal filetype=norg" },
     { event = { "BufEnter", "BufWinEnter" }, pattern = "*.norg", command = [[set foldlevel=1000]] },
     { event = { "BufNewFile", "BufRead", "BufWinEnter" }, pattern = "*.tex", command = [[set filetype=tex]] },

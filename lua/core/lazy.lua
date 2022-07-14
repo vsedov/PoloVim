@@ -98,8 +98,7 @@ function Lazyload()
     end
 
     if load_lsp then
-        -- loader("nvim-lspconfig") -- null-ls.nvim
-        loader("lsp_signature.nvim")
+        -- loader("lsp_signature.nvim")
     end
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
