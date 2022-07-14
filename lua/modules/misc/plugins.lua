@@ -179,7 +179,18 @@ misc({
     wants = { "nvim-treesitter" }, -- or require if not used so far
     keys = { "<Tab>", "<S-Tab>" },
     config = function()
-        require("tabout").setup({ completion = false })
+        require("tabout").setup({
+            completion = false,
+            ignore_beginning = false,
+            tabouts = {
+                { open = "'", close = "'" },
+                { open = '"', close = '"' },
+                { open = "`", close = "`" },
+                { open = "(", close = ")" },
+                { open = "[", close = "]" },
+                { open = "{", close = "}" },
+            },
+        })
     end,
 })
 
@@ -189,7 +200,7 @@ misc({
     config = conf.guess_indent,
 })
 
---
+-- TODO: Might not be needed trail
 misc({
     "Abstract-IDE/penvim",
     event = "BufRead",
