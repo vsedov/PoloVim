@@ -7,3 +7,5 @@ user({
         require("tomato").setup()
     end,
 })
+-- True emotional Support
+user({ "rtakasuke/vim-neko", cmd = "Neko", opt = true })

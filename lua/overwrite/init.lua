@@ -27,7 +27,7 @@ if vim.g.neovide then
     vim.g.neovide_cursor_trail_length = 0.05
     vim.g.neovide_cursor_antialiasing = true
     vim.g.neovide_remember_window_size = true
-    vim.cmd([[set guifont=JetBrainsMono\ Nerd\ Font:h16]])
+    vim.cmd([[set guifont=Operator\ Mono\ Ssm \ Lib \ Book \ Font:h10]])
 end
 
 if vim.fn.exists("g:nvui") ~= 0 then

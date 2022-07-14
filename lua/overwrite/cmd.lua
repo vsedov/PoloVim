@@ -111,6 +111,7 @@ end, {
 })
 add_cmd("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|PERF/", {})
 add_cmd("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|PERF/ *<CR>", {})
+vim.cmd([[command! -nargs=+ F execute 'silent grep!' <q-args> | cw | redraw!]])
 
 add_cmd("CursorNodes", function()
     local node = require("nvim-treesitter.ts_utils").get_node_at_cursor()
