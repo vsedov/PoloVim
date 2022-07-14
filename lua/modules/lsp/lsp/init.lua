@@ -4,6 +4,7 @@ end
 vim.g.lsp_config_complete = true
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
+local dlsconfig = require("diagnosticls-configs")
 
 if lambda.config.python.lsp == "pylsp" then
     vim.g.navic_silence = true
@@ -13,6 +14,20 @@ elseif lambda.config.python.lsp == "jedi" then
 elseif lambda.config.python.lsp == "pyright" then
     lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
 end
+
+dlsconfig.setup({
+    ["python"] = {
+        linter = require("diagnosticls-configs.linters.flake8"),
+        formatter = require("diagnosticls-configs.formatters.yapf"),
+    },
+    ["lua"] = {
+        linter = require("diagnosticls-configs.linters.luacheck"),
+        formatter = require("diagnosticls-configs.formatters.stylua"),
+    },
+    ["vim"] = {
+        linter = require("diagnosticls-configs.linters.vint"),
+    },
+})
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 

@@ -19,6 +19,12 @@ lsp({
     config = conf.nvim_lsp,
     opt = true,
 })
+
+lsp({
+    "creativenull/diagnosticls-configs-nvim",
+    requires = "neovim/nvim-lspconfig",
+})
+
 lsp({ "ii14/lsp-command", opt = true, after = "nvim-lspconfig" })
 lsp({
     "p00f/clangd_extensions.nvim",
@@ -49,9 +55,9 @@ lsp({
 })
 -- 4852d99f9511d090745d3cc1f09a75772b9e07e9 -- working
 
+-- TODO(vsedov) (17:16:37 - 13/07/22): Revert this if i can, temp change
 lsp({
     "ray-x/lsp_signature.nvim",
-    opt = true,
     config = conf.lsp_sig,
 })
 
@@ -68,9 +74,9 @@ lsp({
     config = conf.lsp_lines,
 })
 
-lsp({ "mhartington/formatter.nvim", ft = { "python", "lua", "c" }, opt = true, config = conf.format })
+-- lsp({ "mhartington/formatter.nvim", ft = { "python", "lua", "c" }, opt = true, config = conf.format })
 
-lsp({ "mfussenegger/nvim-lint", ft = { "python", "lua", "c" }, opt = true, config = conf.lint })
+-- lsp({ "mfussenegger/nvim-lint", ft = { "python", "lua", "c" }, opt = true, config = conf.lint })
 
 lsp({ "smjonas/inc-rename.nvim", cmd = "IncRename", config = conf.rename })
 

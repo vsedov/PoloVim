@@ -43,13 +43,16 @@ function config.lsp_sig()
         bind = true,
         doc_lines = 10,
         floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
-        toggle_key = "<C-x>",
         floating_window_above_cur_line = true,
         fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
         hint_enable = true, -- virtual hint enable
         hint_prefix = "🐼 ", -- Panda for parameter
         -- hint_prefix = " ",
-        hint_scheme = "String",
+        extra_trigger_chars = { "(", "{", "," },
+        hint_scheme = "DiagnosticHint",
+        transparency = vim.api.nvim_get_option("pumblend"),
+        toggle_key = "»",
+        select_signature_key = "<C-n>",
         use_lspsaga = false, -- set to true if you want to use lspsaga popup
         hi_parameter = "search", -- how your parameter will be highlight
         max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
@@ -59,12 +62,11 @@ function config.lsp_sig()
             border = "single", -- double, single, shadow, none
         },
         -- transpancy = 80,
-        extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
         zindex = 1002, -- by default it will be on top of all floating windows, set to 50 send it to bottom
         debug = plugin_debug(),
         verbose = plugin_debug(),
         log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-        padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
+        padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
         shadow_blend = 36, -- if you using shadow as border use this set the opacity
         shadow_guibg = "Black", -- if you using shadow as border use this set the color e.g. 'Green' or '#121315'
     }

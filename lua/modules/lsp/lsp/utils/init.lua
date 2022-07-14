@@ -49,6 +49,8 @@ end
 
 -- this could change ove ra period of time . 1
 local function select_default_formater(client, bufnr)
+    -- i use format.nvim on format save so this is not needded .
+
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
 end
@@ -58,7 +60,7 @@ function M.common_on_init(client, bufnr)
         config.on_init_callback(client, bufnr)
         return
     end
-    select_default_formater(client, bufnr)
+    -- select_default_formater(client, bufnr)
 end
 
 function M.common_capabilities()
@@ -75,7 +77,9 @@ function M.common_on_attach(client, bufnr)
     if config.on_attach_callback then
         config.on_attach_callback(client, bufnr)
     end
-    require("nvim-navic").attach(client, bufnr)
+    if client.name ~= "diagnosticls" then
+        require("nvim-navic").attach(client, bufnr)
+    end
     require("modules.lsp.lsp.utils.autocmd").setup_autocommands(client, bufnr)
     add_lsp_buffer_keybindings(client, bufnr)
 end
@@ -94,7 +98,13 @@ function M.setup()
         fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
     end
     require("modules.lsp.lsp.utils.handlers").setup()
+    require("modules.lsp.lsp.utils.setup_autocmd")
     require("modules.lsp.lsp.utils.list")
+
+    require("diagnosticls-configs").init({
+        -- Your custom attach function
+        on_attach = M.common_on_attach,
+    })
 end
 
 function M.enhance_attach(user_config)

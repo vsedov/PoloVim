@@ -28,6 +28,7 @@ function config.filetype()
         },
     })
 end
+
 function config.nvim_treesitter()
     require("modules.lang.treesitter").treesitter()
 end
