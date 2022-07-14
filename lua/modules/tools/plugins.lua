@@ -30,6 +30,7 @@ tools({
         "Broot",
         "Ranger",
         "Xplr", -- 1
+        "Lf",
         "Vifm",
         "Skim",
         "Nnn",
