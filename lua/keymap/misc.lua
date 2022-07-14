@@ -20,5 +20,14 @@ local plug_map = {
     ["n|<f8>"] = map_cu("MruRepos", "MruRepos"):with_noremap():with_silent(),
     ["n|<f9>"] = map_cu("Mru", "Mru"):with_noremap():with_silent(),
     ["n|<f0>"] = map_cu("Mfu", "Mfu"):with_noremap():with_silent(),
+
+    ["n|<leader>tn"] = map_cu("tabedit", "tabedit"):with_noremap():with_silent(),
+    ["n|<leader>tc"] = map_cu("tabclose", "tabclose"):with_noremap():with_silent(),
+    ["n|<leader>to"] = map_cu("tabonly", "tabonly"):with_noremap():with_silent(),
+    ["n|<leader>tm"] = map_cu("tabmove", "tabmove"):with_noremap():with_silent(),
+    ["n|<leader>tm"] = map_cu("tabmove", "tabmove"):with_noremap():with_silent(),
+
+    ["n|]t"] = map_cu("tabprev", "tabprev"):with_noremap():with_silent(),
+    ["n|[t"] = map_cu("tabnext", "tabnext"):with_noremap():with_silent(),
 }
 return plug_map
