@@ -15,9 +15,8 @@ cmp.setup.cmdline("/", search_sources)
 cmp.setup.cmdline("?", search_sources)
 cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
-        { name = "cmdline", keyword_pattern = [=[[^[:blank:]\!]*]=] },
+        { name = "cmdline" },
         { name = "path" },
-        { name = "cmdline_history" },
     }),
 })
 require("modules.completion.cmp.extra")
