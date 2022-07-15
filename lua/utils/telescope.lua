@@ -256,11 +256,30 @@ require("telescope").setup({
                     ["n"] = {},
                 },
             },
-            fzf = {
-                fuzzy = true, -- false will only do exact matching
-                override_generic_sorter = false, -- override the generic sorter
-                override_file_sorter = true, -- override the file sorter
-                case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+            ["zf-native"] = {
+                -- options for sorting file-like items
+                file = {
+                    -- override default telescope file sorter
+                    enable = true,
+
+                    -- highlight matching text in results
+                    highlight_results = true,
+
+                    -- enable zf filename match priority
+                    match_filename = true,
+                },
+
+                -- options for sorting all other items
+                generic = {
+                    -- override default telescope generic item sorter
+                    enable = true,
+
+                    -- highlight matching text in results
+                    highlight_results = true,
+
+                    -- disable zf filename match priority
+                    match_filename = false,
+                },
             },
         },
         set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
@@ -269,27 +288,14 @@ require("telescope").setup({
 telescope.load_extension("dotfiles")
 telescope.load_extension("gosource")
 -- telescope.load_extension("notify")
-loader("telescope-fzy-native.nvim telescope-fzf-native.nvim telescope-live-grep-raw.nvim")
+loader("telescope-zf-native.nvim telescope-live-grep-raw.nvim")
 -- loader("project.nvim") -- telescope-frecency.nvim nvim-neoclip.lua telescope-zoxide
-telescope.load_extension("fzf")
+telescope.load_extension("zf-native")
 
-telescope.setup({
-    extensions = {
-        fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-            -- the default case_mode is "smart_case"
-        },
-    },
-})
-
-telescope.load_extension("fzf")
-telescope.setup({
-    extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
-})
-telescope.load_extension("fzy_native")
+-- telescope.setup({
+--     extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
+-- })
+-- telescope.load_extension("fzy_native")
 
 -- telescope.load_extension("smart_history")
 layout.custom = function(self, columns, lines)
