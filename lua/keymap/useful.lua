@@ -31,8 +31,8 @@ local plug_map = {
     ["n|<C-]>"] = map_args("Template", "Template"),
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>", "Cwd"):with_noremap():with_silent(),
     -- I want to use focus first
-    ["n|<Leader>F"] = map_cr("NeoTreeFocusToggle", "NeoTree Focus Toggle"):with_noremap():with_silent(),
-    ["n|<Leader>e"] = map_cr("NeoTreeFocus", "NeoTree Focus"):with_noremap():with_silent(),
+    ["n|<Leader>e"] = map_cr("NeoTreeFocusToggle", "NeoTree Focus Toggle"):with_noremap():with_silent(),
+    ["n|<Leader>F"] = map_cr("NeoTreeFocus", "NeoTree Focus"):with_noremap():with_silent(),
     ["n|<Leader>cf"] = map_cr("Neotree float reveal_file=<cfile> reveal_force_cwd", "Float reveal file")
         :with_noremap()
         :with_silent(),
