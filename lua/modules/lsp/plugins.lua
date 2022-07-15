@@ -59,6 +59,7 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     config = conf.lsp_sig,
+    opt = true,
 })
 
 lsp({

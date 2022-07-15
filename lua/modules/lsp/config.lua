@@ -33,7 +33,10 @@ function config.saga()
         code_action_icon = "", -- this nice feature
         -- diable this for the time, seems to lag things up
         code_action_lightbulb = {
-            enable = false,
+            enable = true,
+            sign = false,
+            sign_priority = 0,
+            virtual_text = true,
         },
     })
 end

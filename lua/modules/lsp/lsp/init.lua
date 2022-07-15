@@ -18,7 +18,10 @@ end
 dlsconfig.setup({
     ["python"] = {
         linter = require("diagnosticls-configs.linters.flake8"),
-        formatter = require("diagnosticls-configs.formatters.yapf"),
+        formatter = {
+            require("diagnosticls-configs.formatters.yapf"),
+            require("diagnosticls-configs.formatters.isort"),
+        },
     },
     ["lua"] = {
         linter = require("diagnosticls-configs.linters.luacheck"),
