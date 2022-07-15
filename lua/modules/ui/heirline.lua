@@ -786,6 +786,8 @@ local WinBar = {
         end,
         FileNameBlock,
         CloseButton,
+        Space,
+        Navic,
     }),
 }
 
