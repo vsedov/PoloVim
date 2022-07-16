@@ -17,16 +17,17 @@ function M.setup_autocommands(client, bufnr)
     add_cmd("TD", function()
         popup_toggle = not popup_toggle
     end, { desc = "toggle popup diagnostic", force = true })
-    lambda.augroup("FormatLint", {
-        {
-            event = "BufWritePost",
-            buffer = bufnr,
-            command = function()
-                -- vim.cmd([[FormatWrite]])
-                vim.lsp.buf.format({ async = true })
-            end,
-        },
-    })
+    if client.supports_method("textDocument/formatting") then
+        lambda.augroup("FormatLint", {
+            {
+                event = "BufWritePre",
+                pattern = "*",
+                command = function()
+                    vim.lsp.buf.format({ timeout_ms = 2000 })
+                end,
+            },
+        })
+    end
 
     lambda.augroup("LspCursorCommands", {
         {
