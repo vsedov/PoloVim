@@ -125,6 +125,17 @@ function config.nvim_bufferline()
     local groups = require("bufferline.groups")
 
     require("bufferline").setup({
+    highlights = {
+      info = { gui = 'undercurl' },
+      info_selected = { gui = 'undercurl' },
+      info_visible = { gui = 'undercurl' },
+      warning = { gui = 'undercurl' },
+      warning_selected = { gui = 'undercurl' },
+      warning_visible = { gui = 'undercurl' },
+      error = { gui = 'undercurl' },
+      error_selected = { gui = 'undercurl' },
+      error_visible = { gui = 'undercurl' },
+    },
         options = {
             view = "multiwindow",
             numbers = "none", -- function(opts) return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal)) end,

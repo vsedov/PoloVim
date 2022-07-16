@@ -205,4 +205,5 @@ function config.navic()
         depth_limit_indicator = "..",
     })
 end
+
 return config
