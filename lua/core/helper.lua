@@ -87,7 +87,7 @@ lambda.compare_to_clipboard = function()
   bprevious
   execute "normal! \<C-w>\<C-w>"
   diffthis
-]]       ,
+]],
         ftype
     ))
 end
