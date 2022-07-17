@@ -30,6 +30,7 @@ LspKind.Symbol = {
 }
 
 LspKind.Completion = {
+    -- Tn = { text = "Snippet", icon = "" },
     Text = { text = "Text", icon = "" },
     Method = { text = "Method", icon = "" },
     Function = { text = "Function", icon = "" },
