@@ -31,6 +31,7 @@ require("neorg").setup({
                 engine = "nvim-cmp",
             },
         },
+        ["core.looking-glass"] = {}, -- Enable the looking_glass module
         ["core.export.markdown"] = {
             config = {
                 extensions = "all",
@@ -42,9 +43,9 @@ require("neorg").setup({
         ["core.norg.concealer"] = {
             config = {
                 -- markup_preset = "dimmed",
-                markup_preset = "conceal",
-                -- icon_preset = "diamond",
-                -- icon_preset = "varied",
+                -- markup_preset = "conceal",
+                icon_preset = "diamond",
+                markup_preset = "varied",
                 icons = {
                     marker = {
                         enabled = true,
@@ -114,8 +115,8 @@ require("neorg").setup({
 
         ["core.keybinds"] = {
             config = {
-                default_keybinds = false,
-                neorg_leader = "<Leader>o",
+                default_keybinds = true,
+                neorg_leader = "<Leader><leader>",
             },
         },
         ["core.norg.dirman"] = { -- Manage your directories with Neorg
@@ -176,6 +177,8 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
     keybinds.map_event_to_mode("norg", {
         n = { -- Bind keys in normal mode
 
+            { neorg_leader .. "l", "core.looking-glass.magnify-code-block" },
+
             -- Keys for managing TODO items and setting their states
             { "gtu", "core.norg.qol.todo_items.todo.task_undone" },
             { "gtp", "core.norg.qol.todo_items.todo.task_pending" },
@@ -215,6 +218,7 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
         },
         i = {
             { "<C-l>", "core.integrations.telescope.insert_link" },
+            { "<c-b>", "core.looking-glass.magnify-code-block" },
         },
     }, {
         silent = true,
