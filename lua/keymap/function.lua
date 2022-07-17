@@ -52,6 +52,27 @@ local plug_map = {
     ["n|<Leader>gr"] = map_cmd(function()
         return ":IncRename " .. vim.fn.expand("<cword>")
     end, "rename"):with_expr(),
+
+    ["n|dd"] = map_cmd(function()
+            if vim.api.nvim_get_current_line():match("^%s*$") then
+                return '"_dd'
+            else
+                return "dd"
+            end
+        end, "smard dd")
+        :with_noremap()
+        :with_expr(),
+    ["v|d"] = map_cmd(function()
+            local l, c = unpack(vim.api.nvim_win_get_cursor(0))
+            for _, line in ipairs(vim.api.nvim_buf_get_lines(0, l - 1, l, true)) do
+                if line:match("^%s*$") then
+                    return '"_d'
+                end
+            end
+            return "d"
+        end, "visual smart d")
+        :with_noremap()
+        :with_expr(),
 }
 
 return plug_map

@@ -5,15 +5,8 @@ local map_cmd = bind.map_cmd
 local map_args = bind.map_args
 -- local map_key = bind.map_key
 -- local global = require("core.global")
-vim.cmd([[
-  function! ExecuteMacroOverVisualRange()
-    echo "@".getcmdline()
-    execute ":'<,'>normal @".nr2char(getchar())
-  endfunction
-]])
 
 local plug_map = {
-    ["x|@"] = map_cmd(":<C-u>call ExecuteMacroOverVisualRange()<CR>", "Macro Execute"):with_noremap(),
 
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
     ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>", "NeoZoomToggle"):with_noremap():with_silent():with_nowait(),
