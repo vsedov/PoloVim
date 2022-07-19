@@ -8,7 +8,7 @@ lambda.config = {
     config_test = false,
     python = {
         lint = "flake8", -- "pylint "
-        lsp = "jedi", -- jedi pylsp and pyright
+        lsp = "pylance", -- jedi pylsp and pyright
     },
 }
 ----------------------------------------------------------------------------------------------------
