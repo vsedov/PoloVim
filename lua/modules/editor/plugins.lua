@@ -124,7 +124,15 @@ editor({
         vim.keymap.set("c", "<C-R><C-A>", "<Plug>WordMotion_<C-R><C-A>")
     end,
 })
-
+editor({
+    "anuvyklack/vim-smartword",
+    keys = {
+        "<Plug>(smartword-w)",
+        "<Plug>(smartword-b)",
+        "<Plug>(smartword-e)",
+        "<Plug>(smartword-ge)",
+    },
+})
 editor({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
 
 -- temp
@@ -166,32 +174,69 @@ editor({
 editor({
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim",
-    keys = { "<leader>b", "<leader>f", "<c-w>", "\\z", "<leader>h", "<localleader>b" },
+    keys = {
+        "<leader>b",
+        "<leader>f",
+        "<c-w>",
+        "\\z",
+        "<leader>h",
+        "<localleader>b",
+        "<leader>o",
+        ",",
+        "<leadeR>gb",
+        "<localleader>ve",
+    },
     config = conf.hydra,
     opt = true,
 })
 
+-- temp
 editor({
-    "gbprod/substitute.nvim",
-    require = "gbprod/yanky.nvim",
-    keys = {
-        -- normal sub
-        { "n", "L" },
-        { "n", "LL" },
-        { "n", "Ll" },
-        { "x", "L" },
-        -- range
-        { "n", "<leader>l" },
-        { "x", "<leader>l" },
-        { "n", "<leader>lr" },
-        -- Sub
-        { "n", "Lx" },
-        { "n", "Lxx" },
-        { "x", "Lx" },
-        { "n", "Lxc" },
+    "romgrk/barbar.nvim",
+    cmd = {
+        "BufferPrevious",
+        "BufferNext",
+        "BufferMovePrevious",
+        "BufferMoveNext",
+        "BufferPin",
+        "BufferClose",
+        "BufferOrderByDirectory",
+        "BufferOrderByLanguage",
     },
-    config = conf.substitute,
+    requires = { "kyazdani42/nvim-web-devicons" },
 })
+-- temp
+editor({
+    "szw/vim-maximizer",
+    cmd = "MaximizerToggle!",
+})
+
+editor({
+    "mrjones2014/smart-splits.nvim",
+    module = "smart-splits",
+})
+
+-- editor({
+--     "gbprod/substitute.nvim",
+--     require = "gbprod/yanky.nvim",
+--     keys = {
+--         -- normal sub
+--         { "n", "L" },
+--         { "n", "LL" },
+--         { "n", "Ll" },
+--         { "x", "L" },
+--         -- range
+--         { "n", "<leader>l" },
+--         { "x", "<leader>l" },
+--         { "n", "<leader>lr" },
+--         -- Sub
+--         { "n", "Lx" },
+--         { "n", "Lxx" },
+--         { "x", "Lx" },
+--         { "n", "Lxc" },
+--     },
+--     config = conf.substitute,
+-- })
 
 editor({
     "knubie/vim-kitty-navigator",
@@ -206,4 +251,9 @@ editor({
     cmd = { "Bdelete", "Bwipeout" },
     keys = { "_q" },
     config = conf.bbye,
+})
+
+editor({
+    "jbyuki/venn.nvim",
+    opt = true,
 })
