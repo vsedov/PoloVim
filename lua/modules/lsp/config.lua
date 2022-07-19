@@ -19,6 +19,10 @@ function config.luadev()
     require("modules.lsp.lsp.providers.luadev")
 end
 
+function config.lsp_install()
+    require("modules.lsp.lsp.providers.lsp_install")
+end
+
 function config.saga()
     local saga = require("lspsaga")
     saga.init_lsp_saga({

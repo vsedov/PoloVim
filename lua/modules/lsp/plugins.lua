@@ -20,6 +20,14 @@ lsp({
     opt = true,
 })
 
+-- lsp({
+--     "williamboman/nvim-lsp-installer",
+--     -- opt = true,
+--     -- cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
+--     requires = "nvim-lspconfig",
+--     config = conf.lsp_install,
+-- })
+
 lsp({
     "creativenull/diagnosticls-configs-nvim",
     requires = "neovim/nvim-lspconfig",

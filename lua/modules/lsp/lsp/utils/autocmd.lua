@@ -48,22 +48,22 @@ function M.setup_autocommands(client, bufnr)
                 end
             end,
         },
-        {
-            event = { "CursorHold", "CursorHoldI" },
-            buffer = bufnr,
-            description = "LSP: Document Highlight",
-            command = function()
-                pcall(vim.lsp.buf.document_highlight)
-            end,
-        },
-        {
-            event = "CursorMoved",
-            description = "LSP: Document Highlight (Clear)",
-            buffer = bufnr,
-            command = function()
-                vim.lsp.buf.clear_references()
-            end,
-        },
+        -- {
+        --     event = { "CursorHold", "CursorHoldI" },
+        --     buffer = bufnr,
+        --     description = "LSP: Document Highlight",
+        --     command = function()
+        --         pcall(vim.lsp.buf.document_highlight)
+        --     end,
+        -- },
+        -- {
+        --     event = "CursorMoved",
+        --     description = "LSP: Document Highlight (Clear)",
+        --     buffer = bufnr,
+        --     command = function()
+        --         vim.lsp.buf.clear_references()
+        --     end,
+        -- },
     })
 end
 

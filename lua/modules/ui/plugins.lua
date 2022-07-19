@@ -137,7 +137,14 @@ ui({
     end,
 })
 
-ui({ "catppuccin/nvim", as = "catppuccin", opt = true, config = conf.catppuccin })
+ui({
+    "catppuccin/nvim",
+    opt = true,
+    as = "catppuccin",
+    cmd = "CatppuccinCompile",
+    run = "CatppuccinCompile",
+    config = conf.catppuccin,
+})
 ui({ "jzone1366/chalklines.nvim", as = "chalklines", opt = true, config = conf.chalk })
 
 ui({

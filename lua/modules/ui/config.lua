@@ -623,35 +623,38 @@ function config.chalk()
 end
 
 function config.catppuccin()
-    local colors = require("catppuccin.api.colors").get_colors() -- fetch colors with API
     local catppuccin = require("catppuccin")
     catppuccin.setup({
+        dim_inactive = {
+            enabled = true,
+            shade = "dark",
+            percentage = 0.15,
+        },
         transparent_background = false,
         term_colors = true,
-        styles = {
-            comments = "italic",
-            functions = "italic",
-            keywords = "italic",
-            strings = "NONE",
-            variables = "italic",
+        compile = {
+            enabled = true,
+            path = vim.fn.stdpath("cache") .. "/catppuccin",
+            suffix = "_compiled",
         },
         integrations = {
             treesitter = true,
             native_lsp = {
                 enabled = true,
                 virtual_text = {
-                    errors = "italic",
-                    hints = "italic",
-                    warnings = "italic",
-                    information = "italic",
+                    errors = { "italic" },
+                    hints = { "italic" },
+                    warnings = { "italic" },
+                    information = { "italic" },
                 },
                 underlines = {
-                    errors = "underline",
-                    hints = "underline",
-                    warnings = "underline",
-                    information = "underline",
+                    errors = { "underline" },
+                    hints = { "underline" },
+                    warnings = { "underline" },
+                    information = { "underline" },
                 },
             },
+            coc_nvim = false,
             lsp_trouble = true,
             cmp = true,
             lsp_saga = true,
@@ -659,9 +662,9 @@ function config.catppuccin()
             gitsigns = true,
             telescope = true,
             nvimtree = {
-                enabled = true,
+                enabled = false,
                 show_root = true,
-                transparent_panel = true,
+                transparent_panel = false,
             },
             neotree = {
                 enabled = true,
@@ -675,17 +678,18 @@ function config.catppuccin()
             },
             dashboard = true,
             neogit = true,
-            vim_sneak = true,
-            fern = true,
-            barbar = true,
+            vim_sneak = false,
+            fern = false,
+            barbar = false,
             bufferline = true,
             markdown = true,
-            lightspeed = false,
-            ts_rainbow = true,
+            lightspeed = true,
+            ts_rainbow = false,
             hop = false,
             notify = true,
             telekasten = true,
             symbols_outline = true,
+            mini = false,
         },
     })
     vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha

@@ -8,11 +8,15 @@ local dlsconfig = require("diagnosticls-configs")
 
 if lambda.config.python.lsp == "pylsp" then
     vim.g.navic_silence = true
-    lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
+    lspconfig.pylsp.setup(enhance_attach(require("5.pylsp-ls")))
 elseif lambda.config.python.lsp == "jedi" then
     lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
 elseif lambda.config.python.lsp == "pyright" then
     lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
+elseif lambda.config.python.lsp == "pylance" then
+    local pylance = require("modules.lsp.lsp.providers.python.pylance")
+    pylance.creation()
+    lspconfig.pylance.setup(enhance_attach(pylance.config))
 end
 
 dlsconfig.setup({
