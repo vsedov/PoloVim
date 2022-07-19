@@ -55,3 +55,5 @@ local toggle_fstring = function()
 end
 
 vim.keymap.set("n", "<localleader>f", toggle_fstring, { noremap = true })
+
+require("modules.lsp.lsp.providers.python.pylance")
