@@ -1,7 +1,6 @@
 local conf = require("modules.ui.config")
 local ui = require("core.pack").package
 ui({ "j-hui/fidget.nvim", opt = true, ft = { "python", "lua", "c" }, config = conf.fidget })
-ui({ "camspiers/animate.vim", opt = true })
 
 ui({ "kyazdani42/nvim-web-devicons" })
 
@@ -150,15 +149,6 @@ ui({
     config = conf.catppuccin,
 })
 ui({ "jzone1366/chalklines.nvim", as = "chalklines", opt = true, config = conf.chalk })
-
-ui({
-    "~/GitHub/Sakura.nvim",
-    module = "Sakura",
-    opt = true,
-    config = function()
-        vim.cmd([[colorscheme sakura]])
-    end,
-})
 
 -- Use default when loading this .
 ui({ "rebelot/kanagawa.nvim", opt = true, config = conf.kanagawa })

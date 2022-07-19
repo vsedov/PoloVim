@@ -159,7 +159,6 @@ vim.defer_fn(function()
         require("modules.tools.config").grammcheck()
     end, { force = true })
 
-    loader("animate.vim")
     loader("presence.nvim")
     lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
