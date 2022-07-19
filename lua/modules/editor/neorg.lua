@@ -295,7 +295,7 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
             { neorg_leader .. "zb", ":Neorg zettel backlinks<CR>" },
 
             {
-                "<C-s>",
+                "<C-;>",
                 ':lua require"telescope".extensions.neorg.search_headings({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
             },
             {

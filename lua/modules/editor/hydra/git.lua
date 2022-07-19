@@ -11,6 +11,37 @@ local function wrap(fn, ...)
         fn(unpack(args, nargs))
     end
 end
+
+local function diffmaster()
+    local branch = "origin/master"
+    local master = vim.fn.systemlist("git rev-parse --verify develop")
+    if not master[1]:find("^fatal") then
+        branch = "origin/master"
+    else
+        master = vim.fn.systemlist("git rev-parse --verify master")
+        if not master[1]:find("^fatal") then
+            branch = "origin/master"
+        else
+            master = vim.fn.systemlist("git rev-parse --verify main")
+            if not master[1]:find("^fatal") then
+                branch = "origin/main"
+            end
+        end
+    end
+    lprint(branch)
+    local current_branch = vim.fn.systemlist("git branch --show-current")[1]
+    -- git rev-list --boundary feature/FDEL-3386...origin/main | grep "^-"
+    local cmd = string.format([[git rev-list --boundary %s...%s | grep "^-"]], current_branch, branch)
+    local hash = vim.fn.systemlist(cmd)[1]
+
+    lprint(cmd, hash)
+    if hash then
+        vim.cmd("DiffviewOpen " .. hash)
+    else
+        vim.cmd("DiffviewOpen " .. branch)
+    end
+end
+
 if gitrepo then
     loader("keymap-layer.nvim vgit.nvim gitsigns.nvim")
 
@@ -21,13 +52,19 @@ if gitrepo then
   _k_ proj diff _u_ unstage hunk _p_ view hunk  _B_ blameFull   _dd_ diffthis
   _J_: next hunk <--------------------------------------> _K_: prev hunk
   _D_ buf diff   _g_ diff staged _P_ projStaged _f_ proj hunkQF  _U_ unstagebuf
-  _S_ stage buf  _G_ stage diff  _/_ show base
+  _S_ stage buf  _G_ stage diff  _/_ show base  _M_ DifMaster
 
   _<Enter>_ Neogit _q_ exit
 ]]
 
     local gitsigns = require("gitsigns")
     local vgit = require("vgit")
+    local function gitsigns_visual_op(op)
+        return function()
+            return gitsigns[op]({ vim.fn.line("."), vim.fn.line("v") })
+        end
+    end
+
     Hydra({
         hint = hint,
         config = {
@@ -82,6 +119,7 @@ if gitrepo then
             { "d", ":DiffviewOpen<CR>", { silent = true, exit = true } },
             { "k", vgit.project_diff_preview, { exit = true } },
             { "s", ":Gitsigns stage_hunk<CR>", { silent = true } },
+            { "M", diffmaster, { silent = true, exit = true } },
             { "u", gitsigns.undo_stage_hunk },
             { "S", gitsigns.stage_buffer },
             { "p", gitsigns.preview_hunk },

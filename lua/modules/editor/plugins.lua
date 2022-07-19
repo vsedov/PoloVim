@@ -7,6 +7,8 @@ editor({
         { "max397574/neorg-contexts", ft = "norg" },
         { "max397574/neorg-kanban", ft = "norg" },
     },
+    -- after = "nvim-treesitter" ,
+    opt = true,
     config = conf.norg,
 })
 
