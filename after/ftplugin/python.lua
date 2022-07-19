@@ -55,5 +55,8 @@ local toggle_fstring = function()
 end
 
 vim.keymap.set("n", "<localleader>f", toggle_fstring, { noremap = true })
-
-require("modules.lsp.lsp.providers.python.pylance")
+vim.keymap.set("n", "<leader>im", function()
+    current_path = vim.fn.expand("%:p")
+    vim.fn.system("cd " .. current_path)
+    vim.cmd([[NayvyImports]])
+end, { noremap = true })
