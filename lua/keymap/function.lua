@@ -49,15 +49,6 @@ local plug_map = {
         :with_silent(),
     -- Scuffed way of doing this, but this works .
 
-    ["n|<leader>im"] = map_cmd(function()
-            current_path = vim.fn.expand("%:p")
-
-            vim.fn.system("cd " .. current_path)
-            vim.cmd([[NayvyImports]])
-        end, "Python Autoimport")
-        :with_noremap()
-        :with_silent(),
-
     ["n|<Leader>gr"] = map_cmd(function()
         return ":IncRename " .. vim.fn.expand("<cword>")
     end, "rename"):with_expr(),

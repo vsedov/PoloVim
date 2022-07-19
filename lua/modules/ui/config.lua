@@ -460,49 +460,49 @@ function config.satellite()
     })
 end
 
-function config.scrollbar()
-    if vim.wo.diff then
-        return
-    end
-    local w = vim.api.nvim_call_function("winwidth", { 0 })
-    if w < 70 then
-        return
-    end
-    require("scrollbar").setup({
-        handle = {
-            color = "#16161D",
-        },
-        marks = {
-            Search = { color = "#FFA066" },
-            Error = { color = "#E82424" },
-            Warn = { color = "#FF9E3B" },
-            Info = { color = "#6A9589" },
-            Hint = { color = "#658594" },
-            Misc = { color = "#938AA9" },
-        },
-        excluded_filetypes = {
-            "",
-            "prompt",
-            "TelescopePrompt",
-        },
-        autocmd = {
-            render = {
-                "BufWinEnter",
-                "TabEnter",
-                "TermEnter",
-                "WinEnter",
-                "CmdwinLeave",
-                "TextChanged",
-                "VimResized",
-                "WinScrolled",
-            },
-        },
-        handlers = {
-            diagnostic = true,
-            search = false,
-        },
-    })
-end
+-- function config.scrollbar()
+--     if vim.wo.diff then
+--         return
+--     end
+--     local w = vim.api.nvim_call_function("winwidth", { 0 })
+--     if w < 70 then
+--         return
+--     end
+--     require("scrollbar").setup({
+--         handle = {
+--             color = "#16161D",
+--         },
+--         marks = {
+--             Search = { color = "#FFA066" },
+--             Error = { color = "#E82424" },
+--             Warn = { color = "#FF9E3B" },
+--             Info = { color = "#6A9589" },
+--             Hint = { color = "#658594" },
+--             Misc = { color = "#938AA9" },
+--         },
+--         excluded_filetypes = {
+--             "",
+--             "prompt",
+--             "TelescopePrompt",
+--         },
+--         autocmd = {
+--             render = {
+--                 "BufWinEnter",
+--                 "TabEnter",
+--                 "TermEnter",
+--                 "WinEnter",
+--                 "CmdwinLeave",
+--                 "TextChanged",
+--                 "VimResized",
+--                 "WinScrolled",
+--             },
+--         },
+--         handlers = {
+--             diagnostic = true,
+--             search = false,
+--         },
+--     })
+-- end
 
 function config.pretty_fold()
     require("pretty-fold").setup({
@@ -530,27 +530,6 @@ function config.pretty_fold()
     })
 end
 
-function config.scrollview()
-    if vim.wo.diff then
-        return
-    end
-    local w = vim.api.nvim_call_function("winwidth", { 0 })
-    if w < 70 then
-        return
-    end
-
-    vim.g.scrollview_column = 1
-end
-function config.dir_buff()
-    require("dirbuf").setup({
-        hash_padding = 2,
-        show_hidden = true,
-        sort_order = function(l, r)
-            return l.fname:lower() < r.fname:lower()
-        end,
-    })
-end
-
 function config.tokyonight()
     local opt = { "storm", "night" }
     local v = math.random(1, #opt)
@@ -567,59 +546,6 @@ function config.tokyodark()
     vim.g.tokyodark_enable_italic_comment = true
     vim.g.tokyodark_enable_italic = true
     vim.g.tokyodark_color_gamma = "1.0"
-end
-function config.dogrun()
-    vim.g.clap_theme = "dogrun"
-end
-
-function config.chalk()
-    local chalklines = require("chalklines")
-    chalklines.setup({
-        integration = {
-            neotree = {
-                enabled = true,
-                show_root = true, -- makes the root folder not transparent
-                transparent_panel = false, -- make the panel transparent
-            },
-        },
-        modules = {
-            barbar = true,
-            bufferline = true,
-            cmp = true,
-            dashboard = true,
-            diagnostic = {
-                enable = true,
-                background = true,
-            },
-            fern = true,
-            fidget = true,
-            gitgutter = true,
-            gitsigns = true,
-            glyph_palette = true,
-            hop = true,
-            indent_blankline = true,
-            illuminate = true,
-            lightspeed = false, --true normally
-            lsp_saga = true,
-            lsp_trouble = true,
-            modes = true,
-            native_lsp = true,
-            neogit = true,
-            neorg = true,
-            neotree = true,
-            notify = true,
-            nvimtree = true,
-            pounce = true,
-            sneak = true,
-            symbol_outline = true,
-            telescope = true,
-            treesitter = true,
-            tsrainbow = true,
-            vimwiki = true,
-            whichkey = true,
-        },
-    })
-    vim.cmd([[colorscheme chalklines]])
 end
 
 function config.catppuccin()
@@ -862,20 +788,6 @@ function config.gruvbox()
     vim.g.gruvbox_material_palette = palette
     vim.cmd("colorscheme gruvbox-material")
     vim.cmd("doautocmd ColorScheme")
-end
-
-function config.minimap()
-    vim.cmd([[nmap <F14> :MinimapToggle<CR>]])
-    local w = vim.api.nvim_call_function("winwidth", { 0 })
-    if w > 180 then
-        vim.g.minimap_width = 12
-    elseif w > 120 then
-        vim.g.minimap_width = 10
-    elseif w > 80 then
-        vim.g.minimap_width = 7
-    else
-        vim.g.minimap_width = 2
-    end
 end
 
 function config.buffers_close()
