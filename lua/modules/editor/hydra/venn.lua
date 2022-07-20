@@ -15,7 +15,7 @@ Hydra({
         invoke_on_body = true,
         hint = {
             position = "bottom",
-            border = "rounded",
+            border = "single",
         },
         on_enter = function()
             vim.cmd([[packadd venn.nvim]])

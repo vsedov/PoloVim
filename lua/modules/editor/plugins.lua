@@ -175,7 +175,6 @@ editor({
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim",
     keys = {
-        "<leader>b",
         "<leader>f",
         "<c-w>",
         "\\z",
@@ -183,28 +182,13 @@ editor({
         "<localleader>b",
         "<leader>o",
         ",",
-        "<leadeR>gb",
+        "<leader>b",
         "<localleader>ve",
     },
     config = conf.hydra,
     opt = true,
 })
 
--- temp
-editor({
-    "romgrk/barbar.nvim",
-    cmd = {
-        "BufferPrevious",
-        "BufferNext",
-        "BufferMovePrevious",
-        "BufferMoveNext",
-        "BufferPin",
-        "BufferClose",
-        "BufferOrderByDirectory",
-        "BufferOrderByLanguage",
-    },
-    requires = { "kyazdani42/nvim-web-devicons" },
-})
 -- temp
 editor({
     "szw/vim-maximizer",
@@ -216,27 +200,27 @@ editor({
     module = "smart-splits",
 })
 
--- editor({
---     "gbprod/substitute.nvim",
---     require = "gbprod/yanky.nvim",
---     keys = {
---         -- normal sub
---         { "n", "L" },
---         { "n", "LL" },
---         { "n", "Ll" },
---         { "x", "L" },
---         -- range
---         { "n", "<leader>l" },
---         { "x", "<leader>l" },
---         { "n", "<leader>lr" },
---         -- Sub
---         { "n", "Lx" },
---         { "n", "Lxx" },
---         { "x", "Lx" },
---         { "n", "Lxc" },
---     },
---     config = conf.substitute,
--- })
+editor({
+    "gbprod/substitute.nvim",
+    require = "gbprod/yanky.nvim",
+    keys = {
+        -- normal sub
+        { "n", "<c-l>" },
+        { "n", "<c-l>l" },
+        { "n", "<c-l>L" },
+        { "x", "<c-l>" },
+        -- range
+        { "n", "<leader>l" },
+        { "x", "<leader>l" },
+        { "n", "<leader>lr" },
+        -- Sub
+        { "n", "<c-l>x" },
+        { "n", "<c-l>xx" },
+        { "x", "<c-l>x" },
+        { "n", "<c-l>xc" },
+    },
+    config = conf.substitute,
+})
 
 editor({
     "knubie/vim-kitty-navigator",
