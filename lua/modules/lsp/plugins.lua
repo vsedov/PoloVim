@@ -56,7 +56,7 @@ lsp({ "lewis6991/hover.nvim", key = { "K", "gK" }, config = conf.hover })
 
 lsp({
     "glepnir/lspsaga.nvim",
-    cmd = "Lspsaga",
+    cmd = { "Lspsaga", "LSoutlineToggle" },
     opt = true,
     config = conf.saga,
     requires = "nvim-lspconfig",

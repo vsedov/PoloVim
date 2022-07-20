@@ -16,7 +16,7 @@ elseif lambda.config.python.lsp == "pyright" then
 elseif lambda.config.python.lsp == "pylance" then
     local pylance = require("modules.lsp.lsp.providers.python.pylance")
     pylance.creation()
-    lspconfig.pylance.setup(pylance.config)
+    lspconfig.pylance.setup(enhance_attach(pylance.config))
 end
 
 dlsconfig.setup({

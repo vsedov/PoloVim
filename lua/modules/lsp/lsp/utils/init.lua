@@ -74,14 +74,18 @@ function M.common_capabilities()
 end
 
 function M.common_on_attach(client, bufnr)
-    if config.on_attach_callback then
-        config.on_attach_callback(client, bufnr)
-    end
     if client.name ~= "diagnosticls" then
+        if config.on_attach_callback then
+            config.on_attach_callback(client, bufnr)
+        end
         require("nvim-navic").attach(client, bufnr)
+        if client.name == "pylance" then
+            require("modules.lsp.lsp.providers.python.pylance").attach_config(client, bufnr)
+        end
     end
-    require("modules.lsp.lsp.utils.autocmd").setup_autocommands(client, bufnr)
     add_lsp_buffer_keybindings(client, bufnr)
+
+    require("modules.lsp.lsp.utils.autocmd").setup_autocommands(client, bufnr)
 end
 
 function M.get_common_opts()

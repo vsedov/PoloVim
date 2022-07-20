@@ -20,22 +20,22 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 --     },
 -- }
 
--- capabilities.textDocument.codeAction = {
---     -- dynamicRegistration = false;
---     codeActionLiteralSupport = {
---         codeActionKind = {
---             valueSet = {
---                 "quickfix",
---                 "refactor",
---                 "refactor.extract",
---                 "refactor.inline",
---                 "refactor.rewrite",
---                 "source",
---                 "source.organizeImports",
---             },
---         },
---     },
--- }
+capabilities.textDocument.codeAction = {
+    -- dynamicRegistration = false;
+    codeActionLiteralSupport = {
+        codeActionKind = {
+            valueSet = {
+                "quickfix",
+                "refactor",
+                "refactor.extract",
+                "refactor.inline",
+                "refactor.rewrite",
+                "source",
+                "source.organizeImports",
+            },
+        },
+    },
+}
 -- idk this might help educe lag ? i hope
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
