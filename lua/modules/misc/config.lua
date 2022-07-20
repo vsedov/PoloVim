@@ -259,11 +259,17 @@ end
 
 function config.surround()
     require("nvim-surround").setup({
-        keymaps = { -- vim-surround style keymaps
-            insert = "ys",
-            visual = "z",
-            delete = "Ld",
-            change = "Ls",
+        keymaps = {
+            insert = "<C-c>",
+            insert_line = "<C-g>g",
+            normal = "ys",
+            normal_cur = "yss",
+            normal_line = "yS",
+            normal_cur_line = "ySS",
+            visual = "yS",
+            visual_line = "gS",
+            delete = "ds",
+            change = "cS",
         },
     })
 end

@@ -64,13 +64,6 @@ end, { silent = true, expr = true })
 -- Visual Selection from Normal Mode
 vim.keymap.set("n", "vx", "<cmd>STSSelectMasterNode<cr>", opts)
 vim.keymap.set("n", "vn", "<cmd>STSSelectCurrentNode<cr>", opts)
-
--- Select Nodes in Visual Mode
-vim.keymap.set("x", "J", "<cmd>STSSelectNextSiblingNode<cr>", opts)
-vim.keymap.set("x", "K", "<cmd>STSSelectPrevSiblingNode<cr>", opts)
-vim.keymap.set("x", "H", "<cmd>STSSelectParentNode<cr>", opts)
-vim.keymap.set("x", "L", "<cmd>STSSelectChildNode<cr>", opts)
-
 vim.keymap.set("n", "gfu", function() -- only jump to functions
     sts.targeted_jump({ "function", "function_definition" })
     --> In this example, the Lua language schema uses "function",

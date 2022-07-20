@@ -10,12 +10,6 @@ misc({
         { "n", "vu" },
         { "n", "vx" },
         { "n", "vn" },
-
-        { "x", "J" },
-        { "x", "K" },
-        { "x", "H" },
-        { "x", "L" },
-
         { "n", "gv" },
         { "n", "gfu" },
         { "n", "gif" },
@@ -169,7 +163,7 @@ misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
 
 misc({
     "kylechui/nvim-surround",
-    keys = { "ys", "z", "Ld", "Ls" },
+    keys = { "<C-c>", "<C-g>g", "ys", "yss", "yS", "ySS", "yS", "gS", "ds", "cS" },
     config = conf.surround,
 })
 
