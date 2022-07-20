@@ -33,7 +33,7 @@ local buffer_hydra = Hydra({
         { "h", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
         { "p", "<Cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" } },
         { "c", "<Cmd>BufferLinePick<CR>", { desc = "Pin buffer" } },
-        
+
         { "H", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Next" } },
         { "L", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Prev" } },
         { "D", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close", exit = true } },
