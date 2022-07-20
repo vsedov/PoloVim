@@ -1,6 +1,6 @@
 local M = {}
 
-local presets = require("modules.lsp.lsp.providers.python.semantic_tokens.plugin.presets")
+local presets = require("modules.lsp.lsp.semantic_tokens.plugin.presets")
 M.token_map = presets.token_map
 M.modifiers_map = presets.modifiers_map
 

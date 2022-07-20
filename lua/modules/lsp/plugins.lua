@@ -61,9 +61,7 @@ lsp({
     config = conf.saga,
     requires = "nvim-lspconfig",
 })
--- 4852d99f9511d090745d3cc1f09a75772b9e07e9 -- working
 
--- TODO(vsedov) (17:16:37 - 13/07/22): Revert this if i can, temp change
 lsp({
     "ray-x/lsp_signature.nvim",
     config = conf.lsp_sig,

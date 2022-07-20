@@ -101,6 +101,7 @@ function M.setup()
     for _, sign in ipairs(config.signs) do
         fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
     end
+    require("modules.lsp.lsp.semantic_tokens")
     require("modules.lsp.lsp.utils.handlers").setup()
     require("modules.lsp.lsp.utils.setup_autocmd")
     require("modules.lsp.lsp.utils.list")

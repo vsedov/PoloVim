@@ -1,7 +1,7 @@
 local M = {}
 local highlighters = {}
 
-local semantic_tokens = require("modules.lsp.lsp.providers.python.semantic_tokens.core.semantic_tokens")
+local semantic_tokens = require("modules.lsp.lsp.semantic_tokens.core.semantic_tokens")
 local ns = vim.api.nvim_create_namespace("nvim-semantic-tokens")
 
 local function highlight(ctx, token, hl)
@@ -50,7 +50,7 @@ function M.setup()
         on_token = highlight_token,
         -- on_invalidate_range = clear_highlights,
     })
-    highlighters = { require("modules.lsp.lsp.providers.python.semantic_tokens.plugin.table-highlighter") }
+    highlighters = { require("modules.lsp.lsp.semantic_tokens.plugin.table-highlighter") }
     for _, h in ipairs(highlighters) do
         if type(h) == "table" and h.reset then
             h.reset()
