@@ -64,6 +64,7 @@ local P = {
     light_red = "#c43e1f",
     grey = "#3E4556",
     green = "#98c379",
+    whitesmoke = "#9E9E9E",
 }
 
 local L = {
@@ -337,11 +338,17 @@ local function general_overrides()
         -- LSP
         -----------------------------------------------------------------------------//
         LspCodeLens = { link = "NonText" },
-        LspReferenceText = { underline = false, background = "NONE" },
-        LspReferenceRead = { underline = false, background = "NONE" },
-        -- This represents when a reference is assigned which is more interesting than regular
+        LspReferenceText = { underline = true, background = "NONE", sp = P.comment_fg },
+        LspReferenceRead = { underline = true, background = "NONE", sp = P.comment_fg }, -- This represents when a reference is assigned which is more interesting than regular
         -- occurrences so should be highlighted more distinctly
-        LspReferenceWrite = { underline = false, bold = true, italic = true, background = "NONE" },
+
+        LspReferenceWrite = {
+            underline = true,
+            bold = true,
+            italic = true,
+            background = "NONE",
+            sp = P.whitesmoke,
+        },
 
         DiagnosticHeader = { link = "Special", fg = "#56b6c2", bold = true },
         DiagnosticHint = { foreground = L.hint },
