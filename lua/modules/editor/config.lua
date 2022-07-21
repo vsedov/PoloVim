@@ -304,19 +304,19 @@ function config.substitute()
         motion1 = true,
         motion2 = true,
     })
-    vim.keymap.set("n", "<c-l>", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
-    vim.keymap.set("n", "<c-l>l", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-    vim.keymap.set("n", "<c-l>L", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
-    vim.keymap.set("x", "<c-l>l", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
+    vim.keymap.set("n", "YY", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+    vim.keymap.set("n", "Yl", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
+    vim.keymap.set("n", "YL", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
+    vim.keymap.set("x", "Yl", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
 
     vim.keymap.set("n", "<leader>l", "<cmd>lua require('substitute.range').operator()<cr>", { noremap = true })
     vim.keymap.set("x", "<leader>l", "<cmd>lua require('substitute.range').visual()<cr>", { noremap = true })
     vim.keymap.set("n", "<leader>lr", "<cmd>lua require('substitute.range').word()<cr>", { noremap = true })
 
-    vim.keymap.set("n", "<c-l>x", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
-    vim.keymap.set("n", "<c-l>xx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
-    vim.keymap.set("x", "<c-l>x", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
-    vim.keymap.set("n", "<c-l>xc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
+    vim.keymap.set("n", "Yx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
+    vim.keymap.set("n", "Yxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
+    vim.keymap.set("x", "Yx", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
+    vim.keymap.set("n", "Yxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
 end
 function config.bbye()
     vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
