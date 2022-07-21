@@ -374,11 +374,11 @@ local Navic = {
             local child = {
                 {
                     provider = d.icon .. " ",
-                    -- hl = self.type_hl[d.type],
+                    hl = self.type_hl[d.type],
                 },
                 {
                     provider = d.name,
-                    -- hl = self.type_hl[d.type],
+                    hl = self.type_hl[d.type],
                 },
             }
             if #data > 1 and i < #data then

@@ -34,7 +34,7 @@ ui({
 
 ui({ "MunifTanjim/nui.nvim", opt = true })
 
--- Feels slow, might revert backto nvim tree
+-- -- Feels slow, might revert backto nvim tree
 ui({
     "mrbjarksen/neo-tree-diagnostics.nvim",
     requires = "nvim-neo-tree/neo-tree.nvim",
