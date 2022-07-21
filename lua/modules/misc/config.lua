@@ -291,27 +291,6 @@ function config.guess_indent()
     })
 end
 
-function config.projects()
-    require("project_nvim").setup({
-        silent_chdir = false,
-        patterns = { ".git" },
-    })
-    require("telescope").load_extension("projects")
-end
-
-function config.pen()
-    require("penvim").setup({
-        project_env = {
-            enable = true,
-            config_name = ".__nvim__.lua",
-        },
-        rooter = {
-            enable = true,
-            patterns = { ".__nvim__.lua", ".git", "node_modules", ".sln", ".svn" },
-        },
-    })
-end
-
 function config.headers()
     require("headlines").setup()
 end

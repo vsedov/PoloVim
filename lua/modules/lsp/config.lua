@@ -42,6 +42,7 @@ function config.saga()
             sign_priority = 0,
             virtual_text = true,
         },
+        server_filetype_map = { python = { "diagnosticls" } },
     })
 end
 

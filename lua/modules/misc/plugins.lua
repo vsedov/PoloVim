@@ -194,13 +194,6 @@ misc({
     config = conf.guess_indent,
 })
 
--- TODO: Might not be needed trail
-misc({
-    "Abstract-IDE/penvim",
-    event = "BufRead",
-    config = conf.pen,
-})
-
 misc({
     "lukas-reineke/headlines.nvim",
     ft = { "norg", "md" },
@@ -240,4 +233,16 @@ misc({
 misc({
     "nyngwang/NeoNoName.lua",
     cmd = { "NeoNoName" },
+})
+
+misc({
+    "notjedi/nvim-rooter.lua",
+    event = "BufRead",
+    config = function()
+        require("nvim-rooter").setup({
+            rooter_patterns = { ".git", ".hg", ".svn", "pyproject.toml" },
+            trigger_patterns = { "*" },
+            manual = true,
+        })
+    end,
 })
