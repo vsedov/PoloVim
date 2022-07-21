@@ -96,6 +96,10 @@ function M.get_common_opts()
     }
 end
 
+local function test()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+end
+
 function M.setup()
     local fn = vim.fn
     for _, sign in ipairs(config.signs) do
@@ -109,6 +113,7 @@ function M.setup()
     require("diagnosticls-configs").init({
         -- Your custom attach function
         on_attach = M.common_on_attach,
+        capabilities = test(),
     })
 end
 

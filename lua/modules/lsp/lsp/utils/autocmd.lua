@@ -28,43 +28,58 @@ function M.setup_autocommands(client, bufnr)
             },
         })
     end
-
-    lambda.augroup("LspCursorCommands", {
-        {
-            event = { "CursorHold" },
-            buffer = bufnr,
-            command = function(args)
-                if popup_toggle then
-                    local current_cursor = vim.api.nvim_win_get_cursor(0)
-                    local last_popup_cursor = vim.w.lsp_diagnostics_last_cursor or { nil, nil }
-                    -- Show the popup diagnostics window,
-                    -- but only once for the current cursor location (unless moved afterwards).
-                    if
-                        not (current_cursor[1] == last_popup_cursor[1] and current_cursor[2] == last_popup_cursor[2])
-                    then
-                        vim.w.lsp_diagnostics_last_cursor = current_cursor
-                        vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
+    -- if client and client.server_capabilities.codeLensProvider then
+    --     as.augroup("LspCodeLens", {
+    --         {
+    --             event = { "BufEnter", "CursorHold", "InsertLeave" },
+    --             buffer = bufnr,
+    --             command = function()
+    --                 vim.lsp.codelens.refresh()
+    --             end,
+    --         },
+    --     })
+    -- end
+    if client and client.server_capabilities.documentHighlightProvider then
+        lambda.augroup("LspCursorCommands", {
+            {
+                event = { "CursorHold" },
+                buffer = bufnr,
+                command = function(args)
+                    if popup_toggle then
+                        local current_cursor = vim.api.nvim_win_get_cursor(0)
+                        local last_popup_cursor = vim.w.lsp_diagnostics_last_cursor or { nil, nil }
+                        -- Show the popup diagnostics window,
+                        -- but only once for the current cursor location (unless moved afterwards).
+                        if
+                            not (
+                                current_cursor[1] == last_popup_cursor[1]
+                                and current_cursor[2] == last_popup_cursor[2]
+                            )
+                        then
+                            vim.w.lsp_diagnostics_last_cursor = current_cursor
+                            vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
+                        end
                     end
-                end
-            end,
-        },
-        -- {
-        --     event = { "CursorHold", "CursorHoldI" },
-        --     buffer = bufnr,
-        --     description = "LSP: Document Highlight",
-        --     command = function()
-        --         pcall(vim.lsp.buf.document_highlight)
-        --     end,
-        -- },
-        -- {
-        --     event = "CursorMoved",
-        --     description = "LSP: Document Highlight (Clear)",
-        --     buffer = bufnr,
-        --     command = function()
-        --         vim.lsp.buf.clear_references()
-        --     end,
-        -- },
-    })
+                end,
+            },
+            {
+                event = { "CursorHold", "CursorHoldI" },
+                buffer = bufnr,
+                description = "LSP: Document Highlight",
+                command = function()
+                    pcall(vim.lsp.buf.document_highlight)
+                end,
+            },
+            {
+                event = "CursorMoved",
+                description = "LSP: Document Highlight (Clear)",
+                buffer = bufnr,
+                command = function()
+                    vim.lsp.buf.clear_references()
+                end,
+            },
+        })
+    end
 end
 
 return M

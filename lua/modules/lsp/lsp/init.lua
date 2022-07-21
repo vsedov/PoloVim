@@ -5,20 +5,6 @@ vim.g.lsp_config_complete = true
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 local dlsconfig = require("diagnosticls-configs")
-
-if lambda.config.python.lsp == "pylsp" then
-    vim.g.navic_silence = true
-    lspconfig.pylsp.setup(enhance_attach(require("5.pylsp-ls")))
-elseif lambda.config.python.lsp == "jedi" then
-    lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
-elseif lambda.config.python.lsp == "pyright" then
-    lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
-elseif lambda.config.python.lsp == "pylance" then
-    local pylance = require("modules.lsp.lsp.providers.python.pylance")
-    pylance.creation()
-    lspconfig.pylance.setup(enhance_attach(pylance.config))
-end
-
 dlsconfig.setup({
     ["python"] = {
         linter = require("diagnosticls-configs.linters.flake8"),
@@ -35,6 +21,26 @@ dlsconfig.setup({
         linter = require("diagnosticls-configs.linters.vint"),
     },
 })
+
+local python_setup = {
+    pylsp = function()
+        vim.g.navic_silence = true
+        lspconfig.pylsp.setup(enhance_attach(require("5.pylsp-ls")))
+    end,
+    jedi = function()
+        lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
+    end,
+    pylance = function()
+        local pylance = require("modules.lsp.lsp.providers.python.pylance")
+        pylance.creation()
+        lspconfig.pylance.setup(enhance_attach(pylance.config))
+    end,
+    pyright = function()
+        lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
+    end,
+}
+
+python_setup[lambda.config.python.lsp]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 
