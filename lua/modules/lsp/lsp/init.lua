@@ -43,7 +43,6 @@ local python_setup = {
 python_setup[lambda.config.python.lsp]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
-
 lspconfig.gopls.setup(enhance_attach({
     filetypes = { "go" },
     cmd = { "gopls", "--remote=auto" },
@@ -105,3 +104,7 @@ lspconfig.vimls.setup(enhance_attach({
         vimruntime = "",
     },
 }))
+
+if vim.bo.filetype ~= "zig" then
+    require("modules.lsp.lsp.semantic_tokens")
+end

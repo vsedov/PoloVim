@@ -10,8 +10,9 @@ lsp({
 
 lsp({
     "williamboman/nvim-lsp-installer",
+    ft = { "zig" },
     opt = true,
-    cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
+    -- cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
     requires = "nvim-lspconfig",
     config = conf.lsp_install,
 })
