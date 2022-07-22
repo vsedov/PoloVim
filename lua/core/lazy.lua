@@ -100,6 +100,7 @@ function Lazyload()
     if load_lsp then
         loader("nvim-lspconfig") -- null-ls.nvim
     end
+
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
         plugins = "nvim-treesitter-textobjects nvim-treesitter-textsubjects"
@@ -152,6 +153,9 @@ vim.defer_fn(function()
     require("vscripts.tools")
     if vim.bo.filetype ~= "tex" or vim.bo.filetype ~= "md" or vim.bo.filetype ~= "norg" then
         require("vscripts.race_conditions").coding_support()
+    end
+    if vim.bo.filetype == "tex" or vim.bo.filetype == "md" or vim.bo.filetype == "norg" then
+        require("vscripts.race_conditions").spelling_support()
     end
     require("vscripts.race_conditions").language_support()
     vim.cmd("command! Spell call spelunker#check()")
