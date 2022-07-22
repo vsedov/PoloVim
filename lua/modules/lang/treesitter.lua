@@ -256,7 +256,7 @@ local function textsubjects()
     require("nvim-treesitter.configs").setup({
         textsubjects = {
             enable = true,
-            keymaps = { ["<CR>"] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
+            keymaps = { ["<CR>"] = "textsubjects-smart", ["#"] = "textsubjects-container-outer" },
         },
     })
 end

@@ -104,7 +104,3 @@ lspconfig.vimls.setup(enhance_attach({
         vimruntime = "",
     },
 }))
-
-if vim.bo.filetype ~= "zig" then
-    require("modules.lsp.lsp.semantic_tokens")
-end

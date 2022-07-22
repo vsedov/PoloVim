@@ -6,15 +6,16 @@ local function cmd(command)
 end
 
 local window_hint = [[
- ^^^^^^^^^^^^             Move         ^^    Size   ^^  ^^     Split
- ^^^^^^^^^^^^------------------------- ^^-----------^^  ^^---------------
- ^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^   _<A-k>_   ^   _s_: horizontally 
- _h_ ^ ^ _l_  _wh_ _<cr>_ _wl_  _H_ ^ ^ _L_  _<A-h>_ _<A-l>_   _v_: vertically
- ^ ^ _j_ ^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^   _<A-j>_   ^   _q_, _c_: close
- ^^ focus ^  ^^winshift^  ^^Split^^^^^^^^^^  ^_=_: equalize^   _z_: maximize
- ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                  _o_: remain only 
+ ^^^^^^^^^^^^             Move         ^^    Size  ^^  ^^     Split
+ ^^^^^^^^^^^^------------------------- ^^--------------^^  ^^---------------
+ ^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^ ^   _<Up>_     ^   ^_s_: horizontally 
+ _h_ ^ ^ _l_  _wh_ _<cr>_ _wl_  _H_ ^ ^ _L_  _<Left>_ _<Right>_  _v_: vertically
+ ^ ^ _j_ ^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^   ^_q_, _c_: close
+ ^^ focus ^  ^^winshift^  ^^Split^^^^^^^^^^  ^_=_: equalize^     _z_: maximize
+ ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only 
  _b_: choose buffer
 ]]
+
 Hydra({
     name = "Windows",
     hint = window_hint,
@@ -45,25 +46,25 @@ Hydra({
         { "L", "<C-w>L:", { exit = true, desc = "<c-w>L" } },
 
         {
-            "<A-h>",
+            "<Left>",
             function()
                 splits.resize_left(2)
             end,
         },
         {
-            "<A-j>",
+            "<Down>",
             function()
                 splits.resize_down(2)
             end,
         },
         {
-            "<A-k>",
+            "<Up>",
             function()
                 splits.resize_up(2)
             end,
         },
         {
-            "<A-l>",
+            "<Right>",
             function()
                 splits.resize_right(2)
             end,

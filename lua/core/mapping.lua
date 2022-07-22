@@ -49,12 +49,6 @@ local def_map = {
         :with_noremap()
         :with_silent(),
 
-    -- Nice animation
-    ["n|<Up>"] = map_cmd("<cmd> call animate#window_delta_height(10)<CR>"):with_noremap():with_silent(),
-    ["n|<Down>"] = map_cmd("<cmd> call animate#window_delta_height(-10)<CR>"):with_noremap():with_silent(),
-    ["n|<Left>"] = map_cmd("<cmd> call animate#window_delta_width(10)<CR>"):with_noremap():with_silent(),
-    ["n|<Right>"] = map_cmd("<cmd> call animate#window_delta_width(-10)<CR>"):with_noremap():with_silent(),
-
     -- when going to the end of the line in visual mode ignore whitespace characters
     ["n|$"] = map_cmd([[g_]]):with_noremap(),
 }

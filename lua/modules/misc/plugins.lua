@@ -246,3 +246,11 @@ misc({
         })
     end,
 })
+
+misc({
+    "dhruvasagar/vim-table-mode",
+    cmd = "TableModeToggle",
+    opt = true,
+    ft = { "norg", "markdown" },
+    conf = conf.table,
+})

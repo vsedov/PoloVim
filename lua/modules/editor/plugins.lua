@@ -16,7 +16,8 @@ editor({
     "folke/zen-mode.nvim",
     opt = true,
     requires = { "folke/twilight.nvim", opt = true, config = conf.twilight },
-    cmd = { "ZenMode" },
+    cmd = "ZenMode",
+    module = "zen-mode",
     config = conf.zen,
 })
 
@@ -157,7 +158,17 @@ editor({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = c
 editor({
     "m-demare/hlargs.nvim",
     brach = "expected_lua_number",
-    ft = { "python", "c", "cpp", "java", "lua", "rust", "go" },
+    ft = {
+        "python",
+        "c",
+        "cpp",
+        "java",
+        "lua",
+        "rust",
+        "go",
+        "vim",
+        "zig",
+    },
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
 })
@@ -224,7 +235,9 @@ editor({
 
 editor({
     "knubie/vim-kitty-navigator",
+    opt = true,
     run = "cp ./*.py ~/.config/kitty/",
+    keys = { "<c-j>", "<c-k>", "<c-h>", "<c-l>" },
     cond = function()
         return vim.env.TMUX == nil
     end,
