@@ -93,7 +93,8 @@ function config.hover()
     })
 end
 
-function config.lps_lines_setup()
+function config.lsp_lines()
+    require("lsp_lines").register_lsp_virtual_lines()
     local Diagnostics = vim.api.nvim_create_augroup("Diagnostics", { clear = true })
 
     local create_auto_cmd = function()
@@ -118,13 +119,8 @@ function config.lps_lines_setup()
     end, { force = true })
 
     vim.api.nvim_create_user_command("DiagnosticEnable", function()
-        vim.cmd([[packadd lsp_lines.nvim]])
         create_auto_cmd()
     end, { force = true })
-end
-
-function config.lsp_lines()
-    require("lsp_lines").register_lsp_virtual_lines()
 end
 
 function config.format()
