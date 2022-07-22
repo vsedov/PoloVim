@@ -25,7 +25,7 @@ dlsconfig.setup({
 local python_setup = {
     pylsp = function()
         vim.g.navic_silence = true
-        lspconfig.pylsp.setup(enhance_attach(require("5.pylsp-ls")))
+        lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
     end,
     jedi = function()
         lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))

@@ -1,17 +1,6 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 lsp({
-    "williamboman/mason.nvim",
-    event = "BufRead",
-    branch = "alpha",
-    config = function()
-        require("mason").setup({ ui = { border = "single" } })
-        require("mason-lspconfig").setup({
-            automatic_installation = true,
-        })
-    end,
-})
-lsp({
     "neovim/nvim-lspconfig",
     after = "mason.nvim",
     requires = { "mason.nvim" },
@@ -20,13 +9,13 @@ lsp({
     opt = true,
 })
 
--- lsp({
---     "williamboman/nvim-lsp-installer",
---     -- opt = true,
---     -- cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
---     requires = "nvim-lspconfig",
---     config = conf.lsp_install,
--- })
+lsp({
+    "williamboman/nvim-lsp-installer",
+    opt = true,
+    cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
+    requires = "nvim-lspconfig",
+    config = conf.lsp_install,
+})
 
 lsp({
     "creativenull/diagnosticls-configs-nvim",

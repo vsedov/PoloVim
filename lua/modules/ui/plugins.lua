@@ -32,7 +32,7 @@ ui({
     config = conf.notify,
 })
 
-ui({ "MunifTanjim/nui.nvim", opt = true })
+ui({ "MunifTanjim/nui.nvim",opt = true })
 
 -- -- Feels slow, might revert backto nvim tree
 ui({
