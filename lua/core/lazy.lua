@@ -25,7 +25,8 @@ end
 local function loadscheme()
     local themes
     if daylight() == "light" then
-        themes = { "kanagawa.nvim" }
+        themes = { "kanagawa.nvim", "catppuccin" }
+    else
         themes = {
             "kanagawa.nvim",
             "catppuccin",
@@ -41,8 +42,7 @@ local function loadscheme()
 end
 require("vscripts.cursorhold")
 vim.g.cursorhold_updatetime = 100
--- loadscheme()
-require("packer").loader("kanagawa.nvim")
+loadscheme()
 
 require("utils.ui.highlights")
 
@@ -98,7 +98,7 @@ function Lazyload()
     end
 
     if load_lsp then
-        -- loader("lsp_signature.nvim")
+        loader("nvim-lspconfig") -- null-ls.nvim
     end
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then

@@ -288,7 +288,7 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         CursorLineNr = { bold = true },
         FoldColumn = { background = "background" },
-        Folded = { inherit = "Comment", italic = true, bold = true },
+        Folded = { inherit = "Comment", italic = true, bold = true, fg = P.springViolet1, bg = P.sumiInk2 },
         -- Add undercurl to existing spellbad highlight
         -- TODO(vsedov) (20:35:02 - 10/07/22): revert when this is stable
         -- SpellBad = { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" },

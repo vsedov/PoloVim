@@ -1,12 +1,11 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
+
 lsp({
     "neovim/nvim-lspconfig",
-    after = "mason.nvim",
-    requires = { "mason.nvim" },
+    opt = true,
     setup = conf.nvim_lsp_setup,
     config = conf.nvim_lsp,
-    opt = true,
 })
 
 lsp({

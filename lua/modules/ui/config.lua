@@ -563,6 +563,20 @@ function config.catppuccin()
             path = vim.fn.stdpath("cache") .. "/catppuccin",
             suffix = "_compiled",
         },
+        styles = {
+            comments = { "italic" },
+            conditionals = { "italic" },
+            loops = {},
+            functions = {},
+            keywords = { "italic" },
+            strings = {},
+            variables = {},
+            numbers = {},
+            booleans = { "italic" },
+            properties = {},
+            types = {},
+            operators = {},
+        },
         integrations = {
             treesitter = true,
             native_lsp = {
