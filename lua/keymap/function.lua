@@ -14,29 +14,6 @@ local plug_map = {
         end
     end, "Debug / Inspect"):with_silent(),
 
-    -- Venv
-    ["n|<localleader>V"] = map_cmd(function()
-        local venn_enabled = vim.inspect(vim.b.venn_enabled)
-        if venn_enabled == "nil" then
-            print("Venn active")
-            vim.b.venn_enabled = true
-            vim.cmd([[setlocal ve=all]])
-            -- draw a line on HJKL keystokes
-            vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", { noremap = true })
-            vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", { noremap = true })
-            vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", { noremap = true })
-            vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", { noremap = true })
-            -- draw a box by pressing "f" with visual selection
-            vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
-        else
-            print("Venn inactive")
-
-            vim.cmd([[setlocal ve=]])
-            vim.cmd([[mapclear <buffer>]])
-            vim.b.venn_enabled = nil
-        end
-    end, "Venn Toggle"):with_silent(),
-
     ["n|<leader>hw"] = map_cmd(function()
             if require("dynamic_help.extras.statusline").available() ~= "" then
                 require("dynamic_help").float_help(vim.fn.expand("<cword>"))
@@ -62,6 +39,19 @@ local plug_map = {
         end, "smard dd")
         :with_noremap()
         :with_expr(),
+
+    ["n|L"] = map_cmd(function()
+        return ":DD " .. vim.fn.expand("<cword>") .. "<CR>"
+    end, "Dev Docs search"):with_expr(),
+
+    ["n|}"] = map_cmd(function()
+        return ":lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow" .. "<cr>"
+    end, "Diag show next"):with_expr(),
+
+    ["n|{"] = map_cmd(function()
+        return ":lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow" .. "<cr>"
+    end, "Diag show Prev"):with_expr(),
+
     ["v|d"] = map_cmd(function()
             local l, c = unpack(vim.api.nvim_win_get_cursor(0))
             for _, line in ipairs(vim.api.nvim_buf_get_lines(0, l - 1, l, true)) do
