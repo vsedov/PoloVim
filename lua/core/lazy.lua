@@ -171,6 +171,9 @@ vim.defer_fn(function()
     lprint("telescope family")
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
+    vim.defer_fn(function()
+        loader("vim-matchup")
+    end, lazy_timer + 10)
     loader("workspaces.nvim")
     -- Notify
     loader("nvim-notify")

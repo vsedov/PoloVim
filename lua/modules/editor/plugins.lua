@@ -254,3 +254,26 @@ editor({
     "jbyuki/venn.nvim",
     opt = true,
 })
+
+editor({
+    "andymass/vim-matchup",
+    opt = true,
+    event = "InsertEnter",
+    cmd = { "MatchupWhereAmI?", "MatchupShowTimes", "MatchupWhereAmI??" },
+    after = "nvim-treesitter",
+    config = function()
+        vim.g.matchup_enabled = 1
+        vim.g.matchup_surround_enabled = 1
+        -- vim.g.matchup_transmute_enabled = 1
+        vim.g.matchup_matchparen_hi_surround_always = 1
+        vim.g.matchup_matchparen_deferred = 1
+        vim.g.matchup_matchparen_offscreen = { method = "popup" }
+        vim.keymap.set("n", "<c-s-k>", "<cmd>MatchupWhereAmI?<cr>", { noremap = true })
+        require("nvim-treesitter.configs").setup({
+            matchup = {
+                enable = true, -- mandatory, false will disable the whole extension
+                disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+            },
+        })
+    end,
+})

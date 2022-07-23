@@ -21,7 +21,6 @@ local plug_map = {
     -- check whats actually loaded
     ["n|<localleader>ps"] = map_cmd("<cmd>PackerStatus<cr>", "PackerStatus"):with_noremap():with_silent(),
 
-    ["n|<C-]>"] = map_args("Template", "Template"),
     ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>", "Cwd"):with_noremap():with_silent(),
     -- I want to use focus first
     ["n|<Leader>e"] = map_cr("NeoTreeFocusToggle", "NeoTree Focus Toggle"):with_noremap():with_silent(),
