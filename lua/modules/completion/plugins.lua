@@ -10,6 +10,12 @@ completion({
 })
 
 completion({
+    "romainl/vim-devdocs",
+    cmd = { "DD" },
+    opt = true,
+})
+
+completion({
     "max397574/nvim-cmp",
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip

@@ -43,7 +43,7 @@ Hydra({
         { "H", "<C-w>H", { exit = true, desc = "<c-w>H" } },
         { "J", "<C-w>J", { exit = true, desc = "<c-w>J" } },
         { "K", "<C-w>K", { exit = true, desc = "<c-w>K" } },
-        { "L", "<C-w>L:", { exit = true, desc = "<c-w>L" } },
+        { "L", "<C-w>L", { exit = true, desc = "<c-w>L" } },
 
         {
             "<Left>",

@@ -98,7 +98,7 @@ function Lazyload()
     end
 
     if load_lsp then
-        loader("nvim-lspconfig") -- null-ls.nvim
+        -- loader("nvim-lspconfig") -- null-ls.nvim
     end
 
     -- local bytes = vim.fn.wordcount()['bytes']

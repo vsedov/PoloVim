@@ -3,8 +3,8 @@ local config = {}
 
 function config.nvim_doc_help()
     require("docs-view").setup({
-        position = "right",
-        width = 60,
+        position = "bottom",
+        height = 10,
     })
 end
 

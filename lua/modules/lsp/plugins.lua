@@ -4,6 +4,7 @@ local lsp = require("core.pack").package
 lsp({
     "neovim/nvim-lspconfig",
     opt = true,
+    event = "BufEnter",
     setup = conf.nvim_lsp_setup,
     config = conf.nvim_lsp,
 })
@@ -74,7 +75,7 @@ lsp({
 
 -- lsp({ "mfussenegger/nvim-lint", ft = { "python", "lua", "c" }, opt = true, config = conf.lint })
 
-lsp({ "smjonas/inc-rename.nvim", cmd = "IncRename", config = conf.rename })
+lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", after = "nvim-lspconfig", config = conf.rename })
 
 lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
