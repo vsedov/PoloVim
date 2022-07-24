@@ -1,6 +1,6 @@
 local conf = require("modules.ui.config")
 local ui = require("core.pack").package
-ui({ "j-hui/fidget.nvim", opt = true, ft = { "python", "lua", "c" }, config = conf.fidget })
+ui({ "j-hui/fidget.nvim", opt = true, ft = { "julia", "python", "lua", "c" }, config = conf.fidget })
 
 ui({ "kyazdani42/nvim-web-devicons" })
 
