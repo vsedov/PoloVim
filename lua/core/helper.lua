@@ -5,10 +5,11 @@ _G = _G or {}
 _G.lambda = {}
 lambda.config = {
     cmp_theme = "border", -- no-border , border
-    config_test = false,
+    config_test = true,
     python = {
         lint = "flake8", -- "pylint "
         lsp = "pylance", -- jedi pylsp and pyright
+        format = "yapf",
     },
 }
 ----------------------------------------------------------------------------------------------------

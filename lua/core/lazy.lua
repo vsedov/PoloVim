@@ -30,7 +30,6 @@ local function loadscheme()
         themes = {
             "kanagawa.nvim",
             "catppuccin",
-            "tokyonight.nvim",
         }
     end
     local v = math.random(1, #themes)
@@ -144,8 +143,6 @@ end
 vim.defer_fn(function()
     vim.cmd([[doautocmd User LoadLazyPlugin]])
 end, lazy_timer)
-
--- vim.api.nvim_set_hl(0, "LineNr", { fg = "#505068" })
 
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
