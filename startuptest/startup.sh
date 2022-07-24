@@ -39,8 +39,8 @@ get_time
 pf "Opening C File"
 nvim tmp.c --startuptime tmp
 get_time
-# pf "Opening norg File"
-# nvim tmp.norg --startuptime tmp
-# get_time
+pf "Opening norg File"
+nvim tmp.norg --startuptime tmp
+get_time
 
 rm tmp
