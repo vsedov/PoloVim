@@ -11,7 +11,6 @@ lsp({
 
 lsp({
     "williamboman/nvim-lsp-installer",
-    ft = { "zig" },
     opt = true,
     -- cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
     requires = "nvim-lspconfig",
@@ -55,6 +54,7 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     config = conf.lsp_sig,
+    after = "nvim-lspconfig",
     opt = true,
 })
 
@@ -65,9 +65,9 @@ lsp({
 })
 
 lsp({
-    "Maan2003/lsp_lines.nvim",
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     opt = true,
-    cmd = { "DiagnosticDisable", "DiagnosticEnable" },
+    cmd = { "DT" },
     config = conf.lsp_lines,
 })
 
