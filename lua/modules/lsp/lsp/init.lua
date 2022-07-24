@@ -1,3 +1,6 @@
+if vim.bo.filetype ~= "zig" then
+    require("modules.lsp.lsp.semantic_tokens")
+end
 if vim.g.lsp_config_complete then
     return
 end
@@ -43,6 +46,10 @@ local python_setup = {
 python_setup[lambda.config.python.lsp]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
+
+lspconfig.zls.setup(enhance_attach({
+    cmd = { "/home/viv/Anothertest/zls/zig-out/bin/zls" },
+}))
 
 lspconfig.gopls.setup(enhance_attach({
     filetypes = { "go" },

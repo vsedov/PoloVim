@@ -210,6 +210,7 @@ lang({
 
 lang({
     "sheerun/vim-polyglot",
+    opt = true,
     setup = function()
         vim.g.polyglot_disabled = { "latex", "markdown" }
     end,
