@@ -261,3 +261,20 @@ misc({
     ft = { "norg", "markdown" },
     conf = conf.table,
 })
+
+misc({
+    "gbprod/stay-in-place.nvim",
+    keys = {
+        { "n", ">" },
+        { "n", "<" },
+        { "n", "=" },
+        { "n", ">>" },
+        { "n", "<<" },
+        { "x", ">" },
+        { "x", "<" },
+        { "x", "=" },
+    },
+    config = function()
+        require("stay-in-place").setup({})
+    end,
+})
