@@ -130,7 +130,9 @@ elseif lambda.config.cmp_theme == "no-border" then
             "menu",
         },
         format = function(entry, item)
-            item.menu = item.kind
+            item.surround_start = "▐"
+            item.surround_start_hl_group = ("CmpItemKindBlock%s"):format(item.kind)
+            item.surround_end_hl_group = ("CmpItemKindBlock%s"):format(item.kind)
             item.menu_hl_group = ("CmpItemKindMenu%s"):format(item.kind)
             item.padding = " "
             item.kind = kind.presets.default[item.kind] or ""
@@ -141,11 +143,12 @@ elseif lambda.config.cmp_theme == "no-border" then
 
             if entry.source.name == "cmp_tabnine" then
                 if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-                    menu = entry.completion_item.data.detail
+                    item.menu = entry.completion_item.data.detail
                 end
+            else
+                item.menu = item.kind
             end
 
-            item.menu = menu
             return item
         end,
     }
