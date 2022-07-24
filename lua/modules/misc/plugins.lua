@@ -244,12 +244,12 @@ misc({
 
 misc({
     "notjedi/nvim-rooter.lua",
-    event = "BufRead",
+    opt = true,
     config = function()
         require("nvim-rooter").setup({
             rooter_patterns = { ".git", ".hg", ".svn", "pyproject.toml" },
             trigger_patterns = { "*" },
-            manual = true,
+            manual = false,
         })
     end,
 })
