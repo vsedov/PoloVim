@@ -268,7 +268,7 @@ editor({
         vim.g.matchup_matchparen_hi_surround_always = 1
         vim.g.matchup_matchparen_deferred = 1
         vim.g.matchup_matchparen_offscreen = { method = "popup" }
-        vim.keymap.set("n", "<c-s-k>", "<cmd>MatchupWhereAmI?<cr>", { noremap = true })
+        vim.keymap.set("n", "<c-<leader>>", "<cmd>MatchupWhereAmI?<cr>", { noremap = true })
         require("nvim-treesitter.configs").setup({
             matchup = {
                 enable = true, -- mandatory, false will disable the whole extension
