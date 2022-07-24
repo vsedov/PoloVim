@@ -127,6 +127,7 @@ function config.jaq()
                 typescript = "deno run",
                 rust = "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
                 dart = "dart",
+                julia = "cd $dir && julia $file",
             },
             -- Uses internal commands such as 'source' and 'luafile'
             internal = {
