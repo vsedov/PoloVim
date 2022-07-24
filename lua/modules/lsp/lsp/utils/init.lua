@@ -84,7 +84,6 @@ function M.common_on_attach(client, bufnr)
         end
     end
     add_lsp_buffer_keybindings(client, bufnr)
-
     require("modules.lsp.lsp.utils.autocmd").setup_autocommands(client, bufnr)
 end
 

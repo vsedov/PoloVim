@@ -7,9 +7,9 @@ local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 local dlsconfig = require("diagnosticls-configs")
 dlsconfig.setup({
     ["python"] = {
-        linter = require("diagnosticls-configs.linters.flake8"),
+        linter = require("diagnosticls-configs.linters." .. lambda.config.python.lint),
         formatter = {
-            require("diagnosticls-configs.formatters.yapf"),
+            require("diagnosticls-configs.formatters." .. lambda.config.python.format),
             require("diagnosticls-configs.formatters.isort"),
         },
     },
@@ -43,6 +43,7 @@ local python_setup = {
 python_setup[lambda.config.python.lsp]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
+
 lspconfig.gopls.setup(enhance_attach({
     filetypes = { "go" },
     cmd = { "gopls", "--remote=auto" },
@@ -52,7 +53,7 @@ lspconfig.gopls.setup(enhance_attach({
     },
 }))
 
-lspconfig.texlab.setup(enhance_attach({ require("modules.lsp.lsp.providers.latex") }))
+lspconfig.texlab.setup(enhance_attach(require("modules.lsp.lsp.providers.latex")))
 
 lspconfig.jsonls.setup(enhance_attach({
     cmd = { "vscode-json-languageserver", "--stdio" },
