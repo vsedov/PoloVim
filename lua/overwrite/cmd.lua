@@ -116,7 +116,7 @@ vim.cmd([[command! -nargs=+ F execute 'silent grep!' <q-args> | cw | redraw!]])
 add_cmd("CursorNodes", function()
     local node = require("nvim-treesitter.ts_utils").get_node_at_cursor()
     while node do
-        dump(node:type())
+        lambda.dump(node:type())
         node = node:parent()
     end
 end, {})

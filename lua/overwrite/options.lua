@@ -75,7 +75,6 @@ function options:load_options()
     -- --     vim.g.loaded_python3_provider = 0
     -- -- end
 end
-
 options:load_options()
 
 return options
