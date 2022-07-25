@@ -3,16 +3,16 @@ return {
         "julia",
         "--project=@nvim-lspconfig",
         "-J" .. vim.fn.getenv("HOME") .. "/.julia/environments/nvim-lspconfig/languageserver.so",
+        "-J" .. vim.fn.getenv("HOME") .. "/.julia/environments/nvim-lspconfig/juliaformatter.so",
         "--sysimage-native-code=yes",
         "--startup-file=no",
         "--history-file=no",
         "-e",
         [[
-        # just in case
         import Pkg;
-        import JuliaFormatter;
         using JuliaFormatter; 
-        format_file("]] .. vim.fn.expand("%:p") .. [[", remove_extra_newlines = true, style = "yas")
+
+        format_file("]] .. vim.fn.expand("%:p") .. [[", remove_extra_newlines = true)
 
         function recurse_project_paths(path::AbstractString)
             isnothing(Base.current_project(path)) && return
