@@ -216,19 +216,19 @@ editor({
     require = "gbprod/yanky.nvim",
     keys = {
         -- normal sub
-        { "n", "YY" },
-        { "n", "Yl" },
-        { "n", "YL" },
-        { "x", "Y" },
+        { "n", "LY" },
+        { "n", "Ll" },
+        { "n", "LL" },
+        { "x", "L" },
         -- range
         { "n", "<leader>l" },
         { "x", "<leader>l" },
         { "n", "<leader>lr" },
         -- Sub
-        { "n", "Yx" },
-        { "n", "Yxx" },
-        { "x", "Yx" },
-        { "n", "Yxc" },
+        { "n", "Lx" },
+        { "n", "Lxx" },
+        { "x", "Lx" },
+        { "n", "Lxc" },
     },
     config = conf.substitute,
 })
