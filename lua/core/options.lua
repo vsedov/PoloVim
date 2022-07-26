@@ -164,6 +164,7 @@ local function load_options()
         vim.opt[name] = value
     end
 end
+
 if vim.fn.executable("nvr") > 0 then
     vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
     vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"

@@ -22,6 +22,7 @@ local function daylight()
         return "dark"
     end
 end
+
 local function loadscheme()
     local themes
     if daylight() == "light" then
@@ -39,6 +40,7 @@ local function loadscheme()
 
     require("packer").loader(loading_theme)
 end
+
 require("vscripts.cursorhold")
 vim.g.cursorhold_updatetime = 100
 loadscheme()
@@ -74,14 +76,9 @@ function Lazyload()
 
     local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
     if not syn_on then
-        vim.cmd([[syntax manual]])
+        vim.cmd([[syntax on]])
     end
 
-    -- local fname = vim.fn.expand("%:p:f")
-    if fsize > 6 * 1024 * 1024 then
-        vim.cmd([[syntax off]])
-        return
-    end
     -- only works if you are working from one python file .
     if vim.bo.filetype == "lua" then
         loader("lua-dev.nvim")
@@ -112,20 +109,6 @@ function Lazyload()
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { "vista", "guiha" },
         command = [[setlocal syntax=on]],
-    })
-
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = "*",
-        callback = function()
-            if vim.fn.wordcount()["bytes"] > 2048000 then
-                lprint("syntax off")
-                vim.cmd([[setlocal syntax=off]])
-            end
-        end,
-    })
-    vim.api.nvim_create_autocmd("Syntax", {
-        pattern = "*",
-        command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
     })
 end
 
