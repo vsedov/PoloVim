@@ -77,7 +77,6 @@ Hydra({
         { "<C-v>", "<C-w><C-v>", { desc = false } },
 
         { "w", "<C-w>w", { exit = true, desc = false } },
-        { "<C-w>", "<C-w>w", { exit = true, desc = false } },
 
         { "z", cmd("MaximizerToggle!"), { desc = "maximize" } },
         { "<C-z>", cmd("MaximizerToggle!"), { exit = true, desc = false } },

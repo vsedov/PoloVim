@@ -28,24 +28,24 @@ editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
 
 editor({
     "gbprod/yanky.nvim",
-    keys = {
-        { "n", "y" },
-        { "x", "y" },
-
-        { "n", "p" },
-        { "n", "P" },
-        { "x", "p" },
-        { "x", "P" },
-
-        { "n", "gp" },
-        { "n", "gP" },
-        { "x", "gp" },
-        { "x", "gP" },
-
-        { "n", "<Leader>n" },
-        { "n", "<Leader>N" },
-    },
-    -- event = { "CursorMoved", "CmdlineEnter" },
+    -- keys = {
+    --     { "n", "y" },
+    --     { "x", "y" },
+    --
+    --     { "n", "p" },
+    --     { "n", "P" },
+    --     { "x", "p" },
+    --     { "x", "P" },
+    --
+    --     { "n", "gp" },
+    --     { "n", "gP" },
+    --     { "x", "gp" },
+    --     { "x", "gP" },
+    --
+    --     { "n", "<Leader>n" },
+    --     { "n", "<Leader>N" },
+    -- },
+    event = { "CursorMoved", "CmdlineEnter" },
     setup = conf.setup_yanky,
     config = conf.config_yanky,
     requires = "telescope.nvim",
@@ -216,9 +216,9 @@ editor({
     require = "gbprod/yanky.nvim",
     keys = {
         -- normal sub
-        { "n", "LY" },
+        { "n", "L" },
         { "n", "Ll" },
-        { "n", "LL" },
+        { "n", "LK" },
         { "x", "L" },
         -- range
         { "n", "<leader>l" },

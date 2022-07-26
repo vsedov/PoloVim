@@ -221,6 +221,7 @@ function config.winshift()
         },
     })
 end
+
 function config.neoscroll()
     require("cinnamon").setup({
         extra_keymaps = true,
@@ -336,9 +337,9 @@ function config.substitute()
         motion1 = true,
         motion2 = true,
     })
-    vim.keymap.set("n", "LY", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+    vim.keymap.set("n", "L", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
     vim.keymap.set("n", "Ll", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-    vim.keymap.set("n", "LL", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
+    vim.keymap.set("n", "LK", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
     vim.keymap.set("x", "Ll", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
 
     vim.keymap.set("n", "<leader>l", "<cmd>lua require('substitute.range').operator()<cr>", { noremap = true })
@@ -350,7 +351,9 @@ function config.substitute()
     vim.keymap.set("x", "Lx", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
     vim.keymap.set("n", "Lxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
 end
+
 function config.bbye()
     vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
 end
+
 return config

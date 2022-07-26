@@ -709,18 +709,19 @@ function config.blankline()
     -- test this for now, not sure if i like this or not .
     -- vim.opt.listchars:append("space:⋅")
     -- vim.opt.listchars:append("eol:↴")
-
+    vim.opt.listchars:append("space:⋅")
+    vim.opt.listchars:append("eol:↴")
     require("indent_blankline").setup({
         enabled = true,
-        -- char = "|",
-        char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
+        -- char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
         show_foldtext = false,
         -- context_char = "┃",
         -- indent_blankline_context_char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
-        indent_blankline_context_char_list = { "┃", "║", "╬", "█" },
+        char = "│", -- ┆ ┊ 
+        context_char = "▎",
         char_priority = 12,
         show_current_context = true,
-        show_current_context_start = false,
+        show_current_context_start = true,
         show_current_context_start_on_current_line = false,
         show_first_indent_level = true,
         filetype_exclude = {
@@ -850,6 +851,7 @@ function config.modes()
         },
     })
 end
+
 function config.transparent()
     require("transparent").setup({
         enable = false,
