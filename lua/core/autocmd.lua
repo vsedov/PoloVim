@@ -7,6 +7,7 @@ local autocmd = {}
 local function replace_termcodes(str)
     return api.nvim_replace_termcodes(str, true, true, true)
 end
+
 vim.keymap.set({ "n", "v", "o", "i", "c" }, "<Plug>(StopHL)", 'execute("nohlsearch")[-1]', { expr = true })
 
 local function stop_hl()
@@ -84,6 +85,7 @@ local function smart_close()
         api.nvim_win_close(0, true)
     end
 end
+
 lambda.augroup("SmartClose", {
     {
         -- Auto open grep quickfix window
@@ -279,6 +281,7 @@ lambda.augroup("buffer", {
                 end
                 vim.fn.mkdir(dir, "p")
             end
+
             auto_mkdir(vim.fn.expand("%:p:h"), vim.v.cmdbang)
         end,
         nested = false,
