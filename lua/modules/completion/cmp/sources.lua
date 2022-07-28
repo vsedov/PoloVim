@@ -29,25 +29,20 @@ if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end
 
-if vim.o.ft == "norg" then
+if vim.bo.ft == "norg" then
     table.insert(sources, { name = "latex_symbols" })
 end
-if vim.o.ft == "markdown" then
+if vim.bo.ft == "markdown" then
     table.insert(sources, { name = "spell" })
     table.insert(sources, { name = "look" })
     table.insert(sources, { name = "latex_symbols" })
 end
-if vim.o.ft == "gitcommit" then
+if vim.bo.ft == "gitcommit" then
     vim.cmd([[packadd cmp-git]])
     require("cmp_git").setup()
     table.insert(sources, { name = "cmp_git" })
 end
-if vim.o.ft == "lua" then
+if vim.bo.ft == "lua" then
     table.insert(sources, { name = "nvim_lua" })
 end
-if vim.o.ft == "zsh" or vim.o.ft == "sh" or vim.o.ft == "fish" or vim.o.ft == "proto" then
-    table.insert(sources, { name = "path" })
-    table.insert(sources, { name = "calc" })
-end
-
 return sources

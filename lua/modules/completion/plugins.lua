@@ -8,6 +8,15 @@ completion({
     cmd = { "DocsViewToggle" },
     config = conf.nvim_doc_help,
 })
+completion({
+    "KabbAmine/zeavim.vim",
+    cmd = {
+        "Zeavim",
+        "ZeavimV",
+        "Zeavim!",
+        "Docset",
+    },
+})
 
 completion({
     "romainl/vim-devdocs",
