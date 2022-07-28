@@ -40,7 +40,7 @@ local plug_map = {
         :with_noremap()
         :with_expr(),
 
-    ["n|LL"] = map_cmd(function()
+    ["n|LK"] = map_cmd(function()
             return ":DD " .. vim.fn.expand("<cword>") .. "<CR>"
         end, "Dev Docs search")
         :with_expr()

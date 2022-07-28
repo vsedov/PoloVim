@@ -56,7 +56,7 @@ local plug_map = {
         :with_noremap()
         :with_silent(),
 
-    ["n|<leader>["] = map_cmd([[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], "replace current"):with_noremap(),
+    ["n|<leader>sc"] = map_cmd([[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], "replace current"):with_noremap(),
 
     -- ?ie | entire object
     ["x|ie"] = map_cmd([[gg0oG$]]):with_noremap():with_silent(),
@@ -100,8 +100,8 @@ local plug_map = {
     ["o|il"] = map_cmd([[<cmd>normal! ^vg_<CR>]]):with_noremap():with_silent(),
 
     -- -- new lines
-    ["n|;l"] = map_cmd([[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], "New Lines top"):with_noremap(),
-    ["n|;'"] = map_cmd([[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], "New Lines bottom"):with_noremap(),
+    ["n|\\j"] = map_cmd([[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], "New Lines top"):with_noremap(),
+    ["n|\\k"] = map_cmd([[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], "New Lines bottom"):with_noremap(),
 
     -- visual search
     ["v|//"] = map_cmd([[y/<C-R>"<CR>]], "visual search"):with_noremap(),

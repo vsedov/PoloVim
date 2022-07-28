@@ -1,8 +1,6 @@
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local map_cu = bind.map_cu
-local map_cmd = bind.map_cmd
-local map_args = bind.map_args
 
 local plug_map = {
 
@@ -24,7 +22,6 @@ local plug_map = {
     ["n|<leader>tn"] = map_cu("tabedit", "tabedit"):with_noremap():with_silent(),
     ["n|<leader>tc"] = map_cu("tabclose", "tabclose"):with_noremap():with_silent(),
     ["n|<leader>to"] = map_cu("tabonly", "tabonly"):with_noremap():with_silent(),
-    ["n|<leader>tm"] = map_cu("tabmove", "tabmove"):with_noremap():with_silent(),
     ["n|<leader>tm"] = map_cu("tabmove", "tabmove"):with_noremap():with_silent(),
 
     ["n|]t"] = map_cu("tabprev", "tabprev"):with_noremap():with_silent(),

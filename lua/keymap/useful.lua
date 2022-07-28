@@ -11,12 +11,12 @@ local plug_map = {
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
     ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>", "NeoZoomToggle"):with_noremap():with_silent():with_nowait(),
 
-    ["n|__"] = map_cmd("<cmd>NeoWellToggle<CR>", "NeoWellToggle"):with_noremap():with_silent():with_nowait(),
-    ["n|_a"] = map_cmd("<cmd>NeoWellAppend<CR>", "NeoWellAppend"):with_noremap():with_silent():with_nowait(),
-    ["n|_j"] = map_cmd("<cmd>NeoWellJump<CR>", "NeoWellJump"):with_noremap():with_silent():with_nowait(),
-    ["n|_r"] = map_cmd("<cmd>NeoWellEdit<CR>", "NeoWellEdit"):with_noremap():with_silent():with_nowait(),
-    ["n|_d"] = map_cmd("<cmd>NeoWellOut<CR>", "NeoWellOut"):with_noremap():with_silent():with_nowait(),
-    ["n|_D"] = map_cmd("<cmd>NeoWellWipeOut<CR>", "NeoWellWipeOut"):with_noremap():with_silent():with_nowait(),
+    ["n|\\t"] = map_cmd("<cmd>NeoWellToggle<CR>", "NeoWellToggle"):with_noremap():with_silent(),
+    ["n|\\a"] = map_cmd("<cmd>NeoWellAppend<CR>", "NeoWellAppend"):with_noremap():with_silent(),
+    ["n|\\s"] = map_cmd("<cmd>NeoWellJump<CR>", "NeoWellJump"):with_noremap():with_silent(),
+    ["n|\\r"] = map_cmd("<cmd>NeoWellEdit<CR>", "NeoWellEdit"):with_noremap():with_silent(),
+    ["n|\\d"] = map_cmd("<cmd>NeoWellOut<CR>", "NeoWellOut"):with_noremap():with_silent(),
+    ["n|\\D"] = map_cmd("<cmd>NeoWellWipeOut<CR>", "NeoWellWipeOut"):with_noremap():with_silent(),
 
     -- check whats actually loaded
     ["n|<localleader>ps"] = map_cmd("<cmd>PackerStatus<cr>", "PackerStatus"):with_noremap():with_silent(),
@@ -49,7 +49,7 @@ local plug_map = {
         :with_noremap()
         :with_silent(),
     ---- private peek
-    ["n|<Leader>v"] = map_cu("Vista!!", "Vistaaa"):with_noremap():with_silent(),
+    ["n|<Leader>v"] = map_cu("SymbolsOutline", "Vistaaa"):with_noremap():with_silent(),
     ["n|<Leader>gt"] = map_cr(
         '<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
         "Git Linker open browser range "
@@ -79,16 +79,6 @@ local plug_map = {
     -- feel like these needs to change
     ["v|'v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>", "Spectre visual"):with_noremap(),
     ["v|'c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>", "Spectre file search"):with_noremap(),
-
-    ["n|<leader>xx"] = map_cmd("<cmd>Trouble<cr>", "Spectre file search"):with_noremap():with_silent(),
-    ["n|<leader>xw"] = map_cmd("<cmd>Trouble workspace_diagnostics<cr>", "trouble workspace")
-        :with_noremap()
-        :with_silent(),
-    ["n|<leader>xd"] = map_cmd("<cmd>Trouble document_diagnostics<cr>", "trouble document diag")
-        :with_noremap()
-        :with_silent(),
-    ["n|<leader>xl"] = map_cmd("<cmd>Trouble loclist<cr>", "trouble loclist"):with_noremap():with_silent(),
-    ["n|<leader>xq"] = map_cmd("<cmd>Trouble quickfix<cr>", "trouble quickfix"):with_noremap():with_silent(),
 }
 
 return plug_map
