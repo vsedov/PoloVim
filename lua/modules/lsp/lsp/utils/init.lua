@@ -20,7 +20,6 @@ local function add_lsp_buffer_keybindings(client, bufnr)
         ["gD"] = "<cmd>lua vim.lsp.buf.declaration()<CR>",
         ["gI"] = "<cmd>lua vim.lsp.buf.implementation()<CR>",
 
-        ["<leader>="] = "<cmd>lua vim.lsp.buf.formatting()<CR>",
         ["<leader>ai"] = "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
         ["<leader>ao"] = "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",
 
