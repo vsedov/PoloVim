@@ -135,11 +135,6 @@ end
 function config.jetscape()
     require("jeskape").setup({
         mappings = {
-            -- avoid tex values getting in teh way
-            ["\\l"] = {
-                i = "<cmd>Clap | startinsert<cr>",
-                f = "<cmd>Clap grep ++query=<cword> |  startinsert<cr>",
-            },
             j = {
                 h = "<esc>O",
                 k = "<esc>",

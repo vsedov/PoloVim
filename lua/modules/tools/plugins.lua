@@ -2,13 +2,6 @@ local conf = require("modules.tools.config")
 local tools = require("core.pack").package
 
 tools({
-    "simrat39/symbols-outline.nvim",
-    opt = true,
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
-    setup = conf.outline,
-})
-
-tools({
     "relastle/vim-nayvy",
     ft = { "python" },
     opt = true,
@@ -55,8 +48,6 @@ tools({
 })
 
 tools({ "jghauser/mkdir.nvim", opt = true, cmd = "new", config = [[require'mkdir']] })
-
-tools({ "liuchengxu/vista.vim", cmd = "Vista", setup = conf.vim_vista, opt = true })
 
 ------------- Spelling and Grammer
 tools({
