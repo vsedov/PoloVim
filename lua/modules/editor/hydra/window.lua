@@ -20,7 +20,7 @@ Hydra({
     name = "Windows",
     hint = window_hint,
     config = {
-        invoke_on_body = true,
+        invoke_on_body = false,
         hint = {
             border = "rounded",
             offset = -1,

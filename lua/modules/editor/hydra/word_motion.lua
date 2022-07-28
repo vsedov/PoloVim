@@ -3,9 +3,12 @@ local Hydra = require("hydra")
 Hydra({
     name = "Quick words",
     config = {
-        color = "pink",
-        hint = "statusline",
+        hint = {
+            position = "bottom",
+            border = "single",
+        },
     },
+
     mode = { "n", "x", "o" },
     body = ",",
     heads = {

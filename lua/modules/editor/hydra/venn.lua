@@ -17,6 +17,7 @@ Hydra({
             position = "bottom",
             border = "single",
         },
+
         on_enter = function()
             vim.cmd([[packadd venn.nvim]])
             vim.o.virtualedit = "all"
