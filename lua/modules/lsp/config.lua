@@ -43,6 +43,19 @@ function config.saga()
             virtual_text = true,
         },
         server_filetype_map = { python = { "diagnosticls" } },
+        -- show outline
+        show_outline = {
+            win_position = "right",
+            -- set the special filetype in there which in left like nvimtree neotree defx
+            left_with = "",
+            win_width = 30,
+            auto_enter = true,
+            auto_preview = true,
+            virt_text = "┃",
+            jump_key = "o",
+            -- auto refresh when change buffer
+            auto_refresh = true,
+        },
     })
 end
 
@@ -113,8 +126,9 @@ function config.lsp_lines()
             end,
         })
     end
-    local popup_toggle = false
-    vim.api.nvim_create_user_command("DT", function()
+    create_auto_cmd()
+    local popup_toggle = true
+    vim.api.nvim_create_user_command("TL", function()
         popup_toggle = not popup_toggle
         if popup_toggle then
             create_auto_cmd()
@@ -207,6 +221,24 @@ function config.navic()
         depth_limit = 0,
         depth_limit_indicator = "..",
     })
+end
+
+function config.vista()
+    vim.g["vista#renderer#enable_icon"] = 1
+    vim.g.vista_disable_statusline = 1
+
+    vim.g.vista_default_executive = "nvim_lsp" -- ctag
+    vim.g.vista_echo_cursor_strategy = "floating_win"
+    vim.g.vista_vimwiki_executive = "markdown"
+    vim.g.vista_executive_for = {
+        vimwiki = "markdown",
+        pandoc = "markdown",
+        markdown = "toc",
+        typescript = "nvim_lsp",
+        typescriptreact = "nvim_lsp",
+        go = "nvim_lsp",
+        lua = "nvim_lsp",
+    }
 end
 
 return config

@@ -11,8 +11,8 @@ lsp({
 
 lsp({
     "williamboman/nvim-lsp-installer",
-    opt = true,
     -- cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
+    opt = true,
     requires = "nvim-lspconfig",
     config = conf.lsp_install,
 })
@@ -66,8 +66,7 @@ lsp({
 
 lsp({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    opt = true,
-    cmd = { "DT" },
+    after = "nvim-lspconfig",
     config = conf.lsp_lines,
 })
 
@@ -80,3 +79,8 @@ lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", after = "nvim-lspconfig", c
 lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
 lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", requires = { "MunifTanjim/nui.nvim" } })
+lsp({
+    "liuchengxu/vista.vim",
+    cmd = { "Vista", "Vista!", "Vista!!" },
+    config = conf.vista,
+})

@@ -48,7 +48,7 @@ python_setup[lambda.config.python.lsp]()
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 
 lspconfig.zls.setup(enhance_attach({
-    cmd = { "/home/viv/Anothertest/zls/zig-out/bin/zls" },
+    cmd = { "zls" },
 }))
 
 lspconfig.gopls.setup(enhance_attach({
