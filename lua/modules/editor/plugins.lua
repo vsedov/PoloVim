@@ -137,18 +137,18 @@ editor({
 editor({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
 
 -- temp
-editor({
-    "declancm/cinnamon.nvim",
-    keys = {
-        "<C-U>",
-        "<C-D>",
-        "<C-B>",
-        "<C-F>",
-        "gg",
-        "G",
-    },
-    config = conf.neoscroll,
-})
+-- editor({
+--     "declancm/cinnamon.nvim",
+--     keys = {
+--         "<C-U>",
+--         "<C-D>",
+--         "<C-B>",
+--         "<C-F>",
+--         "gg",
+--         "G",
+--     },
+--     config = conf.neoscroll,
+-- })
 
 -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
@@ -159,9 +159,9 @@ editor({
     "m-demare/hlargs.nvim",
     brach = "expected_lua_number",
     ft = {
-        "python",
         "c",
         "cpp",
+        "python",
         "java",
         "lua",
         "rust",
@@ -216,9 +216,9 @@ editor({
     require = "gbprod/yanky.nvim",
     keys = {
         -- normal sub
-        { "n", "L" },
+        { "n", "<leader>L" },
         { "n", "Ll" },
-        { "n", "LK" },
+        { "n", "LL" },
         { "x", "L" },
         -- range
         { "n", "<leader>l" },

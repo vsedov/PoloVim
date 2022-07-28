@@ -297,6 +297,7 @@ function config.hlargs()
     })
     require("hlargs").setup({
         color = "#ef9062",
+        highlight = {},
         excluded_filetypes = {},
         paint_arg_declarations = true,
         paint_arg_usages = true,
@@ -309,10 +310,10 @@ function config.hlargs()
             },
         },
         performance = {
-            parse_delay = 0.5, -- 0.5 ms
-            slow_parse_delay = 25,
-            max_iterations = 1000,
-            max_concurrent_partial_parses = 50,
+            parse_delay = 1,
+            slow_parse_delay = 50,
+            max_iterations = 400,
+            max_concurrent_partial_parses = 30,
             debounce = {
                 partial_parse = 3,
                 partial_insert_mode = 100,
@@ -337,10 +338,10 @@ function config.substitute()
         motion1 = true,
         motion2 = true,
     })
-    vim.keymap.set("n", "L", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+    vim.keymap.set("n", "LL", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
     vim.keymap.set("n", "Ll", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-    vim.keymap.set("n", "LK", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
-    vim.keymap.set("x", "Ll", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
+    vim.keymap.set("n", "<leader>L", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
+    vim.keymap.set("x", "L", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
 
     vim.keymap.set("n", "<leader>l", "<cmd>lua require('substitute.range').operator()<cr>", { noremap = true })
     vim.keymap.set("x", "<leader>l", "<cmd>lua require('substitute.range').visual()<cr>", { noremap = true })
