@@ -63,7 +63,6 @@ local treesitter = function()
             },
             disable = { "elm" }, -- list of language that will be disabled
             use_languagetree = langtree,
-            custom_captures = { todo = "Todo" },
         },
         incremental_selection = {
             enable = enable,

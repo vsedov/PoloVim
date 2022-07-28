@@ -22,8 +22,6 @@ end
 
 function config.gh()
     vim.cmd([[packadd litee.nvim]])
-    require("litee.lib").setup()
-
     local wk = require("which-key")
     wk.register({
         g = {
@@ -151,6 +149,7 @@ function config.diffview()
         },
     })
 end
+
 function config.gitsigns()
     if not packer_plugins["plenary.nvim"].loaded then
         require("packer").loader("plenary.nvim")
@@ -166,6 +165,7 @@ function config.gitsigns()
             fn(unpack(args, nargs))
         end
     end
+
     local function on_attach(bufnr)
         local function map(mode, l, r, opts)
             opts = opts or {}
@@ -208,6 +208,7 @@ function config.gitsigns()
 
         map({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>")
     end
+
     gitsigns.setup({
         debug_mode = true,
         max_file_length = 1000000000,
@@ -262,6 +263,7 @@ function config.gitsigns()
         diff_opts = { internal = true },
     })
 end
+
 function config.neogit()
     vim.cmd([[packadd diffview.nvim]])
     require("neogit").setup({
@@ -291,6 +293,7 @@ function config.neogit()
         },
     })
 end
+
 function config.gitlinker()
     require("gitlinker").setup()
 end
@@ -355,4 +358,5 @@ function config.git_fixer()
     vim.cmd([[command! -nargs=*  fixup lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]])
     vim.cmd([[command! -nargs=*  ammend lua require('fixer/picker/telescope').commit{type="amend"} ]])
 end
+
 return config
