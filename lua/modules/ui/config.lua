@@ -446,7 +446,7 @@ function config.satellite()
                 enable = false,
             },
             marks = {
-                enable = false,
+                enable = true,
             },
         },
         excluded_filetypes = {
@@ -459,50 +459,6 @@ function config.satellite()
         },
     })
 end
-
--- function config.scrollbar()
---     if vim.wo.diff then
---         return
---     end
---     local w = vim.api.nvim_call_function("winwidth", { 0 })
---     if w < 70 then
---         return
---     end
---     require("scrollbar").setup({
---         handle = {
---             color = "#16161D",
---         },
---         marks = {
---             Search = { color = "#FFA066" },
---             Error = { color = "#E82424" },
---             Warn = { color = "#FF9E3B" },
---             Info = { color = "#6A9589" },
---             Hint = { color = "#658594" },
---             Misc = { color = "#938AA9" },
---         },
---         excluded_filetypes = {
---             "",
---             "prompt",
---             "TelescopePrompt",
---         },
---         autocmd = {
---             render = {
---                 "BufWinEnter",
---                 "TabEnter",
---                 "TermEnter",
---                 "WinEnter",
---                 "CmdwinLeave",
---                 "TextChanged",
---                 "VimResized",
---                 "WinScrolled",
---             },
---         },
---         handlers = {
---             diagnostic = true,
---             search = false,
---         },
---     })
--- end
 
 function config.pretty_fold()
     require("pretty-fold").setup({
@@ -709,8 +665,8 @@ function config.blankline()
     -- test this for now, not sure if i like this or not .
     -- vim.opt.listchars:append("space:⋅")
     -- vim.opt.listchars:append("eol:↴")
-    vim.opt.listchars:append("space:⋅")
-    vim.opt.listchars:append("eol:↴")
+    -- vim.opt.listchars:append("space:⋅")
+    -- vim.opt.listchars:append("eol:↴")
     require("indent_blankline").setup({
         enabled = true,
         -- char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
@@ -750,7 +706,7 @@ function config.blankline()
             "orgagenda",
             "", -- for all buffers without a file type
         },
-        buftype_exclude = { "terminal", "nofile" },
+        buftype_exclude = { "terminal", "nofile", "dashboard" },
         context_patterns = {
             "class",
             "function",
@@ -775,34 +731,6 @@ function config.indentguides()
         -- put your options in here
         indent_soft_pattern = "\\s",
     })
-end
-
-function config.gruvbox()
-    local opt = { "soft", "medium", "hard" }
-    local palettes = { "material", "mix", "original" }
-    local v = opt[math.random(1, #opt)]
-    local palette = palettes[math.random(1, #palettes)]
-    local h = tonumber(os.date("%H"))
-    if h > 6 and h < 18 then
-        lprint("gruvboxlight")
-        vim.cmd("set background=light")
-    else
-        lprint("gruvboxdark")
-        vim.cmd("set background=dark")
-    end
-
-    vim.g.gruvbox_material_invert_selection = 0
-    vim.g.gruvbox_material_enable_italic = 1
-    -- vim.g.gruvbox_material_italicize_strings = 1
-    -- vim.g.gruvbox_material_invert_signs = 1
-    vim.g.gruvbox_material_improved_strings = 1
-    vim.g.gruvbox_material_improved_warnings = 1
-    -- vim.g.gruvbox_material_contrast_dark=v
-    vim.g.gruvbox_material_background = v
-    vim.g.gruvbox_material_enable_bold = 1
-    vim.g.gruvbox_material_palette = palette
-    vim.cmd("colorscheme gruvbox-material")
-    vim.cmd("doautocmd ColorScheme")
 end
 
 function config.buffers_close()
@@ -925,6 +853,98 @@ function config.clock()
             threshold = { late = "00:15" }, -- at 15mins the clock will become red
         })
     end
+end
+
+function config.dashboard_setup()
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*",
+        callback = function()
+            local f = vim.fn
+            if not lambda.config.dashboard and f.getcwd():match(f.stdpath("config")) then
+                require("packer").loader("dashboard")
+            end
+        end,
+    })
+end
+
+function config.dashboard_config()
+    vim.g.indentLine_fileTypeExclude = { "dashboard" }
+    local home = os.getenv("HOME")
+    local db = require("dashboard")
+    db.custom_header = {
+        "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑",
+        "│ ⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷ │",
+        "│ ⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇ │",
+        "│ ⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽ │",
+        "│ ⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕ │",
+        "│ ⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕ │",
+        "│ ⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕ │",
+        "│ ⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄ │",
+        "│ ⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ │",
+        "│ ⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿ │",
+        "│ ⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ │",
+        "│ ⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟ │",
+        "│ ⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠ │",
+        "│ ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙ │",
+        "│ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ │",
+        "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙",
+        "                                  ",
+        "                                  ",
+        "                                  ",
+    }
+    db.custom_footer = {
+        "	",
+        "▷ nya-nvim ◁",
+    }
+    db.hide_statusline = true -- boolean default is true.it will hide statusline in dashboard buffer and auto open in other buffer
+    db.hide_tabline = true -- boolean default is true.it will hide tabline in dashboard buffer and auto open in other buffer
+    db.custom_center = {
+        {
+            icon = "  ",
+            desc = "Workspaces                              ",
+            shortcut = "SPC s l",
+            action = "Telescope workspaces",
+        },
+        {
+            icon = "  ",
+            desc = "Recently opened files                   ",
+            action = "DashboardFindHistory",
+            shortcut = "SPC f h",
+        },
+        {
+            icon = "  ",
+            desc = "Find  File                              ",
+            action = "Telescope find_files find_command=rg,--hidden,--files",
+            shortcut = "SPC f f",
+        },
+        {
+            icon = "  ",
+            desc = "File Browser                            ",
+            action = "Telescope file_browser",
+            shortcut = "SPC f b",
+        },
+        {
+            icon = "  ",
+            desc = "Find  word                              ",
+            action = "Telescope live_grep",
+            shortcut = "SPC f w",
+        },
+        {
+            icon = "  ",
+            desc = "Open Personal dotfiles                  ",
+            action = "Telescope dotfiles path=" .. home .. "/.dotfiles",
+            shortcut = "SPC f d",
+        },
+    }
+    -- 	{
+    -- 	a = { description = { '  Find File                        ' }, command = 'Telescope find_files' },
+    -- 	b = { description = { '  Recents                          ' }, command = 'Telescope oldfiles' },
+    -- 	c = { description = { '  Find Word                        ' }, command = 'Telescope live_grep' },
+    -- 	d = { description = { 'ﱐ  New File                         ' }, command = 'DashboardNewFile' },
+    -- 	e = { description = { '  Bookmarks                        ' }, command = 'Telescope marks' },
+    -- 	f = { description = { '  Open Help Doc                    ' }, command = 'view ~/.config/nvim/doc/helpdoc.md' },
+    -- }
+    --
 end
 
 vim.api.nvim_exec(

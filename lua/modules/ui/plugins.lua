@@ -32,7 +32,7 @@ ui({
     config = conf.notify,
 })
 
-ui({ "MunifTanjim/nui.nvim", opt = true })
+ui({ "MunifTanjim/nui.nvim", modules = "nui" })
 
 -- -- Feels slow, might revert backto nvim tree
 ui({
@@ -49,6 +49,7 @@ ui({
             -- only needed if you want to use the "open_window_picker" command
             "s1n7ax/nvim-window-picker",
             -- tag = "v1.2",
+            tag = "v1.*",
             opt = true,
             after = "neo-tree.nvim",
             config = function()
@@ -169,4 +170,12 @@ ui({
     opt = true,
     setup = conf.clock_setup,
     config = conf.clock,
+})
+
+ui({
+    "glepnir/dashboard-nvim",
+    as = "dashboard",
+    opt = true,
+    setup = conf.dashboard_setup,
+    config = conf.dashboard_config,
 })
