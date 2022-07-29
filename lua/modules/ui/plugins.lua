@@ -175,6 +175,7 @@ ui({
 ui({
     "glepnir/dashboard-nvim",
     as = "dashboard",
+    cmd = { "DashboardNewFile" },
     opt = true,
     setup = conf.dashboard_setup,
     config = conf.dashboard_config,
