@@ -13,7 +13,7 @@ vim.cmd([[
     " keywords
     syntax keyword pyOperator product conceal cchar=∏
     syntax keyword pyOperator sum conceal cchar=∑
-    syntax keyword pyStatement lambda conceal cchar=λ
+    syntax keyword pyStatement lambda conceal cchar=ﬦ
     hi link pyOperator Operator
     hi link pyStatement Statement
     hi link pyKeyword Keyword
