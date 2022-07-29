@@ -9,9 +9,9 @@ local M = {}
 ---@param bufnr number
 function M.setup_autocommands(client, bufnr)
     -- show line diagnostics
-    -- if client.name ~="julials" then
-    require("modules.lsp.lsp.utils.setup_autocmd")
-    -- end
+    if client.name ~= "julials" then
+        require("modules.lsp.lsp.utils.setup_autocmd")
+    end
     vim.keymap.set("n", "D", function()
         vim.diagnostic.open_float(0, { scope = "line" })
     end, { noremap = true, silent = true, buffer = bufnr })

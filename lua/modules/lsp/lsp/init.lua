@@ -7,24 +7,6 @@ end
 vim.g.lsp_config_complete = true
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
-local dlsconfig = require("diagnosticls-configs")
-dlsconfig.setup({
-    ["python"] = {
-        linter = require("diagnosticls-configs.linters." .. lambda.config.python.lint),
-        formatter = {
-            require("diagnosticls-configs.formatters." .. lambda.config.python.format),
-            require("diagnosticls-configs.formatters.isort"),
-        },
-    },
-    ["lua"] = {
-        linter = require("diagnosticls-configs.linters.luacheck"),
-        formatter = require("diagnosticls-configs.formatters.stylua"),
-    },
-    ["vim"] = {
-        linter = require("diagnosticls-configs.linters.vint"),
-    },
-})
-
 local python_setup = {
     pylsp = function()
         vim.g.navic_silence = true
@@ -42,10 +24,27 @@ local python_setup = {
         lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
     end,
 }
-
 python_setup[lambda.config.python.lsp]()
+local dlsconfig = require("diagnosticls-configs")
 
-lspconfig.julials.setup(require("modules.lsp.lsp.providers.julials"))
+dlsconfig.setup({
+    ["python"] = {
+        linter = require("diagnosticls-configs.linters." .. lambda.config.python.lint),
+        formatter = {
+            require("diagnosticls-configs.formatters." .. lambda.config.python.format),
+            require("diagnosticls-configs.formatters.isort"),
+        },
+    },
+    ["lua"] = {
+        linter = require("diagnosticls-configs.linters.luacheck"),
+        formatter = require("diagnosticls-configs.formatters.stylua"),
+    },
+    ["vim"] = {
+        linter = require("diagnosticls-configs.linters.vint"),
+    },
+})
+
+lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 
 lspconfig.zls.setup(enhance_attach({
     cmd = { "zls" },
