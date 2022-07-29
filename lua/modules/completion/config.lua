@@ -71,7 +71,7 @@ function config.autopair()
             java = false,
         },
         fast_wrap = {
-            map = "<c-x>x",
+            map = "<c-c>c",
             chars = { "{", "[", "(", '"', "'", "`" },
             pattern = string.gsub([[ [%'%"%`%+%)%>%]%)%}%,%s] ]], "%s+", ""),
             end_key = "$",

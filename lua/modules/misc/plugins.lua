@@ -163,7 +163,7 @@ misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
 
 misc({
     "kylechui/nvim-surround",
-    keys = { "<C-c>", "<C-g>g", "ys", "yss", "yS", "ySS", "yS", "gS", "ds", "cS" },
+    keys = { "<c-c><leader>", "<C-g>g", "ys", "yss", "yS", "ySS", "yS", "gS", "ds", "cS" },
     config = conf.surround,
 })
 
@@ -228,7 +228,6 @@ misc({
         "NeoWellOut",
         "NeoWellWipeOut",
     },
-    keys = { "__", "_a", "_j", "_r", "_d", "_D" },
     config = conf.NeoWell,
 })
 
@@ -277,4 +276,10 @@ misc({
     config = function()
         require("stay-in-place").setup({})
     end,
+})
+misc({
+    "olimorris/persisted.nvim",
+    after = "telescope.nvim",
+    setup = conf.session_setup,
+    config = conf.session_config,
 })

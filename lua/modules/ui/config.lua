@@ -559,8 +559,8 @@ function config.catppuccin()
             telescope = true,
             nvimtree = {
                 enabled = false,
-                show_root = true,
-                transparent_panel = false,
+                show_root = false,
+                transparent_panel = false5,
             },
             neotree = {
                 enabled = true,
@@ -608,7 +608,7 @@ function config.kanagawa()
         specialReturn = true, -- special highlight for the return keyword
         specialException = true, -- special highlight for exception handling keywords
         transparent = false, -- do not set background color
-        dimInactive = false, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
+        dimInactive = true, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
         colors = {},
         overrides = {
             Pmenu = { fg = "NONE", bg = "NONE" },
@@ -616,46 +616,6 @@ function config.kanagawa()
         },
     })
     vim.cmd([[colorscheme kanagawa]])
-end
-
-function config.nightfly()
-    vim.g.nightflyCursorColor = 1
-    vim.g.nightflyUnderlineMatchParen = 1
-    vim.g.nightflyUndercurls = 1
-    vim.g.nightflyItalics = 1
-    vim.g.nightflyNormalFloat = 1
-    vim.g.nightflyTransparent = 1
-
-    -- body
-end
-
-function config.rosepine()
-    vim.g.rose_pine_variant = "moon"
-    vim.g.rose_pine_bold_vertical_split_line = true
-    vim.g.rose_pine_disable_italics = false
-    vim.g.rose_pine_disable_background = false
-    vim.g.rose_pine_disable_float_background = true
-end
-
-function config.nvcode()
-    vim.g.nvcode_termcolors = 256
-    local opt = { "nvcode", "nord", "aurora", "onedark", "gruvbox", "palenight", "snazzy" }
-    local v = "colorscheme " .. opt[math.random(1, #opt)]
-    vim.cmd(v)
-    -- body
-end
-
-function config.sonokai()
-    local opt = { "andromeda", "default", "andromeda", "shusia", "maia", "atlantis" }
-    local v = opt[math.random(1, #opt)]
-    vim.g.sonokai_style = v
-    vim.g.sonokai_enable_italic = 1
-    vim.g.sonokai_diagnostic_virtual_text = "colored"
-    vim.g.sonokai_disable_italic_comment = 1
-    vim.g.sonokai_current_word = "underline"
-    vim.cmd([[colorscheme sonokai]])
-    vim.cmd([[hi CurrentWord guifg=#E3F467 guibg=#332248 gui=Bold,undercurl]])
-    vim.cmd([[hi TSKeyword gui=Bold]])
 end
 
 function config.blankline()
@@ -860,7 +820,7 @@ function config.dashboard_setup()
         pattern = "*",
         callback = function()
             local f = vim.fn
-            if not lambda.config.dashboard and f.getcwd():match(f.stdpath("config")) then
+            if lambda.config.dashboard then
                 require("packer").loader("dashboard")
             end
         end,
@@ -901,6 +861,12 @@ function config.dashboard_config()
     db.custom_center = {
         {
             icon = "  ",
+            desc = "Recently latest session                  ",
+            shortcut = "SPC s l",
+            action = "SessionLoad",
+        },
+        {
+            icon = "  ",
             desc = "Workspaces                              ",
             shortcut = "SPC s l",
             action = "Telescope workspaces",
@@ -932,7 +898,7 @@ function config.dashboard_config()
         {
             icon = "  ",
             desc = "Open Personal dotfiles                  ",
-            action = "Telescope dotfiles path=" .. home .. "/.dotfiles",
+            action = "Telescope dotfiles",
             shortcut = "SPC f d",
         },
     }

@@ -255,7 +255,7 @@ end
 function config.surround()
     require("nvim-surround").setup({
         keymaps = {
-            insert = "<C-c>",
+            insert = "<c-c><leader>",
             insert_line = "<C-g>g",
             normal = "ys",
             normal_cur = "yss",
@@ -315,4 +315,37 @@ inoreabbrev <expr> __
         ]])
 end
 
+function config.session_setup()
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*",
+        callback = function()
+            local f = vim.fn
+            if lambda.config.session then
+                require("packer").loader("persisted.nvim")
+            end
+        end,
+    })
+end
+function config.session_config()
+    require("persisted").setup({
+        save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/
+        autosave = true,
+        autoload = true,
+        use_git_branch = true,
+        after_source = function()
+            -- Reload the LSP servers
+            vim.lsp.stop_client(vim.lsp.get_active_clients())
+        end,
+
+        telescope = {
+            before_source = function()
+                vim.api.nvim_input("<ESC>:%bd<CR>")
+            end,
+            after_source = function(session)
+                print("Loaded session " .. session.name)
+            end,
+        },
+    })
+    require("telescope").load_extension("persisted") -- To load the telescope extension
+end
 return config

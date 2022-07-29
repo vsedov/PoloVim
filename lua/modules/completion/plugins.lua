@@ -66,8 +66,11 @@ completion({
 })
 
 completion({
-    "/home/viv/.config/nvim/lua/modules/completion/snippets/latex/luasnip-latex-snippets.nvim",
+    "iurimateus/luasnip-latex-snippets.nvim",
     requires = { "L3MON4D3/LuaSnip", { "lervag/vimtex", ft = { "tex" } } },
+    config = function()
+        require("luasnip-latex-snippets").setup()
+    end,
     ft = "tex",
 })
 
