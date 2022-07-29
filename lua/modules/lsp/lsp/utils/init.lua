@@ -106,7 +106,6 @@ function M.setup()
     end
 
     require("modules.lsp.lsp.utils.handlers").setup()
-    require("modules.lsp.lsp.utils.setup_autocmd")
     require("modules.lsp.lsp.utils.list")
 
     require("diagnosticls-configs").init({

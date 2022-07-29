@@ -45,7 +45,7 @@ local python_setup = {
 
 python_setup[lambda.config.python.lsp]()
 
-lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
+lspconfig.julials.setup(require("modules.lsp.lsp.providers.julials"))
 
 lspconfig.zls.setup(enhance_attach({
     cmd = { "zls" },

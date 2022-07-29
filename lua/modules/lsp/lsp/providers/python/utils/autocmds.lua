@@ -17,11 +17,11 @@ M.DocumentHighlightAU = function()
     })
 end
 
-M.SemanticTokensAU = function()
+M.SemanticTokensAU = function(bufnr)
     lambda.augroup("SemanticTokens", {
         {
             event = { "BufEnter", "CursorHold", "InsertLeave" },
-            buffer = 0,
+            buffer = bufnr,
             command = function()
                 pcall(vim.lsp.buf.semantic_tokens_full)
             end,
