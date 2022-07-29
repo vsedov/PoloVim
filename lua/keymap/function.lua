@@ -46,6 +46,12 @@ local plug_map = {
         :with_expr()
         :with_noremap(),
 
+    ["n|LM"] = map_cmd(function()
+            return ":Zeavim<CR>"
+        end, "Zeal search")
+        :with_expr()
+        :with_noremap(),
+
     ["n|}"] = map_cmd(function()
         return ":lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow" .. "<cr>"
     end, "Diag show next"):with_expr(),

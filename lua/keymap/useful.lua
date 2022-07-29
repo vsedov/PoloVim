@@ -18,6 +18,12 @@ local plug_map = {
     ["n|\\d"] = map_cmd("<cmd>NeoWellOut<CR>", "NeoWellOut"):with_noremap():with_silent(),
     ["n|\\D"] = map_cmd("<cmd>NeoWellWipeOut<CR>", "NeoWellWipeOut"):with_noremap():with_silent(),
 
+    -- New mapping for lspsaga
+    ["n|<leader><Tab>"] = map_cmd("<cmd>Lspsaga open_floaterm<cr>", "float_term"):with_noremap():with_silent(),
+    ["t|<leader><Tab>"] = map_cmd("<C-\\><C-n><cmd>Lspsaga close_floaterm<cr>", "float_term")
+        :with_noremap()
+        :with_silent(),
+
     -- check whats actually loaded
     ["n|<localleader>ps"] = map_cmd("<cmd>PackerStatus<cr>", "PackerStatus"):with_noremap():with_silent(),
     ["n|<localleader>pP"] = map_cmd("<cmd>StartupTime<cr>", "StartUpTime"):with_noremap():with_silent(),
