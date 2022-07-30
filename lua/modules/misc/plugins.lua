@@ -142,7 +142,11 @@ misc({
     config = conf.text_case,
 })
 
-misc({ "chentoast/marks.nvim", opt = true, keys = { "mx", "m", "m,", "m;" }, config = conf.marks })
+misc({
+    "chentoast/marks.nvim",
+    event = "CursorMoved",
+    config = conf.marks,
+})
 
 misc({
     "sidebar-nvim/sidebar.nvim",
