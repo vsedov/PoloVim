@@ -4,6 +4,7 @@ local api = vim.api
 local fmt = string.format
 
 local autocmd = {}
+
 local function replace_termcodes(str)
     return api.nvim_replace_termcodes(str, true, true, true)
 end

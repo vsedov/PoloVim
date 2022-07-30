@@ -16,8 +16,8 @@ end
 local neorg_callbacks = require("neorg.callbacks")
 -- neorg_callbacks.on_event("core.autocommands.events.bufenter", function(event, event_content)
 neorg_callbacks.on_event("core.started", function(event, event_content)
-    if not packer_plugins["zen-mode.nvim"].loaded then
-        vim.cmd([[packadd zen-mode.nvim ]])
+    if not packer_plugins["true-zen.nvim"].loaded then
+        vim.cmd([[packadd true-zen.nvim ]])
     end
 end)
 require("neorg").setup({

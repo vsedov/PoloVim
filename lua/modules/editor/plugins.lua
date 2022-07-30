@@ -1,6 +1,7 @@
 local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 editor({
+
     "nvim-neorg/neorg",
     branch = "main",
     requires = {
@@ -13,10 +14,10 @@ editor({
 })
 
 editor({
-    "folke/zen-mode.nvim",
+    "Pocco81/true-zen.nvim",
     opt = true,
     requires = { "folke/twilight.nvim", opt = true, config = conf.twilight },
-    cmd = "ZenMode",
+    cmd = { "TZAtaraxis", "TZMinimalist", "TZNarrow", "TZFocus" },
     module = "zen-mode",
     config = conf.zen,
 })
@@ -233,15 +234,15 @@ editor({
     config = conf.substitute,
 })
 
-editor({
-    "knubie/vim-kitty-navigator",
-    opt = true,
-    run = "cp ./*.py ~/.config/kitty/",
-    keys = { "<c-j>", "<c-k>", "<c-h>", "<c-l>" },
-    cond = function()
-        return vim.env.TMUX == nil
-    end,
-})
+-- editor({
+--     "knubie/vim-kitty-navigator",
+--     opt = true,
+--     run = "cp ./*.py ~/.config/kitty/",
+--     keys = { "<c-j>", "<c-k>", "<c-h>", "<c-l>" },
+--     cond = function()
+--         return vim.env.TMUX == nil
+--     end,
+-- })
 
 editor({
     "moll/vim-bbye",
