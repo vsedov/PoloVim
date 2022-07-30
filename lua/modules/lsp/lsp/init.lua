@@ -25,24 +25,6 @@ local python_setup = {
     end,
 }
 python_setup[lambda.config.python.lsp]()
-local dlsconfig = require("diagnosticls-configs")
-
-dlsconfig.setup({
-    ["python"] = {
-        linter = require("diagnosticls-configs.linters." .. lambda.config.python.lint),
-        formatter = {
-            require("diagnosticls-configs.formatters." .. lambda.config.python.format),
-            require("diagnosticls-configs.formatters.isort"),
-        },
-    },
-    ["lua"] = {
-        linter = require("diagnosticls-configs.linters.luacheck"),
-        formatter = require("diagnosticls-configs.formatters.stylua"),
-    },
-    ["vim"] = {
-        linter = require("diagnosticls-configs.linters.vint"),
-    },
-})
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 

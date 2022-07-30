@@ -139,47 +139,6 @@ function config.lsp_lines()
     end, { force = true })
 end
 
-function config.format()
-    require("formatter").setup({
-        -- All formatter configurations are opt-in
-        filetype = {
-            lua = {
-                -- Pick from defaults:
-                require("formatter.filetypes.lua").stylua,
-            },
-            python = {
-                require("formatter.filetypes.python").yapf,
-                require("formatter.filetypes.python").isort,
-            },
-        },
-    })
-end
-
-function config.lint()
-    local lint = require("lint")
-    local pattern = "[^:]+:(%d+):(%d+)-(%d+): %((%a)(%d+)%) (.*)"
-    local groups = { "lnum", "col", "end_col", "severity", "code", "message" }
-    local severities = {
-        W = vim.diagnostic.severity.WARN,
-        E = vim.diagnostic.severity.ERROR,
-    }
-
-    local custom_lua_check = {
-        cmd = "luacheck",
-        stdin = true,
-        args = { "--formatter", "plain", "--codes", "--ranges", "--config", "/home/viv/.config/.luacheckrc", "-" },
-        ignore_exitcode = true,
-        parser = require("lint.parser").from_pattern(pattern, groups, severities, { ["source"] = "luacheck" }),
-    }
-    lint.linters.luacheck = custom_lua_check
-    lint.linters_by_ft = {
-        lua = { "luacheck" },
-        markdown = { "vale" },
-
-        python = { "codespell", "flake8" }, --  "flake8",
-    }
-end
-
 function config.rename()
     require("inc_rename").setup({
         hl_group = "Visual",

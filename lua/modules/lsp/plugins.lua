@@ -17,11 +17,6 @@ lsp({
     config = conf.lsp_install,
 })
 
-lsp({
-    "creativenull/diagnosticls-configs-nvim",
-    requires = "neovim/nvim-lspconfig",
-})
-
 lsp({ "ii14/lsp-command", opt = true, after = "nvim-lspconfig" })
 lsp({
     "p00f/clangd_extensions.nvim",
@@ -66,7 +61,7 @@ lsp({
 
 lsp({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    after = "nvim-lspconfig",
+    cmd = { "TL" },
     config = conf.lsp_lines,
 })
 
@@ -83,4 +78,42 @@ lsp({
     "liuchengxu/vista.vim",
     cmd = { "Vista", "Vista!", "Vista!!" },
     config = conf.vista,
+})
+
+lsp({
+    "jose-elias-alvarez/null-ls.nvim",
+    ft = {
+        "norg",
+        "c",
+        "cpp",
+        "css",
+        "django",
+        "fish",
+        "gitcommit",
+        "gitrebase",
+        "go",
+        "gomod",
+        "haskell",
+        "html",
+        "htmldjango",
+        "javascript",
+        "javascriptreact",
+        "json",
+        "kotlin",
+        "lua",
+        "markdown",
+        "php",
+        "python",
+        "scss",
+        "sh",
+        "svelte",
+        "txt",
+        "typescript",
+        "typescriptreact",
+        "vue",
+    },
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+        require("modules.lsp.lsp.null-ls").setup()
+    end,
 })

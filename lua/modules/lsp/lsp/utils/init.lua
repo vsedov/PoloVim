@@ -48,8 +48,6 @@ end
 
 -- this could change ove ra period of time . 1
 local function select_default_formater(client, bufnr)
-    -- i use format.nvim on format save so this is not needded .
-
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
 end
@@ -59,7 +57,7 @@ function M.common_on_init(client, bufnr)
         config.on_init_callback(client, bufnr)
         return
     end
-    -- select_default_formater(client, bufnr)
+    select_default_formater(client, bufnr)
 end
 
 function M.common_capabilities()
@@ -73,14 +71,12 @@ function M.common_capabilities()
 end
 
 function M.common_on_attach(client, bufnr)
-    if client.name ~= "diagnosticls" then
-        if config.on_attach_callback then
-            config.on_attach_callback(client, bufnr)
-        end
-        require("nvim-navic").attach(client, bufnr)
-        if client.name == "pylance" then
-            require("modules.lsp.lsp.providers.python.pylance").attach_config(client, bufnr)
-        end
+    if config.on_attach_callback then
+        config.on_attach_callback(client, bufnr)
+    end
+    require("nvim-navic").attach(client, bufnr)
+    if client.name == "pylance" then
+        require("modules.lsp.lsp.providers.python.pylance").attach_config(client, bufnr)
     end
     add_lsp_buffer_keybindings(client, bufnr)
     require("modules.lsp.lsp.utils.autocmd").setup_autocommands(client, bufnr)
@@ -107,12 +103,6 @@ function M.setup()
 
     require("modules.lsp.lsp.utils.handlers").setup()
     require("modules.lsp.lsp.utils.list")
-
-    require("diagnosticls-configs").init({
-        -- Your custom attach function
-        on_attach = M.common_on_attach,
-        capabilities = cap(),
-    })
 end
 
 function M.enhance_attach(user_config)

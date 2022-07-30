@@ -1,0 +1,18 @@
+return {
+    lambda.config.python.format,
+    "isort",
+    "brittany",
+    "djlint",
+    "fish_indent",
+    "ktlint",
+    "markdownlint",
+    "phpcbf",
+    "pint",
+    "prettierd",
+    "shellharden",
+    "shfmt",
+    "stylelint",
+    "stylua",
+    "trim_newlines",
+    "trim_whitespace",
+}

@@ -8,7 +8,7 @@ capabilities.textDocument.completion.completionItem.commitCharactersSupport = tr
 capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = { "documentation", "detail", "additionalTextEdits" },
 }
-capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
+
 capabilities.textDocument.codeAction = {
     dynamicRegistration = true,
     codeActionLiteralSupport = {
