@@ -132,14 +132,36 @@ function config.iswap()
     })
 end
 
-function config.jetscape()
-    require("jeskape").setup({
-        mappings = {
-            j = {
-                h = "<esc>O",
-                k = "<esc>",
-                j = "<esc>o",
-            },
+function config.houdini_setup()
+    vim.api.nvim_create_autocmd("User", {
+        desc = "fix for https://github.com/ggandor/lightspeed.nvim/issues/140",
+        pattern = "LightspeedSxLeave",
+        callback = function()
+            local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())
+            if vim.opt.modifiable:get() and not ignore then
+                vim.cmd("normal! a")
+            end
+        end,
+    })
+end
+
+function config.houdini()
+    require("houdini").setup({
+        mappings = { "jk", "AA", "II" },
+        escape_sequences = {
+            i = function(first, second)
+                local seq = first .. second
+
+                if seq == "AA" then
+                    -- jump to the end of the line in insert mode
+                    return "<BS><BS><End>"
+                end
+                if seq == "II" then
+                    -- jump to the beginning of the line in insert mode
+                    return "<BS><BS><Home>"
+                end
+                return "<BS><BS><ESC>"
+            end,
         },
     })
 end
@@ -311,7 +333,7 @@ inoreabbrev <expr> <bar><bar>
           \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
 inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
-          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'w
         ]])
 end
 
@@ -348,4 +370,9 @@ function config.session_config()
     })
     require("telescope").load_extension("persisted") -- To load the telescope extension
 end
+
+function config.autosave()
+    require("auto-save").setup()
+end
+
 return config

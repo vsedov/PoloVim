@@ -96,8 +96,12 @@ misc({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
 
 misc({ "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, config = conf.iswap })
 
-misc({ "Krafi2/jeskape.nvim", event = "InsertEnter", config = conf.jetscape })
-
+misc({
+    "TheBlob42/houdini.nvim",
+    event = "InsertEnter",
+    config = conf.houdini,
+    setup = conf.houdini_setup,
+})
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
 misc({
@@ -286,4 +290,11 @@ misc({
     after = "telescope.nvim",
     setup = conf.session_setup,
     config = conf.session_config,
+})
+
+misc({
+    "Pocco81/auto-save.nvim",
+    config = conf.autosave,
+    cmd = "ASToggle",
+    opt = true,
 })
