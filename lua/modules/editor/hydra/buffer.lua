@@ -1,6 +1,10 @@
 local Hydra = require("hydra")
 
-local hint = [[
+local buffer_config = function()
+    local hint
+    local config
+    if lambda.config.tabby_or_bufferline then
+        hint = [[
   ^^^^                Bufferline                  ^^^^
   ^^^^--------------------------------------------^^^^  
    _l_: BufferLineCycleNext _h_: BufferLineCyclePrev
@@ -17,36 +21,93 @@ local hint = [[
 
    _d_: Bwipeout    
 ]]
+        config = {
+            hint = hint,
+            name = "Buffer management",
+            mode = "n",
+            color = "teal",
+            body = "<leader>b",
+            config = {
+                hint = { border = "single" },
+                invoke_on_body = true,
+            },
+            heads = {
+                { "l", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" } },
+                { "h", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
+                { "p", "<Cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" } },
+                { "c", "<Cmd>BufferLinePick<CR>", { desc = "Pin buffer" } },
 
-local buffer_hydra = Hydra({
-    hint = hint,
-    name = "Buffer management",
-    mode = "n",
-    color = "teal",
-    body = "<leader>b",
-    config = {
-        hint = { border = "single" },
-        invoke_on_body = true,
-    },
-    heads = {
-        { "l", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" } },
-        { "h", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
-        { "p", "<Cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" } },
-        { "c", "<Cmd>BufferLinePick<CR>", { desc = "Pin buffer" } },
+                { "H", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Next" } },
+                { "L", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Prev" } },
+                { "D", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close", exit = true } },
+                { "ot", "<Cmd>BufferLineSortByTabs<CR>", { desc = "Sort by tabs", exit = true } },
+                { "od", "<Cmd>BufferLineSortByDirectory<CR>", { desc = "Sort by dir", exit = true } },
+                {
+                    "oD",
+                    "<Cmd>BufferLineSortByRelativeDirectory<CR>",
+                    { desc = "Sort by relative dir ", exit = true },
+                },
 
-        { "H", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Next" } },
-        { "L", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Prev" } },
-        { "D", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close", exit = true } },
-        { "ot", "<Cmd>BufferLineSortByTabs<CR>", { desc = "Sort by tabs", exit = true } },
-        { "od", "<Cmd>BufferLineSortByDirectory<CR>", { desc = "Sort by dir", exit = true } },
-        { "oD", "<Cmd>BufferLineSortByRelativeDirectory<CR>", { desc = "Sort by relative dir ", exit = true } },
+                { "d", "<Cmd>Bwipeout<CR>", { desc = "delete buffer" } },
+                { "<Esc>", nil, { exit = true, desc = "Quit" } },
+                { "b", "<cmd>Telescope buffers<CR>" },
 
-        { "d", "<Cmd>Bwipeout<CR>", { desc = "delete buffer" } },
-        { "<Esc>", nil, { exit = true, desc = "Quit" } },
-        { "b", "<cmd>Telescope buffers<CR>" },
+                { "qh", "<cmd>BDelete hidden<CR>" },
+                { "qn", "<cmd>BDelete! nameless<CR>" },
+                { "qt", "<cmd>BDelete! this<CR>" },
+            },
+        }
+    else
+        hint = [[
+      ^^^^                    Tabby                   ^^^^
+      ^^^^--------------------------------------------^^^^  
+       _l_: tabn                              _h_: tabp
+       _n_: $tabnew                           _c_: tabclose
+      ^^^^--------------------------------------------^^^^  
+       _H_: +tabmove                          _L_: -tabmove 
+                         _b_: Tele Buffer
+                         _p_: tabonly
+      ^^^^--------------------------------------------^^^^  
+      ^^^^                Delete                      ^^^^
+      ^^^^--------------------------------------------^^^^  
+       _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
 
-        { "qh", "<cmd>BDelete hidden<CR>" },
-        { "qn", "<cmd>BDelete! nameless<CR>" },
-        { "qt", "<cmd>BDelete! this<CR>" },
-    },
-})
+       _d_: Bwipeout    
+    ]]
+        config = {
+            hint = hint,
+            name = "Tab management",
+            mode = "n",
+            color = "teal",
+            body = "<leader>b",
+            config = {
+                hint = { border = "single" },
+                invoke_on_body = true,
+            },
+            heads = {
+                { "l", ":tabn<CR>", { desc = "Next buffer" } },
+                { "h", ":tabp<CR>", { desc = "Prev buffer" } },
+
+                { "n", ":$tabnew<CR>", { desc = "Pin buffer" } },
+                { "c", ":tabclose<CR>", { desc = "Pin buffer" } },
+
+                { "H", ":+tabmove<CR>", { desc = "Move Next" } },
+                { "L", ":-tabmove<CR>", { desc = "Move Prev" } },
+
+                { "p", "<Cmd>tabonly<CR>", { desc = "Pick buffer to close", exit = true } },
+
+                { "d", "<Cmd>Bwipeout<CR>", { desc = "delete buffer" } },
+                { "<Esc>", nil, { exit = true, desc = "Quit" } },
+                { "b", "<cmd>Telescope buffers<CR>" },
+
+                { "qh", "<cmd>BDelete hidden<CR>" },
+                { "qn", "<cmd>BDelete! nameless<CR>" },
+                { "qt", "<cmd>BDelete! this<CR>" },
+            },
+        }
+    end
+    Hydra(config)
+end
+return {
+    buffer = buffer_config,
+}
