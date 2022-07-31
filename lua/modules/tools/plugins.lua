@@ -114,7 +114,7 @@ tools({
 tools({
     "akinsho/toggleterm.nvim",
     cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm", "Htop" },
-    keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr", "<leader>ld" },
+    keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr", "<leader>ld", "<leader><Tab>" },
     config = function()
         require("modules.tools.toggleterm")
     end,

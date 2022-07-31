@@ -22,7 +22,7 @@ vim.keymap.set("n", "<Leader>gh", function()
 end)
 
 vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction='vertical'<cr>")
-vim.keymap.set("n", "<Leader>tv", "<cmd>ToggleTerm direction='float'<cr>")
+vim.keymap.set("n", "<leader><Tab>", "<cmd>ToggleTerm direction='float'<cr>")
 
 local files = {
     python = "python3 -i " .. exp("%:t"),
