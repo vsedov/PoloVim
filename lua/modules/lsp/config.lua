@@ -42,7 +42,7 @@ function config.saga()
             sign_priority = 0,
             virtual_text = false,
         },
-        server_filetype_map = { python = { "diagnosticls" } },
+        server_filetype_map = {},
         -- show outline
         show_outline = {
             win_position = "right",

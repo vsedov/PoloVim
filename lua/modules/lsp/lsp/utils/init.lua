@@ -28,11 +28,18 @@ local function add_lsp_buffer_keybindings(client, bufnr)
 
         ["gr"] = "<cmd>Lspsaga rename<CR>",
 
-        -- ["[e"] = "<cmd> Lspsaga diagnostic_jump_next<cr>",
-        -- ["]e"] = "<cmd> Lspsaga diagnostic_jump_prev<cr>",
+        ["[E"] = function()
+            require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+        end,
+        ["]E"] = function()
+            require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+        end,
+        ["[e"] = "<cmd>Lspsaga diagnostic_jump_next<cr>",
+        ["]e"] = "<cmd>Lspsaga diagnostic_jump_prev<cr>",
 
-        ["[e"] = "<cmd> lua vim.diagnostic.goto_prev({ float = false })<cr>",
-        ["]e"] = "<cmd> lua vim.diagnostic.goto_next({ float = false })<cr>",
+        -- man this was nice, but like, lsp saga be looking god like recently
+        -- ["[e"] = "<cmd> lua vim.diagnostic.goto_prev({ float = false })<cr>",
+        -- ["]e"] = "<cmd> lua vim.diagnostic.goto_next({ float = false })<cr>",
 
         ["gd"] = "<cmd> Lspsaga preview_definition<cr>",
         ["gh"] = "<cmd> Lspsaga lsp_finder<cr>",
