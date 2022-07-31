@@ -8,12 +8,14 @@ lambda.config = {
     config_test = true,
     dashboard = true,
     session = true,
+    tabby_or_bufferline = true, -- false: tabby, true for bufferline
     python = {
         lint = "flake8", -- "pylint "
         lsp = "pylance", -- jedi pylsp and pyright
         format = "yapf",
     },
 }
+
 ----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
@@ -148,6 +150,19 @@ lambda.Format = function(json)
 
     if json then
         vim.cmd([[Jsonformat]]) -- :%!jq .
+    end
+end
+lambda.dynamic_unload = function(module_name, reload)
+    reload = reload or false
+
+    for name, _ in pairs(package.loaded) do
+        if name:match("^" .. module_name) then
+            package.loaded[name] = nil
+        end
+    end
+
+    if reload then
+        require(module_name)
     end
 end
 

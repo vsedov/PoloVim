@@ -412,3 +412,18 @@ if vim.env.TERM == "xterm-kitty" then
         },
     })
 end
+
+vim.api.nvim_create_user_command("SwitchLine", function()
+    if lambda.config.tabby_or_bufferline then
+        package.loaded["bufferline"] = nil
+        lambda.config.tabby_or_bufferline = false
+        require("packer").loader("tabby.nvim")
+        require("modules.ui.config").tabby()
+    else
+        package.loaded["tabby"] = nil
+        lambda.config.tabby_or_bufferline = true
+        vim.cmd([[packadd bufferline]])
+        require("modules.ui.config").nvim_bufferline()
+    end
+    require("modules.editor.hydra.buffer").buffer()
+end, { force = true })

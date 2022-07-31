@@ -161,10 +161,12 @@ vim.defer_fn(function()
     end, { force = true })
 
     loader("presence.nvim")
+    vim.cmd("SwitchLine")
     lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
+    loader("hydra.nvim")
     lprint("telescope family")
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim

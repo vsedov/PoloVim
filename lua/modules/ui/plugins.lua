@@ -15,7 +15,18 @@ ui({
 
 ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
 
-ui({ "akinsho/bufferline.nvim", config = conf.nvim_bufferline, event = "UIEnter", opt = true })
+ui({
+    "akinsho/bufferline.nvim",
+    config = conf.nvim_bufferline,
+    -- setup = conf.nvim_bufferline_tabby_setup,
+    opt = true,
+})
+
+ui({
+    "nanozuki/tabby.nvim",
+    config = conf.tabby,
+    opt = true,
+})
 
 -- Lazy Loading nvim-notify
 ui({

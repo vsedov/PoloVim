@@ -79,6 +79,12 @@ function config.fidget()
     })
 end
 
+-- function config.nvim_bufferline_tabby_setup()
+--         if lambda.config.tabby_or_bufferline then
+--             require("packer").loader("bufferline.nvim")
+--         end
+-- end
+
 function config.nvim_bufferline()
     if not packer_plugins["nvim-web-devicons"].loaded then
         packer_plugins["nvim-web-devicons"].loaded = true
@@ -152,7 +158,7 @@ function config.nvim_bufferline()
             show_buffer_icons = true,
             show_buffer_close_icons = false,
             show_tab_indicators = true,
-            enforce_regular_tabs = false,
+            enforce_regular_tabs = true,
             always_show_bufferline = false,
             -- 'extension' | 'directory' |
             ---based on https://github.com/kovidgoyal/kitty/issues/957
@@ -253,6 +259,11 @@ function config.nvim_bufferline()
             },
         },
     })
+end
+
+function config.tabby()
+    -- use default as that is good enough.
+    require("tabby").setup()
 end
 
 function config.notify()
