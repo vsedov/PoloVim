@@ -349,6 +349,7 @@ local function general_overrides()
             background = "NONE",
             sp = P.whitesmoke,
         },
+        diffAdded = {},
 
         DiagnosticHeader = { link = "Special", fg = "#56b6c2", bold = true },
         DiagnosticHint = { foreground = L.hint },

@@ -302,3 +302,7 @@ local auto_resize = function()
 end
 
 add_cmd("AutoResize", auto_resize(), { nargs = "?" })
+
+add_cmd("LspSagaToggle", function()
+    lambda.config.use_saga = not lambda.config.use_saga
+end, { force = true })

@@ -132,39 +132,6 @@ ui({
     config = conf.pretty_fold,
 })
 
-ui({
-    "folke/tokyonight.nvim",
-    opt = true,
-    setup = conf.tokyonight,
-    config = function()
-        vim.cmd([[hi CursorLine guibg=#353644]])
-        vim.cmd([[colorscheme tokyonight]])
-    end,
-})
-
-ui({
-    "tiagovla/tokyodark.nvim",
-    opt = true,
-    setup = conf.tokyodark,
-    config = function()
-        vim.cmd([[hi CursorLine guibg=#353644]])
-        vim.cmd([[colorscheme tokyodark]])
-    end,
-})
-
-ui({
-    "catppuccin/nvim",
-    opt = true,
-    as = "catppuccin",
-    cmd = "CatppuccinCompile",
-    run = "CatppuccinCompile",
-    config = conf.catppuccin,
-})
-ui({ "jzone1366/chalklines.nvim", as = "chalklines", opt = true, config = conf.chalk })
-
--- Use default when loading this .
-ui({ "rebelot/kanagawa.nvim", opt = true, config = conf.kanagawa })
-
 ui({ "kazhala/close-buffers.nvim", cmd = { "BDelete", "BWipeout" }, config = conf.buffers_close })
 
 ui({

@@ -73,7 +73,7 @@ local current_signature = function()
 end
 
 local function setup_colors()
-    return {
+    local values = {
         bright_bg = utils.get_highlight("Folded").bg,
         red = utils.get_highlight("DiagnosticError").fg,
         dark_red = utils.get_highlight("DiffDelete").bg,
@@ -87,10 +87,16 @@ local function setup_colors()
         diag_error = utils.get_highlight("DiagnosticError").fg,
         diag_hint = utils.get_highlight("DiagnosticHint").fg,
         diag_info = utils.get_highlight("DiagnosticInfo").fg,
-        git_add = utils.get_highlight("diffAdded").fg,
-        git_change = utils.get_highlight("diffChanged").fg,
-        git_del = utils.get_highlight("diffRemoved").fg,
     }
+    if vim.g.colors_name == "kanagawa" then
+        local git = {
+            git_add = utils.get_highlight("diffAdded").fg,
+            git_change = utils.get_highlight("diffChanged").fg,
+            git_del = utils.get_highlight("diffRemoved").fg,
+        }
+        values = vim.tbl_extend("force", values, git)
+    end
+    return values
 end
 
 require("heirline").load_colors(setup_colors())
@@ -481,7 +487,7 @@ local Git = {
             local count = self.status_dict.added or 0
             return count > 0 and ("+" .. count)
         end,
-        hl = "diffAdded",
+        -- hl = "diffAdded"
     },
     {
         provider = function(self)
@@ -489,14 +495,14 @@ local Git = {
             return count > 0 and ("-" .. count)
         end,
 
-        hl = "diffRemoved",
+        -- hl = "diffRemoved",
     },
     {
         provider = function(self)
             local count = self.status_dict.changed or 0
             return count > 0 and ("~" .. count)
         end,
-        hl = "diffChanged",
+        -- hl = "diffChanged",
     },
     {
         condition = function(self)
