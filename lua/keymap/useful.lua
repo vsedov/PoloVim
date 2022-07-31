@@ -19,8 +19,8 @@ local plug_map = {
     ["n|\\D"] = map_cmd("<cmd>NeoWellWipeOut<CR>", "NeoWellWipeOut"):with_noremap():with_silent(),
 
     -- New mapping for lspsaga
-    ["n|<leader><Tab>"] = map_cmd("<cmd>Lspsaga open_floaterm<cr>", "float_term"):with_noremap():with_silent(),
-    ["t|<leader><Tab>"] = map_cmd("<C-\\><C-n><cmd>Lspsaga close_floaterm<cr>", "float_term")
+    ["n|<leader><S-Tab>"] = map_cmd("<cmd>Lspsaga open_floaterm<cr>", "float_term"):with_noremap():with_silent(),
+    ["t|<leader><S-Tab>"] = map_cmd("<C-\\><C-n><cmd>Lspsaga close_floaterm<cr>", "float_term")
         :with_noremap()
         :with_silent(),
 

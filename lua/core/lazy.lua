@@ -25,11 +25,12 @@ end
 local function loadscheme()
     local themes
     if daylight() == "light" then
-        themes = { "kanagawa.nvim", "catppuccin" }
+        themes = { "kanagawa.nvim", "catppuccin", "horizon.nvim" }
     else
         themes = {
             "kanagawa.nvim",
             "catppuccin",
+            "horizon.nvim",
         }
     end
     local v = math.random(1, #themes)
@@ -40,8 +41,8 @@ local function loadscheme()
     require("packer").loader(loading_theme)
 end
 require("vscripts.cursorhold")
+loadscheme()
 vim.g.cursorhold_updatetime = 100
-require("packer").loader("kanagawa.nvim")
 require("utils.ui.highlights")
 
 function Lazyload()
