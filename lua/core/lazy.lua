@@ -161,7 +161,7 @@ vim.defer_fn(function()
     end, { force = true })
 
     loader("presence.nvim")
-    vim.cmd("SwitchLine")
+    vim.cmd("SwitchBar")
     lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
