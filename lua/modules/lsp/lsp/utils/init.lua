@@ -72,6 +72,8 @@ end
 local function select_default_formater(client, bufnr)
     client.config.flags.allow_incremental_sync = true
     client.config.flags.debounce_text_changes = 200
+
+    client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
 end
 
 function M.common_on_init(client, bufnr)

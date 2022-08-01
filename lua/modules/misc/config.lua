@@ -202,7 +202,7 @@ function config.marks()
         builtin_marks = { ".", "<", ">", "^" },
         cyclic = true,
         force_write_shada = false,
-        refresh_interval = 250,
+        refresh_interval = 9,
         sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
         excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
         bookmark_0 = {
@@ -210,6 +210,11 @@ function config.marks()
             virt_text = "BookMark",
         },
         mappings = {},
+    })
+    -- https://github.com/chentoast/marks.nvim/issues/40
+    vim.api.nvim_create_autocmd("cursorhold", {
+        pattern = "*",
+        callback = require("marks").refresh,
     })
 end
 
@@ -243,6 +248,11 @@ function config.sidebar()
         },
         datetime = { format = "%a%b%d|%H:%M", clocks = { { name = "local" } } },
         todos = { ignored_paths = { "~" } },
+    })
+end
+function config.reach()
+    require("reach").setup({
+        notifications = true,
     })
 end
 
@@ -288,6 +298,18 @@ function config.surround()
             delete = "ds",
             change = "cS",
         },
+    })
+end
+
+function config.guess_indent_setup()
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*",
+        callback = function()
+            local f = vim.fn
+            if lambda.config.guess_indent then
+                require("packer").loader("guess-indent.nvim")
+            end
+        end,
     })
 end
 
@@ -373,6 +395,25 @@ end
 
 function config.autosave()
     require("auto-save").setup()
+end
+
+function config.carbon()
+    require("carbon-now").setup({
+        options = {
+            theme = "dracula pro",
+            window_theme = "none",
+            font_family = "Hack",
+            font_size = "18px",
+            bg = "gray",
+            line_numbers = true,
+            line_height = "133%",
+            drop_shadow = false,
+            drop_shadow_offset_y = "20px",
+            drop_shadow_blur = "68px",
+            width = "680",
+            watermark = false,
+        },
+    })
 end
 
 return config

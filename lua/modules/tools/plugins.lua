@@ -49,6 +49,16 @@ tools({
 
 tools({ "jghauser/mkdir.nvim", opt = true, cmd = "new", config = [[require'mkdir']] })
 
+tools({
+    "xiyaowong/link-visitor.nvim",
+    cmd = { "VisitLinkInBuffer", "VisitLinkUnderCursor", "VisitLinkNearCursor" },
+    config = function()
+        require("link-visitor").setup({
+            silent = true, -- disable all prints, `false` by default
+        })
+    end,
+})
+
 ------------- Spelling and Grammer
 tools({
     "kamykn/spelunker.vim",

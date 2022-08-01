@@ -26,7 +26,6 @@ end
 function config.saga()
     local saga = require("lspsaga")
     saga.init_lsp_saga({
-        -- Not need for the time.  > maybe later though
         symbol_in_winbar = {
             in_custom = false,
             enable = false,
@@ -42,20 +41,8 @@ function config.saga()
             sign_priority = 0,
             virtual_text = false,
         },
+        rename_in_select = true,
         server_filetype_map = {},
-        -- show outline
-        show_outline = {
-            win_position = "right",
-            -- set the special filetype in there which in left like nvimtree neotree defx
-            left_with = "",
-            win_width = 30,
-            auto_enter = true,
-            auto_preview = true,
-            virt_text = "┃",
-            jump_key = "o",
-            -- auto refresh when change buffer
-            auto_refresh = true,
-        },
     })
 end
 

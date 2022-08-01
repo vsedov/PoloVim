@@ -15,7 +15,6 @@ misc({
         { "n", "gif" },
         { "n", "gfo" },
         { "n", "J" },
-        -- { "n", "gv" },
         { "x", "<A-j>" },
         { "x", "<A-k>" },
 
@@ -148,7 +147,7 @@ misc({
 
 misc({
     "chentoast/marks.nvim",
-    event = "CursorMoved",
+    event = "BufReadPost",
     config = conf.marks,
 })
 
@@ -168,6 +167,13 @@ misc({
 misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 
 misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
+
+misc({
+    "toppair/reach.nvim",
+    config = conf.reach,
+    opt = true,
+    cmd = { "ReachOpen" },
+})
 
 misc({
     "kylechui/nvim-surround",
@@ -206,6 +212,8 @@ misc({
 misc({
     "NMAC427/guess-indent.nvim",
     cmd = "GuessIndent",
+    opt = true,
+    setup = conf.guess_indent_setup,
     config = conf.guess_indent,
 })
 
@@ -249,6 +257,15 @@ misc({
     cmd = { "NeoNoName" },
 })
 
+misc({
+    "nyngwang/NeoRoot.lua",
+    cmd = { "NeoRootSwitchMode", "NeoRootChange" },
+    config = function()
+        require("neo-root").setup({
+            CUR_MODE = 2, -- 1 for file/buffer mode, 2 for proj-mode
+        })
+    end,
+})
 misc({
     "notjedi/nvim-rooter.lua",
     opt = true,
@@ -296,5 +313,12 @@ misc({
     "Pocco81/auto-save.nvim",
     config = conf.autosave,
     cmd = "ASToggle",
+    opt = true,
+})
+
+misc({
+    "ellisonleao/carbon-now.nvim",
+    config = conf.carbon,
+    cmd = "CarbonNow",
     opt = true,
 })
