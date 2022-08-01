@@ -34,7 +34,7 @@ local plug_map = {
         :with_nowait(),
     ["n|<leader>cd"] = map_cu("NeoRootSwitchMode", "Cwd"):with_noremap():with_silent():with_nowait(),
 
-    ["n|\\t"] = map_cu("NeoWellToggle", "NeoWellToggle"):with_noremap():with_silent(),
+    ["n|\\w"] = map_cu("NeoWellToggle", "NeoWellToggle"):with_noremap():with_silent(),
     ["n|\\a"] = map_cu("NeoWellAppend", "NeoWellAppend"):with_noremap():with_silent(),
     ["n|\\s"] = map_cu("NeoWellJump", "NeoWellJump"):with_noremap():with_silent(),
     ["n|\\r"] = map_cu("NeoWellEdit", "NeoWellEdit"):with_noremap():with_silent(),
