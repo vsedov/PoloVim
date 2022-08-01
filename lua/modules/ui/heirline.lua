@@ -628,7 +628,7 @@ local DefaultStatusline = {
     Space,
     Diagnostics,
     Align,
-    utils.make_flexible_component(3, Navic, { provider = "" }),
+    -- utils.make_flexible_component(3, Navic, { provider = "" }),
     -- space,
     DAPMessages,
     Align,
@@ -798,8 +798,8 @@ local WinBar = {
     }),
 }
 
-require("heirline").setup(StatusLines)
--- require("heirline").setup(StatusLines, WinBar)
+-- require("heirline").setup(StatusLines)
+require("heirline").setup(StatusLines, WinBar)
 
 vim.api.nvim_create_augroup("Heirline", { clear = true })
 vim.api.nvim_create_autocmd("User", {

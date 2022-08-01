@@ -1,6 +1,5 @@
 local add_cmd = vim.api.nvim_create_user_command
-local api = vim.api
-local fn = vim.fn
+local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format
 
 add_cmd("AbbrivGodMode", function()
@@ -11,7 +10,7 @@ add_cmd("DebugOpen", function()
     require("modules.lang.dap").prepare()
 end, { force = true })
 
-add_cmd("HpoonClear", function()
+add_cmd("HarpoonClear", function()
     require("harpoon.mark").clear_all()
 end, { force = true })
 
@@ -243,7 +242,7 @@ local function read_file(file, line_handler)
 end
 
 add_cmd("DotEnv", function()
-    local files = vim.fs.find(".env", {
+    local files = fs.find(".env", {
         upward = true,
         stop = fn.fnamemodify(fn.getcwd(), ":p:h:h"),
         path = fn.expand("%:p:h"),
@@ -266,8 +265,11 @@ add_cmd("DotEnv", function()
     vim.notify(fmt("Read **%s**\n", filename) .. markdown, "info", {
         title = "Nvim Env",
         on_open = function(win)
-            local buf = vim.api.nvim_win_get_buf(win)
-            vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+            local buf = api.nvim_win_get_buf(win)
+            if not api.nvim_buf_is_valid(buf) then
+                return
+            end
+            api.nvim_buf_set_option(buf, "filetype", "markdown")
         end,
     })
 end, {})
@@ -292,9 +294,11 @@ local auto_resize = function()
             auto_resize_on = true
             vim.notify("Auto resize ON")
         else
-            vim.cmd("let &winheight=30")
-            vim.cmd("let &winwidth=30")
-            vim.cmd("wincmd =")
+            vim.cmd([[
+      let &winheight=30
+      let &winwidth=30
+      wincmd =
+      ]])
             auto_resize_on = false
             vim.notify("Auto resize OFF")
         end
