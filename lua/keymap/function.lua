@@ -46,7 +46,7 @@ local plug_map = {
         :with_expr()
         :with_noremap(),
 
-    ["n|LM"] = map_cmd(function()
+    ["n|LA"] = map_cmd(function()
             return ":Zeavim<CR>"
         end, "Zeal search")
         :with_expr()

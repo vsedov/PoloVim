@@ -30,10 +30,10 @@ local plug_map = {
     ["n|<Leader>ir"] = map_cmd('<cmd>lua require"utils.telescope".lsp_references()<CR>', "Tel lsp_references")
         :with_noremap()
         :with_silent(),
-
-    ["v|<Leader>ga"] = map_cmd("<cmd>lua require('utils.telescope').code_actions()<CR>", "Tel code_actions ")
-        :with_noremap()
-        :with_silent(),
+    -- this is broken - fix later
+    -- ["v|<Leader>ga"] = map_cmd("<cmd>lua require('utils.telescope').code_actions()<CR>", "Tel code_actions ")
+    --     :with_noremap()
+    --     :with_silent(),
 
     ["n|<Leader>yy"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>', "NeoClip")
         :with_noremap()
