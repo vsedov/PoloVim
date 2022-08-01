@@ -86,8 +86,8 @@ function config.catppuccin()
         },
     })
     vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-    -- vim.cmd([[colorscheme catppuccin]])
-    vim.cmd.colorscheme("catppuccin")
+    vim.cmd([[colorscheme catppuccin]])
+    -- vim.cmd.colorscheme("catppuccin")
 end
 
 function config.kanagawa()
@@ -113,14 +113,19 @@ function config.kanagawa()
             normalfloat = { bg = "NONE" },
         },
     })
-    vim.cmd.colorscheme("kanagawa")
+    vim.cmd([[colorscheme kanagawa]])
+
+    -- vim.cmd.colorscheme("kanagawa")
 end
 
 function config.oxocarbon()
-    vim.cmd.colorscheme("oxocarbon")
+    vim.cmd([[colorscheme oxocarbon]])
+    -- vim.cmd.colorscheme("oxocarbon")
 end
 
 function config.horizon()
-    vim.cmd.colorscheme("horizon")
+    vim.cmd([[colorscheme horizon]])
+
+    -- vim.cmd.colorscheme("horizon")
 end
 return config
