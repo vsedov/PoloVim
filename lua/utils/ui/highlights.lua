@@ -463,7 +463,7 @@ local function on_sidebar_enter()
 end
 
 local function colorscheme_overrides()
-    if vim.g.colors_name == "doom-one" then
+    if vim.g.colors_name == "boo" then
         M.all({
             CursorLineNr = { foreground = { from = "Keyword" } },
             LineNr = { background = "NONE" },
