@@ -328,5 +328,30 @@ end
 function config.bbye()
     vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
 end
+function config.matchup()
+    vim.g.matchup_enabled = 1
+    vim.g.matchup_surround_enabled = 1
+    -- vim.g.matchup_transmute_enabled = 1
+    vim.g.matchup_matchparen_hi_surround_always = 1
+    vim.g.matchup_matchparen_deferred = 1
+    vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    vim.keymap.set("n", "<leader><leader>w", "<cmd>MatchupWhereAmI?<cr>", { noremap = true })
+end
+function config.mcc()
+    require("mcc").setup({
+        c = { "-", "->", "-", "-----", "-------" },
+        rust = { ";", "::", ";" },
+        go = {
+            { ";", ":=", ";" },
+            { "/", ":=", ";" },
+        },
+        python = {
+            { "::", ":=", "::" },
+            { "--", "->", "-" },
+            { "c__", "__init__", "__call__", "__add__", "__eq__" },
+            { "w_", "print(", "ic(", "pp(", "w_" },
+        },
+    })
+end
 
 return config

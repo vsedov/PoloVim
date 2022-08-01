@@ -12,12 +12,17 @@ local buffer_config = function()
    _H_: Move Next           _L_: Move Prev
    _ot_: Sort Tabs          _od_: Sort Dir
    _oD_: Sort relative dir  _D_: BufferLinePickClose
-                     _b_: Tele Buffer
+                    _b_: Tele Buffer
 
   ^^^^--------------------------------------------^^^^
-  ^^^^                Delete                      ^^^^
+  ^^^^                   Delete                   ^^^^
   ^^^^--------------------------------------------^^^^
    _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
+  ^^^^--------------------------------------------^^^^
+  ^^^^                   Reacher                  ^^^^
+  ^^^^--------------------------------------------^^^^
+
+    _S_: ReachOpen buffers   _s_: ReachOpen Tabs
 
    _d_: Bwipeout
 ]]
@@ -32,6 +37,9 @@ local buffer_config = function()
                 invoke_on_body = true,
             },
             heads = {
+                { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },
+                { "s", ":ReachOpen tabpages<CR>", { desc = "Next buffer" } },
+
                 { "l", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" } },
                 { "h", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
                 { "p", "<Cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" } },
@@ -59,21 +67,28 @@ local buffer_config = function()
         }
     else
         hint = [[
-      ^^^^                    Tabby                   ^^^^
-      ^^^^--------------------------------------------^^^^
-       _l_: tabn                        _h_: tabp
-       _n_: $tabnew                     _c_: tabclose
-      ^^^^--------------------------------------------^^^^
-       _H_: +tabmove                    _L_: -tabmove
-                        _b_: Tele Buffer
-                        _p_: tabonly
-      ^^^^--------------------------------------------^^^^
-      ^^^^                Delete                      ^^^^
-      ^^^^--------------------------------------------^^^^
-       _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
+^^^^                    Tabby                   ^^^^
+^^^^--------------------------------------------^^^^
+  _l_: tabn                       _h_: tabp
+  _n_: $tabnew                    _c_: tabclose
+^^^^--------------------------------------------^^^^
+  _H_: +tabmove                   _L_: -tabmove
+              _b_: Tele Buffer
+              _p_: tabonly
+^^^^--------------------------------------------^^^^
+^^^^                   Delete                   ^^^^
+^^^^--------------------------------------------^^^^
+              _qh_: Del Hidden 
+              _qn_: Del NameLess 
+              _qt_: Del This
+              _d_: Bwipeout
+^^^^--------------------------------------------^^^^
+^^^^                  Reacher                   ^^^^
+^^^^--------------------------------------------^^^^
 
-       _d_: Bwipeout
-    ]]
+  _S_: ReachOpen buffers   _s_: ReachOpen Tabs
+
+]]
         config = {
             hint = hint,
             name = "Tab management",
@@ -85,6 +100,9 @@ local buffer_config = function()
                 invoke_on_body = true,
             },
             heads = {
+                { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },
+                { "s", ":ReachOpen tabpages<CR>", { desc = "Next buffer" } },
+
                 { "l", ":tabn<CR>", { desc = "Next buffer" } },
                 { "h", ":tabp<CR>", { desc = "Prev buffer" } },
 
