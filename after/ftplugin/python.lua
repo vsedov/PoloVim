@@ -60,3 +60,26 @@ vim.keymap.set("n", "<leader>im", function()
     vim.fn.system("cd " .. current_path)
     vim.cmd([[NayvyImports]])
 end, { noremap = true })
+
+local switch_definitions = [[
+  let b:switch_custom_definitions = [
+    {
+      'print\s\+\(.*\)': 'print(\1)',
+      'print(\([^)]*\))': 'print \1',
+      'is\s\(not\)\@!': 'is not ',
+      'is\snot': 'is',
+    }
+  ]
+]]
+vim.cmd(switch_definitions:gsub("\n", ""))
+
+local success, wk = pcall(require, "which-key")
+if not success then
+    return
+end
+
+wk.register({
+    ["<leader>2"] = { '0/TODO<cr><cmd>nohlsearch<cr>"_c4l', "Replace next TODO" },
+    ["[i"] = { "?def __init__<cr><cmd>nohlsearch<cr>", "Goto previous __init__" },
+    ["]i"] = { "/def __init__<cr><cmd>nohlsearch<cr>", "Goto next __init__" },
+}, { buffer = vim.api.nvim_get_current_buf() })

@@ -5,18 +5,41 @@ local map_cmd = bind.map_cmd
 local map_args = bind.map_args
 -- local map_key = bind.map_key
 -- local global = require("core.global")
-
+local cur_buf = nil
+local cur_cur = nil
 local plug_map = {
-
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
-    ["n|<CR>"] = map_cmd("<cmd>NeoZoomToggle<CR>", "NeoZoomToggle"):with_noremap():with_silent():with_nowait(),
+    ["n|<CR>"] = map_cmd(function()
+            if vim.api.nvim_win_get_config(0).relative == "" then
+                cur_buf = vim.fn.bufnr()
+                cur_cur = vim.api.nvim_win_get_cursor(0)
+                if vim.fn.bufname() ~= "" then
+                    vim.cmd("NeoNoName")
+                end
+                vim.cmd("NeoZoomToggle")
+                vim.api.nvim_set_current_buf(cur_buf)
+                vim.api.nvim_win_set_cursor(0, cur_cur)
+                vim.cmd("normal! zt")
+                vim.cmd("normal! 7k7j")
+                return
+            end
+            vim.cmd("NeoZoomToggle")
+            vim.api.nvim_set_current_buf(cur_buf)
+            cur_buf = nil
+            cur_cur = nil
+            vim.cmd("NeoWellJump") -- you can safely remove this line.
+        end, "NeoZoomToggle")
+        :with_noremap()
+        :with_silent()
+        :with_nowait(),
+    ["n|<leader>cd"] = map_cu("NeoRootSwitchMode", "Cwd"):with_noremap():with_silent():with_nowait(),
 
-    ["n|\\t"] = map_cmd("<cmd>NeoWellToggle<CR>", "NeoWellToggle"):with_noremap():with_silent(),
-    ["n|\\a"] = map_cmd("<cmd>NeoWellAppend<CR>", "NeoWellAppend"):with_noremap():with_silent(),
-    ["n|\\s"] = map_cmd("<cmd>NeoWellJump<CR>", "NeoWellJump"):with_noremap():with_silent(),
-    ["n|\\r"] = map_cmd("<cmd>NeoWellEdit<CR>", "NeoWellEdit"):with_noremap():with_silent(),
-    ["n|\\d"] = map_cmd("<cmd>NeoWellOut<CR>", "NeoWellOut"):with_noremap():with_silent(),
-    ["n|\\D"] = map_cmd("<cmd>NeoWellWipeOut<CR>", "NeoWellWipeOut"):with_noremap():with_silent(),
+    ["n|\\t"] = map_cu("NeoWellToggle", "NeoWellToggle"):with_noremap():with_silent(),
+    ["n|\\a"] = map_cu("NeoWellAppend", "NeoWellAppend"):with_noremap():with_silent(),
+    ["n|\\s"] = map_cu("NeoWellJump", "NeoWellJump"):with_noremap():with_silent(),
+    ["n|\\r"] = map_cu("NeoWellEdit", "NeoWellEdit"):with_noremap():with_silent(),
+    ["n|\\d"] = map_cu("NeoWellOut", "NeoWellOut"):with_noremap():with_silent(),
+    ["n|\\D"] = map_cu("NeoWellWipeOut", "NeoWellWipeOut"):with_noremap():with_silent(),
 
     -- New mapping for lspsaga
     ["n|<leader><S-Tab>"] = map_cmd("<cmd>Lspsaga open_floaterm<cr>", "float_term"):with_noremap():with_silent(),
@@ -28,7 +51,7 @@ local plug_map = {
     ["n|<localleader>ps"] = map_cmd("<cmd>PackerStatus<cr>", "PackerStatus"):with_noremap():with_silent(),
     ["n|<localleader>pP"] = map_cmd("<cmd>StartupTime<cr>", "StartUpTime"):with_noremap():with_silent(),
 
-    ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>", "Cwd"):with_noremap():with_silent(),
+    -- ["n|<leader>cd"] = map_cmd("<cmd>cd %:p:h<CR>:pwd<CR>", "Cwd"):with_noremap():with_silent(),
     -- I want to use focus first
     ["n|<Leader>e"] = map_cr("NeoTreeFocusToggle", "NeoTree Focus Toggle"):with_noremap():with_silent(),
     ["n|<Leader>F"] = map_cr("NeoTreeFocus", "NeoTree Focus"):with_noremap():with_silent(),
