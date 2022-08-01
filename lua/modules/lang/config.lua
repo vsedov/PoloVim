@@ -386,6 +386,7 @@ function config.neotest()
     vim.cmd([[packadd neotest-python]])
     vim.cmd([[packadd neotest-plenary]])
     vim.cmd([[packadd neotest-vim-test]])
+    vim.cmd([[packadd overseer.nvim]])
 
     local add_cmd = vim.api.nvim_create_user_command
 
@@ -401,6 +402,14 @@ function config.neotest()
         },
         diagnostic = {
             enabled = true,
+        },
+        consumers = {
+            overseer = require("neotest.consumers.overseer"),
+        },
+        overseer = {
+            enabled = true,
+            -- When this is true (the default), it will replace all neotest.run.* commands
+            force_default = true,
         },
         highlights = {
             adapter_name = "NeotestAdapterName",
@@ -516,6 +525,17 @@ function config.neotest()
     end
 end
 
+function config.overseer()
+    require("overseer").setup({
+        pre_task_hook = function(task_defn)
+            local env = require("utils.set_env").env
+            if env then
+                task_defn.env = env
+                dump(task_defn)
+            end
+        end,
+    })
+end
 function config.coverage()
     require("coverage").setup()
 end

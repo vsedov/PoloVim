@@ -133,6 +133,7 @@ lang({
         "<leader>uS",
         "<leader>uh",
     },
+    wants = "overseer.nvim",
     requires = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
@@ -145,8 +146,25 @@ lang({
             requires = { "vim-test/vim-test", opt = true, after = "neotest" },
         },
     },
-    setup = conf.neotest_setup,
     config = conf.neotest,
+})
+lang({
+    "stevearc/overseer.nvim",
+    config = conf.overseer,
+    module = "overseer",
+    cmd = {
+        "OverseerOpen",
+        "OverseerClose",
+        "OverseerToggle",
+        "OverseerSaveBundle",
+        "OverseerLoadBundle",
+        "OverseerDeleteBundle",
+        "OverseerRunCmd",
+        "OverseerRun",
+        "OverseerBuild",
+        "OverseerQuickAction",
+        "OverseerTaskAction",
+    },
 })
 lang({
     "andythigpen/nvim-coverage",
