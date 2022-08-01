@@ -8,11 +8,11 @@ end
 local window_hint = [[
  ^^^^^^^^^^^^             Move         ^^    Size  ^^  ^^     Split
  ^^^^^^^^^^^^------------------------- ^^--------------^^  ^^---------------
- ^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^ ^   _<Up>_     ^   ^_s_: horizontally 
+ ^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^ ^   _<Up>_     ^   ^_s_: horizontally
  _h_ ^ ^ _l_  _wh_ _<cr>_ _wl_  _H_ ^ ^ _L_  _<Left>_ _<Right>_  _v_: vertically
  ^ ^ _j_ ^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^   ^_q_, _c_: close
  ^^ focus ^  ^^winshift^  ^^Split^^^^^^^^^^  ^_=_: equalize^     _z_: maximize
- ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only 
+ ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only
  _b_: choose buffer
 ]]
 
@@ -31,7 +31,7 @@ Hydra({
     heads = {
         { "h", "<C-w>h" },
         { "j", "<C-w>j" },
-        { "k", cmd([[try | wincmd k | catch /^Vim\%((\a\+)\)\=:E11:/ | close | endtry]]) },
+        { "k", "<C-w>k" },
         { "l", "<C-w>l" },
 
         { "wh", cmd([[WinShift left]]) },

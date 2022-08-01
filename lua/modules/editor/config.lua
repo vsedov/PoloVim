@@ -15,8 +15,8 @@ function config.acc_jk()
         acceleration_table = { 7, 12, 17, 21, 24, 26, 28, 30 },
         deceleration_table = { { 150, 9999 } },
     })
-    vim.keymap.set("n", "j", "<Plug>(accelerated_jk_gj)", {})
-    vim.keymap.set("n", "k", "<Plug>(accelerated_jk_gk)", {})
+    vim.keymap.set("n", "j", "<Plug>(accelerated_jk_gj)", { noremap = true })
+    vim.keymap.set("n", "k", "<Plug>(accelerated_jk_gk)", { noremap = true })
 end
 
 function config.setup_yanky()

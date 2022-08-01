@@ -38,8 +38,8 @@ require("neorg").setup({
             },
         },
         -- ["external.kanban"] = {},
-        -- -- ["external.zettelkasten"] = {},
-        -- ["external.context"] = {},
+        -- ["external.zettelkasten"] = {},
+        ["external.context"] = {},
         ["core.norg.concealer"] = {
             config = {
                 -- markup_preset = "dimmed",

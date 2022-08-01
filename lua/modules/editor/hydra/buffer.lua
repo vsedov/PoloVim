@@ -6,20 +6,20 @@ local buffer_config = function()
     if lambda.config.tabby_or_bufferline then
         hint = [[
   ^^^^                Bufferline                  ^^^^
-  ^^^^--------------------------------------------^^^^  
+  ^^^^--------------------------------------------^^^^
    _l_: BufferLineCycleNext _h_: BufferLineCyclePrev
    _p_: BufferLineTogglePin _c_: BufferLinePick
-   _H_: Move Next           _L_: Move Prev 
-   _ot_: Sort Tabs          _od_: Sort Dir 
+   _H_: Move Next           _L_: Move Prev
+   _ot_: Sort Tabs          _od_: Sort Dir
    _oD_: Sort relative dir  _D_: BufferLinePickClose
                      _b_: Tele Buffer
 
-  ^^^^--------------------------------------------^^^^  
+  ^^^^--------------------------------------------^^^^
   ^^^^                Delete                      ^^^^
-  ^^^^--------------------------------------------^^^^  
+  ^^^^--------------------------------------------^^^^
    _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
 
-   _d_: Bwipeout    
+   _d_: Bwipeout
 ]]
         config = {
             hint = hint,
@@ -60,19 +60,19 @@ local buffer_config = function()
     else
         hint = [[
       ^^^^                    Tabby                   ^^^^
-      ^^^^--------------------------------------------^^^^  
-       _l_: tabn                              _h_: tabp
-       _n_: $tabnew                           _c_: tabclose
-      ^^^^--------------------------------------------^^^^  
-       _H_: +tabmove                          _L_: -tabmove 
-                         _b_: Tele Buffer
-                         _p_: tabonly
-      ^^^^--------------------------------------------^^^^  
+      ^^^^--------------------------------------------^^^^
+       _l_: tabn                        _h_: tabp
+       _n_: $tabnew                     _c_: tabclose
+      ^^^^--------------------------------------------^^^^
+       _H_: +tabmove                    _L_: -tabmove
+                        _b_: Tele Buffer
+                        _p_: tabonly
+      ^^^^--------------------------------------------^^^^
       ^^^^                Delete                      ^^^^
-      ^^^^--------------------------------------------^^^^  
+      ^^^^--------------------------------------------^^^^
        _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
 
-       _d_: Bwipeout    
+       _d_: Bwipeout
     ]]
         config = {
             hint = hint,
