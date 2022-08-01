@@ -128,4 +128,18 @@ function config.horizon()
 
     -- vim.cmd.colorscheme("horizon")
 end
+
+function config.dogrun()
+    vim.cmd([[colorscheme dogrun]])
+end
+
+function config.rose()
+    vim.cmd("colorscheme rose-pine")
+end
+
+function config.boo()
+    local theme_type = { "crimson_moonlight", "radioactive_waste", "forest_stream" }
+
+    require("boo-colorscheme").use({ theme = theme_type[math.random(1, #theme_type)] })
+end
 return config

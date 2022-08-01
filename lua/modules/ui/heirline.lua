@@ -74,7 +74,7 @@ end
 
 local function setup_colors()
     local values = {
-        bright_bg = utils.get_highlight("Folded").bg,
+        bright_bg = utils.get_highlight("Folded").bg or utils.get_highlight("Folded").fg,
         red = utils.get_highlight("DiagnosticError").fg,
         dark_red = utils.get_highlight("DiffDelete").bg,
         green = utils.get_highlight("String").fg,
