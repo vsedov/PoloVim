@@ -40,9 +40,10 @@ local function loadscheme()
 
     require("packer").loader(loading_theme)
 end
-require("vscripts.cursorhold")
 loadscheme()
+require("vscripts.cursorhold")
 vim.g.cursorhold_updatetime = 100
+
 require("utils.ui.highlights")
 
 function Lazyload()
@@ -92,7 +93,7 @@ function Lazyload()
     vim.g.vimsyn_embed = "lPr"
 
     local gitrepo = vim.fn.isdirectory(".git/index")
-    if gitrepo and use_gitsigns() then
+    if gitrepo and lambda.use_gitsigns then
         loader("gitsigns.nvim") -- neogit vgit.nvim
     end
 

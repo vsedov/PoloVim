@@ -10,6 +10,8 @@ lambda.config = {
     session = true, -- set to false to disable session
     tabby_or_bufferline = true, -- false: tabby, true for bufferline
     use_saga = true, -- toggle between diagnostics, if u want to use saga or not
+    guess_indent = true,
+    use_gitsigns = true,
     python = {
         lint = "flake8", -- "pylint "
         lsp = "pylance", -- jedi pylsp and pyright
@@ -195,8 +197,13 @@ return {
             return Plugin_debug
         end
 
-        _G.use_gitsigns = function()
-            return true
+        _G.dump = function(...)
+            local objects = vim.tbl_map(vim.inspect, { ... })
+            if #objects == 0 then
+                print("nil")
+            end
+            print(unpack(objects))
+            return ...
         end
     end,
 }
