@@ -1,5 +1,6 @@
 local conf = require("modules.completion.config")
 local completion = require("core.pack").package
+local use_local = require("utils.module_utils").use_local
 
 completion({ "max397574/dyn_help.nvim" })
 completion({
@@ -66,12 +67,19 @@ completion({
 })
 
 completion({
-    "iurimateus/luasnip-latex-snippets.nvim",
-    requires = { "L3MON4D3/LuaSnip", { "lervag/vimtex", ft = { "tex" } } },
+    use_local("luasnip-latex-snippets.nvim", "contributing"),
+    ft = { "latex", "tex" },
     config = function()
-        require("luasnip-latex-snippets").setup()
+        vim.defer_fn(function()
+            require("luasnip-latex-snippets").setup()
+        end, 100)
     end,
-    ft = "tex",
+})
+
+completion({
+    "lervag/vimtex",
+    opt = true,
+    ft = { "latex", "tex" },
 })
 
 completion({
@@ -121,4 +129,9 @@ completion({
 
 completion({ "danymat/neogen", module = { "neogen" }, requires = { "LuaSnip" }, config = conf.neogen })
 
-completion({ "~/GitHub/vim-sonictemplate", cmd = "Template", config = conf.vim_sonictemplate })
+completion({
+    use_local("vim-sonictemplate", "personal"),
+    as = "vim-sonictemplate",
+    cmd = "Template",
+    config = conf.vim_sonictemplate,
+})

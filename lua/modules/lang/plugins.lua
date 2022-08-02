@@ -1,5 +1,7 @@
 local conf = require("modules.lang.config")
 local lang = require("core.pack").package
+local use_local = require("utils.module_utils").use_local
+
 lang({
     "nathom/filetype.nvim",
     -- event = {'BufEnter'},
@@ -62,6 +64,7 @@ lang({ "is0n/jaq-nvim", cmd = "Jaq", opt = true, config = conf.jaq })
 lang({
     "pianocomposer321/yabs.nvim",
     ft = "python",
+    cmd = { "YabsTask", "YabsDefaultTask" },
     requires = { "nvim-lua/plenary.nvim" },
     config = conf.yabs,
 })
@@ -188,7 +191,12 @@ lang({ "mgedmin/coverage-highlight.vim", ft = "python", opt = true, run = ":Upda
 -- -- Poetry Mappings
 -- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
 -- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
-lang({ "~/GitHub/active_development/py.nvim", ft = "python", opt = true, config = conf.python_dev })
+lang({
+    use_local("py.nvim", "contributing"),
+    ft = "python",
+    opt = true,
+    config = conf.python_dev,
+})
 
 lang({
     "rmagatti/goto-preview",
