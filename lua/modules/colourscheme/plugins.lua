@@ -33,9 +33,3 @@ colourscheme({
     opt = true,
     config = conf.dogrun,
 })
-
-colourscheme({
-    "rockerBOO/boo-colorscheme-nvim",
-    opt = true,
-    config = conf.boo,
-})
