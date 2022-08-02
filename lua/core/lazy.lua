@@ -43,7 +43,6 @@ local function loadscheme()
         "horizon.nvim",
         "rose",
         "vim-dogrun",
-        "boo-colorscheme-nvim",
     }
     local v = math.random(1, #themes)
     local loading_theme = themes[v]

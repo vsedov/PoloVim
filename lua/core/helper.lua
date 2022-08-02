@@ -1,4 +1,4 @@
-local fn = vim.fn
+-- local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 _G = _G or {}
@@ -9,9 +9,11 @@ lambda.config = {
     dashboard = true, -- set to false to not see this
     session = true, -- set to false to disable session
     tabby_or_bufferline = true, -- false: tabby, true for bufferline
-    use_saga = true, -- toggle between diagnostics, if u want to use saga or not
+    use_saga_diagnostic_jump = false, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
+    use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     guess_indent = true,
     use_gitsigns = true,
+    latex = "texlab", -- texlab | ltex
     python = {
         lint = "flake8", -- "pylint "
         lsp = "pylance", -- jedi pylsp and pyright
@@ -169,6 +171,7 @@ lambda.dynamic_unload = function(module_name, reload)
     end
 end
 
+-- plugin_folder()
 return {
     init = function()
         _G.plugin_folder = function()
@@ -177,7 +180,7 @@ return {
             end
             local host = os.getenv("HOST_NAME")
             if host and host:find("vsedov") then
-                Plugin_folder = [[~/github/]] -- vim.fn.expand("$HOME") .. '/github/'
+                Plugin_folder = [[~/GitHub/neovim]] -- vim.fn.expand("$HOME") .. '/github/'
             else
                 Plugin_folder = [[vsedov/]]
             end
