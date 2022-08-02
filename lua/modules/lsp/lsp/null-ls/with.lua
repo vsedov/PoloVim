@@ -1,6 +1,6 @@
 -- https://github.com/fitrh/init.nvim/blob/e787af19c1f59e02a12e98cdcb6a93e7beadb018/lua/config/plugin/null-ls/with.lua
 local With = {}
-
+local null_ls = require("null-ls")
 local plaintext = { "gitcommit", "markdown", "txt" }
 
 With.black = {
@@ -137,6 +137,26 @@ With.write_good = {
     filetypes = plaintext,
     args = { "--text=$TEXT", "--parse" },
     command = "write-good",
+}
+-- see how this works for python based files .
+With.semgrep = {
+    filetypes = {
+        "go",
+        "python",
+        "ruby",
+        "kotlin",
+        "c",
+        "c++",
+        "lua",
+        "rust",
+    },
+    method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+    extra_args = { "--config=auto" },
+}
+
+With.flake8 = {
+    -- for the time, lets see how much lag this would reduce.
+    method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 }
 
 return With

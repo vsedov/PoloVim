@@ -1,9 +1,8 @@
 return {
+    lambda.config.python.lint,
     "cppcheck",
     "djlint",
     "eslint_d",
-    "fish",
-    lambda.config.python.lint,
     "golangci_lint",
     "ktlint",
     "markdownlint",
@@ -16,4 +15,6 @@ return {
     "staticcheck",
     "stylelint",
     "write_good",
+    "luacheck",
+    -- "semgrep",
 }

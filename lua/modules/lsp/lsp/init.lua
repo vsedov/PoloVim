@@ -1,15 +1,10 @@
+local lspconfig = require("lspconfig")
+local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 if vim.bo.filetype ~= "zig" then
     require("modules.lsp.lsp.semantic_tokens")
 end
-if vim.g.lsp_config_complete then
-    return
-end
-vim.g.lsp_config_complete = true
-local lspconfig = require("lspconfig")
-local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
 local python_setup = {
     pylsp = function()
-        vim.g.navic_silence = true
         lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
     end,
     jedi = function()
@@ -24,7 +19,17 @@ local python_setup = {
         lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
     end,
 }
+
+local latex_setup = {
+    texlab = function()
+        lspconfig.texlab.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.texlab")))
+    end,
+    ltex = function()
+        lspconfig.ltex.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.ltex").config))
+    end,
+}
 python_setup[lambda.config.python.lsp]()
+latex_setup[lambda.config.latex]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 
@@ -41,8 +46,6 @@ lspconfig.gopls.setup(enhance_attach({
     },
 }))
 
-lspconfig.texlab.setup(enhance_attach(require("modules.lsp.lsp.providers.latex")))
-
 lspconfig.jsonls.setup(enhance_attach({
     cmd = { "vscode-json-languageserver", "--stdio" },
     filetypes = { "json", "jsonc" },
@@ -51,18 +54,6 @@ lspconfig.jsonls.setup(enhance_attach({
 lspconfig.sqls.setup(enhance_attach({
     filetypes = { "sql", "mysql" },
     cmd = { "sql-language-server", "up", "--method", "stdio" },
-    settings = {
-        sqls = {
-            connections = {
-                {
-                    name = "sqlite3-project",
-                    adapter = "sqlite3",
-                    filename = "/home/viv/GitHub/TeamProject2022_28/ARMS/src/main/resources/db/DummyARMS.sqlite",
-                    projectPaths = "/home/viv/GitHub/TeamProject2022_28/ARMS/",
-                },
-            },
-        },
-    },
 }))
 
 -- -- You will have to Build a package for this .
