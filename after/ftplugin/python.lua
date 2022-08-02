@@ -54,7 +54,7 @@ local toggle_fstring = function()
     vim.api.nvim_win_set_cursor(winnr, cursor)
 end
 
-vim.keymap.set("n", "<localleader>f", toggle_fstring, { noremap = true })
+vim.keymap.set("n", ";f", toggle_fstring, { noremap = true })
 vim.keymap.set("n", "<leader>im", function()
     current_path = vim.fn.expand("%:p")
     vim.fn.system("cd " .. current_path)

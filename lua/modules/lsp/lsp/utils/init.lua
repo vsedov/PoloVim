@@ -1,6 +1,7 @@
 --https://github.com/LunarVim/LunarVim/tree/rolling/lua/lvim/lsp
 -- Modified though
 local M = {}
+local rtest
 -- local autocmds = require("lvim.core.autocmds")
 local config = require("modules.lsp.lsp.utils.config")
 
@@ -27,7 +28,7 @@ local function add_lsp_buffer_keybindings(client, bufnr)
             if lambda.config.use_saga then
                 vim.cmd([[Lspsaga show_line_diagnostics]])
             else
-                require("modules.lsp.lsp.utils.handlers").show_line_diagnostics()
+                vim.diagnostic.open_float(0, { scope = "line", focus = false })
             end
         end,
 
