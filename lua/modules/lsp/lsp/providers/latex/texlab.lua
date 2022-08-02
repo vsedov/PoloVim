@@ -1,7 +1,6 @@
 local forward_search_executable = "zathura"
 local zathura_args = { "--synctex-forward", "%l:1:%f", "%p" }
-
-local settings = {
+return {
     cmd = { "texlab" },
     filetypes = { "tex", "bib" },
     settings = {
@@ -49,4 +48,3 @@ local settings = {
         },
     },
 }
-return settings
