@@ -117,3 +117,10 @@ lsp({
         require("modules.lsp.lsp.null-ls").setup()
     end,
 })
+
+lsp({
+    "barreiroleo/ltex-extra.nvim",
+    opt = true,
+    ft = { "latex", "tex" },
+    module = "ltex_extra",
+})
