@@ -20,7 +20,7 @@ function M.setup_autocommands(client, bufnr)
     end, { desc = "toggle popup diagnostic", force = true })
 
     if client and client.server_capabilities.codeLensProvider then
-        as.augroup("LspCodeLens", {
+        lambda.augroup("LspCodeLens", {
             {
                 event = { "BufEnter", "CursorHold", "InsertLeave" },
                 buffer = bufnr,
@@ -54,24 +54,28 @@ function M.setup_autocommands(client, bufnr)
                     end
                 end,
             },
-            {
-                event = { "CursorHold", "CursorHoldI" },
-                buffer = bufnr,
-                description = "LSP: Document Highlight",
-                command = function()
-                    pcall(vim.lsp.buf.document_highlight)
-                end,
-            },
-            {
-                event = "CursorMoved",
-                description = "LSP: Document Highlight (Clear)",
-                buffer = bufnr,
-                command = function()
-                    vim.lsp.buf.clear_references()
-                end,
-            },
-            --
         })
+        if client.supports_method("textDocument/documentHighlight") then
+            lambda.augroup("lsp_document_highlight", {
+
+                {
+                    event = { "CursorHold", "CursorHoldI" },
+                    buffer = bufnr,
+                    description = "LSP: Document Highlight",
+                    command = function()
+                        pcall(vim.lsp.buf.document_highlight)
+                    end,
+                },
+                {
+                    event = "CursorMoved",
+                    description = "LSP: Document Highlight (Clear)",
+                    buffer = bufnr,
+                    command = function()
+                        vim.lsp.buf.clear_references()
+                    end,
+                },
+            })
+        end
     end
 end
 

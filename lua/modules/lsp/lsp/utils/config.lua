@@ -104,7 +104,44 @@ local codes = {
         "lowercase-global",
     },
 }
-return {
+
+local get_extra_binds = function()
+    local binds = {}
+    if lambda.config.use_saga_maps then
+        binds = {
+            ["gd"] = { "<cmd> Lspsaga preview_definition<cr>", "preview_definition" },
+            ["gh"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
+            ["gj"] = { "<cmd> Lspsaga signature_help<cr>", "signature_help" },
+            ["ca"] = { "<cmd> Lspsaga code_action<cr>", "code_actions" },
+            ["<C-f>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", "lsp scroll up" },
+            ["<C-b>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", "lsp scroll down" },
+
+            ["gr"] = { "<cmd>Lspsaga rename<CR>", "rename" },
+
+            ["[E"] = {
+                function()
+                    require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+                end,
+                "Error Diagnostic",
+            },
+            ["]E"] = {
+                function()
+                    require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+                end,
+                "Error Diagnostic",
+            },
+            ["[e"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Diagnostic Jump next" },
+            ["]e"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Diagnostic Jump prev" },
+        }
+    else
+        binds = {
+            ["[e"] = { "<cmd> lua vim.diagnostic.goto_prev({ float = false })<cr>", "Diagnostic Jump next" },
+            ["]e"] = { "<cmd> lua vim.diagnostic.goto_next({ float = false })<cr>", "Diagnostic Jump prev" },
+        }
+    end
+    return binds
+end
+local container = {
     signs = {
         { name = "DiagnosticSignError", text = "" },
         { name = "DiagnosticSignWarn", text = "" },
@@ -187,10 +224,66 @@ return {
         end
     end)(vim.diagnostic.open_float),
 
-    on_attach_callback = nil,
+    buffer_mappings = {
+        normal_mode = {
+            ["<Leader>cw"] = { "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", "Symbols" },
+            ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "declaration" },
+            ["gI"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "implementation" },
+
+            ["<leader>ai"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
+            ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
+            ["D"] = {
+                function()
+                    if lambda.config.use_saga_diagnostic_jump then
+                        vim.cmd([[Lspsaga show_line_diagnostics]])
+                    else
+                        vim.diagnostic.open_float(0, { scope = "line", focus = false })
+                    end
+                end,
+                "Diagnostic Line",
+            },
+
+            ["<leader>;"] = {
+                function()
+                    require("modules.lsp.lsp.utils.list").change_active("Quickfix")
+                    vim.lsp.buf.references()
+                end,
+                "utils list quickfix change",
+            },
+
+            ["K"] = { require("hover").hover, "hover" },
+
+            ["gK"] = { require("hover").hover_select, "Hover select" },
+        },
+        visual_mode = {
+            ["ca"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
+        },
+        insert_mode = {},
+        extra_binds = get_extra_binds(),
+    },
+    on_attach_callback = {
+        ["global"] = function(client, bufnr)
+            require("nvim-navic").attach(client, bufnr)
+        end,
+
+        ["pylance"] = function(client, bufnr)
+            require("modules.lsp.lsp.providers.python.pylance").attach_config(client, bufnr)
+        end,
+        ["ltex"] = function(client, bufnr)
+            require("modules.lsp.lsp.providers.latex.ltex").attach_config(client, bufnr)
+        end,
+    },
+
     on_init_callback = nil,
+    navic_callback = {
+        "pylance",
+        "ltex",
+        "pylsp ",
+    },
     null_ls = {
         setup = {},
         config = {},
     },
 }
+
+return container

@@ -6,67 +6,18 @@ local rtest
 local config = require("modules.lsp.lsp.utils.config")
 
 local function add_lsp_buffer_keybindings(client, bufnr)
-    local binds
-    -- local border = config.float.border
-    -- TODO(vsedov) (14:29:40 - 11/07/22): Change this later
-    vim.keymap.set("n", "<leader>;", function()
-        require("modules.lsp.lsp.utils.list").change_active("Quickfix")
-        vim.lsp.buf.references()
-    end, { buffer = true })
-
-    vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
-    vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
-
-    local lsp_map = {
-        ["<Leader>cw"] = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
-        ["gD"] = "<cmd>lua vim.lsp.buf.declaration()<CR>",
-        ["gI"] = "<cmd>lua vim.lsp.buf.implementation()<CR>",
-
-        ["<leader>ai"] = "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",
-        ["<leader>ao"] = "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",
-        ["D"] = function()
-            if lambda.config.use_saga then
-                vim.cmd([[Lspsaga show_line_diagnostics]])
-            else
-                vim.diagnostic.open_float(0, { scope = "line", focus = false })
-            end
-        end,
-
-        -- man this was nice, but like, lsp saga be looking god like recently
+    local mappings = {
+        normal_mode = "n",
+        insert_mode = "i",
+        visual_mode = "v",
+        extra_binds = "n",
     }
-
-    if lambda.config.use_saga then
-        binds = {
-            ["gd"] = "<cmd> Lspsaga preview_definition<cr>",
-            ["gh"] = "<cmd> Lspsaga lsp_finder<cr>",
-            ["gj"] = "<cmd> Lspsaga signature_help<cr>",
-            ["ca"] = "<cmd> Lspsaga code_action<cr>",
-            ["<C-f>"] = "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>",
-            ["<C-b>"] = "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
-
-            ["gr"] = "<cmd>Lspsaga rename<CR>",
-
-            ["[E"] = function()
-                require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
-            end,
-            ["]E"] = function()
-                require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
-            end,
-            ["[e"] = "<cmd>Lspsaga diagnostic_jump_next<cr>",
-            ["]e"] = "<cmd>Lspsaga diagnostic_jump_prev<cr>",
-        }
-    else
-        binds = {
-            ["[e"] = "<cmd> lua vim.diagnostic.goto_prev({ float = false })<cr>",
-            ["]e"] = "<cmd> lua vim.diagnostic.goto_next({ float = false })<cr>",
-        }
+    for mode_name, mode_char in pairs(mappings) do
+        for key, remap in pairs(config.buffer_mappings[mode_name]) do
+            local opts = { buffer = bufnr, desc = remap[2], noremap = true, silent = true }
+            vim.keymap.set(mode_char, key, remap[1], opts)
+        end
     end
-    lsp_map = vim.tbl_extend("force", lsp_map, binds)
-    for mode_name, mode_char in pairs(lsp_map) do
-        vim.keymap.set("n", mode_name, mode_char, { noremap = true, silent = true, buffer = bufnr })
-    end
-
-    vim.keymap.set("v", "ca", "<cmd>Lspsaga range_code_action<cr>", { noremap = true, silent = true, buffer = bufnr })
 end
 
 -- this could change ove ra period of time . 1
@@ -82,6 +33,9 @@ function M.common_on_init(client, bufnr)
         config.on_init_callback(client, bufnr)
         return
     end
+    if config.navic_callback[client.name] then
+        vim.g.navic_silence = true
+    end
     select_default_formater(client, bufnr)
 end
 
@@ -96,12 +50,9 @@ function M.common_capabilities()
 end
 
 function M.common_on_attach(client, bufnr)
-    if config.on_attach_callback then
-        config.on_attach_callback(client, bufnr)
-    end
-    require("nvim-navic").attach(client, bufnr)
-    if client.name == "pylance" then
-        require("modules.lsp.lsp.providers.python.pylance").attach_config(client, bufnr)
+    config.on_attach_callback["global"](client, bufnr)
+    if config.on_attach_callback[client.name] then
+        config.on_attach_callback[client.name](client, bufnr)
     end
     add_lsp_buffer_keybindings(client, bufnr)
     require("modules.lsp.lsp.utils.autocmd").setup_autocommands(client, bufnr)
@@ -113,11 +64,6 @@ function M.get_common_opts()
         on_attach = M.common_on_attach,
         capabilities = M.common_capabilities(),
     }
-end
-
-local function cap()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    return capabilities
 end
 
 function M.setup()
