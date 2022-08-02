@@ -5,16 +5,23 @@ local map_cmd = bind.map_cmd
 -- local map_args = bind.map_args
 local loader = require("packer").loader
 local K = {}
-
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
+local run_or_test = function(debug)
+    local ft = vim.bo.filetype
+    local fn = vim.fn.expand("%")
+    fn = string.lower(fn)
 
+    if ft == "lua" then
+        return ":Jaq internal<CR>"
+    else
+        return ":Jaq<CR>"
+    end
+end
 local keys = { --
-    ["n|<Leader>r"] = map_cmd("v:lua.run_or_test()", "run file"):with_expr(),
-    ["n|<F5>"] = map_cmd("v:lua.run_or_test(v:true)", "run file debug"):with_expr(),
-    ["n|<F6>"] = map_cu("Jaq qf", "jaq run"):with_noremap():with_silent(),
-
+    ["n|<leader>r"] = map_cmd(run_or_test, "jaq run"):with_expr(),
+    ["n|<F6>"] = map_cu("Jaq quickfix", "jaq run"):with_noremap():with_silent(),
     ["o|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>", "tsht search"):with_silent(),
     ["v|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>", "tsht search"):with_noremap():with_silent(),
 
@@ -103,44 +110,6 @@ vim.cmd([[nnoremap  <localleader>c  *+yg_]])
 
 --
 bind.nvim_load_mapping(keys)
-
-_G.run_or_test = function(debug)
-    local ft = vim.bo.filetype
-    local fn = vim.fn.expand("%")
-    fn = string.lower(fn)
-    if fn == "[nvim-lua]" then
-        if not packer_plugins["nvim-luadev"].loaded then
-            loader("nvim-luadev")
-        end
-        return t("<Plug>(Luadev-Run)")
-    end
-    if ft == "lua" then
-        local f = string.find(fn, "spec")
-        if f == nil then
-            -- let run lua test
-            return t("<cmd>luafile %<CR>")
-        end
-        return t("<Plug>PlenaryTestFile")
-    elseif ft == "go" then
-        local f = string.find(fn, "test.go")
-        if f == nil then
-            -- let run lua test
-            if debug then
-                return t("<cmd>GoDebug <CR>")
-            else
-                return t("<cmd>GoRun <CR>")
-            end
-        end
-
-        if debug then
-            return t("<cmd>GoDebug nearest<CR>")
-        else
-            return t("<cmd>GoTestFile <CR>")
-        end
-    else
-        return t("<cmd>Jaq<CR>")
-    end
-end
 
 require("overwrite.cmd")
 require("overwrite.autocmd")

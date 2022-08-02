@@ -2,10 +2,6 @@ local add_cmd = vim.api.nvim_create_user_command
 local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format
 
-add_cmd("AbbrivGodMode", function()
-    vim.cmd([[packadd vim-abbrev]])
-end, { force = true })
-
 add_cmd("DebugOpen", function()
     require("modules.lang.dap").prepare()
 end, { force = true })
