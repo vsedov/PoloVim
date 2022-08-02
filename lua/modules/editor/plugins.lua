@@ -249,7 +249,7 @@ editor({
     "andymass/vim-matchup",
     opt = true,
     event = { "InsertEnter" },
-    keys = "<leader><leader>w",
+    keys = "<leader><leader><leader>",
     cmd = { "MatchupWhereAmI?", "MatchupShowTimes", "MatchupWhereAmI??" },
     after = "nvim-treesitter",
     config = conf.matchup,

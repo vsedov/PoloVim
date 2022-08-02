@@ -335,7 +335,7 @@ function config.matchup()
     vim.g.matchup_matchparen_hi_surround_always = 1
     vim.g.matchup_matchparen_deferred = 1
     vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    vim.keymap.set("n", "<leader><leader>w", "<cmd>MatchupWhereAmI?<cr>", { noremap = true })
+    vim.keymap.set("n", "<leader><leader><leader>", "<cmd>MatchupWhereAmI?<cr>", { noremap = true })
 end
 function config.mcc()
     require("mcc").setup({

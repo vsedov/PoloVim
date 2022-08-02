@@ -39,6 +39,13 @@ misc({
     opt = true,
     config = conf.lightspeed,
 })
+misc({
+    "phaazon/hop.nvim",
+    tag = "v2.*",
+    config = conf.hop,
+    event = "BufReadPost",
+    opt = true,
+})
 
 -- misc({
 --     "ggandor/leap.nvim",

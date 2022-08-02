@@ -49,6 +49,24 @@ function config.lightspeed()
     })
 end
 
+function config.hop()
+    require("hop").setup({
+        -- keys = 'etovxqpdygfblzhckisuran',
+        quit_key = "<ESC>",
+        jump_on_sole_occurrence = true,
+        case_insensitive = true,
+        multi_windows = true,
+    })
+    vim.keymap.set("n", "\\s", "<cmd>HopAnywhere<cr>", {})
+    vim.keymap.set("n", "<leader><leader>w", "<cmd>HopWord<cr>", {})
+    vim.keymap.set("n", "<leader><leader>j", "<cmd>HopChar1<cr>", {})
+    vim.keymap.set("n", "<leader><leader>k", "<cmd>HopChar2<cr>", {})
+    vim.keymap.set("n", "<leader><leader>s", "<cmd>HopLine<cr>", {})
+    vim.keymap.set("n", "<leader><leader>l", "<cmd>HopLineStart<cr>", {})
+    vim.keymap.set("n", "g/", "<cmd>HopVertical<cr>", {})
+    vim.keymap.set("n", "g?", "<cmd>HopPattern<cr>", {})
+end
+
 function config.hexokinase()
     vim.g.Hexokinase_optInPatterns = {
         "full_hex",

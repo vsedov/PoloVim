@@ -104,19 +104,6 @@ ui({
     config = conf.blankline,
 }) -- after="nvim-treesitter",
 
--- disabled does not work with muliti split
-ui({
-    "lukas-reineke/virt-column.nvim",
-    opt = true,
-    -- event = {"CursorMoved", "CursorMovedI"},
-    config = function()
-        vim.cmd("highlight clear ColorColumn")
-        require("virt-column").setup()
-
-        vim.cmd("highlight VirtColumn guifg=#4358BF")
-    end,
-})
-
 -- No longer getting lazy loaded, i like this though
 ui({ "lewis6991/satellite.nvim", config = conf.satellite })
 
