@@ -54,7 +54,6 @@ end
 loadscheme()
 require("vscripts.cursorhold")
 vim.g.cursorhold_updatetime = 100
-
 require("utils.ui.highlights")
 
 function Lazyload()
@@ -109,7 +108,10 @@ function Lazyload()
     end
 
     if load_lsp then
-        loader("lsp_signature.nvim") -- null-ls.nvim
+        vim.defer_fn(function()
+            loader("lspsaga.nvim")
+            loader("lsp_signature.nvim") -- null-ls.nvim
+        end, 60)
     end
 
     -- local bytes = vim.fn.wordcount()['bytes']
@@ -174,7 +176,7 @@ vim.defer_fn(function()
     end, { force = true })
 
     loader("presence.nvim")
-    vim.cmd("SwitchBar")
+    -- vim.cmd("SwitchBar")
     lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 

@@ -263,7 +263,16 @@ local container = {
     },
     on_attach_callback = {
         ["global"] = function(client, bufnr)
-            require("nvim-navic").attach(client, bufnr)
+            local navic_callback = {
+                "pylance",
+                "ltex",
+                "pylsp ",
+            }
+            if vim.tbl_contains(navic_callback, client.name) then
+                return
+            else
+                require("nvim-navic").attach(client, bufnr)
+            end
         end,
 
         ["pylance"] = function(client, bufnr)
@@ -275,14 +284,47 @@ local container = {
     },
 
     on_init_callback = nil,
-    navic_callback = {
-        "pylance",
-        "ltex",
-        "pylsp ",
-    },
+
     null_ls = {
-        setup = {},
-        config = {},
+        diagnostic = {
+            lambda.config.python.lint,
+            "cppcheck",
+            "djlint",
+            "eslint_d",
+            "golangci_lint",
+            "ktlint",
+            "markdownlint",
+            "misspell",
+            "mypy",
+            "phpcs",
+            "pylint",
+            "revive",
+            "shellcheck",
+            "staticcheck",
+            "stylelint",
+            "write_good",
+            "luacheck",
+            -- "semgrep",
+        },
+        formatter = {
+            lambda.config.python.format,
+            "isort",
+            "brittany",
+            "djlint",
+            "fish_indent",
+            "ktlint",
+            "markdownlint",
+            "phpcbf",
+            "pint",
+            "prettierd",
+            "shellharden",
+            "shfmt",
+            "stylelint",
+            "stylua",
+            "trim_newlines",
+            "trim_whitespace",
+        },
+        code_action = { "eslint_d", "gitrebase", "shellcheck", "refactoring" },
     },
 }
 

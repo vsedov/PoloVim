@@ -13,7 +13,7 @@ lambda.config = {
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     guess_indent = true,
     use_gitsigns = true,
-    latex = "texlab", -- texlab | ltex
+    latex = "ltex", -- texlab | ltex
     python = {
         lint = "flake8", -- "pylint "
         lsp = "pylance", -- jedi pylsp and pyright
@@ -58,6 +58,11 @@ lambda.augroup = function(name, commands)
     return id
 end
 
+lambda.foreach = function(callback, list)
+    for k, v in pairs(list) do
+        callback(v, k)
+    end
+end
 --- @class CommandArgs
 --- @field args string
 --- @field fargs table

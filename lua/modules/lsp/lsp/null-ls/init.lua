@@ -17,13 +17,13 @@ function M.setup()
     local hover = null_ls.builtins.hover
     local actions = null_ls.builtins.code_actions
 
-    local code_action = { "eslint_d", "gitrebase", "shellcheck", "refactoring" }
+    local config = require("modules.lsp.lsp.utils.config").null_ls
 
     local registered_sources = {}
     for builtin, sources in pairs({
-        formatting = require("modules.lsp.lsp.null-ls.formatter"),
-        diagnostics = require("modules.lsp.lsp.null-ls.diagnostic"),
-        code_actions = code_action,
+        formatting = config.formatter,
+        diagnostics = config.diagnostic,
+        code_actions = config.code_action,
     }) do
         for _, source in ipairs(sources) do
             local config = require("modules.lsp.lsp.null-ls.with")[source] or {}

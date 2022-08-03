@@ -90,6 +90,10 @@ function config.hover()
             require("hover.providers.dictionary")
             require("hover.providers.man")
         end,
+        preview_opts = {
+            border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        },
+        title = false,
     })
 end
 

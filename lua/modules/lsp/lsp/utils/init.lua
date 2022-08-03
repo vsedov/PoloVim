@@ -33,9 +33,7 @@ function M.common_on_init(client, bufnr)
         config.on_init_callback(client, bufnr)
         return
     end
-    if config.navic_callback[client.name] then
-        vim.g.navic_silence = true
-    end
+
     select_default_formater(client, bufnr)
 end
 
