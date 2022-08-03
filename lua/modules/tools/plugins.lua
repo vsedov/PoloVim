@@ -22,7 +22,7 @@ tools({
         "Joshuto", -- 2
         "Broot",
         "Ranger",
-        "Xplr", -- 1
+        "Xplr", -- Nice but, i think ranger tops this one for the.time
         "Lf",
         "Vifm",
         "Skim",
@@ -70,7 +70,7 @@ tools({
 
 tools({
     "lewis6991/spellsitter.nvim",
-    ft = { "norg", "markdown" },
+    ft = { "norg", "markdown", "tex" },
     config = function()
         require("spellsitter").setup({
             filetypes = { "norg" },
@@ -180,7 +180,6 @@ tools({
     "https://gitlab.com/yorickpeterse/nvim-pqf",
     event = "BufReadPre",
     config = function()
-        require("utils.ui.highlights").plugin("pqf", { qfPosition = { link = "Todo" } })
         require("pqf").setup()
     end,
 })
