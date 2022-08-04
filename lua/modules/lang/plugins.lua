@@ -247,7 +247,7 @@ lang({
         vim.g.python_highlight_space_errors = 0
         vim.g.python_highlight_all = 1
         vim.g.latex_to_unicode_auto = 1
-        vim.g.julia_blocks = 0
+        vim.g.julia_blocks = 1
         vim.g.julia_spellcheck_docstrings = 1
         vim.g.julia_spellcheck_strings = 1
         vim.g.julia_indent_align_import = 1
