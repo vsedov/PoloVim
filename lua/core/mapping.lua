@@ -9,8 +9,8 @@ local def_map = {
     ["n|Y"] = map_cmd("y$", "Yank on $"),
     ["n|]w"] = map_cu("WhitespaceNext", "White space next"):with_noremap(),
     ["n|[w"] = map_cu("WhitespacePrev", "White space prev"):with_noremap(),
-    ["n|]b"] = map_cu("bp", "buf prev"):with_noremap(),
-    ["n|[b"] = map_cu("bn", "buf next"):with_noremap(),
+    ["n|]b"] = map_cu("bprev", "buf prev"):with_noremap(),
+    ["n|[b"] = map_cu("bnext", "buf next"):with_noremap(),
 
     ["n|<Leader>w"] = map_cmd("<cmd>:w<cr>", "save"):with_noremap(),
     ["n|<Leader>q"] = map_cmd(":wq!<CR>", "exit"):with_noremap(),
