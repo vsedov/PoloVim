@@ -80,7 +80,7 @@ local function setup_colors()
         green = utils.get_highlight("String").fg,
         blue = utils.get_highlight("Function").fg,
         gray = utils.get_highlight("NonText").fg,
-        orange = utils.get_highlight("Constant").fg,
+        -- orange = utils.get_highlight("Constant").fg, -- for some reason this was causing errors
         purple = utils.get_highlight("Statement").fg,
         cyan = utils.get_highlight("Special").fg,
         diag_warn = utils.get_highlight("DiagnosticWarn").fg,
@@ -806,9 +806,22 @@ vim.api.nvim_create_autocmd("User", {
     pattern = "HeirlineInitWinbar",
     callback = function(args)
         local buf = args.buf
-        local buftype = vim.tbl_contains({ "prompt", "nofile", "help", "quickfix" }, vim.bo[buf].buftype)
-        local filetype = vim.tbl_contains({ "gitcommit", "fugitive" }, vim.bo[buf].filetype)
-        if buftype or filetype then
+        if
+            vim.tbl_contains({
+                "terminal",
+                "prompt",
+                "nofile",
+                "help",
+                "quickfix",
+            }, vim.bo[buf].buftype)
+            or vim.tbl_contains({
+                "gitcommit",
+                "fugitive",
+                "toggleterm",
+                "NvimTree",
+            }, vim.bo[buf].filetype)
+            or not vim.bo[buf].buflisted
+        then
             vim.opt_local.winbar = nil
         end
     end,

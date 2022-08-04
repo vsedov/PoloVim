@@ -662,7 +662,7 @@ function config.clock_setup()
         pattern = "*",
         callback = function()
             local f = vim.fn
-            if not lambda.config.config_test and f.getcwd():match(f.stdpath("config")) then
+            if lambda.config.use_clock and f.getcwd():match(f.stdpath("config")) then
                 require("packer").loader("clock.nvim")
             end
         end,
@@ -699,10 +699,11 @@ function config.dashboard_setup()
         pattern = "*",
         callback = function()
             local f = vim.fn
-            if lambda.config.dashboard then
+            if lambda.config.use_dashboard then
                 require("packer").loader("dashboard")
             end
         end,
+        once = true,
     })
 end
 
