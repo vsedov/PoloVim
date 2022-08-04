@@ -12,7 +12,7 @@ function config.lightspeed()
         --- s/x ---
         jump_to_unique_chars = { safety_timeout = 400 },
         match_only_the_start_of_same_char_seqs = true,
-        force_beacons_into_match_width = false,
+        force_beacons_into_match_width = true,
         -- Display characters in a custom way in the highlighted matches.
         substitute_chars = { ["\r"] = "¬" },
         -- Leaving the appropriate list empty effectively disables "smart" mode,
@@ -266,6 +266,23 @@ function config.reach()
     })
 end
 
+function config.scope_setup()
+    vim.api.nvim_create_autocmd({ "BufAdd", "TabEnter" }, {
+        pattern = "*",
+        group = vim.api.nvim_create_augroup("scope_loading", {}),
+        callback = function()
+            local count = #vim.fn.getbufinfo({ buflisted = 1 })
+            if count >= 2 then
+                require("packer").loader("scope.nvim")
+            end
+        end,
+    })
+end
+
+function config.scope()
+    require("scope").setup()
+end
+
 function config.diaglist()
     require("diaglist").init({
         debug = false,
@@ -316,7 +333,7 @@ function config.guess_indent_setup()
         pattern = "*",
         callback = function()
             local f = vim.fn
-            if lambda.config.guess_indent then
+            if lambda.config.use_guess_indent then
                 require("packer").loader("guess-indent.nvim")
             end
         end,
@@ -374,7 +391,7 @@ function config.session_setup()
         pattern = "*",
         callback = function()
             local f = vim.fn
-            if lambda.config.session then
+            if lambda.config.use_session then
                 require("packer").loader("persisted.nvim")
             end
         end,

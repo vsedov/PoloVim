@@ -182,6 +182,13 @@ misc({
 })
 
 misc({
+    "tiagovla/scope.nvim",
+    opt = true,
+    setup = conf.scope_setup,
+    config = conf.scope,
+})
+
+misc({
     "kylechui/nvim-surround",
     keys = { "<c-c><leader>", "<C-g>g", "ys", "yss", "yS", "ySS", "yS", "gS", "ds", "cS" },
     config = conf.surround,
