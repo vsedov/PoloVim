@@ -19,11 +19,15 @@ local sources = {
     { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
     { name = "neorg", priority = 6 },
-    { name = "cmp_tabnine", keyword_length = 0, priority = 8 },
+
     -- { name = "treesitter", keyword_length = 2 },
     -- { name = "spell" },
     -- { name = "look", keyword_length = 2 },
 }
+if lambda.config.use_tabnine then
+    table.insert(sources, { name = "cmp_tabnine", priority = 8 })
+end
+
 if vim.o.ft == "sql" then
     table.insert(sources, { name = "vim-dadbod-completion" })
 end

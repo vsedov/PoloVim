@@ -99,7 +99,7 @@ completion({
     opt = true,
     setup = function()
         vim.opt.completeopt = "menuone,noselect"
-        vim.g.copilot_enabled = false
+        vim.g.copilot_enabled = lambda.config.sell_your_soul
         -- Have copilot play nice with nvim-cmp.
         vim.g.copilot_no_tab_map = true
         vim.g.copilot_assume_mapped = true
