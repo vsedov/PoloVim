@@ -23,32 +23,17 @@ local function daylight()
     end
 end
 local function loadscheme()
-    -- local themes
-    -- if daylight() == "light" then
-    --     themes = { "kanagawa.nvim", "catppuccin", "horizon.nvim" }
-    -- else
-    --     themes = {
-    --         "kanagawa.nvim",
-    --         "catppuccin",
-    --         "horizon.nvim",
-    --         "kat.nvim",
-    --          "aquarium-vim",
-    --           "rose-pine",
-    --            "vim-dogrun"
-    --        }
-    -- end
     local themes = {
         "kanagawa.nvim",
-        "catppuccin",
         "horizon.nvim",
         "rose",
         "vim-dogrun",
     }
+
+    -- "catppuccin", for some reason this really does not like to work well .
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
-
     lprint(loading_theme)
-
     require("packer").loader(loading_theme)
 end
 loadscheme()
@@ -176,7 +161,7 @@ vim.defer_fn(function()
     end, { force = true })
 
     loader("presence.nvim")
-    -- vim.cmd("SwitchBar")
+    vim.cmd("SwitchBar")
     lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
