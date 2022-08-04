@@ -34,7 +34,6 @@ misc({
 
 misc({
     "ggandor/lightspeed.nvim",
-    setup = conf.lightspeed_setup,
     event = "BufReadPost",
     opt = true,
     config = conf.lightspeed,
