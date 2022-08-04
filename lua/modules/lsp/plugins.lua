@@ -11,7 +11,7 @@ lsp({
 
 lsp({
     "williamboman/nvim-lsp-installer",
-    -- cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
+    cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
     opt = true,
     requires = "nvim-lspconfig",
     config = conf.lsp_install,

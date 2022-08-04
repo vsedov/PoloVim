@@ -101,7 +101,7 @@ lambda.augroup("DiagUpdate", {
         command = "lua update_diagnostics(false)",
     },
     {
-        event = "user",
+        event = "BufWinEnter",
         pattern = "DiagnosticsChanged",
         command = "lua update_diagnostics(true)')",
     },

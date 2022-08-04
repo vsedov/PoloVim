@@ -287,7 +287,7 @@ local container = {
 
     null_ls = {
         diagnostic = {
-            lambda.config.python.lint,
+            lambda.config.lsp.python.lint,
             "cppcheck",
             "djlint",
             "eslint_d",
@@ -307,7 +307,7 @@ local container = {
             -- "semgrep",
         },
         formatter = {
-            lambda.config.python.format,
+            lambda.config.lsp.python.format,
             "isort",
             "brittany",
             "djlint",

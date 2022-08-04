@@ -28,8 +28,8 @@ local latex_setup = {
         lspconfig.ltex.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.ltex").config))
     end,
 }
-python_setup[lambda.config.python.lsp]()
-latex_setup[lambda.config.latex]()
+python_setup[lambda.config.lsp.python.lsp]()
+latex_setup[lambda.config.lsp.latex]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 
