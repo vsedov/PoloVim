@@ -39,6 +39,7 @@ completion({
             config = conf.tabnine,
             opt = true,
         },
+
         { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", opt = true },

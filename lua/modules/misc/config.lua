@@ -4,27 +4,6 @@ function config.syntax_surfer()
     require("modules.misc.syntax_surfer")
 end
 
-function config.lightspeed_setup()
-    local default_keymaps = {
-        { "n", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "n", "cs", "<Plug>Lightspeed_omni_gs" },
-        { "x", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "x", "cs", "<Plug>Lightspeed_omni_gs" },
-        { "o", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "o", "cs", "<Plug>Lightspeed_omni_gs" },
-
-        { "n", "gs", "<Plug>Lightspeed_gs" },
-        { "n", "gS", "<Plug>Lightspeed_gS" },
-        { "x", "gs", "<Plug>Lightspeed_gs" },
-        { "x", "gS", "<Plug>Lightspeed_gS" },
-        { "o", "gs", "<Plug>Lightspeed_gs" },
-        { "o", "gS", "<Plug>Lightspeed_gS" },
-    }
-    for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
-    end
-end
-
 function config.lightspeed()
     require("lightspeed").setup({
         ignore_case = false,
@@ -47,6 +26,17 @@ function config.lightspeed()
         limit_ft_matches = 20,
         repeat_ft_with_target_char = true,
     })
+    local default_keymaps = {
+        { "n", "<c-s>", "<Plug>Lightspeed_omni_s" },
+        { "n", "cs", "<Plug>Lightspeed_omni_gs" },
+        { "x", "<c-s>", "<Plug>Lightspeed_omni_s" },
+        { "x", "cs", "<Plug>Lightspeed_omni_gs" },
+        { "o", "<c-s>", "<Plug>Lightspeed_omni_s" },
+        { "o", "cs", "<Plug>Lightspeed_omni_gs" },
+    }
+    for _, m in ipairs(default_keymaps) do
+        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
+    end
 end
 
 function config.hop()
@@ -57,13 +47,15 @@ function config.hop()
         case_insensitive = true,
         multi_windows = true,
     })
-    vim.keymap.set("n", "\\s", "<cmd>HopAnywhere<cr>", {})
-    vim.keymap.set("n", "<leader><leader>w", "<cmd>HopWord<cr>", {})
+    -- hopeAnywhere is not really needed
+    vim.keymap.set("n", "\\s", "<cmd>HopPatternCurrentLine<cr>", {})
+    vim.keymap.set("n", "<leader><leader>s", "<cmd>HopWord<cr>", {})
     vim.keymap.set("n", "<leader><leader>j", "<cmd>HopChar1<cr>", {})
     vim.keymap.set("n", "<leader><leader>k", "<cmd>HopChar2<cr>", {})
     vim.keymap.set("n", "<leader><leader>s", "<cmd>HopLine<cr>", {})
     vim.keymap.set("n", "<leader><leader>l", "<cmd>HopLineStart<cr>", {})
     vim.keymap.set("n", "g/", "<cmd>HopVertical<cr>", {})
+
     vim.keymap.set("n", "g?", "<cmd>HopPattern<cr>", {})
 end
 
