@@ -27,10 +27,13 @@ local function loadscheme()
         "kanagawa.nvim",
         "horizon.nvim",
         "rose",
-        "vim-dogrun",
+        -- "vim-dogrun",
+        "catppuccin",
+        "kanagawa.nvim",
+        "rose",
+        -- "oxocarbon-lua.nvim",
     }
 
-    -- "catppuccin", for some reason this really does not like to work well .
     local v = math.random(1, #themes)
     local loading_theme = themes[v]
     lprint(loading_theme)

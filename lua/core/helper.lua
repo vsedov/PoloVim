@@ -18,9 +18,10 @@ lambda.config = {
     lsp = {
         latex = "ltex", -- texlab | ltex
         python = {
-            lint = "flake8", -- "pylint "
+            use_semantic_token = true,
+            lint = "flake8", -- pylint, pyflake, and other linters
             lsp = "pylance", -- jedi pylsp and pyright
-            format = "yapf",
+            format = "yapf", -- black
         },
     },
 }
@@ -67,6 +68,11 @@ lambda.foreach = function(callback, list)
         callback(v, k)
     end
 end
+
+lambda.use_local = function(name, path)
+    return os.getenv("HOME") .. "/GitHub/neovim/" .. path .. "/" .. name
+end
+
 --- @class CommandArgs
 --- @field args string
 --- @field fargs table
@@ -134,10 +140,9 @@ end
 
 lambda.p = function(...)
     local vars = vim.tbl_map(vim.inspect, { ... })
-    print(unpack(vars))
+    P(unpack(vars))
     return { ... }
 end
-
 lambda.PERF = function(msg, ...)
     local args = { ... }
     vim.validate({ func = { args[1], "function" }, message = { msg, "string", true } })
