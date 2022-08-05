@@ -1,6 +1,5 @@
 local conf = require("modules.lang.config")
 local lang = require("core.pack").package
-local use_local = require("utils.module_utils").use_local
 
 lang({
     "nathom/filetype.nvim",
@@ -171,7 +170,6 @@ lang({
 })
 lang({
     "andythigpen/nvim-coverage",
-    ft = { "python" },
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
     opt = true,
     config = conf.coverage,
@@ -192,7 +190,7 @@ lang({ "mgedmin/coverage-highlight.vim", ft = "python", opt = true, run = ":Upda
 -- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
 -- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
 lang({
-    use_local("py.nvim", "contributing"),
+    lambda.use_local("py.nvim", "contributing"),
     ft = "python",
     opt = true,
     config = conf.python_dev,

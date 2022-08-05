@@ -52,7 +52,7 @@ function config.hop()
     vim.keymap.set("n", "<leader><leader>s", "<cmd>HopWord<cr>", {})
     vim.keymap.set("n", "<leader><leader>j", "<cmd>HopChar1<cr>", {})
     vim.keymap.set("n", "<leader><leader>k", "<cmd>HopChar2<cr>", {})
-    vim.keymap.set("n", "<leader><leader>s", "<cmd>HopLine<cr>", {})
+    vim.keymap.set("n", "<leader><leader>w", "<cmd>HopLine<cr>", {})
     vim.keymap.set("n", "<leader><leader>l", "<cmd>HopLineStart<cr>", {})
     vim.keymap.set("n", "g/", "<cmd>HopVertical<cr>", {})
 

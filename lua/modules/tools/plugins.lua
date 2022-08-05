@@ -216,3 +216,9 @@ tools({
     opt = true,
     cmd = "ToggleAlternate",
 })
+
+tools({
+    "ttibsi/pre-commit.nvim",
+    cmd = "Precommit",
+    opt = true,
+})

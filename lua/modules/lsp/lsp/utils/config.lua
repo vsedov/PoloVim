@@ -285,6 +285,7 @@ local container = {
 
     on_init_callback = nil,
 
+    -- HACK(vsedov): Create a gloval check for this, useing lambda.config
     null_ls = {
         diagnostic = {
             lambda.config.lsp.python.lint,
@@ -297,7 +298,7 @@ local container = {
             "misspell",
             "mypy",
             "phpcs",
-            "pylint",
+            -- "pylint",
             "revive",
             "shellcheck",
             "staticcheck",
