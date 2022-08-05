@@ -1,22 +1,22 @@
 local M = {}
 M.coding_support = function()
     vim.cmd([[
-			  cnoreabbrev <expr> Cp ((getcmdtype()==':'&&getcmdpos()<=3)?'C p':'Cp')
-			  cnoreabbrev <expr> Cd ((getcmdtype()==':'&&getcmdpos()<=3)?'Cdisplay':'Cd')
+			cnoreabbrev <expr> Cp ((getcmdtype()==':'&&getcmdpos()<=3)?'C p':'Cp')
+			cnoreabbrev <expr> Cd ((getcmdtype()==':'&&getcmdpos()<=3)?'Cdisplay':'Cd')
     		cnoreabbrev pc PackerCompile<CR>
     		cnoreabbrev pu PackerUpdate<CR>
     		cnoreabbrev ps PackerSync<CR>
 
     		cnoreabbrev lcc LuaCacheClear<CR>
 
-			  cnoreabbrev <expr> csa ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs add'  : 'csa')
-			  cnoreabbrev <expr> csf ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs find' : 'csf')
-			  cnoreabbrev <expr> csk ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs kill' : 'csk')
-			  cnoreabbrev <expr> csr ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs reset' : 'csr')
-			  cnoreabbrev <expr> css ((getcmdtype() == ':' && getcmdpos() <= 5)? 'cs show' : 'css')
-			  cnoreabbrev <expr> csh ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs help' : 'csh')
-              cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is#'W')?('w'):('W'))
-			  cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is#'Q')?('q'):('Q'))
+			cnoreabbrev <expr> csa ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs add'  : 'csa')
+			cnoreabbrev <expr> csf ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs find' : 'csf')
+			cnoreabbrev <expr> csk ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs kill' : 'csk')
+			cnoreabbrev <expr> csr ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs reset' : 'csr')
+			cnoreabbrev <expr> css ((getcmdtype() == ':' && getcmdpos() <= 5)? 'cs show' : 'css')
+			cnoreabbrev <expr> csh ((getcmdtype() == ':' && getcmdpos() <= 4)? 'cs help' : 'csh')
+            cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is#'W')?('w'):('W'))
+			cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is#'Q')?('q'):('Q'))
 
 			  " last-vimgrep and -||-
 			  cnoremap <C-G> vimgrep<UP><C-B><Right><Right><Right><Right><Right><Right><Right><Right><Right>
@@ -4819,7 +4819,7 @@ M.spelling_support = function()
 	ab unforetunately unfortunately
 	ab unfortunatley unfortunately
 	ab unfortunatly unfortunately
-	
+
 
 	ab unfourtunately unfortunately
 	ab unahppy unhappy
