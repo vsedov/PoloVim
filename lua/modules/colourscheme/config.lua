@@ -119,8 +119,8 @@ function config.kanagawa()
 end
 
 function config.oxocarbon()
-    vim.cmd([[colorscheme oxocarbon]])
-    -- vim.cmd.colorscheme("oxocarbon")
+    vim.g.oxocarbon_lua_keep_terminal = true
+    vim.cmd("colorscheme oxocarbon-lua")
 end
 
 function config.horizon()

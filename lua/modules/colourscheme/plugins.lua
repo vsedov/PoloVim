@@ -33,3 +33,8 @@ colourscheme({
     opt = true,
     config = conf.dogrun,
 })
+colourscheme({
+    "B4mbus/oxocarbon-lua.nvim",
+    opt = true,
+    config = conf.oxocarbon,
+})
