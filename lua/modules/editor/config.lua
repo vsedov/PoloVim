@@ -3,6 +3,10 @@ function config.norg()
     require("modules.editor.neorg")
 end
 
+function config.femaco()
+    require("femaco").setup()
+end
+
 function config.zen()
     require("true-zen").setup({})
 end

@@ -14,6 +14,14 @@ editor({
 })
 
 editor({
+    "AckslD/nvim-FeMaco.lua",
+    opt = true,
+    ft = { "norg", "markdown" },
+    config = conf.femaco,
+    cmd = "FeMaco",
+})
+
+editor({
     "Pocco81/true-zen.nvim",
     opt = true,
     requires = { "folke/twilight.nvim", opt = true, config = conf.twilight },
@@ -29,23 +37,6 @@ editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
 
 editor({
     "gbprod/yanky.nvim",
-    -- keys = {
-    --     { "n", "y" },
-    --     { "x", "y" },
-    --
-    --     { "n", "p" },
-    --     { "n", "P" },
-    --     { "x", "p" },
-    --     { "x", "P" },
-    --
-    --     { "n", "gp" },
-    --     { "n", "gP" },
-    --     { "x", "gp" },
-    --     { "x", "gP" },
-    --
-    --     { "n", "<Leader>n" },
-    --     { "n", "<Leader>N" },
-    -- },
     event = { "CursorMoved", "CmdlineEnter" },
     setup = conf.setup_yanky,
     config = conf.config_yanky,
