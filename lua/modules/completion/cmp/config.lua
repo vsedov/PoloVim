@@ -9,13 +9,11 @@ local config = {
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    -- completion = {
-    --     autocomplete = { types.cmp.TriggerEvent.TextChanged },
-    --     completeopt = "menu,menuone,noselect",
-    -- },
     preselect = cmp.PreselectMode.None, -- None | Item
     experimental = { ghost_text = true, native_menu = false },
-
+    performance = {
+        throttle = 100,
+    },
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
     sorting = {

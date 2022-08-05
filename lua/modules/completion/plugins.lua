@@ -1,6 +1,5 @@
 local conf = require("modules.completion.config")
 local completion = require("core.pack").package
-local use_local = require("utils.module_utils").use_local
 
 completion({ "max397574/dyn_help.nvim" })
 completion({
@@ -26,7 +25,7 @@ completion({
 })
 
 completion({
-    "max397574/nvim-cmp",
+    "hrsh7th/nvim-cmp",
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
@@ -68,7 +67,7 @@ completion({
 })
 
 completion({
-    use_local("luasnip-latex-snippets.nvim", "contributing"),
+    lambda.use_local("luasnip-latex-snippets.nvim", "contributing"),
     ft = { "latex", "tex" },
     config = function()
         vim.defer_fn(function()
@@ -131,7 +130,7 @@ completion({
 completion({ "danymat/neogen", module = { "neogen" }, requires = { "LuaSnip" }, config = conf.neogen })
 
 completion({
-    use_local("vim-sonictemplate", "personal"),
+    lambda.use_local("vim-sonictemplate", "personal"),
     as = "vim-sonictemplate",
     cmd = "Template",
     config = conf.vim_sonictemplate,

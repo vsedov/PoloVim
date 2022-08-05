@@ -16,7 +16,8 @@ local sources = {
             end,
         },
     },
-    { name = "path", priority = 5 },
+    -- path and treesitter for soem reason was causing lag, which im not sure why .
+    -- { name = "path", priority = 5 },
     { name = "calc", priority = 4 },
     { name = "neorg", priority = 6 },
 
