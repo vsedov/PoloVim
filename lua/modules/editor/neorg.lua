@@ -171,13 +171,13 @@ require("neorg").setup({
 
 local neorg_callbacks = require("neorg.callbacks")
 
-local neorg_leader = "<leader>o"
+local neorg_leader = "\\"
 neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
     -- Map all the below keybinds only when the "norg" mode is active
     keybinds.map_event_to_mode("norg", {
         n = { -- Bind keys in normal mode
 
-            { neorg_leader .. "l", "core.looking-glass.magnify-code-block" },
+            { neorg_leader .. "<cr>", "core.looking-glass.magnify-code-block" },
 
             -- Keys for managing TODO items and setting their states
             { "gtu", "core.norg.qol.todo_items.todo.task_undone" },

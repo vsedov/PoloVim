@@ -28,22 +28,23 @@ local function diffmaster()
             end
         end
     end
-    lprint(branch)
     local current_branch = vim.fn.systemlist("git branch --show-current")[1]
     -- git rev-list --boundary feature/FDEL-3386...origin/main | grep "^-"
-    local cmd = string.format([[git rev-list --boundary %s...%s | grep "^-"]], current_branch, branch)
+    -- local cmd = string.format([[git rev-list --boundary %s...%s | grep "^-"]], current_branch, branch)
+    local cmd = string.format([[git merge-base %s %s ]], branch, current_branch)
     local hash = vim.fn.systemlist(cmd)[1]
 
-    lprint(cmd, hash)
     if hash then
+        vim.notify("DiffviewOpen " .. hash)
         vim.cmd("DiffviewOpen " .. hash)
     else
+        vim.notify("DiffviewOpen " .. branch)
         vim.cmd("DiffviewOpen " .. branch)
     end
 end
 
 if gitrepo then
-    loader("keymap-layer.nvim vgit.nvim gitsigns.nvim")
+    loader("keymap-layer.nvim vgit.nvim gitsigns.nvim vim-fugitive")
 
     local hint = [[
   ^^^^                           Git Files                              ^^^^
@@ -52,7 +53,10 @@ if gitrepo then
   _k_ proj diff _u_ unstage hunk _p_ view hunk  _B_ blameFull   _dd_ diffthis
   _J_: next hunk <--------------------------------------> _K_: prev hunk
   _D_ buf diff   _g_ diff staged _P_ projStaged _f_ proj hunkQF _U_ unstagebuf
-  _S_ stage buf  _G_ stage diff  _/_ show base  _M_ DifMaster
+  _S_ stage buf  _G_ stage diff  _/_ show base  _l_ log         _H_ filehist
+  _c_ conflict   _m_ merge       _M_ difmast   
+
+
 
   _<Enter>_ Neogit _q_ exit
 ]]
@@ -136,11 +140,12 @@ if gitrepo then
             { "d", ":DiffviewOpen<CR>", { silent = true, exit = true } },
             { "k", vgit.project_diff_preview, { exit = true } },
             { "M", diffmaster, { silent = true, exit = true } },
+            { "H", ":DiffviewFileHistory<CR>", { silent = true, exit = true } },
+
             { "u", gitsigns.undo_stage_hunk },
             { "S", gitsigns.stage_buffer },
             { "p", gitsigns.preview_hunk },
             { "x", gitsigns.toggle_deleted, { nowait = true } },
-
             { "r", gitsigns.reset_hunk },
             { "dd", wrap(gitsigns.diffthis, "~") },
 
@@ -161,6 +166,10 @@ if gitrepo then
             { "/", gitsigns.show, { exit = true } }, -- show the base of the file
             { "<Enter>", "<cmd>Neogit<CR>", { exit = true } },
             { "q", nil, { exit = true, nowait = true } },
+
+            { "l", ":Flogsplit<CR>", { exit = true, nowait = true } },
+            { "m", ":Git mergetool<CR>" },
+            { "c", ":GitConflictListQf<CR>" },
         },
     })
 end
