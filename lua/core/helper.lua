@@ -5,18 +5,23 @@ _G = _G or {}
 _G.lambda = {}
 lambda.config = {
     cmp_theme = "border", -- no-border , border
-    tabby_or_bufferline = true, -- false: tabby, true for bufferline
+
+    coding_support = true, -- system wide
+    spelling_support = true, -- tex md and neorg files wide
+    language_support = true, -- system wide
+
+    tabby_or_bufferline = false, -- false: tabby, true for bufferline
     sell_your_soul = false, -- set to true to sell your soul
     use_tabnine = true, -- load tabnine
     use_dashboard = true, -- set to false to not see this
     use_session = true, -- set to false to disable session
-    use_clock = false, -- set to true to  see timer for config
+    use_clock = false, -- set to srue to  see timer for config
     use_saga_diagnostic_jump = false, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_guess_indent = true,
     use_gitsigns = true,
     lsp = {
-        latex = "ltex", -- texlab | ltex
+        latex = "texlab", -- texlab | ltex
         python = {
             use_semantic_token = true,
             lint = "flake8", -- pylint, pyflake, and other linters

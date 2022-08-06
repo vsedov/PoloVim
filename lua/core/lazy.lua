@@ -150,15 +150,14 @@ vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
     require("vscripts.tools")
-    if vim.bo.filetype ~= "tex" or vim.bo.filetype ~= "md" or vim.bo.filetype ~= "norg" then
+
+    if lambda.config.coding_support then
         require("vscripts.race_conditions").coding_support()
-    end
-    if vim.bo.filetype == "tex" or vim.bo.filetype == "md" or vim.bo.filetype == "norg" then
-        require("vscripts.race_conditions").spelling_support()
     end
 
     require("vscripts.race_conditions").language_support()
     vim.cmd("command! Spell call spelunker#check()")
+
     vim.api.nvim_create_user_command("Gram", function()
         require("modules.tools.config").grammcheck()
     end, { force = true })

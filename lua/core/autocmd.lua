@@ -397,7 +397,6 @@ lambda.augroup("ClearCommandMessages", {
         command = clear_commandline(),
     },
 })
-
 if vim.env.TERM == "xterm-kitty" then
     lambda.augroup("VimrcIncSearchHighlight", {
         {
