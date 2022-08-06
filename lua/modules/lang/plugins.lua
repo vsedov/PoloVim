@@ -51,8 +51,6 @@ lang({
     opt = true,
 })
 
-lang({ "JoosepAlviste/nvim-ts-context-commentstring", opt = true })
-
 lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
 
 lang({ "nanotee/luv-vimdocs", opt = true })
@@ -254,4 +252,10 @@ lang({
 lang({
     "Vimjas/vim-python-pep8-indent",
     ft = "pyton",
+})
+
+lang({
+    "direnv/direnv.vim",
+    opt = true,
+    event = "BufEnter",
 })
