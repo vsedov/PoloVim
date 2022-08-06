@@ -16,7 +16,7 @@ cmp.setup.cmdline("?", search_sources)
 cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
         { name = "cmdline" },
-        { name = "path" },
+        -- { name = "path" },
     }),
 })
 require("modules.completion.cmp.extra")
