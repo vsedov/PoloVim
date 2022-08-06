@@ -37,9 +37,9 @@ function! LatexClipboardImage() abort
   "   let caption = getline('.')
   "   execute "normal!".
   "   \"ddi\\begin{wrapfigure}{R}{0.3\\textwidth}\r" .
-  "   \"\\centering\r" . 
-  "   \"\\includegraphics[width=200px]{./imgs/image" . index . ".png}\r" . 
-  "   \"\\caption{" . caption . "}\r" . 
+  "   \"\\centering\r" .
+  "   \"\\includegraphics[width=200px]{./imgs/image" . index . ".png}\r" .
+  "   \"\\caption{" . caption . "}\r" .
   "   \"\\label{fig:LABEL}\r" .
   "   \"\\end{wrapfigure}\r"
   "   \"\r"
@@ -47,3 +47,8 @@ function! LatexClipboardImage() abort
   "   execute "normal! 3k4w:w"
   " endif
 endfunction
+
+lua << EOF
+  require("vscripts.race_conditions").spelling_support()
+EOF
+
