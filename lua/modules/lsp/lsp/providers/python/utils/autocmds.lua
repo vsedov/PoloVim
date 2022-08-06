@@ -23,6 +23,9 @@ M.SemanticTokensAU = function(bufnr)
             event = { "BufEnter", "CursorHold", "InsertLeave" },
             buffer = bufnr,
             command = function()
+                if vim.bo.filetype ~= "python" then
+                    return
+                end
                 pcall(vim.lsp.buf.semantic_tokens_full)
             end,
         },

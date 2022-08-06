@@ -305,7 +305,7 @@ local container = {
             "stylelint",
             "write_good",
             "luacheck",
-            -- "semgrep",
+            "semgrep",
         },
         formatter = {
             lambda.config.lsp.python.format,

@@ -244,7 +244,7 @@ misc({
 
 misc({
     "nyngwang/NeoRoot.lua",
-    cmd = { "NeoRootSwitchMode", "NeoRootChange" },
+    cmd = { "NeoRootSwitchMode", "NeoRootChange", "NeoRoot" },
     config = function()
         require("neo-root").setup({
             CUR_MODE = 2, -- 1 for file/buffer mode, 2 for proj-mode

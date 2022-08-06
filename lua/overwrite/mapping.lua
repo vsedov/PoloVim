@@ -13,6 +13,10 @@ local run_or_test = function(debug)
     local fn = vim.fn.expand("%")
     fn = string.lower(fn)
 
+    -- current_path = vim.fn.expand("%:p")
+    -- vim.fn.system("cd " .. current_path)
+    vim.cmd([[NeoRoot]])
+
     if ft == "lua" then
         return ":Jaq internal<CR>"
     else
