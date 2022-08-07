@@ -68,7 +68,18 @@ git({
     opt = true,
 })
 
-git({ "TimUntersberger/neogit", opt = true, cmd = { "Neogit" }, setup = conf.neogit_setup, config = conf.neogit })
+git({
+    "TimUntersberger/neogit",
+    keys = {
+        "<localleader>gs",
+        "<localleader>gc",
+        "<localleader>gl",
+        "<localleader>gp",
+    },
+    opt = true,
+    cmd = { "Neogit" },
+    config = conf.neogit,
+})
 
 git({ "ruifm/gitlinker.nvim", module = "gitlinker", config = conf.gitlinker })
 
@@ -91,6 +102,7 @@ git({
         "GitConflictPrevConflict",
         "GitConflictListQf",
     },
+    opt = true,
     config = conf.git_conflict,
 })
 

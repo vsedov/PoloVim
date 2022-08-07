@@ -214,7 +214,7 @@ function config.marks()
         force_write_shada = false,
         refresh_interval = 9,
         sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-        excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
+        excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm", "harpoon", "harpoon-menu" },
         bookmark_0 = {
             sign = "⚑",
             virt_text = "BookMark",

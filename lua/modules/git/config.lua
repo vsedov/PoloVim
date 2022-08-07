@@ -264,17 +264,6 @@ function config.gitsigns()
     })
 end
 
-function M.neogit_setup()
-    require("which-key").register({
-        ["<localleader>g"] = {
-            s = "neogit: open status buffer",
-            c = "neogit: open commit buffer",
-            l = "neogit: open pull popup",
-            p = "neogit: open push popup",
-        },
-    })
-end
-
 function config.neogit()
     vim.cmd([[packadd diffview.nvim]])
     local neogit = require("neogit")
@@ -305,6 +294,7 @@ function config.neogit()
             },
         },
     })
+
     vim.keymap.set("n", "<localleader>gs", function()
         neogit.open()
     end, {})
