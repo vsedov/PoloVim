@@ -4990,7 +4990,7 @@ M.month_date = {
     },
 }
 M.python = {
-    scope = "py_", -- testing
+    scope = "py", -- testing
     dict = {
         ["false"] = "False",
         ["true"] = "True",
@@ -4999,4 +4999,5 @@ M.python = {
         ["mnist"] = "MNIST",
     },
 }
+
 return M

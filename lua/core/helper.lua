@@ -10,10 +10,9 @@ lambda.config = {
     abbrev = {
         coding_support = true, -- system wide
         spelling_support = true, -- tex md and neorg files wide
-        month_support = true, -- system wide
         globals = {
             "spelling_support",
-            "month_support",
+            "month_date",
         },
         languages = {
             "python",

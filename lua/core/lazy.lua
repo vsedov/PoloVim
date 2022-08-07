@@ -152,9 +152,7 @@ vim.defer_fn(function()
     require("vscripts.tools")
 
     -- tbh, this can stay here, nothing changes with this
-    if lambda.config.coding_support then
-        require("utils.abbreviations")
-    end
+    require("utils.abbreviations")
 
     vim.cmd("command! Spell call spelunker#check()")
 

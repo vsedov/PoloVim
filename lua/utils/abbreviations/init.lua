@@ -15,11 +15,15 @@ if lambda.config.abbrev.coding_support then
 end
 
 for _, value in ipairs(lambda.config.abbrev.globals) do
-    utils.load_dict(abbrevs.value)
+    if abbrevs[value] ~= nil then
+        utils.load_dict(abbrevs[value])
+    end
 end
 
 for _, value in ipairs(lambda.config.abbrev.languages) do
-    utils.load_dict(abbrevs.value)
+    if abbrevs[value] ~= nil then
+        utils.load_dict(abbrevs[value])
+    end
 end
 
 -- Load specific abreviations
