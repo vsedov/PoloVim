@@ -264,20 +264,33 @@ function config.gitsigns()
     })
 end
 
+function M.neogit_setup()
+    require("which-key").register({
+        ["<localleader>g"] = {
+            s = "neogit: open status buffer",
+            c = "neogit: open commit buffer",
+            l = "neogit: open pull popup",
+            p = "neogit: open push popup",
+        },
+    })
+end
+
 function config.neogit()
     vim.cmd([[packadd diffview.nvim]])
-    require("neogit").setup({
+    local neogit = require("neogit")
+    neogit.setup({
         disable_signs = false,
         disable_context_highlighting = false,
-        disable_commit_confirmation = false,
+        disable_commit_confirmation = true,
+        disable_hint = false,
         auto_refresh = true,
         disable_builtin_notifications = true,
         use_magit_keybindings = true,
+        disable_insert_on_commit = false,
         signs = {
-            -- { closed, opened }
-            section = { ">", "v" },
-            item = { ">", "v" },
-            hunk = { "", "" },
+            section = { "", "" }, -- "", ""
+            item = { "▸", "▾" },
+            hunk = { "樂", "" },
         },
         integrations = {
             diffview = true,
@@ -292,6 +305,14 @@ function config.neogit()
             },
         },
     })
+    vim.keymap.set("n", "<localleader>gs", function()
+        neogit.open()
+    end, {})
+    vim.keymap.set("n", "<localleader>gc", function()
+        neogit.open({ "commit" }, {})
+    end)
+    vim.keymap.set("n", "<localleader>gl", neogit.popups.pull.create, {})
+    vim.keymap.set("n", "<localleader>gp", neogit.popups.push.create, {})
 end
 
 function config.gitlinker()

@@ -68,7 +68,7 @@ git({
     opt = true,
 })
 
-git({ "TimUntersberger/neogit", opt = true, cmd = { "Neogit" }, config = conf.neogit })
+git({ "TimUntersberger/neogit", opt = true, cmd = { "Neogit" }, setup = conf.neogit_setup, config = conf.neogit })
 
 git({ "ruifm/gitlinker.nvim", module = "gitlinker", config = conf.gitlinker })
 

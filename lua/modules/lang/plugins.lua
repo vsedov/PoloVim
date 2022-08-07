@@ -18,6 +18,10 @@ lang({
     config = conf.treesitter_obj,
     opt = true,
 })
+lang({
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    opt = true,
+})
 
 lang({
     "RRethy/nvim-treesitter-textsubjects",

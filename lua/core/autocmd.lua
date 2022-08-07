@@ -140,7 +140,7 @@ lambda.augroup("TextYankHighlight", {
         pattern = "*",
         command = function()
             vim.highlight.on_yank({
-                timeout = 500,
+                timeout = 200,
                 on_visual = false,
                 higroup = "Visual",
             })

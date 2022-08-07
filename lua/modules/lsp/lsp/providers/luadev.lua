@@ -41,6 +41,7 @@ local sumneko_lua_server = enhance_attach({
                 maxPreload = 1000,
                 preloadFileSize = 10000,
             },
+            checkThirdParty = false,
         },
     },
 })

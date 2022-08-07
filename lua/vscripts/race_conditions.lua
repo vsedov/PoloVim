@@ -4262,7 +4262,6 @@ M.spelling_support = function()
 	ab shortwhile short while
 	ab shorly shortly
 	ab shoudl should
-	ab should of should have
 	ab sohw show
 	ab showinf showing
 	ab shreak shriek
@@ -5058,7 +5057,6 @@ M.spelling_support = function()
 	ab woudl would
 	ab wuould would
 	ab wouldbe would be
-	ab would of would have
 	ab wresters wrestlers
 	ab rwite write
 	ab wriet write
