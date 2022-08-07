@@ -51,7 +51,14 @@ completion({
         -- { "ray-x/cmp-treesitter", after = "nvim-cmp", opt = true },
         { "f3fora/cmp-spell", after = "nvim-cmp", opt = true },
         { "octaltree/cmp-look", after = "nvim-cmp", opt = true },
-        { "petertriho/cmp-git", after = "nvim-cmp", opt = true },
+        {
+            "petertriho/cmp-git",
+            after = "nvim-cmp",
+            opt = true,
+            config = function()
+                require("cmp_git").setup({ filetypes = { "gitcommit", "NeogitCommitMessage" } })
+            end,
+        },
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },
     config = conf.cmp,

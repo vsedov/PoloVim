@@ -198,6 +198,10 @@ function config.text_case()
 end
 
 function config.marks()
+    require("utils.ui.highlights").plugin("marks", {
+        { MarkSignHL = { link = "Directory" } },
+        { MarkSignNumHL = { link = "Directory" } },
+    })
     require("which-key").register({
         m = {
             name = "+marks",
