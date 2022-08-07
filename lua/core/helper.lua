@@ -3,18 +3,27 @@ local api = vim.api
 local fmt = string.format
 _G = _G or {}
 _G.lambda = {}
+
 lambda.config = {
     cmp_theme = "border", -- no-border , border
     -- TODO(vsedov) (15:28:12 - 07/08/22): Figure a way so i can toggle abreviations
-    coding_support = true, -- system wide
-    spelling_support = true, -- tex md and neorg files wide
-    language_support = true, -- system wide
-
+    abbrev = {
+        coding_support = true, -- system wide
+        spelling_support = true, -- tex md and neorg files wide
+        month_support = true, -- system wide
+        globals = {
+            "spelling_support",
+            "month_support",
+        },
+        languages = {
+            "python",
+        },
+    },
     tabby_or_bufferline = false, -- false: tabby, true for bufferline
     sell_your_soul = false, -- set to true to sell your soul
     use_tabnine = true, -- load tabnine
-    use_dashboard = true, -- set to false to not see this
-    use_session = true, -- set to false to disable session
+    use_dashboard = false, -- set to false to not see this
+    use_session = false, -- set to false to disable session
     use_clock = false, -- set to srue to  see timer for config
     use_saga_diagnostic_jump = false, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...

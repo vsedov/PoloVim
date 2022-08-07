@@ -289,6 +289,13 @@ lambda.augroup("buffer", {
     },
 })
 
+local activate_spelling = {
+    "txt",
+    "norg",
+    "tex",
+    "md",
+}
+
 lambda.augroup("WindowBehaviours", {
     {
         -- map q to close command window on quit
