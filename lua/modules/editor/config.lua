@@ -352,8 +352,6 @@ function config.mcc()
         -- TODO(vsedov) (18:40:52 - 05/08/22): use luasnip for this
         -- This is such a scuffed way of doing things
         python = {
-            { "false", "False", "false" },
-            { "true", "True", "true" },
             { "--", "->", "-" },
             { "c__", "__init__", "__call__", "__add__", "__eq__" },
             { "w_", "print(", "ic(", "pp(", "w_" },
