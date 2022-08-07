@@ -11,9 +11,9 @@ local def_map = {
     ["n|[b"] = map_cu("bnext", "buf next"):with_noremap(),
 
     ["n|<Leader>w"] = map_cmd("<cmd>:w<cr>", "save"):with_noremap(),
-    ["n|<Leader>q"] = map_cmd(":wq!<CR>", "exit"):with_noremap(),
+    ["n|<Leader>q"] = map_cmd(":q!<CR>", "exit"):with_noremap(),
 
-    ["n|<Space>cw"] = map_cu([[silent! keeppatterns %substitute/\s\+$//e]], "Subsitute"):with_noremap():with_silent(),
+    ["n|<leader>sd"] = map_cu([[silent! keeppatterns %substitute/\s\+$//e]], "Subsitute"):with_noremap():with_silent(),
 
     ["n|<C-h>"] = map_cmd("<C-w>h", "Jump h"):with_noremap(),
     ["n|<C-l>"] = map_cmd("<C-w>l", "Jump l"):with_noremap(),

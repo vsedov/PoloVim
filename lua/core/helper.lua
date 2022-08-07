@@ -5,7 +5,7 @@ _G = _G or {}
 _G.lambda = {}
 lambda.config = {
     cmp_theme = "border", -- no-border , border
-
+    -- TODO(vsedov) (15:28:12 - 07/08/22): Figure a way so i can toggle abreviations
     coding_support = true, -- system wide
     spelling_support = true, -- tex md and neorg files wide
     language_support = true, -- system wide
