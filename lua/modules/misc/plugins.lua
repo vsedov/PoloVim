@@ -289,8 +289,8 @@ misc({
 })
 misc({
     "olimorris/persisted.nvim",
-    after = "telescope.nvim",
     setup = conf.session_setup,
+    opt = true,
     config = conf.session_config,
 })
 
