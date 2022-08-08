@@ -90,8 +90,6 @@ lsp({
         "css",
         "django",
         "fish",
-        "gitcommit",
-        "gitrebase",
         "go",
         "gomod",
         "haskell",
