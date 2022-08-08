@@ -3,9 +3,13 @@ local With = {}
 local null_ls = require("null-ls")
 local plaintext = { "gitcommit", "markdown", "norg" }
 
-With.trim_newlines = {}
+With.trim_newlines = {
+    filetypes = { "*" },
+}
 
-With.trim_whitespace = {}
+With.trim_whitespace = {
+    filetypes = { "*" },
+}
 
 With.black = {
     extra_args = { "--line-length", vim.bo.textwidth },
