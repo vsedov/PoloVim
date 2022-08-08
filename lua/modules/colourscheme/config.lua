@@ -118,7 +118,6 @@ function config.kanagawa()
     -- vim.cmd.colorscheme("kanagawa")
 end
 
-
 function config.horizon()
     vim.cmd([[colorscheme horizon]])
 
@@ -132,6 +131,5 @@ end
 function config.rose()
     vim.cmd("colorscheme rose-pine")
 end
-
 
 return config
