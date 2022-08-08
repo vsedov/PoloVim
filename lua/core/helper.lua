@@ -6,16 +6,15 @@ _G.lambda = {}
 
 lambda.config = {
     cmp_theme = "border", -- no-border , border
-    -- TODO(vsedov) (15:28:12 - 07/08/22): Figure a way so i can toggle abreviations
     abbrev = {
         coding_support = true, -- system wide
         spelling_support = true, -- tex md and neorg files wide
-        globals = {
-            "spelling_support",
+        globals = { -- dictionaries that ive defined to be global, you may not want this idk . 
+            "spelling_support", 
             "month_date",
         },
         languages = {
-            "python",
+            "python", -- current support is python. 
         },
     },
     tabby_or_bufferline = false, -- false: tabby, true for bufferline

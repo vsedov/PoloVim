@@ -151,11 +151,11 @@ misc({
     config = conf.text_case,
 })
 
-misc({
-    "chentoast/marks.nvim",
-    event = "BufReadPost",
-    config = conf.marks,
-})
+-- misc({
+--     "chentoast/marks.nvim",
+--     event = "BufReadPost",
+--     config = conf.marks,
+-- })
 
 misc({
     "sidebar-nvim/sidebar.nvim",
