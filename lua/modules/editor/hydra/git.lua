@@ -47,18 +47,32 @@ if gitrepo then
     loader("keymap-layer.nvim vgit.nvim gitsigns.nvim vim-fugitive")
 
     local hint = [[
-  ^^^^                           Git Files                              ^^^^
-  ^^^^------------------------------------------------------------------^^^^
-  _d_: diftree  _s_ stagehunk    _x_ show del   _b_ gutterView  _r_ reset_hunk
-  _k_ proj diff _u_ unstage hunk _p_ view hunk  _B_ blameFull   _dd_ diffthis
-  _J_: next hunk <--------------------------------------> _K_: prev hunk
-  _D_ buf diff   _g_ diff staged _P_ projStaged _f_ proj hunkQF _U_ unstagebuf
-  _S_ stage buf  _G_ stage diff  _/_ show base  _l_ log         _H_ filehist
-  _c_ conflict   _m_ merge       _M_ difmast   
+  ^^^^----------------------------------------------^^^^
+  ^^^^                   Gitsigns                   ^^^^
+  ^^^^----------------------------------------------^^^^
+  _J_ : next hunk                   _D_ : diffthis 
+  _K_ : prev hunk                   _S_ : stage buf 
+  _s_ : stagehunk                   _p_ : prev hunk 
+  _x_ : show del                    _u_ : ustage hunk 
+  _r_ : reset hunk                  _b_ : gutterView 
+  _/_ : show base                   _B_ : blame_line 
+  ^^^^-----------------------------------------------^^^^
+  ^^^^                     VGIT                      ^^^^
+  ^^^^-----------------------------------------------^^^^
+  _k_ : proj diff                   _g_ : diff staged  
+  _dd_ : diff preview               _P_ :projStaged 
+  _f_ : proj hunkQF                 _U_ : unstagebuf 
+                    _G_ : stage diff
+  ^^^^------------------------------------------------^^^^
+  ^^^^                    Personal                    ^^^^
+  ^^^^------------------------------------------------^^^^
+  _d_: diftree                      _M_ : difmast 
+  _c_ : conflict                    _m_ : merge 
+  _H_ : filehist                    _l_ : log  
+  ^^^^------------------------------------------------^^^^
 
+                _<Enter>_ : Neogit _q_ : exit
 
-
-  _<Enter>_ Neogit _q_ exit
 ]]
 
     local gitsigns = require("gitsigns")
@@ -76,8 +90,9 @@ if gitrepo then
             invoke_on_body = true,
             hint = {
                 position = "bottom",
-                border = "single",
+                border = "rounded",
             },
+
             on_key = function()
                 vim.wait(50)
             end,
@@ -137,33 +152,34 @@ if gitrepo then
                 { desc = "stage hunk" },
             },
 
-            { "d", ":DiffviewOpen<CR>", { silent = true, exit = true } },
-            { "k", vgit.project_diff_preview, { exit = true } },
-            { "M", diffmaster, { silent = true, exit = true } },
-            { "H", ":DiffviewFileHistory<CR>", { silent = true, exit = true } },
-
             { "u", gitsigns.undo_stage_hunk },
             { "S", gitsigns.stage_buffer },
             { "p", gitsigns.preview_hunk },
             { "x", gitsigns.toggle_deleted, { nowait = true } },
             { "r", gitsigns.reset_hunk },
-            { "dd", wrap(gitsigns.diffthis, "~") },
-
-            -- { "b", gitsigns.blame_line },
-            { "b", vgit.buffer_gutter_blame_preview, { exit = true } },
-            { "D", vgit.buffer_diff_preview, { exit = true } },
-            { "g", vgit.buffer_diff_staged_preview, { exit = true } },
-            { "P", vgit.project_staged_hunks_preview },
-            { "f", vgit.project_hunks_qf },
-            { "U", vgit.buffer_unstage },
-            { "G", vgit.buffer_diff_staged_preview },
+            { "D", wrap(gitsigns.diffthis, "~") },
             {
                 "B",
                 function()
                     gitsigns.blame_line({ full = true })
                 end,
+                { desc = "blame_line" },
             },
             { "/", gitsigns.show, { exit = true } }, -- show the base of the file
+            { "b", gitsigns.blame_line },
+
+            { "d", ":DiffviewOpen<CR>", { silent = true, exit = true } },
+            { "M", diffmaster, { silent = true, exit = true } },
+            { "H", ":DiffviewFileHistory<CR>", { silent = true, exit = true } },
+
+            { "k", vgit.project_diff_preview, { exit = true } },
+            { "dd", vgit.buffer_diff_preview, { exit = true } },
+            { "g", vgit.buffer_diff_staged_preview, { exit = true } },
+            { "P", vgit.project_staged_hunks_preview },
+            { "f", vgit.project_hunks_qf },
+            { "U", vgit.buffer_unstage },
+            { "G", vgit.buffer_diff_staged_preview },
+
             { "<Enter>", "<cmd>Neogit<CR>", { exit = true } },
             { "q", nil, { exit = true, nowait = true } },
 

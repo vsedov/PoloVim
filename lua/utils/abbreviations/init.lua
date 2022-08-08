@@ -1,30 +1,37 @@
 local utils = require("utils.abbreviations.utils")
-local abbrevs = require("utils.abbreviations.abbrev")
+local abbrevs = require("utils.abbreviations.dictionary")
+local M = {}
 
-if lambda.config.abbrev.coding_support then
-    for _, abbrev in ipairs(abbrevs.global_abbrevs.iabbrevs) do
-        utils.inoreabbrev(abbrev[1], abbrev[2])
+M.load_cmd = function() end
+
+M.setup = function(opts)
+    if lambda.config.abbrev.coding_support then
+        for _, abbrev in ipairs(abbrevs.global_abbrevs.iabbrevs) do
+            utils.inoreabbrev(abbrev[1], abbrev[2])
+        end
+
+        for _, cabbrev in ipairs(abbrevs.global_abbrevs.cabbrevs) do
+            utils.cnoreabbrev(cabbrev[1], cabbrev[2])
+        end
+        for _, cabbrev in ipairs(abbrevs.global_abbrevs.cnoremapbrevs) do
+            utils.cnoremap(cabbrev[1], cabbrev[2])
+        end
     end
 
-    for _, cabbrev in ipairs(abbrevs.global_abbrevs.cabbrevs) do
-        utils.cnoreabbrev(cabbrev[1], cabbrev[2])
+    for _, value in ipairs(lambda.config.abbrev.globals) do
+        if abbrevs[value] ~= nil then
+            utils.load_dict(abbrevs[value])
+        end
     end
-    for _, cabbrev in ipairs(abbrevs.global_abbrevs.cnoremapbrevs) do
-        utils.cnoremap(cabbrev[1], cabbrev[2])
+
+    for _, value in ipairs(lambda.config.abbrev.languages) do
+        if abbrevs[value] ~= nil then
+            utils.load_dict(abbrevs[value])
+        end
     end
+    M.load_cmd()
 end
-
-for _, value in ipairs(lambda.config.abbrev.globals) do
-    if abbrevs[value] ~= nil then
-        utils.load_dict(abbrevs[value])
-    end
-end
-
-for _, value in ipairs(lambda.config.abbrev.languages) do
-    if abbrevs[value] ~= nil then
-        utils.load_dict(abbrevs[value])
-    end
-end
+return M
 
 -- Load specific abreviations
 

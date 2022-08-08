@@ -71,7 +71,6 @@ end
 
 function M.load_dict(diction)
     local scope, items = diction.scope, diction.dict
-    print(scope)
     if scope == "global" then
         for element in pairs(items) do
             M.inoreabbrev(element, items[element])

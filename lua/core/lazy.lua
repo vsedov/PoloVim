@@ -152,7 +152,7 @@ vim.defer_fn(function()
     require("vscripts.tools")
 
     -- tbh, this can stay here, nothing changes with this
-    require("utils.abbreviations")
+    require("utils.abbreviations").setup()
 
     vim.cmd("command! Spell call spelunker#check()")
 

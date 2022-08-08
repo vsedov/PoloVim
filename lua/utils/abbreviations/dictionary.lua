@@ -84,7 +84,7 @@ M.global_abbrevs = {
         -- " vimgrep semi-prepared
         { "vg", "vimgrep //j **/*<Left><Left><Left><Left><Left><Left><Left>" },
         -- " vimgrep for 'resource'
-        { "rg", [[vimgrep /<c-r>=expand("%:t:r")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
+        { "RG", [[vimgrep /<c-r>=expand("%:t:r")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
         -- " vimgrep for 'cword'
         { "cg", [[vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
         -- " vimgrep for 'CWORD'
@@ -4997,6 +4997,9 @@ M.python = {
         ["dataloader"] = "DataLoader",
         ["totensor"] = "ToTensor",
         ["mnist"] = "MNIST",
+        ["improt"] = "import",
+        ["whole"] = "while",
+        ["prant"] = "print",
     },
 }
 
