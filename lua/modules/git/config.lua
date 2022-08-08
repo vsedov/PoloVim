@@ -267,6 +267,7 @@ end
 function config.neogit()
     vim.cmd([[packadd diffview.nvim]])
     local neogit = require("neogit")
+    pcall(require("plenary"))
     neogit.setup({
         disable_signs = false,
         disable_context_highlighting = false,
