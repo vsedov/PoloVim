@@ -82,11 +82,11 @@ M.global_abbrevs = {
         -- -- " last-vimgrep and -||-
         { "<C-G>", "vimgrep<UP><C-B><Right><Right><Right><Right><Right><Right><Right><Right><Right>" },
         -- " vimgrep semi-prepared
-        { "vg", "vimgrep //j **/*<Left><Left><Left><Left><Left><Left><Left>" },
+        { "VG", "vimgrep //j **/*<Left><Left><Left><Left><Left><Left><Left>" },
         -- " vimgrep for 'resource'
         { "RG", [[vimgrep /<c-r>=expand("%:t:r")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
         -- " vimgrep for 'cword'
-        { "cg", [[vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
+        { "CG", [[vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
         -- " vimgrep for 'CWORD'
         { "Cg", [[vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
         { "Vsp", [[vsp]] },
