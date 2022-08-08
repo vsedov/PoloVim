@@ -377,6 +377,23 @@ lambda.augroup("CheckOutsideTime", {
     },
 })
 
+lambda.augroup("NeorgAutoCommit", {
+    {
+        event = { "VimLeave" },
+        pattern = "*",
+        command = function()
+            local time = ""
+            local is_git = vim.fs.find(".git", { upward = true })
+            local info = {
+                filetype = "neorg",
+                folder = "home/neorg/",
+            }
+            if is_git then
+            end
+        end,
+    },
+})
+
 --- automatically clear commandline messages after a few seconds delay
 --- source: http://unix.stackexchange.com/a/613645
 ---@return function
