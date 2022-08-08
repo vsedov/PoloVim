@@ -1,7 +1,11 @@
 -- https://github.com/fitrh/init.nvim/blob/e787af19c1f59e02a12e98cdcb6a93e7beadb018/lua/config/plugin/null-ls/with.lua
 local With = {}
 local null_ls = require("null-ls")
-local plaintext = { "gitcommit", "markdown", "txt" }
+local plaintext = { "gitcommit", "markdown", "norg" }
+
+With.trim_newlines = {}
+
+With.trim_whitespace = {}
 
 With.black = {
     extra_args = { "--line-length", vim.bo.textwidth },
@@ -53,7 +57,8 @@ With.ktlint = {
 }
 
 With.misspell = {
-    filetypes = plaintext,
+    filetypes = { "markdown", "text", "txt" },
+    args = { "$FILENAME" },
 }
 
 With.mypy = {
@@ -134,7 +139,8 @@ With.stylua = {
 }
 
 With.write_good = {
-    filetypes = plaintext,
+    filetypes = { "markdown", "tex", "" },
+    extra_filetypes = { "txt", "text" },
     args = { "--text=$TEXT", "--parse" },
     command = "write-good",
 }
@@ -155,6 +161,10 @@ With.semgrep = {
 }
 
 With.flake8 = {
+    cwd = function(params)
+        return vim.fn.fnamemodify(params.bufname, ":h")
+    end,
+
     -- for the time, lets see how much lag this would reduce.
     method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 }
