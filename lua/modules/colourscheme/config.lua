@@ -118,10 +118,6 @@ function config.kanagawa()
     -- vim.cmd.colorscheme("kanagawa")
 end
 
-function config.oxocarbon()
-    vim.g.oxocarbon_lua_keep_terminal = true
-    vim.cmd("colorscheme oxocarbon-lua")
-end
 
 function config.horizon()
     vim.cmd([[colorscheme horizon]])
@@ -137,9 +133,5 @@ function config.rose()
     vim.cmd("colorscheme rose-pine")
 end
 
-function config.boo()
-    local theme_type = { "crimson_moonlight", "radioactive_waste", "forest_stream" }
 
-    require("boo-colorscheme").use({ theme = theme_type[math.random(1, #theme_type)] })
-end
 return config
