@@ -271,7 +271,7 @@ function config.neogit()
     neogit.setup({
         disable_signs = false,
         disable_context_highlighting = false,
-        disable_commit_confirmation = false, -- nah i like this 
+        disable_commit_confirmation = false, -- nah i like this
         disable_hint = false,
         auto_refresh = true,
         disable_builtin_notifications = true,
