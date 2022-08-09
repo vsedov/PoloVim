@@ -1,6 +1,6 @@
 local neorg = require("neorg")
 local match = neorg.lib.match
-local match = neorg.lib.when
+local when = neorg.lib.when
 
 local function cmd_parser(command_list)
     for _, command in ipairs(command_list) do
@@ -15,6 +15,17 @@ M.is_dirty = function()
 
     return when(not vim.tbl_isempty(is_dirty), function()
         print("Folder is not clean : pushes needed")
+        vim.ui.input({ prompt = "Do you want to add more to this commit ?" }, function(input)
+            local valid_answers = { "y", "yes", "Y", "Yes", "YES", "YES!" }
+            if vim.tbl_contains(valid_answers, input) then
+                vim.ui.input({ prompt = "Enter commit message" }, function(commit)
+                    commit_message = commit_message .. "\n" .. commit
+                end)
+            else
+                print("Commiting:")
+            end
+        end)
+
         for i, v in ipairs(is_dirty) do
             if string.sub(v, 1, 1) == "?" then
                 is_dirty[i] = " A" .. string.sub(v, 3)
