@@ -377,23 +377,6 @@ lambda.augroup("CheckOutsideTime", {
     },
 })
 
-lambda.augroup("NeorgAutoCommit", {
-    {
-        event = { "VimLeave" },
-        pattern = "*",
-        command = function()
-            local time = ""
-            local is_git = vim.fs.find(".git", { upward = true })
-            local info = {
-                filetype = "neorg",
-                folder = "home/neorg/",
-            }
-            if is_git then
-            end
-        end,
-    },
-})
-
 --- automatically clear commandline messages after a few seconds delay
 --- source: http://unix.stackexchange.com/a/613645
 ---@return function
@@ -432,6 +415,22 @@ if vim.env.TERM == "xterm-kitty" then
             event = "UILeave",
             pattern = "*",
             command = [[if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]],
+        },
+    })
+end
+
+if lambda.config.neorg_auto_commit then
+    lambda.augroup("NeorgAutoCommit", {
+        {
+            event = { "VimLeavePre", "VimSuspend" },
+            pattern = "/home/viv/neorg/*",
+            command = function()
+                -- it might be enabled at teh start: but what happens when i dont what this to occour ?
+                -- best way is to have another check - as there will be a toggle for neorg_auto_commit
+                if lambda.config.neorg_auto_commit then
+                    require("utils.custom_neorg_save").start()
+                end
+            end,
         },
     })
 end
