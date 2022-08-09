@@ -189,22 +189,7 @@ function config.gitsigns()
             return "<ignore>"
         end, { expr = true })
 
-        map("n", "<leader>hs", gitsigns.stage_hunk)
-        map("n", "<leader>hr", gitsigns.reset_hunk)
-        map("v", "<leader>hs", wrap(gitsigns.stage_hunk, { line("."), line("v") }))
-        map("v", "<leader>hr", wrap(gitsigns.reset_hunk, { line("."), line("v") }))
-        map("n", "<leader>hs", gitsigns.stage_buffer)
-        map("n", "<leader>hu", gitsigns.undo_stage_hunk)
-        map("n", "<leader>hr", gitsigns.reset_buffer)
-        map("n", "<leader>hp", gitsigns.preview_hunk)
-        map("n", "<leader>hb", wrap(gitsigns.blame_line, { full = true }))
         map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
-        map("n", "<leader>hd", gitsigns.diffthis)
-        map("n", "<leader>hd", wrap(gitsigns.diffthis, "~"))
-        map("n", "<leader>td", gitsigns.toggle_deleted)
-
-        map("n", "<leader>hq", wrap(gitsigns.setqflist, "all"))
-        map("n", "<leader>hq", wrap(gitsigns.setqflist))
 
         map({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>")
     end
