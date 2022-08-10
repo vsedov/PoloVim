@@ -26,10 +26,9 @@ lambda.config = {
     abbrev = {
         enable = true,
         coding_support = true, -- system wide
-        spelling_support = true, -- tex md and neorg files wide
         globals = { -- dictionaries that ive defined to be global, you may not want this idk .
-            "spelling_support",
-            "month_date",
+            ["spelling_support"] = true,
+            ["month_date"] = true,
         },
         languages = {
             "python", -- current support is python.
@@ -49,8 +48,9 @@ lambda.config = {
         latex = "texlab", -- texlab | ltex
         python = {
             use_semantic_token = true,
+            use_inlay_hints = false,
             lint = "flake8", -- pylint, pyflake, and other linters
-            lsp = "pylance", -- jedi pylsp and pyright
+            lsp = "jedi", -- jedi pylsp and pyright pylance
             format = "yapf", -- black
         },
     },

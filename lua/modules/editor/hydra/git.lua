@@ -74,8 +74,6 @@ if gitrepo then
   ^^^^------------------------------------------------^^^^
 
         _<Enter>_ => Neogit _q_ => exit => _<Esc>_ 
-                        
-
 ]]
 
     local ok, gitsigns = pcall(require, "gitsigns")
@@ -93,10 +91,18 @@ if gitrepo then
                     border = "single",
                 },
                 on_enter = function()
+                    vim.cmd("mkview")
+                    vim.cmd("silent! %foldopen!")
+                    vim.bo.modifiable = false
                     gitsigns.toggle_linehl(true)
                     gitsigns.toggle_deleted(true)
                 end,
                 on_exit = function()
+                    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+                    vim.cmd("loadview")
+                    vim.api.nvim_win_set_cursor(0, cursor_pos)
+                    vim.cmd("normal zv")
+                    gitsigns.toggle_signs(false)
                     gitsigns.toggle_linehl(false)
                     gitsigns.toggle_deleted(false)
                 end,

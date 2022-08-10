@@ -98,6 +98,7 @@ function pbind.map_args(cmd_string, description)
 end
 
 pbind.all_keys = {}
+-- TODO(vsedov) (20:24:06 - 10/08/22): Maybe have a better way of doing this ?
 function pbind.nvim_load_mapping(mapping)
     for key, value in pairs(mapping) do
         --  Regex is faster for some reason than {{..},.. } or {..,{..}}

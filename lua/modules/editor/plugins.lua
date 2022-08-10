@@ -222,15 +222,15 @@ editor({
     opt = true,
 })
 
-editor({
-    "andymass/vim-matchup",
-    opt = true,
-    event = { "InsertEnter" },
-    keys = "<leader><leader><leader>",
-    cmd = { "MatchupWhereAmI?", "MatchupShowTimes", "MatchupWhereAmI??" },
-    after = "nvim-treesitter",
-    config = conf.matchup,
-})
+-- editor({
+--     "andymass/vim-matchup",
+--     opt = true,
+--     event = { "InsertEnter" },
+--     keys = "<leader><leader><leader>",
+--     cmd = { "MatchupWhereAmI?", "MatchupShowTimes", "MatchupWhereAmI??" },
+--     after = "nvim-treesitter",
+--     config = conf.matchup,
+-- })
 
 -- TODO(vsedov) (14:40:21 - 01/08/22): This is a trial, i want to see how this goes
 editor({

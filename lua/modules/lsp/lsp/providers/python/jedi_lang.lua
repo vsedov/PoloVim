@@ -3,7 +3,7 @@ return {
     filetypes = { "python" },
     init_options = {
         jediSettings = {
-            autoImportModules = { "pydantic", "torch", "discord.py", "numpy" },
+            autoImportModules = { "torchvision", "torch", "numpy" },
         },
     },
 }
