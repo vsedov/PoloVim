@@ -57,7 +57,7 @@ function config.catppuccin()
             nvimtree = {
                 enabled = false,
                 show_root = false,
-                transparent_panel = false5,
+                transparent_panel = false,
             },
             neotree = {
                 enabled = true,
@@ -78,14 +78,14 @@ function config.catppuccin()
             markdown = true,
             lightspeed = true,
             ts_rainbow = false,
-            hop = false,
+            hop = true,
             notify = true,
             telekasten = true,
             symbols_outline = true,
             mini = false,
         },
     })
-    vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+    vim.g.catppuccin_flavour = lambda.config.colourscheme.catppuccin_flavour -- latte, frappe, macchiato, mocha
     vim.cmd([[colorscheme catppuccin]])
     -- vim.cmd.colorscheme("catppuccin")
 end
@@ -129,30 +129,55 @@ function config.dogrun()
 end
 
 function config.rose()
+    require("rose-pine").setup({
+        --- @usage 'main' | 'moon'
+        dark_variant = lambda.config.colourscheme.rose,
+        bold_vert_split = true,
+        dim_nc_background = true,
+        disable_background = false,
+        disable_float_background = false,
+        disable_italics = false,
+
+        --- @usage string hex value or named color from rosepinetheme.com/palette
+        groups = {
+            background = "base",
+            panel = "surface",
+            border = "highlight_med",
+            comment = "muted",
+            link = "iris",
+            punctuation = "subtle",
+
+            error = "love",
+            hint = "iris",
+            info = "foam",
+            warn = "gold",
+
+            headings = {
+                h1 = "iris",
+                h2 = "foam",
+                h3 = "rose",
+                h4 = "gold",
+                h5 = "pine",
+                h6 = "foam",
+            },
+            -- or set all headings at once
+            -- headings = 'subtle'
+        },
+
+        -- Change specific vim highlight groups
+        highlight_groups = {
+            ColorColumn = { bg = "rose" },
+        },
+    })
+
     vim.cmd("colorscheme rose-pine")
 end
 function config.doomone()
-    vim.g.doom_one_pumblend_enable = true
     vim.g.doom_one_pumblend_transparency = 3
-
-    -- Add color to cursor
-    vim.g.doom_one_cursor_coloring = true
-    -- Set :terminal colors
-    vim.g.doom_one_terminal_colors = true
-    -- Enable italic comments
-    vim.g.doom_one_italic_comments = true
-    -- Enable TS support
-    vim.g.doom_one_enable_treesitter = true
-    -- Color whole diagnostic text or only underline
     vim.g.doom_one_diagnostics_text_color = true
-    -- Enable transparent background
-    vim.g.doom_one_transparent_background = true
-
-    -- Pumblend transparency
+    vim.g.doom_one_italic_comments = true
     vim.g.doom_one_pumblend_enable = true
-    vim.g.doom_one_pumblend_transparency = 3
 
-    -- Plugins integration
     vim.g.doom_one_plugin_neorg = true
     vim.g.doom_one_plugin_barbar = false
     vim.g.doom_one_plugin_telescope = true
@@ -167,7 +192,7 @@ function config.doomone()
 end
 
 function config.doom()
-    vim.cmd.colorscheme("doom-one")
+    vim.cmd("colorscheme doom-one")
 end
 
 return config

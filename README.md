@@ -61,94 +61,286 @@ lua/modules/users/plugins
 ### Tree
 
 ```
-├── core
-│   ├── event.lua
-│   ├── global.lua
-│   ├── helper.lua
-│   ├── init.lua
-│   ├── lazy.lua
-│   ├── mapping.lua
-│   ├── options.lua
-│   ├── pack.lua
-│   └── timer.lua
-├── internal
-│   ├── bufonly.lua
-│   ├── fsevent.lua
-│   └── quickrun.lua
-├── keymap
-│   ├── bind.lua
-│   ├── config.lua
-│   └── init.lua
-├── modules
-│   ├── completion
-│   │   ├── config.lua
-│   │   ├── lsp.lua
-│   │   ├── lsp_support.lua
-│   │   └── plugins.lua
-│   ├── editor
-│   │   ├── config.lua
-│   │   ├── neorg.lua
-│   │   ├── plugins.lua
-│   │   └── which_key.lua
-│   ├── lang
-│   │   ├── config.lua
-│   │   ├── dap
-│   │   │   ├── dap.lua
-│   │   │   ├── debugHelper.lua
-│   │   │   ├── go.lua
+├── after
+│   ├── ftplugin
+│   │   ├── cpp.vim
+│   │   ├── dap-repl.vim
+│   │   ├── gitcommit.vim
+│   │   ├── go.vim
+│   │   ├── java.lua
+│   │   ├── jsonc.vim
+│   │   ├── json.vim
+│   │   ├── julia.lua
+│   │   ├── lua.lua
+│   │   ├── make.vim
+│   │   ├── markdown.lua
+│   │   ├── NeogitCommitMessage.vim
+│   │   ├── norg.lua
+│   │   ├── proto.vim
+│   │   ├── python.lua
+│   │   ├── qf.vim
+│   │   ├── sql.vim
+│   │   ├── tex.vim
+│   │   ├── vim.vim
+│   │   ├── yaml.vim
+│   │   └── zig.vim
+│   ├── indent
+│   │   └── typescriptreact.vim
+│   ├── queries
+│   │   ├── c
+│   │   │   └── highlights.scm
+│   │   ├── comment
+│   │   │   └── highlights.scm
+│   │   ├── cpp
+│   │   │   └── highlights.scm
+│   │   ├── go
+│   │   │   └── highlights.scm
+│   │   ├── java
+│   │   │   └── highlights.scm
+│   │   ├── javascript
+│   │   │   └── highlights.scm
+│   │   ├── lua
+│   │   │   └── highlights.scm
+│   │   ├── luap
+│   │   │   └── highlights.scm
+│   │   ├── proto
+│   │   │   ├── folds.scm
+│   │   │   └── highlights.scm
+│   │   ├── python
+│   │   │   └── highlights.scm
+│   │   └── rust
+│   │       └── highlights.scm
+│   └── syntax
+│       ├── jsonc.vim
+│       ├── log.vim
+│       ├── make.vim
+│       ├── NeogitStatus.lua
+│       ├── python.lua
+│       ├── qf.lua
+│       └── sh.lua
+├── clipboard_neorg.vim
+├── init.lua
+├── lua
+│   ├── core
+│   │   ├── autocmd.lua
+│   │   ├── autocmd_optional.lua
+│   │   ├── event_helper.lua
+│   │   ├── global.lua
+│   │   ├── helper.lua
+│   │   ├── init.lua
+│   │   ├── lazy.lua
+│   │   ├── mapping.lua
+│   │   ├── options.lua
+│   │   ├── pack.lua
+│   │   └── timer.lua
+│   ├── keymap
+│   │   ├── bind.lua
+│   │   ├── core.lua
+│   │   ├── function.lua
+│   │   ├── init.lua
+│   │   ├── misc.lua
+│   │   ├── telescope.lua
+│   │   └── useful.lua
+│   ├── modules
+│   │   ├── colourscheme
+│   │   │   ├── config.lua
+│   │   │   └── plugins.lua
+│   │   ├── completion
+│   │   │   ├── cmp
+│   │   │   │   ├── config.lua
+│   │   │   │   ├── extra.lua
+│   │   │   │   ├── init.lua
+│   │   │   │   ├── mappings.lua
+│   │   │   │   ├── sources.lua
+│   │   │   │   ├── ui_overwrite.lua
+│   │   │   │   └── utils.lua
+│   │   │   ├── config.lua
+│   │   │   ├── plugins.lua
+│   │   │   └── snippets
+│   │   │       ├── all.lua
+│   │   │       ├── choice_popup.lua
+│   │   │       ├── init.lua
+│   │   │       ├── latex
+│   │   │       │   ├── luasnip-latex-snippets.nvim
+│   │   │       │   ├── tex.lua
+│   │   │       │   └── tex_math.lua
+│   │   │       ├── lua.lua
+│   │   │       ├── luasnip.lua
+│   │   │       ├── norg_snip.lua
+│   │   │       ├── python.lua
+│   │   │       ├── sniputils.lua
+│   │   │       └── toml.lua
+│   │   ├── core
+│   │   │   ├── config.lua
+│   │   │   └── plugins.lua
+│   │   ├── editor
+│   │   │   ├── config.lua
+│   │   │   ├── hydra
+│   │   │   │   ├── buffer.lua
+│   │   │   │   ├── dap.lua
+│   │   │   │   ├── git.lua
+│   │   │   │   ├── init.lua
+│   │   │   │   ├── tele.lua
+│   │   │   │   ├── venn.lua
+│   │   │   │   ├── vim_options.lua
+│   │   │   │   ├── window.lua
+│   │   │   │   └── word_motion.lua
+│   │   │   ├── neorg.lua
+│   │   │   ├── plugins.lua
+│   │   │   └── which_key.lua
+│   │   ├── git
+│   │   │   ├── config.lua
+│   │   │   └── plugins.lua
+│   │   ├── lang
+│   │   │   ├── config.lua
+│   │   │   ├── dap
+│   │   │   │   ├── dap.lua
+│   │   │   │   ├── debugHelper.lua
+│   │   │   │   ├── go.lua
+│   │   │   │   ├── init.lua
+│   │   │   │   ├── jest.lua
+│   │   │   │   ├── js.lua
+│   │   │   │   ├── lua.lua
+│   │   │   │   ├── py.lua
+│   │   │   │   └── rust.lua
+│   │   │   ├── plugins.lua
+│   │   │   └── treesitter.lua
+│   │   ├── lsp
+│   │   │   ├── config.lua
+│   │   │   ├── lsp
+│   │   │   │   ├── init.lua
+│   │   │   │   ├── null-ls
+│   │   │   │   │   ├── init.lua
+│   │   │   │   │   └── with.lua
+│   │   │   │   ├── providers
+│   │   │   │   │   ├── c.lua
+│   │   │   │   │   ├── julials.lua
+│   │   │   │   │   ├── latex
+│   │   │   │   │   │   ├── ltex.lua
+│   │   │   │   │   │   └── texlab.lua
+│   │   │   │   │   ├── lsp_install.lua
+│   │   │   │   │   ├── luadev.lua
+│   │   │   │   │   ├── python
+│   │   │   │   │   │   ├── inlay_hint_core
+│   │   │   │   │   │   │   ├── config.lua
+│   │   │   │   │   │   │   ├── core.lua
+│   │   │   │   │   │   │   ├── init.lua
+│   │   │   │   │   │   │   └── utils.lua
+│   │   │   │   │   │   ├── jedi_lang.lua
+│   │   │   │   │   │   ├── pylance.lua
+│   │   │   │   │   │   ├── pylsp-ls.lua
+│   │   │   │   │   │   ├── pyright.lua
+│   │   │   │   │   │   └── utils
+│   │   │   │   │   │       ├── autocmds.lua
+│   │   │   │   │   │       └── init.lua
+│   │   │   │   │   └── rust.lua
+│   │   │   │   ├── semantic_tokens
+│   │   │   │   │   ├── core
+│   │   │   │   │   │   ├── buf.lua
+│   │   │   │   │   │   ├── handlers.lua
+│   │   │   │   │   │   ├── protocol.lua
+│   │   │   │   │   │   └── semantic_tokens.lua
+│   │   │   │   │   ├── init.lua
+│   │   │   │   │   └── plugin
+│   │   │   │   │       ├── nvim_semantic_tokens.lua
+│   │   │   │   │       ├── presets.lua
+│   │   │   │   │       └── table-highlighter.lua
+│   │   │   │   └── utils
+│   │   │   │       ├── autocmd.lua
+│   │   │   │       ├── capabilities.lua
+│   │   │   │       ├── config.lua
+│   │   │   │       ├── handlers.lua
+│   │   │   │       ├── init.lua
+│   │   │   │       ├── list.lua
+│   │   │   │       ├── peek.lua
+│   │   │   │       └── setup_autocmd.lua
+│   │   │   └── plugins.lua
+│   │   ├── misc
+│   │   │   ├── config.lua
+│   │   │   ├── normal_cmdline.lua
+│   │   │   ├── plugins.lua
+│   │   │   └── syntax_surfer.lua
+│   │   ├── rocks.lua
+│   │   ├── telescope
+│   │   │   ├── config.lua
+│   │   │   └── plugins.lua
+│   │   ├── tools
+│   │   │   ├── config.lua
+│   │   │   ├── plugins.lua
+│   │   │   └── toggleterm.lua
+│   │   ├── ui
+│   │   │   ├── config.lua
+│   │   │   ├── dressing.lua
+│   │   │   ├── heirline.lua
+│   │   │   └── plugins.lua
+│   │   └── user
+│   │       ├── config.lua
+│   │       └── plugins.lua
+│   ├── overwrite
+│   │   ├── autocmd.lua
+│   │   ├── cmd.lua
+│   │   ├── init.lua
+│   │   ├── mapping.lua
+│   │   └── options.lua
+│   ├── telescope
+│   │   └── _extensions
+│   │       ├── dotfiles.lua
+│   │       └── gosource.lua
+│   ├── utils
+│   │   ├── abbreviations
+│   │   │   ├── dictionary.lua
 │   │   │   ├── init.lua
-│   │   │   ├── jest.lua
-│   │   │   ├── js.lua
-│   │   │   ├── lua.lua
-│   │   │   ├── py.lua
-│   │   │   └── rust.lua
-│   │   ├── efm.lua
-│   │   ├── language_utils.lua
-│   │   ├── null-ls
-│   │   │   ├── init.lua
-│   │   │   └── sql.lua
-│   │   ├── plugins.lua
-│   │   └── treesitter.lua
-│   ├── rocks.lua
-│   ├── tools
-│   │   ├── config.lua
-│   │   ├── plugins.lua
-│   │   └── toggleterm.lua
-│   ├── ui
-│   │   ├── config.lua
-│   │   ├── eviline.lua
-│   │   └── plugins.lua
-│   ├── useless
-│   │   ├── config.lua
-│   │   └── plugins.lua
-│   └── user
-│       ├── config.lua
-│       └── plugins.lua
-├── overwrite
-│   ├── event.lua
-│   ├── init.lua
-│   ├── mapping.lua
-│   └── options.lua
-├── selene.toml
-├── stylua.toml
-├── telescope
-│   └── _extensions
-│       ├── dotfiles.lua
-│       └── gosource.lua
-├── utils
-│   ├── asyncmake.lua
-│   ├── container.lua
-│   ├── git.lua
-│   ├── helper.lua
-│   ├── log.lua
-│   ├── profiler.lua
-│   ├── selfunc.lua
-│   ├── telescope.lua
-│   └── ui_overwrite.lua
-├── vim.toml
-└── vscripts
-    ├── cursorhold.lua
-    └── tools.lua
+│   │   │   └── utils.lua
+│   │   ├── coffee.lua
+│   │   ├── custom_neorg_save.lua
+│   │   ├── exit.lua
+│   │   ├── helpers
+│   │   │   ├── asyncmake.lua
+│   │   │   ├── git.lua
+│   │   │   ├── helper.lua
+│   │   │   └── selfunc.lua
+│   │   ├── logs
+│   │   │   └── log.lua
+│   │   ├── profiler.lua
+│   │   ├── set_env.lua
+│   │   ├── telescope.lua
+│   │   ├── treesitter_utils.lua
+│   │   └── ui
+│   │       ├── highlights.lua
+│   │       ├── kind.lua
+│   │       └── kind_symbols.lua
+│   └── vscripts
+│       ├── cursorhold.lua
+│       └── tools.lua
+├── min
+│   ├── init_pack.lua
+│   ├── init_paq.lua
+│   └── minconfig.lua
+├── plugin
+│   ├── cursorword.lua
+│   ├── number.lua
+│   └── whitespace.lua
+├── README.md
+├── scripts
+│   ├── code_runner.json
+│   ├── log-autocmds.vim
+│   └── tools.vim
+├── spell
+│   ├── en.utf-8.add
+│   ├── en.utf-8.add.spl
+│   ├── en.utf-8.spl
+│   └── en.utf-8.sug
+├── startuptest
+│   ├── startup.sh
+│   ├── test.lua
+│   ├── tmp.c
+│   ├── tmp.norg
+│   └── tmp.py
+├── static
+│   └── neovim.cat
+└── stylua.toml
+
+
 
 ```
 

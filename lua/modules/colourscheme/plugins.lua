@@ -14,6 +14,7 @@ colourscheme({
     run = "CatppuccinCompile",
     config = conf.catppuccin,
 })
+
 colourscheme({
     "rose-pine/neovim",
     opt = true,
@@ -22,6 +23,7 @@ colourscheme({
     tag = "v1.*",
     config = conf.rose,
 })
+
 colourscheme({
     "lunarvim/horizon.nvim",
     opt = true,
@@ -33,6 +35,7 @@ colourscheme({
     opt = true,
     config = conf.dogrun,
 })
+
 colourscheme({
     "NTBBloodbath/doom-one.nvim",
     setup = conf.doomone,

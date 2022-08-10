@@ -36,13 +36,13 @@ local function GetItem(colourschemes)
     end
 end
 local function loadscheme()
-    local colourschemes = {
-        { "kanagawa.nvim", 0.3 },
-        { "rose", 0.4 },
-        { "catppuccin", 0.3 },
-    }
-
-    local loading_theme = GetItem(colourschemes)
+    -- local theme
+    -- if daylight() == "dark" then
+    --     theme = lambda.config.colourscheme.themes.dark
+    -- else
+    --     lambda.config.colourscheme.themes.light
+    -- end
+    local loading_theme = GetItem(lambda.config.colourscheme.themes.dark)
     lprint(loading_theme)
     require("packer").loader(loading_theme)
 end

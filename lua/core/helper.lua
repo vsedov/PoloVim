@@ -5,6 +5,22 @@ _G = _G or {}
 _G.lambda = {}
 
 lambda.config = {
+    colourscheme = {
+        --- @usage "main"' | '"moon"
+        rose = "main",
+        --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
+        catppuccin_flavour = "mocha",
+        -- @usage theme_name : percentage chance
+        themes = {
+            dark = {
+                { "kanagawa.nvim", 0.3 },
+                { "rose", 0.4 },
+                { "catppuccin", 0.1 },
+                { "doom-one.nvim", 0.2 },
+            },
+            light = {},
+        },
+    },
     loaded_confirm_quit = true,
     cmp_theme = "border", -- no-border , border
     abbrev = {
@@ -23,7 +39,7 @@ lambda.config = {
     use_tabnine = true, -- load tabnine
     use_dashboard = false, -- set to false to not see this
     use_session = true, -- set to false to disable session
-    use_clock = false, -- set to srue to  see timer for config
+    use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = false, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_guess_indent = true,
