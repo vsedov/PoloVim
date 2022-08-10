@@ -288,9 +288,8 @@ require("telescope").setup({
 telescope.load_extension("dotfiles")
 telescope.load_extension("gosource")
 -- telescope.load_extension("notify")
-loader("telescope-zf-native.nvim telescope-live-grep-raw.nvim")
+loader("telescope-live-grep-raw.nvim")
 -- loader("project.nvim") -- telescope-frecency.nvim nvim-neoclip.lua telescope-zoxide
-telescope.load_extension("zf-native")
 
 -- telescope.setup({
 --     extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },

@@ -128,20 +128,6 @@ editor({
 })
 editor({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
 
--- temp
--- editor({
---     "declancm/cinnamon.nvim",
---     keys = {
---         "<C-U>",
---         "<C-D>",
---         "<C-B>",
---         "<C-F>",
---         "gg",
---         "G",
---     },
---     config = conf.neoscroll,
--- })
-
 -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
 
@@ -265,4 +251,23 @@ editor({
         vim.keymap.set("n", "\\y", require("osc52").copy_operator, { expr = true })
         vim.keymap.set("x", "\\y", require("osc52").copy_visual)
     end,
+})
+editor({
+    "AckslD/nvim-trevJ.lua",
+    module = "trevj",
+    keys = "<leader>j",
+    setup = function()
+        vim.keymap.set("n", "<leader>j", function()
+            require("trevj").format_at_cursor()
+        end)
+    end,
+    config = function()
+        require("trevj").setup()
+    end,
+})
+
+editor({
+    "linty-org/readline.nvim",
+    event = "CmdlineEnter",
+    config = conf.readline,
 })

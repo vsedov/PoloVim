@@ -31,6 +31,7 @@ local function loadscheme()
         "catppuccin",
         "kanagawa.nvim",
         "rose",
+        "doom-one.nvim",
     }
 
     local v = math.random(1, #themes)

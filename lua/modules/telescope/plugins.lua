@@ -7,7 +7,13 @@ telescope({
     requires = {
         { "nvim-neorg/neorg-telescope", opt = true },
         { "nvim-lua/plenary.nvim", opt = true },
-        { "natecraddock/telescope-zf-native.nvim", opt = true },
+        {
+            "natecraddock/telescope-zf-native.nvim",
+            opt = true,
+            config = function()
+                require("telescope").load_extension("zf-native")
+            end,
+        },
         { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
         { "nvim-telescope/telescope-file-browser.nvim", opt = true },
     },

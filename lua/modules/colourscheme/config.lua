@@ -131,5 +131,13 @@ end
 function config.rose()
     vim.cmd("colorscheme rose-pine")
 end
+function config.doomone()
+    vim.g.doom_one_pumblend_enable = true
+    vim.g.doom_one_pumblend_transparency = 3
+end
+
+function config.doom()
+    vim.cmd.colorscheme("doom-one")
+end
 
 return config

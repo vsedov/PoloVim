@@ -86,89 +86,57 @@ end
 -- end
 
 function config.nvim_bufferline()
-    if not packer_plugins["nvim-web-devicons"].loaded then
-        packer_plugins["nvim-web-devicons"].loaded = true
-        vim.cmd([[packadd nvim-web-devicons]])
-    end
     local fn = vim.fn
-    local function diagnostics_indicator(_, _, diagnostics)
-        local symbols = { error = " ", warning = " ", info = " " }
-        local result = {}
-        for name, count in pairs(diagnostics) do
-            if symbols[name] and count > 0 then
-                table.insert(result, symbols[name] .. count)
-            end
-        end
-        result = table.concat(result, " ")
-        return #result > 0 and result or ""
-    end
-
-    local function custom_filter(buf, buf_nums)
-        local logs = vim.tbl_filter(function(b)
-            return vim.bo[b].filetype == "log"
-        end, buf_nums)
-        if vim.tbl_isempty(logs) then
-            return true
-        end
-        local tab_num = vim.fn.tabpagenr()
-        local last_tab = vim.fn.tabpagenr("$")
-        local is_log = vim.bo[buf].filetype == "log"
-        if last_tab == 1 then
-            return true
-        end
-        -- only show log buffers in secondary tabs
-        return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
-    end
-
-    local function sort_by_mtime(a, b)
-        local astat = vim.loop.fs_stat(a.path)
-        local bstat = vim.loop.fs_stat(b.path)
-        local mod_a = astat and astat.mtime.sec or 0
-        local mod_b = bstat and bstat.mtime.sec or 0
-        return mod_a > mod_b
-    end
+    local fmt = string.format
 
     local groups = require("bufferline.groups")
 
     require("bufferline").setup({
-        highlights = {
-            info = { gui = "undercurl" },
-            info_selected = { gui = "undercurl" },
-            info_visible = { gui = "undercurl" },
-            warning = { gui = "undercurl" },
-            warning_selected = { gui = "undercurl" },
-            warning_visible = { gui = "undercurl" },
-            error = { gui = "undercurl" },
-            error_selected = { gui = "undercurl" },
-            error_visible = { gui = "undercurl" },
-        },
+        highlights = function(opts)
+            local hl = opts.highlights
+            local visible = hl.buffer_visible.fg
+            local selected = hl.buffer_selected.fg
+            return {
+                info = { undercurl = true, fg = hl.info.fg },
+                info_selected = { undercurl = true, bold = true, italic = true, fg = selected },
+                info_visible = { undercurl = true, fg = visible },
+                warning = { undercurl = true, fg = hl.warning.fg },
+                warning_selected = { undercurl = true, bold = true, italic = true, fg = selected },
+                warning_visible = { undercurl = true, fg = visible },
+                error = { undercurl = true, fg = hl.error.fg },
+                error_selected = { undercurl = true, bold = true, italic = true, fg = selected },
+                error_visible = { undercurl = true, fg = visible },
+                hint = { undercurl = true, fg = hl.hint.fg },
+                hint_selected = { undercurl = true, bold = true, italic = true, fg = selected },
+                hint_visible = { undercurl = true, fg = visible },
+            }
+        end,
         options = {
-            view = "multiwindow",
-            numbers = "none", -- function(opts) return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal)) end,
+            debug = {
+                logging = true,
+            },
+            navigation = { mode = "uncentered" },
+            mode = "buffers", -- tabs
+            sort_by = "insert_after_current",
+            right_mouse_command = "vert sbuffer %d",
+            show_close_icon = false,
+            show_buffer_close_icons = true,
+            diagnostics = "nvim_lsp",
+            diagnostics_indicator = false,
+            diagnostics_update_in_insert = false,
+
             close_command = "bdelete! %d",
             right_mouse_command = "bdelete! %d",
             left_mouse_command = "buffer %d",
-            -- mappings = true,
-            max_name_length = 14,
-            max_prefix_length = 10,
-            tab_size = 16,
-            mode = "buffers", -- tabs
-            sort_by = sort_by_mtime,
-            show_close_icon = false,
-            show_buffer_icons = true,
-            show_buffer_close_icons = false,
-            show_tab_indicators = true,
-            enforce_regular_tabs = true,
-            always_show_bufferline = false,
-            -- 'extension' | 'directory' |
-            ---based on https://github.com/kovidgoyal/kitty/issues/957
-            diagnostics = "nvim_lsp",
-            diagnostics_indicator = diagnostics_indicator,
-            diagnostics_update_in_insert = false,
-            custom_filter = custom_filter,
-            separator_style = "thin", -- "thin",
-            -- 'extension' | 'directory' |
             offsets = {
+                {
+                    filetype = "pr",
+                    highlight = "PanelHeading",
+                },
+                {
+                    filetype = "dbui",
+                    highlight = "PanelHeading",
+                },
                 {
                     filetype = "undotree",
                     text = "Undotree",
@@ -182,7 +150,7 @@ function config.nvim_bufferline()
                 {
                     filetype = "neo-tree",
                     text = "Explorer",
-                    highlight = "PanelHeading",
+                    highlight = "PanelDarkHeading",
                 },
                 {
                     filetype = "DiffviewFiles",
@@ -192,6 +160,11 @@ function config.nvim_bufferline()
                 {
                     filetype = "flutterToolsOutline",
                     text = "Flutter Outline",
+                    highlight = "PanelHeading",
+                },
+                {
+                    filetype = "Outline",
+                    text = "Symbols",
                     highlight = "PanelHeading",
                 },
                 {
@@ -205,54 +178,54 @@ function config.nvim_bufferline()
                     toggle_hidden_on_enter = true,
                 },
                 items = {
+                    groups.builtin.pinned:with({ icon = "" }),
                     groups.builtin.ungrouped,
                     {
-                        highlight = { guisp = "#808080", gui = "underline" },
+                        name = "Dependencies",
+                        highlight = { fg = "#ECBE7B" },
+                        matcher = function(buf)
+                            return vim.startswith(buf.path, fmt("%s/site/pack/packer", fn.stdpath("data")))
+                                or vim.startswith(buf.path, fn.expand("$VIMRUNTIME"))
+                        end,
+                    },
+                    {
+                        name = "Terraform",
+                        matcher = function(buf)
+                            return buf.name:match("%.tf") ~= nil
+                        end,
+                    },
+                    {
+                        name = "Kubernetes",
+                        matcher = function(buf)
+                            return buf.name:match("kubernetes") and buf.name:match("%.yaml")
+                        end,
+                    },
+                    {
+                        name = "SQL",
+                        matcher = function(buf)
+                            return buf.filename:match("%.sql$")
+                        end,
+                    },
+                    {
                         name = "tests",
                         icon = "",
                         matcher = function(buf)
-                            return buf.filename:match("_spec") or buf.filename:match("test")
+                            local name = buf.filename
+                            if name:match("%.sql$") == nil then
+                                return false
+                            end
+                            return name:match("_spec") or name:match("_test")
                         end,
                     },
                     {
-                        name = "view models",
-                        highlight = { guisp = "#54546D", gui = "underline" },
-                        matcher = function(buf)
-                            return buf.filename:match("view_model%.dart")
-                        end,
-                    },
-                    {
-                        name = "screens",
-                        highlight = { guisp = "#D27E99", gui = "underline" },
-                        matcher = function(buf)
-                            return buf.path:match("screen")
-                        end,
-                    },
-                    {
-                        highlight = { guisp = "#938AA9", gui = "underline" },
                         name = "docs",
+                        icon = "",
                         matcher = function(buf)
                             for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
                                 if ext == fn.fnamemodify(buf.path, ":e") then
                                     return true
                                 end
                             end
-                        end,
-                    },
-                    {
-                        name = "plugins",
-                        highlight = { guisp = "#54546D", gui = "underline" },
-
-                        matcher = function(buf)
-                            return buf.filename:match("plugins")
-                        end,
-                    },
-                    {
-                        name = "config",
-                        highlight = { guisp = "#54546D", gui = "underline" },
-
-                        matcher = function(buf)
-                            return buf.filename:match("config")
                         end,
                     },
                 },
@@ -294,6 +267,19 @@ function config.notify()
     vim.notify = notify
     vim.keymap.set("n", "|+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
     require("telescope").load_extension("notify")
+
+    require("utils.ui.highlights").plugin("notify", {
+        { NotifyERRORBorder = { bg = { from = "NormalFloat" } } },
+        { NotifyWARNBorder = { bg = { from = "NormalFloat" } } },
+        { NotifyINFOBorder = { bg = { from = "NormalFloat" } } },
+        { NotifyDEBUGBorder = { bg = { from = "NormalFloat" } } },
+        { NotifyTRACEBorder = { bg = { from = "NormalFloat" } } },
+        { NotifyERRORBody = { link = "NormalFloat" } },
+        { NotifyWARNBody = { link = "NormalFloat" } },
+        { NotifyINFOBody = { link = "NormalFloat" } },
+        { NotifyDEBUGBody = { link = "NormalFloat" } },
+        { NotifyTRACEBody = { link = "NormalFloat" } },
+    })
 end
 
 function config.neo_tree()
@@ -303,22 +289,57 @@ function config.neo_tree()
     if not packer_plugins["nvim-window-picker"].loaded then
         vim.cmd([[packadd nvim-window-picker ]])
     end
+    local highlights = require("utils.ui.highlights")
 
-    vim.g.neo_tree_remove_legacy_commands = 1
+    local panel_dark_bg = highlights.get("PanelDarkBackground", "bg")
+    local tab_bg = highlights.alter_color(panel_dark_bg, 15)
+
+    highlights.plugin("NeoTree", {
+        theme = {
+            ["*"] = {
+                { NeoTreeNormal = { link = "PanelBackground" } },
+                { NeoTreeNormalNC = { link = "PanelBackground" } },
+                { NeoTreeRootName = { underline = true } },
+                { NeoTreeCursorLine = { link = "Visual" } },
+                { NeoTreeStatusLine = { link = "PanelSt" } },
+                { NeoTreeTabActive = { bg = { from = "PanelBackground" }, bold = true } },
+                { NeoTreeTabInactive = { bg = tab_bg, fg = { from = "Comment" } } },
+                { NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg } },
+                { NeoTreeTabSeparatorActive = { inherit = "PanelBackground", fg = { from = "Comment" } } },
+            },
+            horizon = {
+                { NeoTreeDirectoryIcon = { fg = "#C09553" } },
+            },
+        },
+    })
 
     require("neo-tree").setup({
+        sources = {
+            "filesystem",
+            "buffers",
+            "git_status",
+            "diagnostics",
+        },
+        source_selector = {
+            winbar = true,
+            separator_active = " ",
+        },
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
         popup_border_style = "solid", -- "double", "none", "rounded", "shadow", "single" or "solid
         enable_git_status = true,
         enable_diagnostics = true,
+        git_status_async = true,
         event_handlers = {
             {
-                event = "vim_buffer_enter",
-                handler = function(_)
-                    if vim.bo.filetype == "neo-tree" then
-                        vim.wo.signcolumn = "auto"
-                    end
-                    vim.cmd("highlight! Cursor blend=100")
+                event = "neo_tree_buffer_enter",
+                handler = function()
+                    highlights.set("Cursor", { blend = 100 })
+                end,
+            },
+            {
+                event = "neo_tree_buffer_leave",
+                handler = function()
+                    highlights.set("Cursor", { blend = 0 })
                 end,
             },
         },
@@ -395,31 +416,16 @@ function config.neo_tree()
         },
         nesting_rules = {},
         filesystem = {
-            filtered_items = {
-                visible = false, -- when true, they will just be displayed differently than normal items
-                hide_dotfiles = false,
-                hide_gitignored = false,
-                hide_by_name = {
-                    ".DS_Store",
-                    "thumbs.db",
-                    --"node_modules"
-                },
-                never_show = { -- remains hidden even if visible is toggled to true
-                    --".DS_Store",
-                    --"thumbs.db"
-                },
-            },
-            follow_current_file = true, -- This will find and focus the file in the active buffer every
-            hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
+            hijack_netrw_behavior = "open_current",
             use_libuv_file_watcher = true,
-            window = {
-                mappings = {
-                    ["<bs>"] = "navigate_up",
-                    ["."] = "set_root",
-                    ["H"] = "toggle_hidden",
-                    ["/"] = "fuzzy_finder",
-                    ["f"] = "filter_on_submit",
-                    ["<c-x>"] = "clear_filter",
+            group_empty_dirs = true,
+            follow_current_file = false,
+            filtered_items = {
+                visible = true,
+                hide_dotfiles = false,
+                hide_gitignored = true,
+                never_show = {
+                    ".DS_Store",
                 },
             },
         },

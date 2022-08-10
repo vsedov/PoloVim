@@ -51,7 +51,7 @@ if gitrepo then
   ^^^^                   Gitsigns                   ^^^^
   ^^^^----------------------------------------------^^^^
   _J_ : next hunk                   _D_ : diffthis 
-  _K_ : prev hunk                   _p_ : Preview hunk
+  _K_ : prev hunk                   _p_ : Preview H
   _s_ : stagehunk                   _S_ : stage buf 
   _r_ : reset hunk                  _R_ : Reset Buffer
   _x_ : show del                    _u_ : ustage hunk 
@@ -62,7 +62,7 @@ if gitrepo then
   ^^^^                     VGIT                      ^^^^
   ^^^^-----------------------------------------------^^^^
   _k_ : proj diff                   _g_ : diff staged  
-  _dd_ : diff preview               _P_ :projStaged 
+  _dd_ : diff preview               _P_ : projStaged 
   _f_ : proj hunkQF                 _U_ : unstagebuf 
                     _G_ : stage diff
   ^^^^------------------------------------------------^^^^
@@ -198,7 +198,7 @@ if gitrepo then
             { "U", vgit.buffer_unstage },
             { "G", vgit.buffer_diff_staged_preview },
 
-            { "<Enter>", "<cmd>Neogit<CR>", { exit = true } },
+            { "<Enter>", ":tcd %:p:h<cr>:Neogit<cr>", { exit = true } },
             { "q", nil, { exit = true, nowait = true } },
 
             { "l", ":Flogsplit<CR>", { exit = true, nowait = true } },

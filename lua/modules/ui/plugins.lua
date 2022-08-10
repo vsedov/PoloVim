@@ -76,7 +76,7 @@ ui({
                             buftype = { "terminal" },
                         },
                     },
-                    other_win_hl_color = "#e35e4f",
+                    other_win_hl_color = require("utils.ui.highlights").get("Visual", "bg"),
                 })
             end,
         },

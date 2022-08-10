@@ -38,7 +38,7 @@ function config.workspace()
         notify_info = true,
 
         hooks = {
-            open = { "Telescope find_files" },
+            open = { "NeoTree", "Telescope find_files" },
         },
     })
 end
