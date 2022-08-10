@@ -18,10 +18,10 @@ lambda.config = {
         },
     },
     tabby_or_bufferline = false, -- false: tabby, true for bufferline
-    sell_your_soul = false, -- set to true to sell your soul
+    sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_tabnine = true, -- load tabnine
     use_dashboard = false, -- set to false to not see this
-    use_session = false, -- set to false to disable session
+    use_session = true, -- set to false to disable session
     use_clock = false, -- set to srue to  see timer for config
     use_saga_diagnostic_jump = false, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...

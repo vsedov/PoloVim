@@ -33,3 +33,9 @@ colourscheme({
     opt = true,
     config = conf.dogrun,
 })
+colourscheme({
+    "NTBBloodbath/doom-one.nvim",
+    setup = conf.doomone,
+    config = conf.doom,
+    opt = true,
+})
