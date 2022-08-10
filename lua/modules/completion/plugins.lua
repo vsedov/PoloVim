@@ -130,7 +130,7 @@ completion({
         "CmdLineEnter",
     },
     after = "nvim-cmp",
-
+    keys = { "<C-c>" },
     config = conf.autopair,
 })
 

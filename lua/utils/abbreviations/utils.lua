@@ -61,12 +61,15 @@ M.parse_iabbrev_pr = function(tabl, objective)
         end
     elseif objective == "buffer" then
         for index, value in pairs(tabl) do
-            local to_concat = "iabbrev <buffer>" .. index .. [[ ]] .. value
+            local to_concat = "iabbrev <buffer> " .. index .. [[ ]] .. value
             str_commands = str_commands .. "|" .. to_concat
         end
     end
 
     return str_commands
+end
+function myerrorhandler( err )
+    return
 end
 
 function M.load_dict(diction)
@@ -78,8 +81,8 @@ function M.load_dict(diction)
     else
         lambda.augroup("AutoCorrect" .. scope, {
             {
-                event = "BufWinEnter",
-                pattern = { "*" .. scope },
+                event = "BufEnter",
+                pattern = { "*" .. scope .." silent!" },
                 command = function()
                     M.parse_iabbrev_pr(items, "buffer")
                 end,
@@ -88,7 +91,9 @@ function M.load_dict(diction)
 
         local buffer_filetype = api.nvim_eval([[expand('%:e')]])
         if buffer_filetype == scope then
-            cmd([[]] .. M.parse_iabbrev_pr(items, "buffer") .. [[]])
+            local parser =  M.parse_iabbrev_pr(items, "buffer") 
+            cmd([[]] .. parser .. [[]])
+
         end
     end
 

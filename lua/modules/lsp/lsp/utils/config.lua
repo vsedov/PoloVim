@@ -117,6 +117,7 @@ local get_extra_binds = function()
             ["<C-b>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", "lsp scroll down" },
 
             ["gr"] = { "<cmd>Lspsaga rename<CR>", "rename" },
+            ["gI"] = { "<cmd>Lspsaga implement<CR>", "implementation" },
 
             ["[E"] = {
                 function()
@@ -142,6 +143,41 @@ local get_extra_binds = function()
     return binds
 end
 local container = {
+    buffer_mappings = {
+        normal_mode = {
+            ["<Leader>cw"] = { "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", "Symbols" },
+            ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "declaration" },
+            ["<leader>ai"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
+            ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
+            ["D"] = {
+                function()
+                    if lambda.config.use_saga_diagnostic_jump then
+                        vim.cmd([[Lspsaga show_line_diagnostics]])
+                    else
+                        vim.diagnostic.open_float(0, { scope = "line", focus = false })
+                    end
+                end,
+                "Diagnostic Line",
+            },
+
+            ["<leader>;"] = {
+                function()
+                    require("modules.lsp.lsp.utils.list").change_active("Quickfix")
+                    vim.lsp.buf.references()
+                end,
+                "utils list quickfix change",
+            },
+
+            ["K"] = { require("hover").hover, "hover" },
+
+            ["gK"] = { require("hover").hover_select, "Hover select" },
+        },
+        visual_mode = {
+            ["ca"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
+        },
+        insert_mode = {},
+        extra_binds = get_extra_binds(),
+    },
     signs = {
         { name = "DiagnosticSignError", text = "" },
         { name = "DiagnosticSignWarn", text = "" },
@@ -223,44 +259,6 @@ local container = {
             orig(bufnr, opts)
         end
     end)(vim.diagnostic.open_float),
-
-    buffer_mappings = {
-        normal_mode = {
-            ["<Leader>cw"] = { "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", "Symbols" },
-            ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "declaration" },
-            ["gI"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "implementation" },
-
-            ["<leader>ai"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
-            ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
-            ["D"] = {
-                function()
-                    if lambda.config.use_saga_diagnostic_jump then
-                        vim.cmd([[Lspsaga show_line_diagnostics]])
-                    else
-                        vim.diagnostic.open_float(0, { scope = "line", focus = false })
-                    end
-                end,
-                "Diagnostic Line",
-            },
-
-            ["<leader>;"] = {
-                function()
-                    require("modules.lsp.lsp.utils.list").change_active("Quickfix")
-                    vim.lsp.buf.references()
-                end,
-                "utils list quickfix change",
-            },
-
-            ["K"] = { require("hover").hover, "hover" },
-
-            ["gK"] = { require("hover").hover_select, "Hover select" },
-        },
-        visual_mode = {
-            ["ca"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
-        },
-        insert_mode = {},
-        extra_binds = get_extra_binds(),
-    },
     on_attach_callback = {
         ["global"] = function(client, bufnr)
             local navic_callback = {

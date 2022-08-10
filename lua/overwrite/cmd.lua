@@ -304,7 +304,7 @@ end
 add_cmd("AutoResize", auto_resize(), { nargs = "?" })
 
 add_cmd("LspSagaToggle", function()
-    lambda.config.use_saga = not lambda.config.use_saga
+    lambda.config.use_saga_diagnostic_jump = not lambda.config.use_saga_diagnostic_jump
 end, { force = true })
 
 add_cmd("NeorgAutoCommitToggle", function()
