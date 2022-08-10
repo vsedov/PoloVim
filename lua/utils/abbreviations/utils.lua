@@ -72,7 +72,6 @@ end
 -- require("utils.abbreviations.utils").unload_dict(require("utils.abbreviations.dictionary").python)
 function M.load_dict(diction)
     local scope, items = diction.scope, diction.dict
-    print(scope)
     if scope == "global" then
         for element in pairs(items) do
             M.inoreabbrev(element, items[element])
@@ -103,10 +102,8 @@ function M.unload_dict(diction)
                 M.unmap_iabbrev(items[element])
             end
         else
-            print("im here")
             vim.api.nvim_clear_autocmds({ group = "AutoCorrect" .. scope })
             for element in pairs(items) do
-                print(element)
                 M.unmap_iabbrev(items[element], "buffer")
             end
         end
