@@ -15,4 +15,3 @@ user({ "rtakasuke/vim-neko", cmd = "Neko", opt = true })
 --     lazy "cpeditor.nvim"
 -- end,
 -- }
-
