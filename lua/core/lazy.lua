@@ -159,7 +159,9 @@ vim.defer_fn(function()
     require("vscripts.tools")
 
     -- tbh, this can stay here, nothing changes with this
-    require("utils.abbreviations").setup()
+    if lambda.config.abbrev.enable then
+        require("utils.abbreviations").setup()
+    end
 
     vim.cmd("command! Spell call spelunker#check()")
 

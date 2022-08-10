@@ -57,49 +57,44 @@ M.parse_iabbrev_pr = function(tabl, objective)
     if objective == "global" then
         for index, value in pairs(tabl) do
             local to_concat = "iabbrev " .. index .. [[ ]] .. value
-            str_commands = str_commands .. "|" .. to_concat
+            cmd(to_concat)
         end
     elseif objective == "buffer" then
         for index, value in pairs(tabl) do
             local to_concat = "iabbrev <buffer> " .. index .. [[ ]] .. value
-            str_commands = str_commands .. "|" .. to_concat
+            cmd(to_concat)
         end
     end
 
     return str_commands
 end
-function myerrorhandler( err )
-    return
-end
 
+-- require("utils.abbreviations.utils").unload_dict(require("utils.abbreviations.dictionary").python)
 function M.load_dict(diction)
     local scope, items = diction.scope, diction.dict
+    print(scope)
     if scope == "global" then
         for element in pairs(items) do
             M.inoreabbrev(element, items[element])
         end
+
+        table.insert(M.loaded_dicts, diction)
+        return
     else
         lambda.augroup("AutoCorrect" .. scope, {
             {
-                event = "BufEnter",
-                pattern = { "*" .. scope .." silent!" },
+                event = { "BufNewFile", "BufRead", "BufWinEnter" }, -- this seems to be more reliable.
+                pattern = { "*." .. scope },
                 command = function()
                     M.parse_iabbrev_pr(items, "buffer")
                 end,
+                once = true,
             },
         })
-
-        local buffer_filetype = api.nvim_eval([[expand('%:e')]])
-        if buffer_filetype == scope then
-            local parser =  M.parse_iabbrev_pr(items, "buffer") 
-            cmd([[]] .. parser .. [[]])
-
-        end
+        table.insert(M.loaded_dicts, diction)
+        return
     end
-
-    table.insert(M.loaded_dicts, diction)
 end
-
 function M.unload_dict(diction)
     scope, items = diction.scope, diction.dict
     if has_element(M.loaded_dicts, diction, "value") then
@@ -107,14 +102,14 @@ function M.unload_dict(diction)
             for element in pairs(items) do
                 M.unmap_iabbrev(items[element])
             end
+        else
+            print("im here")
+            vim.api.nvim_clear_autocmds({ group = "AutoCorrect" .. scope })
+            for element in pairs(items) do
+                print(element)
+                M.unmap_iabbrev(items[element], "buffer")
+            end
         end
-    elseif not string.find(scope, "global") and type(scope) == "string" then
-        vim.api.nvim_clear_autocmds({ group = "AutoCorrect" .. scope })
-        for element in pairs(items) do
-            M.unmap_iabbrev(items[element], "buffer")
-        end
-    else
-        cmd("echo 'The dictionary you are trying to unload has not been loaded yet or does not exist")
     end
     remove_element_tbl(M.loaded_dicts, diction)
 end

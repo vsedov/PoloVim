@@ -303,7 +303,7 @@ local function general_overrides()
         --     },
         -- },
         { CursorLineNr = { bold = true } },
-        { FoldColumn = { background = "background" } },
+        -- { FoldColumn = { background = "background" } },
         -- Add undercurl to existing spellbad highlight
         -- -- { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
         -- -- { SpellRare = { undercurl = true } },
@@ -331,8 +331,7 @@ local function general_overrides()
         -- {markdownCode = { background = code_block }},
         -- {markdownCodeBlock = { background = code_block }},
         -- -----------------------------------------------------------------------------//
-        { CursorLineNr = { bold = true } },
-        { FoldColumn = { background = "background" } },
+        { FoldColumn = { background = "bg" } },
         { Folded = { inherit = "Comment", italic = true, bold = true, fg = P.springViolet1, bg = P.sumiInk2 } },
 
         -----------------------------------------------------------------------------//

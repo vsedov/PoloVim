@@ -29,10 +29,9 @@ M.setup = function(opts)
             utils.load_dict(abbrevs[value])
         end
     end
+
     M.load_cmd()
 end
 return M
 
 -- Load specific abreviations
-
--- require("utils.abbreviations.utils").load_dict(require("utils.abbreviations.abbrev").python_support)

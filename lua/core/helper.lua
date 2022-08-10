@@ -24,6 +24,7 @@ lambda.config = {
     loaded_confirm_quit = true,
     cmp_theme = "border", -- no-border , border
     abbrev = {
+        enable = true,
         coding_support = true, -- system wide
         spelling_support = true, -- tex md and neorg files wide
         globals = { -- dictionaries that ive defined to be global, you may not want this idk .
