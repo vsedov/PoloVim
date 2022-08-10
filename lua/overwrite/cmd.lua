@@ -310,3 +310,7 @@ end, { force = true })
 add_cmd("NeorgAutoCommitToggle", function()
     lambda.config.neorg_auto_commit = not lambda.config.neorg_auto_commit
 end, { force = true })
+
+add_cmd("StartCoffee", function()
+    require("utils.coffee")
+end, { force = true })
