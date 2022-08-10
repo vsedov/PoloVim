@@ -404,4 +404,3 @@ lambda.augroup("ClearCommandMessages", {
         command = clear_commandline(),
     },
 })
-
