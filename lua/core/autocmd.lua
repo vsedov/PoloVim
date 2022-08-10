@@ -435,6 +435,10 @@ if lambda.config.neorg_auto_commit then
     })
 end
 
+if lambda.config.loaded_confirm_quit then
+    require("utils.exit")
+end
+
 vim.api.nvim_create_user_command("SwitchBar", function()
     if lambda.config.tabby_or_bufferline then
         package.loaded["bufferline"] = nil

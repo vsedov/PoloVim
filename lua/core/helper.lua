@@ -5,6 +5,7 @@ _G = _G or {}
 _G.lambda = {}
 
 lambda.config = {
+    loaded_confirm_quit = true,
     cmp_theme = "border", -- no-border , border
     abbrev = {
         coding_support = true, -- system wide
