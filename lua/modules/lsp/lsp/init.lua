@@ -1,6 +1,6 @@
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
-if vim.bo.filetype ~= "zig" then
+if vim.bo.filetype ~= "zig" and lambda.config.lsp.use_semantic_token then
     require("modules.lsp.lsp.semantic_tokens")
 end
 local python_setup = {

@@ -45,12 +45,18 @@ lambda.config = {
     use_guess_indent = true,
     use_gitsigns = true,
     lsp = {
+        -- this seems to cause lag, though im not sure about that. Will have to see if that is the
+        -- case or not
+        use_semantic_token = false,
         latex = "texlab", -- texlab | ltex
         python = {
-            use_semantic_token = true,
-            use_inlay_hints = false,
             lint = "flake8", -- pylint, pyflake, and other linters
-            lsp = "jedi", -- jedi pylsp and pyright pylance
+            -- lsp = "jedi", -- jedi pylsp and pyright pylance
+            lsp = "pylance",
+            pylance = {
+                -- i really cannot tell which one is faster atm
+                use_inlay_hints = true,
+            },
             format = "yapf", -- black
         },
     },

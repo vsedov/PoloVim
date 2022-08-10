@@ -204,10 +204,10 @@ M.attach_config = function(client, bufnr)
         { range = true, desc = "Extract methdod" }
     )
 
-    if lambda.config.lsp.python.use_inlay_hints then
+    if lambda.config.lsp.python.pylance.use_inlay_hints then
         utils.autocmds.InlayHintsAU()
     end
-    if lambda.config.lsp.python.use_semantic_token then
+    if lambda.config.lsp.use_semantic_token then
         utils.autocmds.SemanticTokensAU()
     end
 end

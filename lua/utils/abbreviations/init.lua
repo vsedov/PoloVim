@@ -25,13 +25,13 @@ M.setup = function(opts)
         end
     end
 
-    -- for _, value in ipairs(lambda.config.abbrev.languages) do
-    --     if abbrevs[value] ~= nil then
-    --         utils.load_dict(abbrevs[value])
-    --     end
-    -- end
-    --
-    -- M.load_cmd()
+    for _, value in ipairs(lambda.config.abbrev.languages) do
+        if abbrevs[value] ~= nil then
+            utils.load_dict(abbrevs[value])
+        end
+    end
+
+    M.load_cmd()
 end
 return M
 
