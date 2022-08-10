@@ -416,10 +416,11 @@ function config.neo_tree()
         },
         nesting_rules = {},
         filesystem = {
+            -- i think this conflicts with me usng atbs as a whole , though im not 100 % sure
             hijack_netrw_behavior = "open_current",
-            use_libuv_file_watcher = true,
+            use_libuv_file_watcher = false,
             group_empty_dirs = true,
-            follow_current_file = false,
+            follow_current_file = true,
             filtered_items = {
                 visible = true,
                 hide_dotfiles = false,

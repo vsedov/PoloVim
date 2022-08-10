@@ -10,7 +10,7 @@ local t = function(str)
 end
 local run_or_test = function(debug)
     local ft = vim.bo.filetype
-    vim.cmd([[NeoRoot]])
+    t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
     if ft == "lua" then
         return ":Jaq internal<CR>"
     else
