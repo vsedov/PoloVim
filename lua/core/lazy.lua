@@ -22,20 +22,27 @@ local function daylight()
         return "dark"
     end
 end
+local function GetItem(colourschemes)
+    local Counter = 0
+    for i, v in pairs(colourschemes) do
+        Counter = Counter + colourschemes[i][2]
+    end
+    local Chosen = math.random(0, Counter)
+    for i, v in pairs(colourschemes) do
+        Counter = Counter - colourschemes[i][2]
+        if Chosen > Counter then
+            return colourschemes[i][1]
+        end
+    end
+end
 local function loadscheme()
-    local themes = {
-        "kanagawa.nvim",
-        "horizon.nvim",
-        "rose",
-        -- "vim-dogrun",
-        "catppuccin",
-        "kanagawa.nvim",
-        "rose",
-        "doom-one.nvim",
+    local colourschemes = {
+        { "kanagawa.nvim", 0.3 },
+        { "rose", 0.4 },
+        { "catppuccin", 0.3 },
     }
 
-    local v = math.random(1, #themes)
-    local loading_theme = themes[v]
+    local loading_theme = GetItem(colourschemes)
     lprint(loading_theme)
     require("packer").loader(loading_theme)
 end
