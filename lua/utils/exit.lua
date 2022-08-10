@@ -1,9 +1,3 @@
-if lambda.config.loaded_confirm_quit ~= true then
-    return
-end
-local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
 -- https://github.com/NTBBloodbath/nvim.fnl/blob/5226c19e70d466b2a61da9552ac60ab761f42022/fnl/utils/quit.fnl
 local message = {
 

@@ -18,7 +18,7 @@ lambda.config = {
             "python", -- current support is python.
         },
     },
-    tabby_or_bufferline = false, -- false: tabby, true for bufferline
+    tabby_or_bufferline = true, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_tabnine = true, -- load tabnine
     use_dashboard = false, -- set to false to not see this
