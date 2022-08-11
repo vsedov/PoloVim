@@ -5,7 +5,9 @@ _G = _G or {}
 _G.lambda = {}
 
 lambda.config = {
+
     colourscheme = {
+        change_kitty_bg = false,
         --- @usage "main"' | '"moon"
         rose = "main",
         --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
@@ -134,6 +136,8 @@ lambda.source = function(path, prefix)
         vim.cmd(fmt("source %s/%s", vim.g.vim_dir, path))
     end
 end
+
+lambda.lib = require("utils.extended_lib.helpers")
 
 -- https://www.reddit.com/r/neovim/comments/sg919r/diff_with_clipboard/
 lambda.compare_to_clipboard = function()

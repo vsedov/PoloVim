@@ -1,6 +1,5 @@
-local neorg = require("neorg")
-local match = neorg.lib.match
-local when = neorg.lib.when
+local match = lambda.lib.match
+local when = lambda.lib.when
 
 local function cmd_parser(command_list)
     for _, command in ipairs(command_list) do
