@@ -200,6 +200,103 @@ editor({
     config = conf.substitute,
 })
 
+-- start = "gm", -- Mark word / region
+-- start_and_edit = "gM", -- Mark word / region and also edit
+-- start_and_edit_word = "g!M", -- Mark word / region and also edit.  Edit only full word.
+-- start_word = "g!m", -- Mark word / region. Edit only full word
+-- apply_substitute_and_next = "\\m", -- Start substitution / Go to next substitution
+-- apply_substitute_and_prev = "\p", -- same as M but backwards
+-- apply_substitute_all = "\l", -- Substitute all
+editor({
+    "otavioschwanck/cool-substitute.nvim",
+    keys = {
+        "gm",
+        "gM",
+        "g!M",
+        "g!m",
+        "\\m",
+        "\\p",
+        "\\l",
+    },
+    config = conf.cool_sub,
+})
+
+editor({
+    "mg979/vim-visual-multi",
+    keys = {
+        "<Ctrl>",
+        "<M>",
+        "<C-n>",
+        "<C-n>",
+        "<M-n>",
+        "<S-Down>",
+        "<S-Up>",
+        "<M-Left>",
+        "<M-i>",
+        "<M-Right>",
+        "<M-D>",
+        "<M-Down>",
+        "<C-d>",
+        "<C-Down>",
+        "<S-Right>",
+        "<C-LeftMouse>",
+        "<M-LeftMouse>",
+        "<M-C-RightMouse>",
+    },
+    opt = true,
+    setup = conf.vmulti,
+})
+
+editor({
+    "johmsalas/text-case.nvim",
+    keys = {
+        "ga",
+        "gau",
+        "gal",
+        "gas",
+        "gad",
+        "gan",
+        "gad",
+        "gaa",
+        "gac",
+        "gap",
+        "gat",
+        "gaf",
+        "gaU",
+        "gaL",
+        "gaS",
+        "gaD",
+        "gaN",
+        "gaD",
+        "gaA",
+        "gaC",
+        "gaP",
+        "gaT",
+        "gaF",
+        "geu",
+        "gel",
+        "ges",
+        "ged",
+        "gen",
+        "ged",
+        "gea",
+        "gec",
+        "gep",
+        "get",
+        "gef",
+        "ga.",
+        "gaw",
+        "gaW",
+    },
+    config = conf.text_case,
+})
+
+editor({
+    "nicwest/vim-camelsnek",
+    opt = true,
+    cmd = { "Snek", "Camel", "CamelB", "Kebab" },
+})
+
 -- editor({
 --     "knubie/vim-kitty-navigator",
 --     opt = true,

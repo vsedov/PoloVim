@@ -329,6 +329,72 @@ function config.substitute()
     vim.keymap.set("n", "Lxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
 end
 
+function config.cool_sub()
+    require("cool-substitute").setup({
+        setup_keybindings = true,
+        mappings = {
+            start = "gm", -- Mark word / region
+            start_and_edit = "gM", -- Mark word / region and also edit
+            start_and_edit_word = "g!M", -- Mark word / region and also edit.  Edit only full word.
+            start_word = "g!m", -- Mark word / region. Edit only full word
+            apply_substitute_and_next = "\\m", -- Start substitution / Go to next substitution
+            apply_substitute_and_prev = "\\p", -- same as M but backwards
+            apply_substitute_all = "\\l", -- Substitute all
+        },
+        -- reg_char = "o", -- letter to save macro (Dont use number or uppercase here)
+        -- mark_char = "t", -- mark the position at start of macro
+    })
+end
+
+function config.vmulti()
+    vim.g.VM_mouse_mappings = 1
+    -- mission control takes <C-up/down> so remap <M-up/down> to <C-Up/Down>
+    -- vim.api.nvim_set_keymap("n", "<M-n>", "<C-n>", {silent = true})
+    -- vim.api.nvim_set_keymap("n", "<M-Down>", "<C-Down>", {silent = true})
+    -- vim.api.nvim_set_keymap("n", "<M-Up>", "<C-Up>", {silent = true})
+    -- for mac C-L/R was mapped to mission control
+    -- print('vmulti')
+    vim.g.VM_silent_exit = 1
+    vim.g.VM_show_warnings = 0
+    vim.g.VM_default_mappings = 1
+    vim.cmd([[
+      let g:VM_maps = {}
+      let g:VM_maps['Find Under'] = '<C-n>'
+      let g:VM_maps['Find Subword Under'] = '<C-n>'
+      let g:VM_maps['Select All'] = '<C-n>a'
+      let g:VM_maps['Seek Next'] = 'n'
+      let g:VM_maps['Seek Prev'] = 'N'
+      let g:VM_maps["Undo"] = 'u'
+      let g:VM_maps["Redo"] = '<C-r>'
+      let g:VM_maps["Remove Region"] = '<cr>'
+      let g:VM_maps["Add Cursor Down"] = '<M-Down>'
+      let g:VM_maps["Add Cursor Up"] = "<M-Up>"
+      let g:VM_maps["Mouse Cursor"] = "<M-LeftMouse>"
+      let g:VM_maps["Mouse Word"] = "<M-RightMouse>"
+      let g:VM_maps["Add Cursor At Pos"] = '<M-i>'
+  ]])
+end
+function config.text_case()
+    vim.cmd([[packadd which-key.nvim]])
+    vim.cmd([[packadd telescope.nvim]])
+    require("textcase").setup({})
+    require("telescope").load_extension("textcase")
+    vim.keymap.set(
+        "n",
+        "gaw",
+        "<cmd>lua require('textcase').current_word('to_snake_case')<cr>",
+        { desc = "to snake case", noremap = true }
+    )
+    vim.keymap.set(
+        "n",
+        "gaW",
+        "<cmd>lua require('textcase').lsp_rename('to_snake_case')<cr>",
+        { desc = "lsp rename to snake_case", noremap = true }
+    )
+    vim.api.nvim_set_keymap("n", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+    vim.api.nvim_set_keymap("v", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+end
+
 function config.bbye()
     vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
 end

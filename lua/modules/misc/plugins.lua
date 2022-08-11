@@ -72,31 +72,6 @@ misc({
     config = conf.gomove,
 })
 
-misc({
-    "mg979/vim-visual-multi",
-    keys = {
-        "<Ctrl>",
-        "<M>",
-        "<C-n>",
-        "<C-n>",
-        "<M-n>",
-        "<S-Down>",
-        "<S-Up>",
-        "<M-Left>",
-        "<M-i>",
-        "<M-Right>",
-        "<M-D>",
-        "<M-Down>",
-        "<C-d>",
-        "<C-Down>",
-        "<S-Right>",
-        "<C-LeftMouse>",
-        "<M-LeftMouse>",
-        "<M-C-RightMouse>",
-    },
-    opt = true,
-    setup = conf.vmulti,
-})
 misc({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
 
 misc({ "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, config = conf.iswap })
@@ -108,48 +83,6 @@ misc({
     setup = conf.houdini_setup,
 })
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
-
-misc({
-    "johmsalas/text-case.nvim",
-    keys = {
-        "ga",
-        "gau",
-        "gal",
-        "gas",
-        "gad",
-        "gan",
-        "gad",
-        "gaa",
-        "gac",
-        "gap",
-        "gat",
-        "gaf",
-        "gaU",
-        "gaL",
-        "gaS",
-        "gaD",
-        "gaN",
-        "gaD",
-        "gaA",
-        "gaC",
-        "gaP",
-        "gaT",
-        "gaF",
-        "geu",
-        "gel",
-        "ges",
-        "ged",
-        "gen",
-        "ged",
-        "gea",
-        "gec",
-        "gep",
-        "get",
-        "gef",
-        "ga.",
-    },
-    config = conf.text_case,
-})
 
 misc({
     "chentoast/marks.nvim",

@@ -11,7 +11,6 @@ colourscheme({
     opt = true,
     as = "catppuccin",
     cmd = "CatppuccinCompile",
-    run = "CatppuccinCompile",
     config = conf.catppuccin,
 })
 
