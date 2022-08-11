@@ -158,11 +158,6 @@ vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 vim.defer_fn(function()
     require("vscripts.tools")
 
-    -- tbh, this can stay here, nothing changes with this
-    if lambda.config.abbrev.enable then
-        require("utils.abbreviations").setup()
-    end
-
     vim.cmd("command! Spell call spelunker#check()")
 
     vim.api.nvim_create_user_command("Gram", function()

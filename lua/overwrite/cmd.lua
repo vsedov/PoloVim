@@ -311,8 +311,12 @@ add_cmd("NeorgAutoCommitToggle", function()
     lambda.config.neorg_auto_commit = not lambda.config.neorg_auto_commit
 end, { force = true })
 
+add_cmd("ToggleSaveOnExit", function()
+    lambda.config.save_clipboard_on_exit = not lambda.config.save_clipboard_on_exit
+end, { force = true })
+
 add_cmd("StartCoffee", function()
-    require("utils.coffee")
+    require("utils.plugins.coffee")
 end, { force = true })
 
 -- vim.diagnostic.setqflist()

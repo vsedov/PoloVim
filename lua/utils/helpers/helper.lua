@@ -239,6 +239,12 @@ function M.newbinsource(cmd)
         return output
     end
 end
+
+-- add the escape character to special characters
+function M.escape_pattern(text)
+    return text:gsub("([^%w])", "%%%1")
+end
+
 ---Reloads a module
 ---@param module string Name of the module
 function RELOAD(module)

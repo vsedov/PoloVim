@@ -1,4 +1,5 @@
 -- https://github.com/NTBBloodbath/nvim.fnl/blob/5226c19e70d466b2a61da9552ac60ab761f42022/fnl/utils/quit.fnl
+-- https://github.com/yutkat/confirm-quit.nvim
 local message = {
 
     "Please don't leave, there's more demons to toast!",

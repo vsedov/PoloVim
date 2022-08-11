@@ -249,15 +249,15 @@ local LSPActive = {
     },
 }
 
--- local LSPMessages = {
---     provider = function()
---         local status = require("lsp-status").status()
---         if status ~= " " then
---             return status
---         end
---     end,
---     hl = { fg = "gray" },
--- }
+local cool_substitute = {
+    condition = function()
+        return package.loaded["cool-substitute"]
+    end,
+    provider = function()
+        return require("cool-substitute.status").status_with_icons()
+    end,
+    hl = { fg = require("cool-substitute.status").status_color() },
+}
 
 -- local Gps2 = {
 --     condition = require("nvim-navic").is_available,
@@ -558,7 +558,7 @@ local DefaultStatusline = {
     Space,
     Diagnostics,
     Align,
-    -- utils.make_flexible_component(3, Pomo, { provider = "" }),
+    utils.make_flexible_component(3, cool_substitute, { provider = "" }),
     -- space,
     DAPMessages,
     Align,

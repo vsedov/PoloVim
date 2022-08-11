@@ -4,8 +4,15 @@ local fmt = string.format
 _G = _G or {}
 _G.lambda = {}
 
+--
 lambda.config = {
-
+    border = {
+        type_0 = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+        type_1 = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+        type_2 = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
+        type_3 = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
+        type_4 = { "▛", "▀", "▜", "▐", "▟", "▄", "▙", "▌" },
+    },
     colourscheme = {
         change_kitty_bg = false,
         --- @usage "main"' | '"moon"
@@ -24,6 +31,7 @@ lambda.config = {
         },
     },
     loaded_confirm_quit = true,
+    save_clipboard_on_exit = true,
     cmp_theme = "border", -- no-border , border
     abbrev = {
         enable = true,
@@ -212,17 +220,23 @@ lambda.Format = function(json)
         vim.cmd([[Jsonformat]]) -- :%!jq .
     end
 end
+
+lambda.unload = function(lib)
+    package.loaded[lib] = nil
+end
+
 lambda.dynamic_unload = function(module_name, reload)
     reload = reload or false
 
-    for name, _ in pairs(package.loaded) do
-        if name:match("^" .. module_name) then
-            package.loaded[name] = nil
+    for module, _ in pairs(package.loaded) do
+        if module:match(module_name) then
+            if string.find(module, require("utils.helpers.helper").escape_pattern) then
+                lambda.unload(module)
+            end
+            if reload then
+                require(module)
+            end
         end
-    end
-
-    if reload then
-        require(module_name)
     end
 end
 
