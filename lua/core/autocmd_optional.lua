@@ -64,17 +64,6 @@ if lambda.config.colourscheme.change_kitty_bg then
     local autocmd = vim.api.nvim_create_autocmd
     local autogroup = vim.api.nvim_create_augroup
     local bg_change = autogroup("BackgroundChange", { clear = true })
-
-    autocmd("ColorScheme", {
-        pattern = "*",
-        co = function()
-            get_kitty_background()
-            local color = get_color("Normal", "bg")
-            change_background(color)
-        end,
-        group = bg_change,
-    })
-
     lambda.augroup("Background", {
         {
             event = "VimLeavePre",

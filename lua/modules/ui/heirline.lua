@@ -6,7 +6,7 @@ local function setup_colors()
 
         bright_bg = utils.get_highlight("Folded").bg,
         blue = utils.get_highlight("Function").fg,
-        dark_red = utils.get_highlight("DiffDelete").bg,
+        dark_red = utils.get_highlight("DiffDelete").bg or utils.get_highlight("Folded").bg,
         cyan = utils.get_highlight("Special").fg,
     }
     if vim.g.colors_name == "kanagawa" then

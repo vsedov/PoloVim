@@ -5,6 +5,20 @@ local function cmd(command)
     return table.concat({ "<Cmd>", command, "<CR>" })
 end
 
+local function pick_window()
+    local function filter(ids)
+        return ids
+    end
+
+    local wid = require("window-picker").pick_window({
+        include_current_win = true,
+        filter_func = filter,
+    })
+    if type(wid) == "number" then
+        vim.api.nvim_set_current_win(wid)
+    end
+end
+
 local window_hint = [[
  ^^^^^^^^^^^^             Move         ^^    Size  ^^  ^^     Split
  ^^^^^^^^^^^^------------------------- ^^--------------^^  ^^---------------
@@ -13,7 +27,7 @@ local window_hint = [[
  ^ ^ _j_ ^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^   ^_q_, _c_: close
  ^^ focus ^  ^^winshift^  ^^Split^^^^^^^^^^  ^_=_: equalize^     _z_: maximize
  ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only
- _b_: choose buffer
+ _b_: choose buffer  _?_ : Pick window
 ]]
 
 Hydra({
@@ -44,7 +58,7 @@ Hydra({
         { "J", "<C-w>J", { exit = true, desc = "<c-w>J" } },
         { "K", "<C-w>K", { exit = true, desc = "<c-w>K" } },
         { "L", "<C-w>L", { exit = true, desc = "<c-w>L" } },
-
+        { "?", pick_window, { exit = true } },
         {
             "<Left>",
             function()

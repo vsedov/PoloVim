@@ -307,9 +307,6 @@ function config.neo_tree()
                 { NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg } },
                 { NeoTreeTabSeparatorActive = { inherit = "PanelBackground", fg = { from = "Comment" } } },
             },
-            horizon = {
-                { NeoTreeDirectoryIcon = { fg = "#C09553" } },
-            },
         },
     })
 

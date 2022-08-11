@@ -314,3 +314,5 @@ end, { force = true })
 add_cmd("StartCoffee", function()
     require("utils.coffee")
 end, { force = true })
+
+-- vim.diagnostic.setqflist()

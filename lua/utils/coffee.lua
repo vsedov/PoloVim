@@ -7,7 +7,7 @@ end
 
 local function drink_coffee()
     local timer = vim.loop.new_timer()
-    timer:start(0, min(30), function()
+    timer:start(min(30), 0, function()
         notify({ "Drink Coffee", "☕" }, "info", {
             title = "Drink Coffee",
             timeout = min(1),

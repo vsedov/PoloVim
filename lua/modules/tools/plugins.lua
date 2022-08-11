@@ -156,7 +156,6 @@ tools({
         ";v",
         ";c",
     },
-
     config = conf.spectre,
 })
 
@@ -191,7 +190,7 @@ tools({
 -- :Lzi {query}: same as :Zi, but local to the current window
 -- :Tzi {query}: same as :Zi, but local to the current tab
 
-tools({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz" } })
+tools({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz", "Tzi", "Lzi" } })
 
 tools({ "tami5/sqlite.lua", branch = "new/index_access", module = "sqlite" })
 -- manual call
@@ -221,4 +220,15 @@ tools({
     "ttibsi/pre-commit.nvim",
     cmd = "Precommit",
     opt = true,
+})
+
+tools({
+    "lambdalisue/suda.vim",
+    cmd = {
+        "SudaRead",
+        "SudaWrite",
+    },
+    setup = function()
+        vim.g.suda_smart_edit = 1
+    end,
 })

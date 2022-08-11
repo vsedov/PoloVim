@@ -264,9 +264,18 @@ M.config = {
         )
         config.settings.python.analysis.stubPath = stub_path
     end,
-    on_init = function(client)
-        client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+    -- on_init = function(client)
+    --     client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+    -- end,
+    on_init = function(config, root_dir)
+        config.settings.python.pythonPath = get_python_path(client.config.root_dir)
     end,
+    -- on_new_config = function(config, root_dir)
+    --     local env = vim.trim(vim.fn.system('cd "' .. root_dir .. '"; poetry env info -p 2>/dev/null'))
+    --     if string.len(env) > 0 then
+    --         config.settings.python.pythonPath = env .. "/bin/python"
+    --     end
+    -- end,
 }
 
 return M

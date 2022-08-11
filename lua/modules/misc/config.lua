@@ -233,8 +233,10 @@ function config.diaglist()
     vim.api.nvim_create_user_command("Qfa", function()
         require("diaglist").open_all_diagnostics()
     end, { force = true })
+
     vim.api.nvim_create_user_command("Qfb", function()
-        vim.cmd([[lua require("diaglist").open_buffer_diagnostics()]])
+        vim.diagnostic.setqflist()
+        require("diaglist").open_buffer_diagnostics()
     end, { force = true })
 
     vim.keymap.set(
@@ -243,12 +245,11 @@ function config.diaglist()
         "<cmd>lua require('diaglist').open_all_diagnostics()<cr>",
         { noremap = true, silent = true }
     )
-    vim.keymap.set(
-        "n",
-        ";qq",
-        "<cmd>lua require('diaglist').open_buffer_diagnostics()<cr>",
-        { noremap = true, silent = true }
-    )
+    vim.keymap.set("n", ";qq", function()
+        vim.diagnostic.setqflist()
+
+        require("diaglist").open_buffer_diagnostics()
+    end, { noremap = true, silent = true })
 end
 
 function config.surround()
