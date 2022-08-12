@@ -1,4 +1,14 @@
 local config = {}
+
+function config.overlen_setup()
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*",
+        callback = function()
+            require("packer").loader("overlength.nvim")
+        end,
+        once = true,
+    })
+end
 function config.overlen()
     require("overlength").setup({
         -- Overlength highlighting enabled by default
@@ -24,6 +34,6 @@ function config.overlen()
         -- List of filetypes to disable overlength highlighting
         disable_ft = { "qf", "help", "man", "packer", "NvimTree", "Telescope", "WhichKey" },
     })
-    require("overlength").set_overlength("python", 150)
+    require("overlength").set_overlength("python", 130)
 end
 return config

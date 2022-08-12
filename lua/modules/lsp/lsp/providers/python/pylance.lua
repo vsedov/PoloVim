@@ -1,3 +1,5 @@
+-- Quick note about this language server, it does not provide proper documentation
+-- and i also think, though yest it is very fast, it does have issues.
 local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig.util")
 local utils = require("modules.lsp.lsp.providers.python.utils")
@@ -54,7 +56,6 @@ local function extract_method()
         },
     }
     vim.lsp.buf.execute_command(params)
-    -- vim.lsp.buf.rename()
 end
 
 local function on_workspace_executecommand(err, actions, ctx)
@@ -218,7 +219,7 @@ M.config = {
                 completeFunctionParens = true,
                 indexing = true,
                 typeCheckingMode = "basic",
-                diagnosticMode = "workspace",
+                diagnosticMode = "openFilesOnly",
                 inlayHints = {
                     variableTypes = true,
                     functionReturnTypes = true,
@@ -244,11 +245,11 @@ M.config = {
                     reportUnusedFunction = "information",
                     reportUnusedVariable = "information",
                     reportUnusedClass = "information",
-                    strictParameterNoneValue = false,
-                    reportOptionalSubscript = "warning",
-                    reportOptionalMemberAccess = "warning",
-                    reportOptionalIterable = "warning",
-                    reportOptionalCall = "none",
+                    -- strictParameterNoneValue = false,
+                    -- reportOptionalSubscript = "warning",
+                    -- reportOptionalMemberAccess = "warning",
+                    -- reportOptionalIterable = "warning",
+                    -- reportOptionalCall = "none",
                 },
             },
         },
@@ -267,15 +268,15 @@ M.config = {
     -- on_init = function(client)
     --     client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
     -- end,
-    on_init = function(config, root_dir)
-        config.settings.python.pythonPath = get_python_path(client.config.root_dir)
-    end,
-    -- on_new_config = function(config, root_dir)
-    --     local env = vim.trim(vim.fn.system('cd "' .. root_dir .. '"; poetry env info -p 2>/dev/null'))
-    --     if string.len(env) > 0 then
-    --         config.settings.python.pythonPath = env .. "/bin/python"
-    --     end
+    -- on_init = function(config, root_dir)
+    --     config.settings.python.pythonPath = get_python_path(client.config.root_dir)
     -- end,
+    on_new_config = function(config, root_dir)
+        local env = vim.trim(vim.fn.system('cd "' .. root_dir .. '"; poetry env info -p 2>/dev/null'))
+        if string.len(env) > 0 then
+            config.settings.python.pythonPath = env .. "/bin/python"
+        end
+    end,
 }
 
 return M

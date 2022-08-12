@@ -144,3 +144,8 @@ ui({
     setup = conf.dashboard_setup,
     config = conf.dashboard_config,
 })
+
+ui({
+    "xiyaowong/virtcolumn.nvim",
+    event = "BufEnter",
+})

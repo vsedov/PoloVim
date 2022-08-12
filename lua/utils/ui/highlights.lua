@@ -76,6 +76,12 @@ local L = {
 local levels = vim.log.levels
 
 local M = {}
+M.L = {
+    error = P.samuraiRed,
+    warn = P.roninYellow,
+    hint = P.dragonBlue,
+    info = P.waveAqua1,
+}
 
 ---@class HighlightAttributes
 ---@field from string

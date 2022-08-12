@@ -51,13 +51,6 @@ local function get_node_at_cursor()
 end
 
 local utils = {}
-
--- -- args is a table, where 1 is the text in Placeholder 1, 2 the text in
--- -- placeholder 2,...
-utils.copy = function(args)
-    return args[1]
-end
-
 -- Returns a snippet_node wrapped around an insert_node whose initial
 -- text value is set to the current date in the desired format.
 utils.date_input = function(args, state, fmt)

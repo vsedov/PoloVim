@@ -34,6 +34,8 @@ local function GetItem(colourschemes)
             return colourschemes[i][1]
         end
     end
+    -- return rose as a default colourscheme
+    return "rose"
 end
 local function loadscheme()
     -- local theme
@@ -45,6 +47,7 @@ local function loadscheme()
     local loading_theme = GetItem(lambda.config.colourscheme.themes.dark)
     lprint(loading_theme)
     require("packer").loader(loading_theme)
+    -- require("packer").loader("kanagawa.nvim")
 end
 loadscheme()
 require("vscripts.cursorhold")

@@ -329,13 +329,6 @@ editor({
 --     config = conf.matchup,
 -- })
 
--- TODO(vsedov) (14:40:21 - 01/08/22): This is a trial, i want to see how this goes
-editor({
-    "glepnir/mcc.nvim",
-    ft = { "c", "rust", "go", "python", "julia" },
-    config = conf.mcc,
-})
-
 editor({
     "ojroques/nvim-osc52",
     keys = { { "x", "\\y" }, { "n", "\\y" } },

@@ -728,8 +728,8 @@ local WinBar = {
     }),
 }
 
-require("heirline").setup(StatusLines)
--- require("heirline").setup(StatusLines, WinBar)
+--require("heirline").setup(StatusLines)
+require("heirline").setup(StatusLines, WinBar)
 
 vim.api.nvim_create_augroup("Heirline", { clear = true })
 vim.api.nvim_create_autocmd("User", {

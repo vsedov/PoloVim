@@ -269,7 +269,7 @@ end
 
 function config.hlargs()
     require("utils.ui.highlights").plugin("hlargs", {
-        { Hlargs = { italic = true, bold = false } },
+        { Hlargs = { fg = "#ef9062", italic = true, bold = false } },
     })
     require("hlargs").setup({
         color = "#ef9062",
@@ -407,23 +407,7 @@ function config.matchup()
     vim.g.matchup_matchparen_offscreen = { method = "popup" }
     vim.keymap.set("n", "<leader><leader><leader>", "<cmd>MatchupWhereAmI?<cr>", { noremap = true })
 end
-function config.mcc()
-    require("mcc").setup({
-        c = { "-", "->", "-", "-----", "-------" },
-        rust = { ";", "::", ";" },
-        go = {
-            { ";", ":=", ";" },
-            { "/", ":=", ";" },
-        },
-        -- TODO(vsedov) (18:40:52 - 05/08/22): use luasnip for this
-        -- This is such a scuffed way of doing things
-        python = {
-            { "--", "->", "-" },
-            { "c__", "__init__", "__call__", "__add__", "__eq__" },
-            { "w_", "print(", "ic(", "pp(", "w_" },
-        },
-    })
-end
+
 function config.readline()
     local readline = require("readline")
     local map = vim.keymap.set

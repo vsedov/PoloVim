@@ -1,10 +1,12 @@
+vim.g.navic_silence = true
 local util = require("lspconfig/util")
+
 -- local venv_path = os.getenv("VIRTUAL_ENV") -- could be nil
 local python_path = "/usr/bin/python"
 local pylsp_path = "/home/viv/.local/bin/pylsp"
 
 return {
-    cmd = { python_path, pylsp_path },
+    cmd = { "pylsp" },
     settings = {
         pylsp = {
             -- configurationSources = { "flake8" },

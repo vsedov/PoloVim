@@ -1,3 +1,5 @@
+local h = require("utils.ui.highlights")
+
 function get_color_values(color)
     local red = tonumber(color:sub(2, 3), 16)
     local green = tonumber(color:sub(4, 5), 16)
@@ -20,33 +22,66 @@ function blend_colors(top, bottom, alpha)
     return ("#%02X%02X%02X"):format(blend(1), blend(2), blend(3))
 end
 
+local function no_border(values)
+    for kind, _ in pairs(lambda.style.lsp.highlights.Completion) do
+        local inherit = ("CmpItemKind%s"):format(kind)
+        local fg = vim.api.nvim_get_hl_by_name(inherit, true).foreground
+        if fg then
+            local foreground = string.format("#%x", fg)
+
+            vim.api.nvim_set_hl(0, inherit, {
+                fg = foreground,
+                bg = blend_colors(foreground, values, 0.15),
+            })
+            vim.api.nvim_set_hl(0, ("CmpItemKindMenu%s"):format(kind), {
+                fg = foreground,
+            })
+            vim.api.nvim_set_hl(0, ("CmpItemKindBlock%s"):format(kind), {
+                fg = blend_colors(foreground, values, 0.15),
+            })
+        end
+    end
+end
+local function border(values)
+    for kind, _ in pairs(lambda.style.lsp.highlights.Completion) do
+        local inherit = ("CmpItemKind%s"):format(kind)
+        local fg = vim.api.nvim_get_hl_by_name(inherit, true).foreground
+        if fg then
+            local foreground = string.format("#%x", fg)
+            vim.api.nvim_set_hl(0, ("CmpItemKind%s"):format(kind), {
+                fg = foreground,
+            })
+        end
+    end
+end
+
 local function define_highlights()
     vim.api.nvim_set_hl(0, "CmpDocumentationBorder", {
         bg = "None",
     })
     local values = string.format("#%x", vim.api.nvim_get_hl_by_name("Normal", true).background)
-    for kind, _ in pairs(require("utils.ui.kind_symbols").Completion) do
-        local inherit = ("CmpItemKind%s"):format(kind)
-        local fg = vim.api.nvim_get_hl_by_name(inherit, true).foreground
-        if fg then
-            local foreground = string.format("#%x", fg)
-            if lambda.config.cmp_theme == "border" then
-                vim.api.nvim_set_hl(0, ("CmpItemKind%s"):format(kind), {
-                    fg = foreground,
-                })
-            elseif lambda.config.cmp_theme == "no-border" then
-                vim.api.nvim_set_hl(0, inherit, {
-                    fg = foreground,
-                    bg = blend_colors(foreground, values, 0.15),
-                })
-                vim.api.nvim_set_hl(0, ("CmpItemKindMenu%s"):format(kind), {
-                    fg = foreground,
-                })
-                vim.api.nvim_set_hl(0, ("CmpItemKindBlock%s"):format(kind_name), {
-                    fg = blend_colors(foreground, values, 0.15),
-                })
-            end
-        end
+
+    if lambda.config.cmp_theme == "border" then
+        border(values)
+    elseif lambda.config.cmp_theme == "no-border" then
+        no_border(values)
     end
+    local kind_hls = {
+        { CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false } },
+        { CmpItemAbbrMatch = { foreground = { from = "Keyword" } } },
+        { CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" } },
+        { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } } },
+        -- Make the source information less prominent
+        {
+            CmpItemMenu = {
+                -- fg = { from = "Pmenu", attr = "bg", alter = 30 },
+                italic = true,
+                bold = false,
+            },
+        },
+    }
+
+    h.plugin("Cmp", kind_hls)
 end
+
 define_highlights()

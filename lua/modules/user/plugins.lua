@@ -6,6 +6,7 @@ user({ "rtakasuke/vim-neko", cmd = "Neko", opt = true })
 user({
     "lcheylus/overlength.nvim",
     opt = true,
+    setup = conf.overlen_setup,
     cmd = {
         "OverlengthEnable",
         "OverlengthDisable",
@@ -13,6 +14,8 @@ user({
     },
     config = conf.overlen,
 })
+
+
 -- Competitive programming
 -- user {
 -- "nullchilly/cpeditor.nvim",

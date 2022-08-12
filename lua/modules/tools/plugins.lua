@@ -130,19 +130,10 @@ tools({
     end,
 })
 
--- For this to record, cmd might not work
 tools({
     "wakatime/vim-wakatime",
-    event = "InsertEnter",
-    cmd = {
-        "WakaTimeApiKey",
-        "WakaTimeDebugEnable",
-        "WakaTimeDebugDisable",
-        "WakaTimeScreenRedrawEnable",
-        "WakaTimeScreenRedrawEnableAuto",
-        "WakaTimeScreenRedrawDisable",
-        "WakaTimeToday",
-    },
+    opt = true,
+    setup = conf.wakatime,
 })
 
 -- ze black magic

@@ -3,8 +3,8 @@ local options = {
     shiftwidth = 4,
     expandtab = true,
     smarttab = true,
-    -- colorcolumn = 90, -- Delimit text blocks to N columns
     conceallevel = 2,
+    colorcolumn = "130",
 }
 
 for k, v in pairs(options) do
