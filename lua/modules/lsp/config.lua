@@ -56,12 +56,9 @@ function config.lsp_sig()
         hint_enable = true, -- virtual hint enable
         hint_prefix = "🐼 ", -- Panda for parameter
         -- hint_prefix = " ",
-        extra_trigger_chars = { "(", "{", "," },
-        hint_scheme = "DiagnosticHint",
-        transparency = vim.api.nvim_get_option("pumblend"),
         toggle_key = "»",
         select_signature_key = "<C-n>",
-        use_lspsaga = false, -- set to true if you want to use lspsaga popup
+        use_lspsaga = true, -- set to true if you want to use lspsaga popup
         hi_parameter = "search", -- how your parameter will be highlight
         max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
         -- to view the hiding contents
@@ -76,7 +73,6 @@ function config.lsp_sig()
         log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
         padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
         shadow_blend = 36, -- if you using shadow as border use this set the opacity
-        shadow_guibg = "Black", -- if you using shadow as border use this set the color e.g. 'Green' or '#121315'
     }
 
     require("lsp_signature").setup(cfg)
