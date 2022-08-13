@@ -118,7 +118,6 @@ function config.nvim_bufferline()
             navigation = { mode = "uncentered" },
             mode = "buffers", -- tabs
             sort_by = "insert_after_current",
-            right_mouse_command = "vert sbuffer %d",
             show_close_icon = false,
             show_buffer_close_icons = true,
             diagnostics = "nvim_lsp",
@@ -413,20 +412,35 @@ function config.neo_tree()
         },
         nesting_rules = {},
         filesystem = {
-            -- i think this conflicts with me usng atbs as a whole , though im not 100 % sure
-            hijack_netrw_behavior = "open_current",
-            use_libuv_file_watcher = false,
-            group_empty_dirs = true,
-            follow_current_file = true,
             filtered_items = {
-                visible = true,
-                hide_dotfiles = false,
+                visible = false, -- when true, they will just be displayed differently than normal items
+                hide_dotfiles = true,
                 hide_gitignored = true,
-                never_show = {
+                hide_hidden = true, -- only works on Windows for hidden files/directories
+                hide_by_name = {
+                    "node_modules",
+                },
+                hide_by_pattern = { -- uses glob style patterns
+                    "*.meta",
+                },
+                always_show = { -- remains visible even if other settings would normally hide it
+                    ".gitignored",
+                },
+                never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
                     ".DS_Store",
+                    "thumbs.db",
                 },
             },
-        },
+            follow_current_file = false, -- This will find and focus the file in the active buffer every
+            -- time the current file is changed while the tree is open.
+            group_empty_dirs = true, -- when true, empty folders will be grouped together
+            hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
+            -- in whatever position is specified in window.position
+            -- "open_current",  -- netrw disabled, opening a directory opens within the
+            -- window like netrw would, regardless of window.position
+            -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
+            use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+        }, -- instead of relying on nvim autocmd events.
         buffers = {
             show_unloaded = true,
             window = {

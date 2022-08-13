@@ -8,24 +8,33 @@ local function setup_colors()
         blue = utils.get_highlight("Function").fg,
         dark_red = utils.get_highlight("DiffDelete").bg or utils.get_highlight("Folded").bg,
         cyan = utils.get_highlight("Special").fg,
+        ----
+        git_add = utils.get_highlight("diffAdded").fg,
+        git_change = utils.get_highlight("diffChanged").fg,
+        git_del = utils.get_highlight("diffRemoved").fg,
+        diag_warn = utils.get_highlight("DiagnosticWarn").fg,
+        red = utils.get_highlight("DiagnosticError").fg,
+        diag_error = utils.get_highlight("DiagnosticError").fg,
+        diag_hint = utils.get_highlight("DiagnosticHint").fg,
+        diag_info = utils.get_highlight("DiagnosticInfo").fg,
+
+        gray = utils.get_highlight("NonText").fg,
+        orange = utils.get_highlight("Constant").fg, -- for some reason this was causing errors
+        purple = utils.get_highlight("Statement").fg,
+        green = utils.get_highlight("String").fg,
     }
-    if vim.g.colors_name == "kanagawa" then
-        local extended_colors = {
-            gray = utils.get_highlight("NonText").fg,
-            orange = utils.get_highlight("Constant").fg, -- for some reason this was causing errors
-            purple = utils.get_highlight("Statement").fg,
-            green = utils.get_highlight("String").fg,
-            git_add = utils.get_highlight("diffAdded").fg,
-            git_change = utils.get_highlight("diffChanged").fg,
-            git_del = utils.get_highlight("diffRemoved").fg,
-            diag_warn = utils.get_highlight("DiagnosticWarn").fg,
-            red = utils.get_highlight("DiagnosticError").fg,
-            diag_error = utils.get_highlight("DiagnosticError").fg,
-            diag_hint = utils.get_highlight("DiagnosticHint").fg,
-            diag_info = utils.get_highlight("DiagnosticInfo").fg,
-        }
-        values = vim.tbl_extend("force", values, extended_colors)
+    --[[ if vim.g.colors_name == "kanagawa" then ]]
+    --[[     local extended_colors = {} ]]
+    --[[     values = vim.tbl_extend("force", values, extended_colors) ]]
+    --[[ end ]]
+    --[[]]
+    -- loop over the values and check if they are nil and if they are set them to the default value
+    for k, v in pairs(values) do
+        if v == nil then
+            values[k] = utils.get_highlight("NonText").fg
+        end
     end
+
     return values
 end
 
