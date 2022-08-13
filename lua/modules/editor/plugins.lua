@@ -361,3 +361,12 @@ editor({
     event = "CmdlineEnter",
     config = conf.readline,
 })
+
+-- What tf is this plugin ?
+editor({
+    "andrewferrier/vim-wrapping-softhard",
+    event = "BufEnter",
+    config = function()
+        require("wrapping").setup()
+    end,
+})
