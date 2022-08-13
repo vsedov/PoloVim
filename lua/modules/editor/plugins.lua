@@ -319,15 +319,12 @@ editor({
     opt = true,
 })
 
--- editor({
---     "andymass/vim-matchup",
---     opt = true,
---     event = { "InsertEnter" },
---     keys = "<leader><leader><leader>",
---     cmd = { "MatchupWhereAmI?", "MatchupShowTimes", "MatchupWhereAmI??" },
---     after = "nvim-treesitter",
---     config = conf.matchup,
--- })
+editor({
+    "andymass/vim-matchup",
+    event = { "CursorMoved", "CursorMovedI" },
+    cmd = { "MatchupWhereAmI?" },
+    config = conf.matchup,
+})
 
 editor({
     "ojroques/nvim-osc52",
@@ -368,5 +365,14 @@ editor({
     event = "BufEnter",
     config = function()
         require("wrapping").setup()
+    end,
+})
+-- fix terminal color
+editor({
+    "norcalli/nvim-terminal.lua",
+    opt = true,
+    ft = { "log", "terminal" },
+    config = function()
+        require("terminal").setup()
     end,
 })

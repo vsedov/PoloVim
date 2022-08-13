@@ -118,3 +118,15 @@ end, { force = true })
 add_cmd("Quickfix", function()
     make_diagnostic_qf_updater()
 end, { force = true })
+
+add_cmd("LspClients", function(opts)
+    if opts.fargs ~= nil then
+        for _, client in pairs(vim.lsp.get_active_clients()) do
+            if client.name == opts.fargs[1] then
+                lprint(client)
+            end
+        end
+    else
+        lprint(vim.lsp.get_active_clients())
+    end
+end, { nargs = "*" })
