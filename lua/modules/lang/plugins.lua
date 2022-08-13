@@ -228,7 +228,7 @@ lang({
 -- [g finds the diagnostic before the cursor (excluding any diagnostic the cursor is sitting on)
 lang({
     "andrewferrier/textobj-diagnostic.nvim",
-    event = "InsertEnter",
+    ft = { "python", "lua" },
     config = function()
         require("textobj-diagnostic").setup()
     end,
