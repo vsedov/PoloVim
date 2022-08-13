@@ -223,3 +223,11 @@ tools({
         vim.g.suda_smart_edit = 1
     end,
 })
+
+tools({
+    "NTBBloodbath/rest.nvim",
+    opt = true,
+    ft = { "http" },
+    -- keys = { "<Plug>RestNvim", "<Plug>RestNvimPreview", "<Plug>RestNvimLast" },
+    config = conf.rest,
+})
