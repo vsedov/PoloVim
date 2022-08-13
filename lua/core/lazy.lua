@@ -108,7 +108,6 @@ function Lazyload()
     if load_lsp then
         vim.defer_fn(function()
             loader("lspsaga.nvim")
-            loader("lsp_signature.nvim") -- null-ls.nvim
         end, 60)
     end
 

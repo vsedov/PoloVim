@@ -19,7 +19,7 @@ lambda.config = {
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
     save_clipboard_on_exit = true,
-    cmp_theme = "border", --- @usage "border" | "no-border" | "extra"
+    cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
     abbrev = {
         enable = true,
         coding_support = true, -- system wide
@@ -50,8 +50,7 @@ lambda.config = {
             lint = "flake8", -- pylint, pyflake, and other linters
             -- jedis documentation is better though
             lsp = "jedi", -- jedi pylsp and pyright pylance
-            pylance = {
-                -- i really cannot tell which one is faster atm
+            pylance_pyright = {
                 use_inlay_hints = true,
             },
             format = "yapf", -- black
