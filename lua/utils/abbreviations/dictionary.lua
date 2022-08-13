@@ -5000,6 +5000,7 @@ M.python = {
         ["improt"] = "import",
         ["whole"] = "while",
         ["prant"] = "print",
+        ["torhc"] = "torch",
     },
 }
 

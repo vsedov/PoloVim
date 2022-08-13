@@ -8,9 +8,11 @@ local K = {}
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
+--- @usage : Run :cd or <leader>cd -> <leader>r
+---@param debug Debug is idk , idk why i have this here tbh
 local run_or_test = function(debug)
     local ft = vim.bo.filetype
-    t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
+    -- t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
     if ft == "lua" then
         return ":Jaq internal<CR>"
     else
