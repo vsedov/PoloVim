@@ -205,9 +205,10 @@ M.attach_config = function(client, bufnr)
         { range = true, desc = "Extract methdod" }
     )
 
-    if lambda.config.lsp.python.pylance.use_inlay_hints then
+    if lambda.config.lsp.python.pylance_pyright.use_inlay_hints then
         utils.autocmds.InlayHintsAU()
     end
+
     if lambda.config.lsp.use_semantic_token then
         utils.autocmds.SemanticTokensAU()
     end
@@ -245,6 +246,7 @@ M.config = {
                     reportUnusedFunction = "information",
                     reportUnusedVariable = "information",
                     reportUnusedClass = "information",
+
                     -- strictParameterNoneValue = false,
                     -- reportOptionalSubscript = "warning",
                     -- reportOptionalMemberAccess = "warning",
