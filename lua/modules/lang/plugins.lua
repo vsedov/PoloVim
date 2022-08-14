@@ -24,6 +24,18 @@ lang({
 })
 
 lang({
+    "TornaxO7/tree-setter",
+    ft = { "c", "cpp" },
+    config = function()
+        require("nvim-treesitter.configs").setup({
+            tree_setter = {
+                enable = true,
+            },
+        })
+    end,
+})
+
+lang({
     "RRethy/nvim-treesitter-textsubjects",
     ft = { "lua", "rust", "go", "python", "javascript" },
     opt = true,
@@ -46,6 +58,24 @@ lang({
         { "nvim-treesitter/nvim-treesitter" },
     },
     config = conf.refactor,
+})
+-- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this
+-- on startup, using lazy.lua
+lang({
+    "andrewferrier/debugprint.nvim",
+    config = conf.debugprint,
+    keys = {
+        { "n", "g?p" },
+        { "n", "g?P" },
+        { "n", "g?v" },
+        { "n", "g?V" },
+        { "n", "dvl" },
+        { "n", "dvL" },
+        { "v", "g?V" },
+        { "v", "g?v" },
+        { "x", "g?o" },
+        { "x", "g?O" },
+    },
 })
 
 lang({

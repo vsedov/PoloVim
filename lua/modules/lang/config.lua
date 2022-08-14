@@ -67,7 +67,38 @@ end
 
 function config.refactor()
     local refactor = require("refactoring")
-    refactor.setup({})
+
+    refactor.setup({
+        prompt_func_return_type = {
+            go = false,
+            java = false,
+
+            cpp = false,
+            c = false,
+            h = false,
+            hpp = false,
+            cxx = false,
+        },
+        prompt_func_param_type = {
+            go = false,
+            java = false,
+            cpp = false,
+            c = false,
+            h = false,
+            hpp = false,
+            cxx = false,
+        },
+        printf_statements = {
+            python = {
+                'log.info("%s")',
+            },
+        },
+        print_var_statements = {
+            python = {
+                'ic("%s")',
+            },
+        },
+    })
 
     lprint("refactor")
     _G.ts_refactors = function()
@@ -98,6 +129,18 @@ function config.refactor()
     -- vim.api.nvim_set_keymap("v", "<Leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
     -- vim.api.nvim_set_keymap("v", "<Leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
     -- vim.api.nvim_set_keymap("v", "<Leader>rt", [[ <Esc><Cmd>lua M.refactors()<CR>]], {noremap = true, silent = true, expr = false})
+end
+
+function config.debugprint()
+    require("debugprint").setup({
+        create_keymaps = true,
+    })
+    vim.keymap.set("n", "dvl", function()
+        require("debugprint").debugprint({ ignore_treesitter = true, variable = true })
+    end, { desc = "debug print var" })
+    vim.keymap.set("n", "dvL", function()
+        require("debugprint").debugprint({ ignore_treesitter = true, above = true, variable = true })
+    end, { desc = "debug print var above" })
 end
 
 function config.context()

@@ -231,3 +231,5 @@ tools({
     -- keys = { "<Plug>RestNvim", "<Plug>RestNvimPreview", "<Plug>RestNvimLast" },
     config = conf.rest,
 })
+
+tools({ "ibhagwan/fzf-lua", branch = "main", config = conf.fzf, opt = true, cmd = { "FzfLua" } })

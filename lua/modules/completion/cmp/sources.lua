@@ -1,11 +1,10 @@
+-- default sources
 local sources =
     {
         { name = "nvim_lsp_signature_help", priority = 10 },
-
         { name = "nvim_lsp" },
         { name = "luasnip" },
         { name = "path" },
-        { name = "cmp_tabnine", priority = 8 },
     }, {
         {
             name = "buffer",
@@ -20,27 +19,29 @@ local sources =
             },
         },
         { name = "spell" },
-        { name = "neorg", priority = 6 },
+        { name = "nvim_lua" },
     }
+local filetype = {
+    sql = function()
+        table.insert(sources, { name = "vim-dadbod-completion" })
+    end,
+    norg = function()
+        table.insert(sources, { name = "latex_symbols" })
+    end,
+    markdown = function()
+        table.insert(sources, { name = "look" })
+        table.insert(sources, { name = "latex_symbols" })
+    end,
+}
 
-if lambda.config.use_tabnine then
-    table.insert(sources, { name = "cmp_tabnine", priority = 8 })
+if filetype[vim.bo.ft] then
+    filetype[vim.bo.ft]()
 end
 
-if vim.o.ft == "sql" then
-    table.insert(sources, { name = "vim-dadbod-completion" })
+for _, source in pairs(require("modules.completion.cmp.options")) do
+    if source.enable then
+        table.insert(sources, source.options)
+    end
 end
 
-if vim.bo.ft == "norg" then
-    table.insert(sources, { name = "latex_symbols" })
-end
-if vim.bo.ft == "markdown" then
-    table.insert(sources, { name = "spell" })
-    table.insert(sources, { name = "look" })
-    table.insert(sources, { name = "latex_symbols" })
-end
-
-if vim.bo.ft == "lua" then
-    table.insert(sources, { name = "nvim_lua" })
-end
 return sources

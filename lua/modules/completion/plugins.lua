@@ -46,9 +46,8 @@ completion({
         { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-buffer", after = "nvim-cmp", opt = true },
         { "hrsh7th/cmp-calc", after = "nvim-cmp", opt = true },
-        -- { "hrsh7th/cmp-path", after = "nvim-cmp", opt = true },
+        { "hrsh7th/cmp-path", after = "nvim-cmp", opt = true },
         { "max397574/cmp-cmdline", branch = "patch-1", after = "nvim-cmp", opt = true },
-        -- { "ray-x/cmp-treesitter", after = "nvim-cmp", opt = true },
         { "f3fora/cmp-spell", after = "nvim-cmp", opt = true },
         { "octaltree/cmp-look", after = "nvim-cmp", opt = true },
         {
@@ -59,6 +58,7 @@ completion({
                 require("cmp_git").setup({ filetypes = { "gitcommit", "NeogitCommitMessage" } })
             end,
         },
+        { "lukas-reineke/cmp-rg", after = "nvim-cmp", opt = true },
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },
     config = conf.cmp,

@@ -178,6 +178,9 @@ vim.defer_fn(function()
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
     vim.defer_fn(function()
         loader("vim-polyglot")
+        if lambda.config.use_fzf_lua then
+            loader("fzf-lua")
+        end
     end, lazy_timer + 10)
     loader("workspaces.nvim")
     loader("nvim-rooter.lua")

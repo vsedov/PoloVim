@@ -43,14 +43,15 @@ function _G.confirm_quit()
     if vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == "q" then
         if is_last_window() and vim.fn.tabpagenr("$") == 1 then
             if vim.fn.confirm(random_message(message), "&Yes\n&No", 2) ~= 1 then
-                return false
+                return 0
             end
         end
     end
-    return true
+    return 1
 end
 
 vim.cmd([[cnoreabbrev <expr> q (luaeval(v:lua.confirm_quit())) ? 'q' : '']])
+
 vim.cmd([[cnoreabbrev qq  quit]])
 vim.api.nvim_create_user_command("Q", "qall<bang>", { force = true, bang = true })
 

@@ -86,8 +86,7 @@ function config.catppuccin()
         },
     })
     vim.g.catppuccin_flavour = lambda.config.colourscheme.catppuccin_flavour -- latte, frappe, macchiato, mocha
-    vim.cmd([[colorscheme catppuccin]])
-    -- vim.cmd.colorscheme("catppuccin")
+    vim.cmd.colorscheme("catppuccin")
 end
 
 function config.kanagawa()
@@ -113,19 +112,17 @@ function config.kanagawa()
             normalfloat = { bg = "NONE" },
         },
     })
-    vim.cmd([[colorscheme kanagawa]])
+    vim.cmd.colorscheme("kanagawa")
 
     -- vim.cmd.colorscheme("kanagawa")
 end
 
 function config.horizon()
-    vim.cmd([[colorscheme horizon]])
-
-    -- vim.cmd.colorscheme("horizon")
+    vim.cmd.colorscheme("horizon")
 end
 
 function config.dogrun()
-    vim.cmd([[colorscheme dogrun]])
+    vim.cmd.colorscheme("dogrun")
 end
 
 function config.rose()
@@ -170,7 +167,7 @@ function config.rose()
         },
     })
 
-    vim.cmd("colorscheme rose-pine")
+    vim.cmd.colorscheme("rose-pine")
 end
 function config.doomone()
     vim.g.doom_one_pumblend_transparency = 3
@@ -192,7 +189,7 @@ function config.doomone()
 end
 
 function config.doom()
-    vim.cmd("colorscheme doom-one")
+    vim.cmd.colorscheme("doom-one")
 end
 
 return config

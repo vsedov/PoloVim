@@ -56,7 +56,7 @@ function config.hop()
     vim.keymap.set("n", "<leader><leader>l", "<cmd>HopLineStart<cr>", {})
     vim.keymap.set("n", "g/", "<cmd>HopVertical<cr>", {})
 
-    vim.keymap.set("n", "g?", "<cmd>HopPattern<cr>", {})
+    vim.keymap.set("n", "g,", "<cmd>HopPattern<cr>", {})
 end
 
 function config.hexokinase()

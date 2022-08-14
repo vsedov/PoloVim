@@ -33,7 +33,7 @@ lambda.config = {
     },
     tabby_or_bufferline = true, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
-    use_tabnine = true, -- load tabnine -- i do not mind this, but it can slow down quite bad on large files
+    use_fzf_lua = false, -- This is nice, to have, when required.
     use_dashboard = false, -- set to false to not see this
     use_session = true, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
