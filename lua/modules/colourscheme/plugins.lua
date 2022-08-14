@@ -28,7 +28,6 @@ colourscheme({
     opt = true,
     config = conf.horizon,
 })
-
 colourscheme({
     "wadackel/vim-dogrun",
     opt = true,

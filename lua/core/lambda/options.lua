@@ -8,9 +8,12 @@ lambda.config = {
         -- @usage theme_name : percentage chance
         themes = {
             dark = {
-                { "kanagawa.nvim", 0.2 },
+                { "kanagawa.nvim", 0.4 },
                 { "rose", 0.9 },
                 { "catppuccin", 0.2 },
+                { "horizon.nvim", 0.1 },
+                { "vim-dogrun", 0.3 },
+                { "doom-one.nvim", 0.5 },
             },
             light = {},
         },

@@ -1,6 +1,18 @@
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
 
+local function check_version(major, minor, patch)
+    local version = vim.version()
+    return version.major >= major and version.minor >= minor and patch >= version.patch
+end
+local setup_colorscheme = function(name)
+    if check_version(0, 8, 0) then
+        vim.cmd.colorscheme(name)
+    else
+        vim.cmd([[colorscheme ]] .. name)
+    end
+end
+
 function config.catppuccin()
     local catppuccin = require("catppuccin")
     catppuccin.setup({
@@ -86,7 +98,7 @@ function config.catppuccin()
         },
     })
     vim.g.catppuccin_flavour = lambda.config.colourscheme.catppuccin_flavour -- latte, frappe, macchiato, mocha
-    vim.cmd.colorscheme("catppuccin")
+    setup_colorscheme("catppuccin")
 end
 
 function config.kanagawa()
@@ -112,17 +124,15 @@ function config.kanagawa()
             normalfloat = { bg = "NONE" },
         },
     })
-    vim.cmd.colorscheme("kanagawa")
-
-    -- vim.cmd.colorscheme("kanagawa")
+    setup_colorscheme("kanagawa")
 end
 
 function config.horizon()
-    vim.cmd.colorscheme("horizon")
+    setup_colorscheme("horizon")
 end
 
 function config.dogrun()
-    vim.cmd.colorscheme("dogrun")
+    setup_colorscheme("dogrun")
 end
 
 function config.rose()
@@ -166,8 +176,7 @@ function config.rose()
             ColorColumn = { bg = "rose" },
         },
     })
-
-    vim.cmd.colorscheme("rose-pine")
+    setup_colorscheme("rose-pine")
 end
 function config.doomone()
     vim.g.doom_one_pumblend_transparency = 3
@@ -189,7 +198,7 @@ function config.doomone()
 end
 
 function config.doom()
-    vim.cmd.colorscheme("doom-one")
+    setup_colorscheme("doom-one")
 end
 
 return config
