@@ -50,7 +50,7 @@ end
 
 local leader_map = function()
     vim.g.mapleader = " "
-    vim.g.maplocalleader = "."
+    vim.g.maplocalleader = ","
 
     vim.keymap.set("n", "<SPACE>", "<Nop>", { noremap = true })
     vim.keymap.set("n", " ", "", { noremap = true })
