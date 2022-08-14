@@ -11,39 +11,13 @@ vim.cmd([[
   endfunction
 ]])
 
--- TLDR: Conditionally modify character at end of line
--- Description:
--- This function takes a delimiter character and:
---   * removes that character from the end of the line if the character at the end
---     of the line is that character
---   * removes the character at the end of the line if that character is a
---     delimiter that is not the input character and appends that character to
---     the end of the line
---   * adds that character to the end of the line if the line does not end with
---     a delimiter
--- Delimiters:
--- - ","
--- - ";"
----@param character string
----@return function
-local function modify_line_end_delimiter(character)
-    local delimiters = { ",", ";" }
-    return function()
-        local line = api.nvim_get_current_line()
-        local last_char = line:sub(-1)
-        if last_char == character then
-            api.nvim_set_current_line(line:sub(1, #line - 1))
-        elseif vim.tbl_contains(delimiters, last_char) then
-            api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
-        else
-            api.nvim_set_current_line(line .. character)
-        end
-    end
-end
 local plug_map = {
     -- new files
     ["n|<localleader>ns"] = map_cmd([[:e <C-R>=expand("%:p:h") . "/" <CR>]], "newfiles"):with_silent(),
     ["n|<localleader>nf"] = map_cmd([[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], "newfiles"):with_silent(),
+
+    ["n|<localleader>nh"] = map_cmd("<C-W>t <C-W>K", "horizontally split windows to vertical splits"):with_noremap(),
+    ["n|<localleader>nv"] = map_cmd("<C-W>t <C-W>H", "Change two vertically split windows to horizontal splits"):with_noremap(),
 
     -- -- Replace word under cursor in Buffer (case-sensitive)
     -- -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
@@ -124,16 +98,6 @@ local plug_map = {
         :with_noremap()
         :with_expr(),
 
-    -- this could fail
-    ["n|<localleader>,"] = map_cmd(function()
-        modify_line_end_delimiter(",")
-    end, "Modify Del"):with_noremap(),
-    ["n|<localleader>;"] = map_cmd(function()
-        modify_line_end_delimiter(",")
-    end, "Modify Del"):with_noremap(),
-
-    ["n|<localleader>wh"] = map_cmd("<C-W>t <C-W>K", "horizontally split windows to vertical splits"):with_noremap(),
-    ["n|<localleader>wv"] = map_cmd("<C-W>t <C-W>H", "Change two vertically split windows to horizontal splits"):with_noremap(),
     ["n|<C-w>f"] = map_cmd([[<C-w>vgf]], "horizontal split"):with_noremap():with_silent(),
 
     ["n|<localleader>l"] = map_cmd([[<cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync fromstart<cr><c-l>]], "command line window - :<c-f>")
