@@ -339,7 +339,8 @@ function config.cool_sub()
             start_word = "g!m", -- Mark word / region. Edit only full word
             apply_substitute_and_next = "\\m", -- Start substitution / Go to next substitution
             apply_substitute_and_prev = "\\p", -- same as M but backwards
-            apply_substitute_all = "\\l", -- Substitute all
+            apply_substitute_all = "\\\\a", -- Substitute all
+            force_terminate_substitute = "g!!",
         },
         -- reg_char = "o", -- letter to save macro (Dont use number or uppercase here)
         -- mark_char = "t", -- mark the position at start of macro

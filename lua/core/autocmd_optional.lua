@@ -138,7 +138,7 @@ vim.defer_fn(function()
         else
             lambda.unload("tabby")
             lambda.config.tabby_or_bufferline = true
-            vim.cmd([[packadd bufferline]])
+            require("packer").loader("bufferline.nvim")
             require("modules.ui.config").nvim_bufferline()
         end
         require("modules.editor.hydra.buffer").buffer()

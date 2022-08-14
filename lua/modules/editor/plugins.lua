@@ -216,7 +216,8 @@ editor({
         "g!m",
         "\\m",
         "\\p",
-        "\\l",
+        "\\\\a",
+        "g!!",
     },
     config = conf.cool_sub,
 })

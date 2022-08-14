@@ -260,7 +260,7 @@ local LSPActive = {
 
 local cool_substitute = {
     condition = function()
-        return package.loaded["cool-substitute"]
+        return package.loaded["cool-substitute"] ~= nil
     end,
     provider = function()
         return require("cool-substitute.status").status_with_icons()

@@ -56,9 +56,21 @@ local function matchadd()
     vim.w.cursorword_match = 1
 end
 
+local function check_sub()
+    if package.loaded["cool-substitute"] ~= nil then
+        local sub_stat = require("cool-substitute.status").status_no_icons()
+        if sub_stat ~= "" then
+            return false
+        end
+    end
+    return true
+end
 local function cursor_moved()
+    -- local not_in_sub = true
     if vim.api.nvim_get_mode().mode == "n" then
-        matchadd()
+        if check_sub() then
+            matchadd()
+        end
     end
 end
 

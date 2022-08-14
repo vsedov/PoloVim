@@ -76,6 +76,7 @@ lang({
         { "x", "g?o" },
         { "x", "g?O" },
     },
+    cmd = "DeleteDebugPrints",
 })
 
 lang({
