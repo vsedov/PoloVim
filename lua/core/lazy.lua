@@ -13,6 +13,15 @@ if fsize > 1024 * 1024 then
 end
 
 math.randomseed(os.time())
+local setup_colorscheme = function(name)
+    vim.defer_fn(function()
+        if lambda.check_version(0, 8, 0) then
+            vim.cmd.colorscheme(name)
+        else
+            vim.cmd([[colorscheme ]] .. name)
+        end
+    end, 10)
+end
 
 local function daylight()
     local h = tonumber(os.date("%H"))

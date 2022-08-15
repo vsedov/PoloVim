@@ -8,7 +8,9 @@ With.trim_newlines = {
 }
 
 With.trim_whitespace = {
-    filetypes = { "*" },
+    excluded_filetypes = { 'gitcommit', 'NeogitStatus', 'NeogitCommitMessage' },
+        filetypes = { "*" },
+
 }
 
 With.black = {

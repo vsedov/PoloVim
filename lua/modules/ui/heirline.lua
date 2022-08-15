@@ -266,13 +266,7 @@ local cool_substitute = {
         return require("cool-substitute.status").status_with_icons()
     end,
     hl = {
-        fg = function()
-            if package.loaded["cool-substitute"] ~= nil then
-                return require("cool-substitute.status").status_color()
-            else
-                return nil
-            end
-        end,
+        fg = require("cool-substitute.status").status_color(),
     },
 }
 
