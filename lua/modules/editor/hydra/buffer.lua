@@ -13,7 +13,13 @@ local buffer_config = function()
    _ot_: Sort Tabs          _od_: Sort Dir
    _oD_: Sort relative dir  _D_: BufferLinePickClose
                     _b_: Tele Buffer
-
+  ^^^^--------------------------------------------^^^^
+  ^^^^                  Tabs                      ^^^^
+  ^^^^--------------------------------------------^^^^
+    _tl_: tabn                       _th_: tabp
+    _n_: $tabnew                     _tc_: tabclose
+    _tH_: +tabmove                   _tL_: -tabmove
+                    _tp_: tabonly
   ^^^^--------------------------------------------^^^^
   ^^^^                   Delete                   ^^^^
   ^^^^--------------------------------------------^^^^
@@ -37,6 +43,18 @@ local buffer_config = function()
                 invoke_on_body = true,
             },
             heads = {
+
+                { "tl", ":tabn<CR>", { desc = "Next buffer" } },
+                { "th", ":tabp<CR>", { desc = "Prev buffer" } },
+
+                { "n", ":$tabnew<CR>", { desc = "Pin buffer" } },
+                { "tc", ":tabclose<CR>", { desc = "Pin buffer" } },
+
+                { "tH", ":+tabmove<CR>", { desc = "Move Next" } },
+                { "tL", ":-tabmove<CR>", { desc = "Move Prev" } },
+
+                { "tp", "<Cmd>tabonly<CR>", { desc = "Pick buffer to close", exit = true } },
+
                 { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },
                 { "s", ":ReachOpen tabpages<CR>", { desc = "Next buffer" } },
 

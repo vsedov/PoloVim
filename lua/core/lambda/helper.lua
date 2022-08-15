@@ -163,3 +163,16 @@ lambda.dynamic_unload = function(module_name, reload)
         end
     end
 end
+
+--- Check neovim version
+---@param major Major release tag
+---@param minor Minor release tag
+---@param patch Patch tag
+---@return {if all values are greater or qual , version}
+lambda.check_version = function(major, minor, patch)
+    major = major or 0
+    minor = minor or 0
+    patch = patch or 0
+    local version = vim.version()
+    return { version.major >= major and version.minor >= minor and patch >= version.patch, version }
+end

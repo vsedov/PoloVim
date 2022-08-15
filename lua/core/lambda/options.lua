@@ -34,7 +34,7 @@ lambda.config = {
             "python", -- current support is python.
         },
     },
-    tabby_or_bufferline = true, -- false: Bufferline , true for tabby
+    tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_fzf_lua = false, -- This is nice, to have, when required.
     use_dashboard = false, -- set to false to not see this
@@ -47,7 +47,7 @@ lambda.config = {
     lsp = {
         -- this seems to cause lag, though im not sure about that. Will have to see if that is the
         -- case or not
-        use_semantic_token = false,
+        use_semantic_token = true,
         latex = "texlab", -- texlab | ltex
         python = {
             lint = "flake8", -- pylint, pyflake, and other linters
