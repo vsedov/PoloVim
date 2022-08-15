@@ -12,6 +12,12 @@ M.global_abbrevs = {
         { "warn:", [[<c-r>=printf(&commentstring, ' WARNING(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "Ydate", [[<C-R>=strftime("%d-%b-%Y")<CR>]] },
         { ":tdate:", [[<c-r>=strftime("%Y-%m-%d")<cr>]] },
+
+        {":FileName:", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":t")},
+        {":filename:", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":t:r")},
+        {":FilePath:", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h")},
+        {":filepath:", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h:r")},
+
         { "funciton", [[function]] },
         { "d''", "Vivian Sedov" },
         { "m@@ ", "viv.sv@hotmail.com" },

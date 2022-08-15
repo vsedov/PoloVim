@@ -23,12 +23,6 @@ local function setup_colors()
         purple = utils.get_highlight("Statement").fg,
         green = utils.get_highlight("String").fg,
     }
-    --[[ if vim.g.colors_name == "kanagawa" then ]]
-    --[[     local extended_colors = {} ]]
-    --[[     values = vim.tbl_extend("force", values, extended_colors) ]]
-    --[[ end ]]
-    --[[]]
-    -- loop over the values and check if they are nil and if they are set them to the default value
     for k, v in pairs(values) do
         if v == nil then
             values[k] = utils.get_highlight("NonText").fg
@@ -740,6 +734,9 @@ local WinBar = {
 }
 
 --require("heirline").setup(StatusLines)
+-- /home/viv/.local/share/nvim/site/pack/packer/opt/heirline.nvim/lua/heirline
+-- Line 42 : modification
+-- style = vim.tbl_filter(function(value) return value ~= true end, style)
 require("heirline").setup(StatusLines, WinBar)
 
 vim.api.nvim_create_augroup("Heirline", { clear = true })
