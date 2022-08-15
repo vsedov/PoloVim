@@ -4,13 +4,13 @@ local null_ls = require("null-ls")
 local plaintext = { "gitcommit", "markdown", "norg" }
 
 With.trim_newlines = {
+    excluded_filetypes = { "gitcommit", "NeogitStatus", "NeogitCommitMessage" },
     filetypes = { "*" },
 }
 
 With.trim_whitespace = {
-    excluded_filetypes = { 'gitcommit', 'NeogitStatus', 'NeogitCommitMessage' },
-        filetypes = { "*" },
-
+    excluded_filetypes = { "gitcommit", "NeogitStatus", "NeogitCommitMessage" },
+    filetypes = { "*" },
 }
 
 With.black = {

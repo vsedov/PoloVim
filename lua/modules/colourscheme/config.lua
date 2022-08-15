@@ -1,7 +1,6 @@
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
 
-
 function config.catppuccin()
     local catppuccin = require("catppuccin")
     catppuccin.setup({
