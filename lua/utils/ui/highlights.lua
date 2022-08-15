@@ -461,6 +461,8 @@ local function general_overrides()
         { TelescopeSelection = { foreground = P.springBlue, background = P.fujiGray } },
         { TelescopeSelectionCaret = { foreground = P.springBlue, background = P.fujiGray } },
         { TelescopePreviewLine = { background = P.fujiGray } },
+
+        { PanelDarkBackground = { bg = { from = "Normal", alter = -43 } } },
     })
 end
 

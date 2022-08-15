@@ -265,7 +265,15 @@ local cool_substitute = {
     provider = function()
         return require("cool-substitute.status").status_with_icons()
     end,
-    hl = { fg = require("cool-substitute.status").status_color() },
+    hl = {
+        fg = function()
+            if package.loaded["cool-substitute"] ~= nil then
+                return require("cool-substitute.status").status_color()
+            else
+                return nil
+            end
+        end,
+    },
 }
 
 -- local Gps2 = {

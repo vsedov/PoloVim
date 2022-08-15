@@ -46,8 +46,8 @@ local function loadscheme()
     -- end
     local loading_theme = GetItem(lambda.config.colourscheme.themes.dark)
     lprint(loading_theme)
-    require("packer").loader(loading_theme)
-    -- require("packer").loader("kanagawa.nvim")
+    loader(loading_theme)
+    -- loader("kanagawa.nvim")
 end
 loadscheme()
 require("vscripts.cursorhold")

@@ -98,13 +98,10 @@ function config.catppuccin()
         },
     })
     vim.g.catppuccin_flavour = lambda.config.colourscheme.catppuccin_flavour -- latte, frappe, macchiato, mocha
-    setup_colorscheme("catppuccin")
+    vim.cmd([[colorscheme catppuccin]])
 end
 
 function config.kanagawa()
-    if not packer_plugins["kanagawa.nvim"].loaded then
-        vim.cmd([[packadd kanagawa.nvim ]])
-    end
     require("kanagawa").setup({
         undercurl = true, -- enable undercurls
         commentStyle = { italic = true },
@@ -124,15 +121,17 @@ function config.kanagawa()
             normalfloat = { bg = "NONE" },
         },
     })
-    setup_colorscheme("kanagawa")
+    vim.cmd([[colorscheme kanagawa]])
+
+    -- setup_colorscheme("kanagawa")
 end
 
 function config.horizon()
-    setup_colorscheme("horizon")
+    vim.cmd([[colorscheme horizon]])
 end
 
 function config.dogrun()
-    setup_colorscheme("dogrun")
+    vim.cmd([[colorscheme dogrun]])
 end
 
 function config.rose()
@@ -176,7 +175,7 @@ function config.rose()
             ColorColumn = { bg = "rose" },
         },
     })
-    setup_colorscheme("rose-pine")
+    vim.cmd([[colorscheme rose-pine]])
 end
 function config.doomone()
     vim.g.doom_one_pumblend_transparency = 3
@@ -198,7 +197,7 @@ function config.doomone()
 end
 
 function config.doom()
-    setup_colorscheme("doom-one")
+    vim.cmd([[colorscheme doom-one]])
 end
 
 return config

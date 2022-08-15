@@ -377,3 +377,19 @@ editor({
         require("terminal").setup()
     end,
 })
+
+editor({
+    "haya14busa/vim-asterisk",
+    opt = true,
+    keys = {
+        { "n", "*" },
+        { "n", "#" },
+        { "n", "g*" },
+        { "n", "g#" },
+        { "n", "z*" },
+        { "n", "gz*" },
+        { "n", "z#" },
+        { "n", "gz#" },
+    },
+    setup = conf.asterisk_setup,
+})

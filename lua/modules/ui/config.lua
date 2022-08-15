@@ -294,19 +294,16 @@ function config.neo_tree()
     local tab_bg = highlights.alter_color(panel_dark_bg, 15)
 
     highlights.plugin("NeoTree", {
-        theme = {
-            ["*"] = {
-                { NeoTreeNormal = { link = "PanelBackground" } },
-                { NeoTreeNormalNC = { link = "PanelBackground" } },
-                { NeoTreeRootName = { underline = true } },
-                { NeoTreeCursorLine = { link = "Visual" } },
-                { NeoTreeStatusLine = { link = "PanelSt" } },
-                { NeoTreeTabActive = { bg = { from = "PanelBackground" }, bold = true } },
-                { NeoTreeTabInactive = { bg = tab_bg, fg = { from = "Comment" } } },
-                { NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg } },
-                { NeoTreeTabSeparatorActive = { inherit = "PanelBackground", fg = { from = "Comment" } } },
-            },
-        },
+
+        { NeoTreeNormal = { link = "PanelBackground" } },
+        { NeoTreeNormalNC = { link = "PanelBackground" } },
+        { NeoTreeRootName = { underline = true } },
+        { NeoTreeCursorLine = { link = "Visual" } },
+        { NeoTreeStatusLine = { link = "PanelSt" } },
+        { NeoTreeTabActive = { bg = { from = "PanelBackground" }, bold = true } },
+        { NeoTreeTabInactive = { bg = tab_bg, fg = { from = "Comment" } } },
+        { NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg } },
+        { NeoTreeTabSeparatorActive = { inherit = "PanelBackground", fg = { from = "Comment" } } },
     })
 
     require("neo-tree").setup({

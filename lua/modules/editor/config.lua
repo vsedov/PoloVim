@@ -429,4 +429,22 @@ function config.readline()
     map("!", "<C-k>", readline.kill_line)
     map("!", "<C-u>", readline.backward_kill_line)
 end
+
+function config.asterisk_setup()
+    vim.g["asterisk#keeppos"] = 1
+    local default_keymaps = {
+        { "n", "*", "<Plug>(asterisk-*)" },
+        { "n", "#", "<Plug>(asterisk-#)" },
+        { "n", "g*", "<Plug>(asterisk-g*)" },
+        { "n", "g#", "<Plug>(asterisk-g#)" },
+        { "n", "z*", "<Plug>(asterisk-z*)" },
+        { "n", "gz*", "<Plug>(asterisk-gz*)" },
+        { "n", "z#", "<Plug>(asterisk-z#)" },
+        { "n", "gz#", "<Plug>(asterisk-gz#)" },
+    }
+    for _, m in ipairs(default_keymaps) do
+        vim.keymap.set(m[1], m[2], m[3], {})
+    end
+end
+
 return config
