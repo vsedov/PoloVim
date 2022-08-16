@@ -13,12 +13,11 @@ M.global_abbrevs = {
         { "Ydate", [[<C-R>=strftime("%d-%b-%Y")<CR>]] },
         { "tdate:", [[<c-r>=strftime("%Y-%m-%d")<cr>]] },
 
-
         { ":FileName:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":t"))<cr>]] },
         { ":filename:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":t:r"))<cr>]] },
         { ":FilePath:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":h"))<cr>]] },
         { ":FilePath:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":h:r"))<cr>]] },
-        
+
         { "funciton", [[function]] },
         { "dname", "Vivian Sedov" },
         { "m@@ ", "viv.sv@hotmail.com" },
