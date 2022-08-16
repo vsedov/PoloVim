@@ -190,7 +190,7 @@ vim.defer_fn(function()
         end
     end, lazy_timer + 10)
     loader("workspaces.nvim")
-    loader("nvim-rooter.lua")
+    loader("project.nvim")
     -- Notify
     loader("nvim-notify")
     local notify = require("notify")

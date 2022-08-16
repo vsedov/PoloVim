@@ -11,15 +11,16 @@ M.global_abbrevs = {
         { "optim:", [[<c-r>=printf(&commentstring, ' OPTIM(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "warn:", [[<c-r>=printf(&commentstring, ' WARNING(vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "Ydate", [[<C-R>=strftime("%d-%b-%Y")<CR>]] },
-        { ":tdate:", [[<c-r>=strftime("%Y-%m-%d")<cr>]] },
+        { "tdate:", [[<c-r>=strftime("%Y-%m-%d")<cr>]] },
 
-        {":FileName:", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":t")},
-        {":filename:", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":t:r")},
-        {":FilePath:", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h")},
-        {":filepath:", vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h:r")},
 
+        { ":FileName:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":t"))<cr>]] },
+        { ":filename:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":t:r"))<cr>]] },
+        { ":FilePath:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":h"))<cr>]] },
+        { ":FilePath:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":h:r"))<cr>]] },
+        
         { "funciton", [[function]] },
-        { "d''", "Vivian Sedov" },
+        { "dname", "Vivian Sedov" },
         { "m@@ ", "viv.sv@hotmail.com" },
         { ":lod:", "ಠ_ಠ" },
         { ":sadface:", "ʘ︵ʘ" },

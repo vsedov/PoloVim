@@ -28,28 +28,6 @@ local function reloader()
 end
 local open_cmd = "xdg-open"
 
--- https://github.com/AshineFoster/nvim/blob/master/lua/plugins/telescope.lua
-local horizontal_preview_width = function(_, cols, _)
-    if cols > 200 then
-        return math.floor(cols * 0.6)
-    else
-        return math.floor(cols * 0.5)
-    end
-end
-
-local width_for_nopreview = function(_, cols, _)
-    if cols > 200 then
-        return math.floor(cols * 0.5)
-    elseif cols > 110 then
-        return math.floor(cols * 0.6)
-    else
-        return math.floor(cols * 0.75)
-    end
-end
-
-local height_dropdown_nopreview = function(_, _, rows)
-    return math.floor(rows * 0.7)
-end
 local custom_actions = {}
 
 function custom_actions.send_to_qflist(prompt_bufnr)
@@ -61,16 +39,6 @@ function custom_actions.smart_send_to_qflist(prompt_bufnr)
     require("telescope.actions").smart_send_to_qflist(prompt_bufnr)
     require("user").qflist.open()
 end
-
--- function custom_actions.page_up(prompt_bufnr)
---   require('telescope.actions.set').shift_selection(prompt_bufnr, -5)
--- end
---
--- function custom_actions.page_down(prompt_bufnr)
---   require('telescope.actions.set').shift_selection(prompt_bufnr, 5)
--- end
-
--- https://github.com/nvim-telescope/telescope.nvim/issues/416#issuecomment-841273053
 
 function custom_actions.fzf_multi_select(prompt_bufnr)
     local picker = action_state.get_current_picker(prompt_bufnr)
@@ -214,10 +182,11 @@ require("telescope").setup({
                 --     local height = vim.api.nvim_win_get_height(results_win)
                 --     action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
                 -- end,
+
+                ["<cr>"] = custom_actions.multi_selection_open,
             },
 
             i = {
-                ["<cr>"] = custom_actions.multi_selection_open,
                 ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
                 ["<c-s>"] = custom_actions.multi_selection_open_split,
                 ["<c-t>"] = custom_actions.multi_selection_open_tab,
@@ -282,7 +251,7 @@ require("telescope").setup({
                 },
             },
         },
-        set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+        set_env = { ["TERM"] = vim.env.TERM },
     }),
 })
 telescope.load_extension("dotfiles")
@@ -290,59 +259,6 @@ telescope.load_extension("gosource")
 -- telescope.load_extension("notify")
 loader("telescope-live-grep-raw.nvim")
 -- loader("project.nvim") -- telescope-frecency.nvim nvim-neoclip.lua telescope-zoxide
-
--- telescope.setup({
---     extensions = { fzy_native = { override_generic_sorter = false, override_file_sorter = true } },
--- })
--- telescope.load_extension("fzy_native")
-
--- telescope.load_extension("smart_history")
-layout.custom = function(self, columns, lines)
-    local initial_options = self:_get_initial_window_options()
-    local preview = initial_options.preview
-    local results = initial_options.results
-    local prompt = initial_options.prompt
-
-    -- This sets the height/width for the whole layout
-    local height = resolve.resolve_height(self.window.results_height)(self, columns, lines)
-    local width = resolve.resolve_width(self.window.width)(self, columns, lines)
-
-    local max_results = (height > lines and lines or height)
-    local max_width = (width > columns and columns or width)
-
-    local has_preview = self.previewer
-
-    -- border size
-    local bs = self.window.border and 1 or 0
-
-    prompt.height = 1
-    results.height = max_results
-    preview.height = max_results
-    preview.width = width - math.floor(width * self.window.results_width)
-
-    prompt.width = max_width
-    results.width = max_width - (has_preview and (preview.width + bs) or 0)
-
-    prompt.line = (lines / 2) - ((max_results + (bs * 2)) / 2)
-    results.line = prompt.line + 1 + bs
-    preview.line = results.line
-
-    if not self.previewer or columns < self.preview_cutoff then
-        if self.window.border and self.window.borderchars then
-            self.window.borderchars.results[6] = self.window.borderchars.preview[6]
-            self.window.borderchars.results[7] = self.window.borderchars.preview[7]
-        end
-
-        preview.height = 0
-    end
-
-    results.col = math.ceil((columns / 2) - (width / 2) - bs)
-    prompt.col = results.col
-    preview.col = results.col + results.width + bs
-
-    return { preview = has_preview and preview, results = results, prompt = prompt }
-end
-
 M = {}
 
 M._multiopen = function(prompt_bufnr, open_cmd)
