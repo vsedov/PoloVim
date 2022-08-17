@@ -16,3 +16,6 @@ user({ "rtakasuke/vim-neko", cmd = "Neko", opt = true })
 -- end,
 -- }
 -- TODO(vsedov) (00:11:22 - 13/08/22): Temp plugin
+user({
+    "vim-scripts/vim-cursorword",
+})

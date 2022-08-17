@@ -283,7 +283,6 @@ end
 local function general_overrides()
     local normal_bg = M.get("Normal", "bg")
     local code_block = M.alter_color(normal_bg, 30)
-    local code_block = M.alter_color(normal_bg, 30)
     M.all({
         { Dim = { foreground = { from = "Normal", attr = "bg", alter = 25 } } },
         { VertSplit = { background = "NONE", foreground = { from = "NonText" } } },
@@ -374,9 +373,9 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         -- Treesitter
         -----------------------------------------------------------------------------//
-        { TSNamespace = { link = "TypeBuiltin" } },
         { TSKeywordReturn = { italic = true, foreground = { from = "Keyword" } } },
         { TSParameter = { italic = true, bold = true, foreground = "NONE" } },
+        { TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
         -- { TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
         -- FIXME: this should be removed once
         -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
