@@ -9,7 +9,7 @@ lambda.config = {
         themes = {
             dark = {
                 { "kanagawa.nvim", 0.4 },
-                { "rose", 0.9 },
+                --[[ { "rose", 0.9 }, ]]
                 { "catppuccin", 0.2 },
                 { "horizon.nvim", 0.1 },
                 { "vim-dogrun", 0.3 },
@@ -22,7 +22,7 @@ lambda.config = {
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
     save_clipboard_on_exit = true,
-    cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
+    cmp_theme = "no-border", --- @usage "border" | "no-border" | "extra"
     abbrev = {
         enable = true,
         coding_support = true, -- system wide
@@ -34,6 +34,8 @@ lambda.config = {
             "python", -- current support is python.
         },
     },
+
+    rooter_or_project = false, -- true for nvim-rooter , false for project.nvim
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_fzf_lua = false, -- This is nice, to have, when required.
@@ -52,7 +54,7 @@ lambda.config = {
         python = {
             lint = "flake8", -- pylint, pyflake, and other linters
             -- jedis documentation is better though
-            lsp = "jedi", -- jedi pylsp and pyright pylance
+            lsp = "pylance", -- jedi pylsp and pyright pylance
             pylance_pyright = {
                 use_inlay_hints = true,
             },

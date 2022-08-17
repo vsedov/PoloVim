@@ -176,3 +176,18 @@ lambda.check_version = function(major, minor, patch)
     local version = vim.version()
     return { version.major >= major and version.minor >= minor and patch >= version.patch, version }
 end
+
+--- Convert a list or map of items into a value by iterating all it's fields and transforming
+--- them with a callback
+---@generic T : table
+---@param callback fun(T, T, key: string | number): T
+---@param list T[]
+---@param accum T
+---@return T
+function lambda.fold(callback, list, accum)
+    for k, v in pairs(list) do
+        accum = callback(accum, v, k)
+        assert(accum ~= nil, "The accumulator must be returned on each iteration")
+    end
+    return accum
+end
