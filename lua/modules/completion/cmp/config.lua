@@ -132,6 +132,7 @@ elseif lambda.config.cmp_theme == "no-border" then
             item.surround_start_hl_group = ("CmpItemKindBlock%s"):format(item.kind)
             item.surround_end_hl_group = ("CmpItemKindBlock%s"):format(item.kind)
             item.menu_hl_group = ("CmpItemKindMenu%s"):format(item.kind)
+
             item.padding = " "
             item.kind = kind.presets.default[item.kind] or ""
             item.dup = vim.tbl_contains({ "path", "buffer" }, entry.source.name)

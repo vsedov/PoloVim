@@ -3,7 +3,7 @@ return {
         enable = true,
         options = {
             name = "cmp_tabnine",
-            priority = 8,
+            priority = 5,
         },
     },
     use_rg = {

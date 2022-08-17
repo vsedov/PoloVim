@@ -48,7 +48,7 @@ local function border(values)
         local fg = vim.api.nvim_get_hl_by_name(inherit, true).foreground
         if fg then
             local foreground = string.format("#%x", fg)
-            vim.api.nvim_set_hl(0, ("CmpItemKind%s"):format(kind), {
+            vim.api.nvim_set_hl(0, ("CmpItemKindMenu%s"):format(kind), {
                 fg = foreground,
             })
         end
@@ -56,9 +56,11 @@ local function border(values)
 end
 
 local function define_highlights()
+    local lsp_hls = lambda.style.lsp.highlights.Symbol
     vim.api.nvim_set_hl(0, "CmpDocumentationBorder", {
         bg = "None",
     })
+
     local values = string.format("#%x", vim.api.nvim_get_hl_by_name("Normal", true).background)
 
     if lambda.config.cmp_theme == "border" then
@@ -66,20 +68,31 @@ local function define_highlights()
     elseif lambda.config.cmp_theme == "no-border" then
         no_border(values)
     end
-    local kind_hls = {
-        { CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false } },
-        { CmpItemAbbrMatch = { foreground = { from = "Keyword" } } },
-        { CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" } },
-        { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } } },
-        -- Make the source information less prominent
+    local kind_hls = lambda.fold(
+        function(accum, value, key)
+            accum[#accum + 1] =
+                { ["CmpItemKind" .. key] = {
+                    foreground = { from = value },
+                } }
+            return accum
+        end,
+
+        lsp_hls,
         {
-            CmpItemMenu = {
-                -- fg = { from = "Pmenu", attr = "bg", alter = 30 },
-                italic = true,
-                bold = false,
+            { CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false } },
+            { CmpItemAbbrMatch = { foreground = { from = "Keyword" } } },
+            { CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" } },
+            { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } } },
+            -- Make the source information less prominent
+            {
+                CmpItemMenu = {
+                    fg = { from = "Pmenu", attr = "bg", alter = 30 },
+                    italic = true,
+                    bold = false,
+                },
             },
-        },
-    }
+        }
+    )
 
     h.plugin("Cmp", kind_hls)
 end
