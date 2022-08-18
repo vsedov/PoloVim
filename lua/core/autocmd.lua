@@ -15,7 +15,7 @@ local function stop_hl()
     if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
         return
     end
-    api.nvim_feedkeys(as.replace_termcodes("<Plug>(StopHL)"), "m", false)
+    api.nvim_feedkeys(replace_termcodes("<Plug>(StopHL)"), "m", false)
 end
 
 local function hl_search()

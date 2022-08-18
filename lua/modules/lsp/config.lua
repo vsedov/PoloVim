@@ -11,10 +11,6 @@ function config.clangd()
     require("modules.lsp.lsp.providers.c")
 end
 
-function config.rust_tools()
-    require("modules.lsp.lsp.providers.rust")
-end
-
 function config.luadev()
     require("modules.lsp.lsp.providers.luadev")
 end
