@@ -79,18 +79,20 @@ function config.fidget()
     })
 end
 
--- function config.nvim_bufferline_tabby_setup()
---         if lambda.config.tabby_or_bufferline then
---             require("packer").loader("bufferline.nvim")
---         end
--- end
-
 function config.nvim_bufferline()
     local fn = vim.fn
     local fmt = string.format
 
     local groups = require("bufferline.groups")
 
+    local function offset(name, ft)
+        return {
+            filetype = ft,
+            text = name,
+            text_align = "left",
+            highlight = "PanelDarkHeading",
+        }
+    end
     require("bufferline").setup({
         highlights = function(opts)
             local hl = opts.highlights
@@ -127,50 +129,14 @@ function config.nvim_bufferline()
             close_command = "bdelete! %d",
             right_mouse_command = "bdelete! %d",
             left_mouse_command = "buffer %d",
+
             offsets = {
-                {
-                    filetype = "pr",
-                    highlight = "PanelHeading",
-                },
-                {
-                    filetype = "dbui",
-                    highlight = "PanelHeading",
-                },
-                {
-                    filetype = "undotree",
-                    text = "Undotree",
-                    highlight = "PanelHeading",
-                },
-                {
-                    filetype = "NvimTree",
-                    text = "Explorer",
-                    highlight = "PanelHeading",
-                },
-                {
-                    filetype = "neo-tree",
-                    text = "Explorer",
-                    highlight = "PanelDarkHeading",
-                },
-                {
-                    filetype = "DiffviewFiles",
-                    text = "Diff View",
-                    highlight = "PanelHeading",
-                },
-                {
-                    filetype = "flutterToolsOutline",
-                    text = "Flutter Outline",
-                    highlight = "PanelHeading",
-                },
-                {
-                    filetype = "Outline",
-                    text = "Symbols",
-                    highlight = "PanelHeading",
-                },
-                {
-                    filetype = "packer",
-                    text = "Packer",
-                    highlight = "PanelHeading",
-                },
+                offset("DATABASE VIEWER", "dbui"),
+                offset("UNDOTREE", "undotree"),
+                offset("📁 EXPLORER", "neo-tree"),
+                offset("DIFF VIEW", "DiffviewFiles"),
+                offset("FLUTTER OUTLINE", "flutterToolsOutline"),
+                offset("PACKER", "packer"),
             },
             groups = {
                 options = {
@@ -290,20 +256,31 @@ function config.neo_tree()
     end
     local highlights = require("utils.ui.highlights")
 
-    local panel_dark_bg = highlights.get("PanelDarkBackground", "bg")
-    local tab_bg = highlights.alter_color(panel_dark_bg, 15)
-
     highlights.plugin("NeoTree", {
-
         { NeoTreeNormal = { link = "PanelBackground" } },
         { NeoTreeNormalNC = { link = "PanelBackground" } },
         { NeoTreeRootName = { underline = true } },
         { NeoTreeCursorLine = { link = "Visual" } },
         { NeoTreeStatusLine = { link = "PanelSt" } },
         { NeoTreeTabActive = { bg = { from = "PanelBackground" }, bold = true } },
-        { NeoTreeTabInactive = { bg = tab_bg, fg = { from = "Comment" } } },
-        { NeoTreeTabSeparatorInactive = { bg = tab_bg, fg = panel_dark_bg } },
-        { NeoTreeTabSeparatorActive = { inherit = "PanelBackground", fg = { from = "Comment" } } },
+        {
+            NeoTreeTabInactive = {
+                bg = { from = "PanelDarkBackground", alter = 15 },
+                fg = { from = "Comment" },
+            },
+        },
+        {
+            NeoTreeTabSeparatorInactive = {
+                inherit = "NeoTreeTabInactive",
+                fg = { from = "PanelDarkBackground", attr = "bg" },
+            },
+        },
+        {
+            NeoTreeTabSeparatorActive = {
+                inherit = "PanelBackground",
+                fg = { from = "Comment" },
+            },
+        },
     })
 
     require("neo-tree").setup({

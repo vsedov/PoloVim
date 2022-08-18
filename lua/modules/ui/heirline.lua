@@ -251,6 +251,14 @@ local LSPActive = {
         end,
     },
 }
+local get_sub_fg = function()
+    local ok, msg = pcall(require, "cool-substitute.status")
+    if ok then
+        return msg.status_color()
+    else
+        return
+    end
+end
 
 local cool_substitute = {
     condition = function()
@@ -260,7 +268,8 @@ local cool_substitute = {
         return require("cool-substitute.status").status_with_icons()
     end,
     hl = {
-        fg = require("cool-substitute.status").status_color(),
+
+        fg = get_sub_fg(),
     },
 }
 
@@ -768,6 +777,7 @@ vim.api.nvim_create_autocmd("User", {
 
 vim.api.nvim_create_autocmd("ColorScheme", {
     callback = function()
+        require("utils.ui.highlight")
         require("heirline").reset_highlights()
         require("heirline").load_colors(setup_colors())
         require("heirline").statusline:broadcast(function(self)

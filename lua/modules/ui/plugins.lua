@@ -1,14 +1,15 @@
 local conf = require("modules.ui.config")
 local ui = require("core.pack").package
-ui({ "j-hui/fidget.nvim", opt = true, ft = { "julia", "python", "lua", "c" }, config = conf.fidget })
+-- ui({ "j-hui/fidget.nvim", opt = true, ft = { "julia", "python", "lua", "c" }, config = conf.fidget })
 
 ui({ "kyazdani42/nvim-web-devicons" })
 
 ui({
-    "rebelot/heirline.nvim",
+    lambda.use_local("heirline.nvim", "contributing"),
     after = "nvim-lspconfig",
     config = function()
         require("modules.ui.heirline")
+        -- require("modules.ui.heirline_min")
     end,
 })
 
@@ -65,7 +66,7 @@ ui({
             config = function()
                 require("window-picker").setup({
                     autoselect_one = true,
-                    include_current = false,
+                    include_current = true,
                     filter_rules = {
                         -- filter using buffer options
                         bo = {
