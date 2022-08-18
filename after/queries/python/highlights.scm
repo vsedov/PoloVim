@@ -1,4 +1,2 @@
-(
- function_definition
- (identifier)@function_definition
- )
+(("class"         @keyword) (#set! conceal ""))
+(("return"        @keyword) (#set! conceal ""))
