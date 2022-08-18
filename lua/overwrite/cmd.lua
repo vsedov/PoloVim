@@ -320,3 +320,11 @@ add_cmd("StartCoffee", function()
 end, { force = true })
 
 -- vim.diagnostic.setqflist()
+add_cmd("CopilotUnload", function()
+    if lambda.is_loaded("_copilot") then
+        vim.cmd([[Copilot disable]])
+        lambda.dynamic_unload("_copilot", false)
+    else
+        vim.notify("Copilot is not loaded")
+    end
+end, { force = true })
