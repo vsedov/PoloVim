@@ -85,8 +85,7 @@ function config.catppuccin()
             mini = false,
         },
     })
-    vim.g.catppuccin_flavour = lambda.config.colourscheme.catppuccin_flavour -- latte, frappe, macchiato, mocha
-    vim.cmd.colorscheme([[catppuccin]])
+    vim.cmd([[colorscheme catppuccin]])
 end
 
 function config.kanagawa()
@@ -166,27 +165,39 @@ function config.rose()
 
     vim.cmd([[colorscheme rose-pine]])
 end
-function config.doomone()
-    vim.g.doom_one_pumblend_transparency = 3
-    vim.g.doom_one_diagnostics_text_color = true
-    vim.g.doom_one_italic_comments = true
-    vim.g.doom_one_pumblend_enable = true
 
+function config.doom()
+    -- Add color to cursor
+    vim.g.doom_one_cursor_coloring = true
+    -- Set :terminal colors
+    vim.g.doom_one_terminal_colors = true
+    -- Enable italic comments
+    vim.g.doom_one_italic_comments = true
+    -- Enable TS support
+    vim.g.doom_one_enable_treesitter = true
+    -- Color whole diagnostic text or only underline
+    vim.g.doom_one_diagnostics_text_color = true
+    -- Enable transparent background
+    vim.g.doom_one_transparent_background = false
+
+    -- Pumblend transparency
+    vim.g.doom_one_pumblend_enable = true
+    vim.g.doom_one_pumblend_transparency = 20
+
+    -- Plugins integration
     vim.g.doom_one_plugin_neorg = true
-    vim.g.doom_one_plugin_barbar = false
+    vim.g.doom_one_plugin_barbar = true
     vim.g.doom_one_plugin_telescope = true
     vim.g.doom_one_plugin_neogit = true
-    vim.g.doom_one_plugin_nvim_tree = true
+    vim.g.doom_one_plugin_nvim_tree = false
     vim.g.doom_one_plugin_dashboard = true
-    vim.g.doom_one_plugin_startify = true
+    vim.g.doom_one_plugin_startify = false
     vim.g.doom_one_plugin_whichkey = true
     vim.g.doom_one_plugin_indent_blankline = true
     vim.g.doom_one_plugin_vim_illuminate = false
     vim.g.doom_one_plugin_lspsaga = true
-end
 
-function config.doom()
-    vim.cmd.colorscheme([[doom-one]])
+    vim.cmd([[colorscheme doom-one]])
 end
 
 return config

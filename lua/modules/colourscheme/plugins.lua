@@ -12,6 +12,9 @@ colourscheme({
     opt = true,
     as = "catppuccin",
     cmd = "CatppuccinCompile",
+    setup = function()
+        vim.g.catppuccin_flavour = lambda.config.colourscheme.catppuccin_flavour -- latte, frappe, macchiato, mocha
+    end,
     config = conf.catppuccin,
 })
 
@@ -37,7 +40,6 @@ colourscheme({
 
 colourscheme({
     "NTBBloodbath/doom-one.nvim",
-    setup = conf.doomone,
     config = conf.doom,
     opt = true,
 })
