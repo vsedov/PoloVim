@@ -342,15 +342,12 @@ editor({
 })
 editor({
     "AckslD/nvim-trevJ.lua",
-    module = "trevj",
     keys = "<leader>j",
-    setup = function()
+    config = function()
+        require("trevj").setup()
         vim.keymap.set("n", "<leader>j", function()
             require("trevj").format_at_cursor()
         end)
-    end,
-    config = function()
-        require("trevj").setup()
     end,
 })
 
@@ -362,13 +359,13 @@ editor({
 
 -- What tf is this plugin ?
 editor({
-    "andrewferrier/vim-wrapping-softhard",
+    "andrewferrier/wrapping.nvim",
     event = "BufEnter",
     config = function()
         require("wrapping").setup()
     end,
 })
--- fix terminal color
+-- fix terminal colofr
 editor({
     "norcalli/nvim-terminal.lua",
     opt = true,
