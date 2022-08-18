@@ -151,24 +151,20 @@ end
 
 lambda.dynamic_unload = function(module_name, reload)
     reload = reload or false
-
     for module, _ in pairs(package.loaded) do
         if module:match(module_name) then
-            if string.find(module, require("utils.helpers.helper").escape_pattern) then
-                lambda.unload(module)
-            end
+            lambda.unload(module)
+            vim.notify(module .. "Unloaded succesfully ")
             if reload then
                 require(module)
             end
         end
     end
 end
-
 --- Check neovim version
----@param major Major release tag
----@param minor Minor release tag
----@param patch Patch tag
----@return {if all values are greater or qual , version}
+---@param major integer Major release tag
+---@param minor integer Minor release tag
+---@param patch integer Patch tag
 lambda.check_version = function(major, minor, patch)
     major = major or 0
     minor = minor or 0
@@ -190,4 +186,20 @@ function lambda.fold(callback, list, accum)
         assert(accum ~= nil, "The accumulator must be returned on each iteration")
     end
     return accum
+end
+
+--- Search loaded packages
+---@param package_name string If a package contains or has a certain string it
+-- will returnvalue
+lambda.is_loaded = function(package_name)
+    return lambda.lib.when(package.loaded[package_name] ~= nil, function()
+        return package.loaded[package_name]
+    end, function()
+        for i, v in pairs(package.loaded) do
+            if string.find(i, package_name) then
+                return true
+            end
+        end
+        return false
+    end)
 end

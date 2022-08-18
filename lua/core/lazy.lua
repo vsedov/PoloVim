@@ -43,9 +43,9 @@ local function GetItem(colourschemes)
             return colourschemes[i][1]
         end
     end
-    return "rose"
+    return colourschemes[math.random(#colourschemes)][1]
 end
-local function loadscheme()
+local function load_colourscheme()
     -- local theme
     -- if daylight() == "dark" then
     --     theme = lambda.config.colourscheme.themes.dark
@@ -54,9 +54,8 @@ local function loadscheme()
     -- end
     local loading_theme = GetItem(lambda.config.colourscheme.themes.dark)
     loader(loading_theme)
-    -- loader("kanagawa.nvim")
 end
-loadscheme()
+load_colourscheme()
 require("vscripts.cursorhold")
 vim.g.cursorhold_updatetime = 100
 require("utils.ui.highlights")

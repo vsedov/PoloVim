@@ -9,10 +9,10 @@ lambda.config = {
         themes = {
             dark = {
                 { "kanagawa.nvim", 0.4 },
-                --[[ { "rose", 0.9 }, ]]
+                { "rose", 0.9 },
                 { "catppuccin", 0.2 },
-                { "horizon.nvim", 0.1 },
-                { "vim-dogrun", 0.3 },
+                -- { "horizon.nvim", 0.1 },
+                -- { "vim-dogrun", 0.3 },
                 { "doom-one.nvim", 0.5 },
             },
             light = {},
@@ -40,7 +40,7 @@ lambda.config = {
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_fzf_lua = false, -- This is nice, to have, when required.
     use_dashboard = false, -- set to false to not see this
-    use_session = true, -- set to false to disable session
+    use_session = false, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = false, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...

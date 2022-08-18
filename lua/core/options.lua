@@ -31,7 +31,7 @@ local function load_options()
         smarttab = true,
         smartindent = true,
         shiftround = true,
-        lazyredraw = true,
+        lazyredraw = false,
         timeout = true,
         ttimeout = true,
         timeoutlen = 500,

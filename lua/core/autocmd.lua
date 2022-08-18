@@ -15,21 +15,15 @@ local function stop_hl()
     if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
         return
     end
-    api.nvim_feedkeys(replace_termcodes("<Plug>(StopHL)"), "m", false)
+    api.nvim_feedkeys(as.replace_termcodes("<Plug>(StopHL)"), "m", false)
 end
-
--- [C]: in function 'nvim_replace_termcodes'
---         /home/viv/.config/nvim/lua/core/autocmd.lua:14: in function 'stop_hl'
---         /home/viv/.config/nvim/lua/core/autocmd.lua:27: in function 'hl_search'
---         /home/viv/.config/nvim/lua/core/autocmd.lua:35: in function </home/viv/.config/nvim/lua/core/autocmd.lua:34>
--- Press ENTER or type command to continue
 
 local function hl_search()
     local col = api.nvim_win_get_cursor(0)[2]
     local curr_line = api.nvim_get_current_line()
     local ok, match = pcall(fn.matchstrpos, curr_line, fn.getreg("/"), 0)
     if not ok then
-        return vim.notify(match, "error", { title = "HL SEARCH" })
+        return
     end
     local _, p_start, p_end = unpack(match)
     -- if the cursor is in a search result, leave highlighting on
@@ -56,8 +50,20 @@ lambda.augroup("VimrcIncSearchHighlight", {
         pattern = { "hlsearch" },
         command = function()
             vim.schedule(function()
-                vim.cmd("redrawstatus")
+                vim.cmd.redrawstatus()
             end)
+        end,
+    },
+    {
+        event = "RecordingEnter",
+        command = function()
+            vim.opt.hlsearch = false
+        end,
+    },
+    {
+        event = "RecordingLeave",
+        command = function()
+            vim.opt.hlsearch = true
         end,
     },
 })
