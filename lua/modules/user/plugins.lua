@@ -17,5 +17,6 @@ user({ "rtakasuke/vim-neko", cmd = "Neko", opt = true })
 -- }
 -- TODO(vsedov) (00:11:22 - 13/08/22): Temp plugin
 user({
+    event = "BufEnter",
     "vim-scripts/vim-cursorword",
 })
