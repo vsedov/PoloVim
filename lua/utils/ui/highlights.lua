@@ -391,6 +391,7 @@ local function general_overrides()
         -- LSP
         -----------------------------------------------------------------------------//
         { LspCodeLens = { inherit = "Comment", bold = true, italic = false } },
+        { LspCodeLensSeparator = { bold = false, italic = false } },
         { LspReferenceText = { underline = true, background = "NONE", sp = P.comment_fg } },
         { LspReferenceRead = { underline = true, background = "NONE", sp = P.comment_fg } },
         -- This represents when a reference is assigned which is more interesting than regular
@@ -467,12 +468,15 @@ end
 
 local function set_sidebar_highlight()
     M.all({
-        { PanelDarkBackground = { bg = { from = "Normal", alter = -43 } } },
+        { PanelDarkBackground = { bg = { from = "Normal", alter = -42 } } },
         { PanelDarkHeading = { inherit = "PanelDarkBackground", bold = true } },
         { PanelBackground = { background = { from = "Normal", alter = -8 } } },
         { PanelHeading = { inherit = "PanelBackground", bold = true } },
         {
-            PanelWinSeparator = { inherit = "PanelBackground", foreground = { from = "WinSeparator" } },
+            PanelWinSeparator = {
+                inherit = "PanelBackground",
+                foreground = { from = "WinSeparator" },
+            },
         },
         { PanelStNC = { link = "PanelWinSeparator" } },
         { PanelSt = { background = { from = "Visual", alter = -20 } } },
