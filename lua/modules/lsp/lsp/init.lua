@@ -1,5 +1,5 @@
 local lspconfig = require("lspconfig")
-local enhance_attach = require("modules.lsp.lsp.utils").enhance_attach
+local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 if vim.bo.filetype ~= "zig" and lambda.config.lsp.use_semantic_token then
     require("modules.lsp.lsp.semantic_tokens")
 end
@@ -45,11 +45,6 @@ lspconfig.gopls.setup(enhance_attach({
         usePlaceholders = true,
         completeUnimported = true,
     },
-}))
-
-lspconfig.jsonls.setup(enhance_attach({
-    cmd = { "vscode-json-languageserver", "--stdio" },
-    filetypes = { "json", "jsonc" },
 }))
 
 lspconfig.sqls.setup(enhance_attach({

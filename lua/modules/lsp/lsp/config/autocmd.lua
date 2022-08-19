@@ -10,7 +10,7 @@ local M = {}
 function M.setup_autocommands(client, bufnr)
     -- show line diagnostics
     if client.name ~= "julials" then
-        require("modules.lsp.lsp.utils.setup_autocmd")
+        require("modules.lsp.lsp.config.setup_autocmd")
     end
 
     local popup_toggle = false

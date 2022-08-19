@@ -9,7 +9,7 @@ lsp_installer.settings({
     },
 })
 local function on_server_ready(server)
-    local opts = require("modules.lsp.lsp.utils").get_common_opts()
+    local opts = require("modules.lsp.lsp.config").get_common_opts()
     local has_custom_config, server_custom_config = pcall(require, "core.lsp.server_settings." .. server.name)
     if has_custom_config then
         if type(server_custom_config) == "function" then

@@ -4,7 +4,7 @@ local M = {}
 local api = vim.api
 local fn = vim.fn
 
-local config = require("modules.lsp.lsp.utils.config")
+local config = require("modules.lsp.lsp.config.config")
 -- TODO: Change this to fit config - call config from config.lua
 function M.setup()
     vim.diagnostic.config(config.diagnostics)

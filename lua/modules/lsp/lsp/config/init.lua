@@ -24,9 +24,7 @@ local cfg = {
     padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
 }
 local M = {}
-local rtest
--- local autocmds = require("lvim.core.autocmds")
-local config = require("modules.lsp.lsp.utils.config")
+local config = require("modules.lsp.lsp.config.config")
 
 local function add_lsp_buffer_keybindings(client, bufnr)
     local mappings = {
@@ -61,7 +59,7 @@ function M.common_on_init(client, bufnr)
 end
 
 function M.common_capabilities()
-    local capabilities = require("modules.lsp.lsp.utils.capabilities")
+    local capabilities = require("modules.lsp.lsp.config.capabilities")
     local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 
     if status_ok then
@@ -78,7 +76,7 @@ function M.common_on_attach(client, bufnr)
 
     require("lsp_signature").on_attach(cfg, bufnr)
     add_lsp_buffer_keybindings(client, bufnr)
-    require("modules.lsp.lsp.utils.autocmd").setup_autocommands(client, bufnr)
+    require("modules.lsp.lsp.config.autocmd").setup_autocommands(client, bufnr)
 end
 
 function M.get_common_opts()
@@ -95,8 +93,8 @@ function M.setup()
         fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
     end
 
-    require("modules.lsp.lsp.utils.handlers").setup()
-    require("modules.lsp.lsp.utils.list")
+    require("modules.lsp.lsp.config.handlers").setup()
+    require("modules.lsp.lsp.config.list")
 end
 
 function M.enhance_attach(user_config)

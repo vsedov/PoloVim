@@ -162,7 +162,7 @@ local container = {
 
             ["<leader>;"] = {
                 function()
-                    require("modules.lsp.lsp.utils.list").change_active("Quickfix")
+                    require("modules.lsp.lsp.config.list").change_active("Quickfix")
                     vim.lsp.buf.references()
                 end,
                 "utils list quickfix change",

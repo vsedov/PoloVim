@@ -11,12 +11,19 @@ lsp({
 })
 
 lsp({
-    "williamboman/nvim-lsp-installer",
-    cmd = { "LspInstall", "LspInstallInfo", "LspInstallLog" },
-    opt = true,
-    requires = "nvim-lspconfig",
-    config = conf.lsp_install,
+    "williamboman/mason.nvim",
+    after = "nvim-lspconfig",
+    requires = { "nvim-lspconfig", "williamboman/mason-lspconfig.nvim" },
+    config = conf.mason_setup,
 })
+
+-- until i figure out how to install custom languages servers with mason, il keep this here as a handy backup .
+-- lsp({
+--     "williamboman/nvim-lsp-installer",
+--     opt = true,
+--     requires = "nvim-lspconfig",
+--     config = conf.lsp_install,
+-- })
 
 lsp({ "ii14/lsp-command", opt = true, after = "nvim-lspconfig" })
 lsp({
@@ -25,14 +32,6 @@ lsp({
     ft = { "c", "cpp" },
     requires = "nvim-lspconfig",
     config = conf.clangd,
-})
-
-lsp({
-    "simrat39/rust-tools.nvim",
-    opt = true,
-    ft = { "rust" },
-    requires = "nvim-lspconfig",
-    config = conf.rust_tools,
 })
 
 lsp({ "max397574/lua-dev.nvim", ft = "lua", opt = true, requires = "nvim-lspconfig", config = conf.luadev })

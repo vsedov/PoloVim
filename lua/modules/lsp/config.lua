@@ -1,6 +1,6 @@
 local config = {}
 function config.nvim_lsp_setup()
-    require("modules.lsp.lsp.utils").setup()
+    require("modules.lsp.lsp.config").setup()
 end
 
 function config.nvim_lsp()
@@ -13,6 +13,22 @@ end
 
 function config.luadev()
     require("modules.lsp.lsp.providers.luadev")
+end
+
+function config.mason_setup()
+    local get_config = require("modules.lsp.lsp.mason.lsp_servers")
+    require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
+    require("mason-lspconfig").setup({
+        automatic_installation = {
+            exclude = { "sumneko_lua", "clangd", "ltex", "texlab", "pyright", "jedi-language-server" },
+        },
+    })
+    require("mason-lspconfig").setup_handlers({
+        function(name)
+            local config = get_config(name)
+            require("lspconfig")[name].setup(config)
+        end,
+    })
 end
 
 function config.lsp_install()

@@ -16,13 +16,24 @@ function M.setup()
     local diagnostics = null_ls.builtins.diagnostics
     local hover = null_ls.builtins.hover
     local actions = null_ls.builtins.code_actions
-
-    local config = require("modules.lsp.lsp.utils.config").null_ls
+    local config = require("modules.lsp.lsp.config.config").null_ls
+    local mason_package = require("mason-core.package")
+    local format = config.formatter
+    local diagnostic = config.diagnostic
+    for _, package in ipairs(require("mason-registry").get_installed_packages()) do
+        local package_categories = package.spec.categories[1]
+        if package_categories == mason_package.Cat.Formatter then
+            table.insert(format, package.name)
+        end
+        if package_categories == mason_package.Cat.Linter then
+            table.insert(diagnostic, package.name)
+        end
+    end
 
     local registered_sources = {}
     for builtin, sources in pairs({
-        formatting = config.formatter,
-        diagnostics = config.diagnostic,
+        formatting = format,
+        diagnostics = diagnostic,
         code_actions = config.code_action,
     }) do
         for _, source in ipairs(sources) do
