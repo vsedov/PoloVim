@@ -82,61 +82,98 @@ end
 function config.nvim_bufferline()
     local fn = vim.fn
     local fmt = string.format
+    local icons = lambda.style.icons.lsp
 
+    local highlights = require("utils.ui.highlights")
     local groups = require("bufferline.groups")
-
-    local function offset(name, ft)
-        return {
-            filetype = ft,
-            text = name,
-            text_align = "left",
-            highlight = "PanelDarkHeading",
-        }
-    end
+    local data = highlights.get("Normal")
+    local normal_bg, normal_fg = data.background, data.foreground
+    local visible = highlights.alter_color(normal_fg, -40)
+    local visible_tab = { highlight = "VisibleTab", attribute = "bg" }
+    require("utils.ui.highlights").plugin("bufferline", {
+        { VisibleTab = { background = { from = "Normal", alter = 20 }, bold = true } },
+    })
     require("bufferline").setup({
-        highlights = function(opts)
-            local hl = opts.highlights
-            local visible = hl.buffer_visible.fg
-            local selected = hl.buffer_selected.fg
-            return {
-                info = { undercurl = true, fg = hl.info.fg },
-                info_selected = { undercurl = true, bold = true, italic = true, fg = selected },
-                info_visible = { undercurl = true, fg = visible },
-                warning = { undercurl = true, fg = hl.warning.fg },
-                warning_selected = { undercurl = true, bold = true, italic = true, fg = selected },
-                warning_visible = { undercurl = true, fg = visible },
-                error = { undercurl = true, fg = hl.error.fg },
-                error_selected = { undercurl = true, bold = true, italic = true, fg = selected },
-                error_visible = { undercurl = true, fg = visible },
-                hint = { undercurl = true, fg = hl.hint.fg },
-                hint_selected = { undercurl = true, bold = true, italic = true, fg = selected },
-                hint_visible = { undercurl = true, fg = visible },
-            }
+        highlights = function(defaults)
+            local hl = lambda.fold(function(accum, attrs, name)
+                local formatted = name:lower()
+                local is_group = formatted:match("group")
+                local is_offset = formatted:match("offset")
+                local is_separator = formatted:match("separator")
+                local diagnostic = vim.regex([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
+                if diagnostic:match_str(formatted) then
+                    attrs.fg = normal_fg
+                end
+                if not is_group or (is_group and is_separator) then
+                    attrs.bg = normal_bg
+                end
+                if not is_group and not is_offset and is_separator then
+                    attrs.fg = normal_bg
+                end
+                accum[name] = attrs
+                return accum
+            end, defaults.highlights)
+
+            -- Make the visible buffers and selected tab more "visible"
+            hl.buffer_visible.bold = true
+            hl.buffer_visible.italic = true
+            -- hl.buffer_visible.fg = visible
+            hl.tab_selected.bold = true
+            -- hl.tab_selected.bg = visible_tab
+            -- hl.tab_separator_selected.bg = visible_tab
+            return hl
         end,
         options = {
-            debug = {
-                logging = true,
-            },
-            navigation = { mode = "uncentered" },
+            debug = { logging = true },
             mode = "buffers", -- tabs
             sort_by = "insert_after_current",
+            right_mouse_command = "vert sbuffer %d",
             show_close_icon = false,
+            indicator = { style = "underline" },
             show_buffer_close_icons = true,
             diagnostics = "nvim_lsp",
-            diagnostics_indicator = false,
+            diagnostics_indicator = function(count, level)
+                return (icons[level] or "?") .. " " .. count
+            end,
             diagnostics_update_in_insert = false,
-
-            close_command = "bdelete! %d",
-            right_mouse_command = "bdelete! %d",
-            left_mouse_command = "buffer %d",
-
             offsets = {
-                offset("DATABASE VIEWER", "dbui"),
-                offset("UNDOTREE", "undotree"),
-                offset("📁 EXPLORER", "neo-tree"),
-                offset("DIFF VIEW", "DiffviewFiles"),
-                offset("FLUTTER OUTLINE", "flutterToolsOutline"),
-                offset("PACKER", "packer"),
+                {
+                    text = "EXPLORER",
+                    filetype = "neo-tree",
+                    highlight = "PanelHeading",
+                    text_align = "left",
+                    separator = true,
+                },
+                {
+                    text = " FLUTTER OUTLINE",
+                    filetype = "flutterToolsOutline",
+                    highlight = "PanelHeading",
+                    separator = true,
+                },
+                {
+                    text = "UNDOTREE",
+                    filetype = "undotree",
+                    highlight = "PanelHeading",
+                    separator = true,
+                },
+                {
+                    text = " PACKER",
+                    filetype = "packer",
+                    highlight = "PanelHeading",
+                    separator = true,
+                },
+                {
+                    text = " DATABASE VIEWER",
+                    filetype = "dbui",
+                    highlight = "PanelHeading",
+                    separator = true,
+                },
+                {
+                    text = " DIFF VIEW",
+                    filetype = "DiffviewFiles",
+                    highlight = "PanelHeading",
+                    separator = true,
+                },
             },
             groups = {
                 options = {
@@ -147,6 +184,7 @@ function config.nvim_bufferline()
                     groups.builtin.ungrouped,
                     {
                         name = "Dependencies",
+                        icon = "",
                         highlight = { fg = "#ECBE7B" },
                         matcher = function(buf)
                             return vim.startswith(buf.path, fmt("%s/site/pack/packer", fn.stdpath("data")))
@@ -282,7 +320,7 @@ function config.neo_tree()
             },
         },
     })
-
+    vim.g.neo_tree_remove_legacy_commands = 1
     require("neo-tree").setup({
         sources = {
             "filesystem",
@@ -487,6 +525,76 @@ function config.pretty_fold()
             "@brief%s*", -- (for cpp) Remove '@brief' and all spaces after.
         },
     })
+end
+
+function config.ufo()
+    local ufo = require("ufo")
+    local hl = require("utils.ui.highlights")
+    local opt, get_width = vim.opt, vim.api.nvim_strwidth
+
+    local function handler(virt_text, _, _, width, truncate, ctx)
+        local result = {}
+        local padding = ""
+        local cur_width = 0
+        local suffix_width = get_width(ctx.text)
+        local target_width = width - suffix_width
+
+        for _, chunk in ipairs(virt_text) do
+            local chunk_text = chunk[1]
+            local chunk_width = get_width(chunk_text)
+            if target_width > cur_width + chunk_width then
+                table.insert(result, chunk)
+            else
+                chunk_text = truncate(chunk_text, target_width - cur_width)
+                local hl_group = chunk[2]
+                table.insert(result, { chunk_text, hl_group })
+                chunk_width = get_width(chunk_text)
+                if cur_width + chunk_width < target_width then
+                    padding = padding .. (" "):rep(target_width - cur_width - chunk_width)
+                end
+                break
+            end
+            cur_width = cur_width + chunk_width
+        end
+
+        local end_text = ctx.end_virt_text
+        -- reformat the end text to trim excess whitespace from indentation usually the first item is indentation
+        if end_text[1] and end_text[1][1] then
+            end_text[1][1] = end_text[1][1]:gsub("[%s\t]+", "")
+        end
+
+        table.insert(result, { " ⋯ ", "UfoFoldedEllipsis" })
+        vim.list_extend(result, end_text)
+        table.insert(result, { padding, "" })
+        return result
+    end
+
+    opt.foldlevelstart = 99
+    opt.sessionoptions:append("folds")
+
+    lambda.augroup("UfoSettings", {
+        {
+            event = "FileType",
+            pattern = { "norg" },
+            command = function()
+                ufo.detach()
+            end,
+        },
+    })
+
+    ufo.setup({
+        open_fold_hl_timeout = 0,
+        fold_virt_text_handler = handler,
+        enable_fold_end_virt_text = true,
+        preview = { win_config = { winhighlight = "Normal:Normal,FloatBorder:Normal" } },
+        provider_selector = function()
+            return { "treesitter", "indent" }
+        end,
+    })
+
+    vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "open all folds" })
+    vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "close all folds" })
+    vim.keymap.set("n", "zP", ufo.peekFoldedLinesUnderCursor, { desc = "preview fold" })
 end
 
 function config.blankline()

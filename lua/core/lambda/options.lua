@@ -54,11 +54,12 @@ lambda.config = {
         python = {
             lint = "flake8", -- pylint, pyflake, and other linters
             -- jedis documentation is better though
-            lsp = "pylance", -- jedi pylsp and pyright pylance
+            lsp = "jedi", -- jedi pylsp and pyright pylance
             pylance_pyright = {
                 use_inlay_hints = true,
             },
             format = "yapf", -- black
         },
     },
+    main_file_types = {"python", "norg", "tex", "lua", "c", "cpp", "rust"}
 }

@@ -18,7 +18,6 @@ ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
 ui({
     "akinsho/bufferline.nvim",
     config = conf.nvim_bufferline,
-    -- setup = conf.nvim_bufferline_tabby_setup,
     opt = true,
 })
 
@@ -113,10 +112,17 @@ ui({
     config = conf.transparent,
 })
 
+-- ui({
+--     "anuvyklack/pretty-fold.nvim",
+--     -- ft = { "python", "c", "lua", "cpp", "java" },
+--     config = conf.pretty_fold,
+-- })
+
 ui({
-    "anuvyklack/pretty-fold.nvim",
-    ft = { "python", "c", "lua", "cpp", "java" },
-    config = conf.pretty_fold,
+    "kevinhwang91/nvim-ufo",
+    ft = lambda.config.main_file_types,
+    requires = { "kevinhwang91/promise-async", after = "nvim-ufo" },
+    config = conf.ufo,
 })
 
 ui({ "kazhala/close-buffers.nvim", cmd = { "BDelete", "BWipeout" }, config = conf.buffers_close })
@@ -149,4 +155,39 @@ ui({
 ui({
     "xiyaowong/virtcolumn.nvim",
     event = "BufEnter",
+})
+
+ui({
+    "doums/suit.nvim",
+    event = "BufEnter",
+    config = function()
+        require("suit").setup({
+            input = {
+                -- default prompt value
+                default_prompt = "Input: ",
+                -- border of the window (see `:h nvim_open_win`)
+                border = lambda.style.border.type_0,
+                -- highlight group for input
+                hl_input = "NormalFloat",
+                -- highlight group for prompt
+                hl_prompt = "NormalFloat",
+                -- highlight group for window border
+                hl_border = "FloatBorder",
+            },
+            select = {
+                -- default prompt value
+                default_prompt = "Select one of: ",
+                -- border of the window (see `:h nvim_open_win`)
+                border = "single",
+                -- highlight group for select list
+                hl_select = "NormalFloat",
+                -- highlight group for prompt
+                hl_prompt = "NormalFloat",
+                -- highlight group for current selected item
+                hl_selected_item = "PmenuSel",
+                -- highlight group for window border
+                hl_border = "FloatBorder",
+            },
+        })
+    end,
 })

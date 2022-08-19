@@ -181,6 +181,7 @@ end
 ---@param accum T
 ---@return T
 function lambda.fold(callback, list, accum)
+    accum = accum or {}
     for k, v in pairs(list) do
         accum = callback(accum, v, k)
         assert(accum ~= nil, "The accumulator must be returned on each iteration")
@@ -202,4 +203,20 @@ lambda.is_loaded = function(package_name)
         end
         return false
     end)
+end
+
+---Find an item in a list
+---@generic T
+---@param matcher fun(arg: T):boolean
+---@param haystack T[]
+---@return T
+lambda.find = function(matcher, haystack)
+    local found
+    for _, needle in ipairs(haystack) do
+        if matcher(needle) then
+            found = needle
+            break
+        end
+    end
+    return found
 end

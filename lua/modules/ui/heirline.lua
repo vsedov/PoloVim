@@ -777,12 +777,12 @@ vim.api.nvim_create_autocmd("User", {
 
 vim.api.nvim_create_autocmd("ColorScheme", {
     callback = function()
-        require("utils.ui.highlight")
         require("heirline").reset_highlights()
         require("heirline").load_colors(setup_colors())
         require("heirline").statusline:broadcast(function(self)
             self._win_stl = nil
         end)
+        require("utils.ui.highlights")
     end,
     group = "Heirline",
 })
