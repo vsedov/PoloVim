@@ -61,5 +61,5 @@ lambda.config = {
             format = "yapf", -- black
         },
     },
-    main_file_types = {"python", "norg", "tex", "lua", "c", "cpp", "rust"}
+    main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
