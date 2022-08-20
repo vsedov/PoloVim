@@ -16,6 +16,7 @@ function M.setup()
     local diagnostics = null_ls.builtins.diagnostics
     local hover = null_ls.builtins.hover
     local actions = null_ls.builtins.code_actions
+
     local config = require("modules.lsp.lsp.config.config").null_ls
     local mason_package = require("mason-core.package")
     local format = config.formatter

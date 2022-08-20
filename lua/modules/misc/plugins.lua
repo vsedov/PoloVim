@@ -255,3 +255,11 @@ misc({
     cmd = "CarbonNow",
     opt = true,
 })
+
+misc({
+    "nacro90/numb.nvim",
+    event = "CmdlineEnter",
+    config = function()
+        require("numb").setup()
+    end,
+})

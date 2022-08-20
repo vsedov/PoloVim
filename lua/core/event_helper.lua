@@ -50,6 +50,7 @@ end
 
 local called_func = false
 local timer = nil
+
 local space_used
 function M.reset_timer(text_changed)
     if timer and not vim.loop.is_closing(timer) then

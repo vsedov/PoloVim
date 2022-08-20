@@ -25,7 +25,7 @@ function options:load_options()
             mouse = "a",
             textwidth = 120, -- wrap lines at 120 chars. 80 is somewaht antiquated with nowadays displays.
             updatetime = 300, -- Vim waits after you stop typing before it triggers the plugin is governed by the setting updatetime
-            smartcase = true, -- ... but not it begins with upper case
+            smartcase = true, -- ... but not it begins with upper caseredraw
             incsearch = true, -- Shows the match while typing
             hlsearch = true, -- Highlight found searches
             grepformat = "%f:%l:%m,%m\\ %f\\ match%ts,%f", -- "%f:%l:%c:%m";
