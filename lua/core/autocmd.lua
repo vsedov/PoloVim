@@ -50,24 +50,22 @@ lambda.augroup("VimrcIncSearchHighlight", {
         pattern = { "hlsearch" },
         command = function()
             vim.schedule(function()
-                vim.cmd.redrawstatus()
                 vim.cmd("redrawstatus")
             end)
         end,
     },
-    --[[ { ]]
-    --[[     event = "RecordingEnter", ]]
-    --[[     command = function() ]]
-    --[[         vim.opt.hlsearch = false ]]
-    --[[     end, ]]
-    --[[ }, ]]
-    --[[ { ]]
-    --[[     event = "RecordingLeave", ]]
-    --[[     command = function() ]]
-    --[[         vim.opt.hlsearch = true ]]
-    --[[     end, ]]
-    --[[ }, ]]
-    --[[]]
+    {
+        event = "RecordingEnter",
+        command = function()
+            vim.opt.hlsearch = false
+        end,
+    },
+    {
+        event = "RecordingLeave",
+        command = function()
+            vim.opt.hlsearch = true
+        end,
+    },
 })
 
 local smart_close_filetypes = {
