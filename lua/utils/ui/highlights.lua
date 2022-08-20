@@ -375,22 +375,22 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         -- Diff
         -----------------------------------------------------------------------------//
-        -- { DiffAdd = { background = "#26332c", foreground = "NONE", underline = false } },
-        -- { DiffDelete = { background = "#572E33", foreground = "#5c6370", underline = false } },
-        -- { DiffChange = { background = "#273842", foreground = "NONE", underline = false } },
-        -- { DiffText = { background = "#314753", foreground = "NONE" } },
-        -- { diffAdded = { link = "DiffAdd" } },
-        -- { diffChanged = { link = "DiffChange" } },
-        -- { diffRemoved = { link = "DiffDelete" } },
-        -- { diffBDiffer = { link = "WarningMsg" } },
-        -- { diffCommon = { link = "WarningMsg" } },
-        -- { diffDiffer = { link = "WarningMsg" } },
-        -- { diffFile = { link = "Directory" } },
-        -- { diffIdentical = { link = "WarningMsg" } },
-        -- { diffIndexLine = { link = "Number" } },
-        -- { diffIsA = { link = "WarningMsg" } },
-        -- { diffNoEOL = { link = "WarningMsg" } },
-        -- { diffOnly = { link = "WarningMsg" } },
+        --[[ { DiffAdd = { background = "#26332c", foreground = "NONE", underline = false } }, ]]
+        --[[ { DiffDelete = { background = "#572E33", foreground = "#5c6370", underline = false } }, ]]
+        --[[ { DiffChange = { background = "#273842", foreground = "NONE", underline = false } }, ]]
+        --[[ { DiffText = { background = "#314753", foreground = "NONE" } }, ]]
+        { diffAdded = { link = "DiffAdd" } },
+        { diffChanged = { link = "DiffChange" } },
+        { diffRemoved = { link = "DiffDelete" } },
+        { diffBDiffer = { link = "WarningMsg" } },
+        { diffCommon = { link = "WarningMsg" } },
+        { diffDiffer = { link = "WarningMsg" } },
+        { diffFile = { link = "Directory" } },
+        { diffIdentical = { link = "WarningMsg" } },
+        { diffIndexLine = { link = "Number" } },
+        { diffIsA = { link = "WarningMsg" } },
+        { diffNoEOL = { link = "WarningMsg" } },
+        { diffOnly = { link = "WarningMsg" } },
         -----------------------------------------------------------------------------//
         -- colorscheme overrides
         -----------------------------------------------------------------------------//
@@ -542,30 +542,38 @@ end
 
 local function colorscheme_overrides()
     local overrides = {
-        ["horizon"] = {
-            { Normal = { fg = "#C1C1C1" } }, -- TODO: Upstream Normal foreground colour is incorrect
-            { WinSeparator = { foreground = "#4b4c53" } },
+        ["doom-one"] = {
+            { TSNamespace = { foreground = P.blue } },
             { TSVariable = { foreground = { from = "Normal" } } },
+            { CursorLineNr = { foreground = { from = "Keyword" } } },
+            { LineNr = { background = "NONE" } },
+            { NeoTreeIndentMarker = { link = "Comment" } },
+            { NeoTreeRootName = { bold = true, italic = true, foreground = "LightMagenta" } },
+        },
+        ["horizon"] = {
+            { Normal = { fg = "#C1C1C1" } }, -- TODO: Upstream normal foreground color
+            { Constant = { bold = true } },
             { NonText = { fg = { from = "Comment" } } },
             { LineNr = { background = "NONE" } },
-            { TabLineSel = { foreground = { from = "SpecialKey" } } },
-            -- panel window overrides
+            { TabLineSel = { background = { from = "SpecialKey", attr = "fg" } } },
+            { VisibleTab = { background = { from = "Normal", alter = 20 }, bold = true } },
+            { commentTSConstant = { inherit = "Constant", bold = true } },
+            { luaTSConstructor = { inherit = "Type", italic = false, bold = false } },
             { PanelBackground = { link = "Normal" } },
-            { PanelDarkBackground = { background = { from = "Normal", alter = -20 } } },
-            { PanelHeading = { inherit = "Normal", bold = true } },
-            {
-                PanelWinSeparator = { inherit = "PanelBackground", foreground = { from = "WinSeparator" } },
-            },
-            -- plugin overrides
-            { Headline = { background = { from = "Normal", alter = 20 } } }, -- TODO: set ColorColumn instead as this normally links to that
-            { WhichkeyFloat = { link = "NormalFloat" } },
-            { NeoTreeWinSeparator = { inherit = "Normal", fg = "bg" } },
+            { PanelWinSeparator = { inherit = "PanelBackground", fg = { from = "WinSeparator" } } },
+            { PanelHeading = { bg = "bg", bold = true, fg = { from = "Normal", alter = -30 } } },
+            { PanelDarkBackground = { background = { from = "Normal", alter = -25 } } },
+            { PanelDarkHeading = { inherit = "PanelDarkBackground", bold = true } },
+            -- TODO: set ColorColumn instead as this normally links to that
+            { Headline = { background = { from = "Normal", alter = 20 } } },
         },
     }
     local hls = overrides[vim.g.colors_name]
-    if hls then
-        M.all(hls)
+    if not hls then
+        return
     end
+
+    M.all(hls)
 end
 
 local function user_highlights()
