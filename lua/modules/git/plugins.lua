@@ -77,12 +77,14 @@ git({
         "<localleader>gp",
     },
     opt = true,
+    setup = conf.git_setup("neogit"),
     cmd = { "Neogit" },
     config = conf.neogit,
 })
 
 git({ "ruifm/gitlinker.nvim", module = "gitlinker", config = conf.gitlinker })
 
+--  I think this gets loaded in the first place
 git({
     "tanvirtin/vgit.nvim", -- gitsign has similar features
     cmd = { "VGit" },
@@ -106,13 +108,26 @@ git({
     config = conf.git_conflict,
 })
 
+--[[ My work flow requires me to use both neogit and fugative, so what i think  ]]
+--[[ i will do is load this if Neogit is loaded as well, just to be in the same thing ]]
 git({
     "tpope/vim-fugitive",
-    cmd = { "Gvsplit", "Git", "Gedit", "Gstatus", "Gdiffsplit", "Gvdiffsplit" },
+    setup = conf.git_setup("vim-fugitive"),
     opt = true,
 })
 
-git({ "LhKipp/nvim-git-fixer", cmd = { "FixUp", "Ammend" }, opt = true, config = conf.git_fixer })
+git({
+    "LhKipp/nvim-git-fixer",
+    cmd = { "Fixup", "Ammend", "Squash", "Commit", "Reword" },
+    setup = conf.git_setup("nvim-git-fixer"),
+    requires = {
+        "telescope.nvim",
+        "tpope/vim-fugitive",
+        "lewis6991/gitsigns.nvim",
+    },
+    opt = true,
+    config = conf.git_fixer,
+})
 
 git({ "rbong/vim-flog", requires = "vim-fugitive", cmd = { "Flog", "Flogsplit" }, opt = true })
 -- return git

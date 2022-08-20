@@ -1,5 +1,33 @@
 local config = {}
 
+-- TODO(vsedov) (03:11:32 - 20/08/22): Make sure that hydra modules
+-- are loaded based on this ,
+function config.git_setup(package_name)
+    lambda.augroup("InGit", {
+        event = { "BufAdd", "VimEnter" },
+        pattern = "*",
+        command = function()
+            local function onexit(code, _)
+                if code == 0 then
+                    vim.schedule(function()
+                        require("packer").loader(package_name)
+                    end)
+                end
+            end
+            local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+            if lines ~= { "" } then
+                vim.loop.spawn("git", {
+                    args = {
+                        "ls-files",
+                        "--error-unmatch",
+                        vim.fn.expand("%"),
+                    },
+                }, onexit)
+            end
+        end,
+    })
+end
+
 function config.octo()
     require("octo").setup()
     require("which-key").register({
@@ -352,8 +380,25 @@ function config.git_fixer()
             require("gitsigns").refresh()
         end,
     })
-    vim.cmd([[command! -nargs=*  fixup lua require('fixer/picker/telescope').commit{hunk_only=true, type="fixup"} ]])
-    vim.cmd([[command! -nargs=*  ammend lua require('fixer/picker/telescope').commit{type="amend"} ]])
+
+    lambda.command("Fixup", function()
+        require("fixer/picker/telescope").commit({ hunk_only = true, type = "fixup" })
+    end, { bang = true })
+
+    lambda.command("Ammend", function()
+        require("fixer/picker/telescope").commit({ type = "amend" })
+    end, { bang = true })
+
+    lambda.command("Squash", function()
+        require("fixer/picker/telescope").commit({ type = "squash" })
+    end, { bang = true })
+    lambda.command("Reword", function()
+        require("fixer/picker/telescope").commit({ type = "reword" })
+    end, { bang = true })
+
+    lambda.command("Commit", function()
+        require("fixer").commit_hunk()
+    end, {})
 end
 
 return config
