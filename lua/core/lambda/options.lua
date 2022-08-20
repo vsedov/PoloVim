@@ -11,9 +11,10 @@ lambda.config = {
                 { "kanagawa.nvim", 0.4 },
                 { "rose", 0.9 },
                 { "catppuccin", 0.2 },
-                -- { "horizon.nvim", 0.1 },
-                -- { "vim-dogrun", 0.3 },
+                { "horizon.nvim", 0.5 },
+                { "vim-dogrun", 0.3 },
                 { "doom-one.nvim", 0.5 },
+                { "poimandres.nvim", 0.5 },
             },
             light = {},
         },
@@ -35,7 +36,7 @@ lambda.config = {
         },
     },
 
-    rooter_or_project = false, -- true for nvim-rooter , false for project.nvim
+    rooter_or_project = false, --- @usage  true | nvim-rooter - false | for project.nvim
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_fzf_lua = false, -- This is nice, to have, when required.
