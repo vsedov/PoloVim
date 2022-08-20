@@ -43,3 +43,9 @@ colourscheme({
     config = conf.doom,
     opt = true,
 })
+
+colourscheme({
+    "olivercederborg/poimandres.nvim",
+    config = conf.poimandres,
+    opt = true,
+})

@@ -113,11 +113,11 @@ function config.kanagawa()
 end
 
 function config.horizon()
-    vim.cmd.colorscheme([[colorscheme horizon]])
+    vim.cmd([[colorscheme  horizon]])
 end
 
 function config.dogrun()
-    vim.cmd.colorscheme([[colorscheme dogrun]])
+    vim.cmd([[colorscheme dogrun]])
 end
 
 function config.rose()
@@ -199,5 +199,15 @@ function config.doom()
 
     vim.cmd([[colorscheme doom-one]])
 end
+function config.poimandres()
+    require("poimandres").setup({
 
+        bold_vert_split = true, -- use bold vertical separators
+        dim_nc_background = true, -- dim 'non-current' window backgrounds
+        disable_background = false, -- disable background
+        disable_float_background = false, -- disable background for floats
+        disable_italics = false, -- disable italics
+    })
+    vim.cmd("colorscheme poimandres")
+end
 return config
