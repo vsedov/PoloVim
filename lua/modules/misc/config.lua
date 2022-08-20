@@ -362,7 +362,7 @@ function config.session_config()
 end
 
 function config.autosave()
-    require("auto-save").setup()
+    require("save").setup()
 end
 
 function config.carbon()

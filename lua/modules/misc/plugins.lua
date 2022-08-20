@@ -242,10 +242,12 @@ misc({
     config = conf.session_config,
 })
 
+-- REVISIT viv (07:23:50 - 20/08/22): I am not sure if this is viable or not
 misc({
-    "Pocco81/auto-save.nvim",
+    "boorboor/save.nvim",
     config = conf.autosave,
-    cmd = "ASToggle",
+    keys = "<F4>",
+    event = "FocusLost",
     opt = true,
 })
 

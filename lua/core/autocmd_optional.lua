@@ -86,16 +86,16 @@ if lambda.config.colourscheme.change_kitty_bg then
 end
 
 if lambda.config.neorg_auto_commit then
+    local t = function(str)
+        return vim.api.nvim_replace_termcodes(str, true, true, true)
+    end
     lambda.augroup("NeorgAutoCommit", {
         {
-            event = { "VimLeavePre", "VimSuspend" },
-            pattern = "/home/viv/neorg/*",
+            event = { "VimLeavePre" },
+            pattern = { "/home/viv/neorg/*" },
             command = function()
-                -- it might be enabled at teh start: but what happens when i dont what this to occour ?
-                -- best way is to have another check - as there will be a toggle for neorg_auto_commit
-                if lambda.config.neorg_auto_commit then
-                    require("utils.plugins.custom_neorg_save").start()
-                end
+                t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
+                require("utils.plugins.custom_neorg_save").start()
             end,
         },
     })

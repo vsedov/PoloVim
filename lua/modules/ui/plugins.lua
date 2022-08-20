@@ -159,11 +159,6 @@ ui({
 })
 
 ui({
-    "doums/suit.nvim",
-    event = "BufEnter",
-    config = conf.suit,
-})
-ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     after = "nvim-ufo",
     config = function()

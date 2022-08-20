@@ -5,6 +5,7 @@ local map_cmd = bind.map_cmd
 -- local map_args = bind.map_args
 local loader = require("packer").loader
 local K = {}
+
 --- @usage : Run :cd or <leader>cd -> <leader>r
 ---@param debug Debug is idk , idk why i have this here tbh
 local run_or_test = function(debug)
