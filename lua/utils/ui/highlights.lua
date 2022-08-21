@@ -578,13 +578,13 @@ end
 
 local function user_highlights()
     general_overrides()
-    colorscheme_overrides()
     set_sidebar_highlight()
+    colorscheme_overrides()
 end
 
 lambda.augroup("UserHighlights", {
     {
-        event = "BufEnter",
+        event = "ColorScheme",
         command = function()
             user_highlights()
         end,
@@ -597,5 +597,26 @@ lambda.augroup("UserHighlights", {
         end,
     },
 })
+
+local function GetItem(t)
+    local r = math.random()
+    local sum = 0
+    for i, v in ipairs(t) do
+        sum = sum + v[2]
+        if r < sum then
+            return v[1]
+        end
+    end
+    return t[#t][1]
+end
+
+local function load_colourscheme()
+    theme = lambda.config.colourscheme.themes.dark
+
+    -- print(vim.inspect(theme))
+    local loading_theme = GetItem(theme)
+    require("packer").loader(loading_theme)
+end
+load_colourscheme()
 
 return M
