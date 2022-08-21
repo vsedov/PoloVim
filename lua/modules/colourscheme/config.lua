@@ -194,7 +194,7 @@ function config.doom()
     vim.g.doom_one_plugin_startify = false
     vim.g.doom_one_plugin_whichkey = true
     vim.g.doom_one_plugin_indent_blankline = true
-    vim.g.doom_one_plugin_vim_illuminate = false
+    vim.g.doom_one_plugin_vim_illuminate = true
     vim.g.doom_one_plugin_lspsaga = true
 
     vim.cmd([[colorscheme doom-one]])
