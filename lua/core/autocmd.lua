@@ -50,7 +50,7 @@ lambda.augroup("VimrcIncSearchHighlight", {
         pattern = { "hlsearch" },
         command = function()
             vim.schedule(function()
-                vim.cmd("redrawstatus")
+                vim.cmd.redrawstatus()
             end)
         end,
     },
@@ -339,11 +339,6 @@ lambda.augroup("WindowBehaviours", {
                 vim.opt_local.cursorline = false
             end
         end,
-    },
-    {
-        event = { "WinLeave", "BufLeave", "InsertEnter" },
-        pattern = "*",
-        command = [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\|NvimTree\)' && ! &pvw | setlocal nocursorcolumn | endif]],
     },
     { event = "CmdLineEnter", pattern = "*", command = [[set nosmartcase]] },
     { event = "CmdLineLeave", pattern = "*", command = [[set smartcase]] },
