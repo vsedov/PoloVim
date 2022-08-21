@@ -1,17 +1,6 @@
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
 
-local setup_colorscheme = function(name, active)
-    vim.defer_fn(function()
-        if lambda.check_version(0, 8, 0) and active then
-            vim.cmd.colorscheme(name)
-        else
-            vim.cmd([[colorscheme ]] .. name)
-        end
-    end, 10)
-end
-
-
 function config.catppuccin()
     local catppuccin = require("catppuccin")
     catppuccin.setup({
@@ -96,7 +85,7 @@ function config.catppuccin()
             mini = false,
         },
     })
-    setup_colorscheme("catppuccin", lambda.config.colourscheme.use_cmd)
+    vim.cmd.colorscheme("kanagawa")
 end
 
 function config.kanagawa()
@@ -120,16 +109,16 @@ function config.kanagawa()
         },
     })
 
-    setup_colorscheme("kanagawa",lambda.config.colourscheme.use_cmd)
-    -- vim.cmd.colorscheme("kanagawa")
+    -- setup_colorscheme("kanagawa", lambda.config.colourscheme.use_cmd)
+    vim.cmd.colorscheme("kanagawa")
 end
 
 function config.horizon()
-    setup_colorscheme("horizon",lambda.config.colourscheme.use_cmd)
+    vim.cmd.colorscheme("horizon")
 end
 
 function config.dogrun()
-    setup_colorscheme("dogrun", lambda.config.colourscheme.use_cmd)
+    vim.cmd.colorscheme("dogrun")
 end
 
 function config.rose()
@@ -173,9 +162,7 @@ function config.rose()
             ColorColumn = { bg = "rose" },
         },
     })
-    -- vim.cmd.colorscheme("rose-pine")
-    setup_colorscheme("rose-pine", lambda.config.colourscheme.use_cmd)
-
+    vim.cmd.colorscheme("rose-pine")
 end
 
 function config.doom()
@@ -208,8 +195,7 @@ function config.doom()
     vim.g.doom_one_plugin_indent_blankline = true
     vim.g.doom_one_plugin_vim_illuminate = true
     vim.g.doom_one_plugin_lspsaga = true
-
-    setup_colorscheme("doom-one", lambda.config.colourscheme.use_cmd)
+    vim.cmd.colorscheme("doom-one")
 end
 function config.poimandres()
     require("poimandres").setup({
@@ -219,7 +205,14 @@ function config.poimandres()
         disable_float_background = false, -- disable background for floats
         disable_italics = false, -- disable italics
     })
+    vim.cmd.colorscheme("poimandres")
+end
 
-    setup_colorscheme("poimandres", lambda.config.colourscheme.use_cmd)
+function config.tokyonight()
+    vim.cmd.colorscheme("tokyonight")
+end
+
+function config.aquarium()
+    vim.cmd.colorscheme("aquarium")
 end
 return config

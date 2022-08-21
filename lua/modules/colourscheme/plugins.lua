@@ -49,3 +49,15 @@ colourscheme({
     config = conf.poimandres,
     opt = true,
 })
+
+colourscheme({
+    "folke/tokyonight.nvim",
+    opt = true,
+    config = conf.tokyonight,
+})
+
+colourscheme({
+    "FrenzyExists/aquarium-vim",
+    opt = true,
+    config = conf.aquarium,
+})

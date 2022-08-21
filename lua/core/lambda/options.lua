@@ -1,3 +1,14 @@
+local function softmax(t)
+    local sum = 0
+    for i, v in ipairs(t) do
+        sum = sum + math.exp(v[2])
+    end
+    for i, v in ipairs(t) do
+        t[i][2] = math.exp(v[2]) / sum
+    end
+    return t
+end
+-- pick random  item form dark but based on its probability
 lambda.config = {
     colourscheme = {
         use_cmd = true,
@@ -9,16 +20,17 @@ lambda.config = {
         catppuccin_flavour = "mocha",
         -- @usage theme_name : percentage chance
         themes = {
-            dark = {
-                { "kanagawa.nvim", 0.4 },
-                { "rose", 0.9 },
-                { "catppuccin", 0.2 },
+            dark = softmax({
+                { "kanagawa.nvim", 0.8 },
+                { "rose", 0.8 },
+                { "catppuccin", 0.6 },
                 { "horizon.nvim", 0.5 },
                 { "vim-dogrun", 0.3 },
                 { "doom-one.nvim", 0.5 },
                 { "poimandres.nvim", 0.5 },
-            },
-            light = {},
+                { "tokyonight.nvim", 0.5 },
+                { "aquarium-vim", 0.3 },
+            }),
         },
     },
     record_your_self = false, -- waka time

@@ -12,43 +12,9 @@ if fsize > 1024 * 1024 then
     load_lsp = false
 end
 
-math.randomseed(os.time())
-local function daylight()
-    local h = tonumber(os.date("%H"))
-    if h > 6 and h < 18 then
-        return "light"
-    else
-        return "dark"
-    end
-end
-local function GetItem(colourschemes)
-    local Counter = 0
-    for i, v in pairs(colourschemes) do
-        Counter = Counter + colourschemes[i][2]
-    end
-    local Chosen = math.random(0, Counter)
-    for i, v in pairs(colourschemes) do
-        Counter = Counter - colourschemes[i][2]
-        if Chosen > Counter then
-            return colourschemes[i][1]
-        end
-    end
-    return colourschemes[math.random(#colourschemes)][1]
-end
-local function load_colourscheme()
-    -- local theme
-    -- if daylight() == "dark" then
-    --     theme = lambda.config.colourscheme.themes.dark
-    -- else
-    --     lambda.config.colourscheme.themes.light
-    -- end
-    local loading_theme = GetItem(lambda.config.colourscheme.themes.dark)
-    loader(loading_theme)
-end
-load_colourscheme()
 require("vscripts.cursorhold")
-vim.g.cursorhold_updatetime = 100
 require("utils.ui.highlights")
+vim.g.cursorhold_updatetime = 100
 
 function Lazyload()
     _G.PLoader = loader

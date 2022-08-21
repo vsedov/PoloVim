@@ -323,27 +323,25 @@ lambda.augroup("WindowBehaviours", {
         command = "lwindow",
     },
     {
-        event = { "WinEnter", "BufEnter", "InsertLeave" },
-        pattern = "*",
-        command = function()
-            if vim.bo.filetype ~= "dashboard" and not vim.opt_local.cursorline:get() then
-                vim.opt_local.cursorline = true
+        event = { "BufWinEnter" },
+        command = function(args)
+            if vim.wo.diff then
+                vim.diagnostic.disable(args.buf)
             end
         end,
     },
     {
-        event = { "WinLeave", "BufLeave", "InsertEnter" },
-        pattern = "*",
-        command = function()
-            if vim.bo.filetype ~= "dashboard" and vim.opt_local.cursorline:get() then
-                vim.opt_local.cursorline = false
+        event = { "BufWinLeave" },
+        command = function(args)
+            if vim.wo.diff then
+                vim.diagnostic.enable(args.buf)
             end
         end,
     },
+
     { event = "CmdLineEnter", pattern = "*", command = [[set nosmartcase]] },
     { event = "CmdLineLeave", pattern = "*", command = [[set smartcase]] },
-    -- Equalize window dimensions when resizing vim window
-    { event = "VimResized", pattern = "*", command = [[tabdo wincmd =]] },
+
     -- Force write shada on leaving nvim
     {
         event = "VimLeave",
@@ -403,5 +401,61 @@ lambda.augroup("ClearCommandMessages", {
         event = { "CmdlineLeave", "CmdlineChanged" },
         pattern = { ":" },
         command = clear_commandline(),
+    },
+})
+
+lambda.augroup("UpdateVim", {
+    {
+        event = { "FocusLost" },
+        pattern = { "*" },
+        command = "silent! wall",
+    },
+    -- Make windows equal size when vim resizes
+    {
+        event = { "VimResized" },
+        pattern = { "*" },
+        command = "wincmd =",
+    },
+})
+
+local cursorline_exclude = { "alpha", "toggleterm" }
+
+---@param buf number
+---@return boolean
+local function should_show_cursorline(buf)
+    return vim.bo[buf].buftype ~= "terminal"
+        and not vim.wo.previewwindow
+        and vim.wo.winhighlight == ""
+        and vim.bo[buf].filetype ~= ""
+        and not vim.tbl_contains(cursorline_exclude, vim.bo[buf].filetype)
+end
+
+lambda.augroup("Cursorline", {
+    {
+        event = { "BufEnter" },
+        pattern = { "*" },
+        command = function(args)
+            vim.wo.cursorline = should_show_cursorline(args.buf)
+        end,
+    },
+    {
+        event = { "BufLeave" },
+        pattern = { "*" },
+        command = function()
+            vim.wo.cursorline = false
+        end,
+    },
+})
+
+lambda.augroup("TerminalAutocommands", {
+    {
+        event = { "TermClose" },
+        pattern = "*",
+        command = function()
+            --- automatically close a terminal if the job was successful
+            if not vim.v.event.status == 0 then
+                vim.cmd.bdelete({ fn.expand("<abuf>"), bang = true })
+            end
+        end,
     },
 })
