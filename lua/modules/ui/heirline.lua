@@ -2,6 +2,12 @@ local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
 
 local function setup_colors()
+    require("utils.ui.highlights").plugin("heirline", {
+        { diffAdded = { link = "DiffAdd" } },
+        { diffChanged = { link = "DiffChange" } },
+        { diffRemoved = { link = "DiffDelete" } },
+    })
+
     local values = {
 
         bright_bg = utils.get_highlight("Folded").bg,
@@ -13,6 +19,7 @@ local function setup_colors()
         git_change = utils.get_highlight("diffChanged").fg,
         git_del = utils.get_highlight("diffRemoved").fg,
         diag_warn = utils.get_highlight("DiagnosticWarn").fg,
+
         red = utils.get_highlight("DiagnosticError").fg,
         diag_error = utils.get_highlight("DiagnosticError").fg,
         diag_hint = utils.get_highlight("DiagnosticHint").fg,
@@ -431,7 +438,7 @@ local Git = {
             local count = self.status_dict.added or 0
             return count > 0 and ("+" .. count)
         end,
-        -- hl = "diffAdded"
+        hl = "diffAdded",
     },
     {
         provider = function(self)
@@ -439,14 +446,14 @@ local Git = {
             return count > 0 and ("-" .. count)
         end,
 
-        -- hl = "diffRemoved",
+        hl = "diffRemoved",
     },
     {
         provider = function(self)
             local count = self.status_dict.changed or 0
             return count > 0 and ("~" .. count)
         end,
-        -- hl = "diffChanged",
+        hl = "diffChanged",
     },
     {
         condition = function(self)
@@ -775,14 +782,15 @@ vim.api.nvim_create_autocmd("User", {
     group = "Heirline",
 })
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = function()
+lambda.augroup("Heirline", {
+    event = "ColorScheme",
+    command = function()
         require("heirline").reset_highlights()
         require("heirline").load_colors(setup_colors())
         require("heirline").statusline:broadcast(function(self)
             self._win_stl = nil
         end)
         require("utils.ui.highlights")
+        require("lightspeed").init_highlight(true)
     end,
-    group = "Heirline",
 })
