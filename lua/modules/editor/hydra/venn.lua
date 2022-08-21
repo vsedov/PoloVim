@@ -1,10 +1,10 @@
 local Hydra = require("hydra")
 
 local hint = [[
- Arrow^^^^^^   Select region with <C-v> 
- ^ ^ _K_ ^ ^   _f_: surround it with box
- _H_ ^ ^ _L_
- ^ ^ _J_ ^ ^                      _<Esc>_
+ Arrow^^^^^^   Select region with <C-v>
+ ^ ^ _<up>_ ^ ^   _f_: surround it with box
+ _<left>_ ^ ^ _<right>_
+ ^ ^ _<down>_ ^ ^           _<Esc>_
 ]]
 
 Hydra({
@@ -36,10 +36,10 @@ Hydra({
     mode = "n",
     body = "<localleader>ve",
     heads = {
-        { "H", "<C-v>h:VBox<CR>" },
-        { "J", "<C-v>j:VBox<CR>" },
-        { "K", "<C-v>k:VBox<CR>" },
-        { "L", "<C-v>l:VBox<CR>" },
+        { "<left>", "<C-v>h:VBox<CR>" },
+        { "<down>", "<C-v>j:VBox<CR>" },
+        { "<up>", "<C-v>k:VBox<CR>" },
+        { "<right>", "<C-v>l:VBox<CR>" },
         { "f", ":VBox<CR>", { mode = "v" } },
         { "<Esc>", nil, { exit = true } },
     },

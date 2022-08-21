@@ -198,21 +198,6 @@ function config.winshift()
     })
 end
 
-function config.neoscroll()
-    require("cinnamon").setup({
-        extra_keymaps = true,
-        scroll_limit = 150,
-        always_scroll = true,
-    })
-    local map = vim.keymap.set
-
-    map({ "n", "x" }, "gg", "<Cmd>lua Scroll('gg', 0, 0, 1)<CR>")
-    map({ "n", "x" }, "G", "<Cmd>lua Scroll('G', 0, 1, 1)<CR>")
-
-    map({ "n", "x" }, "<ScrollWheelUp>", "<Cmd>lua Scroll('<ScrollWheelUp>')<CR>")
-    map({ "n", "x" }, "<ScrollWheelDown>", "<Cmd>lua Scroll('<ScrollWheelDown>')<CR>")
-end
-
 function config.discord()
     --i don\'t want to deal with vscode , The One True Text Editor
     -- Editor For The True Traditionalist

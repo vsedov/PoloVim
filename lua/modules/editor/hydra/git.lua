@@ -2,7 +2,7 @@ local Hydra = require("hydra")
 local loader = require("packer").loader
 
 local gitrepo = vim.fn.isdirectory(".git/index")
-local line = vim.fn.line
+--[[ local line = vim.fn.line ]]
 
 local function wrap(fn, ...)
     local args = { ... }
@@ -50,30 +50,30 @@ if gitrepo then
   ^^^^----------------------------------------------^^^^
   ^^^^                   Gitsigns                   ^^^^
   ^^^^----------------------------------------------^^^^
-  _J_ : next hunk                   _D_ : diffthis 
+  _J_ : next hunk                   _D_ : diffthis
   _K_ : prev hunk                   _p_ : Preview H
-  _s_ : stagehunk                   _S_ : stage buf 
+  _s_ : stagehunk                   _S_ : stage buf
   _r_ : reset hunk                  _R_ : Reset Buffer
-  _x_ : show del                    _u_ : ustage hunk 
-  _b_ : gutterView                  _B_ : blame_line 
+  _x_ : show del                    _u_ : ustage hunk
+  _b_ : gutterView                  _B_ : blame_line
   _/_ : show base                   _i_ : Select hunk
   _Qq_ : Setqflist all              _Qw_ : Setqflist
   ^^^^-----------------------------------------------^^^^
   ^^^^                     VGIT                      ^^^^
   ^^^^-----------------------------------------------^^^^
-  _k_ : proj diff                   _g_ : diff staged  
-  _dd_ : diff preview               _P_ : projStaged 
-  _f_ : proj hunkQF                 _U_ : unstagebuf 
+  _k_ : proj diff                   _g_ : diff staged
+  _dd_ : diff preview               _P_ : projStaged
+  _f_ : proj hunkQF                 _U_ : unstagebuf
                     _G_ : stage diff
   ^^^^------------------------------------------------^^^^
   ^^^^                    Personal                    ^^^^
   ^^^^------------------------------------------------^^^^
-  _d_: diftree                      _M_ : difmast 
-  _c_ : conflict                    _m_ : merge 
-  _H_ : filehist                    _l_ : log  
+  _d_: diftree                      _M_ : difmast
+  _c_ : conflict                    _m_ : merge
+  _H_ : filehist                    _l_ : log
   ^^^^------------------------------------------------^^^^
 
-        _<Enter>_ => Neogit _q_ => exit => _<Esc>_ 
+        _<Enter>_ => Neogit _q_ => exit => _<Esc>_
 ]]
 
     local ok, gitsigns = pcall(require, "gitsigns")
