@@ -58,7 +58,7 @@ local servers = {
             end,
         }
     end,
-    sourcery = true, -- no clue what this does
+    sourcery = false, -- no clue what this does
 }
 
 return function(name)
