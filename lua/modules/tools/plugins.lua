@@ -40,10 +40,7 @@ tools({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.ha
 
 tools({
     "natecraddock/workspaces.nvim",
-    module = "workspaces",
-    setup = function()
-        require("telescope").load_extension("workspaces")
-    end,
+    after = "telescope.nvim",
     config = conf.workspace,
 })
 

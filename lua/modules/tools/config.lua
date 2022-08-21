@@ -41,6 +41,7 @@ function config.workspace()
             open = { "NeoTree", "Telescope find_files" },
         },
     })
+    require("telescope").load_extension("workspaces")
 end
 
 function config.paperplanes()
