@@ -1,11 +1,22 @@
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
 
+local setup_colorscheme = function(name, active)
+    vim.defer_fn(function()
+        if lambda.check_version(0, 8, 0) and active then
+            vim.cmd.colorscheme(name)
+        else
+            vim.cmd([[colorscheme ]] .. name)
+        end
+    end, 10)
+end
+
+
 function config.catppuccin()
     local catppuccin = require("catppuccin")
     catppuccin.setup({
         dim_inactive = {
-            enabled = true,
+            enabled = lambda.config.colourscheme.dim_background,
             shade = "dark",
             percentage = 0.15,
         },
@@ -85,7 +96,7 @@ function config.catppuccin()
             mini = false,
         },
     })
-    vim.cmd([[colorscheme catppuccin]])
+    setup_colorscheme("catppuccin", lambda.config.colourscheme.use_cmd)
 end
 
 function config.kanagawa()
@@ -101,23 +112,24 @@ function config.kanagawa()
         specialReturn = true, -- special highlight for the return keyword
         specialException = true, -- special highlight for exception handling keywords
         transparent = false, -- do not set background color
-        dimInactive = true, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
+        dimInactive = lambda.config.colourscheme.dim_background, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
         colors = {},
         overrides = {
             Pmenu = { fg = "NONE", bg = "NONE" },
             normalfloat = { bg = "NONE" },
         },
     })
-    vim.cmd([[colorscheme kanagawa]])
+
+    setup_colorscheme("kanagawa",lambda.config.colourscheme.use_cmd)
     -- vim.cmd.colorscheme("kanagawa")
 end
 
 function config.horizon()
-    vim.cmd([[colorscheme  horizon]])
+    setup_colorscheme("horizon",lambda.config.colourscheme.use_cmd)
 end
 
 function config.dogrun()
-    vim.cmd([[colorscheme dogrun]])
+    setup_colorscheme("dogrun", lambda.config.colourscheme.use_cmd)
 end
 
 function config.rose()
@@ -125,7 +137,7 @@ function config.rose()
         --- @usage 'main' | 'moon'
         dark_variant = lambda.config.colourscheme.rose,
         bold_vert_split = true,
-        dim_nc_background = true,
+        dim_nc_background = lambda.config.colourscheme.dim_background,
         disable_background = false,
         disable_float_background = false,
         disable_italics = false,
@@ -162,8 +174,8 @@ function config.rose()
         },
     })
     -- vim.cmd.colorscheme("rose-pine")
+    setup_colorscheme("rose-pine", lambda.config.colourscheme.use_cmd)
 
-    vim.cmd([[colorscheme rose-pine]])
 end
 
 function config.doom()
@@ -197,17 +209,17 @@ function config.doom()
     vim.g.doom_one_plugin_vim_illuminate = true
     vim.g.doom_one_plugin_lspsaga = true
 
-    vim.cmd([[colorscheme doom-one]])
+    setup_colorscheme("doom-one", lambda.config.colourscheme.use_cmd)
 end
 function config.poimandres()
     require("poimandres").setup({
-
         bold_vert_split = true, -- use bold vertical separators
-        dim_nc_background = true, -- dim 'non-current' window backgrounds
+        dim_nc_background = lambda.config.colourscheme.dim_background, -- dim 'non-current' window backgrounds
         disable_background = false, -- disable background
         disable_float_background = false, -- disable background for floats
         disable_italics = false, -- disable italics
     })
-    vim.cmd("colorscheme poimandres")
+
+    setup_colorscheme("poimandres", lambda.config.colourscheme.use_cmd)
 end
 return config
