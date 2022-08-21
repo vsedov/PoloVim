@@ -1,5 +1,7 @@
 lambda.config = {
     colourscheme = {
+        use_cmd = true,
+        dim_background = false,
         change_kitty_bg = false,
         --- @usage "main"' | '"moon"
         rose = "main",
