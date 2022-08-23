@@ -80,27 +80,28 @@ function config.fidget()
 end
 
 function config.nvim_bufferline()
-    local fn = vim.fn
-    local fmt = string.format
-    local icons = lambda.style.icons.lsp
+      local fn = vim.fn
+      local r = vim.regex
+      local fmt = string.format
+      local icons = lambda.style.icons.lsp
 
     local highlights = require("utils.ui.highlights")
     local groups = require("bufferline.groups")
-    local data = highlights.get("Normal")
-    local normal_bg, normal_fg = data.background, data.foreground
-    local visible = highlights.alter_color(normal_fg, -40)
+
     local visible_tab = { highlight = "VisibleTab", attribute = "bg" }
-    require("utils.ui.highlights").plugin("bufferline", {
-        { VisibleTab = { background = { from = "Normal", alter = 20 }, bold = true } },
-    })
+
     require("bufferline").setup({
         highlights = function(defaults)
+            local data = highlights.get("Normal")
+            local normal_bg, normal_fg = data.background, data.foreground
+            local visible = highlights.alter_color(normal_fg, -40)
+            local diagnostic = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
+
             local hl = lambda.fold(function(accum, attrs, name)
                 local formatted = name:lower()
                 local is_group = formatted:match("group")
                 local is_offset = formatted:match("offset")
                 local is_separator = formatted:match("separator")
-                local diagnostic = vim.regex([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
                 if diagnostic:match_str(formatted) then
                     attrs.fg = normal_fg
                 end
@@ -117,10 +118,10 @@ function config.nvim_bufferline()
             -- Make the visible buffers and selected tab more "visible"
             hl.buffer_visible.bold = true
             hl.buffer_visible.italic = true
-            -- hl.buffer_visible.fg = visible
+            hl.buffer_visible.fg = visible
             hl.tab_selected.bold = true
-            -- hl.tab_selected.bg = visible_tab
-            -- hl.tab_separator_selected.bg = visible_tab
+            hl.tab_selected.bg = visible_tab
+            hl.tab_separator_selected.bg = visible_tab
             return hl
         end,
         options = {
@@ -568,10 +569,7 @@ function config.ufo()
         table.insert(result, { padding, "" })
         return result
     end
-
-    opt.foldlevelstart = 99
-    opt.sessionoptions:append("folds")
-
+    
     lambda.augroup("UfoSettings", {
         {
             event = "FileType",
