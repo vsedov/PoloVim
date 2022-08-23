@@ -118,7 +118,7 @@ git({
 
 git({
     "LhKipp/nvim-git-fixer",
-    cmd = { "Fixup", "Ammend", "Squash", "Commit", "Reword" },
+    cmd = { "Fixup", "Amend", "Squash", "Commit", "Reword" },
     setup = conf.git_setup("nvim-git-fixer"),
     requires = {
         "telescope.nvim",
@@ -131,3 +131,22 @@ git({
 
 git({ "rbong/vim-flog", requires = "vim-fugitive", cmd = { "Flog", "Flogsplit" }, opt = true })
 -- return git
+
+-- @usage | this is to clone repos, which is interesting
+-- you can remove and add repos with this, or temp ones that you can mess
+-- around with
+git({
+    "danielhp95/tmpclone-nvim",
+    requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    config = conf.temp_clone,
+    keys = {
+        { "n", "<leader>Tc" },
+        { "n", "<leader>To" },
+        { "n", "<leader>Tr" },
+    },
+    cmd = {
+        "RepoClone",
+        "RepoOpen",
+        "RepoRemove",
+    },
+})

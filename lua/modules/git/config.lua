@@ -385,7 +385,7 @@ function config.git_fixer()
         require("fixer/picker/telescope").commit({ hunk_only = true, type = "fixup" })
     end, { bang = true })
 
-    lambda.command("Ammend", function()
+    lambda.command("Amend", function()
         require("fixer/picker/telescope").commit({ type = "amend" })
     end, { bang = true })
 

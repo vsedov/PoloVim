@@ -14,7 +14,7 @@ import pyinspect as pi
 def main() -> None:
     """Main function"""
     pass
-
+!
 
 if __name__ == "__main__":
     pi.install_traceback()
