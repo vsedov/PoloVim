@@ -138,15 +138,16 @@ git({ "rbong/vim-flog", requires = "vim-fugitive", cmd = { "Flog", "Flogsplit" }
 git({
     "danielhp95/tmpclone-nvim",
     requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-    config = conf.temp_clone,
     keys = {
-        { "n", "<leader>Tc" },
-        { "n", "<leader>To" },
-        { "n", "<leader>Tr" },
+        { "n", "<leader>xc" },
+        { "n", "<leader>xo" },
+        { "n", "<leader>xr" },
     },
     cmd = {
-        "RepoClone",
-        "RepoOpen",
-        "RepoRemove",
+        "TmpcloneClone",
+        "TmpcloneOpen",
+        "TmpcloneRemove",
     },
+
+    config = conf.temp_clone,
 })

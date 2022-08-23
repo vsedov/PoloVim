@@ -366,7 +366,7 @@ end
 function config.git_conflict()
     require("git-conflict").setup()
 end
-
+-- TODO(vsedov) (21:49:12 - 23/08/22): Add this to Hydra
 function config.git_fixer()
     -- defaults shown --
     require("fixer").setup({
@@ -401,23 +401,10 @@ function config.git_fixer()
     end, {})
 end
 
-function config.git_clone()
-    require("tmpclone").setup({
-        datadir = vim.fn.stdpath("data") .. "/tmpclone-data",
-    })
-
-    lambda.command("Clone", function()
-        require("tmpclone.core").clone()
-    end, {})
-    lambda.command("RepoOpen", function()
-        require("tmpclone.core").open_repo()
-    end, {})
-
-    lambda.command("RepoRemove", function()
-        require("tmpclone.core").remove_repo()
-    end, {})
-    vim.keymap.set("n", "<leader>Tc", [[<cmd>lua require("tmpclone.core").clone()<cr>]], {})
-    vim.keymap.set("n", "<leader>To", [[<cmd>lua require("tmpclone.core").open_repo()<cr>]], {})
-    vim.keymap.set("n", "<leader>Tr", [[<cmd>lua require("tmpclone.core").remove_repo()<cr>]], {})
+function config.temp_clone()
+    require("tmpclone").setup()
+    vim.keymap.set("n", "<leader>xc", [[<cmd>TmpcloneClone<cr>]], {})
+    vim.keymap.set("n", "<leader>xo", [[<cmd>TmpcloneOpen<cr>]], {})
+    vim.keymap.set("n", "<leader>xr", [[<cmd>TmpcloneRemove]], {})
 end
 return config
