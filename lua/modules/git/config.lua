@@ -401,4 +401,23 @@ function config.git_fixer()
     end, {})
 end
 
+function config.git_clone()
+    require("tmpclone").setup({
+        datadir = vim.fn.stdpath("data") .. "/tmpclone-data",
+    })
+
+    lambda.command("Clone", function()
+        require("tmpclone.core").clone()
+    end, {})
+    lambda.command("RepoOpen", function()
+        require("tmpclone.core").open_repo()
+    end, {})
+
+    lambda.command("RepoRemove", function()
+        require("tmpclone.core").remove_repo()
+    end, {})
+    vim.keymap.set("n", "<leader>Tc", [[<cmd>lua require("tmpclone.core").clone()<cr>]], {})
+    vim.keymap.set("n", "<leader>To", [[<cmd>lua require("tmpclone.core").open_repo()<cr>]], {})
+    vim.keymap.set("n", "<leader>Tr", [[<cmd>lua require("tmpclone.core").remove_repo()<cr>]], {})
+end
 return config
