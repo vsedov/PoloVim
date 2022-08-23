@@ -1,6 +1,7 @@
 -- local fn = vim.fn
 local api = vim.api
 local fmt = string.format
+local lib = lambda.lib
 
 ---@class Autocommand
 ---@field description string
@@ -224,6 +225,7 @@ end
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean?
+-- TODO(vsedov) (22:01:48 - 23/08/22): refactor using lambda.lib
 lambda.empty = function(item)
     if not item then
         return true

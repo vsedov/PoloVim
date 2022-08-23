@@ -8,12 +8,7 @@ fun! <SID>StripTrailingWhitespace()
 endfun
 " autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
 
-"
-"
-"
-"
 " Search in project
-"
 function! FindProjectRoot(lookFor)
     let s:root=expand('%:p:h')
     let pathMaker='%:p'
@@ -26,7 +21,7 @@ function! FindProjectRoot(lookFor)
     endwhile
     return s:root
 endfunction
-   " 搜索 .git 为项目路径
+" 搜索 .git 为项目路径
 
 "https://github.com/sindrets/diffview.nvim/issues/105
 " The last line in the command opens the local cwd for each window if you have
@@ -53,7 +48,7 @@ command Hex :%!xxd
 
 function! FindRoot()
   let s:root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-  let s:list = ['go.mod', 'Makefile', 'CMakefile.txt']
+  let s:list = ['go.mod', 'Makefile', 'CMakefile.txt', 'package.json']
   if len(s:root) == 0
     for k in s:list
       let s:root =  FindProjectRoot(k)
@@ -67,8 +62,8 @@ function! FindRoot()
   return expand("%:p:h")
 endfunction
 
-let g:root_dir = FindRoot()
-autocmd BufEnter * silent! lcd g:root_dir  " 设置当前路径为项目路径
+" let g:root_dir = FindRoot() " Note disable root finder, null-ls will do this
+" autocmd BufEnter * silent! lcd g:root_dir  " 设置当前路径为项目路径
 
 
 " Protect large files from sourcing and other overhead.
@@ -111,6 +106,7 @@ command! Scratch new | setlocal bt=nofile bh=wipe nobl noswapfile nu
 
 " nnoremap <Leader><S-h> :call ToggleHiddenAll()<CR>
 
+" lfile loclist jump
 function! LF()
     let temp = tempname()
     exec 'silent !lf -selection-path=' . shellescape(temp)
@@ -234,7 +230,7 @@ nnoremap <silent> <Plug>Kwbd :<C-u>Kwbd<CR>
 " Create a mapping (e.g. in your .vimrc) like this:
 "nmap <C-W>! <Plug>Kwbd
 
-" nmap <C-t>c <Plug>Kwbd
+nmap <C-t>c <Plug>Kwbd
 command! Bd bp\|bd \#
 
 " inoremap (; (<CR>);<C-c>O
@@ -255,8 +251,10 @@ function! s:CloseBracket()
         return "{\<Enter>}\<Esc>O"
     endif
 endfunction
-" inoremap <expr> {<Enter> <SID>CloseBracket()
+inoremap <expr> {<Enter> <SID>CloseBracket()
+
 " forma json" also :%!python3 -m json.tool
+
 
 """""""""""""""""""""""maximizer""""""""""""""""""""""""""""
 fun! s:maximize()
