@@ -54,7 +54,7 @@ local keys = { --
         :with_noremap()
         :with_silent(),
 
-    ["n|;t"] = map_cmd([[Telescope harpoon marks]], "Harpoon Marks"):with_noremap():with_silent(),
+    ["n|;t"] = map_cmd([[<cmd>Telescope harpoon marks<cr>]], "Harpoon Marks"):with_noremap():with_silent(),
     ["n|;;"] = map_cmd([[<cmd> lua require("harpoon.ui").toggle_quick_menu()<CR>]], "toggle harpoon ui")
         :with_noremap()
         :with_silent(),
@@ -87,12 +87,10 @@ local keys = { --
         [[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]],
         "Telescope Refactor"
     ):with_noremap(),
-    ["n|<Leader>rp"] = map_cmd([[<cmd>lua require('refactoring').debug.printf({below = false})<CR>]], "Quick debug"):with_noremap(),
+    ["n|d?v"] = map_cmd([[<cmd>lua require('refactoring').debug.printf({below = false})<CR>]], "Quick debug"):with_noremap(),
 
     ["v|<Leader>ro"] = map_cmd([[<cmd> lua require('refactoring').debug.print_var({})<CR>]], "quick debug"):with_noremap(),
     ["n|<Leader>rc"] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]], "debug cleanup"):with_noremap(),
-
-    ["v|<Leader>gs"] = map_cmd("<cmd>lua require('utils.git').qf_add()<cr>", "git utils"),
 }
 
 --

@@ -70,8 +70,8 @@ function config.refactor()
 
     refactor.setup({
         prompt_func_return_type = {
-            go = false,
-            java = false,
+            go = true,
+            java = true,
 
             cpp = false,
             c = false,

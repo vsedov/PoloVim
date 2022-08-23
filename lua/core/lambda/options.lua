@@ -11,7 +11,6 @@ end
 -- pick random  item form dark but based on its probability
 lambda.config = {
     colourscheme = {
-        use_cmd = true,
         dim_background = false,
         change_kitty_bg = false,
         --- @usage "main"' | '"moon"
@@ -27,6 +26,7 @@ lambda.config = {
                 "horizon.nvim",
                 "vim-dogrun",
                 "doom-one.nvim",
+                -- "poimandres.nvim",
                 "tokyonight.nvim",
             },
         },

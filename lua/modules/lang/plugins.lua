@@ -79,6 +79,8 @@ lang({
     cmd = "DeleteDebugPrints",
 })
 
+local test = 10
+
 lang({
     "nvim-treesitter/nvim-treesitter-refactor",
     after = "nvim-treesitter-textobjects", -- manual loading
@@ -147,6 +149,15 @@ lang({
             ft = "python",
         },
     },
+})
+lang({
+    "ofirgall/goto-breakpoints.nvim",
+    after = "nvim-dap",
+    config = function()
+        local map = vim.keymap.set
+        map("n", "]d", require("goto-breakpoints").next, {})
+        map("n", "[d", require("goto-breakpoints").prev, {})
+    end,
 })
 
 lang({ "max397574/nvim-treehopper", module = "tsht" })
@@ -294,3 +305,5 @@ lang({
     opt = true,
     event = "BufEnter",
 })
+
+lang({ "dccsillag/magma-nvim", ft = "python", run = ":UpdateRemotePlugins" })
