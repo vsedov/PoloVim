@@ -164,7 +164,7 @@ editor({
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim",
     config = conf.hydra,
-    opt = true,
+    event = "BufEnter",
 })
 
 -- temp
