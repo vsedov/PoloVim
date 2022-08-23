@@ -61,36 +61,6 @@ local keys = { --
     ["n|<Leader>n;"] = map_cmd([[<cmd> lua require('harpoon.cmd-ui').toggle_quick_menu()<Cr>]], "Harpoon cmd ui")
         :with_noremap()
         :with_silent(),
-
-    --- Refactoring
-    ["v|<Leader>re"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], "Refactor Extract Function")
-        :with_noremap()
-        :with_silent(),
-
-    ["v|<Leader>rf"] = map_cmd(
-            [[<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
-            "Refactor Extract Function to File"
-        )
-        :with_noremap()
-        :with_silent(),
-    ["v|<Leader>rv"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], "Refactor Extract Variable")
-        :with_noremap()
-        :with_silent(),
-    ["v|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], "Refactor Inline Variable")
-        :with_noremap()
-        :with_silent(),
-    ["n|<Leader>ri"] = map_cmd([[<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], "Refactor Inline Variable")
-        :with_noremap()
-        :with_silent(),
-
-    ["v|<Leader>rr"] = map_cmd(
-        [[<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>]],
-        "Telescope Refactor"
-    ):with_noremap(),
-    ["n|d?v"] = map_cmd([[<cmd>lua require('refactoring').debug.printf({below = false})<CR>]], "Quick debug"):with_noremap(),
-
-    ["v|<Leader>ro"] = map_cmd([[<cmd> lua require('refactoring').debug.print_var({})<CR>]], "quick debug"):with_noremap(),
-    ["n|<Leader>rc"] = map_cmd([[<cmd> lua require('refactoring').debug.cleanup({})<CR>]], "debug cleanup"):with_noremap(),
 }
 
 --

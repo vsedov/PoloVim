@@ -57,6 +57,20 @@ lang({
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
     },
+    keys = {
+        { "v", "<leader>re" },
+        { "v", "<leader>rf" },
+        { "v", "<leader>rv" },
+        { "v", "<leader>ri" },
+        { "n", "<leader>rb" },
+        { "n", "<leader>rbf" },
+        { "n", "<leader>ri" },
+        { "v", "<leader>rr" },
+        { "v", "<leader>rv" },
+        { "n", "<leader>rc" },
+        { "n", "d?v" },
+        { "n", "d?V" },
+    },
     config = conf.refactor,
 })
 -- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this

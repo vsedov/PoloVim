@@ -88,14 +88,10 @@ function config.refactor()
             hpp = false,
             cxx = false,
         },
-        printf_statements = {
-            python = {
-                'log.info("%s")',
-            },
-        },
+
         print_var_statements = {
             python = {
-                'ic("%s")',
+                'ic(f"{%s}")',
             },
         },
     })
@@ -109,14 +105,13 @@ function config.refactor()
             require("refactoring").refactor(content.value)
         end
 
-        local opts = require("telescope.themes").get_cursor() -- set personal telescope options
         require("telescope.pickers")
-            .new(opts, {
+            .new({}, {
                 prompt_title = "refactors",
                 finder = require("telescope.finders").new_table({
                     results = require("refactoring").get_refactors(),
                 }),
-                sorter = require("telescope.config").values.generic_sorter(opts),
+                sorter = require("telescope.config").values.generic_sorter({}),
                 attach_mappings = function(_, map)
                     map("i", "<CR>", _refactor)
                     map("n", "<CR>", _refactor)
@@ -126,21 +121,120 @@ function config.refactor()
             :find()
     end
 
-    -- vim.api.nvim_set_keymap("v", "<Leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
-    -- vim.api.nvim_set_keymap("v", "<Leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
-    -- vim.api.nvim_set_keymap("v", "<Leader>rt", [[ <Esc><Cmd>lua M.refactors()<CR>]], {noremap = true, silent = true, expr = false})
+    -- Remaps for the refactoring operations currently offered by the plugin
+    vim.keymap.set(
+        "v",
+        "<leader>re",
+        [[<Cmd>lua require('refactoring').refactor('Extract Function')<CR>]],
+        { noremap = true, silent = true, expr = false }
+    )
+    vim.keymap.set(
+        "v",
+        "<leader>rf",
+        [[<Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
+        { noremap = true, silent = true, expr = false }
+    )
+    vim.keymap.set(
+        "v",
+        "<leader>rv",
+        [[<Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]],
+        { noremap = true, silent = true, expr = false }
+    )
+    vim.keymap.set(
+        "v",
+        "<leader>ri",
+        [[<Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+        { noremap = true, silent = true, expr = false }
+    )
+
+    -- Extract block doesn't need visual mode
+    vim.keymap.set(
+        "n",
+        "<leader>rb",
+        [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]],
+        { noremap = true, silent = true, expr = false }
+    )
+    vim.keymap.set(
+        "n",
+        "<leader>rbf",
+        [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]],
+        { noremap = true, silent = true, expr = false }
+    )
+
+    -- Inline variable can also pick up the identifier currently under the cursor without visual mode
+    vim.keymap.set(
+        "n",
+        "<leader>ri",
+        [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+        { noremap = true, silent = true, expr = false }
+    )
+    vim.api.nvim_set_keymap(
+        "v",
+        "<leader>rr",
+        "<cmd>lua require('refactoring').select_refactor()<CR>",
+        { noremap = true, silent = true, expr = false }
+    )
+    -- You can also use below = true here to to change the position of the printf
+    -- statement (or set two remaps for either one). This remap must be made in normal mode.
+    vim.api.nvim_set_keymap(
+        "n",
+        "d?v",
+        "<cmd>lua require('refactoring').debug.printf({below = false})<CR>",
+        { noremap = true }
+    )
+
+    -- Print var
+
+    -- Remap in normal mode and passing { normal = true } will automatically find the variable under the cursor and print it
+    vim.api.nvim_set_keymap(
+        "n",
+        "d?V",
+        "<cmd>lua require('refactoring').debug.print_var({ normal = true })<CR>",
+        { noremap = true }
+    )
+    -- Remap in visual mode will print whatever is in the visual selection
+    vim.api.nvim_set_keymap(
+        "v",
+        "<leader>rv",
+        "<cmd>lua require('refactoring').debug.print_var({})<CR>",
+        { noremap = true }
+    )
+
+    -- Cleanup function: this remap should be made in normal mode
+    vim.api.nvim_set_keymap(
+        "n",
+        "<leader>rc",
+        "<cmd>lua require('refactoring').debug.cleanup({})<CR>",
+        { noremap = true }
+    )
 end
 
 function config.debugprint()
     require("debugprint").setup({
         create_keymaps = true,
     })
-    vim.keymap.set("n", "dvl", function()
-        require("debugprint").debugprint({ ignore_treesitter = true, variable = true })
-    end, { desc = "debug print var" })
-    vim.keymap.set("n", "dvL", function()
-        require("debugprint").debugprint({ ignore_treesitter = true, above = true, variable = true })
-    end, { desc = "debug print var above" })
+    local bind_table = {
+
+        ["dvl"] = {
+
+            mode = "n",
+            command = function()
+                require("debugprint").debugprint({ ignore_treesitter = true, variable = true })
+            end,
+            desc = "Debug print var",
+        },
+        ["dvL"] = {
+            mode = "n",
+            command = function()
+                require("debugprint").debugprint({ ignore_treesitter = true, above = true, variable = true })
+            end,
+            desc = { "Debug print var above" },
+        },
+    }
+
+    for i, v in bind_table do
+        vim.keymap.set(v.mode, i, v.command, { desc = v.desc })
+    end
 end
 
 function config.context()
