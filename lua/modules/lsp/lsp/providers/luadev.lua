@@ -2,11 +2,17 @@ local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 local lspconfig = require("lspconfig")
 local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
 local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
-local runtime_path = {}
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
 -- Log:info(sumneko_binary, "-E", sumneko_root_path .. "/main.lua")
+
+local path = vim.split(package.path, ";")
+table.insert(path, "lua/?.lua")
+table.insert(path, "lua/?/init.lua")
+
+local plugins = ("%s/site/pack/packer"):format(vim.fn.stdpath("data"))
+local plenary = ("%s/start/plenary.nvim"):format(plugins)
+local packer = ("%s/opt/packer.nvim"):format(plugins)
 local sumneko_lua_server = enhance_attach({
+
     cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     settings = {
         Lua = {
@@ -27,24 +33,17 @@ local sumneko_lua_server = enhance_attach({
                 },
             },
             completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
-            hint = {
-                enable = true,
-            },
+
+            format = { enable = false },
+            hint = { enable = true, arrayIndex = "Disable", setType = true },
             workspace = {
-                -- remove all of this, as it slows things down
-                library = {
-                    [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = true,
-                    -- vim.api.nvim_get_runtime_file("", false),
-                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                },
-                maxPreload = 1000,
-                preloadFileSize = 10000,
+                library = { vim.fn.expand("$VIMRUNTIME/lua"), packer, plenary },
+                checkThirdParty = false,
             },
-            checkThirdParty = false,
         },
     },
 })
+
 local lua_dev_plugins = {
     "nvim-notify",
     "plenary.nvim",
@@ -54,7 +53,7 @@ local runtime_path_completion = true
 if not runtime_path_completion then
     sumneko_lua_server.settings.Lua.runtime = {
         version = "LuaJIT",
-        path = runtime_path,
+        path = path,
     }
 end
 local luadev = require("lua-dev").setup({

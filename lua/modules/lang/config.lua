@@ -91,7 +91,7 @@ function config.refactor()
 
         print_var_statements = {
             python = {
-                'ic(f"{%s}")',
+                'ic(f"{ %s }")',
             },
         },
     })
@@ -168,7 +168,7 @@ function config.refactor()
         [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
         { noremap = true, silent = true, expr = false }
     )
-    vim.api.nvim_set_keymap(
+    vim.keymap.set(
         "v",
         "<leader>rr",
         "<cmd>lua require('refactoring').select_refactor()<CR>",
@@ -176,65 +176,41 @@ function config.refactor()
     )
     -- You can also use below = true here to to change the position of the printf
     -- statement (or set two remaps for either one). This remap must be made in normal mode.
-    vim.api.nvim_set_keymap(
-        "n",
-        "d?v",
-        "<cmd>lua require('refactoring').debug.printf({below = false})<CR>",
-        { noremap = true }
-    )
+    vim.keymap.set("n", "d?v", "<cmd>lua require('refactoring').debug.printf({below = false})<CR>", { noremap = true })
 
     -- Print var
 
     -- Remap in normal mode and passing { normal = true } will automatically find the variable under the cursor and print it
-    vim.api.nvim_set_keymap(
+    vim.keymap.set(
         "n",
         "d?V",
         "<cmd>lua require('refactoring').debug.print_var({ normal = true })<CR>",
         { noremap = true }
     )
     -- Remap in visual mode will print whatever is in the visual selection
-    vim.api.nvim_set_keymap(
-        "v",
-        "<leader>rv",
-        "<cmd>lua require('refactoring').debug.print_var({})<CR>",
-        { noremap = true }
-    )
+    vim.keymap.set("v", "<leader>rv", "<cmd>lua require('refactoring').debug.print_var({})<CR>", { noremap = true })
 
     -- Cleanup function: this remap should be made in normal mode
-    vim.api.nvim_set_keymap(
-        "n",
-        "<leader>rc",
-        "<cmd>lua require('refactoring').debug.cleanup({})<CR>",
-        { noremap = true }
-    )
+    vim.keymap.set("n", "<leader>rc", "<cmd>lua require('refactoring').debug.cleanup({})<CR>", { noremap = true })
 end
 
 function config.debugprint()
     require("debugprint").setup({
         create_keymaps = true,
     })
-    local bind_table = {
 
-        ["dvl"] = {
-
-            mode = "n",
-            command = function()
-                require("debugprint").debugprint({ ignore_treesitter = true, variable = true })
-            end,
-            desc = "Debug print var",
-        },
-        ["dvL"] = {
-            mode = "n",
-            command = function()
-                require("debugprint").debugprint({ ignore_treesitter = true, above = true, variable = true })
-            end,
-            desc = { "Debug print var above" },
-        },
-    }
-
-    for i, v in bind_table do
-        vim.keymap.set(v.mode, i, v.command, { desc = v.desc })
-    end
+    vim.keymap.set(
+        "n",
+        "dvl",
+        "<cmd>lua require('debugprint').debugprint({ ignore_treesitter = true, variable = true })<CR>",
+        { noremap = true, desc = { "Debug print var above" } }
+    )
+    vim.keymap.set(
+        "n",
+        "dvl",
+        "<cmd>lua require('debugprint').debugprint({ ignore_treesitter = true, above = true, variable = true })<CR>",
+        { noremap = true, desc = { "Debug print var above" } }
+    )
 end
 
 function config.context()

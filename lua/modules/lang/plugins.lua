@@ -208,6 +208,8 @@ lang({
     },
     config = conf.neotest,
 })
+-- TODO(vsedov) (10:00:41 - 23/08/22): Lean how to actually use this cause
+-- I kinda do not really know wtf this thing really does is this another jaq or something ?
 lang({
     "stevearc/overseer.nvim",
     config = conf.overseer,

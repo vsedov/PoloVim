@@ -430,6 +430,7 @@ local function should_show_cursorline(buf)
         and not vim.tbl_contains(cursorline_exclude, vim.bo[buf].filetype)
 end
 
+-- might be something wrong with this, though im not sure what.
 lambda.augroup("Cursorline", {
     {
         event = { "BufEnter" },
@@ -459,3 +460,5 @@ lambda.augroup("TerminalAutocommands", {
         end,
     },
 })
+
+-- Make curosr
