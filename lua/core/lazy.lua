@@ -11,9 +11,18 @@ if fsize > 1024 * 1024 then
     load_ts_plugins = false
     load_lsp = false
 end
+local function load_colourscheme()
+    math.randomseed(os.time())
+    local theme = lambda.config.colourscheme.themes.dark
+    local rand = math.random(#theme)
+    loader(theme[rand])
+    -- loader("rose") -- Forceuflly load rosepine
+end
 
 require("vscripts.cursorhold")
 require("utils.ui.highlights")
+load_colourscheme()
+
 vim.g.cursorhold_updatetime = 100
 
 function Lazyload()
@@ -134,7 +143,6 @@ vim.defer_fn(function()
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
-    loader("hydra.nvim")
     lprint("telescope family")
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
