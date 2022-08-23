@@ -20,17 +20,15 @@ lambda.config = {
         catppuccin_flavour = "mocha",
         -- @usage theme_name : percentage chance
         themes = {
-            dark = softmax({
-                { "kanagawa.nvim", 0.8 },
-                { "rose", 0.8 },
-                { "catppuccin", 0.6 },
-                { "horizon.nvim", 0.5 },
-                { "vim-dogrun", 0.3 },
-                { "doom-one.nvim", 0.5 },
-                { "poimandres.nvim", 0.5 },
-                { "tokyonight.nvim", 0.5 },
-                { "aquarium-vim", 0.3 },
-            }),
+            dark = {
+                "kanagawa.nvim",
+                "rose",
+                "catppuccin",
+                "horizon.nvim",
+                "vim-dogrun",
+                "doom-one.nvim",
+                "tokyonight.nvim",
+            },
         },
     },
     record_your_self = false, -- waka time
