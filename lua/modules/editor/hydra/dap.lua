@@ -103,16 +103,13 @@ local dap_hydra = Hydra({
 })
 
 lambda.augroup("HydraDap", {
-    event = "User",
-    user = "DapStarted",
-    command = function()
-        print("i am active")
-        vim.schedule(function()
-            vim.api.nvim_create_autocmd(
-                { "BufReadPost" },
-                { callback = require("persistent-breakpoints.api").load_breakpoints }
-            )
-            dap_hydra:activate()
-        end)
-    end,
+    {
+        event = "User",
+        pattern = "DapStarted",
+        command = function()
+            vim.schedule(function()
+                dap_hydra:activate()
+            end)
+        end,
+    },
 })

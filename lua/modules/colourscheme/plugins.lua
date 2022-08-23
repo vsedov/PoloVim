@@ -55,9 +55,3 @@ colourscheme({
     opt = true,
     config = conf.tokyonight,
 })
-
-colourscheme({
-    "FrenzyExists/aquarium-vim",
-    opt = true,
-    config = conf.aquarium,
-})

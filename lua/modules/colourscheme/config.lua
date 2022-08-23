@@ -85,7 +85,7 @@ function config.catppuccin()
             mini = false,
         },
     })
-    vim.cmd.colorscheme("kanagawa")
+    vim.cmd.colorscheme("catppuccin")
 end
 
 function config.kanagawa()
