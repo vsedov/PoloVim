@@ -26,4 +26,10 @@ return {
             name = "path",
         },
     },
+    use_overseer = {
+        enable = true,
+        options = {
+            name = "overseer",
+        },
+    },
 }
