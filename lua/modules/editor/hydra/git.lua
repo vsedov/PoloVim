@@ -47,9 +47,18 @@ if gitrepo then
     loader("keymap-layer.nvim vgit.nvim gitsigns.nvim vim-fugitive")
 
     local hint = [[
-  ^^^^----------------------------------------------^^^^
-  ^^^^                   Gitsigns                   ^^^^
-  ^^^^----------------------------------------------^^^^
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+ ^^^^                      Speed                       ^^^^
+ ^^^^                                                  ^^^^
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+                    _hs_: Commit
+        _hr_: Reword                _hf_: Fixup
+        _ha_: Amend                 _hS_: Squash
+
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+ ^^^^                     Gitsigns                     ^^^^
+ ^^^^                                                  ^^^^
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
   _J_ : next hunk                   _D_ : diffthis
   _K_ : prev hunk                   _p_ : Preview H
   _s_ : stagehunk                   _S_ : stage buf
@@ -58,24 +67,30 @@ if gitrepo then
   _b_ : gutterView                  _B_ : blame_line
   _/_ : show base                   _i_ : Select hunk
   _Qq_ : Setqflist all              _Qw_ : Setqflist
-  ^^^^-----------------------------------------------^^^^
-  ^^^^                     VGIT                      ^^^^
-  ^^^^-----------------------------------------------^^^^
+
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+ ^^^^                       VGIT                       ^^^^
+ ^^^^                                                  ^^^^
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
   _k_ : proj diff                   _g_ : diff staged
   _dd_ : diff preview               _P_ : projStaged
   _f_ : proj hunkQF                 _U_ : unstagebuf
                     _G_ : stage diff
-  ^^^^------------------------------------------------^^^^
-  ^^^^                    Personal                    ^^^^
-  ^^^^------------------------------------------------^^^^
+
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+ ^^^^                      Personal                    ^^^^
+ ^^^^                                                  ^^^^
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
   _d_: diftree                      _M_ : difmast
-  _c_ : conflict                    _m_ : merge
+  _C_ : conflict                    _m_ : merge
   _H_ : filehist                    _l_ : log
-  ^^^^------------------------------------------------^^^^
+
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
 
         _<Enter>_ => Neogit _q_ => exit => _<Esc>_
-]]
 
+
+]]
     local ok, gitsigns = pcall(require, "gitsigns")
     if ok then
         local vgit = require("vgit")
@@ -88,7 +103,7 @@ if gitrepo then
                 invoke_on_body = true,
                 hint = {
                     position = "bottom",
-                    border = "single",
+                    border = lambda.style.border.type_0,
                 },
                 on_enter = function()
                     vim.cmd.mkview()
@@ -190,56 +205,12 @@ if gitrepo then
                 { "l", ":Flogsplit<CR>", { exit = true, nowait = true } },
                 { "m", ":Git mergetool<CR>" },
                 { "C", ":GitConflictListQf<CR>" },
-                { "c", ":Commit<CR>" },
-            },
-        })
-        local speed_hint = [[
-    ^ ^ Options    ^
-    ^
-    _s_  Commit    ^
-    _f_  Fixup     ^
-    _a_  Amend     ^
-    _S_  Squash    ^
-    _r_  Reword    ^
-    ^
-^^^^    _<Esc>_
-]]
 
-        Hydra({
-            name = "Speed Git",
-            hint = speed_hint,
-            config = {
-                color = "pink",
-                invoke_on_body = true,
-                hint = {
-                    position = "middle-right",
-                    border = lambda.style.border.type_0,
-                },
-                on_enter = function()
-                    vim.cmd.mkview()
-                    vim.cmd("silent! %foldopen!")
-                    vim.bo.modifiable = false
-                    gitsigns.toggle_linehl(true)
-                    gitsigns.toggle_deleted(true)
-                end,
-                on_exit = function()
-                    local cursor_pos = vim.api.nvim_win_get_cursor(0)
-                    vim.cmd.loadview()
-                    vim.api.nvim_win_set_cursor(0, cursor_pos)
-                    vim.cmd("normal zv")
-                    gitsigns.toggle_signs(false)
-                    gitsigns.toggle_linehl(false)
-                    gitsigns.toggle_deleted(false)
-                end,
-            },
-            mode = { "n" },
-            body = "<leader>k",
-            heads = {
-                { "s", ":Commit<CR>", { silent = true } },
-                { "f", ":Fixup<CR>", { silent = true } },
-                { "a", ":Amend<CR>", { silent = true } },
-                { "S", ":Squash<CR>", { silent = true } },
-                { "r", ":Reword<CR>", { silent = true } },
+                { "hs", ":Commit<CR>", { silent = true } },
+                { "hf", ":Fixup<CR>", { silent = true } },
+                { "ha", ":Amend<CR>", { silent = true } },
+                { "hS", ":Squash<CR>", { silent = true } },
+                { "hr", ":Reword<CR>", { silent = true } },
             },
         })
     end

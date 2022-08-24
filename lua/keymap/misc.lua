@@ -27,10 +27,10 @@ local plug_map = {
     ["n|]t"] = map_cu("tabprev", "tabprev"):with_noremap():with_silent(),
     ["n|[t"] = map_cu("tabnext", "tabnext"):with_noremap():with_silent(),
 
-    ["n|;S"] = map_cu("ReachOpen buffers", "ReachOpen buffers"):with_noremap():with_silent(),
+    ["n|;s"] = map_cu("ReachOpen buffers", "ReachOpen buffers"):with_noremap():with_silent(),
     ["n|M"] = map_cu("ReachOpen marks", "ReachOpen marks"):with_noremap():with_silent(),
-    ["n|;s"] = map_cu("ReachOpen tabpages", "ReachOpen tabpages"):with_noremap():with_silent(),
-    ["n|C"] = map_cu("ReachOpen colorschemes" .. "<cmd>lua require('utils.ui.highlights')<cr>", "ReachOpen colorschemes")
+    ["n|;S"] = map_cu("ReachOpen tabpages", "ReachOpen tabpages"):with_noremap():with_silent(),
+    ["n|;c"] = map_cu("ReachOpen colorschemes" .. "<cmd>lua require('utils.ui.highlights')<cr>", "ReachOpen colorschemes")
         :with_noremap()
         :with_silent(),
 }
