@@ -265,3 +265,18 @@ misc({
         require("numb").setup()
     end,
 })
+
+misc({
+    "m-demare/attempt.nvim",
+    requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    opt = true,
+    config = conf.attempt,
+    keys = {
+        "<leader>an",
+        "<leader>ai",
+        "<leader>ar",
+        "<leader>ad",
+        "<leader>ac",
+        "<leader>al",
+    },
+})

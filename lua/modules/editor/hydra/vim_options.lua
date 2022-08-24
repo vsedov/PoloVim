@@ -4,7 +4,7 @@ local hint = [[
   ^ ^        Options
   ^
   _v_ %{ve} virtual edit
-  _i_ %{list} invisible characters  
+  _i_ %{list} invisible characters
   _s_ %{spell} spell
   _w_ %{wrap} wrap
   _c_ %{cul} cursor line
@@ -26,7 +26,7 @@ Hydra({
         },
     },
     mode = { "n", "x" },
-    body = "<leader>o",
+    body = "<leader>O",
     heads = {
         {
             "n",

@@ -639,44 +639,9 @@ function config.neotest()
 end
 
 function config.overseer()
-    require("overseer").setup({
-        pre_task_hook = function(task_defn)
-            local env = require("utils.set_env").env
-            if env then
-                task_defn.env = env
-                dump(task_defn)
-            end
-        end,
-
-        component_aliases = {
-            default = {
-                "on_output_summarize",
-                "on_exit_set_status",
-                { "on_complete_notify", system = "unfocused" },
-                "on_complete_dispose",
-            },
-            default_neotest = {
-                { "on_complete_notify", system = "unfocused", on_change = true },
-                "default",
-            },
-        },
-        -- pre_task_hook = function(task_defn, util)
-        --   util.add_component(task_defn, { "timeout", timeout = 19 })
-        --   -- util.remove_component(task_defn, "timeout")
-        -- end,
-    })
-    vim.api.nvim_create_user_command(
-        "OverseerDebugParser",
-        'lua require("overseer.parser.debug").start_debug_session()',
-        {}
-    )
-    vim.keymap.set("n", "<leader>oo", "<cmd>OverseerToggle<CR>")
-    vim.keymap.set("n", "<leader>or", "<cmd>OverseerRun<CR>")
-    vim.keymap.set("n", "<leader>ol", "<cmd>OverseerLoadBundle<CR>")
-    vim.keymap.set("n", "<leader>ob", "<cmd>OverseerBuild<CR>")
-    vim.keymap.set("n", "<leader>od", "<cmd>OverseerQuickAction<CR>")
-    vim.keymap.set("n", "<leader>os", "<cmd>OverseerTaskAction<CR>")
+    require("modules.lang.overseer")
 end
+
 function config.coverage()
     require("coverage").setup()
 end

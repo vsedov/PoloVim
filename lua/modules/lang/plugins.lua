@@ -227,6 +227,14 @@ lang({
         "OverseerQuickAction",
         "OverseerTaskAction",
     },
+    keys = {
+        "<leader>oo",
+        "<leader>or",
+        "<leader>ol",
+        "<leader>ob",
+        "<leader>od",
+        "<leader>os",
+    },
 })
 lang({
     "andythigpen/nvim-coverage",

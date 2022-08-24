@@ -2,6 +2,7 @@ local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
 
 local function setup_colors()
+    -- i just have this to shut this thing up tbh
     require("utils.ui.highlights").plugin("heirline", {
         { diffAdded = { link = "DiffAdd" } },
         { diffChanged = { link = "DiffChange" } },

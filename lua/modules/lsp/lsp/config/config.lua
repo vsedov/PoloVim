@@ -147,7 +147,7 @@ local container = {
         normal_mode = {
             ["<Leader>cw"] = { "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", "Symbols" },
             ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "declaration" },
-            ["<leader>ai"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
+            ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
             ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
             ["D"] = {
                 function()
