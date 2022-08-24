@@ -189,7 +189,57 @@ if gitrepo then
 
                 { "l", ":Flogsplit<CR>", { exit = true, nowait = true } },
                 { "m", ":Git mergetool<CR>" },
-                { "c", ":GitConflictListQf<CR>" },
+                { "C", ":GitConflictListQf<CR>" },
+                { "c", ":Commit<CR>" },
+            },
+        })
+        local speed_hint = [[
+    ^ ^ Options    ^
+    ^
+    _s_  Commit    ^
+    _f_  Fixup     ^
+    _a_  Amend     ^
+    _S_  Squash    ^
+    _r_  Reword    ^
+    ^
+^^^^    _<Esc>_
+]]
+
+        Hydra({
+            name = "Speed Git",
+            hint = speed_hint,
+            config = {
+                color = "pink",
+                invoke_on_body = true,
+                hint = {
+                    position = "middle-right",
+                    border = lambda.style.border.type_0,
+                },
+                on_enter = function()
+                    vim.cmd.mkview()
+                    vim.cmd("silent! %foldopen!")
+                    vim.bo.modifiable = false
+                    gitsigns.toggle_linehl(true)
+                    gitsigns.toggle_deleted(true)
+                end,
+                on_exit = function()
+                    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+                    vim.cmd.loadview()
+                    vim.api.nvim_win_set_cursor(0, cursor_pos)
+                    vim.cmd("normal zv")
+                    gitsigns.toggle_signs(false)
+                    gitsigns.toggle_linehl(false)
+                    gitsigns.toggle_deleted(false)
+                end,
+            },
+            mode = { "n" },
+            body = "<leader>k",
+            heads = {
+                { "s", ":Commit<CR>", { silent = true } },
+                { "f", ":Fixup<CR>", { silent = true } },
+                { "a", ":Amend<CR>", { silent = true } },
+                { "S", ":Squash<CR>", { silent = true } },
+                { "r", ":Reword<CR>", { silent = true } },
             },
         })
     end
