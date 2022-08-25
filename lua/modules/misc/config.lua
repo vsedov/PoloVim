@@ -389,7 +389,7 @@ function config.attempt()
 
     require("telescope").load_extension("attempt")
 
-    function M.map(mode, l, r, opts)
+    function map(mode, l, r, opts)
         opts = opts or {}
         opts = vim.tbl_extend("force", { silent = true }, opts)
         vim.keymap.set(mode, l, r, opts)
