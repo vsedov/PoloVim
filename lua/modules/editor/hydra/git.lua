@@ -51,7 +51,7 @@ if gitrepo then
  ^^^^                      Speed                       ^^^^
  ^^^^                                                  ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-                    _hs_: Commit
+                    _C_: Commit
   _hr_ : Reword            ▕         _hf_ : Fixup
   _ha_ : Amend             ▕         _hS_ : Sqash
                          ▕ 
@@ -82,7 +82,7 @@ if gitrepo then
  ^^^^                                                 ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   _d_ : diftree            ▕         _M_ : difmast
-  _C_ : conflict           ▕         _m_ : merge
+  _c_ : conflict           ▕         _m_ : merge
   _H_ : filehist           ▕         _l_ : log
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
@@ -102,8 +102,8 @@ if gitrepo then
                 color = "pink",
                 invoke_on_body = true,
                 hint = {
-                    position = "bottom",
-                    border = lambda.style.border.type_0,
+                    position = "bottom-right",
+                    border = "single",
                 },
                 on_enter = function()
                     vim.cmd.mkview()
@@ -204,9 +204,9 @@ if gitrepo then
 
                 { "l", ":Flogsplit<CR>", { exit = true, nowait = true } },
                 { "m", ":Git mergetool<CR>" },
-                { "C", ":GitConflictListQf<CR>" },
+                { "c", ":GitConflictListQf<CR>" },
 
-                { "hs", ":Commit<CR>", { silent = true } },
+                { "C", ":Commit<CR>", { silent = true } },
                 { "hf", ":Fixup<CR>", { silent = true } },
                 { "ha", ":Amend<CR>", { silent = true } },
                 { "hS", ":Squash<CR>", { silent = true } },

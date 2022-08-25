@@ -71,7 +71,7 @@ Hydra({
         color = "teal",
         invoke_on_body = true,
         hint = {
-            position = "bottom",
+            position = "bottom-right",
             border = "single",
         },
     },

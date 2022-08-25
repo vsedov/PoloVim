@@ -53,7 +53,8 @@ local dap_hydra = Hydra({
         color = "pink",
         invoke_on_body = true,
         hint = {
-            position = "bottom",
+            position = "bottom-right",
+
             border = "rounded",
         },
     },

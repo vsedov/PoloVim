@@ -109,25 +109,21 @@ lang({ "nanotee/luv-vimdocs", opt = true })
 -- builtin lua functions
 lang({ "milisims/nvim-luaref", opt = true })
 lang({ "is0n/jaq-nvim", cmd = "Jaq", opt = true, config = conf.jaq })
-lang({
-    "pianocomposer321/yabs.nvim",
-    ft = "python",
-    cmd = { "YabsTask", "YabsDefaultTask" },
-    requires = { "nvim-lua/plenary.nvim" },
-    config = conf.yabs,
-})
 
 lang({ "mtdl9/vim-log-highlighting", ft = { "text", "log" } })
 
 lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
 
 lang({
-    "B4mbus/todo-comments.nvim",
-    cmd = { "TodoTelescope", "TodoTelescope", "TodoTrouble" },
-    requires = "trouble.nvim",
-    config = conf.todo_comments,
+    "ram02z/dev-comments.nvim",
+    requires = {
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/nvim-telescope", -- optional
+    },
+    event = { "BufEnter" },
+    config = conf.dev_comments,
 })
-
 -- not the same as folkes version
 lang({ "bfredl/nvim-luadev", opt = true, ft = "lua", setup = conf.luadev })
 

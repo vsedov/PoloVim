@@ -258,7 +258,7 @@ telescope.load_extension("gosource")
 -- telescope.load_extension("notify")
 loader("telescope-live-grep-raw.nvim")
 -- loader("project.nvim") -- telescope-frecency.nvim nvim-neoclip.lua telescope-zoxide
-M = {}
+local M = {}
 
 M._multiopen = function(prompt_bufnr, open_cmd)
     local picker = action_state.get_current_picker(prompt_bufnr)
@@ -462,7 +462,7 @@ M.theme = function(opts)
         layout_strategy = "flex",
         results_title = false,
         preview_title = false,
-        preview = false,
+        preview = true,
         winblend = 30,
         width = 100,
         results_height = 15,

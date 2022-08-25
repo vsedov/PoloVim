@@ -6,27 +6,32 @@ local buffer_config = function()
     if lambda.config.tabby_or_bufferline then
         hint = [[
   ^^^^                Bufferline                  ^^^^
-  ^^^^--------------------------------------------^^^^
+  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
    _l_: BufferLineCycleNext _h_: BufferLineCyclePrev
    _p_: BufferLineTogglePin _c_: BufferLinePick
    _H_: Move Next           _L_: Move Prev
    _ot_: Sort Tabs          _od_: Sort Dir
    _oD_: Sort relative dir  _D_: BufferLinePickClose
                     _b_: Tele Buffer
-  ^^^^--------------------------------------------^^^^
+
+  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^                  Tabs                      ^^^^
-  ^^^^--------------------------------------------^^^^
+  ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
+
     _tl_: tabn                       _th_: tabp
     _n_: $tabnew                     _tc_: tabclose
     _tH_: +tabmove                   _tL_: -tabmove
                     _tp_: tabonly
-  ^^^^--------------------------------------------^^^^
+
+  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^                   Delete                   ^^^^
-  ^^^^--------------------------------------------^^^^
+  ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
+
    _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
-  ^^^^--------------------------------------------^^^^
+
+  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^                   Reacher                  ^^^^
-  ^^^^--------------------------------------------^^^^
+  ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
 
     _S_: ReachOpen buffers   _s_: ReachOpen Tabs
 
@@ -39,7 +44,7 @@ local buffer_config = function()
             color = "teal",
             body = "<leader>b",
             config = {
-                hint = { border = "single" },
+                hint = { border = "single", position = "bottom-right" },
                 invoke_on_body = true,
             },
             heads = {
@@ -86,23 +91,27 @@ local buffer_config = function()
     else
         hint = [[
 ^^^^                    Tabby                   ^^^^
-^^^^--------------------------------------------^^^^
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   _l_: tabn                       _h_: tabp
   _n_: $tabnew                    _c_: tabclose
-^^^^--------------------------------------------^^^^
+^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
+
   _H_: +tabmove                   _L_: -tabmove
               _b_: Tele Buffer
               _p_: tabonly
-^^^^--------------------------------------------^^^^
+
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
 ^^^^                   Delete                   ^^^^
-^^^^--------------------------------------------^^^^
+^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
+
               _qh_: Del Hidden 
               _qn_: Del NameLess 
               _qt_: Del This
               _d_: Bwipeout
-^^^^--------------------------------------------^^^^
+
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
 ^^^^                  Reacher                   ^^^^
-^^^^--------------------------------------------^^^^
+^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
 
   _S_: ReachOpen buffers   _s_: ReachOpen Tabs
 
@@ -116,6 +125,7 @@ local buffer_config = function()
             config = {
                 hint = { border = "single" },
                 invoke_on_body = true,
+                position = "bottom-right",
             },
             heads = {
                 { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },
