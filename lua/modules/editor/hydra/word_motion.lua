@@ -10,7 +10,7 @@ Hydra({
     },
 
     mode = { "n", "x", "o" },
-    body = ",",
+    body = "<localleader><localleader>",
     heads = {
         { "w", "<Plug>(smartword-w)" },
         { "b", "<Plug>(smartword-b)" },
