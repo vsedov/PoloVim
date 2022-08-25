@@ -117,10 +117,9 @@ require("telescope").setup({
         -- prompt_prefix = " ",
         prompt_prefix = "  ",
         shorten_path = true,
-        preview = {
-            hide_on_startup = true,
-        },
-        -- preview = true,
+        --[[ preview = { ]]
+        --[[     hide_on_startup = true, ]]
+        --[[ }, ]]
         entry_prefix = " ",
         layout_config = {
             width = 0.99,
