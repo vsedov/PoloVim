@@ -54,7 +54,7 @@ if gitrepo then
                    _c_ : Commit
   _hr_ : Reword            ▕         _hf_ : Fixup
   _ha_ : Amend             ▕         _hS_ : Sqash
-                   _hd_ : Dash 
+                   _a_ :  Dash 
                          ▕ 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
  ^^^^                     Gitsigns                    ^^^^
@@ -107,20 +107,15 @@ if gitrepo then
                     border = "single",
                 },
                 on_enter = function()
-                    vim.cmd.mkview()
-                    vim.cmd("silent! %foldopen!")
                     vim.bo.modifiable = false
+                    gitsigns.toggle_signs(true)
                     gitsigns.toggle_linehl(true)
-                    gitsigns.toggle_deleted(true)
                 end,
                 on_exit = function()
-                    local cursor_pos = vim.api.nvim_win_get_cursor(0)
-                    vim.cmd.loadview()
-                    vim.api.nvim_win_set_cursor(0, cursor_pos)
-                    vim.cmd("normal zv")
                     gitsigns.toggle_signs(false)
                     gitsigns.toggle_linehl(false)
                     gitsigns.toggle_deleted(false)
+                    vim.cmd("echo") -- clear the echo area
                 end,
             },
             mode = { "n", "x" },
@@ -172,7 +167,7 @@ if gitrepo then
                 { "p", gitsigns.preview_hunk },
                 { "x", gitsigns.toggle_deleted, { nowait = true } },
                 { "r", gitsigns.reset_hunk },
-                { "D", wrap(gitsigns.diffthis, "~") },
+                { "D", gitsigns.diffthis },
                 { "R", ":Gitsigns reset_buffer<CR>", { silent = true } },
 
                 { "Qq", wrap(gitsigns.setqflist, "all") },
@@ -212,7 +207,7 @@ if gitrepo then
                 { "ha", ":Amend<CR>", { silent = true } },
                 { "hS", ":Squash<CR>", { silent = true } },
                 { "hr", ":Reword<CR>", { silent = true } },
-                { "hd", ":GDash<CR>", { exit = true, silent = true } },
+                { "a", ":GDash<CR>", { exit = true, silent = true } },
             },
         })
     end

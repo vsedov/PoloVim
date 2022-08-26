@@ -1,3 +1,5 @@
+-- https://github.com/josephsdavid/neovim2/blob/master/lua/core/hydra.lua
+
 local Hydra = require("hydra")
 
 local ex = function(feedkeys)

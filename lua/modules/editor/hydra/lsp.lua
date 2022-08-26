@@ -3,7 +3,8 @@ local cmd = require("hydra.keymap-util").cmd
 
 local hint = [[
 _K_: prev diagnostic  _d_: type definition _a_: code action  _s_: symbols  _w_: references
-_J_: next diagnostic  _r_: rename          _t_: trouble     
+_J_: next diagnostic  _r_: rename          _t_: trouble    
+
 ]]
 
 Hydra({
