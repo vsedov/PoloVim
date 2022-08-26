@@ -46,10 +46,9 @@ local treesitter = function()
 
     require("nvim-treesitter.configs").setup({
         autopairs = { enable = enable },
-        -- matchup = {
-        --     enable = true,
-        --     disable = { "c", "ruby" }, -- optional, list of language that will be disabled
-        -- },
+        matchup = {
+            enable = true,
+        },
         highlight = {
             enable = true, -- false will disable the whole extension
             additional_vim_regex_highlighting = false,
@@ -202,6 +201,8 @@ local treesitter_obj = function()
             "css",
             "yaml",
             "vue",
+            "julia",
+            "comment",
         },
     })
 

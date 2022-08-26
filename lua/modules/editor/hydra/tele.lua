@@ -16,7 +16,7 @@ local hint_telescope = [[
   _r_: registers       ▕   _/_: Search His _o_: oldfiles
   _R_: reloader        ▕   _c_: Com His    _k_: keymaps
   _j_: Jump            ▕   _m_: commands   _<Enter>_: Tele
-                     ▕                     
+                     ▕
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
  ^^^^                       Files                         ^^^^
  ^^^^                                                     ^^^^

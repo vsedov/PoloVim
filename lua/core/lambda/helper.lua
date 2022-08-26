@@ -242,3 +242,7 @@ lambda.empty = function(item)
     end
     return item ~= nil
 end
+lambda.execute_keys = function(feedkeys)
+    local keys = vim.api.nvim_replace_termcodes(feedkeys, true, false, true)
+    vim.api.nvim_feedkeys(keys, "x", false)
+end

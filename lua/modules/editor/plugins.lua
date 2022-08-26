@@ -323,6 +323,7 @@ editor({
 editor({
     "andymass/vim-matchup",
     event = { "CursorMoved", "CursorMovedI" },
+    after = "nvim-treesitter", --[[ Load this after nvim treesitter ]]
     cmd = { "MatchupWhereAmI?" },
     config = conf.matchup,
 })

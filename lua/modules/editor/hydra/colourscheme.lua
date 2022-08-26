@@ -1,4 +1,6 @@
-local hydra = require("hydra")
+-- https://github.com/josephsdavid/neovim2/blob/master/lua/core/hydra.lua
+local Hydra = require("hydra")
+
 local function colorcycler(reverse)
     local colors = vim.fn.getcompletion("", "color")
     local ccol = vim.g.colors_name
@@ -21,19 +23,39 @@ local function colorcycler(reverse)
             i = len
         end
         local out = colors[i]
-        vim.cmd('colorscheme ' .. out)
+        local loader = require("packer").loader
+        print(out)
+        local valid = lambda.config.colourscheme.themes.dark
+        -- if out contains a valid theme, load it like kanagawa is in kangawa.nvim
+        -- check if it matches or contains
+
+        for _, theme in ipairs(valid) do
+            if out:find(theme) then
+                loader(theme)
+                break
+            end
+        end
+
+        vim.cmd("colorscheme " .. out)
         print("using colorcheme: " .. out)
     end
 end
 
-
-hydra({
+Hydra({
     name = "Color Cycler",
-    config = { color = "amaranth", hint = {type = "statusline"}, },
     mode = "n",
-    body = "<localleader>C"
+    body = "<localleader>C",
+    config = {
+        color = "amaranth",
+        invoke_on_body = true,
+        hint = {
+            border = "single",
+            position = "middle",
+        },
+    },
+
     heads = {
         { "j", colorcycler(false), { desc = "next colorscheme" } },
         { "k", colorcycler(true), { desc = "previous colorscheme" } },
-    }
+    },
 })

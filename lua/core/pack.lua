@@ -3,7 +3,7 @@ local vim_path = require("core.global").vim_path
 local path_sep = require("core.global").path_sep
 local data_dir = require("core.global").data_dir
 -- local home = require('core.global').home
-local modules_dir = vim_path .. path_sep .. "lua" .. path_sep .. "modules"
+local modules_dir = require("core.global").modules_dir
 local packer_compiled = data_dir .. "packer_compiled.vim"
 local compile_to_lua = data_dir .. "lua" .. path_sep .. "_compiled.lua"
 local packer = nil
@@ -145,16 +145,13 @@ end
 
 function plugins.auto_compile()
     local file = vim.fn.expand("%:p")
-    if not file:match(vim_path) then
-        return
-    end
-
-    if file:match("plugins.lua") then
+    if file:match(modules_dir) then
         plugins.clean()
+        plugins.compile()
+        plugins.convert_compile_file()
+
+        vim.notify("Compile Done!", "info", { title = "Packer" })
     end
-    plugins.compile()
-    require("_compiled")
-    plugins.convert_compile_file()
 end
 
 function plugins.load_compile()
@@ -167,7 +164,6 @@ function plugins.load_compile()
         require("_compiled")
     end
     local cmds = {
-        "Compile",
         "Install",
         "Update",
         "Sync",
@@ -179,7 +175,6 @@ function plugins.load_compile()
             require("core.pack")[fn.tolower(cmd)]()
         end, {})
     end
-    vim.cmd([[command! PackerProfile lua require('packer').profile_output()]])
     vim.cmd(
         [[command! -nargs=+ -complete=customlist,v:lua.require'core.pack.snapshot'.completion.create PackerSnapshot  lua require('packer').snapshot(<f-args>)]]
     )
@@ -189,6 +184,14 @@ function plugins.load_compile()
     vim.cmd(
         [[command! -nargs=+ -complete=customlist,v:lua.require'core.pack.snapshot'.completion.snapshot PackerSnapshotDelete lua require('packer.snapshot').delete(<f-args>)]]
     )
+    api.nvim_create_user_command("PackerProfile", function()
+        require("core.pack").profile_output()
+    end, {})
+
+    api.nvim_create_user_command("PackerCompile", function()
+        require("core.pack").magic_compile()
+    end, {})
+
     local PackerHooks = vim.api.nvim_create_augroup("PackerHooks", { clear = true })
     vim.api.nvim_create_autocmd("User", {
         pattern = "PackerCompileDone",
@@ -196,13 +199,6 @@ function plugins.load_compile()
             vim.notify("Compile Done!", vim.log.levels.INFO, { title = "Packer" })
         end,
         group = PackerHooks,
-    })
-    vim.api.nvim_create_autocmd("BufWritePost", {
-        pattern = "*.lua",
-        callback = function()
-            plugins.auto_compile()
-        end,
-        desc = "Auto Compile the neovim config which write in lua",
     })
 end
 

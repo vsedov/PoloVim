@@ -385,17 +385,8 @@ function config.bbye()
     vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
 end
 function config.matchup()
-    require("nvim-treesitter.configs").setup({
-        matchup = {
-            enable = true, -- mandatory, false will disable the whole extension
-            disable = { "c", "ruby" }, -- optional, list of language that will be disabled
-            -- [options]
-        },
-    })
-
-    vim.g.matchup_enabled = 1
+    vim.g.loaded_matchit = 1
     vim.g.matchup_surround_enabled = 1
-    -- vim.g.matchup_transmute_enabled = 1
     vim.g.matchup_matchparen_deferred = 1
     vim.g.matchup_matchparen_offscreen = { method = "popup" }
     vim.keymap.set("n", "<leader><leader><leader>", "<cmd>MatchupWhereAmI?<cr>", { noremap = true })
