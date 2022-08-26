@@ -1,29 +1,50 @@
 local add_cmd = vim.api.nvim_create_user_command
+local lsp = vim.lsp
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
+local diagnostic = vim.diagnostic
+local L = vim.lsp.log_levels
+
 local features = {
     FORMATTING = "formatting",
     CODELENS = "codelens",
     DIAGNOSTICS = "diagnostics",
     REFERENCES = "references",
 }
-local M = {}
---- Check that a buffer is valid and loaded before calling a callback
---- TODO: neovim upstream should validate the buffer itself rather than
--- each user having to implement this logic
----@param callback function
----@param buf integer
-local function valid_call(callback, buf)
-    if not buf or not api.nvim_buf_is_loaded(buf) or not api.nvim_buf_is_valid(buf) then
-        return
-    end
-    callback()
-end
 
 local get_augroup = function(bufnr, method)
     assert(bufnr, "A bufnr is required to create an lsp augroup")
     return fmt("LspCommands_%d_%s", bufnr, method)
+end
+
+---@param opts table<string, any>
+
+---@param bufnr integer
+---@param capability string
+---@return table[]
+local function clients_by_capability(bufnr, capability)
+    return vim.tbl_filter(function(c)
+        return c.server_capabilities[capability]
+    end, lsp.get_active_clients({ buffer = bufnr }))
+end
+
+---@param buf integer
+---@return boolean
+local function is_buffer_valid(buf)
+    return buf and api.nvim_buf_is_loaded(buf) and api.nvim_buf_is_valid(buf)
+end
+
+--- Check that a buffer is valid and loaded before calling a callback
+--- it also ensures that a client which supports the capability is attached
+---@param buf integer
+---@return boolean, table[]
+local function check_valid_client(buf, capability)
+    if not is_buffer_valid(buf) then
+        return false, {}
+    end
+    local clients = clients_by_capability(buf, capability)
+    return next(clients) ~= nil, clients
 end
 
 --- Add lsp autocommands
@@ -70,7 +91,7 @@ function M.setup_autocommands(client, bufnr)
                 desc = "LSP: Code Lens",
                 buffer = bufnr,
                 command = function(args)
-                    valid_call(vim.lsp.codelens.refresh, args.buf)
+                    check_valid_request(lsp.codelens.refresh, args.buf, "codeLensProvider")
                 end,
             },
         })
@@ -83,7 +104,9 @@ function M.setup_autocommands(client, bufnr)
                 buffer = bufnr,
                 desc = "LSP: References",
                 command = function(args)
-                    valid_call(vim.lsp.buf.document_highlight, args.buf)
+                    if check_valid_client(args.buf, "documentHighlightProvider") then
+                        lsp.buf.document_highlight()
+                    end
                 end,
             },
             {
@@ -91,7 +114,9 @@ function M.setup_autocommands(client, bufnr)
                 desc = "LSP: References Clear",
                 buffer = bufnr,
                 command = function(args)
-                    valid_call(vim.lsp.buf.clear_references, args.buf)
+                    if check_valid_client(args.buf, "documentHighlightProvider") then
+                        lsp.buf.clear_references()
+                    end
                 end,
             },
         })
