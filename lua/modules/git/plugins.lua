@@ -51,13 +51,8 @@ git({ "ThePrimeagen/git-worktree.nvim", event = { "CmdwinEnter", "CmdlineEnter" 
 
 git({
     "sindrets/diffview.nvim",
-    cmd = {
-        "DiffviewOpen",
-        "DiffviewFileHistory",
-        "DiffviewFocusFiles",
-        "DiffviewToggleFiles",
-        "DiffviewRefresh",
-    },
+    setup = conf.git_setup("diffview.nvim"),
+    opt = true,
     config = conf.diffview,
 })
 
