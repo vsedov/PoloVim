@@ -77,7 +77,7 @@ local gh_dash = Terminal:new({
     },
 })
 
-vim.keymap.set("n", "<leader>ld", function()
+vim.api.nvim_create_user_command("GDash", function()
     gh_dash:toggle()
 end, {})
 
