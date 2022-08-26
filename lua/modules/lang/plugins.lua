@@ -129,8 +129,7 @@ lang({ "bfredl/nvim-luadev", opt = true, ft = "lua", setup = conf.luadev })
 
 lang({
     "rafcamlet/nvim-luapad",
-    cmd = { "LuaRun", "Lua", "Luapad" },
-    ft = { "lua" },
+    ft =  "lua" ,
     config = conf.luapad,
 })
 
