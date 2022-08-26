@@ -1,5 +1,10 @@
 local overseer = require("overseer")
 local STATUS = require("overseer.constants").STATUS
+local TAG = require("overseer.constants").STATUS
+
+-- M.STATUS = Enum.new({ "PENDING", "RUNNING", "CANCELED", "SUCCESS", "FAILURE", "DISPOSED" })
+-- ---@alias overseer.Tag "BUILD"|"TEST"|"CLEAN"
+-- M.TAG = Enum.new({ "BUILD", "TEST", "CLEAN" })
 overseer.setup({
     form = { win_opts = { winblend = 0 } },
     task_editor = { win_opts = { winblend = 0 } },
@@ -68,18 +73,7 @@ vim.api.nvim_create_user_command(
     'lua require("overseer.parser.debug").start_debug_session()',
     {}
 )
-vim.keymap.set("n", "<leader>oo", "<cmd>OverseerToggle<CR>")
-vim.keymap.set("n", "<leader>or", "<cmd>OverseerRun<CR>")
-vim.keymap.set("n", "<leader>ol", "<cmd>OverseerLoadBundle<CR>")
-vim.keymap.set("n", "<leader>ob", "<cmd>OverseerBuild<CR>")
-vim.keymap.set("n", "<leader>od", "<cmd>OverseerQuickAction<CR>")
-vim.keymap.set("n", "<leader>os", "<cmd>OverseerTaskAction<CR>")
+-- Binds need to be loaded last
+require("modules.lang.overseer.templates")
 
--- TODO(vsedov) (03:09:05 - 24/08/22): refactor this so that i do not have to manually load
--- everything
-for i, v in ipairs(require("modules.lang.overseer.debugs")) do
-    overseer.register_template(i)
-end
-for i, v in ipairs(require("modules.lang.overseer.python")) do
-    overseer.register_template(i)
-end
+require("modules.lang.overseer.binds")
