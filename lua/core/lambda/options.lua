@@ -1,13 +1,3 @@
-local function softmax(t)
-    local sum = 0
-    for i, v in ipairs(t) do
-        sum = sum + math.exp(v[2])
-    end
-    for i, v in ipairs(t) do
-        t[i][2] = math.exp(v[2]) / sum
-    end
-    return t
-end
 -- pick random  item form dark but based on its probability
 lambda.config = {
     colourscheme = {
@@ -31,7 +21,7 @@ lambda.config = {
             },
         },
     },
-    record_your_self = false, -- waka time
+    record_your_self = true, -- waka time
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
     save_clipboard_on_exit = true,
