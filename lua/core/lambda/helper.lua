@@ -1,7 +1,7 @@
--- local fn = vim.fn
+local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local lib = lambda.lib
+local l = vim.log.levels
 
 ---@class Autocommand
 ---@field description string
@@ -222,6 +222,28 @@ lambda.find = function(matcher, haystack)
     return found
 end
 
+--- Call the given function and use `vim.notify` to notify of any errors
+--- this function is a wrapper around `xpcall` which allows having a single
+--- error handler for all errors
+---@param msg string
+---@param func function
+---@vararg any
+---@return boolean, any
+---@overload fun(fun: function, ...): boolean, any
+function lambda.wrap_err(msg, func, ...)
+    local args = { ... }
+    if type(msg) == "function" then
+        args, func, msg = { func, unpack(args) }, msg, nil
+    end
+    return xpcall(func, function(err)
+        msg = msg and fmt("%s:\n%s", msg, err) or err
+        local info = debug.getinfo(2, "S")
+        local title = fmt("ERROR(%s:%d)", fn.fnamemodify(info.short_src, ":~:."), info.linedefined)
+        vim.schedule(function()
+            vim.notify(msg, l.ERROR, { title = title })
+        end)
+    end, unpack(args))
+end
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean?
