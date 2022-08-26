@@ -20,8 +20,9 @@ local function pick_window()
 end
 
 local window_hint = [[
- ^^^^^^^^^^^^             Move         ^^    Size  ^^  ^^     Split
- ^^^^^^^^^^^^------------------------- ^^--------------^^  ^^---------------
+ ^^^^^^^^^^^^          Move            ^^    Size  ^^  ^^     Split
+ ^^^^^^^^^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ ^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^  ^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
  ^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^ ^   _<Up>_     ^   ^_s_: horizontally
  _h_ ^ ^ _l_  _wh_ _<cr>_ _wl_  _H_ ^ ^ _L_  _<Left>_ _<Right>_  _v_: vertically
  ^ ^ _j_ ^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^   ^_q_, _c_: close

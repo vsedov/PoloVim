@@ -7,6 +7,7 @@ loader("keymap-layer.nvim vgit.nvim gitsigns.nvim")
 local exclude_table = {
     "init",
 }
+
 -- this is to check if tests are currently active or not
 if not test_active then
     table.insert(exclude_table, "hydra_test")

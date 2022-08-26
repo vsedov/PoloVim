@@ -23,7 +23,6 @@ local function colorcycler(reverse)
             i = len
         end
         local out = colors[i]
-        local loader = require("packer").loader
         print(out)
         local valid = lambda.config.colourscheme.themes.dark
         -- if out contains a valid theme, load it like kanagawa is in kangawa.nvim
@@ -31,7 +30,7 @@ local function colorcycler(reverse)
 
         for _, theme in ipairs(valid) do
             if out:find(theme) then
-                loader(theme)
+                require("packer").loader(theme)
                 break
             end
         end
