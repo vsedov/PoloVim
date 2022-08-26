@@ -108,9 +108,9 @@ function plugins.auto_compile()
 end
 
 function plugins.compile_loader()
-  plugins.clean()
-  plugins.auto_compile()
-  vim.cmd([[silent UpdateRemotePlugins]])
+    plugins.clean()
+    plugins.auto_compile()
+    vim.cmd([[silent UpdateRemotePlugins]])
 end
 
 function plugins.load_compile()
@@ -147,7 +147,7 @@ function plugins.load_compile()
         group = PackerHooks,
     })
 
-      vim.cmd([[autocmd User PackerComplete lua require('core.pack').compile_loader()]])
+    vim.cmd([[autocmd User PackerComplete lua require('core.pack').compile_loader()]])
 end
 
 return plugins
