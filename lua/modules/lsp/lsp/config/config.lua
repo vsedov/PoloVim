@@ -297,7 +297,6 @@ local container = {
             "mypy",
             "phpcs",
             "revive",
-            "shellcheck",
             "staticcheck",
             "stylelint",
             "write_good",
@@ -321,7 +320,7 @@ local container = {
             "trim_newlines",
             "trim_whitespace",
         },
-        code_action = { "eslint_d", "gitrebase", "shellcheck", "refactoring" },
+        code_action = { "eslint_d", "gitrebase", "refactoring" },
     },
 }
 

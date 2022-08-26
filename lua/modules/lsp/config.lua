@@ -48,11 +48,12 @@ function config.saga()
         code_action_icon = "", -- this nice feature
         -- diable this for the time, seems to lag things up
         code_action_lightbulb = {
-            enable = false,
-            sign = false,
-            sign_priority = 0,
-            virtual_text = false,
+            enable = true,
+            sign = true,
+            sign_priority = 20,
+            virtual_text = true,
         },
+        code_action_num_shortcut = true,
         rename_in_select = true,
         server_filetype_map = {},
     })
