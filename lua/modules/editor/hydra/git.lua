@@ -51,9 +51,10 @@ if gitrepo then
  ^^^^                      Speed                       ^^^^
  ^^^^                                                  ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-                    _C_: Commit
+                   _c_ : Commit
   _hr_ : Reword            ▕         _hf_ : Fixup
   _ha_ : Amend             ▕         _hS_ : Sqash
+                   _hd_ : Dash 
                          ▕ 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
  ^^^^                     Gitsigns                    ^^^^
@@ -82,7 +83,7 @@ if gitrepo then
  ^^^^                                                 ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   _d_ : diftree            ▕         _M_ : difmast
-  _c_ : conflict           ▕         _m_ : merge
+  _C_ : conflict           ▕         _m_ : merge
   _H_ : filehist           ▕         _l_ : log
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
@@ -204,13 +205,14 @@ if gitrepo then
 
                 { "l", ":Flogsplit<CR>", { exit = true, nowait = true } },
                 { "m", ":Git mergetool<CR>" },
-                { "c", ":GitConflictListQf<CR>" },
+                { "C", ":GitConflictListQf<CR>" },
 
-                { "C", ":Commit<CR>", { silent = true } },
+                { "c", ":Commit<CR>", { silent = true } },
                 { "hf", ":Fixup<CR>", { silent = true } },
                 { "ha", ":Amend<CR>", { silent = true } },
                 { "hS", ":Squash<CR>", { silent = true } },
                 { "hr", ":Reword<CR>", { silent = true } },
+                { "hd", ":GDash<CR>", { exit = true, silent = true } },
             },
         })
     end
