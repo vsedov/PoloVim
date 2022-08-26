@@ -186,6 +186,8 @@ end
 ---   M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
+---  NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme
+--- is updated
 ---@param name string
 ---@param opts HighlightKeys
 ---@overload fun(namespace: integer, name: string, opts: HighlightKeys)
@@ -194,27 +196,26 @@ function M.set(namespace, name, opts)
         opts, name, namespace = name, namespace, 0
     end
 
-    assert(name and opts, "Both 'name' and 'opts' must be specified")
-    assert(type(name) == "string", fmt("Name must be a string but got '%s'", name))
-    assert(type(opts) == "table", fmt("Opts must be a table but got '%s'", vim.inspect(opts)))
-    assert(namespace, "You must specify a valid namespace, you passed %s", vim.inspect(namespace))
+    vim.validate({
+        opts = { opts, "table" },
+        name = { name, "string" },
+        namespace = { namespace, "number" },
+    })
 
     local hl = get_highlight(opts.inherit or name)
-    opts.inherit = nil
 
     for attr, value in pairs(opts) do
         if type(value) == "table" and value.from then
-            opts[attr] = M.get(value.from, value.attr or attr)
+            hl[attr] = M.get(value.from, value.attr or attr)
             if value.alter then
-                opts[attr] = M.alter_color(opts[attr], value.alter)
+                hl[attr] = M.alter_color(hl[attr], value.alter)
             end
+        elseif attr ~= "inherit" then
+            hl[attr] = value
         end
     end
 
-    local ok, msg = pcall(api.nvim_set_hl, namespace, name, vim.tbl_extend("force", hl, opts))
-    if not ok then
-        vim.notify(fmt("Failed to set %s because - %s", name, msg))
-    end
+    lambda.wrap_err(fmt("failed to set %s because", name), api.nvim_set_hl, namespace, name, hl)
 end
 
 --- Check if the current window has a winhighlight
@@ -275,24 +276,26 @@ end
 ---------------------------------------------------------------------------------
 -- Plugin highlights
 ---------------------------------------------------------------------------------
+local function add_theme_overrides(theme)
+    local res, seen = {}, {}
+    local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme["*"] or {})
+    for _, hl in ipairs(list) do
+        local n = next(hl)
+        if not seen[n] then
+            res[#res + 1] = hl
+        end
+        seen[n] = true
+    end
+    return res
+end
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
 ---@param opts table<string, table> map of highlights
 function M.plugin(name, opts)
     -- Options can be specified by theme name so check if they have been or there is a general
     -- definition otherwise use the opts as is
-    local theme = opts.theme
-    if theme then
-        local res, seen = {}, {}
-        local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme["*"] or {})
-        for _, hl in ipairs(list) do
-            local n = next(hl)
-            if not seen[n] then
-                res[#res + 1] = hl
-            end
-            seen[n] = true
-        end
-        opts = res
+    if opts.theme then
+        opts = add_theme_overrides(opts.theme)
         if not next(opts) then
             return
         end
@@ -312,7 +315,6 @@ function M.plugin(name, opts)
         },
     })
 end
-
 local function general_overrides()
     local normal_bg = M.get("Normal", "bg")
     local code_block = M.alter_color(normal_bg, 30)
