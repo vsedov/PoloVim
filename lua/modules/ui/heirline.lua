@@ -7,29 +7,27 @@ local function setup_colors()
         { diffAdded = { link = "DiffAdd" } },
         { diffChanged = { link = "DiffChange" } },
         { diffRemoved = { link = "DiffDelete" } },
+        { diffDeleted = { link = "DiffDelete" } },
     })
 
     local values = {
 
         bright_bg = utils.get_highlight("Folded").bg,
-        blue = utils.get_highlight("Function").fg,
-        dark_red = utils.get_highlight("DiffDelete").bg or utils.get_highlight("Folded").bg,
-        cyan = utils.get_highlight("Special").fg,
-        ----
-        git_add = utils.get_highlight("diffAdded").fg,
-        git_change = utils.get_highlight("diffChanged").fg,
-        git_del = utils.get_highlight("diffRemoved").fg,
-        diag_warn = utils.get_highlight("DiagnosticWarn").fg,
-
         red = utils.get_highlight("DiagnosticError").fg,
+        dark_red = utils.get_highlight("DiffDelete").bg or utils.get_highlight("Statement").fg,
+        green = utils.get_highlight("String").fg,
+        blue = utils.get_highlight("Function").fg,
+        gray = utils.get_highlight("NonText").fg,
+        orange = utils.get_highlight("Constant").fg,
+        purple = utils.get_highlight("Statement").fg,
+        cyan = utils.get_highlight("Special").fg,
+        diag_warn = utils.get_highlight("DiagnosticWarn").fg,
         diag_error = utils.get_highlight("DiagnosticError").fg,
         diag_hint = utils.get_highlight("DiagnosticHint").fg,
         diag_info = utils.get_highlight("DiagnosticInfo").fg,
-
-        gray = utils.get_highlight("NonText").fg,
-        orange = utils.get_highlight("Constant").fg, -- for some reason this was causing errors
-        purple = utils.get_highlight("Statement").fg,
-        green = utils.get_highlight("String").fg,
+        git_del = utils.get_highlight("diffDeleted").fg,
+        git_add = utils.get_highlight("diffAdded").fg,
+        git_change = utils.get_highlight("diffChanged").fg,
     }
     for k, v in pairs(values) do
         if v == nil then
@@ -541,17 +539,23 @@ local HelpFilename = {
 }
 
 local TerminalName = {
-
-    -- condition = function()
-    --     return vim.bo.buftype == "terminal"
-    -- end,
-
-    -- icon = " ", -- 
-    provider = function()
-        local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
-        return " " .. tname
-    end,
-    hl = { fg = "blue", bold = true },
+    -- icon = ' ', -- 
+    {
+        provider = function()
+            local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
+            return " " .. tname
+        end,
+        hl = { fg = "blue", bold = true },
+    },
+    { provider = " - " },
+    {
+        provider = function()
+            return vim.b.term_title
+        end,
+    },
+    {
+        hl = { bold = true, fg = "blue" },
+    },
 }
 
 local Spell = {
@@ -640,7 +644,7 @@ local TerminalStatusline = {
     condition = function()
         return conditions.buffer_matches({ buftype = { "terminal" } })
     end,
-    hl = { bg = "dark_red" },
+    hl = { fg = "gray" },
     { condition = conditions.is_active, ViMode, Space },
     FileType,
     Space,
