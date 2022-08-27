@@ -1,0 +1,22 @@
+#!/bin/bash
+
+projectDir=$PWD
+docsBuild="$projectDir/docs/make.jl"
+docsFile="$projectDir/docs/build/index.html"
+
+julia --project -e '
+using Pkg
+
+mktempdir() do p
+    cp(joinpath(pwd(), "docs", "Project.toml"), joinpath(p, "Project.toml"))
+
+    Pkg.activate(p)
+
+    Pkg.develop(PackageSpec(path = pwd()))
+    Pkg.instantiate()
+
+    include("'"$docsBuild"'")
+end
+
+Sys.isapple() ? run(`open $("'"$docsFile"'")`) : Sys.iswindows() ? run(`cmd /c start $("'"$docsFile"'")`) : Sys.islinux() ? run(`xdg-open $("'"$docsFile"'")`) : nothing
+'

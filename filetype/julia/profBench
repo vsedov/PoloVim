@@ -1,0 +1,17 @@
+#!/bin/bash
+project="$(basename "$PWD")"
+cd benchmark || exit
+julia --threads=auto --project -e '
+using BenchmarkTools, Profile, FileIO
+include("PackageBenchmarks.jl")
+
+a = @bprofile '"$1"'
+Profile.print(
+    IOContext(open("/tmp/julprof.data", "w"), :displaysize=>(100000,1000)),
+    format=:flat
+)
+run(`/home/oleete/.config/bin/nvrWS "lua _G.jul_perf_flat()"`)
+profileData = Profile.retrieve()
+save("/tmp/last_jul.jlprof", profileData[1], profileData[2])
+display(a)
+'
