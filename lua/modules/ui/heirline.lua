@@ -787,15 +787,21 @@ vim.api.nvim_create_autocmd("User", {
     group = "Heirline",
 })
 
-lambda.augroup("Heirline", {
-    event = "ColorScheme",
-    command = function()
-        require("heirline").reset_highlights()
-        require("heirline").load_colors(setup_colors())
-        require("heirline").statusline:broadcast(function(self)
-            self._win_stl = nil
-        end)
-        require("utils.ui.highlights")
-        require("lightspeed").init_highlight(true)
-    end,
+local colour_change = function()
+    require("heirline").reset_highlights()
+    require("heirline").load_colors(setup_colors())
+    require("heirline").statusline:broadcast(function(self)
+        self._win_stl = nil
+    end)
+    require("utils.ui.highlights")
+    require("lightspeed").init_highlight(true)
+end
+
+lambda.augroup("Colourscheme", {
+    {
+        event = "ColorScheme",
+        command = function()
+            colour_change()
+        end,
+    },
 })

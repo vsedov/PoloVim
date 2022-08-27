@@ -38,6 +38,9 @@ local commands = {
         },
     },
     {
+        -- REVISIT: (vsedov) (06:26:47 - 27/08/22): I would like this to be a god runner
+        -- Issue is that for lua files i want to run so % and not lua ... or luafile .. which
+        -- are not valid commands . so im not sure how that would work for overseers.
         name = "Runner",
         builder = function()
             local cmd = "python "

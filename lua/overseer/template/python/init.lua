@@ -19,6 +19,17 @@ return {
                 cmd = "python " .. vim.fn.expand("%:p"),
                 condition = { filetype = "python" },
             },
+            {
+                name = "Poetry run file (" .. vim.fn.expand("%:t:r") .. ")",
+                tskName = "Running " .. vim.fn.expand("%:t:r"),
+                cmd = "poetry run python" .. vim.fn.expand("%:p"),
+                condition = {
+                    callback = function(opts)
+                        return files.exists(files.join(opts.dir, "pyproject.toml"))
+                            or files.exists(files.join(opts.dir, "poetry.toml"))
+                    end,
+                },
+            },
         }
 
         local ret = {}
