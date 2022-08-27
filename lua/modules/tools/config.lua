@@ -38,7 +38,7 @@ function config.workspace()
         notify_info = true,
 
         hooks = {
-            open = { "NeoTree", "Telescope find_files" },
+            open = { "Neotree", "Telescope find_files" },
         },
     })
     require("telescope").load_extension("workspaces")
