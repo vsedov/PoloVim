@@ -165,3 +165,9 @@ ui({
         require("neoscroll").setup()
     end,
 })
+
+ui({
+    "stevearc/dressing.nvim",
+    after = "telescope.nvim",
+    config = conf.dressing,
+})
