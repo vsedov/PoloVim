@@ -10,7 +10,7 @@ function config.fm()
 
         ui = {
             float = {
-                border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+                border = lambda.style.border.type_0,
             },
         },
     })
