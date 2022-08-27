@@ -66,13 +66,13 @@ local ret = {}
 for _, command in pairs(commands) do
     table.insert(ret, {
         name = command.name,
-        builder = command.builder or  function()
+        builder = command.builder or function()
             return {
                 name = command.tskName or command.name,
                 cmd = command.cmd,
                 components = command.components or { "default" },
             }
-        end ,
+        end,
         tags = command.tags,
         params = command.params or {},
         condition = command.condition,
