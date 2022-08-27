@@ -58,7 +58,7 @@ local commands = {
         end,
         priority = 5,
         condition = {
-            filetype = { "py", "lua" },
+            filetype = { "py", "lua", "c", "cpp", "sh", "rust" },
         },
     },
 }
