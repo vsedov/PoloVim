@@ -54,8 +54,8 @@ if gitrepo then
                    _c_ : Commit
   _hr_ : Reword            ▕         _hf_ : Fixup
   _ha_ : Amend             ▕         _hS_ : Sqash
-                   _a_ :  Dash 
-                         ▕ 
+                   _a_ :  Dash
+                         ▕
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
  ^^^^                     Gitsigns                    ^^^^
  ^^^^                                                 ^^^^
@@ -68,7 +68,7 @@ if gitrepo then
   _b_ : gutterView         ▕         _B_ : BlameLine
   _/_ : show base          ▕         _i_ : Select hunk
   _Qq_ : Setqflist all     ▕         _Qw_ : Stqflist
-                         ▕ 
+                         ▕
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
  ^^^^                       VGIT                      ^^^^
  ^^^^                                                 ^^^^

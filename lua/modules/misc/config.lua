@@ -100,15 +100,17 @@ function config.iswap()
 end
 
 function config.houdini_setup()
-    vim.api.nvim_create_autocmd("User", {
-        desc = "fix for https://github.com/ggandor/lightspeed.nvim/issues/140",
-        pattern = "LightspeedSxLeave",
-        callback = function()
-            local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())
-            if vim.opt.modifiable:get() and not ignore then
-                vim.cmd("normal! a")
-            end
-        end,
+    lambda.augroup("User", {
+        {
+            desc = "fix for https://github.com/ggandor/lightspeed.nvim/issues/140",
+            pattern = "LightspeedSxLeave",
+            command = function()
+                local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())
+                if vim.opt.modifiable:get() and not ignore then
+                    vim.cmd("normal! a")
+                end
+            end,
+        },
     })
 end
 
@@ -118,7 +120,6 @@ function config.houdini()
         escape_sequences = {
             i = function(first, second)
                 local seq = first .. second
-
                 if seq == "AA" then
                     -- jump to the end of the line in insert mode
                     return "<BS><BS><End>"
@@ -129,6 +130,9 @@ function config.houdini()
                 end
                 return "<BS><BS><ESC>"
             end,
+            R = "<BS><BS><ESC>",
+            t = "<BS><BS><C-\\><C-n>",
+            c = "<BS><BS><C-c>",
         },
     })
 end

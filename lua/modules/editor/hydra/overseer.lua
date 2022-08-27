@@ -7,7 +7,7 @@ hint = [[
 _w_: OverseerToggle          _r_: OverseerRun
 _d_: OverseerQuickAction     _s_: TaskAction
 _b_: OverseerBuild           _l_:  LoadBundle
-              _<Enter>_: Runnner  
+              _<Enter>_: Runnner
 ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
 ]]
 
@@ -23,7 +23,7 @@ Hydra({
         },
     },
     mode = { "n", "x" },
-    body = "<leader>W",
+    body = ";w",
     heads = {
         { "w", cmd("OverseerToggle") },
         { "r", cmd("OverseerRun") },

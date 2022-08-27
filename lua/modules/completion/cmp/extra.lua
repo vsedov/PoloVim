@@ -29,5 +29,3 @@ if neorg.is_loaded() then
 else
     neorg.callbacks.on_event("core.started", load_completion)
 end
--- TODO(vsedov) (18:06:44 - 17/04/22): Use vim.highlight to set this insterad
--- vim.cmd([[hi NormalFloat guibg=none]])

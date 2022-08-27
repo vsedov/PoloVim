@@ -1,3 +1,4 @@
+local api = vim.api
 -- default sources
 local sources =
     {

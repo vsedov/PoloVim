@@ -51,7 +51,7 @@ function config.saga()
             enable = true,
             sign = true,
             sign_priority = 20,
-            virtual_text = true,
+            virtual_text = false,
         },
         code_action_num_shortcut = true,
         rename_in_select = true,

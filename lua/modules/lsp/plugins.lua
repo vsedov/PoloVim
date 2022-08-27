@@ -65,10 +65,6 @@ lsp({
     config = conf.lsp_lines,
 })
 
--- lsp({ "mhartington/formatter.nvim", ft = { "python", "lua", "c" }, opt = true, config = conf.format })
-
--- lsp({ "mfussenegger/nvim-lint", ft = { "python", "lua", "c" }, opt = true, config = conf.lint })
-
 lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", after = "nvim-lspconfig", config = conf.rename })
 
 lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
