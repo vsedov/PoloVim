@@ -14,10 +14,11 @@ overseer.setup({
     dap = true,
     task_list = {
         bindings = {
+            ["o"] = "<cmd>OverseerQuickAction open in toggleterm<cr>",
             ["?"] = "ShowHelp",
             ["<CR>"] = "RunAction",
             ["<C-e>"] = "Edit",
-            ["o"] = "<cmd>OverseerQuickAction open in toggleterm<cr>",
+            ["O"] = "Open",
             ["<C-v>"] = "OpenVsplit",
             ["<C-s>"] = "OpenSplit",
             ["<C-f>"] = "OpenFloat",
@@ -32,27 +33,26 @@ overseer.setup({
             ["}"] = "NextTask",
         },
     },
+
     component_aliases = {
-        default_neotest = {
-            "on_output_summarize",
-            "on_exit_set_status",
-            "on_complete_notify",
-            "on_complete_dispose",
-            { "toggleterm.attach_toggleterm", goto_bottom = true },
-        },
         default = {
+            { "on_complete_notify", system = "unfocused" },
             "on_output_summarize",
             "on_exit_set_status",
             "on_complete_notify",
             "on_complete_dispose",
             "toggleterm.attach_toggleterm",
         },
+        default_neotest = {
+            "on_output_summarize",
+            "on_exit_set_status",
+            "on_complete_notify",
+            "on_complete_dispose",
+            { "toggleterm.attach_toggleterm", goto_bottom = true },
+            { "on_complete_notify", system = "unfocused", on_change = true },
+        },
     },
     actions = {
-        ["open"] = false,
-        ["open vsplit"] = false,
-        ["open hsplit"] = false,
-        ["set loclist diagnostics"] = true,
         ["open in toggleterm"] = {
             desc = "Attach this task to a toggleterm terminal",
             run = function(task)
@@ -73,18 +73,6 @@ overseer.setup({
                 task.toggleterm:set_harp(2)
             end,
         },
-        ["open hsplit, no focus"] = {
-            desc = "open terminal in a horizontal split",
-            condition = function(task)
-                local bufnr = task:get_bufnr()
-                return bufnr and vim.api.nvim_buf_is_valid(bufnr)
-            end,
-            run = function(task)
-                vim.cmd([[split]])
-                vim.api.nvim_win_set_buf(0, task:get_bufnr())
-                vim.cmd([[wincmd k]])
-            end,
-        },
         ["keep runnning"] = {
             desc = "restart the task even if it succeeds",
             run = function(task)
@@ -101,6 +89,7 @@ overseer.setup({
             end,
         },
     },
+
     templates = { "builtin", "julia", "python", "tox", "configs" },
 })
 

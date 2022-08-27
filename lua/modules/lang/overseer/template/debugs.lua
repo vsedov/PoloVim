@@ -4,7 +4,7 @@ return {
         builder = function()
             return {
                 name = "View LSP Logs",
-                cmd = "tail --follow --retry ~/.local/share/nvim/lsp.log | less -S",
+                cmd = "tail --follow --retry ~/.local/state/nvim/lsp.log | less -S",
             }
         end,
         priority = 6000,
@@ -15,7 +15,7 @@ return {
         builder = function()
             return {
                 name = "View Neovim Logs",
-                cmd = "tail --follow --retry ~/.local/share/nvim/log | less -S",
+                cmd = "tail --follow --retry ~/.local/state/nvim/log | less -S",
             }
         end,
         priority = 6000,
@@ -44,5 +44,17 @@ return {
             end
             return ret
         end,
+    },
+
+    {
+        name = "System Info (btop)",
+        builder = function()
+            return {
+                name = "btop",
+                cmd = "btop",
+            }
+        end,
+        priority = 4000,
+        params = {},
     },
 }

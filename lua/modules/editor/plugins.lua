@@ -347,7 +347,13 @@ editor({
     config = function()
         require("trevj").setup()
         vim.keymap.set("n", "<leader>j", function()
-            require("trevj").format_at_cursor()
+            local exclude_list = {
+                "toggleterm",
+                "terminal",
+            }
+            if not vim.tbl_contains(exclude_list, vim.bo.buftype) then
+                require("trevj").format_at_cursor()
+            end
         end)
     end,
 })
