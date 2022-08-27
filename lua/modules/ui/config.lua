@@ -891,6 +891,19 @@ function config.dashboard_config()
     --
 end
 
+function config.dressing()
+    require("utils.ui.highlights").plugin("dressing", { { FloatTitle = { inherit = "Visual", bold = true } } })
+    require("dressing").setup({
+        input = {
+            insert_only = false,
+            relative = "editor",
+        },
+        select = {
+            backend = "fzf",
+        },
+    })
+end
+
 vim.api.nvim_exec(
     [[
     set nocursorcolumn
