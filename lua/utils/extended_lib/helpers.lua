@@ -84,7 +84,7 @@ local extended = {
             comparison = (comparison ~= nil)
         end
 
-        return neorg.lib.match(type(comparison) == "table" and unpack(comparison) or comparison)({
+        return lambda.lib.match(type(comparison) == "table" and unpack(comparison) or comparison)({
             ["true"] = when_true,
             ["false"] = when_false,
         })
@@ -130,7 +130,7 @@ local extended = {
     ---@param element any #The item to find
     ---@return any|nil #The found value or `nil` if nothing could be found
     find = function(tbl, element)
-        return neorg.lib.filter(tbl, function(key, value)
+        return lambda.lib.filter(tbl, function(key, value)
             if value == element then
                 return key
             end
@@ -142,7 +142,7 @@ local extended = {
     ---@param value number|string #The value to insert
     ---@return any #The item to return
     insert_or = function(tbl, value)
-        local item = neorg.lib.find(tbl, value)
+        local item = lambda.lib.find(tbl, value)
 
         return item and tbl[item]
             or (function()
@@ -180,7 +180,7 @@ local extended = {
             end
 
             if type(expected_value) == "table" then
-                vim.list_extend(results, neorg.lib.extract(expected_value, value))
+                vim.list_extend(results, lambda.lib.extract(expected_value, value))
             end
         end
 
@@ -278,18 +278,18 @@ local extended = {
             return value
         end
 
-        return value, neorg.lib.reparg(value, index - 1)
+        return value, lambda.lib.reparg(value, index - 1)
     end,
 
     --- Lazily concatenates a string to prevent runtime errors where an object may not exist
     --  Consider the following example:
     --
-    --      neorg.lib.when(str ~= nil, str .. " extra text", "")
+    --      lambda.lib.when(str ~= nil, str .. " extra text", "")
     --
     --  This would fail, simply because the string concatenation will still be evaluated in order
     --  to be placed inside the variable. You may use:
     --
-    --      neorg.lib.when(str ~= nil, neorg.lib.lazy_string_concat(str, " extra text"), "")
+    --      lambda.lib.when(str ~= nil, lambda.lib.lazy_string_concat(str, " extra text"), "")
     --
     --  To mitigate this issue directly.
     --- @vararg string #An unlimited number of strings
@@ -341,7 +341,7 @@ local extended = {
     --- Extends a list by constructing a new one vs mutating an existing
     --  list in the case of `vim.list_extend`
     list_extend = function(list, ...)
-        return list and { unpack(list), unpack(neorg.lib.list_extend(...)) } or {}
+        return list and { unpack(list), unpack(lambda.lib.list_extend(...)) } or {}
     end,
 
     --- Converts a table with `key = value` pairs to a `{ key, value }` array.
