@@ -143,10 +143,10 @@ user({
 user({
     "jouderianjr/pomodoro.nvim",
     keys = {
-        "<leader>Pf", 
+        "<leader>Pf",
         "<leader>Pb",
-        "<leader>Plb", 
-        "<leader>Pp", 
+        "<leader>Plb",
+        "<leader>Pp",
         "<leader>Pr",
     },
     cmd = {
@@ -154,6 +154,6 @@ user({
         "PomodoroStartBreak",
         "PomodoroStartLongBreak",
         "PomodoroPause",
-        "PomodoroResume"
-    }
+        "PomodoroResume",
+    },
 })
