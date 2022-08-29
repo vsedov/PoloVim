@@ -179,10 +179,10 @@ local container = {
         extra_binds = get_extra_binds(),
     },
     signs = {
-        { name = "DiagnosticSignError", text = "" },
-        { name = "DiagnosticSignWarn", text = "" },
-        { name = "DiagnosticSignHint", text = "" },
-        { name = "DiagnosticSignInfo", text = "" },
+        { name = "DiagnosticSignError", text = lambda.style.icons.lsp.error },
+        { name = "DiagnosticSignWarn", text = lambda.style.icons.lsp.warn },
+        { name = "DiagnosticSignHint", text = lambda.style.icons.lsp.hint },
+        { name = "DiagnosticSignInfo", text = lambda.style.icons.lsp.info },
     },
     diagnostics = {
         signs = true,

@@ -147,7 +147,7 @@ function plugins.load_compile()
         group = PackerHooks,
     })
 
-    vim.cmd([[autocmd User PackerComplete lua require('core.pack').compile_loader()]])
+    vim.cmd([[autocmd User PackerComplete lua require('core.pack').auto_compile()]])
 end
 
 return plugins

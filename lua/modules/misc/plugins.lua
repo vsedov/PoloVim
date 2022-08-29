@@ -15,19 +15,6 @@ misc({
         { "n", "gif" },
         { "n", "gfo" },
         { "n", "J" },
-        { "x", "<A-j>" },
-        { "x", "<A-k>" },
-
-        { "n", "<C-o>" },
-        { "n", "<C-p>" },
-
-        { "n", "<c-;>" },
-        { "n", "<c-'>" },
-
-        { "n", "-" },
-        { "n", "=" },
-        { "n", "<S-+>" },
-        { "n", "+" },
     },
     config = conf.syntax_surfer,
 })
@@ -81,7 +68,6 @@ misc({
     "TheBlob42/houdini.nvim",
     event = "InsertEnter",
     config = conf.houdini,
-    setup = conf.houdini_setup,
 })
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 

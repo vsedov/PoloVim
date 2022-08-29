@@ -39,7 +39,3 @@ local function reload_gtd()
 end
 change_gtd_workspace()
 reload_gtd()
-
--- TODO: (vsedov) (04:25:02 - 27/08/22): I am no sure
--- how valid this might be
-lambda.dynamic_unload("dressing", false)

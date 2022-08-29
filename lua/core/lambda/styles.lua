@@ -44,6 +44,7 @@ lambda.style = {
             info = "", -- 
             hint = "", -- ⚑
         },
+
         git = {
             add = "", -- '',
             mod = "",

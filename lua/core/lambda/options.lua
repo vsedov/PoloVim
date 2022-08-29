@@ -16,7 +16,7 @@ lambda.config = {
                 "horizon.nvim",
                 "vim-dogrun",
                 "doom-one.nvim",
-                -- "poimandres.nvim",
+                "poimandres.nvim",
                 "tokyonight.nvim",
             },
         },
@@ -25,7 +25,7 @@ lambda.config = {
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
     save_clipboard_on_exit = true,
-    cmp_theme = "no-border", --- @usage "border" | "no-border" | "extra"
+    cmp_theme = "border", --- @usage "border" | "no-border" | "extra"
     abbrev = {
         enable = true,
         coding_support = true, -- system wide
@@ -38,12 +38,13 @@ lambda.config = {
         },
     },
 
-    rooter_or_project = false, --- @usage  true | nvim-rooter - false | for project.nvim
+    rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to Ture for nvim -- rooter as that has
+    --[[ manual control ]]
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
-    use_fzf_lua = false, -- This is nice, to have, when required.
-    use_dashboard = false, -- set to false to not see this
-    use_session = true, -- set to false to disable session
+    use_fzf_lua = true, -- This is nice, to have, when required.
+    use_dashboard = true, -- set to false to not see this
+    use_session = false, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = false, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...

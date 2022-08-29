@@ -23,7 +23,6 @@ completion({
     cmd = { "DD" },
     opt = true,
 })
-
 completion({
     "hrsh7th/nvim-cmp",
     -- opt = true,

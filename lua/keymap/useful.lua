@@ -62,7 +62,7 @@ local plug_map = {
 
     ["n|<leader>ga"] = map_cmd("<Cmd>Lspsaga code_action<cr>", "Code action Menu"):with_noremap():with_silent(),
     -- ["n|cc"] = map_cmd("<Cmd>CodeActionMenu<cr>", "Code action Menu"):with_noremap():with_silent(),
-    ["v|<leader>ga"] = map_cmd("<cmd><C-U>Lspsaga range_code_action<CR>", "Code action Menu")
+    ["x|<leader>ga"] = map_cmd("<cmd><C-U>Lspsaga range_code_action<CR>", "Code action Menu")
         :with_noremap()
         :with_silent(),
     ["n|<Leader>ca"] = map_cu("<cmd>CodeActionMenu<CR>", "lsp code actions"):with_noremap():with_silent(),

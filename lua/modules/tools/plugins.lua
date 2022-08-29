@@ -172,7 +172,7 @@ tools({
 
 tools({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz", "Tzi", "Lzi" } })
 
-tools({ "tami5/sqlite.lua", branch = "new/index_access", module = "sqlite" })
+tools({ "tami5/sqlite.lua", module = "sqlite" })
 -- manual call
 tools({
     "AckslD/nvim-neoclip.lua",

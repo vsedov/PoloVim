@@ -37,3 +37,14 @@ telescope({
         end, { force = true })
     end,
 })
+
+telescope({
+    "dhruvmanila/telescope-bookmarks.nvim",
+    branch = "feat/waterfox",
+    -- Uncomment if the selected browser is Firefox or buku
+    requires = {
+        "kkharji/sqlite.lua",
+    },
+    wants = "telescope.nvim",
+    config = conf.bookmark,
+})

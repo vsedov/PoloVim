@@ -47,8 +47,6 @@ function config.hop()
         case_insensitive = true,
         multi_windows = true,
     })
-    -- hopeAnywhere is not really needed
-    vim.keymap.set("n", "\\s", "<cmd>HopPatternCurrentLine<cr>", {})
     vim.keymap.set("n", "<leader><leader>s", "<cmd>HopWord<cr>", {})
     vim.keymap.set("n", "<leader><leader>j", "<cmd>HopChar1<cr>", {})
     vim.keymap.set("n", "<leader><leader>k", "<cmd>HopChar2<cr>", {})
@@ -98,26 +96,16 @@ function config.iswap()
         autoswap = true,
     })
 end
-
-function config.houdini_setup()
-    lambda.augroup("User", {
-        {
-            desc = "fix for https://github.com/ggandor/lightspeed.nvim/issues/140",
-            pattern = "LightspeedSxLeave",
-            command = function()
-                local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())
-                if vim.opt.modifiable:get() and not ignore then
-                    vim.cmd("normal! a")
-                end
-            end,
-        },
-    })
-end
-
 function config.houdini()
     require("houdini").setup({
         mappings = { "jk", "AA", "II" },
         escape_sequences = {
+            t = function(first, second)
+                if vim.bo.buftype == "terminal" then
+                    return "" -- disabled
+                end
+                return "<BS><BS><C-\\><C-n>"
+            end,
             i = function(first, second)
                 local seq = first .. second
                 if seq == "AA" then
@@ -130,9 +118,6 @@ function config.houdini()
                 end
                 return "<BS><BS><ESC>"
             end,
-            R = "<BS><BS><ESC>",
-            t = "<BS><BS><C-\\><C-n>",
-            c = "<BS><BS><C-c>",
         },
     })
 end
@@ -387,6 +372,7 @@ function config.carbon()
         },
     })
 end
+
 function config.attempt()
     local attempt = require("attempt")
     attempt.setup()

@@ -460,5 +460,17 @@ lambda.augroup("TerminalAutocommands", {
         end,
     },
 })
+lambda.augroup("HoudiniFix", {
+    {
+        pattern = "LightspeedSxLeave",
+        event = "User",
+        command = function()
+            local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())
+            if vim.opt.modifiable:get() and not ignore then
+                vim.cmd("normal! a")
+            end
+        end,
+    },
+})
 
 -- Make curosr
