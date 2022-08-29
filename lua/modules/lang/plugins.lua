@@ -231,7 +231,7 @@ lang({ "mgedmin/coverage-highlight.vim", ft = "python", opt = true, run = ":Upda
 -- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
 -- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
 lang({
-    lambda.use_local("py.nvim", "contributing"),
+    "vsedov/py.nvim",
     ft = "python",
     opt = true,
     config = conf.python_dev,

@@ -73,7 +73,7 @@ completion({
 })
 
 completion({
-    lambda.use_local("luasnip-latex-snippets.nvim", "contributing"),
+    "iurimateus/luasnip-latex-snippets.nvim",
     ft = { "latex", "tex" },
     config = function()
         vim.defer_fn(function()
@@ -136,7 +136,7 @@ completion({
 completion({ "danymat/neogen", module = { "neogen" }, requires = { "LuaSnip" }, config = conf.neogen })
 
 completion({
-    lambda.use_local("vim-sonictemplate", "personal"),
+    "vsedov/vim-sonictemplate",
     as = "vim-sonictemplate",
     cmd = "Template",
     config = conf.vim_sonictemplate,

@@ -6,6 +6,8 @@ ui({ "kyazdani42/nvim-web-devicons" })
 
 ui({
     lambda.use_local("heirline.nvim", "contributing"),
+    "rebelot/heirline.nvim",
+
     after = "nvim-lspconfig",
     config = function()
         require("modules.ui.heirline")
