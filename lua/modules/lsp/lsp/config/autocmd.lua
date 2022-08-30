@@ -5,6 +5,7 @@ local api = vim.api
 local fmt = string.format
 local diagnostic = vim.diagnostic
 local L = vim.lsp.log_levels
+local M = {}
 
 local features = {
     FORMATTING = "formatting",

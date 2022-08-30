@@ -147,7 +147,7 @@ vim.defer_fn(function()
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
 
-    -- i have no clue what else to do .
+    -- -- i have no clue what else to do .
     local plugins = {
         "telescope-live-grep-args.nvim",
         "telescope-frecency.nvim",
