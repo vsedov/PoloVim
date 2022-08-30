@@ -146,6 +146,14 @@ function config.rename()
 end
 
 function config.navic()
+    local highlights = require("utils.ui.highlights")
+    local s = lambda.style
+    local misc = s.icons.misc
+
+    highlights.plugin("navic", {
+        { NavicText = { bold = true } },
+        { NavicSeparator = { link = "Directory" } },
+    })
     require("nvim-navic").setup({
         icons = {
             File = " ",
@@ -176,9 +184,9 @@ function config.navic()
             TypeParameter = " ",
         },
         highlight = true,
-        separator = " > ",
+        separator = (" %s "):format(misc.arrow_right),
         depth_limit = 0,
-        depth_limit_indicator = "..",
+        depth_limit_indicator = misc.ellipsis,
     })
 end
 
