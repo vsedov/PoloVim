@@ -181,13 +181,24 @@ end
 ---@param list T[]
 ---@param accum T
 ---@return T
-function lambda.fold(callback, list, accum)
+lambda.fold = function(callback, list, accum)
     accum = accum or {}
     for k, v in pairs(list) do
         accum = callback(accum, v, k)
         assert(accum ~= nil, "The accumulator must be returned on each iteration")
     end
     return accum
+end
+
+---@generic T : table
+---@param callback fun(item: T, key: string | number, list: T[]): T
+---@param list T[]
+---@return T[]
+lambda.map = function(callback, list)
+    return lambda.fold(function(accum, v, k)
+        accum[#accum + 1] = callback(v, k, accum)
+        return accum
+    end, list, {})
 end
 
 --- Search loaded packages

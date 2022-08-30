@@ -21,6 +21,8 @@ lambda.config = {
             },
         },
     },
+    telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
+    simple_notify = true, -- notifier.nvim = true , else use nvim-notif
     record_your_self = true, -- waka time
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
