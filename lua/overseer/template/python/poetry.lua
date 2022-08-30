@@ -1,37 +1,42 @@
--- -- https://github.com/Oliver-Leete/Configs/tree/master/nvim/lua
+-- https://github.com/Oliver-Leete/Configs/tree/master/nvim/lua
 local overseer = require("overseer")
 local constants = require("overseer.constants")
 local files = require("overseer.files")
 local STATUS = require("overseer.constants").STATUS
 local TAG = constants.TAG
 
+local condFunc = function(opts)
+    return files.exists(files.join(opts.dir, "Project.toml"))
+end
+
 return {
     condition = {
         callback = function(opts)
-            return files.exists(files.join(opts.dir, "pyproject.toml")) or vim.bo.filetype == "python"
+            return files.exists(files.join(opts.dir, "pyproject.toml"))
         end,
     },
+
     generator = function(_)
         local commands = {
             {
-                name = "Python run file (" .. vim.fn.expand("%:t:r") .. ")",
-                tskName = "Running " .. vim.fn.expand("%:t:r"),
-                cmd = "python " .. vim.fn.expand("%:p"),
-                condition = { filetype = "python" },
+                name = "Poetry run Project",
+                tskName = "Poetry run Project",
+                cmd = "poetry run task start",
             },
             {
-                name = "Poetry run file (" .. vim.fn.expand("%:t:r") .. ")",
-                tskName = "Running " .. vim.fn.expand("%:t:r"),
-                cmd = "poetry run python" .. vim.fn.expand("%:p"),
-                condition = {
-                    callback = function(opts)
-                        return files.exists(files.join(opts.dir, "pyproject.toml"))
-                            or files.exists(files.join(opts.dir, "poetry.toml"))
-                    end,
-                },
+                name = "Poetry run pre-commit",
+                tskName = "Poetry run Project",
+                cmd = "poetry run task lint",
+            },
+            {
+                name = "Poetry build",
+                cmd = "poetry run task build",
+            },
+            {
+                name = "Poetry freeze",
+                cmd = "poetry export -f requirements.txt > requirements.txt --without-hashes",
             },
         }
-
         local ret = {}
         local priority = 60
         for _, command in pairs(commands) do
@@ -47,7 +52,7 @@ return {
                 tags = command.tags,
                 priority = priority,
                 params = {},
-                condition = command.condition,
+                condition = command.condition or condFunc,
             })
             priority = priority + 1
         end
