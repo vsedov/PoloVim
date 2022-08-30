@@ -29,7 +29,7 @@ return {
     use_overseer = {
         enable = true,
         options = {
-            name = "overseer",
+            name = "cmp_overseer",
         },
     },
 }
