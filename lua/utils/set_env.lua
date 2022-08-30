@@ -33,32 +33,36 @@ function dump(...)
     return ...
 end
 local function set_var(name, command, args)
-    job:new({
-        command = command,
-        args = args,
-        on_exit = function(j)
-            M.env[name] = j:result()[1]
-        end,
-    }):start()
+    job
+        :new({
+            command = command,
+            args = args,
+            on_exit = function(j)
+                M.env[name] = j:result()[1]
+            end,
+        })
+        :start()
 end
 
 local function from_pass(path)
-    job:new({
-        command = "pass",
-        args = { "show", "env/" .. path },
-        on_exit = function(j)
-            for _, row in ipairs(j:result()) do
-                if row:sub(1, 1) ~= "#" then
-                    local col = string.find(row, "=", 1, true)
-                    if col then
-                        local name = row:sub(1, col - 1)
-                        local value = row:sub(col + 1)
-                        M.env[name] = value
+    job
+        :new({
+            command = "pass",
+            args = { "show", "env/" .. path },
+            on_exit = function(j)
+                for _, row in ipairs(j:result()) do
+                    if row:sub(1, 1) ~= "#" then
+                        local col = string.find(row, "=", 1, true)
+                        if col then
+                            local name = row:sub(1, col - 1)
+                            local value = row:sub(col + 1)
+                            M.env[name] = value
+                        end
                     end
                 end
-            end
-        end,
-    }):start()
+            end,
+        })
+        :start()
 end
 
 local function apply_conf(conf)

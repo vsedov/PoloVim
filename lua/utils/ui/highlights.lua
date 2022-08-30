@@ -535,12 +535,6 @@ local function set_telescope()
             { TelescopePromptPrefix = { link = "Statement" } },
             { TelescopeBorder = { foreground = P.grey } },
             { TelescopeTitle = { inherit = "Normal", bold = true } },
-            {
-                TelescopeSelectionCaret = {
-                    fg = { from = "Identifier" },
-                    bg = { from = "TelescopeSelection" },
-                },
-            },
         }
     end
     M.all(tele)

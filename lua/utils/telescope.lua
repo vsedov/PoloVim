@@ -1,9 +1,8 @@
-local utils_main = require("utils.helpers.helper")
+require("utils.helpers.helper")
 local loader = require("packer").loader
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 local conf = require("telescope.config").values
-local layout = require("telescope.pickers.layout_strategies")
 local resolve = require("telescope.config.resolve")
 local make_entry = require("telescope.make_entry")
 local previewers = require("telescope.previewers")
@@ -107,213 +106,6 @@ local new_maker = function(filepath, bufnr, opts)
         end,
     }):sync()
 end
-require("telescope").setup({
-    -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua
-    selection_caret = "  ",
-    get_status_text = function(self)
-        local xx = (self.stats.processed or 0) - (self.stats.filtered or 0)
-        local yy = self.stats.processed or 0
-        if xx == 0 and yy == 0 then
-            return ""
-        end
-
-        -- local status_icon
-        -- if opts.completed then
-        --   status_icon = "✔️"
-        -- else
-        --   status_icon = "*"
-        -- end
-        return string.format("%s / %s", xx, yy)
-        -- return ""
-    end,
-    buffer_previewer_maker = new_maker,
-    file_ignore_patterns = { "node_modules", "vendor" },
-
-    -- winblend = 20,
-    mappings = {
-        n = {
-            ["q"] = actions.close,
-            ["<C-j>"] = actions.move_selection_next,
-            ["<C-k>"] = actions.move_selection_previous,
-            ["<C-o>"] = actions.select_vertical,
-            ["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-            ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
-            ["<C-h>"] = "which_key",
-            ["<C-l>"] = actions_layout.toggle_preview,
-            -- ["<C-y>"] = set_prompt_to_entry_value,
-            ["<C-u>"] = actions.preview_scrolling_up,
-            ["<C-d>"] = actions.preview_scrolling_down,
-            ["<C-f>"] = require("telescope.actions").cycle_history_prev,
-
-            ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
-            ["<c-S>"] = custom_actions.multi_selection_open_split,
-            ["<c-t>"] = custom_actions.multi_selection_open_tab,
-            ["<cr>"] = custom_actions.multi_selection_open,
-        },
-
-        i = {
-            ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
-            ["<c-s>"] = custom_actions.multi_selection_open_split,
-            ["<c-t>"] = custom_actions.multi_selection_open_tab,
-
-            ["<C-j>"] = actions.move_selection_next,
-            ["<c-p>"] = action_layout.toggle_prompt_position,
-            ["<C-k>"] = actions.move_selection_previous,
-            ["<C-y>"] = set_prompt_to_entry_value,
-            ["<C-o>"] = actions.select_vertical,
-            ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-            ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
-
-            ["<C-h>"] = "which_key",
-            ["<C-l>"] = actions_layout.toggle_preview,
-
-            ["<C-d>"] = actions.preview_scrolling_down,
-            ["<C-u>"] = actions.preview_scrolling_up,
-
-            ["<C-n>"] = function(prompt_bufnr)
-                local results_win = state.get_status(prompt_bufnr).results_win
-                local height = vim.api.nvim_win_get_height(results_win)
-                action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
-            end,
-            ["<C-p>"] = function(prompt_bufnr)
-                local results_win = state.get_status(prompt_bufnr).results_win
-                local height = vim.api.nvim_win_get_height(results_win)
-                action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
-            end,
-        },
-    },
-
-    file_ignore_patterns = {
-        "%.jpg",
-        "%.jpeg",
-        "%.png",
-        "%.otf",
-        "%.ttf",
-        "%.DS_Store",
-        "^.git/",
-        "^node_modules/",
-        "^site-packages/",
-    },
-    extensions = {
-        bookmarks = {
-            -- Available: 'brave', 'buku', 'chrome', 'chrome_beta', 'edge', 'safari', 'firefox', 'vivaldi'
-            selected_browser = "waterfox",
-
-            -- Either provide a shell command to open the URL
-            url_open_command = "open",
-
-            -- Or provide the plugin name which is already installed
-            -- Available: 'vim_external', 'open_browser'
-            url_open_plugin = nil,
-
-            -- Show the full path to the bookmark instead of just the bookmark name
-            full_path = true,
-
-            -- Provide a custom profile name for Firefox
-            waterfox_profile_name = "default-default",
-
-            -- Add a column which contains the tags for each bookmark for buku
-            buku_include_tags = false,
-
-            -- Provide debug messages
-            debug = false,
-        },
-        file_browser = {
-            -- theme = "ivy",
-            mappings = {
-                ["i"] = {},
-                ["n"] = {},
-            },
-        },
-        frecency = {
-            default_workspace = "CWD",
-            show_unindexed = false, -- Show all files or only those that have been indexed
-            ignore_patterns = { "*.git/*", "*/tmp/*", "*node_modules/*", "*vendor/*" },
-            workspaces = {
-                conf = vim.env.DOTFILES,
-                project = vim.env.PROJECTS_DIR,
-            },
-        },
-        ["zf-native"] = {
-            -- options for sorting file-like items
-            file = {
-                -- override default telescope file sorter
-                enable = true,
-
-                -- highlight matching text in results
-                highlight_results = true,
-
-                -- enable zf filename match priority
-                match_filename = true,
-            },
-
-            -- options for sorting all other items
-            generic = {
-                -- override default telescope generic item sorter
-                enable = true,
-
-                -- highlight matching text in results
-                highlight_results = true,
-
-                -- disable zf filename match priority
-                match_filename = false,
-            },
-        },
-    },
-    set_env = { ["TERM"] = vim.env.TERM },
-    pickers = {
-        buffers = dropdown({
-            sort_mru = true,
-            sort_lastused = true,
-            show_all_buffers = true,
-            ignore_current_buffer = true,
-            previewer = false,
-            mappings = {
-                i = { ["<c-x>"] = "delete_buffer" },
-                n = { ["<c-x>"] = "delete_buffer" },
-            },
-        }),
-        oldfiles = dropdown(),
-        live_grep = ivy({
-            file_ignore_patterns = { ".git/", "%.svg", "%.lock" },
-            max_results = 2000,
-        }),
-        current_buffer_fuzzy_find = dropdown({
-            previewer = false,
-            shorten_path = false,
-        }),
-        colorscheme = {
-            enable_preview = true,
-        },
-        find_files = {
-            hidden = true,
-        },
-        keymaps = dropdown({
-            layout_config = {
-                height = 18,
-                width = 0.5,
-            },
-        }),
-        git_branches = dropdown(),
-        git_bcommits = {
-            layout_config = {
-                horizontal = {
-                    preview_width = 0.55,
-                },
-            },
-        },
-        git_commits = {
-            layout_config = {
-                horizontal = {
-                    preview_width = 0.55,
-                },
-            },
-        },
-        reloader = dropdown(),
-    },
-})
-telescope.load_extension("dotfiles")
-telescope.load_extension("gosource")
 
 -- telescope.load_extension("zf-native")
 -- telescope.load_extension("frecency")
@@ -322,6 +114,194 @@ telescope.load_extension("gosource")
 -- telescope.load_extension("notify")
 
 local M = {}
+
+M.setup = function()
+    local icons = lambda.style.icons
+    local P = lambda.style.palette
+
+    require("telescope").setup({
+        defaults = {
+            borderchars = {
+                prompt = { " ", "▕", "▁", "▏", "▏", "▕", "🭿", "🭼" },
+                results = { "▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼" },
+                preview = { "▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼" },
+            },
+            preview = {
+                hide_on_startup = true,
+            },
+            buffer_previewer_maker = new_maker,
+            -- dynamic_preview_title = fa,
+            prompt_prefix = icons.misc.telescope .. " ",
+            selection_caret = icons.misc.chevron_right .. " ",
+            cycle_layout_list = { "flex", "horizontal", "vertical", "bottom_pane", "center" },
+            mappings = {
+                n = {
+                    ["q"] = actions.close,
+                    ["<C-j>"] = actions.move_selection_next,
+                    ["<C-k>"] = actions.move_selection_previous,
+                    ["<C-o>"] = actions.select_vertical,
+                    ["<C-Q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                    ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
+                    ["<C-h>"] = "which_key",
+                    ["<C-l>"] = actions_layout.toggle_preview,
+                    -- ["<C-y>"] = set_prompt_to_entry_value,
+                    ["<C-u>"] = actions.preview_scrolling_up,
+                    ["<C-d>"] = actions.preview_scrolling_down,
+                    ["<C-f>"] = require("telescope.actions").cycle_history_prev,
+
+                    ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
+                    ["<c-S>"] = custom_actions.multi_selection_open_split,
+                    ["<c-t>"] = custom_actions.multi_selection_open_tab,
+
+                    -- ["<C-n>"] = function(prompt_bufnr)
+                    --     local results_win = state.get_status(prompt_bufnr).results_win
+                    --     local height = vim.api.nvim_win_get_height(results_win)
+                    --     action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
+                    -- end,
+
+                    -- ["<C-p>"] = function(prompt_bufnr)
+                    --     local results_win = state.get_status(prompt_bufnr).results_win
+                    --     local height = vim.api.nvim_win_get_height(results_win)
+                    --     action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
+                    -- end,
+
+                    ["<cr>"] = custom_actions.multi_selection_open,
+                },
+
+                i = {
+                    ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
+                    ["<c-s>"] = custom_actions.multi_selection_open_split,
+                    ["<c-t>"] = custom_actions.multi_selection_open_tab,
+
+                    ["<C-j>"] = actions.move_selection_next,
+                    ["<c-p>"] = action_layout.toggle_prompt_position,
+                    ["<C-k>"] = actions.move_selection_previous,
+                    ["<C-y>"] = set_prompt_to_entry_value,
+                    ["<C-o>"] = actions.select_vertical,
+                    ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+                    ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
+
+                    ["<C-h>"] = "which_key",
+                    ["<C-l>"] = actions_layout.toggle_preview,
+
+                    ["<C-d>"] = actions.preview_scrolling_down,
+                    ["<C-u>"] = actions.preview_scrolling_up,
+
+                    ["<C-n>"] = function(prompt_bufnr)
+                        local results_win = state.get_status(prompt_bufnr).results_win
+                        local height = vim.api.nvim_win_get_height(results_win)
+                        action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
+                    end,
+                    ["<C-p>"] = function(prompt_bufnr)
+                        local results_win = state.get_status(prompt_bufnr).results_win
+                        local height = vim.api.nvim_win_get_height(results_win)
+                        action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
+                    end,
+                },
+            },
+            file_ignore_patterns = {
+                "%.jpg",
+                "%.jpeg",
+                "%.png",
+                "%.otf",
+                "%.ttf",
+                "%.DS_Store",
+                "^.git/",
+                "^node_modules/",
+                "^site-packages/",
+            },
+            path_display = { "truncate" },
+            winblend = 5,
+            history = {
+                path = vim.fn.stdpath("data") .. "/telescope_history.sqlite3",
+            },
+            layout_strategy = "flex",
+            layout_config = {
+                horizontal = {
+                    preview_width = 0.55,
+                },
+            },
+            extensions = {
+                file_browser = {
+                    -- theme = "ivy",
+                    mappings = {
+                        ["i"] = {},
+                        ["n"] = {},
+                    },
+                },
+                frecency = {
+                    default_workspace = "CWD",
+                    show_unindexed = false, -- Show all files or only those that have been indexed
+                    ignore_patterns = { "*.git/*", "*/tmp/*", "*node_modules/*", "*vendor/*" },
+                    workspaces = {
+                        conf = vim.env.DOTFILES,
+                        project = vim.env.PROJECTS_DIR,
+                    },
+                },
+                bookmarks = {
+                    selected_browser = "waterfox",
+                    url_open_command = "open",
+                    url_open_plugin = nil,
+                    full_path = true,
+                    firefox_profile_name = "default-default",
+                    buku_include_tags = false,
+                    debug = false,
+                },
+            },
+            pickers = {
+
+                buffers = {
+                    sort_mru = true,
+                    sort_lastused = true,
+                    show_all_buffers = true,
+                    ignore_current_buffer = true,
+                    previewer = false,
+                    mappings = {
+                        i = { ["<c-x>"] = "delete_buffer" },
+                        n = { ["<c-x>"] = "delete_buffer" },
+                    },
+                },
+                oldfiles = dropdown(),
+                live_grep = {
+                    file_ignore_patterns = { ".git/", "%.svg", "%.lock" },
+                    max_results = 2000,
+                },
+                current_buffer_fuzzy_find = {
+                    previewer = false,
+                    shorten_path = false,
+                },
+                colorscheme = {
+                    enable_preview = true,
+                },
+                find_files = {
+                    hidden = true,
+                },
+                keymaps = {
+                    layout_config = {
+                        height = 18,
+                        width = 0.5,
+                    },
+                },
+                git_branches = dropdown(),
+                git_bcommits = {
+                    layout_config = {
+                        horizontal = {
+                            preview_width = 0.55,
+                        },
+                    },
+                },
+                git_commits = {
+                    layout_config = {
+                        horizontal = {
+                            preview_width = 0.55,
+                        },
+                    },
+                },
+                reloader = dropdown(),
+            },
+        },
+    })
+end
 
 M._multiopen = function(prompt_bufnr, open_cmd)
     local picker = action_state.get_current_picker(prompt_bufnr)
@@ -428,7 +408,7 @@ M.files = function(opts)
     opts = opts or {}
 
     vim.fn.system("git status")
-    local is_not_git = vim.v.shell_error > 0
+    is_not_git = vim.v.shell_error > 0
     if is_not_git then
         require("telescope.builtin").find_files(opts)
         return
