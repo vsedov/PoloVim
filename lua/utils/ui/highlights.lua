@@ -483,22 +483,6 @@ local function general_overrides()
         { DiagnosticFloatingHint = { link = "DiagnosticHint" } },
         { DiagnosticFloatingError = { link = "DiagnosticError" } },
 
-        { TelescopeBorder = { foreground = P.sumiInk2, background = P.sumiInk2 } },
-        { TelescopePromptBorder = { foreground = P.sumiInk0, background = P.sumiInk0 } },
-        { TelescopePreviewBorder = { foreground = P.sumiInk2, background = P.sumiInk2 } },
-        { TelescopeResultsBorder = { foreground = P.sumiInk2, background = P.sumiInk2 } },
-
-        { TelescopePromptNormal = { foreground = P.fujiWhite, background = P.sumiInk0 } },
-        { TelescopeNormal = { foreground = P.red, background = P.sumiInk2 } },
-        { TelescopePreviewNormal = { background = P.sumiInk2 } },
-
-        { TelescopePreviewTitle = { foreground = P.sumiInk3, background = P.green } },
-        { TelescopePromptTitle = { foreground = P.sumiInk3, background = P.oniViolet } },
-        { TelescopeResultsTitle = { foreground = P.sumiInk3, background = P.springBlue } },
-        { TelescopeSelection = { foreground = P.springBlue, background = P.fujiGray } },
-        { TelescopeSelectionCaret = { foreground = P.springBlue, background = P.fujiGray } },
-        { TelescopePreviewLine = { background = P.fujiGray } },
-
         { PanelDarkBackground = { bg = { from = "Normal", alter = -43 } } },
     })
 end
@@ -518,6 +502,48 @@ local function set_sidebar_highlight()
         { PanelStNC = { link = "PanelWinSeparator" } },
         { PanelSt = { background = { from = "Visual", alter = -20 } } },
     })
+end
+
+local function set_telescope()
+    local tele = {}
+    if lambda.config.telescope_theme == "custom_bottom_no_borders" then
+        tele = {
+
+            { TelescopeBorder = { foreground = P.sumiInk2, background = P.sumiInk2 } },
+            { TelescopePromptBorder = { foreground = P.sumiInk0, background = P.sumiInk0 } },
+            { TelescopePreviewBorder = { foreground = P.sumiInk2, background = P.sumiInk2 } },
+            { TelescopeResultsBorder = { foreground = P.sumiInk2, background = P.sumiInk2 } },
+
+            { TelescopePromptNormal = { foreground = P.fujiWhite, background = P.sumiInk0 } },
+            { TelescopeNormal = { foreground = P.red, background = P.sumiInk2 } },
+            { TelescopePreviewNormal = { background = P.sumiInk2 } },
+
+            { TelescopePreviewTitle = { foreground = P.sumiInk3, background = P.green } },
+            { TelescopePromptTitle = { foreground = P.sumiInk3, background = P.oniViolet } },
+            { TelescopeResultsTitle = { foreground = P.sumiInk3, background = P.springBlue } },
+            { TelescopeSelection = { foreground = P.springBlue, background = P.fujiGray } },
+            { TelescopeSelectionCaret = { foreground = P.springBlue, background = P.fujiGray } },
+            { TelescopePreviewLine = { background = P.fujiGray } },
+        }
+    elseif lambda.config.telescope_theme == "float_all_borders" then
+        tele = {
+            { TelescopePromptTitle = { bg = P.grey, fg = { from = "Directory" }, bold = true } },
+            { TelescopeResultsTitle = { bg = P.grey, fg = { from = "Normal" }, bold = true } },
+            { TelescopePreviewTitle = { bg = P.grey, fg = { from = "Normal" }, bold = true } },
+            { TelescopePreviewBorder = { fg = P.grey, bg = { from = "PanelBackground" } } },
+            { TelescopePreviewNormal = { link = "PanelBackground" } },
+            { TelescopePromptPrefix = { link = "Statement" } },
+            { TelescopeBorder = { foreground = P.grey } },
+            { TelescopeTitle = { inherit = "Normal", bold = true } },
+            {
+                TelescopeSelectionCaret = {
+                    fg = { from = "Identifier" },
+                    bg = { from = "TelescopeSelection" },
+                },
+            },
+        }
+    end
+    M.all(tele)
 end
 
 local sidebar_fts = {
@@ -582,6 +608,7 @@ local function user_highlights()
     general_overrides()
     set_sidebar_highlight()
     colorscheme_overrides()
+    set_telescope()
 end
 
 lambda.augroup("UserHighlights", {
