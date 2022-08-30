@@ -101,13 +101,15 @@ function config.houdini()
         mappings = { "jk", "AA", "II" },
         escape_sequences = {
             t = function(first, second)
-                if vim.bo.buftype == "terminal" then
-                    return "" -- disabled
-                end
                 return "<BS><BS><C-\\><C-n>"
             end,
             i = function(first, second)
                 local seq = first .. second
+
+                if vim.opt.filetype:get() == "terminal" then
+                    return "" -- disabled
+                end
+
                 if seq == "AA" then
                     -- jump to the end of the line in insert mode
                     return "<BS><BS><End>"
@@ -118,6 +120,8 @@ function config.houdini()
                 end
                 return "<BS><BS><ESC>"
             end,
+            R = "<BS><BS><ESC>",
+            c = "<BS><BS><C-c>",
         },
     })
 end

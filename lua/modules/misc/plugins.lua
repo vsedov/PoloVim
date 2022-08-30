@@ -66,7 +66,7 @@ misc({ "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, config = conf.iswap 
 --  JK  AA II
 misc({
     "TheBlob42/houdini.nvim",
-    event = "InsertEnter",
+    event = { "InsertEnter", "CmdlineEnter" },
     config = conf.houdini,
 })
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
