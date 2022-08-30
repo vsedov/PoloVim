@@ -26,6 +26,12 @@ local hint_telescope = [[
   _b_: browse files                 _d_: DotFiles
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+ ^^^^                 Frecency/BookMakrs                  ^^^^
+ ^^^^                                                     ^^^^
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+  _<Space>_: Frec     _\\_: FrecCWD     _B_: BookMarks
+
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
  ^^^^                        MRU                          ^^^^
  ^^^^                                                     ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
@@ -99,6 +105,8 @@ Hydra({
         { "p", ":Telescope workspaces<CR>", { exit = true } }, -- pass
         { "M", ":Telescope marks<CR>", { exit = true } }, -- pass
 
+        { "B", telescope.extensions.bookmarks.bookmarks, { exit = true } }, -- pass
+
         -- -- -- commands
         { "/", ":Telescope search_history<CR>", { exit = true } },
         { "c", require("utils.telescope").command_history, { exit = true } },
@@ -107,6 +115,10 @@ Hydra({
         { "k", ":Telescope keymaps<CR>", { exit = true } },
         { "R", ":Telescope reloader<CR>", { exit = true } },
         { "<Enter>", "<cmd>Telescope<CR>", { exit = true } },
+
+        { "<Space>", require("telescope").extensions.frecency.frecency, { exit = true } },
+        { "\\", ":Telescope frecency workspace=CWD<CR>", { exit = true } },
+
         { "q", nil, { exit = true, nowait = true } },
 
         -- -- files

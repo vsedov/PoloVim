@@ -6,9 +6,11 @@ editor({
     branch = "main",
     requires = {
         { "max397574/neorg-contexts", ft = "norg" },
-        { "max397574/neorg-kanban", ft = "norg" },
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+        "nvim-treesitter",
     },
-    -- after = "nvim-treesitter" ,
+    -- after = "" ,
     opt = true,
     config = conf.norg,
 })
