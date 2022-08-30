@@ -2,7 +2,8 @@ local conf = require("modules.telescope.config")
 local tele = require("core.pack").package
 tele({
     "nvim-telescope/telescope.nvim",
-    module = { "telescope", "utils.telescope" },
+    branch = "master",
+    module = "telescope",
     requires = {
         { "nvim-neorg/neorg-telescope", after = "telescope.nvim" },
         { "nvim-lua/plenary.nvim", opt = true },
@@ -17,25 +18,23 @@ tele({
             "nvim-telescope/telescope-frecency.nvim",
             opt = true,
             config = function()
-                require("telescope").load_extension("file_browser")
+                require("telescope").load_extension("frecency")
             end,
         },
         {
             "nvim-telescope/telescope-live-grep-args.nvim",
             opt = true,
             config = function()
-                require("telescope").load_extension("file_browser")
+                require("telescope").load_extension("live-grep-args")
             end,
         },
     },
     config = conf.telescope,
-    opt = true,
 })
 
 tele({
     "jvgrootveld/telescope-zoxide",
     opt = true,
-    after = "telescope.nvim",
     config = function()
         require("telescope").load_extension("zoxide")
     end,
