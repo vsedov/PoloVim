@@ -1,34 +1,47 @@
 local conf = require("modules.telescope.config")
-local telescope = require("core.pack").package
-telescope({
+local tele = require("core.pack").package
+tele({
     "nvim-telescope/telescope.nvim",
     module = { "telescope", "utils.telescope" },
-    config = conf.telescope,
     requires = {
-        { "nvim-neorg/neorg-telescope", opt = true },
+        { "nvim-neorg/neorg-telescope", after = "telescope.nvim" },
         { "nvim-lua/plenary.nvim", opt = true },
         {
-            "natecraddock/telescope-zf-native.nvim",
+            "nvim-telescope/telescope-file-browser.nvim",
             opt = true,
             config = function()
-                require("telescope").load_extension("zf-native")
+                require("telescope").load_extension("file_browser")
             end,
         },
-        { "nvim-telescope/telescope-live-grep-raw.nvim", opt = true },
-        { "nvim-telescope/telescope-file-browser.nvim", opt = true },
+        {
+            "nvim-telescope/telescope-frecency.nvim",
+            opt = true,
+            config = function()
+                require("telescope").load_extension("file_browser")
+            end,
+        },
+        {
+            "nvim-telescope/telescope-live-grep-args.nvim",
+            opt = true,
+            config = function()
+                require("telescope").load_extension("file_browser")
+            end,
+        },
     },
+    config = conf.telescope,
     opt = true,
 })
--- config this better https://github.com/jvgrootveld/telescope-zoxide
-telescope({
+
+tele({
     "jvgrootveld/telescope-zoxide",
-    module = "telescope",
+    opt = true,
+    after = "telescope.nvim",
     config = function()
         require("telescope").load_extension("zoxide")
     end,
 })
 
-telescope({
+tele({
     "zane-/howdoi.nvim",
     cmd = "Howdoi",
     config = function()
@@ -38,13 +51,12 @@ telescope({
     end,
 })
 
-telescope({
+tele({
     "dhruvmanila/telescope-bookmarks.nvim",
     branch = "feat/waterfox",
-    -- Uncomment if the selected browser is Firefox or buku
+    opt = true,
     requires = {
         "kkharji/sqlite.lua",
     },
-    wants = "telescope.nvim",
     config = conf.bookmark,
 })
