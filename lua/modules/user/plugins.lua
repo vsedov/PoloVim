@@ -141,13 +141,14 @@ user({
 })
 
 user({
-    "jouderianjr/pomodoro.nvim",
+    lambda.use_local("pomodoro.nvim", "personal"),
     keys = {
-        "<leader>Pf",
-        "<leader>Pb",
-        "<leader>Plb",
-        "<leader>Pp",
-        "<leader>Pr",
+        "<C-P>f",
+        "<C-P>b",
+        "<C-P>lb",
+        "<C-P>p",
+        "<C-P>r",
+        "<C-P>tp",
     },
     cmd = {
         "PomodoroStartFocus",
@@ -155,5 +156,6 @@ user({
         "PomodoroStartLongBreak",
         "PomodoroPause",
         "PomodoroResume",
+        "PomodoroTogglePopup",
     },
 })

@@ -328,3 +328,7 @@ add_cmd("CopilotUnload", function()
         vim.notify("Copilot is not loaded")
     end
 end, { force = true })
+
+add_cmd("PullCustom", function()
+    require("utils.plugins.git_pull_personal")()
+end, { force = true })
