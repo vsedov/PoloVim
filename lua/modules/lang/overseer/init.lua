@@ -90,7 +90,7 @@ overseer.setup({
         },
     },
 
-    templates = { "builtin", "julia", "python", "tox", "configs" },
+    templates = { "builtin", "julia", "python.normal", "python.poetry", "tox", "configs" },
 })
 
 vim.api.nvim_create_user_command(

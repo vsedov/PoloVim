@@ -119,7 +119,7 @@ lang({
     requires = {
         "nvim-treesitter/nvim-treesitter",
         "nvim-lua/plenary.nvim",
-        "nvim-telescope/nvim-telescope", -- optional
+        "nvim-telescope/telescope.nvim", -- optional
     },
     event = { "BufEnter" },
     config = conf.dev_comments,
