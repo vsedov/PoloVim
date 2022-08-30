@@ -285,7 +285,14 @@ function config.notify()
         { NotifyTRACEBody = { link = "NormalFloat" } },
     })
 end
-
+function config.notifier()
+    require("notifier").setup({
+        notify = {
+            clear_time = 10000, -- Time in milisecond before removing a vim.notifiy notification, 0 to make them sticky
+            min_level = vim.log.levels.INFO, -- Minimum log level to print the notification
+        },
+    })
+end
 function config.neo_tree()
     if not packer_plugins["nui.nvim"].loaded then
         vim.cmd([[packadd nui.nvim ]])
@@ -892,14 +899,39 @@ function config.dashboard_config()
 end
 
 function config.dressing()
+    -- NOTE: the limit is half the max lines because this is the cursor theme so
+    -- unless the cursor is at the top or bottom it realistically most often will
+    -- only have half the screen available
+    local function get_height(self, _, max_lines)
+        local results = #self.finder.results
+        local PADDING = 4 -- this represents the size of the telescope window
+        local LIMIT = math.floor(max_lines / 2)
+        return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
+    end
+
     require("utils.ui.highlights").plugin("dressing", { { FloatTitle = { inherit = "Visual", bold = true } } })
     require("dressing").setup({
         input = {
             insert_only = false,
-            relative = "editor",
+            winblend = 2,
+            border = lambda.style.border.type_0,
         },
         select = {
-            backend = "fzf",
+            get_config = function(opts)
+                -- center the picker for treesitter prompts
+                if opts.kind == "codeaction" then
+                    return {
+                        backend = "telescope",
+                        telescope = require("telescope.themes").get_cursor({
+                            layout_config = { height = get_height },
+                        }),
+                    }
+                end
+            end,
+            backend = "fzf_lua",
+            telescope = require("telescope.themes").get_dropdown({
+                layout_config = { height = get_height },
+            }),
         },
     })
 end

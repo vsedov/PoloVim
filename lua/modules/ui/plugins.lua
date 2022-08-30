@@ -32,14 +32,21 @@ ui({
     "rcarriga/nvim-notify",
     opt = true,
     setup = function()
-        vim.notify = function(msg, level, opts)
-            require("packer").loader("nvim-notify")
-            vim.notify = require("notify")
-            vim.notify(msg, level, opts)
+        if not lambda.config.simple_notify then
+            vim.notify = function(msg, level, opts)
+                require("packer").loader("nvim-notify")
+                vim.notify = require("notify")
+                vim.notify(msg, level, opts)
+            end
         end
     end,
     requires = "telescope.nvim", -- this might not be needed
     config = conf.notify,
+})
+ui({
+    "vigoux/notifier.nvim",
+    opt = true,
+    config = conf.notifier,
 })
 
 ui({ "MunifTanjim/nui.nvim", modules = "nui" })
