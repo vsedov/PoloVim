@@ -146,6 +146,19 @@ vim.defer_fn(function()
     lprint("telescope family")
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
+
+    -- i have no clue what else to do .
+    local plugins = {
+        "telescope-live-grep-args.nvim",
+        "telescope-frecency.nvim",
+        "telescope-file-browser.nvim",
+        "telescope-bookmarks.nvim",
+    }
+    for _, v in ipairs(plugins) do
+        cmd = "packadd " .. v
+        vim.cmd(cmd)
+    end
+
     vim.defer_fn(function()
         loader("vim-polyglot")
         if lambda.config.use_fzf_lua then
@@ -159,9 +172,13 @@ vim.defer_fn(function()
         loader("project.nvim")
     end
     -- Notify
-    loader("nvim-notify")
-    local notify = require("notify")
-    vim.notify = notify
+    if lambda.config.simple_notify then
+        loader("notifier.nvim")
+    else
+        loader("nvim-notify")
+        local notify = require("notify")
+        vim.notify = notify
+    end
     lprint("all done")
 end, lazy_timer + 80)
 loader("neorg")

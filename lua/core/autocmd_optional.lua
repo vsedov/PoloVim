@@ -94,6 +94,7 @@ if lambda.config.neorg_auto_commit then
             event = { "VimLeavePre" },
             pattern = { "/home/viv/neorg/*" },
             command = function()
+                lambda.dynamic_unload("dressing", false)
                 t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
                 require("utils.plugins.custom_neorg_save").start()
             end,
