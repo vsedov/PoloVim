@@ -1,6 +1,5 @@
 local conf = require("modules.ui.config")
 local ui = require("core.pack").package
--- ui({ "j-hui/fidget.nvim", opt = true, ft = { "julia", "python", "lua", "c" }, config = conf.fidget })
 
 ui({ "kyazdani42/nvim-web-devicons" })
 
@@ -78,9 +77,7 @@ ui({
                         bo = {
                             -- if the file type is one of following, the window will be ignored
                             filetype = { "neo-tree", "neo-tree-popup", "notify", "quickfix" },
-
-                            -- if the buffer type is one of following, the window will be ignored
-                            buftype = { "terminal" },
+                            buftype = { "terminal", "quickfix", "nofile" },
                         },
                     },
                     other_win_hl_color = require("utils.ui.highlights").get("Visual", "bg"),
@@ -89,7 +86,6 @@ ui({
         },
     },
     module = "neo-tree", -- if wanting to lazyload
-
     cmd = { "Neotree", "NeoTreeShow", "NeoTreeFocus", "NeoTreeFocusToggle" },
     config = conf.neo_tree,
 })
@@ -119,18 +115,20 @@ ui({
     config = conf.transparent,
 })
 
--- ui({
---     "anuvyklack/pretty-fold.nvim",
---     -- ft = { "python", "c", "lua", "cpp", "java" },
---     config = conf.pretty_fold,
--- })
-
 ui({
     "kevinhwang91/nvim-ufo",
     --[[ ft = lambda.config.main_file_types, ]]
     event = "BufEnter",
+
     requires = { "kevinhwang91/promise-async", after = "nvim-ufo" },
     config = conf.ufo,
+})
+
+ui({
+    "Vonr/foldcus.nvim",
+    after = "nvim-ufo",
+    requires = { "nvim-treesitter/nvim-treesitter" },
+    config = conf.fold_focus,
 })
 
 ui({ "kazhala/close-buffers.nvim", cmd = { "BDelete", "BWipeout" }, config = conf.buffers_close })
@@ -175,6 +173,12 @@ ui({
 
 ui({
     "stevearc/dressing.nvim",
-    after = "telescope.nvim",
+    event = "BufWinEnter",
     config = conf.dressing,
+})
+
+ui({
+    "RRethy/vim-illuminate",
+    event = "BufEnter",
+    config = conf.illuminate,
 })

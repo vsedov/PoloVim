@@ -225,7 +225,7 @@ function config.nvim_bufferline()
                         name = "docs",
                         icon = "",
                         matcher = function(buf)
-                            for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
+                            for _, ext in ipairs({ "md", "txt", "norg", "wiki" }) do
                                 if ext == fn.fnamemodify(buf.path, ":e") then
                                     return true
                                 end
@@ -577,6 +577,13 @@ function config.ufo()
         return result
     end
 
+    opt.foldlevelstart = 99
+    opt.sessionoptions:append("folds")
+
+    hl.plugin("ufo", {
+        { Folded = { bold = false, italic = false, bg = { from = "Normal", alter = -7 } } },
+    })
+
     lambda.augroup("UfoSettings", {
         {
             event = "FileType",
@@ -602,6 +609,32 @@ function config.ufo()
     vim.keymap.set("n", "zP", ufo.peekFoldedLinesUnderCursor, { desc = "preview fold" })
 end
 
+function config.fold_focus()
+    local foldcus = require("foldcus")
+    local NS = { noremap = true, silent = true }
+
+    -- Fold multiline comments longer than or equal to 4 lines
+    vim.keymap.set("n", "z;", function()
+        foldcus.fold(4)
+    end, NS)
+
+    -- Fold multiline comments longer than or equal to the number of lines specified by args
+    -- e.g. Foldcus 4
+    vim.api.nvim_create_user_command("Foldcus", function(args)
+        foldcus.fold(tonumber(args.args))
+    end, { nargs = "*" })
+
+    -- Delete folds of multiline comments longer than or equal to 4 lines
+    vim.keymap.set("n", "z'", function()
+        foldcus.unfold(4)
+    end, NS)
+
+    -- Delete folds of multiline comments longer than or equal to the number of lines specified by args
+    -- e.g. Unfoldcus 4
+    vim.api.nvim_create_user_command("Unfoldcus", function(args)
+        foldcus.unfold(tonumber(args.args))
+    end, { nargs = "*" })
+end
 function config.blankline()
     vim.opt.termguicolors = true
     vim.opt.list = true
@@ -910,6 +943,7 @@ function config.dressing()
     end
 
     require("utils.ui.highlights").plugin("dressing", { { FloatTitle = { inherit = "Visual", bold = true } } })
+
     require("dressing").setup({
         input = {
             insert_only = false,
@@ -928,14 +962,51 @@ function config.dressing()
                     }
                 end
             end,
-            backend = "fzf_lua",
+            backend = "telescope",
             telescope = require("telescope.themes").get_dropdown({
                 layout_config = { height = get_height },
             }),
         },
     })
 end
-
+function config.illuminate()
+    -- default configuration
+    require("illuminate").configure({
+        -- providers: provider used to get references in the buffer, ordered by priority
+        providers = {
+            "lsp",
+            "treesitter",
+            "regex",
+        },
+        -- delay: delay in milliseconds
+        delay = 100,
+        -- filetype_overrides: filetype specific overrides.
+        -- The keys are strings to represent the filetype while the values are tables that
+        -- supports the same keys passed to .configure except for filetypes_denylist and filetypes_allowlist
+        filetype_overrides = {},
+        -- filetypes_denylist: filetypes to not illuminate, this overrides filetypes_allowlist
+        filetypes_denylist = {
+            "dirvish",
+            "fugitive",
+        },
+        -- filetypes_allowlist: filetypes to illuminate, this is overriden by filetypes_denylist
+        filetypes_allowlist = {},
+        -- modes_denylist: modes to not illuminate, this overrides modes_allowlist
+        modes_denylist = {},
+        -- modes_allowlist: modes to illuminate, this is overriden by modes_denylist
+        modes_allowlist = {},
+        -- providers_regex_syntax_denylist: syntax to not illuminate, this overrides providers_regex_syntax_allowlist
+        -- Only applies to the 'regex' provider
+        -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+        providers_regex_syntax_denylist = {},
+        -- providers_regex_syntax_allowlist: syntax to illuminate, this is overriden by providers_regex_syntax_denylist
+        -- Only applies to the 'regex' provider
+        -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+        providers_regex_syntax_allowlist = {},
+        -- under_cursor: whether or not to illuminate under the cursor
+        under_cursor = true,
+    })
+end
 vim.api.nvim_exec(
     [[
     set nocursorcolumn

@@ -13,8 +13,9 @@ local function setup_colors()
     local values = {
 
         bright_bg = utils.get_highlight("Folded").bg,
+        bright_fg = utils.get_highlight("Folded").fg,
         red = utils.get_highlight("DiagnosticError").fg,
-        dark_red = utils.get_highlight("DiffDelete").bg or utils.get_highlight("Statement").fg,
+        dark_red = utils.get_highlight("DiffDelete").bg,
         green = utils.get_highlight("String").fg,
         blue = utils.get_highlight("Function").fg,
         gray = utils.get_highlight("NonText").fg,
@@ -42,6 +43,10 @@ require("heirline").load_colors(setup_colors())
 local ViMode = {
     init = function(self)
         self.mode = vim.fn.mode(1)
+        if not self.once then
+            vim.cmd("au ModeChanged *:*o redrawstatus")
+        end
+        self.once = true
     end,
     static = {
         mode_names = {
@@ -88,6 +93,9 @@ local ViMode = {
         local color = self:mode_color()
         return { fg = color, bold = true }
     end,
+    update = {
+        "ModeChanged",
+    },
 }
 
 local FileNameBlock = {
@@ -220,29 +228,37 @@ local dyn_help_available = {
     hl = { fg = "blue" },
 }
 
-local ScrollBar = {
-    static = {
-        sbar = { "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" },
-    },
-    provider = function(self)
-        local curr_line = vim.api.nvim_win_get_cursor(0)[1]
-        local lines = vim.api.nvim_buf_line_count(0)
-        local i = math.floor(curr_line / lines * (#self.sbar - 1)) + 1
-        return string.rep(self.sbar[i], 2)
+local FileSize = {
+    provider = function()
+        -- stackoverflow, compute human readable file size
+        local suffix = { "b", "k", "M", "G", "T", "P", "E" }
+        local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
+        fsize = (fsize < 0 and 0) or fsize
+        if fsize <= 0 then
+            return "0" .. suffix[1]
+        end
+        local i = math.floor((math.log(fsize) / math.log(1024)))
+        return string.format("%.2g%s", fsize / math.pow(1024, i), suffix[i])
     end,
-    hl = { fg = "blue", bg = "bright_bg" },
+}
+
+local FileLastModified = {
+    provider = function()
+        local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
+        return (ftime > 0) and os.date("%c", ftime)
+    end,
 }
 
 local LSPActive = {
     condition = conditions.lsp_attached,
-    update = { "LspAttach", "LspDetach" },
+    update = { "LspAttach", "LspDetach", "WinEnter" },
 
     provider = " [LSP]",
 
     -- Or complicate things a bit and get the servers names
     -- provider  = function(self)
     --     local names = {}
-    --     for i, server in ipairs(vim.lsp.buf_get_clients(0)) do
+    --     for i, server in pairs(vim.lsp.buf_get_clients(0)) do
     --         table.insert(names, server.name)
     --     end
     --     return " [" .. table.concat(names, " ") .. "]"
@@ -251,12 +267,13 @@ local LSPActive = {
     on_click = {
         name = "heirline_LSP",
         callback = function()
-            vim.defer_fn(function()
+            vim.schedule(function()
                 vim.cmd("LspInfo")
-            end, 100)
+            end)
         end,
     },
 }
+
 local get_sub_fg = function()
     local ok, msg = pcall(require, "cool-substitute.status")
     if ok then
@@ -299,7 +316,7 @@ local Navic = {
             Module = "Include",
             Namespace = "TSNamespace",
             Package = "Include",
-            Class = "Struct",
+            --[[ Class = "Struct", ]]
             Method = "Method",
             Property = "TSProperty",
             Field = "TSField",
@@ -317,7 +334,7 @@ local Navic = {
             Key = "TSKeyword",
             Null = "Comment",
             EnumMember = "TSField",
-            Struct = "Struct",
+            --[[ Struct = "Struct", ]]
             Event = "Keyword",
             Operator = "Operator",
             TypeParameter = "Type",
@@ -334,12 +351,13 @@ local Navic = {
                 },
                 {
                     provider = d.name,
-                    hl = self.type_hl[d.type],
+                    -- hl = self.type_hl[d.type],
                 },
             }
             if #data > 1 and i < #data then
                 table.insert(child, {
                     provider = " > ",
+                    hl = { fg = "bright_fg" },
                 })
             end
             table.insert(children, child)
@@ -599,9 +617,7 @@ local DefaultStatusline = {
 }
 
 local InactiveStatusline = {
-    condition = function()
-        return not conditions.is_active()
-    end,
+    condition = conditions.is_not_active,
     { hl = { fg = "gray", force = true }, WorkDir },
     FileNameBlock,
     { provider = "%<" },
@@ -743,7 +759,7 @@ local WinBar = {
 
     utils.surround({ "", "" }, "bright_bg", {
         hl = function()
-            if not conditions.is_active() then
+            if conditions.is_not_active() then
                 return { fg = "gray", force = true }
             end
         end,
@@ -789,6 +805,7 @@ vim.api.nvim_create_autocmd("User", {
 
 local colour_change = function()
     require("heirline").reset_highlights()
+    require("heirline").clear_colors()
     require("heirline").load_colors(setup_colors())
     require("heirline").statusline:broadcast(function(self)
         self._win_stl = nil
@@ -798,6 +815,23 @@ local colour_change = function()
 end
 
 lambda.augroup("Colourscheme", {
+    {
+        event = "FileType",
+        pattern = "*",
+        command = [[if index(['wipe', 'delete', 'unload'], &bufhidden) >= 0 | set nobuflisted | endif]],
+    },
+    {
+        event = "User",
+        pattern = "HeirlineInitWinbar",
+        command = function(args)
+            local buf = args.buf
+            local buftype = vim.tbl_contains({ "prompt", "nofile", "help", "quickfix" }, vim.bo[buf].buftype)
+            local filetype = vim.tbl_contains({ "gitcommit", "fugitive", "Trouble", "packer" }, vim.bo[buf].filetype)
+            if buftype or filetype then
+                vim.opt_local.winbar = nil
+            end
+        end,
+    },
     {
         event = "ColorScheme",
         command = function()
