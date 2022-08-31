@@ -394,8 +394,8 @@ function config.attempt()
     map("n", "<leader>ar", attempt.run) -- run attempt
     map("n", "<leader>ad", attempt.delete_buf) -- delete attempt from current buffer
     map("n", "<leader>ac", attempt.rename_buf) -- rename attempt from current buffer
-    map("n", "<leader>al", "Telescope attempt") -- search through attempts
-    --or: map('n', '<leader>al', attempt.open_select) -- use ui.select instead of telescope
+    map("n", "<leader>aL", "Telescope attempt") -- search through attempts
+    map("n", "<leader>al", attempt.open_select) -- use ui.select instead of telescope
 end
 
 return config
