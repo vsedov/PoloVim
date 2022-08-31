@@ -308,15 +308,15 @@ function config.gitsigns()
         debug_mode = true,
         max_file_length = 1000000000,
         signs = {
-            add = { show_count = false, text = "│" },
-            change = { show_count = false, text = "│" },
-            delete = { show_count = true, text = "ﬠ" },
-            topdelete = { show_count = true, text = "ﬢ" },
-            changedelete = { show_count = true, text = "┊" },
+            add = { hl = "GitSignsAdd", text = "▌" },
+            change = { hl = "GitSignsChange", text = "▌" },
+            delete = { hl = "GitSignsDelete", text = "▌" },
+            topdelete = { hl = "GitSignsDelete", text = "▌" },
+            changedelete = { hl = "GitSignsChange", text = "▌" },
         },
         on_attach = on_attach,
         preview_config = {
-            border = "rounded",
+            border = lambda.style.border.type_0,
         },
         current_line_blame = true,
         current_line_blame_formatter = " : <author> | <author_time:%d-%m-%y> | <summary>",
@@ -324,7 +324,7 @@ function config.gitsigns()
             relative_time = true,
         },
         current_line_blame_opts = {
-            delay = 0,
+            delay = 50,
         },
         count_chars = {
             "⒈",
@@ -348,14 +348,10 @@ function config.gitsigns()
             "⒚",
             "⒛",
         },
-        _refresh_staged_on_update = false,
-        watch_gitdir = { interval = 1000, follow_files = true },
-        sign_priority = 6,
-        status_formatter = nil, -- use default
-        update_debounce = 0,
+        update_debounce = 50,
+        _extmark_signs = true,
+        _threaded_diff = true,
         word_diff = true,
-        _threaded_diff = true, -- no clue what this does
-        diff_opts = { internal = true },
     })
 end
 
