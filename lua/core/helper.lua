@@ -46,5 +46,11 @@ return {
             print(unpack(objects))
             return ...
         end
+
+        ---Reloads a module
+        ---@param module string Name of the module
+        _G.RELOAD = function(module)
+            return require("plenary.reload").reload_module(module)
+        end
     end,
 }

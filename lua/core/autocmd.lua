@@ -32,6 +32,21 @@ local function hl_search()
     end
 end
 
+local save_excluded = {
+    "neo-tree",
+    "neo-tree-popup",
+    "lua.luapad",
+    "gitcommit",
+    "NeogitCommitMessage",
+}
+local function can_save()
+    return lambda.empty(fn.win_gettype())
+        and lambda.empty(vim.bo.buftype)
+        and not lambda.empty(vim.bo.filetype)
+        and vim.bo.modifiable
+        and not vim.tbl_contains(save_excluded, vim.bo.filetype)
+end
+
 lambda.augroup("VimrcIncSearchHighlight", {
     {
         event = { "CursorMoved" },
@@ -153,6 +168,7 @@ lambda.augroup("TextYankHighlight", {
         end,
     },
 })
+
 lambda.augroup("Utilities", {
     {
         -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
@@ -160,35 +176,36 @@ lambda.augroup("Utilities", {
         pattern = { "file:///*" },
         nested = true,
         command = function(args)
-            vim.cmd(fmt("bd!|edit %s", vim.uri_to_fname(args.file)))
-        end,
-    },
-    {
-        -- When editing a file, always jump to the last known cursor position.
-        -- Don't do it for commit messages, when the position is invalid.
-        event = { "BufRead" },
-        patter = "*",
-        command = function()
-            if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
-                -- check if filetype isn't one of the listed
-                if not vim.tbl_contains({ "gitcommit", "help", "packer", "toggleterm" }, vim.bo.ft) then
-                    -- check if mark `"` is inside the current file (can be false if at end of file and stuff got deleted outside neovim)
-                    -- if it is go to it
-                    vim.cmd([[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]])
-                    -- get cursor position
-                    local cursor = api.nvim_win_get_cursor(0)
-                    -- if there are folds under the cursor open them
-                    if fn.foldclosed(cursor[1]) ~= -1 then
-                        vim.cmd([[silent normal! zO]])
-                    end
-                end
-            end
+            vim.cmd.bdelete({ bang = true })
+            vim.cmd.edit(vim.uri_to_fname(args.file))
         end,
     },
     {
         event = { "FileType" },
         pattern = { "gitcommit", "gitrebase" },
         command = "set bufhidden=delete",
+    },
+    {
+        event = { "FileType" },
+        pattern = {
+            "lua",
+            "vim",
+            "dart",
+            "python",
+            "javascript",
+            "typescript",
+            "rust",
+            "org",
+            "NeogitCommitMessage",
+            "go",
+            "markdown",
+        },
+        -- FIXME: spellsitter is slow in large files
+        -- TODO: should this be done in ftplugin files
+        -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
+        command = function(args)
+            vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000
+        end,
     },
     {
         event = { "BufWritePre", "FileWritePre" },
@@ -199,8 +216,8 @@ lambda.augroup("Utilities", {
         event = { "BufLeave" },
         pattern = { "*" },
         command = function()
-            if require("core.event_helper").can_save() then
-                vim.cmd("silent! update")
+            if can_save() then
+                vim.cmd.update({ mods = { silent = true } })
             end
         end,
     },
@@ -209,7 +226,7 @@ lambda.augroup("Utilities", {
         pattern = { "*" },
         nested = true,
         command = function()
-            if require("core.event_helper").empty(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
+            if lambda.empty(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
                 vim.cmd([[
             unlet! b:ftdetect
             filetype detect
