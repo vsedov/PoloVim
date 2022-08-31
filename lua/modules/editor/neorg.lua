@@ -1,18 +1,13 @@
-if not packer_plugins["telescope.nvim"].loaded then
-    vim.cmd([[packadd telescope.nvim ]])
-end
-
--- if not packer_plugins["neorg-telescope"].loaded then
---     vim.cmd([[packadd neorg-telescope ]])
--- end
-
 if not packer_plugins["nvim-treesitter"].loaded then
-    vim.cmd([[packadd plenary.nvim ]])
+    vim.cmd([[packadd nvim-treesitter ]])
 end
 
 if not packer_plugins["nvim-cmp"].loaded then
     vim.cmd([[packadd nvim-cmp]])
 end
+
+require("packer").loader("neorg-telescope")
+
 local neorg_callbacks = require("neorg.callbacks")
 -- neorg_callbacks.on_event("core.autocommands.events.bufenter", function(event, event_content)
 neorg_callbacks.on_event("core.started", function(event, event_content)
@@ -39,7 +34,7 @@ require("neorg").setup({
         },
         -- ["external.kanban"] = {},
         -- ["external.zettelkasten"] = {},
-        ["external.context"] = {},
+        -- ["external.context"] = {},
         ["core.norg.concealer"] = {
             config = {
                 -- markup_preset = "dimmed",
@@ -169,7 +164,6 @@ require("neorg").setup({
     },
 })
 
-local neorg_callbacks = require("neorg.callbacks")
 local neorg_leader = "\\"
 neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
     -- Map all the below keybinds only when the "norg" mode is active
