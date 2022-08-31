@@ -279,3 +279,49 @@ lambda.execute_keys = function(feedkeys)
     local keys = vim.api.nvim_replace_termcodes(feedkeys, true, false, true)
     vim.api.nvim_feedkeys(keys, "x", false)
 end
+
+---Require a module using `pcall` and report any errors
+---@param module string
+---@param opts table?
+---@return boolean, any
+lambda.require = function(module, opts)
+    opts = opts or { silent = false }
+    local ok, result = pcall(require, module)
+    if not ok and not opts.silent then
+        if opts.message then
+            result = opts.message .. "\n" .. result
+        end
+        vim.notify(result, l.ERROR, { title = fmt("Error requiring: %s", module) })
+    end
+    return ok, result
+end
+---NOTE: this plugin returns the currently loaded state of a plugin given
+---given certain assumptions i.e. it will only be true if the plugin has been
+---loaded e.g. lazy loading will return false
+---@param plugin_name string
+---@return boolean?
+lambda.plugin_loaded = function(plugin_name)
+    local plugins = packer_plugins or {}
+    return plugins[plugin_name] and plugins[plugin_name].loaded
+end
+---@alias Plug table<(string | number), string>
+
+--- A convenience wrapper that calls the ftplugin config for a plugin if it exists
+--- and warns me if the plugin is not installed
+--- TODO: find out if it's possible to annotate the plugin as a module
+---@param name string | Plug
+---@param callback fun(module: table)
+lambda.ftplugin_conf = function(name, callback)
+    local plugin_name = type(name) == "table" and name.plugin or nil
+    if plugin_name and not lambda.plugin_loaded(plugin_name) then
+        return
+    end
+
+    local module = type(name) == "table" and name[1] or name
+    local info = debug.getinfo(1, "S")
+    local ok, plugin = lambda.require(module, { message = fmt("In file: %s", info.source) })
+
+    if ok then
+        callback(plugin)
+    end
+end
