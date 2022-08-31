@@ -6,10 +6,11 @@ return {
     filetypes = { "python" },
     init_options = {
         jediSettings = {
+            -- Allot of machine learning models that are set from default.
             autoImportModules = { "torch", "torchvision", "numpy", "matplotlib", "os", "PIL" },
         },
-        -- completion = {
-        --     resolveEagerly = true
-        -- }
+        --[[ completion = { ]]
+        --[[     resolveEagerly = true ]]
+        --[[ } ]]
     },
 }
