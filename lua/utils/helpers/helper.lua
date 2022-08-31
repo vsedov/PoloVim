@@ -245,12 +245,6 @@ function M.escape_pattern(text)
     return text:gsub("([^%w])", "%%%1")
 end
 
----Reloads a module
----@param module string Name of the module
-function RELOAD(module)
-    return require("plenary.reload").reload_module(module)
-end
-
 ---Reloads and requires a module
 ---@param name string Name of the module
 ---@return any module The required module

@@ -417,6 +417,7 @@ local function general_overrides()
         -- FIXME: this should be removed once
         -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
         { yamlTSError = { link = "None" } },
+
         -- highlight FIXME comments
         { commentTSWarning = { background = P.springBlue, foreground = "bg", bold = true } },
         { commentTSDanger = { background = L.hint, foreground = "bg", bold = true } },
@@ -424,60 +425,96 @@ local function general_overrides()
         { CommentTasksTodo = { link = "commentTSWarning" } },
         { CommentTasksFixme = { link = "commentTSDanger" } },
         { CommentTasksNote = { link = "commentTSNote" } },
+
         -----------------------------------------------------------------------------//
         -- LSP
         -----------------------------------------------------------------------------//
         { LspCodeLens = { inherit = "Comment", bold = true, italic = false } },
         { LspCodeLensSeparator = { bold = false, italic = false } },
-        { LspReferenceText = { underline = true, background = "NONE", sp = P.comment_fg } },
-        { LspReferenceRead = { underline = true, background = "NONE", sp = P.comment_fg } },
+        {
+            LspReferenceText = {
+                underline = true,
+                background = "NONE",
+                special = { from = "Comment", attr = "fg" },
+            },
+        },
+        {
+            LspReferenceRead = {
+                underline = true,
+                background = "NONE",
+                special = { from = "Comment", attr = "fg" },
+            },
+        },
         -- This represents when a reference is assigned which is more interesting than regular
         -- occurrences so should be highlighted more distinctly
         {
             LspReferenceWrite = {
-                underline = true,
                 bold = true,
                 italic = true,
                 background = "NONE",
-                sp = P.whitesmoke,
+                underline = true,
+                special = { from = "Comment", attr = "fg" },
             },
         },
+        -- Base colours
         { DiagnosticHint = { foreground = L.hint } },
         { DiagnosticError = { foreground = L.error } },
         { DiagnosticWarning = { foreground = L.warn } },
         { DiagnosticInfo = { foreground = L.info } },
+        -- Underline
         { DiagnosticUnderlineError = { undercurl = true, sp = L.error, foreground = "none" } },
         { DiagnosticUnderlineHint = { undercurl = true, sp = L.hint, foreground = "none" } },
         { DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, foreground = "none" } },
         { DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, foreground = "none" } },
+        -- Virtual Text
+        { DiagnosticVirtualTextInfo = { bg = { from = "DiagnosticInfo", attr = "fg", alter = -70 } } },
+        { DiagnosticVirtualTextHint = { bg = { from = "DiagnosticHint", attr = "fg", alter = -70 } } },
+        { DiagnosticVirtualTextWarn = { bg = { from = "DiagnosticWarn", attr = "fg", alter = -80 } } },
         {
-            DiagnosticVirtualTextInfo = {
-                background = { from = "DiagnosticInfo", attr = "fg", alter = -70 },
+            DiagnosticVirtualTextError = { bg = { from = "DiagnosticError", attr = "fg", alter = -80 } },
+        },
+        -- Sign column line
+        { DiagnosticSignInfoLine = { inherit = "DiagnosticVirtualTextInfo", fg = "NONE" } },
+        { DiagnosticSignHintLine = { inherit = "DiagnosticVirtualTextHint", fg = "NONE" } },
+        { DiagnosticSignErrorLine = { inherit = "DiagnosticVirtualTextError", fg = "NONE" } },
+        { DiagnosticSignWarnLine = { inherit = "DiagnosticVirtualTextWarn", fg = "NONE" } },
+        -- Sign column signs
+        {
+            DiagnosticSignWarn = {
+                bg = { from = "DiagnosticVirtualTextWarn" },
+                fg = { from = "DiagnosticWarn" },
             },
         },
         {
-            DiagnosticVirtualTextHint = {
-                background = { from = "DiagnosticHint", attr = "fg", alter = -70 },
+            DiagnosticSignInfo = {
+                bg = { from = "DiagnosticVirtualTextInfo" },
+                fg = { from = "DiagnosticInfo" },
             },
         },
         {
-            DiagnosticVirtualTextError = {
-                background = { from = "DiagnosticError", attr = "fg", alter = -80 },
+            DiagnosticSignHint = {
+                bg = { from = "DiagnosticVirtualTextHint" },
+                fg = { from = "DiagnosticHint" },
             },
         },
         {
-            DiagnosticVirtualTextWarn = {
-                background = { from = "DiagnosticWarn", attr = "fg", alter = -80 },
+            DiagnosticSignError = {
+                bg = { from = "DiagnosticVirtualTextError" },
+                fg = { from = "DiagnosticError" },
             },
         },
-        { DiagnosticSignWarn = { link = "DiagnosticWarn" } },
-        { DiagnosticSignInfo = { link = "DiagnosticInfo" } },
-        { DiagnosticSignHint = { link = "DiagnosticHint" } },
-        { DiagnosticSignError = { link = "DiagnosticError" } },
-        { DiagnosticSignWarnLine = { inherit = "DiagnosticWarn", bg = { from = "CursorLine" } } },
-        { DiagnosticSignInfoLine = { inherit = "DiagnosticInfo", bg = { from = "CursorLine" } } },
-        { DiagnosticSignHintLine = { inherit = "DiagnosticHint", bg = { from = "CursorLine" } } },
-        { DiagnosticSignErrorLine = { inherit = "DiagnosticError", bg = { from = "CursorLine" } } },
+
+        -- Sign column line number
+        { DiagnosticSignWarnNr = { link = "DiagnosticSignWarn" } },
+        { DiagnosticSignInfoNr = { link = "DiagnosticSignInfo" } },
+        { DiagnosticSignHintNr = { link = "DiagnosticSignHint" } },
+        { DiagnosticSignErrorNr = { link = "DiagnosticSignError" } },
+        -- Sign column cursor line number
+        { DiagnosticSignWarnCursorNr = { inherit = "DiagnosticSignWarn", bold = true } },
+        { DiagnosticSignInfoCursorNr = { inherit = "DiagnosticSignInfo", bold = true } },
+        { DiagnosticSignHintCursorNr = { inherit = "DiagnosticSignHint", bold = true } },
+        { DiagnosticSignErrorCursorNr = { inherit = "DiagnosticSignError", bold = true } },
+        -- Floating windows
         { DiagnosticFloatingWarn = { link = "DiagnosticWarn" } },
         { DiagnosticFloatingInfo = { link = "DiagnosticInfo" } },
         { DiagnosticFloatingHint = { link = "DiagnosticHint" } },
