@@ -22,8 +22,11 @@ lambda.config = {
         },
     },
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
-    simple_notify = true, -- notifier.nvim = true , else use nvim-notif
-    record_your_self = true, -- waka time
+    -- TODO: (vsedov) (09:58:51 - 31/08/22): Use simple notify based on filetpe or project
+    -- and use record your self based on if you are in multiple projects or not , as i think
+    -- this also causes lag when codoing which can get very annoying
+    simple_notify = false, -- notifier.nvim = true , else use nvim-notif
+    record_your_self = false, -- waka time
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
     save_clipboard_on_exit = true,

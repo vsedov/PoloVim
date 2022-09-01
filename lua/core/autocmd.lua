@@ -188,16 +188,8 @@ lambda.augroup("Utilities", {
     {
         event = { "FileType" },
         pattern = {
-            "lua",
-            "vim",
-            "dart",
-            "python",
-            "javascript",
-            "typescript",
-            "rust",
-            "org",
+            "norg",
             "NeogitCommitMessage",
-            "go",
             "markdown",
         },
         -- FIXME: spellsitter is slow in large files
