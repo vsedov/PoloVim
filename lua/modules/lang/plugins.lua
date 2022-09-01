@@ -304,3 +304,33 @@ lang({
 })
 
 lang({ "dccsillag/magma-nvim", ft = "python", run = ":UpdateRemotePlugins" })
+
+lang({
+    "0x100101/lab.nvim",
+    opt = true,
+    run = "cd js && npm ci",
+    requires = { "nvim-lua/plenary.nvim" },
+    cmd = {
+        "Lab code",
+        "Lab",
+    },
+    keys = {
+        "<localleader>rs",
+        "<localleader>rr",
+        "<localleader>rp",
+    },
+    config = function()
+        require("lab").setup({
+            code_runner = {
+                enabled = true,
+            },
+            quick_data = {
+                enabled = true,
+            },
+        })
+
+        vim.keymap.set("n", "<localleader>rs", ":Lab code stop<cr>", {})
+        vim.keymap.set("n", "<localleader>rr", ":Lab code run<cr>", {})
+        vim.keymap.set("n", "<localleader>rp", ":Lab code panel<cr>", {})
+    end,
+})
