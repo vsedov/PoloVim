@@ -78,6 +78,7 @@ lsp({
 
 lsp({
     "jose-elias-alvarez/null-ls.nvim",
+    after = "nvim-lspconfig",
     ft = {
         "norg",
         "c",

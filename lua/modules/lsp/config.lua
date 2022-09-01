@@ -46,10 +46,10 @@ function config.saga()
             click_support = false,
         },
         code_action_icon = "", -- this nice feature
-        -- diable this for the time, seems to lag things up
+        -- this is just annoying
         code_action_lightbulb = {
-            enable = true,
-            sign = true,
+            enable = false,
+            sign = false,
             sign_priority = 20,
             virtual_text = false,
         },
