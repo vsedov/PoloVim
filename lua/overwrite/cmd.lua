@@ -48,14 +48,6 @@ add_cmd("ColourScheme", function()
     require("utils.telescope").colorscheme()
 end, { force = true })
 
-add_cmd("BL", function()
-    require("utils.selfunc").blameVirtualText()
-end, { force = true })
-
-add_cmd("BLR", function()
-    require("utils.selfunc").clearBlameVirtualText()
-end, { force = true })
-
 add_cmd("Diagnostics", function()
     vim.cmd("silent lmake! %")
     if #vim.fn.getloclist(0) == 0 then
