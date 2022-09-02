@@ -10,6 +10,7 @@ return {
         enable = false,
         options = {
             name = "rg",
+            additional_arguments = "--max-depth 8",
         },
     },
     use_neorg = {

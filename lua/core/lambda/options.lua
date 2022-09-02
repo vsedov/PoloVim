@@ -29,8 +29,11 @@ lambda.config = {
     record_your_self = false, -- waka time
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
+    cmp = {
+        tabnine_sort = false,
+        cmp_theme = "border", --- @usage "border" | "no-border" | "extra"
+    },
     save_clipboard_on_exit = true,
-    cmp_theme = "border", --- @usage "border" | "no-border" | "extra"
     abbrev = {
         enable = true,
         coding_support = true, -- system wide

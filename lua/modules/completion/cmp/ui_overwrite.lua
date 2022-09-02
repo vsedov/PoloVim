@@ -63,9 +63,9 @@ local function define_highlights()
 
     local values = string.format("#%x", vim.api.nvim_get_hl_by_name("Normal", true).background)
 
-    if lambda.config.cmp_theme == "border" then
+    if lambda.config.cmp.cmp_theme == "border" then
         border(values)
-    elseif lambda.config.cmp_theme == "no-border" then
+    elseif lambda.config.cmp.cmp_theme == "no-border" then
         no_border(values)
     end
     local kind_hls = lambda.fold(

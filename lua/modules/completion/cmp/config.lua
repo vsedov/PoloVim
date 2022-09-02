@@ -1,4 +1,5 @@
 local cmp = require("cmp")
+local compare = require("cmp.config.compare")
 local utils = require("modules.completion.cmp.utils")
 local border = lambda.style.border.type_0
 local fields = {
@@ -17,36 +18,6 @@ local config = {
     experimental = { ghost_text = true }, -- native_menu = false
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
-    -- maybe this was cauasing the lag, lol, this cactually could of been the cause
-    --[[ sorting = { ]]
-    --[[     comparators = { ]]
-    --[[         cmp.config.compare.offset, ]]
-    --[[         cmp.config.compare.exact, ]]
-    --[[         cmp.config.compare.score, ]]
-    --[[         function() ]]
-    --[[             if vim.o.filetype == "c" or vim.o.filetype == "cpp" then ]]
-    --[[                 require("clangd_extensions.cmp_scores") ]]
-    --[[             end ]]
-    --[[         end, ]]
-    --[[         function(entry1, entry2) ]]
-    --[[             local _, entry1_under = entry1.completion_item.label:find("^_+") ]]
-    --[[             local _, entry2_under = entry2.completion_item.label:find("^_+") ]]
-    --[[             entry1_under = entry1_under or 0 ]]
-    --[[             entry2_under = entry2_under or 0 ]]
-    --[[             if entry1_under > entry2_under then ]]
-    --[[                 return false ]]
-    --[[             elseif entry1_under < entry2_under then ]]
-    --[[                 return true ]]
-    --[[             end ]]
-    --[[         end, ]]
-    --[[         cmp.config.compare.kind, ]]
-    --[[         cmp.config.compare.sort_text, ]]
-    --[[         cmp.config.compare.length, ]]
-    --[[         cmp.config.compare.order, ]]
-    --[[]]
-    --[[     }, ]]
-    --[[ }, ]]
-    --[[]]
     enabled = function()
         if vim.bo.ft == "TelescopePrompt" then
             return false
@@ -78,7 +49,7 @@ local config = {
     },
 }
 
-if lambda.config.cmp_theme == "border" then
+if lambda.config.cmp.cmp_theme == "border" then
     local kind = require("utils.ui.kind")
 
     config.window = {
@@ -106,7 +77,7 @@ if lambda.config.cmp_theme == "border" then
             end,
         }),
     }
-elseif lambda.config.cmp_theme == "no-border" then
+elseif lambda.config.cmp.cmp_theme == "no-border" then
     local kind = require("utils.ui.kind")
 
     config.window = {
@@ -147,7 +118,7 @@ elseif lambda.config.cmp_theme == "no-border" then
             return item
         end,
     }
-elseif lambda.config.cmp_theme == "extra" then
+elseif lambda.config.cmp.cmp_theme == "extra" then
     local cmp_window = {
         border = border,
         winhighlight = table.concat({
@@ -193,4 +164,20 @@ elseif lambda.config.cmp_theme == "extra" then
     }
 end
 
+if lambda.config.cmp.tabnine_sort then
+    config.sorting = {
+        priority_weight = 2,
+        comparators = {
+            require("cmp_tabnine.compare"),
+            compare.offset,
+            compare.exact,
+            compare.score,
+            compare.recently_used,
+            compare.kind,
+            compare.sort_text,
+            compare.length,
+            compare.order,
+        },
+    }
+end
 return config
