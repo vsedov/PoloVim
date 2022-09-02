@@ -1,6 +1,13 @@
 local conf = require("modules.ui.config")
 local ui = require("core.pack").package
-
+function not_headless()
+    return #vim.api.nvim_list_uis() > 0
+end
+ui({
+    "j-hui/fidget.nvim",
+    opt = true,
+    config = conf.fidget,
+})
 ui({ "kyazdani42/nvim-web-devicons" })
 
 ui({
@@ -28,17 +35,10 @@ ui({
 
 -- Lazy Loading nvim-notify
 ui({
-    "rcarriga/nvim-notify",
+    "akinsho/nvim-notify",
     opt = true,
-    setup = function()
-        if not lambda.config.simple_notify then
-            vim.notify = function(msg, level, opts)
-                require("packer").loader("nvim-notify")
-                vim.notify = require("notify")
-                vim.notify(msg, level, opts)
-            end
-        end
-    end,
+    branch = "feature/direction-config",
+    cond = not_headless,
     requires = "telescope.nvim", -- this might not be needed
     config = conf.notify,
 })
@@ -131,7 +131,12 @@ ui({
     config = conf.fold_focus,
 })
 
-ui({ "kazhala/close-buffers.nvim", cmd = { "BDelete", "BWipeout" }, config = conf.buffers_close })
+ui({
+    "kazhala/close-buffers.nvim",
+    cmd = { "Kwbd", "BDelete", "BWipeout" },
+    module = "close-buffers",
+    config = conf.buffers_close,
+})
 
 ui({
     "zbirenbaum/neodim",

@@ -91,7 +91,6 @@ local function load_options()
         laststatus = 3,
         display = "lastline",
         showbreak = "﬌  ", --↳
-        listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
         pumblend = 10,
         winblend = 10,
         syntax = "off",
@@ -128,6 +127,13 @@ local function load_options()
             foldopen = "",
             -- foldsep = " ",
             foldclose = "",
+        },
+        listchars = {
+            eol = nil,
+            tab = "│ ",
+            extends = "›", -- Alternatives: … »
+            precedes = "‹", -- Alternatives: … «
+            trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2)
         },
         spellfile = global.home .. ".config/nvim/spell/en.utf-8.add",
         spelloptions = "camel",

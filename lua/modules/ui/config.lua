@@ -1,46 +1,12 @@
+local api = vim.api
 local config = {}
 packer_plugins = packer_plugins or {} -- supress warning
 
 function config.fidget()
     local relative = "editor"
     require("fidget").setup({
-        text = {
-            spinner = {
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-                " ",
-            },
-            done = "", -- character shown when all tasks are complete
-            commenced = " ", -- message shown when task starts
-            completed = " ", -- message shown when task completes
-        },
         align = {
-            bottom = true, -- align fidgets along bottom edge of buffer
+            bottom = false, -- align fidgets along bottom edge of buffer
             right = true, -- align fidgets along right edge of buffer
         },
         timer = {
@@ -55,7 +21,7 @@ function config.fidget()
         },
         fmt = {
             leftpad = true, -- right-justify text in fidget box
-            stack_upwards = true, -- list of tasks grows upwards
+            stack_upwards = false, -- list of tasks grows upwards
             max_width = 0, -- maximum width of the fidget box
             -- function to format fidget title
             fidget = function(fidget_name, spinner)
@@ -75,6 +41,12 @@ function config.fidget()
         debug = {
             logging = false, -- whether to enable logging, for debugging
             strict = false, -- whether to interpret LSP strictly
+        },
+    })
+    lambda.augroup("CloseFidget", {
+        {
+            event = "VimLeavePre",
+            command = "silent! FidgetClose",
         },
     })
 end
@@ -244,34 +216,6 @@ function config.tabby()
 end
 
 function config.notify()
-    if #vim.api.nvim_list_uis() == 0 then
-        -- no need to configure notifications in headless
-        return
-    end
-    local notify = require("notify")
-    notify.setup({
-        timeout = 3000,
-        stages = "fade_in_slide_out",
-        max_width = function()
-            return math.floor(vim.o.columns * 0.8)
-        end,
-        max_height = function()
-            return math.floor(vim.o.lines * 0.8)
-        end,
-        on_open = function(win)
-            if vim.api.nvim_win_is_valid(win) then
-                vim.api.nvim_win_set_config(win, { border = "single" })
-            end
-        end,
-        render = function(bufnr, notif, highlights, config)
-            local style = notif.title[1] == "" and "minimal" or "default"
-            require("notify.render")[style](bufnr, notif, highlights, config)
-        end,
-    })
-    vim.notify = notify
-    vim.keymap.set("n", "|+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
-    require("telescope").load_extension("notify")
-
     require("utils.ui.highlights").plugin("notify", {
         { NotifyERRORBorder = { bg = { from = "NormalFloat" } } },
         { NotifyWARNBorder = { bg = { from = "NormalFloat" } } },
@@ -284,7 +228,32 @@ function config.notify()
         { NotifyDEBUGBody = { link = "NormalFloat" } },
         { NotifyTRACEBody = { link = "NormalFloat" } },
     })
+
+    local notify = require("notify")
+    notify.setup({
+        timeout = 3000,
+        stages = "slide",
+        direction = "bottom_up",
+        background_colour = "NormalFloat",
+
+        max_width = function()
+            return math.floor(vim.o.columns * 0.8)
+        end,
+        max_height = function()
+            return math.floor(vim.o.lines * 0.8)
+        end,
+        render = function(...)
+            local notif = select(2, ...)
+            local style = notif.title[1] == "" and "minimal" or "default"
+            require("notify.render")[style](...)
+        end,
+    })
+    vim.notify = notify
+
+    vim.keymap.set("n", "|+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
+    require("telescope").load_extension("notify")
 end
+
 function config.notifier()
     require("notifier").setup({
         notify = {
@@ -710,7 +679,7 @@ function config.indentguides()
     })
 end
 
-function config.buffers_close()
+function config.close_buffers()
     require("close_buffers").setup({
         preserve_window_layout = { "this" },
         next_buffer_cmd = function(windows)
@@ -722,6 +691,9 @@ function config.buffers_close()
             end
         end,
     })
+    vim.api.nvim_create_user_command("Kwbd", function()
+        require("close_buffers").delete({ type = "this" })
+    end, { range = true })
 end
 
 function config.modes()
