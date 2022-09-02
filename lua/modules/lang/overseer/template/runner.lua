@@ -65,6 +65,7 @@ local commands = {
         },
     },
 }
+
 local ret = {}
 for _, command in pairs(commands) do
     table.insert(ret, {
