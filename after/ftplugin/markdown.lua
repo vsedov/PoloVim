@@ -7,4 +7,3 @@ add_cmd("MDRun", function()
         vim.notify("This is not a Markdown file", vim.log.levels.WARN, {})
     end
 end, {})
-
