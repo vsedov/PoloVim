@@ -505,6 +505,7 @@ function config.pretty_fold()
 end
 
 function config.ufo()
+    vim.cmd[[packadd promise-async]]
     local ufo = require("ufo")
     local hl = require("utils.ui.highlights")
     local opt, get_width = vim.opt, vim.api.nvim_strwidth

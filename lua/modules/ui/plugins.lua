@@ -64,14 +64,12 @@ ui({
         {
             -- only needed if you want to use the "open_window_picker" command
             "s1n7ax/nvim-window-picker",
-            -- tag = "v1.2",
-            tag = "v1.*",
             opt = true,
             after = "neo-tree.nvim",
             config = function()
                 require("window-picker").setup({
-                    autoselect_one = true,
-                    include_current = true,
+                    autoselect_one = false,
+                    include_current = false,
                     filter_rules = {
                         -- filter using buffer options
                         bo = {
@@ -117,9 +115,7 @@ ui({
 
 ui({
     "kevinhwang91/nvim-ufo",
-    --[[ ft = lambda.config.main_file_types, ]]
     event = "BufEnter",
-
     requires = { "kevinhwang91/promise-async", after = "nvim-ufo" },
     config = conf.ufo,
 })
