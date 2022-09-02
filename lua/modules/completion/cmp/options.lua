@@ -3,14 +3,16 @@ return {
         enable = true,
         options = {
             name = "cmp_tabnine",
-            priority = 5,
+            priority = 7,
         },
     },
     use_rg = {
-        enable = false,
+        enable = true,
         options = {
             name = "rg",
-            additional_arguments = "--max-depth 8",
+            keyword_length = 4,
+            max_item_count = 10,
+            option = { additional_arguments = "--max-depth 8" },
         },
     },
     use_neorg = {
