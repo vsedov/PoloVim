@@ -175,7 +175,7 @@ misc({
 -- I have mixed feeling about this as i like using tabs, but this kinda ruins the structure
 -- every time, so i wonder if there  is a way to avoid this error in the first place
 misc({
-    "notjedi/nvim-rooter.lua",
+    lambda.use_local("nvim-rooter.lua", "personal"),
     opt = true,
     config = function()
         require("nvim-rooter").setup({
