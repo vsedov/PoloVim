@@ -57,7 +57,7 @@ completion({
                 require("cmp_git").setup({ filetypes = { "gitcommit", "NeogitCommitMessage" } })
             end,
         },
-        { "lukas-reineke/cmp-rg", after = "nvim-cmp", opt = true },
+        { "lukas-reineke/cmp-rg", branch = "bug/implement-chunk-size", after = "nvim-cmp" },
         { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
     },
     config = conf.cmp,
