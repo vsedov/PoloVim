@@ -154,7 +154,8 @@ editor({
 })
 
 editor({
-    "max397574/which-key.nvim",
+    "xaviervalarino/which-key.nvim",
+    branch = "fix-maparg",
     opt = true,
     after = "nvim-treesitter",
     config = function()

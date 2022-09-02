@@ -158,27 +158,25 @@ vim.defer_fn(function()
         cmd = "packadd " .. v
         vim.cmd(cmd)
     end
+end, lazy_timer + 80)
 
-    vim.defer_fn(function()
-        loader("vim-polyglot")
-        if lambda.config.use_fzf_lua then
-            loader("fzf-lua")
-        end
-    end, lazy_timer + 10)
+vim.defer_fn(function()
+    if lambda.config.use_fzf_lua then
+        loader("fzf-lua")
+    end
     loader("workspaces.nvim")
     if lambda.config.rooter_or_project then
         loader("nvim-rooter.lua")
     else
         loader("project.nvim")
     end
-    -- Notify
+    -- -- Notify
     if lambda.config.simple_notify then
         loader("notifier.nvim")
     else
+        loader("fidget.nvim")
         loader("nvim-notify")
-        local notify = require("notify")
-        vim.notify = notify
     end
+    loader("neorg")
     lprint("all done")
 end, lazy_timer + 80)
-loader("neorg")
