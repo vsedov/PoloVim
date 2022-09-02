@@ -16,6 +16,7 @@ With.trim_whitespace = {
 
 With.codespell = {
     disabled_filetypes = file_type_exclude,
+    method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 }
 
 With.black = {
