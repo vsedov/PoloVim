@@ -154,8 +154,7 @@ editor({
 })
 
 editor({
-    "xaviervalarino/which-key.nvim",
-    branch = "fix-maparg",
+    "folke/which-key.nvim",
     opt = true,
     after = "nvim-treesitter",
     config = function()

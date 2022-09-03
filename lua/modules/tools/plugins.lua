@@ -156,7 +156,7 @@ tools({
     config = conf.bqf,
 })
 tools({
-    "https://gitlab.com/yorickpeterse/nvim-pqf",
+    "barklan/nvim-pqf",
     event = "BufReadPre",
     config = function()
         require("pqf").setup()

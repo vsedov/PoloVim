@@ -52,7 +52,6 @@ tele({
 
 tele({
     "dhruvmanila/telescope-bookmarks.nvim",
-    branch = "feat/waterfox",
     opt = true,
     requires = {
         "kkharji/sqlite.lua",

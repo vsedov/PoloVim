@@ -58,8 +58,8 @@ ui({
 })
 ui({
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    requires = {
+    branch = "main",
+    wants = {
         "MunifTanjim/nui.nvim",
         {
             -- only needed if you want to use the "open_window_picker" command
@@ -139,6 +139,15 @@ ui({
     ft = { "python", "lua" },
     requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
     config = conf.dim,
+})
+
+ui({
+    "levouh/tint.nvim",
+    opt = true,
+    event = "BufEnter",
+    config = function()
+        require("tint").setup()
+    end,
 })
 
 ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })

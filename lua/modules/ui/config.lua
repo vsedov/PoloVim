@@ -233,7 +233,7 @@ function config.notify()
     notify.setup({
         timeout = 3000,
         stages = "slide",
-        direction = "bottom_up",
+        top_down =false,
         background_colour = "NormalFloat",
 
         max_width = function()
@@ -505,7 +505,7 @@ function config.pretty_fold()
 end
 
 function config.ufo()
-    vim.cmd[[packadd promise-async]]
+    vim.cmd([[packadd promise-async]])
     local ufo = require("ufo")
     local hl = require("utils.ui.highlights")
     local opt, get_width = vim.opt, vim.api.nvim_strwidth
