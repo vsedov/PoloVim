@@ -854,17 +854,8 @@ M.find_string = function()
     reloader()
     -- local opts = themes.get_ivy({
     local opts = {
-        border = true,
         shorten_path = false,
         prompt_title = "~ Live Grep ~",
-        -- layout_strategy = "flex",
-        layout_config = {
-            width = 0.99,
-            height = 0.5,
-            prompt_position = "top",
-            -- horizontal = { width = { padding = 0.05 } },
-            -- vertical = { preview_height = 0.75 },
-        },
         file_ignore_patterns = {
             "vendor/*",
             "node_modules",
@@ -874,9 +865,6 @@ M.find_string = function()
             "%.svg",
             "%.otf",
             "%.ttf",
-        },
-        preview = {
-            hide_on_startup = false,
         },
     }
     -- winblend = 15,
