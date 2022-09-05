@@ -47,6 +47,32 @@ local disable_distribution_plugins = function()
     -- vim.g.loaded_ruby_provider = 0
     -- vim.g.loaded_perl_provider = 0
 end
+local file_type = function()
+    if not vim.filetype then
+        return
+    end
+
+    vim.filetype.add({
+        extension = {
+            lock = "yaml",
+        },
+        filename = {
+            ["NEOGIT_COMMIT_EDITMSG"] = "NeogitCommitMessage",
+            [".psqlrc"] = "conf", -- TODO: find a better filetype
+            ["go.mod"] = "gomod",
+            [".gitignore"] = "conf",
+            ["launch.json"] = "jsonc",
+            Podfile = "ruby",
+            Brewfile = "ruby",
+        },
+        pattern = {
+            [".*%.conf"] = "conf",
+            [".*%.theme"] = "conf",
+            [".*%.gradle"] = "groovy",
+            [".*%.env%..*"] = "env",
+        },
+    })
+end
 
 local leader_map = function()
     vim.g.mapleader = " "
@@ -74,6 +100,7 @@ local load_core = function()
         require("core.autocmd_optional")
         require("core.mapping")
         require("keymap")
+        file_type()
         -- selene: allow(global_usage)
         _G.lprint = require("utils.logs.log").lprint
         pack.load_compile()
