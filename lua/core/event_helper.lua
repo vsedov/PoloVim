@@ -10,37 +10,6 @@ local blacklist_files = {
     "md",
 }
 
-local function should_mkview()
-    return vim.bo.buftype == ""
-        and vim.fn.getcmdwintype() == ""
-        and blacklist_files[vim.bo.filetype] == nil
-        and vim.fn.exists("$SUDO_USER") == 0 -- Don't create root-owned files.
-end
-
-function M.mkview()
-    if should_mkview() then
-        local success, err = pcall(function()
-            if vim.fn.exists("*haslocaldir") and vim.fn.haslocaldir() then
-                -- We never want to save an :lcd command, so hack around it...
-                api.nvim_command("cd -")
-                api.nvim_command("mkview")
-                api.nvim_command("lcd -")
-            else
-                api.nvim_command("mkview")
-            end
-        end)
-        if not success then
-            if
-                err:find("%f[%w]E186%f[%W]") == nil -- No previous directory: probably a `git` operation.
-                and err:find("%f[%w]E190%f[%W]") == nil -- Could be name or path length exceeding NAME_MAX or PATH_MAX.
-                and err:find("%f[%w]E5108%f[%W]") == nil
-            then
-                error(err)
-            end
-        end
-    end
-end
-
 function M.loadview()
     if should_mkview() then
         api.nvim_command("silent! loadview")

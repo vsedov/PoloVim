@@ -24,6 +24,7 @@ require("utils.ui.highlights")
 load_colourscheme()
 
 vim.g.cursorhold_updatetime = 100
+vim.cmd([[syntax on]])
 
 function Lazyload()
     _G.PLoader = loader
@@ -31,10 +32,10 @@ function Lazyload()
         lprint("diffmode")
         vim.cmd([[packadd nvim-treesitter]])
         require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = false } })
-        vim.cmd([[syntax on]])
         return
     else
         loader("nvim-treesitter")
+        -- vim.cmd([[syntax on]])
     end
     lprint("I am lazy")
 
@@ -52,16 +53,10 @@ function Lazyload()
         "neo-tree",
     }
 
-    local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
-    if not syn_on then
-        vim.cmd([[syntax manual]])
-    end
-
-    -- local fname = vim.fn.expand("%:p:f")
-    if fsize > 6 * 1024 * 1024 then
-        vim.cmd([[syntax off]])
-        return
-    end
+    -- local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
+    -- if not syn_on then
+    --     vim.cmd([[syntax manual]])
+    -- end
     -- only works if you are working from one python file .
     if vim.bo.filetype == "lua" then
         loader("lua-dev.nvim")
@@ -101,13 +96,10 @@ function Lazyload()
         callback = function()
             if vim.fn.wordcount()["bytes"] > 2048000 then
                 lprint("syntax off")
+                vim.notify("syntax off")
                 vim.cmd([[setlocal syntax=off]])
             end
         end,
-    })
-    vim.api.nvim_create_autocmd("Syntax", {
-        pattern = "*",
-        command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
     })
 end
 
@@ -146,24 +138,16 @@ vim.defer_fn(function()
     lprint("telescope family")
     loader("telescope.nvim")
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
-
-    -- -- i have no clue what else to do .
-    local plugins = {
-        "telescope-live-grep-args.nvim",
-        "telescope-frecency.nvim",
-        "telescope-file-browser.nvim",
-        "telescope-bookmarks.nvim",
-    }
-    for _, v in ipairs(plugins) do
-        cmd = "packadd " .. v
-        vim.cmd(cmd)
-    end
 end, lazy_timer + 80)
 
 vim.defer_fn(function()
     if lambda.config.use_fzf_lua then
         loader("fzf-lua")
     end
+    if lambda.config.use_commant_t then
+        loader("command-t")
+    end
+
     loader("workspaces.nvim")
     if lambda.config.rooter_or_project then
         loader("nvim-rooter.lua")
