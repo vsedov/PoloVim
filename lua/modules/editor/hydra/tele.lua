@@ -1,5 +1,17 @@
 local Hydra = require("hydra")
+-- -- i have no clue what else to do .
+local plugins = {
+    "telescope-live-grep-args.nvim",
+    "telescope-frecency.nvim",
+    "telescope-file-browser.nvim",
+    "telescope-bookmarks.nvim",
+}
+for _, v in ipairs(plugins) do
+    cmd = "packadd " .. v
+    vim.cmd(cmd)
+end
 
+require("telescope").load_extension("frecency")
 local hint_telescope = [[
  ^^      Git         ^^^^           Surfing               ^^^^
  ^^^^                                                     ^^^^

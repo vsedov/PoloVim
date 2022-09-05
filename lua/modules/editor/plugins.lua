@@ -411,3 +411,21 @@ editor({
         })
     end,
 })
+editor({
+    "wincent/command-t",
+    run = "cd lua/wincent/commandt/lib && make",
+    opt = true,
+    setup = function()
+        vim.g.CommandTPreferredImplementation = "lua"
+    end,
+    config = function()
+        require("wincent.commandt").setup()
+    end,
+})
+editor({
+    "kevinhwang91/nvim-hclipboard",
+    event = "InsertCharPre",
+    config = function()
+        require("hclipboard").start()
+    end,
+})
