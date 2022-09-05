@@ -11,7 +11,7 @@ ui({
 ui({ "kyazdani42/nvim-web-devicons" })
 
 ui({
-    lambda.use_local("heirline.nvim", "contributing"),
+    "rebelot/heirline.nvim",
     after = "nvim-lspconfig",
     config = function()
         require("modules.ui.heirline")
@@ -33,15 +33,14 @@ ui({
     opt = true,
 })
 
--- Lazy Loading nvim-notify
+-- todo: FIX THIS
 ui({
-    "akinsho/nvim-notify",
+    "rcarriga/nvim-notify",
     opt = true,
-    branch = "feature/direction-config",
-    cond = not_headless,
     requires = "telescope.nvim", -- this might not be needed
     config = conf.notify,
 })
+
 ui({
     "vigoux/notifier.nvim",
     opt = true,
@@ -59,7 +58,7 @@ ui({
 ui({
     "nvim-neo-tree/neo-tree.nvim",
     branch = "main",
-    wants = {
+    requires = {
         "MunifTanjim/nui.nvim",
         {
             -- only needed if you want to use the "open_window_picker" command
@@ -68,8 +67,8 @@ ui({
             after = "neo-tree.nvim",
             config = function()
                 require("window-picker").setup({
-                    autoselect_one = false,
-                    include_current = false,
+                    autoselect_one = true,
+                    include_current = true,
                     filter_rules = {
                         -- filter using buffer options
                         bo = {
@@ -146,7 +145,20 @@ ui({
     opt = true,
     event = "BufEnter",
     config = function()
-        require("tint").setup()
+        require("tint").setup({
+            amt = -35,
+            ignore = { "WinSeparator", "Status.*", "Comment", "Beacon.*", "Panel.*" },
+            ignorefunc = function(win_id)
+                if vim.fn.win_gettype(win_id) ~= "" then
+                    return true
+                end
+                local buf = vim.api.nvim_win_get_buf(win_id)
+                local b = vim.bo[buf]
+                local ignore_bt = { "terminal", "prompt", "nofile" }
+                local ignore_ft = { "neo-tree", "packer", "diff", "toggleterm", "Neogit.*", "Telescope.*" }
+                return lambda.any(b.bt, ignore_bt) or lambda.any(b.ft, ignore_ft)
+            end,
+        })
     end,
 })
 

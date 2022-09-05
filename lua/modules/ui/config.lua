@@ -233,7 +233,7 @@ function config.notify()
     notify.setup({
         timeout = 3000,
         stages = "slide",
-        top_down =false,
+        top_down = false,
         background_colour = "NormalFloat",
 
         max_width = function()

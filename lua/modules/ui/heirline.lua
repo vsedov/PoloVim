@@ -714,7 +714,7 @@ local StatusLines = {
         end,
     },
 
-    init = utils.pick_child_on_condition,
+    fallthrough = false,
 
     GitStatusline,
     SpecialStatusline,
@@ -746,7 +746,7 @@ local CloseButton = {
 }
 
 local WinBar = {
-    init = utils.pick_child_on_condition,
+    fallthrough = false,
     {
         condition = function()
             return conditions.buffer_matches({
