@@ -21,6 +21,7 @@ function M.setup()
     local mason_package = require("mason-core.package")
     local format = config.formatter
     local diagnostic = config.diagnostic
+
     for _, package in ipairs(require("mason-registry").get_installed_packages()) do
         local package_categories = package.spec.categories[1]
         if package_categories == mason_package.Cat.Formatter then
@@ -31,6 +32,12 @@ function M.setup()
         end
     end
 
+    for _, py_form in ipairs(lambda.config.lsp.python.format) do
+        table.insert(format, py_form)
+    end
+    for _, py_form in ipairs(lambda.config.lsp.python.lint) do
+        table.insert(diagnostic, py_form)
+    end
     local registered_sources = {}
     for builtin, sources in pairs({
         formatting = format,
@@ -68,6 +75,7 @@ function M.setup()
         ),
         on_attach = function(client, bufnr)
             if client.supports_method("textDocument/formatting") then
+                local augroup = "NullLs"
                 vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     group = augroup,

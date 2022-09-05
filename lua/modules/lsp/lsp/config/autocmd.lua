@@ -89,7 +89,7 @@ function M.setup_autocommands(client, bufnr)
                 {
                     event = { "CursorHold" },
                     buffer = bufnr,
-                    desc = "LSP: Show diagnostics",   
+                    desc = "LSP: Show diagnostics",
                     command = function(args)
                         vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
                     end,

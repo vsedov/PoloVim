@@ -286,7 +286,6 @@ local container = {
     -- HACK(vsedov): Create a gloval check for this, useing lambda.config
     null_ls = {
         diagnostic = {
-            lambda.config.lsp.python.lint,
             "cppcheck",
             "djlint",
             "eslint_d",
@@ -294,17 +293,13 @@ local container = {
             "ktlint",
             "markdownlint",
             "misspell",
-            "mypy",
             "phpcs",
-            "revive",
             "staticcheck",
             "stylelint",
             "write_good",
             "luacheck",
         },
         formatter = {
-            lambda.config.lsp.python.format,
-            "isort",
             "brittany",
             "djlint",
             "fish_indent",

@@ -2,12 +2,14 @@
 -- Modified though
 local cfg = {
     bind = true,
+    fix_pos = true, -- set to true, the floating window will not auto-close until finish all parameters
     doc_lines = 10,
-    floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
-    floating_window_above_cur_line = false,
-    fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
-    hint_enable = true, -- virtual hint enable
+
+    --[[ floating_window = false, -- show hint in a floating window, set to false for virtual text only mode ]]
+    --[[ floating_window_above_cur_line = false, ]]
+    hint_enable = false, -- virtual hint enable
     hint_prefix = "🐼 ", -- Panda for parameter
+    auto_close_after = 15, -- close after 15 seconds
     --[[ hint_prefix = " ", ]]
     toggle_key = "»",
     select_signature_key = "<C-n>",
@@ -16,6 +18,7 @@ local cfg = {
     handler_opts = {
         border = lambda.style.border.type_0, -- double, single, shadow, none
     },
+
     -- transpancy = 80,
     -- zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
     debug = plugin_debug(),

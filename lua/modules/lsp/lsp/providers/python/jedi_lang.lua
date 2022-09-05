@@ -7,10 +7,7 @@ return {
     init_options = {
         jediSettings = {
             -- Allot of machine learning models that are set from default.
-            autoImportModules = { "torch", "numpy", "matplotlib", "os", "PIL" },
-        },
-        completion = {
-            resolveEagerly = true,
+            autoImportModules = { "torch", "numpy", "matplotlib" },
         },
     },
 }
