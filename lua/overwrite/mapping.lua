@@ -20,8 +20,6 @@ end
 local keys = { --
     ["n|<leader>r"] = map_cmd(run_or_test, "jaq run"):with_expr(),
     ["n|<F6>"] = map_cu("Jaq quickfix", "jaq run"):with_noremap():with_silent(),
-    ["o|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>", "tsht search"):with_silent(),
-    ["v|M"] = map_cmd(":<C-U>lua require('tsht').nodes()<CR>", "tsht search"):with_noremap():with_silent(),
 
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]], "Harppon Add file"):with_noremap(),
     ["n|;n"] = map_cmd([[<cmd> lua require("harpoon.mark").toggle_file()<CR>]], "Harpoon Toggle File"):with_noremap(),
