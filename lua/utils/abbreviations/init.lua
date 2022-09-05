@@ -10,12 +10,9 @@ M.setup = function(opts)
         for _, abbrev in ipairs(abbrevs.global_abbrevs.iabbrevs) do
             utils.inoreabbrev(abbrev[1], abbrev[2])
         end
-
+        -- these break so cannot really use these now
         for _, cabbrev in ipairs(abbrevs.global_abbrevs.cabbrevs) do
             utils.cnoreabbrev(cabbrev[1], cabbrev[2])
-        end
-        for _, cabbrev in ipairs(abbrevs.global_abbrevs.cnoremapbrevs) do
-            utils.cnoremap(cabbrev[1], cabbrev[2])
         end
     end
 
@@ -30,8 +27,6 @@ M.setup = function(opts)
             utils.load_dict(abbrevs[value])
         end
     end
-
-    M.load_cmd()
 end
 return M
 

@@ -82,20 +82,6 @@ M.global_abbrevs = {
             [[silent lgrep <C-r>=expand('%')<cr> \| lopen<C-b><right><right><right><right><right><right><right><right><right><right><right><right><right>]],
         },
         { "sl", [[s/\v()/\1\r/gc<left><left><left><left><left><left><left><left><left>]] },
-        { "ft", [[set ft=]] },
-    },
-    cnoremapbrevs = {
-        -- -- " last-vimgrep and -||-
-        { "<C-G>", "vimgrep<UP><C-B><Right><Right><Right><Right><Right><Right><Right><Right><Right>" },
-        -- " vimgrep semi-prepared
-        { "VG", "vimgrep //j **/*<Left><Left><Left><Left><Left><Left><Left>" },
-        -- " vimgrep for 'resource'
-        { "RG", [[vimgrep /<c-r>=expand("%:t:r")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
-        -- " vimgrep for 'cword'
-        { "CG", [[vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
-        -- " vimgrep for 'CWORD'
-        { "Cg", [[vimgrep /<c-r>=expand("<cword>")<nl>/j **/*.<c-r>=expand("%:t:e")<nl>]] },
-        { "Vsp", [[vsp]] },
     },
 }
 
