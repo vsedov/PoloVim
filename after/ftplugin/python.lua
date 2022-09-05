@@ -5,6 +5,7 @@ local options = {
     smarttab = true,
     conceallevel = 2,
     colorcolumn = "130",
+    foldmethod = "syntax",
 }
 
 for k, v in pairs(options) do
