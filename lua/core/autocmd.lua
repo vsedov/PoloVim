@@ -213,6 +213,7 @@ lambda.augroup("Utilities", {
             end
         end,
     },
+
     {
         event = { "BufWritePost" },
         pattern = { "*" },
@@ -256,23 +257,6 @@ lambda.augroup("buffer", {
         end,
     },
 
-    -- { "BufEnter", "*", [[lcd `=expand('%:p:h')`]] }, -- Not requried atm
-    {
-        event = "BufLeave",
-        pattern = { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
-
-        command = function()
-            require("core.event_helper").mkview()
-        end,
-    },
-    {
-        event = "BufWinEnter",
-        pattern = { "*.py", "*.lua", "*.c", "*.cpp", "*.norg", "*.tex" },
-
-        command = function()
-            require("core.event_helper").loadview()
-        end,
-    },
     {
         event = "BufWritePre",
         pattern = "*",
@@ -503,4 +487,18 @@ lambda.augroup("AddTerminalMappings", {
         end,
     },
 })
--- Make curosr
+
+--[[ Honestly cap locks are such a pain in the ass that its getting too annoying  ]]
+--[[ i will use <c-;> and <c-g>c to enable them when i need to just in case ]]
+lambda.augroup("CapLockDisable", {
+    {
+        event = "VimEnter",
+        pattern = "*",
+        command = "silent !setxkbmap -option ctrl:nocaps",
+    },
+    {
+        event = "VimLeave",
+        pattern = "*",
+        command = "silent !setxkbmap -option",
+    },
+})

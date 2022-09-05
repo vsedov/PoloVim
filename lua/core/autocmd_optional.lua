@@ -3,21 +3,6 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
-if vim.env.TERM == "xterm-kitty" then
-    lambda.augroup("VimrcIncSearchHighlight", {
-        {
-            event = "UIEnter",
-            pattern = "*",
-            command = [[if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]],
-        },
-        {
-            event = "UILeave",
-            pattern = "*",
-            command = [[if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]],
-        },
-    })
-end
-
 if lambda.config.colourscheme.change_kitty_bg then
     local fn = vim.fn
     vim.g.ORIGINAL_KITTY_BG_COLOR = nil
@@ -119,11 +104,14 @@ end
 
 vim.defer_fn(function()
     if lambda.config.loaded_confirm_quit then
+        -- this breaks neotree for some reason
         require("utils.plugins.exit")
     end
 
     -- tbh, this can stay here, nothing changes with this
     if lambda.config.abbrev.enable then
+        -- or is it you , lets find out who the real problem maker in this thing
+        --[[ is ]]
         require("utils.abbreviations").setup()
     end
 
