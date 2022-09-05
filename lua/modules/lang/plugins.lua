@@ -15,18 +15,6 @@ lang({
 })
 
 lang({
-    "TornaxO7/tree-setter",
-    ft = { "c", "cpp" },
-    config = function()
-        require("nvim-treesitter.configs").setup({
-            tree_setter = {
-                enable = true,
-            },
-        })
-    end,
-})
-
-lang({
     "RRethy/nvim-treesitter-textsubjects",
     ft = { "lua", "rust", "go", "python", "javascript" },
     opt = true,
@@ -83,8 +71,6 @@ lang({
     },
     cmd = "DeleteDebugPrints",
 })
-
-local test = 10
 
 lang({
     "nvim-treesitter/nvim-treesitter-refactor",
@@ -160,7 +146,28 @@ lang({
     end,
 })
 
-lang({ "max397574/nvim-treehopper", module = "tsht" })
+lang({
+    "max397574/nvim-treehopper",
+    keys = {
+        { "o", "u" },
+        { "v", "u" },
+    },
+    config = function()
+        lambda.augroup("TreehopperMaps", {
+            {
+                event = "FileType",
+                command = function(args)
+                    -- FIXME: this issue should be handled inside the plugin rather than manually
+                    local langs = require("nvim-treesitter.parsers").available_parsers()
+                    if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
+                        vim.keymap.set("o", "u", ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
+                        vim.keymap.set("n", "u", ":lua require('tsht').nodes()<cr>", { buffer = args.buf })
+                    end
+                end,
+            },
+        })
+    end,
+})
 
 lang({ "lewis6991/nvim-treesitter-context", event = "InsertEnter", config = conf.context })
 
@@ -263,26 +270,6 @@ lang({
         require("textobj-diagnostic").setup()
     end,
 })
-
--- lang({
---     "sheerun/vim-polyglot",
---     opt = true,
---     setup = function()
---         vim.g.polyglot_disabled = { "latex", "markdown", "lua"},
---     end,
---     config = function()
---         -- JSON: do not remove double quotes in view
---         vim.g.vim_json_syntax_conceal = 0
---         -- Python
---         vim.g.python_highlight_space_errors = 0
---         vim.g.python_highlight_all = 1
---         vim.g.latex_to_unicode_auto = 1
---         vim.g.julia_blocks = 1
---         vim.g.julia_spellcheck_docstrings = 1
---         vim.g.julia_spellcheck_strings = 1
---         vim.g.julia_indent_align_import = 1
---     end,
--- })
 
 lang({
     "Vimjas/vim-python-pep8-indent",

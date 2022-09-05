@@ -51,20 +51,7 @@ local treesitter = function()
         },
         highlight = {
             enable = true, -- false will disable the whole extension
-            additional_vim_regex_highlighting = false,
-
-            -- thanks max >.<
-            custom_captures = {
-                ["require_call"] = "RequireCall",
-                ["function_definition"] = "FunctionDefinition",
-            },
-            query_linter = {
-                enable = true,
-                use_virtual_text = true,
-                lint_events = { "BufWrite", "CursorMoved" },
-            },
-            disable = { "elm" }, -- list of language that will be disabled
-            use_languagetree = langtree,
+            additional_vim_regex_highlighting = lambda.config.do_you_want_lag,
         },
         incremental_selection = {
             enable = enable,
@@ -186,7 +173,6 @@ local treesitter_obj = function()
             "html",
             "javascript",
             "typescript",
-            "jsdoc",
             "json",
             "c",
             "java",
@@ -196,7 +182,6 @@ local treesitter_obj = function()
             "cpp",
             "python",
             "rust",
-            "jsonc",
             "dart",
             "css",
             "yaml",
@@ -226,10 +211,7 @@ local treesitter_ref = function()
             highlight_definitions = { enable = enable },
             highlight_current_scope = { enable = false },
             smart_rename = {
-                enable = true,
-                keymaps = {
-                    smart_rename = "<Leader>gR", -- mapping to rename reference under cursor
-                },
+                enable = false,
             },
             navigation = {
                 enable = true, -- enabled navigation might conflict with mapping
@@ -242,8 +224,6 @@ local treesitter_ref = function()
                 },
             },
         },
-
-        autopairs = { enable = false },
     })
 end
 
