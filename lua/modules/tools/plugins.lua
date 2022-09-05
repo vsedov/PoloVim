@@ -283,3 +283,25 @@ tools({
     wants = "dressing.nvim",
     event = "BufNewFile",
 })
+
+tools({
+    "barklan/capslock.nvim",
+    keys = {
+        { "i", "<C-;>" },
+        { "n", "<C-;>" },
+        { "c", "<C-;>" },
+    },
+    config = function()
+        require("capslock").setup()
+        vim.keymap.set({ "n", "i", "C" }, "<C-;>", "<Plug>CapsLockToggle", {})
+    end,
+})
+
+tools({
+    "jbyuki/nabla.nvim",
+    keys = { "<localleader>s" },
+    config = function()
+        vim.keymap.set("n", "<localleader>s", [[:lua require("nabla").popup()<CR>]], {})
+        require("nabla").enable_virt()
+    end,
+})
