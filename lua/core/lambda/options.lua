@@ -1,5 +1,14 @@
 -- pick random  item form dark but based on its probability
 lambda.config = {
+    leader = {
+        -- TODO: (vsedov) (21:18:41 - 03/09/22): My entire keymap config
+        -- will need to be refactored , soon , so to do so , im preping in advice:
+        -- i might get rid of this though , im not sure.
+        leader = "<leader>",
+        local_leader = "<localleader",
+        leader_s_colon = ";",
+        leader_c_space = "<C-<leader>>",
+    },
     colourscheme = {
         dim_background = false,
         change_kitty_bg = false,
@@ -16,11 +25,11 @@ lambda.config = {
                 "horizon.nvim",
                 "vim-dogrun",
                 "doom-one.nvim",
-                "poimandres.nvim",
                 "tokyonight.nvim",
             },
         },
     },
+    do_you_want_lag = false, -- Enable Extra regex,
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     -- TODO: (vsedov) (09:58:51 - 31/08/22): Use simple notify based on filetpe or project
     -- and use record your self based on if you are in multiple projects or not , as i think
@@ -45,12 +54,12 @@ lambda.config = {
             "python", -- current support is python.
         },
     },
-
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to Ture for nvim -- rooter as that has
     --[[ manual control ]]
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
-    use_fzf_lua = true, -- This is nice, to have, when required.
+    use_fzf_lua = false, -- This is nice, to have, when required.
+    use_commant_t = true,
     use_dashboard = true, -- set to false to not see this
     use_session = true, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
@@ -59,18 +68,15 @@ lambda.config = {
     use_guess_indent = true,
     use_gitsigns = true,
     lsp = {
-        -- this seems to cause lag, though im not sure about that. Will have to see if that is the
-        -- case or not
-        use_semantic_token = true,
         latex = "texlab", -- texlab | ltex
         python = {
-            lint = "flake8", -- pylint, pyflake, and other linters
+            lint = { "ruff", "flake8" }, -- pylint, pyflake, and other linters
+            format = { "isort", "yapf" }, -- black
             -- jedis documentation is better though
             lsp = "jedi", -- jedi pylsp and pyright pylance
             pylance_pyright = {
                 use_inlay_hints = true,
             },
-            format = "yapf", -- black
         },
     },
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },

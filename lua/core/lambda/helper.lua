@@ -325,3 +325,16 @@ lambda.ftplugin_conf = function(name, callback)
         callback(plugin)
     end
 end
+
+--- Check if the target matches  any item in the list.
+---@param target string
+---@param list string[]
+---@return boolean
+lambda.any = function(target, list)
+    for _, item in ipairs(list) do
+        if target:match(item) then
+            return true
+        end
+    end
+    return false
+end
