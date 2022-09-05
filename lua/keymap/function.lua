@@ -59,7 +59,8 @@ local plug_map = {
     ["n|{"] = map_cmd(function()
         return ":lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow" .. "<cr>"
     end, "Diag show Prev"):with_expr(),
-    ["n|<leader>R"] = map_cmd(function()
+
+    ["n|;r"] = map_cmd(function()
         if lambda.config.rooter_or_project then
             return ":RooterToggle<cr>"
         end

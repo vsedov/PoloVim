@@ -329,7 +329,7 @@ if TYPE_CHECKING:
     }),
 
     s("log", {
-        t({ "logging" }),
+        t({ "logger" }),
         c(1, {
             t({ ".info(" }),
             t({ ".debug(" }),
