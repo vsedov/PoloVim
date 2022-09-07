@@ -3,7 +3,6 @@ local loader = require("packer").loader
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local wk = require("which-key")
-M.setup = function() end
 
 M.config = function()
     vim.fn.sign_define("DapBreakpoint", { text = "⧐", texthl = "Error", linehl = "", numhl = "" })
@@ -16,12 +15,6 @@ M.dapui = function()
     dap.listeners.after.event_initialized["dapui_config"] = function()
         require("dapui").open()
         vim.api.nvim_exec_autocmds("User", { pattern = "DapStarted" })
-    end
-    dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close()
-    end
-    dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close()
     end
 end
 
