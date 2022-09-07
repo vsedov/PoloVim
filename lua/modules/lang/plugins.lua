@@ -127,7 +127,6 @@ lang({
 lang({
     "mfussenegger/nvim-dap",
     module = "dap",
-    requires = "which-key.nvim",
     config = conf.dap_config,
     requires = {
         {
@@ -140,6 +139,7 @@ lang({
             after = "nvim-dap",
             ft = "python",
         },
+        "folke/which-key.nvim",
     },
 })
 lang({
@@ -167,7 +167,7 @@ lang({
                     local langs = require("nvim-treesitter.parsers").available_parsers()
                     if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
                         vim.keymap.set("o", "u", ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
-                        vim.keymap.set("n", "u", ":lua require('tsht').nodes()<cr>", { buffer = args.buf })
+                        vim.keymap.set("v", "u", ":lua require('tsht').nodes()<cr>", { buffer = args.buf })
                     end
                 end,
             },
@@ -175,7 +175,7 @@ lang({
     end,
 })
 
-lang({ "lewis6991/nvim-treesitter-context", event = "InsertEnter", config = conf.context })
+lang({ "nvim-treesitter/nvim-treesitter-context", event = "WinScrolled", config = conf.context })
 
 lang({ "ray-x/guihua.lua", run = "cd lua/fzy && make", opt = true })
 
