@@ -137,15 +137,22 @@ editor({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = c
 
 editor({
     "m-demare/hlargs.nvim",
-    brach = "expected_lua_number",
     ft = {
+
         "c",
         "cpp",
-        "python",
-        "java",
-        "lua",
-        "rust",
         "go",
+        "java",
+        "javascript",
+        "jsx",
+        "lua",
+        "php",
+        "python",
+        "r",
+        "ruby",
+        "rust",
+        "tsx",
+        "typescript",
         "vim",
         "zig",
     },
@@ -155,8 +162,8 @@ editor({
 
 editor({
     "folke/which-key.nvim",
-    opt = true,
-    after = "nvim-treesitter",
+    module = "which-key",
+    requires = "nvim-treesitter",
     config = function()
         require("modules.editor.which_key")
     end,
@@ -427,5 +434,68 @@ editor({
     event = "InsertCharPre",
     config = function()
         require("hclipboard").start()
+    end,
+})
+
+editor({
+    "monkoose/matchparen.nvim",
+    opt = true,
+    config = function()
+        require("matchparen").setup()
+    end,
+})
+
+editor({
+    "junegunn/goyo.vim",
+    cmd = { "Goyo!", "Goyo" },
+    config = function()
+        vim.cmd([[
+        function! s:goyo_enter()
+          if executable('tmux') && strlen($TMUX)
+            silent !tmux set status off
+            silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+          endif
+          set noshowmode
+          set noshowcmd
+          set scrolloff=999
+          Limelight
+          " ...
+        endfunction
+
+        function! s:goyo_leave()
+          if executable('tmux') && strlen($TMUX)
+            silent !tmux set status on
+            silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+          endif
+          set showmode
+          set showcmd
+          set scrolloff=5
+          Limelight!
+          " ...
+        endfunction
+
+        autocmd! User GoyoEnter nested call <SID>goyo_enter()
+        autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+        ]])
+    end,
+})
+editor({
+    "marklcrns/vim-smartq",
+    keys = {
+        "Q",
+        "q",
+    },
+    cmd = {
+        "SmartQ",
+        "SmartQ!",
+        "SmartQSave",
+        "SmartQWipeEmpty",
+        "SmartQWipeEmpty!",
+        "SmartQCloseSplits",
+    },
+    config = function()
+        vim.g.smartq_goyo_integration = 1
+        vim.g.smartq_zenmode_integration = 0
     end,
 })
