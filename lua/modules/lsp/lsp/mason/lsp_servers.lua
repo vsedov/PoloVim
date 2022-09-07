@@ -48,16 +48,14 @@ local servers = {
             },
         },
     },
-    sqls = function()
-        return {
-            root_dir = require("lspconfig").util.root_pattern(".git"),
-            single_file_support = false,
-            on_new_config = function(new_config, new_rootdir)
-                table.insert(new_config.cmd, "-config")
-                table.insert(new_config.cmd, new_rootdir .. "/.config.yaml")
-            end,
-        }
-    end,
+    sqls = {
+        root_dir = require("lspconfig").util.root_pattern(".git"),
+        single_file_support = false,
+        on_new_config = function(new_config, new_rootdir)
+            table.insert(new_config.cmd, "-config")
+            table.insert(new_config.cmd, new_rootdir .. "/.config.yaml")
+        end,
+    },
     sourcery = false, -- no clue what this does
 }
 
