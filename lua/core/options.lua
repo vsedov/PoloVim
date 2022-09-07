@@ -2,6 +2,7 @@ local global = require("core.global")
 
 local function load_options()
     local global_local = {
+        guifont = "Operator Mono Ssm Lib Book:h10",
         termguicolors = true,
         mouse = "nv",
         errorbells = true,
@@ -31,12 +32,11 @@ local function load_options()
         smarttab = true,
         smartindent = true,
         shiftround = true,
-        lazyredraw = true,
         timeout = true,
         ttimeout = true,
         timeoutlen = 500,
         ttimeoutlen = 10,
-        updatetime = 250,
+        updatetime = 300,
         redrawtime = 5000,
         ignorecase = true,
         smartcase = true,
@@ -116,13 +116,28 @@ local function load_options()
         foldcolumn = "1", -- nice folds
         fillchars = {
             eob = " ",
-            vert = "║",
-            horiz = "═",
-            horizup = "╩",
-            horizdown = "╦",
-            vertleft = "╣",
-            vertright = "╠",
-            verthoriz = "╬",
+            -- vert = "║",
+            -- horiz = "═",
+            -- horizup = "╩",
+            -- horizdown = "╦",
+            -- vertleft = "╣",
+            -- vertright = "╠",
+            -- verthoriz = "╬",
+            horiz = "━",
+            horizup = "┻",
+            horizdown = "┳",
+            vert = "┃",
+            vertleft = "┫",
+            vertright = "┣",
+
+            -- horiz = "━",
+            -- horizup = "┻",
+            -- horizdown = "┳",
+            -- vert = "┃",
+            -- vertleft = "┫",
+            -- vertright = "┣",
+            -- verthoriz = "╋",
+
             fold = " ",
             foldopen = "",
             -- foldsep = " ",
@@ -136,7 +151,6 @@ local function load_options()
             trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2)
         },
         spellfile = global.home .. ".config/nvim/spell/en.utf-8.add",
-        spelloptions = "camel",
         spellcapcheck = "",
         spelllang = "en_gb,programming",
         secure = true,
@@ -176,6 +190,7 @@ if vim.fn.executable("nvr") > 0 then
     vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end
 
+vim.opt.spelloptions:append({ "camel", "noplainbuffer" })
 vim.opt.jumpoptions:append({ "view" })
 vim.g.python_host_prog = "/usr/bin/python2"
 vim.g.python3_host_prog = "/usr/bin/python3"

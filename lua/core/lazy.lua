@@ -24,7 +24,7 @@ require("utils.ui.highlights")
 load_colourscheme()
 
 vim.g.cursorhold_updatetime = 100
-vim.cmd([[syntax on]])
+-- vim.cmd([[syntax on]])
 
 function Lazyload()
     _G.PLoader = loader
@@ -162,5 +162,6 @@ vim.defer_fn(function()
         loader("nvim-notify")
     end
     loader("neorg")
+    loader("matchparen.nvim")
     lprint("all done")
 end, lazy_timer + 80)
