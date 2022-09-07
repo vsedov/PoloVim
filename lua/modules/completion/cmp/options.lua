@@ -35,4 +35,11 @@ return {
             name = "cmp_overseer",
         },
     },
+    use_lab = {
+        enable = true,
+        options = {
+            name = "lab.quick_data",
+            keyword_length = 4,
+        },
+    },
 }

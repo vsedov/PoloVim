@@ -1,7 +1,21 @@
 local conf = require("modules.completion.config")
 local completion = require("core.pack").package
 
-completion({ "max397574/dyn_help.nvim" })
+completion({
+    "max397574/dyn_help.nvim",
+    opt = true,
+    keys = "<leader>hw",
+    config = function()
+        vim.keymap.set("n", "<leader>hw", function()
+            if require("dynamic_help.extras.statusline").available() ~= "" then
+                require("dynamic_help").float_help(vim.fn.expand("<cword>"))
+            else
+                local help = vim.fn.input("Help Tag> ")
+                require("dynamic_help").float_help(help)
+            end
+        end, {})
+    end,
+})
 completion({
     "amrbashir/nvim-docs-view",
     opt = true,
@@ -17,7 +31,6 @@ completion({
         "Docset",
     },
 })
-
 completion({
     "romainl/vim-devdocs",
     cmd = { "DD" },

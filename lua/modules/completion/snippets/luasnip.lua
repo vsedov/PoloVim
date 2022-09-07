@@ -11,9 +11,8 @@ local util = require("luasnip.util.util")
 
 require("luasnip.config").setup({
     history = true,
-    region_check_events = "CursorMoved",
-    delete_check_events = "TextChangedI",
-    updateevents = "TextChanged,TextChangedI,InsertLeave",
+    region_check_events = "CursorMoved,CursorHold,InsertEnter",
+    delete_check_events = "InsertLeave",
     enable_autosnippets = true,
     ext_opts = {
         [ls_types.choiceNode] = {
