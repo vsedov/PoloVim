@@ -77,7 +77,7 @@ lsp({
 })
 
 lsp({
-    "jose-elias-alvarez/null-ls.nvim",
+    lambda.use_local("null-ls.nvim", "contributing"),
     event = "BufEnter",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -90,4 +90,9 @@ lsp({
     opt = true,
     ft = { "latex", "tex" },
     module = "ltex_extra",
+})
+
+lsp({
+    "theHamsta/nvim-semantic-tokens",
+    opt = true,
 })

@@ -14,7 +14,7 @@ local python_setup = {
         lspconfig.pylance.setup(enhance_attach(pylance.config))
     end,
     pyright = function()
-        lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright")))
+        lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright").config))
     end,
 }
 

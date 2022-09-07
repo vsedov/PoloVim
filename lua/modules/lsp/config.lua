@@ -25,8 +25,10 @@ function config.mason_setup()
     })
     require("mason-lspconfig").setup_handlers({
         function(name)
-            local config = get_config(name)
-            require("lspconfig")[name].setup(config)
+            local conf = get_config(name)
+            if conf then
+                require("lspconfig")[name].setup(conf)
+            end
         end,
     })
 end
@@ -79,7 +81,9 @@ function config.lsp_sig()
         handler_opts = {
             border = "single", -- double, single, shadow, none
         },
+
         -- transpancy = 80,
+
         zindex = 1002, -- by default it will be on top of all floating windows, set to 50 send it to bottom
         debug = plugin_debug(),
         verbose = plugin_debug(),
