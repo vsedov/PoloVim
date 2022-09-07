@@ -5,9 +5,9 @@ local cfg = {
     fix_pos = true, -- set to true, the floating window will not auto-close until finish all parameters
     doc_lines = 10,
 
-    --[[ floating_window = false, -- show hint in a floating window, set to false for virtual text only mode ]]
-    --[[ floating_window_above_cur_line = false, ]]
-    hint_enable = false, -- virtual hint enable
+    floating_window = false, -- show hint in a floating window, set to false for virtual text only mode ]]
+    floating_window_above_cur_line = false,
+    hint_enable = true, -- virtual hint enable
     hint_prefix = "🐼 ", -- Panda for parameter
     auto_close_after = 15, -- close after 15 seconds
     --[[ hint_prefix = " ", ]]
@@ -19,8 +19,8 @@ local cfg = {
         border = lambda.style.border.type_0, -- double, single, shadow, none
     },
 
-    -- transpancy = 80,
-    -- zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
+    transpancy = 80,
+    zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
     debug = plugin_debug(),
     verbose = plugin_debug(),
     log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
@@ -44,23 +44,12 @@ local function add_lsp_buffer_keybindings(client, bufnr)
     end
 end
 
--- this could change ove ra period of time . 1
-local function select_default_formater(client, bufnr)
-    client.config.flags.allow_incremental_sync = true
-    client.config.flags.debounce_text_changes = 200
-
-    client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
-end
-
 function M.common_on_init(client, bufnr)
     if config.on_init_callback then
         config.on_init_callback(client, bufnr)
         return
     end
-
-    select_default_formater(client, bufnr)
 end
-
 function M.common_capabilities()
     local capabilities = require("modules.lsp.lsp.config.capabilities")
     local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -77,7 +66,9 @@ function M.common_on_attach(client, bufnr)
         config.on_attach_callback[client.name](client, bufnr)
     end
 
-    require("lsp_signature").on_attach(cfg, bufnr)
+    if lambda.config.lsp.use_lsp_signature then
+        require("lsp_signature").on_attach(cfg, bufnr)
+    end
     add_lsp_buffer_keybindings(client, bufnr)
     require("modules.lsp.lsp.config.autocmd").setup_autocommands(client, bufnr)
 end

@@ -276,6 +276,9 @@ local container = {
         ["pylance"] = function(client, bufnr)
             require("modules.lsp.lsp.providers.python.pylance").attach_config(client, bufnr)
         end,
+        ["pyright"] = function(client, bufnr)
+            require("modules.lsp.lsp.providers.python.pyright").attach_config(client, bufnr)
+        end,
         ["ltex"] = function(client, bufnr)
             require("modules.lsp.lsp.providers.latex.ltex").attach_config(client, bufnr)
         end,

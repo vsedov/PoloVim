@@ -21,10 +21,6 @@ add_cmd("LspRestart", function()
     reload_lsp()
 end, { force = true })
 
-add_cmd("Quickfix", function()
-    make_diagnostic_qf_updater()
-end, { force = true })
-
 add_cmd("LspClients", function(opts)
     if opts.fargs ~= nil then
         for _, client in pairs(vim.lsp.get_active_clients()) do
