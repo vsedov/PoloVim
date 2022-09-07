@@ -102,7 +102,21 @@ ui({
     opt = true,
     config = conf.blankline,
 }) -- after="nvim-treesitter",
-
+ui({
+    "yaocccc/nvim-hlchunk",
+    ft = {
+        "python",
+        "lua",
+        "js",
+        "json",
+        "go",
+        "cpp",
+        "c",
+    },
+    setup = function()
+        vim.g.hlchunk_files = "*.ts,*.js,*.json,*.go,*.cpp,*.c,*.lua,*.py"
+    end,
+})
 -- No longer getting lazy loaded, i like this though
 ui({ "lewis6991/satellite.nvim", config = conf.satellite })
 
@@ -134,20 +148,13 @@ ui({
 })
 
 ui({
-    "zbirenbaum/neodim",
-    ft = { "python", "lua" },
-    requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
-    config = conf.dim,
-})
-
-ui({
     "levouh/tint.nvim",
     opt = true,
     event = "BufEnter",
     config = function()
         require("tint").setup({
             amt = -35,
-            ignore = { "WinSeparator", "Status.*", "Comment", "Beacon.*", "Panel.*" },
+            ignore = { "WinSeparator", "Status.*", "Comment", "Beacon.*", "Panel.*", "Telescope.*" },
             ignorefunc = function(win_id)
                 if vim.fn.win_gettype(win_id) ~= "" then
                     return true

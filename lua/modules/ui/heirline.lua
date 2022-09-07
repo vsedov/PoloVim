@@ -235,13 +235,6 @@ local Ruler = {
     provider = "%7(%l/%3L%):%2c %P",
 }
 
-local dyn_help_available = {
-    provider = function()
-        return " " .. require("dynamic_help.extras.statusline").available()
-    end,
-    hl = { fg = "blue" },
-}
-
 local FileSize = {
     provider = function()
         -- stackoverflow, compute human readable file size
@@ -610,7 +603,6 @@ local DefaultStatusline = {
     WorkDir,
     FileNameBlock,
     { provider = "%<" },
-    dyn_help_available,
     Space,
     Git,
     Space,

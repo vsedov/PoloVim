@@ -344,6 +344,14 @@ function config.neo_tree()
                 expander_expanded = "",
                 expander_highlight = "NeoTreeExpander",
             },
+            diagnostics = {
+                highlights = {
+                    hint = "DiagnosticHint",
+                    info = "DiagnosticInfo",
+                    warn = "DiagnosticWarn",
+                    error = "DiagnosticError",
+                },
+            },
             icon = {
                 folder_closed = "",
                 folder_open = "",
