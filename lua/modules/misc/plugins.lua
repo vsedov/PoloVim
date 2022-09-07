@@ -41,16 +41,6 @@ misc({
 --     config = conf.leap,
 -- })
 
--- nvim-colorizer replacement
-misc({
-    "rrethy/vim-hexokinase",
-    -- ft = { 'html','css','sass','vim','typescript','typescriptreact'},
-    config = conf.hexokinase,
-    run = "make hexokinase",
-    opt = true,
-    cmd = { "HexokinaseTurnOn", "HexokinaseToggle" },
-})
-
 -- Its hard for this because binds are weird
 misc({
     "booperlv/nvim-gomove",
