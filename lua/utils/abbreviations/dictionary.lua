@@ -2,6 +2,7 @@ local M = {}
 
 M.global_abbrevs = {
     iabbrevs = {
+        { "note:", [[<c-r>=printf(&commentstring, 'NOTE: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "rev:", [[<c-r>=printf(&commentstring, ' REVISIT: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "todo:", [[<c-r>=printf(&commentstring, ' TODO: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "hack:", [[<c-r>=printf(&commentstring, ' HACK: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
