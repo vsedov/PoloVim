@@ -39,8 +39,8 @@ lambda.config = {
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
     cmp = {
-        tabnine_sort = false,
-        cmp_theme = "border", --- @usage "border" | "no-border" | "extra"
+        tabnine_sort = true,
+        cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
     },
     save_clipboard_on_exit = true,
     abbrev = {
@@ -54,7 +54,7 @@ lambda.config = {
             "python", -- current support is python.
         },
     },
-    rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to Ture for nvim -- rooter as that has
+    rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     --[[ manual control ]]
     tabby_or_bufferline = true, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
@@ -71,7 +71,7 @@ lambda.config = {
         use_lsp_signature = false,
         latex = "texlab", -- texlab | ltex
         python = {
-            lint = { "ruff" }, -- pylint, pyflake, and other linters
+            lint = { "flake8" }, -- pylint, pyflake, and other linters
             format = { "isort", "yapf" }, -- black
             -- jedis documentation is better though
             lsp = "jedi", -- jedi pylsp and pyright pylance

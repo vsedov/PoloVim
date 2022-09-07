@@ -7,7 +7,6 @@ local options = {
     colorcolumn = "130",
     foldmethod = "syntax",
 }
-vim.api.nvim_command("setlocal foldexpr=nvim_treesitter#foldexpr()")
 
 for k, v in pairs(options) do
     vim.o[k] = v

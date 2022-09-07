@@ -75,14 +75,17 @@ function M.setup()
         ),
         on_attach = function(client, bufnr)
             if client.supports_method("textDocument/formatting") then
-                local augroup = "NullLs"
+                local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+                vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
+                    lsp_formatting(bufnr)
+                end, {})
+
                 vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     group = augroup,
                     buffer = bufnr,
-                    callback = function()
-                        lsp_formatting(bufnr)
-                    end,
+                    command = "undojoin | LspFormatting",
                 })
             end
         end,
