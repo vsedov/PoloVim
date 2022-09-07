@@ -32,7 +32,7 @@ local disable_distribution_plugins = function()
     vim.g.loaded_getscriptPlugin = 1
     vim.g.loaded_vimball = 1
     vim.g.loaded_vimballPlugin = 1
-    vim.g.loaded_matchit = 0
+    vim.g.loaded_matchit = 1
     vim.g.loaded_matchparen = 1
     vim.g.loaded_2html_plugin = 1
     vim.g.loaded_logiPat = 1
@@ -41,7 +41,7 @@ local disable_distribution_plugins = function()
     vim.g.loaded_netrwPlugin = 1
     vim.g.loaded_netrwSettings = 1
     vim.g.loaded_netrwFileHandlers = 1
-    vim.g.matchup_matchparen_enabled = 0
+    vim.g.matchup_matchparen_enabled = 1
     vim.g.load_black = 1
     vim.g.loaded_node_provider = 1
     -- vim.g.loaded_ruby_provider = 0
@@ -91,9 +91,6 @@ local load_core = function()
     disable_distribution_plugins()
     leader_map()
 
-    if pcall(require, "impatient") then
-        require("impatient")
-    end
     if pack.ensure_plugins() == "installed" then
         require("core.options")
         require("core.autocmd")
