@@ -66,16 +66,6 @@ tools({
 })
 
 tools({
-    "lewis6991/spellsitter.nvim",
-    ft = { "norg", "markdown", "tex" },
-    config = function()
-        require("spellsitter").setup({
-            filetypes = { "norg" },
-            enable = true,
-        })
-    end,
-})
-tools({
     "rhysd/vim-grammarous",
     opt = true,
     cmd = { "GrammarousCheck" },
