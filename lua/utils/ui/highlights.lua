@@ -75,7 +75,9 @@ local L = {
 }
 local levels = vim.log.levels
 
-local M = {}
+local M = {
+    win_hl = {},
+}
 M.L = {
     error = P.samuraiRed,
     warn = P.roninYellow,
@@ -170,9 +172,8 @@ function M.get(group, attribute, fallback)
     if color then
         return color
     end
-    local msg = fmt("%s's %s does not exist", group, attr)
     vim.schedule(function()
-        vim.notify(msg, "error")
+        vim.notify(fmt("%s's %s does not exist", group, attr), "error")
     end)
     return "NONE"
 end
@@ -218,15 +219,27 @@ function M.set(namespace, name, opts)
     lambda.wrap_err(fmt("failed to set %s because", name), api.nvim_set_hl, namespace, name, hl)
 end
 
+--- Set window local highlights
+---@param name string
+---@param win_id number
+---@param hls HighlightKeys[]
+function M.win_hl.set(name, win_id, hls)
+    local namespace = api.nvim_create_namespace(name)
+    M.all(hls, namespace)
+    api.nvim_win_set_hl_ns(win_id, namespace)
+end
+
 --- Check if the current window has a winhighlight
 --- which includes the specific target highlight
+--- FIXME: setting a window highlight with `nvim_win_set_hl_ns` will cause this check to fail as
+--- a winhighlight is not set and the win namespace cannot be detected
 --- @param win_id integer
 --- @vararg string
 --- @return boolean, string
-function M.has_win_highlight(win_id, ...)
+function M.win_hl.exists(win_id, ...)
     local win_hl = vim.wo[win_id].winhighlight
     for _, target in ipairs({ ... }) do
-        if win_hl:match(target) ~= nil then
+        if win_hl:match(target) then
             return true, win_hl
         end
     end
@@ -239,9 +252,9 @@ end
 ---@param target string
 ---@param name string
 ---@param fallback string
-function M.adopt_win_highlight(win_id, target, name, fallback)
+function M.win_hl.adopt(win_id, target, name, fallback)
     local win_hl_name = name .. win_id
-    local _, win_hl = M.has_win_highlight(win_id, target)
+    local _, win_hl = M.win_hl.exists(win_id, target)
 
     if pcall(api.nvim_get_hl_by_name, win_hl_name, true) then
         return win_hl_name
@@ -276,6 +289,10 @@ end
 ---------------------------------------------------------------------------------
 -- Plugin highlights
 ---------------------------------------------------------------------------------
+--- Takes the overrides for each theme and merges the lists, avoiding duplicates and ensuring
+--- priority is given to specific themes rather than the fallback
+---@param theme table<string, table<string, string>>
+---@return table<string, string>
 local function add_theme_overrides(theme)
     local res, seen = {}, {}
     local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme["*"] or {})
@@ -315,6 +332,7 @@ function M.plugin(name, opts)
         },
     })
 end
+
 local function general_overrides()
     local normal_bg = M.get("Normal", "bg")
     local code_block = M.alter_color(normal_bg, 30)
@@ -407,12 +425,26 @@ local function general_overrides()
         { EndOfBuffer = { background = "NONE" } },
         -----------------------------------------------------------------------------//
         -- Treesitter
-        -----------------------------------------------------------------------------//
-        { TSVariable = { foreground = { from = "Normal" } } },
+        ---------------------------------------------------------------------------//
+        { TSVariable = { foreground = { from = "TSVariable" } } },
+        { TSNamespace = { foreground = P.blue } },
 
+        { Comment = { italic = true } },
+        { Type = { italic = true, bold = true } },
+        { Include = { italic = true, bold = false } },
+        { QuickFixLine = { inherit = "PmenuSbar", foreground = "NONE", italic = true } },
+        -- Neither the sign column or end of buffer highlights require an explicit background
+        -- they should both just use the background that is in the window they are in.
+        -- if either are specified this can lead to issues when a winhighlight is set
+        { SignColumn = { background = "NONE" } },
+        { EndOfBuffer = { background = "NONE" } },
+        -----------------------------------------------------------------------------//
+        -- Treesitter
+        -----------------------------------------------------------------------------//
         { TSKeywordReturn = { italic = true, foreground = { from = "Keyword" } } },
         { TSParameter = { italic = true, bold = true, foreground = "NONE" } },
         { TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
+
         -- { TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
         -- FIXME: this should be removed once
         -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
