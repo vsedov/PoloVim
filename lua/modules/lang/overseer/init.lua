@@ -14,7 +14,6 @@ overseer.setup({
     dap = true,
     task_list = {
         bindings = {
-            ["o"] = "<cmd>OverseerQuickAction open in toggleterm<cr>",
             ["?"] = "ShowHelp",
             ["<CR>"] = "RunAction",
             ["<C-e>"] = "Edit",
@@ -41,38 +40,17 @@ overseer.setup({
             "on_exit_set_status",
             "on_complete_notify",
             "on_complete_dispose",
-            "toggleterm.attach_toggleterm",
         },
         default_neotest = {
             "on_output_summarize",
             "on_exit_set_status",
             "on_complete_notify",
             "on_complete_dispose",
-            { "toggleterm.attach_toggleterm", goto_bottom = true },
             { "on_complete_notify", system = "unfocused", on_change = true },
         },
     },
     actions = {
-        ["open in toggleterm"] = {
-            desc = "Attach this task to a toggleterm terminal",
-            run = function(task)
-                if task.toggleterm then
-                    if task.toggleterm:is_open() then
-                        task.toggleterm:close()
-                        task.toggleterm:open()
-                    else
-                        task.toggleterm:open()
-                    end
-                else
-                    local bufnr = task.strategy.bufnr
-                    task.toggleterm = Terminal:new({ bufnr = bufnr, jobname = task.name })
-                    task:add_components({ "toggleterm.on_dispose_clean_toggleterm" })
-                    task.toggleterm:toggle()
-                    task.toggleterm:__resurrect()
-                end
-                task.toggleterm:set_harp(2)
-            end,
-        },
+
         ["keep runnning"] = {
             desc = "restart the task even if it succeeds",
             run = function(task)
