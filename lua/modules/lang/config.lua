@@ -41,6 +41,10 @@ function config.treesitter_obj()
     require("modules.lang.treesitter").treesitter_obj()
 end
 
+function config.rainbow()
+    require("modules.lang.treesitter").rainbow()
+end
+
 function config.treesitter_ref()
     require("modules.lang.treesitter").treesitter_ref()
 end
@@ -374,10 +378,6 @@ function config.luapad()
             end,
         },
     })
-end
-
-function config.dap_setup()
-    require("modules.lang.dap.init").setup()
 end
 
 function config.dap_config()

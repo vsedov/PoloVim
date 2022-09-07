@@ -4,6 +4,12 @@ local lang = require("core.pack").package
 lang({ "nvim-treesitter/nvim-treesitter", opt = true, run = ":TSUpdate", config = conf.nvim_treesitter })
 
 lang({
+    "p00f/nvim-ts-rainbow",
+    after = "nvim-treesitter",
+    config = conf.rainbow,
+    opt = true,
+})
+lang({
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
     config = conf.treesitter_obj,
@@ -121,7 +127,7 @@ lang({
 lang({
     "mfussenegger/nvim-dap",
     module = "dap",
-    setup = conf.dap_setup,
+    requires = "which-key.nvim",
     config = conf.dap_config,
     requires = {
         {
