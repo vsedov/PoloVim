@@ -12,7 +12,7 @@ if fsize > 1024 * 1024 then
     load_lsp = false
 end
 local function load_colourscheme()
-    math.randomseed(os.time())
+    math.randomseed(os.clock() * 100000000000)
     local theme = lambda.config.colourscheme.themes.dark
     local rand = math.random(#theme)
     loader(theme[rand])
@@ -53,10 +53,10 @@ function Lazyload()
         "neo-tree",
     }
 
-    -- local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
-    -- if not syn_on then
-    --     vim.cmd([[syntax manual]])
-    -- end
+    local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
+    if not syn_on then
+        vim.cmd([[syntax manual]])
+    end
     -- only works if you are working from one python file .
     if vim.bo.filetype == "lua" then
         loader("lua-dev.nvim")
@@ -122,9 +122,6 @@ vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
     require("vscripts.tools")
-
-    vim.cmd("command! Spell call spelunker#check()")
-
     vim.api.nvim_create_user_command("Gram", function()
         require("modules.tools.config").grammcheck()
     end, { force = true })

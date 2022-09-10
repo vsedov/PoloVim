@@ -18,12 +18,14 @@ colourscheme({
     config = conf.catppuccin,
 })
 
+-- temp::
 colourscheme({
-    "rose-pine/neovim",
+    "rose-pine/neovim", -- rose-pine/neovim
+
     opt = true,
     as = "rose",
     module = "rose-pine",
-    tag = "v1.*",
+    -- tag = "v1.*",
     config = conf.rose,
 })
 
@@ -54,4 +56,10 @@ colourscheme({
     "folke/tokyonight.nvim",
     opt = true,
     config = conf.tokyonight,
+})
+
+colourscheme({
+    "sam4llis/nvim-tundra",
+    opt = true,
+    config = conf.tundra,
 })

@@ -16,6 +16,23 @@ editor({
 })
 
 editor({
+    "hisbaan/jot.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    keys = { "<leader>J" },
+    cmd = { "Jot" },
+    config = function()
+        require("jot").setup({
+            search_dir = "~/neorg/",
+            search_depth = 10,
+            hide_search_dir = false,
+            post_open_hook = function() end,
+        })
+
+        vim.keymap.set("n", "<leader>J", "<Cmd>Jot<CR>", { noremap = true, silent = true })
+    end,
+})
+
+editor({
     "AckslD/nvim-FeMaco.lua",
     opt = true,
     ft = { "norg", "markdown" },
@@ -138,7 +155,6 @@ editor({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = c
 editor({
     "m-demare/hlargs.nvim",
     ft = {
-
         "c",
         "cpp",
         "go",

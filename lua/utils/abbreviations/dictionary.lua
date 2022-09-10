@@ -86,6 +86,7 @@ M.global_abbrevs = {
     },
 }
 
+-- https://github.com/RastalDev/vim_autocorrect
 M.spelling_support = {
     scope = "global",
     dict = {
@@ -4983,7 +4984,7 @@ M.month_date = {
     },
 }
 M.python = {
-    scope = "py", -- testing
+    scope = "python", -- testing
     dict = {
         ["false"] = "False",
         ["true"] = "True",

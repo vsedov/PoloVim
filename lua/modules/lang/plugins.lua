@@ -279,7 +279,7 @@ lang({
 
 lang({
     "Vimjas/vim-python-pep8-indent",
-    ft = "pyton",
+    ft = "python",
 })
 
 lang({

@@ -7,30 +7,18 @@ local lsp_formatting = function(bufnr)
         end,
         bufnr = bufnr,
         async = true,
+        timeout_ms = 1000,
     })
 end
 
 function M.setup()
     local null_ls = require("null-ls")
-    local lspconfig = require("lspconfig")
-    local diagnostics = null_ls.builtins.diagnostics
     local hover = null_ls.builtins.hover
     local actions = null_ls.builtins.code_actions
 
     local config = require("modules.lsp.lsp.config.config").null_ls
-    local mason_package = require("mason-core.package")
     local format = config.formatter
     local diagnostic = config.diagnostic
-
-    for _, package in ipairs(require("mason-registry").get_installed_packages()) do
-        local package_categories = package.spec.categories[1]
-        if package_categories == mason_package.Cat.Formatter then
-            table.insert(format, package.name)
-        end
-        if package_categories == mason_package.Cat.Linter then
-            table.insert(diagnostic, package.name)
-        end
-    end
 
     for _, py_form in ipairs(lambda.config.lsp.python.format) do
         table.insert(format, py_form)
@@ -50,7 +38,8 @@ function M.setup()
             table.insert(registered_sources, source)
         end
     end
-
+    table.insert(registered_sources, require("typos").actions)
+    table.insert(registered_sources, require("typos").diagnostics)
     local cfg = {
         sources = registered_sources,
         debounce = 1000,
@@ -75,7 +64,7 @@ function M.setup()
         ),
         on_attach = function(client, bufnr)
             if client.supports_method("textDocument/formatting") then
-                local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+                local augroup = vim.api.nvim_create_augroup("FormatOnSave", {})
                 vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
                     lsp_formatting(bufnr)
                 end, {})
@@ -85,7 +74,9 @@ function M.setup()
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     group = augroup,
                     buffer = bufnr,
-                    command = "undojoin | LspFormatting",
+                    callback = function()
+                        lsp_formatting(bufnr)
+                    end,
                 })
             end
         end,

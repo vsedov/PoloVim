@@ -117,8 +117,13 @@ ui({
         vim.g.hlchunk_files = "*.ts,*.js,*.json,*.go,*.cpp,*.c,*.lua,*.py"
     end,
 })
--- No longer getting lazy loaded, i like this though
-ui({ "lewis6991/satellite.nvim", config = conf.satellite })
+
+ui({
+    "lewis6991/satellite.nvim",
+    opt = true,
+    ft = lambda.config.main_file_types,
+    config = conf.satellite,
+})
 
 ui({
     "xiyaowong/nvim-transparent",
@@ -153,16 +158,31 @@ ui({
     event = "BufEnter",
     config = function()
         require("tint").setup({
-            amt = -35,
-            ignore = { "WinSeparator", "Status.*", "Comment", "Beacon.*", "Panel.*", "Telescope.*" },
-            ignorefunc = function(win_id)
-                if vim.fn.win_gettype(win_id) ~= "" then
+            tint = -30,
+            highlight_ignore_patterns = {
+                "WinSeparator",
+                "St.*",
+                "Comment",
+                "Panel.*",
+                "Telescope.*",
+                "Bqf.*",
+            },
+            window_ignore_function = function(win_id)
+                if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= "" then
                     return true
                 end
                 local buf = vim.api.nvim_win_get_buf(win_id)
                 local b = vim.bo[buf]
                 local ignore_bt = { "terminal", "prompt", "nofile" }
-                local ignore_ft = { "neo-tree", "packer", "diff", "toggleterm", "Neogit.*", "Telescope.*" }
+                local ignore_ft = {
+                    "neo-tree",
+                    "packer",
+                    "diff",
+                    "toggleterm",
+                    "Neogit.*",
+                    "Telescope.*",
+                    "qf",
+                }
                 return lambda.any(b.bt, ignore_bt) or lambda.any(b.ft, ignore_ft)
             end,
         })

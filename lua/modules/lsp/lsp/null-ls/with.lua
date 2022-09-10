@@ -181,4 +181,16 @@ With.flake8 = {
     method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 }
 
+With.ruff = {
+    condition = function(u)
+        return u.root_has_file({
+            "pyproject.toml",
+            "poetry.toml",
+        })
+    end,
+    cwd = function(params)
+        return vim.fn.fnamemodify(params.bufname, ":h")
+    end,
+}
+
 return With

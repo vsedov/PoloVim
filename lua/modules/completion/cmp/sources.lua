@@ -15,7 +15,6 @@ local sources =
                 end,
             },
         },
-        { name = "spell" },
         { name = "nvim_lua" },
     }
 local filetype = {

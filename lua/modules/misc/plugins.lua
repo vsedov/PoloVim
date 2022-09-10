@@ -68,6 +68,20 @@ misc({
 })
 
 misc({
+    "crusj/bookmarks.nvim",
+    branch = "main",
+    requires = { "kyazdani42/nvim-web-devicons" },
+    -- opt = true,
+    keys = {
+        "<tab><tab>",
+        "\\a",
+        "\\d",
+        "\\o",
+    },
+    config = conf.bookmark,
+})
+
+misc({
     "sidebar-nvim/sidebar.nvim",
     cmd = {
         "SidebarNvimToggle",

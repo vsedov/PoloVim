@@ -426,7 +426,7 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         -- Treesitter
         ---------------------------------------------------------------------------//
-        { TSVariable = { foreground = { from = "TSVariable" } } },
+        --[[ { TSVariable = { foreground = { from = "TSVariable" } } }, ]]
         { TSNamespace = { foreground = P.blue } },
 
         { Comment = { italic = true } },
@@ -443,7 +443,7 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         { TSKeywordReturn = { italic = true, foreground = { from = "Keyword" } } },
         { TSParameter = { italic = true, bold = true, foreground = "NONE" } },
-        { TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
+        { TSError = { foreground = "NONE", background = "NONE", undercurl = true, sp = "DarkRed" } },
 
         -- { TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
         -- FIXME: this should be removed once
@@ -620,15 +620,15 @@ local sidebar_fts = {
 }
 
 local function on_sidebar_enter()
-    vim.wo.winhighlight = table.concat({
-        "Normal:PanelBackground",
-        "EndOfBuffer:PanelBackground",
-        "StatusLine:PanelSt",
-        "StatusLineNC:PanelStNC",
-        "SignColumn:PanelBackground",
-        "VertSplit:PanelVertSplit",
-        "WinSeparator:PanelWinSeparator",
-    }, ",")
+    vim.opt_local.winhighlight:append({
+        Normal = "PanelBackground",
+        EndOfBuffer = "PanelBackground",
+        StatusLine = "PanelSt",
+        StatusLineNC = "PanelStNC",
+        SignColumn = "PanelBackground",
+        VertSplit = "PanelVertSplit",
+        WinSeparator = "PanelWinSeparator",
+    })
 end
 
 local function colorscheme_overrides()
@@ -689,7 +689,5 @@ lambda.augroup("UserHighlights", {
         end,
     },
 })
-
--- colorscheme_table : {{name = softmax, name = softmax}, {name = softmax, name = softmax}}
 
 return M

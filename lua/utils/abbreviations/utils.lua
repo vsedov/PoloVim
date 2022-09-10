@@ -82,12 +82,11 @@ function M.load_dict(diction)
     else
         lambda.augroup("AutoCorrect" .. scope, {
             {
-                event = { "BufNewFile", "BufRead", "BufWinEnter" }, -- this seems to be more reliable.
-                pattern = { "*." .. scope },
+                event = { "FileType" }, -- this seems to be more reliable.
+                pattern = { scope },
                 command = function()
                     M.parse_iabbrev_pr(items, "buffer")
                 end,
-                once = true,
             },
         })
         table.insert(M.loaded_dicts, diction)

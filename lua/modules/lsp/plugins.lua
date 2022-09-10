@@ -79,9 +79,35 @@ lsp({
 lsp({
     lambda.use_local("null-ls.nvim", "contributing"),
     event = "BufEnter",
-    requires = { "nvim-lua/plenary.nvim" },
+    requires = { "nvim-lua/plenary.nvim", { "poljar/typos.nvim", module = "typos" } },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
+        -- require("typos").setup()
+    end,
+})
+
+lsp({
+    "jayp0521/mason-null-ls.nvim",
+    after = {
+        "null-ls.nvim",
+        "mason.nvim",
+    },
+    config = function()
+        require("mason-null-ls").setup({
+            ensure_installed = {
+                { "shellcheck", auto_update = true },
+            },
+            auto_update = true,
+            automatic_installation = false,
+        })
+
+        require("mason-null-ls").check_install(true)
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "MasonNullLsUpdateCompleted",
+            callback = function()
+                vim.schedule(vim.notify("mason-null-ls has finished"))
+            end,
+        })
     end,
 })
 

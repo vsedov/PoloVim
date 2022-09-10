@@ -265,17 +265,7 @@ function config.gitsigns()
         require("packer").loader("plenary.nvim")
     end
     local gitsigns = require("gitsigns")
-
-    local line = vim.fn.line
-
-    local function wrap(fn, ...)
-        local args = { ... }
-        local nargs = select("#", ...)
-        return function()
-            fn(unpack(args, nargs))
-        end
-    end
-
+    local cwd = vim.fn.getcwd()
     local function on_attach(bufnr)
         local function map(mode, l, r, opts)
             opts = opts or {}
@@ -305,7 +295,7 @@ function config.gitsigns()
     end
 
     gitsigns.setup({
-        debug_mode = true,
+        debug_mode = false,
         max_file_length = 1000000000,
         signs = {
             add = { hl = "GitSignsAdd", text = "▌" },
@@ -318,7 +308,7 @@ function config.gitsigns()
         preview_config = {
             border = lambda.style.border.type_0,
         },
-        current_line_blame = true,
+        current_line_blame = not cwd:match("personal") and not cwd:match("nvim"),
         current_line_blame_formatter = " : <author> | <author_time:%d-%m-%y> | <summary>",
         current_line_blame_formatter_opts = {
             relative_time = true,
@@ -399,6 +389,26 @@ end
 
 function config.gitlinker()
     require("gitlinker").setup()
+
+    vim.api.nvim_set_keymap(
+        "n",
+        "<leader>gT",
+        '<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
+        { silent = true }
+    )
+    vim.api.nvim_set_keymap(
+        "v",
+        "<leader>gT",
+        '<cmd>lua require"gitlinker".get_buf_range_url("v", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
+        {}
+    )
+    vim.api.nvim_set_keymap("n", "<leader>gY", '<cmd>lua require"gitlinker".get_repo_url()<cr>', { silent = true })
+    vim.api.nvim_set_keymap(
+        "n",
+        "<leader>gB",
+        '<cmd>lua require"gitlinker".get_repo_url({action_callback = require"gitlinker.actions".open_in_browser})<cr>',
+        { silent = true }
+    )
 end
 
 function config.vgit()

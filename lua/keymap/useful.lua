@@ -35,13 +35,6 @@ local plug_map = {
 
     ["n|<leader>cd"] = map_cmd("<cmd>tcd %:p:h<cr><cmd>pwd<cr>", "Cwd"):with_noremap():with_silent():with_nowait(),
 
-    ["n|\\w"] = map_cu("NeoWellToggle", "NeoWellToggle"):with_noremap():with_silent(),
-    ["n|\\a"] = map_cu("NeoWellAppend", "NeoWellAppend"):with_noremap():with_silent(),
-    ["n|\\j"] = map_cu("NeoWellJump", "NeoWellJump"):with_noremap():with_silent(),
-    ["n|\\r"] = map_cu("NeoWellEdit", "NeoWellEdit"):with_noremap():with_silent(),
-    ["n|\\d"] = map_cu("NeoWellOut", "NeoWellOut"):with_noremap():with_silent(),
-    ["n|\\D"] = map_cu("NeoWellWipeOut", "NeoWellWipeOut"):with_noremap():with_silent(),
-
     -- New mapping for lspsaga
     ["n|<leader><S-Tab>"] = map_cmd("<cmd>Lspsaga open_floaterm<cr>", "float_term"):with_noremap():with_silent(),
     ["t|<leader><S-Tab>"] = map_cmd("<C-\\><C-n><cmd>Lspsaga close_floaterm<cr>", "float_term")
@@ -83,19 +76,6 @@ local plug_map = {
     ---- private peek
     ["n|<Leader>v"] = map_cu("Vista!!", "Vistaaa"):with_noremap():with_silent(),
 
-    ["n|<Leader>gt"] = map_cr(
-        '<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-        "Git Linker open browser range "
-    ):with_silent(),
-    ["v|<Leader>gt"] = map_cr(
-        '<cmd>lua require"gitlinker".get_buf_range_url("v", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-        "Git Linker range"
-    ),
-    ["n|<Leader>gY"] = map_cr('<cmd>lua require"gitlinker".get_repo_url()<cr>', "get repo url"):with_silent(),
-    ["n|<Leader>gT"] = map_cr(
-        '<cmd>lua require"gitlinker".get_repo_url({action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-        "Open Browser"
-    ):with_silent(),
     ["n|<RightMouse>"] = map_cmd("<RightMouse><cmd>lua vim.lsp.buf.definition()<CR>", "rightclick def")
         :with_noremap()
         :with_silent(),

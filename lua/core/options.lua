@@ -74,6 +74,7 @@ local function load_options()
         scrolloff = 2,
         sidescrolloff = 5,
         foldlevelstart = 99,
+        foldexpr = "nvim_treesitter#foldexpr()",
         ruler = false,
         list = true,
         mousefocus = true,

@@ -1,13 +1,13 @@
 return {
     use_tabnine = {
-        enable = true,
+        enable = lambda.config.cmp.use_tabnine,
         options = {
             name = "cmp_tabnine",
             priority = 7,
         },
     },
     use_rg = {
-        enable = true,
+        enable = lambda.config.cmp.use_rg,
         options = {
             name = "rg",
             keyword_length = 4,

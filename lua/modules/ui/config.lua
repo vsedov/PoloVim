@@ -45,7 +45,7 @@ function config.fidget()
     })
     lambda.augroup("CloseFidget", {
         {
-            event = "VimLeavePre",
+            event = { "VimLeavePre", "LspDetach" },
             command = "silent! FidgetClose",
         },
     })

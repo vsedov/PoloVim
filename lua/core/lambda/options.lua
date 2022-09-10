@@ -22,10 +22,11 @@ lambda.config = {
                 "kanagawa.nvim",
                 "rose",
                 "catppuccin",
-                -- "horizon.nvim",
-                -- "vim-dogrun",
-                -- "doom-one.nvim",
-                --[[ "tokyonight.nvim", ]]
+                "horizon.nvim",
+                "vim-dogrun",
+                "nvim-tundra",
+                "doom-one.nvim",
+                "tokyonight.nvim",
             },
         },
     },
@@ -39,6 +40,8 @@ lambda.config = {
     neorg_auto_commit = true,
     loaded_confirm_quit = true,
     cmp = {
+        use_tabnine = true,
+        use_rg = true,
         tabnine_sort = true,
         cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
     },
@@ -56,22 +59,22 @@ lambda.config = {
     },
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     --[[ manual control ]]
-    tabby_or_bufferline = true, -- false: Bufferline , true for tabby
+    tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_fzf_lua = false, -- This is nice, to have, when required.
-    use_commant_t = true,
+    use_command_T = true,
     use_dashboard = false, -- set to false to not see this
     use_session = false, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
-    use_guess_indent = false,
+    use_guess_indent = true,
     use_gitsigns = true,
     lsp = {
         use_lsp_signature = false,
         latex = "texlab", -- texlab | ltex
         python = {
-            lint = { "flake8" }, -- pylint, pyflake, and other linters
+            lint = { "ruff" }, -- pylint, pyflake, and other linters
             format = { "isort", "yapf" }, -- black
             -- jedis documentation is better though
             lsp = "jedi", -- jedi pylsp and pyright pylance
@@ -82,3 +85,5 @@ lambda.config = {
     },
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
+
+-- Complte refactor for how python might be loaded

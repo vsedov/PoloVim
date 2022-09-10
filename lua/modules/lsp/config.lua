@@ -145,6 +145,7 @@ end
 
 function config.rename()
     require("inc_rename").setup({
+        input_buffer_type = "dressing",
         hl_group = "Visual",
     })
 end

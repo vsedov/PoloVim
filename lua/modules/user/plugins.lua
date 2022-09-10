@@ -17,7 +17,7 @@ user({
         vim.cmd([[
         let g:jukit_layout = {
             \'split': 'horizontal',
-            \'p1': 0.6, 
+            \'p1': 0.6,
             \'val': [
                 \'file_content',
                 \{
@@ -41,5 +41,13 @@ user({
         endfun
         vnoremap H :call PythonHelp()<cr>
         ]])
+    end,
+})
+
+user({
+    "samuzora/pet.nvim",
+    opt = true,
+    config = function()
+        require("pet-nvim")
     end,
 })

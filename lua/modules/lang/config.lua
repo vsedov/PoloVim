@@ -1,33 +1,4 @@
 local config = {}
--- local bind = require('keymap.bind')
--- local map_cr = bind.map_cr
--- local map_cu = bind.map_cu
--- local map_cmd = bind.map_cmd
--- local loader = require"packer".loader
-function config.filetype()
-    require("filetype").setup({
-        overrides = {
-            literal = {
-                ["kitty.conf"] = "kitty",
-                [".gitignore"] = "conf",
-            },
-            complex = {
-                [".clang*"] = "yaml",
-                [".*%.env.*"] = "sh",
-                [".*ignore"] = "conf",
-            },
-            extensions = {
-                tf = "terraform",
-                tfvars = "terraform",
-                hcl = "hcl",
-                tfstate = "json",
-                eslintrc = "json",
-                prettierrc = "json",
-                mdx = "markdown",
-            },
-        },
-    })
-end
 
 function config.nvim_treesitter()
     require("modules.lang.treesitter").treesitter()

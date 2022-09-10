@@ -161,6 +161,23 @@ function config.marks()
     })
 end
 
+function config.bookmark()
+    require("bookmarks").setup({
+        keymap = {
+            toggle = "<tab><tab>", -- toggle bookmarks
+            add = "\\a", -- add bookmarks
+            jump = "<CR>", -- jump from bookmarks
+            delete = "\\d", -- delete bookmarks
+            order = "<\\o", -- order bookmarks by frequency or updated_time
+        },
+        width = 0.8, -- bookmarks window width:  (0, 1]
+        height = 0.6, -- bookmarks window height: (0, 1]
+        preview_ratio = 0.4, -- bookmarks preview window ratio (0, 1]
+        preview_ext_enable = true, -- if true, preview buf will add file ext, preview window may be highlighed(treesitter), but may be slower.
+        fix_enable = false, -- if true, when saving the current file, if the bookmark line number of the current file changes, try to fix it.
+    })
+end
+
 function config.sidebar()
     if not packer_plugins["neogit"].loaded then
         require("packer").loader("neogit")
