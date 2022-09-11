@@ -29,8 +29,16 @@ misc({
     "phaazon/hop.nvim",
     tag = "v2.*",
     config = conf.hop,
-    event = "BufReadPost",
     opt = true,
+    keys = {
+        "<leader><leader>s",
+        "<leader><leader>j",
+        "<leader><leader>k",
+        "<leader><leader>w",
+        "<leader><leader>l",
+        "g/",
+        "g,",
+    },
 })
 
 -- misc({
@@ -79,19 +87,6 @@ misc({
         "\\o",
     },
     config = conf.bookmark,
-})
-
-misc({
-    "sidebar-nvim/sidebar.nvim",
-    cmd = {
-        "SidebarNvimToggle",
-        "SidebarNvimClose",
-        "SidebarNvimOpen",
-        "SidebarNvimUpdate",
-        "SidebarNvimFocus",
-    },
-
-    config = conf.sidebar,
 })
 
 misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })

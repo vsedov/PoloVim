@@ -77,9 +77,10 @@ lsp({
 })
 
 lsp({
-    lambda.use_local("null-ls.nvim", "contributing"),
+    --[[ lambda.use_local("null-ls.nvim", "contributing"), ]]
+    "jose-elias-alvarez/null-ls.nvim",
     event = "BufEnter",
-    requires = { "nvim-lua/plenary.nvim", { "poljar/typos.nvim", module = "typos" } },
+    requires = { "nvim-lua/plenary.nvim" },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
         -- require("typos").setup()
@@ -102,12 +103,6 @@ lsp({
         })
 
         require("mason-null-ls").check_install(true)
-        vim.api.nvim_create_autocmd("User", {
-            pattern = "MasonNullLsUpdateCompleted",
-            callback = function()
-                vim.schedule(vim.notify("mason-null-ls has finished"))
-            end,
-        })
     end,
 })
 
@@ -121,4 +116,8 @@ lsp({
 lsp({
     "theHamsta/nvim-semantic-tokens",
     opt = true,
+    config = function()
+        preset = "default"
+        highlighters = { require("nvim-semantic-tokens.table-highlighter") }
+    end,
 })

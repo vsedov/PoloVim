@@ -109,7 +109,7 @@ local get_extra_binds = function()
     local binds = {}
     if lambda.config.use_saga_maps then
         binds = {
-            ["gd"] = { "<cmd> Lspsaga preview_definition<cr>", "preview_definition" },
+            ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
             ["gh"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
             ["gs"] = { "<cmd> Lspsaga signature_help<cr>", "signature_help" },
             ["ca"] = { "<cmd> Lspsaga code_action<cr>", "code_actions" },

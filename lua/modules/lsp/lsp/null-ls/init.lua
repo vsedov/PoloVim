@@ -38,8 +38,8 @@ function M.setup()
             table.insert(registered_sources, source)
         end
     end
-    table.insert(registered_sources, require("typos").actions)
-    table.insert(registered_sources, require("typos").diagnostics)
+    -- table.insert(registered_sources, require("typos").actions)
+    -- table.insert(registered_sources, require("typos").diagnostics)
     local cfg = {
         sources = registered_sources,
         debounce = 1000,

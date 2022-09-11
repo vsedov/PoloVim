@@ -47,17 +47,51 @@ function config.saga()
             show_file = false,
             click_support = false,
         },
-        code_action_icon = "", -- this nice feature
-        -- this is just annoying
+        border_style = lambda.style.border.type_0,
+        saga_winblend = 10,
+        move_in_saga = { prev = "<C-,>", next = "<C-.>" },
+        diagnostic_header = { " ", " ", " ", "ﴞ " },
+        max_preview_lines = 10,
+        code_action_icon = "ﯦ",
+        code_action_num_shortcut = true,
         code_action_lightbulb = {
             enable = false,
-            sign = false,
+            sign = true,
             sign_priority = 20,
             virtual_text = false,
         },
-        code_action_num_shortcut = true,
-        rename_in_select = true,
-        server_filetype_map = {},
+        finder_icons = {
+            def = "  ",
+            ref = "諭 ",
+            link = "  ",
+        },
+        finder_action_keys = {
+            open = { "o", "<cr>" },
+            vsplit = "s",
+            split = "i",
+            tabe = "t",
+            quit = "q",
+            scroll_down = "<C-f>",
+            scroll_up = "<C-b>",
+        },
+        code_action_keys = {
+            quit = "q",
+            exec = "<CR>",
+        },
+        rename_action_quit = "<C-c>",
+
+        show_outline = {
+            win_position = "right",
+            -- set the special filetype in there which in left like nvimtree neotree defx
+            left_with = "",
+            win_width = 30,
+            auto_enter = true,
+            auto_preview = true,
+            virt_text = "┃",
+            jump_key = "o",
+            -- auto refresh when change buffer
+            auto_refresh = true,
+        },
     })
 end
 

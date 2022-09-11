@@ -68,7 +68,7 @@ overseer.setup({
         },
     },
 
-    templates = { "builtin", "julia", "tox", "configs" },
+    templates = { "builtin", "python", "julia", "tox", "configs" },
 })
 
 vim.api.nvim_create_user_command(

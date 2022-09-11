@@ -171,6 +171,7 @@ function M.setup_autocommands(client, bufnr)
             },
         }
     end)
+
     vim.b[bufnr].lsp_events = events
 end
 return M
