@@ -87,7 +87,6 @@ for surround, motion in pairs({ i = "j", a = "k" }) do
     end
 end
 
-
 local mapping = {
     color = function(t, rhs)
         t.config.color = rhs
