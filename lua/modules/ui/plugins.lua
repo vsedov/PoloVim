@@ -121,7 +121,6 @@ ui({
 ui({
     "lewis6991/satellite.nvim",
     opt = true,
-    ft = lambda.config.main_file_types,
     config = conf.satellite,
 })
 

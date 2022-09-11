@@ -469,10 +469,10 @@ function config.satellite()
     require("satellite").setup({
         handlers = {
             gitsigns = {
-                enable = false,
+                enable = true,
             },
             marks = {
-                enable = true,
+                enable = false,
             },
         },
         excluded_filetypes = {
@@ -486,55 +486,29 @@ function config.satellite()
     })
 end
 
-function config.pretty_fold()
-    require("pretty-fold").setup({
-        keep_indentation = true,
-        fill_char = "•",
-        sections = {
-            left = {
-                "content",
-            },
-            right = {
-                " ",
-                "number_of_folded_lines",
-                ": ",
-                "percentage",
-                " ",
-                function(fold_config)
-                    return fold_config.fill_char:rep(3)
-                end,
-            },
-        },
-        -- List of patterns that will be removed from content foldtext section.
-        stop_words = {
-            "@brief%s*", -- (for cpp) Remove '@brief' and all spaces after.
-        },
-    })
-end
-
 function config.ufo()
     vim.cmd([[packadd promise-async]])
     local ufo = require("ufo")
     local hl = require("utils.ui.highlights")
-    local opt, get_width = vim.opt, vim.api.nvim_strwidth
+    local opt, strwidth = vim.opt, vim.api.nvim_strwidth
 
-    local function handler(virt_text, _, _, width, truncate, ctx)
+    local function handler(virt_text, _, end_lnum, width, truncate, ctx)
         local result = {}
         local padding = ""
         local cur_width = 0
-        local suffix_width = get_width(ctx.text)
+        local suffix_width = strwidth(ctx.text)
         local target_width = width - suffix_width
 
         for _, chunk in ipairs(virt_text) do
             local chunk_text = chunk[1]
-            local chunk_width = get_width(chunk_text)
+            local chunk_width = strwidth(chunk_text)
             if target_width > cur_width + chunk_width then
                 table.insert(result, chunk)
             else
                 chunk_text = truncate(chunk_text, target_width - cur_width)
                 local hl_group = chunk[2]
                 table.insert(result, { chunk_text, hl_group })
-                chunk_width = get_width(chunk_text)
+                chunk_width = strwidth(chunk_text)
                 if cur_width + chunk_width < target_width then
                     padding = padding .. (" "):rep(target_width - cur_width - chunk_width)
                 end
@@ -543,7 +517,7 @@ function config.ufo()
             cur_width = cur_width + chunk_width
         end
 
-        local end_text = ctx.end_virt_text
+        local end_text = ctx.get_fold_virt_text(end_lnum)
         -- reformat the end text to trim excess whitespace from indentation usually the first item is indentation
         if end_text[1] and end_text[1][1] then
             end_text[1][1] = end_text[1][1]:gsub("[%s\t]+", "")
@@ -572,13 +546,17 @@ function config.ufo()
         },
     })
 
+    local ft_map = {
+        dart = { "lsp", "treesitter" },
+    }
+
     ufo.setup({
         open_fold_hl_timeout = 0,
         fold_virt_text_handler = handler,
-        enable_fold_end_virt_text = true,
+        enable_get_fold_virt_text = true,
         preview = { win_config = { winhighlight = "Normal:Normal,FloatBorder:Normal" } },
-        provider_selector = function()
-            return { "treesitter", "indent" }
+        provider_selector = function(_, filetype)
+            return ft_map[filetype] or { "treesitter", "indent" }
         end,
     })
 
