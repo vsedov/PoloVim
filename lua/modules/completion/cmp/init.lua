@@ -1,6 +1,4 @@
 local cmp = require("cmp")
-
-require("modules.completion.snippets")
 cmp.setup(require("modules.completion.cmp.config"))
 local search_sources = {
     view = { entries = { name = "custom", selection_order = "near_cursor" } },
