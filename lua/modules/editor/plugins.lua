@@ -10,15 +10,12 @@ editor({
         "hrsh7th/nvim-cmp",
         "nvim-treesitter",
     },
-    -- after = "" ,
-    opt = true,
     config = conf.norg,
 })
 
 editor({
     "hisbaan/jot.nvim",
     requires = "nvim-lua/plenary.nvim",
-    keys = { "<leader>J" },
     cmd = { "Jot" },
     config = function()
         require("jot").setup({
@@ -27,8 +24,6 @@ editor({
             hide_search_dir = false,
             post_open_hook = function() end,
         })
-
-        vim.keymap.set("n", "<leader>J", "<Cmd>Jot<CR>", { noremap = true, silent = true })
     end,
 })
 
@@ -367,19 +362,20 @@ editor({
     end,
 })
 editor({
-    "AckslD/nvim-trevJ.lua",
-    keys = "<leader>j",
+    "aarondiel/spread.nvim",
+    after = "nvim-treesitter",
+    module = "spread",
+    keys = {
+        "<leader>J",
+        "<leader>j",
+    },
     config = function()
-        require("trevj").setup()
+        vim.keymap.set("n", "<leader>J", function()
+            require("spread").out()
+        end, { desc = "spread: expand" })
         vim.keymap.set("n", "<leader>j", function()
-            local exclude_list = {
-                "toggleterm",
-                "terminal",
-            }
-            if not vim.tbl_contains(exclude_list, vim.bo.buftype) then
-                require("trevj").format_at_cursor()
-            end
-        end)
+            require("spread").combine()
+        end, { desc = "spread: combine" })
     end,
 })
 
@@ -462,41 +458,6 @@ editor({
 })
 
 editor({
-    "junegunn/goyo.vim",
-    cmd = { "Goyo!", "Goyo" },
-    config = function()
-        vim.cmd([[
-        function! s:goyo_enter()
-          if executable('tmux') && strlen($TMUX)
-            silent !tmux set status off
-            silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-          endif
-          set noshowmode
-          set noshowcmd
-          set scrolloff=999
-          Limelight
-          " ...
-        endfunction
-
-        function! s:goyo_leave()
-          if executable('tmux') && strlen($TMUX)
-            silent !tmux set status on
-            silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-          endif
-          set showmode
-          set showcmd
-          set scrolloff=5
-          Limelight!
-          " ...
-        endfunction
-
-        autocmd! User GoyoEnter nested call <SID>goyo_enter()
-        autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-        ]])
-    end,
-})
-editor({
     "marklcrns/vim-smartq",
     keys = {
         "Q",
@@ -511,7 +472,7 @@ editor({
         "SmartQCloseSplits",
     },
     config = function()
-        vim.g.smartq_goyo_integration = 1
+        vim.g.smartq_goyo_integration = 0
         vim.g.smartq_zenmode_integration = 0
     end,
 })

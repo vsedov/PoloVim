@@ -127,7 +127,7 @@ require("neorg").setup({
                 },
                 index = "index.norg",
                 --[[ autodetect = true,
-          autochdir = false, ]]
+                  autochdir = false, ]]
             },
         },
 
