@@ -443,8 +443,7 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         { TSKeywordReturn = { italic = true, foreground = { from = "Keyword" } } },
         { TSParameter = { italic = true, bold = true, foreground = "NONE" } },
-        { TSError = { foreground = "NONE", background = "NONE", undercurl = true, sp = "DarkRed" } },
-
+        { TSError = { foreground = "fg", background = "NONE" } },
         -- { TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
         -- FIXME: this should be removed once
         -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
