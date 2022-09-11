@@ -22,10 +22,10 @@ lambda.config = {
                 "kanagawa.nvim",
                 "rose",
                 "catppuccin",
-                "horizon.nvim",
-                "vim-dogrun",
+                -- "horizon.nvim",
+                -- "vim-dogrun",
                 "nvim-tundra",
-                "doom-one.nvim",
+                -- "doom-one.nvim",
                 "tokyonight.nvim",
             },
         },
@@ -37,12 +37,12 @@ lambda.config = {
     -- this also causes lag when codoing which can get very annoying
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = false, -- waka time
-    neorg_auto_commit = true,
+    neorg_auto_commit = false,
     loaded_confirm_quit = true,
     cmp = {
-        use_tabnine = true,
-        use_rg = true,
-        tabnine_sort = true,
+        use_tabnine = false,
+        use_rg = false,
+        tabnine_sort = false,
         cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
     },
     save_clipboard_on_exit = true,
@@ -74,7 +74,7 @@ lambda.config = {
         use_lsp_signature = false,
         latex = "texlab", -- texlab | ltex
         python = {
-            lint = { "ruff" }, -- pylint, pyflake, and other linters
+            lint = { "flake8" }, -- pylint, pyflake, and other linters
             format = { "isort", "yapf" }, -- black
             -- jedis documentation is better though
             lsp = "jedi", -- jedi pylsp and pyright pylance

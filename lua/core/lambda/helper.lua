@@ -232,7 +232,12 @@ lambda.find = function(matcher, haystack)
     end
     return found
 end
-
+---Check if a cmd is executable
+---@param e string
+---@return boolean
+lambda.executable = function(e)
+    return fn.executable(e) > 0
+end
 --- Call the given function and use `vim.notify` to notify of any errors
 --- this function is a wrapper around `xpcall` which allows having a single
 --- error handler for all errors
