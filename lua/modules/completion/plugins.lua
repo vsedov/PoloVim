@@ -80,9 +80,14 @@ completion({
     "L3MON4D3/LuaSnip", -- need to be the first to load
     event = "InsertEnter",
     module = "luasnip",
+    branch = "parse_from_ast",
     requires = {
         { "rafamadriz/friendly-snippets", event = "InsertEnter" },
     }, -- , event = "InsertEnter"
+    config = function()
+        require("modules.completion.snippets")
+    end,
+    rocks = { "jsregexp" },
 })
 
 completion({

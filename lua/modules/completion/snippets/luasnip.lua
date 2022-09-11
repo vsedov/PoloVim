@@ -2,7 +2,6 @@ local types = require("luasnip.util.types")
 local ls_types = require("luasnip.util.types")
 local luasnip = require("luasnip")
 local util = require("luasnip.util.util")
-
 -- require("luasnip.config").set_config({
 --     -- Update more often, :h events for more info.
 --     history = true,
@@ -17,15 +16,14 @@ require("luasnip.config").setup({
     ext_opts = {
         [ls_types.choiceNode] = {
             active = {
-                -- virt_text = { { "●", "Special" } },
-                -- virt_text = { { "<-", "GitSignsDelete" } },
-                -- virt_text = { { " ", "GitSignsDelete" } },
-                virt_text = { { " ", "Keyword" } },
+                hl_mode = "combine",
+                virt_text = { { "●", "Operator" } },
             },
         },
         [ls_types.insertNode] = {
             active = {
-                virt_text = { { "●", "Special" } },
+                hl_mode = "combine",
+                virt_text = { { "●", "Operator" } },
             },
         },
     },
@@ -82,6 +80,4 @@ require("luasnip.config").setup({
 
         return snippet
     end,
-    -- im not sure what this thing does
-    -- ft_func = require("luasnip.extras.filetype_functions").from_cursor_pos,
 })

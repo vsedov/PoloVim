@@ -1,22 +1,20 @@
 local api = vim.api
 -- default sources
-local sources =
+local sources = {
+    { name = "nvim_lsp_signature_help", priority = 10 },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "path" },
     {
-        { name = "nvim_lsp_signature_help", priority = 10 },
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-        { name = "path" },
-    }, {
-        {
-            name = "buffer",
-            options = {
-                get_bufnrs = function()
-                    return vim.api.nvim_list_bufs()
-                end,
-            },
+        name = "buffer",
+        options = {
+            get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+            end,
         },
-        { name = "nvim_lua" },
-    }
+    },
+    { name = "nvim_lua" },
+}
 local filetype = {
     sql = function()
         table.insert(sources, { name = "vim-dadbod-completion" })
