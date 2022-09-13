@@ -38,7 +38,7 @@ local hint_telescope = [[
   _b_: browse files                 _d_: DotFiles
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
- ^^^^                 Frecency/BookMakrs                  ^^^^
+ ^^^^                 Frecency/BookMarks                  ^^^^
  ^^^^                                                     ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
   _<Space>_: Frec     _\\_: FrecCWD     _B_: BookMarks
