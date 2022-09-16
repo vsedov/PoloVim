@@ -64,7 +64,7 @@ function config.nvim_bufferline()
 
     require("bufferline").setup({
         highlights = function(defaults)
-            local data = highlights.get("Normal")
+            local data = highlights.get("normal")
             local normal_bg, normal_fg = data.background, data.foreground
             local visible = highlights.alter_color(normal_fg, -40)
             local diagnostic = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
@@ -87,13 +87,14 @@ function config.nvim_bufferline()
                 return accum
             end, defaults.highlights)
 
-            -- Make the visible buffers and selected tab more "visible"
+            -- make the visible buffers and selected tab more "visible"
             hl.buffer_visible.bold = true
             hl.buffer_visible.italic = true
             hl.buffer_visible.fg = visible
             hl.tab_selected.bold = true
             hl.tab_selected.bg = visible_tab
             hl.tab_separator_selected.bg = visible_tab
+
             return hl
         end,
         options = {
