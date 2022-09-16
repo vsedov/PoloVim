@@ -141,10 +141,6 @@ vim.defer_fn(function()
     if lambda.config.use_fzf_lua then
         loader("fzf-lua")
     end
-    if lambda.config.use_commant_t then
-        loader("command-t")
-    end
-
     loader("workspaces.nvim")
     if lambda.config.rooter_or_project then
         loader("nvim-rooter.lua")
