@@ -3,10 +3,29 @@ local loader = require("packer").loader
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local wk = require("which-key")
-
+local fn, icons = vim.fn, lambda.style.icons
 M.config = function()
-    vim.fn.sign_define("DapBreakpoint", { text = "⧐", texthl = "Error", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapStopped", { text = "⧐", texthl = "Success", linehl = "", numhl = "" })
+    require("utils.ui.highlights").plugin("dap", {
+        { DapBreakpoint = { foreground = lambda.style.palette.light_red } },
+        { DapStopped = { foreground = lambda.style.palette.green } },
+    })
+
+    fn.sign_define({
+        {
+            name = "DapBreakpoint",
+            text = icons.misc.bug,
+            texthl = "DapBreakpoint",
+            linehl = "",
+            numhl = "",
+        },
+        {
+            name = "DapStopped",
+            text = icons.misc.bookmark,
+            texthl = "DapStopped",
+            linehl = "",
+            numhl = "",
+        },
+    })
 end
 
 M.dapui = function()

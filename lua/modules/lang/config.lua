@@ -274,7 +274,7 @@ function config.dev_comments()
         -- Enables vim.notify messages
         debug = false,
         -- Creates <Plug> mappings
-        default_mappings = false,
+        default_mappings = true,
         -- Create user commands
         default_commands = true,
         -- Each call of dev-comments is cached
@@ -293,10 +293,12 @@ function config.dev_comments()
         highlight = {
             tags = {
                 ["TODO"] = "TSWarning",
+                ["NOTE"] = "TSWarning",
                 ["PERF"] = "TSWarning",
                 ["HACK"] = "TSWarning",
                 ["WARNING"] = "TSWarning",
                 ["OPTIM"] = "TSWarning",
+                ["TRIAL"] = "TSWarning",
                 ["REVISIT"] = "TSDanger",
                 ["FIXME"] = "TSDanger",
                 ["XXX"] = "TSDanger",

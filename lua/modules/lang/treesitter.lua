@@ -49,6 +49,7 @@ local treesitter = function()
         matchup = {
             enable = true,
         },
+        markid = { enable = true },
         highlight = {
             enable = true, -- false will disable the whole extension
             additional_vim_regex_highlighting = lambda.config.do_you_want_lag,
@@ -82,7 +83,6 @@ local treesitter_obj = function()
     end
 
     require("nvim-treesitter.configs").setup({
-
         indent = { enable = true, disable = { "python", "c", "cpp" } },
         context_commentstring = { enable = true, enable_autocmd = false },
         textobjects = {
