@@ -1,6 +1,8 @@
 local cmp = require("cmp")
 require("packer").loader("nvim-autopairs")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+local tabnine_options = lambda.config.cmp.tabnine
+
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
 -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
@@ -28,4 +30,15 @@ if neorg.is_loaded() then
     load_completion()
 else
     neorg.callbacks.on_event("core.started", load_completion)
+end
+
+if tabnine_options.use_tabnine and tabnine_options.tabnine_prefetch then
+    local prefetch = vim.api.nvim_create_augroup("prefetch", { clear = true })
+    vim.api.nvim_create_autocmd("BufRead", {
+        group = prefetch,
+        pattern = lambda.config.main_file_types,
+        callback = function()
+            require("cmp_tabnine"):prefetch(vim.fn.expand("%:p"))
+        end,
+    })
 end

@@ -164,7 +164,7 @@ elseif lambda.config.cmp.cmp_theme == "extra" then
     }
 end
 
-if lambda.config.cmp.tabnine_sort then
+if lambda.config.cmp.tabnine.tabnine_sort then
     config.sorting = {
         priority_weight = 2,
         comparators = {
