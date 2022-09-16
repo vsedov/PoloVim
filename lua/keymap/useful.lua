@@ -9,7 +9,7 @@ local cur_buf = nil
 local cur_cur = nil
 local plug_map = {
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
-    ["n|<C-<CR>>"] = map_cmd(function()
+    ["n|\\<cr>"] = map_cmd(function()
             if vim.api.nvim_win_get_config(0).relative == "" then
                 cur_buf = vim.fn.bufnr()
                 cur_cur = vim.api.nvim_win_get_cursor(0)
@@ -53,11 +53,11 @@ local plug_map = {
         :with_noremap()
         :with_silent(),
 
-    ["n|<leader>ga"] = map_cmd("<Cmd>Lspsaga code_action<cr>", "Code action Menu"):with_noremap():with_silent(),
+    --  REVISIT: (vsedov) (20:40:02 - 15/09/22): See if this works
+    ["n|\\;"] = map_cmd("<Cmd>Lspsaga code_action<cr>", "Code action Menu"):with_noremap():with_silent(),
     -- ["n|cc"] = map_cmd("<Cmd>CodeActionMenu<cr>", "Code action Menu"):with_noremap():with_silent(),
-    ["x|<leader>ga"] = map_cmd("<cmd><C-U>Lspsaga range_code_action<CR>", "Code action Menu")
-        :with_noremap()
-        :with_silent(),
+    ["x|ga"] = map_cmd("<C-U>Lspsaga range_code_action<CR>", "Code action Menu"):with_noremap():with_silent(),
+
     ["n|<Leader>ca"] = map_cu("<cmd>CodeActionMenu<CR>", "lsp code actions"):with_noremap():with_silent(),
     ["v|<Leader>ca"] = map_cu("<cmd>CodeActionMenu<CR>", "lsp code actions"):with_noremap():with_silent(),
 
@@ -90,8 +90,8 @@ local plug_map = {
     ["n|;w"] = map_cu("Sad", "Sad Search"):with_noremap():with_silent(),
 
     -- feel like these needs to change
-    ["v|'v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>", "Spectre visual"):with_noremap(),
-    ["v|'c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>", "Spectre file search"):with_noremap(),
+    ["v|;v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>", "Spectre visual"):with_noremap(),
+    ["v|;c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>", "Spectre file search"):with_noremap(),
 }
 
 return plug_map
