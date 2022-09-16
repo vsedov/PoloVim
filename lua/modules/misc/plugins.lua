@@ -1,72 +1,8 @@
 local conf = require("modules.misc.config")
 local misc = require("core.pack").package
 
-misc({
-    "ziontee113/syntax-tree-surfer",
-    keys = {
-        { "n", "vU" },
-        { "n", "vD" },
-        { "n", "vd" },
-        { "n", "vu" },
-        { "n", "vx" },
-        { "n", "vn" },
-        { "n", "gv" },
-        { "n", "gfu" },
-        { "n", "gif" },
-        { "n", "gfo" },
-        { "n", "J" },
-    },
-    config = conf.syntax_surfer,
-})
-
-misc({
-    "ggandor/lightspeed.nvim",
-    event = "BufReadPost",
-    opt = true,
-    config = conf.lightspeed,
-})
-misc({
-    "phaazon/hop.nvim",
-    tag = "v2.*",
-    config = conf.hop,
-    opt = true,
-    keys = {
-        "<leader><leader>s",
-        "<leader><leader>j",
-        "<leader><leader>k",
-        "<leader><leader>w",
-        "<leader><leader>l",
-        "g/",
-        "g,",
-    },
-})
-
--- misc({
---     "ggandor/leap.nvim",
---     setup = conf.leap_setup,
---     event = "BufReadPost",
---     opt = true,
---     config = conf.leap,
--- })
-
--- Its hard for this because binds are weird
-misc({
-    "booperlv/nvim-gomove",
-    keys = { "<M>" },
-    opt = true,
-    config = conf.gomove,
-})
-
 misc({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
 
-misc({ "mizlan/iswap.nvim", cmd = { "ISwap", "ISwapWith" }, config = conf.iswap })
-
---  JK  AA II
-misc({
-    "TheBlob42/houdini.nvim",
-    event = { "InsertEnter", "CmdlineEnter" },
-    config = conf.houdini,
-})
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
 misc({
@@ -126,14 +62,7 @@ misc({
     ft = { "norg", "md" },
     config = conf.headers,
 })
-misc({
-    "dstein64/vim-startuptime",
-    cmd = "StartupTime",
-    config = function()
-        vim.g.startuptime_tries = 15
-        vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
-    end,
-})
+
 -- programming spell
 misc({ "psliwka/vim-dirtytalk", run = ":DirtytalkUpdate" })
 

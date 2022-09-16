@@ -1,62 +1,5 @@
 local config = {}
 
-function config.syntax_surfer()
-    require("modules.misc.syntax_surfer")
-end
-
-function config.lightspeed()
-    require("lightspeed").setup({
-        ignore_case = false,
-        exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
-
-        --- s/x ---
-        jump_to_unique_chars = { safety_timeout = 400 },
-        match_only_the_start_of_same_char_seqs = true,
-        force_beacons_into_match_width = true,
-        -- Display characters in a custom way in the highlighted matches.
-        substitute_chars = { ["\r"] = "¬" },
-        -- Leaving the appropriate list empty effectively disables "smart" mode,
-        -- and forces auto-jump to be on or off.
-        -- These keys are captured directly by the plugin at runtime.
-        special_keys = {
-            next_match_group = "<TAB>",
-            prev_match_group = "<S-Tab>",
-        },
-        --- f/t ---
-        limit_ft_matches = 20,
-        repeat_ft_with_target_char = true,
-    })
-    local default_keymaps = {
-        { "n", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "n", "cs", "<Plug>Lightspeed_omni_gs" },
-        { "x", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "x", "cs", "<Plug>Lightspeed_omni_gs" },
-        { "o", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "o", "cs", "<Plug>Lightspeed_omni_gs" },
-    }
-    for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
-    end
-end
-
-function config.hop()
-    require("hop").setup({
-        -- keys = 'etovxqpdygfblzhckisuran',
-        quit_key = "<ESC>",
-        jump_on_sole_occurrence = true,
-        case_insensitive = true,
-        multi_windows = true,
-    })
-    vim.keymap.set("n", "<leader><leader>s", "<cmd>HopWord<cr>", {})
-    vim.keymap.set("n", "<leader><leader>j", "<cmd>HopChar1<cr>", {})
-    vim.keymap.set("n", "<leader><leader>k", "<cmd>HopChar2<cr>", {})
-    vim.keymap.set("n", "<leader><leader>w", "<cmd>HopLine<cr>", {})
-    vim.keymap.set("n", "<leader><leader>l", "<cmd>HopLineStart<cr>", {})
-    vim.keymap.set("n", "g/", "<cmd>HopVertical<cr>", {})
-
-    vim.keymap.set("n", "g,", "<cmd>HopPattern<cr>", {})
-end
-
 function config.hexokinase()
     vim.g.Hexokinase_optInPatterns = {
         "full_hex",
@@ -74,56 +17,6 @@ function config.hexokinase()
         -- 'foreground',
         -- 'foregroundfull'
     }
-end
-
--- use normal config for now
-function config.gomove()
-    require("gomove").setup({
-        -- whether or not to map default key bindings, (true/false)
-        map_defaults = true,
-        -- what method to use for reindenting, ("vim-move" / "simple" / ("none"/nil))
-        reindent_mode = "vim-move",
-        -- whether to not to move past end column when moving blocks horizontally, (true/false)
-        move_past_end_col = false,
-        -- whether or not to ignore indent when duplicating lines horizontally, (true/false)
-        ignore_indent_lh_dup = true,
-    })
-end
-
-function config.iswap()
-    require("iswap").setup({
-        keys = "qwertyuiop",
-        autoswap = true,
-    })
-end
-function config.houdini()
-    require("houdini").setup({
-        mappings = { "jk", "AA", "II" },
-        escape_sequences = {
-            t = function(first, second)
-                return "<BS><BS><C-\\><C-n>"
-            end,
-            i = function(first, second)
-                local seq = first .. second
-
-                if vim.opt.filetype:get() == "terminal" then
-                    return "" -- disabled
-                end
-
-                if seq == "AA" then
-                    -- jump to the end of the line in insert mode
-                    return "<BS><BS><End>"
-                end
-                if seq == "II" then
-                    -- jump to the beginning of the line in insert mode
-                    return "<BS><BS><Home>"
-                end
-                return "<BS><BS><ESC>"
-            end,
-            R = "<BS><BS><ESC>",
-            c = "<BS><BS><C-c>",
-        },
-    })
 end
 
 function config.marks()
@@ -147,7 +40,17 @@ function config.marks()
         force_write_shada = false,
         refresh_interval = 9,
         sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-        excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm", "harpoon", "harpoon-menu" },
+        excluded_filetypes = {
+            "NeogitStatus",
+            "NeogitCommitMessage",
+            "toggleterm",
+            "harpoon",
+            "harpoon-menu",
+            "BookMarks",
+            "BookMark",
+            "bookmarks",
+            "bookmark",
+        },
         bookmark_0 = {
             sign = "⚑",
             virt_text = "BookMark",
@@ -309,6 +212,22 @@ function config.guess_indent()
 end
 
 function config.headers()
+    local highlights = require("utils.ui.highlights")
+    -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
+    -- NOTE: this must be set in the setup function or it will crash nvim...
+    highlights.plugin("Headlines", {
+        theme = {
+            ["*"] = {
+                { Headline1 = { background = "#003c30", foreground = "White" } },
+                { Headline2 = { background = "#00441b", foreground = "White" } },
+                { Headline3 = { background = "#084081", foreground = "White" } },
+                { Dash = { background = "#0b60a1", bold = true } },
+            },
+            ["horizon"] = {
+                { Headline = { background = { from = "Normal", alter = 20 } } },
+            },
+        },
+    })
     require("headlines").setup()
 end
 
