@@ -55,6 +55,7 @@ if gitrepo then
   _hr_ : Reword            ▕         _hf_ : Fixup
   _ha_ : Amend             ▕         _hS_ : Sqash
                    _a_ :  Dash
+                   _L_ :  LazyGit
                          ▕
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
  ^^^^                     Gitsigns                    ^^^^
@@ -195,7 +196,7 @@ if gitrepo then
 
                 { "<Enter>", ":tcd %:p:h<cr>:Neogit<cr>", { exit = true } },
                 { "q", nil, { exit = true, nowait = true } },
-                { "<Esc>", nil, { exit = true } },
+                { "<Esc>", nil, { exit = true, desc = false } },
 
                 { "l", ":Flogsplit<CR>", { exit = true, nowait = true } },
                 { "m", ":Git mergetool<CR>" },
@@ -207,6 +208,7 @@ if gitrepo then
                 { "hS", ":Squash<CR>", { silent = true } },
                 { "hr", ":Reword<CR>", { silent = true } },
                 { "a", ":GDash<CR>", { exit = true, silent = true } },
+                { "L", ":Lazygit<CR>", { exit = true, silent = true } },
             },
         })
     end

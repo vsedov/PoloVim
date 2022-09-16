@@ -56,7 +56,7 @@ local hint_telescope = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
       _;_: search ft    _'_: search     _#_: browse
 
-  _q_ exit
+  _q_ exit _<Esc>_ exit
 
 ]]
 local telescope = require("telescope")
@@ -132,6 +132,7 @@ Hydra({
         { "\\", ":Telescope frecency workspace=CWD<CR>", { exit = true } },
 
         { "q", nil, { exit = true, nowait = true } },
+        { "<Esc>", nil, { exit = true, nowait = true } },
 
         -- -- files
         { "f", require("utils.telescope").find_files, { exit = true } },

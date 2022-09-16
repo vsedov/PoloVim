@@ -23,7 +23,7 @@ local hint = [[
   ^^^^                    BreakPoints                     ^^^^
   ^^^^                                                    ^^^^
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  _bb_: Toggle BP                    _bc_: cond set BP
+  _b_: Toggle BP                    _bc_: cond set BP
   _bC_: clear BP                     _z_: float BP
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^                      Debug                         ^^^^
@@ -63,7 +63,7 @@ local dap_hydra = Hydra({
     body = "<localleader>b",
     heads = {
         {
-            "bb",
+            "b",
             "<cmd>lua require('dap').toggle_breakpoint(); require('persistent-breakpoints.api').store_breakpoints(false)<cr>",
             { silent = true },
         },
