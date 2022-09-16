@@ -47,7 +47,6 @@ function config.saga()
             show_file = false,
             click_support = false,
         },
-        border_style = lambda.style.border.type_0,
         saga_winblend = 10,
         move_in_saga = { prev = "<C-,>", next = "<C-.>" },
         diagnostic_header = { " ", " ", " ", "ﴞ " },
@@ -134,13 +133,17 @@ function config.hover()
         init = function()
             require("hover.providers.lsp")
             require("hover.providers.gh")
-            require("hover.providers.dictionary")
+            require("hover.providers.jira")
             require("hover.providers.man")
+            require("hover.providers.dictionary")
         end,
         preview_opts = {
             border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
         },
-        title = false,
+        title = true,
+        -- Whether the contents of a currently open hover window should be moved
+        -- to a :h preview-window when pressing the hover keymap.
+        preview_window = true,
     })
 end
 
