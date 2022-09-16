@@ -109,28 +109,28 @@ editor({
     config = conf.comment_box,
 })
 
--- trying to figure out why this does not work .
-
-editor({
-    "chaoren/vim-wordmotion",
-    keys = {
-        { "n", "<Plug>WordMotion_" },
-        { "x", "<Plug>WordMotion_" },
-        { "o", "<Plug>WordMotion_" },
-        { "c", "<Plug>WordMotion_" },
-    },
-    setup = function()
-        vim.g.wordmotion_uppercase_spaces = { "-" }
-        vim.g.wordmotion_nomap = 1
-        for _, key in ipairs({ "e", "b", "w", "E", "B", "W", "ge", "gE" }) do
-            vim.keymap.set({ "n", "x", "o" }, key, "<Plug>WordMotion_" .. key)
-        end
-        vim.keymap.set({ "x", "o" }, "aW", "<Plug>WordMotion_aW")
-        vim.keymap.set({ "x", "o" }, "iW", "<Plug>WordMotion_iW")
-        vim.keymap.set("c", "<C-R><C-W>", "<Plug>WordMotion_<C-R><C-W>")
-        vim.keymap.set("c", "<C-R><C-A>", "<Plug>WordMotion_<C-R><C-A>")
-    end,
-})
+--[[ This thing causes issues with respect to cmdheight=0 ]]
+--[[ editor({ ]]
+--[[     "chaoren/vim-wordmotion", ]]
+--[[     keys = { ]]
+--[[         { "n", "<Plug>WordMotion_" }, ]]
+--[[         { "x", "<Plug>WordMotion_" }, ]]
+--[[         { "o", "<Plug>WordMotion_" }, ]]
+--[[         { "c", "<Plug>WordMotion_" }, ]]
+--[[     }, ]]
+--[[     setup = function() ]]
+--[[         vim.g.wordmotion_uppercase_spaces = { "-" } ]]
+--[[         vim.g.wordmotion_nomap = 1 ]]
+--[[         for _, key in ipairs({ "e", "b", "w", "E", "B", "W", "ge", "gE" }) do ]]
+--[[             vim.keymap.set({ "n", "x", "o" }, key, "<Plug>WordMotion_" .. key) ]]
+--[[         end ]]
+--[[         vim.keymap.set({ "x", "o" }, "aW", "<Plug>WordMotion_aW") ]]
+--[[         vim.keymap.set({ "x", "o" }, "iW", "<Plug>WordMotion_iW") ]]
+--[[         vim.keymap.set("c", "<C-R><C-W>", "<Plug>WordMotion_<C-R><C-W>") ]]
+--[[         vim.keymap.set("c", "<C-R><C-A>", "<Plug>WordMotion_<C-R><C-A>") ]]
+--[[     end, ]]
+--[[ }) ]]
+--[[]]
 editor({
     "anuvyklack/vim-smartword",
     keys = {
@@ -169,6 +169,11 @@ editor({
     },
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
+})
+
+editor({
+    "David-Kunz/markid",
+    after = "nvim-treesitter",
 })
 
 editor({
@@ -430,17 +435,7 @@ editor({
         })
     end,
 })
-editor({
-    "wincent/command-t",
-    run = "cd lua/wincent/commandt/lib && make",
-    opt = true,
-    setup = function()
-        vim.g.CommandTPreferredImplementation = "lua"
-    end,
-    config = function()
-        require("wincent.commandt").setup()
-    end,
-})
+
 editor({
     "kevinhwang91/nvim-hclipboard",
     event = "InsertCharPre",
