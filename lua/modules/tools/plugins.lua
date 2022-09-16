@@ -153,15 +153,6 @@ tools({
     end,
 })
 
--- :Z {query}: cd to the highest ranked directory matching your query. If {query} is omitted, cd to the home directory
--- :Lz {query}: same as :Z, but local to the current window
--- :Tz {query}: same as :Z, but local to the current tab
--- :Zi {query}: cd to one of your highest ranking directories using fzf
--- :Lzi {query}: same as :Zi, but local to the current window
--- :Tzi {query}: same as :Zi, but local to the current tab
-
-tools({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz", "Tzi", "Lzi" } })
-
 tools({ "tami5/sqlite.lua", module = "sqlite" })
 -- manual call
 tools({
@@ -210,8 +201,6 @@ tools({
     -- keys = { "<Plug>RestNvim", "<Plug>RestNvimPreview", "<Plug>RestNvimLast" },
     config = conf.rest,
 })
-
-tools({ "ibhagwan/fzf-lua", branch = "main", config = conf.fzf, opt = true, cmd = { "FzfLua" } })
 
 -- Default:~
 --     normal = {
@@ -293,5 +282,14 @@ tools({
     config = function()
         vim.keymap.set("n", "<localleader>s", [[:lua require("nabla").popup()<CR>]], {})
         require("nabla").enable_virt()
+    end,
+})
+
+tools({
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+    config = function()
+        vim.g.startuptime_tries = 15
+        vim.g.startuptime_exe_args = { "+let g:auto_session_enabled = 0" }
     end,
 })
