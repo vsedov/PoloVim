@@ -40,9 +40,13 @@ lambda.config = {
     neorg_auto_commit = false,
     loaded_confirm_quit = true,
     cmp = {
-        use_tabnine = false,
+        tabnine = {
+            use_tabnine = true,
+            tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+            tabnine_prefetch = true,
+        },
+
         use_rg = false,
-        tabnine_sort = false,
         cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
     },
     save_clipboard_on_exit = true,
@@ -61,8 +65,14 @@ lambda.config = {
     --[[ manual control ]]
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
-    use_fzf_lua = false, -- This is nice, to have, when required.
-    use_command_T = true,
+    extra_search = {
+        enable = true,
+        providers = {
+            use_azy = true,
+            use_fzf_lua = false, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
+            use_command_t = true, -- If this is active, the hydra will be activated
+        },
+    },
     use_dashboard = false, -- set to false to not see this
     use_session = false, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
