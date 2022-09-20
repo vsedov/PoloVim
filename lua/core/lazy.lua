@@ -13,17 +13,17 @@ if fsize > 1024 * 1024 then
 end
 local function load_colourscheme()
     math.randomseed(os.clock() * 100000000000)
-    local theme = lambda.config.colourscheme.themes.dark
+    local theme = lambda.config.colourscheme.themes.dark.core_themes
+
     local rand = math.random(#theme)
     loader(theme[rand])
     -- loader("rose") -- Forceuflly load rosepine
 end
 
-require("vscripts.cursorhold")
-require("utils.ui.highlights")
+-- require("vscripts.cursorhold")
 load_colourscheme()
 
-vim.g.cursorhold_updatetime = 100
+-- vim.g.cursorhold_updatetime = 100
 -- vim.cmd([[syntax on]])
 
 function Lazyload()
@@ -121,7 +121,7 @@ end, lazy_timer)
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    require("vscripts.tools")
+    -- require("vscripts.tools")
     vim.api.nvim_create_user_command("Gram", function()
         require("modules.tools.config").grammcheck()
     end, { force = true })
