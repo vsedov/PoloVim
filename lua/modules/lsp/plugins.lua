@@ -89,20 +89,15 @@ lsp({
 
 lsp({
     "jayp0521/mason-null-ls.nvim",
-    after = {
-        "null-ls.nvim",
-        "mason.nvim",
+    requires = {
+        "williamboman/mason.nvim",
+        "jose-elias-alvarez/null-ls.nvim",
     },
+    after = "mason.nvim",
     config = function()
         require("mason-null-ls").setup({
-            ensure_installed = {
-                { "shellcheck", auto_update = true },
-            },
-            auto_update = true,
             automatic_installation = false,
         })
-
-        require("mason-null-ls").check_install(true)
     end,
 })
 

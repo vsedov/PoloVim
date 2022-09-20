@@ -42,8 +42,8 @@ function M.setup()
     -- table.insert(registered_sources, require("typos").diagnostics)
     local cfg = {
         sources = registered_sources,
-        debounce = 1000,
-        default_timeout = 3000,
+        debounce = 500,
+        default_timeout = 500,
         fallback_severity = vim.diagnostic.severity.WARN,
         root_dir = require("lspconfig").util.root_pattern(
             ".null-ls-root",
@@ -75,7 +75,8 @@ function M.setup()
                     group = augroup,
                     buffer = bufnr,
                     callback = function()
-                        lsp_formatting(bufnr)
+                        vim.cmd("LspFormatting")
+                        --[[ lsp_formatting(bufnr) ]]
                     end,
                 })
             end
