@@ -156,9 +156,18 @@ elseif lambda.config.cmp.cmp_theme == "extra" then
                 -- Man this thing lagged like crazy if i remember correctly
                 rg = "[Rg]",
                 git = "[Git]",
-                cmp_tabnine = "[TN]",
             })[entry.source.name]
+            if entry.source.name == "cmp_tabnine" then
+                local detail = (entry.completion_item.data or {}).detail
+                vim_item.kind = "[TN]"
+                if detail and detail:find(".*%%.*") then
+                    vim_item.kind = vim_item.kind .. " " .. detail
+                end
 
+                if (entry.completion_item.data or {}).multiline then
+                    vim_item.kind = vim_item.kind .. " " .. "[ML]"
+                end
+            end
             return vim_item
         end,
     }

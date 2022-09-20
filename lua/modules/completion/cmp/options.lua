@@ -4,7 +4,7 @@ return {
         options = {
             name = "cmp_tabnine",
             keyword_length = 0,
-            priority = 10, -- Make tabnine have the same priority as lsp
+            priority = lambda.config.cmp.tabnine.tabnine_priority, -- Make tabnine have the same priority as lsp
         },
     },
     use_rg = {
