@@ -79,10 +79,11 @@ if lambda.config.neorg_auto_commit then
             event = { "VimLeavePre" },
             pattern = { "/home/viv/neorg/*" },
             command = function()
-                lambda.dynamic_unload("dressing", false)
-                t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
-                require("utils.plugins.custom_neorg_save").start()
+                vim.api.nvim_create_user_command("NeorgCommit", function()
+                    require("utils.plugins.custom_neorg_save").start()
+                end, { force = true })
             end,
+            once = true,
         },
     })
 end
@@ -105,7 +106,7 @@ end
 vim.defer_fn(function()
     if lambda.config.loaded_confirm_quit then
         -- this breaks neotree for some reason
-        require("utils.plugins.exit")
+        --[[ require("utils.plugins.exit") ]]
     end
 
     -- tbh, this can stay here, nothing changes with this

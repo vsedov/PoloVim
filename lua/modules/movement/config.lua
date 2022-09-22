@@ -18,23 +18,51 @@ function config.lightspeed()
         -- and forces auto-jump to be on or off.
         -- These keys are captured directly by the plugin at runtime.
         special_keys = {
-            next_match_group = "<TAB>",
-            prev_match_group = "<S-Tab>",
+            next_match_group = "<space>",
+            prev_match_group = "<tab>",
         },
         --- f/t ---
         limit_ft_matches = 20,
         repeat_ft_with_target_char = true,
     })
     local default_keymaps = {
-        { "n", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "n", "cs", "<Plug>Lightspeed_omni_gs" },
-        { "x", "<c-s>", "<Plug>Lightspeed_omni_s" },
+        { "n", "<c-/>", "<Plug>Lightspeed_omni_s" },
+        { "x", "<c-/>", "<Plug>Lightspeed_omni_s" },
+        { "o", "<c-/>", "<Plug>Lightspeed_omni_s" },
+
         { "x", "cs", "<Plug>Lightspeed_omni_gs" },
-        { "o", "<c-s>", "<Plug>Lightspeed_omni_s" },
+        { "n", "cs", "<Plug>Lightspeed_omni_gs" },
         { "o", "cs", "<Plug>Lightspeed_omni_gs" },
     }
     for _, m in ipairs(default_keymaps) do
         vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
+    end
+
+    vim.g.lightspeed_last_motion = ""
+    lambda.augroup("lightspeed_last_motion", {
+        {
+
+            event = "User",
+            pattern = { "LightspeedSxEnter" },
+            command = function()
+                vim.g.lightspeed_last_motion = "sx"
+            end,
+        },
+        {
+            event = "User",
+            pattern = { "LightspeedFxEnter" },
+            command = function()
+                vim.g.lightspeed_last_motion = "fx"
+            end,
+        },
+    })
+
+    local search_types = { ["<c-[>"] = ";", ["<c-]>"] = "," }
+    for k, v in pairs(search_types) do
+        vim.keymap.set("n", k, function()
+            return vim.g.lightspeed_last_motion == "sx" and "<Plug>Lightspeed_" .. v .. "_sx"
+                or "<Plug>Lightspeed_" .. v .. "_ft"
+        end, { expr = true, noremap = true })
     end
 end
 
