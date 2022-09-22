@@ -115,28 +115,6 @@ tools({
     setup = conf.wakatime,
 })
 
--- ze black magic
-tools({
-    "windwp/nvim-spectre",
-    module = "spectre",
-    requires = { "nvim-lua/plenary.nvim" },
-    keys = {
-        ";w",
-        ";W",
-        ";v",
-        ";c",
-    },
-    config = conf.spectre,
-})
-
-tools({
-    "ray-x/sad.nvim",
-    cmd = { "Sad" },
-    requires = { "ray-x/guihua.lua", opt = true, after = "sad.nvim" },
-    opt = true,
-    config = conf.sad,
-})
-
 tools({ "ilAYAli/scMRU.nvim", cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" }, module = "mru" })
 
 -- need quick fix  :vimgrep /\w\+/j % | copen
