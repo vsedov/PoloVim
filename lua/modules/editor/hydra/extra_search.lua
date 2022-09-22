@@ -5,13 +5,25 @@ local loader = require("packer").loader
 local cmd = require("hydra.keymap-util").cmd
 
 local function azy_hydra()
-    hint = [[
-^^^^                  AzySearch                 ^^^^
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-_f_: Files               _b_: Buffers
-_F_: File-Content        _h_: Help
-_q_: QuickFix
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
+    local hint = [[
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+ ^^^^                   Azy Search                        ^^^^
+ ^^^^                                                     ^^^^
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+  _f_: Find Files                   _s_: find string
+  _q_: QuickFix                     _h_: Help
+                     _b_: Buffers
+
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+ ^^^^                   Azy LSP                           ^^^^
+ ^^^^                                                     ^^^^
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+   _w_: WorkspaceSymbols             _r_: references
+
+                     _d_: DocumentSymbol
+
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+     _<Esc>_ exit
 ]]
 
     Hydra({
@@ -26,15 +38,17 @@ _q_: QuickFix
             },
         },
         mode = { "n" },
-        body = "<leader>az",
+        body = ";A",
         heads = {
-            { "f", require("azy.builtins").files(), {} },
-            { "F", require("azy.builtins").files_contents(), { exit = true } },
+            { "b", require("azy.builtins").buffers(), { exit = false } },
+
+            { "f", require("azy.builtins").files(), { exit = true, silent = true } },
+            { "s", require("azy.builtins").files_contents(), { exit = true } },
             { "h", require("azy.builtins").help(), { exit = true } },
-            { "b", require("azy.builtins").buffers(), { exit = true } },
             { "q", require("azy.builtins").quickfix(), { exit = true } },
-            --[[ { "r", require("azy.builtins").lsp.references, { exit = true } }, ]]
-            --[[ { "w", require("azy.builtins.lsp").references(), { exit = true } }, ]]
+            { "w", require("azy.builtins").lsp.workspace_symbols(), { exit = true } },
+            { "r", require("azy.builtins").lsp.references(), { exit = true } },
+            { "d", require("azy.builtins").lsp.document_symbol(), { exit = true } },
             { "<Esc>", nil, { exit = true, desc = false } },
         },
     })

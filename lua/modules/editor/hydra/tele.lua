@@ -10,6 +10,21 @@ for _, v in ipairs(plugins) do
     cmd = "packadd " .. v
     vim.cmd(cmd)
 end
+-- Hav eto do this for this stupid thing to work.
+require("telescope").setup({
+    extensions = {
+        bookmarks = {
+            selected_browser = "waterfox",
+            url_open_command = "open",
+            url_open_plugin = nil,
+            full_path = true,
+            waterfox_profile_name = "default-default",
+            buku_include_tags = false,
+            debug = false,
+        },
+    },
+})
+require("telescope").load_extension("bookmarks")
 
 require("telescope").load_extension("frecency")
 local hint_telescope = [[
