@@ -56,7 +56,6 @@ search({
     requires = {
         "kkharji/sqlite.lua",
     },
-    config = conf.bookmark,
 })
 
 -- NOTE: (vsedov) (23:27:10 - 16/09/22): Azy seems to be very fast
@@ -64,7 +63,13 @@ search({
 search({
     "vigoux/azy.nvim",
     run = "make lib",
+    commit = "b3e6577318ec496f22204ee9eed32656c6c3156a",
     module = "azy",
+    config = function()
+        require("azy").setup({
+            preview = true, -- Whether to preview selected items on the fly (this is an unstable feature, feedback appreciated)
+        })
+    end,
 })
 
 search({ "ibhagwan/fzf-lua", branch = "main", config = conf.fzf, opt = true, cmd = { "FzfLua" } })
@@ -89,3 +94,35 @@ search({
 -- :Tzi {query}: same as :Zi, but local to the current tab
 
 search({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz", "Tzi", "Lzi" } })
+
+-- ze black magic
+search({
+    "windwp/nvim-spectre",
+    module = "spectre",
+    requires = { "nvim-lua/plenary.nvim" },
+    keys = {
+        ";e",
+        ";W",
+        ";v",
+        ";c",
+    },
+    config = conf.spectre,
+})
+
+search({
+    "ray-x/sad.nvim",
+    cmd = { "Sad" },
+    requires = {
+        "ray-x/guihua.lua",
+        opt = true,
+        config = function()
+            require("guihua.maps").setup({
+                maps = {
+                    close_view = "<C-x>",
+                },
+            })
+        end,
+    },
+    opt = true,
+    config = conf.sad,
+})
