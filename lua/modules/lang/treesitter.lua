@@ -49,7 +49,7 @@ local treesitter = function()
         matchup = {
             enable = true,
         },
-        markid = { enable = true },
+        markid = { enable = lambda.config.better_ts_highlights},
         highlight = {
             enable = true, -- false will disable the whole extension
             additional_vim_regex_highlighting = lambda.config.do_you_want_lag,

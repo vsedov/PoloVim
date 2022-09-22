@@ -1,6 +1,7 @@
 -- pick random  item form dark but based on its probability
 lambda.config = {
     do_you_want_lag = false, -- Enable Extra regex,
+    better_ts_highlights = true,
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = false, -- waka time
@@ -27,7 +28,7 @@ lambda.config = {
         providers = {
             use_azy = true,
             use_fzf_lua = false, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
-            use_command_t = true, -- If this is active, the hydra will be activated
+            use_command_t = false, -- If this is active, the hydra will be activated
         },
     },
     use_dashboard = false, -- set to false to not see this

@@ -177,8 +177,6 @@ lang({
 
 lang({ "nvim-treesitter/nvim-treesitter-context", event = "WinScrolled", config = conf.context })
 
-lang({ "ray-x/guihua.lua", run = "cd lua/fzy && make", opt = true })
-
 lang({ "mfussenegger/nvim-jdtls", ft = "java", opt = true })
 
 lang({
