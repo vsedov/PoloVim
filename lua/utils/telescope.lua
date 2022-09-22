@@ -238,15 +238,6 @@ M.setup = function()
                         project = vim.env.PROJECTS_DIR,
                     },
                 },
-                bookmarks = {
-                    selected_browser = "waterfox",
-                    url_open_command = "open",
-                    url_open_plugin = nil,
-                    full_path = true,
-                    firefox_profile_name = "default-default",
-                    buku_include_tags = false,
-                    debug = false,
-                },
             },
             pickers = {
 

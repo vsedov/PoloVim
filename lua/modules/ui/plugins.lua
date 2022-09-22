@@ -119,12 +119,6 @@ ui({
 })
 
 ui({
-    "lewis6991/satellite.nvim",
-    opt = true,
-    config = conf.satellite,
-})
-
-ui({
     "xiyaowong/nvim-transparent",
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
     config = conf.transparent,
