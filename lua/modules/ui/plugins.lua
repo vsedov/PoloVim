@@ -3,6 +3,7 @@ local ui = require("core.pack").package
 function not_headless()
     return #vim.api.nvim_list_uis() > 0
 end
+
 ui({
     "j-hui/fidget.nvim",
     opt = true,
@@ -223,4 +224,34 @@ ui({
     "RRethy/vim-illuminate",
     event = "BufEnter",
     config = conf.illuminate,
+})
+ui({
+    "rainbowhxch/beacon.nvim",
+    opt = true,
+    event = "BufEnter",
+    config = function()
+        local beacon = require("beacon")
+        beacon.setup({
+            minimal_jump = 20,
+            ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
+            ignore_filetypes = {
+                "qf",
+                "neo-tree",
+                "NeogitCommitMessage",
+                "NeogitPopup",
+                "NeogitStatus",
+                "packer",
+                "trouble",
+            },
+        })
+        lambda.augroup("BeaconCmds", {
+            {
+                event = "BufReadPre",
+                pattern = "*.norg",
+                command = function()
+                    beacon.beacon_off()
+                end,
+            },
+        })
+    end,
 })

@@ -5,7 +5,7 @@ search({
     branch = "master",
     module = "telescope",
     requires = {
-        { "nvim-neorg/neorg-telescope", after = "telescope.nvim" },
+        { "vhyrro/neorg-telescope", after = "telescope.nvim" },
         { "nvim-lua/plenary.nvim", opt = true },
         {
             "nvim-telescope/telescope-file-browser.nvim",

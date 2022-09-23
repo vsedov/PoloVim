@@ -57,7 +57,11 @@ function config.lightspeed()
         },
     })
 
-    local search_types = { ["<c-[>"] = ";", ["<c-]>"] = "," }
+    local search_types = {
+        ["<c-[>"] = ";",
+        ["<c-]>"] = ",",
+    }
+
     for k, v in pairs(search_types) do
         vim.keymap.set("n", k, function()
             return vim.g.lightspeed_last_motion == "sx" and "<Plug>Lightspeed_" .. v .. "_sx"

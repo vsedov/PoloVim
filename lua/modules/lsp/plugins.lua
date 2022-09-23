@@ -120,30 +120,18 @@ lsp({
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     event = { "LspAttach" },
-    config = function()
-        require("rcd").setup({
-            -- Where to render the diagnostics: top or bottom, the latter sitting at
-            -- the bottom line of the buffer, not of the terminal.
-            position = "top",
+    config = conf.rcd,
+})
 
-            -- In order to print the diagnostics we need to use autocommands, you can
-            -- disable this behaviour and call the functions yourself if you think
-            -- your autocmds work better than the default ones with this option:
-            auto_cmds = true,
-        })
-        -- lambda.augroup("right_corner_diagnostics", {
-        --     {
-        --         event = { "CursorHold", "CursorHoldI" },
-        --         command = function()
-        --             require("rcd").show()
-        --         end,
-        --     },
-        --     {
-        --         event = { "CursorHold", "CursorHoldI" },
-        --         command = function()
-        --             require("rcd").hide()
-        --         end,
-        --     },
-        -- })
-    end,
+lsp({
+    "direnv/direnv.vim",
+    opt = true,
+    ft = { "python", "julia" },
+})
+
+lsp({
+    "AckslD/swenv.nvim",
+    cmd = { "VenvFind", "GetVenv" },
+    ft = "python",
+    config = conf.swenv,
 })

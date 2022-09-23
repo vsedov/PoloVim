@@ -177,7 +177,7 @@ function config.surround()
             visual = "yS",
             visual_line = "gS",
             delete = "ds",
-            change = "cS",
+            change = "<c-s>",
         },
     })
 end

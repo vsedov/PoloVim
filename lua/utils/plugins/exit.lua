@@ -70,7 +70,7 @@ lambda.augroup("confirm-quit", {
     },
     {
         event = { "CmdlineLeave" },
-        patter = ":",
+        pattern = ":",
         command = function()
             vim.bo.iskeyword = vim.g.confirm_quit_isk_save
         end,

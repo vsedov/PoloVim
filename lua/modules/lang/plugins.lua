@@ -280,12 +280,6 @@ lang({
     ft = "python",
 })
 
-lang({
-    "direnv/direnv.vim",
-    opt = true,
-    event = "BufEnter",
-})
-
 lang({ "dccsillag/magma-nvim", ft = "python", run = ":UpdateRemotePlugins" })
 
 lang({

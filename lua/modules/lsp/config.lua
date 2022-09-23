@@ -249,5 +249,50 @@ function config.vista()
         lua = "nvim_lsp",
     }
 end
+function config.rcd()
+    require("rcd").setup({
+        -- Where to render the diagnostics: top or bottom, the latter sitting at
+        -- the bottom line of the buffer, not of the terminal.
+        position = "top",
 
+        -- In order to print the diagnostics we need to use autocommands, you can
+        -- disable this behaviour and call the functions yourself if you think
+        -- your autocmds work better than the default ones with this option:
+        auto_cmds = true,
+    })
+    -- lambda.augroup("right_corner_diagnostics", {
+    --     {
+    --         event = { "CursorHold", "CursorHoldI" },
+    --         command = function()
+    --             require("rcd").show()
+    --         end,
+    --     },
+    --     {
+    --         event = { "CursorHold", "CursorHoldI" },
+    --         command = function()
+    --             require("rcd").hide()
+    --         end,
+    --     },
+    -- })
+end
+function config.swenv()
+    require("swenv").setup({
+        -- Should return a list of tables with a `name` and a `path` entry each.
+        -- Gets the argument `venvs_path` set below.
+        -- By default just lists the entries in `venvs_path`.
+        get_venvs = function(venvs_path)
+            return require("swenv.api").get_venvs(venvs_path)
+        end,
+        -- Path passed to `get_venvs`.
+        venvs_path = vim.fn.expand("/home/viv/.cache/pypoetry/virtualenvs/"),
+        -- Something to do after setting an environment
+        post_set_venv = nil,
+    })
+    lambda.command("VenvFind", function()
+        require("swenv.api").pick_venv()
+    end, {})
+    lambda.command("GetVenv", function()
+        require("swenv.api").get_current_venv()
+    end, {})
+end
 return config
