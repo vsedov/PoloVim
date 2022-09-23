@@ -10,6 +10,10 @@ local packer = nil
 local Packer = {}
 Packer.__index = Packer
 
+function packer_notify(msg, level)
+    vim.notify(msg, level, { title = "Packer" })
+end
+
 function Packer:load_plugins()
     self.repos = {}
     self.rocks = {}
@@ -153,6 +157,20 @@ function plugins.load_compile()
     })
 
     vim.cmd([[autocmd User PackerComplete lua require('core.pack').auto_compile()]])
+
+    lambda.command("PackerCompiledEdit", function()
+        vim.cmd.edit(packer_compiled)
+    end)
+
+    lambda.command("PackerCompiledDelete", function()
+        vim.fn.delete(packer_compiled)
+        packer_notify(fmt("Deleted %s", packer_compiled))
+    end)
+
+    if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(packer_compiled) then
+        vim.cmd.source(packer_compiled)
+        vim.g.packer_compiled_loaded = true
+    end
 end
 
 return plugins
