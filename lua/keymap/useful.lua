@@ -85,13 +85,7 @@ local plug_map = {
     ["n|<Leader>ta"] = map_cr("ToggleAlternate", "Toggle values"):with_noremap():with_silent(),
     ["n|<Leader><Leader>1"] = map_cu("ZenMode", "Quiet Mode zen"):with_noremap():with_silent(),
 
-    ["n|;e"] = map_cmd("<cmd>lua require('spectre').open()<CR>", "spectre"):with_noremap(),
-    ["n|;W"] = map_cmd("<cmd>lua require('spectre').open_visual({select_word=true})<CR>", "current word spectre"):with_noremap(),
     ["n|;w"] = map_cu("Sad", "Sad Search"):with_noremap():with_silent(),
-
-    -- feel like these needs to change
-    ["v|;v"] = map_cmd("<cmd>lua require('spectre').open_visual()<CR>", "Spectre visual"):with_noremap(),
-    ["v|;c"] = map_cmd("<cmd>lua require('spectre').open_file_search()<CR>", "Spectre file search"):with_noremap(),
 }
 
 return plug_map

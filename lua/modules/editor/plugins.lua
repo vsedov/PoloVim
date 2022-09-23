@@ -4,12 +4,14 @@ editor({
 
     "nvim-neorg/neorg",
     branch = "main",
+    run = ":Neorg sync-parsers",
     requires = {
         { "max397574/neorg-contexts", ft = "norg" },
         "nvim-lua/plenary.nvim",
         "hrsh7th/nvim-cmp",
         "nvim-treesitter",
     },
+    after = { "nvim-treesitter", "telescope.nvim" },
     config = conf.norg,
 })
 
