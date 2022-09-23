@@ -4,27 +4,29 @@ local config = {}
 -- are loaded based on this ,
 function config.git_setup(package_name)
     lambda.augroup("InGit", {
-        event = { "BufAdd", "VimEnter" },
-        pattern = "*",
-        command = function()
-            local function onexit(code, _)
-                if code == 0 then
-                    vim.schedule(function()
-                        require("packer").loader(package_name)
-                    end)
+        {
+            event = { "BufAdd", "VimEnter" },
+            pattern = "*",
+            command = function()
+                local function onexit(code, _)
+                    if code == 0 then
+                        vim.schedule(function()
+                            require("packer").loader(package_name)
+                        end)
+                    end
                 end
-            end
-            local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-            if lines ~= { "" } then
-                vim.loop.spawn("git", {
-                    args = {
-                        "ls-files",
-                        "--error-unmatch",
-                        vim.fn.expand("%"),
-                    },
-                }, onexit)
-            end
-        end,
+                local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                if lines ~= { "" } then
+                    vim.loop.spawn("git", {
+                        args = {
+                            "ls-files",
+                            "--error-unmatch",
+                            vim.fn.expand("%"),
+                        },
+                    }, onexit)
+                end
+            end,
+        },
     })
 end
 
