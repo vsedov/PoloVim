@@ -517,24 +517,15 @@ function lambda.has(feature)
     return vim.fn.has(feature) > 0
 end
 
-----------------------------------------------------------------------------------------------------
--- Mappings
-----------------------------------------------------------------------------------------------------
 
----create a mapping function factory
----@param mode string
----@param o table
----@return fun(lhs: string, rhs: string|function, opts: table|nil) 'create a mapping'
-local function make_mapper(mode, o)
-    -- copy the opts table as extends will mutate the opts table passed in otherwise
-    local parent_opts = vim.deepcopy(o)
-    ---Create a mapping
-    ---@param lhs string
-    ---@param rhs string|function
-    ---@param opts table
-    return function(lhs, rhs, opts)
-        -- If the label is all that was passed in, set the opts automagically
-        opts = type(opts) == "string" and { desc = opts } or opts and vim.deepcopy(opts) or {}
-        vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
-    end
+function lambda.setup_plugin(event, plugin_name, condition)
+    vim.api.nvim_create_autocmd(event, {
+        pattern = "*",
+        callback = function()
+            if condition then
+                require("packer").loader(plugin_name)
+            end
+        end,
+        once = true,
+    })
 end
