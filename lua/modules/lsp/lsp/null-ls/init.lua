@@ -1,3 +1,11 @@
+-- vim.cmd[[packadd lsp-format-modifications.nvim]]
+-- local lsp_format_modifications = require"lsp-format-modifications"
+--         lsp_format_modifications.attach(
+--                 client,
+--                 bufnr,
+--                 { format_on_save = false }
+--         )
+
 local M = {}
 
 local lsp_formatting = function(bufnr)
@@ -70,7 +78,6 @@ function M.setup()
                 end, {})
 
                 vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     group = augroup,
                     buffer = bufnr,

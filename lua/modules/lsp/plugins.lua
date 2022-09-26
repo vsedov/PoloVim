@@ -60,6 +60,11 @@ lsp({
 })
 
 lsp({
+    "joechrisellis/lsp-format-modifications.nvim",
+    opt = true,
+})
+
+lsp({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     cmd = { "TL" },
     config = conf.lsp_lines,

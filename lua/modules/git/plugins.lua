@@ -62,6 +62,7 @@ git({
     opt = true,
 })
 
+-- gets loaded through hydra
 git({
     "TimUntersberger/neogit",
     keys = {
@@ -71,7 +72,6 @@ git({
         "<localleader>gp",
     },
     opt = true,
-    setup = conf.git_setup("neogit"),
     cmd = { "Neogit" },
     config = conf.neogit,
 })
@@ -113,9 +113,9 @@ git({
 
 --[[ My work flow requires me to use both neogit and fugative, so what i think  ]]
 --[[ i will do is load this if Neogit is loaded as well, just to be in the same thing ]]
+-- get loaded through hydra
 git({
     "tpope/vim-fugitive",
-    setup = conf.git_setup("vim-fugitive"),
     opt = true,
 })
 
