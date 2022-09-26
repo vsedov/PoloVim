@@ -58,12 +58,9 @@ search({
     },
 })
 
--- NOTE: (vsedov) (23:27:10 - 16/09/22): Azy seems to be very fast
--- So please refer to the hydra config for this. /lua/modules/editor/hydra/azy
 search({
     "vigoux/azy.nvim",
     run = "make lib",
-    commit = "b3e6577318ec496f22204ee9eed32656c6c3156a",
     module = "azy",
     config = function()
         require("azy").setup({
