@@ -47,7 +47,11 @@ user({
 user({
     "samuzora/pet.nvim",
     opt = true,
+    setup = function()
+        lambda.setup_plugin("BufEnter", "pet.nvim", lambda.config.use_pet)
+    end, 
     config = function()
         require("pet-nvim")
     end,
 })
+

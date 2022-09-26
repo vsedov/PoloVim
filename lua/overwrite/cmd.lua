@@ -324,3 +324,8 @@ end, { force = true })
 add_cmd("PullCustom", function()
     require("utils.plugins.git_pull_personal")()
 end, { force = true })
+
+add_cmd("Reverse", "<line1>,<line2>g/^/m<line1>-1", {
+    range = "%",
+    bar = true,
+})

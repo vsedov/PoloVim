@@ -426,7 +426,7 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         -- Treesitter
         ---------------------------------------------------------------------------//
-        --[[ { TSVariable = { foreground = { from = "TSVariable" } } }, ]]
+        { TSVariable = { foreground = { from = "Normal" } } },
         { TSNamespace = { foreground = P.blue } },
 
         { Comment = { italic = true } },
