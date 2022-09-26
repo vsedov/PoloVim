@@ -189,11 +189,11 @@ lambda.augroup("Utilities", {
             "NeogitCommitMessage",
             "markdown",
         },
-        -- FIXME: spellsitter is slow in large files
-        -- TODO: should this be done in ftplugin files
-        -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
+        -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows        -- command = function(args)
+        --     vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000
+        -- end,
         command = function(args)
-            vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000
+            vim.opt_local.spell = true
         end,
     },
     {
