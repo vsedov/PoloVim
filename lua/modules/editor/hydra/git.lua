@@ -44,7 +44,7 @@ local function diffmaster()
 end
 
 if gitrepo then
-    loader("keymap-layer.nvim vgit.nvim gitsigns.nvim vim-fugitive")
+    loader("keymap-layer.nvim vgit.nvim vim-fugitive")
 
     local hint = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^

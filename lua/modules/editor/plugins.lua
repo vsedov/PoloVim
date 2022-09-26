@@ -3,7 +3,8 @@ local editor = require("core.pack").package
 editor({
 
     "nvim-neorg/neorg",
-    branch = "main",
+    --[[ branch = "main", ]]
+    tags = "*",
     run = ":Neorg sync-parsers",
     requires = {
         { "max397574/neorg-contexts", ft = "norg" },
@@ -11,7 +12,7 @@ editor({
         "hrsh7th/nvim-cmp",
         "nvim-treesitter",
     },
-    after = { "nvim-treesitter", "telescope.nvim" },
+    after = { "telescope.nvim" },
     config = conf.norg,
 })
 
@@ -143,7 +144,35 @@ editor({
     },
 })
 editor({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
+editor({
+    "anuvyklack/windows.nvim",
+    requires = {
+        { "anuvyklack/middleclass", opt = true },
+        { "anuvyklack/animation.nvim", opt = true },
+    },
+    opt = true,
+    cmd = {
 
+        "WindowsMaximize",
+        "WindowsMaximize!",
+        "WindowsToggleAutowidth",
+        "WindowsEnableAutowidth",
+        "WindowsDisableAutowidth",
+    },
+    keys = {
+        "<c-w>z",
+        ";z",
+    },
+    config = function()
+        vim.cmd([[packadd middleclass]])
+        vim.cmd([[packadd animation.nvim]])
+        vim.o.winwidth = 10
+        vim.o.winminwidth = 10
+        vim.o.equalalways = false
+        require("windows").setup()
+        vim.keymap.set("n", ";z", "<Cmd>WindowsMaximize<CR>")
+    end,
+})
 -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
 
