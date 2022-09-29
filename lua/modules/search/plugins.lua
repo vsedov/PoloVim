@@ -33,6 +33,11 @@ search({
 })
 
 search({
+    "axkirillov/easypick.nvim",
+    after = "telescope.nvim",
+    config = conf.easypick,
+})
+search({
     "jvgrootveld/telescope-zoxide",
     opt = true,
     config = function()
@@ -70,18 +75,6 @@ search({
 })
 
 search({ "ibhagwan/fzf-lua", branch = "main", config = conf.fzf, opt = true, cmd = { "FzfLua" } })
-
-search({
-    "wincent/command-t",
-    run = "cd lua/wincent/commandt/lib && make",
-    opt = true,
-    setup = function()
-        vim.g.CommandTPreferredImplementation = "lua"
-    end,
-    config = function()
-        require("wincent.commandt").setup()
-    end,
-})
 
 -- :Z {query}: cd to the highest ranked directory matching your query. If {query} is omitted, cd to the home directory
 -- :Lz {query}: same as :Z, but local to the current window
