@@ -77,17 +77,13 @@ if lambda.config.neorg_auto_commit then
     lambda.augroup("NeorgAutoCommit", {
         {
             event = { "BufEnter" },
-            pattern = { "/home/viv/neorg/*" },
+            pattern = { "/home/viv/neorg/*", "/home/viv/GitHub/personal/year_3/*" },
             command = function()
-                t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
                 vim.api.nvim_create_user_command("NeorgCommit", function()
                     require("utils.plugins.custom_neorg_save").start()
                 end, { bang = true })
-                print("NeorgCommit Command Created")
-                --[[Have it so, that ;w]]
                 vim.keymap.set("n", [[;']], "<cmd>NeorgCommit<cr>", {})
             end,
-            once = true,
         },
     })
 end

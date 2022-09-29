@@ -499,3 +499,37 @@ lambda.augroup("CapLockDisable", {
         command = "silent !setxkbmap -option",
     },
 })
+
+lambda.augroup("dwm", {
+    {
+        event = "TermOpen",
+        pattern = "*",
+        command = function()
+            vim.b.dwm_disabled = true
+        end,
+    },
+    {
+        event = "FileType",
+        pattern = "*",
+        command = function()
+            if vim.tbl_contains({ "neo-tree" }, vim.opt.filetype:get()) then
+                vim.b.dwm_disabled = true
+            end
+        end,
+    },
+    {
+        event = "BufRead",
+        pattern = "*",
+        command = function()
+            if vim.tbl_contains({ "nofile" }, vim.opt.buftype:get()) then
+                vim.b.dwm_disabled = true
+            end
+        end,
+    },
+
+    {
+        event = "BufRead",
+        pattern = "*",
+        command = [[if &previewwindow | let b:dwm_disabled = 1 | endif]],
+    },
+})

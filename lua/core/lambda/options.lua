@@ -20,15 +20,13 @@ lambda.config = {
         },
     },
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
-    --[[ manual control ]]
-    tabby_or_bufferline = true, -- false: Bufferline , true for tabby
+    tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     extra_search = {
         enable = true,
         providers = {
             use_azy = true,
             use_fzf_lua = false, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
-            use_command_t = false, -- If this is active, the hydra will be activated
         },
     },
     use_dashboard = false, -- set to false to not see this
@@ -40,6 +38,7 @@ lambda.config = {
     use_gitsigns = true,
     use_hlchunk = true,
     use_pet = false,
+    use_delay_train = true,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 lambda.config.colourscheme = {
@@ -72,9 +71,9 @@ lambda.config.cmp = {
         use_tabnine = true,
         tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
         tabnine_prefetch = true,
-        tabnine_priority = 9,
+        tabnine_priority = 5,
     },
-    use_rg = true,
+    use_rg = false,
     cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
 }
 

@@ -517,7 +517,6 @@ function lambda.has(feature)
     return vim.fn.has(feature) > 0
 end
 
-
 function lambda.setup_plugin(event, plugin_name, condition)
     vim.api.nvim_create_autocmd(event, {
         pattern = "*",

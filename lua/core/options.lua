@@ -99,7 +99,6 @@ o.foldlevelstart = 4
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
--- Use faster grep alternatives if possible
 if lambda.executable("rg") then
     vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
     opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
@@ -151,7 +150,7 @@ o.linebreak = true -- lines wrap at words rather than random characters
 o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "auto:3-5"
 o.ruler = false
-o.cmdheight = 1 -- 0 , is still borked it seems
+o.cmdheight = 0 -- 0 , is still borked it seems
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1
