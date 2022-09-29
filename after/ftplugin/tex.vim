@@ -47,8 +47,3 @@ function! LatexClipboardImage() abort
   "   execute "normal! 3k4w:w"
   " endif
 endfunction
-
-lua << EOF
-  require("vscripts.race_conditions").spelling_support()
-EOF
-
