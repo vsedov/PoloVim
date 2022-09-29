@@ -38,7 +38,7 @@ lambda.config = {
     use_gitsigns = true,
     use_hlchunk = true,
     use_pet = false,
-    use_delay_train = true,
+    use_delay_train = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 lambda.config.colourscheme = {

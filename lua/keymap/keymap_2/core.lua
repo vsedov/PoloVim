@@ -55,7 +55,6 @@ M.config = {
             [leader("F")] = { cmd("Lex 30"), "Netrw" },
             [leader("w")] = { cmd("w!"), "save" },
             [leader("cc")] = { cmd("tcd %:p:h<cr><cmd>pwd"), "cd to current file" },
-            [leader("cd")] = { harpoon_notify(clever_tcd), "cd to current project or file" },
             [Alt("Up")] = { cmd("resize +2"), "Increase window size horizontal" },
             [Alt("Left")] = { cmd("vertical resize -2"), "Decrease window size vertical" },
             [Alt("Right")] = { cmd("vertical resize +2"), "Increase window size vertical" },
@@ -63,6 +62,8 @@ M.config = {
             [Ctrl(".")] = { cmd("bp"), "Previous buffer" },
             [Ctrl(",")] = { cmd("bn"), "next buffer" },
             [g("G")] = { cmd("Neogit"), "Git" },
+
+            [leader("cd")] = { harpoon_notify(clever_tcd), "cd to current project or file" },
             [cxc_("h")] = { harpoon_notify(hm.add_file), "harpoon mark" },
             [cx("h")] = { harpoon_notify(hm.add_file), "harpoon mark" },
             [cx("x")] = { harpoon_notify(hm.add_file), "harpoon mark" },
