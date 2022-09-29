@@ -59,11 +59,12 @@ local hint_telescope = [[
   _<Space>_: Frec     _\\_: FrecCWD     _B_: BookMarks
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
- ^^^^                        MRU                          ^^^^
+ ^^^^                     MRU/Misc                        ^^^^
  ^^^^                                                     ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
       _L_: MRU                          _K_: MFU
       _A_: MruAdd                       _D_: MruDel
+                          _T_: EP
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
  ^^^^                       DevDoc                        ^^^^
@@ -71,6 +72,7 @@ local hint_telescope = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
       _;_: search ft    _'_: search     _#_: browse
 
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
   _q_ exit _<Esc>_ exit
 
 ]]
@@ -142,7 +144,7 @@ Hydra({
         { "k", ":Telescope keymaps<CR>", { exit = true } },
         { "R", ":Telescope reloader<CR>", { exit = true } },
         { "<Enter>", "<cmd>Telescope<CR>", { exit = true } },
-
+        { "T", "<cmd>Easypick command_palette<CR>", { exit = true } },
         { "<Space>", require("telescope").extensions.frecency.frecency, { exit = true } },
         { "\\", ":Telescope frecency workspace=CWD<CR>", { exit = true } },
 

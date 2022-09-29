@@ -103,6 +103,7 @@ local dap_hydra = Hydra({
         { "w", dap_uirun("float_element", "watches"), { silent = true } },
         { "r", dap_uirun("float_element", "repl"), { silent = true } },
 
+        { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
         { "q", nil, { exit = true, nowait = true } },
     },
 })
