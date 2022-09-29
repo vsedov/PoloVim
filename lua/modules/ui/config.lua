@@ -756,15 +756,7 @@ function config.colourutils()
 end
 
 function config.clock_setup()
-    vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-            local f = vim.fn
-            if lambda.config.use_clock and f.getcwd():match(f.stdpath("config")) then
-                require("packer").loader("clock.nvim")
-            end
-        end,
-    })
+    lambda.setup_plugin("BufEnter", "clock.nvim", lambda.config.use_clock and f.getcwd():match(f.stdpath("config")))
 end
 
 function config.clock()
@@ -793,16 +785,7 @@ function config.clock()
 end
 
 function config.dashboard_setup()
-    vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-            local f = vim.fn
-            if lambda.config.use_dashboard then
-                require("packer").loader("dashboard")
-            end
-        end,
-        once = true,
-    })
+    lambda.setup_plugin("BufEnter", "dashboard", lambda.config.use_dashboard)
 end
 
 function config.dashboard_config()
