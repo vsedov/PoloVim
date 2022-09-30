@@ -46,6 +46,7 @@ function M.setup()
             table.insert(registered_sources, source)
         end
     end
+
     -- table.insert(registered_sources, require("typos").actions)
     -- table.insert(registered_sources, require("typos").diagnostics)
     local cfg = {
@@ -82,8 +83,7 @@ function M.setup()
                     group = augroup,
                     buffer = bufnr,
                     callback = function()
-                        vim.cmd("LspFormatting")
-                        --[[ lsp_formatting(bufnr) ]]
+                        lsp_formatting(bufnr)
                     end,
                 })
             end

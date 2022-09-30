@@ -115,6 +115,9 @@ function M.setup_autocommands(client, bufnr)
                     buffer = bufnr,
                     desc = "LSP: Show diagnostics",
                     command = function(args)
+                        if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then
+                            return
+                        end
                         vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
                     end,
                 },
