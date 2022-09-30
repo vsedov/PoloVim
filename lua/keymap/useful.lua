@@ -57,8 +57,6 @@ local plug_map = {
     ["n|\\;"] = map_cmd("<Cmd>Lspsaga code_action<cr>", "Code action Menu"):with_noremap():with_silent(),
     -- ["n|cc"] = map_cmd("<Cmd>CodeActionMenu<cr>", "Code action Menu"):with_noremap():with_silent(),
     ["x|ga"] = map_cmd("<C-U>Lspsaga range_code_action<CR>", "Code action Menu"):with_noremap():with_silent(),
-    ["n|<Leader>ca"] = map_cu("<cmd>CodeActionMenu<CR>", "lsp code actions"):with_noremap():with_silent(),
-    ["v|<Leader>ca"] = map_cu("<cmd>CodeActionMenu<CR>", "lsp code actions"):with_noremap():with_silent(),
 
     ---- private peek
     ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.lsp.lsp.config.peek".toggle_diagnostics_visibility()<CR>', "Toggle diagnostic Temp")

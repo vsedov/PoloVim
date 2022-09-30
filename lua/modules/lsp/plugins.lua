@@ -54,9 +54,24 @@ lsp({
 })
 
 lsp({
-    "weilbith/nvim-code-action-menu",
-    cmd = "CodeActionMenu",
-    ft = { "python", "lua", "c", "java", "prolog", "lisp", "cpp" },
+    "aznhe21/actions-preview.nvim",
+    keys = {
+        "<leader>ca"
+    },
+    config = function()
+        require("actions-preview").setup({
+            -- options for vim.diff(): https://neovim.io/doc/user/lua.html#vim.diff()
+            diff = {
+                ctxlen = 3,
+            },
+            backend = { "telescope", "nui" },
+            -- options for telescope.nvim: https://github.com/nvim-telescope/telescope.nvim#themes
+            telescope = require("telescope.themes").get_dropdown(),
+        })
+
+        vim.keymap.set({ "v", "n" }, "<Leader>ca", require("actions-preview").code_actions)
+
+    end,
 })
 
 lsp({
