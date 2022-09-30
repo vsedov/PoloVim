@@ -237,9 +237,9 @@ tools({
 
 tools({
     "mong8se/actually.nvim",
-    after = "dressing.nvim",
+    wants = "dressing.nvim",
     setup = function()
-        lambda.setup_plugin("BufEnter", "actually.nvim", true)
+        lambda.setup_plugin("VimEnter", "actually.nvim", true)
     end,
 })
 

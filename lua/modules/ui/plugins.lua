@@ -220,6 +220,15 @@ ui({
     config = conf.dressing,
 })
 
+-- ui({
+--   "folke/noice.nvim",
+--   after = "dressing.nvim",
+--   config = function()
+--     require("noice").setup()
+--   end,
+-- })
+
+
 ui({
     "RRethy/vim-illuminate",
     event = "BufEnter",

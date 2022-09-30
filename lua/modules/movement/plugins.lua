@@ -26,8 +26,6 @@ movement({
     config = conf.lightspeed,
 })
 
-
-
 movement({
     "phaazon/hop.nvim",
     tag = "v2.*",
