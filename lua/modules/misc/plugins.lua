@@ -45,7 +45,7 @@ misc({
 
 misc({
     "kylechui/nvim-surround",
-    keys = { "<c-c><leader>", "<C-g>g", "ys", "yss", "yS", "ySS", "yS", "gS", "ds", "<c-s>" },
+    keys = { "<c-c><leader>", "<C-g>g", "ys", "yss", "yS", "ySS", "yS", "gS", "ds", "<c-/>" },
     config = conf.surround,
 })
 

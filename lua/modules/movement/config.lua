@@ -26,9 +26,9 @@ function config.lightspeed()
         repeat_ft_with_target_char = true,
     })
     local default_keymaps = {
-        { "n", "<c-/>", "<Plug>Lightspeed_omni_s" },
-        { "x", "<c-/>", "<Plug>Lightspeed_omni_s" },
-        { "o", "<c-/>", "<Plug>Lightspeed_omni_s" },
+        { "n", "<c-s>", "<Plug>Lightspeed_omni_s" },
+        { "x", "<c-s>", "<Plug>Lightspeed_omni_s" },
+        { "o", "<c-s>", "<Plug>Lightspeed_omni_s" },
 
         { "x", "cs", "<Plug>Lightspeed_omni_gs" },
         { "n", "cs", "<Plug>Lightspeed_omni_gs" },
