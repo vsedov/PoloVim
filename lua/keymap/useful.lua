@@ -46,7 +46,7 @@ local plug_map = {
     ["n|<localleader>pP"] = map_cmd("<cmd>StartupTime<cr>", "StartUpTime"):with_noremap():with_silent(),
 
     ["n|<Leader>e"] = map_cr("NeoTreeFocusToggle", "NeoTree Focus Toggle"):with_noremap():with_silent(),
-    ["n|<Leader><leader>d"] = map_cr("Neotree Diagnostics", "Diagnostics"):with_noremap():with_silent(),
+    ["n|<Leader><leader>d"] = map_cr("Neotree diagnostics", "Diagnostics"):with_noremap():with_silent(),
 
     ["n|<Leader>F"] = map_cr("NeoTreeFocus", "NeoTree Focus"):with_noremap():with_silent(),
     ["n|<Leader>cf"] = map_cr("Neotree float reveal_file=<cfile> reveal_force_cwd", "Float reveal file")
@@ -71,7 +71,7 @@ local plug_map = {
 
     ["n|dpk"] = map_cmd('<cmd>lua require"modules.lsp.lsp.config.peek".PeekImplementation()<CR>', "Peek Implementation")
         :with_noremap()
-        :with_silent()
+        :with_silent(),
     ---- private peek
     ["n|<Leader>v"] = map_cu("Vista!!", "Vistaaa"):with_noremap():with_silent(),
 
