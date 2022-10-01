@@ -15,11 +15,11 @@ return {
                     "-synctex=1",
                     "%f",
                 },
-                on_save = false,
+                on_save = true,
                 forward_search_after = false,
             },
             chktex = {
-                on_open_and_save = false,
+                on_open_and_save = true,
                 on_edit = false,
             },
             forward_search = {
@@ -36,7 +36,7 @@ return {
                 underline = true,
             },
             linters = { "chktex" },
-            auto_save = false,
+            auto_save = true,
             ignore_errors = {},
             diagnosticsDelay = 300,
             formatterLineLength = 120,
