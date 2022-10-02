@@ -47,3 +47,4 @@ function! LatexClipboardImage() abort
   "   execute "normal! 3k4w:w"
   " endif
 endfunction
+

@@ -90,48 +90,28 @@ function config.config_yanky()
 end
 
 function config.comment()
-    vim.cmd([[packadd nvim-ts-context-commentstring ]])
     require("Comment").setup({
         padding = true,
         sticky = true,
         ignore = nil,
+        toggler = {
+            line = "gcc",
+            block = "gbc",
+        },
+        opleader = {
+            line = "gc",
+            block = "gb",
+        },
+        extra = {
+            above = "gcO",
+            below = "gco",
+            eol = "gcA",
+        },
         mappings = {
             basic = true,
             extra = true,
             extended = true,
         },
-        pre_hook = function(ctx)
-            local U = require("Comment.utils")
-
-            local location = nil
-            if ctx.ctype == U.ctype.block then
-                location = require("ts_context_commentstring.utils").get_cursor_location()
-            elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-                location = require("ts_context_commentstring.utils").get_visual_start_location()
-            end
-
-            return require("ts_context_commentstring.internal").calculate_commentstring({
-                key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
-                location = location,
-            })
-        end,
-        post_hook = function(ctx)
-            -- lprint(ctx)
-            if ctx.range.scol == -1 then
-                -- do something with the current line
-            else
-                -- print(vim.inspect(ctx), ctx.range.srow, ctx.range.erow, ctx.range.scol, ctx.range.ecol)
-                if ctx.range.ecol > 400 then
-                    ctx.range.ecol = 1
-                end
-                if ctx.cmotion > 1 then
-                    -- 322 324 0 2147483647
-                    vim.fn.setpos("'<", { 0, ctx.range.srow, ctx.range.scol })
-                    vim.fn.setpos("'>", { 0, ctx.range.erow, ctx.range.ecol })
-                    vim.cmd([[exe "norm! gv"]])
-                end
-            end
-        end,
     })
 end
 

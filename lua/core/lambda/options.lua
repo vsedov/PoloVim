@@ -79,7 +79,7 @@ lambda.config.cmp = {
 
 lambda.config.lsp = {
     use_lsp_signature = true,
-    latex = "texlab", -- texlab | ltex
+    latex = "ltex", -- texlab | ltex
     python = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
         format = { "isort", "yapf" }, -- black
