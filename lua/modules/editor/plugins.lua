@@ -544,44 +544,42 @@ editor({
     end,
 })
 
-
 editor({
     "junegunn/goyo.vim",
-    opt = true, 
+    opt = true,
     cmd = {
-        "Goyo"
+        "Goyo",
     },
     config = function()
-        vim.g.goyo_width = '85%' -- Default width
-        vim.g.goyo_height = '90%' -- Default height
+        vim.g.goyo_width = "85%" -- Default width
+        vim.g.goyo_height = "90%" -- Default height
 
-        vim.cmd [[
+        vim.cmd([[
         function! s:goyo_enter()
           " Hides mode from showing
-          set noshowmode 
+          set noshowmode
           " Hides the sign column
-          :set scl=no 
+          :set scl=no
           " Hides lualine
-          lua require"lualine".hide() 
+          lua require"lualine".hide()
           " ...
         endfunction
         function! s:goyo_leave()
           " Resets syntax highlighting (workaround for goyo bug)
-          syntax off 
-          syntax on 
+          syntax off
+          syntax on
           " Makes the signcolumn match the background colorscheme
           highlight clear SignColumn
           " Brings mode back
-          set showmode 
+          set showmode
           " Shows lualine again
           lua require"lualine".hide({unhide=true})
           " ...
         endfunction
         autocmd! User GoyoEnter nested call <SID>goyo_enter()
         autocmd! User GoyoLeave nested call <SID>goyo_leave()
-        ]]
-
-    end
+        ]])
+    end,
 })
 
 editor({
@@ -601,15 +599,5 @@ editor({
     config = function()
         vim.g.smartq_goyo_integration = 1
         vim.g.smartq_zenmode_integration = 0
-    end,
-})
-
-editor({
-    "ja-ford/delaytrain.nvim",
-    setup = function()
-        lambda.setup_plugin("BufEnter", "delaytrain.nvim", lambda.config.use_delay_train)
-    end,
-    config = function()
-        require("delaytrain").setup()
     end,
 })
