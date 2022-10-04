@@ -20,11 +20,7 @@ local function load_colourscheme()
     -- loader("rose") -- Forceuflly load rosepine
 end
 
--- require("vscripts.cursorhold")
 load_colourscheme()
-
--- vim.g.cursorhold_updatetime = 100
--- vim.cmd([[syntax on]])
 
 function Lazyload()
     _G.PLoader = loader

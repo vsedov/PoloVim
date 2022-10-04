@@ -150,7 +150,7 @@ o.linebreak = true -- lines wrap at words rather than random characters
 o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "auto:3-5"
 o.ruler = false
-o.cmdheight = 0 -- 0 , is still borked it seems
+o.cmdheight = 1 -- 0 , is still borked it seems
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1
@@ -250,7 +250,7 @@ o.shada = "!,'300,<50,@100,s10,h"
 o.ignorecase = true
 o.smartcase = true
 o.wrapscan = true -- Searches wrap around the end of the file
-o.scrolloff = 9
+o.scrolloff = 999 -- 9
 o.sidescrolloff = 10
 o.sidescroll = 1
 o.magic = true

@@ -6,7 +6,7 @@ lambda.config = {
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = false, -- waka time
     neorg_auto_commit = true,
-    loaded_confirm_quit = true,
+    loaded_confirm_quit = false,
     save_clipboard_on_exit = true,
     abbrev = {
         enable = true,
@@ -37,8 +37,8 @@ lambda.config = {
     use_guess_indent = true,
     use_gitsigns = true,
     use_hlchunk = true,
-    use_pet = false,
-    use_delay_train = false,
+    use_pet = true,
+    use_lightspeed = true, -- if false then leap.nvim will be used.
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 lambda.config.colourscheme = {
