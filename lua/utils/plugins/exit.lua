@@ -21,6 +21,7 @@ local message = {
     "It's not like I'll miss you or anything, b-baka!",
     "You are *not* prepared!",
 }
+
 local function is_last_window()
     local wins = vim.api.nvim_list_wins()
     local count = 0
@@ -36,22 +37,20 @@ local function is_last_window()
     return false
 end
 
-local function random_message(mess)
-    return mess[math.random(1, #mess)]
-end
 function _G.confirm_quit()
-    if vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == "q" then
-        if is_last_window() and vim.fn.tabpagenr("$") == 1 then
-            if vim.fn.confirm(random_message(message), "&Yes\n&No", 2) ~= 1 then
-                return 0
+    vim.defer_fn(function()
+        if vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == "q" then
+            if is_last_window() and vim.fn.tabpagenr("$") == 1 then
+                if vim.fn.confirm(random_message(message), "&Yes\n&No", 2) ~= 1 then
+                    return "false"
+                end
             end
         end
-    end
-    return 1
+        return "true"
+    end, 109)
 end
 
 vim.cmd([[cnoreabbrev <expr> q (luaeval(v:lua.confirm_quit())) ? 'q' : '']])
-
 vim.cmd([[cnoreabbrev qq  quit]])
 vim.api.nvim_create_user_command("Q", "qall<bang>", { force = true, bang = true })
 
