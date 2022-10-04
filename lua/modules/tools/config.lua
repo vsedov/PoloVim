@@ -277,16 +277,5 @@ function config.neoclip()
         },
     })
 end
-function config.rest()
-    require("rest-nvim").setup({})
-    local set = vim.keymap.set
-    local rest = require("rest-nvim")
-    local bufnr = tonumber(vim.fn.expand("<abuf>"), 10)
-    set("n", "<leader>rn", rest.run, { noremap = true, buffer = bufnr })
-    set("n", "<leader>rl", rest.last, { noremap = true, buffer = bufnr })
-    set("n", "<leader>rp", function()
-        rest.run(true)
-    end, { noremap = true, buffer = bufnr })
-end
 
 return config
