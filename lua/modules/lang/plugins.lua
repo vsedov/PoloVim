@@ -311,3 +311,13 @@ lang({
         vim.keymap.set("n", "<localleader>rp", ":Lab code panel<cr>", {})
     end,
 })
+
+lang({
+    "ranelpadon/python-copy-reference.vim",
+    opt = true,
+    ft = "python",
+    config = function()
+        vim.keymap.set("n", "<leader>rd", ":PythonCopyReferenceDotted<CR>", {})
+        vim.keymap.set("n", "<leader>rp", ":PythonCopyReferencePytest<CR>", {})
+    end,
+})
