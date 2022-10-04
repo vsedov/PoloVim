@@ -96,3 +96,18 @@ user({
         end, { desc = "close dwm" })
     end,
 })
+
+user({
+    "p00f/cphelper.nvim",
+    cmd = {
+        "CphReceive",
+        "CphTest",
+        "CphReTest",
+        "CphEdit",
+        "CphDelete",
+    },
+    config = function()
+        vim.g["cph#lang"] = "python"
+        vim.g["cph#border"] = lambda.style.border.type_0
+    end,
+})
