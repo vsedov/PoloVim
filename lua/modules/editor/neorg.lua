@@ -177,8 +177,7 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
             { "gtp", "core.norg.qol.todo_items.todo.task_pending" },
             { "gtd", "core.norg.qol.todo_items.todo.task_done" },
             { "gth", "core.norg.qol.todo_items.todo.task_on_hold" },
-            { "gtc", "core.norg.qol.todo_items.todo.task_cancelled" },
-            { "gtr", "core.norg.qol.todo_items.todo.task_recurring" },
+
             { "gti", "core.norg.qol.todo_items.todo.task_important" },
             { "<C-leader>", "core.norg.qol.todo_items.todo.task_cycle" },
 

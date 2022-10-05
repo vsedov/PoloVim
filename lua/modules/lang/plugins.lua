@@ -37,24 +37,10 @@ lang({
 -- Inline functions dont seem to work .
 lang({
     "ThePrimeagen/refactoring.nvim",
-    opt = true,
+    module = "refactoring",
     requires = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
-    },
-    keys = {
-        { "v", "<leader>re" },
-        { "v", "<leader>rf" },
-        { "v", "<leader>rv" },
-        { "v", "<leader>ri" },
-        { "n", "<leader>rb" },
-        { "n", "<leader>rbf" },
-        { "n", "<leader>ri" },
-        { "v", "<leader>rr" },
-        { "v", "<leader>rv" },
-        { "n", "<leader>rc" },
-        { "n", "d?v" },
-        { "n", "d?V" },
     },
     config = conf.refactor,
 })
@@ -316,8 +302,31 @@ lang({
     "ranelpadon/python-copy-reference.vim",
     opt = true,
     ft = "python",
+    cmd = {
+        "PythonCopyReferenceDotted",
+        "PythonCopyReferencePytest",
+    },
+})
+
+lang({
+    "jghauser/papis.nvim",
+    after = { "telescope.nvim", "nvim-cmp" },
+    ft = { "latex", "tex", "norg" },
+    requires = {
+        "kkharji/sqlite.lua",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "nvim-treesitter/nvim-treesitter",
+    },
+    rocks = { "lyaml" },
     config = function()
-        vim.keymap.set("n", "<leader>rd", ":PythonCopyReferenceDotted<CR>", {})
-        vim.keymap.set("n", "<leader>rp", ":PythonCopyReferencePytest<CR>", {})
+        require("papis").setup({
+            papis_python = {
+                dir = "/home/viv/Documents/papers/",
+                info_name = "info.yaml", -- (when setting papis options `-` is replaced with `_`
+                notes_name = [[notes.norg]],
+            },
+            enable_keymaps = false,
+        })
     end,
 })

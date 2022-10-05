@@ -260,16 +260,6 @@ function config.diffview()
             },
         },
     })
-
-    require("utils.ui.highlights").plugin("diffview", {
-        { DiffAddedChar = { bg = "NONE", fg = { from = "diffAdded", attr = "bg", alter = 30 } } },
-        { DiffChangedChar = { bg = "NONE", fg = { from = "diffChanged", attr = "bg", alter = 30 } } },
-        { DiffviewStatusAdded = { link = "DiffAddedChar" } },
-        { DiffviewStatusModified = { link = "DiffChangedChar" } },
-        { DiffviewStatusRenamed = { link = "DiffChangedChar" } },
-        { DiffviewStatusUnmerged = { link = "DiffChangedChar" } },
-        { DiffviewStatusUntracked = { link = "DiffAddedChar" } },
-    })
 end
 
 function config.gitsigns()
