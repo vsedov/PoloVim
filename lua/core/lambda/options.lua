@@ -39,6 +39,7 @@ lambda.config = {
     use_hlchunk = true,
     use_pet = true,
     use_lightspeed = true, -- if false then leap.nvim will be used.
+    use_noice = true,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 lambda.config.colourscheme = {
