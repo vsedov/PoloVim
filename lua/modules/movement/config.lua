@@ -83,13 +83,13 @@ function config.leap()
         },
     })
     require("leap").setup({
-        equivalence_classes = { " \t\r\n", "([{", ")]}", "`\"'" },
+        equivalence_classes = { " \t\r\n", "([{", ")]}", "`\"'", ["\r"] = "¬" },
         max_highlighted_traversal_targets = 20,
         special_keys = {
             repeat_search = "<enter>",
             next_aot_match = "<enter>",
-            next_match = { ";", "<enter>" },
-            prev_match = { ",", "<tab>" },
+            next_match = { "<space>", "<c-[>" },
+            prev_match = { "<tab>", "<c-]>" },
             next_group = "<space>",
             prev_group = "<tab>",
         },

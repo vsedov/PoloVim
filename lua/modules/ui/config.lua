@@ -717,6 +717,29 @@ function config.modes()
     })
 end
 
+function config.modicator()
+    local modicator = require("modicator")
+
+    print("here")
+    modicator.setup({
+        line_numbers = true,
+        cursorline = false,
+        highlights = {
+            modes = {
+                ["n"] = modicator.get_highlight_fg("CursorLineNr"),
+                ["i"] = modicator.get_highlight_fg("Question"),
+                ["v"] = modicator.get_highlight_fg("Type"),
+                ["V"] = modicator.get_highlight_fg("Type"),
+                ["�"] = modicator.get_highlight_fg("Type"),
+                ["s"] = modicator.get_highlight_fg("Keyword"),
+                ["S"] = modicator.get_highlight_fg("Keyword"),
+                ["R"] = modicator.get_highlight_fg("Title"),
+                ["c"] = modicator.get_highlight_fg("Constant"),
+            },
+        },
+    })
+end
+
 function config.transparent()
     require("transparent").setup({
         enable = false,
@@ -748,6 +771,38 @@ function config.dim()
             signs = true,
             underline = true,
         },
+    })
+end
+
+function config.tint()
+    require("tint").setup({
+        tint = -30,
+        highlight_ignore_patterns = {
+            "WinSeparator",
+            "St.*",
+            "Comment",
+            "Panel.*",
+            "Telescope.*",
+            "Bqf.*",
+        },
+        window_ignore_function = function(win_id)
+            if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= "" then
+                return true
+            end
+            local buf = vim.api.nvim_win_get_buf(win_id)
+            local b = vim.bo[buf]
+            local ignore_bt = { "terminal", "prompt", "nofile" }
+            local ignore_ft = {
+                "neo-tree",
+                "packer",
+                "diff",
+                "toggleterm",
+                "Neogit.*",
+                "Telescope.*",
+                "qf",
+            }
+            return lambda.any(b.bt, ignore_bt) or lambda.any(b.ft, ignore_ft)
+        end,
     })
 end
 
@@ -912,6 +967,31 @@ function config.dressing()
         },
     })
 end
+
+function config.noice()
+    require("noice").setup({
+        cmdline = {
+            view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+            opts = { buf_options = { filetype = "vim" } }, -- enable syntax highlighting in the cmdline
+            menu = "wild", -- @type "popup" | "wild", -- what style of popupmenu do you want to use?
+            icons = {
+                ["/"] = { icon = " ", hl_group = "DiagnosticWarn" },
+                ["?"] = { icon = " ", hl_group = "DiagnosticWarn" },
+                [":"] = { icon = " ", hl_group = "DiagnosticInfo", firstc = false },
+            },
+        },
+        history = {
+            -- options for the message history that you get with `:Noice`
+            view = "split",
+            opts = { enter = true },
+            filter = { event = "msg_show", ["not"] = { kind = { "search_count", "echo" } } },
+        },
+        throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
+        views = {}, -- @see the section on views below
+        routes = {}, -- @see the section on routes below
+    })
+end
+
 function config.illuminate()
     -- default configuration
     require("illuminate").configure({
@@ -950,16 +1030,31 @@ function config.illuminate()
         under_cursor = true,
     })
 end
-vim.api.nvim_exec(
-    [[
-    set nocursorcolumn
-    set nocursorline
-    augroup vimrc_todo
-    au!
-    au Syntax *.go,*.c,*.rs,*.js,*.tsx,*.cpp,*.html syn match MyTodo /\v<(FIXME|Fixme|NOTE|Note|TODO|ToDo|OPTIMIZE|XXX):/ containedin=.*Comment,vimCommentTitle
-    augroup END
-    hi def link MyTodo Todo
-  ]],
-    true
-)
+
+function config.beacon()
+    local beacon = require("beacon")
+    beacon.setup({
+        minimal_jump = 20,
+        ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
+        ignore_filetypes = {
+            "qf",
+            "neo-tree",
+            "NeogitCommitMessage",
+            "NeogitPopup",
+            "NeogitStatus",
+            "packer",
+            "trouble",
+        },
+    })
+    lambda.augroup("BeaconCmds", {
+        {
+            event = "BufReadPre",
+            pattern = "*.norg",
+            command = function()
+                beacon.beacon_off()
+            end,
+        },
+    })
+end
+
 return config

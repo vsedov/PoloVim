@@ -35,14 +35,14 @@ Hydra({
     name = "Windows",
     hint = window_hint,
     config = {
-        invoke_on_body = false,
+        invoke_on_body = true,
         hint = {
             border = "rounded",
             offset = -1,
         },
     },
     mode = "n",
-    body = "<C-w>",
+    body = "<C-w>[",
     heads = {
         { "h", "<C-w>h" },
         { "j", "<C-w>j" },

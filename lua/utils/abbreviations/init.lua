@@ -29,5 +29,3 @@ M.setup = function(opts)
     end
 end
 return M
-
--- Load specific abreviations

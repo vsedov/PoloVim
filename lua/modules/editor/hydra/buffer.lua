@@ -20,7 +20,7 @@ local buffer_config = function()
             three.remove_project()
         end, {})
 
-hint = [[
+        hint = [[
   ^^^^                Bufferline                  ^^^^
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
    _l_: three next          _h_: three prev

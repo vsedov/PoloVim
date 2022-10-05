@@ -22,15 +22,18 @@ movement({
 movement({
     "ggandor/lightspeed.nvim",
     setup = function()
-        lambda.setup_plugin("BufReadPost", "lightspeed.nvim", lambda.config.use_lightspeed)
+        lambda.setup_plugin("BufEnter", "lightspeed.nvim", lambda.config.use_lightspeed)
     end,
+    opt = true,
     config = conf.lightspeed,
 })
 
 movement({
     "ggandor/leap.nvim",
     setup = function()
-        lambda.setup_plugin("BufReadPost", "leap.nvim", not lambda.config.use_lightspeed)
+        lambda.setup_plugin("BufEnter", "leap.nvim", function()
+            return not lambda.config.use_lightspeed
+        end)
     end,
     opt = true,
     config = conf.leap,
@@ -38,7 +41,6 @@ movement({
 
 movement({
     "ggandor/flit.nvim",
-    wants = { "leap.nvim" },
     after = "leap.nvim",
     config = function()
         require("flit").setup()

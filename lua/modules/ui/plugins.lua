@@ -150,37 +150,7 @@ ui({
     "levouh/tint.nvim",
     opt = true,
     event = "BufEnter",
-    config = function()
-        require("tint").setup({
-            tint = -30,
-            highlight_ignore_patterns = {
-                "WinSeparator",
-                "St.*",
-                "Comment",
-                "Panel.*",
-                "Telescope.*",
-                "Bqf.*",
-            },
-            window_ignore_function = function(win_id)
-                if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= "" then
-                    return true
-                end
-                local buf = vim.api.nvim_win_get_buf(win_id)
-                local b = vim.bo[buf]
-                local ignore_bt = { "terminal", "prompt", "nofile" }
-                local ignore_ft = {
-                    "neo-tree",
-                    "packer",
-                    "diff",
-                    "toggleterm",
-                    "Neogit.*",
-                    "Telescope.*",
-                    "qf",
-                }
-                return lambda.any(b.bt, ignore_bt) or lambda.any(b.ft, ignore_ft)
-            end,
-        })
-    end,
+    config = conf.tint,
 })
 
 ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
@@ -222,30 +192,17 @@ ui({
 
 ui({
     "folke/noice.nvim",
-    event = "VimEnter",
-    config = function()
-        require("noice").setup({
-            cmdline = {
-                view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
-                opts = { buf_options = { filetype = "vim" } }, -- enable syntax highlighting in the cmdline
-                menu = "wild", -- @type "popup" | "wild", -- what style of popupmenu do you want to use?
-                icons = {
-                    ["/"] = { icon = " ", hl_group = "DiagnosticWarn" },
-                    ["?"] = { icon = " ", hl_group = "DiagnosticWarn" },
-                    [":"] = { icon = " ", hl_group = "DiagnosticInfo", firstc = false },
-                },
-            },
-            history = {
-                -- options for the message history that you get with `:Noice`
-                view = "split",
-                opts = { enter = true },
-                filter = { event = "msg_show", ["not"] = { kind = { "search_count", "echo" } } },
-            },
-            throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
-            views = {}, -- @see the section on views below
-            routes = {}, -- @see the section on routes below
-        })
+    opt = true,
+    setup = function()
+        lambda.setup_plugin("VimEnter", "noice.nvim", lambda.config.use_noice)
     end,
+    requires = {
+        -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+        "nui.nvim",
+        "nvim-notify",
+        "hrsh7th/nvim-cmp",
+    },
+    config = conf.noice,
 })
 
 ui({
@@ -257,29 +214,5 @@ ui({
     "rainbowhxch/beacon.nvim",
     opt = true,
     event = "BufEnter",
-    config = function()
-        local beacon = require("beacon")
-        beacon.setup({
-            minimal_jump = 20,
-            ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
-            ignore_filetypes = {
-                "qf",
-                "neo-tree",
-                "NeogitCommitMessage",
-                "NeogitPopup",
-                "NeogitStatus",
-                "packer",
-                "trouble",
-            },
-        })
-        lambda.augroup("BeaconCmds", {
-            {
-                event = "BufReadPre",
-                pattern = "*.norg",
-                command = function()
-                    beacon.beacon_off()
-                end,
-            },
-        })
-    end,
+    config = conf.beacon,
 })

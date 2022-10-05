@@ -18,7 +18,7 @@ local run_or_test = function(debug)
     end
 end
 local keys = { --
-    ["n|<leader>r"] = map_cmd(run_or_test, "jaq run"):with_expr(),
+    ["n|<leader>R"] = map_cmd(run_or_test, "jaq run"):with_expr(),
     ["n|<F6>"] = map_cu("Jaq quickfix", "jaq run"):with_noremap():with_silent(),
 
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]], "Harppon Add file"):with_noremap(),
