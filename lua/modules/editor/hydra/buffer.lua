@@ -104,8 +104,8 @@ local buffer_config = function()
 ^^^^                   Delete                   ^^^^
 ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
 
-              _qh_: Del Hidden 
-              _qn_: Del NameLess 
+              _qh_: Del Hidden
+              _qn_: Del NameLess
               _qt_: Del This
               _d_: Bwipeout
 
@@ -123,9 +123,7 @@ local buffer_config = function()
             color = "teal",
             body = "<leader>b",
             config = {
-                hint = { border = "single" },
-                invoke_on_body = true,
-                position = "bottom-right",
+                hint = { border = "single", position = "bottom-right" },
             },
             heads = {
                 { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },

@@ -1,14 +1,25 @@
 local Hydra = require("hydra")
 
+local harpoon_hint_visual = [[
+^ ^ _w_: w       ^ ^
+^ ^ _b_: b       ^ ^
+^ ^ _e_: e       ^ ^
+^ ^ _ge_: ge     ^ ^
+^ _<Esc>_: quit  ^ ^
+]]
+
 Hydra({
     name = "Quick words",
+
+    hint = harpoon_hint_visual,
     config = {
+        color = "teal",
+        invoke_on_body = true,
         hint = {
-            position = "bottom",
+            position = "bottom-right",
             border = "single",
         },
     },
-
     mode = { "n", "x", "o" },
     body = "<localleader>w",
     heads = {
