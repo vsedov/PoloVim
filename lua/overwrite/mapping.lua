@@ -6,19 +6,7 @@ local map_cmd = bind.map_cmd
 local loader = require("packer").loader
 local K = {}
 
---- @usage : Run :cd or <leader>cd -> <leader>r
----@param debug Debug is idk , idk why i have this here tbh
-local run_or_test = function(debug)
-    local ft = vim.bo.filetype
-    -- t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
-    if ft == "lua" then
-        return ":Jaq internal<CR>"
-    else
-        return ":Jaq<CR>"
-    end
-end
 local keys = { --
-    ["n|<leader>R"] = map_cmd(run_or_test, "jaq run"):with_expr(),
     ["n|<F6>"] = map_cu("Jaq quickfix", "jaq run"):with_noremap():with_silent(),
 
     ["n|;a"] = map_cmd([[<cmd> lua require("harpoon.mark").add_file()<CR>]], "Harppon Add file"):with_noremap(),
