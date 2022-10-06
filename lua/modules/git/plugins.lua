@@ -154,3 +154,9 @@ git({
 
     config = conf.temp_clone,
 })
+
+-- git({
+--     "cosmicthemethhead/gitlens.nvim",
+--     setup = conf.git_setup("gitlens.nvim"),
+--     config = conf.gitlens,
+-- })

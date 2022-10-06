@@ -497,4 +497,13 @@ function config.temp_clone()
     vim.keymap.set("n", "<leader>xo", [[<cmd>TmpcloneOpen<cr>]], {})
     vim.keymap.set("n", "<leader>xr", [[<cmd>TmpcloneRemove]], {})
 end
+
+function config.gitlens()
+    require("gitlens").setup({
+        ui = {
+            username = "vsedov",
+        },
+    })
+end
+
 return config
