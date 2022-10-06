@@ -173,6 +173,12 @@ With.semgrep = {
 }
 
 With.flake8 = {
+    condition = function(u)
+        return vim.api.nvim_buf_line_count(
+            -- Current buffer
+            0
+        ) < 8000
+    end,
     cwd = function(params)
         return vim.fn.fnamemodify(params.bufname, ":h")
     end,

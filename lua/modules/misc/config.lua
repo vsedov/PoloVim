@@ -113,28 +113,6 @@ function config.sidebar()
         todos = { ignored_paths = { "~" } },
     })
 end
-function config.reach()
-    require("reach").setup({
-        notifications = true,
-    })
-end
-
-function config.scope_setup()
-    vim.api.nvim_create_autocmd({ "BufAdd", "TabEnter" }, {
-        pattern = "*",
-        group = vim.api.nvim_create_augroup("scope_loading", {}),
-        callback = function()
-            local count = #vim.fn.getbufinfo({ buflisted = 1 })
-            if count >= 2 then
-                require("packer").loader("scope.nvim")
-            end
-        end,
-    })
-end
-
-function config.scope()
-    require("scope").setup()
-end
 
 function config.diaglist()
     require("diaglist").init({

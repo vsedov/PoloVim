@@ -140,13 +140,6 @@ ui({
 })
 
 ui({
-    "kazhala/close-buffers.nvim",
-    cmd = { "Kwbd", "BDelete", "BWipeout" },
-    module = "close-buffers",
-    config = conf.buffers_close,
-})
-
-ui({
     "levouh/tint.nvim",
     opt = true,
     event = "BufEnter",

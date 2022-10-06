@@ -26,7 +26,7 @@ local buffer_config = function()
    _l_: three next          _h_: three prev
    _p_: three pin           _c_: BufferLinePick
    _H_: Move Next           _L_: Move Prev
-   _D_: Pick Close          _q_: Smart Close 
+   _D_: Pick Close          _q_: Smart Close
    _m_: Three Move          _Q_: Close Buffer
    _ot_: Sort Tabs          _od_: Sort Dir
    _or_: Sort relative dir  _b_: Tele Buffer
@@ -38,7 +38,7 @@ local buffer_config = function()
         _1_: Jump 1    _2_: Jump 2    _3_: Jump 3
         _4_: Jump 4    _5_: Jump 5    _6_: Jump 6
         _7_: Jump 7    _8_: Jump 8    _9_: Jump 9
-                     _0_: Jump 0    
+                     _0_: Jump 0
                      _#_: last buffer
 
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
@@ -163,7 +163,7 @@ local buffer_config = function()
             name = "Tab management",
             mode = "n",
             color = "teal",
-            body = "<leader>b",
+            body = "<leader>B",
             config = {
                 hint = { border = "single", position = "bottom-right" },
             },

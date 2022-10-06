@@ -518,6 +518,12 @@ function lambda.has(feature)
 end
 
 function lambda.setup_plugin(event, plugin_name, condition)
+    if type(condition) == "function" then
+        condition = condition()
+    end
+    if type(plugin_name) == "function" then
+        plugin_name = plugin_name()
+    end
     vim.api.nvim_create_autocmd(event, {
         pattern = "*",
         callback = function()

@@ -203,11 +203,6 @@ editor({
 })
 
 editor({
-    "David-Kunz/markid",
-    after = "nvim-treesitter",
-})
-
-editor({
     "folke/which-key.nvim",
     module = "which-key",
     requires = "nvim-treesitter",
@@ -328,13 +323,13 @@ editor({
 
 editor({
     "edluffy/hologram.nvim",
-    ft = {
-        "norg",
-        "md",
-        "org",
-        "latex",
+    cmd = {
+        "Hologram",
     },
     config = function()
+        lambda.command("Hologram", function()
+            vim.cmd([[packadd hologram.nvim]])
+        end, {})
         require("hologram").setup({
             auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
         })
@@ -388,23 +383,6 @@ editor({
     "nicwest/vim-camelsnek",
     opt = true,
     cmd = { "Snek", "Camel", "CamelB", "Kebab" },
-})
-
--- editor({
---     "knubie/vim-kitty-navigator",
---     opt = true,
---     run = "cp ./*.py ~/.config/kitty/",
---     keys = { "<c-j>", "<c-k>", "<c-h>", "<c-l>" },
---     cond = function()
---         return vim.env.TMUX == nil
---     end,
--- })
-
-editor({
-    "moll/vim-bbye",
-    cmd = { "Bdelete", "Bwipeout" },
-    keys = { "_q" },
-    config = conf.bbye,
 })
 
 editor({

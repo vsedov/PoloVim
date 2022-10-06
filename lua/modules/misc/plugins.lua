@@ -27,22 +27,6 @@ misc({
 
 misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 
-misc({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
-
-misc({
-    "toppair/reach.nvim",
-    config = conf.reach,
-    opt = true,
-    cmd = { "ReachOpen" },
-})
-
-misc({
-    "tiagovla/scope.nvim",
-    opt = true,
-    setup = conf.scope_setup,
-    config = conf.scope,
-})
-
 misc({
     "kylechui/nvim-surround",
     keys = { "<c-c><leader>", "<C-g>g", "ys", "yss", "yS", "ySS", "yS", "gS", "ds", "<c-/>" },

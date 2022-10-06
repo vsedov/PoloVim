@@ -533,3 +533,10 @@ lambda.augroup("dwm", {
         command = [[if &previewwindow | let b:dwm_disabled = 1 | endif]],
     },
 })
+
+lambda.setup_plugin("BufEnter", function()
+    if lambda.config.use_lightspeed then
+        return "lightspeed.nvim"
+    end
+    return "leap.nvim"
+end, true)

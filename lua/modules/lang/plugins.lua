@@ -1,39 +1,6 @@
 local conf = require("modules.lang.config")
 local lang = require("core.pack").package
 
-lang({ "nvim-treesitter/nvim-treesitter", opt = true, run = ":TSUpdate", config = conf.nvim_treesitter })
-
-lang({
-    "p00f/nvim-ts-rainbow",
-    after = "nvim-treesitter",
-    config = conf.rainbow,
-    opt = true,
-})
-lang({
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    after = "nvim-treesitter",
-    config = conf.treesitter_obj,
-    opt = true,
-})
-lang({
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    opt = true,
-})
-
-lang({
-    "RRethy/nvim-treesitter-textsubjects",
-    ft = { "lua", "rust", "go", "python", "javascript" },
-    opt = true,
-    config = conf.tsubject,
-})
-
-lang({
-    "RRethy/nvim-treesitter-endwise",
-    ft = { "lua", "ruby", "vim" },
-    event = "InsertEnter",
-    opt = true,
-    config = conf.endwise,
-})
 -- Inline functions dont seem to work .
 lang({
     "ThePrimeagen/refactoring.nvim",
@@ -44,11 +11,11 @@ lang({
     },
     config = conf.refactor,
 })
+
 -- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this
 -- on startup, using lazy.lua
 lang({
     "andrewferrier/debugprint.nvim",
-    config = conf.debugprint,
     keys = {
         { "n", "g?p" },
         { "n", "g?P" },
@@ -62,13 +29,7 @@ lang({
         { "x", "g?O" },
     },
     cmd = "DeleteDebugPrints",
-})
-
-lang({
-    "nvim-treesitter/nvim-treesitter-refactor",
-    after = "nvim-treesitter-textobjects", -- manual loading
-    config = conf.treesitter_ref, -- let the last loaded config treesitter
-    opt = true,
+    config = conf.debugprint,
 })
 
 lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
@@ -137,31 +98,6 @@ lang({
         map("n", "[d", require("goto-breakpoints").prev, {})
     end,
 })
-
-lang({
-    "max397574/nvim-treehopper",
-    keys = {
-        { "o", "u" },
-        { "v", "u" },
-    },
-    config = function()
-        lambda.augroup("TreehopperMaps", {
-            {
-                event = "FileType",
-                command = function(args)
-                    -- FIXME: this issue should be handled inside the plugin rather than manually
-                    local langs = require("nvim-treesitter.parsers").available_parsers()
-                    if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
-                        vim.keymap.set("o", "u", ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
-                        vim.keymap.set("v", "u", ":lua require('tsht').nodes()<cr>", { buffer = args.buf })
-                    end
-                end,
-            },
-        })
-    end,
-})
-
-lang({ "nvim-treesitter/nvim-treesitter-context", event = "WinScrolled", config = conf.context })
 
 lang({ "mfussenegger/nvim-jdtls", ft = "java", opt = true })
 

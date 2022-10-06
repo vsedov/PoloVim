@@ -362,10 +362,6 @@ function config.text_case()
     vim.api.nvim_set_keymap("v", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
 end
 
-function config.bbye()
-    vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
-end
-
 function config.venn()
     local function noremap(mode, lhs, rhs)
         vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, { noremap = true })
