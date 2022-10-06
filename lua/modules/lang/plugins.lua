@@ -28,6 +28,7 @@ lang({
         { "x", "g?o" },
         { "x", "g?O" },
     },
+    module = "debugprint",
     cmd = "DeleteDebugPrints",
     config = conf.debugprint,
 })
@@ -227,13 +228,15 @@ lang({
                 enabled = true,
             },
         })
-
-        vim.keymap.set("n", "<localleader>rs", ":Lab code stop<cr>", {})
-        vim.keymap.set("n", "<localleader>rr", ":Lab code run<cr>", {})
-        vim.keymap.set("n", "<localleader>rp", ":Lab code panel<cr>", {})
     end,
 })
-
+lang({
+    "michaelb/sniprun",
+    run = "bash ./install.sh",
+    module = { "sniprun" },
+    cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
+    config = function() end,
+})
 lang({
     "ranelpadon/python-copy-reference.vim",
     opt = true,

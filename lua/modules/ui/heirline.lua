@@ -596,6 +596,27 @@ ViMode = utils.surround({ "", "" }, "bright_bg", { ViMode, Snippets })
 local Align = { provider = "%=" }
 local Space = { provider = " " }
 
+local hydra = require("hydra.statusline")
+local HydraActive = {
+    condition = hydra.is_active,
+    utils.surround({ "", "" }, function() -- color
+        return hydra.get_color()
+    end, {
+        {
+            fallthrough = false,
+            Space,
+            { provider = "" },
+        },
+        Space,
+        {
+            provider = function()
+                return " " .. hydra.get_name() .. "  " or "HYDRA"
+            end,
+        },
+        hl = { fg = "red", force = true },
+    }),
+}
+
 local DefaultStatusline = {
     ViMode,
     Space,
@@ -609,6 +630,7 @@ local DefaultStatusline = {
     Diagnostics,
     Align,
     utils.make_flexible_component(3, cool_substitute, { provider = "" }),
+    utils.make_flexible_component(3, HydraActive, { provider = "" }),
     -- space,
     DAPMessages,
     Align,

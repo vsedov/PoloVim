@@ -23,7 +23,6 @@ end
 local config = {}
 
 local exit = { nil, { exit = true, desc = "EXIT" } }
-
 -- TODO: make a toggler for cursorhold events, so we can show peek
 function toggle(lhs, on_enter, on_exit)
     return {
