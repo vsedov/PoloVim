@@ -600,7 +600,7 @@ local hydra = require("hydra.statusline")
 local HydraActive = {
     condition = hydra.is_active,
     utils.surround({ "", "" }, function() -- color
-        return hydra.get_color()
+        return "orange"
     end, {
         {
             fallthrough = false,

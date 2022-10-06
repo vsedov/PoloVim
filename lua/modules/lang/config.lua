@@ -369,19 +369,6 @@ function config.neotest()
     add_cmd("TestAttach", function()
         require("neotest").run.attach()
     end, { force = true })
-
-    local cmd = {
-        ["<leader>ur"] = "TestNear",
-        ["<leader>uc"] = "TestCurrent",
-        ["<leader>us"] = "TestSummary",
-        ["<leader>uo"] = "TestOutput",
-        ["<leader>uS"] = "TestStrat",
-        ["<leader>uh"] = "TestStop",
-    }
-
-    for i, v in pairs(cmd) do
-        vim.keymap.set("n", i, "<cmd>" .. v .. "<cr>", { buffer = 0 })
-    end
 end
 
 function config.overseer()
