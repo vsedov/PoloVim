@@ -1,6 +1,6 @@
 local Hydra = require("hydra")
 
-local harpoon_hint_visual = [[
+local refactoring_visual = [[
 ^ ^ _e_: Extract Function         ^ ^
 ^ ^ _f_: Extract Function To File ^ ^
 ^ ^ _v_: Extract Variable         ^ ^
@@ -12,7 +12,7 @@ local harpoon_hint_visual = [[
 
 Hydra({
     name = "Refactoring Visual ",
-    hint = harpoon_hint_visual,
+    hint = refactoring_visual,
     config = {
         color = "pink",
         invoke_on_body = true,
@@ -34,7 +34,7 @@ Hydra({
     },
 })
 
-local harpoon_hint_normal = [[
+local refactoring_normal = [[
 ^ ^ _d_: PyCopyReferenceDotted    ^ ^
 ^ ^ _p_: PyCopyReferencePytest    ^ ^
 ^ ^ _b_: Extract Block            ^ ^
@@ -45,8 +45,8 @@ local harpoon_hint_normal = [[
 ]]
 
 Hydra({
-    name = "Refactoring Visual ",
-    hint = harpoon_hint_normal,
+    name = "Refactoring normal ",
+    hint = refactoring_normal,
     config = {
         color = "pink",
         invoke_on_body = true,
@@ -85,9 +85,11 @@ Hydra({
         },
     },
     mode = "n",
-    body = "d;",
+    body = "dv",
     heads = {
-        { "v", "<cmd>lua require('refactoring').debug.printf({below = false})<CR>", { exit = false } },
+        { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
+
+        { "v", "<cmd>lua require('refactoring').debug.printf({below = true})<CR>", { exit = false } },
         { "V", "<cmd>lua require('refactoring').debug.printf({below = false})<CR>", { exit = true } },
     },
 })
