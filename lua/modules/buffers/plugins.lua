@@ -32,3 +32,10 @@ buffer({
     keys = { "_q" },
     config = conf.bbye,
 })
+
+buffer({
+    "stevearc/stickybuf.nvim",
+    opt = true,
+    cmd = { "PinBuffer", "PinBuftype", "PinBuftype", "UnpinBuffer" },
+    config = conf.sticky_buf,
+})

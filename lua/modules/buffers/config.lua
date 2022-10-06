@@ -44,4 +44,41 @@ function config.bbye()
     vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
 end
 
+function config.sticky_buf()
+    require("stickybuf").setup({
+        buftype = {
+            [""] = false,
+            acwrite = false,
+            help = "buftype",
+            nofile = false,
+            nowrite = false,
+            quickfix = "buftype",
+            terminal = false,
+            prompt = "bufnr",
+        },
+        wintype = {
+            autocmd = false,
+            popup = "bufnr",
+            preview = false,
+            command = false,
+            [""] = false,
+            unknown = false,
+            floating = false,
+        },
+        filetype = {
+            aerial = "filetype",
+            nerdtree = "filetype",
+            ["neotest-summary"] = "filetype",
+        },
+        bufname = {
+            ["Neogit.*Popup"] = "bufnr",
+        },
+        autocmds = {
+            defx = [[au FileType defx if &winfixwidth || &winfixheight | silent! PinFiletype | endif]],
+            fern = [[au FileType fern if &winfixwidth || &winfixheight | silent! PinFiletype | endif]],
+            neogit = [[au FileType NeogitStatus,NeogitLog,NeogitGitCommandHistory if winnr('$') > 1 | silent! PinFiletype | endif]],
+        },
+    })
+end
+
 return config
