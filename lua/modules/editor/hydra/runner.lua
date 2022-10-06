@@ -16,7 +16,7 @@ Hydra({
         color = "pink",
         invoke_on_body = true,
         hint = {
-            position = "bottom-right",
+            position = "middle-right",
             border = lambda.style.border.type_0,
         },
     },
@@ -37,33 +37,32 @@ local run_or_test = function(debug)
     if ft == "lua" then
         return ":Jaq internal<CR>"
     else
-        -- return ":Jaq<CR>"
         local m = vim.fn.mode()
         if m == "n" or m == "i" then
-            require("sniprun").run()
+            cmd("Lab code run")
         else
             require("sniprun").run("v")
         end
     end
 end
 
-local hint = [[
+local core_runner_hint = [[
 ^ ^ _r_: Run Code   ^ ^
 ^ ^ _f_: Adv RUn    ^ ^
-^ ^ _w_: SnipRun    ^ ^
-^ ^ _e_: SnipRunV   ^ ^
-^ ^ _a_: Run Code   ^ ^
+^ ^ _w_: Run Code   ^ ^
 ^ ^ _s_: Stop Code  ^ ^
-^ ^ _d_: Pannel     ^ ^
+^ ^ _p_: Pannel     ^ ^
+^ ^ _o_: SnipRun    ^ ^
+^ ^ _e_: SnipRunV   ^ ^
 ]]
 Hydra({
     name = "Runner",
-    hint = hint,
+    hint = core_runner_hint,
     config = {
         color = "pink",
         invoke_on_body = true,
         hint = {
-            position = "bottom-right",
+            position = "middle-right",
             border = lambda.style.border.type_0,
         },
     },
@@ -71,14 +70,12 @@ Hydra({
     body = ";r",
     heads = {
         { "r", cmd("Jaq float"), { exit = false } },
-        { "f", run_or_test, { exit = false } },
-        { "w", cmd([[luarequire("sniprun").run())]]), { exit = false } },
-        { "e", cmd([[lua require("sniprun").run('v')]]), { exit = false } },
-
-        { "a", cmd("Lab code run"), { exit = false } },
+        { "f", run_or_test, { exit = true } },
+        { "w", cmd("Lab code run"), { exit = true } },
         { "s", cmd("Lab code stop"), { exit = false } },
-        { "d", cmd("Lab code panel"), { exit = false } },
-
+        { "p", cmd("Lab code panel"), { exit = false } },
+        { "o", cmd([[lua require("sniprun").run()]]), { exit = false } },
+        { "e", cmd([[lua require("sniprun").run('v')]]), { exit = false } },
         { "<Esc>", nil, { exit = true, desc = false } },
     },
 })
