@@ -23,14 +23,15 @@ local buffer_config = function()
         hint = [[
   ^^^^                Bufferline                  ^^^^
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-   _l_: three next          _h_: three prev
+   _l_: next                _h_: prev
    _p_: three pin           _c_: BufferLinePick
    _H_: Move Next           _L_: Move Prev
    _D_: Pick Close          _q_: Smart Close
    _m_: Three Move          _Q_: Close Buffer
    _ot_: Sort Tabs          _od_: Sort Dir
    _or_: Sort relative dir  _b_: Tele Buffer
-
+   _tl_: next               _th_: prev
+   
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^               BufferJumper                 ^^^^
   ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
@@ -109,14 +110,16 @@ local buffer_config = function()
                 { "qn", "<cmd>BDelete! nameless<CR>" },
                 { "qt", "<cmd>BDelete! this<CR>" },
 
-                { "l", three.next, { desc = "Next buffer" } },
-                { "h", three.prev, { desc = "Prev buffer" } },
-                { "p", three.toggle_pin, { desc = "Pin buffer" } },
+                { "tl", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" } },
+                { "th", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
+                { "l", three.wrap(three.next, { wrap = true }, { desc = "[G]oto next [B]uffer" }) },
+                { "h", three.wrap(three.prev, { wrap = true }, { desc = "[G]oto prev [B]uffer" }) },
+
+                { "p", "<cmd>BufferLineTogglePin<cr>", { desc = "Pin buffer" } },
                 { "q", three.smart_close, { desc = "[C]lose window or buffer" } },
                 { "Q", three.close_buffer, { desc = "[B]uffer [C]lose" } },
                 { "H", three.hide_buffer, { desc = "[B]uffer [H]ide" } },
                 { "m", buffer_move, { desc = "[B]uffer [M]ove" } },
-
                 { "1", three.wrap(three.jump_to, 1), { desc = "Jump to buffer 1" } },
                 { "2", three.wrap(three.jump_to, 2), { desc = "Jump to buffer 2" } },
                 { "3", three.wrap(three.jump_to, 3), { desc = "Jump to buffer 3" } },

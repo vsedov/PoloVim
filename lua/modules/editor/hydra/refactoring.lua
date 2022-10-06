@@ -1,95 +1,143 @@
 local Hydra = require("hydra")
 
-local refactoring_visual = [[
-^ ^ _e_: Extract Function         ^ ^
-^ ^ _f_: Extract Function To File ^ ^
-^ ^ _v_: Extract Variable         ^ ^
-^ ^ _i_: Inline Variable          ^ ^
-^ ^ _r_: Select refactor          ^ ^
-^ ^ _V_: debug print_var          ^ ^
-^ _<Esc>_: quit                   ^ ^
+local function cmd(command)
+    return table.concat({ "<Cmd>", command, "<CR>" })
+end
+
+local function vcmd(command)
+    return table.concat({ [[<Esc><Cmd>]], command, [[<CR>]] })
+end
+
+-- For rereference:
+--   ^ VARIABLES ^                  ^ EXPRESSIONS ^                  ^ DEBUG PRINT    ^
+--   _n_: Rename      _b_: Extract block   ^e^: Extract function      _p_: Print var  ^
+--   _i_: Inline      _B_:   ... to file   ^f^:   ... to file         _c_: Clear up   ^
+--   ^v^: Extract
+--   ^ ^                   _q_: Format     _r_: Select refactor           _<Esc>_
+--
+local hint_visual = [[
+   ^ VARIABLES ^                  ^ EXPRESSIONS ^                  ^ DEBUG PRINT     ^
+   ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^
+    _n_: Rename      _b_: Extract block   _e_: Extract function      _p_: Print var  ^
+    _i_: Inline      _B_: ...to file      _f_: ...to file                            ^
+    _v_: Extract                                                                     ^
+   ^ ^                                    _r_: Select refactor           _<Esc>_     ^
+]]
+local hint_normal = [[
+   ^ VARIABLES ^                  ^ EXPRESSIONS ^                  ^ DEBUG PRINT     ^
+   ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔    ^
+    _n_: Rename                   _b_: Extract block                 _p_: Print var  ^
+    _i_: Inline                   _B_:   ... to file                 _c_: Clear up   ^
+   ^                                                                                 ^
+   ^ ^                   _q_: Format     _r_: Select refactor            _<Esc>_     ^
 ]]
 
+-- Normal Mode Version
 Hydra({
-    name = "Refactoring Visual ",
-    hint = refactoring_visual,
+    name = "Refactor",
+    hint = hint_normal,
     config = {
-        color = "pink",
+        color = "blue",
         invoke_on_body = true,
         hint = {
-            position = "bottom-right",
-            border = lambda.style.border.type_0,
+            position = "bottom",
+            border = "rounded",
         },
     },
-    mode = "v",
+    mode = { "n" },
     body = "<leader>r",
     heads = {
-        { "e", "<cmd>lua require('refactoring').refactor('Extract Function')<CR>", { exit = false } },
-        { "f", "<cmd>lua require('refactoring').refactor('Extract Function To File')<CR>", { exit = true } },
-        { "v", "<cmd>lua require('refactoring').refactor('Extract Variable')<CR>", { exit = true } },
-        { "i", "<cmd>lua require('refactoring').refactor('Inline Variable')<CR>", { exit = true } },
-        { "V", "<cmd>lua require('refactoring').debug.print_var({})<CR>", { exit = true } },
-        { "r", "<cmd>lua require('refactoring').select_refactor()<CR>", { exit = true } },
-        { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
+        { "<Esc>", nil, { exit = true, nowait = true } },
+        { "r", require("refactoring").select_refactor, { desc = "Select refactor" } },
+        { "n", vim.lsp.buf.rename, { desc = "Rename" } },
+        { "q", vim.lsp.buf.formatting, { desc = "Format buffer" } },
+        {
+            "i",
+            cmd([[lua require('refactoring').refactor('Inline Variable')]]),
+            { desc = "Inline variable" },
+        },
+        {
+            "b",
+            cmd([[lua require('refactoring').refactor('Extract Block')]]),
+            { desc = "Extract block" },
+        },
+        {
+            "B",
+            cmd([[lua require('refactoring').refactor('Extract Block To File')]]),
+            { desc = "Extract block to file" },
+        },
+        {
+            "p",
+            cmd("lua require('refactoring').debug.print_var({ normal = true })"),
+            { desc = "Debug print" },
+        },
+        {
+            "c",
+            cmd("lua require('refactoring').debug.cleanup({})"),
+            { desc = "Debug print cleanup" },
+        },
     },
 })
 
-local refactoring_normal = [[
-^ ^ _d_: PyCopyReferenceDotted    ^ ^
-^ ^ _p_: PyCopyReferencePytest    ^ ^
-^ ^ _b_: Extract Block            ^ ^
-^ ^ _B_: Extract Block To File    ^ ^
-^ ^ _i_: Extract Variable         ^ ^
-^ ^ _c_: debug.cleanup            ^ ^
-^ _<Esc>_: quit                   ^ ^
-]]
-
+-- Visual Mode Version
 Hydra({
-    name = "Refactoring normal ",
-    hint = refactoring_normal,
+    name = "Refactor",
+    hint = hint_visual,
     config = {
-        color = "pink",
+        color = "teal",
         invoke_on_body = true,
         hint = {
-            position = "bottom-right",
-            border = lambda.style.border.type_0,
+            position = "bottom",
+            border = "rounded",
         },
     },
-    mode = "n",
+    mode = { "v" },
     body = "<leader>r",
     heads = {
-        { "d", "<cmd>PythonCopyReferenceDotted<CR>", { exit = false } },
-        { "p", "<cmd>PythonCopyReferencePytest<CR>", { exit = false } },
-        { "b", "<cmd>lua require('refactoring').refactor('Extract Block')<CR>", { exit = false } },
-        { "B", "<cmd>lua require('refactoring').refactor('Extract Block To File')<CR>", { exit = true } },
-        { "i", "<cmd>lua require('refactoring').refactor('Inline Variable')<CR>", { exit = true } },
-        { "c", "<cmd>lua require('refactoring').debug.cleanup({})<CR>", { exit = true } },
-        { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
-    },
-})
-
-local debug_time = [[
-^ ^ _v_: Debug Above  ^ ^
-^ ^ _V_: Debug Below  ^ ^
-]]
-
-Hydra({
-    name = "Refactoring Visual ",
-    hint = debug_time,
-    config = {
-        color = "pink",
-        invoke_on_body = true,
-        hint = {
-            position = "bottom-right",
-            border = lambda.style.border.type_0,
+        { "<Esc>", nil, { exit = true, nowait = true } },
+        { "r", require("refactoring").select_refactor, { desc = "Select refactor" } },
+        { "n", vim.lsp.buf.rename, { desc = "Rename" } },
+        {
+            "i",
+            cmd([[ lua require('refactoring').refactor('Inline Variable') ]]),
+            { desc = "Inline variable" },
         },
-    },
-    mode = "n",
-    body = "dv",
-    heads = {
-        { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
-
-        { "v", "<cmd>lua require('refactoring').debug.printf({below = true})<CR>", { exit = false } },
-        { "V", "<cmd>lua require('refactoring').debug.printf({below = false})<CR>", { exit = true } },
+        {
+            "b",
+            cmd([[ lua require('refactoring').refactor('Extract Block')]]),
+            { desc = "Extract block" },
+        },
+        {
+            "B",
+            cmd([[ lua require('refactoring').refactor('Extract Block To File')]]),
+            { desc = "Extract block to file" },
+        },
+        {
+            "v",
+            cmd("lua require('refactoring').debug.print_var({ normal = true })"),
+            { desc = "Debug print" },
+        },
+        -- Visual Mode Only
+        {
+            "e",
+            vcmd([[lua require('refactoring').refactor('Extract Function')]]),
+            { desc = "Extract function" },
+        },
+        {
+            "f",
+            vcmd([[lua require('refactoring').refactor('Extract Function To File')]]),
+            { desc = "Extract function to file" },
+        },
+        {
+            "v",
+            vcmd([[lua require('refactoring').refactor('Extract Variable')]]),
+            { desc = "Extract variable" },
+        },
+        -- Debugging Prints
+        {
+            "p",
+            cmd("lua require('refactoring').debug.print_var({})"),
+            { desc = "Debug print cleanup" },
+        },
     },
 })
