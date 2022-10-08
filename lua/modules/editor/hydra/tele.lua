@@ -101,6 +101,7 @@ local function MFU()
 end
 
 Hydra({
+    name = "Tele",
     hint = hint_telescope,
     config = {
         color = "teal",

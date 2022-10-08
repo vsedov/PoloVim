@@ -12,13 +12,6 @@ local mx = function(feedkeys)
     end
 end
 
-local ex = function(feedkeys)
-    return function()
-        local keys = vim.api.nvim_replace_termcodes(feedkeys, true, false, true)
-        vim.api.nvim_feedkeys(keys, "x", false)
-    end
-end
-
 -- NOTE:
 local config = {}
 
