@@ -124,12 +124,12 @@ vim.defer_fn(function()
             lambda.unload("bufferline")
             lambda.config.tabby_or_bufferline = false
             require("packer").loader("tabby.nvim")
-            require("modules.ui.config").tabby()
+            require("modules.buffers.config").tabby()
         else
             lambda.unload("tabby")
             lambda.config.tabby_or_bufferline = true
             require("packer").loader("bufferline.nvim")
-            require("modules.ui.config").nvim_bufferline()
+            require("modules.buffers.config").nvim_bufferline()
         end
         require("modules.editor.hydra.buffer").buffer()
     end, { force = true })
