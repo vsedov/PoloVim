@@ -21,19 +21,6 @@ ui({
 })
 
 ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
-
-ui({
-    "akinsho/bufferline.nvim",
-    config = conf.nvim_bufferline,
-    opt = true,
-})
-
-ui({
-    "nanozuki/tabby.nvim",
-    config = conf.tabby,
-    opt = true,
-})
-
 -- todo: FIX THIS
 ui({
     "rcarriga/nvim-notify",
