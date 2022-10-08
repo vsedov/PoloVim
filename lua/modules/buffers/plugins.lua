@@ -1,9 +1,17 @@
 local conf = require("modules.buffers.config")
 local buffer = require("core.pack").package
 
-buffer({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
+buffer({
+    "akinsho/bufferline.nvim",
+    config = conf.nvim_bufferline,
+    opt = true,
+})
 
-buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
+buffer({
+    "nanozuki/tabby.nvim",
+    config = conf.tabby,
+    opt = true,
+})
 
 buffer({
     "toppair/reach.nvim",
@@ -12,12 +20,15 @@ buffer({
     cmd = { "ReachOpen" },
 })
 
-buffer({
-    "tiagovla/scope.nvim",
-    opt = true,
-    setup = conf.scope_setup,
-    config = conf.scope,
-})
+-- buffer({
+--     "tiagovla/scope.nvim",
+--     after = "bufferline.nvim",
+--     config = conf.scope,
+-- })
+
+buffer({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
+
+buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
 
 buffer({
     "kazhala/close-buffers.nvim",
