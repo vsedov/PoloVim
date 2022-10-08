@@ -20,11 +20,11 @@ buffer({
     cmd = { "ReachOpen" },
 })
 
--- buffer({
---     "tiagovla/scope.nvim",
---     after = "bufferline.nvim",
---     config = conf.scope,
--- })
+buffer({
+    "tiagovla/scope.nvim",
+    after = "bufferline.nvim",
+    config = conf.scope,
+})
 
 buffer({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
 
