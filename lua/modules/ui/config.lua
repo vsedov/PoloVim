@@ -806,9 +806,8 @@ end
 function config.noice()
     require("noice").setup({
         popupmenu = {
-            backend = "cmp",
+            enabled = false, -- disable if you use something like cmp-cmdline
         },
-
         cmdline = {
             view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
             opts = { buf_options = { filetype = "vim" } }, -- enable syntax highlighting in the cmdline
@@ -820,13 +819,11 @@ function config.noice()
             },
         },
         history = {
-            -- options for the message history that you get with `:Noice`
             view = "split",
             opts = { enter = true },
             filter = { event = "msg_show", ["not"] = { kind = { "search_count", "echo" } } },
         },
         throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
-
         views = {},
         routes = {},
     })
