@@ -540,3 +540,25 @@ lambda.setup_plugin("BufEnter", function()
     end
     return "leap.nvim"
 end, true)
+
+lambda.augroup("FixNoice", {
+    {
+        event = "FileType",
+        pattern = "NeogitCommitMessage",
+        command = function()
+            if lambda.config.use_noice then
+                vim.cmd([[Noice disable]])
+            end
+        end,
+    },
+    {
+        event = "BufLeave",
+        pattern = "NeogitCommitMessage",
+        command = function()
+            print("i am here")
+            if lambda.config.use_noice then
+                vim.cmd([[Noice enable]])
+            end
+        end,
+    },
+})

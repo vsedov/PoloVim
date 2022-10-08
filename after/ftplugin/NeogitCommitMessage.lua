@@ -23,24 +23,3 @@ lambda.ftplugin_conf("cmp", function(cmp)
         }),
     })
 end)
-
-lambda.augroup("FixNoice", {
-    {
-        event = "FileType",
-        pattern = "NeogitCommitMessage",
-        command = function()
-            if lambda.config.use_noice then
-                vim.cmd([[Noice disable]])
-            end
-        end,
-    },
-    {
-        event = "BufLeave",
-        pattern = "NeogitCommitMessage",
-        command = function()
-            if lambda.config.use_noice then
-                vim.cmd([[Noice enable]])
-            end
-        end,
-    },
-})
