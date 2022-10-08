@@ -28,7 +28,12 @@ o.ttimeoutlen = 10
 o.splitbelow = true
 o.splitright = true
 o.eadirection = "hor"
-o.splitkeep = "cursor"
+-- cursor
+-- screen
+-- topline
+if vim.fn.has("nvim-0.9") then
+    opt.splitkeep = "screen"
+end
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
 o.switchbuf = "useopen,uselast"
