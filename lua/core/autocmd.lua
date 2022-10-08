@@ -556,7 +556,6 @@ lambda.augroup("FixNoice", {
         pattern = "*gitStatus",
         command = function()
             if lambda.config.use_noice then
-                -- and vim.bo.filetype == "NeogitStatus" then
                 vim.cmd([[Noice enable]])
             end
         end,
