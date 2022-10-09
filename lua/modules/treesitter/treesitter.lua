@@ -66,13 +66,6 @@ local treesitter = function()
             },
         },
     })
-    require("nvim-treesitter.highlight").set_custom_captures({
-        -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-        -- ["foo.bar"] = "Identifier",
-        ["require_call"] = "RequireCall",
-        ["function_definition"] = "FunctionDefinition",
-        ["quantifier"] = "Special",
-    })
 end
 
 local treesitter_obj = function()
