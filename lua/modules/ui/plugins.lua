@@ -1,8 +1,5 @@
 local conf = require("modules.ui.config")
 local ui = require("core.pack").package
-function not_headless()
-    return #vim.api.nvim_list_uis() > 0
-end
 
 ui({
     "j-hui/fidget.nvim",
@@ -195,4 +192,15 @@ ui({
     opt = true,
     event = "BufEnter",
     config = conf.beacon,
+})
+
+ui({
+    "samuzora/pet.nvim",
+    opt = true,
+    setup = function()
+        lambda.setup_plugin("BufEnter", "pet.nvim", lambda.config.use_pet)
+    end,
+    config = function()
+        require("pet-nvim")
+    end,
 })

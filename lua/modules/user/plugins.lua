@@ -45,17 +45,6 @@ user({
 })
 
 user({
-    "samuzora/pet.nvim",
-    opt = true,
-    setup = function()
-        lambda.setup_plugin("BufEnter", "pet.nvim", lambda.config.use_pet)
-    end,
-    config = function()
-        require("pet-nvim")
-    end,
-})
-
-user({
     -- for packer.nvim
     "delphinus/dwm.nvim",
     -- branch = "feature/refactor",
@@ -64,8 +53,6 @@ user({
         "_j",
         "_k",
         "_<CR>",
-        "_@",
-        "_<leader>",
         "_l",
         "_h",
         "_n",
@@ -83,8 +70,6 @@ user({
         vim.keymap.set("n", "_j", "<C-w>w")
         vim.keymap.set("n", "_k", "<C-w>W")
         vim.keymap.set("n", "_<CR>", dwm.focus, { desc = "focus" })
-        vim.keymap.set("n", "_@", dwm.focus, { desc = "focus" })
-        vim.keymap.set("n", "_<leader>", dwm.focus, { desc = "focus" })
         vim.keymap.set("n", "_l", dwm.grow, { desc = "grow" })
         vim.keymap.set("n", "_h", dwm.shrink, { desc = "shrink" })
         vim.keymap.set("n", "_n", dwm.new, { desc = "new" })
@@ -112,35 +97,46 @@ user({
     end,
 })
 
--- PlayMusic (path of file/folder)|(url link)|(keywords search)
--- open a terminal and run mpv to play only the sound
---     MusicPlay (path of file/folder)|(url link)|(keywords search)
--- open a terminal and run mpv to play only the sound
---     MusicPlayVideo (path of file/folder)|(url link)|(keywords search)
--- open a terminal and run mpv to play the sound + video
---     MusicNext
--- pass to the next music (or stop it if not a playlist)
---     MusicPrev
--- pass to the previous music (if playlist)
---     MusicShuffle
--- shuffle the playlist
---     MusicUnShuffle
--- unshuffle the playlist
---     MusicQueue
--- show queue
---     MusicAllPlaylist
-user({ "voldikss/vim-floaterm" })
-
 user({
 
     "Saverio976/music.nvim",
-    requires = "voldikss/vim-floaterm",
+    requires = { "voldikss/vim-floaterm" },
+    opt = true,
+    cmd = {
+        "PlayMusic",
+        "PlayCustom",
+        "MusicPlay",
+        "MusicPlayVideo",
+        "MusicNext",
+        "MusicPrev",
+        "MusicShuffle",
+        "MusicUnShuffle",
+        "MusicQueue",
+        "MusicAllPlaylist",
+    },
     run = ":MusicInstall",
     config = function()
-        lambda.command("PlayMain", function()
-            vim.cmd("PlayMusic https://youtube.com/playlist?list=PLefUWboWnSEAWXaxHfHvUXolulEnv1mC3")
+        local playlist_list_table = {
+            Main = { "https://youtube.com/playlist?list=PLefUWboWnSEAWXaxHfHvUXolulEnv1mC3" },
+            Background = { "https://youtube.com/playlist?list=PLefUWboWnSEAcmPIC8XdNZM5gWEejXJJN" },
+            Yui = { "https://youtube.com/playlist?list=PLefUWboWnSEDGxFVyD6E_elkHmXxHQOu5" },
+        }
+
+        local completion = function(_, _, _)
+            local list = {}
+            for k, _ in pairs(playlist_list_table) do
+                table.insert(list, k)
+            end
+            return list
+        end
+        lambda.command("PlayCustom", function(music_type)
+            local music_type = music_type or {}
+            if music_type == {} or playlist_list_table[music_type.args] == nil then
+                music_type.args = "Main"
+            end
+            vim.cmd("PlayMusic " .. playlist_list_table[music_type.args][1])
             vim.cmd("FloatermToggle")
-        end, {})
+        end, { nargs = "*", complete = completion })
     end,
 })
 
@@ -152,43 +148,15 @@ user({
 --     [split {direction} {target}] opens a new buffer window with an optional direction and target. Valid directions are up, down, left, and right. If no direction is given, Bufala will either abort or split based on the layout configured in the setup function (see below). The target is whatever you would put in a :buffer {target} command.
 --     [swap swaps] the current buffer window with last buffer window you were in.
 
-user({
-    "https://github.com/nat-418/bufala.nvim",
-    setup = function()
-        lambda.setup_plugin("BufEnter", "bufala.nvim", true)
-    end,
-    cmd = { "bufala" },
-    config = function()
-        require("bufala").setup({
-            layout = "stack", -- optional, valid values are 'stack' and 'row'
-        })
-    end,
-})
--- Lua
-user({
-    "abecodes/tabout.nvim",
-    config = function()
-        require("tabout").setup({
-            tabkey = "<C-k>",
-            backwards_tabkey = "<C-j>",
-            act_as_tab = true, -- shift content if tab out is not possible
-            act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-            default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
-            default_shift_tab = "<C-D>", -- reverse shift default action,
-            enable_backwards = true, -- well ...
-            completion = true, -- if the tabkey is used in a completion pum
-            tabouts = {
-                { open = "'", close = "'" },
-                { open = '"', close = '"' },
-                { open = "`", close = "`" },
-                { open = "(", close = ")" },
-                { open = "[", close = "]" },
-                { open = "{", close = "}" },
-            },
-            ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
-            exclude = {}, -- tabout will ignore these filetypes
-        })
-    end,
-    wants = { "nvim-treesitter" }, -- or require if not used so far
-    after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
-})
+-- user({
+--     "https://github.com/nat-418/bufala.nvim",
+--     setup = function()
+--         lambda.setup_plugin("BufEnter", "bufala.nvim", true)
+--     end,
+--     cmd = { "bufala" },
+--     config = function()
+--         require("bufala").setup({
+--             layout = "stack", -- optional, valid values are 'stack' and 'row'
+--         })
+--     end,
+-- })
