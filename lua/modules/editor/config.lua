@@ -447,10 +447,10 @@ function config.asterisk_setup()
     end
 end
 function config.goyo()
-        vim.g.goyo_width = "85%" -- Default width
-        vim.g.goyo_height = "90%" -- Default height
+    vim.g.goyo_width = "85%" -- Default width
+    vim.g.goyo_height = "90%" -- Default height
 
-        vim.cmd([[
+    vim.cmd([[
         function! s:goyo_enter()
           " Hides mode from showing
           set noshowmode
@@ -477,29 +477,29 @@ function config.goyo()
         ]])
 end
 function config.smart_q()
-        vim.g.smartq_goyo_integration = 1
-        vim.g.smartq_zenmode_integration = 0
-    end
+    vim.g.smartq_goyo_integration = 1
+    vim.g.smartq_zenmode_integration = 0
+end
 function config.tabout()
-        require("tabout").setup({
-            tabkey = "<C-k>",
-            backwards_tabkey = "<C-j>",
-            act_as_tab = true, -- shift content if tab out is not possible
-            act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-            default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
-            default_shift_tab = "<C-D>", -- reverse shift default action,
-            enable_backwards = true, -- well ...
-            completion = true, -- if the tabkey is used in a completion pum
-            tabouts = {
-                { open = "'", close = "'" },
-                { open = '"', close = '"' },
-                { open = "`", close = "`" },
-                { open = "(", close = ")" },
-                { open = "[", close = "]" },
-                { open = "{", close = "}" },
-            },
-            ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
-            exclude = {}, -- tabout will ignore these filetypes
-        })
-    end
+    require("tabout").setup({
+        tabkey = "<C-k>",
+        backwards_tabkey = "<C-j>",
+        act_as_tab = true, -- shift content if tab out is not possible
+        act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+        default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+        default_shift_tab = "<C-D>", -- reverse shift default action,
+        enable_backwards = true, -- well ...
+        completion = true, -- if the tabkey is used in a completion pum
+        tabouts = {
+            { open = "'", close = "'" },
+            { open = '"', close = '"' },
+            { open = "`", close = "`" },
+            { open = "(", close = ")" },
+            { open = "[", close = "]" },
+            { open = "{", close = "}" },
+        },
+        ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+        exclude = {}, -- tabout will ignore these filetypes
+    })
+end
 return config

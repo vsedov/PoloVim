@@ -525,8 +525,6 @@ editor({
     config = conf.smart_q,
 })
 
-
-
 -- Lua
 editor({
     "abecodes/tabout.nvim",
