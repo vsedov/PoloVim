@@ -81,7 +81,6 @@ local leader_map = function()
     vim.keymap.set("n", "<SPACE>", "<Nop>", { noremap = true })
     vim.keymap.set("n", " ", "", { noremap = true })
     vim.keymap.set("x", " ", "", { noremap = true })
-    vim.keymap.set("n", "<c-i>", "<c-i>")
 end
 
 local load_core = function()

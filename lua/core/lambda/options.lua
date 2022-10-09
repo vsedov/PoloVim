@@ -36,10 +36,11 @@ lambda.config = {
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_guess_indent = true,
     use_gitsigns = true,
-    use_hlchunk = true,
+    use_hlchunk = false,
     use_pet = true,
     use_lightspeed = true, -- if false then leap.nvim will be used.
-    use_noice = true,
+    use_noice = false,
+    use_music = true,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 lambda.config.colourscheme = {
