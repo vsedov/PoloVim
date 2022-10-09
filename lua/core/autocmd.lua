@@ -541,7 +541,7 @@ lambda.setup_plugin("BufEnter", function()
     return "leap.nvim"
 end, true)
 
-lambda.augroup("FixNoice", {
+lambda.augroup("PluginCustomFixes", {
     {
         event = "FileType",
         pattern = "NeogitCommitMessage",

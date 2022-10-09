@@ -126,7 +126,9 @@ vim.defer_fn(function()
 
     if lambda.config.tabby_or_bufferline ~= nil then
         vim.cmd("SwitchBar")
-        loader("scope.nvim")
+        if lambda.config.use_scope then
+            loader("scope.nvim")
+        end
     end
     lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
