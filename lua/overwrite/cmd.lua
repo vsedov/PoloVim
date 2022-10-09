@@ -329,3 +329,26 @@ add_cmd("Reverse", "<line1>,<line2>g/^/m<line1>-1", {
     range = "%",
     bar = true,
 })
+
+add_cmd("DiagnosticGetAll", function()
+    vim.diagnostic.get()
+end, { desc = "Get all the available diagnostics" })
+add_cmd("DiagnosticGetNext", function()
+    vim.diagnostic.get_next()
+end, { desc = "Get the next diagnostic" })
+add_cmd("DiagnosticGetPrev", function()
+    vim.diagnostic.get_prev()
+end, { desc = "Get the previous diagnostic" })
+
+-- Goto diagnostic
+add_cmd("DiagnosticGotoNext", function()
+    vim.diagnostic.goto_next()
+end, { desc = "Go to the next diagnostic" })
+add_cmd("DiagnosticGotoPrev", function()
+    vim.diagnostic.goto_prev()
+end, { desc = "Go to the previous diagnostic" })
+
+-- Location list
+add_cmd("DiagnosticPopulateLocList", function()
+    vim.diagnostic.set_loclist({ open_loclist = false })
+end, { desc = "Populate the location list with the available diagnostics" })
