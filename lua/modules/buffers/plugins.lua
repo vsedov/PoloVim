@@ -22,7 +22,7 @@ buffer({
 
 buffer({
     "tiagovla/scope.nvim",
-    after = "bufferline.nvim",
+    opt = true,
     config = conf.scope,
 })
 
