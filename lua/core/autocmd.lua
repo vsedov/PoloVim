@@ -544,7 +544,7 @@ end, true)
 lambda.augroup("PluginCustomFixes", {
     {
         event = "BufEnter",
-        pattern = "NeogitCommitMessage",
+        pattern = "*gitStatus",
         command = function()
             if lambda.config.use_noice then
                 vim.cmd([[Noice disable]])
