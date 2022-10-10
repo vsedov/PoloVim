@@ -4,6 +4,7 @@ function config.syntax_surfer()
 end
 
 function config.lightspeed()
+    -- vim.notify("Using lightspeed")
     require("lightspeed").setup({
         ignore_case = false,
         exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
@@ -70,29 +71,26 @@ function config.lightspeed()
     end
 end
 function config.leap()
+    -- vim.notify("Using Leap")
     require("utils.ui.highlights").plugin("leap", {
         theme = {
             ["*"] = {
                 { LeapBackdrop = { fg = "#707070" } },
             },
-            horizon = {
-                { LeapLabelPrimary = { fg = "#ccff88", italic = true } },
-                { LeapLabelSecondary = { fg = "#99ccff" } },
-                { LeapLabelSelected = { fg = "Magenta" } },
             },
-        },
     })
     require("leap").setup({
-        equivalence_classes = { " \t\r\n", "([{", ")]}", "`\"'", ["\r"] = "¬" },
         max_highlighted_traversal_targets = 20,
         special_keys = {
-            repeat_search = "<enter>",
-            next_aot_match = "<enter>",
-            next_match = { "<space>", "<c-[>" },
-            prev_match = { "<tab>", "<c-]>" },
+            repeat_search = "<c-[>",
+            next_aot_match = "<c-]>",
+            next_match = { "<space>", "<c-#>" },
+            prev_match = { "<tab>", "<c-#>#" },
             next_group = "<space>",
             prev_group = "<tab>",
         },
+        substitute_chars = {['\r\n'] = "¬", ["\r"] = "¬" },
+
     })
     require("leap").set_default_keymaps()
 

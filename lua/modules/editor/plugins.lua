@@ -1,42 +1,5 @@
 local conf = require("modules.editor.config")
 local editor = require("core.pack").package
-editor({
-
-    "nvim-neorg/neorg",
-    --[[ branch = "main", ]]
-    tags = "*",
-    run = ":Neorg sync-parsers",
-    requires = {
-        { "max397574/neorg-contexts", ft = "norg" },
-        "nvim-lua/plenary.nvim",
-        "hrsh7th/nvim-cmp",
-        "nvim-treesitter",
-    },
-    after = { "telescope.nvim" },
-    config = conf.norg,
-})
-
-editor({
-    "hisbaan/jot.nvim",
-    requires = "nvim-lua/plenary.nvim",
-    cmd = { "Jot" },
-    config = function()
-        require("jot").setup({
-            search_dir = "~/neorg/",
-            search_depth = 10,
-            hide_search_dir = false,
-            post_open_hook = function() end,
-        })
-    end,
-})
-
-editor({
-    "AckslD/nvim-FeMaco.lua",
-    opt = true,
-    ft = { "norg", "markdown" },
-    config = conf.femaco,
-    cmd = "FeMaco",
-})
 
 editor({
     "Pocco81/true-zen.nvim",
@@ -321,20 +284,6 @@ editor({
     setup = conf.vmulti,
 })
 
-editor({
-    "edluffy/hologram.nvim",
-    cmd = {
-        "Hologram",
-    },
-    config = function()
-        lambda.command("Hologram", function()
-            vim.cmd([[packadd hologram.nvim]])
-        end, {})
-        require("hologram").setup({
-            auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
-        })
-    end,
-})
 editor({
     "johmsalas/text-case.nvim",
     keys = {

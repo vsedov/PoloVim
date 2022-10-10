@@ -76,6 +76,7 @@ lsp({
 lsp({
     "joechrisellis/lsp-format-modifications.nvim",
     opt = true,
+    modules = "lsp-format-modifications",
 })
 
 lsp({

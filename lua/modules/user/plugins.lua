@@ -45,44 +45,6 @@ user({
 })
 
 user({
-    -- for packer.nvim
-    "delphinus/dwm.nvim",
-    -- branch = "feature/refactor",
-    opt = true,
-    keys = {
-        "_j",
-        "_k",
-        "_<CR>",
-        "_l",
-        "_h",
-        "_n",
-        "_q",
-        "_s",
-        "_c",
-    },
-    config = function()
-        local dwm = require("dwm")
-        dwm.setup({
-            key_maps = false,
-            master_pane_count = 1,
-            master_pane_width = "60%",
-        })
-        vim.keymap.set("n", "_j", "<C-w>w")
-        vim.keymap.set("n", "_k", "<C-w>W")
-        vim.keymap.set("n", "_<CR>", dwm.focus, { desc = "focus" })
-        vim.keymap.set("n", "_l", dwm.grow, { desc = "grow" })
-        vim.keymap.set("n", "_h", dwm.shrink, { desc = "shrink" })
-        vim.keymap.set("n", "_n", dwm.new, { desc = "new" })
-        vim.keymap.set("n", "_q", dwm.rotateLeft, { desc = "rotate left" })
-        vim.keymap.set("n", "_s", dwm.rotate, { desc = "rotate" })
-        vim.keymap.set("n", "_c", function()
-            vim.notify("closing!", vim.log.levels.INFO)
-            dwm.close()
-        end, { desc = "close dwm" })
-    end,
-})
-
-user({
     "p00f/cphelper.nvim",
     cmd = {
         "CphReceive",
@@ -140,23 +102,16 @@ user({
     end,
 })
 
--- :Bufala {subcommand} {arguments...}
-
--- There are a few subcommands:
---     [{count} cycle] moves through buffer windows with an optional count.
---     [focus swaps] the current buffer window with the first or main buffer window.
---     [split {direction} {target}] opens a new buffer window with an optional direction and target. Valid directions are up, down, left, and right. If no direction is given, Bufala will either abort or split based on the layout configured in the setup function (see below). The target is whatever you would put in a :buffer {target} command.
---     [swap swaps] the current buffer window with last buffer window you were in.
-
--- user({
---     "https://github.com/nat-418/bufala.nvim",
---     setup = function()
---         lambda.setup_plugin("BufEnter", "bufala.nvim", true)
---     end,
---     cmd = { "bufala" },
---     config = function()
---         require("bufala").setup({
---             layout = "stack", -- optional, valid values are 'stack' and 'row'
---         })
---     end,
--- })
+--  REVISIT: (vsedov) (21:41:00 - 10/10/22): I have this plugin
+--  But i have no clue what this does, or what the point of this is .
+user({
+    "m-gail/escape.nvim",
+    opt = true,
+    keys = {
+        { "v", "<leader>e" },
+    },
+    config = function()
+        local sc = require("escape")
+        vim.keymap.set("v", "<leader>e", sc.escape, { noremap = true, silent = true })
+    end,
+})

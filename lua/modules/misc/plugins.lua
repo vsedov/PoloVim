@@ -111,14 +111,6 @@ misc({
 })
 
 misc({
-    "dhruvasagar/vim-table-mode",
-    cmd = "TableModeToggle",
-    opt = true,
-    ft = { "norg", "markdown" },
-    conf = conf.table,
-})
-
-misc({
     "gbprod/stay-in-place.nvim",
     keys = {
         { "n", ">" },
