@@ -24,3 +24,13 @@ if neorg.is_loaded() then
 else -- Otherwise wait until Neorg gets started and load the completion module then
     neorg.callbacks.on_event("core.started", load_completion)
 end
+
+-- lambda.augroup("Neorg", {
+--     {
+--         event = "BufWritePost",
+--         pattern = "*.norg",
+--         command = function()
+--             vim.cmd([[TrimTrailingWhitespace]])
+--         end,
+--     },
+-- })
