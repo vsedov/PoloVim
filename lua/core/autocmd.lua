@@ -543,7 +543,7 @@ end, true)
 
 lambda.augroup("PluginCustomFixes", {
     {
-        event = "FileType",
+        event = "BufEnter",
         pattern = "NeogitCommitMessage",
         command = function()
             if lambda.config.use_noice then
