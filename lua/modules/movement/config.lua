@@ -71,27 +71,26 @@ function config.lightspeed()
     end
 end
 function config.leap()
-    -- vim.notify("Using Leap")
     require("utils.ui.highlights").plugin("leap", {
         theme = {
             ["*"] = {
-                { LeapBackdrop = { fg = "#707070" } },
+                { LeapBackdrop = { link = "Comment" } },
             },
-            },
+        },
     })
     require("leap").setup({
         max_highlighted_traversal_targets = 20,
         special_keys = {
-            repeat_search = "<c-[>",
-            next_aot_match = "<c-]>",
-            next_match = { "<space>", "<c-#>" },
-            prev_match = { "<tab>", "<c-#>#" },
-            next_group = "<space>",
-            prev_group = "<tab>",
+            repeat_search = "<enter>",
+            next_match = "<space>",
+            prev_match = "<C-space>",
+            next_group = "<tab>",
+            prev_group = "<S-tab>",
         },
-        substitute_chars = {['\r\n'] = "¬", ["\r"] = "¬" },
-
+        equivalence_classes = { " \t\r\n" },
+        substitute_chars = { ["\t\r\n"] = "¬" },
     })
+    -- vim.cmd[[autocmd ColorScheme * lua require('leap').init_highlight(true)]]
     require("leap").set_default_keymaps()
 
     local function get_line_starts(winid)

@@ -89,16 +89,16 @@ ui({
 }) -- after="nvim-treesitter",
 ui({
     "yaocccc/nvim-hlchunk",
-    ft = {
-        "python",
-        "lua",
-        "js",
-        "json",
-        "go",
-        "cpp",
-        "c",
-    },
+    opt = true,
     setup = function()
+        lambda.lazy_load({
+            events = "BufWinEnter",
+            augroup_name = "hlchunk",
+            condition = lambda.config.use_hlchunk,
+            plugin = "nvim-hlchunk",
+        })
+    end,
+    config = function()
         vim.g.hlchunk_files = "*.ts,*.js,*.json,*.go,*.cpp,*.c,*.lua,*.py"
     end,
 })
@@ -171,7 +171,12 @@ ui({
     "folke/noice.nvim",
     opt = true,
     setup = function()
-        lambda.setup_plugin("VimEnter", "noice.nvim", lambda.config.use_noice)
+        lambda.lazy_load({
+            events = "VimEnter",
+            augroup_name = "noice",
+            condition = lambda.config.use_noice,
+            plugin = "noice.nvim",
+        })
     end,
     requires = {
         -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -198,7 +203,12 @@ ui({
     "samuzora/pet.nvim",
     opt = true,
     setup = function()
-        lambda.setup_plugin("BufEnter", "pet.nvim", lambda.config.use_pet)
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "pet",
+            condition = lambda.config.use_pet,
+            plugin = "pet.nvim",
+        })
     end,
     config = function()
         require("pet-nvim")

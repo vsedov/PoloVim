@@ -216,14 +216,11 @@ function config.NeoWell()
 end
 
 function config.session_setup()
-    vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-            if lambda.config.use_session == true then
-                require("packer").loader("persisted.nvim")
-            end
-        end,
-        once = true,
+    lambda.lazy_load({
+        events = "BufEnter",
+        augroup_name = "session",
+        condition = lambda.config.use_session,
+        plugin = "persisted.nvim",
     })
 end
 function config.session_config()

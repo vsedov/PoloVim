@@ -646,7 +646,14 @@ function config.colourutils()
 end
 
 function config.clock_setup()
-    lambda.setup_plugin("BufEnter", "clock.nvim", lambda.config.use_clock and f.getcwd():match(f.stdpath("config")))
+    lambda.lazy_load({
+        events = "BufEnter",
+        augroup_name = "clock",
+        condition = function()
+            return lambda.config.use_clock and vim.fn.getcwd():match(vim.fn.stdpath("config"))
+        end,
+        plugin = "clock.nvim",
+    })
 end
 
 function config.clock()
@@ -675,7 +682,12 @@ function config.clock()
 end
 
 function config.dashboard_setup()
-    lambda.setup_plugin("BufEnter", "dashboard", lambda.config.use_dashboard)
+    lambda.lazy_load({
+        events = "BufEnter",
+        augroup_name = "dashboard",
+        condition = lambda.config.use_dashboard,
+        plugin = "dashboard",
+    })
 end
 
 function config.dashboard_config()

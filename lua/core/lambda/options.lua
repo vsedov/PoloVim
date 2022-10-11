@@ -6,7 +6,7 @@ lambda.config = {
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = true, -- waka time
     neorg_auto_commit = true,
-    loaded_confirm_quit = false,
+    loaded_confirm_quit = false, -- not when noice is active, as that causes some stupid issue w
     save_clipboard_on_exit = true,
     abbrev = {
         enable = true,

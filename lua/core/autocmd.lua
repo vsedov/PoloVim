@@ -534,32 +534,35 @@ lambda.augroup("dwm", {
     },
 })
 
-lambda.setup_plugin("BufEnter", function()
-    if lambda.config.use_lightspeed then
-        return "lightspeed.nvim"
-    end
-    return "leap.nvim"
-end, true)
+lambda.lazy_load({
+    events = "BufEnter",
+    augroup_name = "movement",
+    condition = true,
+    plugin = function()
+        if lambda.config.use_lightspeed then
+            return "lightspeed.nvim"
+        end
+        return "leap.nvim"
+    end,
+})
 
 lambda.augroup("PluginCustomFixes", {
     {
         event = "FileType",
-        pattern = {"NeogitPopup", "NeogitCommitMessage"},
+        pattern = { "NeogitPopup", "NeogitCommitMessage" },
         command = function()
             if lambda.config.use_noice then
                 vim.cmd([[Noice disable]])
                 print("Noice disabled")
-
             end
         end,
     },
     {
         event = "BufWinLeave",
-        pattern = {"NeogitStatus"},
+        pattern = { "NeogitStatus" },
         command = function()
             if lambda.config.use_noice then
-
-                if not vim.tbl_contains({"NeogitPopup", "NeogitCommitMessage"}, vim.bo.filetype) then
+                if not vim.tbl_contains({ "NeogitPopup", "NeogitCommitMessage" }, vim.bo.filetype) then
                     vim.cmd([[Noice enable]])
                     print("Noice enable")
                 end

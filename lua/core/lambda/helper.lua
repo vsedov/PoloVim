@@ -517,7 +517,7 @@ function lambda.has(feature)
     return vim.fn.has(feature) > 0
 end
 
-function lambda.setup_plugin(event, plugin_name, condition)
+function lambda.lazy_load(event, plugin_name, condition)
     if type(condition) == "function" then
         condition = condition()
     end
@@ -529,6 +529,35 @@ function lambda.setup_plugin(event, plugin_name, condition)
         callback = function()
             if condition then
                 require("packer").loader(plugin_name)
+            end
+        end,
+        once = true,
+    })
+end
+
+function lambda.lazy_load(tb)
+    vim.api.nvim_create_autocmd(tb.events, {
+        group = vim.api.nvim_create_augroup(tb.augroup_name, {}),
+        callback = function()
+            local condition
+            if type(tb.condition) == "function" then
+                condition = tb.condition()
+            else
+                condition = tb.condition
+            end
+            if type(tb.plugin) == "function" then
+                tb.plugin = tb.plugin()
+            end
+
+            if condition then
+                vim.api.nvim_del_augroup_by_name(tb.augroup_name)
+                if tb.plugin ~= "nvim-treesitter" then
+                    vim.defer_fn(function()
+                        require("packer").loader(tb.plugin)
+                    end, 0)
+                else
+                    require("packer").loader(tb.plugin)
+                end
             end
         end,
         once = true,

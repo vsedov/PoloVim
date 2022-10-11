@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 get_time() {
-	tail -1 tmp | cut -d ' ' -f 1
+    tail -1 tmp | cut -d ' ' -f 1
 }
 
 pf() {
-	printf '%s : ' "$@"
+    printf '%s : ' "$@"
 }
 
 echo "Warmup test #1"

@@ -226,13 +226,19 @@ tools({
     },
 })
 
-tools({
-    "mong8se/actually.nvim",
-    wants = "dressing.nvim",
-    setup = function()
-        lambda.setup_plugin("VimEnter", "actually.nvim", true)
-    end,
-})
+-- tools({
+--     "mong8se/actually.nvim",
+--     wants = "dressing.nvim",
+--     setup = function()
+--     tb = {
+--         events = "VimEnter",
+--         augroup_name  = "actually",
+--         condition =  lambda.config.use_actually,
+--         plugin = "actually.nvim"
+--     }
+--         lambda.lazy_load(tb)
+--     end,
+-- })
 
 tools({
     "barklan/capslock.nvim",
