@@ -536,20 +536,16 @@ function lambda.lazy_load(event, plugin_name, condition)
 end
 
 function lambda.lazy_load(tb)
-    vim.api.nvim_create_autocmd(tb.events, {
-        group = vim.api.nvim_create_augroup(tb.augroup_name, {}),
+    api.nvim_create_autocmd(tb.events, {
+        group = api.nvim_create_augroup(tb.augroup_name, {}),
         callback = function()
-            local condition
-            if type(tb.condition) == "function" then
-                condition = tb.condition()
-            else
-                condition = tb.condition
-            end
-            if type(tb.plugin) == "function" then
-                tb.plugin = tb.plugin()
+            for i, v in pairs(tb) do
+                if type(v) == "function" then
+                    tb[i] = v()
+                end
             end
 
-            if condition then
+            if tb.condition then
                 vim.api.nvim_del_augroup_by_name(tb.augroup_name)
                 if tb.plugin ~= "nvim-treesitter" then
                     vim.defer_fn(function()
