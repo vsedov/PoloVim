@@ -215,14 +215,6 @@ function config.NeoWell()
     })
 end
 
-function config.session_setup()
-    lambda.lazy_load({
-        events = "BufEnter",
-        augroup_name = "session",
-        condition = lambda.config.use_session,
-        plugin = "persisted.nvim",
-    })
-end
 function config.session_config()
     require("persisted").setup({
         save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/

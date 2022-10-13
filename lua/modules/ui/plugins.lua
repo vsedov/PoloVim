@@ -189,13 +189,29 @@ ui({
 
 ui({
     "RRethy/vim-illuminate",
-    event = "BufEnter",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "illuminate",
+            condition = true,
+            plugin = "vim-illuminate",
+        })
+    end,
     config = conf.illuminate,
 })
 ui({
     "rainbowhxch/beacon.nvim",
+
     opt = true,
-    event = "BufEnter",
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "beacon",
+            condition = true,
+            plugin = "beacon.nvim",
+        })
+    end,
     config = conf.beacon,
 })
 

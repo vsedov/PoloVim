@@ -128,8 +128,16 @@ misc({
 })
 misc({
     "olimorris/persisted.nvim",
-    setup = conf.session_setup,
     opt = true,
+
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "session",
+            condition = lambda.config.use_session,
+            plugin = "persisted.nvim",
+        })
+    end,
     config = conf.session_config,
 })
 

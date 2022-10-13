@@ -90,8 +90,7 @@ git({
 --  I think this gets loaded in the first place
 git({
     "tanvirtin/vgit.nvim", -- gitsign has similar features
-    cmd = { "VGit" },
-    -- after = {"telescope.nvim"},
+    modules = "vgit",
     opt = true,
     config = conf.vgit,
 })

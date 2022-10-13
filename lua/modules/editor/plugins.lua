@@ -178,7 +178,15 @@ editor({
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim",
     config = conf.hydra,
-    event = "BufEnter",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "hydra",
+            condition = true,
+            plugin = "hydra.nvim",
+        })
+    end,
 })
 
 -- temp
@@ -389,7 +397,15 @@ editor({
 -- What tf is this plugin ?
 editor({
     "andrewferrier/wrapping.nvim",
-    event = "BufEnter",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "wrapping",
+            condition = true,
+            plugin = "wrapping.nvim",
+        })
+    end,
     config = function()
         require("wrapping").setup()
     end,

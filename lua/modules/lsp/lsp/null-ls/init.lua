@@ -19,6 +19,16 @@ local lsp_formatting = function(bufnr)
     })
 end
 
+local function augroup_setup(augroup, bufnr)
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        buffer = bufnr,
+        callback = function()
+            lsp_formatting(bufnr)
+        end,
+    })
+end
 function M.setup()
     local null_ls = require("null-ls")
     local hover = null_ls.builtins.hover
@@ -78,14 +88,7 @@ function M.setup()
                     lsp_formatting(bufnr)
                 end, {})
 
-                vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    group = augroup,
-                    buffer = bufnr,
-                    callback = function()
-                        lsp_formatting(bufnr)
-                    end,
-                })
+                augroup_setup(augroup, buffer)
             end
         end,
     }

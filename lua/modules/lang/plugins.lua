@@ -52,7 +52,15 @@ lang({
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim", -- optional
     },
-    event = { "BufEnter" },
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "comment",
+            condition = true,
+            plugin = "dev-comments.nvim",
+        })
+    end,
     config = conf.dev_comments,
 })
 -- not the same as folkes version

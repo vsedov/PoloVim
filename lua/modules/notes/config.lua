@@ -1,6 +1,6 @@
 local config = {}
 function config.norg()
-    require("modules.editor.neorg")
+    require("modules.notes.neorg")
 end
 
 function config.femaco()

@@ -818,7 +818,10 @@ end
 function config.noice()
     require("noice").setup({
         popupmenu = {
-            enabled = false, -- disable if you use something like cmp-cmdline
+            backend = "cmp",
+        },
+        messages = {
+            enabled = false, -- disable if you use native messages UI
         },
         cmdline = {
             view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
