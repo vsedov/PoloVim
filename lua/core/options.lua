@@ -30,8 +30,8 @@ o.splitright = true
 o.eadirection = "hor"
 -- cursor
 -- screen
--- topline
-if vim.fn.has("nvim-0.9") then
+-- -- topline
+if lambda.check_version(0, 9, 0)[1] then
     opt.splitkeep = "screen"
 end
 -- exclude usetab as we do not want to jump to buffers in already open tabs

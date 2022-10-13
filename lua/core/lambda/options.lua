@@ -39,7 +39,7 @@ lambda.config = {
     use_hlchunk = false,
     use_pet = true,
     use_lightspeed = true, -- if false then leap.nvim will be used.
-    use_noice = true,
+    use_noice = false,
     use_music = true,
     use_scope = false, -- really fucks with neogit window
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
@@ -82,6 +82,7 @@ lambda.config.cmp = {
 
 lambda.config.lsp = {
     use_lsp_signature = true,
+    use_lsp_format_modifications = true,
     latex = "ltex", -- texlab | ltex
     python = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
