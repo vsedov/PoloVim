@@ -111,7 +111,7 @@ require("neorg").setup({
         ["core.keybinds"] = {
             config = {
                 default_keybinds = true,
-                neorg_leader = "<Leader><leader>",
+                neorg_leader = "_",
             },
         },
         ["core.norg.dirman"] = { -- Manage your directories with Neorg
@@ -164,7 +164,7 @@ require("neorg").setup({
     },
 })
 
-local neorg_leader = "\\"
+local neorg_leader = "_"
 neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
     -- Map all the below keybinds only when the "norg" mode is active
     keybinds.map_event_to_mode("norg", {
@@ -233,7 +233,7 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
             { "<CR>", "core.norg.qol.toc.hop-toc-link" },
 
             -- Keys for closing the current display
-            { "q", "core.norg.qol.toc.close" },
+            { "Q", "core.norg.qol.toc.close" },
             { "<Esc>", "core.norg.qol.toc.close" },
         },
     }, {
