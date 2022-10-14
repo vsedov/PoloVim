@@ -1,10 +1,4 @@
 -- vim.cmd[[packadd lsp-format-modifications.nvim]]
--- local lsp_format_modifications = require"lsp-format-modifications"
---         lsp_format_modifications.attach(
---                 client,
---                 bufnr,
---                 { format_on_save = false }
---         )
 
 local M = {}
 
@@ -41,8 +35,8 @@ function M.setup()
     for _, py_form in ipairs(lambda.config.lsp.python.format) do
         table.insert(format, py_form)
     end
-    for _, py_form in ipairs(lambda.config.lsp.python.lint) do
-        table.insert(diagnostic, py_form)
+    for _, py_diag in ipairs(lambda.config.lsp.python.lint) do
+        table.insert(diagnostic, py_diag)
     end
     local registered_sources = {}
     for builtin, sources in pairs({
@@ -87,8 +81,16 @@ function M.setup()
                 vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
                     lsp_formatting(bufnr)
                 end, {})
-
-                augroup_setup(augroup, buffer)
+                local ammount = vim.api.nvim_buf_line_count(bufnr) < 8000
+                -- P(client)
+                if not ammount then
+                    local lsp_format_modifications = require("lsp-format-modifications")
+                    lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
+                    -- Currently this does not work for majority of my formatters , due to refactoring .
+                    -- Needs a way to filter certain types
+                else
+                    augroup_setup(augroup, buffer)
+                end
             end
         end,
     }
