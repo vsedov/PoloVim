@@ -177,16 +177,16 @@ function config.discord()
     -- Editor For The True Traditionalist
     require("presence"):setup({
         -- General options
-        auto_update = true, -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+        auto_update = true, -- Update activity based on autocmd events (if false, map or manually execute :lua package.loaded.presence:update`)
         neovim_image_text = "Editor For The True Traditionalist", -- Text displayed when hovered over the Neovim image
         main_image = "file", -- Main image display (either "neovim" or "file")
         client_id = "793271441293967371", -- Use your own Discord application client id (not recommended)
         log_level = nil, -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
-        debounce_timeout = 10, -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+        debounce_timeout = 10, -- Number of seconds to debounce events (or calls to :lua package.loaded.presence:update(<filename>, true))
         enable_line_number = true, -- Displays the current line number instead of the current project
         blacklist = {}, -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
-        buttons = true, -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
-        file_assets = {}, -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
+        buttons = true, -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table ({{ label = "<label>", url = "<url>" }, ...}, or a function(buffer: string, repo_url: string|nil): table)
+        file_assets = {}, -- Custom file asset definitions keyed by file names and extensions (see default config at lua/presence/file_assets.lua for reference)
 
         -- Rich Presence text options
         editing_text = "Editing %s", -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
@@ -195,7 +195,7 @@ function config.discord()
         plugin_manager_text = "Managing plugins", -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
         reading_text = "Reading %s", -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
         workspace_text = "Working on %s", -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
-        line_number_text = "Line %s out of %s", -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+        line_number_text = "Line %s out of %s", -- Format string rendered when enable_line_number is set to true (either string or function(line_number: number, line_count: number): string)
     })
 end
 
@@ -205,16 +205,44 @@ function config.dial()
     require("dial.config").augends:register_group({
         -- default augends used when no group name is specified
         default = {
-            augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
-            augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
-            augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
+            augend.constant.new({
+                elements = { "and", "or" },
+                word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+                cyclic = true, -- "or" is incremented into "and".
+            }),
+            augend.constant.new({
+                elements = { "&&", "||" },
+                word = false,
+                cyclic = true,
+            }),
+            augend.constant.new({
+                elements = { "True", "False" },
+                word = true,
+                cyclic = true,
+            }),
+            augend.date.alias["%Y/%m/%d"],
+            augend.date.alias["%m/%d/%Y"],
+            augend.date.alias["%d/%m/%Y"],
+            augend.date.alias["%m/%d/%y"],
+            augend.date.alias["%d/%m/%y"],
+            augend.date.alias["%m/%d"],
+            augend.date.alias["%-m/%-d"],
+            augend.date.alias["%Y-%m-%d"],
+            augend.date.alias["%H:%M:%S"],
+            augend.date.alias["%H:%M"],
+            augend.constant.alias.bool,
+            augend.constant.alias.alpha,
+            augend.constant.alias.Alpha,
+            augend.paren.alias.quote,
+            augend.paren.alias.brackets,
+            augend.paren.alias.lua_str_literal,
         },
-
-        -- augends used when group with name `mygroup` is specified
+        -- augends used when group with name mygroup is specified
         mygroup = {
-            augend.integer.alias.decimal,
-            augend.constant.alias.bool, -- boolean value (true <-> false)
-            augend.date.alias["%m/%d/%Y"], -- date (02/19/2022, etc.)
+            augend.constant.alias.ja_weekday,
+            augend.constant.alias.ja_weekday_full,
+            augend.date.alias["%Y年%-m月%-d日"],
+            augend.date.alias["%Y年%-m月%-d日(%ja)"],
         },
     })
     local map = vim.keymap.set
@@ -224,6 +252,8 @@ function config.dial()
     map("v", "<C-x>", dial.dec_visual(), { remap = false })
     map("v", "g<C-a>", dial.inc_gvisual(), { remap = false })
     map("v", "g<C-x>", dial.dec_gvisual(), { remap = false })
+    map("n", "_a", require("dial.map").inc_normal("mygroup"), { noremap = true })
+    map("n", "_x", require("dial.map").dec_normal("mygroup"), { noremap = true })
 end
 
 function config.hlargs()
@@ -486,7 +516,7 @@ function config.tabout()
         tabouts = {
             { open = "'", close = "'" },
             { open = '"', close = '"' },
-            { open = "`", close = "`" },
+            { open = "", close = "" },
             { open = "(", close = ")" },
             { open = "[", close = "]" },
             { open = "{", close = "}" },

@@ -139,8 +139,23 @@ editor({
 -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
 
-editor({ "monaqa/dial.nvim", keys = { "<C-a>", "<C-x>" }, opt = true, config = conf.dial })
+editor({
+    "monaqa/dial.nvim",
+    keys = {
+        { "n", "<C-a>" },
+        { "n", "<C-x>" },
 
+        { "v", "<C-a>" },
+        { "v", "<C-x>" },
+
+        { "v", "g<C-a>" },
+        { "v", "g<C-x>" },
+        { "n", "_a" },
+        { "n", "_x" },
+    },
+    opt = true,
+    config = conf.dial,
+})
 editor({
     "m-demare/hlargs.nvim",
     ft = {
