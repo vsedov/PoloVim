@@ -8,29 +8,12 @@ lambda.config = {
     neorg_auto_commit = true,
     loaded_confirm_quit = false, -- not when noice is active, as that causes some stupid issue w
     save_clipboard_on_exit = true,
-    abbrev = {
-        enable = true,
-        coding_support = true, -- system wide
-        globals = { -- dictionaries that ive defined to be global, you may not want this idk .
-            ["spelling_support"] = true,
-            ["month_date"] = true,
-        },
-        languages = {
-            "python", -- current support is python.
-        },
-    },
+
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
-    extra_search = {
-        enable = true,
-        providers = {
-            use_azy = true,
-            use_fzf_lua = false, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
-        },
-    },
     use_dashboard = false, -- set to false to not see this
-    use_session = true, -- set to false to disable session
+    use_session = false, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
@@ -44,9 +27,19 @@ lambda.config = {
     use_scope = false, -- really fucks with neogit window
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
+
+
+lambda.config.extra_search = {
+    enable = true,
+    providers = {
+        use_azy = true,
+        use_fzf_lua = false, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
+    },
+}
+
 lambda.config.colourscheme = {
     dim_background = false,
-    change_kitty_bg = false,
+    change_kitty_bg = true,
     --- @usage "main"' | '"moon"
     rose = "main",
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
@@ -69,12 +62,25 @@ lambda.config.colourscheme = {
         },
     },
 }
+
+lambda.config.abbrev = {
+    enable = true,
+    coding_support = true, -- system wide
+    globals = { -- dictionaries that ive defined to be global, you may not want this idk .
+        ["spelling_support"] = true,
+        ["month_date"] = true,
+    },
+    languages = {
+        "python", -- current support is python.
+    },
+}
+
 lambda.config.cmp = {
     tabnine = {
         use_tabnine = true,
         tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
         tabnine_prefetch = true,
-        tabnine_priority = 5,
+        tabnine_priority = 4,
     },
     use_rg = false,
     cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"

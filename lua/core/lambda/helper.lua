@@ -536,15 +536,14 @@ function lambda.lazy_load(event, plugin_name, condition)
 end
 
 function lambda.lazy_load(tb)
+    for i, v in pairs(tb) do
+        if type(v) == "function" then
+            tb[i] = v()
+        end
+    end
     api.nvim_create_autocmd(tb.events, {
         group = api.nvim_create_augroup(tb.augroup_name, {}),
         callback = function()
-            for i, v in pairs(tb) do
-                if type(v) == "function" then
-                    tb[i] = v()
-                end
-            end
-
             if tb.condition then
                 vim.api.nvim_del_augroup_by_name(tb.augroup_name)
                 if tb.plugin ~= "nvim-treesitter" then
@@ -558,4 +557,12 @@ function lambda.lazy_load(tb)
         end,
         once = true,
     })
+end
+function lambda.clever_tcd()
+    local root = require("lspconfig").util.root_pattern("Project.toml", ".git")(vim.api.nvim_buf_get_name(0))
+    if root == nil then
+        root = " %:p:h"
+    end
+    vim.cmd("tcd " .. root)
+    vim.cmd("pwd")
 end
