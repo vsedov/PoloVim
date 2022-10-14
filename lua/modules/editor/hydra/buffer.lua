@@ -166,9 +166,10 @@ local buffer_config = function()
             name = "Tab management",
             mode = "n",
             color = "teal",
-            body = "<leader>B",
+            body = "<leader>b",
             config = {
                 hint = { border = "single", position = "bottom-right" },
+                invoke_on_body = true,
             },
             heads = {
                 { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },

@@ -193,8 +193,7 @@ if gitrepo then
                 { "f", vgit.project_hunks_qf },
                 { "U", vgit.buffer_unstage },
                 { "G", vgit.buffer_diff_staged_preview },
-
-                { "<Enter>", ":tcd %:p:h<cr>:Neogit<cr>", { exit = true } },
+                { "<Enter>", ":silent lua lambda.clever_tcd()<cr>:Neogit<cr>", { exit = true } },
                 { "q", nil, { exit = true, nowait = true } },
                 { "<Esc>", nil, { exit = true, desc = false } },
 
