@@ -7,6 +7,7 @@ local map_args = bind.map_args
 -- local global = require("core.global")
 local cur_buf = nil
 local cur_cur = nil
+
 local plug_map = {
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
     ["n|\\<cr>"] = map_cmd(function()
@@ -33,7 +34,7 @@ local plug_map = {
         :with_silent()
         :with_nowait(),
 
-    ["n|<leader>cd"] = map_cmd("<cmd>tcd %:p:h<cr><cmd>pwd<cr>", "Cwd"):with_noremap():with_silent():with_nowait(),
+    ["n|<leader>cd"] = map_cmd(lambda.clever_tcd, "Cwd"):with_noremap():with_silent():with_nowait(),
 
     -- New mapping for lspsaga
     ["n|<leader><S-Tab>"] = map_cmd("<cmd>Lspsaga open_floaterm<cr>", "float_term"):with_noremap():with_silent(),
@@ -76,11 +77,8 @@ local plug_map = {
     ["n|<RightMouse>"] = map_cmd("<RightMouse><cmd>lua vim.lsp.buf.definition()<CR>", "rightclick def")
         :with_noremap()
         :with_silent(),
-
     ["n|<C-ScrollWheelUp>"] = map_cmd("<C-i>", "Buf Move"):with_noremap():with_silent(),
     ["n|<C-ScrollWheelDown>"] = map_cmd("<C-o>", "Buf Move"):with_noremap():with_silent(),
-    ["n|<Leader>ta"] = map_cr("ToggleAlternate", "Toggle values"):with_noremap():with_silent(),
-
     ["n|<localleader>W"] = map_cu("Sad", "Sad Search"):with_noremap():with_silent(),
 }
 

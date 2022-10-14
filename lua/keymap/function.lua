@@ -55,7 +55,7 @@ local plug_map = {
             return ":RooterToggle<cr>"
         end
         --[[ i cannot remember what the command was for this  ]]
-        return ":ProjRoot<cr>"
+        return ":ProjectRoot<cr>"
     end, "Diag show Prev"):with_expr(),
 
     ["v|d"] = map_cmd(function()
