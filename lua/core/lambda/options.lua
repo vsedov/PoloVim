@@ -94,9 +94,9 @@ lambda.config.lsp = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
         format = { "isort", "yapf" }, -- black
         -- jedis documentation is better though
-        lsp = "jedi", -- jedi pylsp and pyright pylance
+        lsp = "pylance", -- jedi pylsp and pyright pylance
         pylance_pyright = {
-            use_inlay_hints = false,
+            use_inlay_hints = true,
         },
     },
 }

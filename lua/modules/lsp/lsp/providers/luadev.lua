@@ -6,9 +6,25 @@ local runtime_path = {}
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
+require("neodev").setup({
+    enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
+    runtime = true, -- runtime path
+    types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+    plugins = true, -- installed opt or start plugins in packpath
+  override = function(root_dir, library)
+    if require("neodev.util").has_file(root_dir, "/.config/nvim/") then
+      library.enabled = false
+      library.plugins = false
+    end
+  end,
+})
+
+
+
 local sumneko_lua_server = enhance_attach({
 
-    cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+    -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+    cmd = {"lua-language-server"},
     settings = {
         Lua = {
             diagnostics = {
@@ -43,27 +59,4 @@ local sumneko_lua_server = enhance_attach({
         },
     },
 })
-
-local lua_dev_plugins = {
-    "nvim-notify",
-    "plenary.nvim",
-}
-
-local runtime_path_completion = true
-if not runtime_path_completion then
-    sumneko_lua_server.settings.Lua.runtime = {
-        version = "LuaJIT",
-        path = runtime_path,
-    }
-end
-local luadev = require("lua-dev").setup({
-    library = {
-        vimruntime = true,
-        types = true,
-        plugins = lua_dev_plugins, -- toggle this to get completion for require of all plugins
-    },
-    runtime_path = runtime_path_completion,
-    lspconfig = sumneko_lua_server,
-})
-
-lspconfig.sumneko_lua.setup(luadev)
+lspconfig.sumneko_lua.setup(sumneko_lua_server)

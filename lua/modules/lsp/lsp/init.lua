@@ -1,6 +1,7 @@
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 
+
 local python_setup = {
     pylsp = function()
         lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
@@ -9,8 +10,10 @@ local python_setup = {
         lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
     end,
     pylance = function()
+
         local pylance = require("modules.lsp.lsp.providers.python.pylance")
         pylance.creation()
+
         lspconfig.pylance.setup(enhance_attach(pylance.config))
     end,
     pyright = function()

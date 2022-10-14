@@ -55,7 +55,7 @@ function Lazyload()
     end
     -- only works if you are working from one python file .
     if vim.bo.filetype == "lua" then
-        loader("lua-dev.nvim")
+        loader("neodev.nvim")
         loader("luv-vimdocs")
         loader("nvim-luaref")
     end

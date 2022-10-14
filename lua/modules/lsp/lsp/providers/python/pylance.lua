@@ -74,15 +74,7 @@ M.creation = function()
             name = "pylance",
             autostart = true,
             single_file_support = true,
-            cmd = {
-                "node",
-                vim.fn.expand(
-                    "/home/viv/.local/share/nvim/lsp_servers/pylance/extension/dist/server.bundle.js",
-                    false,
-                    true
-                )[1],
-                "--stdio",
-            },
+            cmd = { "pylance", "--stdio" },
             filetypes = { "python" },
             root_dir = function(fname)
                 local markers = {

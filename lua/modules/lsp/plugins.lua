@@ -34,7 +34,7 @@ lsp({
     config = conf.clangd,
 })
 
-lsp({ "max397574/lua-dev.nvim", ft = "lua", opt = true, requires = "nvim-lspconfig", config = conf.luadev })
+lsp({ "folke/neodev.nvim", ft = "lua", opt = true, requires = "nvim-lspconfig", config = conf.luadev })
 
 lsp({ "lewis6991/hover.nvim", key = { "K", "gK" }, config = conf.hover })
 
@@ -117,6 +117,7 @@ lsp({
         require("mason-null-ls").setup({
             automatic_installation = false,
         })
+        
     end,
 })
 
