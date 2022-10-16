@@ -28,7 +28,6 @@ lambda.config = {
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
-
 lambda.config.extra_search = {
     enable = true,
     providers = {

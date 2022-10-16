@@ -11,20 +11,18 @@ require("neodev").setup({
     runtime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
     plugins = true, -- installed opt or start plugins in packpath
-  override = function(root_dir, library)
-    if require("neodev.util").has_file(root_dir, "/.config/nvim/") then
-      library.enabled = false
-      library.plugins = false
-    end
-  end,
+    override = function(root_dir, library)
+        if require("neodev.util").has_file(root_dir, "/.config/nvim/") then
+            library.enabled = false
+            library.plugins = false
+        end
+    end,
 })
-
-
 
 local sumneko_lua_server = enhance_attach({
 
     -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-    cmd = {"lua-language-server"},
+    cmd = { "lua-language-server" },
     settings = {
         Lua = {
             diagnostics = {

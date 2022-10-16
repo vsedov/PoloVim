@@ -106,36 +106,6 @@ editor({
         "<Plug>(smartword-ge)",
     },
 })
-editor({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.win_shift })
-editor({
-    "anuvyklack/windows.nvim",
-    requires = {
-        { "anuvyklack/middleclass", opt = true },
-        { "anuvyklack/animation.nvim", opt = true },
-    },
-    opt = true,
-    cmd = {
-
-        "WindowsMaximize",
-        "WindowsMaximize!",
-        "WindowsToggleAutowidth",
-        "WindowsEnableAutowidth",
-        "WindowsDisableAutowidth",
-    },
-    keys = {
-        "<c-w>z",
-        ";z",
-    },
-    config = function()
-        vim.cmd([[packadd middleclass]])
-        vim.cmd([[packadd animation.nvim]])
-        vim.o.winwidth = 10
-        vim.o.winminwidth = 10
-        vim.o.equalalways = false
-        require("windows").setup()
-        vim.keymap.set("n", ";z", "<Cmd>WindowsMaximize<CR>")
-    end,
-})
 -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
 
@@ -200,39 +170,6 @@ editor({
             augroup_name = "hydra",
             condition = true,
             plugin = "hydra.nvim",
-        })
-    end,
-})
-
--- temp
-editor({
-    "szw/vim-maximizer",
-    cmd = "MaximizerToggle!",
-})
-
-editor({
-    "mrjones2014/smart-splits.nvim",
-    module = "smart-splits",
-})
-
-editor({
-    "tamton-aquib/flirt.nvim",
-    keys = {
-        "<C-down>",
-        "<C-up>",
-        "<C-right>",
-        "<C-left>",
-        "<A-up>",
-        "<A-down>",
-        "<A-left>",
-        "<A-right>",
-    },
-    config = function()
-        require("flirt").setup({
-            override_open = true, -- experimental
-            close_command = "Q",
-            default_move_mappings = true, -- <C-arrows> to move floats
-            default_resize_mappings = true, -- <A-arrows> to resize floats
         })
     end,
 })

@@ -144,34 +144,6 @@ function config.comment_box()
     keymap("i", "<M-p>", cb.line, {})
 end
 
-function config.winshift()
-    require("winshift").setup({
-        highlight_moving_win = true, -- Highlight the window being moved
-        focused_hl_group = "Visual", -- The highlight group used for the moving window
-        moving_win_options = {
-            wrap = false,
-            cursorline = false,
-            cursorcolumn = false,
-            colorcolumn = "",
-        },
-        window_picker_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-        window_picker_ignore = {
-            -- This table allows you to indicate to the window picker that a window
-            -- should be ignored if its buffer matches any of the following criteria.
-            filetype = { -- List of ignored file types
-                "NvimTree",
-            },
-            buftype = { -- List of ignored buftypes
-                "terminal",
-                "quickfix",
-            },
-            bufname = { -- List of regex patterns matching ignored buffer names
-                [[.*foo/bar/baz\.qux]],
-            },
-        },
-    })
-end
-
 function config.discord()
     --i don\'t want to deal with vscode , The One True Text Editor
     -- Editor For The True Traditionalist
