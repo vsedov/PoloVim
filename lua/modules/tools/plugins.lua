@@ -189,7 +189,7 @@ tools({
     },
     config = function()
         require("capslock").setup()
-        vim.keymap.set({ "n", "i", "C" }, "<C-;>", "<Plug>CapsLockToggle", {})
+        vim.keymap.set({ "n", "i", "c" }, "<C-;>", "<Plug>CapsLockToggle", {})
     end,
 })
 
