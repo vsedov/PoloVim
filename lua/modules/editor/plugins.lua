@@ -346,22 +346,6 @@ editor({
     config = conf.readline,
 })
 
--- What tf is this plugin ?
-editor({
-    "andrewferrier/wrapping.nvim",
-    opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "wrapping",
-            condition = true,
-            plugin = "wrapping.nvim",
-        })
-    end,
-    config = function()
-        require("wrapping").setup()
-    end,
-})
 -- fix terminal colofr
 editor({
     "norcalli/nvim-terminal.lua",
