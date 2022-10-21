@@ -8,11 +8,9 @@ lambda.config = {
     neorg_auto_commit = true,
     loaded_confirm_quit = false, -- not when noice is active, as that causes some stupid issue w
     save_clipboard_on_exit = true,
-
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
-    use_dashboard = false, -- set to false to not see this
     use_session = false, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
@@ -25,6 +23,11 @@ lambda.config = {
     use_noice = false,
     use_music = true,
     use_scope = false, -- really fucks with neogit window
+    use_wrapping = false, -- I am not sure if this is causing me to segfault.
+    use_scroll = false,
+    use_beacon = true,
+    use_dashboard = false, -- set to false to not see this
+    use_unception = true, 
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
@@ -38,7 +41,7 @@ lambda.config.extra_search = {
 
 lambda.config.colourscheme = {
     dim_background = false,
-    change_kitty_bg = true,
+    change_kitty_bg = false,
     --- @usage "main"' | '"moon"
     rose = "main",
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
@@ -48,14 +51,14 @@ lambda.config.colourscheme = {
         dark = {
             core_themes = {
                 "kanagawa.nvim",
-                "rose",
                 "catppuccin",
-                "tokyonight.nvim",
-                "nvim-tundra",
+                -- "rose", -- TSMethod'
+                -- "tokyonight.nvim3", -- allot
+                -- "vim-dogrun"
             },
             others = {
                 "horizon.nvim",
-                "vim-dogrun",
+                "nvim-tundra", -- TSProperty'
                 "doom-one.nvim",
             },
         },
@@ -77,11 +80,11 @@ lambda.config.abbrev = {
 lambda.config.cmp = {
     tabnine = {
         use_tabnine = true,
-        tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+        tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
         tabnine_prefetch = true,
-        tabnine_priority = 4,
+        tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
     },
-    use_rg = false,
+    use_rg = false, -- this will induce lag , so use this on your own risk
     cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
 }
 

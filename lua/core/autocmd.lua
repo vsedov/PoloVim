@@ -570,3 +570,24 @@ lambda.augroup("PluginCustomFixes", {
         end,
     },
 })
+vim.cmd([[
+  augroup _general_settings
+    autocmd!
+    autocmd BufWinEnter * :set formatoptions-=cro
+    autocmd FileType qf set nobuflisted
+  augroup end
+  augroup _auto_resize
+    autocmd!
+    autocmd VimResized * tabdo wincmd =
+  augroup end
+fun! CleanExtraSpaces()
+	let save_cursor = getpos(".")
+	let old_query = getreg('/')
+	silent! %s/\s\+$//e
+	call setpos('.', save_cursor)
+	call setreg('/', old_query)
+endfun
+if has("autocmd")
+	autocmd BufWritePre *.txt,*.jl,*.js,*.py,*.wiki,*.sh,*.coffee,*.lua :call CleanExtraSpaces()
+endif
+]])
