@@ -53,7 +53,6 @@ Hydra({
         { ";", [[<cmd>lua require("memento").toggle()<CR>]] },
         { "C", [[<cmd>lua require("memento").clear_history()<CR>]] },
 
-
         { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
     },
 })
