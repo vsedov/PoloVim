@@ -36,8 +36,6 @@ tools({
 })
 tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, opt = true, config = conf.paperplanes })
 
-tools({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
-
 tools({
     "natecraddock/workspaces.nvim",
     after = "telescope.nvim",

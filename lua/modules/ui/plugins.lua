@@ -6,6 +6,7 @@ ui({
     opt = true,
     config = conf.fidget,
 })
+
 ui({ "kyazdani42/nvim-web-devicons" })
 
 ui({
@@ -141,10 +142,15 @@ ui({
 
 ui({
     "glepnir/dashboard-nvim",
-    as = "dashboard",
-    cmd = { "DashboardNewFile" },
     opt = true,
-    setup = conf.dashboard_setup,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "db",
+            condition = lambda.config.use_dashboard,
+            plugin = "dashboard-nvim",
+        })
+    end,
     config = conf.dashboard_config,
 })
 
@@ -157,7 +163,17 @@ ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     after = "nvim-ufo",
     config = function()
-        require("neoscroll").setup()
+        require("neoscroll").setup({
+            mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+            hide_cursor = true, -- Hide cursor while scrolling
+            stop_eof = true, -- Stop at <EOF> when scrolling downwards
+            respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+            cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+            easing_function = nil, -- Default easing function
+            pre_hook = nil, -- Function to run before the scrolling animation starts
+            post_hook = nil, -- Function to run after the scrolling animation ends
+            performance_mode = true, -- Disable "Performance Mode" on all buffers.
+        })
     end,
 })
 
@@ -208,7 +224,7 @@ ui({
         lambda.lazy_load({
             events = "BufEnter",
             augroup_name = "beacon",
-            condition = true,
+            condition = lambda.config.use_beacon,
             plugin = "beacon.nvim",
         })
     end,
@@ -228,5 +244,25 @@ ui({
     end,
     config = function()
         require("pet-nvim")
+    end,
+})
+
+ui({
+    "tamton-aquib/duck.nvim",
+    cmd = {
+        "DuckUse",
+        "DuckStop",
+    },
+    config = function()
+        require("duck").setup({
+            height = 5,
+            width = 5,
+        })
+        lambda.command("DuckUse", function()
+            require("duck").hatch("🐼")
+        end, {})
+        lambda.command("DuckStop", function()
+            require("duck").cook()
+        end, {})
     end,
 })

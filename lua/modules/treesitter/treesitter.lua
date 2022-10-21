@@ -90,23 +90,6 @@ local treesitter_obj = function()
                     ["gk"] = "@class.outer",
                 },
             },
-            keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["aC"] = "@class.outer",
-                ["iC"] = "@class.inner",
-                ["ac"] = "@conditional.outer",
-                ["ic"] = "@conditional.inner",
-                ["ae"] = "@block.outer",
-                ["ie"] = "@block.inner",
-                ["al"] = "@loop.outer",
-                ["il"] = "@loop.inner",
-                ["is"] = "@statement.inner",
-                ["as"] = "@statement.outer",
-                ["ad"] = "@comment.outer",
-                ["am"] = "@call.outer",
-                ["im"] = "@call.inner",
-            },
             move = {
                 enable = enable,
                 set_jumps = true, -- whether to set jumps in the jumplist
@@ -140,13 +123,18 @@ local treesitter_obj = function()
                 },
             },
             select = {
-                enable = enable,
+                enable = true,
+                include_surrounding_whitespace = true,
                 keymaps = {
-                    -- You can use the capture groups defined in textobjects.scm
-                    ["af"] = "@function.outer",
-                    ["if"] = "@function.inner",
-                    ["ac"] = "@class.outer",
-                    ["ic"] = "@class.inner",
+                    ["af"] = { query = "@function.outer", desc = "ts: all function" },
+                    ["if"] = { query = "@function.inner", desc = "ts: inner function" },
+                    ["ac"] = { query = "@class.outer", desc = "ts: all class" },
+                    ["ic"] = { query = "@class.inner", desc = "ts: inner class" },
+                    ["aC"] = { query = "@conditional.outer", desc = "ts: all conditional" },
+                    ["iC"] = { query = "@conditional.inner", desc = "ts: inner conditional" },
+                    -- FIXME: this is unusable
+                    -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/issues/133 is resolved
+                    -- ['ax'] = '@comment.outer',
                 },
             },
             swap = {
@@ -170,6 +158,7 @@ local treesitter_obj = function()
             "c",
             "java",
             "toml",
+            'diff',
             "tsx",
             "lua",
             "cpp",

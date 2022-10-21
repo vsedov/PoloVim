@@ -36,7 +36,6 @@ windows({
 
 windows({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.winshift })
 
---  Possible, ONE Can be causing huge LAG, it could be a viability : :think:
 windows({
     "anuvyklack/windows.nvim",
     requires = {
@@ -64,5 +63,22 @@ windows({
         vim.o.equalalways = false
         require("windows").setup()
         vim.keymap.set("n", ";z", "<Cmd>WindowsMaximize<CR>")
+    end,
+})
+
+-- What tf is this plugin ?
+windows({
+    "andrewferrier/wrapping.nvim",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "wrapping",
+            condition = lambda.config.use_wrapping,
+            plugin = "wrapping.nvim",
+        })
+    end,
+    config = function()
+        require("wrapping").setup()
     end,
 })

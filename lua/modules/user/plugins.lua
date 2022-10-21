@@ -102,16 +102,24 @@ user({
     end,
 })
 
---  REVISIT: (vsedov) (21:41:00 - 10/10/22): I have this plugin
---  But i have no clue what this does, or what the point of this is .
+
+
+
 user({
-    "m-gail/escape.nvim",
-    opt = true,
-    keys = {
-        { "v", "<leader>e" },
-    },
-    config = function()
-        local sc = require("escape")
-        vim.keymap.set("v", "<leader>e", sc.escape, { noremap = true, silent = true })
+    "samjwill/nvim-unception",
+    opt = true, 
+    setup = function()
+        lambda.lazy_load({
+            events = "FileType",
+            pattern = "toggleterm",
+            augroup_name = "unception",
+            condition =  lambda.config.use_unception,
+            plugin = "nvim-unception",
+        })
+
     end,
+    config = function()
+        vim.g.unception_delete_replaced_buffer = true 
+        vim.g.unception_enable_flavor_text = false
+    end
 })
