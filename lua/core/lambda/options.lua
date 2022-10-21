@@ -20,14 +20,14 @@ lambda.config = {
     use_hlchunk = false,
     use_pet = true,
     use_lightspeed = true, -- if false then leap.nvim will be used.
-    use_noice = false,
+    use_noice = true,
     use_music = true,
     use_scope = false, -- really fucks with neogit window
     use_wrapping = false, -- I am not sure if this is causing me to segfault.
     use_scroll = false,
-    use_beacon = true,
+    use_beacon = false,
     use_dashboard = false, -- set to false to not see this
-    use_unception = true, 
+    use_unception = true,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
@@ -96,7 +96,7 @@ lambda.config.lsp = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
         format = { "isort", "yapf" }, -- black
         -- jedis documentation is better though
-        lsp = "pylance", -- jedi pylsp and pyright pylance
+        lsp = "jedi", -- jedi pylsp and pyright pylance
         pylance_pyright = {
             use_inlay_hints = true,
         },

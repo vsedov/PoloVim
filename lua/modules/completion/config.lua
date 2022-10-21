@@ -1,13 +1,6 @@
 -- local global = require("core.global")
 local config = {}
 
-function config.nvim_doc_help()
-    require("docs-view").setup({
-        position = "bottom",
-        height = 10,
-    })
-end
-
 function config.cmp()
     require("modules.completion.cmp")
 end
@@ -77,23 +70,6 @@ function config.autopair()
             keys = "qwertyuiopzxcvbnmasdfghjkl",
             check_comma = true,
             hightlight = "Search",
-        },
-    })
-end
-
-function config.neogen()
-    require("neogen").setup({
-        snippet_engine = "luasnip",
-        languages = {
-            lua = {
-                template = { annotation_convention = "emmylua" },
-            },
-            python = {
-                template = { annotation_convention = "numpydoc" },
-            },
-            c = {
-                template = { annotation_convention = "doxygen" },
-            },
         },
     })
 end

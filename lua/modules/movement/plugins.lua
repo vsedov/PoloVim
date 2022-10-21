@@ -106,9 +106,5 @@ movement({
     end,
 })
 
-
 movement({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
-movement({ "gaborvecsei/memento.nvim", 
-    opt = true, 
-    module = "memento",
- })
+movement({ "gaborvecsei/memento.nvim", opt = true, module = "memento" })

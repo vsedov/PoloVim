@@ -2,7 +2,8 @@
 local With = {}
 local null_ls = require("null-ls")
 local plaintext = { "gitcommit", "markdown", "norg" }
-local file_type_exclude = {"memento", "norg", "gitcommit", "NeogitStatus", "NeogitCommitMessage", "harpoon-menu", "harpoon" }
+local file_type_exclude =
+    { "memento", "norg", "gitcommit", "NeogitStatus", "NeogitCommitMessage", "harpoon-menu", "harpoon" }
 
 With.trim_newlines = {
     name = "trim_newlines",

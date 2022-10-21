@@ -125,7 +125,7 @@ lambda.augroup("SmartClose", {
                 or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
 
             if is_eligible then
-                vim.keymap.set("n", "q", smart_close, { buffer = 0, nowait = true })
+                vim.keymap.set("n", "-q", smart_close, { buffer = 0, nowait = true })
             end
         end,
     },

@@ -153,8 +153,10 @@ vim.defer_fn(function()
     if lambda.config.simple_notify then
         loader("notifier.nvim")
     else
-        loader("fidget.nvim")
-        loader("nvim-notify")
+        if not lambda.config.use_noice then
+            loader("fidget.nvim")
+            loader("nvim-notify")
+        end
     end
     loader("matchparen.nvim")
     lprint("all done")

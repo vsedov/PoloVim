@@ -1,8 +1,6 @@
 local conf = require("modules.misc.config")
 local misc = require("core.pack").package
 
-misc({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
-
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
 misc({

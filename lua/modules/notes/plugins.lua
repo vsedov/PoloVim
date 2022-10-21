@@ -113,3 +113,26 @@ notes({
         "PomodoroTogglePopup",
     },
 })
+
+notes({
+    "jghauser/papis.nvim",
+    after = { "telescope.nvim", "nvim-cmp" },
+    ft = { "latex", "tex", "norg" },
+    requires = {
+        "kkharji/sqlite.lua",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "nvim-treesitter/nvim-treesitter",
+    },
+    rocks = { "lyaml" },
+    config = function()
+        require("papis").setup({
+            papis_python = {
+                dir = "/home/viv/Documents/papers/",
+                info_name = "info.yaml", -- (when setting papis options `-` is replaced with `_`
+                notes_name = [[notes.norg]],
+            },
+            enable_keymaps = false,
+        })
+    end,
+})

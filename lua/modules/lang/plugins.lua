@@ -188,17 +188,6 @@ lang({
     config = conf.regexplainer,
 })
 
--- ig finds the diagnostic under or after the cursor (including any diagnostic the cursor is sitting on)
--- ]g finds the diagnostic after the cursor (excluding any diagnostic the cursor is sitting on)
--- [g finds the diagnostic before the cursor (excluding any diagnostic the cursor is sitting on)
-lang({
-    "andrewferrier/textobj-diagnostic.nvim",
-    ft = { "python", "lua" },
-    config = function()
-        require("textobj-diagnostic").setup()
-    end,
-})
-
 lang({
     "Vimjas/vim-python-pep8-indent",
     ft = "python",
@@ -237,36 +226,4 @@ lang({
     module = { "sniprun" },
     cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
     config = function() end,
-})
-lang({
-    "ranelpadon/python-copy-reference.vim",
-    opt = true,
-    ft = "python",
-    cmd = {
-        "PythonCopyReferenceDotted",
-        "PythonCopyReferencePytest",
-    },
-})
-
-lang({
-    "jghauser/papis.nvim",
-    after = { "telescope.nvim", "nvim-cmp" },
-    ft = { "latex", "tex", "norg" },
-    requires = {
-        "kkharji/sqlite.lua",
-        "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
-        "nvim-treesitter/nvim-treesitter",
-    },
-    rocks = { "lyaml" },
-    config = function()
-        require("papis").setup({
-            papis_python = {
-                dir = "/home/viv/Documents/papers/",
-                info_name = "info.yaml", -- (when setting papis options `-` is replaced with `_`
-                notes_name = [[notes.norg]],
-            },
-            enable_keymaps = false,
-        })
-    end,
 })

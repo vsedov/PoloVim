@@ -47,3 +47,38 @@ ts({
 })
 
 ts({ "nvim-treesitter/nvim-treesitter-context", event = "WinScrolled", config = conf.context })
+
+ts({
+    "m-demare/hlargs.nvim",
+    ft = {
+        "c",
+        "cpp",
+        "go",
+        "java",
+        "javascript",
+        "jsx",
+        "lua",
+        "php",
+        "python",
+        "r",
+        "ruby",
+        "rust",
+        "tsx",
+        "typescript",
+        "vim",
+        "zig",
+    },
+    requires = { "nvim-treesitter/nvim-treesitter" },
+    config = conf.hlargs,
+})
+
+-- ig finds the diagnostic under or after the cursor (including any diagnostic the cursor is sitting on)
+-- ]g finds the diagnostic after the cursor (excluding any diagnostic the cursor is sitting on)
+-- [g finds the diagnostic before the cursor (excluding any diagnostic the cursor is sitting on)
+ts({
+    "andrewferrier/textobj-diagnostic.nvim",
+    ft = { "python", "lua" },
+    config = function()
+        require("textobj-diagnostic").setup()
+    end,
+})

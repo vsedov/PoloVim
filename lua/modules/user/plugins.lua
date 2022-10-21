@@ -102,24 +102,20 @@ user({
     end,
 })
 
-
-
-
 user({
     "samjwill/nvim-unception",
-    opt = true, 
+    opt = true,
     setup = function()
         lambda.lazy_load({
             events = "FileType",
             pattern = "toggleterm",
             augroup_name = "unception",
-            condition =  lambda.config.use_unception,
+            condition = lambda.config.use_unception,
             plugin = "nvim-unception",
         })
-
     end,
     config = function()
-        vim.g.unception_delete_replaced_buffer = true 
+        vim.g.unception_delete_replaced_buffer = true
         vim.g.unception_enable_flavor_text = false
-    end
+    end,
 })

@@ -158,7 +158,7 @@ local treesitter_obj = function()
             "c",
             "java",
             "toml",
-            'diff',
+            "diff",
             "tsx",
             "lua",
             "cpp",

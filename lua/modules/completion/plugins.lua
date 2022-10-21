@@ -2,41 +2,6 @@ local conf = require("modules.completion.config")
 local completion = require("core.pack").package
 
 completion({
-    "max397574/dyn_help.nvim",
-    opt = true,
-    keys = "<leader>hw",
-    config = function()
-        vim.keymap.set("n", "<leader>hw", function()
-            if require("dynamic_help.extras.statusline").available() ~= "" then
-                require("dynamic_help").float_help(vim.fn.expand("<cword>"))
-            else
-                local help = vim.fn.input("Help Tag> ")
-                require("dynamic_help").float_help(help)
-            end
-        end, {})
-    end,
-})
-completion({
-    "amrbashir/nvim-docs-view",
-    opt = true,
-    cmd = { "DocsViewToggle" },
-    config = conf.nvim_doc_help,
-})
-completion({
-    "KabbAmine/zeavim.vim",
-    cmd = {
-        "Zeavim",
-        "ZeavimV",
-        "Zeavim!",
-        "Docset",
-    },
-})
-completion({
-    "romainl/vim-devdocs",
-    cmd = { "DD" },
-    opt = true,
-})
-completion({
     "hrsh7th/nvim-cmp",
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
@@ -141,8 +106,6 @@ completion({
     keys = { "<C-c>" },
     config = conf.autopair,
 })
-
-completion({ "danymat/neogen", module = { "neogen" }, requires = { "LuaSnip" }, config = conf.neogen })
 
 completion({
     lambda.use_local("vim-sonictemplate", "personal"),
