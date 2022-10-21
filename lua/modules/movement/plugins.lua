@@ -82,3 +82,33 @@ movement({
     keys = { "c/" },
     config = conf.sj,
 })
+
+movement({
+    "max397574/nvim-treehopper",
+    keys = {
+        { "o", "u" },
+        { "v", "u" },
+    },
+    config = function()
+        lambda.augroup("TreehopperMaps", {
+            {
+                event = "FileType",
+                command = function(args)
+                    -- FIXME: this issue should be handled inside the plugin rather than manually
+                    local langs = require("nvim-treesitter.parsers").available_parsers()
+                    if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
+                        vim.keymap.set("o", "u", ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
+                        vim.keymap.set("v", "u", ":lua require('tsht').nodes()<cr>", { buffer = args.buf })
+                    end
+                end,
+            },
+        })
+    end,
+})
+
+
+movement({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
+movement({ "gaborvecsei/memento.nvim", 
+    opt = true, 
+    module = "memento",
+ })
