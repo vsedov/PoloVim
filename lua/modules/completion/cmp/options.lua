@@ -18,7 +18,6 @@ return {
     },
     use_neorg = {
         enable = true,
-
         options = {
             name = "neorg",
             priority = 6,
@@ -37,7 +36,7 @@ return {
         },
     },
     use_lab = {
-        enable = true,
+        enable = false,
         options = {
             name = "lab.quick_data",
             keyword_length = 4,

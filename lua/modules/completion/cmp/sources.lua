@@ -23,7 +23,6 @@ local filetype = {
         table.insert(sources, { name = "latex_symbols" })
     end,
     markdown = function()
-        table.insert(sources, { name = "look" })
         table.insert(sources, { name = "latex_symbols" })
     end,
 }
