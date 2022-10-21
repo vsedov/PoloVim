@@ -45,6 +45,7 @@ function config.marks()
             "NeogitCommitMessage",
             "toggleterm",
             "harpoon",
+            "memento",
             "harpoon-menu",
             "BookMarks",
             "BookMark",
