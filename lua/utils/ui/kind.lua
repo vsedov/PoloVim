@@ -4,7 +4,6 @@ local fmt = string.format
 local kind_presets = {
     default = lambda.style.lsp.kinds.nerdfonts,
 }
-
 local kind_order = lambda.style.lsp.highlights.Symbol
 local kind_len = 25
 
