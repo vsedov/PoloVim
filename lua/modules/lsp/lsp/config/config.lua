@@ -113,8 +113,8 @@ local get_extra_binds = function()
             ["gh"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
             ["gs"] = { "<cmd> Lspsaga signature_help<cr>", "signature_help" },
             ["ca"] = { "<cmd> Lspsaga code_action<cr>", "code_actions" },
-            ["<C-f>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", "lsp scroll up" },
-            ["<C-b>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", "lsp scroll down" },
+            -- ["<C-f>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", "lsp scroll up" },
+            -- ["<C-b>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", "lsp scroll down" },
 
             ["gr"] = { "<cmd>Lspsaga rename<CR>", "rename" },
             ["gI"] = { "<cmd>Lspsaga implement<CR>", "implementation" },

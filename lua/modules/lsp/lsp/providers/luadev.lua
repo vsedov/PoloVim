@@ -10,18 +10,9 @@ require("neodev").setup({
     enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
     runtime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-    plugins = true, -- installed opt or start plugins in packpath
-    override = function(root_dir, library)
-        if require("neodev.util").has_file(root_dir, "/.config/nvim/") then
-            library.enabled = false
-            library.plugins = false
-        end
-    end,
+    plugins = false, -- installed opt or start plugins in packpath
 })
-
 local sumneko_lua_server = enhance_attach({
-
-    -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     cmd = { "lua-language-server" },
     settings = {
         Lua = {
@@ -42,16 +33,9 @@ local sumneko_lua_server = enhance_attach({
                 },
             },
             completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
-
             format = { enable = false },
             hint = { enable = true, arrayIndex = "Disable", setType = true },
             workspace = {
-                library = {
-                    [table.concat({ vim.fn.stdpath("data"), "lua" }, "/")] = true,
-                    -- vim.api.nvim_get_runtime_file("", false),
-                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                },
                 checkThirdParty = false,
             },
         },
