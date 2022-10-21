@@ -28,6 +28,7 @@ local hint_normal = [[
    ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔    ^
     _n_: Rename                   _b_: Extract block                 _p_: Print var  ^
     _i_: Inline                   _B_:   ... to file                 _c_: Clear up   ^
+   ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔    ^
    ^                                                                                 ^
    ^ ^                   _q_: Format     _r_: Select refactor            _<Esc>_     ^
 ]]
@@ -78,7 +79,6 @@ Hydra({
         },
     },
 })
-
 -- Visual Mode Version
 Hydra({
     name = "Refactor",

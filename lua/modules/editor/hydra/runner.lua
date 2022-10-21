@@ -49,11 +49,22 @@ end
 local core_runner_hint = [[
 ^ ^ _r_: Run Code   ^ ^
 ^ ^ _f_: Adv RUn    ^ ^
+
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^ _w_: Run Code   ^ ^
 ^ ^ _s_: Stop Code  ^ ^
 ^ ^ _p_: Pannel     ^ ^
+
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^ _o_: SnipRun    ^ ^
 ^ ^ _e_: SnipRunV   ^ ^
+
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
+^ ^ _c_: PyRefDot   ^ ^
+^ ^ _C_: PyRefTest  ^ ^
+
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
+
 ]]
 Hydra({
     name = "Runner",
@@ -77,5 +88,15 @@ Hydra({
         { "o", cmd([[lua require("sniprun").run()]]), { exit = false } },
         { "e", cmd([[lua require("sniprun").run('v')]]), { exit = false } },
         { "<Esc>", nil, { exit = true, desc = false } },
+        {
+            "c",
+            cmd("PythonCopyReferenceDotted"),
+            { desc = "Python Copy reference dot" },
+        },
+        {
+            "C",
+            cmd("PythonCopyReferencePytest"),
+            { desc = "Python Copy reference Pytest" },
+        },
     },
 })
