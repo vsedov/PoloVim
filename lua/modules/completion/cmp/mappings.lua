@@ -74,7 +74,7 @@ local mappings = {
         elseif luasnip.jumpable(-1) then
             luasnip.jump(-1)
         else
-            -- smart_bs()
+            -- utils.smart_bs()
             vim.cmd(":<")
         end
     end, {
@@ -83,37 +83,43 @@ local mappings = {
         "c",
     }),
 
-    ["<C-j>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-        else
-            fallback()
-        end
-    end, {
-        "i",
-        "s",
-    }),
+    -- ["<C-j>"] = cmp.mapping(function(fallback)
+    --     if luasnip.jumpable(-1) then
+    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+    --     else
+    --         fallback()
+    --     end
+    -- end, {
+    --     "i",
+    --     "s",
+    -- }),
 
-    ["<C-k>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-        else
-            fallback()
-        end
-    end, {
-        "i",
-        "s",
-    }),
+    -- ["<C-k>"] = cmp.mapping(function(fallback)
+    --     if luasnip.expand_or_jumpable() then
+    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+    --     else
+    --         fallback()
+    --     end
+    -- end, {
+    --     "i",
+    --     "s",
+    -- }),
     ["<C-l>"] = cmp.mapping(function(fallback)
-        local copilot_keys = vim.fn["copilot#Accept"]("")
-        if copilot_keys ~= "" then
-            vim.api.nvim_feedkeys(copilot_keys, "i", true)
+        if lambda.config.sell_your_soul then
+            local copilot_keys = vim.fn["copilot#Accept"]("")
+            if copilot_keys ~= "" then
+                vim.api.nvim_feedkeys(copilot_keys, "i", true)
+            else
+                fallback()
+            end
         else
-            fallback()
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+            else
+                fallback()
+            end
         end
     end, {
         "i",

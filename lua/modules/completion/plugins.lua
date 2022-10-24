@@ -98,13 +98,34 @@ completion({
 
 completion({
     "windwp/nvim-autopairs",
-    event = {
-        "InsertEnter",
-        "CmdLineEnter",
-    },
-    after = "nvim-cmp",
+    setup = function()
+        lambda.lazy_load({
+            events = { "InsertEnter", "CmdLineEnter" },
+            augroup_name = "autopairs",
+            condition = not lambda.config.use_lexima,
+            plugin = "nvim-autopairs",
+        })
+    end,
     keys = { "<C-c>" },
     config = conf.autopair,
+})
+
+completion({
+    "cohama/lexima.vim",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = { "InsertEnter", "CmdLineEnter" },
+            augroup_name = "lexima",
+            condition = lambda.config.use_lexima,
+            plugin = "lexima.vim",
+        })
+    end,
+    config = function()
+        vim.g.lexima_enable_basic_rules = 1
+        vim.g.lexima_enable_newline_rules = 1
+        vim.g.lexima_enable_endwise_rules = 0
+    end,
 })
 
 completion({
@@ -112,4 +133,12 @@ completion({
     as = "vim-sonictemplate",
     cmd = "Template",
     config = conf.vim_sonictemplate,
+})
+
+-- Lua
+completion({
+    "abecodes/tabout.nvim",
+    config = conf.tabout,
+    wants = { "nvim-treesitter"}, -- or require if not used so far
+    after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
 })

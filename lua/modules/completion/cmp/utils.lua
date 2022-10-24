@@ -81,19 +81,18 @@ end
 -- yields intuitive behavior.
 M.smart_bs = function()
     if vim.o.expandtab then
-        return M.rhs("<BS>")
+        return M.rhs(":<")
     else
-        local col = M.column()
+        local col = column()
         local line = vim.api.nvim_get_current_line()
         local prefix = line:sub(1, col)
         local in_leading_indent = prefix:find("^%s*$")
         if in_leading_indent then
-            return M.rhs("<BS>")
+            return M.rhs(":<")
         end
-
         local previous_char = prefix:sub(#prefix, #prefix)
         if previous_char ~= " " then
-            return M.rhs("<BS>")
+            return M.rhs(":<")
         end
         return M.rhs("<C-\\><C-o>:set expandtab<CR><BS><C-\\><C-o>:set noexpandtab<CR>")
     end
