@@ -176,9 +176,20 @@ editor({
     end,
 })
 
+---
+-- map("!", "<M-f>", readline.forward_word)
+-- map("!", "<M-b>", readline.backward_word)
+-- map("!", "<M-d>", readline.kill_word)
+-- map("!", "<M-BS>", readline.backward_kill_word)
+
+-- map("!", "<C-a>", readline.beginning_of_line)
+-- map("!", "<C-e>", readline.end_of_line)
+
+-- map("!", "<C-w>", readline.unix_word_rubout)
+-- map("!", "<C-u>", readline.backward_kill_line)
 editor({
     "linty-org/readline.nvim",
-    event = "CmdlineEnter",
+    event = "InsertEnter",
     config = conf.readline,
 })
 
@@ -260,12 +271,4 @@ editor({
         "SmartQCloseSplits",
     },
     config = conf.smart_q,
-})
-
--- Lua
-editor({
-    "abecodes/tabout.nvim",
-    config = conf.tabout,
-    wants = { "nvim-treesitter" }, -- or require if not used so far
-    after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
 })
