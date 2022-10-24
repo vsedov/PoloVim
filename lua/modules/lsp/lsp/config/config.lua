@@ -112,7 +112,6 @@ local get_extra_binds = function()
             ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
             ["gh"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
             ["gs"] = { "<cmd> Lspsaga signature_help<cr>", "signature_help" },
-            ["ca"] = { "<cmd> Lspsaga code_action<cr>", "code_actions" },
             -- ["<C-f>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", "lsp scroll up" },
             -- ["<C-b>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", "lsp scroll down" },
 
@@ -173,7 +172,7 @@ local container = {
             ["gK"] = { require("hover").hover_select, "Hover select" },
         },
         visual_mode = {
-            ["ca"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
+            ["\\;"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
         },
         insert_mode = {},
         extra_binds = get_extra_binds(),
