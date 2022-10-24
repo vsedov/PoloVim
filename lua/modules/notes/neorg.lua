@@ -32,7 +32,7 @@ require("neorg").setup({
                 extensions = "all",
             },
         },
-        ["core.execute"] = {},
+        -- ["core.execute"] = {},
         -- ["external.zettelkasten"] = {},
         -- ["external.context"] = {},
         ["core.norg.concealer"] = {

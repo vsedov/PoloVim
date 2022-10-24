@@ -2,9 +2,9 @@ local conf = require("modules.notes.config")
 local notes = require("core.pack").package
 
 notes({
-    -- "nvim-neorg/neorg",
-    "tamton-aquib/neorg",
-    branch = "code-execution",
+    "nvim-neorg/neorg",
+    -- "tamton-aquib/neorg",
+    -- branch = "code-execution",
     --[[ branch = "main", ]]
     tags = "*",
     run = ":Neorg sync-parsers",

@@ -82,14 +82,6 @@ tools({
 })
 
 tools({
-    "ekickx/clipboard-image.nvim",
-    ft = { "norg", "markdown" },
-    cmd = { "PasteImg" },
-    opt = true,
-    config = conf.clipboardimage,
-})
-
-tools({
     "iamcco/markdown-preview.nvim",
     ft = { "markdown", "pandoc.markdown", "rmd" },
     cmd = { "MarkdownPreview" },

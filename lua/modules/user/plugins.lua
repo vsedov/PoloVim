@@ -119,3 +119,54 @@ user({
         vim.g.unception_enable_flavor_text = false
     end,
 })
+
+user({
+    "echasnovski/mini.nvim",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "FileType",
+            pattern = { "lua", "python" },
+            augroup_name = "mini",
+            condition = lambda.config.use_mini,
+            plugin = "mini.nvim",
+        })
+    end,
+    config = function()
+        -- Trailspace (highlight and remove)
+        require("mini.trailspace").setup()
+        -- Align text
+        require("mini.align").setup()
+        -- Minimap
+        local map = require("mini.map")
+        local diagnostic_integration = map.gen_integration.diagnostic({
+            error = "DiagnosticFloatingError",
+            warn = "DiagnosticFloatingWarn",
+            info = "DiagnosticFloatingInfo",
+            hint = "DiagnosticFloatingHint",
+        })
+        map.setup({
+            integrations = {
+                map.gen_integration.builtin_search(),
+                map.gen_integration.gitsigns(),
+                diagnostic_integration,
+            },
+        })
+        lambda.command("MiniMap", map.toggle, {})
+    end,
+})
+user({
+    "pkage/coauthor.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+    cmd = {
+        "CoauthorWrite",
+        "CoauthorHealth",
+    },
+    config = function()
+        -- default configuration options shown
+        require("coauthor").setup({
+            server_uri = "http://localhost:8021",
+            max_length = 256,
+        })
+    end,
+})
