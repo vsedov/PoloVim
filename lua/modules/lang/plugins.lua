@@ -39,7 +39,6 @@ lang({ "nanotee/luv-vimdocs", opt = true })
 
 -- builtin lua functions
 lang({ "milisims/nvim-luaref", opt = true })
-lang({ "is0n/jaq-nvim", cmd = "Jaq", opt = true, config = conf.jaq })
 
 lang({ "mtdl9/vim-log-highlighting", ft = { "text", "log" } })
 
@@ -135,6 +134,20 @@ lang({
     "stevearc/overseer.nvim",
     config = conf.overseer,
 })
+lang({
+    "CRAG666/code_runner.nvim",
+    cmd = {
+        "RunCode",
+        "RunFile",
+        "RunProject",
+        "RunClose",
+        "CRFiletype",
+        "CRProjects",
+    },
+    opt = true,
+    config = conf.code_runner,
+})
+
 lang({
     "andythigpen/nvim-coverage",
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
