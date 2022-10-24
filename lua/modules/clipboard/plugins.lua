@@ -8,6 +8,7 @@ clipsub({
     config = conf.config_yanky,
     requires = { "telescope.nvim", "kkharji/sqlite.lua" },
 })
+--  REVISIT: (vsedov) (17:56:23 - 23/10/22): Is this even required ?
 clipsub({
     "ibhagwan/smartyank.nvim",
     after = "yanky.nvim",
@@ -120,3 +121,11 @@ clipsub({
 })
 
 clipsub({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
+
+clipsub({
+    "ekickx/clipboard-image.nvim",
+    ft = { "norg", "markdown" },
+    cmd = { "PasteImg" },
+    opt = true,
+    config = conf.clipboardimage,
+})
