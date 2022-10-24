@@ -35,7 +35,7 @@ local run_or_test = function(debug)
     local ft = vim.bo.filetype
     -- t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
     if ft == "lua" then
-        return ":Jaq internal<CR>"
+        return ":RunCode<CR>"
     else
         local m = vim.fn.mode()
         if m == "n" or m == "i" then
@@ -46,29 +46,42 @@ local run_or_test = function(debug)
     end
 end
 
-local core_runner_hint = [[
-^ ^ _r_: Run Code   ^ ^
-^ ^ _f_: Adv RUn    ^ ^
+hint = [[
+^^^^                  Overseer                  ^^^^
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
+_w_: OverseerToggle          _e_: OverseerRun
+_d_: OverseerQuickAction     _t_: TaskAction
+_b_: OverseerBuild           _l_:  LoadBundle
+              _<Enter>_: Runnner
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
 
-^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^ _w_: Run Code   ^ ^
-^ ^ _s_: Stop Code  ^ ^
-^ ^ _p_: Pannel     ^ ^
+                 Code Runners
 
-^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^ _o_: SnipRun    ^ ^
-^ ^ _e_: SnipRunV   ^ ^
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
+_r_: Run Code                 _F_: Adv RUn
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
 
-^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^ _c_: PyRefDot   ^ ^
-^ ^ _C_: PyRefTest  ^ ^
+                 Lab Runners
 
-^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
+_W_: Run Code                 _s_: Stop Code
+                  _p_: Pannel
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
+
+                  SnipRun
+
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
+_o_: SnipRun                 _v_: SnipRunV
+^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
+
+
+^^^^ _C_: Pydoc _c_: Doc        _<Esc>_: quit   ^^^^
 
 ]]
+
 Hydra({
     name = "Runner",
-    hint = core_runner_hint,
+    hint = hint,
     config = {
         color = "pink",
         invoke_on_body = true,
@@ -77,16 +90,38 @@ Hydra({
             border = lambda.style.border.type_0,
         },
     },
-    mode = { "n", "i", "v" },
+    mode = { "n", "i", "v", "x" },
     body = ";r",
     heads = {
-        { "r", cmd("Jaq float"), { exit = false } },
-        { "f", run_or_test, { exit = true } },
-        { "w", cmd("Lab code run"), { exit = true } },
+        { "w", cmd("OverseerToggle"), { exit = true } },
+        { "e", cmd("OverseerRun") },
+        { "d", cmd("OverseerQuickAction") },
+        { "t", cmd("OverseerTaskAction") },
+        { "b", cmd("OverseerBuild") },
+        { "l", cmd("OverseerLoadBundle") },
+        {
+            "<Enter>",
+            function()
+                local overseer = require("overseer")
+                overseer.run_template({ name = "Runner" }, function(task)
+                    if task then
+                        overseer.run_action(task, "open float")
+                        -- overseer.run_action(task, 'open hsplit')
+                    end
+                end)
+            end,
+            { exit = true, desc = false },
+        },
+
+        { "<Esc>", nil, { exit = true, desc = false } },
+
+        { "r", cmd("RunCode"), { exit = true } },
+        { "F", run_or_test, { exit = true } },
+        { "W", cmd("Lab code run"), { exit = true } },
         { "s", cmd("Lab code stop"), { exit = false } },
         { "p", cmd("Lab code panel"), { exit = false } },
-        { "o", cmd([[lua require("sniprun").run()]]), { exit = false } },
-        { "e", cmd([[lua require("sniprun").run('v')]]), { exit = false } },
+        { "o", cmd([[lua require("sniprun").run()]]), { exit = true } },
+        { "v", cmd([[lua require("sniprun").run('v')]]), { exit = false } },
         { "<Esc>", nil, { exit = true, desc = false } },
         {
             "c",

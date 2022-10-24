@@ -79,6 +79,31 @@ for surround, motion in pairs({ i = "j", a = "k" }) do
     end
 end
 
+local harpoon_hint = [[
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔ ^ ^
+^ ^   _j_: next
+    _k_: prev
+    _J_: next
+    _K_: prev
+    _)_: i)
+    _(_: a)
+    _]_: i]
+    _[_: a]
+    _}_: i}
+    _{_: a{
+    _f_: af
+    _F_: iF
+
+    _cj_: ci
+    _yj_: yi
+    _ck_: ca
+    _yk_: ya
+    _dj_: di
+    _dk_: da
+
+^ ^ _<Esc>_: quit^ ^
+]]
+
 local mapping = {
     color = function(t, rhs)
         t.config.color = rhs
@@ -96,13 +121,19 @@ local mapping = {
         t.config.mode = rhs
     end,
 }
+-- Make a bind view
 
 --#region
 
 for name, spec in pairs(config) do
     local new_hydra = {
+        hint = harpoon_hint,
         name = name,
         config = {
+            hint = {
+                position = "middle-right",
+                border = lambda.style.border.type_0,
+            },
             invoke_on_body = true,
             timeout = false,
         },
