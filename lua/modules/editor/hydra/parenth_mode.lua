@@ -11,6 +11,12 @@ local mx = function(feedkeys)
         vim.api.nvim_feedkeys(keys, "m", false)
     end
 end
+local function make_core_table(core_table, second_table)
+    for _, v in pairs(second_table) do
+        table.insert(core_table, v)
+    end
+    table.insert(core_table, "\n")
+end
 
 -- NOTE:
 local config = {}
@@ -31,8 +37,7 @@ config.parenth_mode = {
     color = "pink",
     body = "\\<leader>",
     mode = { "n", "v", "x", "o" },
-    ["<Esc>"] = { nil, { exit = true, desc = false } },
-    ["\\<leader>"] = { nil, { exit = true, desc = false } },
+    ["<Esc>"] = { nil, { exit = true } },
     j = {
         function()
             vim.fn.search("[({[]")
@@ -79,31 +84,6 @@ for surround, motion in pairs({ i = "j", a = "k" }) do
     end
 end
 
-local harpoon_hint = [[
-^ ^▔▔▔▔▔▔▔▔▔▔▔▔ ^ ^
-^ ^   _j_: next
-    _k_: prev
-    _J_: next
-    _K_: prev
-    _)_: i)
-    _(_: a)
-    _]_: i]
-    _[_: a]
-    _}_: i}
-    _{_: a{
-    _f_: af
-    _F_: iF
-
-    _cj_: ci
-    _yj_: yi
-    _ck_: ca
-    _yk_: ya
-    _dj_: di
-    _dk_: da
-
-^ ^ _<Esc>_: quit^ ^
-]]
-
 local mapping = {
     color = function(t, rhs)
         t.config.color = rhs
@@ -125,20 +105,28 @@ local mapping = {
 
 --#region
 
-for name, spec in pairs(config) do
-    local new_hydra = {
-        hint = harpoon_hint,
-        name = name,
-        config = {
-            hint = {
-                position = "middle-right",
-                border = lambda.style.border.type_0,
-            },
-            invoke_on_body = true,
-            timeout = false,
+-- Loop over Spec table and make a hinting table
+hint_auto_create = [[
+      parenth
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔ ^ ^
+]]
+
+-- Create a Auto Hinting Table same as above but with auto generated
+
+local new_hydra = {
+    name = "core",
+    config = {
+        hint = {
+            position = "middle-right",
+            border = lambda.style.border.type_0,
         },
-        heads = {},
-    }
+        invoke_on_body = true,
+        timeout = false,
+    },
+    heads = {},
+}
+
+for name, spec in pairs(config) do
     for lhs, rhs in pairs(spec) do
         local action = mapping[lhs]
         if action == nil then
@@ -147,5 +135,103 @@ for name, spec in pairs(config) do
             action(new_hydra, rhs)
         end
     end
-    hydra(new_hydra)
 end
+--
+local function auto_hint_generate()
+    container = {}
+    for x, y in pairs(config.parenth_mode) do
+        local mapping = x
+        if type(y[1]) == "function" then
+            for x, y in pairs(y[2]) do
+                if x == "desc" then
+                    container[mapping] = y
+                end
+            end
+        end
+    end
+    -- sort container by mapping alphabetically
+    -- P(container)
+    -- sort alphabetically and any
+    sorted = {}
+    for k, v in pairs(container) do
+        table.insert(sorted, k)
+    end
+    table.sort(sorted)
+
+    bracket = { "(", ")", "[", "]", "{", "}" }
+    -- Single characters - non Capital to Capital then to double characters then brackets
+    single = {}
+    for _, v in pairs(sorted) do
+        if string.len(v) == 1 and not vim.tbl_contains(bracket, v) then
+            table.insert(single, v)
+        end
+    end
+    table.sort(single)
+    douible = {}
+    for _, v in pairs(sorted) do
+        if string.len(v) == 2 and not vim.tbl_contains(bracket, v) then
+            table.insert(douible, v)
+        end
+    end
+    table.sort(douible)
+
+    core_table = {}
+
+    make_core_table(core_table, single)
+    make_core_table(core_table, douible)
+    make_core_table(core_table, bracket)
+
+    hint_table = {}
+    string_val = "^ ^ Parenth ^ ^\n\n"
+    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔^ ^\n"
+
+    for _, v in pairs(core_table) do
+        if v == "\n" then
+            hint = "\n"
+            hint = hint .. "^ ^▔▔▔▔▔▔▔▔^ ^\n"
+        else
+            hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+        end
+        table.insert(hint_table, hint)
+        string_val = string_val .. hint
+        -- end
+    end
+    -- print(string_val)
+    return string_val
+end
+
+val = auto_hint_generate()
+new_hydra.hint = val
+hydra(new_hydra)
+
+--
+-- local harpoon_hint = [[
+-- ^ ^▔▔▔▔▔▔▔▔▔▔▔▔ ^ ^
+-- ^ ^   _j_: next
+--     _k_: prev
+--     _J_: next
+--     _K_: prev
+--
+--     _)_: i)
+--     _(_: a)
+--
+--     _]_: i]
+--     _[_: a]
+--
+--     _}_: i}
+--     _{_: a{
+--
+--     _f_: af
+--     _F_: iF
+--
+--     _cj_: ci
+--     _ck_: ca
+--
+--     _yj_: yi
+--     _yk_: ya
+--
+--     _dj_: di
+--     _dk_: da
+--
+-- ^ ^ _<Esc>_: quit^ ^
+-- ]]
