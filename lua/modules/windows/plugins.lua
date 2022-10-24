@@ -26,7 +26,7 @@ windows({
     },
     config = function()
         require("flirt").setup({
-            override_open = true, -- experimental
+            override_open = false, -- experimental
             close_command = "Q",
             default_move_mappings = true, -- <C-arrows> to move floats
             default_resize_mappings = true, -- <A-arrows> to resize floats

@@ -28,6 +28,8 @@ lambda.config = {
     use_beacon = false,
     use_dashboard = false, -- set to false to not see this
     use_unception = true,
+    use_mini = true,
+    use_lexima = true,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
@@ -94,9 +96,9 @@ lambda.config.lsp = {
     latex = "ltex", -- texlab | ltex
     python = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
-        format = { "isort", "yapf" }, -- black
+        format = { "isort", "black" }, -- black
         -- jedis documentation is better though
-        lsp = "jedi", -- jedi pylsp and pyright pylance
+        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         pylance_pyright = {
             use_inlay_hints = true,
         },

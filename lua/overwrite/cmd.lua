@@ -314,11 +314,18 @@ end, { force = true })
 -- vim.diagnostic.setqflist()
 add_cmd("CopilotUnload", function()
     if lambda.is_loaded("_copilot") then
+        lambda.config.sell_your_soul = false
         vim.cmd([[Copilot disable]])
         lambda.dynamic_unload("_copilot", false)
     else
         vim.notify("Copilot is not loaded")
     end
+end, { force = true })
+
+add_cmd("CopilotEnable", function()
+    lambda.config.sell_your_soul = true
+
+    vim.cmd([[Copilot enable]])
 end, { force = true })
 
 add_cmd("PullCustom", function()
