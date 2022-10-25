@@ -158,6 +158,5 @@ vim.defer_fn(function()
             loader("nvim-notify")
         end
     end
-    loader("matchparen.nvim")
     lprint("all done")
 end, lazy_timer + 80)
