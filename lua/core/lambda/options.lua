@@ -20,7 +20,7 @@ lambda.config = {
     use_hlchunk = false,
     use_pet = true,
     use_lightspeed = true, -- if false then leap.nvim will be used.
-    use_noice = true,
+    use_noice = false,
     use_music = true,
     use_scope = false, -- really fucks with neogit window
     use_wrapping = false, -- I am not sure if this is causing me to segfault.
@@ -30,6 +30,7 @@ lambda.config = {
     use_unception = true,
     use_mini = true,
     use_lexima = true,
+    use_hi_pairs = true,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
@@ -54,6 +55,7 @@ lambda.config.colourscheme = {
             core_themes = {
                 "kanagawa.nvim",
                 "catppuccin",
+                "mellow.nvim",
                 -- "rose", -- TSMethod'
                 -- "tokyonight.nvim3", -- allot
                 -- "vim-dogrun"
@@ -96,7 +98,7 @@ lambda.config.lsp = {
     latex = "ltex", -- texlab | ltex
     python = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
-        format = { "isort", "black" }, -- black
+        format = { "isort", "yapf" }, -- black -- Need to make it so it knows what formater to use :think:
         -- jedis documentation is better though
         lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         pylance_pyright = {
