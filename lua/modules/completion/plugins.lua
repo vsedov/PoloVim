@@ -139,6 +139,6 @@ completion({
 completion({
     "abecodes/tabout.nvim",
     config = conf.tabout,
-    wants = { "nvim-treesitter"}, -- or require if not used so far
+    wants = { "nvim-treesitter" }, -- or require if not used so far
     after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
 })

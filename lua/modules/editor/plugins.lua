@@ -151,14 +151,6 @@ editor({
 })
 
 editor({
-    "andymass/vim-matchup",
-    event = { "CursorMoved", "CursorMovedI" },
-    after = "nvim-treesitter", --[[ Load this after nvim treesitter ]]
-    cmd = { "MatchupWhereAmI?" },
-    config = conf.matchup,
-})
-
-editor({
     "aarondiel/spread.nvim",
     after = "nvim-treesitter",
     module = "spread",
@@ -236,14 +228,6 @@ editor({
     event = "InsertCharPre",
     config = function()
         require("hclipboard").start()
-    end,
-})
-
-editor({
-    "monkoose/matchparen.nvim",
-    opt = true,
-    config = function()
-        require("matchparen").setup()
     end,
 })
 
