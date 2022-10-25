@@ -46,9 +46,6 @@ local treesitter = function()
 
     require("nvim-treesitter.configs").setup({
         autopairs = { enable = enable },
-        matchup = {
-            enable = true,
-        },
         markid = { enable = lambda.config.better_ts_highlights },
         highlight = {
             enable = true, -- false will disable the whole extension

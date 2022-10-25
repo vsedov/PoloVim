@@ -82,3 +82,10 @@ ts({
         require("textobj-diagnostic").setup()
     end,
 })
+
+ts({
+    "andymass/vim-matchup",
+    event = "BufRead", --[[ Load this after nvim treesitter ]]
+    config = conf.matchup,
+    setup = conf.matchup_setup,
+})
