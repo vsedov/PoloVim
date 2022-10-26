@@ -11,6 +11,7 @@ local exclude_table = {
 -- this is to check if tests are currently active or not
 if not test_active then
     table.insert(exclude_table, "hydra_test")
+    table.insert(exclude_table, "HydraAutoHint")
 end
 
 local path_list = vim.split(vim.fn.glob(all_hydras .. "*.lua", true), "\n")
