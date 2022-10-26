@@ -58,6 +58,7 @@ if lambda.config.colourscheme.change_kitty_bg then
                 end
             end,
         },
+
         {
             event = "ColorScheme",
             pattern = "*",
