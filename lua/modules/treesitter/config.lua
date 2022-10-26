@@ -81,7 +81,7 @@ function config.hlargs()
 end
 
 function config.matchup_setup()
-    vim.g.matchup_matchparen_nomode = 'i'
+    vim.g.matchup_matchparen_nomode = "i"
     vim.g.matchup_matchparen_pumvisible = 0
     vim.g.matchup_matchparen_deferred = 1
     vim.g.matchup_matchparen_deferred_show_delay = 150
@@ -91,15 +91,20 @@ function config.matchup_setup()
     vim.g.matchup_surround_enabled = 1
     vim.g.matchup_motion_enabled = 1
     vim.g.matchup_text_obj_enabled = 1
-    vim.g.matchup_transmute_enabled =1
-    vim.g.matchup_matchparen_enabled =1
+    vim.g.matchup_transmute_enabled = 1
+    vim.g.matchup_matchparen_enabled = 1
     vim.g.matchup_override_vimtex = 1
 
     vim.g.matchup_matchparen_offscreen = {
-      method = 'popup',
-      fullwidth = 1
+        method = "popup",
+        fullwidth = 1,
     }
-    
+    lambda.lazy_load({
+        events = "BufRead",
+        augroup_name = "matchup",
+        condition = true,
+        plugin = "vim-matchup",
+    })
 end
 function config.matchup()
     vim.keymap.set("n", "\\w", "<cmd>MatchupWhereAmI??<cr>", { noremap = true })
@@ -110,4 +115,30 @@ function config.matchup()
         },
     })
 end
+
+function config.hi_pairs()
+    function setkey(k)
+        local function out(kk, v)
+            vim[k][kk] = v
+        end
+
+        return out
+    end
+    setglobal = setkey("g")
+
+    setglobal("hiPairs_enable_matchParen", 0)
+    setglobal("hiPairs_timeout", 1)
+    setglobal("hiPairs_insert_timeout", 1)
+    setglobal("hiPairs_hl_matchPair", {
+        term = "underline,bold",
+        cterm = "underline,bold",
+        ctermfg = "0",
+        ctermbg = "180",
+        gui = "underline,bold,italic",
+        guifg = "#fb94ff",
+        guibg = "NONE",
+    })
+
+end
+
 return config
