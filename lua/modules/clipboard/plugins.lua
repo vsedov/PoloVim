@@ -124,7 +124,6 @@ clipsub({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
 
 clipsub({
     "ekickx/clipboard-image.nvim",
-    ft = { "norg", "markdown" },
     cmd = { "PasteImg" },
     opt = true,
     config = conf.clipboardimage,
