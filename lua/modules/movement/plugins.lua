@@ -79,7 +79,7 @@ movement({
 --[[ cancel everything by pressing the <Escape> key. ]]
 movement({
     "woosaaahh/sj.nvim",
-    keys = { "c/" },
+    keys = { "c/", "c?" },
     config = conf.sj,
 })
 
@@ -108,3 +108,10 @@ movement({
 
 movement({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
 movement({ "gaborvecsei/memento.nvim", opt = true, module = "memento" })
+
+movement({
+    "unblevable/quick-scope",
+    opt = true,
+    after = "lightspeed.nvim",
+    config = conf.quick_scope,
+})

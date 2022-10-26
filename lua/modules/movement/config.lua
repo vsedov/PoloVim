@@ -4,11 +4,9 @@ function config.syntax_surfer()
 end
 
 function config.lightspeed()
-    -- vim.notify("Using lightspeed")
     require("lightspeed").setup({
         ignore_case = false,
         exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
-
         --- s/x ---
         jump_to_unique_chars = { safety_timeout = 400 },
         match_only_the_start_of_same_char_seqs = true,
@@ -23,8 +21,8 @@ function config.lightspeed()
             prev_match_group = "<tab>",
         },
         --- f/t ---
-        limit_ft_matches = 20,
-        repeat_ft_with_target_char = true,
+        limit_ft_matches = nil,
+        repeat_ft_with_target_char = false,
     })
     local default_keymaps = {
         { "n", "<c-s>", "<Plug>Lightspeed_omni_s" },
@@ -69,6 +67,11 @@ function config.lightspeed()
                 or "<Plug>Lightspeed_" .. v .. "_ft"
         end, { expr = true, noremap = true })
     end
+    -- I want to test something out actually
+    vim.keymap.set("n", "f", "f")
+    vim.keymap.set("n", "F", "F")
+    vim.keymap.set("n", "t", "t")
+    vim.keymap.set("n", "T", "T")
 end
 function config.leap()
     require("utils.ui.highlights").plugin("leap", {
@@ -290,24 +293,52 @@ function config.houdini()
 end
 
 function config.sj()
+    local colors = {
+        black = "#000000",
+        light_gray = "#DDDDDD",
+        white = "#FFFFFF",
+
+        blue = "#5AA5DE",
+        dark_blue = "#345576",
+        darker_blue = "#005080",
+
+        green = "#40BC60",
+        magenta = "#C000C0",
+        orange = "#DE945A",
+    }
+
     local sj = require("sj")
     sj.setup({
-        -- automatically jump on a match if it is the only one
-        auto_jump = true,
-        -- help to better identify labels and matches
-        use_overlay = true,
+        pattern_type = "vim_very_magic",
+        prompt_prefix = "Pattern ? ",
+        search_scope = "visible_lines",
+
         highlights = {
-            -- used for the label before matches
-            SjLabel = { bold = true },
-            -- used for everything that is not a match
-            SjOverlay = { bold = true, italic = true },
-            -- used to highlight matches
-            SjSearch = { bold = true },
-            -- used in the cmd line when the pattern has no matches
-            SjWarning = { bold = true },
+            SjFocusedLabel = { fg = colors.white, bg = colors.magenta, bold = false, italic = false },
+            SjLabel = { fg = colors.black, bg = colors.blue, bold = true, italic = false },
+            SjLimitReached = { fg = colors.black, bg = colors.orange, bold = true, italic = false },
+            SjMatches = { fg = colors.light_gray, bg = colors.darker_blue, bold = false, italic = false },
+            SjNoMatches = { fg = colors.orange, bold = false, italic = false },
+            SjOverlay = { fg = colors.dark_blue, bold = false, italic = false },
+        },
+
+        keymaps = {
+            prev_match = "<C-p>", -- focus the previous label and match
+            next_match = "<C-n>", -- focus the next label and match
+            send_to_qflist = "<C-q>", --- send search result to the quickfix list
         },
     })
+
     vim.keymap.set("n", "c/", sj.run)
+    vim.keymap.set({ "n", "o", "v" }, "c?", function()
+        sj.run({
+            auto_jump = true,
+            max_pattern_length = 1,
+            pattern_type = "lua_plain",
+            search_scope = "current_line",
+            use_overlay = false,
+        })
+    end)
 end
 
 function config.harpoon()
@@ -323,5 +354,47 @@ function config.harpoon()
         },
     })
     require("telescope").load_extension("harpoon")
+end
+function config.quick_scope()
+    vim.g.qs_max_chars = 256
+    vim.g.qs_buftype_blacklist = { "terminal", "nofile", "startify", "qf", "mason" }
+    vim.cmd([[
+            highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
+            highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
+        ]])
+
+    local function disable_quick_scope()
+        if vim.g.qs_enable == 1 then
+            return vim.cmd("QuickScopeToggle")
+        end
+    end
+
+    local function enable_quick_scope()
+        if vim.g.qs_enable == 0 then
+            return vim.cmd("QuickScopeToggle")
+        end
+    end
+    lambda.augroup("LightspeedQuickscope", {
+        {
+            event = "User",
+            pattern = "LightspeedSxEnter",
+            command = disable_quick_scope,
+        },
+        {
+            event = "User",
+            pattern = "LightspeedSxLeave",
+            command = enable_quick_scope,
+        },
+        {
+            event = "ColorScheme",
+            pattern = "*",
+            command = "highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline",
+        },
+        {
+            event = "ColorScheme",
+            pattern = "*",
+            command = "highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline",
+        },
+    })
 end
 return config
