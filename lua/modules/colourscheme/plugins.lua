@@ -62,3 +62,8 @@ colourscheme({
     opt = true,
     config = conf.tundra,
 })
+colourscheme({
+    "kvrohit/mellow.nvim",
+    opt = true,
+    config = conf.mellow,
+})

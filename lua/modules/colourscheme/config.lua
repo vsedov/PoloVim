@@ -261,4 +261,11 @@ function config.tundra()
     vim.opt.background = "dark"
     vim.cmd.colorscheme("tundra")
 end
+function config.mellow()
+    vim.g.mellow_italic_functions = true
+    vim.g.mellow_bold_functions = true
+
+    vim.cmd.colorscheme("mellow")
+end
+
 return config
