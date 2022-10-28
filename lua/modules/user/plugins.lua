@@ -1,9 +1,6 @@
 local conf = require("modules.user.config")
 local user = require("core.pack").package
 
--- True emotional Support
-user({ "rtakasuke/vim-neko", cmd = "Neko", opt = true })
-
 -- TODO(vsedov) (00:11:22 - 13/08/22): Temp plugin
 
 -- TODO: (vsedov) (09:02:43 - 29/08/22): https://github.com/luk400/vim-jukit set this thing up,
@@ -155,6 +152,7 @@ user({
         lambda.command("MiniMap", map.toggle, {})
     end,
 })
+
 user({
     "pkage/coauthor.nvim",
     requires = { "nvim-lua/plenary.nvim" },
@@ -170,3 +168,98 @@ user({
         })
     end,
 })
+
+user({
+    "gorbit99/codewindow.nvim",
+    opt = true,
+    cmd = { "CodeMiniMapOpen", "CodeMiniMapClose", "CodeMiniMapToggle", "CodeMiniMapToggleFocus" },
+    setup = function()
+        lambda.lazy_load({
+            events = "FileType",
+            pattern = { "lua", "python" },
+            augroup_name = "codewindow",
+            condition = lambda.config.use_code_window,
+            plugin = "codewindow.nvim",
+        })
+    end,
+    config = function()
+        require("utils.ui.highlights").plugin("codewindow", {
+            { CodewindowBorder = { link = "WinSeparator" } },
+            { CodewindowWarn = { bg = "NONE", fg = { from = "DiagnosticSignWarn", attr = "bg" } } },
+            { CodewindowError = { bg = "NONE", fg = { from = "DiagnosticSignError", attr = "bg" } } },
+        })
+        require("codewindow").setup({
+            z_index = 25,
+            auto_enable = true,
+            minimap_width = 10,
+            exclude_filetypes = {
+                "qf",
+                "git",
+                "help",
+                "alpha",
+                "packer",
+                "gitcommit",
+                "NeogitStatus",
+                "neo-tree",
+                "neo-tree-popup",
+                "NeogitCommitMessage",
+                "",
+            },
+        })
+        local codewindow = require("codewindow")
+        lambda.command("CodeMiniMapOpen", codewindow.open_minimap, {})
+        lambda.command("CodeMiniMapClose", codewindow.close_minimap, {})
+        lambda.command("CodeMiniMapToggle", codewindow.toggle_minimap, {})
+        lambda.command("CodeMiniMapToggleFocus", codewindow.toggle_focus, {})
+    end,
+})
+
+user({
+    "ziontee113/query-secretary",
+    opt = true,
+    cmd = { "QueryTree" },
+    config = function()
+        require("query-secretary").setup({
+            open_win_opts = {
+                row = 0,
+                col = 9999,
+                width = 50,
+                height = 15,
+            },
+
+            -- other options you can customize
+            buf_set_opts = {
+                tabstop = 2,
+                softtabstop = 2,
+                shiftwidth = 2,
+            },
+
+            capture_group_names = { "cap", "second", "third" }, -- when press "c"
+            predicates = { "eq", "any-of", "contains", "match", "lua-match" }, -- when press "p"
+            visual_hl_group = "Visual", -- when moving cursor around
+
+            -- here are the default keymaps
+            keymaps = {
+                close = { "q", "Esc" },
+                next_predicate = { "p" },
+                previous_predicate = { "P" },
+                remove_predicate = { "d" },
+                toggle_field_name = { "f" },
+                yank_query = { "y" },
+                next_capture_group = { "c" },
+                previous_capture_group = { "C" },
+            },
+        })
+        lambda.command("QueryTree", function()
+            require("query-secretary").query_window_initiate()
+        end, {})
+    end,
+})
+
+-- user {
+-- 'loganswartz/plugwatch.nvim',
+-- requires = { 'nvim-lua/plenary.nvim' },
+-- config = function()
+--     require('plugwatch').setup()
+-- end,
+-- }
