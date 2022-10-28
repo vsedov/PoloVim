@@ -1,7 +1,23 @@
 local config = {}
 
 function config.zen()
-    require("true-zen").setup({})
+    local truezen = require("true-zen")
+    truezen.setup({})
+    local keymap = vim.keymap
+
+    keymap.set("n", ";zn", function()
+        local first = 0
+        local last = vim.api.nvim_buf_line_count(0)
+        truezen.narrow(first, last)
+    end, { noremap = true })
+    keymap.set("v", ";zn", function()
+        local first = vim.fn.line("v")
+        local last = vim.fn.line(".")
+        truezen.narrow(first, last)
+    end, { noremap = true })
+    keymap.set("n", ";zf", truezen.focus, { noremap = true })
+    keymap.set("n", ";zm", truezen.minimalist, { noremap = true })
+    keymap.set("n", ";za", truezen.ataraxis, { noremap = true })
 end
 
 function config.acc_jk()

@@ -7,6 +7,12 @@ editor({
     requires = { "folke/twilight.nvim", opt = true, config = conf.twilight },
     cmd = { "TZAtaraxis", "TZMinimalist", "TZNarrow", "TZFocus" },
     module = "zen-mode",
+    keys = {
+        ";zn",
+        ";zf",
+        ";zm",
+        ";za",
+    },
     config = conf.zen,
 })
 
