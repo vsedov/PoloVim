@@ -3,26 +3,6 @@ local misc = require("core.pack").package
 
 misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
-misc({
-    "chentoast/marks.nvim",
-    event = "BufReadPost",
-    config = conf.marks,
-})
-
-misc({
-    "crusj/bookmarks.nvim",
-    branch = "main",
-    requires = { "kyazdani42/nvim-web-devicons" },
-    -- opt = true,
-    keys = {
-        "<tab><tab>",
-        "\\a",
-        "\\d",
-        "\\o",
-    },
-    config = conf.bookmark,
-})
-
 misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 
 misc({
@@ -60,16 +40,6 @@ misc({
         "NeoWellWipeOut",
     },
     config = conf.NeoWell,
-})
-
-misc({
-    "nyngwang/NeoZoom.lua",
-    branch = "neo-zoom-original", -- UNCOMMENT THIS, if you prefer the old one
-    cmd = { "NeoZoomToggle" },
-})
-misc({
-    "nyngwang/NeoNoName.lua",
-    cmd = { "NeoNoName" },
 })
 
 misc({

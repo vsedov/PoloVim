@@ -50,3 +50,13 @@ buffer({
     cmd = { "PinBuffer", "PinBuftype", "PinBuftype", "UnpinBuffer" },
     config = conf.sticky_buf,
 })
+
+buffer({
+    "nyngwang/NeoZoom.lua",
+    branch = "neo-zoom-original", -- UNCOMMENT THIS, if you prefer the old one
+    cmd = { "NeoZoomToggle" },
+})
+buffer({
+    "nyngwang/NeoNoName.lua",
+    cmd = { "NeoNoName" },
+})

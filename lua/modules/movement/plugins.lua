@@ -115,3 +115,23 @@ movement({
     after = "lightspeed.nvim",
     config = conf.quick_scope,
 })
+
+movement({
+    "chentoast/marks.nvim",
+    event = "BufReadPost",
+    config = conf.marks,
+})
+
+movement({
+    "crusj/bookmarks.nvim",
+    branch = "main",
+    requires = { "kyazdani42/nvim-web-devicons" },
+    -- opt = true,
+    keys = {
+        "<tab><tab>",
+        "\\a",
+        "\\d",
+        "\\o",
+    },
+    config = conf.bookmark,
+})

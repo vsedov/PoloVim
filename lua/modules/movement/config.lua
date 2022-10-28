@@ -358,11 +358,11 @@ end
 function config.quick_scope()
     vim.g.qs_max_chars = 256
     vim.g.qs_buftype_blacklist = { "terminal", "nofile", "startify", "qf", "mason" }
-    vim.cmd([[
-            highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
-            highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
-        ]])
 
+    require("utils.ui.highlights").plugin("QuickScope", {
+        { QuickScopePrimary = { ctermfg = 155, fg = "#ff5fff", underline = true, italic = true, bold = true } },
+        { QuickScopeSecondary = { ctermfg = 81, fg = "#5fffff", underline = true, italic = true, bold = true } },
+    })
     local function disable_quick_scope()
         if vim.g.qs_enable == 1 then
             return vim.cmd("QuickScopeToggle")
@@ -388,13 +388,92 @@ function config.quick_scope()
         {
             event = "ColorScheme",
             pattern = "*",
-            command = "highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline",
-        },
-        {
-            event = "ColorScheme",
-            pattern = "*",
-            command = "highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline",
+            command = function()
+                require("utils.ui.highlights").plugin("QuickScope", {
+                    {
+                        QuickScopePrimary = {
+                            ctermfg = 155,
+                            fg = "#ff5fff",
+                            italic = true,
+                            bold = true,
+                            underline = true,
+                        },
+                    },
+                    {
+                        QuickScopeSecondary = {
+                            ctermfg = 81,
+                            fg = "#5fffff",
+                            italic = true,
+                            bold = true,
+                            underline = true,
+                        },
+                    },
+                })
+            end,
         },
     })
 end
+function config.marks()
+    require("utils.ui.highlights").plugin("marks", {
+        { MarkSignHL = { link = "Directory" } },
+        { MarkSignNumHL = { link = "Directory" } },
+    })
+    require("which-key").register({
+        m = {
+            name = "+marks",
+            b = { "<Cmd>MarksListBuf<CR>", "list buffer" },
+            g = { "<Cmd>MarksQFListGlobal<CR>", "list global" },
+            ["0"] = { "<Cmd>BookmarksQFList 0<CR>", "list bookmark" },
+        },
+    }, { prefix = "<leader>" })
+
+    require("marks").setup({
+        default_mappings = true,
+        builtin_marks = { ".", "<", ">", "^" },
+        cyclic = true,
+        force_write_shada = false,
+        refresh_interval = 9,
+        sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
+        excluded_filetypes = {
+            "NeogitStatus",
+            "NeogitCommitMessage",
+            "toggleterm",
+            "harpoon",
+            "memento",
+            "harpoon-menu",
+            "BookMarks",
+            "BookMark",
+            "bookmarks",
+            "bookmark",
+        },
+        bookmark_0 = {
+            sign = "⚑",
+            virt_text = "BookMark",
+        },
+        mappings = {},
+    })
+    -- https://github.com/chentoast/marks.nvim/issues/40
+    vim.api.nvim_create_autocmd("cursorhold", {
+        pattern = "*",
+        callback = require("marks").refresh,
+    })
+end
+
+function config.bookmark()
+    require("bookmarks").setup({
+        keymap = {
+            toggle = "<tab><tab>", -- toggle bookmarks
+            add = "\\a", -- add bookmarks
+            jump = "<CR>", -- jump from bookmarks
+            delete = "\\d", -- delete bookmarks
+            order = "<\\o", -- order bookmarks by frequency or updated_time
+        },
+        width = 0.8, -- bookmarks window width:  (0, 1]
+        height = 0.6, -- bookmarks window height: (0, 1]
+        preview_ratio = 0.4, -- bookmarks preview window ratio (0, 1]
+        preview_ext_enable = true, -- if true, preview buf will add file ext, preview window may be highlighed(treesitter), but may be slower.
+        fix_enable = false, -- if true, when saving the current file, if the bookmark line number of the current file changes, try to fix it.
+    })
+end
+
 return config
