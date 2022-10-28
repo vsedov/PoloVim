@@ -24,7 +24,7 @@ local function create_hint(hints, bind_count, title_padding)
     for _, hint in ipairs(hints) do
         local desc = hint[3].desc
         local keybind = hint[1]
-        local topic = hint.topic
+        local topic = hint.topic or "topic"
         -- add topic = {leybind, desc}
         if not hint_table[topic] then
             hint_table[topic] = {}
@@ -100,3 +100,5 @@ local function create_hint(hints, bind_count, title_padding)
     end
     return hint
 end
+
+return create_hint
