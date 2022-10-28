@@ -59,10 +59,6 @@ local plug_map = {
     ["i|<S-Return>"] = map_cmd([[<C-o>o]], "Start new line from any cursor position"):with_noremap():with_silent(),
     -- -- visually select the block of text I just pasted in Vim
     ["n|gV"] = map_cmd([[`[v`]], "visually select the block of text"):with_noremap():with_silent(),
-    -- Greatest remap ever
-    ["x|<leader>p"] = map_cmd([["\"_dP"]], "Greatest remap ever"):with_noremap():with_silent(),
-    ["x|<leader>y"] = map_cmd([["\"+y"]], "Yank"):with_noremap():with_silent(),
-    ["n|<leader>dd"] = map_cmd([["_d]], "Greatest remap ever"):with_noremap():with_silent(),
 
     ["x|@"] = map_cmd(":<C-u>call ExecuteMacroOverVisualRange()<CR>", "Macro Execute"):with_noremap(),
 
