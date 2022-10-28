@@ -430,9 +430,17 @@ local function general_overrides()
         { TSNamespace = { foreground = P.blue } },
 
         { TSNamespace = { inherit = "PanelDarkBackground", bold = true } },
-        { Variable = { inherit = "PanelDarkBackground", bold = true } },
+        { TSVariable = { inherit = "PanelDarkBackground", bold = true } },
         { TSStorageClass = { inherit = "PanelDarkBackground", bold = true } },
         { TSNamespace = { inherit = "PanelDarkBackground", bold = true } },
+
+        { ["@keyword.return"] = { italic = true, foreground = { from = "Keyword" } } },
+
+        { ["@parameter"] = { italic = true, bold = true, foreground = "NONE" } },
+        { ["@error"] = { foreground = "fg", background = "NONE" } },
+
+        { ["@text.diff.add"] = { link = "DiffAdd" } },
+        { ["@text.diff.delete"] = { link = "DiffDelete" } },
 
         { Comment = { italic = true } },
         { Type = { italic = true, bold = true } },
