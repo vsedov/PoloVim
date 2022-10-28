@@ -90,7 +90,6 @@ ts({
     setup = conf.matchup_setup,
 })
 
-
 ts({
     "Yggdroot/hiPairs",
     setup = function()
@@ -102,5 +101,5 @@ ts({
             plugin = "hiPairs",
         })
     end,
-    config = conf.hi_pairs
+    config = conf.hi_pairs,
 })

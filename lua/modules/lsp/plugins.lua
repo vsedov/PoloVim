@@ -96,8 +96,8 @@ lsp({
 })
 
 lsp({
-    --[[ lambda.use_local("null-ls.nvim", "contributing"), ]]
-    "jose-elias-alvarez/null-ls.nvim",
+    lambda.use_local("null-ls.nvim", "contributing"),
+    -- "jose-elias-alvarez/null-ls.nvim",
     event = "BufEnter",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()

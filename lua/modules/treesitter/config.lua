@@ -138,7 +138,6 @@ function config.hi_pairs()
         guifg = "#fb94ff",
         guibg = "NONE",
     })
-
 end
 
 return config

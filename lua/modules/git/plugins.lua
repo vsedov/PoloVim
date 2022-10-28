@@ -62,9 +62,11 @@ git({
     opt = true,
 })
 
--- gets loaded through hydra
+--  TODO: (vsedov) (20:55:15 - 26/10/22): Fix NeoGit is not a command.
+-- "TimUntersberger/neogit",
 git({
-    "TimUntersberger/neogit",
+    "ten3roberts/neogit",
+    branch = "git-escapes",
     keys = {
         "<localleader>gs",
         "<localleader>gc",
