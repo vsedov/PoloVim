@@ -28,9 +28,11 @@ lambda.config = {
     use_beacon = false,
     use_dashboard = false, -- set to false to not see this
     use_unception = true,
-    use_mini = true,
-    use_lexima = true,
+    use_mini = false, -- Trailing whitr spaces , mini bar and some other things i forgot i setup , its not bad , But i do not think i need ito
+    use_code_window = true,
+    use_lexima = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
     use_hi_pairs = true,
+    use_fidget = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
@@ -97,7 +99,7 @@ lambda.config.lsp = {
     use_lsp_format_modifications = true,
     latex = "ltex", -- texlab | ltex
     python = {
-        lint = { "flake8" }, -- pylint, pyflake, and other linters
+        lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "isort", "yapf" }, -- black -- Need to make it so it knows what formater to use :think:
         -- jedis documentation is better though
         lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing

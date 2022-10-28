@@ -139,6 +139,8 @@ vim.defer_fn(function()
     loader("telescope.nvim telescope-zoxide nvim-neoclip.lua") --project.nvim
 end, lazy_timer + 80)
 
+--  TODO: (vsedov) (01:32:08 - 28/10/22): WTF is this code viv ??
+--  REVISIT: (vsedov) (01:32:15 - 28/10/22): Change this once you have time
 vim.defer_fn(function()
     if lambda.config.use_fzf_lua then
         loader("fzf-lua")
@@ -154,7 +156,9 @@ vim.defer_fn(function()
         loader("notifier.nvim")
     else
         if not lambda.config.use_noice then
-            loader("fidget.nvim")
+            if lambda.config.use_fidget then
+                loader("fidget.nvim")
+            end
             loader("nvim-notify")
         end
     end
