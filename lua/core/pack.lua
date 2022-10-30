@@ -128,8 +128,7 @@ function plugins.load_compile()
     else
         assert("Missing packer compile file Run PackerCompile Or PackerInstall to fix")
         vim.cmd("packadd packer.nvim")
-        plugins.compile()
-        require("packer_compiled")
+        plugins.compile_loader()
         vim.notify("compile finished successfully wrote to " .. packer_compiled)
     end
 
