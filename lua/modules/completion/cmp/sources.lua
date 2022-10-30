@@ -2,7 +2,7 @@ local api = vim.api
 -- default sources
 local sources = {
     { name = "nvim_lsp_signature_help", priority = 10 },
-    { name = "nvim_lsp" },
+    { name = "nvim_lsp", priority = 10 },
     { name = "luasnip" },
     { name = "path" },
     {
