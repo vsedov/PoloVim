@@ -36,7 +36,7 @@ lsp({
 
 lsp({ "folke/neodev.nvim", ft = "lua", opt = true, requires = "nvim-lspconfig", config = conf.luadev })
 
-lsp({ "lewis6991/hover.nvim", key = { "K", "gK" }, config = conf.hover })
+lsp({ "lewis6991/hover.nvim", modules = "hover", config = conf.hover })
 
 lsp({
     "glepnir/lspsaga.nvim",
