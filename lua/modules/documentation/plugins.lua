@@ -57,18 +57,9 @@ docs({
         "nvim-treesitter/nvim-treesitter",
         "MunifTanjim/nui.nvim",
     },
-    opt = true,
-    cmd = {
-        "USearch",
-        "ULookUp",
-        "UHoverLink",
-    },
-
+    modules = "updoc",
     config = function()
         local udoc = require("updoc")
         udoc.setup()
-        lambda.command("USearch", udoc.search, {})
-        lambda.command("ULookUp", udoc.lookup, {})
-        lambda.command("UHoverLink", udoc.show_hover_links, {})
     end,
 })
