@@ -1,29 +1,22 @@
--- local km = require("core.keymap")
-local hydra = require("hydra")
-
-if table.unpack == nil then
-    table.unpack = unpack
-end
-
+local Hydra = require("hydra")
 local mx = function(feedkeys)
     return function()
         local keys = vim.api.nvim_replace_termcodes(feedkeys, true, false, true)
         vim.api.nvim_feedkeys(keys, "m", false)
     end
 end
+
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
         table.insert(core_table, v)
     end
     table.insert(core_table, "\n")
 end
-
--- NOTE:
 local config = {}
 
 local exit = { nil, { exit = true, desc = "EXIT" } }
 -- TODO: make a toggler for cursorhold events, so we can show peek
-function toggle(lhs, on_enter, on_exit)
+local function toggle(lhs, on_enter, on_exit)
     return {
         color = "pink",
         body = lhs,
@@ -37,7 +30,8 @@ config.parenth_mode = {
     color = "pink",
     body = "\\<leader>",
     mode = { "n", "v", "x", "o" },
-    ["<Esc>"] = { nil, { exit = true } },
+    ["<ESC>"] = { nil, { exit = true } },
+    ["<leader>"] = { nil, { exit = true } },
     j = {
         function()
             vim.fn.search("[({[]")
@@ -101,12 +95,8 @@ local mapping = {
         t.config.mode = rhs
     end,
 }
--- Make a bind view
 
---#region
-
--- Loop over Spec table and make a hinting table
-hint_auto_create = [[
+local hint_auto_create = [[
       parenth
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔ ^ ^
 ]]
@@ -118,7 +108,6 @@ local new_hydra = {
     config = {
         hint = {
             position = "middle-right",
-            border = lambda.style.border.type_0,
         },
         invoke_on_body = true,
         timeout = false,
@@ -202,36 +191,4 @@ end
 
 val = auto_hint_generate()
 new_hydra.hint = val
-hydra(new_hydra)
-
---
--- local harpoon_hint = [[
--- ^ ^▔▔▔▔▔▔▔▔▔▔▔▔ ^ ^
--- ^ ^   _j_: next
---     _k_: prev
---     _J_: next
---     _K_: prev
---
---     _)_: i)
---     _(_: a)
---
---     _]_: i]
---     _[_: a]
---
---     _}_: i}
---     _{_: a{
---
---     _f_: af
---     _F_: iF
---
---     _cj_: ci
---     _ck_: ca
---
---     _yj_: yi
---     _yk_: ya
---
---     _dj_: di
---     _dk_: da
---
--- ^ ^ _<Esc>_: quit^ ^
--- ]]
+Hydra(new_hydra)

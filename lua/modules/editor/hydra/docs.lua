@@ -36,7 +36,9 @@ local hints = [[
  ^^^^                                              ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
                     _D_: Live Docs
+                    _k_: Usearch
 
+    _l_: ULookup          ▕          _o_: UShowLink
     _z_: Zeavim           ▕          _Z_: DevDocs
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
@@ -93,6 +95,33 @@ config.doc_binds = {
         cmd("DD"),
         { nowait = true, silent = true, desc = "DevDoc Search", exit = true },
     },
+    ------------
+    ------------
+
+    k = {
+        function()
+            require('updoc').search()
+        end,
+        {  exit = true },
+    },
+    l = {
+        function()
+            vim.defer_fn(function()
+            require('updoc').lookup()
+        end, 100)
+        end,
+        {  exit = true },
+    },
+
+    o = {
+        function()
+            require('updoc').show_hover_links()
+        end,
+        {  exit = true },
+    },
+
+    ------------
+    -----------
 
     --- Python stuff Language specific stuff
     ["["] = {
