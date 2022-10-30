@@ -529,7 +529,7 @@ function lambda.lazy_load(tb)
         callback = function()
             if tb.condition then
                 vim.api.nvim_del_augroup_by_name(tb.augroup_name)
-                if not vim.tbl_contains({ "nvim-treesitter", "dashboard-nvim" }, tb.plugin) then
+                if not vim.tbl_contains({ "nvim-treesitter", "dashboard-nvim", "noice.nvim" }, tb.plugin) then
                     vim.defer_fn(function()
                         require("packer").loader(tb.plugin)
                     end, 0)
