@@ -303,6 +303,13 @@ local cool_substitute = {
     },
 }
 
+local plugin_watcher = {
+
+    provider = function()
+        -- return require("plugwatch").get_statusline_indicator.status()
+        return "x"
+    end,
+}
 -- local Gps2 = {
 --     condition = require("nvim-navic").is_available,
 --     provider = require("nvim-navic").get_location,
@@ -628,6 +635,7 @@ local DefaultStatusline = {
     Git,
     Space,
     Diagnostics,
+    plugin_watcher,
     Align,
     utils.make_flexible_component(3, cool_substitute, { provider = "" }),
     utils.make_flexible_component(3, HydraActive, { provider = "" }),

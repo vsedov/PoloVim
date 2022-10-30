@@ -108,7 +108,6 @@ movement({
 
 movement({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
 movement({ "gaborvecsei/memento.nvim", opt = true, module = "memento" })
-
 movement({
     "unblevable/quick-scope",
     opt = true,

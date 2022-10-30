@@ -188,19 +188,34 @@ ui({
     opt = true,
     setup = function()
         lambda.lazy_load({
-            events = "VimEnter",
+            events = "BufWinEnter",
             augroup_name = "noice",
             condition = lambda.config.use_noice,
             plugin = "noice.nvim",
         })
     end,
     requires = {
-        -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
         "nui.nvim",
         "nvim-notify",
         "hrsh7th/nvim-cmp",
     },
     config = conf.noice,
+})
+
+ui({
+    "folke/drop.nvim",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "VimEnter",
+            augroup_name = "drop",
+            condition = lambda.config.use_drop,
+            plugin = "drop.nvim",
+        })
+    end,
+    config = function()
+        require("drop").setup()
+    end,
 })
 
 ui({
@@ -266,3 +281,6 @@ ui({
         end, {})
     end,
 })
+
+-- True emotional Support
+ui({ "rtakasuke/vim-neko", cmd = "Neko", opt = true })
