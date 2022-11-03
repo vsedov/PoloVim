@@ -92,14 +92,6 @@ ts({
 
 ts({
     "Yggdroot/hiPairs",
-    setup = function()
-        lambda.lazy_load({
-            events = "FileType",
-            pattern = { "python", "lua", "julia" },
-            augroup_name = "hiPairs",
-            condition = lambda.config.use_hi_pairs,
-            plugin = "hiPairs",
-        })
-    end,
+    event = "BufWinEnter",
     config = conf.hi_pairs,
 })
