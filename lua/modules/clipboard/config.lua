@@ -1,8 +1,8 @@
 local config = {}
 function config.setup_yanky()
     local default_keymaps = {
-        { "n", "y", "<Plug>(YankyYank)" },
-        { "x", "y", "<Plug>(YankyYank)" },
+        { "n", "Y", "<Plug>(YankyYank)" },
+        { "x", "Y", "<Plug>(YankyYank)" },
 
         { "n", "p", "<Plug>(YankyPutAfter)" },
         { "n", "P", "<Plug>(YankyPutBefore)" },
