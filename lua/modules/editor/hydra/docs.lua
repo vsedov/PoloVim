@@ -36,10 +36,10 @@ local hints = [[
  ^^^^                                              ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
                     _D_: Live Docs
-                    _k_: Usearch
+                    _l_: ULook
 
-    _l_: ULookup          ▕          _o_: UShowLink
-    _z_: Zeavim           ▕          _Z_: DevDocs
+    _j_: USearch          ▕          _o_: UShowLink
+    _z_: Zeavim           ▕          _k_: DevDocs
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
  ^^^^               Language Specifc Docs          ^^^^
@@ -87,37 +87,37 @@ config.doc_binds = {
         cmd("DocsViewToggle"),
         { nowait = true, silent = true, desc = "Live Docs", exit = true },
     },
-    Z = {
+    z = {
         cmd("Zeavim"),
         { nowait = true, silent = true, desc = "Zeal", exit = true },
     },
-    z = {
+    k = {
         cmd("DD"),
         { nowait = true, silent = true, desc = "DevDoc Search", exit = true },
     },
     ------------
     ------------
 
-    k = {
-        function()
-            require('updoc').search()
-        end,
-        {  exit = true },
-    },
     l = {
         function()
-            vim.defer_fn(function()
-            require('updoc').lookup()
-        end, 100)
+            require("updoc").lookup()
         end,
-        {  exit = true },
+        { exit = true },
+    },
+    j = {
+        function()
+            vim.defer_fn(function()
+                require("updoc").search()
+            end, 100)
+        end,
+        { exit = true },
     },
 
     o = {
         function()
-            require('updoc').show_hover_links()
+            require("updoc").show_hover_links()
         end,
-        {  exit = true },
+        { exit = true },
     },
 
     ------------

@@ -1,4 +1,4 @@
-local Hydra = require("hydra")
+local hydra = require("hydra")
 local mx = function(feedkeys)
     return function()
         local keys = vim.api.nvim_replace_termcodes(feedkeys, true, false, true)
@@ -30,8 +30,8 @@ config.parenth_mode = {
     color = "pink",
     body = "\\<leader>",
     mode = { "n", "v", "x", "o" },
+    ["\\<leader>"] = { nil, { exit = true } },
     ["<ESC>"] = { nil, { exit = true } },
-    ["<leader>"] = { nil, { exit = true } },
     j = {
         function()
             vim.fn.search("[({[]")
@@ -191,4 +191,4 @@ end
 
 val = auto_hint_generate()
 new_hydra.hint = val
-Hydra(new_hydra)
+hydra(new_hydra)
