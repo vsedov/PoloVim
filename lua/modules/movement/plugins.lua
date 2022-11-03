@@ -134,3 +134,13 @@ movement({
     },
     config = conf.bookmark,
 })
+
+movement({
+    "cbochs/portal.nvim",
+    opt = true,
+    after = "lightspeed.nvim",
+    requires = {
+        "cbochs/grapple.nvim",
+    },
+    config = conf.portal,
+})

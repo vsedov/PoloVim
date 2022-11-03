@@ -29,9 +29,9 @@ function config.lightspeed()
         { "x", "<c-s>", "<Plug>Lightspeed_omni_s" },
         { "o", "<c-s>", "<Plug>Lightspeed_omni_s" },
 
-        { "x", "cs", "<Plug>Lightspeed_omni_gs" },
-        { "n", "cs", "<Plug>Lightspeed_omni_gs" },
-        { "o", "cs", "<Plug>Lightspeed_omni_gs" },
+        { "x", "cS", "<Plug>Lightspeed_omni_gs" },
+        { "n", "cS", "<Plug>Lightspeed_omni_gs" },
+        { "o", "cS", "<Plug>Lightspeed_omni_gs" },
     }
     for _, m in ipairs(default_keymaps) do
         vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
@@ -476,4 +476,25 @@ function config.bookmark()
     })
 end
 
+function config.portal()
+    vim.cmd([[packadd grapple.nvim]])
+    require("grapple").setup({
+        ---@type "debug" | "info" | "warn" | "error"
+        log_level = "warn",
+
+        ---The scope used when creating, selecting, and deleting tags
+        ---@type Grapple.Scope
+        scope = "global",
+
+        ---The save location for tags
+        save_path = vim.fn.stdpath("data") .. "/" .. "grapple.json",
+
+        integrations = {
+            ---Integration with portal.nvim. Registers a "tagged" query item
+            portal = true,
+        },
+    })
+
+    require("portal").setup({})
+end
 return config
