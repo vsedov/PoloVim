@@ -6,11 +6,11 @@ if lambda.config.use_lightspeed then
     local cmd = require("hydra.keymap-util").cmd
     loader("portal.nvim")
     local hint = [[
-^ ^ _i_: Jump Forward   ^ ^
-^ ^ _o_: Jump Backward  ^ ^
+^ ^ _[_: Jump Forward   ^ ^
+^ ^ _]_: Jump Backward  ^ ^
 ^ ^ _k_: Toggle         ^ ^
-^ ^ _t_: Tag            ^ ^
-^ ^ _u_: UnTag          ^ ^
+^ ^ _m_: Tag            ^ ^
+^ ^ _M_: UnTag          ^ ^
 ]]
     Hydra({
         name = "Runner",
@@ -24,17 +24,17 @@ if lambda.config.use_lightspeed then
             },
         },
         mode = { "n" },
-        body = "\\i",
+        body = "\\]",
         heads = {
             {
-                "i",
+                "[",
                 function()
                     require("portal").jump_forward()
                 end,
                 { exit = true },
             },
             {
-                "o",
+                "]",
                 function()
                     require("portal").jump_backward()
                 end,
@@ -48,18 +48,18 @@ if lambda.config.use_lightspeed then
                 { exit = false },
             },
             {
-                "t",
+                "m",
                 function()
                     require("grapple").tag()
                 end,
-                { exit = false },
+                { exit = true },
             },
             {
-                "u",
+                "M",
                 function()
                     require("grapple").untag()
                 end,
-                { exit = false },
+                { exit = true },
             },
             { "<Esc>", nil, { exit = true, desc = false } },
         },
