@@ -201,10 +201,10 @@ lang({
     config = conf.regexplainer,
 })
 
-lang({
-    "Vimjas/vim-python-pep8-indent",
-    ft = "python",
-})
+-- lang({
+--     "Vimjas/vim-python-pep8-indent",
+--     ft = "python",
+-- })
 
 lang({ "dccsillag/magma-nvim", ft = "python", run = ":UpdateRemotePlugins" })
 
