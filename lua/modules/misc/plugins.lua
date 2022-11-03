@@ -7,7 +7,7 @@ misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" },
 
 misc({
     "kylechui/nvim-surround",
-    keys = { "<c-c><leader>", "<C-g>g", "ys", "yss", "yS", "ySS", "yS", "gS", "ds", "<c-/>" },
+    event = "BufWinEnter",
     config = conf.surround,
 })
 
@@ -95,7 +95,8 @@ misc({
     end,
 })
 misc({
-    "olimorris/persisted.nvim",
+    -- "olimorris/persisted.nvim",
+    "stevearc/resession.nvim",
     opt = true,
 
     setup = function()
@@ -103,7 +104,8 @@ misc({
             events = "BufEnter",
             augroup_name = "session",
             condition = lambda.config.use_session,
-            plugin = "persisted.nvim",
+            -- plugin = "persisted.nvim",
+            plugin = "resession.nvim",
         })
     end,
     config = conf.session_config,

@@ -83,18 +83,15 @@ end
 
 function config.surround()
     require("nvim-surround").setup({
-        keymaps = {
-            insert = "<c-c><leader>",
-            insert_line = "<C-g>g",
-            normal = "ys",
-            normal_cur = "yss",
-            normal_line = "yS",
-            normal_cur_line = "ySS",
-            visual = "yS",
-            visual_line = "gS",
-            delete = "ds",
-            change = "<c-/>",
-        },
+        insert_line = "<C-#>", -- I am not sure how i feel about this
+        normal = "ys",
+        normal_cur = "yss",
+        normal_line = "yS",
+        normal_cur_line = "ySS",
+        visual = "S",
+        visual_line = "gS",
+        delete = "ds",
+        change = "cs",
     })
 end
 
@@ -139,26 +136,60 @@ function config.NeoWell()
 end
 
 function config.session_config()
-    require("persisted").setup({
-        save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/
-        autosave = true,
-        autoload = true,
-        use_git_branch = true,
-        after_source = function()
-            -- Reload the LSP servers
-            vim.lsp.stop_client(vim.lsp.get_active_clients())
-        end,
+    -- require("persisted").setup({
+    --     save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/
+    --     autosave = true,
+    --     autoload = true,
+    --     use_git_branch = true,
+    --     after_source = function()
+    --         -- Reload the LSP servers
+    --         vim.lsp.stop_client(vim.lsp.get_active_clients())
+    --     end,
 
-        telescope = {
-            before_source = function()
-                vim.api.nvim_input("<ESC>:%bd<CR>")
-            end,
-            after_source = function(session)
-                print("Loaded session " .. session.name)
-            end,
-        },
+    --     telescope = {
+    --         before_source = function()
+    --             vim.api.nvim_input("<ESC>:%bd<CR>")
+    --         end,
+    --         after_source = function(session)
+    --             print("Loaded session " .. session.name)
+    --         end,
+    --     },
+    -- })
+    -- require("telescope").load_extension("persisted") -- To load the telescope extension
+    local resession = require("resession")
+    resession.setup({
+        tab_buf_filter = function(tabpage, bufnr)
+            local dir = vim.fn.getcwd(-1, vim.api.nvim_tabpage_get_number(tabpage))
+            return vim.startswith(vim.api.nvim_buf_get_name(bufnr), dir)
+        end,
     })
-    require("telescope").load_extension("persisted") -- To load the telescope extension
+
+    local function get_session_name()
+        local name = vim.fn.getcwd()
+        local branch = vim.fn.system("git branch --show-current")
+        if vim.v.shell_error == 0 then
+            return name .. branch
+        else
+            return name
+        end
+    end
+    vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function()
+            -- Only load the session if nvim was started with no args
+            if vim.fn.argc(-1) == 0 then
+                resession.load(get_session_name(), { dir = "dirsession", silence_errors = true })
+            end
+        end,
+    })
+    vim.api.nvim_create_autocmd("VimLeavePre", {
+        callback = function()
+            resession.save(get_session_name(), { dir = "dirsession", notify = false })
+        end,
+    })
+
+    vim.keymap.set("n", "_ss", resession.save_tab)
+    vim.keymap.set("n", "_sl", resession.load)
+    vim.keymap.set("n", "_sd", resession.delete)
 end
 
 function config.autosave()
