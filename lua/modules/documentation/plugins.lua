@@ -52,12 +52,7 @@ docs({
 --  TODO: (vsedov) (06:07:10 - 28/10/22): Make hydra so this would be nice to use.
 docs({
     "loganswartz/updoc.nvim",
-    requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-        "MunifTanjim/nui.nvim",
-    },
-    modules = "updoc",
+    after = "nvim-lspconfig",
     config = function()
         local udoc = require("updoc")
         udoc.setup()
