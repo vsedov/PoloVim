@@ -551,7 +551,7 @@ lambda.augroup("PluginCustomFixes", {
         event = "FileType",
         pattern = { "NeogitPopup", "NeogitCommitMessage" },
         command = function()
-            if lambda.config.use_noice then
+            if lambda.config.ui.enable then
                 vim.cmd([[Noice disable]])
                 print("Noice disabled")
             end
@@ -561,7 +561,7 @@ lambda.augroup("PluginCustomFixes", {
         event = "BufWinLeave",
         pattern = { "NeogitStatus" },
         command = function()
-            if lambda.config.use_noice then
+            if lambda.config.ui.enable then
                 if not vim.tbl_contains({ "NeogitPopup", "NeogitCommitMessage" }, vim.bo.filetype) then
                     vim.cmd([[Noice enable]])
                     print("Noice enable")

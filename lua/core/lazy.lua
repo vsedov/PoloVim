@@ -155,7 +155,7 @@ vim.defer_fn(function()
     if lambda.config.simple_notify then
         loader("notifier.nvim")
     else
-        if not lambda.config.use_noice then
+        if not lambda.config.ui.enable then
             if lambda.config.use_fidget then
                 loader("fidget.nvim")
             end

@@ -32,7 +32,6 @@ local def_map = {
 
     -- command line
     ["c|<C-b>"] = map_cmd("<Left>"):with_noremap(),
-    ["c|<C-f>"] = map_cmd("<Right>"):with_noremap(),
     ["c|<C-a>"] = map_cmd("<Home>"):with_noremap(),
     ["c|<C-e>"] = map_cmd("<End>"):with_noremap(),
     ["c|<C-d>"] = map_cmd("<Del>"):with_noremap(),
