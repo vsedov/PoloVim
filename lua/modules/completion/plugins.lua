@@ -5,7 +5,6 @@ completion({
     "hrsh7th/nvim-cmp",
     -- opt = true,
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
-    -- ft = {'lua', 'markdown',  'yaml', 'json', 'sql', 'vim', 'sh', 'sql', 'vim', 'sh'},
     after = { "LuaSnip" }, -- "nvim-snippy",
     requires = {
         {
@@ -108,24 +107,6 @@ completion({
     end,
     keys = { "<C-c>" },
     config = conf.autopair,
-})
-
-completion({
-    "cohama/lexima.vim",
-    opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = { "InsertEnter", "CmdLineEnter" },
-            augroup_name = "lexima",
-            condition = lambda.config.use_lexima,
-            plugin = "lexima.vim",
-        })
-    end,
-    config = function()
-        vim.g.lexima_enable_basic_rules = 1
-        vim.g.lexima_enable_newline_rules = 1
-        vim.g.lexima_enable_endwise_rules = 0
-    end,
 })
 
 completion({
