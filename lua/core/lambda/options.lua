@@ -1,17 +1,20 @@
 -- pick random  item form dark but based on its probability
+local noice_enabled = true
+local use_noice_docs = false
+
 lambda.config = {
-    do_you_want_lag = false, -- Enable Extra regex,
+    do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     better_ts_highlights = true,
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = true, -- waka time
     neorg_auto_commit = true,
-    loaded_confirm_quit = false, -- not when noice is active, as that causes some stupid issue w
+    loaded_confirm_quit = false, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
     save_clipboard_on_exit = true,
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
-    use_session = false, -- set to false to disable session
+    use_session = true, -- set to false to disable session
     use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
@@ -20,16 +23,12 @@ lambda.config = {
     use_hlchunk = false,
     use_pet = true,
     use_lightspeed = true, -- if false then leap.nvim will be used.
-    use_noice = true,
-    use_drop = false,
     use_music = true,
-    use_scope = false, -- really fucks with neogit window
+    use_scope = true, -- really fucks with neogit window
     use_wrapping = false, -- I am not sure if this is causing me to segfault.
-    use_scroll = false,
     use_beacon = false,
     use_dashboard = false, -- set to false to not see this
     use_unception = true,
-    use_mini = false, -- Trailing whitr spaces , mini bar and some other things i forgot i setup , its not bad , But i do not think i need ito
     use_code_window = false,
     use_lexima = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
     use_hi_pairs = true,
@@ -58,12 +57,12 @@ lambda.config.colourscheme = {
             core_themes = {
                 "kanagawa.nvim",
                 "catppuccin",
-                "mellow.nvim",
                 -- "rose", -- TSMethod'
                 -- "tokyonight.nvim3", -- allot
                 -- "vim-dogrun"
             },
             others = {
+                "mellow.nvim",
                 "horizon.nvim",
                 "nvim-tundra", -- TSProperty'
                 "doom-one.nvim",
@@ -106,6 +105,22 @@ lambda.config.lsp = {
         lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         pylance_pyright = {
             use_inlay_hints = true,
+        },
+    },
+}
+
+lambda.config.ui = {
+    noice = {
+        enable = noice_enabled,
+        lsp = {
+            --  REVISIT: (vsedov) (03:05:41 - 31/10/22): Come back to this once this is owrking
+            use_noice_signature = use_noice_docs, -- I would very much like to use this,l but for now this is broken
+            use_noice_hover = use_noice_docs,
+            use_markdown = {
+                convert_input_to_markdown_lines = use_noice_docs,
+                stylize_markdown = use_noice_docs, --  If use_noice_signature is false , then these boys have to be disabled too interested
+                get_documentation = use_noice_docs, --
+            },
         },
     },
 }
