@@ -96,8 +96,8 @@ lsp({
 })
 
 lsp({
-    lambda.use_local("null-ls.nvim", "contributing"),
-    -- "jose-elias-alvarez/null-ls.nvim",
+    "vsedov/null-ls.nvim",
+    branch = "feat/ruff",
     event = "BufEnter",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
