@@ -180,9 +180,6 @@ With.flake8 = {
             0
         ) < 8000
     end,
-    cwd = function(params)
-        return vim.fn.fnamemodify(params.bufname, ":h")
-    end,
 
     -- for the time, lets see how much lag this would reduce.
     method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
@@ -194,9 +191,6 @@ With.ruff = {
             "pyproject.toml",
             "poetry.toml",
         })
-    end,
-    cwd = function(params)
-        return vim.fn.fnamemodify(params.bufname, ":h")
     end,
 }
 

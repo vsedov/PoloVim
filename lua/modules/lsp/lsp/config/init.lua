@@ -4,7 +4,6 @@ local cfg = {
     bind = true,
     fix_pos = true, -- set to true, the floating window will not auto-close until finish all parameters
     doc_lines = 10,
-
     floating_window = false, -- show hint in a floating window, set to false for virtual text only mode ]]
     floating_window_above_cur_line = false,
     hint_enable = true, -- virtual hint enable
@@ -67,8 +66,11 @@ function M.common_on_attach(client, bufnr)
     end
 
     if lambda.config.lsp.use_lsp_signature then
-        require("lsp_signature").on_attach(cfg, bufnr)
+        if lambda.config.ui.noice.lsp.use_noice_signature == false then
+            require("lsp_signature").on_attach(cfg, bufnr)
+        end
     end
+    -- Ideally if we are using noice , we really should not be using lsp_signature.
     add_lsp_buffer_keybindings(client, bufnr)
     require("modules.lsp.lsp.config.autocmd").setup_autocommands(client, bufnr)
 end

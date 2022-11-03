@@ -86,8 +86,6 @@ function M.setup()
                 if not ammount then
                     local lsp_format_modifications = require("lsp-format-modifications")
                     lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
-                    -- Currently this does not work for majority of my formatters , due to refactoring .
-                    -- Needs a way to filter certain types
                 else
                     augroup_setup(augroup, buffer)
                 end

@@ -11,7 +11,7 @@ function M.setup()
     diagnostic.config(config.diagnostics)
     diagnostic.open_float = config.open_float
     -- Does noice overwrite this as well ?
-    if not lambda.config.use_noice then
+    if not lambda.config.ui.noice.enable then
         lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
             config.virtual_text,
         })
