@@ -190,7 +190,7 @@ ui({
         lambda.lazy_load({
             events = "BufWinEnter",
             augroup_name = "noice",
-            condition = lambda.config.use_noice,
+            condition = lambda.config.ui.noice.enable,
             plugin = "noice.nvim",
         })
     end,
@@ -200,22 +200,6 @@ ui({
         "hrsh7th/nvim-cmp",
     },
     config = conf.noice,
-})
-
-ui({
-    "folke/drop.nvim",
-    opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "VimEnter",
-            augroup_name = "drop",
-            condition = lambda.config.use_drop,
-            plugin = "drop.nvim",
-        })
-    end,
-    config = function()
-        require("drop").setup()
-    end,
 })
 
 ui({
