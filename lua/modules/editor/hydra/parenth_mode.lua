@@ -1,4 +1,6 @@
 local hydra = require("hydra")
+local leader = "H"
+
 local mx = function(feedkeys)
     return function()
         local keys = vim.api.nvim_replace_termcodes(feedkeys, true, false, true)
@@ -28,9 +30,9 @@ end
 
 config.parenth_mode = {
     color = "pink",
-    body = "\\<leader>",
+    body = leader,
     mode = { "n", "v", "x", "o" },
-    ["\\<leader>"] = { nil, { exit = true } },
+    [leader] = { nil, { exit = true } },
     ["<ESC>"] = { nil, { exit = true } },
     j = {
         function()

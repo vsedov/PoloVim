@@ -23,10 +23,10 @@ Hydra({
     mode = { "n", "x", "o" },
     body = "<localleader>w",
     heads = {
-        { "w", "<Plug>(smartword-w)" },
-        { "b", "<Plug>(smartword-b)" },
-        { "e", "<Plug>(smartword-e)" },
-        { "ge", "<Plug>(smartword-ge)" },
+        { "w", "<Plug>(smartword-w)", { exit = false } },
+        { "b", "<Plug>(smartword-b)", { exit = false } },
+        { "e", "<Plug>(smartword-e)", { exit = false } },
+        { "ge", "<Plug>(smartword-ge)", { exit = false } },
         { "<Esc>", nil, { exit = true, mode = "n" } },
     },
 })

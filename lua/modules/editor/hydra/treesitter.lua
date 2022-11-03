@@ -1,10 +1,5 @@
-local Hydra = require("hydra")
 local ts_move = require("nvim-treesitter.textobjects.move")
-
-local Hydra = require("hydra")
-local ts_move = require("nvim-treesitter.textobjects.move")
-local ts_select = require("nvim-treesitter.textobjects.select")
-
+local leader = "\\<leader>"
 local hydra = require("hydra")
 
 local mx = function(feedkeys)
@@ -34,12 +29,11 @@ local function toggle(lhs, on_enter, on_exit)
         on_enter = on_enter,
     }
 end
-
 config.parenth_mode = {
     color = "pink",
-    body = "H",
+    body = leader,
     mode = { "n", "v", "x", "o" },
-    ["H"] = { nil, { exit = true } },
+    [leader] = { nil, { exit = true } },
     ["<ESC>"] = { nil, { exit = true } },
     j = {
         function()
@@ -65,17 +59,15 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "Move [P] →" },
     },
-   ["{"] ={ mx("ac"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
-   ["}"] ={ mx("ic"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
+    ["{"] = { mx("ac"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
+    ["}"] = { mx("ic"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
 
+    ["]"] = { mx("af"), { nowait = true, desc = "Func [af]" } }, -- ts: all function
+    ["["] = { mx("if"), { nowait = true, desc = "Func [if]" } }, -- ts: inner function
 
-   ["]"] ={ mx("af"), { nowait = true, desc = "Func [af]" } }, -- ts: all function
-   ["["] ={ mx("if"), { nowait = true, desc = "Func [if]" } }, -- ts: inner function
-
-   ["a"] ={ mx("aC"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
-   ["i"] ={ mx("iC"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
+    ["a"] = { mx("aC"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
+    ["i"] = { mx("iC"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
 }
-
 
 local mapping = {
     color = function(t, rhs)
@@ -97,7 +89,7 @@ local mapping = {
 -- Create a Auto Hinting Table same as above but with auto generated
 
 local new_hydra = {
-    name = "core",
+    name = "TS",
     config = {
         hint = {
             position = "middle-right",
@@ -138,7 +130,7 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    bracket = { "h", "j","k","l" }
+    bracket = { "h", "j", "k", "l" }
     -- Single characters - non Capital to Capital then to double characters then brackets
     single = {}
     for _, v in pairs(sorted) do
