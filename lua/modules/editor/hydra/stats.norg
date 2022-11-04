@@ -1,0 +1,32 @@
+@document.meta
+title: stats
+description: 
+authors: viv
+categories: 
+created: 2022-11-03
+updated: 2022-11-03
+version: 0.0.15
+@end
+
+* Data on most used Hydra Modules that i have
+
+** Daily
+   - Buffers
+   - Harpoon
+   - docs
+   - runner
+   - tele
+
+** Some what
+   - Lsp
+   - refactoring
+   - text case, great module , only used when required, works amazing with subsitute
+   - vim_options
+   - window module is sometimes used
+   - grapple : i do not know if this is worth it
+
+** Meh not really , but nice to have
+   - Colourscheme 
+   - dap [ very rare if i use this]
+   - extra search - need to make it to <leader>f if the project size is huge | great for fat files and projects
+   - neotest, well i havent done testing in a while

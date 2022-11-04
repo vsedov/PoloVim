@@ -2,18 +2,50 @@ local ts_move = require("nvim-treesitter.textobjects.move")
 local leader = "\\<leader>"
 local hydra = require("hydra")
 
-local mx = function(feedkeys)
+local mx = function(feedkeys, type)
+    local type = type or "m"
     return function()
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, true, true), "n", true)
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), "v", false)
+        if type == "v" then
+            print(feedkeys)
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, true, true), "n", true)
+        end
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), type, false)
     end
 end
+local motion_type = {
+    d = "Del",
+    c = "Cut",
+    y = "Yank",
+}
+local bracket = { "h", "j", "k", "l" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
         table.insert(core_table, v)
     end
     table.insert(core_table, "\n")
+end
+
+local function starts(String, Start)
+    return string.sub(String, 1, string.len(Start)) == Start
+end
+
+local function create_table_normal(var, sorted, string_len, start_val)
+    start_val = start_val or nil
+    var = {}
+    for _, v in pairs(sorted) do
+        if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
+            if start_val ~= nil then
+                if starts(v, start_val) then
+                    table.insert(var, v)
+                end
+            else
+                table.insert(var, v)
+            end
+        end
+    end
+    table.sort(var)
+    return var
 end
 
 local config = {}
@@ -59,15 +91,26 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "Move [P] →" },
     },
-    ["{"] = { mx("ac"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
-    ["}"] = { mx("ic"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
+    ["c"] = { mx("ac", "v"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
+    ["C"] = { mx("ic", "v"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
 
-    ["]"] = { mx("af"), { nowait = true, desc = "Func [af]" } }, -- ts: all function
-    ["["] = { mx("if"), { nowait = true, desc = "Func [if]" } }, -- ts: inner function
+    ["a"] = { mx("af", "v"), { nowait = true, desc = "Func [af]" } }, -- ts: all function
+    ["i"] = { mx("if", "v"), { nowait = true, desc = "Func [if]" } }, -- ts: inner function
 
-    ["a"] = { mx("aC"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
-    ["i"] = { mx("iC"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
+    ["A"] = { mx("aC", "v"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
+    ["I"] = { mx("iC", "v"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
 }
+
+for surround, motion in pairs({ c = "ac", C = "ic", a = "af", i = "if", A = "aC", I = "iC" }) do
+    for doc, key in pairs({ d = "d", c = "c", y = "y" }) do
+        local motiondoc = surround
+        local mapping = table.concat({ doc, surround })
+        config.parenth_mode[mapping] = {
+            mx(table.concat({ key, motion })),
+            { nowait = true, desc = motion_type[doc] .. " [" .. key .. motion .. "]", exit = true },
+        }
+    end
+end
 
 local mapping = {
     color = function(t, rhs)
@@ -93,6 +136,7 @@ local new_hydra = {
     config = {
         hint = {
             position = "middle-right",
+            border = lambda.style.border.type_0,
         },
         timeout = 4000,
         invoke_on_body = true,
@@ -111,6 +155,7 @@ for name, spec in pairs(config) do
         end
     end
 end
+
 --
 local function auto_hint_generate()
     container = {}
@@ -130,29 +175,19 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    bracket = { "h", "j", "k", "l" }
-    -- Single characters - non Capital to Capital then to double characters then brackets
-    single = {}
-    for _, v in pairs(sorted) do
-        if string.len(v) == 1 and not vim.tbl_contains(bracket, v) then
-            table.insert(single, v)
-        end
-    end
-    table.sort(single)
-    douible = {}
-    for _, v in pairs(sorted) do
-        if string.len(v) == 1 and not vim.tbl_contains(bracket, v) then
-            table.insert(douible, v)
-        end
-    end
-    table.sort(douible)
+    single = create_table_normal({}, sorted, 1)
+
+    delete = create_table_normal({}, sorted, 2, "d")
+    change = create_table_normal({}, sorted, 2, "c")
+    yank = create_table_normal({}, sorted, 2, "y")
 
     core_table = {}
 
-    -- make_core_table(core_table, single)
     make_core_table(core_table, bracket)
-
-    make_core_table(core_table, douible)
+    make_core_table(core_table, single)
+    make_core_table(core_table, delete)
+    make_core_table(core_table, change)
+    make_core_table(core_table, yank)
 
     hint_table = {}
     string_val = "^ ^   Tree Sitter   ^ ^\n\n"
