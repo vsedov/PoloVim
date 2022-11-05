@@ -6,16 +6,16 @@ local mx = function(feedkeys, type)
     local type = type or "m"
     return function()
         if type == "v" then
-            print(feedkeys)
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, true, true), "n", true)
         end
+
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), type, false)
     end
 end
 local motion_type = {
-    d = "Del",
-    c = "Cut",
-    y = "Yank",
+    D = "Del",
+    C = "Cut",
+    Y = "Yank",
 }
 local bracket = { "h", "j", "k", "l" }
 
@@ -44,7 +44,10 @@ local function create_table_normal(var, sorted, string_len, start_val)
             end
         end
     end
-    table.sort(var)
+    table.sort(var, function(a, b)
+        return a:lower() < b:lower()
+    end)
+
     return var
 end
 
@@ -61,6 +64,7 @@ local function toggle(lhs, on_enter, on_exit)
         on_enter = on_enter,
     }
 end
+
 config.parenth_mode = {
     color = "pink",
     body = leader,
@@ -95,19 +99,20 @@ config.parenth_mode = {
     ["C"] = { mx("ic", "v"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
 
     ["a"] = { mx("af", "v"), { nowait = true, desc = "Func [af]" } }, -- ts: all function
-    ["i"] = { mx("if", "v"), { nowait = true, desc = "Func [if]" } }, -- ts: inner function
+    ["A"] = { mx("if", "v"), { nowait = true, desc = "Func [if]" } }, -- ts: inner function
 
-    ["A"] = { mx("aC", "v"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
+    ["i"] = { mx("aC", "v"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
     ["I"] = { mx("iC", "v"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
 }
 
-for surround, motion in pairs({ c = "ac", C = "ic", a = "af", i = "if", A = "aC", I = "iC" }) do
-    for doc, key in pairs({ d = "d", c = "c", y = "y" }) do
+for surround, motion in pairs({ c = "ac", C = "ic", a = "af", A = "if", i = "aC", I = "iC" }) do
+    for doc, key in pairs({ D = "d", C = "c", Y = "y" }) do
         local motiondoc = surround
+        local exit = false
         local mapping = table.concat({ doc, surround })
         config.parenth_mode[mapping] = {
             mx(table.concat({ key, motion })),
-            { nowait = true, desc = motion_type[doc] .. " [" .. key .. motion .. "]", exit = true },
+            { desc = motion_type[doc] .. " [" .. key .. motion .. "]", exit = exit },
         }
     end
 end
@@ -140,7 +145,6 @@ local new_hydra = {
         },
         timeout = 4000,
         invoke_on_body = true,
-        timeout = false,
     },
     heads = {},
 }
@@ -176,18 +180,17 @@ local function auto_hint_generate()
     table.sort(sorted)
 
     single = create_table_normal({}, sorted, 1)
-
-    delete = create_table_normal({}, sorted, 2, "d")
-    change = create_table_normal({}, sorted, 2, "c")
-    yank = create_table_normal({}, sorted, 2, "y")
+    yank = create_table_normal({}, sorted, 2, "Y")
+    delete = create_table_normal({}, sorted, 2, "D")
+    change = create_table_normal({}, sorted, 2, "C")
 
     core_table = {}
 
     make_core_table(core_table, bracket)
     make_core_table(core_table, single)
+    make_core_table(core_table, yank)
     make_core_table(core_table, delete)
     make_core_table(core_table, change)
-    make_core_table(core_table, yank)
 
     hint_table = {}
     string_val = "^ ^  Tree Sitter    ^ ^\n\n"
@@ -204,7 +207,6 @@ local function auto_hint_generate()
         string_val = string_val .. hint
         -- end
     end
-    -- print(string_val)
     return string_val
 end
 
