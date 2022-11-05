@@ -1,6 +1,7 @@
 local ts_move = require("nvim-treesitter.textobjects.move")
-local leader = "\\<leader>"
+local leader = "<c-w>]"
 local hydra = require("hydra")
+local cmd = require("hydra.keymap-util").cmd
 
 local mx = function(feedkeys, type)
     local type = type or "m"
@@ -12,12 +13,8 @@ local mx = function(feedkeys, type)
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), type, false)
     end
 end
-local motion_type = {
-    D = "Del",
-    C = "Cut",
-    Y = "Yank",
-}
-local bracket = { "h", "j", "k", "l" }
+
+local bracket = { "w", "W" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -36,7 +33,8 @@ local function create_table_normal(var, sorted, string_len, start_val)
     for _, v in pairs(sorted) do
         if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
             if start_val ~= nil then
-                if starts(v, start_val) then
+                if vim.tbl_contains(start_val, v) then
+                    -- if starts(v, start_val) then
                     table.insert(var, v)
                 end
             else
@@ -71,51 +69,40 @@ config.parenth_mode = {
     mode = { "n", "v", "x", "o" },
     [leader] = { nil, { exit = true } },
     ["<ESC>"] = { nil, { exit = true } },
-    j = {
-        function()
-            ts_move.goto_next_start({ "@function.outer", "@class.outer" })
-        end,
-        { nowait = true, desc = "Move [N] ←" },
-    },
-    h = {
-        function()
-            ts_move.goto_next_end({ "@function.outer", "@class.outer" })
-        end,
-        { nowait = true, desc = "Move [N] →" },
-    },
+
     k = {
         function()
-            ts_move.goto_previous_start({ "@function.outer", "@class.outer" })
+            require("nvim-treesitter.textobjects.swap").swap_next("@parameter.inner")
         end,
-        { nowait = true, desc = "Move [P] ←" },
+
+        { nowait = true, desc = "TS Swap →", exit = true },
     },
-    l = {
+    j = {
         function()
-            ts_move.goto_previous_start({ "@function.outer", "@class.outer" })
+            require("nvim-treesitter.textobjects.swap").swap_previous("@parameter.inner")
         end,
-        { nowait = true, desc = "Move [P] →" },
+        { nowait = true, desc = "TS Swap ←", exit = true },
     },
-    ["c"] = { mx("ac", "v"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
-    ["C"] = { mx("ic", "v"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
+    W = {
+        function()
+            vim.cmd([[ISwap]])
+        end,
 
-    ["a"] = { mx("af", "v"), { nowait = true, desc = "Func [af]" } }, -- ts: all function
-    ["A"] = { mx("if", "v"), { nowait = true, desc = "Func [if]" } }, -- ts: inner function
+        { nowait = true, desc = "Iswap", exit = true },
+    },
+    w = {
+        function()
+            vim.cmd([[ISwapWith]])
+        end,
 
-    ["i"] = { mx("aC", "v"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
-    ["I"] = { mx("iC", "v"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
+        { nowait = true, desc = "IswapWith", exit = false },
+    },
+
+    U = { mx("vU"), { nowait = true, desc = "Surf U", exit = true } }, -- ts: all class
+    u = { mx("vu"), { nowait = true, desc = "Surf u", exit = true } }, -- ts: inner class
+    D = { mx("vD"), { nowait = true, desc = "Surf D", exit = true } }, -- ts: all function
+    d = { mx("vd"), { nowait = true, desc = "Surf d", exit = true } }, -- ts: all conditional
 }
-
-for surround, motion in pairs({ c = "ac", C = "ic", a = "af", A = "if", i = "aC", I = "iC" }) do
-    for doc, key in pairs({ D = "d", C = "c", Y = "y" }) do
-        local motiondoc = surround
-        local exit = false
-        local mapping = table.concat({ doc, surround })
-        config.parenth_mode[mapping] = {
-            mx(table.concat({ key, motion })),
-            { desc = motion_type[doc] .. " [" .. key .. motion .. "]", exit = exit },
-        }
-    end
-end
 
 local mapping = {
     color = function(t, rhs)
@@ -137,7 +124,7 @@ local mapping = {
 -- Create a Auto Hinting Table same as above but with auto generated
 
 local new_hydra = {
-    name = "TS",
+    name = "Swapper",
     config = {
         hint = {
             position = "middle-right",
@@ -179,21 +166,17 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    single = create_table_normal({}, sorted, 1)
-    yank = create_table_normal({}, sorted, 2, "Y")
-    delete = create_table_normal({}, sorted, 2, "D")
-    change = create_table_normal({}, sorted, 2, "C")
+    surf = create_table_normal({}, sorted, 1, { "d", "D", "U", "u" })
+    ts = create_table_normal({}, sorted, 1, { "j", "k" })
 
     core_table = {}
 
     make_core_table(core_table, bracket)
-    make_core_table(core_table, single)
-    make_core_table(core_table, yank)
-    make_core_table(core_table, delete)
-    make_core_table(core_table, change)
+    make_core_table(core_table, surf)
+    make_core_table(core_table, ts)
 
     hint_table = {}
-    string_val = "^ ^  Tree Sitter    ^ ^\n\n"
+    string_val = "^ ^    swapPer    ^ ^\n\n"
     string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
 
     for _, v in pairs(core_table) do
