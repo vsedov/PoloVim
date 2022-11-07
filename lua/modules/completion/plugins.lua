@@ -101,7 +101,7 @@ completion({
         lambda.lazy_load({
             events = { "InsertEnter", "CmdLineEnter" },
             augroup_name = "autopairs",
-            condition = not lambda.config.use_lexima,
+            condition = not lambda.config.use_luasnip_brackets,
             plugin = "nvim-autopairs",
         })
     end,

@@ -13,8 +13,6 @@ local def_map = {
     ["n|<Leader>w"] = map_cmd("<cmd>:w<cr>", "save"):with_noremap(),
     -- ["n|<Leader>q"] = map_cmd(":q<CR>", "exit"):with_noremap(),
 
-    ["n|<leader>sd"] = map_cu([[silent! keeppatterns %substitute/\s\+$//e]], "Subsitute"):with_noremap():with_silent(),
-
     ["n|<C-h>"] = map_cmd("<C-w>h", "Jump h"):with_noremap(),
     ["n|<C-l>"] = map_cmd("<C-w>l", "Jump l"):with_noremap(),
     ["n|<C-J>"] = map_cmd("<C-w>j", "Jump j"):with_noremap(),

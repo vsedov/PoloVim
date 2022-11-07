@@ -359,3 +359,57 @@ end, { desc = "Go to the previous diagnostic" })
 add_cmd("DiagnosticPopulateLocList", function()
     vim.diagnostic.set_loclist({ open_loclist = false })
 end, { desc = "Populate the location list with the available diagnostics" })
+
+add_cmd("ShowHydraBinds", function()
+    binds = {
+        buffer = "<leader>b",
+        git = "<leader>h",
+        harpoon = "<CR>",
+        parenth = "H",
+        treesitter = "\\<leader>",
+        runner = ";r",
+        docs = "<leader>d",
+        tele = "<leader>f",
+        swap = "<c-w>]",
+        windows = "<c-w>[",
+        grapple = "<leader>i",
+        dap = "<localleader>b",
+        extra_search = ";A",
+        lsp = "\\l",
+        neotest = "<leader>u",
+        refactoring = "<leader>r",
+        text_case = "gaa gae",
+        word_motion = "<localleader>w",
+        subsitute = "L",
+    }
+
+    -- local sorted_binds = {}
+    -- for k, v in pairs(binds) do
+    --     table.insert(sorted_binds, { k, v })
+    -- end
+    -- table.sort(binds, function(a, b)
+    --     return a[1] < b[1]
+    -- end)
+    -- local str = "" .. "\n"
+    -- for _, v in ipairs(sorted_binds) do
+    --     str = str .. fmt("**%s** - `%s`" .. "\n", v[1], v[2])
+    -- end
+
+    -- Show them in that order
+    local str = "" .. "\n"
+    for k, v in pairs(binds) do
+        str = str .. fmt("**%s** - `%s`" .. "\n", k, v)
+    end
+
+    vim.notify(str, "info", {
+        title = "Hydra binds",
+        on_open = function(win)
+            local buf = api.nvim_win_get_buf(win)
+            if not api.nvim_buf_is_valid(buf) then
+                return
+            end
+            api.nvim_buf_set_option(buf, "filetype", "markdown")
+        end,
+        timeout = 30000,
+    })
+end, {})

@@ -30,7 +30,7 @@ lambda.config = {
     use_dashboard = false, -- set to false to not see this
     use_unception = true,
     use_code_window = false,
-    use_lexima = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
+    use_luasnip_brackets = true, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
     use_hi_pairs = true,
     use_fidget = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
@@ -102,7 +102,7 @@ lambda.config.lsp = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "isort", "yapf" }, -- black -- Need to make it so it knows what formater to use :think:
         -- jedis documentation is better though
-        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "pylance", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         pylance_pyright = {
             use_inlay_hints = true,
         },

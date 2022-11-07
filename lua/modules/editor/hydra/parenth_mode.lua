@@ -98,11 +98,6 @@ local mapping = {
     end,
 }
 
-local hint_auto_create = [[
-      parenth
-^ ^▔▔▔▔▔▔▔▔▔▔▔▔ ^ ^
-]]
-
 -- Create a Auto Hinting Table same as above but with auto generated
 
 local new_hydra = {
@@ -110,6 +105,7 @@ local new_hydra = {
     config = {
         hint = {
             position = "middle-right",
+            border = lambda.style.border.type_0,
         },
         invoke_on_body = true,
         timeout = false,

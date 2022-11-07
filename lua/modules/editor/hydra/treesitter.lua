@@ -69,7 +69,6 @@ config.parenth_mode = {
     color = "pink",
     body = leader,
     mode = { "n", "v", "x", "o" },
-    [leader] = { nil, { exit = true } },
     ["<ESC>"] = { nil, { exit = true } },
     j = {
         function()
@@ -95,24 +94,26 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "Move [P] →" },
     },
-    ["c"] = { mx("ac", "v"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
-    ["C"] = { mx("ic", "v"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
+    ["w"] = { mx("ac", "v"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
+    ["W"] = { mx("ic", "v"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
 
     ["a"] = { mx("af", "v"), { nowait = true, desc = "Func [af]" } }, -- ts: all function
     ["A"] = { mx("if", "v"), { nowait = true, desc = "Func [if]" } }, -- ts: inner function
 
     ["i"] = { mx("aC", "v"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
     ["I"] = { mx("iC", "v"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
+    ["<CR>"] = { mx("J"), { nowait = true, desc = "Jump", exit = true } }, -- ts: inner conditional
 }
-
+--  TODO: (vsedov) (02:33:50 - 07/11/22): Cut and delete in this instance would do the same thing if
+--  im not mistaken
 for surround, motion in pairs({ c = "ac", C = "ic", a = "af", A = "if", i = "aC", I = "iC" }) do
     for doc, key in pairs({ D = "d", C = "c", Y = "y" }) do
         local motiondoc = surround
-        local exit = false
+        -- local exit_call = false
         local mapping = table.concat({ doc, surround })
         config.parenth_mode[mapping] = {
             mx(table.concat({ key, motion })),
-            { desc = motion_type[doc] .. " [" .. key .. motion .. "]", exit = exit },
+            { desc = motion_type[doc] .. " [" .. key .. motion .. "]", exit = true },
         }
     end
 end

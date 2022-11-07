@@ -6,8 +6,8 @@ if lambda.config.use_lightspeed then
     local cmd = require("hydra.keymap-util").cmd
     loader("portal.nvim")
     local hint = [[
-^ ^ _[_: Jump Forward   ^ ^
-^ ^ _]_: Jump Backward  ^ ^
+^ ^ _i_: Jump Forward   ^ ^
+^ ^ _o_: Jump Backward  ^ ^
 ^ ^ _k_: Toggle         ^ ^
 ^ ^ _m_: Tag            ^ ^
 ^ ^ _M_: UnTag          ^ ^
@@ -24,17 +24,17 @@ if lambda.config.use_lightspeed then
             },
         },
         mode = { "n" },
-        body = "\\]",
+        body = "<leader>i",
         heads = {
             {
-                "[",
+                "i",
                 function()
                     require("portal").jump_forward()
                 end,
                 { exit = true },
             },
             {
-                "]",
+                "o",
                 function()
                     require("portal").jump_backward()
                 end,

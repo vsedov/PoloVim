@@ -1,7 +1,7 @@
 local cmp = require("cmp")
 local tabnine_options = lambda.config.cmp.tabnine
 
-if not lambda.config.use_lexima then
+if not lambda.config.use_luasnip_brackets then
     require("packer").loader("nvim-autopairs")
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))

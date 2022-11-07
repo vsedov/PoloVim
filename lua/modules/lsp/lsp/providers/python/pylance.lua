@@ -222,7 +222,7 @@ M.config = {
             analysis = {
                 completeFunctionParens = true,
                 indexing = true,
-                typeCheckingMode = "basic",
+                typeCheckingMode = "none",
                 diagnosticMode = "openFilesOnly",
                 inlayHints = {
                     variableTypes = true,
@@ -231,32 +231,26 @@ M.config = {
                 -- Honestly just shut this thing up , its actually very annoying
                 -- when it just keeps giving pointless error messages.
                 diagnosticSeverityOverrides = {
-                    -- information : this can get very anonying
-                    --[[ reportMissingTypeStubs = false, ]]
+                    --felse: this can get very anonying
+                    reportMissingTypeStubs = false,
                     -- stuff from top
-                    -- reportGeneralTypeIssues = "warning",
-                    -- reportUnboundVariable = "warning",
-                    -- reportUndefinedVariable = "error",
-                    -- reportUntypedClassDecorator = "none",
-                    -- reportUntypedFunctionDecorator = "none",
-                    -- reportFunctionMemberAccess = "warning",
+                    reportGeneralTypeIssues = false,
+                    reportUnboundVariable = false,
+                    reportUndefinedVariable = "error",
+                    reportUntypedClassDecorator = "none",
+                    reportUntypedFunctionDecorator = "none",
+                    reportFunctionMemberAccess = false,
                     --
-                    -- reportUnknownMemberType = "information",
-                    -- reportUnknownVariableType = "information",
-                    -- reportUnknownArgumentType = "warning",
-                    -- reportUnknownParameterType = "warning",
-                    -- reportUnknownLambdaType = "warning",
-                    --
-                    --[[ reportUnusedImport = "information", ]]
-                    --[[ reportUnusedFunction = "information", ]]
-                    --[[ reportUnusedVariable = "information", ]]
-                    --[[ reportUnusedClass = "information", ]]
-
-                    -- strictParameterNoneValue = false,
-                    -- reportOptionalSubscript = "warning",
-                    -- reportOptionalMemberAccess = "warning",
-                    -- reportOptionalIterable = "warning",
-                    -- reportOptionalCall = "none",
+                    reportUnknownMemberType = false,
+                    reportUnknownVariableType = false,
+                    reportUnknownArgumentType = false,
+                    reportUnknownParameterType = false,
+                    reportUnknownLambdaType = false,
+                    strictParameterNoneValue = false,
+                    reportOptionalSubscript = false,
+                    reportOptionalMemberAccess = false,
+                    reportOptionalIterable = false,
+                    reportOptionalCall = "none",
                 },
             },
         },

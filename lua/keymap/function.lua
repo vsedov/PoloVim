@@ -29,18 +29,6 @@ local plug_map = {
     --     end, "smard dd")
     --     :with_noremap()
     --     :with_expr(),
-    --
-    ["n|LK"] = map_cmd(function()
-            return ":DD " .. vim.fn.expand("<cword>") .. "<CR>"
-        end, "Dev Docs search")
-        :with_expr()
-        :with_noremap(),
-
-    ["n|LA"] = map_cmd(function()
-            return ":Zeavim<CR>"
-        end, "Zeal search")
-        :with_expr()
-        :with_noremap(),
 
     ["n|}"] = map_cmd(function()
         return ":lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow" .. "<cr>"
