@@ -157,18 +157,6 @@ lang({
 lang({ "mgedmin/coverage-highlight.vim", ft = "python", opt = true, run = ":UpdateRemotePlugins" })
 
 -- -- IPython Mappings
--- M.map("n", "p", "<cmd>lua require('py.ipython').toggleIPython()<CR>")
--- M.map("n", "c", "<cmd>lua require('py.ipython').sendObjectsToIPython()<CR>")
--- M.map("v", "c", '"zy:lua require("py.ipython").sendHighlightsToIPython()<CR>')
--- M.map("v", "s", '"zy:lua require("py.ipython").sendIPythonToBuffer()<CR>')
-
--- -- Pytest Mappings
--- M.map("n", "t", "<cmd>lua require('py.pytest').launchPytest()<CR>")
--- M.map("n", "r", "<cmd>lua require('py.pytest').showPytestResult()<CR>")
-
--- -- Poetry Mappings
--- M.map("n", "a", "<cmd>lua require('py.poetry').inputDependency()<CR>")
--- M.map("n", "d", "<cmd>lua require('py.poetry').showPackage()<CR>")
 lang({
     lambda.use_local("py.nvim", "contributing"),
     ft = "python",

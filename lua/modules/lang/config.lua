@@ -329,7 +329,7 @@ end
 function config.python_dev()
     require("py").setup({
         leader = "<leader><leader>",
-        mappings = true,
+        mappings = false,
         taskipy = true,
         poetry_install_every = 1,
         ipython_in_vsplit = 1,

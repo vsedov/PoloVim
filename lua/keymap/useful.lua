@@ -80,10 +80,6 @@ local plug_map = {
     ["n|<C-ScrollWheelUp>"] = map_cmd("<C-i>", "Buf Move"):with_noremap():with_silent(),
     ["n|<C-ScrollWheelDown>"] = map_cmd("<C-o>", "Buf Move"):with_noremap():with_silent(),
     ["n|<localleader>W"] = map_cu("Sad", "Sad Search"):with_noremap():with_silent(),
-
-    ["i|jb"] = map_cmd("()<esc>i"):with_silent(),
-    ["i|jn"] = map_cmd("[]<esc>i"):with_silent(),
-    ["i|jm"] = map_cmd("{}<esc>i"):with_silent(),
 }
 
 return plug_map

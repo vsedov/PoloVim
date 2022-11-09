@@ -1,3 +1,5 @@
+--  TODO: (vsedov) (08:58:48 - 08/11/22): Make all of this optional, because im not sure which is
+--  causing the error here, and its quite important that i figure this one out .
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
 ts({ "nvim-treesitter/nvim-treesitter", opt = true, run = ":TSUpdate", config = conf.nvim_treesitter })
@@ -14,10 +16,6 @@ ts({
     config = conf.treesitter_obj,
     opt = true,
 })
-ts({
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    opt = true,
-})
 
 ts({
     "RRethy/nvim-treesitter-textsubjects",
@@ -29,7 +27,6 @@ ts({
 ts({
     "RRethy/nvim-treesitter-endwise",
     ft = { "lua", "ruby", "vim" },
-    event = "InsertEnter",
     opt = true,
     config = conf.endwise,
 })
@@ -46,7 +43,7 @@ ts({
     after = "nvim-treesitter",
 })
 
-ts({ "nvim-treesitter/nvim-treesitter-context", event = "WinScrolled", config = conf.context })
+-- ts({ "nvim-treesitter/nvim-treesitter-context", event = "WinScrolled", config = conf.context })
 
 ts({
     "m-demare/hlargs.nvim",
@@ -72,9 +69,6 @@ ts({
     config = conf.hlargs,
 })
 
--- ig finds the diagnostic under or after the cursor (including any diagnostic the cursor is sitting on)
--- ]g finds the diagnostic after the cursor (excluding any diagnostic the cursor is sitting on)
--- [g finds the diagnostic before the cursor (excluding any diagnostic the cursor is sitting on)
 ts({
     "andrewferrier/textobj-diagnostic.nvim",
     ft = { "python", "lua" },
@@ -94,4 +88,11 @@ ts({
     "Yggdroot/hiPairs",
     event = "BufWinEnter",
     config = conf.hi_pairs,
+})
+
+ts({
+    "yioneko/nvim-yati",
+    after = "nvim-treesitter",
+    requires = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
+    config = conf.indent,
 })

@@ -1,13 +1,13 @@
 -- pick random  item form dark but based on its probability
 local noice_enabled = true
-local use_noice_docs = false
+local use_noice_docs = true -- this creats an error for some reason , though im not sure why | It is nice to have though
 
 lambda.config = {
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     better_ts_highlights = true,
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
-    record_your_self = true, -- waka time
+    record_your_self = false, -- waka time
     neorg_auto_commit = true,
     loaded_confirm_quit = false, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
     save_clipboard_on_exit = true,
@@ -18,10 +18,10 @@ lambda.config = {
     use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
-    use_guess_indent = true,
+    use_guess_indent = false,
     use_gitsigns = true,
     use_hlchunk = false,
-    use_pet = true,
+    use_pet = false,
     use_lightspeed = true, -- if false then leap.nvim will be used.
     use_music = true,
     use_scope = true, -- really fucks with neogit window
@@ -30,8 +30,8 @@ lambda.config = {
     use_dashboard = false, -- set to false to not see this
     use_unception = true,
     use_code_window = false,
-    use_luasnip_brackets = true, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
-    use_hi_pairs = true,
+    use_luasnip_brackets = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
+    use_hi_pairs = false,
     use_fidget = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
@@ -76,7 +76,7 @@ lambda.config.abbrev = {
     coding_support = true, -- system wide
     globals = { -- dictionaries that ive defined to be global, you may not want this idk .
         ["spelling_support"] = true,
-        ["month_date"] = true,
+        ["month_date"] = false,
     },
     languages = {
         "python", -- current support is python.
@@ -100,9 +100,9 @@ lambda.config.lsp = {
     latex = "ltex", -- texlab | ltex
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
-        format = { "isort", "yapf" }, -- black -- Need to make it so it knows what formater to use :think:
+        format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         -- jedis documentation is better though
-        lsp = "pylance", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         pylance_pyright = {
             use_inlay_hints = true,
         },

@@ -27,8 +27,7 @@ clipsub({
 clipsub({
     "gbprod/substitute.nvim",
     require = "gbprod/yanky.nvim",
-    opt = true,
-    modules = {"substitute", "substitute.*"},
+    event = { "CursorMoved", "CmdlineEnter" },
     config = conf.substitute,
 })
 

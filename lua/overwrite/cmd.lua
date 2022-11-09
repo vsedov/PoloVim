@@ -381,6 +381,8 @@ add_cmd("ShowHydraBinds", function()
         text_case = "gaa gae",
         word_motion = "<localleader>w",
         subsitute = "L",
+        python = "\\i",
+        python_magma = "<leder>I",
     }
 
     -- local sorted_binds = {}
@@ -410,6 +412,6 @@ add_cmd("ShowHydraBinds", function()
             end
             api.nvim_buf_set_option(buf, "filetype", "markdown")
         end,
-        timeout = 30000,
+        timeout = 1000,
     })
 end, {})

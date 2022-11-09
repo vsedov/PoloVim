@@ -14,8 +14,8 @@ user({
         vim.cmd([[
         let g:jukit_layout = {
             \'split': 'horizontal',
-            \'p1': 0.6,
-            \'val': [
+           \'val': [
+             \'p1': 0.6,
                 \'file_content',
                 \{
                     \'split': 'vertical',
@@ -205,28 +205,17 @@ user({
     end,
 })
 
-user({
-    "nvim-zh/colorful-winsep.nvim",
-    setup = function()
-        lambda.lazy_load({
-            events = "BufWinEnter",
-            augroup_name = "winsep",
-            condition = true,
-            plugin = "colorful-winsep.nvim",
-        })
-    end,
-    config = function()
-        require("colorful-winsep").setup({})
-    end,
-})
-
-user({
-    "hrsh7th/vim-gindent",
-    ft = { "python", "php", "vim" },
-    config = function()
-        vim.cmd([[
-let g:gindent = {}
-let g:gindent.enabled = { -> index(['vim', 'php','python'], &filetype) != -1 }
-        ]])
-    end,
-})
+--  TODO: (vsedov) (12:12:33 - 08/11/22): I do not think i need this
+-- user({
+-- "nvim-zh/colorful-winsep.nvim",
+-- setup = function()
+--     lambda.lazy_load({
+--         events = "BufWinEnter",
+--         augroup_name = "winsep",
+--         plugin = "colorful-winsep.nvim",
+--     })
+-- end,
+-- config = function()
+--     require("colorful-winsep").setup({})
+-- end,
+-- })

@@ -300,7 +300,6 @@ local container = {
             "stylelint",
             "write_good",
             "luacheck",
-            "ruff",
         },
         formatter = {
             "brittany",

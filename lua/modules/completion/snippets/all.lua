@@ -152,10 +152,10 @@ if lambda.config.use_luasnip_brackets then
         pair("`", "`", neg, even_count),
     }
     -- table.insert(all, extensions)
-    -- for _, y in ipairs(extensions) do
-    --     table.insert(all, y)
-    -- end
-    ls.add_snippets("all", extensions, { type = "autosnippets" })
+    for _, y in ipairs(extensions) do
+        table.insert(all, y)
+    end
+    -- ls.add_snippets("all", extensions, { type = "autosnippets" })
 end
 
 return all

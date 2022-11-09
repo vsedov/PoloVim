@@ -66,7 +66,7 @@ function config.notify()
 
     local notify = require("notify")
     notify.setup({
-        timeout = 3000,
+        timeout = 1000,
         stages = "slide",
         top_down = false,
         background_colour = "NormalFloat",
@@ -891,7 +891,7 @@ function config.noice()
             -- event is always "notify" and kind can be any log level as a string
             -- The default routes will forward notifications to nvim-notify
             -- Benefit of using Noice for this is the routing and consistent history view
-            enabled = true,
+            enabled = false,
             view = "notify",
         },
 

@@ -1,7 +1,6 @@
 local Hydra = require("hydra")
 local match = lambda.lib.match
 local when = lambda.lib.when
-local loader = require("packer").loader
 local cmd = require("hydra.keymap-util").cmd
 
 local hint = [[

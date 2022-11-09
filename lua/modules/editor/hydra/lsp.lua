@@ -11,10 +11,12 @@ Hydra({
     name = "Diagnostic",
     hint = hint,
     config = {
-        invoke_on_body = true,
         hint = {
+            position = "middle-right",
             border = lambda.style.border.type_0,
         },
+        timeout = false,
+        invoke_on_body = true,
     },
     mode = { "n", "x" },
     body = "\\l",
@@ -23,7 +25,7 @@ Hydra({
         { "J", vim.diagnostic.goto_next },
 
         { "d", vim.lsp.buf.type_definition, { exit = true } },
-        { "r", cmd(":Lspsaga rename"), { exit = true } },
+        { "r", cmd("Lspsaga rename"), { exit = true } },
         { "a", vim.lsp.buf.code_action, { exit = true } },
         { "t", cmd("TroubleToggle"), { exit = true } },
         { "s", cmd("SymbolsOutline"), { exit = true } },

@@ -17,7 +17,7 @@ local motion_type = {
     C = "Cut",
     Y = "Yank",
 }
-local bracket = { "h", "j", "k", "l" }
+local bracket = { "h", "j", "k", "l", "O", "]", "[" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -94,6 +94,15 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "Move [P] →" },
     },
+
+    -- ig finds the diagnostic under or after the cursor (including any diagnostic the cursor is sitting on)
+    -- ]g finds the diagnostic after the cursor (excluding any diagnostic the cursor is sitting on)
+    -- [g finds the diagnostic before the cursor (excluding any diagnostic the cursor is sitting on)
+
+    ["O"] = { mx("ig", "v"), { nowait = true, desc = "Diag A[Cur]" } }, -- ts: all class
+    ["]"] = { mx("]g", "v"), { nowait = true, desc = "Diag >[Cur]" } }, -- ts: all class
+    ["["] = { mx("[g", "v"), { nowait = true, desc = "Diag <[Cur]" } }, -- ts: all class
+
     ["w"] = { mx("ac", "v"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
     ["W"] = { mx("ic", "v"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
 
@@ -184,6 +193,8 @@ local function auto_hint_generate()
     yank = create_table_normal({}, sorted, 2, "Y")
     delete = create_table_normal({}, sorted, 2, "D")
     change = create_table_normal({}, sorted, 2, "C")
+
+    -- diagnostics = create_table_normal({}, sorted, 2, "d")
 
     core_table = {}
 

@@ -10,7 +10,6 @@ git({
         "kyazdani42/nvim-web-devicons",
     },
     cmd = "Octo",
-    keys = { "<Leader>Op", "<Leader>Opl", "<Leader>Ope", "<Leader>Oil", "<Leader>Oic", "<Leader>Oie" },
     config = conf.octo,
 })
 

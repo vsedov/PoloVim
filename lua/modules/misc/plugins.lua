@@ -97,17 +97,18 @@ misc({
 misc({
     -- "olimorris/persisted.nvim",
     "stevearc/resession.nvim",
-    opt = true,
+    -- opt = true,
+    -- setup = function()
+    --     lambda.lazy_load({
+    --         events = "User",
+    --         pattern = "*",
+    --         augroup_name = "session",
+    --         condition = lambda.config.use_session,
+    --         -- plugin = "persisted.nvim",
+    --         plugin = "resession.nvim",
+    --     })
+    -- end,
 
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "session",
-            condition = lambda.config.use_session,
-            -- plugin = "persisted.nvim",
-            plugin = "resession.nvim",
-        })
-    end,
     config = conf.session_config,
 })
 
@@ -116,7 +117,6 @@ misc({
     "boorboor/save.nvim",
     config = conf.autosave,
     keys = "<F4>",
-    event = "FocusLost",
     opt = true,
 })
 

@@ -14,7 +14,11 @@ notes({
         "hrsh7th/nvim-cmp",
         "nvim-treesitter",
     },
-    after = { "telescope.nvim" },
+    cmd = {
+        "Neorg",
+    },
+    ft = { "neorg" },
+    -- after = { "telescope.nvim" },
     config = conf.norg,
 })
 

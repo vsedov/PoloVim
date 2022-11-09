@@ -29,8 +29,8 @@ return {
                 unique = true,
             },
             {
-                name = "Python run file (" .. vim.fn.expand("%:t:r") .. ")",
-                tskName = "Running " .. vim.fn.expand("%:t:r"),
+                name = "RunningPython",
+                tskName = "RunningPython",
                 cmd = "python " .. vim.fn.expand("%:p"),
                 condition = { filetype = "python" },
                 unique = true,

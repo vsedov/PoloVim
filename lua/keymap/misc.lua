@@ -5,7 +5,6 @@ local map_cu = bind.map_cu
 local plug_map = {
 
     ["n|<F2>"] = map_cu("UndotreeToggle", "Undo Tree"):with_noremap():with_silent(),
-    ["n|<leader>sw"] = map_cu("ISwapWith", "Swap parameters"):with_noremap():with_silent(),
     ["n|<f8>"] = map_cu("MruRepos", "MruRepos"):with_noremap():with_silent(),
     ["n|<f9>"] = map_cu("Mru", "Mru"):with_noremap():with_silent(),
     ["n|<f0>"] = map_cu("Mfu", "Mfu"):with_noremap():with_silent(),
