@@ -60,6 +60,8 @@ local python_hints = [[
 ^ ^ _<enter>_ : Ruff Fixer         ^ ^
 ^ ^ _i_ : Navy                     ^ ^
 ^ ^ _f_ : f-string                 ^ ^
+^ ^ _e_ : VenvFind                 ^ ^
+^ ^ _E_ : GetVenv                  ^ ^
 ^ ^                                ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^        Poetry poetry           ^ ^
@@ -104,7 +106,7 @@ local python_hints = {
     },
 
     mode = { "n", "x" },
-    body = "\\i",
+    body = ";l",
     heads = {
         { "<enter>", fixer, { nowait = true } },
         { "i", navy, { exit = true } },
@@ -123,6 +125,9 @@ local python_hints = {
 
         { "w", cmd("lua require('py.taskipy').runTasks()"), { exit = true } },
         { "W", cmd("lua require('py.taskipy').runTaskInput()"), { exit = true } },
+
+        { "e", cmd("VenvFind"), { exit = true } },
+        { "E", cmd("GetVenv"), { exit = true } },
 
         { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
     },
@@ -174,10 +179,8 @@ lambda.augroup("HydraPython", {
         event = "FileType",
         pattern = "python",
         command = function()
-            vim.schedule(function()
-                Hydra(python_hints)
-                Hydra(magma)
-            end)
+            Hydra(python_hints)
+            Hydra(magma)
         end,
     },
 })

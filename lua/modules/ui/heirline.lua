@@ -604,7 +604,7 @@ local Spell = {
     hl = { bold = true, fg = "orange" },
 }
 
-ViMode = utils.surround({ "", "" }, "bright_bg", { ViMode, Snippets })
+ViMode = utils.surround({ "", "" }, "bright_bg", { ViMode })
 
 local Align = { provider = "%=" }
 local Space = { provider = " " }
@@ -638,23 +638,23 @@ local DefaultStatusline = {
     FileNameBlock,
     { provider = "%<" },
     Space,
-    Git,
-    Space,
-    Diagnostics,
+    -- Git,
+    -- Space,
+    -- Diagnostics,
     Align,
     { flexible = 3, { cool_substitute }, { provider = "" } },
     { flexible = 3, { HydraActive }, { provider = "" } },
     -- space,
-    DAPMessages,
+    -- DAPMessages,
     Align,
     LSPActive,
     Space,
     FileType,
     { flexible = 3, { Space, FileEncoding }, { provider = "" } },
 
-    Space,
-    Ruler,
-    Space,
+    -- Space,
+    -- Ruler,
+    -- Space,
     ScrollBar,
 }
 
@@ -744,7 +744,7 @@ local StatusLines = {
 
     fallthrough = false,
 
-    GitStatusline,
+    -- GitStatusline,
     SpecialStatusline,
     TerminalStatusline,
     InactiveStatusline,
@@ -857,23 +857,6 @@ local colour_change = function()
 end
 
 lambda.augroup("Colourscheme", {
-    {
-        event = "FileType",
-        pattern = "*",
-        command = [[if index(['wipe', 'delete', 'unload'], &bufhidden) >= 0 | set nobuflisted | endif]],
-    },
-    {
-        event = "User",
-        pattern = "HeirlineInitWinbar",
-        command = function(args)
-            local buf = args.buf
-            local buftype = vim.tbl_contains({ "prompt", "nofile", "help", "quickfix" }, vim.bo[buf].buftype)
-            local filetype = vim.tbl_contains({ "gitcommit", "fugitive", "Trouble", "packer" }, vim.bo[buf].filetype)
-            if buftype or filetype then
-                vim.opt_local.winbar = nil
-            end
-        end,
-    },
     {
         event = "ColorScheme",
         command = function()

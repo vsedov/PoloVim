@@ -7,11 +7,36 @@ ui({
     config = conf.fidget,
 })
 
-ui({ "kyazdani42/nvim-web-devicons" })
+ui({
+    "nvim-tree/nvim-web-devicons",
+
+    config = function()
+        require("nvim-web-devicons").setup({
+            -- your personnal icons can go here (to override)
+            -- you can specify color or cterm_color instead of specifying both of them
+            -- DevIcon will be appended to `name`
+            override = {
+                zsh = {
+                    icon = "",
+                    color = "#428850",
+                    cterm_color = "65",
+                    name = "Zsh",
+                },
+            },
+            -- globally enable different highlight colors per icon (default to true)
+            -- if set to false all icons will have the default icon's color
+            color_icons = true,
+            -- globally enable default icons (default to false)
+            -- will get overriden by `get_icons` option
+            default = true,
+        })
+    end,
+})
 
 ui({
     "rebelot/heirline.nvim",
-    after = "nvim-lspconfig",
+    -- after = "nvim-lspconfig",
+    opt = true,
     config = function()
         require("modules.ui.heirline")
         -- require("modules.ui.heirline_min")
@@ -113,7 +138,7 @@ ui({
 ui({
     "kevinhwang91/nvim-ufo",
     event = "BufEnter",
-    requires = { "kevinhwang91/promise-async", after = "nvim-ufo" },
+    requires = { "kevinhwang91/promise-async" },
     config = conf.ufo,
 })
 
@@ -124,12 +149,12 @@ ui({
     config = conf.fold_focus,
 })
 
-ui({
-    "levouh/tint.nvim",
-    opt = true,
-    event = "BufEnter",
-    config = conf.tint,
-})
+-- ui({
+--     "levouh/tint.nvim",
+--     opt = true,
+--     event = "BufEnter",
+--     config = conf.tint,
+-- })
 
 ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
 
@@ -209,7 +234,7 @@ ui({
         lambda.lazy_load({
             events = "BufEnter",
             augroup_name = "illuminate",
-            condition = true,
+            condition = false,
             plugin = "vim-illuminate",
         })
     end,

@@ -103,9 +103,9 @@ Hydra({
             function()
                 local overseer = require("overseer")
                 overseer.run_template({ name = "Runner" }, function(task)
+                    task = task or "Poetry run file"
                     if task then
                         overseer.run_action(task, "open float")
-                        -- overseer.run_action(task, 'open hsplit')
                     end
                 end)
             end,

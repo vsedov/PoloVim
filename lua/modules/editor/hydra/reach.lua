@@ -30,7 +30,7 @@ local jump_hint = [[
 Hydra({
     name = "Jump",
     mode = "n",
-    body = ";L",
+    body = ";;", -- Im not sure how this would feel.
     hint = jump_hint,
     config = {
         hint = {

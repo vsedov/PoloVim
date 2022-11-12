@@ -107,23 +107,23 @@ function M.setup_autocommands(client, bufnr)
         require("modules.lsp.lsp.config.setup_autocmd")
     end
 
-    if lambda.config.lsp.diagnostics_hover then
-        augroup(FEATURES.DIAGNOSTICS, function()
-            return {
-                {
-                    event = { "CursorHold" },
-                    buffer = bufnr,
-                    desc = "LSP: Show diagnostics",
-                    command = function(args)
-                        if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then
-                            return
-                        end
-                        vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
-                    end,
-                },
-            }
-        end)
-    end
+    -- if lambda.config.lsp.diagnostics_hover then
+    --     augroup(FEATURES.DIAGNOSTICS, function()
+    --         return {
+    --             {
+    --                 event = { "CursorHold" },
+    --                 buffer = bufnr,
+    --                 desc = "LSP: Show diagnostics",
+    --                 command = function(args)
+    --                     if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then
+    --                         return
+    --                     end
+    --                     vim.diagnostic.open_float(args.buf, { scope = "cursor", focus = false })
+    --                 end,
+    --             },
+    --         }
+    --     end)
+    -- end
 
     augroup(FEATURES.FORMATTING, function(provider)
         return {

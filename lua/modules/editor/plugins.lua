@@ -191,16 +191,6 @@ editor({
     config = conf.readline,
 })
 
--- fix terminal colofr
-editor({
-    "norcalli/nvim-terminal.lua",
-    opt = true,
-    ft = { "log", "terminal" },
-    config = function()
-        require("terminal").setup()
-    end,
-})
-
 editor({
     "haya14busa/vim-asterisk",
     opt = true,
@@ -217,25 +207,17 @@ editor({
     setup = conf.asterisk_setup,
 })
 
-editor({
-    "ethanholz/nvim-lastplace",
-    event = "BufEnter",
-    config = function()
-        require("nvim-lastplace").setup({
-            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-            lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
-            lastplace_open_folds = true,
-        })
-    end,
-})
-
-editor({
-    "kevinhwang91/nvim-hclipboard",
-    event = "InsertCharPre",
-    config = function()
-        require("hclipboard").start()
-    end,
-})
+-- editor({
+--     "ethanholz/nvim-lastplace",
+--     event = "BufEnter",
+--     config = function()
+--         require("nvim-lastplace").setup({
+--             lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+--             lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
+--             lastplace_open_folds = true,
+--         })
+--     end,
+-- })
 
 editor({
     "junegunn/goyo.vim",

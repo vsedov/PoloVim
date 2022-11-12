@@ -83,48 +83,47 @@ movement({
     config = conf.sj,
 })
 
-movement({
-    "max397574/nvim-treehopper",
-    keys = {
-        { "o", "u" },
-        { "v", "u" },
-    },
-    config = function()
-        lambda.augroup("TreehopperMaps", {
-            {
-                event = "FileType",
-                command = function(args)
-                    -- FIXME: this issue should be handled inside the plugin rather than manually
-                    local langs = require("nvim-treesitter.parsers").available_parsers()
-                    if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
-                        vim.keymap.set("o", "u", ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
-                        vim.keymap.set("v", "u", ":lua require('tsht').nodes()<cr>", { buffer = args.buf })
-                    end
-                end,
-            },
-        })
-    end,
-})
-
 movement({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
-movement({ "gaborvecsei/memento.nvim", opt = true, module = "memento" })
+movement({ "gaborvecsei/memento.nvim", opt = true, module = "memento", after = "harpoon" })
+
 movement({
     "unblevable/quick-scope",
     opt = true,
-    after = "lightspeed.nvim",
+    setup = function()
+        vim.keymap.set("n", "f", "f")
+        vim.keymap.set("n", "F", "F")
+        vim.keymap.set("n", "t", "t")
+        vim.keymap.set("n", "T", "T")
+
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "quick_scope",
+            condition = lambda.config.use_quick_scope, -- reverse
+            plugin = "quick-scope",
+        })
+    end,
     config = conf.quick_scope,
 })
 
 movement({
     "chentoast/marks.nvim",
-    event = "BufReadPost",
+    -- branch = "cursorhold",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "marks",
+            condition = lambda.config.use_marks, -- reverse
+            plugin = "marks.nvim",
+        })
+    end,
     config = conf.marks,
 })
 
 movement({
     "crusj/bookmarks.nvim",
     branch = "main",
-    requires = { "kyazdani42/nvim-web-devicons" },
+    requires = { "nvim-tree/nvim-web-devicons" },
     -- opt = true,
     keys = {
         "<tab><tab>",

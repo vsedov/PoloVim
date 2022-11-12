@@ -4,7 +4,6 @@ vim.api.nvim_create_user_command("T", function(param)
     param = param or "python %"
     vim.cmd("OverseerOpen!")
     vim.cmd("OverseerRunCmd " .. param.args)
-    -- require("overseer").load_task('RunningPython')
     previous_cmd = param.args
 end, { nargs = "?", force = true })
 

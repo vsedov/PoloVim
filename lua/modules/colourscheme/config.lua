@@ -268,4 +268,13 @@ function config.mellow()
     vim.cmd.colorscheme("mellow")
 end
 
+function config.lucy()
+    vim.g.oh_lucy_italic_functions = true
+    vim.g.oh_lucy_italic_comments = true
+
+    vim.g.oh_lucy_evening_italic_functions = true
+    vim.g.oh_lucy_evening_italic_comments = true
+    vim.cmd.colorscheme("oh-lucy-evening")
+end
+
 return config

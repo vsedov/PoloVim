@@ -14,14 +14,11 @@ notes({
         "hrsh7th/nvim-cmp",
         "nvim-treesitter",
     },
-    cmd = {
-        "Neorg",
-    },
-    ft = { "neorg" },
-    -- after = { "telescope.nvim" },
+
     config = conf.norg,
 })
 
+--  REVISIT: (vsedov) (02:26:26 - 10/11/22): Required?
 notes({
     "hisbaan/jot.nvim",
     requires = "nvim-lua/plenary.nvim",
@@ -120,7 +117,7 @@ notes({
 
 notes({
     "jghauser/papis.nvim",
-    after = { "telescope.nvim", "nvim-cmp" },
+    -- after = { "telescope.nvim", "nvim-cmp" },
     ft = { "latex", "tex", "norg" },
     requires = {
         "kkharji/sqlite.lua",

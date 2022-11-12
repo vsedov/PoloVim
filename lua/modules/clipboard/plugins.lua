@@ -8,12 +8,18 @@ clipsub({
     config = conf.config_yanky,
     requires = { "telescope.nvim", "kkharji/sqlite.lua" },
 })
+
 --  REVISIT: (vsedov) (17:56:23 - 23/10/22): Is this even required ?
 clipsub({
     "ibhagwan/smartyank.nvim",
     after = "yanky.nvim",
     config = function()
         require("smartyank").setup({
+            highlight = {
+                enabled = true, -- highlight yanked text
+                higroup = "IncSearch", -- highlight group of yanked text
+                timeout = 300, -- timeout for clearing the highlight
+            },
             osc52 = {
                 enabled = true,
                 ssh_only = false, -- false to OSC52 yank also in local sessions

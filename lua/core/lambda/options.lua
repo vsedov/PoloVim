@@ -1,5 +1,5 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = true
+local noice_enabled = false
 local use_noice_docs = true -- this creats an error for some reason , though im not sure why | It is nice to have though
 
 lambda.config = {
@@ -7,32 +7,37 @@ lambda.config = {
     better_ts_highlights = true,
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
-    record_your_self = false, -- waka time
-    neorg_auto_commit = true,
+    record_your_self = true, -- waka time
+    neorg_auto_commit = false,
     loaded_confirm_quit = false, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
-    save_clipboard_on_exit = true,
+    save_clipboard_on_exit = false,
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_session = true, -- set to false to disable session
-    use_clock = false, -- set to true to  see timer for config
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_guess_indent = false,
     use_gitsigns = true,
     use_hlchunk = false,
-    use_pet = false,
     use_lightspeed = true, -- if false then leap.nvim will be used.
     use_music = true,
     use_scope = true, -- really fucks with neogit window
-    use_wrapping = false, -- I am not sure if this is causing me to segfault.
-    use_beacon = false,
-    use_dashboard = false, -- set to false to not see this
+    use_wrapping = true, -- I am not sure if this is causing me to segfault.
     use_unception = true,
     use_code_window = false,
     use_luasnip_brackets = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
     use_hi_pairs = false,
+    use_marks = false,
+    use_quick_scope = false,
+    use_use_hiPairs = false,
+    -- UI
+    use_clock = false, -- set to true to  see timer for config
+    use_pet = false,
+    use_beacon = false,
+    use_dashboard = false, -- set to false to not see this
     use_fidget = false,
+
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
@@ -55,8 +60,9 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
-                "catppuccin",
+                -- "kanagawa.nvim",
+                "oh-lucy.nvim",
+                -- "catppuccin",
                 -- "rose", -- TSMethod'
                 -- "tokyonight.nvim3", -- allot
                 -- "vim-dogrun"
@@ -85,7 +91,7 @@ lambda.config.abbrev = {
 
 lambda.config.cmp = {
     tabnine = {
-        use_tabnine = true,
+        use_tabnine = false,
         tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
         tabnine_prefetch = false,
         tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
@@ -95,8 +101,12 @@ lambda.config.cmp = {
 }
 
 lambda.config.lsp = {
-    use_lsp_signature = true,
-    use_lsp_format_modifications = true,
+    use_rcd = false,
+    use_lsp_lines = false,
+
+    use_lsp_signature = false,
+    use_lsp_format_modifications = false,
+
     latex = "ltex", -- texlab | ltex
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters

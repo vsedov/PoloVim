@@ -381,6 +381,7 @@ local function general_overrides()
                 foreground = P.grey,
             },
         },
+
         -- { FloatBorder = { bg = { from = 'Normal', alter = -15 }, fg = { from = 'Comment' } } },
         -- {NormalFloat = { inherit = "Pmenu" }},
         -- {FloatBorder = { inherit = "NormalFloat", foreground = { from = "NonText" }}},
@@ -547,6 +548,13 @@ local function general_overrides()
                 fg = { from = "DiagnosticError" },
             },
         },
+        -- Temp Highlight change
+        {
+            Cursor = {
+                bg = { from = "black" },
+                fg = { from = "DiagnosticError" },
+            },
+        },
 
         -- Sign column line number
         { DiagnosticSignWarnNr = { link = "DiagnosticSignWarn" } },
@@ -687,7 +695,7 @@ local function colorscheme_overrides()
     M.all(hls)
 end
 
-local function user_highlights()
+function M.user_highlights()
     general_overrides()
     set_sidebar_highlight()
     colorscheme_overrides()
@@ -698,7 +706,7 @@ lambda.augroup("UserHighlights", {
     {
         event = "ColorScheme",
         command = function()
-            user_highlights()
+            M.user_highlights()
         end,
     },
     {

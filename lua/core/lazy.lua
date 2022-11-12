@@ -66,10 +66,19 @@ function Lazyload()
     if gitrepo and lambda.use_gitsigns then
         loader("gitsigns.nvim") -- neogit vgit.nvim
     end
-
+    local condition = function()
+        if lambda.config.lsp.use_lsp_signature then
+            if lambda.config.ui.noice.lsp.use_noice_signature == false then
+                return true
+            end
+        end
+    end
     if load_lsp then
         vim.defer_fn(function()
             loader("lspsaga.nvim")
+            if condition() then
+                loader("lsp_signature.nvim")
+            end
         end, 60)
     end
 
@@ -78,7 +87,9 @@ function Lazyload()
         plugins = "nvim-treesitter-textobjects nvim-treesitter-textsubjects"
         loader(plugins)
         lprint(plugins)
-        loader("indent-blankline.nvim")
+        --  REVISIT: (vsedov) (17:17:23 - 11/11/22): Is this causing lag  WTF IS CAUSING THIS LAG
+        --  :REeeee:
+        -- loader("indent-blankline.nvim")
         loader("refactoring.nvim")
     end
 

@@ -67,3 +67,9 @@ colourscheme({
     opt = true,
     config = conf.mellow,
 })
+
+colourscheme({
+    "Yazeed1s/oh-lucy.nvim",
+    opt = true,
+    config = conf.lucy,
+})

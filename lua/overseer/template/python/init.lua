@@ -20,8 +20,9 @@ return {
         local commands = {
 
             {
-                name = "poetry build",
-                cmd = "poetry run task build",
+                name = "poetry start",
+                tskname = "PoetryStart",
+                cmd = "poetry run task start",
                 condition = {
                     callback = isInProject,
                 },
@@ -37,7 +38,7 @@ return {
             },
             {
                 name = "Poetry run file (" .. vim.fn.expand("%:t:r") .. ")",
-                tskName = "Running " .. vim.fn.expand("%:t:r"),
+                tskName = "Poetry run file",
                 cmd = "poetry run python " .. vim.fn.expand("%:p"),
                 condition = {
                     callback = isInProject,

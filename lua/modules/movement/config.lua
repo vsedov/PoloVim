@@ -67,11 +67,6 @@ function config.lightspeed()
                 or "<Plug>Lightspeed_" .. v .. "_ft"
         end, { expr = true, noremap = true })
     end
-    -- I want to test something out actually
-    vim.keymap.set("n", "f", "f")
-    vim.keymap.set("n", "F", "F")
-    vim.keymap.set("n", "t", "t")
-    vim.keymap.set("n", "T", "T")
 end
 function config.leap()
     require("utils.ui.highlights").plugin("leap", {
@@ -431,8 +426,8 @@ function config.marks()
         default_mappings = true,
         builtin_marks = { ".", "<", ">", "^" },
         cyclic = true,
-        force_write_shada = false,
-        refresh_interval = 9,
+        force_write_shada = true,
+        refresh_interval = 0,
         sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
         excluded_filetypes = {
             "NeogitStatus",
@@ -472,7 +467,9 @@ function config.bookmark()
         height = 0.6, -- bookmarks window height: (0, 1]
         preview_ratio = 0.4, -- bookmarks preview window ratio (0, 1]
         preview_ext_enable = true, -- if true, preview buf will add file ext, preview window may be highlighed(treesitter), but may be slower.
-        fix_enable = false, -- if true, when saving the current file, if the bookmark line number of the current file changes, try to fix it.
+        fix_enable = true, -- if true, when saving the current file, if the bookmark line number of the current file changes, try to fix it.
+        virt_text = "🐼", -- Show virt text at the end of bookmarked lines
+        virt_pattern = { "*.python", "*.go", "*.lua", "*.sh", "*.php", "*.rust" }, -- Show virt text only on matched pattern
     })
 end
 
@@ -484,7 +481,7 @@ function config.portal()
 
         ---The scope used when creating, selecting, and deleting tags
         ---@type Grapple.Scope
-        scope = "global",
+        scope = "directory",
 
         ---The save location for tags
         save_path = vim.fn.stdpath("data") .. "/" .. "grapple.json",

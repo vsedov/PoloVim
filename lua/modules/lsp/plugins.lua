@@ -48,9 +48,16 @@ lsp({
 
 lsp({
     "ray-x/lsp_signature.nvim",
-    module = "lsp_signature",
     opt = true,
-    -- config = conf.lsp_sig,
+    -- setup = function()
+    --     lambda.lazy_load({
+    --         events = "BufWinEnter",
+    --         augroup_name = "lsp_sig",
+    --         condition = condition(),
+    --         plugin = "lsp_signature.nvim",
+    --     })
+    -- end,
+    config = conf.lsp_sig,
 })
 
 lsp({
@@ -78,12 +85,6 @@ lsp({
     modules = "lsp-format-modifications",
 })
 
-lsp({
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    cmd = { "TL" },
-    config = conf.lsp_lines,
-})
-
 lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", after = "nvim-lspconfig", config = conf.rename })
 
 lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
@@ -96,8 +97,7 @@ lsp({
 })
 
 lsp({
-    "vsedov/null-ls.nvim",
-    branch = "feat/ruff",
+    "jose-elias-alvarez/null-ls.nvim",
     event = "BufEnter",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -137,20 +137,29 @@ lsp({
 })
 
 lsp({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    cmd = { "TL" },
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "rcd",
+            condition = lambda.config.lsp.use_lsp_lines,
+            plugin = "lsp_lines.nvim",
+        })
+    end,
+    config = conf.lsp_lines,
+})
+
+lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
-    event = { "LspAttach" },
+    cmd = { "RCL" },
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "rcd",
+            condition = lambda.config.lsp.use_rcd,
+            plugin = "right-corner-diagnostics.nvim",
+        })
+    end,
     config = conf.rcd,
-})
-
-lsp({
-    "direnv/direnv.vim",
-    opt = true,
-    ft = { "python", "julia" },
-})
-
-lsp({
-    "AckslD/swenv.nvim",
-    cmd = { "VenvFind", "GetVenv" },
-    ft = "python",
-    config = conf.swenv,
 })

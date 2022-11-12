@@ -7,41 +7,6 @@ local user = require("core.pack").package
 -- looks very nice to have .
 
 user({
-    "luk400/vim-jukit",
-    opt = true,
-    config = function()
-        vim.g.jukit_terminal = "kitty"
-        vim.cmd([[
-        let g:jukit_layout = {
-            \'split': 'horizontal',
-           \'val': [
-             \'p1': 0.6,
-                \'file_content',
-                \{
-                    \'split': 'vertical',
-                    \'p1': 0.6,
-                    \'val': ['output', 'output_history']
-                \}
-            \]
-        \}
-        fun! DFColumns()
-            let visual_selection = jukit#util#get_visual_selection()
-            let cmd = visual_selection . '.columns'
-            call jukit#send#send_to_split(cmd)
-        endfun
-        vnoremap C :call DFColumns()<cr>
-
-        fun! PythonHelp()
-            let visual_selection = jukit#util#get_visual_selection()
-            let cmd = 'help(' . visual_selection . ')'
-            call jukit#send#send_to_split(cmd)
-        endfun
-        vnoremap H :call PythonHelp()<cr>
-        ]])
-    end,
-})
-
-user({
     "p00f/cphelper.nvim",
     cmd = {
         "CphReceive",
@@ -219,3 +184,89 @@ user({
 --     require("colorful-winsep").setup({})
 -- end,
 -- })
+
+user({
+    "rgroli/other.nvim",
+    config = function()
+        require("other-nvim").setup({
+            mappings = {
+                -- builtin mappings
+                "livewire",
+                "angular",
+                "laravel",
+                "rails",
+                -- custom mapping
+                {
+                    pattern = "/path/to/file/src/app/(.*)/.*.ext$",
+                    target = "/path/to/file/src/view/%1/",
+                    transformer = "lowercase",
+                },
+            },
+            transformers = {
+                -- defining a custom transformer
+                lowercase = function(inputString)
+                    return inputString:lower()
+                end,
+            },
+            style = {
+                -- How the plugin paints its window borders
+                -- Allowed values are none, single, double, rounded, solid and shadow
+                border = "solid",
+
+                -- Column seperator for the window
+                seperator = "|",
+
+                -- width of the window in percent. e.g. 0.5 is 50%, 1.0 is 100%
+                width = 0.7,
+
+                -- min height in rows.
+                -- when more columns are needed this value is extended automatically
+                minHeight = 2,
+            },
+        })
+
+        vim.api.nvim_set_keymap("n", "_ll", "<cmd>:Other<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "_lp", "<cmd>:OtherSplit<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "_lv", "<cmd>:OtherVSplit<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "_lc", "<cmd>:OtherClear<CR>", { noremap = true, silent = true })
+
+        -- Context specific bindings
+        vim.api.nvim_set_keymap("n", "_lt", "<cmd>:Other test<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "_ls", "<cmd>:Other scss<CR>", { noremap = true, silent = true })
+    end,
+})
+user({
+    "samodostal/copilot-client.lua",
+    opt = true,
+    keys = {
+        { "i", "<c-]" },
+    },
+    requires = {
+        "zbirenbaum/copilot.lua", -- requires copilot.lua and plenary.nvim
+        "nvim-lua/plenary.nvim",
+    },
+    config = function()
+        require("copilot").setup({
+            cmp = {
+                enabled = false, -- no need for cmp
+            },
+        })
+
+        require("copilot-client").setup({
+            mapping = {
+                accept = "<CR>",
+                -- Next and previos suggestions to be added
+                -- suggest_next = '<C-n>',
+                -- suggest_prev = '<C-p>',
+            },
+        })
+
+        -- Create a keymap that triggers the suggestion. To accept suggestion press <CR> as set in the setup.
+        vim.api.nvim_set_keymap(
+            "i",
+            "<C-]>",
+            '<cmd>lua require("copilot-client").suggest()<CR>',
+            { noremap = true, silent = true }
+        )
+    end,
+})

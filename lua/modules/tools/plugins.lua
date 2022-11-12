@@ -1,16 +1,6 @@
 local conf = require("modules.tools.config")
 local tools = require("core.pack").package
 
-tools({
-    "relastle/vim-nayvy",
-    ft = { "python" },
-    opt = true,
-    config = function()
-        vim.g.nayvy_import_path_format = "all_relative"
-        vim.g.nayvy_import_config_path = "$HOME/.config/nayvy/nayvy.py"
-    end,
-})
-
 tools({ "neovim/nvimdev.nvim", ft = "lua", opt = true, config = conf.nvimdev })
 
 tools({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }, opt = true })
@@ -156,20 +146,6 @@ tools({
     end,
 })
 
--- tools({
---     "mong8se/actually.nvim",
---     wants = "dressing.nvim",
---     setup = function()
---     tb = {
---         events = "VimEnter",
---         augroup_name  = "actually",
---         condition =  lambda.config.use_actually,
---         plugin = "actually.nvim"
---     }
---         lambda.lazy_load(tb)
---     end,
--- })
-
 tools({
     "barklan/capslock.nvim",
     keys = {
@@ -259,7 +235,7 @@ tools({
         lambda.lazy_load({
             events = "CmdlineEnter",
             augroup_name = "live_command",
-            condition = true,
+            condition = false, -- reverse
             plugin = "live-command.nvim",
         })
     end,

@@ -420,23 +420,23 @@ local function should_show_cursorline(buf)
         and not vim.tbl_contains(cursorline_exclude, vim.bo[buf].filetype)
 end
 
--- might be something wrong with this, though im not sure what.
-lambda.augroup("Cursorline", {
-    {
-        event = { "BufEnter" },
-        pattern = { "*" },
-        command = function(args)
-            vim.wo.cursorline = should_show_cursorline(args.buf)
-        end,
-    },
-    {
-        event = { "BufLeave" },
-        pattern = { "*" },
-        command = function()
-            vim.wo.cursorline = false
-        end,
-    },
-})
+-- -- might be something wrong with this, though im not sure what.
+-- lambda.augroup("Cursorline", {
+--     {
+--         event = { "BufEnter" },
+--         pattern = { "*" },
+--         command = function(args)
+--             vim.wo.cursorline = should_show_cursorline(args.buf)
+--         end,
+--     },
+--     {
+--         event = { "BufLeave" },
+--         pattern = { "*" },
+--         command = function()
+--             vim.wo.cursorline = false
+--         end,
+--     },
+-- })
 
 lambda.augroup("TerminalAutocommands", {
     {
@@ -545,7 +545,6 @@ lambda.lazy_load({
         return "leap.nvim"
     end,
 })
-
 lambda.augroup("PluginCustomFixes", {
     {
         event = "FileType",

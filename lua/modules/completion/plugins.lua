@@ -10,7 +10,16 @@ completion({
         {
             "tzachar/cmp-tabnine",
             run = "./install.sh",
-            after = "nvim-cmp",
+            -- after = "nvim-cmp",
+            setup = function()
+                lambda.lazy_load({
+                    events = "FileType",
+                    pattern = { "python", "lua" },
+                    augroup_name = "tabnine",
+                    condition = lambda.config.cmp.tabnine.use_tabnine,
+                    plugin = "cmp-tabnine",
+                })
+            end,
             config = conf.tabnine,
             opt = true,
         },
