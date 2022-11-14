@@ -13,9 +13,9 @@ local mx = function(feedkeys, type)
     end
 end
 local motion_type = {
-    D = "Del",
-    C = "Cut",
-    Y = "Yank",
+    d = "Del",
+    c = "Cut",
+    y = "Yank",
 }
 local bracket = { "h", "j", "k", "l", "O", "]", "[" }
 
@@ -116,7 +116,7 @@ config.parenth_mode = {
 --  TODO: (vsedov) (02:33:50 - 07/11/22): Cut and delete in this instance would do the same thing if
 --  im not mistaken
 for surround, motion in pairs({ c = "ac", C = "ic", a = "af", A = "if", i = "aC", I = "iC" }) do
-    for doc, key in pairs({ D = "d", C = "c", Y = "y" }) do
+    for doc, key in pairs({ d = "d", c = "c", y = "y" }) do
         local motiondoc = surround
         -- local exit_call = false
         local mapping = table.concat({ doc, surround })
@@ -190,9 +190,9 @@ local function auto_hint_generate()
     table.sort(sorted)
 
     single = create_table_normal({}, sorted, 1)
-    yank = create_table_normal({}, sorted, 2, "Y")
-    delete = create_table_normal({}, sorted, 2, "D")
-    change = create_table_normal({}, sorted, 2, "C")
+    yank = create_table_normal({}, sorted, 2, "y")
+    delete = create_table_normal({}, sorted, 2, "d")
+    change = create_table_normal({}, sorted, 2, "c")
 
     -- diagnostics = create_table_normal({}, sorted, 2, "d")
 
