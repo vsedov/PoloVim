@@ -79,7 +79,18 @@ movement({
 --[[ cancel everything by pressing the <Escape> key. ]]
 movement({
     "woosaaahh/sj.nvim",
-    keys = { "c/", "c?" },
+    keys = {
+        "<leader>sR",
+        "<leader>sr",
+        "<leader>sn",
+        "<leader>sp",
+        "<leader>sc",
+        "c?",
+        "c/",
+        "<leader>sv",
+        "<leader>sV",
+        "<leader>sP",
+    },
     config = conf.sj,
 })
 
@@ -90,10 +101,12 @@ movement({
     "unblevable/quick-scope",
     opt = true,
     setup = function()
-        vim.keymap.set("n", "f", "f")
-        vim.keymap.set("n", "F", "F")
-        vim.keymap.set("n", "t", "t")
-        vim.keymap.set("n", "T", "T")
+        if lambda.config.use_quick_scope then
+            vim.keymap.set("n", "f", "f")
+            vim.keymap.set("n", "F", "F")
+            vim.keymap.set("n", "t", "t")
+            vim.keymap.set("n", "T", "T")
+        end
 
         lambda.lazy_load({
             events = "BufEnter",

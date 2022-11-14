@@ -1,5 +1,5 @@
 local ts_move = require("nvim-treesitter.textobjects.move")
-local leader = "\\s"
+local leader = ";e"
 local hydra = require("hydra")
 local cmd = require("hydra.keymap-util").cmd
 
@@ -14,7 +14,7 @@ local mx = function(feedkeys, type)
     end
 end
 
-local bracket = { "s", "S" }
+local bracket = { "e", "s" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -67,41 +67,50 @@ config.parenth_mode = {
     color = "pink",
     body = leader,
     mode = { "n", "v", "x", "o" },
-    [leader] = { nil, { exit = true } },
+    [leader] = { nil, { exit = false } },
     ["<ESC>"] = { nil, { exit = true } },
 
-    k = {
+    e = {
         function()
-            require("nvim-treesitter.textobjects.swap").swap_next("@parameter.inner")
+            require("ssr").open()
         end,
 
-        { nowait = true, desc = "TS Swap →", exit = true },
-    },
-    j = {
-        function()
-            require("nvim-treesitter.textobjects.swap").swap_previous("@parameter.inner")
-        end,
-        { nowait = true, desc = "TS Swap ←", exit = true },
+        { nowait = true, desc = "SSR Rep", exit = true },
     },
     s = {
         function()
-            vim.cmd([[ISwap]])
+            vim.cmd([[Sad]])
         end,
 
-        { nowait = true, desc = "Iswap", exit = true },
+        { nowait = true, desc = "Sad SSR", exit = true },
     },
-    S = {
+    w = {
         function()
-            vim.cmd([[ISwapWith]])
+            require("spectre").open()
         end,
 
-        { nowait = true, desc = "IswapWith", exit = false },
+        { nowait = true, desc = "Spectre Open", exit = true },
     },
+    W = {
+        function()
+            require("spectre").open_visual({ select_word = true })
+        end,
 
-    U = { mx("vU"), { nowait = true, desc = "Surf U", exit = true } }, -- ts: all class
-    u = { mx("vu"), { nowait = true, desc = "Surf u", exit = true } }, -- ts: inner class
-    D = { mx("vD"), { nowait = true, desc = "Surf D", exit = true } }, -- ts: all function
-    d = { mx("vd"), { nowait = true, desc = "Surf d", exit = true } }, -- ts: all conditional
+        { nowait = true, desc = "Specre Word", exit = true },
+    },
+    v = {
+        function()
+            require("spectre").open_visual()
+        end,
+
+        { nowait = true, desc = "Spectre V", exit = true },
+    },
+    f = {
+        function()
+            require("spectre").open_file_search()
+        end,
+        { nowait = true, desc = "Spectre FS", exit = true },
+    },
 }
 
 local mapping = {
@@ -124,7 +133,7 @@ local mapping = {
 -- Create a Auto Hinting Table same as above but with auto generated
 
 local new_hydra = {
-    name = "Swapper",
+    name = "SAD",
     config = {
         hint = {
             position = "middle-right",
@@ -166,17 +175,15 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    surf = create_table_normal({}, sorted, 1, { "d", "D", "U", "u" })
-    ts = create_table_normal({}, sorted, 1, { "j", "k" })
+    ts = create_table_normal({}, sorted, 1, { "w", "W", "v", "f" })
 
     core_table = {}
 
     make_core_table(core_table, bracket)
-    make_core_table(core_table, surf)
     make_core_table(core_table, ts)
 
     hint_table = {}
-    string_val = "^ ^    swapPer    ^ ^\n\n"
+    string_val = "^ ^      SAD      ^ ^\n\n"
     string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
 
     for _, v in pairs(core_table) do

@@ -1,4 +1,11 @@
 local Hydra = require("hydra")
+local reach_options = {
+    handle = "dynamic",
+    show_current = true,
+    sort = function(a, b)
+        return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
+    end,
+}
 
 local buffer_config = function()
     local hint
@@ -29,7 +36,7 @@ local buffer_config = function()
    _D_: Pick Close          _q_: Smart Close
    _m_: Three Move          _Q_: Close Buffer
    _ot_: Sort Tabs          _od_: Sort Dir
-   _or_: Sort relative dir  _b_: Tele Buffer
+   _or_: Sort relative dir  _b_:  Buffer Jump
    _tl_: next               _th_: prev
    
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
@@ -104,7 +111,14 @@ local buffer_config = function()
 
                 { "d", "<Cmd>Bwipeout<CR>", { desc = "delete buffer" } },
                 { "<Esc>", nil, { exit = true, desc = "Quit" } },
-                { "b", "<cmd>Telescope buffers<CR>" },
+                -- { "b", "<cmd>ReachOpen buffers<CR>" },
+                {
+                    "b",
+                    function()
+                        require("reach").buffers(reach_options)
+                    end,
+                    { exit = true },
+                },
 
                 { "qh", "<cmd>BDelete hidden<CR>" },
                 { "qn", "<cmd>BDelete! nameless<CR>" },

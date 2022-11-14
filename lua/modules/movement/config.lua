@@ -305,8 +305,8 @@ function config.sj()
     local sj = require("sj")
     sj.setup({
         pattern_type = "vim_very_magic",
-        prompt_prefix = "Pattern ? ",
-        search_scope = "visible_lines",
+        prompt_prefix = "/",
+        search_scope = "buffer",
 
         highlights = {
             SjFocusedLabel = { fg = colors.white, bg = colors.magenta, bold = false, italic = false },
@@ -323,9 +323,57 @@ function config.sj()
             send_to_qflist = "<C-q>", --- send search result to the quickfix list
         },
     })
+    vim.keymap.set("n", "!", function()
+        sj.run({ select_window = true })
+    end)
 
-    vim.keymap.set("n", "c/", sj.run)
-    vim.keymap.set({ "n", "o", "v" }, "c?", function()
+    vim.keymap.set("n", "<A-!>", function()
+        sj.select_window()
+    end)
+
+    --- visible lines -------------------------------------
+
+    vim.keymap.set({ "n", "o", "x" }, "<leader>sv", function()
+        vim.fn.setpos("''", vim.fn.getpos("."))
+        sj.run({
+            forward_search = false,
+        })
+    end, { desc = "CJ VL " })
+
+    vim.keymap.set({ "n", "o", "x" }, "<leader>sV", function()
+        vim.fn.setpos("''", vim.fn.getpos("."))
+        sj.run()
+    end, { desc = "CJ VL run" })
+
+    vim.keymap.set("n", "<leader>sP", function()
+        sj.run({
+            max_pattern_length = 1,
+            pattern_type = "lua_plain",
+        })
+    end, { desc = "CJ VL lua_plain" })
+
+    --- buffer --------------------------------------------
+
+    vim.keymap.set("n", "c/", function()
+        vim.fn.setpos("''", vim.fn.getpos("."))
+        sj.run({
+            forward_search = false,
+            search_scope = "buffer",
+            update_search_register = true,
+        })
+    end, { desc = "c/" })
+
+    vim.keymap.set("n", "c?", function()
+        vim.fn.setpos("''", vim.fn.getpos("."))
+        sj.run({
+            search_scope = "buffer",
+            update_search_register = true,
+        })
+    end, { desc = "c?" })
+
+    --- current line --------------------------------------
+
+    vim.keymap.set({ "n", "o", "x" }, "<leader>sc", function()
         sj.run({
             auto_jump = true,
             max_pattern_length = 1,
@@ -333,7 +381,41 @@ function config.sj()
             search_scope = "current_line",
             use_overlay = false,
         })
-    end)
+    end, { desc = "Current line " })
+
+    --- prev/next match -----------------------------------
+
+    vim.keymap.set("n", "<leader>sp", function()
+        sj.prev_match()
+        if sj_cache.options.search_scope:match("^buffer") then
+            vim.cmd("normal! zzzv")
+        end
+    end, { desc = "Prev search " })
+
+    vim.keymap.set("n", "<leader>sn", function()
+        sj.next_match()
+        if sj_cache.options.search_scope:match("^buffer") then
+            vim.cmd("normal! zzzv")
+        end
+    end, { desc = "Next search " })
+
+    --- redo ----------------------------------------------
+
+    vim.keymap.set("n", "<leader>sr", function()
+        local relative_labels = sj_cache.options.relative_labels
+        sj.redo({
+            relative_labels = false,
+            max_pattern_length = 1,
+        })
+        sj_cache.options.relative_labels = relative_labels
+    end, { desc = "Redo last " })
+
+    vim.keymap.set("n", "<leader>sR", function()
+        sj.redo({
+            relative_labels = true,
+            max_pattern_length = 1,
+        })
+    end, { desc = "Redo Relative " })
 end
 
 function config.harpoon()

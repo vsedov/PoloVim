@@ -151,26 +151,6 @@ function config.spectre()
         is_open_target_win = true, --open file on opener window
         is_insert_mode = false, -- start open panel on is_insert_mode
     })
-
-    vim.keymap.set("n", ";e", "<cmd>lua require('spectre').open()<cr>", { desc = "spectre", noremap = true })
-    vim.keymap.set(
-        "n",
-        ";W",
-        "<cmd>lua require('spectre').open_visual({select_word=true})<cr>",
-        { desc = "current word spectre", noremap = true }
-    )
-    vim.keymap.set(
-        "x",
-        ";v",
-        "<cmd>lua require('spectre').open_visual()<cr>",
-        { desc = "Spectre visual", noremap = true }
-    )
-    vim.keymap.set(
-        "x",
-        ";c",
-        "<cmd>lua require('spectre').open_file_search()<cr>",
-        { desc = "Spectre file search", noremap = true }
-    )
 end
 
 function config.sad()
