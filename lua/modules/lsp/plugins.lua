@@ -63,7 +63,7 @@ lsp({
 lsp({
     "aznhe21/actions-preview.nvim",
     keys = {
-        "<leader>ca",
+        "\\;",
     },
     config = function()
         require("actions-preview").setup({
@@ -76,7 +76,7 @@ lsp({
             telescope = require("telescope.themes").get_dropdown(),
         })
 
-        vim.keymap.set({ "v", "n" }, "<Leader>ca", require("actions-preview").code_actions)
+        vim.keymap.set({ "v", "n" }, "\\;", require("actions-preview").code_actions)
     end,
 })
 
@@ -99,7 +99,7 @@ lsp({
 lsp({
     "jose-elias-alvarez/null-ls.nvim",
     event = "BufEnter",
-    requires = { "nvim-lua/plenary.nvim" },
+    requires = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
         -- require("typos").setup()

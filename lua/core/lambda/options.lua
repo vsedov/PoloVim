@@ -1,39 +1,64 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = false
+local noice_enabled = true
+local use_lightspeed = true
+local use_ts_yeti = true
+
 local use_noice_docs = true -- this creats an error for some reason , though im not sure why | It is nice to have though
 
 lambda.config = {
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     better_ts_highlights = true,
+
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
-    record_your_self = true, -- waka time
+
+    record_your_self = false, -- waka time
     neorg_auto_commit = false,
+
     loaded_confirm_quit = false, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
-    save_clipboard_on_exit = false,
+    save_clipboard_on_exit = true,
+
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
+
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_session = true, -- set to false to disable session
+
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
-    use_guess_indent = false,
+
+    -- Currently using nvim-yeti
+
     use_gitsigns = true,
     use_hlchunk = false,
-    use_lightspeed = true, -- if false then leap.nvim will be used.
-    use_music = true,
+
+    -- this still feels niceer
+    use_lightspeed = use_lightspeed, -- if false then leap.nvim will be used.
+    use_quick_scope = use_lightspeed,
+    use_use_hiPairs = true,
+
+    use_music = false,
+
     use_scope = true, -- really fucks with neogit window
+
+    use_scroll = false,
+    use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
+
     use_wrapping = true, -- I am not sure if this is causing me to segfault.
+
     use_unception = true,
+
     use_code_window = false,
+
     use_luasnip_brackets = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
-    use_hi_pairs = false,
+
     use_marks = false,
-    use_quick_scope = false,
-    use_use_hiPairs = false,
+
+    --  TODO: (vsedov) (18:03:38 - 17/11/22): Im not sure if these cause allot of lag on large
+    --  files,
     -- UI
     use_clock = false, -- set to true to  see timer for config
-    use_pet = false,
+    use_pet = true,
     use_beacon = false,
     use_dashboard = false, -- set to false to not see this
     use_fidget = false,
@@ -60,15 +85,15 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                -- "kanagawa.nvim",
+                "kanagawa.nvim",
                 "oh-lucy.nvim",
-                -- "catppuccin",
+                "catppuccin",
                 -- "rose", -- TSMethod'
-                -- "tokyonight.nvim3", -- allot
+                -- "tokyonight.nvim", -- allot
                 -- "vim-dogrun"
+                -- "mellow.nvim",
             },
             others = {
-                "mellow.nvim",
                 "horizon.nvim",
                 "nvim-tundra", -- TSProperty'
                 "doom-one.nvim",
@@ -77,11 +102,16 @@ lambda.config.colourscheme = {
     },
 }
 
+lambda.config.treesitter = {
+    use_guess_indent = not use_ts_yeti,
+    use_yeti = use_ts_yeti,
+}
+
 lambda.config.abbrev = {
     enable = true,
     coding_support = true, -- system wide
     globals = { -- dictionaries that ive defined to be global, you may not want this idk .
-        ["spelling_support"] = true,
+        ["spelling_support"] = false, -- i wonder if this would help reduce the lag
         ["month_date"] = false,
     },
     languages = {
@@ -91,9 +121,9 @@ lambda.config.abbrev = {
 
 lambda.config.cmp = {
     tabnine = {
-        use_tabnine = false,
-        tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
-        tabnine_prefetch = false,
+        use_tabnine = true,
+        tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+        tabnine_prefetch = true,
         tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
     },
     use_rg = false, -- this will induce lag , so use this on your own risk
@@ -103,9 +133,7 @@ lambda.config.cmp = {
 lambda.config.lsp = {
     use_rcd = false,
     use_lsp_lines = false,
-
     use_lsp_signature = false,
-    use_lsp_format_modifications = false,
 
     latex = "ltex", -- texlab | ltex
     python = {
@@ -118,8 +146,8 @@ lambda.config.lsp = {
         },
     },
 }
-
 lambda.config.ui = {
+    use_illuminate = false,
     noice = {
         enable = noice_enabled,
         lsp = {

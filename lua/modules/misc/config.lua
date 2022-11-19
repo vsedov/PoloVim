@@ -95,18 +95,6 @@ function config.surround()
     })
 end
 
-function config.guess_indent_setup()
-    vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-            local f = vim.fn
-            if lambda.config.use_guess_indent then
-                require("packer").loader("guess-indent.nvim")
-            end
-        end,
-    })
-end
-
 function config.guess_indent()
     require("guess-indent").setup({
         auto_cmd = true, -- Set to false to disable automatic execution

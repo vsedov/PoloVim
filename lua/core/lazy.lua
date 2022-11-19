@@ -173,5 +173,22 @@ vim.defer_fn(function()
             loader("nvim-notify")
         end
     end
+
+    if lambda.config.use_fzf_lua then
+        print("lodaing fzf")
+        loader("fzf-lua")
+    end
+
+    -- ths thing is quite laggy
+    if lambda.config.use_ufo and vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()) < 500 then
+        print("nvim-ufo loading")
+        loader("nvim-ufo")
+    end
+
+    if lambda.config.use_scroll then
+        print("neo scroll loading")
+        loader("neoscroll.nvim")
+    end
+
     lprint("all done")
 end, lazy_timer + 80)

@@ -73,3 +73,17 @@ colourscheme({
     opt = true,
     config = conf.lucy,
 })
+
+colourscheme({
+    "folke/styler.nvim",
+    opt = true,
+    config = function()
+        require("styler").setup({
+            themes = {
+                markdown = { colorscheme = "kanagawa" },
+                python = { colorscheme = "kanagawa" },
+                help = { colorscheme = "catppuccin-mocha", background = "dark" },
+            },
+        })
+    end,
+})

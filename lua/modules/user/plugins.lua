@@ -128,48 +128,6 @@ user({
     end,
 })
 
-user({
-    "ziontee113/query-secretary",
-    opt = true,
-    cmd = { "QueryTree" },
-    config = function()
-        require("query-secretary").setup({
-            open_win_opts = {
-                row = 0,
-                col = 9999,
-                width = 50,
-                height = 15,
-            },
-
-            -- other options you can customize
-            buf_set_opts = {
-                tabstop = 2,
-                softtabstop = 2,
-                shiftwidth = 2,
-            },
-
-            capture_group_names = { "cap", "second", "third" }, -- when press "c"
-            predicates = { "eq", "any-of", "contains", "match", "lua-match" }, -- when press "p"
-            visual_hl_group = "Visual", -- when moving cursor around
-
-            -- here are the default keymaps
-            keymaps = {
-                close = { "q", "Esc" },
-                next_predicate = { "p" },
-                previous_predicate = { "P" },
-                remove_predicate = { "d" },
-                toggle_field_name = { "f" },
-                yank_query = { "y" },
-                next_capture_group = { "c" },
-                previous_capture_group = { "C" },
-            },
-        })
-        lambda.command("QueryTree", function()
-            require("query-secretary").query_window_initiate()
-        end, {})
-    end,
-})
-
 --  TODO: (vsedov) (12:12:33 - 08/11/22): I do not think i need this
 -- user({
 -- "nvim-zh/colorful-winsep.nvim",
@@ -185,88 +143,23 @@ user({
 -- end,
 -- })
 
-user({
-    "rgroli/other.nvim",
-    config = function()
-        require("other-nvim").setup({
-            mappings = {
-                -- builtin mappings
-                "livewire",
-                "angular",
-                "laravel",
-                "rails",
-                -- custom mapping
-                {
-                    pattern = "/path/to/file/src/app/(.*)/.*.ext$",
-                    target = "/path/to/file/src/view/%1/",
-                    transformer = "lowercase",
-                },
-            },
-            transformers = {
-                -- defining a custom transformer
-                lowercase = function(inputString)
-                    return inputString:lower()
-                end,
-            },
-            style = {
-                -- How the plugin paints its window borders
-                -- Allowed values are none, single, double, rounded, solid and shadow
-                border = "solid",
+-- user({
+--     "samodostal/copilot-client.lua",
+--     requires = {
+--         "zbirenbaum/copilot.lua", -- requires copilot.lua and plenary.nvim
+--         "nvim-lua/plenary.nvim",
+--     },
+--     config = function()
+--         require("copilot").setup({
+--             cmp = {
+--                 enabled = false, -- no need for cmp
+--             },
+--         })
 
-                -- Column seperator for the window
-                seperator = "|",
-
-                -- width of the window in percent. e.g. 0.5 is 50%, 1.0 is 100%
-                width = 0.7,
-
-                -- min height in rows.
-                -- when more columns are needed this value is extended automatically
-                minHeight = 2,
-            },
-        })
-
-        vim.api.nvim_set_keymap("n", "_ll", "<cmd>:Other<CR>", { noremap = true, silent = true })
-        vim.api.nvim_set_keymap("n", "_lp", "<cmd>:OtherSplit<CR>", { noremap = true, silent = true })
-        vim.api.nvim_set_keymap("n", "_lv", "<cmd>:OtherVSplit<CR>", { noremap = true, silent = true })
-        vim.api.nvim_set_keymap("n", "_lc", "<cmd>:OtherClear<CR>", { noremap = true, silent = true })
-
-        -- Context specific bindings
-        vim.api.nvim_set_keymap("n", "_lt", "<cmd>:Other test<CR>", { noremap = true, silent = true })
-        vim.api.nvim_set_keymap("n", "_ls", "<cmd>:Other scss<CR>", { noremap = true, silent = true })
-    end,
-})
-user({
-    "samodostal/copilot-client.lua",
-    opt = true,
-    keys = {
-        { "i", "<c-]" },
-    },
-    requires = {
-        "zbirenbaum/copilot.lua", -- requires copilot.lua and plenary.nvim
-        "nvim-lua/plenary.nvim",
-    },
-    config = function()
-        require("copilot").setup({
-            cmp = {
-                enabled = false, -- no need for cmp
-            },
-        })
-
-        require("copilot-client").setup({
-            mapping = {
-                accept = "<CR>",
-                -- Next and previos suggestions to be added
-                -- suggest_next = '<C-n>',
-                -- suggest_prev = '<C-p>',
-            },
-        })
-
-        -- Create a keymap that triggers the suggestion. To accept suggestion press <CR> as set in the setup.
-        vim.api.nvim_set_keymap(
-            "i",
-            "<C-]>",
-            '<cmd>lua require("copilot-client").suggest()<CR>',
-            { noremap = true, silent = true }
-        )
-    end,
-})
+--         require("copilot-client").setup({
+--             mapping = {
+--                 accept = "<CR>",
+--             },
+--         })
+--     end,
+-- })

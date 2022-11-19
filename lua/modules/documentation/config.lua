@@ -17,7 +17,7 @@ function config.neogen()
     })
 end
 function config.dyn_help()
-    vim.keymap.set("n", "<leader>hw", function()
+    vim.keymap.set("n", "<leader>xw", function()
         if require("dynamic_help.extras.statusline").available() ~= "" then
             require("dynamic_help").float_help(vim.fn.expand("<cword>"))
         else

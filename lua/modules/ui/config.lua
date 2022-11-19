@@ -392,7 +392,7 @@ function config.ufo()
         enable_get_fold_virt_text = true,
         preview = { win_config = { winhighlight = "Normal:Normal,FloatBorder:Normal" } },
         provider_selector = function(_, filetype)
-            return ft_map[filetype] or { "treesitter", "indent" }
+            return ft_map[filetype] or { "indent" }
         end,
     })
 

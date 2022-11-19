@@ -98,10 +98,7 @@ opt.formatoptions = {
     l = true,
     v = true,
 }
------------------------------------------------------------------------------//
--- Folds {{{1
------------------------------------------------------------------------------//
-o.foldlevelstart = 20
+
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
@@ -282,6 +279,16 @@ opt.mousescroll = { "ver:1", "hor:6" }
 -- these only read ".vim" files
 o.secure = true -- Disable autocmd etc for project local vimrc files.
 o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
+
+-----------------------------------------------------------------------------//
+-- Folds {{{1
+-----------------------------------------------------------------------------//
+o.foldlevelstart = 20
+if not lambda.plugin_installed("nvim-ufo") and not lambda.config.use_ufo then
+    o.foldexpr = "nvim_treesitter#foldexpr()"
+    o.foldmethod = "expr"
+end
+
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//

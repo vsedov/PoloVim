@@ -136,15 +136,37 @@ ui({
 })
 
 ui({
+    "kevinhwang91/promise-async",
+    opt = true,
+})
+ui({
     "kevinhwang91/nvim-ufo",
-    event = "BufEnter",
-    requires = { "kevinhwang91/promise-async" },
+    opt = true,
     config = conf.ufo,
 })
 
 ui({
+    "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
+    opt = true,
+    config = function()
+        require("neoscroll").setup({
+            mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+            hide_cursor = true, -- Hide cursor while scrolling
+            stop_eof = true, -- Stop at <EOF> when scrolling downwards
+            respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+            cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+            easing_function = nil, -- Default easing function
+            pre_hook = nil, -- Function to run before the scrolling animation starts
+            post_hook = nil, -- Function to run after the scrolling animation ends
+            performance_mode = true, -- Disable "Performance Mode" on all buffers.
+        })
+    end,
+})
+
+--  REVISIT: (vsedov) (03:44:46 - 16/11/22): What does this plugin do again ?
+ui({
     "Vonr/foldcus.nvim",
-    after = "nvim-ufo",
+    after = "nvim-treesitter",
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = conf.fold_focus,
 })
@@ -185,24 +207,6 @@ ui({
 })
 
 ui({
-    "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    after = "nvim-ufo",
-    config = function()
-        require("neoscroll").setup({
-            mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
-            hide_cursor = true, -- Hide cursor while scrolling
-            stop_eof = true, -- Stop at <EOF> when scrolling downwards
-            respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-            cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-            easing_function = nil, -- Default easing function
-            pre_hook = nil, -- Function to run before the scrolling animation starts
-            post_hook = nil, -- Function to run after the scrolling animation ends
-            performance_mode = true, -- Disable "Performance Mode" on all buffers.
-        })
-    end,
-})
-
-ui({
     "stevearc/dressing.nvim",
     event = "BufWinEnter",
     config = conf.dressing,
@@ -234,7 +238,7 @@ ui({
         lambda.lazy_load({
             events = "BufEnter",
             augroup_name = "illuminate",
-            condition = false,
+            condition = lambda.config.ui.use_illuminate,
             plugin = "vim-illuminate",
         })
     end,

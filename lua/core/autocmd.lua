@@ -44,41 +44,41 @@ local function can_save()
         and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
-lambda.augroup("VimrcIncSearchHighlight", {
-    {
-        event = { "CursorMoved" },
-        command = function()
-            hl_search()
-        end,
-    },
-    {
-        event = { "InsertEnter" },
-        command = function()
-            stop_hl()
-        end,
-    },
-    {
-        event = { "OptionSet" },
-        pattern = { "hlsearch" },
-        command = function()
-            vim.schedule(function()
-                vim.cmd.redrawstatus()
-            end)
-        end,
-    },
-    {
-        event = "RecordingEnter",
-        command = function()
-            vim.opt.hlsearch = false
-        end,
-    },
-    {
-        event = "RecordingLeave",
-        command = function()
-            vim.opt.hlsearch = true
-        end,
-    },
-})
+-- lambda.augroup("VimrcIncSearchHighlight", {
+--     {
+--         event = { "CursorMoved" },
+--         command = function()
+--             hl_search()
+--         end,
+--     },
+--     {
+--         event = { "InsertEnter" },
+--         command = function()
+--             stop_hl()
+--         end,
+--     },
+--     {
+--         event = { "OptionSet" },
+--         pattern = { "hlsearch" },
+--         command = function()
+--             vim.schedule(function()
+--                 vim.cmd.redrawstatus()
+--             end)
+--         end,
+--     },
+--     {
+--         event = "RecordingEnter",
+--         command = function()
+--             vim.opt.hlsearch = false
+--         end,
+--     },
+--     {
+--         event = "RecordingLeave",
+--         command = function()
+--             vim.opt.hlsearch = true
+--         end,
+--     },
+-- })
 
 local smart_close_filetypes = {
     "help",
@@ -254,35 +254,35 @@ lambda.augroup("buffer", {
         end,
     },
 
-    {
-        event = "BufWritePre",
-        pattern = "*",
-        command = function()
-            local function auto_mkdir(dir, force)
-                if
-                    vim.fn.empty(dir) == 1
-                    or string.match(dir, "^%w%+://")
-                    or vim.fn.isdirectory(dir) == 1
-                    or string.match(dir, "^suda:")
-                then
-                    return
-                end
-                if not force then
-                    vim.fn.inputsave()
-                    local result = vim.fn.input(string.format('"%s" does not exist. Create? [y/N]', dir), "")
-                    if vim.fn.empty(result) == 1 then
-                        print("Canceled")
-                        return
-                    end
-                    vim.fn.inputrestore()
-                end
-                vim.fn.mkdir(dir, "p")
-            end
+    -- {
+    --     event = "BufWritePre",
+    --     pattern = "*",
+    --     command = function()
+    --         local function auto_mkdir(dir, force)
+    --             if
+    --                 vim.fn.empty(dir) == 1
+    --                 or string.match(dir, "^%w%+://")
+    --                 or vim.fn.isdirectory(dir) == 1
+    --                 or string.match(dir, "^suda:")
+    --             then
+    --                 return
+    --             end
+    --             if not force then
+    --                 vim.fn.inputsave()
+    --                 local result = vim.fn.input(string.format('"%s" does not exist. Create? [y/N]', dir), "")
+    --                 if vim.fn.empty(result) == 1 then
+    --                     print("Canceled")
+    --                     return
+    --                 end
+    --                 vim.fn.inputrestore()
+    --             end
+    --             vim.fn.mkdir(dir, "p")
+    --         end
 
-            auto_mkdir(vim.fn.expand("%:p:h"), vim.v.cmdbang)
-        end,
-        nested = false,
-    },
+    --         auto_mkdir(vim.fn.expand("%:p:h"), vim.v.cmdbang)
+    --     end,
+    --     nested = false,
+    -- },
 })
 
 local activate_spelling = {
@@ -545,6 +545,7 @@ lambda.lazy_load({
         return "leap.nvim"
     end,
 })
+
 lambda.augroup("PluginCustomFixes", {
     {
         event = "FileType",
@@ -567,6 +568,16 @@ lambda.augroup("PluginCustomFixes", {
                 end
             end
         end,
+    },
+    {
+        event = "BufWritePost",
+        pattern = "*",
+        command = function()
+            if lambda.config.use_ufo and vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()) > 800 then
+                vim.cmd([[UfoDetach]])
+            end
+        end,
+        once = true,
     },
 })
 vim.cmd([[

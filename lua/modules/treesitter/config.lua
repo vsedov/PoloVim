@@ -23,7 +23,7 @@ function config.tsubject()
     require("nvim-treesitter.configs").setup({
         textsubjects = {
             enable = true,
-            keymaps = { ["<CR>"] = "textsubjects-smart", [";"] = "textsubjects-container-outer" },
+            keymaps = { ["\\l"] = "textsubjects-smart", ["\\k"] = "textsubjects-container-outer" },
         },
     })
 end
@@ -142,6 +142,7 @@ function config.indent()
 
     require("nvim-treesitter.configs").setup({
         yati = {
+
             default_fallback = function(lnum, computed, bufnr)
                 if vim.tbl_contains(tm_fts, vim.bo[bufnr].filetype) then
                     return require("tmindent").get_indent(lnum, bufnr) + computed
@@ -149,6 +150,8 @@ function config.indent()
                 -- or any other fallback methods
                 return require("nvim-yati.fallback").vim_auto(lnum, computed, bufnr)
             end,
+            enable = true,
+            default_lazy = true,
         },
     })
 end

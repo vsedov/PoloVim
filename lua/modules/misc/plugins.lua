@@ -15,7 +15,14 @@ misc({
     "NMAC427/guess-indent.nvim",
     cmd = "GuessIndent",
     opt = true,
-    setup = conf.guess_indent_setup,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "indent",
+            condition = lambda.config.treesitter.use_guess_indent,
+            plugin = "guess-indent.nvim",
+        })
+    end,
     config = conf.guess_indent,
 })
 

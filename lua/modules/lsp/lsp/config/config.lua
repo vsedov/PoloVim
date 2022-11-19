@@ -172,7 +172,7 @@ local container = {
             ["gK"] = { require("hover").hover_select, "Hover select" },
         },
         visual_mode = {
-            ["\\;"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
+            ["\\'"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
         },
         insert_mode = {},
         extra_binds = get_extra_binds(),

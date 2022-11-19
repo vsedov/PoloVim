@@ -64,7 +64,7 @@ search({
 })
 
 search({
-    "vigoux/azy.nvim",
+    "https://git.sr.ht/~vigoux/azy.nvim",
     run = "make lib",
     module = "azy",
     config = function()

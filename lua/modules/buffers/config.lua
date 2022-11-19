@@ -1,5 +1,4 @@
 local config = {}
-
 function config.nvim_bufferline()
     local fn = vim.fn
     local r = vim.regex

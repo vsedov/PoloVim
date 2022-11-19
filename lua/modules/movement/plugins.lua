@@ -34,6 +34,7 @@ movement({
 movement({
     "ggandor/flit.nvim",
     opt = true,
+    wants = "leap.nvim",
     after = "leap.nvim",
     config = function()
         require("flit").setup()

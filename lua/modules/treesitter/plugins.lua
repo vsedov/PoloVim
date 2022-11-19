@@ -104,3 +104,60 @@ ts({
     requires = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
     config = conf.indent,
 })
+
+-- Packer
+ts({
+    "folke/paint.nvim",
+    event = "BufReadPre",
+    config = function()
+        require("paint").setup({
+            -- @type PaintHighlight[]
+            highlights = {
+                {
+                    filter = { filetype = "lua" },
+                    pattern = "%s(@%w+)",
+                    -- pattern = "%s*%-%-%-%s*(@%w+)",
+                    hl = "@parameter",
+                },
+                {
+                    filter = { filetype = "c" },
+                    -- pattern = "%s*%/%/%/%s*(@%w+)",
+                    pattern = "%s(@%w+)",
+                    hl = "@parameter",
+                },
+                {
+                    filter = { filetype = "python" },
+                    -- pattern = "%s*%/%/%/%s*(@%w+)",
+                    pattern = "%s(@%w+)",
+                    hl = "@parameter",
+                },
+
+                {
+                    filter = { filetype = "markdown" },
+                    pattern = "%*.-%*", -- *foo*
+                    hl = "Title",
+                },
+                {
+                    filter = { filetype = "markdown" },
+                    pattern = "%*%*.-%*%*", -- **foo**
+                    hl = "Error",
+                },
+                {
+                    filter = { filetype = "markdown" },
+                    pattern = "%s_.-_", --_foo_
+                    hl = "MoreMsg",
+                },
+                {
+                    filter = { filetype = "markdown" },
+                    pattern = "%s%`.-%`", -- `foo`
+                    hl = "Keyword",
+                },
+                {
+                    filter = { filetype = "markdown" },
+                    pattern = "%`%`%`.*", -- ```foo<CR>...<CR>```
+                    hl = "MoreMsg",
+                },
+            },
+        })
+    end,
+})

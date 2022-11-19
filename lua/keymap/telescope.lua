@@ -8,7 +8,7 @@ local plug_map = {
     ["n|<Leader>U"] = map_cmd('<cmd>lua require"utils.telescope".find_updir()<CR>', "Up dir")
         :with_noremap()
         :with_silent(),
-    ["n|<leader>hW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>', "Help tag")
+    ["n|<leader>xW"] = map_cmd('<cmd>lua require"utils.telescope".help_tags()<CR>', "Help tag")
         :with_noremap()
         :with_silent(),
 
