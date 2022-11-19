@@ -6,24 +6,16 @@ local cmd = require("hydra.keymap-util").cmd
 
 local function azy_hydra()
     local hint = [[
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
- ^^^^                   Azy Search                        ^^^^
- ^^^^                                                     ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-  _f_: Find Files                   _s_: find string
-  _q_: QuickFix                     _h_: Help
-                     _b_: Buffers
+_f_: Find Files
+_s_: find string
+_q_: QuickFix
+_h_: Help
+_b_: Buffers
 
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
- ^^^^                   Azy LSP                           ^^^^
- ^^^^                                                     ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-   _w_: WorkspaceSymbols             _r_: references
-
-                     _d_: DocumentSymbol
-
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-     _<Esc>_ exit
+_w_: WorkspaceSymbols
+_r_: references
+_d_: DocumentSymbol
+_<Esc>_ exit
 ]]
 
     Hydra({

@@ -160,10 +160,7 @@ editor({
     "aarondiel/spread.nvim",
     after = "nvim-treesitter",
     module = "spread",
-    keys = {
-        "<leader>J",
-        "<leader>j",
-    },
+    keys = { "<leader>J", "<leader>j" },
     config = function()
         vim.keymap.set("n", "<leader>J", function()
             require("spread").out()

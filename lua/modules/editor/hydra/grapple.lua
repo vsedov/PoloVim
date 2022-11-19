@@ -1,101 +1,384 @@
---  TODO: (vsedov) (17:12:35 - 09/11/22): Add this into harpoon module later downthe line
 if lambda.config.use_lightspeed then
     local Hydra = require("hydra")
-    local match = lambda.lib.match
-    local when = lambda.lib.when
-    local loader = require("packer").loader
-    local cmd = require("hydra.keymap-util").cmd
-    loader("portal.nvim")
-    local hint = [[
-^ ^ _n_: Jump Forward   ^ ^
-^ ^ _p_: Jump Backward  ^ ^
-^ ^ _k_: Toggle         ^ ^
-^ ^ _l_: Popup          ^ ^
-^ ^ _s_: Create Name    ^ ^
-^ ^ _S_: Select Name    ^ ^
-^ ^ _m_: Tag            ^ ^
-^ ^ _M_: UnTag          ^ ^
-^ ^ _R_: Rest           ^ ^
-]]
-    Hydra({
-        name = "Grapple",
-        hint = hint,
+    local function starts(String, Start)
+        return string.sub(String, 1, string.len(Start)) == Start
+    end
+    local leader = "<leader>l"
+    local hydra = require("hydra")
+
+    local bracket = { "n", "p" }
+
+    local function make_core_table(core_table, second_table)
+        for _, v in pairs(second_table) do
+            table.insert(core_table, v)
+        end
+        table.insert(core_table, "\n")
+    end
+
+    local function create_table_normal(var, sorted, string_len, start_val)
+        start_val = start_val or nil
+        var = {}
+        for _, v in pairs(sorted) do
+            if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
+                if start_val ~= nil then
+                    if type(start_val) == "table" then
+                        if vim.tbl_contains(start_val, v) then
+                            -- if starts(v, start_val) then
+                            table.insert(var, v)
+                        end
+                    else
+                        if starts(v, start_val) then
+                            table.insert(var, v)
+                        end
+                    end
+                else
+                    table.insert(var, v)
+                end
+            end
+        end
+        table.sort(var, function(a, b)
+            return a:lower() < b:lower()
+        end)
+
+        return var
+    end
+
+    local config = {}
+
+    local exit = { nil, { exit = true, desc = "EXIT" } }
+    config.parenth_mode = {
+        color = "red",
+        body = leader,
+        mode = { "n", "v", "x", "o" },
+        ["<ESC>"] = { nil, { exit = true } },
+
+        n = {
+            function()
+                require("portal").jump_forward()
+            end,
+            { nowait = true, exit = false, desc = "[P] Jump Next" },
+        },
+        p = {
+            function()
+                require("portal").jump_forward()
+            end,
+            { nowait = true, exit = false, desc = "[P] Jump Prev" },
+        },
+
+        k = {
+            function()
+                require("grapple").toggle()
+            end,
+            { nowait = true, exit = true, desc = "[G] Toggle" },
+        },
+        m = {
+            function()
+                require("grapple").tag()
+            end,
+            { nowait = true, exit = true, desc = "[G] Tag" },
+        },
+        M = {
+            function()
+                require("grapple").untag()
+            end,
+            { nowait = true, exit = true, desc = "[G] UnTag" },
+        },
+        g = {
+            function()
+                require("grapple").popup_tags("global")
+            end,
+            { nowait = true, exit = true, desc = "[G] Popup Global" },
+        },
+        P = {
+            function()
+                require("grapple").popup_tags()
+            end,
+            { nowait = true, exit = true, desc = "[G] Popup All" },
+        },
+        S = {
+            function()
+                require("grapple").popup_scopes()
+            end,
+            { nowait = true, exit = true, desc = "[G] Popup Scope" },
+        },
+        R = {
+            function()
+                require("grapple").reset()
+            end,
+            { nowait = true, exit = true, desc = "[G] Reset" },
+        },
+
+        ["t1"] = {
+            function()
+                require("grapple").tag({ key = 1 })
+            end,
+            { nowait = true, desc = "Tag File 1", exit = true },
+        },
+        ["t2"] = {
+            function()
+                require("grapple").tag({ key = 2 })
+            end,
+            { nowait = true, desc = "Tag File 2", exit = true },
+        },
+        ["t3"] = {
+            function()
+                require("grapple").tag({ key = 3 })
+            end,
+            { nowait = true, desc = "Tag File 3", exit = true },
+        },
+        ["t4"] = {
+            function()
+                require("grapple").tag({ key = 4 })
+            end,
+            { nowait = true, desc = "Tag File 4", exit = true },
+        },
+        ["t5"] = {
+            function()
+                require("grapple").tag({ key = 5 })
+            end,
+            { nowait = true, desc = "Tag File 5", exit = true },
+        },
+
+        ["t6"] = {
+            function()
+                require("grapple").tag({ key = 6 })
+            end,
+            { nowait = true, desc = "Tag File 6", exit = true },
+        },
+
+        ["t7"] = {
+            function()
+                require("grapple").tag({ key = 7 })
+            end,
+            { nowait = true, desc = "Tag File 7", exit = true },
+        },
+
+        ["t8"] = {
+            function()
+                require("grapple").tag({ key = 8 })
+            end,
+            { nowait = true, desc = "Tag File 8", exit = true },
+        },
+
+        ["t9"] = {
+            function()
+                require("grapple").tag({ key = 9 })
+            end,
+            { nowait = true, desc = "Tag File 9", exit = true },
+        },
+
+        ["u1"] = {
+            function()
+                require("grapple").untag({ key = 1 })
+            end,
+            { nowait = true, desc = "UnTag File 1", exit = true },
+        },
+        ["u2"] = {
+            function()
+                require("grapple").untag({ key = 2 })
+            end,
+            { nowait = true, desc = "UnTag File 2", exit = true },
+        },
+        ["u3"] = {
+            function()
+                require("grapple").untag({ key = 3 })
+            end,
+            { nowait = true, desc = "UnTag File 3", exit = true },
+        },
+        ["u4"] = {
+            function()
+                require("grapple").untag({ key = 4 })
+            end,
+            { nowait = true, desc = "UnTag File 4", exit = true },
+        },
+        ["u5"] = {
+            function()
+                require("grapple").untag({ key = 5 })
+            end,
+            { nowait = true, desc = "UnTag File 5", exit = true },
+        },
+
+        ["u6"] = {
+            function()
+                require("grapple").untag({ key = 6 })
+            end,
+            { nowait = true, desc = "UnTag File 6", exit = true },
+        },
+
+        ["u7"] = {
+            function()
+                require("grapple").untag({ key = 7 })
+            end,
+            { nowait = true, desc = "UnTag File 7", exit = true },
+        },
+
+        ["u8"] = {
+            function()
+                require("grapple").untag({ key = 8 })
+            end,
+            { nowait = true, desc = "UnTag File 8", exit = true },
+        },
+
+        ["u9"] = {
+            function()
+                require("grapple").untag({ key = 9 })
+            end,
+            { nowait = true, desc = "UnTag File 9", exit = true },
+        },
+
+        ["1"] = {
+            function()
+                require("grapple").select({ key = 1 })
+            end,
+            { nowait = true, desc = "Goto File 1", exit = true },
+        },
+        ["2"] = {
+            function()
+                require("grapple").select({ key = 2 })
+            end,
+            { nowait = true, desc = "Goto File 2", exit = true },
+        },
+        ["3"] = {
+            function()
+                require("grapple").select({ key = 3 })
+            end,
+            { nowait = true, desc = "Goto File 3", exit = true },
+        },
+        ["4"] = {
+            function()
+                require("grapple").select({ key = 4 })
+            end,
+            { nowait = true, desc = "Goto File 4", exit = true },
+        },
+        ["5"] = {
+            function()
+                require("grapple").select({ key = 5 })
+            end,
+            { nowait = true, desc = "Goto File 5", exit = true },
+        },
+
+        ["6"] = {
+            function()
+                require("grapple").select({ key = 6 })
+            end,
+            { nowait = true, desc = "Goto File 6", exit = true },
+        },
+
+        ["7"] = {
+            function()
+                require("grapple").select({ key = 7 })
+            end,
+            { nowait = true, desc = "Goto File 7", exit = true },
+        },
+
+        ["8"] = {
+            function()
+                require("grapple").select({ key = 8 })
+            end,
+            { nowait = true, desc = "Goto File 8", exit = true },
+        },
+
+        ["9"] = {
+            function()
+                require("grapple").select({ key = 9 })
+            end,
+            { nowait = true, desc = "Goto File 9", exit = true },
+        },
+    }
+    local mapping = {
+        color = function(t, rhs)
+            t.config.color = rhs
+        end,
+        body = function(t, rhs)
+            t.body = rhs
+        end,
+        on_enter = function(t, rhs)
+            t.config.on_enter = rhs
+        end,
+        on_exit = function(t, rhs)
+            t.config.on_exit = rhs
+        end,
+        mode = function(t, rhs)
+            t.config.mode = rhs
+        end,
+    }
+    -- Create a Auto Hinting Table same as above but with auto generated
+
+    local new_hydra = {
+        name = "SAD",
         config = {
-            color = "pink",
-            invoke_on_body = true,
             hint = {
                 position = "middle-right",
                 border = lambda.style.border.type_0,
             },
+            timeout = false,
+            invoke_on_body = true,
         },
-        mode = { "n" },
-        body = "<leader>l",
-        heads = {
-            {
-                "n",
-                function()
-                    require("portal").jump_forward()
-                end,
-                { exit = true },
-            },
-            {
-                "p",
-                function()
-                    require("portal").jump_backward()
-                end,
-                { exit = true },
-            },
-            {
-                "k",
-                function()
-                    require("grapple").toggle()
-                end,
-                { exit = false },
-            },
-            {
-                "m",
-                function()
-                    require("grapple").tag()
-                end,
-                { exit = true },
-            },
-            {
-                "M",
-                function()
-                    require("grapple").untag()
-                end,
-                { exit = true },
-            },
-            {
-                "l",
-                function()
-                    require("grapple").popup_tags("global")
-                end,
-                { exit = true },
-            },
+        heads = {},
+    }
 
-            {
-                "s",
-                function()
-                    require("grapple").select({ key = "{name}" })
-                end,
-                { exit = true },
-            },
-            {
-                "S",
-                function()
-                    require("grapple").toggle({ key = "{name}" })
-                end,
-                { exit = true },
-            },
-            {
-                "R",
-                function()
-                    require("grapple").reset()
-                end,
-                { exit = true },
-            },
-            { "<Esc>", nil, { exit = true, desc = false } },
-        },
-    })
+    for name, spec in pairs(config) do
+        for lhs, rhs in pairs(spec) do
+            local action = mapping[lhs]
+            if action == nil then
+                new_hydra.heads[#new_hydra.heads + 1] = { lhs, table.unpack(rhs) }
+            else
+                action(new_hydra, rhs)
+            end
+        end
+    end
+
+    --
+    local function auto_hint_generate()
+        container = {}
+        for x, y in pairs(config.parenth_mode) do
+            local mapping = x
+            if type(y[1]) == "function" then
+                for x, y in pairs(y[2]) do
+                    if x == "desc" then
+                        container[mapping] = y
+                    end
+                end
+            end
+        end
+        sorted = {}
+        for k, v in pairs(container) do
+            table.insert(sorted, k)
+        end
+        table.sort(sorted)
+
+        graple = create_table_normal({}, sorted, 1, { "k", "m", "M", "g", "P", "p", "S", "R" })
+        tags = create_table_normal({}, sorted, 2, "t")
+        untags = create_table_normal({}, sorted, 2, "u")
+        go = create_table_normal({}, sorted, 1, { "1", "2", "3", "4", "5", "6", "7", "8", "9" })
+
+        core_table = {}
+
+        make_core_table(core_table, bracket)
+        make_core_table(core_table, graple)
+        make_core_table(core_table, go)
+        make_core_table(core_table, tags)
+        make_core_table(core_table, untags)
+
+        hint_table = {}
+        string_val = "^ ^      Graple       ^ ^\n\n"
+        string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+
+        for _, v in pairs(core_table) do
+            if v == "\n" then
+                hint = "\n"
+                hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+            else
+                hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+            end
+            table.insert(hint_table, hint)
+            string_val = string_val .. hint
+            -- end
+        end
+        return string_val
+    end
+
+    val = auto_hint_generate()
+    new_hydra.hint = val
+    hydra(new_hydra)
 end

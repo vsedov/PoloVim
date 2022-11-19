@@ -4,7 +4,7 @@ local hint = [[
  _t_: test nearest    _a_: attach nearest    _o_: summary
  _f_: test file       _x_: stop nearest      _d_: debug nearest
  ^ ^
- ^ ^                  _Esc_: exit
+ ^ ^                  _<Esc>_: exit
 ]]
 
 local test_hydra = Hydra({

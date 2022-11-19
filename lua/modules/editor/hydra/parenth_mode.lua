@@ -1,5 +1,5 @@
 local hydra = require("hydra")
-local leader = "\\k"
+local leader = "\\l"
 
 local mx = function(feedkeys)
     return function()

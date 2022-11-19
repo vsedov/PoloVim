@@ -1,3 +1,7 @@
+local fmt = string.format
+local api, fn, fs = vim.api, vim.fn, vim.fs
+local fmt = string.format
+
 local all_hydras = require("core.global").modules_dir .. "/editor/hydra/"
 local loader = require("packer").loader
 local when = lambda.lib.when
@@ -38,9 +42,9 @@ vim.api.nvim_create_user_command("ShowHydraBinds", function()
         git_plus = "<leader>H",
         grapple = "<leader>l",
         harpoon = "<cr>",
-        lsp = "\\l",
+        lsp = "\\k",
         test = "<leader>u",
-        parenth_mode = "\\k", -- Might change
+        parenth_mode = "\\l", -- Might change
         python = ";l",
         magma = "<leader>I",
         reach = ";;",
@@ -75,3 +79,46 @@ vim.api.nvim_create_user_command("ShowHydraBinds", function()
         timeout = 3000,
     })
 end, {})
+
+vim.api.nvim_create_user_command("ShowCoreHydraBinds", function()
+    hints = {
+        treesitter = "\\<leader>",
+        parenth_mode = "\\l", -- Might change
+        sub = "L",
+        swap = "\\s",
+        reach = ";;",
+        extra_search = ";A",
+        python = ";l",
+
+        git_plus = "<leader>H",
+        grapple = "<leader>l",
+        refactoring = "<leader>r",
+
+        text_case = "gaa and gae",
+        windows = "<c-w>[",
+        word_motion = "<localleader>w",
+    }
+
+    local str = "" .. "\n"
+    for k, v in pairs(hints) do
+        str = str .. fmt("**%s** - `%s`" .. "\n", k, v)
+    end
+
+    vim.notify(str, "info", {
+        title = "Hydra binds",
+        on_open = function(win)
+            local buf = api.nvim_win_get_buf(win)
+            if not api.nvim_buf_is_valid(buf) then
+                return
+            end
+            api.nvim_buf_set_option(buf, "filetype", "markdown")
+        end,
+        timeout = 10000,
+    })
+end, {})
+vim.keymap.set("n", "<leader>sl", function()
+    vim.cmd([[ShowCoreHydraBinds]])
+end, { desc = "Show Core Hydra Binds" })
+vim.keymap.set("n", "<leader>sk", function()
+    vim.cmd([[ShowHydraBinds]])
+end, { desc = "Show all Hydra Binds " })

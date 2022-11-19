@@ -1,58 +1,254 @@
 local Hydra = require("hydra")
 
-local harpoon_hint = [[
-^ ^ _<enter>_: Toggle Harpoon   _]_: Harpoon Toggle File      ^ ^
-^ ^ _a_: Harpoon add file       _;_: Memento toggle           ^ ^
-^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^ _1_: open harpoon file 1    _n_: go to next harpoon file  ^ ^
-^ ^ _2_: open harpoon file 2    _p_: go to prev harpoon file  ^ ^
-^ ^ _3_: open harpoon file 3    _t_: harpoon marks            ^ ^
-^ ^ _4_: open harpoon file 4    _c_: toggle quick cmd menu    ^ ^
-^ ^ _5_: open harpoon file 5    _C_: memento Clear            ^ ^
-^ ^ _6_: open harpoon file 6                                  ^ ^
-^ ^ _7_: open harpoon file 7                                  ^ ^
-^ ^ _8_: open harpoon file 8                                  ^ ^
-^ ^ _9_: open harpoon file 9                                  ^ ^
-^ ^                                                           ^ ^
-^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^                             _<Esc>_: quit                 ^ ^
-]]
+local leader = "<CR>"
+local hydra = require("hydra")
 
-Hydra({
-    name = "harpoon",
-    hint = harpoon_hint,
+local bracket = { "<CR>", "w", "a", "W" }
+
+local function make_core_table(core_table, second_table)
+    for _, v in pairs(second_table) do
+        table.insert(core_table, v)
+    end
+    table.insert(core_table, "\n")
+end
+
+local function create_table_normal(var, sorted, string_len, start_val)
+    start_val = start_val or nil
+    var = {}
+    for _, v in pairs(sorted) do
+        if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
+            if start_val ~= nil then
+                if vim.tbl_contains(start_val, v) then
+                    -- if starts(v, start_val) then
+                    table.insert(var, v)
+                end
+            else
+                table.insert(var, v)
+            end
+        end
+    end
+    table.sort(var, function(a, b)
+        return a:lower() < b:lower()
+    end)
+
+    return var
+end
+
+local config = {}
+
+local exit = { nil, { exit = true, desc = "EXIT" } }
+config.parenth_mode = {
+    color = "red",
+    body = leader,
+    mode = { "n", "v", "x", "o" },
+    ["<ESC>"] = { nil, { exit = true } },
+
+    ["<CR>"] = {
+        function()
+            require("harpoon.ui").toggle_quick_menu()
+        end,
+        { nowait = true, exit = true, desc = "Quick Menu" },
+    },
+    w = {
+        function()
+            require("harpoon.mark").toggle_file()
+        end,
+        { nowait = true, exit = true, desc = "Toggle File" },
+    },
+    W = {
+        function()
+            require("telescope.builtin").harpoon_marks()
+        end,
+        { nowait = true, exit = true, desc = "Harpoon Tele" },
+    },
+    a = {
+        function()
+            require("harpoon.mark").add_file()
+        end,
+        { nowait = true, exit = true, desc = "Add File" },
+    },
+    n = {
+        function()
+            require("harpoon.ui").nav_next()
+        end,
+        { nowait = true, exit = true, desc = "Next File" },
+    },
+    p = {
+        function()
+            require("harpoon.ui").nav_prev()
+        end,
+        { nowait = true, exit = true, desc = "Prev File" },
+    },
+
+    [";"] = {
+        function()
+            require("memento").toggle()
+        end,
+        { nowait = true, exit = false, desc = "Memento Toggle" },
+    },
+    c = {
+        function()
+            require("harpoon.cmd-ui").toggle_quick_menu()
+        end,
+        { nowait = true, exit = true, desc = "Quick ui Menu" },
+    },
+    C = {
+        function()
+            require("memento").clear_history()
+        end,
+        { nowait = true, exit = true, desc = "Memento Clear" },
+    },
+
+    ["1"] = {
+        function()
+            require("harpoon.ui").nav_file(1)
+        end,
+        { nowait = true, desc = "Jump File 1", exit = true },
+    },
+    ["2"] = {
+        function()
+            require("harpoon.ui").nav_file(2)
+        end,
+        { nowait = true, desc = "Jump File 2", exit = true },
+    },
+    ["3"] = {
+        function()
+            require("harpoon.ui").nav_file(3)
+        end,
+        { nowait = true, desc = "Jump File 3", exit = true },
+    },
+    ["4"] = {
+        function()
+            require("harpoon.ui").nav_file(4)
+        end,
+        { nowait = true, desc = "Jump File 4", exit = true },
+    },
+    ["5"] = {
+        function()
+            require("harpoon.ui").nav_file(5)
+        end,
+        { nowait = true, desc = "Jump File 5", exit = true },
+    },
+
+    ["6"] = {
+        function()
+            require("harpoon.ui").nav_file(6)
+        end,
+        { nowait = true, desc = "Jump File 6", exit = true },
+    },
+
+    ["7"] = {
+        function()
+            require("harpoon.ui").nav_file(7)
+        end,
+        { nowait = true, desc = "Jump File 7", exit = true },
+    },
+
+    ["8"] = {
+        function()
+            require("harpoon.ui").nav_file(8)
+        end,
+        { nowait = true, desc = "Jump File 8", exit = true },
+    },
+
+    ["9"] = {
+        function()
+            require("harpoon.ui").nav_file(9)
+        end,
+        { nowait = true, desc = "Jump File 9", exit = true },
+    },
+}
+local mapping = {
+    color = function(t, rhs)
+        t.config.color = rhs
+    end,
+    body = function(t, rhs)
+        t.body = rhs
+    end,
+    on_enter = function(t, rhs)
+        t.config.on_enter = rhs
+    end,
+    on_exit = function(t, rhs)
+        t.config.on_exit = rhs
+    end,
+    mode = function(t, rhs)
+        t.config.mode = rhs
+    end,
+}
+-- Create a Auto Hinting Table same as above but with auto generated
+
+local new_hydra = {
+    name = "SAD",
     config = {
-        color = "pink",
-        invoke_on_body = true,
         hint = {
-            position = "bottom-right",
+            position = "middle-right",
             border = lambda.style.border.type_0,
         },
+        timeout = false,
+        invoke_on_body = true,
     },
-    mode = "n",
-    body = "<CR>",
-    heads = {
-        { "1", "<cmd>lua require('harpoon.ui').nav_file(1)<CR>" },
-        { "2", "<cmd>lua require('harpoon.ui').nav_file(2)<CR>" },
-        { "3", "<cmd>lua require('harpoon.ui').nav_file(3)<CR>" },
-        { "4", "<cmd>lua require('harpoon.ui').nav_file(4)<CR>" },
-        { "5", "<cmd>lua require('harpoon.ui').nav_file(5)<CR>" },
-        { "6", "<cmd>lua require('harpoon.ui').nav_file(6)<CR>" },
-        { "7", "<cmd>lua require('harpoon.ui').nav_file(7)<CR>" },
-        { "8", "<cmd>lua require('harpoon.ui').nav_file(8)<CR>" },
-        { "9", "<cmd>lua require('harpoon.ui').nav_file(9)<CR>" },
+    heads = {},
+}
 
-        { "n", "<cmd>lua require('harpoon.ui').nav_next()<CR>" },
-        { "p", "<cmd>lua require('harpoon.ui').nav_prev()<CR>" },
-        { "t", "<cmd>Telescope harpoon marks<CR>", { exit = true } },
-        { "c", "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>", { exit = true } },
-        { "]", [[<cmd>lua require("harpoon.mark").toggle_file()<CR>]], { exit = true } },
-        { "<enter>", [[<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>]], { exit = true } },
-        { "a", [[<cmd>lua require("harpoon.mark").add_file()<CR>]] },
+for name, spec in pairs(config) do
+    for lhs, rhs in pairs(spec) do
+        local action = mapping[lhs]
+        if action == nil then
+            new_hydra.heads[#new_hydra.heads + 1] = { lhs, table.unpack(rhs) }
+        else
+            action(new_hydra, rhs)
+        end
+    end
+end
 
-        { ";", [[<cmd>lua require("memento").toggle()<CR>]] },
-        { "C", [[<cmd>lua require("memento").clear_history()<CR>]] },
+--
+local function auto_hint_generate()
+    container = {}
+    for x, y in pairs(config.parenth_mode) do
+        local mapping = x
+        if type(y[1]) == "function" then
+            for x, y in pairs(y[2]) do
+                if x == "desc" then
+                    container[mapping] = y
+                end
+            end
+        end
+    end
+    sorted = {}
+    for k, v in pairs(container) do
+        table.insert(sorted, k)
+    end
+    table.sort(sorted)
 
-        { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
-    },
-})
+    num = create_table_normal({}, sorted, 1, { "1", "2", "3", "4", "5", "6", "7", "8", "9" })
+    memento = create_table_normal({}, sorted, 1, { ";", "C" })
+    harpoon = create_table_normal({}, sorted, 1, { "n", "p", "c" })
+
+    core_table = {}
+
+    make_core_table(core_table, bracket)
+    make_core_table(core_table, harpoon)
+    make_core_table(core_table, memento)
+    make_core_table(core_table, num)
+
+    hint_table = {}
+    string_val = "^ ^      SAD      ^ ^\n\n"
+    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+
+    for _, v in pairs(core_table) do
+        if v == "\n" then
+            hint = "\n"
+            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+        else
+            hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+        end
+        table.insert(hint_table, hint)
+        string_val = string_val .. hint
+        -- end
+    end
+    return string_val
+end
+
+val = auto_hint_generate()
+new_hydra.hint = val
+hydra(new_hydra)
