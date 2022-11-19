@@ -3,7 +3,7 @@ local Hydra = require("hydra")
 local leader = "<CR>"
 local hydra = require("hydra")
 
-local bracket = { "<CR>", "w", "a", "W" }
+local bracket = { "<CR>", "w", "a", "W", "<leader>" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -86,7 +86,7 @@ config.parenth_mode = {
         end,
         { nowait = true, exit = false, desc = "Memento Toggle" },
     },
-    c = {
+    ["<leader>"] = {
         function()
             require("harpoon.cmd-ui").toggle_quick_menu()
         end,
@@ -222,7 +222,7 @@ local function auto_hint_generate()
 
     num = create_table_normal({}, sorted, 1, { "1", "2", "3", "4", "5", "6", "7", "8", "9" })
     memento = create_table_normal({}, sorted, 1, { ";", "C" })
-    harpoon = create_table_normal({}, sorted, 1, { "n", "p", "c" })
+    harpoon = create_table_normal({}, sorted, 1, { "n", "p" })
 
     core_table = {}
 
@@ -232,13 +232,13 @@ local function auto_hint_generate()
     make_core_table(core_table, num)
 
     hint_table = {}
-    string_val = "^ ^      SAD      ^ ^\n\n"
-    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+    string_val = "^ ^         Harpoon         ^ ^\n\n"
+    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
 
     for _, v in pairs(core_table) do
         if v == "\n" then
             hint = "\n"
-            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
         else
             hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
         end
