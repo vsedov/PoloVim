@@ -69,19 +69,13 @@ function config.lightspeed()
     end
 end
 function config.leap()
-    require("utils.ui.highlights").plugin("leap", {
-        theme = {
-            ["*"] = {
-                { LeapBackdrop = { fg = "#707070" } },
-            },
-            horizon = {
-                { LeapLabelPrimary = { bg = "NONE", fg = "#ccff88", italic = true } },
-                { LeapLabelSecondary = { bg = "NONE", fg = "#99ccff" } },
-                { LeapLabelSelected = { bg = "NONE", fg = "Magenta" } },
-            },
-        },
+    vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
+    vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
+    vim.api.nvim_set_hl(0, "LeapMatch", {
+        fg = "white", -- for light themes, set to 'black' or similar
+        bold = true,
+        nocombine = true,
     })
-    require("leap").add_default_mappings()
 end
 
 function config.hop()
@@ -181,12 +175,20 @@ function config.sj()
         },
 
         keymaps = {
-            prev_match = "<C-p>", -- focus the previous label and match
-            next_match = "<C-n>", -- focus the next label and match
-            send_to_qflist = "<C-q>", --- send search result to the quickfix list
+            cancel = "<Esc>", -- cancel the search
+            validate = "<CR>", -- jump to the focused match
+            prev_match = "N", -- focus the previous match
+            next_match = "n", -- focus the next match
+            prev_pattern = "<C-p>", -- select the previous pattern while searching
+            next_pattern = "<C-n>", -- select the next pattern while searching
+            delete_prev_char = "<BS>", -- delete the previous character
+            delete_prev_word = "<C-w>", -- delete the previous word
+            delete_pattern = "<C-u>", -- delete the whole pattern
+            restore_pattern = "<c-BS>", -- restore the pattern to the last version having matches
+            send_to_qflist = "<c-#>", --- send the search results to the quickfix list
         },
     })
-    vim.keymap.set("n", "!", function()
+    vim.keymap.set("n", "<c-b>", function()
         sj.run({ select_window = true })
     end)
 
@@ -217,14 +219,14 @@ function config.sj()
 
     --- buffer --------------------------------------------
 
-    vim.keymap.set("n", "c/", function()
+    vim.keymap.set("n", "/", function()
         vim.fn.setpos("''", vim.fn.getpos("."))
         sj.run({
             forward_search = false,
             search_scope = "buffer",
             update_search_register = true,
         })
-    end, { desc = "c/" })
+    end, { desc = "/" })
 
     vim.keymap.set("n", "c?", function()
         vim.fn.setpos("''", vim.fn.getpos("."))
@@ -233,7 +235,7 @@ function config.sj()
             update_search_register = true,
         })
     end, { desc = "c?" })
-
+    local sj_cache = require("sj.cache")
     --- current line --------------------------------------
 
     vim.keymap.set({ "n", "o", "x" }, "<leader>sc", function()
@@ -355,60 +357,64 @@ function config.quick_scope()
         },
     })
 end
-function config.marks()
-    require("utils.ui.highlights").plugin("marks", {
-        { MarkSignHL = { link = "Directory" } },
-        { MarkSignNumHL = { link = "Directory" } },
-    })
-    require("which-key").register({
-        m = {
-            name = "+marks",
-            b = { "<Cmd>MarksListBuf<CR>", "list buffer" },
-            g = { "<Cmd>MarksQFListGlobal<CR>", "list global" },
-            ["0"] = { "<Cmd>BookmarksQFList 0<CR>", "list bookmark" },
-        },
-    }, { prefix = "<leader>" })
 
-    require("marks").setup({
-        default_mappings = true,
-        builtin_marks = { ".", "<", ">", "^" },
-        cyclic = true,
-        force_write_shada = true,
-        refresh_interval = 0,
-        sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-        excluded_filetypes = {
-            "NeogitStatus",
-            "NeogitCommitMessage",
-            "toggleterm",
-            "harpoon",
-            "memento",
-            "harpoon-menu",
-            "BookMarks",
-            "BookMark",
-            "bookmarks",
-            "bookmark",
+function config.grapple()
+    require("grapple").setup({
+        log_level = "warn",
+        scope = "directory",
+        save_path = vim.fn.stdpath("data") .. "/" .. "grapple.json",
+        popup_options = {
+            relative = "editor",
+            width = 60,
+            height = 12,
+            style = "minimal",
+            focusable = false,
+            border = "single",
         },
-        bookmark_0 = {
-            sign = "⚑",
-            virt_text = "BookMark",
+
+        integrations = {
+            resession = true,
         },
-        mappings = {},
-    })
-    -- https://github.com/chentoast/marks.nvim/issues/40
-    vim.api.nvim_create_autocmd("cursorhold", {
-        pattern = "*",
-        callback = require("marks").refresh,
     })
 end
+function config.easymark()
+
+    require("easymark").setup({
+        position = "bottom", -- position choices: bottom|top|left|right
+        height = 10, -- might have to reduce this
+        width = 30,
+        pane_action_keys = {
+            close = "q", -- close mark window
+            cancel = "<esc>", -- close the preview and get back to your last position
+            refresh = "r", -- manually refresh
+            jump = { "<cr>", "<tab>" }, -- jump to the mark
+            jump_close = { "o" }, -- jump to the mark and close mark window
+            toggle_mode = "t", -- toggle mark between "marked" and "unmacked" mode
+            next = "j", -- next item
+            previous = "k", -- preview item
+        },
+        mark_opts = {
+            virt_text = "",
+            virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+        },
+        auto_preview = true,
+    })
+
+end
+
+
 
 function config.bookmark()
+
+
     require("bookmarks").setup({
         keymap = {
             toggle = "<tab><tab>", -- toggle bookmarks
             add = "\\a", -- add bookmarks
             jump = "<CR>", -- jump from bookmarks
-            delete = "\\d", -- delete bookmarks
+            delete = "dd", -- delete bookmarks
             order = "<\\o", -- order bookmarks by frequency or updated_time
+            show_desc = "\\sd",
         },
         width = 0.8, -- bookmarks window width:  (0, 1]
         height = 0.6, -- bookmarks window height: (0, 1]
@@ -420,25 +426,6 @@ function config.bookmark()
     })
 end
 
-function config.portal()
-    vim.cmd([[packadd grapple.nvim]])
-    require("grapple").setup({
-        ---@type "debug" | "info" | "warn" | "error"
-        log_level = "warn",
 
-        ---The scope used when creating, selecting, and deleting tags
-        ---@type Grapple.Scope
-        scope = "directory",
 
-        ---The save location for tags
-        save_path = vim.fn.stdpath("data") .. "/" .. "grapple.json",
-
-        integrations = {
-            ---Integration with portal.nvim. Registers a "tagged" query item
-            portal = true,
-        },
-    })
-
-    require("portal").setup({})
-end
 return config

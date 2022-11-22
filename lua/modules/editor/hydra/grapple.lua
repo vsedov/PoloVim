@@ -1,12 +1,15 @@
-if lambda.config.use_lightspeed then
+if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
     local Hydra = require("hydra")
     local function starts(String, Start)
         return string.sub(String, 1, string.len(Start)) == Start
     end
+
+    local types = require("portal.types")
+
     local leader = "H"
     local hydra = require("hydra")
 
-    local bracket = { "n", "p" }
+    local bracket = { "n", "N" }
 
     local function make_core_table(core_table, second_table)
         for _, v in pairs(second_table) do
@@ -53,13 +56,23 @@ if lambda.config.use_lightspeed then
 
         n = {
             function()
-                require("portal").jump_forward()
+                require("portal.jump").select(
+                    require("portal.jump").search(
+                        require("portal.query").resolve({ "grapple" }),
+                        types.Direction.FORWARD
+                    )[1]
+                )
             end,
             { nowait = true, exit = false, desc = "[P] Jump Next" },
         },
-        p = {
+        N = {
             function()
-                require("portal").jump_forward()
+                require("portal.jump").select(
+                    require("portal.jump").search(
+                        require("portal.query").resolve({ "grapple" }),
+                        types.Direction.BACKWARD
+                    )[1]
+                )
             end,
             { nowait = true, exit = false, desc = "[P] Jump Prev" },
         },
@@ -304,7 +317,7 @@ if lambda.config.use_lightspeed then
     -- Create a Auto Hinting Table same as above but with auto generated
 
     local new_hydra = {
-        name = "SAD",
+        name = "Grapple",
         config = {
             hint = {
                 position = "middle-right",

@@ -21,14 +21,34 @@ movement({
 
 movement({
     "ggandor/lightspeed.nvim",
+    requires = { "tpope/vim-repeat" },
+
     opt = true,
     config = conf.lightspeed,
 })
 
 movement({
     "ggandor/leap.nvim",
+    requires = { "tpope/vim-repeat" },
+
     opt = true,
     config = conf.leap,
+})
+
+movement({
+    "ggandor/leap-spooky.nvim",
+    opt = true,
+    wants = "leap.nvim",
+    after = "leap.nvim",
+    config = function()
+        require("leap-spooky").setup({
+            affixes = {
+                remote = { window = "r", cross_window = "R" },
+                magnetic = { window = "m", cross_window = "M" },
+            },
+            paste_on_remote_yank = true,
+        })
+    end,
 })
 
 movement({
@@ -87,10 +107,12 @@ movement({
         "<leader>sp",
         "<leader>sc",
         "c?",
-        "c/",
+        "/",
         "<leader>sv",
         "<leader>sV",
         "<leader>sP",
+        "<c-b>",
+        "<A-!>",
     },
     config = conf.sj,
 })
@@ -119,41 +141,49 @@ movement({
     config = conf.quick_scope,
 })
 
+
+
 movement({
-    "chentoast/marks.nvim",
-    -- branch = "cursorhold",
+    "cbochs/portal.nvim",
     opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "marks",
-            condition = lambda.config.use_marks, -- reverse
-            plugin = "marks.nvim",
-        })
-    end,
-    config = conf.marks,
+    requires = {
+        "ThePrimeagen/harpoon",
+        "cbochs/grapple.nvim",
+    },
+    modules = "portal",
 })
+movement({
+    "cbochs/grapple.nvim",
+    opt = true,
+    after = "lightspeed.nvim",
+    config = conf.grapple,
+})
+
+
+movement({
+    "LintaoAmons/lazymark.nvim", 
+    modules = "lazymark",
+})
+
 
 movement({
     "crusj/bookmarks.nvim",
     branch = "main",
-    requires = { "nvim-tree/nvim-web-devicons" },
-    -- opt = true,
+    requires = {
+        "nvim-tree/nvim-web-devicons",
+        "nvim-treesitter/nvim-treesitter",
+    },
     keys = {
         "<tab><tab>",
         "\\a",
-        "\\d",
         "\\o",
     },
     config = conf.bookmark,
 })
 
+
 movement({
-    "cbochs/portal.nvim",
-    opt = true,
-    after = "lightspeed.nvim",
-    requires = {
-        "cbochs/grapple.nvim",
-    },
-    config = conf.portal,
+    "0x00-ketsu/easymark.nvim",
+    modules = "easymark",    
+    config = conf.easymark,
 })

@@ -1,7 +1,16 @@
 local Hydra = require("hydra")
+require("portal").setup({
+    integrations = {
+        harpoon = true,
+        grapple = true,
+    },
+    query = { "harpoon", "grapple" },
+})
 
 local leader = "<CR>"
 local hydra = require("hydra")
+
+local types = require("portal.types")
 
 local bracket = { "<CR>", "w", "a", "W", "<leader>" }
 
@@ -71,13 +80,13 @@ config.parenth_mode = {
         function()
             require("harpoon.ui").nav_next()
         end,
-        { nowait = true, exit = true, desc = "Next File" },
+        { nowait = true, exit = false, desc = "Next File" },
     },
-    p = {
+    N = {
         function()
             require("harpoon.ui").nav_prev()
         end,
-        { nowait = true, exit = true, desc = "Prev File" },
+        { nowait = true, exit = false, desc = "Prev File" },
     },
 
     [";"] = {
@@ -157,6 +166,22 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "Jump File 9", exit = true },
     },
+    ["["] = {
+        function()
+            require("portal.jump").select(
+                require("portal.jump").search(require("portal.query").resolve({ "harpoon" }), types.Direction.FORWARD)[1]
+            )
+        end,
+        { nowait = true, desc = "Portal Jump", exit = false },
+    },
+    ["]"] = {
+        function()
+            require("portal.jump").select(
+                require("portal.jump").search(require("portal.query").resolve({ "harpoon" }), types.Direction.BACKWARD)[1]
+            )
+        end,
+        { nowait = true, desc = "Portal Back", exit = false },
+    },
 }
 local mapping = {
     color = function(t, rhs)
@@ -178,7 +203,7 @@ local mapping = {
 -- Create a Auto Hinting Table same as above but with auto generated
 
 local new_hydra = {
-    name = "SAD",
+    name = "Harpoon",
     config = {
         hint = {
             position = "middle-right",
@@ -222,11 +247,13 @@ local function auto_hint_generate()
 
     num = create_table_normal({}, sorted, 1, { "1", "2", "3", "4", "5", "6", "7", "8", "9" })
     memento = create_table_normal({}, sorted, 1, { ";", "C" })
-    harpoon = create_table_normal({}, sorted, 1, { "n", "p" })
+    harpoon = create_table_normal({}, sorted, 1, { "n", "N" })
+    portal = create_table_normal({}, sorted, 1, { "[", "]" })
 
     core_table = {}
 
     make_core_table(core_table, bracket)
+    make_core_table(core_table, portal)
     make_core_table(core_table, harpoon)
     make_core_table(core_table, memento)
     make_core_table(core_table, num)

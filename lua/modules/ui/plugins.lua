@@ -35,8 +35,8 @@ ui({
 
 ui({
     "rebelot/heirline.nvim",
-    -- after = "nvim-lspconfig",
-    opt = true,
+    after = "nvim-lspconfig",
+    -- opt = true,
     config = function()
         require("modules.ui.heirline")
         -- require("modules.ui.heirline_min")
