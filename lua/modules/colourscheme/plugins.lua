@@ -77,10 +77,12 @@ colourscheme({
 colourscheme({
     "folke/styler.nvim",
     opt = true,
+    cmd = "Styler",
     config = function()
         require("styler").setup({
             themes = {
                 markdown = { colorscheme = "kanagawa" },
+                norg = { colorscheme = "tokyonight" },
                 python = { colorscheme = "kanagawa" },
                 help = { colorscheme = "catppuccin-mocha", background = "dark" },
             },

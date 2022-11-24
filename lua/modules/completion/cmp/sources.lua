@@ -4,7 +4,7 @@ local sources = {
     { name = "nvim_lsp", priority = 9 },
     { name = "luasnip", priority = 8 },
     { name = "neorg", priority = 6 },
-    { name = "nvim_lsp_signature_help", priority = 10 },
+    -- { name = "nvim_lsp_signature_help", priority = 10 },
 
     { name = "path" },
     --  REVISIT: (vsedov) (07:34:00 - 11/11/22): Why do i need this ?
