@@ -3,11 +3,10 @@ local function starts(String, Start)
     return string.sub(String, 1, string.len(Start)) == Start
 end
 
-
 local leader = "m"
 local hydra = require("hydra")
 
-local bracket = { "<cr>", "m","n", "N", "c", }
+local bracket = { "<cr>", "m", "n", "N", "c" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -54,52 +53,49 @@ config.parenth_mode = {
 
     m = {
         function()
-            require"easymark".toggle_mark()
+            require("easymark").toggle_mark()
         end,
         { nowait = true, exit = false, desc = "Toggle Mark" },
     },
-   c = {
+    c = {
         function()
-            require"easymark".clear_mark()
+            require("easymark").clear_mark()
         end,
         { nowait = true, exit = true, desc = "Clear Mark" },
     },
-   n = {
+    n = {
         function()
-            require"easymark".next_mark()
+            require("easymark").next_mark()
         end,
         { nowait = true, exit = false, desc = "Next Mark" },
     },
-   N = {
+    N = {
         function()
-            require"easymark".prev_mark()
+            require("easymark").prev_mark()
         end,
         { nowait = true, exit = false, desc = "Prev Mark" },
     },
-   ["<cr>"] = {
+    ["<cr>"] = {
         function()
-            require"easymark".toggle_pane()
+            require("easymark").toggle_pane()
         end,
         { nowait = true, exit = true, desc = "Toggle Plane" },
     },
-   a = {
+    a = {
         function()
-          require("lazymark").mark()
-
+            require("lazymark").mark()
         end,
         { nowait = true, exit = true, desc = "Single[M] Add" },
     },
-   l = {
+    l = {
         function()
-          require("lazymark").gotoMark()
-
+            require("lazymark").gotoMark()
         end,
-        { nowait = true, exit = true, desc = "Single[M]  Goto" },
+        { nowait = true, exit = true, desc = "Single[M] Goto" },
     },
-   C = {
+    C = {
         function()
-          require("lazymark").check()
-
+            require("lazymark").check()
         end,
         { nowait = true, exit = true, desc = "Single[M] Check" },
     },
@@ -167,7 +163,7 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    easymark = create_table_normal({}, sorted, 1, { "a", "l" ,"C" })
+    easymark = create_table_normal({}, sorted, 1, { "a", "l", "C" })
 
     core_table = {}
 

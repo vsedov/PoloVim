@@ -173,17 +173,5 @@ local magma = {
         { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
     },
 }
-local loaded = false
-
-lambda.augroup("HydraPython", {
-    {
-        event = "BufWinEnter",
-        pattern = "*.py",
-        command = function()
-            if not loaded then
-                Hydra(python_hints)
-                Hydra(magma)
-            end
-        end,
-    },
-})
+Hydra(python_hints)
+Hydra(magma)

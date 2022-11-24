@@ -17,16 +17,6 @@ end
 local config = {}
 
 local exit = { nil, { exit = true, desc = "EXIT" } }
--- TODO: make a toggler for cursorhold events, so we can show peek
-local function toggle(lhs, on_enter, on_exit)
-    return {
-        color = "pink",
-        body = lhs,
-        [lhs] = exit,
-        on_exit = on_exit,
-        on_enter = on_enter,
-    }
-end
 
 config.parenth_mode = {
     color = "pink",
