@@ -117,7 +117,6 @@ vim.api.nvim_create_user_command("ShowCoreHydraBinds", function()
     })
 end, {})
 
-
 vim.keymap.set("n", "<leader>sl", function()
     vim.cmd([[ShowCoreHydraBinds]])
 end, { desc = "Show Core Hydra Binds" })

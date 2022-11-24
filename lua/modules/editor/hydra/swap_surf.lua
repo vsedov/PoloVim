@@ -14,7 +14,7 @@ local mx = function(feedkeys, type)
     end
 end
 
-local bracket = { "s", "S" }
+local bracket = { "s", "S", "k", "j" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -67,7 +67,6 @@ config.parenth_mode = {
     color = "pink",
     body = leader,
     mode = { "n", "v", "x", "o" },
-    [leader] = { nil, { exit = true } },
     ["<ESC>"] = { nil, { exit = true } },
 
     k = {
@@ -102,13 +101,12 @@ config.parenth_mode = {
     u = { mx("vu"), { nowait = true, desc = "Surf u", exit = true } }, -- ts: inner class
     D = { mx("vD"), { nowait = true, desc = "Surf D", exit = true } }, -- ts: all function
     d = { mx("vd"), { nowait = true, desc = "Surf d", exit = true } }, -- ts: all conditional
-    
+
     w = {
         function()
             vim.cmd([[STSJumpToTop]])
         end,
         { nowait = true, desc = "Surf Jump Top", exit = false },
-
     },
     x = {
         function()
@@ -160,7 +158,7 @@ config.parenth_mode = {
 
         { nowait = true, desc = "Surf [N] Swap", exit = false },
     },
-   V = {
+    V = {
         function()
             vim.cmd([[STSSwapPrevVisual]])
         end,
@@ -168,10 +166,6 @@ config.parenth_mode = {
         { nowait = true, desc = "Surf [P] Swap", exit = false },
     },
 }
-
-
-
-
 
 local mapping = {
     color = function(t, rhs)
@@ -236,21 +230,20 @@ local function auto_hint_generate()
     table.sort(sorted)
 
     surf = create_table_normal({}, sorted, 1, { "d", "D", "U", "u" })
-    ts = create_table_normal({}, sorted, 1, { "j", "k" })
 
     core_table = {}
 
     make_core_table(core_table, bracket)
-    make_core_table(core_table, ts)
     make_core_table(core_table, surf)
-    make_core_table(core_table,  {"w", "H", "J", "K", "L", "x", "X",  "v", "V"})
+    make_core_table(core_table, { "w", "H", "J", "K", "L" })
+    make_core_table(core_table, { "x", "X", "v", "V" })
 
     hint_table = {}
-    string_val = "^ ^    Swap/Surf    ^ ^\n\n"
+    string_val = "^ ^      SwapSurf       ^ ^\n\n"
+    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+
     for _, v in pairs(core_table) do
         if v == "\n" then
-
-
             hint = "\n"
             hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
         else
@@ -260,8 +253,6 @@ local function auto_hint_generate()
         string_val = string_val .. hint
         -- end
     end
-
-    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
     return string_val
 end
 

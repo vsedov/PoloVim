@@ -43,7 +43,7 @@ config.parenth_mode = {
         function()
             require("reach").buffers(reach_options)
         end,
-        { nowait = true, exit = true , desc = "Reach Buffers" },
+        { nowait = true, exit = true, desc = "Reach Buffers" },
     },
     m = {
         function()
@@ -55,7 +55,7 @@ config.parenth_mode = {
         function()
             cmd("ReachOpen tabpages")
         end,
-        { nowait = true, exit =  true, desc = "Reach TabPage" },
+        { nowait = true, exit = true, desc = "Reach TabPage" },
     },
     c = {
         function()
@@ -74,7 +74,7 @@ config.parenth_mode = {
         function()
             cmd("WorkspacesList")
         end,
-        { nowait = true, exit =true , desc = "Workspace List" },
+        { nowait = true, exit = true, desc = "Workspace List" },
     },
     w = {
         function()
@@ -82,27 +82,24 @@ config.parenth_mode = {
         end,
         { nowait = true, exit = true, desc = "Workspace Open" },
     },
-     a = {
+    a = {
         function()
             cmd("WorkspacesAdd")
         end,
         { nowait = true, exit = true, desc = "Workspace Add" },
     },
-      d = {
+    d = {
         function()
             cmd("WorkspacesRemove")
         end,
-        { nowait = true, exit =true , desc = "Workspace Remove" },
+        { nowait = true, exit = true, desc = "Workspace Remove" },
     },
-       r = {
+    r = {
         function()
             cmd("WorkspacesRename")
         end,
-        { nowait = true, exit =true, desc = "Workspace Rename" },
+        { nowait = true, exit = true, desc = "Workspace Rename" },
     },
-
-
-
 }
 
 local mapping = {
@@ -167,13 +164,10 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-
-
     core_table = {}
 
     make_core_table(core_table, bracket)
-    make_core_table(core_table,{"w", "a", "d", "r", "L", })
-
+    make_core_table(core_table, { "w", "a", "d", "r", "L" })
 
     hint_table = {}
     string_val = "^ ^      Reach     ^ ^\n\n"
