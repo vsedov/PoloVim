@@ -83,15 +83,17 @@ end
 
 function config.surround()
     require("nvim-surround").setup({
-        insert_line = "<C-#>", -- I am not sure how i feel about this
-        normal = "ys",
-        normal_cur = "yss",
-        normal_line = "yS",
-        normal_cur_line = "ySS",
-        visual = "S",
-        visual_line = "gS",
-        delete = "ds",
-        change = "cs",
+        keymaps = {
+            insert_line = "<C-#>", -- I am not sure how i feel about this
+            normal = "ys",
+            normal_cur = "yss",
+            normal_line = "yS",
+            normal_cur_line = "ySS",
+            visual = "gs",
+            visual_line = "gS",
+            delete = "ds",
+            change = "cs",
+        },
     })
 end
 

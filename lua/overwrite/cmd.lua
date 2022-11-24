@@ -359,3 +359,42 @@ end, { desc = "Go to the previous diagnostic" })
 add_cmd("DiagnosticPopulateLocList", function()
     vim.diagnostic.set_loclist({ open_loclist = false })
 end, { desc = "Populate the location list with the available diagnostics" })
+
+local fmt = string.format
+local api, fn, fs = vim.api, vim.fn, vim.fs
+
+add_cmd("LeapJumpCommands", function()
+    local hints = {
+        ["ca[r][R]b"] = "ca[r][R]b<leap> |Change around remote block",
+        zfarp = "zfarp<leap> | Delete/fold/comment/etc. paragraphs without leaving your position",
+        yaRp = "yaRp<leap> | Clone text object from another window and self",
+        cimw = "cimw<leap>[correction] | fix typo",
+        drr = "drr<leap> | work on distant lines",
+        y3rr = "y3rr<leap> | yank 3 lines sam as 3yy",
+        ["yrr or yRR"] = "yrr<leap> Line yank",
+        ["ymm or yMM"] = "ymm<leap> Line Yank",
+        defaults = [[
+'iw', 'iW', 'is', 'ip', 'i[', 'i]', 'i(', 'i)', 'ib',
+'i>', 'i<', 'it', 'i{', 'i}', 'iB', 'i"', 'i\'', 'i`',
+'aw', 'aW', 'as', 'ap', 'a[', 'a]', 'a(', 'a)', 'ab',
+'a>', 'a<', 'at', 'a{', 'a}', 'aB', 'a"', 'a\'', 'a`',
+        ]],
+    }
+
+    local str = "" .. "\n"
+    for k, v in pairs(hints) do
+        str = str .. fmt("**%s** - `%s`" .. "\n", k, v)
+    end
+
+    vim.notify(str, "info", {
+        title = "Leap Spooky binds",
+        on_open = function(win)
+            local buf = api.nvim_win_get_buf(win)
+            if not api.nvim_buf_is_valid(buf) then
+                return
+            end
+            api.nvim_buf_set_option(buf, "filetype", "markdown")
+        end,
+        timeout = 10000,
+    })
+end, {})

@@ -416,6 +416,7 @@ function config.bookmark()
         preview_ext_enable = true, -- if true, preview buf will add file ext, preview window may be highlighed(treesitter), but may be slower.
         fix_enable = true, -- if true, when saving the current file, if the bookmark line number of the current file changes, try to fix it.
         virt_text = "🐼", -- Show virt text at the end of bookmarked lines
+        -- virt_text = "𐇬", -- Show virt text at the end of bookmarked lines
         virt_pattern = { "*.python", "*.go", "*.lua", "*.sh", "*.php", "*.rust" }, -- Show virt text only on matched pattern
     })
 end

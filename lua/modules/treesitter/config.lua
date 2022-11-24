@@ -39,14 +39,6 @@ function config.playground()
     })
 end
 
-function config.context()
-    require("treesitter-context").setup({
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        throttle = true, -- Throttles plugin updates (may improve performance)
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-    })
-end
-
 function config.hlargs()
     require("utils.ui.highlights").plugin("hlargs", {
         { Hlargs = { fg = "#ef9062", italic = true, bold = false } },

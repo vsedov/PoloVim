@@ -196,3 +196,25 @@ ts({
         )
     end,
 })
+
+ts({
+    "haringsrob/nvim_context_vt",
+    requires = "nvim-treesitter",
+    opt = true,
+    cmd = {
+        "NvimContextVtToggle",
+        "NvimContextVtDebug",
+    },
+    function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "context",
+            condition = lambda.config.treesitter.use_context, -- reverse
+            plugin = "nvim_context_vt",
+        })
+    end,
+
+    config = function()
+        require("nvim_context_vt").setup({})
+    end,
+})

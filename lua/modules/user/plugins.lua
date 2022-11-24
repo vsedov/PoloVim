@@ -69,7 +69,7 @@ user({
     opt = true,
     setup = function()
         lambda.lazy_load({
-            events = "FileType",
+            events = "CmdlineEnter",
             pattern = "toggleterm",
             augroup_name = "unception",
             condition = lambda.config.use_unception,
@@ -129,19 +129,33 @@ user({
 })
 
 --  TODO: (vsedov) (12:12:33 - 08/11/22): I do not think i need this
--- user({
--- "nvim-zh/colorful-winsep.nvim",
--- setup = function()
---     lambda.lazy_load({
---         events = "BufWinEnter",
---         augroup_name = "winsep",
---         plugin = "colorful-winsep.nvim",
---     })
--- end,
--- config = function()
---     require("colorful-winsep").setup({})
--- end,
--- })
+user({
+    "nvim-zh/colorful-winsep.nvim",
+    setup = function()
+        lambda.lazy_load({
+            events = "BufWinEnter",
+            augroup_name = "winsep",
+            plugin = "colorful-winsep.nvim",
+        })
+    end,
+    config = function()
+        require("colorful-winsep").setup({})
+    end,
+})
+
+user({
+    "glepnir/hlsearch.nvim",
+    setup = function()
+        lambda.lazy_load({
+            events = "BufRead",
+            augroup_name = "hlsearch",
+            plugin = "hlsearch.nvim",
+        })
+    end,
+    config = function()
+        require("hlsearch").setup()
+    end,
+})
 
 -- user({
 --     "samodostal/copilot-client.lua",
@@ -163,3 +177,14 @@ user({
 --         })
 --     end,
 -- })
+
+user({
+    "nullchilly/fsread.nvim",
+    cmd = { "FSRead", "FSClear", "FSToggle" },
+    config = function()
+        vim.g.flow_strength = 0.7 -- low: 0.3, middle: 0.5, high: 0.7 (default)
+        vim.g.skip_flow_default_hl = true -- If you want to override default highlights
+        vim.api.nvim_set_hl(0, "FSPrefix", { fg = "#cdd6f4" })
+        vim.api.nvim_set_hl(0, "FSSuffix", { fg = "#6C7086" })
+    end,
+})
