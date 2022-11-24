@@ -229,21 +229,29 @@ end
 
 function config.readline()
     local readline = require("readline")
-    local map = vim.keymap.set
-    map("!", "<M-f>", readline.forward_word)
-    map("!", "<M-b>", readline.backward_word)
-    map("!", "<M-d>", readline.kill_word)
-    map("!", "<M-BS>", readline.backward_kill_word)
 
-    map("!", "<C-a>", readline.beginning_of_line)
-    map("!", "<C-e>", readline.end_of_line)
+    vim.keymap.set("!", "<M-d>", readline.kill_word)
+    vim.keymap.set("!", "<M-BS>", readline.backward_kill_word)
+    vim.keymap.set("!", "<M-f>", readline.forward_word)
+    vim.keymap.set("!", "<M-b>", readline.backward_word)
 
-    map("!", "<C-w>", readline.unix_word_rubout)
-    map("!", "<C-u>", readline.backward_kill_line)
+    vim.keymap.set("!", "<C-s>", readline.kill_line)
+    vim.keymap.set("!", "<C-u>", readline.backward_kill_line)
+
+    vim.keymap.set("!", "<C-w>", readline.unix_word_rubout)
+
+    vim.keymap.set("!", "<C-a>", readline.beginning_of_line)
+    vim.keymap.set("!", "<C-e>", readline.end_of_line)
+
+    vim.keymap.set("!", "<C-f>", "<Right>") -- forward-char
+    vim.keymap.set("!", "<C-b>", "<Left>") -- backward-char
+    vim.keymap.set("!", "<C-n>", "<Down>") -- next-line
+    vim.keymap.set("!", "<C-p>", "<Up>") -- previous-line
 end
 
 function config.asterisk_setup()
     vim.g["asterisk#keeppos"] = 1
+
     local default_keymaps = {
         { "n", "*", "<Plug>(asterisk-*)" },
         { "n", "#", "<Plug>(asterisk-#)" },

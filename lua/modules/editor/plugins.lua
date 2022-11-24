@@ -171,6 +171,22 @@ editor({
     end,
 })
 
+-- editor({
+--     "Wansmer/treesj",
+--     requires = { "nvim-treesitter" },
+--     config = function()
+--         local tsj = require("treesj")
+--         tsj.setup({
+--             use_default_keymaps = false,
+--             check_syntax_error = true,
+--             max_join_length = 150,
+--             cursor_behavior = "hold",
+--             notify = true,
+--             langs =,
+--         })
+--     end,
+-- })
+
 ---
 -- map("!", "<M-f>", readline.forward_word)
 -- map("!", "<M-b>", readline.backward_word)
