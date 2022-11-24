@@ -534,17 +534,17 @@ lambda.augroup("dwm", {
     },
 })
 
-lambda.lazy_load({
-    events = "BufEnter",
-    augroup_name = "movement",
-    condition = true,
-    plugin = function()
-        if lambda.config.use_lightspeed then
-            return "lightspeed.nvim"
-        end
-        return "leap.nvim"
-    end,
-})
+-- lambda.lazy_load({
+--     events = "BufEnter",
+--     augroup_name = "movement",
+--     condition = true,
+--     plugin = function()
+--         if lambda.config.use_lightspeed then
+--             return "lightspeed.nvim"
+--         end
+--         return "leap.nvim"
+--     end,
+-- })
 
 lambda.augroup("PluginCustomFixes", {
     {

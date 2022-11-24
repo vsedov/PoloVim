@@ -1,11 +1,11 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = true
-local use_lightspeed = true
+local noice_enabled = false
+local use_noice_docs = false -- this creats an error for some reason , though im not sure why | It is nice to have though
+local use_lightspeed = false --  So the tldr here is when this is false, both lightspeed and leap are active, but when this is true only lightspeed will be active
 local use_ts_yeti = true
 
-local use_noice_docs = true -- this creats an error for some reason , though im not sure why | It is nice to have though
-
 lambda.config = {
+    overwrite_colours_use_styler = true,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     better_ts_highlights = true,
 
@@ -35,6 +35,7 @@ lambda.config = {
     -- this still feels niceer
     use_lightspeed = use_lightspeed, -- if false then leap.nvim will be used.
     use_quick_scope = use_lightspeed,
+    use_both_leap_light_speed = not use_lightspeed,
     use_use_hiPairs = true,
 
     use_music = false,
@@ -52,13 +53,16 @@ lambda.config = {
 
     use_luasnip_brackets = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
 
-    use_marks = false,
+    use_marks = false, -- This has not been updated in a long while, and hence, although its a gret plugin it can become very slow
+    -- and not verynice to use, because of this , i am disabling this for the time .
 
     --  TODO: (vsedov) (18:03:38 - 17/11/22): Im not sure if these cause allot of lag on large
     --  files,
     -- UI
     use_clock = false, -- set to true to  see timer for config
-    use_pet = true,
+
+    use_pet = false,
+
     use_beacon = false,
     use_dashboard = false, -- set to false to not see this
     use_fidget = false,
@@ -88,10 +92,11 @@ lambda.config.colourscheme = {
                 "kanagawa.nvim",
                 "oh-lucy.nvim",
                 "catppuccin",
-                -- "rose", -- TSMethod'
-                -- "tokyonight.nvim", -- allot
-                -- "vim-dogrun"
-                -- "mellow.nvim",
+                "nvim-tundra",
+                "rose", -- TSMethod'
+                "tokyonight.nvim", -- allot
+                "vim-dogrun",
+                "mellow.nvim",
             },
             others = {
                 "horizon.nvim",
@@ -111,8 +116,8 @@ lambda.config.abbrev = {
     enable = true,
     coding_support = true, -- system wide
     globals = { -- dictionaries that ive defined to be global, you may not want this idk .
-        ["spelling_support"] = false, -- i wonder if this would help reduce the lag
-        ["month_date"] = false,
+        ["spelling_support"] = true, -- i wonder if this would help reduce the lag
+        ["month_date"] = true,
     },
     languages = {
         "python", -- current support is python.
@@ -133,7 +138,7 @@ lambda.config.cmp = {
 lambda.config.lsp = {
     use_rcd = false,
     use_lsp_lines = false,
-    use_lsp_signature = false,
+    use_lsp_signature = true5,
 
     latex = "ltex", -- texlab | ltex
     python = {
@@ -147,7 +152,7 @@ lambda.config.lsp = {
     },
 }
 lambda.config.ui = {
-    use_illuminate = false,
+    use_illuminate = true,
     noice = {
         enable = noice_enabled,
         lsp = {

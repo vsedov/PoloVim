@@ -20,7 +20,10 @@ local function load_colourscheme()
     -- loader("rose") -- Forceuflly load rosepine
 end
 
-load_colourscheme()
+load_colourscheme() -- loads default colourscheme
+if not lambda.config.overwrite_colours_use_styler then
+    loader("styler.nvim")
+end
 
 function Lazyload()
     _G.PLoader = loader
@@ -190,5 +193,13 @@ vim.defer_fn(function()
         loader("neoscroll.nvim")
     end
 
+    if lambda.config.use_both_leap_light_speed then
+        loader("lightspeed.nvim")
+        loader("leap.nvim")
+    end
+
+    if lambda.config.use_lightspeed then
+        loader("lightspeed.nvim")
+    end
     lprint("all done")
 end, lazy_timer + 80)
