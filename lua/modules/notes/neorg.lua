@@ -17,7 +17,7 @@ neorg_callbacks.on_event("core.started", function(event, event_content)
 end)
 require("neorg").setup({
     load = {
-
+        ["core.upgrade"] = {},
         ["core.defaults"] = {}, -- Load all the default modules
         ["core.integrations.telescope"] = {},
         ["core.export"] = {},
