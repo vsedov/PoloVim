@@ -69,8 +69,8 @@ local plug_map = {
     ["o|il"] = map_cmd([[<cmd>normal! ^vg_<CR>]]):with_noremap():with_silent(),
 
     -- -- new lines
-    ["n|\\j"] = map_cmd([[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], "New Lines top"):with_noremap(),
-    ["n|\\k"] = map_cmd([[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], "New Lines bottom"):with_noremap(),
+    ["n|\\["] = map_cmd([[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], "New Lines top"):with_noremap(),
+    ["n|\\]"] = map_cmd([[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], "New Lines bottom"):with_noremap(),
 
     -- visual search
     ["v|//"] = map_cmd([[y/<C-R>"<CR>]], "visual search"):with_noremap(),

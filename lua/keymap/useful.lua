@@ -10,7 +10,7 @@ local cur_cur = nil
 
 local plug_map = {
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
-    ["n|\\<cr>"] = map_cmd(function()
+    ["n|_<cr>"] = map_cmd(function()
             if vim.api.nvim_win_get_config(0).relative == "" then
                 cur_buf = vim.fn.bufnr()
                 cur_cur = vim.api.nvim_win_get_cursor(0)
