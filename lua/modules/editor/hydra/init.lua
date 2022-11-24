@@ -53,7 +53,7 @@ vim.api.nvim_create_user_command("ShowHydraBinds", function()
         lab_runner = "<localleader>r",
         sad = ";e",
         sub = "L",
-        swap = "\\s",
+        swap_surf = ";s",
         tele = "<leader>f",
         text_case = "gaa and gae",
         treesitter = "\\<leader>",
@@ -85,7 +85,7 @@ vim.api.nvim_create_user_command("ShowCoreHydraBinds", function()
         treesitter = "\\<leader>",
         parenth_mode = "\\l", -- Might change
         sub = "L",
-        swap = "\\s",
+        swap_surf = ";s",
         reach = ";;",
         extra_search = ";A",
         python = ";l",
@@ -116,6 +116,8 @@ vim.api.nvim_create_user_command("ShowCoreHydraBinds", function()
         timeout = 10000,
     })
 end, {})
+
+
 vim.keymap.set("n", "<leader>sl", function()
     vim.cmd([[ShowCoreHydraBinds]])
 end, { desc = "Show Core Hydra Binds" })

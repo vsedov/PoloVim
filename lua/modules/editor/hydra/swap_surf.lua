@@ -1,5 +1,5 @@
 local ts_move = require("nvim-treesitter.textobjects.move")
-local leader = "\\s"
+local leader = ";s"
 local hydra = require("hydra")
 local cmd = require("hydra.keymap-util").cmd
 
@@ -102,7 +102,76 @@ config.parenth_mode = {
     u = { mx("vu"), { nowait = true, desc = "Surf u", exit = true } }, -- ts: inner class
     D = { mx("vD"), { nowait = true, desc = "Surf D", exit = true } }, -- ts: all function
     d = { mx("vd"), { nowait = true, desc = "Surf d", exit = true } }, -- ts: all conditional
+    
+    w = {
+        function()
+            vim.cmd([[STSJumpToTop]])
+        end,
+        { nowait = true, desc = "Surf Jump Top", exit = false },
+
+    },
+    x = {
+        function()
+            vim.cmd([[STSSelectMasterNode]])
+        end,
+
+        { nowait = true, desc = "Surf Master Node", exit = false },
+    },
+    X = {
+        function()
+            vim.cmd([[STSSelectCurrentNode]])
+        end,
+
+        { nowait = true, desc = "Surf Curent Node", exit = false },
+    },
+
+    J = {
+        function()
+            vim.cmd([[STSSelectNextSiblingNode]])
+        end,
+
+        { nowait = true, desc = "Surf [N] Sibling", exit = false },
+    },
+    K = {
+        function()
+            vim.cmd([[STSSelectPrevSiblingNode]])
+        end,
+
+        { nowait = true, desc = "Surf [P] Sibling", exit = false },
+    },
+    H = {
+        function()
+            vim.cmd([[STSSelectParentNode]])
+        end,
+
+        { nowait = true, desc = "Surf Parent", exit = false },
+    },
+    L = {
+        function()
+            vim.cmd([[STSSelectChildNode]])
+        end,
+
+        { nowait = true, desc = "Surf Child", exit = false },
+    },
+    v = {
+        function()
+            vim.cmd([[STSSwapNextVisual]])
+        end,
+
+        { nowait = true, desc = "Surf [N] Swap", exit = false },
+    },
+   V = {
+        function()
+            vim.cmd([[STSSwapPrevVisual]])
+        end,
+
+        { nowait = true, desc = "Surf [P] Swap", exit = false },
+    },
 }
+
+
+
+
 
 local mapping = {
     color = function(t, rhs)
@@ -124,7 +193,7 @@ local mapping = {
 -- Create a Auto Hinting Table same as above but with auto generated
 
 local new_hydra = {
-    name = "Swapper",
+    name = "Swap/Surf",
     config = {
         hint = {
             position = "middle-right",
@@ -172,17 +241,18 @@ local function auto_hint_generate()
     core_table = {}
 
     make_core_table(core_table, bracket)
-    make_core_table(core_table, surf)
     make_core_table(core_table, ts)
+    make_core_table(core_table, surf)
+    make_core_table(core_table,  {"w", "H", "J", "K", "L", "x", "X",  "v", "V"})
 
     hint_table = {}
-    string_val = "^ ^    swapPer    ^ ^\n\n"
-    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
-
+    string_val = "^ ^    Swap/Surf    ^ ^\n\n"
     for _, v in pairs(core_table) do
         if v == "\n" then
+
+
             hint = "\n"
-            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
         else
             hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
         end
@@ -190,6 +260,8 @@ local function auto_hint_generate()
         string_val = string_val .. hint
         -- end
     end
+
+    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
     return string_val
 end
 

@@ -161,3 +161,38 @@ ts({
         })
     end,
 })
+
+ts({
+    -- It uses hydra
+    "Dkendal/nvim-treeclimber",
+    after = "nvim-treesitter",
+    requires = "rktjmp/lush.nvim",
+    config = function()
+        local tc = require("nvim-treeclimber")
+
+        -- Highlight groups
+        -- Change if you don't have Lush installed
+        local color = require("nvim-treeclimber.hi")
+        local bg = color.bg_hsluv("Normal")
+        local fg = color.fg_hsluv("Normal")
+        local dim = bg.mix(fg, 20)
+
+        vim.api.nvim_set_hl(0, "TreeClimberHighlight", { background = dim.hex })
+
+        vim.api.nvim_set_hl(0, "TreeClimberSiblingBoundary", { background = color.terminal_color_5.hex })
+
+        vim.api.nvim_set_hl(
+            0,
+            "TreeClimberSibling",
+            { background = color.terminal_color_5.mix(bg, 40).hex, bold = true }
+        )
+
+        vim.api.nvim_set_hl(0, "TreeClimberParent", { background = bg.mix(fg, 2).hex })
+
+        vim.api.nvim_set_hl(
+            0,
+            "TreeClimberParentStart",
+            { background = color.terminal_color_4.mix(bg, 10).hex, bold = true }
+        )
+    end,
+})

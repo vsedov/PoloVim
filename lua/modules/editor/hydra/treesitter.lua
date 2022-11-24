@@ -1,4 +1,5 @@
 local ts_move = require("nvim-treesitter.textobjects.move")
+local tc = require("nvim-treeclimber")
 local leader = "\\<leader>"
 local hydra = require("hydra")
 
@@ -114,9 +115,9 @@ config.parenth_mode = {
     ["<CR>"] = { mx("J"), { nowait = true, desc = "Jump", exit = true } }, -- ts: inner conditional
 }
 --  TODO: (vsedov) (02:33:50 - 07/11/22): Cut and delete in this instance would do the same thing if
---  im not mistaken
+--  im not mistaken c = "c"
 for surround, motion in pairs({ c = "ac", C = "ic", a = "af", A = "if", i = "aC", I = "iC" }) do
-    for doc, key in pairs({ d = "d", c = "c", y = "y" }) do
+    for doc, key in pairs({ d = "d", y = "y" }) do
         local motiondoc = surround
         -- local exit_call = false
         local mapping = table.concat({ doc, surround })
@@ -192,7 +193,7 @@ local function auto_hint_generate()
     single = create_table_normal({}, sorted, 1)
     yank = create_table_normal({}, sorted, 2, "y")
     delete = create_table_normal({}, sorted, 2, "d")
-    change = create_table_normal({}, sorted, 2, "c")
+    -- change = create_table_normal({}, sorted, 2, "c")
 
     -- diagnostics = create_table_normal({}, sorted, 2, "d")
 
@@ -202,7 +203,7 @@ local function auto_hint_generate()
     make_core_table(core_table, single)
     make_core_table(core_table, yank)
     make_core_table(core_table, delete)
-    make_core_table(core_table, change)
+    -- make_core_table(core_table, change)
 
     hint_table = {}
     string_val = "^ ^  Tree Sitter    ^ ^\n\n"
