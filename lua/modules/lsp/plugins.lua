@@ -49,14 +49,14 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     opt = true,
-    -- setup = function()
-    --     lambda.lazy_load({
-    --         events = "BufWinEnter",
-    --         augroup_name = "lsp_sig",
-    --         condition = condition(),
-    --         plugin = "lsp_signature.nvim",
-    --     })
-    -- end,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufWinEnter",
+            augroup_name = "lsp_sig",
+            condition = lambda.config.lsp.use_lsp_signature,
+            plugin = "lsp_signature.nvim",
+        })
+    end,
     config = conf.lsp_sig,
 })
 

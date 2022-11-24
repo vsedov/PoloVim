@@ -24,7 +24,7 @@ docs({
 docs({
     "max397574/dyn_help.nvim",
     opt = true,
-    keys = "<leader>hw",
+    keys = "<leader>xw",
     config = conf.dyn_help,
 })
 
@@ -52,7 +52,6 @@ docs({
 --  TODO: (vsedov) (06:07:10 - 28/10/22): Make hydra so this would be nice to use.
 docs({
     "loganswartz/updoc.nvim",
-    -- after = "nvim-lspconfig
     modules = "updoc",
     opt = true,
     config = function()

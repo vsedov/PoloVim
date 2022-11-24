@@ -87,7 +87,7 @@ function config.code_runner()
             java = "cd $dir && javac $dir && java $fileName",
             c = "gcc $file -o $dir && ./$fileNameWithoutExt",
             cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
-            python = "cd $dir && python3 $fileName ",
+            python = "cd $dir && poetry run python $fileName ",
         },
     })
 end
