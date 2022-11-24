@@ -219,7 +219,7 @@ function config.sj()
 
     --- buffer --------------------------------------------
 
-    vim.keymap.set("n", "/", function()
+    vim.keymap.set("n", "c/", function()
         vim.fn.setpos("''", vim.fn.getpos("."))
         sj.run({
             forward_search = false,
@@ -378,7 +378,6 @@ function config.grapple()
     })
 end
 function config.easymark()
-
     require("easymark").setup({
         position = "bottom", -- position choices: bottom|top|left|right
         height = 10, -- might have to reduce this
@@ -399,14 +398,9 @@ function config.easymark()
         },
         auto_preview = true,
     })
-
 end
 
-
-
 function config.bookmark()
-
-
     require("bookmarks").setup({
         keymap = {
             toggle = "<tab><tab>", -- toggle bookmarks
@@ -425,7 +419,5 @@ function config.bookmark()
         virt_pattern = { "*.python", "*.go", "*.lua", "*.sh", "*.php", "*.rust" }, -- Show virt text only on matched pattern
     })
 end
-
-
 
 return config

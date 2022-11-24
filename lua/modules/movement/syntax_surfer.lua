@@ -61,9 +61,6 @@ vim.keymap.set("n", "vu", function()
     return "g@l"
 end, { silent = true, expr = true })
 
--- Visual Selection from Normal Mode
-vim.keymap.set("n", "vx", "<cmd>STSSelectMasterNode<cr>", opts)
-vim.keymap.set("n", "vn", "<cmd>STSSelectCurrentNode<cr>", opts)
 vim.keymap.set("n", "gfu", function() -- only jump to functions
     sts.targeted_jump({ "function", "function_definition" })
     --> In this example, the Lua language schema uses "function",
@@ -95,3 +92,10 @@ vim.keymap.set("n", "J", function() -- jump to all that you specify
         "switch_statement",
     })
 end, opts)
+
+lambda.command("STSJumpToTop", function()
+    require("syntax-tree-surfer").go_to_top_node_and_execute_commands(
+        false,
+        { "normal! O", "normal! O", "startinsert" }
+    )
+end, {})

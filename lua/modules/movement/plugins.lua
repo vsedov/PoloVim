@@ -16,6 +16,17 @@ movement({
         { "n", "gfo" },
         { "n", "J" },
     },
+    cmd = {
+        "STSSwapNextVisual",
+        "STSSwapPrevVisual",
+        "STSSelectChildNode",
+        "STSSelectParentNode",
+        "STSSelectPrevSiblingNode",
+        "STSSelectNextSiblingNode",
+        "STSSelectCurrentNode",
+        "STSSelectMasterNode",
+        "STSJumpToTop",
+    },
     config = conf.syntax_surfer,
 })
 
@@ -107,7 +118,7 @@ movement({
         "<leader>sp",
         "<leader>sc",
         "c?",
-        "/",
+        "c/",
         "<leader>sv",
         "<leader>sV",
         "<leader>sP",
@@ -141,8 +152,6 @@ movement({
     config = conf.quick_scope,
 })
 
-
-
 movement({
     "cbochs/portal.nvim",
     opt = true,
@@ -159,12 +168,16 @@ movement({
     config = conf.grapple,
 })
 
-
+-- requirment:
+-- /home/viv/.config/nvim/init.lua|2,0
+-- need to create .cache/nvim/lazymark.nvim
+-- then need to add some random stuff on the file
+-- like NONE
+-- then make a mark , it wil then work .
 movement({
-    "LintaoAmons/lazymark.nvim", 
+    "LintaoAmons/lazymark.nvim",
     modules = "lazymark",
 })
-
 
 movement({
     "crusj/bookmarks.nvim",
@@ -181,9 +194,8 @@ movement({
     config = conf.bookmark,
 })
 
-
 movement({
     "0x00-ketsu/easymark.nvim",
-    modules = "easymark",    
+    modules = "easymark",
     config = conf.easymark,
 })
