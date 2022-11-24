@@ -77,10 +77,21 @@ local gh_dash = Terminal:new({
     },
 })
 
+local nap = Terminal:new({
+    cmd = "nap",
+    hidden = true,
+    direction = "float",
+    on_open = float_handler,
+})
+
 vim.api.nvim_create_user_command("GDash", function()
     gh_dash:toggle()
 end, {})
 
 vim.api.nvim_create_user_command("Htop", function()
     htop:toggle()
+end, {})
+
+vim.api.nvim_create_user_command("Nap", function()
+    nap:toggle()
 end, {})
