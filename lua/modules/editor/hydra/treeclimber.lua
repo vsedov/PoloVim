@@ -1,8 +1,9 @@
 local tc = require("nvim-treeclimber")
-local leader = "\\<cr>"
+
+local leader = ";w"
 local hydra = require("hydra")
 
-local bracket = { "H", "J", "K", "L", "w" }
+local bracket = { "h", "j", "k", "l", "w" }
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
         table.insert(core_table, v)
@@ -17,35 +18,35 @@ local exit = { nil, { exit = true, desc = "EXIT" } }
 config.parenth_mode = {
     color = "pink",
     body = leader,
-    mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
 
-    H = {
+    h = {
         function()
             tc.select_backward()
         end,
-        { nowait = true, desc = "TC Back" },
+
+        { nowait = false, exit = true, desc = "TC Back" },
     },
-    J = {
+    j = {
         function()
             tc.select_shrink()
         end,
         { nowait = true, desc = "TC Shrink" },
     },
-    K = {
+    k = {
         function()
             tc.select_expand()
         end,
         { nowait = true, desc = "TC Expand" },
     },
-    L = {
+    l = {
         function()
             tc.select_forward()
         end,
         { nowait = true, desc = "TC >" },
     },
 
-    f = {
+    w = {
         function()
             tc.show_control_flow()
         end,
@@ -91,7 +92,7 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "TC Grow <" },
     },
-    w = {
+    W = {
         function()
             tc.select_top_level()
         end,
@@ -112,9 +113,6 @@ local mapping = {
     on_exit = function(t, rhs)
         t.config.on_exit = rhs
     end,
-    mode = function(t, rhs)
-        t.config.mode = rhs
-    end,
 }
 -- Create a Auto Hinting Table same as above but with auto generated
 
@@ -128,6 +126,7 @@ local new_hydra = {
         timeout = false,
         invoke_on_body = true,
     },
+    mode = { "n", "x", "o" },
     heads = {},
 }
 
@@ -164,8 +163,8 @@ local function auto_hint_generate()
     core_table = {}
 
     make_core_table(core_table, bracket)
+    make_core_table(core_table, { "W", "c", "e" })
     make_core_table(core_table, { "s", "S", "[", "]" })
-    make_core_table(core_table, { "c", "f", "e" })
 
     hint_table = {}
     string_val = "^ ^  Tree Climber    ^ ^\n\n"

@@ -42,7 +42,7 @@ vim.api.nvim_create_user_command("ShowHydraBinds", function()
         git_plus = "<leader>H",
         grapple = "<leader>l",
         harpoon = "<cr>",
-        lsp = "\\k",
+        lsp = ";a",
         test = "<leader>u",
         parenth_mode = "\\l", -- Might change
         python = ";l",
@@ -89,6 +89,7 @@ vim.api.nvim_create_user_command("ShowCoreHydraBinds", function()
         reach = ";;",
         extra_search = ";A",
         python = ";l",
+        lsp = ";a",
 
         git_plus = "<leader>H",
         grapple = "<leader>l",

@@ -18,7 +18,7 @@ local motion_type = {
     c = "Cut",
     y = "Yank",
 }
-local bracket = { "h", "j", "k", "l", "O", "]", "[" }
+local bracket = { "h", "j", "k", "l", "O", "J", "K" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -69,7 +69,6 @@ end
 config.parenth_mode = {
     color = "pink",
     body = leader,
-    mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
     j = {
         function()
@@ -101,8 +100,8 @@ config.parenth_mode = {
     -- [g finds the diagnostic before the cursor (excluding any diagnostic the cursor is sitting on)
 
     ["O"] = { mx("ig", "v"), { nowait = true, desc = "Diag A[Cur]" } }, -- ts: all class
-    ["]"] = { mx("]g", "v"), { nowait = true, desc = "Diag >[Cur]" } }, -- ts: all class
-    ["["] = { mx("[g", "v"), { nowait = true, desc = "Diag <[Cur]" } }, -- ts: all class
+    ["J"] = { mx("]g", "v"), { nowait = true, desc = "Diag >[Cur]" } }, -- ts: all class
+    ["K"] = { mx("[g", "v"), { nowait = true, desc = "Diag <[Cur]" } }, -- ts: all class
 
     ["w"] = { mx("ac", "v"), { nowait = true, desc = "Cls  [ac]" } }, -- ts: all class
     ["W"] = { mx("ic", "v"), { nowait = true, desc = "Cls  [ic]" } }, -- ts: inner class
@@ -114,6 +113,7 @@ config.parenth_mode = {
     ["I"] = { mx("iC", "v"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
     ["<CR>"] = { mx("J"), { nowait = true, desc = "Jump", exit = true } }, -- ts: inner conditional
 }
+
 --  TODO: (vsedov) (02:33:50 - 07/11/22): Cut and delete in this instance would do the same thing if
 --  im not mistaken c = "c"
 for surround, motion in pairs({ c = "ac", C = "ic", a = "af", A = "if", i = "aC", I = "iC" }) do
@@ -141,9 +141,6 @@ local mapping = {
     on_exit = function(t, rhs)
         t.config.on_exit = rhs
     end,
-    mode = function(t, rhs)
-        t.config.mode = rhs
-    end,
 }
 -- Create a Auto Hinting Table same as above but with auto generated
 
@@ -158,6 +155,7 @@ local new_hydra = {
         invoke_on_body = true,
     },
     heads = {},
+    mode = { "n", "v", "x", "o" },
 }
 
 for name, spec in pairs(config) do
