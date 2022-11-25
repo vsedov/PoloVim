@@ -78,4 +78,3 @@ vim.api.nvim_create_user_command(
 )
 
 require("modules.lang.overseer.binds")
-require("modules.lang.overseer.template")
