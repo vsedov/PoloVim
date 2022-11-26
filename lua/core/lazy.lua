@@ -194,7 +194,6 @@ vim.defer_fn(function()
     end
 
     if lambda.config.use_both_leap_light_speed then
-        loader("lightspeed.nvim")
         loader("leap.nvim")
     end
 

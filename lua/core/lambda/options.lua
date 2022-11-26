@@ -1,7 +1,7 @@
 -- pick random  item form dark but based on its probability
 local noice_enabled = false
 local use_noice_docs = false -- this creats an error for some reason , though im not sure why | It is nice to have though
-local use_lightspeed = false --  So the tldr here is when this is false, both lightspeed and leap are active, but when this is true only lightspeed will be active
+local use_lightspeed = true --  So the tldr here is when this is false, both lightspeed and leap are active, but when this is true only lightspeed will be active
 local use_ts_yeti = true
 local use_glance = true
 
@@ -35,36 +35,26 @@ lambda.config = {
     use_hlchunk = false,
 
     -- this still feels niceer
-    use_lightspeed = use_lightspeed, -- if false then leap.nvim will be used.
-    use_quick_scope = use_lightspeed,
-    use_both_leap_light_speed = not use_lightspeed,
+    use_lightspeed = false, -- if false then leap.nvim will be used.
+    -- if false then leap.nvim will be used.
+    use_both_leap_light_speed = true,
+    use_leap = true,
+
+    use_quick_scope = false,
+
     use_use_hiPairs = true,
 
     use_music = false,
-
     use_scope = true, -- really fucks with neogit window
-
     use_scroll = false,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-
-    use_wrapping = true, -- I am not sure if this is causing me to segfault.
-
+    use_wrapping = false, -- I am not sure if this is causing me to segfault.
     use_unception = true,
-
     use_code_window = false,
-
     use_luasnip_brackets = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
-
     use_marks = false, -- This has not been updated in a long while, and hence, although its a gret plugin it can become very slow
-    -- and not verynice to use, because of this , i am disabling this for the time .
-
-    --  TODO: (vsedov) (18:03:38 - 17/11/22): Im not sure if these cause allot of lag on large
-    --  files,
-    -- UI
     use_clock = false, -- set to true to  see timer for config
-
     use_pet = false,
-
     use_beacon = false,
     use_dashboard = false, -- set to false to not see this
     use_fidget = false,
@@ -155,7 +145,7 @@ lambda.config.lsp = {
     },
 }
 lambda.config.ui = {
-    use_illuminate = true,
+    use_illuminate = false,
     noice = {
         enable = noice_enabled,
         lsp = {
