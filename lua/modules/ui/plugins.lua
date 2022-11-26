@@ -171,6 +171,13 @@ ui({
     config = conf.fold_focus,
 })
 
+-- ui({
+--     "levouh/tint.nvim",
+--     opt = true,
+--     event = "BufEnter",
+--     config = conf.tint,
+-- })
+
 ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
 
 ui({

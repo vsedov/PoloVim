@@ -85,22 +85,22 @@ misc({
     end,
 })
 
-misc({
-    "gbprod/stay-in-place.nvim",
-    keys = {
-        { "n", ">" },
-        { "n", "<" },
-        { "n", "=" },
-        { "n", ">>" },
-        { "n", "<<" },
-        { "x", ">" },
-        { "x", "<" },
-        { "x", "=" },
-    },
-    config = function()
-        require("stay-in-place").setup({})
-    end,
-})
+-- misc({
+--     "gbprod/stay-in-place.nvim",
+--     keys = {
+--         { "n", ">" },
+--         { "n", "<" },
+--         { "n", "=" },
+--         { "n", ">>" },
+--         { "n", "<<" },
+--         { "x", ">" },
+--         { "x", "<" },
+--         { "x", "=" },
+--     },
+--     config = function()
+--         require("stay-in-place").setup({})
+--     end,
+-- })
 misc({
     -- "olimorris/persisted.nvim",
     "stevearc/resession.nvim",

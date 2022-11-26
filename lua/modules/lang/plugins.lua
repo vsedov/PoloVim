@@ -12,8 +12,8 @@ lang({
     config = conf.refactor,
 })
 
--- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this
--- on startup, using lazy.lua
+-- -- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this
+-- -- on startup, using lazy.lua
 lang({
     "andrewferrier/debugprint.nvim",
     keys = {
@@ -40,8 +40,6 @@ lang({ "nanotee/luv-vimdocs", opt = true })
 -- builtin lua functions
 lang({ "milisims/nvim-luaref", opt = true })
 
-lang({ "mtdl9/vim-log-highlighting", ft = { "text", "log" } })
-
 lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
 
 lang({
@@ -62,7 +60,7 @@ lang({
     end,
     config = conf.dev_comments,
 })
--- not the same as folkes version
+-- -- not the same as folkes version
 lang({ "bfredl/nvim-luadev", opt = true, ft = "lua", setup = conf.luadev })
 
 lang({
@@ -107,8 +105,6 @@ lang({
     end,
 })
 
-lang({ "mfussenegger/nvim-jdtls", ft = "java", opt = true })
-
 lang({
     "rcarriga/neotest",
     opt = true,
@@ -131,15 +127,17 @@ lang({
     config = conf.neotest,
 })
 lang({
-
     "rcarriga/neotest-vim-test",
     cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
     requires = { "vim-test/vim-test", opt = true, after = "neotest" },
 })
+
 lang({
     "stevearc/overseer.nvim",
+    event = "BufWinEnter",
     config = conf.overseer,
 })
+
 lang({
     "CRAG666/code_runner.nvim",
     cmd = {
@@ -160,9 +158,7 @@ lang({
     opt = true,
     config = conf.coverage,
 })
-lang({ "mgedmin/coverage-highlight.vim", ft = "python", opt = true, run = ":UpdateRemotePlugins" })
-
--- -- IPython Mappings
+-- -- -- IPython Mappings
 lang({
     lambda.use_local("py.nvim", "contributing"),
     ft = "python",
@@ -187,10 +183,10 @@ lang({
     config = conf.regexplainer,
 })
 
--- lang({
---     "Vimjas/vim-python-pep8-indent",
---     ft = "python",
--- })
+-- -- lang({
+-- --     "Vimjas/vim-python-pep8-indent",
+-- --     ft = "python",
+-- -- })
 
 lang({ "dccsillag/magma-nvim", ft = "python", run = ":UpdateRemotePlugins" })
 

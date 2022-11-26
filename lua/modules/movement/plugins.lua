@@ -29,12 +29,11 @@ movement({
     },
     config = conf.syntax_surfer,
 })
+--------------------------------
 
 movement({
     "ggandor/lightspeed.nvim",
     requires = { "tpope/vim-repeat" },
-
-    opt = true,
     config = conf.lightspeed,
 })
 
@@ -65,11 +64,103 @@ movement({
 movement({
     "ggandor/flit.nvim",
     opt = true,
-    wants = "leap.nvim",
     after = "leap.nvim",
-    config = function()
-        require("flit").setup()
+
+    setup = function()
+        if lambda.config.use_leap then
+            vim.keymap.set("n", "f", "f")
+            vim.keymap.set("n", "F", "F")
+            vim.keymap.set("n", "t", "t")
+            vim.keymap.set("n", "T", "T")
+        end
     end,
+
+    config = function()
+        require("flit").setup({
+            keys = { f = "f", F = "F", t = "t", T = "T" },
+            -- A string like "nv", "nvo", "o", etc.
+            labeled_modes = "nvo",
+            multiline = true,
+            -- Like `leap`s similar argument (call-specific overrides).
+            -- E.g.: opts = { equivalence_classes = {} }
+            opts = {},
+        })
+    end,
+})
+--------------------------------
+
+movement({
+    "unblevable/quick-scope",
+    opt = true,
+    setup = function()
+        if lambda.config.use_quick_scope then
+            vim.keymap.set("n", "f", "f")
+            vim.keymap.set("n", "F", "F")
+            vim.keymap.set("n", "t", "t")
+            vim.keymap.set("n", "T", "T")
+        end
+
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "quick_scope",
+            condition = lambda.config.use_quick_scope, -- reverse
+            plugin = "quick-scope",
+        })
+    end,
+    config = conf.quick_scope,
+})
+--------------------------------
+
+movement({
+    "cbochs/portal.nvim",
+    opt = true,
+    requires = {
+        "ThePrimeagen/harpoon",
+        "cbochs/grapple.nvim",
+    },
+    modules = "portal",
+})
+movement({
+    "cbochs/grapple.nvim",
+    opt = true,
+    after = "lightspeed.nvim",
+    config = conf.grapple,
+})
+movement({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
+movement({ "gaborvecsei/memento.nvim", opt = true, module = "memento", after = "harpoon" })
+
+--------------------------------
+
+-- requirment:
+-- /home/viv/.config/nvim/init.lua|2,0
+-- need to create .cache/nvim/lazymark.nvim
+-- then need to add some random stuff on the file
+-- like NONE
+-- then make a mark , it wil then work .
+movement({
+    "LintaoAmons/lazymark.nvim",
+    modules = "lazymark",
+})
+
+movement({
+    "crusj/bookmarks.nvim",
+    branch = "main",
+    requires = {
+        "nvim-tree/nvim-web-devicons",
+        "nvim-treesitter/nvim-treesitter",
+    },
+    keys = {
+        "<tab><tab>",
+        "\\a",
+        "\\o",
+    },
+    config = conf.bookmark,
+})
+--------------------------------
+movement({
+    "0x00-ketsu/easymark.nvim",
+    modules = "easymark",
+    config = conf.easymark,
 })
 
 movement({
@@ -126,76 +217,4 @@ movement({
         "<A-!>",
     },
     config = conf.sj,
-})
-
-movement({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
-movement({ "gaborvecsei/memento.nvim", opt = true, module = "memento", after = "harpoon" })
-
-movement({
-    "unblevable/quick-scope",
-    opt = true,
-    setup = function()
-        if lambda.config.use_quick_scope then
-            vim.keymap.set("n", "f", "f")
-            vim.keymap.set("n", "F", "F")
-            vim.keymap.set("n", "t", "t")
-            vim.keymap.set("n", "T", "T")
-        end
-
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "quick_scope",
-            condition = lambda.config.use_quick_scope, -- reverse
-            plugin = "quick-scope",
-        })
-    end,
-    config = conf.quick_scope,
-})
-
-movement({
-    "cbochs/portal.nvim",
-    opt = true,
-    requires = {
-        "ThePrimeagen/harpoon",
-        "cbochs/grapple.nvim",
-    },
-    modules = "portal",
-})
-movement({
-    "cbochs/grapple.nvim",
-    opt = true,
-    after = "lightspeed.nvim",
-    config = conf.grapple,
-})
-
--- requirment:
--- /home/viv/.config/nvim/init.lua|2,0
--- need to create .cache/nvim/lazymark.nvim
--- then need to add some random stuff on the file
--- like NONE
--- then make a mark , it wil then work .
-movement({
-    "LintaoAmons/lazymark.nvim",
-    modules = "lazymark",
-})
-
-movement({
-    "crusj/bookmarks.nvim",
-    branch = "main",
-    requires = {
-        "nvim-tree/nvim-web-devicons",
-        "nvim-treesitter/nvim-treesitter",
-    },
-    keys = {
-        "<tab><tab>",
-        "\\a",
-        "\\o",
-    },
-    config = conf.bookmark,
-})
-
-movement({
-    "0x00-ketsu/easymark.nvim",
-    modules = "easymark",
-    config = conf.easymark,
 })

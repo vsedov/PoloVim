@@ -45,14 +45,14 @@ local treesitter = function()
     }
 
     require("nvim-treesitter.configs").setup({
-        autopairs = { enable = enable },
+        autopairs = { enable = false },
         markid = { enable = lambda.config.better_ts_highlights },
         highlight = {
             enable = true, -- false will disable the whole extension
             additional_vim_regex_highlighting = lambda.config.do_you_want_lag,
         },
         incremental_selection = {
-            enable = enable,
+            enable = false,
             -- disable = {"elm"},
             keymaps = {
                 -- mappings for incremental selection (visual mappings)

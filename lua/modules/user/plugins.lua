@@ -135,6 +135,8 @@ user({
         lambda.lazy_load({
             events = "BufWinEnter",
             augroup_name = "winsep",
+            condition = false,
+
             plugin = "colorful-winsep.nvim",
         })
     end,
@@ -149,6 +151,8 @@ user({
         lambda.lazy_load({
             events = "BufRead",
             augroup_name = "hlsearch",
+            condition = false,
+
             plugin = "hlsearch.nvim",
         })
     end,
@@ -186,5 +190,34 @@ user({
         vim.g.skip_flow_default_hl = true -- If you want to override default highlights
         vim.api.nvim_set_hl(0, "FSPrefix", { fg = "#cdd6f4" })
         vim.api.nvim_set_hl(0, "FSSuffix", { fg = "#6C7086" })
+    end,
+})
+
+user({
+    "chrisgrieser/nvim-genghis",
+    requires = "stevearc/dressing.nvim",
+    opt = true,
+    cmd = {
+        "GenghiscopyFilepath",
+        "GenghiscopyFilename",
+        "Genghischmodx",
+        "GenghisrenameFile",
+        "GenghiscreateNewFile",
+        "GenghisduplicateFile",
+        "Genghistrash",
+        "Genghismove",
+    },
+    config = function()
+        local genghis = require("genghis")
+        lambda.command("GenghiscopyFilepath", genghis.copyFilepath, {})
+        lambda.command("GenghiscopyFilename", genghis.copyFilename, {})
+        lambda.command("Genghischmodx", genghis.chmodx, {})
+        lambda.command("GenghisrenameFile", genghis.renameFile, {})
+        lambda.command("GenghiscreateNewFile", genghis.createNewFile, {})
+        lambda.command("GenghisduplicateFile", genghis.duplicateFile, {})
+        lambda.command("Genghistrash", function()
+            genghis.trashFile({ trashLocation = "/home/viv/.local/share/Trash/" })
+        end, {})
+        lambda.command("Genghismove", genghis.moveSelectionToNewFile, {})
     end,
 })

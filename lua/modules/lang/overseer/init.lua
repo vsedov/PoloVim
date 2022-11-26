@@ -1,15 +1,6 @@
 local overseer = require("overseer")
 local STATUS = require("overseer.constants").STATUS
 overseer.setup({
-    form = {
-        border = lambda.style.border.type_0,
-
-        win_opts = { winblend = 0 },
-    },
-    task_editor = { win_opts = { winblend = 0 } },
-    task_win = { win_opts = { winblend = 0 } },
-    confirm = { win_opts = { winblend = 0 } },
-
     auto_detect_success_color = true,
     dap = true,
     task_list = {
@@ -68,7 +59,7 @@ overseer.setup({
         },
     },
 
-    templates = { "builtin", "python", "julia", "tox", "configs" },
+    templates = { "builtin", "python" },
 })
 
 vim.api.nvim_create_user_command(
