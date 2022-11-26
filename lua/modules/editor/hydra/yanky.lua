@@ -15,6 +15,14 @@ local hint = [[
 local yanky_hydra = Hydra({
     name = "Yank ring",
     mode = "n",
+    config = {
+        color = "amaranth",
+        invoke_on_body = true,
+        hint = {
+            border = lambda.style.border.type_0,
+            position = "middle-right",
+        },
+    },
     hint = hint,
     heads = {
         { "y", "<Plug>(YankyYank)", { desc = "Yank" } },
