@@ -3,8 +3,10 @@ local noice_enabled = false
 local use_noice_docs = false -- this creats an error for some reason , though im not sure why | It is nice to have though
 local use_lightspeed = false --  So the tldr here is when this is false, both lightspeed and leap are active, but when this is true only lightspeed will be active
 local use_ts_yeti = true
+local use_glance = true
 
 lambda.config = {
+    use_hydra = true,
     overwrite_colours_use_styler = true,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     better_ts_highlights = true,
@@ -139,14 +141,14 @@ lambda.config.cmp = {
 lambda.config.lsp = {
     use_rcd = false,
     use_lsp_lines = false,
-    use_lsp_signature = true5,
+    use_lsp_signature = true,
 
     latex = "ltex", -- texlab | ltex
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         -- jedis documentation is better though
-        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "pylance", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         pylance_pyright = {
             use_inlay_hints = true,
         },

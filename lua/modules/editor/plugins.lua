@@ -143,7 +143,7 @@ editor({
         lambda.lazy_load({
             events = "BufEnter",
             augroup_name = "hydra",
-            condition = true,
+            condition = lambda.config.use_hydra,
             plugin = "hydra.nvim",
         })
     end,
@@ -231,15 +231,6 @@ editor({
 --         })
 --     end,
 -- })
-
-editor({
-    "junegunn/goyo.vim",
-    opt = true,
-    cmd = {
-        "Goyo",
-    },
-    config = conf.goyo,
-})
 
 editor({
     "marklcrns/vim-smartq",

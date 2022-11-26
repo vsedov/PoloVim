@@ -31,10 +31,6 @@ end
 M.dapui = function()
     local dap, dapui = require("dap"), require("dapui")
     dapui.setup()
-    dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open()
-        vim.api.nvim_exec_autocmds("User", { pattern = "DapStarted" })
-    end
 end
 
 M.prepare = function()
@@ -44,7 +40,6 @@ M.prepare = function()
         ["python"] = function()
             loader("nvim-dap-python")
             require("dap-python").setup(vim.fn.system("which python"))
-            -- require("dap-python").setup("/home/viv/.cache/pypoetry/virtualenvs/neorgbot-aidSKrkk-py3.10/bin/python")
 
             require("dap-python").test_runner = "pytest"
 

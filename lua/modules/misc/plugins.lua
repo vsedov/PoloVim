@@ -5,11 +5,11 @@ misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
 misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 
-misc({
-    "kylechui/nvim-surround",
-    event = "BufWinEnter",
-    config = conf.surround,
-})
+-- misc({
+--     "kylechui/nvim-surround",
+--     event = "BufWinEnter",
+--     config = conf.surround,
+-- })
 
 misc({
     "NMAC427/guess-indent.nvim",

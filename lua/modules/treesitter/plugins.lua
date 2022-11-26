@@ -109,57 +109,7 @@ ts({
 ts({
     "folke/paint.nvim",
     event = "BufReadPre",
-    config = function()
-        require("paint").setup({
-            -- @type PaintHighlight[]
-            highlights = {
-                {
-                    filter = { filetype = "lua" },
-                    pattern = "%s(@%w+)",
-                    -- pattern = "%s*%-%-%-%s*(@%w+)",
-                    hl = "@parameter",
-                },
-                {
-                    filter = { filetype = "c" },
-                    -- pattern = "%s*%/%/%/%s*(@%w+)",
-                    pattern = "%s(@%w+)",
-                    hl = "@parameter",
-                },
-                {
-                    filter = { filetype = "python" },
-                    -- pattern = "%s*%/%/%/%s*(@%w+)",
-                    pattern = "%s(@%w+)",
-                    hl = "@parameter",
-                },
-
-                {
-                    filter = { filetype = "markdown" },
-                    pattern = "%*.-%*", -- *foo*
-                    hl = "Title",
-                },
-                {
-                    filter = { filetype = "markdown" },
-                    pattern = "%*%*.-%*%*", -- **foo**
-                    hl = "Error",
-                },
-                {
-                    filter = { filetype = "markdown" },
-                    pattern = "%s_.-_", --_foo_
-                    hl = "MoreMsg",
-                },
-                {
-                    filter = { filetype = "markdown" },
-                    pattern = "%s%`.-%`", -- `foo`
-                    hl = "Keyword",
-                },
-                {
-                    filter = { filetype = "markdown" },
-                    pattern = "%`%`%`.*", -- ```foo<CR>...<CR>```
-                    hl = "MoreMsg",
-                },
-            },
-        })
-    end,
+    config = conf.paint,
 })
 
 ts({
@@ -167,54 +117,5 @@ ts({
     "Dkendal/nvim-treeclimber",
     after = "nvim-treesitter",
     requires = "rktjmp/lush.nvim",
-    config = function()
-        local tc = require("nvim-treeclimber")
-
-        -- Highlight groups
-        -- Change if you don't have Lush installed
-        local color = require("nvim-treeclimber.hi")
-        local bg = color.bg_hsluv("Normal")
-        local fg = color.fg_hsluv("Normal")
-        local dim = bg.mix(fg, 20)
-
-        vim.api.nvim_set_hl(0, "TreeClimberHighlight", { background = dim.hex })
-
-        vim.api.nvim_set_hl(0, "TreeClimberSiblingBoundary", { background = color.terminal_color_5.hex })
-
-        vim.api.nvim_set_hl(
-            0,
-            "TreeClimberSibling",
-            { background = color.terminal_color_5.mix(bg, 40).hex, bold = true }
-        )
-
-        vim.api.nvim_set_hl(0, "TreeClimberParent", { background = bg.mix(fg, 2).hex })
-
-        vim.api.nvim_set_hl(
-            0,
-            "TreeClimberParentStart",
-            { background = color.terminal_color_4.mix(bg, 10).hex, bold = true }
-        )
-    end,
-})
-
-ts({
-    "haringsrob/nvim_context_vt",
-    requires = "nvim-treesitter",
-    opt = true,
-    cmd = {
-        "NvimContextVtToggle",
-        "NvimContextVtDebug",
-    },
-    function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "context",
-            condition = lambda.config.treesitter.use_context, -- reverse
-            plugin = "nvim_context_vt",
-        })
-    end,
-
-    config = function()
-        require("nvim_context_vt").setup({})
-    end,
+    -- config = conf.climber,
 })

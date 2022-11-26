@@ -217,6 +217,7 @@ local function textsubjects()
             keymaps = {
                 ["<leader><leader><leader>"] = "textsubjects-smart",
                 ["<leader><leader><cr>"] = "textsubjects-container-outer",
+                ['<leader><leader>;"'] = "textsubjects-container-inner",
             },
         },
     })

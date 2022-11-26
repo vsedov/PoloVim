@@ -4,7 +4,6 @@ local clipsub = require("core.pack").package
 clipsub({
     "gbprod/yanky.nvim",
     event = { "CursorMoved", "CmdlineEnter" },
-    setup = conf.setup_yanky,
     config = conf.config_yanky,
     requires = { "telescope.nvim", "kkharji/sqlite.lua" },
 })

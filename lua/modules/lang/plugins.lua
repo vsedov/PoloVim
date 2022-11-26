@@ -112,24 +112,30 @@ lang({ "mfussenegger/nvim-jdtls", ft = "java", opt = true })
 lang({
     "rcarriga/neotest",
     opt = true,
-    modules = "neotest",
-    wants = "overseer.nvim",
+    cmd = {
+        "TestNear",
+        "TestCurrent",
+        "TestSummary",
+        "TestOutput",
+        "TestStrat",
+        "TestStop",
+        "TestAttach",
+    },
     requires = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
-        { "rcarriga/neotest-python", opt = true },
-        { "rcarriga/neotest-plenary", opt = true },
-        {
-            "rcarriga/neotest-vim-test",
-            cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
-            opt = true,
-            requires = { "vim-test/vim-test", opt = true, after = "neotest" },
-        },
+        { "rcarriga/neotest-python" },
+        { "rcarriga/neotest-plenary" },
+        { "stevearc/overseer.nvim" },
     },
     config = conf.neotest,
 })
--- TODO(vsedov) (10:00:41 - 23/08/22): Lean how to actually use this cause
--- I kinda do not really know wtf this thing really does is this another jaq or something ?
+lang({
+
+    "rcarriga/neotest-vim-test",
+    cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
+    requires = { "vim-test/vim-test", opt = true, after = "neotest" },
+})
 lang({
     "stevearc/overseer.nvim",
     config = conf.overseer,
@@ -162,14 +168,6 @@ lang({
     ft = "python",
     opt = true,
     config = conf.python_dev,
-})
-
-lang({
-    "rmagatti/goto-preview",
-    keys = { "gi", "gt", "gR", "gC" },
-    requires = "telescope.nvim",
-    after = "nvim-lspconfig",
-    config = conf.goto_preview,
 })
 
 lang({

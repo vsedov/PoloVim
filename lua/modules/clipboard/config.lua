@@ -1,29 +1,4 @@
 local config = {}
-function config.setup_yanky()
-    local default_keymaps = {
-        { "n", "Y", "<Plug>(YankyYank)" },
-        { "x", "Y", "<Plug>(YankyYank)" },
-
-        { "n", "p", "<Plug>(YankyPutAfter)" },
-        { "n", "P", "<Plug>(YankyPutBefore)" },
-
-        { "x", "p", "<Plug>(YankyPutAfter)" },
-        { "x", "P", "<Plug>(YankyPutBefore)" },
-
-        { "n", "gp", "<Plug>(YankyGPutAfter)" },
-        { "n", "gP", "<Plug>(YankyGPutBefore)" },
-
-        { "x", "gp", "<Plug>(YankyGPutAfter)" },
-        { "x", "gP", "<Plug>(YankyGPutBefore)" },
-
-        { "n", "<Leader>n", "<Plug>(YankyCycleForward)" },
-        { "n", "<Leader>N", "<Plug>(YankyCycleBackward)" },
-    }
-    for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], {})
-    end
-end
-
 function config.config_yanky()
     local mapping = require("yanky.telescope.mapping")
     require("yanky").setup({
@@ -64,15 +39,20 @@ function config.config_yanky()
     })
     require("telescope").load_extension("yank_history")
     vim.keymap.set("n", "<leader>yu", "<cmd>Telescope yank_history<cr>", {})
+
+    local default_keymaps = {
+        { "n", "y", "<Plug>(YankyYank)" },
+        { "x", "y", "<Plug>(YankyYank)" },
+    }
+    for _, m in ipairs(default_keymaps) do
+        vim.keymap.set(m[1], m[2], m[3], {})
+    end
 end
 
 function config.substitute()
-    vim.cmd([[packadd yanky.nvim]])
     require("substitute").setup({
         yank_substituted_text = true,
-        on_substitute = function(event)
-            require("yanky").init_ring("p", event.register, event.count, event.vmode:match("[vV�]"))
-        end,
+        on_substitute = require("yanky.integration").substitute(),
         motion1 = true,
         motion2 = true,
     })
