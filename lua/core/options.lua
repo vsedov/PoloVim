@@ -151,7 +151,7 @@ o.conceallevel = 2
 o.breakindentopt = "sbr"
 o.linebreak = true -- lines wrap at words rather than random characters
 o.synmaxcol = 1024 -- don't syntax highlight long lines
-o.signcolumn = "auto:3-5"
+o.signcolumn = "yes:4"
 o.ruler = false
 if lambda.config.ui.noice.enable then
     o.cmdheight = 1 -- 0 , is still borked it seems

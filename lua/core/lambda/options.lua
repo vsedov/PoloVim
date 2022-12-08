@@ -1,13 +1,14 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = false
+local noice_enabled = true
 local use_noice_docs = false -- this creats an error for some reason , though im not sure why | It is nice to have though
+
 local use_lightspeed = true --  So the tldr here is when this is false, both lightspeed and leap are active, but when this is true only lightspeed will be active
 local use_ts_yeti = true
 local use_glance = true
 
 lambda.config = {
     use_hydra = true,
-    overwrite_colours_use_styler = true,
+    overwrite_colours_use_styler = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     better_ts_highlights = true,
 
@@ -34,29 +35,27 @@ lambda.config = {
     use_gitsigns = true,
     use_hlchunk = false,
 
-    -- this still feels niceer
+    --  ──────────────────────────────────────────────────────────────────────
     use_lightspeed = false, -- if false then leap.nvim will be used.
-    -- if false then leap.nvim will be used.
     use_both_leap_light_speed = true,
     use_leap = true,
-
+    --  ──────────────────────────────────────────────────────────────────────
     use_quick_scope = false,
-
+    --  ──────────────────────────────────────────────────────────────────────
     use_use_hiPairs = true,
-
     use_music = false,
+
     use_scope = true, -- really fucks with neogit window
+
     use_scroll = false,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_wrapping = false, -- I am not sure if this is causing me to segfault.
+    use_wrapping = true, -- I am not sure if this is causing me to segfault.
     use_unception = true,
     use_code_window = false,
     use_luasnip_brackets = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
-    use_marks = false, -- This has not been updated in a long while, and hence, although its a gret plugin it can become very slow
     use_clock = false, -- set to true to  see timer for config
     use_pet = false,
     use_beacon = false,
-    use_dashboard = false, -- set to false to not see this
     use_fidget = false,
 
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
@@ -81,14 +80,14 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
-                "oh-lucy.nvim",
+                -- "kanagawa.nvim",
+                -- "oh-lucy.nvim",
                 "catppuccin",
-                "nvim-tundra",
-                "rose", -- TSMethod'
-                "tokyonight.nvim", -- allot
-                "vim-dogrun",
-                "mellow.nvim",
+                -- "nvim-tundra",
+                -- "tokyonight.nvim", -- allot
+                -- "rose", -- TSMethod'
+                -- "vim-dogrun",
+                -- "mellow.nvim",
             },
             others = {
                 "horizon.nvim",
@@ -102,7 +101,6 @@ lambda.config.colourscheme = {
 lambda.config.treesitter = {
     use_guess_indent = not use_ts_yeti,
     use_yeti = use_ts_yeti,
-    use_context = true,
 }
 
 lambda.config.abbrev = {
@@ -120,7 +118,8 @@ lambda.config.abbrev = {
 lambda.config.cmp = {
     tabnine = {
         use_tabnine = true,
-        tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+        tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+        tabnine_overwrite_sort = true,
         tabnine_prefetch = true,
         tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
     },
@@ -132,20 +131,19 @@ lambda.config.lsp = {
     use_rcd = false,
     use_lsp_lines = false,
     use_lsp_signature = true,
-
-    latex = "ltex", -- texlab | ltex
+    use_typos = true,
+    latex = "texlab", -- texlab | ltex
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
-        format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
-        -- jedis documentation is better though
+        format = { "isort", "yapf" }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = "pylance", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
-        pylance_pyright = {
-            use_inlay_hints = true,
-        },
+        use_semantic_token = true,
+        use_inlay_hints = true,
     },
 }
 lambda.config.ui = {
     use_illuminate = false,
+    use_murmur = true, -- Do not use both illuminate and murmur
     noice = {
         enable = noice_enabled,
         lsp = {

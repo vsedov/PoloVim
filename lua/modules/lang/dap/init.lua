@@ -4,6 +4,17 @@ local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local wk = require("which-key")
 local fn, icons = vim.fn, lambda.style.icons
+local function close_nvim_ide_panels() 
+    if pcall(require, 'ide') then
+        local ws = require('ide.workspaces.workspace_registry').get_workspace(vim.api.nvim_get_current_tabpage())
+        if ws ~= nil then
+            ws.close_panel(require('ide.panels.panel').PANEL_POS_BOTTOM)
+            ws.close_panel(require('ide.panels.panel').PANEL_POS_LEFT)
+            ws.close_panel(require('ide.panels.panel').PANEL_POS_RIGHT)
+        end
+    end
+end
+
 M.config = function()
     require("utils.ui.highlights").plugin("dap", {
         { DapBreakpoint = { foreground = lambda.style.palette.light_red } },
@@ -30,64 +41,46 @@ end
 
 M.dapui = function()
     local dap, dapui = require("dap"), require("dapui")
+
+
     dapui.setup()
+
+
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+      dapui.open()
+      close_nvim_ide_panels()
+    end
 end
 
 M.prepare = function()
     loader("nvim-dap")
     loader("nvim-dap-ui")
-    local ft_call = {
-        ["python"] = function()
-            loader("nvim-dap-python")
-            require("dap-python").setup(vim.fn.system("which python"))
+    loader("nvim-dap-python")
+    require("dap-python").setup()
+    require('dap-python').resolve_python = function()
+      return vim.fn.system("which python")
+    end
+    require("dap-python").test_runner = "pytest"
 
-            require("dap-python").test_runner = "pytest"
-
-            local function test_method()
-                require("dap-python").test_method()
-            end
-            local function test_class()
-                require("dap-python").test_class()
-            end
-            local function debug_selection()
-                require("dap-python").debug_selection()
-            end
-            wk.register({
-                d = {
-                    name = "+debugger",
-                    ff = { test_class, "python test class" },
-                    n = { test_method, "python test method" },
-                    s = { debug_selection, "python debug_selection" },
-                },
-            }, {
-                prefix = "<localleader>",
-            })
-
-            -- require("modules.lang.dap.py")
-        end,
-
-        ["lua"] = function()
-            local keys = {
-                ["n|<F5>"] = map_cr('<cmd>lua require"osv".launch()'):with_noremap():with_silent(),
-                ["n|<F4>"] = map_cr('<cmd>lua require"dap".continue()'):with_noremap():with_silent(),
-            }
-            bind.nvim_load_mapping(keys)
-            require("modules.lang.dap.lua")
-        end,
-
-        ["typescript"] = function()
-            vim.notify("debug prepare for js")
-            vim.cmd([[command! -nargs=*  DebugTest lua require"modules.lang.dap.jest".run(<f-args>)]])
-            require("modules.lang.dap.js")
-        end,
-
-        ["rust"] = function()
-            require("modules.lang.dap.rust")
-        end,
-    }
-
-    local filetype = vim.bo.filetype
-    ft_call[filetype]()
+    local function test_method()
+        require("dap-python").test_method()
+    end
+    local function test_class()
+        require("dap-python").test_class()
+    end
+    local function debug_selection()
+        require("dap-python").debug_selection()
+    end
+    wk.register({
+        d = {
+            name = "+debugger",
+            ff = { test_class, "python test class" },
+            n = { test_method, "python test method" },
+            s = { debug_selection, "python debug_selection" },
+        },
+    }, {
+        prefix = "<localleader>",
+    })
 
     vim.cmd([[command! BPToggle lua require"dap".toggle_breakpoint()]])
     vim.cmd([[command! Debug lua require"modules.lang.dap".StartDbg()]])

@@ -28,6 +28,7 @@ end
 function Lazyload()
     _G.PLoader = loader
     if vim.wo.diff then
+        print("here")
         lprint("diffmode")
         vim.cmd([[packadd nvim-treesitter]])
         require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = false } })
@@ -200,5 +201,6 @@ vim.defer_fn(function()
     if lambda.config.use_lightspeed then
         loader("lightspeed.nvim")
     end
+
     lprint("all done")
 end, lazy_timer + 80)

@@ -214,7 +214,6 @@ function config.neotest()
         },
         overseer = {
             enabled = true,
-            -- When this is true (the default), it will replace all neotest.run.* commands
             force_default = true,
         },
         highlights = {

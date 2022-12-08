@@ -90,7 +90,6 @@ lang({
         {
             "mfussenegger/nvim-dap-python",
             after = "nvim-dap",
-            ft = "python",
         },
         "folke/which-key.nvim",
     },
