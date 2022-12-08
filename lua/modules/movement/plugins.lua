@@ -3,19 +3,7 @@ local movement = require("core.pack").package
 
 movement({
     "ziontee113/syntax-tree-surfer",
-    keys = {
-        { "n", "vU" },
-        { "n", "vD" },
-        { "n", "vd" },
-        { "n", "vu" },
-        { "n", "vx" },
-        { "n", "vn" },
-        { "n", "gv" },
-        { "n", "gfu" },
-        { "n", "gif" },
-        { "n", "gfo" },
-        { "n", "J" },
-    },
+    keys = { "vU", "vD", "vd", "vu", "gfu", "gfo", "J", "vn", "vx" },
     cmd = {
         "STSSwapNextVisual",
         "STSSwapPrevVisual",
@@ -50,15 +38,7 @@ movement({
     opt = true,
     wants = "leap.nvim",
     after = "leap.nvim",
-    config = function()
-        require("leap-spooky").setup({
-            affixes = {
-                remote = { window = "r", cross_window = "R" },
-                magnetic = { window = "m", cross_window = "M" },
-            },
-            paste_on_remote_yank = true,
-        })
-    end,
+    config = conf.leap_spooky,
 })
 
 movement({
@@ -75,17 +55,7 @@ movement({
         end
     end,
 
-    config = function()
-        require("flit").setup({
-            keys = { f = "f", F = "F", t = "t", T = "T" },
-            -- A string like "nv", "nvo", "o", etc.
-            labeled_modes = "nvo",
-            multiline = true,
-            -- Like `leap`s similar argument (call-specific overrides).
-            -- E.g.: opts = { equivalence_classes = {} }
-            opts = {},
-        })
-    end,
+    config = conf.leap_flit,
 })
 --------------------------------
 
@@ -140,6 +110,9 @@ movement({ "gaborvecsei/memento.nvim", opt = true, module = "memento", after = "
 movement({
     "LintaoAmons/lazymark.nvim",
     modules = "lazymark",
+    -- config = function()
+    -- vim.g.lazymark_settings.persist_mark_dir = vim.fn.stdpath("cache") .. "/lazymark.nvim"
+    -- end
 })
 
 movement({

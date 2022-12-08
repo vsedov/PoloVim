@@ -68,6 +68,9 @@ vim.keymap.set("n", "gfu", function() -- only jump to functions
     --  we include both, so this keymap will work on both languages
 end, opts)
 
+vim.keymap.set("n", "vx", "<cmd>STSSelectMasterNode<cr>", opts)
+vim.keymap.set("n", "vn", "<cmd>STSSelectCurrentNode<cr>", opts)
+
 vim.keymap.set("n", "gif", function() -- only jump to if_statements
     sts.targeted_jump({ "if_statement", "else_clause", "else_statement", "elseif_statement" })
 end, opts)

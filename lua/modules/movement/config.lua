@@ -6,13 +6,65 @@ end
 function config.lightspeed()
     require("lightspeed").setup({
         ignore_case = false,
-        exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
+        exit_after_idle_msecs = { unlabeled = 1000 },
         --- s/x ---
         jump_to_unique_chars = { safety_timeout = 400 },
         match_only_the_start_of_same_char_seqs = true,
         force_beacons_into_match_width = true,
         -- Display characters in a custom way in the highlighted matches.
-        substitute_chars = { ["\r"] = "¬" },
+        -- substitute_chars = { ["\r"] = "¬" },
+        substitute_chars = { ["\r"] = "¬", ["\n"] = "¬" },
+
+        safe_labels = { "s", "f", "n", "u", "t", "/", "S", "F", "N", "L", "H", "M", "U", "G", "T", "?", "Z" },
+        labels = {
+            "s",
+            "f",
+            "n",
+            "j",
+            "k",
+            "l",
+            "h",
+            "o",
+            "d",
+            "w",
+            "e",
+            "m",
+            "b",
+            "u",
+            "y",
+            "v",
+            "r",
+            "g",
+            "t",
+            "c",
+            "x",
+            "/",
+            "z",
+            "S",
+            "F",
+            "N",
+            "J",
+            "K",
+            "L",
+            "H",
+            "O",
+            "D",
+            "W",
+            "E",
+            "M",
+            "B",
+            "U",
+            "Y",
+            "V",
+            "R",
+            "G",
+            "T",
+            "C",
+            "X",
+            "?",
+            "Z",
+        },
+
         -- Leaving the appropriate list empty effectively disables "smart" mode,
         -- and forces auto-jump to be on or off.
         -- These keys are captured directly by the plugin at runtime.
@@ -24,6 +76,7 @@ function config.lightspeed()
         limit_ft_matches = nil,
         repeat_ft_with_target_char = false,
     })
+
     local default_keymaps = {
         { "n", "<c-s>", "<Plug>Lightspeed_omni_s" },
         { "x", "<c-s>", "<Plug>Lightspeed_omni_s" },
@@ -57,24 +110,68 @@ function config.lightspeed()
     })
 
     local search_types = {
-        ["<c-[>"] = ";",
-        ["<c-]>"] = ",",
+        [";a"] = ";",
+        [";d"] = ",",
     }
 
     for k, v in pairs(search_types) do
         vim.keymap.set("n", k, function()
             return vim.g.lightspeed_last_motion == "sx" and "<Plug>Lightspeed_" .. v .. "_sx"
                 or "<Plug>Lightspeed_" .. v .. "_ft"
-        end, { expr = true, noremap = true })
+        end, { desc = "Lightspeed_" .. v .. vim.g.lightspeed_last_motion, expr = true, noremap = true })
     end
 end
 function config.leap()
-    vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
-    vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
+    vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
+
     vim.api.nvim_set_hl(0, "LeapMatch", {
         fg = "white", -- for light themes, set to 'black' or similar
         bold = true,
         nocombine = true,
+    })
+    vim.api.nvim_set_hl(0, "LeapLabelPrimary", {
+        fg = "#ff2f87",
+        bold = true,
+        nocombine = true,
+    })
+    require("leap").setup({
+        max_phase_one_targets = nil,
+        highlight_unlabeled_phase_one_targets = true,
+        max_highlighted_traversal_targets = 50,
+        case_sensitive = false,
+        equivalence_classes = { " \t", "\r\n" },
+        substitute_chars = { ["\r"] = "¬", ["\n"] = "¬" },
+        special_keys = {
+            repeat_search = "<enter>",
+            next_phase_one_target = "<enter>",
+            next_target = { "<enter>", ";" },
+            prev_target = { "<tab>", "," },
+            next_group = "<space>",
+            prev_group = "<tab>",
+            multi_accept = "<enter>",
+            multi_revert = "<backspace>",
+        },
+    })
+end
+function config.leap_spooky()
+    require("leap-spooky").setup({
+        affixes = {
+            remote = { window = "r", cross_window = "R" },
+            magnetic = { window = "m", cross_window = "M" },
+        },
+        paste_on_remote_yank = true,
+    })
+end
+
+function config.leap_flit()
+    require("flit").setup({
+        keys = { f = "f", F = "F", t = "t", T = "T" },
+        -- A string like "nv", "nvo", "o", etc.
+        labeled_modes = "nvo",
+        multiline = true,
+        -- Like `leap`s similar argument (call-specific overrides).
+        -- E.g.: opts = { equivalence_classes = {} }
+        opts = { equivalence_classes = { " \t", "\r\n" } },
     })
 end
 
