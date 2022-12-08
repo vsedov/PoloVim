@@ -51,8 +51,10 @@ function M.setup()
         end
     end
 
-    table.insert(registered_sources, require("typos").actions)
-    table.insert(registered_sources, require("typos").diagnostics)
+    if lambda.config.lsp.use_typos then
+        table.insert(registered_sources, require("typos").actions)
+        table.insert(registered_sources, require("typos").diagnostics)
+    end
 
     local cfg = {
         sources = registered_sources,
@@ -82,7 +84,6 @@ function M.setup()
                 vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
                     lsp_formatting(bufnr)
                 end, {})
-                -- im kinda suprised that this even works , but it is indeed nice to have.
                 local ammount = vim.api.nvim_buf_line_count(bufnr) < 500
                 if not ammount then
                     print("Format modifcations active ")

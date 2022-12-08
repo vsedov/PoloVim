@@ -144,17 +144,11 @@ end
 local container = {
     buffer_mappings = {
         normal_mode = {
-            ["<Leader>cw"] = { "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", "Symbols" },
-            ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "declaration" },
             ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
             ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
             ["D"] = {
                 function()
-                    if lambda.config.use_saga_diagnostic_jump then
-                        vim.cmd([[Lspsaga show_line_diagnostics]])
-                    else
-                        vim.diagnostic.open_float(0, { scope = "line", focus = false })
-                    end
+                    vim.cmd([[Lspsaga show_line_diagnostics]])
                 end,
                 "Diagnostic Line",
             },

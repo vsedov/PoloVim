@@ -11,6 +11,7 @@ local servers = {
     bashls = true,
     terraformls = true,
     marksman = true,
+    pylance = true,
     gopls = {
         settings = {
             gopls = {
@@ -57,6 +58,8 @@ local servers = {
         end,
     },
     sourcery = false, -- no clue what this does
+    buf = true,
+    grammarly = true,
 }
 
 return function(name)

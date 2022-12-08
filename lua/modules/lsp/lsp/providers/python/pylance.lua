@@ -8,6 +8,9 @@ local utils = require("modules.lsp.lsp.providers.python.utils")
 local util = require("lspconfig.util")
 local lsp_util = require("vim.lsp.util")
 local path = require("lspconfig/util").path
+
+local py = require("modules.lsp.lsp.providers.python.utils.python_help")
+
 -- client.server_capabilities.executeCommandProvider
 local _commands = {
     "pyright.createtypestub",
@@ -142,41 +145,13 @@ function pathFinder(hidden_file, filename, error)
     vim.notify(error, "error", { title = "py.nvim" })
 end
 
-local function get_python_path(workspace)
-    -- Use activated virtualenv.
-    if vim.env.VIRTUAL_ENV then
-        return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
-    end
-
-    -- Find and use virtualenv via poetry in workspace directory.
-    -- Change this to get it from the root file where git is
-    local match = vim.fn.glob(path.join(workspace, "poetry.lock"))
-    -- local match = pathFinder(false, poetry.lock, "Poetry env not found")
-    if match ~= "" then
-        local venv = vim.fn.trim(vim.fn.system("poetry env info -p"))
-        return path.join(venv, "bin", "python")
-    end
-
-    -- Fallback to system Python.
-    return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
-end
-
 local function on_window_logmessage(err, content, ctx)
     if content.type == 3 then
         vim.notify(content.message)
     end
 end
-require("nvim-semantic-tokens").setup({
-    preset = "default",
-    highlighters = { require("nvim-semantic-tokens.table-highlighter") },
-})
-
 M.attach_config = function(client, bufnr)
     local caps = client.server_capabilities
-    if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
-        vim.cmd([[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.buf.semantic_tokens_full()]])
-    end
-
     client.commands["pylance.extractVariableWithRename"] = function(command, enriched_ctx)
         command.command = "pylance.extractVariable"
         vim.lsp.buf.execute_command(command)
@@ -208,21 +183,32 @@ M.attach_config = function(client, bufnr)
         { range = true, desc = "Extract methdod" }
     )
 
-    if lambda.config.lsp.python.pylance_pyright.use_inlay_hints then
+    if lambda.config.lsp.python.use_inlay_hints then
         utils.autocmds.InlayHintsAU()
     end
 
-    if lambda.config.lsp.use_semantic_token then
-        utils.autocmds.SemanticTokensAU()
+    if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
+        if lambda.config.lsp.python.use_semantic_token then
+            require("nvim-semantic-tokens").setup({
+                preset = "default",
+                highlighters = { require("nvim-semantic-tokens.table-highlighter") },
+            })
+
+            utils.autocmds.SemanticTokensAU(bufnr)
+        end
     end
 end
 M.config = {
     settings = {
         python = {
             analysis = {
+                useLibraryCodeForTypes = true,
                 completeFunctionParens = true,
+                autoImportCompletions = true,
+                typeCheckingMode = "off", -- 'strict' or 'basic'
+                reportImportCycles = true, -- Use mypy via null-ls for type checking.
+
                 indexing = true,
-                typeCheckingMode = "none",
                 diagnosticMode = "openFilesOnly",
                 inlayHints = {
                     variableTypes = true,
@@ -233,7 +219,6 @@ M.config = {
                 diagnosticSeverityOverrides = {
                     --felse: this can get very anonying
                     reportMissingTypeStubs = false,
-                    -- stuff from top
                     reportGeneralTypeIssues = false,
                     reportUnboundVariable = false,
                     reportUndefinedVariable = "error",
@@ -261,13 +246,22 @@ M.config = {
             "site",
             "pack",
             "packer",
+            "typings",
             "opt",
             "python-type-stubs"
         )
         config.settings.python.analysis.stubPath = stub_path
     end,
-    on_init = function(client)
-        client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+    on_new_config = function(new_config, new_root_dir)
+        py.env(new_root_dir)
+        new_config.settings.python.pythonPath = vim.fn.exepath("python") or vim.fn.exepath("python3") or "python"
+        -- new_config.cmd_env.PATH = py.env(new_root_dir) .. new_config.cmd_env.PATH
+
+        local pep582 = py.pep582(new_root_dir)
+
+        if pep582 ~= nil then
+            new_config.settings.python.analysis.extraPaths = { pep582 }
+        end
     end,
 }
 

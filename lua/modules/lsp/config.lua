@@ -22,7 +22,7 @@ function config.mason_setup()
     require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
     require("mason-lspconfig").setup({
         automatic_installation = {
-            exclude = { "sumneko_lua", "clangd", "ltex", "texlab", "pyright", "jedi-language-server" },
+            exclude = { "sumneko_lua", "clangd", "ltex", "texlab", "jedi-language-server" },
         },
     })
     require("mason-lspconfig").setup_handlers({
@@ -33,6 +33,9 @@ function config.mason_setup()
             end
         end,
     })
+    if lambda.config.lsp.python.lsp == "pylance" then
+        require("lspconfig").pylance.setup(require("modules.lsp.lsp.config").enhance_attach({}))
+    end
 end
 
 function config.lsp_install()

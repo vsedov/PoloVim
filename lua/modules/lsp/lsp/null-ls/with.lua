@@ -152,7 +152,7 @@ With.stylua = {
 }
 
 With.write_good = {
-    filetypes = { "markdown", "tex", "" },
+    filetypes = { "markdown", "norg" },
     extra_filetypes = { "txt", "text" },
     args = { "--text=$TEXT", "--parse" },
     command = "write-good",

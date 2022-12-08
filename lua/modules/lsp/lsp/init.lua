@@ -9,13 +9,9 @@ local python_setup = {
         lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
     end,
     pylance = function()
-        local pylance = require("modules.lsp.lsp.providers.python.pylance")
-        pylance.creation()
-
-        lspconfig.pylance.setup(enhance_attach(pylance.config))
+        print("Using Pylance")
     end,
     pyright = function()
-        print("active")
         lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright").config))
     end,
 }
@@ -29,6 +25,7 @@ local latex_setup = {
     end,
 }
 python_setup[lambda.config.lsp.python.lsp]()
+
 latex_setup[lambda.config.lsp.latex]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
