@@ -70,6 +70,15 @@ function config.hlargs()
             },
         },
     })
+    lambda.command("HlargsEnable", function()
+        require("hlargs").enable()
+    end, {})
+    lambda.command("HlargsDisable", function()
+        require("hlargs").disable()
+    end, {})
+    lambda.command("HlargsToggle", function()
+        require("hlargs").toggle()
+    end, {})
 end
 
 function config.matchup_setup()

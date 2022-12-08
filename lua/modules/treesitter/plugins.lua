@@ -119,3 +119,29 @@ ts({
     requires = "rktjmp/lush.nvim",
     -- config = conf.climber,
 })
+
+ts({
+    "wellle/targets.vim",
+    opt = true,
+    event = { "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI" },
+    setup = function()
+        vim.g.targets_gracious = 1
+    end,
+    config = function()
+        vim.cmd([[
+autocmd User targets#mappings#user call targets#mappings#extend({
+    \ 's': { 'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
+    \                      {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
+    \                      {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}] },
+    \ '@': {
+    \     'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
+    \                   {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
+    \                   {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}],
+    \     'pair':      [{'o':'(', 'c':')'}, {'o':'[', 'c':']'}, {'o':'{', 'c':'}'}, {'o':'<', 'c':'>'}],
+    \     'quote':     [{'d':"'"}, {'d':'"'}, {'d':'`'}],
+    \     'tag':       [{}],
+    \     },
+    \ })
+      ]])
+    end,
+})
