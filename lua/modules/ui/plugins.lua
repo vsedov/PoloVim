@@ -188,20 +188,6 @@ ui({
 })
 
 ui({
-    "glepnir/dashboard-nvim",
-    opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "db",
-            condition = lambda.config.use_dashboard,
-            plugin = "dashboard-nvim",
-        })
-    end,
-    config = conf.dashboard_config,
-})
-
-ui({
     "xiyaowong/virtcolumn.nvim",
     event = "BufEnter",
 })
@@ -242,8 +228,38 @@ ui({
             plugin = "vim-illuminate",
         })
     end,
+
     config = conf.illuminate,
 })
+ui({
+    "nyngwang/murmur.lua",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "murmur",
+            condition = lambda.config.ui.use_murmur,
+            plugin = "murmur.lua",
+        })
+    end,
+    config = function()
+        require("murmur").setup({
+            -- cursor_rgb = 'purple', -- default to '#393939'
+            max_len = 80, -- maximum word-length to highlight
+            -- disable_on_lines = 2000, -- to prevent lagging on large files. Default to 2000 lines.
+            exclude_filetypes = {},
+            callbacks = {
+                -- to trigger the close_events of vim.diagnostic.open_float.
+                function()
+                    -- Close floating diag. and make it triggerable again.
+                    vim.cmd("doautocmd InsertEnter")
+                    vim.w.diag_shown = false
+                end,
+            },
+        })
+    end,
+})
+
 ui({
     "rainbowhxch/beacon.nvim",
 
