@@ -5,7 +5,6 @@ local function t(str)
 end
 
 local hint = [[
-^ ^ _y_: Yank    ^ ^
 ^ ^ _p_: After   ^ ^
 ^ ^ _P_: Before  ^ ^
 ^ ^ _n_: ↓       ^ ^
@@ -25,7 +24,6 @@ local yanky_hydra = Hydra({
     },
     hint = hint,
     heads = {
-        { "y", "<Plug>(YankyYank)", { desc = "Yank" } },
         { "p", "<Plug>(YankyPutAfter)", { desc = "After" } },
         { "P", "<Plug>(YankyPutBefore)", { desc = "Before" } },
         { "n", "<Plug>(YankyCycleForward)", { private = true, desc = "↓" } },
@@ -35,7 +33,6 @@ local yanky_hydra = Hydra({
 
 -- choose/change the mappings if you want
 for key, putAction in pairs({
-    -- ["y"] = "<Plug>(YankyYank)",
     ["p"] = "<Plug>(YankyPutAfter)",
     ["P"] = "<Plug>(YankyPutBefore)",
     ["gp"] = "<Plug>(YankyGPutAfter)",

@@ -81,23 +81,30 @@ config.parenth_mode = {
         end,
         { nowait = true, exit = true, desc = "Toggle Plane" },
     },
+
     a = {
         function()
             require("lazymark").mark()
         end,
         { nowait = true, exit = true, desc = "Single[M] Add" },
     },
-    l = {
+    g = {
         function()
             require("lazymark").gotoMark()
         end,
         { nowait = true, exit = true, desc = "Single[M] Goto" },
     },
-    C = {
+    r = {
         function()
-            require("lazymark").check()
+            require("lazymark").redoMark()
         end,
-        { nowait = true, exit = true, desc = "Single[M] Check" },
+        { nowait = true, exit = true, desc = "Single[M] Redo" },
+    },
+    u = {
+        function()
+            require("lazymark").undoMark()
+        end,
+        { nowait = true, exit = true, desc = "Single[M] Undo" },
     },
 }
 
@@ -163,7 +170,7 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    easymark = create_table_normal({}, sorted, 1, { "a", "l", "C" })
+    easymark = create_table_normal({}, sorted, 1, { "a", "g", "r", "u" })
 
     core_table = {}
 

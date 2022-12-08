@@ -108,14 +108,14 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "Surf Jump Top", exit = false },
     },
-    x = {
+    N = {
         function()
             vim.cmd([[STSSelectMasterNode]])
         end,
 
         { nowait = true, desc = "Surf Master Node", exit = false },
     },
-    X = {
+    n = {
         function()
             vim.cmd([[STSSelectCurrentNode]])
         end,
@@ -235,8 +235,8 @@ local function auto_hint_generate()
 
     make_core_table(core_table, bracket)
     make_core_table(core_table, surf)
+    make_core_table(core_table, { "N", "n", "v", "V" })
     make_core_table(core_table, { "w", "H", "J", "K", "L" })
-    make_core_table(core_table, { "x", "X", "v", "V" })
 
     hint_table = {}
     string_val = "^ ^      SwapSurf       ^ ^\n\n"

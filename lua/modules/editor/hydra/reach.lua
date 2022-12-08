@@ -100,6 +100,30 @@ config.parenth_mode = {
         end,
         { nowait = true, exit = true, desc = "Workspace Rename" },
     },
+    n = {
+        function()
+            cmd("CybuNext")
+        end,
+        { nowait = true, exit = false, desc = "CybuNext" },
+    },
+    N = {
+        function()
+            cmd("CybuPrev")
+        end,
+        { nowait = true, exit = false, desc = "CybuPrev" },
+    },
+    ["]"] = {
+        function()
+            cmd("CybuLastusedPrev")
+        end,
+        { nowait = true, exit = false, desc = "CybuLastusedPrev" },
+    },
+    ["["] = {
+        function()
+            cmd("CybuLastusedNext")
+        end,
+        { nowait = true, exit = false, desc = "CybuLastusedNext" },
+    },
 }
 
 local mapping = {
@@ -119,8 +143,6 @@ local mapping = {
         t.config.mode = rhs
     end,
 }
--- Create a Auto Hinting Table same as above but with auto generated
-
 local new_hydra = {
     name = "Reach",
     config = {
@@ -168,6 +190,7 @@ local function auto_hint_generate()
 
     make_core_table(core_table, bracket)
     make_core_table(core_table, { "w", "a", "d", "r", "L" })
+    make_core_table(core_table, { "n", "N", "[", "]" })
 
     hint_table = {}
     string_val = "^ ^      Reach     ^ ^\n\n"

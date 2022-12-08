@@ -106,7 +106,7 @@ local python_hints = {
     },
 
     mode = { "n", "x" },
-    body = ";l",
+    body = ";p",
     heads = {
         { "<enter>", fixer, { nowait = true } },
         { "i", navy, { exit = true } },

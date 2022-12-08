@@ -236,3 +236,12 @@ editor({
     },
     config = conf.smart_q,
 })
+editor({
+    "AndrewRadev/switch.vim",
+    opt = true,
+    cmd = { "Switch", "Switch!", "Switch?", "SwitchCase", "SwitchCase!" },
+    fn = { "switch#Switch" },
+    setup = function()
+        vim.g.switch_mapping = ";S"
+    end,
+})

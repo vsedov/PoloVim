@@ -23,45 +23,45 @@ config.parenth_mode = {
         function()
             vim.cmd([[TestCurrent]])
         end,
-        { nowait = true, desc = "Test Current" },
+        { nowait = true, exit = false, desc = "Test Current" },
     },
 
     s = {
         function()
             vim.cmd([[TestSummary]])
         end,
-        { nowait = false, exit = true, desc = "Test Sum" },
+        { nowait = false, exit = false, desc = "Test Sum" },
     },
     o = {
         function()
             vim.cmd([[TestOutput]])
         end,
-        { nowait = false, exit = true, desc = "Test Output" },
+        { nowait = false, exit = false, desc = "Test Output" },
     },
     d = {
         function()
             vim.cmd([[TestStrat dap]])
         end,
-        { nowait = false, exit = true, desc = "Test dap" },
+        { nowait = false, exit = false, desc = "Test dap" },
     },
     D = {
         function()
             vim.cmd([[TestStrat integrated]])
         end,
-        { nowait = false, exit = true, desc = "Test integrated" },
+        { nowait = false, exit = false, desc = "Test integrated" },
     },
 
     S = {
         function()
             vim.cmd([[TestStop]])
         end,
-        { nowait = false, exit = true, desc = "Test Stop" },
+        { nowait = false, exit = false, desc = "Test Stop" },
     },
     a = {
         function()
             vim.cmd([[TestAttach]])
         end,
-        { nowait = false, exit = true, desc = "Test Attach" },
+        { nowait = false, exit = false, desc = "Test Attach" },
     },
     n = {
         function()
