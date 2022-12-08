@@ -221,3 +221,36 @@ user({
         lambda.command("Genghismove", genghis.moveSelectionToNewFile, {})
     end,
 })
+
+-- about time .
+user({
+    "LunarVim/bigfile.nvim",
+    config = function()
+        local default_config = {
+            filesize = 2,
+            pattern = { "*" },
+            features = {
+                "indent_blankline",
+                "illuminate",
+                "syntax",
+                "matchparen",
+                "vimopts",
+                "filetype",
+            },
+        }
+        require("bigfile").config(default_config)
+    end,
+})
+
+user({
+    "elihunter173/dirbuf.nvim",
+    cmd = "DirBuf",
+    config = function()
+        require("dirbuf").setup({
+            hash_padding = 2,
+            show_hidden = true,
+            sort_order = "default",
+            write_cmd = "DirbufSync",
+        })
+    end,
+})
