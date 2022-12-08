@@ -189,4 +189,21 @@ if lambda.config.cmp.tabnine.tabnine_sort then
         },
     }
 end
+
+if lambda.config.cmp.tabnine_overwrite_sort then
+    config.sorting = {
+        comparators = {
+            compare.offset,
+            compare.exact,
+            compare.score,
+            compare.recently_used,
+            compare.kind,
+            compare.sort_text,
+            compare.length,
+            compare.order,
+            require("cmp_tabnine.compare"),
+        },
+    }
+end
+
 return config

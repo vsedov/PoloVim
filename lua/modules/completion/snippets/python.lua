@@ -377,23 +377,6 @@ if TYPE_CHECKING:
         t({ '"""', "" }),
         d(5, python_class_init, {}, {}),
     }),
-    -- snippet that calls pi.ask("question")
-    s(
-        { trig = "ask" },
-        fmt([[   pi.ask("{}")]], {
-            i(1, "How do i invert a binary tree?"),
-        })
-    ),
-    -- # Find the functions you're looking for
-    -- pi.search(pi, name='what')
-    -- snippet for this
-    s(
-        { trig = "search" },
-        fmt([[pi.search({}, name='{}')]], {
-            i(1, "what"),
-            i(2, "name"),
-        })
-    ),
 
     s(
         "raise",
