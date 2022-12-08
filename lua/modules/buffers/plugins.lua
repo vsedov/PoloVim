@@ -19,6 +19,18 @@ buffer({
     opt = true,
     cmd = { "ReachOpen" },
 })
+buffer({
+    "ghillb/cybu.nvim",
+    requires = { "nvim-tree/nvim-web-devicons", "nvim-lua/plenary.nvim" },
+    config = conf.cybu,
+    -- opt = true,
+    cmd = {
+        "CybuNext",
+        "CybuPrev",
+        "CybuLastusedPrev",
+        "CybuLastusedNext",
+    },
+})
 
 buffer({
     "tiagovla/scope.nvim",

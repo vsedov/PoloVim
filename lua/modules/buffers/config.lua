@@ -168,6 +168,9 @@ function config.reach()
         notifications = true,
     })
 end
+function config.cybu()
+    require("cybu").setup()
+end
 
 function config.scope()
     require("scope").setup()
