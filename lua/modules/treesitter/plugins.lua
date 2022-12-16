@@ -84,19 +84,19 @@ ts({
     setup = conf.matchup_setup,
 })
 
-ts({
-    "Yggdroot/hiPairs",
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "hiPairs",
-            condition = lambda.config.use_hiPairs, -- reverse
-            plugin = "hiPairs",
-        })
-    end,
+-- ts({
+--     "Yggdroot/hiPairs",
+--     setup = function()
+--         lambda.lazy_load({
+--             events = "BufEnter",
+--             augroup_name = "hiPairs",
+--             condition = lambda.config.use_hiPairs, -- reverse
+--             plugin = "hiPairs",
+--         })
+--     end,
 
-    config = conf.hi_pairs,
-})
+--     config = conf.hi_pairs,
+-- })
 
 ts({
     "yioneko/nvim-yati",
@@ -105,12 +105,12 @@ ts({
     config = conf.indent,
 })
 
--- Packer
-ts({
-    "folke/paint.nvim",
-    event = "BufReadPre",
-    config = conf.paint,
-})
+-- -- Packer
+-- ts({
+--     "folke/paint.nvim",
+--     event = "BufReadPre",
+--     config = conf.paint,
+-- })
 
 ts({
     -- It uses hydra
