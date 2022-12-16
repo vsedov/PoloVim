@@ -385,12 +385,11 @@ end
 M.howdoi = function()
     telescope.setup({
         extensions = {
-            howdoi = vim.tbl_deep_extend("force", { num_answers = 10 }, themes.get_dropdown()),
+            howdoi = vim.tbl_deep_extend("force", { num_answers = 10 }, require("telescope.themes").get_ivy()),
         },
     })
     reloader()
-    local dropdown = require("telescope.themes").get_dropdown({})
-    telescope.extensions.howdoi.howdoi(dropdown)
+    telescope.extensions.howdoi.howdoi()
 end
 
 M.files = function(opts)
