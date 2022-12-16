@@ -4,16 +4,6 @@ local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local wk = require("which-key")
 local fn, icons = vim.fn, lambda.style.icons
-local function close_nvim_ide_panels() 
-    if pcall(require, 'ide') then
-        local ws = require('ide.workspaces.workspace_registry').get_workspace(vim.api.nvim_get_current_tabpage())
-        if ws ~= nil then
-            ws.close_panel(require('ide.panels.panel').PANEL_POS_BOTTOM)
-            ws.close_panel(require('ide.panels.panel').PANEL_POS_LEFT)
-            ws.close_panel(require('ide.panels.panel').PANEL_POS_RIGHT)
-        end
-    end
-end
 
 M.config = function()
     require("utils.ui.highlights").plugin("dap", {
@@ -42,13 +32,10 @@ end
 M.dapui = function()
     local dap, dapui = require("dap"), require("dapui")
 
-
     dapui.setup()
 
-
     dap.listeners.after.event_initialized["dapui_config"] = function()
-      dapui.open()
-      close_nvim_ide_panels()
+        dapui.open()
     end
 end
 
@@ -57,8 +44,8 @@ M.prepare = function()
     loader("nvim-dap-ui")
     loader("nvim-dap-python")
     require("dap-python").setup()
-    require('dap-python').resolve_python = function()
-      return vim.fn.system("which python")
+    require("dap-python").resolve_python = function()
+        return vim.fn.system("which python")
     end
     require("dap-python").test_runner = "pytest"
 
