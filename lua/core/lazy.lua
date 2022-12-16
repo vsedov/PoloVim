@@ -198,9 +198,5 @@ vim.defer_fn(function()
         loader("leap.nvim")
     end
 
-    if lambda.config.use_lightspeed then
-        loader("lightspeed.nvim")
-    end
-
     lprint("all done")
 end, lazy_timer + 80)

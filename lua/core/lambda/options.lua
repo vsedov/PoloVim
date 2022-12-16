@@ -136,7 +136,7 @@ lambda.config.lsp = {
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "isort", "yapf" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = "pylance", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
         use_inlay_hints = true,
     },

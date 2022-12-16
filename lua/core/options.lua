@@ -98,6 +98,7 @@ opt.formatoptions = {
     l = true,
     v = true,
 }
+opt.ssop:append({ "localoptions" })
 
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
