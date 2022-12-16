@@ -28,8 +28,7 @@ movement({
 movement({
     "ggandor/leap.nvim",
     requires = { "tpope/vim-repeat" },
-
-    opt = true,
+    -- opt = true,
     config = conf.leap,
 })
 
@@ -45,7 +44,6 @@ movement({
     "ggandor/flit.nvim",
     opt = true,
     after = "leap.nvim",
-
     setup = function()
         if lambda.config.use_leap then
             vim.keymap.set("n", "f", "f")
@@ -88,12 +86,11 @@ movement({
         "ThePrimeagen/harpoon",
         "cbochs/grapple.nvim",
     },
-    modules = "portal",
 })
 movement({
     "cbochs/grapple.nvim",
     opt = true,
-    after = "lightspeed.nvim",
+    -- after = "lightspeed.nvim",
     config = conf.grapple,
 })
 movement({ "ThePrimeagen/harpoon", module = "harpoon", opt = true, config = conf.harpoon })
