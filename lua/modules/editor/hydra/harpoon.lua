@@ -1,12 +1,4 @@
 local Hydra = require("hydra")
-require("portal").setup({
-    integrations = {
-        harpoon = true,
-        grapple = true,
-    },
-    query = { "harpoon", "grapple" },
-})
-
 local leader = "<CR>"
 local hydra = require("hydra")
 
@@ -165,22 +157,6 @@ config.parenth_mode = {
             require("harpoon.ui").nav_file(9)
         end,
         { nowait = true, desc = "Jump File 9", exit = true },
-    },
-    ["["] = {
-        function()
-            require("portal.jump").select(
-                require("portal.jump").search(require("portal.query").resolve({ "harpoon" }), types.Direction.FORWARD)[1]
-            )
-        end,
-        { nowait = true, desc = "Portal Jump", exit = false },
-    },
-    ["]"] = {
-        function()
-            require("portal.jump").select(
-                require("portal.jump").search(require("portal.query").resolve({ "harpoon" }), types.Direction.BACKWARD)[1]
-            )
-        end,
-        { nowait = true, desc = "Portal Back", exit = false },
     },
 }
 local mapping = {
