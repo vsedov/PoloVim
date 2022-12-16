@@ -1,5 +1,5 @@
 -- vim.cmd[[packadd lsp-format-modifications.nvim]]
-
+local active = false
 local M = {}
 
 local lsp_formatting = function(bufnr)
@@ -84,7 +84,7 @@ function M.setup()
                 vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
                     lsp_formatting(bufnr)
                 end, {})
-                local ammount = vim.api.nvim_buf_line_count(bufnr) < 500
+                local ammount = vim.api.nvim_buf_line_count(bufnr) < 500 and active
                 if not ammount then
                     print("Format modifcations active ")
                     local lsp_format_modifications = require("lsp-format-modifications")
