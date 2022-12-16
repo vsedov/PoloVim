@@ -161,27 +161,6 @@ user({
     end,
 })
 
--- user({
---     "samodostal/copilot-client.lua",
---     requires = {
---         "zbirenbaum/copilot.lua", -- requires copilot.lua and plenary.nvim
---         "nvim-lua/plenary.nvim",
---     },
---     config = function()
---         require("copilot").setup({
---             cmp = {
---                 enabled = false, -- no need for cmp
---             },
---         })
-
---         require("copilot-client").setup({
---             mapping = {
---                 accept = "<CR>",
---             },
---         })
---     end,
--- })
-
 user({
     "nullchilly/fsread.nvim",
     cmd = { "FSRead", "FSClear", "FSToggle" },
@@ -251,6 +230,66 @@ user({
             show_hidden = true,
             sort_order = "default",
             write_cmd = "DirbufSync",
+        })
+    end,
+})
+
+-- https://github.com/f/awesome-chatgpt-prompts
+
+-- <C-c> to close chat window.
+-- <C-u> scroll up chat window.
+-- <C-d> scroll down chat window.
+-- <C-y> to copy/yank last answer.
+user({
+    "jackMort/ChatGPT.nvim",
+    cmd = {
+        "ChatGPT",
+        "ChatGPTActAs",
+    },
+    config = function()
+        require("chatgpt").setup({
+            -- optional configuration
+        })
+    end,
+    requires = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+    },
+})
+
+user({
+    "xorid/asciitree.nvim",
+    cmd = "AsciiTree",
+
+    config = function()
+        require("asciitree").setup({
+            -- Characters used to represent the tree.
+            symbols = {
+                child = "├",
+                last = "└",
+                parent = "│",
+                dash = "─",
+                blank = " ",
+            },
+
+            -- How deep each level should be drawn. This value can be overridden by
+            -- calling the AsciiTree command with a number, such as :AsciiTree 4.
+            depth = 2,
+
+            -- The delimiter to look for when converting to a tree. By default, this
+            -- looks for a tree that looks like:
+            -- # Level 1
+            -- ## Level 2
+            -- ### Level 3
+            -- #### Level 4
+            --
+            -- Changing it to "+" would look for the following:
+            -- + Level 1
+            -- ++ Level 2
+            -- +++ Level 3
+            -- ++++ Level 4
+            delimiter = "#",
         })
     end,
 })
