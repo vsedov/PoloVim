@@ -698,7 +698,7 @@ function config.dressing()
         input = {
             insert_only = false,
             win_options = {
-                winblend   = 2,
+                winblend = 2,
             },
             border = lambda.style.border.type_0,
         },

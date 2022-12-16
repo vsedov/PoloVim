@@ -33,18 +33,17 @@ ui({
     end,
 })
 
-ui({
-    "rebelot/heirline.nvim",
-    after = "nvim-lspconfig",
-    -- opt = true,
-    config = function()
-        require("modules.ui.heirline")
-        -- require("modules.ui.heirline_min")
-    end,
-})
+-- ui({
+--     "rebelot/heirline.nvim",
+--     after = "nvim-lspconfig",
+--     config = function()
+--         require("modules.ui.heirline")
+--         -- require("modules.ui.heirline_min")
+--     end,
+-- })
 
-ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
--- todo: FIX THIS
+-- ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
+-- -- todo: FIX THIS
 ui({
     "rcarriga/nvim-notify",
     opt = true,
@@ -99,35 +98,11 @@ ui({
 })
 
 ui({
-    "tamton-aquib/keys.nvim",
-    cmd = "KeysToggle",
-    opt = true,
-    config = function()
-        require("keys").setup()
-    end,
-})
-
-ui({
     "lukas-reineke/indent-blankline.nvim",
     branch = "develop",
     opt = true,
     config = conf.blankline,
 }) -- after="nvim-treesitter",
-ui({
-    "yaocccc/nvim-hlchunk",
-    opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "BufWinEnter",
-            augroup_name = "hlchunk",
-            condition = lambda.config.use_hlchunk,
-            plugin = "nvim-hlchunk",
-        })
-    end,
-    config = function()
-        vim.g.hlchunk_files = "*.ts,*.js,*.json,*.go,*.cpp,*.c,*.lua,*.py"
-    end,
-})
 
 ui({
     "xiyaowong/nvim-transparent",
@@ -170,13 +145,6 @@ ui({
     requires = { "nvim-treesitter/nvim-treesitter" },
     config = conf.fold_focus,
 })
-
--- ui({
---     "levouh/tint.nvim",
---     opt = true,
---     event = "BufEnter",
---     config = conf.tint,
--- })
 
 ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
 
