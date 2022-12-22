@@ -18,18 +18,18 @@ M.DocumentHighlightAU = function()
 end
 
 M.SemanticTokensAU = function(bufnr)
+    vim.cmd([[packadd theHamsta/nvim-semantic-tokens]])
     lambda.augroup("SemanticTokens", {
         {
-            event = { "BufEnter", "CursorHold", "InsertLeave" },
+            -- event = { "BufEnter", "CursorHold", "InsertLeave" },
+            event = "TextChanged",
             buffer = bufnr,
             command = function()
-                if vim.bo.filetype ~= "python" then
-                    return
-                end
-                pcall(vim.lsp.buf.semantic_tokens_full)
+                vim.lsp.buf.semantic_tokens_full()
             end,
         },
     })
+    vim.lsp.buf.semantic_tokens_full()
 end
 
 M.InlayHintsAU = function()

@@ -1,15 +1,10 @@
-vim.cmd([[packadd nvim-semantic-tokens]])
 local M = {}
-
-require("nvim-semantic-tokens").setup({
-    preset = "default",
-    highlighters = { require("nvim-semantic-tokens.table-highlighter") },
-})
 
 M.attach_config = function(client, bufnr)
     local caps = client.server_capabilities
-    if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
-        vim.cmd([[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.buf.semantic_tokens_full()]])
+
+    if lambda.config.lsp.python.use_inlay_hints then
+        require("modules.lsp.lsp.providers.python.utils.autocmds").InlayHintsAU()
     end
 end
 M.config = {
