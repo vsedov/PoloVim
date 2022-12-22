@@ -6,16 +6,17 @@ local use_lightspeed = true --  So the tldr here is when this is false, both lig
 local use_ts_yeti = true
 local use_glance = true
 
+local py_lang = "jedi"
+
 lambda.config = {
     use_hydra = true,
     overwrite_colours_use_styler = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
-    better_ts_highlights = true,
-
+    -- better_ts_highlights = py_lang ~= "pylance",
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
 
-    record_your_self = false, -- waka time
+    record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
 
     loaded_confirm_quit = false, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
@@ -33,7 +34,6 @@ lambda.config = {
     -- Currently using nvim-yeti
 
     use_gitsigns = true,
-    use_hlchunk = false,
 
     --  ──────────────────────────────────────────────────────────────────────
     use_lightspeed = false, -- if false then leap.nvim will be used.
@@ -83,6 +83,7 @@ lambda.config.colourscheme = {
                 -- "kanagawa.nvim",
                 -- "oh-lucy.nvim",
                 "catppuccin",
+                "mellifluous.nvim",
                 -- "nvim-tundra",
                 -- "tokyonight.nvim", -- allot
                 -- "rose", -- TSMethod'
@@ -134,16 +135,16 @@ lambda.config.lsp = {
     use_typos = true,
     latex = "texlab", -- texlab | ltex
     python = {
-        lint = { "ruff" }, -- pylint, pyflake, and other linters
+        lint = { "flake8" }, -- pylint, pyflake, and other linters
         format = { "isort", "yapf" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = py_lang, -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
         use_inlay_hints = true,
     },
 }
 lambda.config.ui = {
-    use_illuminate = false,
-    use_murmur = true, -- Do not use both illuminate and murmur
+    use_illuminate = true,
+    use_murmur = false, -- Do not use both illuminate and murmur
     noice = {
         enable = noice_enabled,
         lsp = {
