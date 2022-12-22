@@ -1,5 +1,5 @@
 -- vim.cmd[[packadd lsp-format-modifications.nvim]]
-local active = false
+local active = true
 local M = {}
 
 local lsp_formatting = function(bufnr)
@@ -84,14 +84,17 @@ function M.setup()
                 vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
                     lsp_formatting(bufnr)
                 end, {})
-                local ammount = vim.api.nvim_buf_line_count(bufnr) < 500 and active
-                if not ammount then
-                    print("Format modifcations active ")
-                    local lsp_format_modifications = require("lsp-format-modifications")
-                    lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
-                else
-                    augroup_setup(augroup, buffer)
-                end
+                -- local ammount = (vim.api.nvim_buf_line_count(bufnr) < 500 and active)
+                -- print(amount)
+                -- if not ammount then
+                --     print("Format modifcations active ")
+                --     local lsp_format_modifications = require("lsp-format-modifications")
+                --     lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
+                -- else
+                augroup_setup(augroup, bufnr)
+                -- end
+                --  REVISIT: (vsedov) (14:36:18 - 18/12/22): Pretty cerain im being stupid here, so
+                --  i will come back to this once i have tim e.
             end
         end,
     }

@@ -1,6 +1,8 @@
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 
+require("modules.lsp.lsp.providers.python.utils.semantic_tokens")
+
 local python_setup = {
     pylsp = function()
         lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
