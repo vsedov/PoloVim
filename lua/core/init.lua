@@ -81,6 +81,10 @@ local leader_map = function()
     vim.keymap.set("n", "<SPACE>", "<Nop>", { noremap = true })
     vim.keymap.set("n", " ", "", { noremap = true })
     vim.keymap.set("x", " ", "", { noremap = true })
+    vim.keymap.set("n", "<esc>", function()
+        require("notify").dismiss()
+        vim.cmd.nohl()
+    end, {})
 end
 
 local load_core = function()

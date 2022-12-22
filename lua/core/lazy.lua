@@ -132,7 +132,7 @@ end, lazy_timer)
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    -- require("vscripts.tools")
+    require("vscripts.tools")
     vim.api.nvim_create_user_command("Gram", function()
         require("modules.tools.config").grammcheck()
     end, { force = true })
@@ -188,15 +188,18 @@ vim.defer_fn(function()
         print("nvim-ufo loading")
         loader("nvim-ufo")
     end
+    lprint("all done")
+end, lazy_timer + 80)
 
+-- Load Leap, after 100, because why not, this is my core movement
+vim.defer_fn(function()
     if lambda.config.use_scroll then
         print("neo scroll loading")
         loader("neoscroll.nvim")
     end
 
-    if lambda.config.use_both_leap_light_speed then
-        loader("leap.nvim")
-    end
-
-    lprint("all done")
-end, lazy_timer + 80)
+    local movement = require("modules.movement.config")
+    movement.leap()
+    movement.leap_spooky()
+    movement.leap_flit()
+end, 100)
