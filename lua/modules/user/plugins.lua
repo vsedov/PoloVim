@@ -81,86 +81,22 @@ user({
         vim.g.unception_enable_flavor_text = false
     end,
 })
-
-user({
-    "gorbit99/codewindow.nvim",
-    opt = true,
-    cmd = { "CodeMiniMapOpen", "CodeMiniMapClose", "CodeMiniMapToggle", "CodeMiniMapToggleFocus" },
-    setup = function()
-        lambda.lazy_load({
-            events = "FileType",
-            pattern = { "lua", "python" },
-            augroup_name = "codewindow",
-            condition = lambda.config.use_code_window,
-            plugin = "codewindow.nvim",
-        })
-    end,
-    config = function()
-        require("utils.ui.highlights").plugin("codewindow", {
-            { CodewindowBorder = { link = "WinSeparator" } },
-            { CodewindowWarn = { bg = "NONE", fg = { from = "DiagnosticSignWarn", attr = "bg" } } },
-            { CodewindowError = { bg = "NONE", fg = { from = "DiagnosticSignError", attr = "bg" } } },
-        })
-        require("codewindow").setup({
-            z_index = 25,
-            auto_enable = true,
-            minimap_width = 10,
-            exclude_filetypes = {
-                "qf",
-                "git",
-                "help",
-                "alpha",
-                "packer",
-                "gitcommit",
-                "NeogitStatus",
-                "neo-tree",
-                "neo-tree-popup",
-                "NeogitCommitMessage",
-                "harpoon",
-                "memento",
-            },
-        })
-        local codewindow = require("codewindow")
-        lambda.command("CodeMiniMapOpen", codewindow.open_minimap, {})
-        lambda.command("CodeMiniMapClose", codewindow.close_minimap, {})
-        lambda.command("CodeMiniMapToggle", codewindow.toggle_minimap, {})
-        lambda.command("CodeMiniMapToggleFocus", codewindow.toggle_focus, {})
-    end,
-})
-
---  TODO: (vsedov) (12:12:33 - 08/11/22): I do not think i need this
-user({
-    "nvim-zh/colorful-winsep.nvim",
-    setup = function()
-        lambda.lazy_load({
-            events = "BufWinEnter",
-            augroup_name = "winsep",
-            condition = false,
-
-            plugin = "colorful-winsep.nvim",
-        })
-    end,
-    config = function()
-        require("colorful-winsep").setup({})
-    end,
-})
-
-user({
-    "glepnir/hlsearch.nvim",
-    setup = function()
-        lambda.lazy_load({
-            events = "BufRead",
-            augroup_name = "hlsearch",
-            condition = false,
-
-            plugin = "hlsearch.nvim",
-        })
-    end,
-    config = function()
-        require("hlsearch").setup()
-    end,
-})
-
+--
+-- user({
+--     "glepnir/hlsearch.nvim",
+--     setup = function()
+--         lambda.lazy_load({
+--             events = "BufRead",
+--             augroup_name = "hlsearch",
+--             condition = false,
+--             plugin = "hlsearch.nvim",
+--         })
+--     end,
+--     config = function()
+--         require("hlsearch").setup()
+--     end,
+-- })
+--
 user({
     "nullchilly/fsread.nvim",
     cmd = { "FSRead", "FSClear", "FSToggle" },
@@ -291,5 +227,106 @@ user({
             -- ++++ Level 4
             delimiter = "#",
         })
+    end,
+})
+
+user({
+    "shortcuts/no-neck-pain.nvim",
+    opt = true,
+    cmd = "NoNeckPain",
+    config = function()
+        NoNeckPain = {}
+        NoNeckPain.bufferOptions = {
+            -- When `false`, the buffer won't be created.
+            enabled = true,
+            -- Hexadecimal color code to override the current background color of the buffer. (e.g. #24273A)
+            -- popular theme are supported by their name:
+            -- - catppuccin-frappe
+            -- - catppuccin-frappe-dark
+            -- - catppuccin-latte
+            -- - catppuccin-latte-dark
+            -- - catppuccin-macchiato
+            -- - catppuccin-macchiato-dark
+            -- - catppuccin-mocha
+            -- - catppuccin-mocha-dark
+            -- - tokyonight-day
+            -- - tokyonight-moon
+            -- - tokyonight-night
+            -- - tokyonight-storm
+            -- - rose-pine
+            -- - rose-pine-moon
+            -- - rose-pine-dawn
+            backgroundColor = nil,
+            -- buffer-scoped options: any `vim.bo` options is accepted here.
+            bo = {
+                filetype = "no-neck-pain",
+                buftype = "nofile",
+                bufhidden = "hide",
+                modifiable = false,
+                buflisted = false,
+                swapfile = false,
+            },
+            -- window-scoped options: any `vim.wo` options is accepted here.
+            wo = {
+                cursorline = false,
+                cursorcolumn = false,
+                number = false,
+                relativenumber = false,
+                foldenable = false,
+                list = false,
+            },
+        }
+
+        require("no-neck-pain").setup({
+            -- The width of the focused buffer when enabling NNP.
+            -- If the available window size is less than `width`, the buffer will take the whole screen.
+            width = 100,
+            -- Prints useful logs about what event are triggered, and reasons actions are executed.
+            debug = false,
+            -- Disables NNP if the last valid buffer in the list has been closed.
+            disableOnLastBuffer = false,
+            -- When `true`, disabling NNP kills every split/vsplit buffers except the main NNP buffer.
+            killAllBuffersOnDisable = false,
+            --- Options related to the side buffers. See |NoNeckPain.bufferOptions|.
+            buffers = {
+                -- When `true`, the side buffers will be named `no-neck-pain-left` and `no-neck-pain-right` respectively.
+                setNames = false,
+                -- Common options are set to both buffers, for option scoped to the `left` and/or `right` buffer, see `buffers.left` and `buffers.right`.
+                common = NoNeckPain.bufferOptions,
+                --- Options applied to the `left` buffer, the options defined here overrides the `common` ones.
+                --- When `nil`, the buffer won't be created.
+                left = NoNeckPain.bufferOptions,
+                --- Options applied to the `left` buffer, the options defined here overrides the `common` ones.
+                --- When `nil`, the buffer won't be created.
+                right = NoNeckPain.bufferOptions,
+            },
+            -- lists supported integrations that might clash with `no-neck-pain.nvim`'s behavior
+            integrations = {
+                -- https://github.com/nvim-tree/nvim-tree.lua
+                nvimTree = {
+                    -- the position of the tree, can be `left` or `right``
+                    position = "left",
+                },
+            },
+        })
+    end,
+})
+
+user({
+    "numToStr/Navigator.nvim",
+    keys = {
+        "_h",
+        "_l",
+        "_k",
+        "_j",
+        "_p",
+    },
+    config = function()
+        require("Navigator").setup()
+        vim.keymap.set({ "n", "t" }, "_h", "<CMD>NavigatorLeft<CR>")
+        vim.keymap.set({ "n", "t" }, "_l", "<CMD>NavigatorRight<CR>")
+        vim.keymap.set({ "n", "t" }, "_k", "<CMD>NavigatorUp<CR>")
+        vim.keymap.set({ "n", "t" }, "_j", "<CMD>NavigatorDown<CR>")
+        vim.keymap.set({ "n", "t" }, "_p", "<CMD>NavigatorPrevious<CR>")
     end,
 })
