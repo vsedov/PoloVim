@@ -97,10 +97,10 @@ config.parenth_mode = {
         { nowait = true, desc = "IswapWith", exit = false },
     },
 
-    U = { mx("vU"), { nowait = true, desc = "Surf U", exit = true } }, -- ts: all class
-    u = { mx("vu"), { nowait = true, desc = "Surf u", exit = true } }, -- ts: inner class
-    D = { mx("vD"), { nowait = true, desc = "Surf D", exit = true } }, -- ts: all function
-    d = { mx("vd"), { nowait = true, desc = "Surf d", exit = true } }, -- ts: all conditional
+    U = { mx("cU"), { nowait = true, desc = "Surf U", exit = true } }, -- ts: all class
+    u = { mx("cu"), { nowait = true, desc = "Surf u", exit = true } }, -- ts: inner class
+    D = { mx("cD"), { nowait = true, desc = "Surf D", exit = true } }, -- ts: all function
+    d = { mx("cd"), { nowait = true, desc = "Surf d", exit = true } }, -- ts: all conditional
 
     w = {
         function()

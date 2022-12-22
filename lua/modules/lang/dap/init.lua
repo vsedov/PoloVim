@@ -2,7 +2,6 @@ local M = {}
 local loader = require("packer").loader
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
-local wk = require("which-key")
 local fn, icons = vim.fn, lambda.style.icons
 
 M.config = function()
@@ -58,15 +57,17 @@ M.prepare = function()
     local function debug_selection()
         require("dap-python").debug_selection()
     end
+    local wk = require("which-key")
+
     wk.register({
-        d = {
+        D = {
             name = "+debugger",
             ff = { test_class, "python test class" },
             n = { test_method, "python test method" },
             s = { debug_selection, "python debug_selection" },
         },
     }, {
-        prefix = "<localleader>",
+        prefix = ";",
     })
 
     vim.cmd([[command! BPToggle lua require"dap".toggle_breakpoint()]])

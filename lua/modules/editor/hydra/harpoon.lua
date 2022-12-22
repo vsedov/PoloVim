@@ -4,7 +4,7 @@ local hydra = require("hydra")
 
 local types = require("portal.types")
 
-local bracket = { "<CR>", "w", "a", "W", "<leader>" }
+local bracket = { "<CR>", "w", "a", ";", "<leader>" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -56,12 +56,14 @@ config.parenth_mode = {
         end,
         { nowait = true, exit = true, desc = "Toggle File" },
     },
-    W = {
+    [";"] = {
         function()
-            require("telescope.builtin").harpoon_marks()
+            require("telescope").load_extension("harpoon")
+            vim.cmd("Telescope harpoon marks")
         end,
         { nowait = true, exit = true, desc = "Harpoon Tele" },
     },
+
     a = {
         function()
             require("harpoon.mark").add_file()
@@ -81,23 +83,11 @@ config.parenth_mode = {
         { nowait = true, exit = false, desc = "Prev File" },
     },
 
-    [";"] = {
-        function()
-            require("memento").toggle()
-        end,
-        { nowait = true, exit = false, desc = "Memento Toggle" },
-    },
     ["<leader>"] = {
         function()
             require("harpoon.cmd-ui").toggle_quick_menu()
         end,
         { nowait = true, exit = true, desc = "Quick ui Menu" },
-    },
-    C = {
-        function()
-            require("memento").clear_history()
-        end,
-        { nowait = true, exit = true, desc = "Memento Clear" },
     },
 
     ["1"] = {
@@ -222,16 +212,13 @@ local function auto_hint_generate()
     table.sort(sorted)
 
     num = create_table_normal({}, sorted, 1, { "1", "2", "3", "4", "5", "6", "7", "8", "9" })
-    memento = create_table_normal({}, sorted, 1, { ";", "C" })
     harpoon = create_table_normal({}, sorted, 1, { "n", "N" })
     portal = create_table_normal({}, sorted, 1, { "[", "]" })
 
     core_table = {}
 
     make_core_table(core_table, bracket)
-    make_core_table(core_table, portal)
     make_core_table(core_table, harpoon)
-    make_core_table(core_table, memento)
     make_core_table(core_table, num)
 
     hint_table = {}

@@ -9,7 +9,7 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
     local leader = "H"
     local hydra = require("hydra")
 
-    local bracket = { "n", "N" }
+    local bracket = {}
 
     local function make_core_table(core_table, second_table)
         for _, v in pairs(second_table) do
@@ -53,30 +53,6 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
         body = leader,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
-
-        n = {
-            function()
-                require("portal.jump").select(
-                    require("portal.jump").search(
-                        require("portal.query").resolve({ "grapple" }),
-                        types.Direction.FORWARD
-                    )[1]
-                )
-            end,
-            { nowait = true, exit = false, desc = "[P] Jump Next" },
-        },
-        N = {
-            function()
-                require("portal.jump").select(
-                    require("portal.jump").search(
-                        require("portal.query").resolve({ "grapple" }),
-                        types.Direction.BACKWARD
-                    )[1]
-                )
-            end,
-            { nowait = true, exit = false, desc = "[P] Jump Prev" },
-        },
-
         k = {
             function()
                 require("grapple").toggle()

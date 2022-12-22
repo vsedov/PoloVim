@@ -128,7 +128,7 @@ editor({
 editor({
     "folke/which-key.nvim",
     module = "which-key",
-    requires = "nvim-treesitter",
+    after = "nvim-treesitter",
     config = function()
         require("modules.editor.which_key")
     end,
