@@ -56,9 +56,6 @@ if vim.fn.exists("g:nvui") ~= 0 then
     vim.cmd([[NvuiTitlebarFontSize 12]])
     vim.cmd([[NvuiTitlebarFontFamily Arial]])
     vim.cmd([[NvuiCursorAnimationDuration 0.1]])
-    vim.cmd(
-        [[set guicursor=n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor-blinkwait300-blinkon500-blinkoff300,r-cr-o:hor20]]
-    )
 end
 
 overwrite()

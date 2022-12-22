@@ -343,7 +343,7 @@ local function general_overrides()
         { mkdLineBreak = { link = "NONE" } },
         { Directory = { inherit = "Keyword", bold = true } },
         { URL = { inherit = "Keyword", underline = true } },
-        -----------------------------------------------------------------------------//
+        ---------------------------------------------------------------------------//
         -- Commandline
         -----------------------------------------------------------------------------//
         { MsgArea = { background = { from = "Normal", alter = -10 } } },
@@ -393,8 +393,8 @@ local function general_overrides()
         { FoldColumn = { background = "bg" } },
         { Folded = { inherit = "Comment", italic = true, bold = true, fg = P.springViolet1, bg = P.sumiInk2 } },
 
-        -----------------------------------------------------------------------------//
-        -- Diff
+        -- -----------------------------------------------------------------------------//
+        -- -- Diff
         -----------------------------------------------------------------------------//
         --[[ { DiffAdd = { background = "#26332c", foreground = "NONE", underline = false } }, ]]
         --[[ { DiffDelete = { background = "#572E33", foreground = "#5c6370", underline = false } }, ]]
@@ -419,51 +419,46 @@ local function general_overrides()
         { Type = { italic = true, bold = true } },
         { Include = { italic = true, bold = false } },
         { QuickFixLine = { inherit = "PmenuSbar", foreground = "NONE", italic = true } },
-        -- Neither the sign column or end of buffer highlights require an explicit background
-        -- they should both just use the background that is in the window they are in.
-        -- if either are specified this can lead to issues when a winhighlight is set
-        { SignColumn = { background = "NONE" } },
-        { EndOfBuffer = { background = "NONE" } },
-        -----------------------------------------------------------------------------//
-        -- Treesitter
-        ---------------------------------------------------------------------------//
-        { TSVariable = { foreground = { from = "Normal" } } },
-        { TSNamespace = { foreground = P.blue } },
+        -- -- Neither the sign column or end of buffer highlights require an explicit background
+        -- -- they should both just use the background that is in the window they are in.
+        -- -- if either are specified this can lead to issues when a winhighlight is set
+        -- { SignColumn = { background = "NONE" } },
+        -- { EndOfBuffer = { background = "NONE" } },
+        -- -----------------------------------------------------------------------------//
+        -- -- Treesitter
+        -- ---------------------------------------------------------------------------//
+        -- { TSVariable = { foreground = { from = "Normal" } } },
+        -- { TSNamespace = { foreground = P.blue } },
 
-        { TSNamespace = { inherit = "PanelDarkBackground", bold = true } },
-        { TSVariable = { inherit = "PanelDarkBackground", bold = true } },
-        { TSStorageClass = { inherit = "PanelDarkBackground", bold = true } },
-        { TSNamespace = { inherit = "PanelDarkBackground", bold = true } },
+        { TSNamespace = { bold = true } },
+        { TSVariable = { bold = true } },
+        { TSStorageClass = { bold = true } },
+        { TSNamespace = { bold = true } },
 
-        { ["@keyword.return"] = { italic = true, foreground = { from = "Keyword" } } },
+        -- { ["@text.diff.add"] = { link = "DiffAdd" } },
+        -- { ["@text.diff.delete"] = { link = "DiffDelete" } },
 
-        { ["@parameter"] = { italic = true, bold = true, foreground = "NONE" } },
-        { ["@error"] = { foreground = "fg", background = "NONE" } },
-
-        { ["@text.diff.add"] = { link = "DiffAdd" } },
-        { ["@text.diff.delete"] = { link = "DiffDelete" } },
-
-        { Comment = { italic = true } },
-        { Type = { italic = true, bold = true } },
-        { Include = { italic = true, bold = false } },
-        { QuickFixLine = { inherit = "PmenuSbar", foreground = "NONE", italic = true } },
-        -- Neither the sign column or end of buffer highlights require an explicit background
-        -- they should both just use the background that is in the window they are in.
-        -- if either are specified this can lead to issues when a winhighlight is set
-        { SignColumn = { background = "NONE" } },
-        { EndOfBuffer = { background = "NONE" } },
+        -- { Comment = { italic = true } },
+        -- { Type = { italic = true, bold = true } },
+        -- { Include = { italic = true, bold = false } },
+        -- { QuickFixLine = { inherit = "PmenuSbar", foreground = "NONE", italic = true } },
+        -- -- Neither the sign column or end of buffer highlights require an explicit background
+        -- -- they should both just use the background that is in the window they are in.
+        -- -- if either are specified this can lead to issues when a winhighlight is set
+        -- { SignColumn = { background = "NONE" } },
+        -- { EndOfBuffer = { background = "NONE" } },
         -----------------------------------------------------------------------------//
         -- Treesitter
         -----------------------------------------------------------------------------//
-        { ["@keyword.return"] = { italic = true, foreground = { from = "Keyword" } } },
-        { ["@parameter"] = { italic = true, bold = true, foreground = "NONE" } },
-        { ["@error"] = { foreground = "fg", background = "NONE" } },
-        -- { TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
-        -- FIXME: this should be removed once
-        -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
-        { yamlTSError = { link = "None" } },
+        -- { ["@keyword.return"] = { italic = true, foreground = { from = "Keyword" } } },
+        -- { ["@parameter"] = { italic = true, bold = true, foreground = "NONE" } },
+        -- { ["@error"] = { foreground = "fg", background = "NONE" } },
+        -- /{ TSError = { undercurl = true, sp = "DarkRed", foreground = "NONE" } },
+        -- -- FIXME: this should be removed once
+        -- -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
+        -- { yamlTSError = { link = "None" } },
 
-        -- highlight FIXME comments
+        -- -- highlight FIXME comments
         { commentTSWarning = { background = P.springBlue, foreground = "bg", bold = true } },
         { commentTSDanger = { background = L.hint, foreground = "bg", bold = true } },
         { commentTSNote = { background = P.green, foreground = "bg", bold = true } },
@@ -471,36 +466,36 @@ local function general_overrides()
         { CommentTasksFixme = { link = "commentTSDanger" } },
         { CommentTasksNote = { link = "commentTSNote" } },
 
-        -----------------------------------------------------------------------------//
-        -- LSP
-        -----------------------------------------------------------------------------//
-        { LspCodeLens = { inherit = "Comment", bold = true, italic = false } },
-        { LspCodeLensSeparator = { bold = false, italic = false } },
-        {
-            LspReferenceText = {
-                underline = true,
-                background = "NONE",
-                special = { from = "Comment", attr = "fg" },
-            },
-        },
-        {
-            LspReferenceRead = {
-                underline = true,
-                background = "NONE",
-                special = { from = "Comment", attr = "fg" },
-            },
-        },
-        -- This represents when a reference is assigned which is more interesting than regular
-        -- occurrences so should be highlighted more distinctly
-        {
-            LspReferenceWrite = {
-                bold = true,
-                italic = true,
-                background = "NONE",
-                underline = true,
-                special = { from = "Comment", attr = "fg" },
-            },
-        },
+        -- -----------------------------------------------------------------------------//
+        -- -- LSP
+        -- -----------------------------------------------------------------------------//
+        -- { LspCodeLens = { inherit = "Comment", bold = true, italic = false } },
+        -- { LspCodeLensSeparator = { bold = false, italic = false } },
+        -- {
+        --     LspReferenceText = {
+        --         underline = true,
+        --         background = "NONE",
+        --         special = { from = "Comment", attr = "fg" },
+        --     },
+        -- },
+        -- {
+        --     LspReferenceRead = {
+        --         underline = true,
+        --         background = "NONE",
+        --         special = { from = "Comment", attr = "fg" },
+        --     },
+        -- },
+        -- -- This represents when a reference is assigned which is more interesting than regular
+        -- -- occurrences so should be highlighted more distinctly
+        -- {
+        --     LspReferenceWrite = {
+        --         bold = true,
+        --         italic = true,
+        --         background = "NONE",
+        --         underline = true,
+        --         special = { from = "Comment", attr = "fg" },
+        --     },
+        -- },
         -- Base colours
         { DiagnosticHint = { foreground = L.hint } },
         { DiagnosticError = { foreground = L.error } },
