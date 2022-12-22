@@ -34,7 +34,9 @@ function config.mason_setup()
         end,
     })
     if lambda.config.lsp.python.lsp == "pylance" then
-        require("lspconfig").pylance.setup(require("modules.lsp.lsp.config").enhance_attach({}))
+        require("lspconfig").pylance.setup(
+            require("modules.lsp.lsp.config").enhance_attach(require("modules.lsp.lsp.providers.python.pylance").config)
+        )
     end
 end
 

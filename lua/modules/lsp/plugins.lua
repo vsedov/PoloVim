@@ -128,15 +128,6 @@ lsp({
 })
 
 lsp({
-    "theHamsta/nvim-semantic-tokens",
-    opt = true,
-    config = function()
-        preset = "default"
-        highlighters = { require("nvim-semantic-tokens.table-highlighter") }
-    end,
-})
-
-lsp({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     cmd = { "TL" },
     setup = function()
