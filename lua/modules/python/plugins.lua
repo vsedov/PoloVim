@@ -25,6 +25,11 @@ python({
 })
 
 python({
+    "wookayin/vim-python-enhanced-syntax",
+    ft = "python",
+})
+
+python({
     "luk400/vim-jukit",
     opt = true,
     config = function()
