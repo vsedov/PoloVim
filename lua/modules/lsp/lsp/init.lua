@@ -1,6 +1,23 @@
 local lspconfig = require("lspconfig")
 local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 
+local configs = lspconfig.configs
+if not configs.ruff_lsp then
+    configs.ruff_lsp = {
+        default_config = {
+            cmd = { "ruff-lsp" },
+            filetypes = { "python" },
+            root_dir = lspconfig.util.find_git_ancestor,
+            settings = {
+                ruff_lsp = {
+                    -- Any extra CLI arguments for `ruff` go here.
+                    args = {},
+                },
+            },
+        },
+    }
+end
+
 require("modules.lsp.lsp.providers.python.utils.semantic_tokens")
 
 local python_setup = {
@@ -55,6 +72,8 @@ lspconfig.rust_analyzer.setup(enhance_attach({
     filetypes = { "rust" },
     cmd = { "rust-analyzer" },
 }))
+
+lspconfig.ruff_lsp.setup(enhance_attach({}))
 
 lspconfig.vimls.setup(enhance_attach({
     cmd = { "vim-language-server", "--stdio" },
