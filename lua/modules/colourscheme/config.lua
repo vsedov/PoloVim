@@ -277,4 +277,49 @@ function config.lucy()
     vim.cmd.colorscheme("oh-lucy-evening")
 end
 
+function config.melli()
+    require("mellifluous").setup({
+        dim_inactive = lambda.config.colourscheme.dim_background,
+        color_set = "mellifluous",
+        styles = {
+            comments = "italic",
+            conditionals = "NONE",
+            folds = "NONE",
+            loops = "NONE",
+            functions = "NONE",
+            keywords = "NONE",
+            strings = "NONE",
+            variables = "NONE",
+            numbers = "NONE",
+            booleans = "NONE",
+            properties = "NONE",
+            types = "NONE",
+            operators = "NONE",
+        },
+        transparent_background = {
+            enabled = false,
+            floating_windows = false,
+            telescope = true,
+            file_tree = true,
+            cursor_line = true,
+            status_line = false,
+        },
+        plugins = {
+            cmp = true,
+            indent_blankline = true,
+            nvim_tree = {
+                enabled = false,
+                show_root = false,
+            },
+            telescope = {
+                enabled = true,
+                nvchad_like = true,
+            },
+            startify = false,
+        },
+    })
+
+    vim.cmd.colorscheme("mellifluous")
+end
+
 return config

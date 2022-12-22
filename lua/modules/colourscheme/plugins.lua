@@ -89,3 +89,9 @@ colourscheme({
         })
     end,
 })
+
+colourscheme({
+    "ramojus/mellifluous.nvim",
+    requires = { "rktjmp/lush.nvim" },
+    config = conf.melli,
+})
