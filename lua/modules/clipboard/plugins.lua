@@ -17,7 +17,7 @@ clipsub({
             highlight = {
                 enabled = true, -- highlight yanked text
                 higroup = "IncSearch", -- highlight group of yanked text
-                timeout = 300, -- timeout for clearing the highlight
+                timeout = 200, -- timeout for clearing the highlight
             },
             osc52 = {
                 enabled = true,
