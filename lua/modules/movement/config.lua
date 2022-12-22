@@ -121,6 +121,7 @@ function config.lightspeed()
         end, { desc = "Lightspeed_" .. v .. vim.g.lightspeed_last_motion, expr = true, noremap = true })
     end
 end
+
 function config.leap()
     vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
 
@@ -134,6 +135,7 @@ function config.leap()
         bold = true,
         nocombine = true,
     })
+
     require("leap").setup({
         max_phase_one_targets = nil,
         highlight_unlabeled_phase_one_targets = true,
@@ -445,6 +447,7 @@ function config.harpoon()
             mark_branch = false,
         },
     })
+
     require("telescope").load_extension("harpoon")
 end
 function config.quick_scope()

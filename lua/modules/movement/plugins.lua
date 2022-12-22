@@ -3,7 +3,7 @@ local movement = require("core.pack").package
 
 movement({
     "ziontee113/syntax-tree-surfer",
-    keys = { "vU", "vD", "vd", "vu", "gfu", "gfo", "J", "vn", "vx" },
+    keys = { "cU", "cD", "cd", "cu", "gfu", "gfo", "J", "cn", "cx" },
     cmd = {
         "STSSwapNextVisual",
         "STSSwapPrevVisual",
@@ -17,7 +17,7 @@ movement({
     },
     config = conf.syntax_surfer,
 })
---------------------------------
+-- --------------------------------
 
 movement({
     "ggandor/lightspeed.nvim",
@@ -28,33 +28,25 @@ movement({
 movement({
     "ggandor/leap.nvim",
     requires = { "tpope/vim-repeat" },
-    -- opt = true,
-    config = conf.leap,
+    after = "lightspeed.nvim",
+    setup = function()
+        vim.keymap.set("n", "f", "f")
+        vim.keymap.set("n", "F", "F")
+        vim.keymap.set("n", "t", "t")
+        vim.keymap.set("n", "T", "T")
+    end,
 })
 
 movement({
     "ggandor/leap-spooky.nvim",
-    opt = true,
-    wants = "leap.nvim",
     after = "leap.nvim",
-    config = conf.leap_spooky,
 })
 
 movement({
     "ggandor/flit.nvim",
-    opt = true,
     after = "leap.nvim",
-    setup = function()
-        if lambda.config.use_leap then
-            vim.keymap.set("n", "f", "f")
-            vim.keymap.set("n", "F", "F")
-            vim.keymap.set("n", "t", "t")
-            vim.keymap.set("n", "T", "T")
-        end
-    end,
-
-    config = conf.leap_flit,
 })
+
 --------------------------------
 
 movement({
@@ -112,20 +104,21 @@ movement({
     -- end
 })
 
-movement({
-    "crusj/bookmarks.nvim",
-    branch = "main",
-    requires = {
-        "nvim-tree/nvim-web-devicons",
-        "nvim-treesitter/nvim-treesitter",
-    },
-    keys = {
-        "<tab><tab>",
-        "\\a",
-        "\\o",
-    },
-    config = conf.bookmark,
-})
+-- movement({
+--     "crusj/bookmarks.nvim",
+--     branch = "main",
+--     requires = {
+--         "nvim-tree/nvim-web-devicons",
+--         "nvim-treesitter/nvim-treesitter",
+--     },
+--     keys = {
+--         "<tab><tab>",
+--         "\\a",
+--         "\\o",
+--     },
+--     config = conf.bookmark,
+-- })
+--
 --------------------------------
 movement({
     "0x00-ketsu/easymark.nvim",
