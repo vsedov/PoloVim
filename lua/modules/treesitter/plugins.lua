@@ -79,7 +79,7 @@ ts({
 
 ts({
     "andymass/vim-matchup",
-    opt = true,
+    after = "nvim-treesitter",
     config = conf.matchup,
     setup = conf.matchup_setup,
 })

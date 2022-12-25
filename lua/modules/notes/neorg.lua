@@ -9,12 +9,7 @@ end
 require("packer").loader("neorg-telescope")
 
 local neorg_callbacks = require("neorg.callbacks")
--- neorg_callbacks.on_event("core.autocommands.events.bufenter", function(event, event_content)
-neorg_callbacks.on_event("core.started", function(event, event_content)
-    if not packer_plugins["true-zen.nvim"].loaded then
-        vim.cmd([[packadd true-zen.nvim ]])
-    end
-end)
+
 require("neorg").setup({
     load = {
         ["core.upgrade"] = {},
@@ -128,19 +123,6 @@ require("neorg").setup({
                 index = "index.norg",
                 --[[ autodetect = true,
                   autochdir = false, ]]
-            },
-        },
-
-        ["core.gtd.base"] = {
-            config = {
-                -- workspace =   "example_gtd" , -- assign the workspace,
-                workspace = "home",
-                exclude = { "notes/", "journal" }, -- Optional: all excluded files from the workspace are not part of the gtd workflow
-                projects = {
-                    show_completed_projects = false,
-                    show_projects_without_tasks = false,
-                },
-                custom_tag_completion = true,
             },
         },
 

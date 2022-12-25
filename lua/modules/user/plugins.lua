@@ -234,6 +234,7 @@ user({
     "shortcuts/no-neck-pain.nvim",
     opt = true,
     cmd = "NoNeckPain",
+    keys = { "zz" },
     config = function()
         NoNeckPain = {}
         NoNeckPain.bufferOptions = {
@@ -309,6 +310,7 @@ user({
                 },
             },
         })
+        vim.keymap.set("n", "zz", "<cmd>NoNeckPain<cr>", {})
     end,
 })
 
@@ -328,5 +330,20 @@ user({
         vim.keymap.set({ "n", "t" }, "_k", "<CMD>NavigatorUp<CR>")
         vim.keymap.set({ "n", "t" }, "_j", "<CMD>NavigatorDown<CR>")
         vim.keymap.set({ "n", "t" }, "_p", "<CMD>NavigatorPrevious<CR>")
+    end,
+})
+
+user({
+    "phaazon/mind.nvim",
+    cmd = {
+        "MindOpenMain",
+        "MindOpenProject",
+        "MindOpenSmartProject",
+        "MindReloadState",
+        "MindClose",
+    },
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+        require("mind").setup()
     end,
 })

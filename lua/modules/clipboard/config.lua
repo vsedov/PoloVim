@@ -37,9 +37,6 @@ function config.config_yanky()
             enabled = true,
         },
     })
-    require("telescope").load_extension("yank_history")
-    vim.keymap.set("n", "<leader>yu", "<cmd>Telescope yank_history<cr>", {})
-
     local default_keymaps = {
         { "n", "y", "<Plug>(YankyYank)" },
         { "x", "y", "<Plug>(YankyYank)" },

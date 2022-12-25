@@ -100,12 +100,6 @@ function config.matchup_setup()
         method = "popup",
         fullwidth = 1,
     }
-    lambda.lazy_load({
-        events = "BufRead",
-        augroup_name = "matchup",
-        condition = true,
-        plugin = "vim-matchup",
-    })
 end
 function config.matchup()
     vim.keymap.set("n", "\\w", "<cmd>MatchupWhereAmI??<cr>", { noremap = true })

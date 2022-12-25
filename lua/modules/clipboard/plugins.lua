@@ -5,7 +5,7 @@ clipsub({
     "gbprod/yanky.nvim",
     event = { "CursorMoved", "CmdlineEnter" },
     config = conf.config_yanky,
-    requires = { "telescope.nvim", "kkharji/sqlite.lua" },
+    requires = { "nvim-telescope/telescope.nvim", "kkharji/sqlite.lua" },
 })
 
 --  REVISIT: (vsedov) (17:56:23 - 23/10/22): Is this even required ?

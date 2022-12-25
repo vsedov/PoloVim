@@ -398,3 +398,55 @@ add_cmd("LeapJumpCommands", function()
         timeout = 10000,
     })
 end, {})
+
+local normal = {
+    ["<cr>"] = "open_data",
+    ["<s-cr>"] = "open_data_index",
+    ["<tab>"] = "toggle_node",
+    ["<s-tab>"] = "toggle_node",
+    ["/"] = "select_path",
+    ["$"] = "change_icon_menu",
+    c = "add_inside_end_index",
+    I = "add_inside_start",
+    i = "add_inside_end",
+    l = "copy_node_link",
+    L = "copy_node_link_index",
+    d = "delete",
+    O = "add_above",
+    o = "add_below",
+    q = "quit",
+    r = "rename",
+    R = "change_icon",
+    u = "make_url",
+    x = "select",
+}
+
+local selection = {
+    ["<cr>"] = "open_data",
+    ["<s-tab>"] = "toggle_node",
+    ["/"] = "select_path",
+    I = "move_inside_start",
+    i = "move_inside_end",
+    O = "move_above",
+    o = "move_below",
+    q = "quit",
+    x = "select",
+}
+
+lambda.command("MindCommandNormal", function()
+    -- Print all of normal
+    local str = "" .. "\n"
+    for k, v in pairs(normal) do
+        str = str .. fmt("%s - `%s`" .. "\n", k, v)
+    end
+    vim.notify(str)
+end, {})
+
+lambda.command("MindCommandSelection", function()
+    -- Print all of normal
+    local str = "" .. "\n"
+    for k, v in pairs(selection) do
+        str = str .. fmt("%s - `%s`" .. "\n", k, v)
+    end
+    vim.notify(str)
+end, {})

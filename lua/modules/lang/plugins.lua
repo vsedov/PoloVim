@@ -42,24 +42,17 @@ lang({ "milisims/nvim-luaref", opt = true })
 
 lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
 
-lang({
-    "ram02z/dev-comments.nvim",
-    requires = {
-        "nvim-treesitter/nvim-treesitter",
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim", -- optional
-    },
-    opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "comment",
-            condition = true,
-            plugin = "dev-comments.nvim",
-        })
-    end,
-    config = conf.dev_comments,
-})
+-- lang({
+--     "ram02z/dev-comments.nvim",
+--     requires = {
+--         "nvim-treesitter/nvim-treesitter",
+--         "nvim-lua/plenary.nvim",
+--         "nvim-telescope/telescope.nvim", -- optional
+--     },
+--     opt = true,
+--     after = "telescope.nvim",
+--     config = conf.dev_comments,
+-- })
 -- -- not the same as folkes version
 lang({ "bfredl/nvim-luadev", opt = true, ft = "lua", setup = conf.luadev })
 

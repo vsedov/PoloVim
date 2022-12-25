@@ -81,7 +81,7 @@ local plug_map = {
     ["n|<leader><cr>"] = map_cmd([[empty(&buftype) ? '@@' : '<CR>']], "repeat macros"):with_noremap():with_expr(),
 
     -- evaluate folds
-    ["n|zz<leader>"] = map_cmd([[@=(foldlevel('.')?'za':"\<Space>")<CR>]], "eval fold"):with_noremap(), -- Refocus folds
+    ["n|<leader>z"] = map_cmd([[@=(foldlevel('.')?'za':"\<Space>")<CR>]], "eval fold"):with_noremap(), -- Refocus folds
     -- Refocus folds
     ["n|z<leader>"] = map_cmd([[zMzvzz]], "refocus folds"):with_noremap(), -- Refocus folds
     -- Make zO recursively open whatever top level fold we're in, no matter where the
@@ -89,7 +89,7 @@ local plug_map = {
     ["n|z0"] = map_cmd([[zCzO]]):with_noremap(),
 
     -- Toggle top/center/bottom
-    ["n|zz"] = map_cmd([[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']])
+    ["n|;z"] = map_cmd([[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']])
         :with_noremap()
         :with_expr(),
 

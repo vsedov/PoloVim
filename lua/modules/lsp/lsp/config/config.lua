@@ -258,7 +258,7 @@ local container = {
                 "pylance",
                 "ltex",
                 "pylsp ",
-                "ruff_lsp"
+                "ruff_lsp",
             }
             if vim.tbl_contains(navic_callback, client.name) then
                 return

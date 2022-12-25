@@ -535,6 +535,7 @@ function lambda.lazy_load(tb)
                         tb.plugin
                     )
                 then
+                    -- print(tb.pl)
                     vim.defer_fn(function()
                         require("packer").loader(tb.plugin)
                     end, 0)

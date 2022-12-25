@@ -7,7 +7,7 @@ local loader = require("packer").loader
 local when = lambda.lib.when
 local test_active = false
 
-loader("keymap-layer.nvim vgit.nvim gitsigns.nvim")
+loader("keymap-layer.nvim gitsigns.nvim")
 local exclude_table = {
     "init",
 }

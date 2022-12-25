@@ -1,21 +1,6 @@
 local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 
-editor({
-    "Pocco81/true-zen.nvim",
-    opt = true,
-    requires = { "folke/twilight.nvim", opt = true, config = conf.twilight },
-    cmd = { "TZAtaraxis", "TZMinimalist", "TZNarrow", "TZFocus" },
-    module = "zen-mode",
-    keys = {
-        ";zn",
-        ";zf",
-        ";zm",
-        ";za",
-    },
-    config = conf.zen,
-})
-
 editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
     "j",
     "k",
@@ -139,14 +124,53 @@ editor({
     requires = "anuvyklack/keymap-layer.nvim",
     config = conf.hydra,
     opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "hydra",
-            condition = true,
-            plugin = "hydra.nvim",
-        })
-    end,
+    keys = {
+        "<leader>b",
+        "<localleader>b",
+        "<leader>d",
+        ";A",
+        ";\\",
+        "<leader>h",
+        "<leader>H",
+        "H",
+        "L",
+        "<cr>",
+        ";l",
+        "m",
+        "<leader>u",
+        "\\l",
+        ";p",
+        "<leader>I",
+        ";;",
+        "<leader>r",
+        "<localleader>r",
+        ";r",
+        "<leader>L",
+        ";s",
+        "<leader>f",
+        "gaa",
+        "gae",
+        ";w",
+        "\\<leader",
+        "<leader>O",
+        "<c-w>[",
+        "<localleader>w",
+        "<leader>yu",
+        "p",
+        "P",
+        "gp",
+        "gP",
+        "]p",
+        "[p",
+        "]P",
+        "[P",
+        ">p",
+        "<p",
+        ">P",
+        "<P",
+        "=p",
+        "=P",
+    },
 })
 
 editor({

@@ -1,5 +1,5 @@
 local Hydra = require("hydra")
--- -- i have no clue what else to do .
+vim.cmd([[packadd telescope.nvim]])
 local plugins = {
     "telescope-live-grep-args.nvim",
     "telescope-frecency.nvim",

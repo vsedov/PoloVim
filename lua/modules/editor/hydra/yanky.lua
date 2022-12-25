@@ -63,3 +63,6 @@ for key, putAction in pairs({
         yanky_hydra:activate()
     end)
 end
+
+require("telescope").load_extension("yank_history")
+vim.keymap.set("n", "<leader>yu", "<cmd>Telescope yank_history<cr>", {})

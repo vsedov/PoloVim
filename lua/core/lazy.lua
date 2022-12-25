@@ -34,7 +34,7 @@ function Lazyload()
         require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = false } })
         return
     else
-        loader("nvim-treesitter")
+        -- loader("nvim-treesitter")
         -- vim.cmd([[syntax on]])
     end
     lprint("I am lazy")
