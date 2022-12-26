@@ -2,16 +2,16 @@ local conf = require("modules.colourscheme.config")
 local colourscheme = require("core.pack").package
 colourscheme({
     "rebelot/kanagawa.nvim",
-    opt = true,
+    lazy = true,
     config = conf.kanagawa,
 })
 
 colourscheme({
     "catppuccin/nvim",
-    opt = true,
+    lazy = true,
     as = "catppuccin",
     cmd = "CatppuccinCompile",
-    setup = function()
+    init = function()
         vim.g.catppuccin_flavour = lambda.config.colourscheme.catppuccin_flavour -- latte, frappe, macchiato, mocha
     end,
     config = conf.catppuccin,
@@ -21,7 +21,7 @@ colourscheme({
 colourscheme({
     "rose-pine/neovim", -- rose-pine/neovim
 
-    opt = true,
+    lazy = true,
     as = "rose",
     module = "rose-pine",
     -- tag = "v1.*",
@@ -30,68 +30,53 @@ colourscheme({
 
 colourscheme({
     "lunarvim/horizon.nvim",
-    opt = true,
+    lazy = true,
     config = conf.horizon,
 })
 colourscheme({
     "wadackel/vim-dogrun",
-    opt = true,
+    lazy = true,
     config = conf.dogrun,
 })
 
 colourscheme({
     "NTBBloodbath/doom-one.nvim",
     config = conf.doom,
-    opt = true,
+    lazy = true,
 })
 
 colourscheme({
     "olivercederborg/poimandres.nvim",
     config = conf.poimandres,
-    opt = true,
+    lazy = true,
 })
 
 colourscheme({
     "folke/tokyonight.nvim",
-    opt = true,
+    lazy = true,
     config = conf.tokyonight,
 })
 
 colourscheme({
     "sam4llis/nvim-tundra",
-    opt = true,
+    lazy = true,
     config = conf.tundra,
 })
 colourscheme({
     "kvrohit/mellow.nvim",
-    opt = true,
+    lazy = true,
     config = conf.mellow,
 })
 
 colourscheme({
     "Yazeed1s/oh-lucy.nvim",
-    opt = true,
+    lazy = true,
     config = conf.lucy,
 })
 
 colourscheme({
-    "folke/styler.nvim",
-    opt = true,
-    cmd = "Styler",
-    config = function()
-        require("styler").setup({
-            themes = {
-                markdown = { colorscheme = "kanagawa" },
-                norg = { colorscheme = "tokyonight" },
-                python = { colorscheme = "kanagawa" },
-                help = { colorscheme = "catppuccin-mocha", background = "dark" },
-            },
-        })
-    end,
-})
-
-colourscheme({
     "ramojus/mellifluous.nvim",
-    requires = { "rktjmp/lush.nvim" },
+    dependencies = { "rktjmp/lush.nvim" },
+    lazy = true,
     config = conf.melli,
 })

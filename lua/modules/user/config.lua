@@ -1,3 +1,0 @@
-local config = {}
-
-return config

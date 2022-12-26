@@ -1,11 +1,11 @@
-local conf = require("modules.clipboard.config")
 local clipsub = require("core.pack").package
+local conf = require("modules.clipboard.config")
 
 clipsub({
     "gbprod/yanky.nvim",
     event = { "CursorMoved", "CmdlineEnter" },
     config = conf.config_yanky,
-    requires = { "nvim-telescope/telescope.nvim", "kkharji/sqlite.lua" },
+    dependencies = { "nvim-telescope/telescope.nvim", "kkharji/sqlite.lua" },
 })
 
 --  REVISIT: (vsedov) (17:56:23 - 23/10/22): Is this even required ?
@@ -31,7 +31,7 @@ clipsub({
 
 clipsub({
     "gbprod/substitute.nvim",
-    require = "gbprod/yanky.nvim",
+    dependencies = "gbprod/yanky.nvim",
     event = { "CursorMoved", "CmdlineEnter" },
     config = conf.substitute,
 })
@@ -94,27 +94,27 @@ clipsub({
         "<M-LeftMouse>",
         "<M-C-RightMouse>",
     },
-    opt = true,
-    setup = conf.vmulti,
+    lazy = true,
+    init = conf.vmulti,
 })
 
 clipsub({
     "johmsalas/text-case.nvim",
-    modules = "textcase",
+    lazy = true, 
     config = conf.text_case,
 })
 
 clipsub({
     "nicwest/vim-camelsnek",
-    opt = true,
+    lazy = true,
     cmd = { "Snek", "Camel", "CamelB", "Kebab" },
 })
 
-clipsub({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
+clipsub({ "mbbill/undotree", lazy = true, cmd = { "UndotreeToggle" } })
 
 clipsub({
     "ekickx/clipboard-image.nvim",
     cmd = { "PasteImg" },
-    opt = true,
+    lazy = true,
     config = conf.clipboardimage,
 })
