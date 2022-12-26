@@ -4,20 +4,20 @@ local conf = require('modules.buffers.config')
 buffer({
   'akinsho/bufferline.nvim',
   config = conf.nvim_bufferline,
-  opt = true,
+  lazy = true,
 })
 
 buffer({
   'toppair/reach.nvim',
   config = conf.reach,
-  opt = true,
+  lazy = true,
   cmd = { 'ReachOpen' },
 })
 buffer({
   'ghillb/cybu.nvim',
-  requires = { 'nvim-tree/nvim-web-devicons', 'nvim-lua/plenary.nvim' },
+  dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-lua/plenary.nvim' },
   config = conf.cybu,
-  -- opt = true,
+  -- lazy = true,
   cmd = {
     'CybuNext',
     'CybuPrev',
@@ -28,7 +28,7 @@ buffer({
 
 buffer({
   'tiagovla/scope.nvim',
-  opt = true,
+  lazy = true,
   config = conf.scope,
 })
 
@@ -52,7 +52,7 @@ buffer({
 
 buffer({
   'stevearc/stickybuf.nvim',
-  opt = true,
+  lazy = true,
   cmd = { 'PinBuffer', 'PinBuftype', 'PinBuftype', 'UnpinBuffer' },
   config = conf.sticky_buf,
 })

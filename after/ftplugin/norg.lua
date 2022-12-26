@@ -5,7 +5,7 @@ vim.o.concealcursor = "nv"
 
 vim.bo.commentstring = "#%s"
 vim.cmd([[source ~/.config/nvim/clipboard_neorg.vim]])
-vim.cmd([[packadd nvim-treesitter]])
+vim.cmd([[ Lazy load nvim-treesitter]])
 
 -- Not sure if this needs to be on or not
 -- vim.o.spell = 1

@@ -195,58 +195,6 @@ function config.bqf()
     require("utils.ui.highlights").plugin("bqf", { { BqfPreviewBorder = { link = "WinSeparator" } } })
 end
 
-function config.neoclip()
-    require("neoclip").setup({
-        history = 2000,
-        enable_persistent_history = true,
-        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-        filter = nil,
-        preview = true,
-        default_register = "a extra=star,plus,unnamed,b",
-        default_register_macros = "q",
-        enable_macro_history = true,
-        content_spec_column = true,
-        on_paste = {
-            set_reg = false,
-        },
-        on_replay = {
-            set_reg = false,
-        },
-        keys = {
-            telescope = {
-                i = {
-                    select = "<cr>",
-                    paste = "<c-p>",
-                    paste_behind = "<c-k>",
-                    replay = "<c-q>",
-                    custom = {},
-                },
-                n = {
-                    select = "<cr>",
-                    paste = "p",
-                    paste_behind = "P",
-                    replay = "q",
-                    custom = {},
-                },
-            },
-        },
-    })
-end
 
-function config.live_command()
-    require("live-command").setup({
-        commands = {
-            Reg = {
-                cmd = "norm",
-                -- This will transform ":5Reg a" into ":norm 5@a"
-                args = function(opts)
-                    return (opts.count == -1 and "" or opts.count) .. "@" .. opts.args
-                end,
-                range = "",
-            },
-            Norm = { cmd = "norm" },
-        },
-    })
-end
 
 return config

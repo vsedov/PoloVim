@@ -64,7 +64,7 @@ tools({
 tools({
     "plasticboy/vim-markdown",
     ft = "markdown",
-    requires = { "godlygeek/tabular" },
+    dependencies = { "godlygeek/tabular" },
     cmd = { "Toc" },
     init = conf.markdown,
     lazy = true,
@@ -109,13 +109,6 @@ tools({
     end,
 })
 
--- -- manual call
-tools({
-    "AckslD/nvim-neoclip.lua",
-    lazy = true,
-    requires = { "tami5/sqlite.lua" },
-    config = conf.neoclip,
-})
 
 tools({
     "voldikss/vim-translator",

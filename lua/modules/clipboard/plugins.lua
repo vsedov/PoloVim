@@ -118,3 +118,12 @@ clipsub({
     lazy = true,
     config = conf.clipboardimage,
 })
+
+
+-- -- manual call
+clipsub({
+    "AckslD/nvim-neoclip.lua",
+    lazy = true,
+    dependencies = { "kkharji/sqlite.lua" },
+    config = conf.neoclip,
+})

@@ -3,7 +3,7 @@
 -- local fmt = string.format
 
 -- local all_hydras = require("core.global").modules_dir .. "/editor/hydra/"
--- local loader = require("packer").loader
+-- local loader = require("lazy").load
 -- local when = lambda.lib.when
 -- local test_active = false
 
