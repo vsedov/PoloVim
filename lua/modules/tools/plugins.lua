@@ -1,7 +1,6 @@
 local conf = require("modules.tools.config")
 local tools = require("core.pack").package
 
-
 tools({ "neovim/nvimdev.nvim", ft = "lua", lazy = true, config = conf.nvimdev })
 
 tools({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }, lazy = true })
@@ -32,7 +31,6 @@ tools({
     lazy = true,
     config = conf.workspace,
 })
-
 
 tools({
     "xiyaowong/link-visitor.nvim",
@@ -108,7 +106,6 @@ tools({
         require("pqf").setup()
     end,
 })
-
 
 tools({
     "voldikss/vim-translator",

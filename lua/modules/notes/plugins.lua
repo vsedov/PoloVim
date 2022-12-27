@@ -63,7 +63,6 @@ notes({
     config = conf.hologram,
 })
 
-
 -- -- notes({
 -- --     "jghauser/papis.nvim",
 -- --     -- after = { "telescope.nvim", "nvim-cmp" },

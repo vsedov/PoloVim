@@ -1,6 +1,5 @@
 local config = {}
 
-
 function config.acc_jk()
     require("accelerated-jk").setup({
         mode = "time_driven",

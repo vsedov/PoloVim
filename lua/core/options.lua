@@ -1,20 +1,20 @@
 local o, opt, fn = vim.o, vim.opt, vim.fn
-local cache_dir = vim.env.HOME .. '/.cache/nvim/'
+local cache_dir = vim.env.HOME .. "/.cache/nvim/"
 
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
 opt.shortmess = {
-  t = true, -- truncate file messages at start
-  A = true, -- ignore annoying swap file messages
-  o = true, -- file-read message overwrites previous
-  O = true, -- file-read message overwrites previous
-  T = true, -- truncate non-file messages in middle
-  f = true, -- (file x of x) instead of just (x of x
-  F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
-  s = true,
-  c = true,
-  W = true, -- Don't show [w] or written when writing
+    t = true, -- truncate file messages at start
+    A = true, -- ignore annoying swap file messages
+    o = true, -- file-read message overwrites previous
+    O = true, -- file-read message overwrites previous
+    T = true, -- truncate non-file messages in middle
+    f = true, -- (file x of x) instead of just (x of x
+    F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
+    s = true,
+    c = true,
+    W = true, -- Don't show [w] or written when writing
 }
 -----------------------------------------------------------------------------//
 -- Timings {{{1
@@ -28,83 +28,83 @@ o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 o.splitbelow = true
 o.splitright = true
-o.eadirection = 'hor'
+o.eadirection = "hor"
 -- cursor
 -- screen
 -- -- topline
-opt.splitkeep = 'screen'
+opt.splitkeep = "screen"
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
-o.switchbuf = 'useopen,uselast'
+o.switchbuf = "useopen,uselast"
 opt.fillchars = {
-  eob = ' ',
-  -- vert = "║",
-  -- horiz = "═",
-  -- horizup = "╩",
-  -- horizdown = "╦",
-  -- vertleft = "╣",
-  -- vertright = "╠",
-  -- verthoriz = "╬",
-  horiz = '━',
-  horizup = '┻',
-  horizdown = '┳',
-  vert = '┃',
-  vertleft = '┫',
-  vertright = '┣',
+    eob = " ",
+    -- vert = "║",
+    -- horiz = "═",
+    -- horizup = "╩",
+    -- horizdown = "╦",
+    -- vertleft = "╣",
+    -- vertright = "╠",
+    -- verthoriz = "╬",
+    horiz = "━",
+    horizup = "┻",
+    horizdown = "┳",
+    vert = "┃",
+    vertleft = "┫",
+    vertright = "┣",
 
-  -- horiz = "━",
-  -- horizup = "┻",
-  -- horizdown = "┳",
-  -- vert = "┃",
-  -- vertleft = "┫",
-  -- vertright = "┣",
-  -- verthoriz = "╋",
+    -- horiz = "━",
+    -- horizup = "┻",
+    -- horizdown = "┳",
+    -- vert = "┃",
+    -- vertleft = "┫",
+    -- vertright = "┣",
+    -- verthoriz = "╋",
 
-  fold = ' ',
-  foldopen = '',
-  -- foldsep = " ",
-  foldclose = '',
+    fold = " ",
+    foldopen = "",
+    -- foldsep = " ",
+    foldclose = "",
 }
 -----------------------------------------------------------------------------//
 -- Diff {{{1
 -----------------------------------------------------------------------------//
 -- Use in vertical diff mode, blank lines to keep sides aligned, Ignore whitespace changes
 opt.diffopt = opt.diffopt
-  + {
-    'vertical',
-    'iwhite',
-    'hiddenoff',
-    'foldcolumn:0',
-    'context:4',
-    'algorithm:histogram',
-    'indent-heuristic',
-  }
+    + {
+        "vertical",
+        "iwhite",
+        "hiddenoff",
+        "foldcolumn:0",
+        "context:4",
+        "algorithm:histogram",
+        "indent-heuristic",
+    }
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
 opt.formatoptions = {
-  ['1'] = true,
-  ['2'] = true, -- Use indent from 2nd line of a paragraph
-  q = true, -- continue comments with gq"
-  c = true, -- Auto-wrap comments using textwidth
-  r = true, -- Continue comments when pressing Enter
-  n = true, -- Recognize numbered lists
-  t = false, -- autowrap lines using text width value
-  j = true, -- remove a comment leader when joining lines.
-  -- Only break if the line was not longer than 'textwidth' when the insert
-  -- started and only at a white character that has been entered during the
-  -- current insert command.
-  l = true,
-  v = true,
+    ["1"] = true,
+    ["2"] = true, -- Use indent from 2nd line of a paragraph
+    q = true, -- continue comments with gq"
+    c = true, -- Auto-wrap comments using textwidth
+    r = true, -- Continue comments when pressing Enter
+    n = true, -- Recognize numbered lists
+    t = false, -- autowrap lines using text width value
+    j = true, -- remove a comment leader when joining lines.
+    -- Only break if the line was not longer than 'textwidth' when the insert
+    -- started and only at a white character that has been entered during the
+    -- current insert command.
+    l = true,
+    v = true,
 }
-opt.ssop:append({ 'localoptions' })
+opt.ssop:append({ "localoptions" })
 
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
 -- if lambda.executable("rg") then
 vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
-opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
+opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
 -- elseif lambda.executable("ag") then
 --     vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
 --     opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
@@ -112,46 +112,46 @@ opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
-o.wildcharm = ('\t'):byte()
-o.wildmode = 'longest:full,full' -- Shows a menu bar as opposed to an enormous list
+o.wildcharm = ("\t"):byte()
+o.wildmode = "longest:full,full" -- Shows a menu bar as opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
 opt.wildignore = {
-  '*.aux',
-  '*.out',
-  '*.toc',
-  '*.o',
-  '*.obj',
-  '*.dll',
-  '*.jar',
-  '*.pyc',
-  '*.rbc',
-  '*.class',
-  '*.gif',
-  '*.ico',
-  '*.jpg',
-  '*.jpeg',
-  '*.png',
-  '*.avi',
-  '*.wav',
-  -- Temp/System
-  '*.*~',
-  '*~ ',
-  '*.swp',
-  '.lock',
-  '.DS_Store',
-  'tags.lock',
+    "*.aux",
+    "*.out",
+    "*.toc",
+    "*.o",
+    "*.obj",
+    "*.dll",
+    "*.jar",
+    "*.pyc",
+    "*.rbc",
+    "*.class",
+    "*.gif",
+    "*.ico",
+    "*.jpg",
+    "*.jpeg",
+    "*.png",
+    "*.avi",
+    "*.wav",
+    -- Temp/System
+    "*.*~",
+    "*~ ",
+    "*.swp",
+    ".lock",
+    ".DS_Store",
+    "tags.lock",
 }
-o.wildoptions = 'pum'
+o.wildoptions = "pum"
 o.pumblend = 3 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
 o.conceallevel = 2
-o.breakindentopt = 'sbr'
+o.breakindentopt = "sbr"
 o.linebreak = true -- lines wrap at words rather than random characters
 o.synmaxcol = 1024 -- don't syntax highlight long lines
-o.signcolumn = 'yes:3'
+o.signcolumn = "yes:3"
 o.ruler = false
 -- if lambda.config.ui.noice.enable then
 --     o.cmdheight = 1 -- 0 , is still borked it seems
@@ -164,11 +164,11 @@ o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 o.list = true -- invisible chars
 opt.listchars = {
-  eol = nil,
-  tab = '│ ',
-  extends = '›', -- Alternatives: … »
-  precedes = '‹', -- Alternatives: … «
-  trail = '•', -- BULLET (U+2022, UTF-8: E2 80 A2)
+    eol = nil,
+    tab = "│ ",
+    extends = "›", -- Alternatives: … »
+    precedes = "‹", -- Alternatives: … «
+    trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
 -----------------------------------------------------------------------------//
 -- Indentation
@@ -185,13 +185,13 @@ o.shiftwidth = 2
 o.gdefault = true
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
-opt.completeopt = { 'menuone', 'noselect' }
+opt.completeopt = { "menuone", "noselect" }
 o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files
-opt.clipboard = { 'unnamedplus' }
+opt.clipboard = { "unnamedplus" }
 o.laststatus = 3
 o.termguicolors = true
-o.guifont = 'CartographCF Nerd Font Mono:h14,codicon'
+o.guifont = "CartographCF Nerd Font Mono:h14,codicon"
 -----------------------------------------------------------------------------//
 -- Emoji {{{1
 -----------------------------------------------------------------------------//
@@ -204,9 +204,9 @@ o.emoji = false
 -----------------------------------------------------------------------------//
 -- This is from the help docs, it enables mode shapes, "Cursor" highlight, and blinking
 opt.guicursor = {
-  [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]],
-  [[a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor]],
-  [[sm:block-blinkwait175-blinkoff150-blinkon175]],
+    [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]],
+    [[a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor]],
+    [[sm:block-blinkwait175-blinkoff150-blinkon175]],
 }
 -----------------------------------------------------------------------------//
 -- Title {{{1
@@ -216,7 +216,7 @@ opt.guicursor = {
 -- end
 
 -- o.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.lambda.modified_icon()}'
-o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
+o.titleold = fn.fnamemodify(vim.loop.os_getenv("SHELL"), ":t")
 o.title = true
 o.titlelen = 70
 -----------------------------------------------------------------------------//
@@ -227,18 +227,18 @@ o.showmode = false
 -- * help files since that will error if they are from a lazy loaded plugin
 -- * folds since they are created dynamically and might be missing on startup
 opt.sessionoptions = {
-  'globals',
-  'buffers',
-  'curdir',
-  'winpos',
-  'tabpages',
+    "globals",
+    "buffers",
+    "curdir",
+    "winpos",
+    "tabpages",
 }
-opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
-o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
+opt.viewoptions = { "cursor", "folds" } -- save/restore just these (with `:{mk,load}view`)
+o.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
 -----------------------------------------------------------------------------//
 -- Jumplist
 -----------------------------------------------------------------------------//
-opt.jumpoptions = { 'stack' } -- make the jumplist behave like a browser stack
+opt.jumpoptions = { "stack" } -- make the jumplist behave like a browser stack
 -------------------------------------------------------------------------------
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
@@ -246,10 +246,10 @@ o.backup = false
 o.writebackup = false
 o.undofile = true
 o.swapfile = true
-o.directory = cache_dir .. 'swag/'
-o.undodir = cache_dir .. 'undo/'
-o.backupdir = cache_dir .. 'backup/'
-o.viewdir = cache_dir .. 'view/'
+o.directory = cache_dir .. "swag/"
+o.undodir = cache_dir .. "undo/"
+o.backupdir = cache_dir .. "backup/"
+o.viewdir = cache_dir .. "view/"
 o.shada = "!,'300,<50,@100,s10,h"
 --}}}
 -----------------------------------------------------------------------------//
@@ -266,16 +266,16 @@ o.magic = true
 -- Spelling {{{1
 -----------------------------------------------------------------------------//
 opt.spellsuggest:prepend({ 12 })
-opt.spelloptions:append({ 'camel', 'noplainbuffer' })
-opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
-opt.fileformats = { 'unix', 'mac', 'dos' }
-opt.spelllang:append('programming')
+opt.spelloptions:append({ "camel", "noplainbuffer" })
+opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
+opt.fileformats = { "unix", "mac", "dos" }
+opt.spelllang:append("programming")
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
 o.mousefocus = true
 o.mousemoveevent = true
-opt.mousescroll = { 'ver:1', 'hor:6' }
+opt.mousescroll = { "ver:1", "hor:6" }
 -----------------------------------------------------------------------------//
 -- these only read ".vim" files
 o.secure = true -- Disable autocmd etc for project local vimrc files.

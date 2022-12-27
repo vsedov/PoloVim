@@ -1,13 +1,4 @@
-if not packer_plugins["nvim-treesitter"].loaded then
-    vim.cmd([[Lazy load nvim-treesitter ]])
-end
-
-if not packer_plugins["nvim-cmp"].loaded then
-    vim.cmd([[Lazy load nvim-cmp]])
-end
-
 require("lazy").load("neorg-telescope")
-
 local neorg_callbacks = require("neorg.callbacks")
 
 require("neorg").setup({

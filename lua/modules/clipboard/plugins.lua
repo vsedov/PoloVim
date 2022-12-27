@@ -100,7 +100,7 @@ clipsub({
 
 clipsub({
     "johmsalas/text-case.nvim",
-    lazy = true, 
+    lazy = true,
     config = conf.text_case,
 })
 
@@ -118,7 +118,6 @@ clipsub({
     lazy = true,
     config = conf.clipboardimage,
 })
-
 
 -- -- manual call
 clipsub({

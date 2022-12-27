@@ -1,5 +1,6 @@
 local conf = require("modules.editor.config")
 local editor = require("core.pack").package
+
 editor({ "nvim-lua/plenary.nvim", module = "plenary" })
 editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
     "j",
@@ -119,59 +120,59 @@ editor({
     end,
 })
 
--- editor({
---     "anuvyklack/hydra.nvim",
---     dependencies = "anuvyklack/keymap-layer.nvim",
---     config = conf.hydra,
---     lazy = true,
---     keys = {
---         "<leader>b",
---         "<localleader>b",
---         "<leader>d",
---         ";A",
---         ";\\",
---         "<leader>h",
---         "<leader>H",
---         "H",
---         "L",
---         "<cr>",
---         ";l",
---         "m",
---         "<leader>u",
---         "\\l",
---         ";p",
---         "<leader>I",
---         ";;",
---         "<leader>r",
---         "<localleader>r",
---         ";r",
---         "<leader>L",
---         ";s",
---         "<leader>f",
---         "gaa",
---         "gae",
---         ";w",
---         "\\<leader",
---         "<leader>O",
---         "<c-w>[",
---         "<localleader>w",
---         "<leader>yu",
---         "p",
---         "P",
---         "gp",
---         "gP",
---         "]p",
---         "[p",
---         "]P",
---         "[P",
---         ">p",
---         "<p",
---         ">P",
---         "<P",
---         "=p",
---         "=P",
---     },
--- })
+editor({
+    "anuvyklack/hydra.nvim",
+    dependencies = "anuvyklack/keymap-layer.nvim",
+    config = conf.hydra,
+    lazy = true,
+    keys = {
+        "<leader>b",
+        "<localleader>b",
+        "<leader>d",
+        ";A",
+        ";\\",
+        "<leader>h",
+        "<leader>H",
+        "H",
+        "L",
+        "<cr>",
+        ";l",
+        "m",
+        "<leader>u",
+        "\\l",
+        ";p",
+        "<leader>I",
+        ";;",
+        "<leader>r",
+        "<localleader>r",
+        ";r",
+        "<leader>L",
+        ";s",
+        "<leader>f",
+        "gaa",
+        "gae",
+        ";w",
+        "\\<leader",
+        "<leader>O",
+        "<c-w>[",
+        "<localleader>w",
+        "<leader>yu",
+        "p",
+        "P",
+        "gp",
+        "gP",
+        "]p",
+        "[p",
+        "]P",
+        "[P",
+        ">p",
+        "<p",
+        ">P",
+        "<P",
+        "=p",
+        "=P",
+    },
+})
 
 editor({
     "jbyuki/venn.nvim",
@@ -195,8 +196,6 @@ editor({
     end,
 })
 
-
-
 editor({
     "haya14busa/vim-asterisk",
     lazy = true,
@@ -213,27 +212,27 @@ editor({
     init = conf.asterisk_setup,
 })
 
--- editor({
---     "marklcrns/vim-smartq",
---     keys = {
---         "Q",
---         "q",
---     },
---     cmd = {
---         "SmartQ",
---         "SmartQ!",
---         "SmartQSave",
---         "SmartQWipeEmpty",
---         "SmartQWipeEmpty!",
---         "SmartQCloseSplits",
---     },
---     config = conf.smart_q,
--- -- })
--- editor({
---     "AndrewRadev/switch.vim",
---     lazy = true,
---     cmd = { "Switch", "Switch!", "Switch?", "SwitchCase", "SwitchCase!" },
---     init = function()
---         vim.g.switch_mapping = ";S"
---     end,
--- })
+editor({
+    "marklcrns/vim-smartq",
+    keys = {
+        "Q",
+        "q",
+    },
+    config = conf.smart_q,
+    cmd = {
+        "SmartQ",
+        "SmartQSave",
+        "SmartQWipeEmpty",
+        "SmartQCloseSplits",
+    },
+})
+
+editor({
+    "AndrewRadev/switch.vim",
+    lazy = true,
+    init = function()
+        vim.g.switch_mapping = ";S"
+    end,
+    keys = { ";S" },
+    cmd = { "Switch", "SwitchCase" },
+})

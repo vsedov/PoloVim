@@ -3,7 +3,7 @@ local langtree = true
 local lines = vim.fn.line("$")
 
 local treesitter = function()
-    lprint("loading treesitter")
+    -- lprint("loading treesitter")
     if lines > 30000 then -- skip some settings for large file
         -- vim.cmd[[syntax on]]
         print("skip treesitter")
@@ -66,7 +66,7 @@ local treesitter = function()
 end
 
 local treesitter_obj = function()
-    lprint("loading treesitter textobj")
+    -- lprint("loading treesitter textobj")
     if lines > 30000 then -- skip some settings for large file
         print("skip treesitter obj")
         return
@@ -173,7 +173,7 @@ local treesitter_obj = function()
 end
 
 local treesitter_ref = function()
-    lprint("loading treesitter refactor")
+    -- lprint("loading treesitter refactor")
 
     if vim.fn.line("$") > 10000 then -- skip for large file
         -- vim.cmd[[syntax on]]
