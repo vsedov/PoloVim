@@ -9,7 +9,7 @@ colourscheme({
 colourscheme({
     "catppuccin/nvim",
     lazy = true,
-    as = "catppuccin",
+    name = "catppuccin",
     cmd = "CatppuccinCompile",
     init = function()
         vim.g.catppuccin_flavour = lambda.config.colourscheme.catppuccin_flavour -- latte, frappe, macchiato, mocha
@@ -22,7 +22,7 @@ colourscheme({
     "rose-pine/neovim", -- rose-pine/neovim
 
     lazy = true,
-    as = "rose",
+    name = "rose",
     module = "rose-pine",
     -- tag = "v1.*",
     config = conf.rose,

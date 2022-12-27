@@ -91,4 +91,4 @@ local function define_highlights()
     h.plugin("Cmp", kind_hls)
 end
 
-define_highlights()
+-- define_highlights()

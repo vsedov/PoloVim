@@ -91,19 +91,21 @@ local leader_map = function()
 end
 
 local load_core = function()
+    require("core.globals")
+
     local pack = require("core.pack")
     createdir()
     disable_distribution_plugins()
     leader_map()
 
-    require("core.pack"):boot_strap()
-
     require("core.options")
+    require("core.autocmd")
+    require("core.autocmd_optional")
     require("keymap")
-    require("internal.event")
     file_type()
+
+    require("core.pack"):boot_strap()
     require("core.lazy")
 end
-require("core.globals")
 
 load_core()

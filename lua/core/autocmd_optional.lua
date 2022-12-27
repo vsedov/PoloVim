@@ -117,21 +117,4 @@ vim.defer_fn(function()
         require("utils.abbreviations").setup()
     end
 
-    -------------------------
-    -- COMMANDS
-    -------------------------
-    vim.api.nvim_create_user_command("SwitchBar", function()
-        if lambda.config.tabby_or_bufferline then
-            lambda.unload("bufferline")
-            lambda.config.tabby_or_bufferline = false
-            require("packer").loader("tabby.nvim")
-            require("modules.buffers.config").tabby()
-        else
-            lambda.unload("tabby")
-            lambda.config.tabby_or_bufferline = true
-            require("packer").loader("bufferline.nvim")
-            require("modules.buffers.config").nvim_bufferline()
-        end
-        require("modules.editor.hydra.buffer").buffer()
-    end, { force = true })
 end, 100)

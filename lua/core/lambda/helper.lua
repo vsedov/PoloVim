@@ -39,7 +39,7 @@ lambda.source = function(path, prefix)
     end
 end
 
-lambda.lib = require('utils.extended_lib.helpers')
+lambda.lib = require("utils.extended_lib.helpers")
 
 -- https://www.reddit.com/r/neovim/comments/sg919r/diff_with_clipboard/
 lambda.compare_to_clipboard = function()
@@ -522,11 +522,11 @@ function lambda.lazy_load(tb)
                         tb.plugin
                     )
                 then
-                    -- vim.defer_fn(function()
-                        -- require("lazy").load(tb.plugin)
-                    -- end, 0)
+                    vim.defer_fn(function()
+                        require("lazy").load({ plugins = { tb.plugin } })
+                    end, 0)
                 else
-                    -- require("lazy").load(tb.plugin)
+                    require("lazy").load({ plugins = { tb.plugin } })
                 end
             end
         end,

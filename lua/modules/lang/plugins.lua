@@ -1,16 +1,16 @@
--- local conf = require("modules.lang.config")
--- local lang = require("core.pack").package
+local conf = require("modules.lang.config")
+local lang = require("core.pack").package
 
--- -- Inline functions dont seem to work .
--- lang({
---     "ThePrimeagen/refactoring.nvim",
---     module = "refactoring",
---     dependencies = {
---         { "nvim-lua/plenary.nvim" },
---         { "nvim-treesitter/nvim-treesitter" },
---     },
---     config = conf.refactor,
--- })
+-- Inline functions dont seem to work .
+lang({
+    "ThePrimeagen/refactoring.nvim",
+    module = "refactoring",
+    dependencies = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-treesitter/nvim-treesitter" },
+    },
+    config = conf.refactor,
+})
 
 -- -- -- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this
 -- -- -- on startup, using lazy.lua

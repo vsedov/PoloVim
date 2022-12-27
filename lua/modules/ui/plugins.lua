@@ -1,8 +1,6 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
 
-ui({ "glepnir/zephyr-nvim", config = conf.zephyr })
-
 ui({
     "j-hui/fidget.nvim",
     lazy = true,

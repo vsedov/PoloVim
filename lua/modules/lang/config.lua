@@ -31,7 +31,7 @@ function config.refactor()
         },
     })
 
-    lprint("refactor")
+    -- lprint("refactor")
     _G.ts_refactors = function()
         -- telescope refactoring helper
         local function _refactor(prompt_bufnr)

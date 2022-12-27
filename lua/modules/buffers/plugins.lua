@@ -3,6 +3,7 @@ local conf = require("modules.buffers.config")
 
 buffer({
     "akinsho/bufferline.nvim",
+    event = "BufEnter",
     config = conf.nvim_bufferline,
     lazy = true,
 })
