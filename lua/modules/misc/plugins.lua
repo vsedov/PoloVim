@@ -1,53 +1,53 @@
--- local conf = require("modules.misc.config")
--- local misc = require("core.pack").package
+local conf = require("modules.misc.config")
+local misc = require("core.pack").package
 
--- misc({ "fladson/vim-kitty", ft = { "*.conf" } })
+misc({ "fladson/vim-kitty", ft = { "*.conf" } })
 
--- misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 
--- -- misc({
--- --     "kylechui/nvim-surround",
--- --     event = "BufWinEnter",
--- --     config = conf.surround,
--- -- })
+misc({
+    "kylechui/nvim-surround",
+    event = "BufWinEnter",
+    config = conf.surround,
+})
 
--- misc({
---     "NMAC427/guess-indent.nvim",
---     cmd = "GuessIndent",
---     opt = true,
---     setup = function()
---         lambda.lazy_load({
---             events = "BufEnter",
---             augroup_name = "indent",
---             condition = lambda.config.treesitter.use_guess_indent,
---             plugin = "guess-indent.nvim",
---         })
---     end,
---     config = conf.guess_indent,
--- })
+misc({
+    "NMAC427/guess-indent.nvim",
+    cmd = "GuessIndent",
+    opt = true,
+    setup = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "indent",
+            condition = lambda.config.treesitter.use_guess_indent,
+            plugin = "guess-indent.nvim",
+        })
+    end,
+    config = conf.guess_indent,
+})
 
--- misc({
---     "lukas-reineke/headlines.nvim",
---     ft = { "norg", "md" },
---     config = conf.headers,
--- })
+misc({
+    "lukas-reineke/headlines.nvim",
+    ft = { "norg", "md" },
+    config = conf.headers,
+})
 
--- -- programming spell
--- misc({ "psliwka/vim-dirtytalk", run = ":DirtytalkUpdate" })
+-- programming spell
+misc({ "psliwka/vim-dirtytalk", run = ":DirtytalkUpdate" })
 
--- ----
--- misc({
---     "nyngwang/NeoWell.lua",
---     cmd = {
---         "NeoWellToggle",
---         "NeoWellAppend",
---         "NeoWellJump",
---         "NeoWellEdit",
---         "NeoWellOut",
---         "NeoWellWipeOut",
---     },
---     config = conf.NeoWell,
--- })
+----
+misc({
+    "nyngwang/NeoWell.lua",
+    cmd = {
+        "NeoWellToggle",
+        "NeoWellAppend",
+        "NeoWellJump",
+        "NeoWellEdit",
+        "NeoWellOut",
+        "NeoWellWipeOut",
+    },
+    config = conf.NeoWell,
+})
 
 -- misc({
 --     "nyngwang/NeoRoot.lua",
@@ -117,40 +117,40 @@
 -- })
 
 -- -- REVISIT viv (07:23:50 - 20/08/22): I am not sure if this is viable or not
--- misc({
---     "boorboor/save.nvim",
---     config = conf.autosave,
---     keys = "<F4>",
---     opt = true,
--- })
+misc({
+    "boorboor/save.nvim",
+    config = conf.autosave,
+    keys = "<F4>",
+    opt = true,
+})
 
--- misc({
---     "ellisonleao/carbon-now.nvim",
---     config = conf.carbon,
---     cmd = "CarbonNow",
---     opt = true,
--- })
+misc({
+    "ellisonleao/carbon-now.nvim",
+    config = conf.carbon,
+    cmd = "CarbonNow",
+    opt = true,
+})
 
--- misc({
---     "nacro90/numb.nvim",
---     event = "CmdlineEnter",
---     config = function()
---         require("numb").setup()
---     end,
--- })
+misc({
+    "nacro90/numb.nvim",
+    event = "CmdlineEnter",
+    config = function()
+        require("numb").setup()
+    end,
+})
 
--- misc({
---     "m-demare/attempt.nvim",
---     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
---     opt = true,
---     config = conf.attempt,
---     keys = {
---         "<leader>an",
---         "<leader>ai",
---         "<leader>ar",
---         "<leader>ad",
---         "<leader>ac",
---         "<leader>al",
---         "<leader>aL",
---     },
--- })
+misc({
+    "m-demare/attempt.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    opt = true,
+    config = conf.attempt,
+    keys = {
+        "<leader>an",
+        "<leader>ai",
+        "<leader>ar",
+        "<leader>ad",
+        "<leader>ac",
+        "<leader>al",
+        "<leader>aL",
+    },
+})

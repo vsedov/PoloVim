@@ -207,9 +207,6 @@ function config.diffview()
 end
 
 function config.gitsigns()
-    if not packer_plugins["plenary.nvim"].loaded then
-        require("lazy").load("plenary.nvim")
-    end
     local gitsigns = require("gitsigns")
     local cwd = vim.fn.getcwd()
     local function on_attach(bufnr)

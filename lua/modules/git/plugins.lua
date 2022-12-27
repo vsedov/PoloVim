@@ -58,6 +58,7 @@ git({
 git({
     "lewis6991/gitsigns.nvim",
     config = conf.gitsigns,
+    dependencies = {"nvim-lua/plenary.nvim"},
     lazy = true,
 })
 
