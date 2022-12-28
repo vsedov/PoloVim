@@ -103,7 +103,6 @@ local load_core = function()
     require("core.autocmd_optional")
     require("keymap")
     file_type()
-
     require("core.pack"):boot_strap()
     require("core.lazy")
 end

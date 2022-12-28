@@ -95,7 +95,6 @@ if gitrepo then
 
 ]]
     local ok, gitsigns = pcall(require, "gitsigns")
-    print("here")
     if ok then
         local vgit = require("vgit")
         Hydra({

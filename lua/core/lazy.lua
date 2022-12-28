@@ -120,10 +120,10 @@ end, lazy_timer)
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 
 vim.defer_fn(function()
-    -- require("vscripts.tools")
-    -- vim.api.nvim_create_user_command("Gram", function()
-    -- require("modules.tools.config").grammcheck()
-    -- end, { force = true })
+    require("vscripts.tools")
+    vim.api.nvim_create_user_command("Gram", function()
+    require("modules.tools.config").grammcheck()
+    end, { force = true })
 
     loader({ plugins = { "presence.nvim" } })
 

@@ -55,16 +55,16 @@ git({
     config = conf.neogit,
 })
 
-git({
-    "ruifm/gitlinker.nvim",
-    keys = {
-        { "n", "<leader>gT" },
-        { "v", "<leader>gT" },
-        { "n", "<leader>gY" },
-        { "n", "<leader>gB" },
-    },
-    config = conf.gitlinker,
-})
+-- git({
+--     "ruifm/gitlinker.nvim",
+--     keys = {
+--         { "n", "<leader>gT" },
+--         { "v", "<leader>gT" },
+--         { "n", "<leader>gY" },
+--         { "n", "<leader>gB" },
+--     },
+--     config = conf.gitlinker,
+-- })
 
 -- --  I think this gets loaded in the first place
 git({

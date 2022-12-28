@@ -56,7 +56,7 @@ search({
 
 -- search({
 --     "https://git.sr.ht/~vigoux/azy.nvim",
---     run = "make lib",
+--     build ="make lib",
 --     module = "azy",
 --     config = function()
 --         require("azy").setup({

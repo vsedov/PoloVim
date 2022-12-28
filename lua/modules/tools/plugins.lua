@@ -73,7 +73,7 @@ tools({
     ft = { "markdown", "pandoc.markdown", "rmd" },
     cmd = { "MarkdownPreview" },
     init = conf.mkdp,
-    run = [[sh -c "cd app && yarn install"]],
+    build =[[sh -c "cd app && yarn install"]],
     lazy = true,
 })
 

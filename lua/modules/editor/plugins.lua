@@ -93,32 +93,28 @@ editor({
 -- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 
-editor({
-    "monaqa/dial.nvim",
-    keys = {
-        { "n", "<C-a>" },
-        { "n", "<C-x>" },
+-- editor({
+--     "monaqa/dial.nvim",
+--     keys = {
+--         { "<C-x>", mode = "n" } ,
+--         { "<C-a>", mode = "n" } ,
 
-        { "v", "<C-a>" },
-        { "v", "<C-x>" },
+--         { "<C-a>", mode = "v" } ,
+--         { "<C-x>", mode = "v" } ,
 
-        { "v", "g<C-a>" },
-        { "v", "g<C-x>" },
-        { "n", "_a" },
-        { "n", "_x" },
-    },
-    lazy = true,
-    config = conf.dial,
-})
 
-editor({
-    "folke/which-key.nvim",
-    module = "which-key",
-    after = "nvim-treesitter",
-    config = function()
-        require("modules.editor.which_key")
-    end,
-})
+
+--         { "g<C-a>", mode = "v" } ,
+--         { "g<C-x>", mode = "v" } ,
+
+
+
+--         { "_a", mode = "n" } ,
+--         { "_x", mode = "n" } ,
+--     },
+--     lazy = true,
+--     config = conf.dial,
+-- })
 
 editor({
     "anuvyklack/hydra.nvim",
@@ -200,31 +196,21 @@ editor({
     "haya14busa/vim-asterisk",
     lazy = true,
     keys = {
-        { "n", "*" },
-        { "n", "#" },
-        { "n", "g*" },
-        { "n", "g#" },
-        { "n", "z*" },
-        { "n", "gz*" },
-        { "n", "z#" },
-        { "n", "gz#" },
+        {  "*" },
+        {  "#" },
+        { "g*" },
+        {  "g#" },
+        { "z*" },
+        { "gz*" },
+        {  "z#" },
+        { "gz#" },
     },
     init = conf.asterisk_setup,
 })
 
 editor({
     "marklcrns/vim-smartq",
-    keys = {
-        "Q",
-        "q",
-    },
-    config = conf.smart_q,
-    cmd = {
-        "SmartQ",
-        "SmartQSave",
-        "SmartQWipeEmpty",
-        "SmartQCloseSplits",
-    },
+    
 })
 
 editor({

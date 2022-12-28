@@ -247,9 +247,9 @@ function config.neotest()
         },
         output = {
             enabled = true,
-            open_on_run = "short",
+            open_on_build ="short",
         },
-        run = {
+        build ={
             enabled = true,
         },
         status = {
@@ -271,7 +271,7 @@ function config.neotest()
                 expand_all = "e",
                 jumpto = "i",
                 output = "o",
-                run = "r",
+                build ="r",
                 short = "O",
                 stop = "u",
             },

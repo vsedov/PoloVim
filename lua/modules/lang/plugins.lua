@@ -17,16 +17,16 @@ lang({
 lang({
     "andrewferrier/debugprint.nvim",
     keys = {
-        { "n", "g?p" },
-        { "n", "g?P" },
-        { "n", "g?v" },
-        { "n", "g?V" },
-        { "n", "dvl" },
-        { "n", "dvL" },
-        { "v", "g?V" },
-        { "v", "g?v" },
-        { "x", "g?o" },
-        { "x", "g?O" },
+        { "g?p", mode = "n" },
+        { "g?P", mode = "n" },
+        { "g?v", mode = "n" },
+        { "g?V", mode = "n" },
+        { "g?l", mode = "n" },
+        { "g?L", mode = "n" },
+        { "g?V", mode = "v" },
+        { "g?v", mode = "v" },
+        { "g?o", mode = "x" },
+        { "g?O", mode = "x" },
     },
     module = "debugprint",
     cmd = "DeleteDebugPrints",
@@ -175,12 +175,12 @@ lang({
     config = conf.regexplainer,
 })
 
-lang({ "dccsillag/magma-nvim", ft = "python", run = ":UpdateRemotePlugins" })
+lang({ "dccsillag/magma-nvim", ft = "python", build =":UpdateRemotePlugins" })
 
 lang({
     "0x100101/lab.nvim",
     opt = true,
-    run = "cd js && npm ci",
+    build ="cd js && npm ci",
     dependencies = { "nvim-lua/plenary.nvim" },
     cmd = {
         "Lab code",
@@ -204,7 +204,7 @@ lang({
 })
 lang({
     "michaelb/sniprun",
-    run = "bash ./install.sh",
+    build ="bash ./install.sh",
     module = { "sniprun" },
     cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
     config = function() end,

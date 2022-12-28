@@ -2,7 +2,7 @@
 --  causing the error here, and its quite important that i figure this one out .
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
-ts({ "nvim-treesitter/nvim-treesitter", lazy = true, run = ":TSUpdate", config = conf.nvim_treesitter })
+ts({ "nvim-treesitter/nvim-treesitter", lazy = true, build =":TSUpdate", config = conf.nvim_treesitter })
 
 ts({
     "p00f/nvim-ts-rainbow",

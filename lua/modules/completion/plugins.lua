@@ -9,7 +9,7 @@ completion({
     dependencies = {
         {
             "tzachar/cmp-tabnine",
-            run = "./install.sh",
+            build ="./install.sh",
             -- after = "nvim-cmp",
             init = function()
                 -- lambda.lazy_load({

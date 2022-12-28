@@ -7,7 +7,7 @@ notes({
     -- branch = "code-execution",
     --[[ branch = "main", ]]
     tags = "*",
-    run = ":Neorg sync-parsers",
+    build =":Neorg sync-parsers",
     dependencies = {
         { "max397574/neorg-contexts", ft = "norg" },
         "nvim-lua/plenary.nvim",

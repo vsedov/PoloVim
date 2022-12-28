@@ -33,7 +33,7 @@ misc({
 })
 
 -- programming spell
-misc({ "psliwka/vim-dirtytalk", run = ":DirtytalkUpdate" })
+misc({ "psliwka/vim-dirtytalk", build =":DirtytalkUpdate" })
 
 ----
 misc({
