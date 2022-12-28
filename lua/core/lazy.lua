@@ -166,7 +166,7 @@ vim.defer_fn(function()
 
     -- ths thing is quite laggy
     if lambda.config.use_ufo and vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()) < 500 then
-        print("nvim-ufo loading")
+        -- print("nvim-ufo loading")
         loader({ plugins = { "nvim-ufo" } })
     end
     -- lprint("all done")

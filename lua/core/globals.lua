@@ -7,7 +7,7 @@ P = vim.pretty_print
 _G.dump = function(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
     if #objects == 0 then
-        print("nil")
+        -- print("nil")
     end
     print(unpack(objects))
     return ...

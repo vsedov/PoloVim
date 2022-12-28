@@ -1,5 +1,4 @@
 require("utils.helpers.helper")
-local loader = require("lazy").load
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 local conf = require("telescope.config").values

@@ -14,7 +14,6 @@ search({
         {
             "nvim-telescope/telescope-frecency.nvim",
             lazy = true,
-
         },
         {
             "nvim-telescope/telescope-live-grep-args.nvim",
