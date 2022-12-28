@@ -7,6 +7,15 @@ editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
     "k",
 }, config = conf.acc_jk })
 
+editor({
+    "folke/which-key.nvim",
+    module = "which-key",
+    after = "nvim-treesitter",
+    config = function()
+        require("modules.editor.which_key")
+    end,
+})
+
 -- -- -- -- NORMAL mode:
 -- -- -- -- `gcc` - Toggles the current line using linewise comment
 -- -- -- -- `gbc` - Toggles the current line using blockwise comment
@@ -102,12 +111,8 @@ editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 --         { "<C-a>", mode = "v" } ,
 --         { "<C-x>", mode = "v" } ,
 
-
-
 --         { "g<C-a>", mode = "v" } ,
 --         { "g<C-x>", mode = "v" } ,
-
-
 
 --         { "_a", mode = "n" } ,
 --         { "_x", mode = "n" } ,
@@ -196,13 +201,13 @@ editor({
     "haya14busa/vim-asterisk",
     lazy = true,
     keys = {
-        {  "*" },
-        {  "#" },
+        { "*" },
+        { "#" },
         { "g*" },
-        {  "g#" },
+        { "g#" },
         { "z*" },
         { "gz*" },
-        {  "z#" },
+        { "z#" },
         { "gz#" },
     },
     init = conf.asterisk_setup,
@@ -210,7 +215,6 @@ editor({
 
 editor({
     "marklcrns/vim-smartq",
-    
 })
 
 editor({

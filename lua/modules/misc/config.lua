@@ -19,8 +19,6 @@ function config.hexokinase()
     }
 end
 
-
-
 function config.diaglist()
     require("diaglist").init({
         debug = false,

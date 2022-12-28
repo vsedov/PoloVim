@@ -207,8 +207,6 @@ function config.venn()
     end, { bang = true })
 end
 
-
-
 function config.asterisk_setup()
     vim.g["asterisk#keeppos"] = 1
 

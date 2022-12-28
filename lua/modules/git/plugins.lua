@@ -118,9 +118,9 @@ git({
     "danielhp95/tmpclone-nvim",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
     keys = {
-        { "n", "<leader>xc" },
-        { "n", "<leader>xo" },
-        { "n", "<leader>xr" },
+        { "<leader>xc" },
+        { "<leader>xo" },
+        { "<leader>xr" },
     },
     cmd = {
         "TmpcloneClone",

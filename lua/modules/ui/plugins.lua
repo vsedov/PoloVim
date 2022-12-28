@@ -33,37 +33,36 @@ ui({
     end,
 })
 
--- ui({
---     "rebelot/heirline.nvim",
---     after = "nvim-lspconfig",
---     config = function()
---         require("modules.ui.heirline")
---         -- require("modules.ui.heirline_min")
---     end,
--- })
+-- -- ui({
+-- --     "rebelot/heirline.nvim",
+-- --     after = "nvim-lspconfig",
+-- --     config = function()
+-- --         require("modules.ui.heirline")
+-- --         -- require("modules.ui.heirline_min")
+-- --     end,
+-- -- })
 
--- ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
--- -- todo: FIX THIS
+-- -- ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
+-- -- -- todo: FIX THIS
 ui({
     "rcarriga/nvim-notify",
-    -- lazy = true,
-    dependencies = "telescope.nvim", -- this might not be needed
+    lazy = true,
     config = conf.notify,
 })
 
-ui({
-    "vigoux/notifier.nvim",
-    lazy = true,
-    config = conf.notifier,
-})
+-- -- ui({
+-- --     "vigoux/notifier.nvim",
+-- --     lazy = true,
+-- --     config = conf.notifier,
+-- -- })
 
-ui({ "MunifTanjim/nui.nvim", modules = "nui" })
+ui({ "MunifTanjim/nui.nvim", lazy = true })
 
--- -- Feels slow, might revert backto nvim tree
+-- -- -- Feels slow, might revert backto nvim tree
 ui({
     "mrbjarksen/neo-tree-diagnostics.nvim",
     dependencies = "nvim-neo-tree/neo-tree.nvim",
-    module = "neo-tree.sources.diagnostics", -- if wanting to lazyload
+    lazy = true,
 })
 ui({
     "nvim-neo-tree/neo-tree.nvim",
@@ -92,7 +91,6 @@ ui({
             end,
         },
     },
-    module = "neo-tree", -- if wanting to lazyload
     cmd = { "Neotree", "NeoTreeShow", "NeoTreeFocus", "NeoTreeFocusToggle" },
     config = conf.neo_tree,
 })

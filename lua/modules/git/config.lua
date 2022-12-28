@@ -2,7 +2,6 @@ local config = {}
 
 function config.octo()
     require("octo").setup()
-
 end
 
 function config.worktree()

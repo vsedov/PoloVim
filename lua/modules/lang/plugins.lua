@@ -1,7 +1,7 @@
 local conf = require("modules.lang.config")
 local lang = require("core.pack").package
 
--- Inline functions dont seem to work .
+-- -- Inline functions dont seem to work .
 lang({
     "ThePrimeagen/refactoring.nvim",
     module = "refactoring",
@@ -12,8 +12,8 @@ lang({
     config = conf.refactor,
 })
 
--- -- -- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this
--- -- on startup, using lazy.lua
+-- -- -- -- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this
+-- -- -- on startup, using lazy.lua
 lang({
     "andrewferrier/debugprint.nvim",
     keys = {
@@ -37,24 +37,24 @@ lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
 
 lang({ "nanotee/luv-vimdocs", opt = true })
 
--- -- builtin lua functions
+-- -- -- builtin lua functions
 lang({ "milisims/nvim-luaref", opt = true })
 
-lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
+lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, lazy = true, config = conf.trouble })
 
--- lang({
---     "ram02z/dev-comments.nvim",
---     dependencies = {
---         "nvim-treesitter/nvim-treesitter",
---         "nvim-lua/plenary.nvim",
---         "nvim-telescope/telescope.nvim", -- optional
---     },
---     opt = true,
---     after = "telescope.nvim",
---     config = conf.dev_comments,
--- })
--- -- -- not the same as folkes version
-lang({ "bfredl/nvim-luadev", opt = true, ft = "lua", init = conf.luadev })
+-- -- lang({
+-- --     "ram02z/dev-comments.nvim",
+-- --     dependencies = {
+-- --         "nvim-treesitter/nvim-treesitter",
+-- --         "nvim-lua/plenary.nvim",
+-- --         "nvim-telescope/telescope.nvim", -- optional
+-- --     },
+-- --     lazy = true,
+-- --     after = "telescope.nvim",
+-- --     config = conf.dev_comments,
+-- -- })
+-- -- -- -- not the same as folkes version
+-- lang({ "bfredl/nvim-luadev", lazy = true, ft = "lua", init = conf.luadev })
 
 lang({
     "rafcamlet/nvim-luapad",
@@ -72,34 +72,25 @@ lang({
 })
 lang({
     "mfussenegger/nvim-dap",
-    module = "dap",
+    lazy = true,
     config = conf.dap_config,
     dependencies = {
-        {
-            "rcarriga/nvim-dap-ui",
-            after = "nvim-dap",
-            config = conf.dapui,
-        },
-        {
-            "mfussenegger/nvim-dap-python",
-            after = "nvim-dap",
-        },
-        "folke/which-key.nvim",
+        "rcarriga/nvim-dap-ui",
+        "mfussenegger/nvim-dap-python",
     },
 })
 lang({
     "ofirgall/goto-breakpoints.nvim",
     after = "nvim-dap",
     config = function()
-        local map = vim.keymap.set
-        map("n", "]d", require("goto-breakpoints").next, {})
-        map("n", "[d", require("goto-breakpoints").prev, {})
+        vim.keymap.set("n", "]d", require("goto-breakpoints").next, {})
+        vim.keymap.set("n", "[d", require("goto-breakpoints").prev, {})
     end,
 })
 
 lang({
     "rcarriga/neotest",
-    opt = true,
+    lazy = true,
     cmd = {
         "TestNear",
         "TestCurrent",
@@ -121,7 +112,7 @@ lang({
 lang({
     "rcarriga/neotest-vim-test",
     cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
-    dependencies = { "vim-test/vim-test", opt = true, after = "neotest" },
+    dependencies = { "vim-test/vim-test", lazy = true, after = "neotest" },
 })
 
 lang({
@@ -140,27 +131,27 @@ lang({
         "CRFiletype",
         "CRProjects",
     },
-    opt = true,
+    lazy = true,
     config = conf.code_runner,
 })
 
 lang({
     "andythigpen/nvim-coverage",
     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
-    opt = true,
+    lazy = true,
     config = conf.coverage,
 })
 -- -- -- IPython Mappings
 -- lang({
 --     lambda.use_local("py.nvim", "contributing"),
 --     ft = "python",
---     opt = true,
+--     lazy = true,
 --     config = conf.python_dev,
 -- })
 
 lang({
     "bennypowers/nvim-regexplainer",
-    opt = true,
+    lazy = true,
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
         "MunifTanjim/nui.nvim",
@@ -175,12 +166,12 @@ lang({
     config = conf.regexplainer,
 })
 
-lang({ "dccsillag/magma-nvim", ft = "python", build =":UpdateRemotePlugins" })
+lang({ "dccsillag/magma-nvim", ft = "python", build = ":UpdateRemotePlugins" })
 
 lang({
     "0x100101/lab.nvim",
-    opt = true,
-    build ="cd js && npm ci",
+    lazy = true,
+    build = "cd js && npm ci",
     dependencies = { "nvim-lua/plenary.nvim" },
     cmd = {
         "Lab code",
@@ -204,7 +195,7 @@ lang({
 })
 lang({
     "michaelb/sniprun",
-    build ="bash ./install.sh",
+    build = "bash ./install.sh",
     module = { "sniprun" },
     cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
     config = function() end,

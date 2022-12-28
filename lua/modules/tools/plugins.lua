@@ -73,7 +73,7 @@ tools({
     ft = { "markdown", "pandoc.markdown", "rmd" },
     cmd = { "MarkdownPreview" },
     init = conf.mkdp,
-    build =[[sh -c "cd app && yarn install"]],
+    build = [[sh -c "cd app && yarn install"]],
     lazy = true,
 })
 
@@ -136,9 +136,7 @@ tools({
 tools({
     "barklan/capslock.nvim",
     keys = {
-        { "i", "<C-;>" },
-        { "n", "<C-;>" },
-        { "c", "<C-;>" },
+        { "<C-;>" },
     },
     config = function()
         require("capslock").setup()

@@ -184,10 +184,6 @@ function config.dap_config()
     require("modules.lang.dap.init").config()
 end
 
-function config.dapui()
-    require("modules.lang.dap.init").dapui()
-end
-
 function config.neotest()
     vim.cmd([[Lazy load neotest-python]])
     vim.cmd([[Lazy load neotest-plenary]])
@@ -247,9 +243,9 @@ function config.neotest()
         },
         output = {
             enabled = true,
-            open_on_build ="short",
+            open_on_build = "short",
         },
-        build ={
+        build = {
             enabled = true,
         },
         status = {
@@ -271,7 +267,7 @@ function config.neotest()
                 expand_all = "e",
                 jumpto = "i",
                 output = "o",
-                build ="r",
+                build = "r",
                 short = "O",
                 stop = "u",
             },

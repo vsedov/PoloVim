@@ -1,12 +1,10 @@
-require("lazy").load({ plugins = { "neorg-telescope" } })
-
-local neorg_callbacks = require("neorg.callbacks")
+require("lazy").load({ plugins = { "neorg-telescope", "nvim-cmp" } })
 
 require("neorg").setup({
     load = {
         ["core.upgrade"] = {},
         ["core.defaults"] = {}, -- Load all the default modules
-        ["core.integrations.telescope"] = {},
+        -- ["core.integrations.telescope"] = {},
         ["core.export"] = {},
         ["core.norg.completion"] = {
             config = {
@@ -78,16 +76,6 @@ require("neorg").setup({
                 },
             },
         },
-        ["core.presenter"] = {
-            config = {
-                zen_mode = "zen-mode",
-                slide_count = {
-                    enable = true,
-                    position = "top",
-                    count_format = "[%d/%d]",
-                },
-            },
-        },
 
         ["core.norg.esupports.metagen"] = {
             config = {
@@ -138,151 +126,152 @@ require("neorg").setup({
     },
 })
 
-local neorg_leader = "_"
-neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
-    -- Map all the below keybinds only when the "norg" mode is active
-    keybinds.map_event_to_mode("norg", {
-        n = { -- Bind keys in normal mode
+-- local neorg_callbacks = require("neorg.callbacks")
+-- local neorg_leader = "_"
+-- neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
+--     -- Map all the below keybinds only when the "norg" mode is active
+--     keybinds.map_event_to_mode("norg", {
+--         n = { -- Bind keys in normal mode
 
-            { neorg_leader .. "<cr>", "core.looking-glass.magnify-code-block" },
+--             { neorg_leader .. "<cr>", "core.looking-glass.magnify-code-block" },
 
-            -- Keys for managing TODO items and setting their states
-            { "gtu", "core.norg.qol.todo_items.todo.task_undone" },
-            { "gtp", "core.norg.qol.todo_items.todo.task_pending" },
-            { "gtd", "core.norg.qol.todo_items.todo.task_done" },
-            { "gth", "core.norg.qol.todo_items.todo.task_on_hold" },
+--             -- Keys for managing TODO items and setting their states
+--             { "gtu", "core.norg.qol.todo_items.todo.task_undone" },
+--             { "gtp", "core.norg.qol.todo_items.todo.task_pending" },
+--             { "gtd", "core.norg.qol.todo_items.todo.task_done" },
+--             { "gth", "core.norg.qol.todo_items.todo.task_on_hold" },
 
-            { "gti", "core.norg.qol.todo_items.todo.task_important" },
-            { "<C-leader>", "core.norg.qol.todo_items.todo.task_cycle" },
+--             { "gti", "core.norg.qol.todo_items.todo.task_important" },
+--             { "<C-leader>", "core.norg.qol.todo_items.todo.task_cycle" },
 
-            -- Keys for managing GTD
-            { neorg_leader .. "tc", "core.gtd.base.capture" },
-            { neorg_leader .. "tv", "core.gtd.base.views" },
-            { neorg_leader .. "te", "core.gtd.base.edit" },
+--             -- Keys for managing GTD
+--             { neorg_leader .. "tc", "core.gtd.base.capture" },
+--             { neorg_leader .. "tv", "core.gtd.base.views" },
+--             { neorg_leader .. "te", "core.gtd.base.edit" },
 
-            -- Keys for managing notes
-            { neorg_leader .. "nn", "core.norg.dirman.new.note" },
+--             -- Keys for managing notes
+--             { neorg_leader .. "nn", "core.norg.dirman.new.note" },
 
-            { "<CR>", "core.norg.esupports.hop.hop-link" },
-            { "<M-CR>", "core.norg.esupports.hop.hop-link", "vsplit" },
+--             { "<CR>", "core.norg.esupports.hop.hop-link" },
+--             { "<M-CR>", "core.norg.esupports.hop.hop-link", "vsplit" },
 
-            { "<M-k>", "core.norg.manoeuvre.item_up" },
-            { "<M-j>", "core.norg.manoeuvre.item_down" },
+--             { "<M-k>", "core.norg.manoeuvre.item_up" },
+--             { "<M-j>", "core.norg.manoeuvre.item_down" },
 
-            -- mnemonic: markup toggle
-            { neorg_leader .. "mt", "core.norg.concealer.toggle-markup" },
+--             -- mnemonic: markup toggle
+--             { neorg_leader .. "mt", "core.norg.concealer.toggle-markup" },
 
-            { neorg_leader .. "l", "core.integrations.telescope.insert_link" },
-        },
+--             { neorg_leader .. "l", "core.integrations.telescope.insert_link" },
+--         },
 
-        o = {
-            { "ah", "core.norg.manoeuvre.textobject.around-heading" },
-            { "ih", "core.norg.manoeuvre.textobject.inner-heading" },
-            { "at", "core.norg.manoeuvre.textobject.around-tag" },
-            { "it", "core.norg.manoeuvre.textobject.inner-tag" },
-            { "al", "core.norg.manoeuvre.textobject.around-whole-list" },
-        },
-        i = {
-            { "<C-l>", "core.integrations.telescope.insert_link" },
-            { "<c-b>", "core.looking-glass.magnify-code-block" },
-        },
-    }, {
-        silent = true,
-        noremap = true,
-    })
+--         o = {
+--             { "ah", "core.norg.manoeuvre.textobject.around-heading" },
+--             { "ih", "core.norg.manoeuvre.textobject.inner-heading" },
+--             { "at", "core.norg.manoeuvre.textobject.around-tag" },
+--             { "it", "core.norg.manoeuvre.textobject.inner-tag" },
+--             { "al", "core.norg.manoeuvre.textobject.around-whole-list" },
+--         },
+--         i = {
+--             { "<C-l>", "core.integrations.telescope.insert_link" },
+--             { "<c-b>", "core.looking-glass.magnify-code-block" },
+--         },
+--     }, {
+--         silent = true,
+--         noremap = true,
+--     })
 
-    -- Map the below keys only when traverse-heading mode is active
-    keybinds.map_event_to_mode("traverse-heading", {
-        n = {
-            -- Rebind j and k to move between headings in traverse-heading mode
-            { "j", "core.integrations.treesitter.next.heading" },
-            { "k", "core.integrations.treesitter.previous.heading" },
-        },
-    }, {
-        silent = true,
-        noremap = true,
-    })
-    keybinds.map_event_to_mode("toc-split", {
-        n = {
-            { "<CR>", "core.norg.qol.toc.hop-toc-link" },
+--     -- Map the below keys only when traverse-heading mode is active
+--     keybinds.map_event_to_mode("traverse-heading", {
+--         n = {
+--             -- Rebind j and k to move between headings in traverse-heading mode
+--             { "j", "core.integrations.treesitter.next.heading" },
+--             { "k", "core.integrations.treesitter.previous.heading" },
+--         },
+--     }, {
+--         silent = true,
+--         noremap = true,
+--     })
+--     keybinds.map_event_to_mode("toc-split", {
+--         n = {
+--             { "<CR>", "core.norg.qol.toc.hop-toc-link" },
 
-            -- Keys for closing the current display
-            { "Q", "core.norg.qol.toc.close" },
-            { "<Esc>", "core.norg.qol.toc.close" },
-        },
-    }, {
-        silent = true,
-        noremap = true,
-        nowait = true,
-    })
+--             -- Keys for closing the current display
+--             { "Q", "core.norg.qol.toc.close" },
+--             { "<Esc>", "core.norg.qol.toc.close" },
+--         },
+--     }, {
+--         silent = true,
+--         noremap = true,
+--         nowait = true,
+--     })
 
-    -- Map the below keys on gtd displays
-    keybinds.map_event_to_mode("gtd-displays", {
-        n = {
-            { "<CR>", "core.gtd.ui.goto_task" },
+--     -- Map the below keys on gtd displays
+--     keybinds.map_event_to_mode("gtd-displays", {
+--         n = {
+--             { "<CR>", "core.gtd.ui.goto_task" },
 
-            -- Keys for closing the current display
-            { "q", "core.gtd.ui.close" },
-            { "<Esc>", "core.gtd.ui.close" },
+--             -- Keys for closing the current display
+--             { "q", "core.gtd.ui.close" },
+--             { "<Esc>", "core.gtd.ui.close" },
 
-            { "e", "core.gtd.ui.edit_task" },
-            { "<Tab>", "core.gtd.ui.details" },
-        },
-    }, {
-        silent = true,
-        noremap = true,
-        nowait = true,
-    })
+--             { "e", "core.gtd.ui.edit_task" },
+--             { "<Tab>", "core.gtd.ui.details" },
+--         },
+--     }, {
+--         silent = true,
+--         noremap = true,
+--         nowait = true,
+--     })
 
-    -- Map the below keys on presenter mode
-    keybinds.map_event_to_mode("presenter", {
-        n = {
-            { "<CR>", "core.presenter.next_page" },
-            { "l", "core.presenter.next_page" },
-            { "h", "core.presenter.previous_page" },
+--     -- Map the below keys on presenter mode
+--     keybinds.map_event_to_mode("presenter", {
+--         n = {
+--             { "<CR>", "core.presenter.next_page" },
+--             { "l", "core.presenter.next_page" },
+--             { "h", "core.presenter.previous_page" },
 
-            -- Keys for closing the current display
-            { "q", "core.presenter.close" },
-            { "<Esc>", "core.presenter.close" },
-        },
-    }, {
-        silent = true,
-        noremap = true,
-        nowait = true,
-    })
-    -- Apply the below keys to all modes
-    keybinds.map_to_mode("all", {
-        n = {
-            { neorg_leader .. "mn", ":Neorg mode norg<CR>" },
-            { neorg_leader .. "mh", ":Neorg mode traverse-heading<CR>" },
+--             -- Keys for closing the current display
+--             { "q", "core.presenter.close" },
+--             { "<Esc>", "core.presenter.close" },
+--         },
+--     }, {
+--         silent = true,
+--         noremap = true,
+--         nowait = true,
+--     })
+--     -- Apply the below keys to all modes
+--     keybinds.map_to_mode("all", {
+--         n = {
+--             { neorg_leader .. "mn", ":Neorg mode norg<CR>" },
+--             { neorg_leader .. "mh", ":Neorg mode traverse-heading<CR>" },
 
-            { neorg_leader .. "ze", ":Neorg zettel explore<CR>" },
-            { neorg_leader .. "zn", ":Neorg zettel new<CR>" },
-            { neorg_leader .. "zb", ":Neorg zettel backlinks<CR>" },
+--             { neorg_leader .. "ze", ":Neorg zettel explore<CR>" },
+--             { neorg_leader .. "zn", ":Neorg zettel new<CR>" },
+--             { neorg_leader .. "zb", ":Neorg zettel backlinks<CR>" },
 
-            {
-                "<C-;>",
-                ':lua require"telescope".extensions.neorg.search_headings({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
-            },
-            {
-                neorg_leader .. "u",
-                ':lua require"telescope".extensions.neorg.find_context_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
-            },
-            {
-                neorg_leader .. "i",
-                ':lua require"telescope".extensions.neorg.find_project_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
-            },
-            {
-                neorg_leader .. "o",
-                ':lua require"telescope".extensions.neorg.find_aof_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
-            },
-            {
-                neorg_leader .. "p",
-                ':lua require"telescope".extensions.neorg.find_aof_project_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
-            },
-        },
-    }, {
-        silent = true,
-        noremap = true,
-    })
-end)
+--             {
+--                 "<C-;>",
+--                 ':lua require"telescope".extensions.neorg.search_headings({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+--             },
+--             {
+--                 neorg_leader .. "u",
+--                 ':lua require"telescope".extensions.neorg.find_context_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+--             },
+--             {
+--                 neorg_leader .. "i",
+--                 ':lua require"telescope".extensions.neorg.find_project_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+--             },
+--             {
+--                 neorg_leader .. "o",
+--                 ':lua require"telescope".extensions.neorg.find_aof_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+--             },
+--             {
+--                 neorg_leader .. "p",
+--                 ':lua require"telescope".extensions.neorg.find_aof_project_tasks({theme="ivy",border = true,shorten_path = false,prompt_prefix = " ◈  ",layout_config = {prompt_position = "top"}})<CR>',
+--             },
+--         },
+--     }, {
+--         silent = true,
+--         noremap = true,
+--     })
+-- end)

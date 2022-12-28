@@ -1,22 +1,6 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
 
-movement({
-    "ziontee113/syntax-tree-surfer",
-    keys = { "cU", "cD", "cd", "cu", "gfu", "gfo", "J", "cn", "cx" },
-    cmd = {
-        "STSSwapNextVisual",
-        "STSSwapPrevVisual",
-        "STSSelectChildNode",
-        "STSSelectParentNode",
-        "STSSelectPrevSiblingNode",
-        "STSSelectNextSiblingNode",
-        "STSSelectCurrentNode",
-        "STSSelectMasterNode",
-        "STSJumpToTop",
-    },
-    config = conf.syntax_surfer,
-})
 -- -- --------------------------------
 
 movement({
@@ -28,7 +12,7 @@ movement({
 movement({
     "ggandor/leap.nvim",
     dependencies = { "tpope/vim-repeat" },
-    after = "lightspeed.nvim",
+    lazy = true,
     init = function()
         vim.keymap.set("n", "f", "f")
         vim.keymap.set("n", "F", "F")
@@ -70,7 +54,22 @@ movement({
     config = conf.quick_scope,
 })
 --------------------------------
-
+movement({
+    "ziontee113/syntax-tree-surfer",
+    keys = { "cU", "cD", "cd", "cu", "gfu", "gfo", "J", "cn", "cx" },
+    cmd = {
+        "STSSwapNextVisual",
+        "STSSwapPrevVisual",
+        "STSSelectChildNode",
+        "STSSelectParentNode",
+        "STSSelectPrevSiblingNode",
+        "STSSelectNextSiblingNode",
+        "STSSelectCurrentNode",
+        "STSSelectMasterNode",
+        "STSJumpToTop",
+    },
+    config = conf.syntax_surfer,
+})
 movement({
     "cbochs/portal.nvim",
     lazy = true,

@@ -98,7 +98,6 @@ function config.notifier()
     })
 end
 function config.neo_tree()
-
     local highlights = require("utils.ui.highlights")
 
     highlights.plugin("NeoTree", {
