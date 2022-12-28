@@ -81,12 +81,12 @@ ts({
     "andymass/vim-matchup",
     after = "nvim-treesitter",
     config = conf.matchup,
-    setup = conf.matchup_setup,
+    init = conf.matchup_setup,
 })
 
 -- ts({
 --     "Yggdroot/hiPairs",
---     setup = function()
+--     init = function()
 --         lambda.lazy_load({
 --             events = "BufEnter",
 --             augroup_name = "hiPairs",
@@ -124,7 +124,7 @@ ts({
     "wellle/targets.vim",
     lazy = true,
     event = { "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI" },
-    setup = function()
+    init = function()
         vim.g.targets_gracious = 1
     end,
     config = function()

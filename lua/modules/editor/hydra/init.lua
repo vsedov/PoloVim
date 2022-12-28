@@ -3,7 +3,6 @@ local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format
 
 local all_hydras = require("core.helper").get_config_path() .. "/lua/modules" .. "/editor/hydra/"
-local loader = require("lazy").load
 local when = lambda.lib.when
 local test_active = false
 

@@ -1,7 +1,5 @@
 local M = {}
 local loader = require("lazy").load
-local bind = require("keymap.bind")
-local map_cr = bind.map_cr
 local fn, icons = vim.fn, lambda.style.icons
 
 M.config = function()
@@ -39,9 +37,10 @@ M.dapui = function()
 end
 
 M.prepare = function()
-    loader("nvim-dap")
-    loader("nvim-dap-ui")
-    loader("nvim-dap-python")
+    loader({ plugins = { "nvim-dap" } })
+    loader({ plugins = { "nvim-dap-ui" } })
+    loader({ plugins = { "nvim-dap-python" } })
+    loader({ plugins = { "workspaces.nvim" } })
     require("dap-python").setup()
     require("dap-python").resolve_python = function()
         return vim.fn.system("which python")

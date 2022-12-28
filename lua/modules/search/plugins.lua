@@ -10,24 +10,16 @@ search({
         {
             "nvim-telescope/telescope-file-browser.nvim",
             lazy = true,
-            config = function()
-                require("telescope").load_extension("file_browser")
-            end,
         },
         {
             "nvim-telescope/telescope-frecency.nvim",
             lazy = true,
-            config = function()
-                require("telescope").load_extension("frecency")
-            end,
+
         },
-        -- {
-        --     "nvim-telescope/telescope-live-grep-args.nvim",
-        --     lazy = true,
-        --     config = function()
-        --         require("telescope").load_extension("live-grep-args")
-        --     end,
-        -- },
+        {
+            "nvim-telescope/telescope-live-grep-args.nvim",
+            lazy = true,
+        },
     },
     config = conf.telescope,
 })

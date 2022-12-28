@@ -30,9 +30,6 @@ function config.autopair()
     local has_autopairs, autopairs = pcall(require, "nvim-autopairs")
     if not has_autopairs then
         print("autopairs not loaded")
-
-        local loader = require("lazy").load
-        loader("nvim-autopairs")
         has_autopairs, autopairs = pcall(require, "nvim-autopairs")
         if not has_autopairs then
             print("autopairs not installed")

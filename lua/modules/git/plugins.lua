@@ -54,80 +54,79 @@ git({
     config = conf.neogit,
 })
 
--- git({
---     "ruifm/gitlinker.nvim",
---     keys = {
---         { "n", "<leader>gT" },
---         { "v", "<leader>gT" },
---         { "n", "<leader>gY" },
---         { "n", "<leader>gB" },
---     },
---     config = conf.gitlinker,
--- })
+git({
+    "ruifm/gitlinker.nvim",
+    keys = {
+        { "n", "<leader>gT" },
+        { "v", "<leader>gT" },
+        { "n", "<leader>gY" },
+        { "n", "<leader>gB" },
+    },
+    config = conf.gitlinker,
+})
 
 -- --  I think this gets loaded in the first place
--- git({
---     "tanvirtin/vgit.nvim", -- gitsign has similar features
---     modules = "vgit",
---     lazy = true,
---     config = conf.vgit,
--- })
+git({
+    "tanvirtin/vgit.nvim", -- gitsign has similar features
+    modules = "vgit",
+    lazy = true,
+    config = conf.vgit,
+})
 
--- git({
---     "akinsho/git-conflict.nvim",
---     cmd = {
---         "GitConflictChooseOurs",
---         "GitConflictChooseTheirs",
---         "GitConflictChooseBoth",
---         "GitConflictChooseNone",
---         "GitConflictNextConflict",
---         "GitConflictPrevConflict",
---         "GitConflictListQf",
---     },
---     lazy = true,
---     config = conf.git_conflict,
--- })
+git({
+    "akinsho/git-conflict.nvim",
+    cmd = {
+        "GitConflictChooseOurs",
+        "GitConflictChooseTheirs",
+        "GitConflictChooseBoth",
+        "GitConflictChooseNone",
+        "GitConflictNextConflict",
+        "GitConflictPrevConflict",
+        "GitConflictListQf",
+    },
+    lazy = true,
+    config = conf.git_conflict,
+})
 
--- -- --[[ My work flow requires me to use both neogit and fugative, so what i think  ]]
--- -- --[[ i will do is load this if Neogit is loaded as well, just to be in the same thing ]]
--- -- -- get loaded through hydra
--- git({
---     "tpope/vim-fugitive",
---     lazy = true,
--- })
+-- --[[ My work flow requires me to use both neogit and fugative, so what i think  ]]
+-- --[[ i will do is load this if Neogit is loaded as well, just to be in the same thing ]]
+-- -- get loaded through hydra
+git({
+    "tpope/vim-fugitive",
+    lazy = true,
+})
 
--- git({
---     "LhKipp/nvim-git-fixer",
---     cmd = { "Fixup", "Amend", "Squash", "Commit", "Reword" },
---     init = conf.git_setup("nvim-git-fixer"),
---     dependencies = {
---         "telescope.nvim",
---         "tpope/vim-fugitive",
---         "lewis6991/gitsigns.nvim",
---     },
---     lazy = true,
---     config = conf.git_fixer,
--- })
+git({
+    "LhKipp/nvim-git-fixer",
+    cmd = { "Fixup", "Amend", "Squash", "Commit", "Reword" },
+    dependencies = {
+        "telescope.nvim",
+        "tpope/vim-fugitive",
+        "lewis6991/gitsigns.nvim",
+    },
+    lazy = true,
+    config = conf.git_fixer,
+})
 
--- git({ "rbong/vim-flog", requires = "vim-fugitive", cmd = { "Flog", "Flogsplit" }, lazy = true })
--- -- return git
+git({ "rbong/vim-flog", requires = "vim-fugitive", cmd = { "Flog", "Flogsplit" }, lazy = true })
+-- return git
 
--- -- @usage | this is to clone repos, which is interesting
--- -- you can remove and add repos with this, or temp ones that you can mess
--- -- around with
--- git({
---     "danielhp95/tmpclone-nvim",
---     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
---     keys = {
---         { "n", "<leader>xc" },
---         { "n", "<leader>xo" },
---         { "n", "<leader>xr" },
---     },
---     cmd = {
---         "TmpcloneClone",
---         "TmpcloneOpen",
---         "TmpcloneRemove",
---     },
+-- @usage | this is to clone repos, which is interesting
+-- you can remove and add repos with this, or temp ones that you can mess
+-- around with
+git({
+    "danielhp95/tmpclone-nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    keys = {
+        { "n", "<leader>xc" },
+        { "n", "<leader>xo" },
+        { "n", "<leader>xr" },
+    },
+    cmd = {
+        "TmpcloneClone",
+        "TmpcloneOpen",
+        "TmpcloneRemove",
+    },
 
---     config = conf.temp_clone,
--- })
+    config = conf.temp_clone,
+})

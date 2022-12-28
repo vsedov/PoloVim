@@ -1,5 +1,4 @@
 local Hydra = require("hydra")
-local loader = require("lazy").load
 local gitrepo = vim.fn.isdirectory(".git/index")
 local cmd = require("hydra.keymap-util").cmd
 

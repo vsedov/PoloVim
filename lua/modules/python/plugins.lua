@@ -24,6 +24,11 @@ python({
     end,
 })
 
+-- python({
+--     "Vimjas/vim-python-pep8-indent",
+--     ft = "python",
+-- })
+
 python({
     "wookayin/vim-python-enhanced-syntax",
     ft = "python",

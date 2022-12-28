@@ -1,4 +1,5 @@
-require("lazy").load("neorg-telescope")
+require("lazy").load({ plugins = { "neorg-telescope" } })
+
 local neorg_callbacks = require("neorg.callbacks")
 
 require("neorg").setup({

@@ -116,5 +116,4 @@ vim.defer_fn(function()
         --[[ is ]]
         require("utils.abbreviations").setup()
     end
-
 end, 100)

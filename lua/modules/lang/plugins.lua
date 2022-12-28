@@ -13,144 +13,144 @@ lang({
 })
 
 -- -- -- OPTIM(vsedov) (01:01:25 - 14/08/22): If this gets used more, i will load this
--- -- -- on startup, using lazy.lua
--- lang({
---     "andrewferrier/debugprint.nvim",
---     keys = {
---         { "n", "g?p" },
---         { "n", "g?P" },
---         { "n", "g?v" },
---         { "n", "g?V" },
---         { "n", "dvl" },
---         { "n", "dvL" },
---         { "v", "g?V" },
---         { "v", "g?v" },
---         { "x", "g?o" },
---         { "x", "g?O" },
---     },
---     module = "debugprint",
---     cmd = "DeleteDebugPrints",
---     config = conf.debugprint,
--- })
+-- -- on startup, using lazy.lua
+lang({
+    "andrewferrier/debugprint.nvim",
+    keys = {
+        { "n", "g?p" },
+        { "n", "g?P" },
+        { "n", "g?v" },
+        { "n", "g?V" },
+        { "n", "dvl" },
+        { "n", "dvL" },
+        { "v", "g?V" },
+        { "v", "g?v" },
+        { "x", "g?o" },
+        { "x", "g?O" },
+    },
+    module = "debugprint",
+    cmd = "DeleteDebugPrints",
+    config = conf.debugprint,
+})
 
--- lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
+lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
 
--- lang({ "nanotee/luv-vimdocs", opt = true })
+lang({ "nanotee/luv-vimdocs", opt = true })
 
 -- -- builtin lua functions
--- lang({ "milisims/nvim-luaref", opt = true })
+lang({ "milisims/nvim-luaref", opt = true })
 
--- lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
+lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, opt = true, config = conf.trouble })
 
--- -- lang({
--- --     "ram02z/dev-comments.nvim",
--- --     dependencies = {
--- --         "nvim-treesitter/nvim-treesitter",
--- --         "nvim-lua/plenary.nvim",
--- --         "nvim-telescope/telescope.nvim", -- optional
--- --     },
--- --     opt = true,
--- --     after = "telescope.nvim",
--- --     config = conf.dev_comments,
--- -- })
+-- lang({
+--     "ram02z/dev-comments.nvim",
+--     dependencies = {
+--         "nvim-treesitter/nvim-treesitter",
+--         "nvim-lua/plenary.nvim",
+--         "nvim-telescope/telescope.nvim", -- optional
+--     },
+--     opt = true,
+--     after = "telescope.nvim",
+--     config = conf.dev_comments,
+-- })
 -- -- -- not the same as folkes version
--- lang({ "bfredl/nvim-luadev", opt = true, ft = "lua", setup = conf.luadev })
+lang({ "bfredl/nvim-luadev", opt = true, ft = "lua", init = conf.luadev })
 
--- lang({
---     "rafcamlet/nvim-luapad",
---     ft = "lua",
---     config = conf.luapad,
--- })
+lang({
+    "rafcamlet/nvim-luapad",
+    ft = "lua",
+    config = conf.luapad,
+})
 
--- lang({
---     "Weissle/persistent-breakpoints.nvim",
---     requires = "mfussenegger/nvim-dap",
---     module = "persistent-breakpoints",
---     config = function()
---         require("persistent-breakpoints").setup({})
---     end,
--- })
--- lang({
---     "mfussenegger/nvim-dap",
---     module = "dap",
---     config = conf.dap_config,
---     dependencies = {
---         {
---             "rcarriga/nvim-dap-ui",
---             after = "nvim-dap",
---             config = conf.dapui,
---         },
---         {
---             "mfussenegger/nvim-dap-python",
---             after = "nvim-dap",
---         },
---         "folke/which-key.nvim",
---     },
--- })
--- lang({
---     "ofirgall/goto-breakpoints.nvim",
---     after = "nvim-dap",
---     config = function()
---         local map = vim.keymap.set
---         map("n", "]d", require("goto-breakpoints").next, {})
---         map("n", "[d", require("goto-breakpoints").prev, {})
---     end,
--- })
+lang({
+    "Weissle/persistent-breakpoints.nvim",
+    requires = "mfussenegger/nvim-dap",
+    module = "persistent-breakpoints",
+    config = function()
+        require("persistent-breakpoints").setup({})
+    end,
+})
+lang({
+    "mfussenegger/nvim-dap",
+    module = "dap",
+    config = conf.dap_config,
+    dependencies = {
+        {
+            "rcarriga/nvim-dap-ui",
+            after = "nvim-dap",
+            config = conf.dapui,
+        },
+        {
+            "mfussenegger/nvim-dap-python",
+            after = "nvim-dap",
+        },
+        "folke/which-key.nvim",
+    },
+})
+lang({
+    "ofirgall/goto-breakpoints.nvim",
+    after = "nvim-dap",
+    config = function()
+        local map = vim.keymap.set
+        map("n", "]d", require("goto-breakpoints").next, {})
+        map("n", "[d", require("goto-breakpoints").prev, {})
+    end,
+})
 
--- lang({
---     "rcarriga/neotest",
---     opt = true,
---     cmd = {
---         "TestNear",
---         "TestCurrent",
---         "TestSummary",
---         "TestOutput",
---         "TestStrat",
---         "TestStop",
---         "TestAttach",
---     },
---     dependencies = {
---         { "nvim-lua/plenary.nvim" },
---         { "nvim-treesitter/nvim-treesitter" },
---         { "rcarriga/neotest-python" },
---         { "rcarriga/neotest-plenary" },
---         { "stevearc/overseer.nvim" },
---     },
---     config = conf.neotest,
--- })
--- lang({
---     "rcarriga/neotest-vim-test",
---     cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
---     dependencies = { "vim-test/vim-test", opt = true, after = "neotest" },
--- })
+lang({
+    "rcarriga/neotest",
+    opt = true,
+    cmd = {
+        "TestNear",
+        "TestCurrent",
+        "TestSummary",
+        "TestOutput",
+        "TestStrat",
+        "TestStop",
+        "TestAttach",
+    },
+    dependencies = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-treesitter/nvim-treesitter" },
+        { "rcarriga/neotest-python" },
+        { "rcarriga/neotest-plenary" },
+        { "stevearc/overseer.nvim" },
+    },
+    config = conf.neotest,
+})
+lang({
+    "rcarriga/neotest-vim-test",
+    cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
+    dependencies = { "vim-test/vim-test", opt = true, after = "neotest" },
+})
 
--- lang({
---     "stevearc/overseer.nvim",
---     event = "BufWinEnter",
---     config = conf.overseer,
--- })
+lang({
+    "stevearc/overseer.nvim",
+    event = "BufWinEnter",
+    config = conf.overseer,
+})
 
--- lang({
---     "CRAG666/code_runner.nvim",
---     cmd = {
---         "RunCode",
---         "RunFile",
---         "RunProject",
---         "RunClose",
---         "CRFiletype",
---         "CRProjects",
---     },
---     opt = true,
---     config = conf.code_runner,
--- })
+lang({
+    "CRAG666/code_runner.nvim",
+    cmd = {
+        "RunCode",
+        "RunFile",
+        "RunProject",
+        "RunClose",
+        "CRFiletype",
+        "CRProjects",
+    },
+    opt = true,
+    config = conf.code_runner,
+})
 
--- lang({
---     "andythigpen/nvim-coverage",
---     cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
---     opt = true,
---     config = conf.coverage,
--- })
--- -- -- -- IPython Mappings
+lang({
+    "andythigpen/nvim-coverage",
+    cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
+    opt = true,
+    config = conf.coverage,
+})
+-- -- -- IPython Mappings
 -- lang({
 --     lambda.use_local("py.nvim", "contributing"),
 --     ft = "python",
@@ -158,59 +158,54 @@ lang({
 --     config = conf.python_dev,
 -- })
 
--- lang({
---     "bennypowers/nvim-regexplainer",
---     opt = true,
---     dependencies = {
---         "nvim-treesitter/nvim-treesitter",
---         "MunifTanjim/nui.nvim",
---     },
---     cmd = {
---         "RegexplainerShow",
---         "RegexplainerShowSplit",
---         "RegexplainerShowPopup",
---         "RegexplainerHide",
---         "RegexplainerToggle",
---     },
---     config = conf.regexplainer,
--- })
+lang({
+    "bennypowers/nvim-regexplainer",
+    opt = true,
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+        "MunifTanjim/nui.nvim",
+    },
+    cmd = {
+        "RegexplainerShow",
+        "RegexplainerShowSplit",
+        "RegexplainerShowPopup",
+        "RegexplainerHide",
+        "RegexplainerToggle",
+    },
+    config = conf.regexplainer,
+})
 
--- -- -- lang({
--- -- --     "Vimjas/vim-python-pep8-indent",
--- -- --     ft = "python",
--- -- -- })
+lang({ "dccsillag/magma-nvim", ft = "python", run = ":UpdateRemotePlugins" })
 
--- lang({ "dccsillag/magma-nvim", ft = "python", run = ":UpdateRemotePlugins" })
-
--- lang({
---     "0x100101/lab.nvim",
---     opt = true,
---     run = "cd js && npm ci",
---     dependencies = { "nvim-lua/plenary.nvim" },
---     cmd = {
---         "Lab code",
---         "Lab",
---     },
---     keys = {
---         "<localleader>rs",
---         "<localleader>rr",
---         "<localleader>rp",
---     },
---     config = function()
---         require("lab").setup({
---             code_runner = {
---                 enabled = true,
---             },
---             quick_data = {
---                 enabled = true,
---             },
---         })
---     end,
--- })
--- lang({
---     "michaelb/sniprun",
---     run = "bash ./install.sh",
---     module = { "sniprun" },
---     cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
---     config = function() end,
--- })
+lang({
+    "0x100101/lab.nvim",
+    opt = true,
+    run = "cd js && npm ci",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = {
+        "Lab code",
+        "Lab",
+    },
+    keys = {
+        "<localleader>rs",
+        "<localleader>rr",
+        "<localleader>rp",
+    },
+    config = function()
+        require("lab").setup({
+            code_runner = {
+                enabled = true,
+            },
+            quick_data = {
+                enabled = true,
+            },
+        })
+    end,
+})
+lang({
+    "michaelb/sniprun",
+    run = "bash ./install.sh",
+    module = { "sniprun" },
+    cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
+    config = function() end,
+})

@@ -4,9 +4,8 @@ local lsp = require("core.pack").package
 lsp({
     "neovim/nvim-lspconfig",
     lazy = true,
-    module_pattern = "lspconfig.*",
     event = "BufEnter",
-    setup = conf.nvim_lsp_setup,
+    init = conf.nvim_lsp_setup,
     config = conf.nvim_lsp,
 })
 
@@ -41,7 +40,7 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     lazy = true,
-    setup = function()
+    init = function()
         lambda.lazy_load({
             events = "BufWinEnter",
             augroup_name = "lsp_sig",
@@ -122,7 +121,7 @@ lsp({
 -- lsp({
 --     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 --     cmd = { "TL" },
---     setup = function()
+--     init = function()
 --         lambda.lazy_load({
 --             events = "BufEnter",
 --             augroup_name = "rcd",
@@ -136,7 +135,7 @@ lsp({
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cmd = { "RCL" },
-    setup = function()
+    init = function()
         lambda.lazy_load({
             events = "BufEnter",
             augroup_name = "rcd",

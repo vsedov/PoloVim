@@ -3,7 +3,7 @@ function config.nvim_bufferline()
     local fn = vim.fn
     local r = vim.regex
     local fmt = string.format
-    -- local icons = lambda.style.icons.lsp
+    local icons = lambda.style.icons.lsp
 
     local highlights = require("utils.ui.highlights")
     local groups = require("bufferline.groups")

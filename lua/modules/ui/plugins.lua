@@ -151,7 +151,7 @@ ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
 ui({
     "akinsho/clock.nvim",
     lazy = true,
-    setup = conf.clock_setup,
+    init = conf.clock_setup,
     config = conf.clock,
 })
 

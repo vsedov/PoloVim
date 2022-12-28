@@ -69,7 +69,7 @@ windows({
 windows({
     "andrewferrier/wrapping.nvim",
     lazy = true,
-    setup = function()
+    init = function()
         lambda.lazy_load({
             events = "BufEnter",
             augroup_name = "wrapping",
