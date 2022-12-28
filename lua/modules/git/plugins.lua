@@ -33,6 +33,7 @@ git({
     "lewis6991/gitsigns.nvim",
     config = conf.gitsigns,
     dependencies = { "nvim-lua/plenary.nvim" },
+    module = "gitsigns",
     lazy = true,
 })
 
@@ -68,7 +69,6 @@ git({
 -- --  I think this gets loaded in the first place
 git({
     "tanvirtin/vgit.nvim", -- gitsign has similar features
-    modules = "vgit",
     lazy = true,
     config = conf.vgit,
 })

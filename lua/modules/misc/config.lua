@@ -19,38 +19,7 @@ function config.hexokinase()
     }
 end
 
-function config.sidebar()
-    if not packer_plugins["neogit"].loaded then
-        require("lazy").load("neogit")
-    end
-    require("sidebar-nvim").setup({
-        open = true,
-        side = "left",
-        initial_width = 32,
-        hide_statusline = false,
-        bindings = {
-            ["q"] = function(a, b) end,
-        },
-        update_interval = 1000,
-        section_separator = { "────────────────" },
-        sections = { "files", "git", "symbols", "containers" },
 
-        git = {
-            icon = "",
-        },
-        symbols = {
-            icon = "ƒ",
-        },
-        containers = {
-            icon = "",
-            attach_shell = "/bin/sh",
-            show_all = true,
-            interval = 5000,
-        },
-        datetime = { format = "%a%b%d|%H:%M", clocks = { { name = "local" } } },
-        todos = { ignored_paths = { "~" } },
-    })
-end
 
 function config.diaglist()
     require("diaglist").init({

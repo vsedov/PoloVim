@@ -1,7 +1,9 @@
 local Hydra = require("hydra")
 
+local loader = require("lazy").load
+
+
 local gitrepo = vim.fn.isdirectory(".git/index")
---[[ local line = vim.fn.line ]]
 
 local function wrap(fn, ...)
     local args = { ... }
@@ -43,7 +45,7 @@ local function diffmaster()
 end
 
 if gitrepo then
-    -- loader("keymap-layer.nvim vgit.nvim vim-fugitive")
+    require("lazy").load({ plugins = { "vgit.nvim" , "gitsigns.nvim", "vim-fugitive"} })
 
     local hint = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
@@ -93,6 +95,7 @@ if gitrepo then
 
 ]]
     local ok, gitsigns = pcall(require, "gitsigns")
+    print("here")
     if ok then
         local vgit = require("vgit")
         Hydra({

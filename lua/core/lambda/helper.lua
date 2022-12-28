@@ -513,8 +513,6 @@ function lambda.lazy_load(tb)
         pattern = tb.pattern or "*",
         callback = function()
             if tb.condition then
-                print(tb.pl)
-
                 vim.api.nvim_del_augroup_by_name(tb.augroup_name)
                 if
                     not vim.tbl_contains(

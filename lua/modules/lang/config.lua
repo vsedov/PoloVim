@@ -189,10 +189,10 @@ function config.dapui()
 end
 
 function config.neotest()
-    vim.cmd([[ Lazy load neotest-python]])
-    vim.cmd([[ Lazy load neotest-plenary]])
-    vim.cmd([[ Lazy load neotest-vim-test]])
-    vim.cmd([[ Lazy load overseer.nvim]])
+    vim.cmd([[Lazy load neotest-python]])
+    vim.cmd([[Lazy load neotest-plenary]])
+    vim.cmd([[Lazy load neotest-vim-test]])
+    vim.cmd([[Lazy load overseer.nvim]])
 
     local add_cmd = vim.api.nvim_create_user_command
 

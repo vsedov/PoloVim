@@ -259,7 +259,7 @@ function config.gitsigns()
 end
 
 function config.neogit()
-    vim.cmd([[ Lazy load diffview.nvim]])
+    vim.cmd([[Lazy load diffview.nvim]])
     local neogit = require("neogit")
     pcall(require("plenary"))
     neogit.setup({
@@ -361,7 +361,6 @@ function config.vgit()
             },
         },
     })
-    require("lazy").load("telescope.nvim")
 end
 
 function config.git_conflict()

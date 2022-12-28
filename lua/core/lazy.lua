@@ -26,7 +26,6 @@ load_colourscheme() -- loads default colourscheme
 function Lazyload()
     _G.PLoader = loader
     if vim.wo.diff then
-        print("here")
         -- lprint("diffmode")
         -- vim.cmd([[Lazy load ]])
         loader({ plugins = { "nvim-treesitter" } })
