@@ -122,161 +122,28 @@ user({
     end,
 })
 
--- https://github.com/f/awesome-chatgpt-prompts
-
--- <C-c> to close chat window.
--- <C-u> scroll up chat window.
--- <C-d> scroll down chat window.
--- <C-y> to copy/yank last answer.
 user({
-    "jackMort/ChatGPT.nvim",
-    cmd = {
-        "ChatGPT",
-        "ChatGPTActAs",
-    },
+    "strash/everybody-wants-that-line.nvim",
     config = function()
-        require("chatgpt").setup({
-            -- optional configuration
+        -- or you can add it
+        require("everybody-wants-that-line").setup({
+            buffer = {
+                show = true,
+                prefix = "λ:",
+                -- Symbol before buffer number, e.g. "0000.".
+                -- If you don't want additional symbols to be displayed, set `buffer.max_symbols = 0`.
+                symbol = "0",
+                -- Maximum number of symbols including buffer number.
+                max_symbols = 5,
+            },
+            filepath = {
+                path = "relative",
+                shorten = false,
+            },
+            filesize = {
+                metric = "decimal",
+            },
+            separator = "│",
         })
-    end,
-    requires = {
-        "MunifTanjim/nui.nvim",
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim",
-    },
-})
-
-user({
-    "xorid/asciitree.nvim",
-    cmd = "AsciiTree",
-
-    config = function()
-        require("asciitree").setup({
-            -- Characters used to represent the tree.
-            symbols = {
-                child = "├",
-                last = "└",
-                parent = "│",
-                dash = "─",
-                blank = " ",
-            },
-
-            -- How deep each level should be drawn. This value can be overridden by
-            -- calling the AsciiTree command with a number, such as :AsciiTree 4.
-            depth = 2,
-
-            -- The delimiter to look for when converting to a tree. By default, this
-            -- looks for a tree that looks like:
-            -- # Level 1
-            -- ## Level 2
-            -- ### Level 3
-            -- #### Level 4
-            --
-            -- Changing it to "+" would look for the following:
-            -- + Level 1
-            -- ++ Level 2
-            -- +++ Level 3
-            -- ++++ Level 4
-            delimiter = "#",
-        })
-    end,
-})
-
-user({
-    "shortcuts/no-neck-pain.nvim",
-    lazy = true,
-    cmd = "NoNeckPain",
-    keys = { "zz" },
-    config = function()
-        NoNeckPain = {}
-        NoNeckPain.bufferOptions = {
-            -- When `false`, the buffer won't be created.
-            enabled = true,
-            -- Hexadecimal color code to override the current background color of the buffer. (e.g. #24273A)
-            -- popular theme are supported by their name:
-            -- - catppuccin-frappe
-            -- - catppuccin-frappe-dark
-            -- - catppuccin-latte
-            -- - catppuccin-latte-dark
-            -- - catppuccin-macchiato
-            -- - catppuccin-macchiato-dark
-            -- - catppuccin-mocha
-            -- - catppuccin-mocha-dark
-            -- - tokyonight-day
-            -- - tokyonight-moon
-            -- - tokyonight-night
-            -- - tokyonight-storm
-            -- - rose-pine
-            -- - rose-pine-moon
-            -- - rose-pine-dawn
-            backgroundColor = nil,
-            -- buffer-scoped options: any `vim.bo` options is accepted here.
-            bo = {
-                filetype = "no-neck-pain",
-                buftype = "nofile",
-                bufhidden = "hide",
-                modifiable = false,
-                buflisted = false,
-                swapfile = false,
-            },
-            -- window-scoped options: any `vim.wo` options is accepted here.
-            wo = {
-                cursorline = false,
-                cursorcolumn = false,
-                number = false,
-                relativenumber = false,
-                foldenable = false,
-                list = false,
-            },
-        }
-
-        require("no-neck-pain").setup({
-            -- The width of the focused buffer when enabling NNP.
-            -- If the available window size is less than `width`, the buffer will take the whole screen.
-            width = 100,
-            -- Prints useful logs about what event are triggered, and reasons actions are executed.
-            debug = false,
-            -- Disables NNP if the last valid buffer in the list has been closed.
-            disableOnLastBuffer = false,
-            -- When `true`, disabling NNP kills every split/vsplit buffers except the main NNP buffer.
-            killAllBuffersOnDisable = false,
-            --- Options related to the side buffers. See |NoNeckPain.bufferOptions|.
-            buffers = {
-                -- When `true`, the side buffers will be named `no-neck-pain-left` and `no-neck-pain-right` respectively.
-                setNames = false,
-                -- Common options are set to both buffers, for option scoped to the `left` and/or `right` buffer, see `buffers.left` and `buffers.right`.
-                common = NoNeckPain.bufferOptions,
-                --- Options applied to the `left` buffer, the options defined here overrides the `common` ones.
-                --- When `nil`, the buffer won't be created.
-                left = NoNeckPain.bufferOptions,
-                --- Options applied to the `left` buffer, the options defined here overrides the `common` ones.
-                --- When `nil`, the buffer won't be created.
-                right = NoNeckPain.bufferOptions,
-            },
-            -- lists supported integrations that might clash with `no-neck-pain.nvim`'s behavior
-            integrations = {
-                -- https://github.com/nvim-tree/nvim-tree.lua
-                nvimTree = {
-                    -- the position of the tree, can be `left` or `right``
-                    position = "left",
-                },
-            },
-        })
-        vim.keymap.set("n", "zz", "<cmd>NoNeckPain<cr>", {})
-    end,
-})
-
-user({
-    "phaazon/mind.nvim",
-    cmd = {
-        "MindOpenMain",
-        "MindOpenProject",
-        "MindOpenSmartProject",
-        "MindReloadState",
-        "MindClose",
-    },
-    requires = { "nvim-lua/plenary.nvim" },
-    config = function()
-        require("mind").setup()
     end,
 })

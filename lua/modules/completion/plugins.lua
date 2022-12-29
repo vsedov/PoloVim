@@ -10,16 +10,7 @@ completion({
         {
             "tzachar/cmp-tabnine",
             build = "./install.sh",
-            -- after = "nvim-cmp",
-            init = function()
-                -- lambda.lazy_load({
-                --     events = "FileType",
-                --     pattern = { "python", "lua" },
-                --     augroup_name = "tabnine",
-                --     condition = lambda.config.cmp.tabnine.use_tabnine,
-                --     plugin = "cmp-tabnine",
-                -- })
-            end,
+            ft = { "python", "lua" },
             config = conf.tabnine,
             lazy = true,
         },
@@ -59,15 +50,15 @@ completion({
     rocks = { "jsregexp" },
 })
 
--- completion({
---     lambda.use_local("luasnip-latex-snippets.nvim", "contributing"),
---     ft = { "latex", "tex" },
---     config = function()
---         vim.defer_fn(function()
---             require("luasnip-latex-snippets").setup()
---         end, 100)
---     end,
--- })
+completion({
+    "iurimateus/luasnip-latex-snippets.nvim",
+    ft = { "latex", "tex" },
+    config = function()
+        vim.defer_fn(function()
+            require("luasnip-latex-snippets").setup()
+        end, 100)
+    end,
+})
 
 completion({
     "kristijanhusak/vim-dadbod-completion",
@@ -76,27 +67,6 @@ completion({
         vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
         -- vim.cmd([[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
         -- body
-    end,
-})
-
-completion({
-    "github/copilot.vim",
-    cmd = "Copilot",
-    lazy = true,
-    init = function()
-        --[[ vim.opt.completeopt = "menuone,noselect" ]]
-        vim.g.copilot_enabled = lambda.config.sell_your_soul
-        -- Have copilot play nice with nvim-cmp.
-        vim.g.copilot_no_tab_map = true
-        vim.g.copilot_assume_mapped = true
-        vim.g.copilot_tab_fallback = ""
-        local excluded_filetypes = { "norg", "nofile", "prompt" }
-        local copilot_filetypes = {}
-        for _, ft in pairs(excluded_filetypes) do
-            copilot_filetypes[ft] = false
-        end
-
-        vim.g["copilot_filetypes"] = copilot_filetypes
     end,
 })
 
@@ -114,12 +84,11 @@ completion({
     config = conf.autopair,
 })
 
--- completion({
---     lambda.use_local("vim-sonictemplate", "personal"),
---     as = "vim-sonictemplate",
---     cmd = "Template",
---     config = conf.vim_sonictemplate,
--- })
+completion({
+    "vsedov/vim-sonictemplate",
+    cmd = "Template",
+    config = conf.vim_sonictemplate,
+})
 
 -- -- Lua
 completion({

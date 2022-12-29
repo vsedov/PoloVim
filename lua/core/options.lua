@@ -1,6 +1,5 @@
 local o, opt, fn = vim.o, vim.opt, vim.fn
 local cache_dir = vim.env.HOME .. "/.cache/nvim/"
-
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -32,7 +31,9 @@ o.eadirection = "hor"
 -- cursor
 -- screen
 -- -- topline
-opt.splitkeep = "screen"
+if lambda.check_version(0, 9, 0)[1] then
+    opt.splitkeep = "screen"
+end
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
 o.switchbuf = "useopen,uselast"
@@ -102,13 +103,13 @@ opt.ssop:append({ "localoptions" })
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
--- if lambda.executable("rg") then
-vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
-opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
--- elseif lambda.executable("ag") then
---     vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
---     opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
--- end
+if lambda.executable("rg") then
+    vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
+    opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
+elseif lambda.executable("ag") then
+    vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
+    opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
+end
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
@@ -158,6 +159,8 @@ o.ruler = false
 -- else
 --     o.cmdheight = 1
 -- end
+o.cmdheight = 0
+
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1
@@ -211,11 +214,10 @@ opt.guicursor = {
 -----------------------------------------------------------------------------//
 -- Title {{{1
 -----------------------------------------------------------------------------//
--- function lambda.modified_icon()
---     return vim.bo.modified and lambda.style.icons.misc.circle or ""
--- end
-
--- o.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.lambda.modified_icon()}'
+function lambda.modified_icon()
+    return vim.bo.modified and lambda.style.icons.misc.circle or ""
+end
+o.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.lambda.modified_icon()}'
 o.titleold = fn.fnamemodify(vim.loop.os_getenv("SHELL"), ":t")
 o.title = true
 o.titlelen = 70
@@ -269,7 +271,7 @@ opt.spellsuggest:prepend({ 12 })
 opt.spelloptions:append({ "camel", "noplainbuffer" })
 opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
 opt.fileformats = { "unix", "mac", "dos" }
--- opt.spelllang:append("programming")
+--opt.spelllang:append("programming") -- NOTE: (vsedov) (16:01:13 - 29/12/22): No longer works
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
@@ -289,8 +291,12 @@ o.foldlevelstart = 20
 -----------------------------------------------------------------------------//
 -- Git editor
 -----------------------------------------------------------------------------//
-vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+if lambda.executable("nvr") then
+    vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+    vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+end
 
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
+
+-- vim:foldmethod=marker

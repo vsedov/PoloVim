@@ -1,5 +1,5 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = true
+local noice_enabled = false
 local use_noice_docs = false -- this creats an error for some reason , though im not sure why | It is nice to have though
 
 local use_lightspeed = true --  So the tldr here is when this is false, both lightspeed and leap are active, but when this is true only lightspeed will be active

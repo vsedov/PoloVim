@@ -46,8 +46,5 @@ docs({
     "loganswartz/updoc.nvim",
     modules = "updoc",
     lazy = true,
-    config = function()
-        local udoc = require("updoc")
-        udoc.setup()
-    end,
+    config = true,
 })

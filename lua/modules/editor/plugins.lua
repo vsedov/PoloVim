@@ -193,17 +193,6 @@ editor({
 
 editor({
     "haya14busa/vim-asterisk",
-    lazy = true,
-    keys = {
-        { "*" },
-        { "#" },
-        { "g*" },
-        { "g#" },
-        { "z*" },
-        { "gz*" },
-        { "z#" },
-        { "gz#" },
-    },
     init = conf.asterisk_setup,
 })
 

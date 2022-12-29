@@ -119,9 +119,7 @@ misc({
 misc({
     "nacro90/numb.nvim",
     event = "CmdlineEnter",
-    config = function()
-        require("numb").setup()
-    end,
+    config = true,
 })
 
 misc({
@@ -138,4 +136,25 @@ misc({
         "<leader>al",
         "<leader>aL",
     },
+})
+
+misc({
+    "shortcuts/no-neck-pain.nvim",
+    lazy = true,
+    cmd = "NoNeckPain",
+    keys = { "zz" },
+    config = conf.noneck,
+})
+
+misc({
+    "phaazon/mind.nvim",
+    cmd = {
+        "MindOpenMain",
+        "MindOpenProject",
+        "MindOpenSmartProject",
+        "MindReloadState",
+        "MindClose",
+    },
+    requires = { "nvim-lua/plenary.nvim" },
+    config = true,
 })

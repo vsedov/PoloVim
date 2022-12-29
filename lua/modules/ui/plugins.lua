@@ -160,7 +160,8 @@ ui({
 
 ui({
     "folke/noice.nvim",
-    lazy = true,
+    lazy = not lambda.config.ui.noice.enable,
+    after = "leap.nvim",
     dependencies = {
         "nui.nvim",
         "nvim-notify",

@@ -143,3 +143,12 @@ autocmd User targets#mappings#user call targets#mappings#extend({
       ]])
     end,
 })
+
+ts({
+    "chrisgrieser/nvim-various-textobjs",
+    lazy = true,
+    ft = { "python", "lua" },
+    config = function()
+        require("various-textobjs").setup({ useDefaultKeymaps = true })
+    end,
+})
