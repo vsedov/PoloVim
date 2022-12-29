@@ -7,7 +7,6 @@ ts({ "nvim-treesitter/nvim-treesitter", lazy = true, build = ":TSUpdate", config
 ts({
     "p00f/nvim-ts-rainbow",
     after = "nvim-treesitter",
-    config = conf.rainbow,
     lazy = true,
 })
 ts({
@@ -84,19 +83,18 @@ ts({
     init = conf.matchup_setup,
 })
 
--- ts({
---     "Yggdroot/hiPairs",
---     init = function()
---         lambda.lazy_load({
---             events = "BufEnter",
---             augroup_name = "hiPairs",
---             condition = lambda.config.use_hiPairs, -- reverse
---             plugin = "hiPairs",
---         })
---     end,
-
---     config = conf.hi_pairs,
--- })
+ts({
+    "Yggdroot/hiPairs",
+    init = function()
+        lambda.lazy_load({
+            events = "BufEnter",
+            augroup_name = "hiPairs",
+            condition = lambda.config.use_hiPairs, -- reverse
+            plugin = "hiPairs",
+        })
+    end,
+    config = conf.hi_pairs,
+})
 
 ts({
     "yioneko/nvim-yati",

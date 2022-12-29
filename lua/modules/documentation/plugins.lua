@@ -25,16 +25,15 @@ docs({
     config = conf.nvim_doc_help,
 })
 
--- docs({
---     "KabbAmine/zeavim.vim",
---     lazy = true,
---     cmd = {
---         "Zeavim",
---         "ZeavimV",
---         "Zeavim!",
---         "Docset",
---     },
--- })
+docs({
+    "KabbAmine/zeavim.vim",
+    lazy = true,
+    cmd = {
+        "Zeavim",
+        "ZeavimV",
+        "Docset",
+    },
+})
 
 docs({
     "romainl/vim-devdocs",

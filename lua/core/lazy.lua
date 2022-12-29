@@ -79,7 +79,6 @@ function Lazyload()
     if load_lsp then
         vim.defer_fn(function()
             loader({ plugins = { "lspsaga.nvim" } })
-
             if condition() then
                 loader({ plugins = { "lsp_signature.nvim" } })
             end
@@ -88,9 +87,6 @@ function Lazyload()
 
     -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
-        loader({ plugins = { "nvim-treesitter-textobjects" } })
-
-        loader({ plugins = { "nvim-treesitter-textsubjects" } })
         loader({ plugins = { "refactoring.nvim" } })
     end
 
@@ -150,7 +146,7 @@ vim.defer_fn(function()
     loader({ plugins = { "workspaces.nvim" } })
 
     if lambda.config.rooter_or_project then
-        -- loader({ plugins = { "nvim-rooter.lua" } })
+        loader({ plugins = { "nvim-rooter.lua" } })
     else
         loader({ plugins = { "project.nvim" } })
     end

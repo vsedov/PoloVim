@@ -55,14 +55,14 @@ search({
 })
 
 -- search({
---     "https://git.sr.ht/~vigoux/azy.nvim",
---     build ="make lib",
---     module = "azy",
---     config = function()
---         require("azy").setup({
---             preview = true, -- Whether to preview selected items on the fly (this is an unstable feature, feedback appreciated)
---         })
---     end,
+-- "https://git.sr.ht/~vigoux/azy.nvim",
+-- build ="make lib",
+-- module = "azy",
+-- config = function()
+--     require("azy").setup({
+--         preview = true, -- Whether to preview selected items on the fly (this is an unstable feature, feedback appreciated)
+--     })
+-- end,
 -- })
 
 search({ "ibhagwan/fzf-lua", branch = "main", config = conf.fzf, lazy = true, cmd = { "FzfLua" } })

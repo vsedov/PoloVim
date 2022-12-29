@@ -15,22 +15,11 @@ vim.cmd([[ Lazy load nvim-treesitter]])
 local neorg = require("neorg")
 local function load_completion()
     neorg.modules.load_module("core.norg.completion", nil, {
-        engine = "nvim-cmp", -- Choose your completion engine here
+        engine = "nvim-cmp",
     })
 end
-
 if neorg.is_loaded() then
     load_completion()
-else -- Otherwise wait until Neorg gets started and load the completion module then
+else
     neorg.callbacks.on_event("core.started", load_completion)
 end
-
--- lambda.augroup("Neorg", {
---     {
---         event = "BufWritePost",
---         pattern = "*.norg",
---         command = function()
---             vim.cmd([[TrimTrailingWhitespace]])
---         end,
---     },
--- })

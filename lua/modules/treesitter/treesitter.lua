@@ -74,6 +74,11 @@ local treesitter_obj = function()
 
     require("nvim-treesitter.configs").setup({
         indent = { enable = true, disable = { "python" } },
+        rainbow = {
+            enable = true,
+            extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+            max_file_lines = nil, -- Do not enable for files with more than n lines, int
+        },
         textobjects = {
             -- syntax-aware textobjects
             enable = enable,
@@ -223,15 +228,6 @@ local function textsubjects()
     })
 end
 
-local function rainbow()
-    require("nvim-treesitter.configs").setup({
-        rainbow = {
-            enable = true,
-            extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-            max_file_lines = nil, -- Do not enable for files with more than n lines, int
-        },
-    })
-end
 -- treesitter()
 
 return {

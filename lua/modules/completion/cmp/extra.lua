@@ -19,20 +19,6 @@ vim.api.nvim_create_autocmd("FileType", {
     once = false,
 })
 
-local neorg = require("neorg")
-
-local function load_completion()
-    neorg.modules.load_module("core.norg.completion", nil, {
-        engine = "nvim-cmp",
-    })
-end
-
-if neorg.is_loaded() then
-    load_completion()
-else
-    neorg.callbacks.on_event("core.started", load_completion)
-end
-
 if tabnine_options.use_tabnine and tabnine_options.tabnine_prefetch then
     local prefetch = vim.api.nvim_create_augroup("prefetch", { clear = true })
     vim.api.nvim_create_autocmd("BufRead", {

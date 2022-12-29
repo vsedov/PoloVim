@@ -142,12 +142,6 @@ lang({
     config = conf.coverage,
 })
 -- -- -- IPython Mappings
--- lang({
---     lambda.use_local("py.nvim", "contributing"),
---     ft = "python",
---     lazy = true,
---     config = conf.python_dev,
--- })
 
 lang({
     "bennypowers/nvim-regexplainer",

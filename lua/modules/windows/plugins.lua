@@ -39,8 +39,8 @@ windows({ "sindrets/winshift.nvim", cmd = "WinShift", lazy = true, config = conf
 windows({
     "anuvyklack/windows.nvim",
     dependencies = {
-        { "anuvyklack/middleclass", lazy = true },
-        { "anuvyklack/animation.nvim", lazy = true },
+        { "anuvyklack/middleclass" },
+        { "anuvyklack/animation.nvim" },
     },
     lazy = true,
     cmd = {
@@ -55,8 +55,6 @@ windows({
         ";z",
     },
     config = function()
-        vim.cmd([[ Lazy load middleclass]])
-        vim.cmd([[ Lazy load animation.nvim]])
         vim.o.winwidth = 10
         vim.o.winminwidth = 10
         vim.o.equalalways = false

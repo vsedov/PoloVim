@@ -42,19 +42,13 @@ ui({
 -- --     end,
 -- -- })
 
--- -- ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
+ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
 -- -- -- todo: FIX THIS
 ui({
     "rcarriga/nvim-notify",
     lazy = true,
     config = conf.notify,
 })
-
--- -- ui({
--- --     "vigoux/notifier.nvim",
--- --     lazy = true,
--- --     config = conf.notifier,
--- -- })
 
 ui({ "MunifTanjim/nui.nvim", lazy = true })
 

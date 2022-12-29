@@ -69,26 +69,20 @@ editor({
 })
 
 -- -- --[[ This thing causes issues with respect to cmdheight=0 ]]
--- editor({
---     "chaoren/vim-wordmotion",
---     keys = {
---         { "n", "<Plug>WordMotion_" },
---         { "x", "<Plug>WordMotion_" },
---         { "o", "<Plug>WordMotion_" },
---         { "c", "<Plug>WordMotion_" },
---     },
---     init = function()
---         vim.g.wordmotion_uppercase_spaces = { "-" }
---         vim.g.wordmotion_nomap = 1
---         for _, key in ipairs({ "e", "b", "w", "E", "B", "W", "ge", "gE" }) do
---             vim.keymap.set({ "n", "x", "o" }, key, "<Plug>WordMotion_" .. key)
---         end
---         vim.keymap.set({ "x", "o" }, "aW", "<Plug>WordMotion_aW")
---         vim.keymap.set({ "x", "o" }, "iW", "<Plug>WordMotion_iW")
---         vim.keymap.set("c", "<C-R><C-W>", "<Plug>WordMotion_<C-R><C-W>")
---         vim.keymap.set("c", "<C-R><C-A>", "<Plug>WordMotion_<C-R><C-A>")
---     end,
--- })
+editor({
+    "chaoren/vim-wordmotion",
+    lazy = true,
+    event = "BufWinEnter",
+    init = function()
+        vim.g.wordmotion_uppercase_spaces = { "-" }
+        vim.g.wordmotion_nomap = 1
+        for _, key in ipairs({ "e", "b", "w", "E", "B", "W", "ge", "gE" }) do
+            vim.keymap.set({ "n", "x", "o" }, key, "<Plug>WordMotion_" .. key)
+        end
+        vim.keymap.set("c", "<C-R><C-W>", "<Plug>WordMotion_<C-R><C-W>")
+        vim.keymap.set("c", "<C-R><C-A>", "<Plug>WordMotion_<C-R><C-A>")
+    end,
+})
 
 editor({
     "anuvyklack/vim-smartword",
@@ -102,24 +96,24 @@ editor({
 -- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 
--- editor({
---     "monaqa/dial.nvim",
---     keys = {
---         { "<C-x>", mode = "n" } ,
---         { "<C-a>", mode = "n" } ,
+editor({
+    "monaqa/dial.nvim",
+    keys = {
+        { "<C-x>", mode = "n" },
+        { "<C-a>", mode = "n" },
 
---         { "<C-a>", mode = "v" } ,
---         { "<C-x>", mode = "v" } ,
+        { "<C-a>", mode = "v" },
+        { "<C-x>", mode = "v" },
 
---         { "g<C-a>", mode = "v" } ,
---         { "g<C-x>", mode = "v" } ,
+        { "g<C-a>", mode = "v" },
+        { "g<C-x>", mode = "v" },
 
---         { "_a", mode = "n" } ,
---         { "_x", mode = "n" } ,
---     },
---     lazy = true,
---     config = conf.dial,
--- })
+        { "_a", mode = "n" },
+        { "_x", mode = "n" },
+    },
+    lazy = true,
+    config = conf.dial,
+})
 
 editor({
     "anuvyklack/hydra.nvim",

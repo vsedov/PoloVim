@@ -2,6 +2,13 @@ local conf = require("modules.python.config")
 local python = require("core.pack").package
 
 python({
+    "vsedov/py.nvim",
+    ft = "python",
+    lazy = true,
+    config = conf.python_dev,
+})
+
+python({
     "direnv/direnv.vim",
     lazy = true,
     ft = { "python", "julia" },

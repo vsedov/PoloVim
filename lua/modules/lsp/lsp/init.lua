@@ -35,6 +35,8 @@ local python_setup = {
     end,
 }
 
+-- lspconfig.ruff_lsp.setup({})
+
 local latex_setup = {
     texlab = function()
         lspconfig.texlab.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.texlab")))
@@ -72,8 +74,6 @@ lspconfig.rust_analyzer.setup(enhance_attach({
     filetypes = { "rust" },
     cmd = { "rust-analyzer" },
 }))
-
-lspconfig.ruff_lsp.setup(enhance_attach({}))
 
 lspconfig.vimls.setup(enhance_attach({
     cmd = { "vim-language-server", "--stdio" },
