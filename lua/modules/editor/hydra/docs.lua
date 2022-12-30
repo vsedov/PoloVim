@@ -37,7 +37,7 @@ local hints = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
                     _D_: Live Docs
                     _l_: ULook
-
+                           
     _j_: USearch          ▕          _o_: UShowLink
     _z_: Zeavim           ▕          _k_: DevDocs
 

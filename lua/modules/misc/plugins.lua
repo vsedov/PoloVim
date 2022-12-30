@@ -165,4 +165,7 @@ misc({
         "Memorize",
         "Recall",
     },
+    config = function()
+        require("remember_me").setup({})
+    end,
 })
