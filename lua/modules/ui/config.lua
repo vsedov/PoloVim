@@ -1,6 +1,6 @@
 local api = vim.api
 local config = {}
-packer_plugins = packer_plugins or {} -- supress warning
+
 function config.fidget()
     local relative = "editor"
     require("fidget").setup({
@@ -98,33 +98,12 @@ function config.notifier()
     })
 end
 function config.neo_tree()
-    if not packer_plugins["nui.nvim"].loaded then
-        vim.cmd([[packadd nui.nvim ]])
-    end
-    if not packer_plugins["nvim-window-picker"].loaded then
-        vim.cmd([[packadd nvim-window-picker ]])
-    end
     local highlights = require("utils.ui.highlights")
 
     highlights.plugin("NeoTree", {
-        { NeoTreeNormal = { link = "PanelBackground" } },
-        { NeoTreeNormalNC = { link = "PanelBackground" } },
         { NeoTreeRootName = { underline = true } },
         { NeoTreeCursorLine = { link = "Visual" } },
         { NeoTreeStatusLine = { link = "PanelSt" } },
-        { NeoTreeTabActive = { bg = { from = "PanelBackground" }, bold = true } },
-        {
-            NeoTreeTabInactive = {
-                bg = { from = "PanelDarkBackground", alter = 15 },
-                fg = { from = "Comment" },
-            },
-        },
-        {
-            NeoTreeTabSeparatorInactive = {
-                inherit = "NeoTreeTabInactive",
-                fg = { from = "PanelDarkBackground", attr = "bg" },
-            },
-        },
         {
             NeoTreeTabSeparatorActive = {
                 inherit = "PanelBackground",
@@ -322,7 +301,6 @@ function config.satellite()
 end
 
 function config.ufo()
-    vim.cmd([[packadd promise-async]])
     local ufo = require("ufo")
     local hl = require("utils.ui.highlights")
     local opt, strwidth = vim.opt, vim.api.nvim_strwidth

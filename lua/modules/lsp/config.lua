@@ -121,8 +121,6 @@ function config.lsp_sig()
 
         transpancy = 80,
         zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
-        debug = plugin_debug(),
-        verbose = plugin_debug(),
         log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
         padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
     }

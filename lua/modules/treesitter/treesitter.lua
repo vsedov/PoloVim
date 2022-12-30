@@ -3,7 +3,7 @@ local langtree = true
 local lines = vim.fn.line("$")
 
 local treesitter = function()
-    lprint("loading treesitter")
+    -- lprint("loading treesitter")
     if lines > 30000 then -- skip some settings for large file
         -- vim.cmd[[syntax on]]
         print("skip treesitter")
@@ -66,7 +66,7 @@ local treesitter = function()
 end
 
 local treesitter_obj = function()
-    lprint("loading treesitter textobj")
+    -- lprint("loading treesitter textobj")
     if lines > 30000 then -- skip some settings for large file
         print("skip treesitter obj")
         return
@@ -74,6 +74,11 @@ local treesitter_obj = function()
 
     require("nvim-treesitter.configs").setup({
         indent = { enable = true, disable = { "python" } },
+        rainbow = {
+            enable = true,
+            extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+            max_file_lines = nil, -- Do not enable for files with more than n lines, int
+        },
         textobjects = {
             -- syntax-aware textobjects
             enable = enable,
@@ -173,7 +178,7 @@ local treesitter_obj = function()
 end
 
 local treesitter_ref = function()
-    lprint("loading treesitter refactor")
+    -- lprint("loading treesitter refactor")
 
     if vim.fn.line("$") > 10000 then -- skip for large file
         -- vim.cmd[[syntax on]]
@@ -223,15 +228,6 @@ local function textsubjects()
     })
 end
 
-local function rainbow()
-    require("nvim-treesitter.configs").setup({
-        rainbow = {
-            enable = true,
-            extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-            max_file_lines = nil, -- Do not enable for files with more than n lines, int
-        },
-    })
-end
 -- treesitter()
 
 return {

@@ -31,7 +31,7 @@ function config.refactor()
         },
     })
 
-    lprint("refactor")
+    -- lprint("refactor")
     _G.ts_refactors = function()
         -- telescope refactoring helper
         local function _refactor(prompt_bufnr)
@@ -184,15 +184,11 @@ function config.dap_config()
     require("modules.lang.dap.init").config()
 end
 
-function config.dapui()
-    require("modules.lang.dap.init").dapui()
-end
-
 function config.neotest()
-    vim.cmd([[packadd neotest-python]])
-    vim.cmd([[packadd neotest-plenary]])
-    vim.cmd([[packadd neotest-vim-test]])
-    vim.cmd([[packadd overseer.nvim]])
+    vim.cmd([[Lazy load neotest-python]])
+    vim.cmd([[Lazy load neotest-plenary]])
+    vim.cmd([[Lazy load neotest-vim-test]])
+    vim.cmd([[Lazy load overseer.nvim]])
 
     local add_cmd = vim.api.nvim_create_user_command
 
@@ -247,9 +243,9 @@ function config.neotest()
         },
         output = {
             enabled = true,
-            open_on_run = "short",
+            open_on_build = "short",
         },
-        run = {
+        build = {
             enabled = true,
         },
         status = {
@@ -271,7 +267,7 @@ function config.neotest()
                 expand_all = "e",
                 jumpto = "i",
                 output = "o",
-                run = "r",
+                build = "r",
                 short = "O",
                 stop = "u",
             },
@@ -342,7 +338,7 @@ function config.python_dev()
     })
 end
 function config.regexplainer()
-    vim.cmd([[packadd nui.nvim]])
+    vim.cmd([[ Lazy load nui.nvim]])
     require("regexplainer").setup({
         -- 'narrative'
         mode = "narrative", -- TODO: 'ascii', 'graphical'

@@ -45,7 +45,6 @@ local hint = [[
   _q_ exit
 
 ]]
-
 -- automatically load breakpoints when a file is loaded into the buffer.
 local dap_hydra = Hydra({
     hint = hint,

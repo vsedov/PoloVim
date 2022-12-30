@@ -2,32 +2,26 @@
 --  causing the error here, and its quite important that i figure this one out .
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
-ts({ "nvim-treesitter/nvim-treesitter", opt = true, run = ":TSUpdate", config = conf.nvim_treesitter })
+ts({ "nvim-treesitter/nvim-treesitter", build = "TSUpdate", config = conf.nvim_treesitter })
 
-ts({
-    "p00f/nvim-ts-rainbow",
-    after = "nvim-treesitter",
-    config = conf.rainbow,
-    opt = true,
-})
 ts({
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
     config = conf.treesitter_obj,
-    opt = true,
+    lazy = true,
 })
 
 ts({
     "RRethy/nvim-treesitter-textsubjects",
     ft = { "lua", "rust", "go", "python", "javascript" },
-    opt = true,
+    lazy = true,
     config = conf.tsubject,
 })
 
 ts({
     "RRethy/nvim-treesitter-endwise",
     ft = { "lua", "ruby", "vim" },
-    opt = true,
+    lazy = true,
     config = conf.endwise,
 })
 
@@ -35,7 +29,7 @@ ts({
     "nvim-treesitter/nvim-treesitter-refactor",
     after = "nvim-treesitter-textobjects", -- manual loading
     config = conf.treesitter_ref, -- let the last loaded config treesitter
-    opt = true,
+    lazy = true,
 })
 
 ts({
@@ -65,66 +59,56 @@ ts({
         "vim",
         "zig",
     },
-    requires = { "nvim-treesitter/nvim-treesitter" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
 })
 
 ts({
     "andrewferrier/textobj-diagnostic.nvim",
     ft = { "python", "lua" },
-    config = function()
-        require("textobj-diagnostic").setup()
-    end,
+    config = true,
 })
 
 ts({
     "andymass/vim-matchup",
     after = "nvim-treesitter",
     config = conf.matchup,
-    setup = conf.matchup_setup,
+    init = conf.matchup_setup,
 })
 
--- ts({
---     "Yggdroot/hiPairs",
---     setup = function()
---         lambda.lazy_load({
---             events = "BufEnter",
---             augroup_name = "hiPairs",
---             condition = lambda.config.use_hiPairs, -- reverse
---             plugin = "hiPairs",
---         })
---     end,
-
---     config = conf.hi_pairs,
--- })
+ts({
+    "Yggdroot/hiPairs",
+    lazy = not lambda.config.use_hiPairs,
+    config = conf.hi_pairs,
+})
 
 ts({
     "yioneko/nvim-yati",
     after = "nvim-treesitter",
-    requires = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
+    dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
     config = conf.indent,
 })
 
 -- -- Packer
--- ts({
---     "folke/paint.nvim",
---     event = "BufReadPre",
---     config = conf.paint,
--- })
+ts({
+    "folke/paint.nvim",
+    ft = "lua",
+    config = conf.paint,
+})
 
 ts({
     -- It uses hydra
     "Dkendal/nvim-treeclimber",
     after = "nvim-treesitter",
-    requires = "rktjmp/lush.nvim",
+    dependencies = { "rktjmp/lush.nvim" },
     -- config = conf.climber,
 })
 
 ts({
     "wellle/targets.vim",
-    opt = true,
-    event = { "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI" },
-    setup = function()
+    lazy = true,
+    event = "VeryLazy",
+    init = function()
         vim.g.targets_gracious = 1
     end,
     config = function()
@@ -143,5 +127,14 @@ autocmd User targets#mappings#user call targets#mappings#extend({
     \     },
     \ })
       ]])
+    end,
+})
+
+ts({
+    "chrisgrieser/nvim-various-textobjs",
+    lazy = true,
+    ft = { "python", "lua" },
+    config = function()
+        require("various-textobjs").setup({ useDefaultKeymaps = true })
     end,
 })

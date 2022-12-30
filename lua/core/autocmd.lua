@@ -230,7 +230,11 @@ lambda.augroup("Utilities", {
 lambda.augroup("buffer", {
     { event = { "BufRead", "BufNewFile" }, pattern = "*.norg", command = "setlocal filetype=norg" },
     { event = { "BufEnter", "BufWinEnter" }, pattern = "*.norg", command = [[set foldlevel=1000]] },
-    { event = { "BufNewFile", "BufRead", "BufWinEnter" }, pattern = "*.tex", command = [[set filetype=tex]] },
+    {
+        event = { "BufNewFile", "BufRead", "BufWinEnter" },
+        pattern = "*.tex",
+        command = [[set filetype=tex]],
+    },
     -- Reload vim config automatically
     {
         event = "BufWritePost",

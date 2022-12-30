@@ -1,4 +1,4 @@
--- vim.cmd[[packadd lsp-format-modifications.nvim]]
+-- vim.cmd[[ Lazy load lsp-format-modifications.nvim]]
 local active = true
 local M = {}
 

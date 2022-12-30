@@ -118,6 +118,9 @@ M.L = {
 ---@return number
 ---@return number
 local function hex_to_rgb(color)
+    if color == nil then
+        return
+    end
     local hex = color:gsub("#", "")
     return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5), 16)
 end
@@ -391,7 +394,15 @@ local function general_overrides()
         -- {markdownCodeBlock = { background = code_block }},
         -- -----------------------------------------------------------------------------//
         { FoldColumn = { background = "bg" } },
-        { Folded = { inherit = "Comment", italic = true, bold = true, fg = P.springViolet1, bg = P.sumiInk2 } },
+        {
+            Folded = {
+                inherit = "Comment",
+                italic = true,
+                bold = true,
+                fg = P.springViolet1,
+                bg = P.sumiInk2,
+            },
+        },
 
         -- -----------------------------------------------------------------------------//
         -- -- Diff

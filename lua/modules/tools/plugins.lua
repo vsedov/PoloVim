@@ -1,9 +1,9 @@
 local conf = require("modules.tools.config")
 local tools = require("core.pack").package
 
-tools({ "neovim/nvimdev.nvim", ft = "lua", opt = true, config = conf.nvimdev })
+tools({ "neovim/nvimdev.nvim", ft = "lua", lazy = true, config = conf.nvimdev })
 
-tools({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }, opt = true })
+tools({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }, lazy = true })
 
 tools({
     "is0n/fm-nvim",
@@ -24,15 +24,13 @@ tools({
     },
     config = conf.fm,
 })
-tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, opt = true, config = conf.paperplanes })
+tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, lazy = true, config = conf.paperplanes })
 
 tools({
     "natecraddock/workspaces.nvim",
-    after = "telescope.nvim",
+    lazy = true,
     config = conf.workspace,
 })
-
-tools({ "jghauser/mkdir.nvim", opt = true, cmd = "new", config = [[require'mkdir']] })
 
 tools({
     "xiyaowong/link-visitor.nvim",
@@ -47,37 +45,36 @@ tools({
 ------------- Spelling and Grammer
 tools({
     "kamykn/spelunker.vim",
-    opt = true,
-    fn = { "spelunker#check" },
-    setup = conf.spelunker,
+    lazy = true,
+    init = conf.spelunker,
     config = conf.spellcheck,
 })
 
 tools({
     "rhysd/vim-grammarous",
-    opt = true,
+    lazy = true,
     cmd = { "GrammarousCheck" },
     ft = { "markdown", "txt", "norg", "tex" },
-    setup = conf.grammarous,
+    init = conf.grammarous,
 })
 -------------
 
 tools({
     "plasticboy/vim-markdown",
     ft = "markdown",
-    requires = { "godlygeek/tabular" },
+    dependencies = { "godlygeek/tabular" },
     cmd = { "Toc" },
-    setup = conf.markdown,
-    opt = true,
+    init = conf.markdown,
+    lazy = true,
 })
 
 tools({
     "iamcco/markdown-preview.nvim",
     ft = { "markdown", "pandoc.markdown", "rmd" },
     cmd = { "MarkdownPreview" },
-    setup = conf.mkdp,
-    run = [[sh -c "cd app && yarn install"]],
-    opt = true,
+    init = conf.mkdp,
+    build = [[sh -c "cd app && yarn install"]],
+    lazy = true,
 })
 
 tools({
@@ -91,8 +88,7 @@ tools({
 
 tools({
     "wakatime/vim-wakatime",
-    opt = true,
-    setup = conf.wakatime,
+    lazy = true,
 })
 
 tools({ "ilAYAli/scMRU.nvim", cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" }, module = "mru" })
@@ -111,19 +107,10 @@ tools({
     end,
 })
 
-tools({ "tami5/sqlite.lua", module = "sqlite" })
--- manual call
-tools({
-    "AckslD/nvim-neoclip.lua",
-    opt = true,
-    requires = { "tami5/sqlite.lua" },
-    config = conf.neoclip,
-})
-
 tools({
     "voldikss/vim-translator",
-    opt = true,
-    setup = function()
+    lazy = true,
+    init = function()
         vim.g.translator_source_lang = "jp"
     end,
     cmd = { "Translate", "TranslateW", "TranslateR", "TranslateH", "TranslateL" },
@@ -132,7 +119,7 @@ tools({
 tools({
     "ttibsi/pre-commit.nvim",
     cmd = "Precommit",
-    opt = true,
+    lazy = true,
 })
 
 tools({
@@ -141,7 +128,7 @@ tools({
         "SudaRead",
         "SudaWrite",
     },
-    setup = function()
+    init = function()
         vim.g.suda_smart_edit = 1
     end,
 })
@@ -149,9 +136,7 @@ tools({
 tools({
     "barklan/capslock.nvim",
     keys = {
-        { "i", "<C-;>" },
-        { "n", "<C-;>" },
-        { "c", "<C-;>" },
+        { "<C-;>" },
     },
     config = function()
         require("capslock").setup()
@@ -226,18 +211,4 @@ tools({
             },
         })
     end,
-})
-
-tools({
-    "smjonas/live-command.nvim",
-    opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "CmdlineEnter",
-            augroup_name = "live_command",
-            condition = false, -- reverse
-            plugin = "live-command.nvim",
-        })
-    end,
-    config = conf.live_command,
 })

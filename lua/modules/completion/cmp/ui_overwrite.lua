@@ -60,12 +60,16 @@ local function define_highlights()
     vim.api.nvim_set_hl(0, "CmpDocumentationBorder", {
         bg = "None",
     })
-    local values = string.format("#%x", vim.api.nvim_get_hl_by_name("Normal", true).background)
-    if lambda.config.cmp.cmp_theme == "border" then
-        border(values)
-    elseif lambda.config.cmp.cmp_theme == "no-border" then
-        no_border(values)
+    if vim.api.nvim_get_hl_by_name("Normal", true).background ~= nll then
+        local values = string.format("#%x", vim.api.nvim_get_hl_by_name("Normal", true).background)
+
+        if lambda.config.cmp.cmp_theme == "border" then
+            border(values)
+        elseif lambda.config.cmp.cmp_theme == "no-border" then
+            no_border(values)
+        end
     end
+
     local kind_hls = lambda.fold(
         function(accum, value, key)
             accum[#accum + 1] = { ["CmpItemKind" .. key] = { foreground = { from = value } } }

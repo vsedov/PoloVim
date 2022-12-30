@@ -738,7 +738,7 @@ local lua = {
                         "'" .. author .. "/" .. project .. "']={",
                     }),
                     t({ "", "" }),
-                    t("    opt = true,"),
+                    t("    lazy = true,"),
                     t({ "", "" }),
                     t("    config = function()"),
                     t({ "", "" }),

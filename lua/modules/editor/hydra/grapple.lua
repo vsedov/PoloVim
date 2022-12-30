@@ -4,8 +4,6 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
         return string.sub(String, 1, string.len(Start)) == Start
     end
 
-    local types = require("portal.types")
-
     local leader = "H"
     local hydra = require("hydra")
 

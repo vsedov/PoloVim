@@ -1,5 +1,5 @@
 local o, opt, fn = vim.o, vim.opt, vim.fn
-local global = require("core.global")
+local cache_dir = vim.env.HOME .. "/.cache/nvim/"
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -154,11 +154,13 @@ o.linebreak = true -- lines wrap at words rather than random characters
 o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "yes:3"
 o.ruler = false
-if lambda.config.ui.noice.enable then
-    o.cmdheight = 1 -- 0 , is still borked it seems
-else
-    o.cmdheight = 1
-end
+-- if lambda.config.ui.noice.enable then
+--     o.cmdheight = 1 -- 0 , is still borked it seems
+-- else
+--     o.cmdheight = 1
+-- end
+o.cmdheight = 0
+
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1
@@ -246,10 +248,10 @@ o.backup = false
 o.writebackup = false
 o.undofile = true
 o.swapfile = true
-o.directory = global.cache_dir .. "swag/"
-o.undodir = global.cache_dir .. "undo/"
-o.backupdir = global.cache_dir .. "backup/"
-o.viewdir = global.cache_dir .. "view/"
+o.directory = cache_dir .. "swag/"
+o.undodir = cache_dir .. "undo/"
+o.backupdir = cache_dir .. "backup/"
+o.viewdir = cache_dir .. "view/"
 o.shada = "!,'300,<50,@100,s10,h"
 --}}}
 -----------------------------------------------------------------------------//
@@ -269,7 +271,7 @@ opt.spellsuggest:prepend({ 12 })
 opt.spelloptions:append({ "camel", "noplainbuffer" })
 opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
 opt.fileformats = { "unix", "mac", "dos" }
-opt.spelllang:append("programming")
+--opt.spelllang:append("programming") -- NOTE: (vsedov) (16:01:13 - 29/12/22): No longer works
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
@@ -285,10 +287,6 @@ o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
 -- Folds {{{1
 -----------------------------------------------------------------------------//
 o.foldlevelstart = 20
-if not lambda.plugin_installed("nvim-ufo") and not lambda.config.use_ufo then
-    o.foldexpr = "nvim_treesitter#foldexpr()"
-    o.foldmethod = "expr"
-end
 
 -----------------------------------------------------------------------------//
 -- Git editor

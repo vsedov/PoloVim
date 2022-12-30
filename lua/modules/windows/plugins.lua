@@ -1,9 +1,9 @@
 local conf = require("modules.windows.config")
 local windows = require("core.pack").package
---  Possible, ONE Can be causing huge LAG, it could be a viability : :think:
+-- --  Possible, ONE Can be causing huge LAG, it could be a viability : :think:
 windows({
     "szw/vim-maximizer",
-    cmd = "MaximizerToggle!",
+    cmd = "MaximizerToggle",
 })
 
 --  Possible, ONE Can be causing huge LAG, it could be a viability : :think:
@@ -34,19 +34,18 @@ windows({
     end,
 })
 
-windows({ "sindrets/winshift.nvim", cmd = "WinShift", opt = true, config = conf.winshift })
+windows({ "sindrets/winshift.nvim", cmd = "WinShift", lazy = true, config = conf.winshift })
 
 windows({
     "anuvyklack/windows.nvim",
-    requires = {
-        { "anuvyklack/middleclass", opt = true },
-        { "anuvyklack/animation.nvim", opt = true },
+    dependencies = {
+        { "anuvyklack/middleclass" },
+        { "anuvyklack/animation.nvim" },
     },
-    opt = true,
+    lazy = true,
     cmd = {
 
         "WindowsMaximize",
-        "WindowsMaximize!",
         "WindowsToggleAutowidth",
         "WindowsEnableAutowidth",
         "WindowsDisableAutowidth",
@@ -56,8 +55,6 @@ windows({
         ";z",
     },
     config = function()
-        vim.cmd([[packadd middleclass]])
-        vim.cmd([[packadd animation.nvim]])
         vim.o.winwidth = 10
         vim.o.winminwidth = 10
         vim.o.equalalways = false
@@ -69,8 +66,8 @@ windows({
 -- What tf is this plugin ?
 windows({
     "andrewferrier/wrapping.nvim",
-    opt = true,
-    setup = function()
+    lazy = true,
+    init = function()
         lambda.lazy_load({
             events = "BufEnter",
             augroup_name = "wrapping",

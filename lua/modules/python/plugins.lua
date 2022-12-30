@@ -2,8 +2,15 @@ local conf = require("modules.python.config")
 local python = require("core.pack").package
 
 python({
+    "vsedov/py.nvim",
+    ft = "python",
+    lazy = true,
+    config = conf.python_dev,
+})
+
+python({
     "direnv/direnv.vim",
-    opt = true,
+    lazy = true,
     ft = { "python", "julia" },
 })
 
@@ -17,12 +24,17 @@ python({
 python({
     "relastle/vim-nayvy",
     ft = { "python" },
-    opt = true,
+    lazy = true,
     config = function()
         vim.g.nayvy_import_path_format = "all_relative"
         vim.g.nayvy_import_config_path = "$HOME/.config/nayvy/nayvy.py"
     end,
 })
+
+-- python({
+--     "Vimjas/vim-python-pep8-indent",
+--     ft = "python",
+-- })
 
 python({
     "wookayin/vim-python-enhanced-syntax",
@@ -31,7 +43,7 @@ python({
 
 python({
     "luk400/vim-jukit",
-    opt = true,
+    lazy = true,
     config = function()
         vim.g.jukit_terminal = "kitty"
         vim.cmd([[

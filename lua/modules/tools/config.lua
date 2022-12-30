@@ -79,10 +79,6 @@ function config.spellcheck()
 end
 
 function config.grammcheck()
-    -- body
-    if not packer_plugins["rhysd/vim-grammarous"] or not packer_plugins["rhysd/vim-grammarous"].loaded then
-        require("packer").loader("vim-grammarous")
-    end
     vim.cmd([[GrammarousCheck]])
 end
 
@@ -113,17 +109,6 @@ function config.mkdp()
     vim.cmd(
         [[let g:mkdp_preview_options = { 'mkit': {}, 'katex': {}, 'uml': {}, 'maid': {}, 'disable_sync_scroll': 0, 'sync_scroll_type': 'middle', 'hide_yaml_meta': 1, 'sequence_diagrams': {}, 'flowchart_diagrams': {}, 'content_editable': v:true, 'disable_filename': 0 }]]
     )
-end
-function config.wakatime()
-    vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-            if lambda.config.record_your_self then
-                require("packer").loader("vim-wakatime")
-            end
-        end,
-        once = true,
-    })
 end
 
 function config.bqf()
@@ -206,60 +191,6 @@ function config.bqf()
     })
 
     require("utils.ui.highlights").plugin("bqf", { { BqfPreviewBorder = { link = "WinSeparator" } } })
-end
-
-function config.neoclip()
-    require("neoclip").setup({
-        history = 2000,
-        enable_persistent_history = true,
-        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-        filter = nil,
-        preview = true,
-        default_register = "a extra=star,plus,unnamed,b",
-        default_register_macros = "q",
-        enable_macro_history = true,
-        content_spec_column = true,
-        on_paste = {
-            set_reg = false,
-        },
-        on_replay = {
-            set_reg = false,
-        },
-        keys = {
-            telescope = {
-                i = {
-                    select = "<cr>",
-                    paste = "<c-p>",
-                    paste_behind = "<c-k>",
-                    replay = "<c-q>",
-                    custom = {},
-                },
-                n = {
-                    select = "<cr>",
-                    paste = "p",
-                    paste_behind = "P",
-                    replay = "q",
-                    custom = {},
-                },
-            },
-        },
-    })
-end
-
-function config.live_command()
-    require("live-command").setup({
-        commands = {
-            Reg = {
-                cmd = "norm",
-                -- This will transform ":5Reg a" into ":norm 5@a"
-                args = function(opts)
-                    return (opts.count == -1 and "" or opts.count) .. "@" .. opts.args
-                end,
-                range = "",
-            },
-            Norm = { cmd = "norm" },
-        },
-    })
 end
 
 return config

@@ -1,4 +1,3 @@
-local Hydra = require("hydra")
 local leader = ";l"
 local hydra = require("hydra")
 

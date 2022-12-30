@@ -3,60 +3,43 @@ local lsp = require("core.pack").package
 
 lsp({
     "neovim/nvim-lspconfig",
-    opt = true,
-    module_pattern = "lspconfig.*",
+    lazy = true,
     event = "BufEnter",
-    setup = conf.nvim_lsp_setup,
+    init = conf.nvim_lsp_setup,
     config = conf.nvim_lsp,
 })
 
 lsp({
     "williamboman/mason.nvim",
     after = "nvim-lspconfig",
-    requires = { "nvim-lspconfig", "williamboman/mason-lspconfig.nvim" },
+    dependencies = { "neovim/nvim-lspconfig", "williamboman/mason-lspconfig.nvim" },
     config = conf.mason_setup,
 })
 
--- until i figure out how to install custom languages servers with mason, il keep this here as a handy backup .
--- lsp({
---     "williamboman/nvim-lsp-installer",
---     opt = true,
---     requires = "nvim-lspconfig",
---     config = conf.lsp_install,
--- })
-
-lsp({ "ii14/lsp-command", opt = true, after = "nvim-lspconfig" })
+lsp({ "ii14/lsp-command", lazy = true, after = "nvim-lspconfig" })
 lsp({
     "p00f/clangd_extensions.nvim",
-    opt = true,
+    lazy = true,
     ft = { "c", "cpp" },
-    requires = "nvim-lspconfig",
+    dependencies = "nvim-lspconfig",
     config = conf.clangd,
 })
 
-lsp({ "folke/neodev.nvim", ft = "lua", opt = true, requires = "nvim-lspconfig", config = conf.luadev })
+lsp({ "folke/neodev.nvim", ft = "lua", lazy = true, dependencies = "neovim/nvim-lspconfig", config = conf.luadev })
 
 lsp({ "lewis6991/hover.nvim", modules = "hover", config = conf.hover })
 
 lsp({
     "glepnir/lspsaga.nvim",
     cmd = { "Lspsaga", "LSoutlineToggle" },
-    opt = true,
+    lazy = true,
     config = conf.saga,
-    requires = "nvim-lspconfig",
+    dependencies = "neovim/nvim-lspconfig",
 })
 
 lsp({
     "ray-x/lsp_signature.nvim",
-    opt = true,
-    setup = function()
-        lambda.lazy_load({
-            events = "BufWinEnter",
-            augroup_name = "lsp_sig",
-            condition = lambda.config.lsp.use_lsp_signature,
-            plugin = "lsp_signature.nvim",
-        })
-    end,
+    lazy = not lambda.config.lsp.use_lsp_signature,
     config = conf.lsp_sig,
 })
 
@@ -87,19 +70,19 @@ lsp({
 
 lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", after = "nvim-lspconfig", config = conf.rename })
 
-lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
+-- lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
-lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", requires = { "MunifTanjim/nui.nvim" } })
+lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
 lsp({
     "liuchengxu/vista.vim",
-    cmd = { "Vista", "Vista!", "Vista!!" },
+    cmd = { "Vista" },
     config = conf.vista,
 })
 
 lsp({
     "jose-elias-alvarez/null-ls.nvim",
     event = "BufEnter",
-    requires = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
         -- require("typos").setup()
@@ -108,7 +91,7 @@ lsp({
 
 lsp({
     "jayp0521/mason-null-ls.nvim",
-    requires = {
+    dependencies = {
         "williamboman/mason.nvim",
         "jose-elias-alvarez/null-ls.nvim",
     },
@@ -122,43 +105,22 @@ lsp({
 
 lsp({
     "barreiroleo/ltex-extra.nvim",
-    opt = true,
+    lazy = true,
     ft = { "latex", "tex" },
     module = "ltex_extra",
 })
 
 lsp({
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    cmd = { "TL" },
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "rcd",
-            condition = lambda.config.lsp.use_lsp_lines,
-            plugin = "lsp_lines.nvim",
-        })
-    end,
-    config = conf.lsp_lines,
-})
-
-lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cmd = { "RCL" },
-    setup = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "rcd",
-            condition = lambda.config.lsp.use_rcd,
-            plugin = "right-corner-diagnostics.nvim",
-        })
-    end,
+    lazy = not lambda.config.lsp.use_rcd,
     config = conf.rcd,
 })
 
 lsp({
     "rmagatti/goto-preview",
     -- keys = { "gI", "gt", "gR", "gC" },
-    requires = "telescope.nvim",
+    dependencies = "telescope.nvim",
     -- after = "nvim-lspconfig",
     modules = "goto-preview",
     config = conf.goto_preview,

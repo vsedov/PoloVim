@@ -159,7 +159,6 @@ function config.nvim_bufferline()
     })
 end
 function config.tabby()
-    -- use default as that is good enough.
     require("tabby").setup()
 end
 

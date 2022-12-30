@@ -11,10 +11,6 @@ function config.treesitter_obj()
     require("modules.treesitter.treesitter").treesitter_obj()
 end
 
-function config.rainbow()
-    require("modules.treesitter.treesitter").rainbow()
-end
-
 function config.treesitter_ref()
     require("modules.treesitter.treesitter").treesitter_ref()
 end

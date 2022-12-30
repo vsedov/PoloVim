@@ -212,20 +212,6 @@ function lambda.find(matcher, haystack)
     return found
 end
 
-lambda.list_installed_plugins = (function()
-    local plugins
-    return function()
-        if plugins then
-            return plugins
-        end
-        local data_dir = fn.stdpath("data")
-        local start = fn.expand(data_dir .. "/site/pack/packer/start/*", true, true)
-        local opt = fn.expand(data_dir .. "/site/pack/packer/opt/*", true, true)
-        plugins = vim.list_extend(start, opt)
-        return plugins
-    end
-end)()
-
 ---Check if a plugin is on the system not whether or not it is loaded
 ---@param plugin_name string
 ---@return boolean
@@ -236,16 +222,6 @@ function lambda.plugin_installed(plugin_name)
         end
     end
     return false
-end
-
----NOTE: this plugin returns the currently loaded state of a plugin given
----given certain assumptions i.e. it will only be true if the plugin has been
----loaded e.g. lazy loading will return false
----@param plugin_name string
----@return boolean?
-function lambda.plugin_loaded(plugin_name)
-    local plugins = packer_plugins or {}
-    return plugins[plugin_name] and plugins[plugin_name].loaded
 end
 
 ---Check whether or not the location or quickfix list is open
@@ -517,6 +493,15 @@ function lambda.has(feature)
     return vim.fn.has(feature) > 0
 end
 
+function lambda.clever_tcd()
+    local root = require("lspconfig").util.root_pattern("Project.toml", ".git")(vim.api.nvim_buf_get_name(0))
+    if root == nil then
+        root = " %:p:h"
+    end
+    vim.cmd("tcd " .. root)
+    vim.cmd("pwd")
+end
+
 function lambda.lazy_load(tb)
     for i, v in pairs(tb) do
         if type(v) == "function" then
@@ -535,23 +520,14 @@ function lambda.lazy_load(tb)
                         tb.plugin
                     )
                 then
-                    -- print(tb.pl)
                     vim.defer_fn(function()
-                        require("packer").loader(tb.plugin)
+                        require("lazy").load({ plugins = { tb.plugin } })
                     end, 0)
                 else
-                    require("packer").loader(tb.plugin)
+                    require("lazy").load({ plugins = { tb.plugin } })
                 end
             end
         end,
         once = true,
     })
-end
-function lambda.clever_tcd()
-    local root = require("lspconfig").util.root_pattern("Project.toml", ".git")(vim.api.nvim_buf_get_name(0))
-    if root == nil then
-        root = " %:p:h"
-    end
-    vim.cmd("tcd " .. root)
-    vim.cmd("pwd")
 end

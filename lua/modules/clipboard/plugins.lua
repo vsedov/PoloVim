@@ -1,11 +1,11 @@
-local conf = require("modules.clipboard.config")
 local clipsub = require("core.pack").package
+local conf = require("modules.clipboard.config")
 
 clipsub({
     "gbprod/yanky.nvim",
-    event = { "CursorMoved", "CmdlineEnter" },
+    event = "VeryLazy",
     config = conf.config_yanky,
-    requires = { "nvim-telescope/telescope.nvim", "kkharji/sqlite.lua" },
+    dependencies = { "nvim-telescope/telescope.nvim", "kkharji/sqlite.lua" },
 })
 
 --  REVISIT: (vsedov) (17:56:23 - 23/10/22): Is this even required ?
@@ -31,8 +31,8 @@ clipsub({
 
 clipsub({
     "gbprod/substitute.nvim",
-    require = "gbprod/yanky.nvim",
-    event = { "CursorMoved", "CmdlineEnter" },
+    dependencies = "gbprod/yanky.nvim",
+    event = "VeryLazy",
     config = conf.substitute,
 })
 
@@ -59,20 +59,6 @@ clipsub({
 })
 
 clipsub({
-    "ojroques/nvim-osc52",
-    keys = { { "x", "\\y" }, { "n", "\\y" } },
-    config = function()
-        require("osc52").setup({
-            max_length = 0, -- Maximum length of selection (0 for no limit)
-            silent = false, -- Disable message on successful copy
-            trim = false, -- Trim text before copy
-        })
-        vim.keymap.set("n", "\\y", require("osc52").copy_operator, { expr = true })
-        vim.keymap.set("x", "\\y", require("osc52").copy_visual)
-    end,
-})
-
-clipsub({
     "mg979/vim-visual-multi",
     keys = {
         "<Ctrl>",
@@ -94,27 +80,35 @@ clipsub({
         "<M-LeftMouse>",
         "<M-C-RightMouse>",
     },
-    opt = true,
-    setup = conf.vmulti,
+    lazy = true,
+    init = conf.vmulti,
 })
 
 clipsub({
     "johmsalas/text-case.nvim",
-    modules = "textcase",
+    lazy = true,
     config = conf.text_case,
 })
 
 clipsub({
     "nicwest/vim-camelsnek",
-    opt = true,
+    lazy = true,
     cmd = { "Snek", "Camel", "CamelB", "Kebab" },
 })
 
-clipsub({ "mbbill/undotree", opt = true, cmd = { "UndotreeToggle" } })
+clipsub({ "mbbill/undotree", lazy = true, cmd = { "UndotreeToggle" } })
 
 clipsub({
     "ekickx/clipboard-image.nvim",
     cmd = { "PasteImg" },
-    opt = true,
+    lazy = true,
     config = conf.clipboardimage,
+})
+
+-- -- manual call
+clipsub({
+    "AckslD/nvim-neoclip.lua",
+    lazy = true,
+    dependencies = { "kkharji/sqlite.lua" },
+    config = conf.neoclip,
 })

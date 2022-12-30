@@ -154,7 +154,7 @@ function config.spectre()
 end
 
 function config.sad()
-    vim.cmd([[packadd guihua.lua]])
+    vim.cmd([[Lazy load guihua.lua]])
     require("sad").setup({
         diff = "diff-so-fancy", -- you can use `diff`, `diff-so-fancy`
         ls_file = "fd", -- also git ls_file

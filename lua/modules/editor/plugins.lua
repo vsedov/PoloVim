@@ -1,10 +1,20 @@
 local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 
+editor({ "nvim-lua/plenary.nvim", module = "plenary" })
 editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
     "j",
     "k",
 }, config = conf.acc_jk })
+
+editor({
+    "folke/which-key.nvim",
+    module = "which-key",
+    after = "nvim-treesitter",
+    config = function()
+        require("modules.editor.which_key")
+    end,
+})
 
 -- -- -- -- NORMAL mode:
 -- -- -- -- `gcc` - Toggles the current line using linewise comment
@@ -54,27 +64,21 @@ editor({
     "LudoPinelli/comment-box.nvim",
     keys = { "<Leader>cb", "<Leader>cc", "<Leader>cl", "<M-p>" },
     cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },
-    opt = true,
+    lazy = true,
     config = conf.comment_box,
 })
 
--- --[[ This thing causes issues with respect to cmdheight=0 ]]
+-- -- --[[ This thing causes issues with respect to cmdheight=0 ]]
 editor({
     "chaoren/vim-wordmotion",
-    keys = {
-        { "n", "<Plug>WordMotion_" },
-        { "x", "<Plug>WordMotion_" },
-        { "o", "<Plug>WordMotion_" },
-        { "c", "<Plug>WordMotion_" },
-    },
-    setup = function()
+    lazy = true,
+    event = "VeryLazy",
+    init = function()
         vim.g.wordmotion_uppercase_spaces = { "-" }
         vim.g.wordmotion_nomap = 1
         for _, key in ipairs({ "e", "b", "w", "E", "B", "W", "ge", "gE" }) do
             vim.keymap.set({ "n", "x", "o" }, key, "<Plug>WordMotion_" .. key)
         end
-        vim.keymap.set({ "x", "o" }, "aW", "<Plug>WordMotion_aW")
-        vim.keymap.set({ "x", "o" }, "iW", "<Plug>WordMotion_iW")
         vim.keymap.set("c", "<C-R><C-W>", "<Plug>WordMotion_<C-R><C-W>")
         vim.keymap.set("c", "<C-R><C-A>", "<Plug>WordMotion_<C-R><C-A>")
     end,
@@ -89,93 +93,38 @@ editor({
         "<Plug>(smartword-ge)",
     },
 })
--- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
-editor({ "andweeb/presence.nvim", opt = true, config = conf.discord })
+-- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
+editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 
 editor({
     "monaqa/dial.nvim",
     keys = {
-        { "n", "<C-a>" },
-        { "n", "<C-x>" },
+        { "<C-x>", mode = "n" },
+        { "<C-a>", mode = "n" },
 
-        { "v", "<C-a>" },
-        { "v", "<C-x>" },
+        { "<C-a>", mode = "v" },
+        { "<C-x>", mode = "v" },
 
-        { "v", "g<C-a>" },
-        { "v", "g<C-x>" },
-        { "n", "_a" },
-        { "n", "_x" },
+        { "g<C-a>", mode = "v" },
+        { "g<C-x>", mode = "v" },
+
+        { "_a", mode = "n" },
+        { "_x", mode = "n" },
     },
-    opt = true,
+    lazy = true,
     config = conf.dial,
 })
 
 editor({
-    "folke/which-key.nvim",
-    module = "which-key",
-    after = "nvim-treesitter",
-    config = function()
-        require("modules.editor.which_key")
-    end,
-})
-
-editor({
     "anuvyklack/hydra.nvim",
-    requires = "anuvyklack/keymap-layer.nvim",
+    dependencies = "anuvyklack/keymap-layer.nvim",
     config = conf.hydra,
-    opt = true,
-    keys = {
-        "<leader>b",
-        "<localleader>b",
-        "<leader>d",
-        ";A",
-        ";\\",
-        "<leader>h",
-        "<leader>H",
-        "H",
-        "L",
-        "<cr>",
-        ";l",
-        "m",
-        "<leader>u",
-        "\\l",
-        ";p",
-        "<leader>I",
-        ";;",
-        "<leader>r",
-        "<localleader>r",
-        ";r",
-        "<leader>L",
-        ";s",
-        "<leader>f",
-        "gaa",
-        "gae",
-        ";w",
-        "\\<leader",
-        "<leader>O",
-        "<c-w>[",
-        "<localleader>w",
-        "<leader>yu",
-        "p",
-        "P",
-        "gp",
-        "gP",
-        "]p",
-        "[p",
-        "]P",
-        "[P",
-        ">p",
-        "<p",
-        ">P",
-        "<P",
-        "=p",
-        "=P",
-    },
+    event = "VeryLazy",
 })
 
 editor({
     "jbyuki/venn.nvim",
-    opt = true,
+    lazy = true,
     cmd = "Venn",
     config = conf.venn,
 })
@@ -195,77 +144,22 @@ editor({
     end,
 })
 
--- editor({
---     "Wansmer/treesj",
---     requires = { "nvim-treesitter" },
---     config = function()
---         local tsj = require("treesj")
---         tsj.setup({
---             use_default_keymaps = false,
---             check_syntax_error = true,
---             max_join_length = 150,
---             cursor_behavior = "hold",
---             notify = true,
---             langs =,
---         })
---     end,
--- })
-
--- ---
--- -- map("!", "<M-f>", readline.forward_word)
--- -- map("!", "<M-b>", readline.backward_word)
--- -- map("!", "<M-d>", readline.kill_word)
--- -- map("!", "<M-BS>", readline.backward_kill_word)
-
--- -- map("!", "<C-a>", readline.beginning_of_line)
--- -- map("!", "<C-e>", readline.end_of_line)
-
--- -- map("!", "<C-w>", readline.unix_word_rubout)
--- -- map("!", "<C-u>", readline.backward_kill_line)
--- editor({
---     "linty-org/readline.nvim",
---     event = "InsertEnter",
---     config = conf.readline,
--- })
-
 editor({
     "haya14busa/vim-asterisk",
-    opt = true,
-    keys = {
-        { "n", "*" },
-        { "n", "#" },
-        { "n", "g*" },
-        { "n", "g#" },
-        { "n", "z*" },
-        { "n", "gz*" },
-        { "n", "z#" },
-        { "n", "gz#" },
-    },
-    setup = conf.asterisk_setup,
+    init = conf.asterisk_setup,
 })
 
 editor({
     "marklcrns/vim-smartq",
-    keys = {
-        "Q",
-        "q",
-    },
-    cmd = {
-        "SmartQ",
-        "SmartQ!",
-        "SmartQSave",
-        "SmartQWipeEmpty",
-        "SmartQWipeEmpty!",
-        "SmartQCloseSplits",
-    },
-    config = conf.smart_q,
+    event = "VeryLazy",
 })
+
 editor({
     "AndrewRadev/switch.vim",
-    opt = true,
-    cmd = { "Switch", "Switch!", "Switch?", "SwitchCase", "SwitchCase!" },
-    fn = { "switch#Switch" },
-    setup = function()
+    lazy = true,
+    init = function()
         vim.g.switch_mapping = ";S"
     end,
+    keys = { ";S" },
+    cmd = { "Switch", "SwitchCase" },
 })

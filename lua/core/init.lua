@@ -1,19 +1,22 @@
-local global = require("core.global")
+local g, api = vim.g, vim.api
+-- require('internal.winbar')
+
+local cache_dir = vim.env.HOME .. "/.cache/nvim/"
 local vim = vim
 
 -- Create cache dir and subs dir
 local createdir = function()
     local data_dir = {
-        global.cache_dir .. "backup",
-        global.cache_dir .. "session",
-        global.cache_dir .. "swap",
-        global.cache_dir .. "tags",
-        global.cache_dir .. "undo",
+        cache_dir .. "backup",
+        cache_dir .. "session",
+        cache_dir .. "swap",
+        cache_dir .. "tags",
+        cache_dir .. "undo",
     }
     -- There only check once that If cache_dir exists
     -- Then I don't want to check subs dir exists
-    if vim.fn.isdirectory(global.cache_dir) == 0 then
-        os.execute("mkdir -p " .. global.cache_dir)
+    if vim.fn.isdirectory(cache_dir) == 0 then
+        os.execute("mkdir -p " .. cache_dir)
         for _, v in pairs(data_dir) do
             if vim.fn.isdirectory(v) == 0 then
                 os.execute("mkdir -p " .. v)
@@ -88,26 +91,20 @@ local leader_map = function()
 end
 
 local load_core = function()
-    require("core.helper").init()
+    require("core.globals")
+
     local pack = require("core.pack")
     createdir()
     disable_distribution_plugins()
     leader_map()
 
-    if pack.ensure_plugins() == "installed" then
-        require("core.options")
-        require("core.autocmd")
-        require("core.autocmd_optional")
-        require("core.mapping")
-        require("keymap")
-        file_type()
-        -- selene: allow(global_usage)
-        _G.lprint = require("utils.logs.log").lprint
-        pack.load_compile()
-        require("core.lazy")
-    else
-        print("install all plugins, please wait")
-    end
+    require("core.options")
+    require("core.autocmd")
+    require("core.autocmd_optional")
+    require("keymap")
+    file_type()
+    require("core.pack"):boot_strap()
+    require("core.lazy")
 end
 
 load_core()

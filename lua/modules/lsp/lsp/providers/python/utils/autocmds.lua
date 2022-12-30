@@ -18,7 +18,6 @@ M.DocumentHighlightAU = function()
 end
 
 M.SemanticTokensAU = function(bufnr)
-    vim.cmd([[packadd theHamsta/nvim-semantic-tokens]])
     lambda.augroup("SemanticTokens", {
         {
             -- event = { "BufEnter", "CursorHold", "InsertLeave" },

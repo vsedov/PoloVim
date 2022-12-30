@@ -1,25 +1,5 @@
 local config = {}
 
-function config.zen()
-    local truezen = require("true-zen")
-    truezen.setup({})
-    local keymap = vim.keymap
-
-    keymap.set("n", ";zn", function()
-        local first = 0
-        local last = vim.api.nvim_buf_line_count(0)
-        truezen.narrow(first, last)
-    end, { noremap = true })
-    keymap.set("v", ";zn", function()
-        local first = vim.fn.line("v")
-        local last = vim.fn.line(".")
-        truezen.narrow(first, last)
-    end, { noremap = true })
-    keymap.set("n", ";zf", truezen.focus, { noremap = true })
-    keymap.set("n", ";zm", truezen.minimalist, { noremap = true })
-    keymap.set("n", ";za", truezen.ataraxis, { noremap = true })
-end
-
 function config.acc_jk()
     require("accelerated-jk").setup({
         mode = "time_driven",
@@ -225,28 +205,6 @@ function config.venn()
         vim.g.venn_enabled = false
         toggle()
     end, { bang = true })
-end
-
-function config.readline()
-    local readline = require("readline")
-
-    vim.keymap.set("!", "<M-d>", readline.kill_word)
-    vim.keymap.set("!", "<M-BS>", readline.backward_kill_word)
-    vim.keymap.set("!", "<M-f>", readline.forward_word)
-    vim.keymap.set("!", "<M-b>", readline.backward_word)
-
-    vim.keymap.set("!", "<C-s>", readline.kill_line)
-    vim.keymap.set("!", "<C-u>", readline.backward_kill_line)
-
-    vim.keymap.set("!", "<C-w>", readline.unix_word_rubout)
-
-    vim.keymap.set("!", "<C-a>", readline.beginning_of_line)
-    vim.keymap.set("!", "<C-e>", readline.end_of_line)
-
-    vim.keymap.set("!", "<C-f>", "<Right>") -- forward-char
-    vim.keymap.set("!", "<C-b>", "<Left>") -- backward-char
-    vim.keymap.set("!", "<C-n>", "<Down>") -- next-line
-    vim.keymap.set("!", "<C-p>", "<Up>") -- previous-line
 end
 
 function config.asterisk_setup()

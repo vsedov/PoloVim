@@ -1,9 +1,5 @@
-local Hydra = require("hydra")
-local leader = "<CR>"
 local hydra = require("hydra")
-
-local types = require("portal.types")
-
+local leader = "<CR>"
 local bracket = { "<CR>", "w", "a", ";", "<leader>" }
 
 local function make_core_table(core_table, second_table)

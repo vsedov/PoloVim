@@ -48,27 +48,5 @@ local def_map = {
     -- when going to the end of the line in visual mode ignore whitespace characters
     ["n|$"] = map_cmd([[g_]]):with_noremap(),
 }
--- local os_map = {
---   ["n|<c-s>"] = map_cu("write"):with_noremap(),
---   ["i|<c-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
---   ["v|<c-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
---   ["i|<C-q>"] = map_cmd("<Esc>:wq<CR>"),
--- }
 
--- local global = require("core.global")
--- if global.is_mac then
---   os_map = {
---     ["n|<d-s>"] = map_cu("w"):with_silent(),
---     ["i|<d-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
---     ["v|<d-s>"] = map_cu('"normal :w"'):with_noremap():with_silent(),
-
---     ["n|<d-w>"] = map_cu("wqa!"):with_silent(),
---     ["i|<d-w>"] = map_cu('"normal :wqa!"'):with_noremap():with_silent(),
---     ["v|<d-w>"] = map_cu('"normal :wqa!"'):with_noremap():with_silent(),
---   }
--- end
-
--- def_map = vim.list_extend(def_map, os_map)
--- def_map = vim.tbl_extend("keep", def_map, os_map)
-
-bind.nvim_load_mapping(def_map)
+return def_map

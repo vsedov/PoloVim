@@ -1,109 +1,7 @@
 local config = {}
 
--- TODO(vsedov) (03:11:32 - 20/08/22): Make sure that hydra modules
--- are loaded based on this ,
-function config.git_setup(package_name)
-    lambda.augroup("InGit", {
-        {
-            event = { "BufAdd", "VimEnter" },
-            pattern = "*",
-            command = function()
-                local function onexit(code, _)
-                    if code == 0 then
-                        vim.schedule(function()
-                            require("packer").loader(package_name)
-                        end)
-                    end
-                end
-                local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-                if lines ~= { "" } then
-                    vim.loop.spawn("git", {
-                        args = {
-                            "ls-files",
-                            "--error-unmatch",
-                            vim.fn.expand("%"),
-                        },
-                    }, onexit)
-                end
-            end,
-        },
-    })
-end
-
 function config.octo()
     require("octo").setup()
-    require("which-key").register({
-        O = {
-            name = "+octo",
-            p = {
-                name = "+pr",
-                l = { "<Cmd>Octo pr list<CR>", "pull requests List" },
-                e = { "<Cmd>Octo pr edit<CR>", "pull requests edit" },
-            },
-            i = {
-                name = "+issues",
-                l = { "<Cmd>Octo issue list<CR>", "Issue List" },
-                c = { "<Cmd>Octo issue create<CR>", "Issue Create" },
-                e = { "<Cmd>Octo issue edit<CR>", "Issue Edit" },
-            },
-        },
-    }, { prefix = "<leader>" })
-end
-
-function config.gh()
-    vim.cmd([[packadd litee.nvim]])
-    local wk = require("which-key")
-    wk.register({
-        g = {
-            name = "+Git",
-            h = {
-                name = "+Github",
-                c = {
-                    name = "+Commits",
-                    c = { "<cmd>GHCloseCommit<cr>", "Close" },
-                    e = { "<cmd>GHExpandCommit<cr>", "Expand" },
-                    o = { "<cmd>GHOpenToCommit<cr>", "Open To" },
-                    p = { "<cmd>GHPopOutCommit<cr>", "Pop Out" },
-                    z = { "<cmd>GHCollapseCommit<cr>", "Collapse" },
-                },
-                i = {
-                    name = "+Issues",
-                    p = { "<cmd>GHPreviewIssue<cr>", "Preview" },
-                },
-                l = {
-                    name = "+Litee",
-                    t = { "<cmd>LTPanel<cr>", "Toggle Panel" },
-                },
-                r = {
-                    name = "+Review",
-                    b = { "<cmd>GHStartReview<cr>", "Begin" },
-                    c = { "<cmd>GHCloseReview<cr>", "Close" },
-                    d = { "<cmd>GHDeleteReview<cr>", "Delete" },
-                    e = { "<cmd>GHExpandReview<cr>", "Expand" },
-                    s = { "<cmd>GHSubmitReview<cr>", "Submit" },
-                    z = { "<cmd>GHCollapseReview<cr>", "Collapse" },
-                },
-                p = {
-                    name = "+Pull Request",
-                    c = { "<cmd>GHClosePR<cr>", "Close" },
-                    d = { "<cmd>GHPRDetails<cr>", "Details" },
-                    e = { "<cmd>GHExpandPR<cr>", "Expand" },
-                    o = { "<cmd>GHOpenPR<cr>", "Open" },
-                    p = { "<cmd>GHPopOutPR<cr>", "PopOut" },
-                    r = { "<cmd>GHRefreshPR<cr>", "Refresh" },
-                    t = { "<cmd>GHOpenToPR<cr>", "Open To" },
-                    z = { "<cmd>GHCollapsePR<cr>", "Collapse" },
-                },
-                t = {
-                    name = "+Threads",
-                    c = { "<cmd>GHCreateThread<cr>", "Create" },
-                    n = { "<cmd>GHNextThread<cr>", "Next" },
-                    t = { "<cmd>GHToggleThread<cr>", "Toggle" },
-                },
-            },
-        },
-    }, { prefix = "<leader>" })
-    require("litee.gh").setup()
 end
 
 function config.worktree()
@@ -138,7 +36,7 @@ function config.worktree()
         end
     end)
     return { git_worktree = git_worktree }
-    -- vim.cmd[[packadd telescope.nvim]]
+    -- vim.cmd[[ Lazy load telescope.nvim]]
     -- require("telescope").load_extension("git_worktree")
 end
 
@@ -190,82 +88,10 @@ function config.diffview()
             DiffviewOpen = {},
             DiffviewFileHistory = {},
         },
-        hooks = {}, -- See ':h diffview-config-hooks'
-        keymaps = {
-            disable_defaults = false, -- Disable the default keymaps
-            view = {
-                -- The `view` bindings are active in the diff buffers, only when the current
-                -- tabpage is a Diffview.
-                ["<tab>"] = actions.select_next_entry, -- Open the diff for the next file
-                ["<s-tab>"] = actions.select_prev_entry, -- Open the diff for the previous file
-                ["gf"] = actions.goto_file, -- Open the file in a new split in the previous tabpage
-                ["<C-w><C-f>"] = actions.goto_file_split, -- Open the file in a new split
-                ["<C-w>gf"] = actions.goto_file_tab, -- Open the file in a new tabpage
-                ["<leader>e"] = actions.focus_files, -- Bring focus to the files panel
-                ["<leader>b"] = actions.toggle_files, -- Toggle the files panel.
-            },
-            file_panel = {
-                ["j"] = actions.next_entry, -- Bring the cursor to the next file entry
-                ["<down>"] = actions.next_entry,
-                ["k"] = actions.prev_entry, -- Bring the cursor to the previous file entry.
-                ["<up>"] = actions.prev_entry,
-                ["<cr>"] = actions.select_entry, -- Open the diff for the selected entry.
-                ["o"] = actions.select_entry,
-                ["<2-LeftMouse>"] = actions.select_entry,
-                ["-"] = actions.toggle_stage_entry, -- Stage / unstage the selected entry.
-                ["S"] = actions.stage_all, -- Stage all entries.
-                ["U"] = actions.unstage_all, -- Unstage all entries.
-                ["X"] = actions.restore_entry, -- Restore entry to the state on the left side.
-                ["R"] = actions.refresh_files, -- Update stats and entries in the file list.
-                ["L"] = actions.open_commit_log, -- Open the commit log panel.
-                ["<c-b>"] = actions.scroll_view(-0.25), -- Scroll the view up
-                ["<c-f>"] = actions.scroll_view(0.25), -- Scroll the view down
-                ["<tab>"] = actions.select_next_entry,
-                ["<s-tab>"] = actions.select_prev_entry,
-                ["gf"] = actions.goto_file,
-                ["<C-w><C-f>"] = actions.goto_file_split,
-                ["<C-w>gf"] = actions.goto_file_tab,
-                ["i"] = actions.listing_style, -- Toggle between 'list' and 'tree' views
-                ["f"] = actions.toggle_flatten_dirs, -- Flatten empty subdirectories in tree listing style.
-                ["<leader>e"] = actions.focus_files,
-                ["<leader>b"] = actions.toggle_files,
-            },
-            file_history_panel = {
-                ["g!"] = actions.options, -- Open the option panel
-                ["<C-A-d>"] = actions.open_in_diffview, -- Open the entry under the cursor in a diffview
-                ["y"] = actions.copy_hash, -- Copy the commit hash of the entry under the cursor
-                ["L"] = actions.open_commit_log,
-                ["zR"] = actions.open_all_folds,
-                ["zM"] = actions.close_all_folds,
-                ["j"] = actions.next_entry,
-                ["<down>"] = actions.next_entry,
-                ["k"] = actions.prev_entry,
-                ["<up>"] = actions.prev_entry,
-                ["<cr>"] = actions.select_entry,
-                ["o"] = actions.select_entry,
-                ["<2-LeftMouse>"] = actions.select_entry,
-                ["<c-b>"] = actions.scroll_view(-0.25),
-                ["<c-f>"] = actions.scroll_view(0.25),
-                ["<tab>"] = actions.select_next_entry,
-                ["<s-tab>"] = actions.select_prev_entry,
-                ["gf"] = actions.goto_file,
-                ["<C-w><C-f>"] = actions.goto_file_split,
-                ["<C-w>gf"] = actions.goto_file_tab,
-                ["<leader>e"] = actions.focus_files,
-                ["<leader>b"] = actions.toggle_files,
-            },
-            option_panel = {
-                ["<tab>"] = actions.select_entry,
-                ["q"] = actions.close,
-            },
-        },
     })
 end
 
 function config.gitsigns()
-    if not packer_plugins["plenary.nvim"].loaded then
-        require("packer").loader("plenary.nvim")
-    end
     local gitsigns = require("gitsigns")
     local cwd = vim.fn.getcwd()
     local function on_attach(bufnr)
@@ -348,7 +174,7 @@ function config.gitsigns()
 end
 
 function config.neogit()
-    vim.cmd([[packadd diffview.nvim]])
+    vim.cmd([[Lazy load diffview.nvim]])
     local neogit = require("neogit")
     pcall(require("plenary"))
     neogit.setup({
@@ -450,7 +276,6 @@ function config.vgit()
             },
         },
     })
-    require("packer").loader("telescope.nvim")
 end
 
 function config.git_conflict()

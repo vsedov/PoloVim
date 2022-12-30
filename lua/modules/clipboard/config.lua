@@ -102,7 +102,7 @@ function config.vmulti()
   ]])
 end
 function config.text_case()
-    vim.cmd([[packadd telescope.nvim]])
+    vim.cmd([[Lazy load telescope.nvim]])
     require("telescope").load_extension("textcase")
 end
 
@@ -133,6 +133,44 @@ function config.clipboardimage()
             img_name = img_func,
             img_dir_txt = "img",
             affix = [[\includegraphics{%s}]],
+        },
+    })
+end
+
+function config.neoclip()
+    require("neoclip").setup({
+        history = 2000,
+        enable_persistent_history = true,
+        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+        filter = nil,
+        preview = true,
+        default_register = "a extra=star,plus,unnamed,b",
+        default_register_macros = "q",
+        enable_macro_history = true,
+        content_spec_column = true,
+        on_paste = {
+            set_reg = false,
+        },
+        on_replay = {
+            set_reg = false,
+        },
+        keys = {
+            telescope = {
+                i = {
+                    select = "<cr>",
+                    paste = "<c-p>",
+                    paste_behind = "<c-k>",
+                    replay = "<c-q>",
+                    custom = {},
+                },
+                n = {
+                    select = "<cr>",
+                    paste = "p",
+                    paste_behind = "P",
+                    replay = "q",
+                    custom = {},
+                },
+            },
         },
     })
 end

@@ -1,4 +1,3 @@
-local Hydra = require("hydra")
 local leader = "<leader>u"
 local hydra = require("hydra")
 
@@ -9,6 +8,22 @@ local function make_core_table(core_table, second_table)
         table.insert(core_table, v)
     end
     table.insert(core_table, "\n")
+end
+
+local function test_method()
+    if vim.bo.filetype == "python" then
+        require("dap-python").test_method()
+    end
+end
+local function test_class()
+    if vim.bo.filetype == "python" then
+        require("dap-python").test_class()
+    end
+end
+local function debug_selection()
+    if vim.bo.filetype == "python" then
+        require("dap-python").debug_selection()
+    end
 end
 
 local config = {}
@@ -87,6 +102,26 @@ config.parenth_mode = {
         end,
         { nowait = false, exit = true, desc = "TestVisit" },
     },
+
+    w = {
+        function()
+            test_method()
+        end,
+        { nowait = false, exit = true, desc = "TestMethod" },
+    },
+
+    W = {
+        function()
+            test_class()
+        end,
+        { nowait = false, exit = true, desc = "TestClass" },
+    },
+    [";"] = {
+        function()
+            debug_selection()
+        end,
+        { nowait = false, exit = true, desc = "Selection" },
+    },
 }
 
 local mapping = {
@@ -155,6 +190,7 @@ local function auto_hint_generate()
     make_core_table(core_table, bracket)
     make_core_table(core_table, { "d", "D", "S", "a" })
     make_core_table(core_table, { "n", "f", "l", "v" })
+    make_core_table(core_table, { "w", "W", ";" })
     hint_table = {}
     string_val = "^ ^     Neo Test   ^ ^\n\n"
     string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"

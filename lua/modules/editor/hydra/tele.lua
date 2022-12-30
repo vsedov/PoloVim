@@ -1,5 +1,4 @@
 local Hydra = require("hydra")
-vim.cmd([[packadd telescope.nvim]])
 local plugins = {
     "telescope-live-grep-args.nvim",
     "telescope-frecency.nvim",
@@ -7,8 +6,7 @@ local plugins = {
     "telescope-bookmarks.nvim",
 }
 for _, v in ipairs(plugins) do
-    cmd = "packadd " .. v
-    vim.cmd(cmd)
+    require("lazy").load({ plugins = { v } })
 end
 -- Hav eto do this for this stupid thing to work.
 require("telescope").setup({

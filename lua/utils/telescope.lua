@@ -1,5 +1,4 @@
 require("utils.helpers.helper")
-local loader = require("packer").loader
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 local conf = require("telescope.config").values
@@ -429,14 +428,6 @@ M.jump = function()
     reloader()
 
     builtin.jumplist({ layout_strategy = "vertical" })
-end
-
-M.installed_plugins = function()
-    reloader()
-
-    builtin.find_files({
-        cwd = vim.fn.stdpath("data") .. "/site/pack/packer/start/",
-    })
 end
 
 M.ag = function(text_to_find)

@@ -4,29 +4,20 @@ search({
     "nvim-telescope/telescope.nvim",
     branch = "master",
     module = "telescope",
-    requires = {
+    dependencies = {
         { "vhyrro/neorg-telescope", after = "telescope.nvim" },
-        { "nvim-lua/plenary.nvim", opt = true },
+        { "nvim-lua/plenary.nvim", lazy = true },
         {
             "nvim-telescope/telescope-file-browser.nvim",
-            opt = true,
-            config = function()
-                require("telescope").load_extension("file_browser")
-            end,
+            lazy = true,
         },
         {
             "nvim-telescope/telescope-frecency.nvim",
-            opt = true,
-            config = function()
-                require("telescope").load_extension("frecency")
-            end,
+            lazy = true,
         },
         {
             "nvim-telescope/telescope-live-grep-args.nvim",
-            opt = true,
-            config = function()
-                require("telescope").load_extension("live-grep-args")
-            end,
+            lazy = true,
         },
     },
     config = conf.telescope,
@@ -39,7 +30,7 @@ search({
 })
 search({
     "jvgrootveld/telescope-zoxide",
-    opt = true,
+    lazy = true,
     config = function()
         require("telescope").load_extension("zoxide")
     end,
@@ -57,24 +48,24 @@ search({
 
 search({
     "dhruvmanila/telescope-bookmarks.nvim",
-    opt = true,
-    requires = {
+    lazy = true,
+    dependencies = {
         "kkharji/sqlite.lua",
     },
 })
 
-search({
-    "https://git.sr.ht/~vigoux/azy.nvim",
-    run = "make lib",
-    module = "azy",
-    config = function()
-        require("azy").setup({
-            preview = true, -- Whether to preview selected items on the fly (this is an unstable feature, feedback appreciated)
-        })
-    end,
-})
+-- search({
+-- "https://git.sr.ht/~vigoux/azy.nvim",
+-- build ="make lib",
+-- module = "azy",
+-- config = function()
+--     require("azy").setup({
+--         preview = true, -- Whether to preview selected items on the fly (this is an unstable feature, feedback appreciated)
+--     })
+-- end,
+-- })
 
-search({ "ibhagwan/fzf-lua", branch = "main", config = conf.fzf, opt = true, cmd = { "FzfLua" } })
+search({ "ibhagwan/fzf-lua", branch = "main", config = conf.fzf, lazy = true, cmd = { "FzfLua" } })
 
 -- :Z {query}: cd to the highest ranked directory matching your query. If {query} is omitted, cd to the home directory
 -- :Lz {query}: same as :Z, but local to the current window
@@ -89,7 +80,7 @@ search({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz", "Tzi", "Lzi" } })
 search({
     "windwp/nvim-spectre",
     module = "spectre",
-    requires = { "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
         ";e",
         ";W",
@@ -102,9 +93,9 @@ search({
 search({
     "ray-x/sad.nvim",
     cmd = { "Sad" },
-    requires = {
+    dependencies = {
         "ray-x/guihua.lua",
-        opt = true,
+        lazy = true,
         config = function()
             require("guihua.maps").setup({
                 maps = {
@@ -113,7 +104,7 @@ search({
             })
         end,
     },
-    opt = true,
+    lazy = true,
     config = conf.sad,
 })
 

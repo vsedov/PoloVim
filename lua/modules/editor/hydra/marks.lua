@@ -1,9 +1,8 @@
-local Hydra = require("hydra")
 local function starts(String, Start)
     return string.sub(String, 1, string.len(Start)) == Start
 end
 
-local leader = "m"
+local leader_key = "m"
 local hydra = require("hydra")
 
 local bracket = { "<cr>", "m", "n", "N", "c" }
@@ -47,7 +46,7 @@ local config = {}
 local exit = { nil, { exit = true, desc = "EXIT" } }
 config.parenth_mode = {
     color = "red",
-    body = leader,
+    body = leader_key,
     mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
 
