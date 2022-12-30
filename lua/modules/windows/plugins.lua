@@ -9,7 +9,7 @@ windows({
 --  Possible, ONE Can be causing huge LAG, it could be a viability : :think:
 windows({
     "mrjones2014/smart-splits.nvim",
-    module = "smart-splits",
+    lazy = true,
 })
 
 windows({
@@ -75,7 +75,5 @@ windows({
             plugin = "wrapping.nvim",
         })
     end,
-    config = function()
-        require("wrapping").setup()
-    end,
+    config = true,
 })

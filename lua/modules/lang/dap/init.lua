@@ -19,6 +19,9 @@ M.prepare = function()
         return vim.fn.system("which python")
     end
 
+    vim.keymap.set("n", "]d", require("goto-breakpoints").next, {})
+    vim.keymap.set("n", "[d", require("goto-breakpoints").prev, {})
+
     require("dap-python").test_runner = "pytest"
 
     vim.cmd([[command! BPToggle lua require"dap".toggle_breakpoint()]])

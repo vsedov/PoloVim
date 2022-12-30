@@ -29,13 +29,6 @@ function config.workspace()
     require("telescope").load_extension("workspaces")
 end
 
-function config.paperplanes()
-    require("paperplanes").setup({
-        register = "+",
-        provider = "ix.io",
-    })
-end
-
 function config.vim_vista()
     vim.g["vista#renderer#enable_icon"] = 1
     vim.g.vista_disable_statusline = 1

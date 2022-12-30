@@ -77,15 +77,8 @@ lang({
     dependencies = {
         "rcarriga/nvim-dap-ui",
         "mfussenegger/nvim-dap-python",
+        "ofirgall/goto-breakpoints.nvim",
     },
-})
-lang({
-    "ofirgall/goto-breakpoints.nvim",
-    after = "nvim-dap",
-    config = function()
-        vim.keymap.set("n", "]d", require("goto-breakpoints").next, {})
-        vim.keymap.set("n", "[d", require("goto-breakpoints").prev, {})
-    end,
 })
 
 lang({
@@ -112,7 +105,7 @@ lang({
 lang({
     "rcarriga/neotest-vim-test",
     cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
-    dependencies = { "vim-test/vim-test", lazy = true, after = "neotest" },
+    dependencies = { "vim-test/vim-test", lazy = true },
 })
 
 lang({

@@ -10,7 +10,6 @@ editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
 editor({
     "folke/which-key.nvim",
     module = "which-key",
-    after = "nvim-treesitter",
     config = function()
         require("modules.editor.which_key")
     end,
@@ -129,24 +128,38 @@ editor({
     config = conf.venn,
 })
 
+-- editor({
+--     "aarondiel/spread.nvim",
+--     after = "nvim-treesitter",
+--     module = "spread",
+--     keys = { "<leader>J", "<leader>j" },
+--     config = function()
+--         vim.keymap.set("n", "<leader>J", function()
+--             require("spread").out()
+--         end, { desc = "spread: expand" })
+--         vim.keymap.set("n", "<leader>j", function()
+--             require("spread").combine()
+--         end, { desc = "spread: combine" })
+--     end,
+-- })
 editor({
-    "aarondiel/spread.nvim",
-    after = "nvim-treesitter",
-    module = "spread",
+    "Wansmer/treesj",
     keys = { "<leader>J", "<leader>j" },
     config = function()
+        require("treesj").setup({})
+
         vim.keymap.set("n", "<leader>J", function()
-            require("spread").out()
-        end, { desc = "spread: expand" })
+            vim.cmd([[TSJToggle]])
+        end, { desc = "Spread: Expand" })
         vim.keymap.set("n", "<leader>j", function()
-            require("spread").combine()
-        end, { desc = "spread: combine" })
+            vim.cmd([[TSJJoin]])
+        end, { desc = "Spread: Combine" })
     end,
 })
-
 editor({
     "haya14busa/vim-asterisk",
     init = conf.asterisk_setup,
+    event = "VeryLazy",
 })
 
 editor({

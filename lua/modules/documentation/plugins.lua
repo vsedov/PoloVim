@@ -1,7 +1,7 @@
 local conf = require("modules.documentation.config")
 local docs = require("core.pack").package
 
-docs({ "danymat/neogen", module = { "neogen" }, dependencies = { "LuaSnip" }, config = conf.neogen })
+docs({ "danymat/neogen", lazy = true, dependencies = { "L3MON4D3/LuaSnip" }, config = conf.neogen })
 
 docs({
     "ranelpadon/python-copy-reference.vim",
@@ -44,7 +44,6 @@ docs({
 --  TODO: (vsedov) (06:07:10 - 28/10/22): Make hydra so this would be nice to use.
 docs({
     "loganswartz/updoc.nvim",
-    modules = "updoc",
     lazy = true,
     config = true,
 })
