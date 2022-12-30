@@ -25,13 +25,8 @@ load_colourscheme() -- loads default colourscheme
 
 function Lazyload()
     _G.PLoader = loader
-    if vim.wo.diff then
-        loader({ plugins = { "nvim-treesitter" } })
-        require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = false } })
-        return
-    else
-        loader({ plugins = { "nvim-treesitter" } })
-    end
+
+    loader({ plugins = { "nvim-treesitter" } })
 
     local disable_ft = {
         "NvimTree",

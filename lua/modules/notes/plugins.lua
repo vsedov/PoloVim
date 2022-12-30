@@ -23,9 +23,9 @@ notes({
 
 notes({
     "lervag/vimtex",
-    lazy = true,
     ft = { "latex", "tex" },
-    init = conf.vimtex,
+    after = "nvim-treesitter/nvim-treesitter",
+    config = conf.vimtex,
 })
 
 notes({
@@ -34,12 +34,4 @@ notes({
     lazy = true,
     ft = { "norg", "markdown" },
     conf = conf.table,
-})
-
-notes({
-    "edluffy/hologram.nvim",
-    lazy = true,
-    -- Disable this fo rth etime , there could be some breaking changes
-    -- that i dont really know how to deal with
-    config = conf.hologram,
 })

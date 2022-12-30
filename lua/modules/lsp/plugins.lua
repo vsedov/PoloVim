@@ -110,7 +110,6 @@ lsp({
     module = "ltex_extra",
 })
 
-
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cmd = { "RCL" },

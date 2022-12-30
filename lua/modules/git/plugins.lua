@@ -13,7 +13,6 @@ git({
     config = conf.octo,
 })
 
-
 -- need to find a usecase for this
 git({ "ThePrimeagen/git-worktree.nvim", lazy = true, config = conf.worktree })
 

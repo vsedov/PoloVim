@@ -2,13 +2,8 @@
 --  causing the error here, and its quite important that i figure this one out .
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
-ts({ "nvim-treesitter/nvim-treesitter", lazy = true, build = ":TSUpdate", config = conf.nvim_treesitter })
+ts({ "nvim-treesitter/nvim-treesitter", build = "TSUpdate", config = conf.nvim_treesitter })
 
-ts({
-    "p00f/nvim-ts-rainbow",
-    after = "nvim-treesitter",
-    lazy = true,
-})
 ts({
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
@@ -71,9 +66,7 @@ ts({
 ts({
     "andrewferrier/textobj-diagnostic.nvim",
     ft = { "python", "lua" },
-    config = function()
-        require("textobj-diagnostic").setup()
-    end,
+    config = true,
 })
 
 ts({
@@ -85,14 +78,7 @@ ts({
 
 ts({
     "Yggdroot/hiPairs",
-    init = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "hiPairs",
-            condition = lambda.config.use_hiPairs, -- reverse
-            plugin = "hiPairs",
-        })
-    end,
+    lazy = not lambda.config.use_hiPairs,
     config = conf.hi_pairs,
 })
 
@@ -106,7 +92,7 @@ ts({
 -- -- Packer
 ts({
     "folke/paint.nvim",
-    event = "BufReadPre",
+    ft = "lua",
     config = conf.paint,
 })
 
@@ -114,14 +100,14 @@ ts({
     -- It uses hydra
     "Dkendal/nvim-treeclimber",
     after = "nvim-treesitter",
-    requires = "rktjmp/lush.nvim",
+    dependencies = { "rktjmp/lush.nvim" },
     -- config = conf.climber,
 })
 
 ts({
     "wellle/targets.vim",
     lazy = true,
-    event = { "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI" },
+    event = "VeryLazy",
     init = function()
         vim.g.targets_gracious = 1
     end,
