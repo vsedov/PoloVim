@@ -54,19 +54,6 @@ search({
     },
 })
 
--- search({
--- "https://git.sr.ht/~vigoux/azy.nvim",
--- build ="make lib",
--- module = "azy",
--- config = function()
---     require("azy").setup({
---         preview = true, -- Whether to preview selected items on the fly (this is an unstable feature, feedback appreciated)
---     })
--- end,
--- })
-
-search({ "ibhagwan/fzf-lua", branch = "main", config = conf.fzf, lazy = true, cmd = { "FzfLua" } })
-
 -- :Z {query}: cd to the highest ranked directory matching your query. If {query} is omitted, cd to the home directory
 -- :Lz {query}: same as :Z, but local to the current window
 -- :Tz {query}: same as :Z, but local to the current tab
