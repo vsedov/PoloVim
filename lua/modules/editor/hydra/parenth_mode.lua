@@ -22,7 +22,6 @@ config.parenth_mode = {
     color = "pink",
     body = leader,
     mode = { "n", "v", "x", "o" },
-    [leader] = { nil, { exit = true } },
     ["<ESC>"] = { nil, { exit = true } },
     j = {
         function()
