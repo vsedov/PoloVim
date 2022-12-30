@@ -204,3 +204,31 @@ tools({
         })
     end,
 })
+tools({
+    "chrisgrieser/nvim-genghis",
+    dependencies = { "stevearc/dressing.nvim" },
+    lazy = true,
+    cmd = {
+        "GenghiscopyFilepath",
+        "GenghiscopyFilename",
+        "Genghischmodx",
+        "GenghisrenameFile",
+        "GenghiscreateNewFile",
+        "GenghisduplicateFile",
+        "Genghistrash",
+        "Genghismove",
+    },
+    config = function()
+        local genghis = require("genghis")
+        lambda.command("GenghiscopyFilepath", genghis.copyFilepath, {})
+        lambda.command("GenghiscopyFilename", genghis.copyFilename, {})
+        lambda.command("Genghischmodx", genghis.chmodx, {})
+        lambda.command("GenghisrenameFile", genghis.renameFile, {})
+        lambda.command("GenghiscreateNewFile", genghis.createNewFile, {})
+        lambda.command("GenghisduplicateFile", genghis.duplicateFile, {})
+        lambda.command("Genghistrash", function()
+            genghis.trashFile({ trashLocation = "/home/viv/.local/share/Trash/" })
+        end, {})
+        lambda.command("Genghismove", genghis.moveSelectionToNewFile, {})
+    end,
+})

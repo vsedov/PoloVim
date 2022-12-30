@@ -240,3 +240,31 @@ ui({
 
 -- True emotional Support
 ui({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })
+
+ui({
+    "strash/everybody-wants-that-line.nvim",
+    lazy = true,
+    event = "BufWinEnter",
+    config = function()
+        -- or you can add it
+        require("everybody-wants-that-line").setup({
+            buffer = {
+                show = true,
+                prefix = "λ:",
+                -- Symbol before buffer number, e.g. "0000.".
+                -- If you don't want additional symbols to be displayed, set `buffer.max_symbols = 0`.
+                symbol = "0",
+                -- Maximum number of symbols including buffer number.
+                max_symbols = 5,
+            },
+            filepath = {
+                path = "relative",
+                shorten = false,
+            },
+            filesize = {
+                metric = "decimal",
+            },
+            separator = "│",
+        })
+    end,
+})
