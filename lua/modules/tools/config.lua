@@ -49,20 +49,6 @@ function config.vim_vista()
     -- vim.g['vista#renderer#icons'] = {['function'] = "", ['method'] = "ℱ", variable = "כֿ"}
 end
 
-function config.spelunker()
-    -- vim.cmd("command! Spell call spelunker#check()")
-    vim.g.enable_spelunker_vim_on_readonly = 0
-    vim.g.spelunker_target_min_char_len = 5
-    vim.g.spelunker_check_type = 2
-    vim.g.spelunker_highlight_type = 2
-    vim.g.spelunker_disable_uri_checking = 1
-    vim.g.spelunker_disable_account_name_checking = 1
-    vim.g.spelunker_disable_email_checking = 1
-    -- vim.cmd("highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=undercurl guifg=#F3206e guisp=#EF3050")
-    -- vim.cmd("highlight SpelunkerComplexOrCompoundWord cterm=underline gui=undercurl guisp=#EF3050")
-    vim.cmd("highlight def link SpelunkerSpellBad SpellBad")
-    vim.cmd("highlight def link SpelunkerComplexOrCompoundWord Rare")
-end
 
 function config.spellcheck()
     vim.cmd("highlight def link SpelunkerSpellBad SpellBad")

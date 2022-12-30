@@ -42,13 +42,7 @@ tools({
     end,
 })
 
-------------- Spelling and Grammer
-tools({
-    "kamykn/spelunker.vim",
-    lazy = true,
-    init = conf.spelunker,
-    config = conf.spellcheck,
-})
+
 
 tools({
     "rhysd/vim-grammarous",
