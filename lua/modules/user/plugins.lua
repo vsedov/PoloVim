@@ -92,6 +92,7 @@ user({
 -- -- about time .
 user({
     "LunarVim/bigfile.nvim",
+    event = "VeryLazy",
     config = function()
         local default_config = {
             filesize = 2,

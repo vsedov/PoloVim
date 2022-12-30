@@ -24,7 +24,7 @@ tools({
     },
     config = conf.fm,
 })
-tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, lazy = true, config = conf.paperplanes })
+tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, lazy = true, config = true })
 
 tools({
     "natecraddock/workspaces.nvim",
@@ -102,9 +102,7 @@ tools({
 tools({
     "barklan/nvim-pqf",
     event = "BufReadPre",
-    config = function()
-        require("pqf").setup()
-    end,
+    config = true,
 })
 
 tools({
@@ -128,6 +126,7 @@ tools({
         "SudaRead",
         "SudaWrite",
     },
+    lazy = true, 
     init = function()
         vim.g.suda_smart_edit = 1
     end,
@@ -138,6 +137,7 @@ tools({
     keys = {
         { "<C-;>" },
     },
+    lazy = true, 
     config = function()
         require("capslock").setup()
         vim.keymap.set({ "n", "i", "c" }, "<C-;>", "<Plug>CapsLockToggle", {})

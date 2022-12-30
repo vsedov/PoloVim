@@ -5,7 +5,7 @@ search({
     branch = "master",
     module = "telescope",
     dependencies = {
-        { "vhyrro/neorg-telescope", after = "telescope.nvim" },
+        { "vhyrro/neorg-telescope", lazy = true},
         { "nvim-lua/plenary.nvim", lazy = true },
         {
             "nvim-telescope/telescope-file-browser.nvim",
@@ -25,7 +25,8 @@ search({
 
 search({
     "axkirillov/easypick.nvim",
-    after = "telescope.nvim",
+    event = "VeryLazy",
+    lazy = true,
     config = conf.easypick,
 })
 search({
@@ -39,6 +40,7 @@ search({
 search({
     "zane-/howdoi.nvim",
     cmd = "Howdoi",
+    lazy = true,
     config = function()
         vim.api.nvim_create_user_command("Howdoi", function()
             require("utils.telescope").howdoi()
@@ -66,7 +68,6 @@ search({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz", "Tzi", "Lzi" } })
 -- ze black magic
 search({
     "windwp/nvim-spectre",
-    module = "spectre",
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
         ";e",
@@ -98,7 +99,7 @@ search({
 search({
     "cshuaimin/ssr.nvim",
     module = "ssr",
-    -- Calling setup is optional.
+    lazy = true,
     config = function()
         require("ssr").setup({
             min_width = 50,

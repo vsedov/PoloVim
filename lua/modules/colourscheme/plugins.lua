@@ -20,11 +20,8 @@ colourscheme({
 -- temp::
 colourscheme({
     "rose-pine/neovim", -- rose-pine/neovim
-
     lazy = true,
     name = "rose",
-    module = "rose-pine",
-    -- tag = "v1.*",
     config = conf.rose,
 })
 

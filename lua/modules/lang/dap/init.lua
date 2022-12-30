@@ -18,6 +18,9 @@ M.prepare = function()
     require("dap-python").resolve_python = function()
         return vim.fn.system("which python")
     end
+    
+    vim.keymap.set("n", "]d", require("goto-breakpoints").next, {})
+    vim.keymap.set("n", "[d", require("goto-breakpoints").prev, {})
 
     require("dap-python").test_runner = "pytest"
 

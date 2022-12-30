@@ -50,7 +50,7 @@ ui({
     config = conf.notify,
 })
 
-ui({ "MunifTanjim/nui.nvim", lazy = true })
+ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
 
 -- -- -- Feels slow, might revert backto nvim tree
 ui({
@@ -67,7 +67,6 @@ ui({
             -- only needed if you want to use the "open_window_picker" command
             "s1n7ax/nvim-window-picker",
             lazy = true,
-            after = "neo-tree.nvim",
             config = function()
                 require("window-picker").setup({
                     autoselect_one = true,
@@ -133,7 +132,6 @@ ui({
 --  REVISIT: (vsedov) (03:44:46 - 16/11/22): What does this plugin do again ?
 ui({
     "Vonr/foldcus.nvim",
-    after = "nvim-treesitter",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.fold_focus,
 })
@@ -161,7 +159,6 @@ ui({
 ui({
     "folke/noice.nvim",
     lazy = not lambda.config.ui.noice.enable,
-    after = "leap.nvim",
     dependencies = {
         "nui.nvim",
         "nvim-notify",
@@ -173,12 +170,28 @@ ui({
 ui({
     "RRethy/vim-illuminate",
     lazy = true,
-
+    init = function()
+        lambda.lazy_load({
+            events = "BufWinEnter",
+            augroup_name = "illuminate",
+            condition = lambda.config.ui.illuminate,
+            plugin = "vim-illuminate",
+        })
+    end,
     config = conf.illuminate,
 })
+
 ui({
     "nyngwang/murmur.lua",
     lazy = true,
+    init = function()
+        lambda.lazy_load({
+            events = "BufRead",
+            augroup_name = "murmur",
+            condition = lambda.config.ui.use_murmur,
+            plugin = "murmur.lua",
+        })
+    end,
     config = function()
         require("murmur").setup({
             -- cursor_rgb = 'purple', -- default to '#393939'
@@ -195,12 +208,6 @@ ui({
             },
         })
     end,
-})
-
-ui({
-    "rainbowhxch/beacon.nvim",
-    lazy = true,
-    config = conf.beacon,
 })
 
 ui({

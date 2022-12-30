@@ -1,30 +1,33 @@
 local Hydra = require("hydra")
-local plugins = {
-    "telescope-live-grep-args.nvim",
-    "telescope-frecency.nvim",
-    "telescope-file-browser.nvim",
-    "telescope-bookmarks.nvim",
-}
-for _, v in ipairs(plugins) do
-    require("lazy").load({ plugins = { v } })
-end
--- Hav eto do this for this stupid thing to work.
-require("telescope").setup({
-    extensions = {
-        bookmarks = {
-            selected_browser = "waterfox",
-            url_open_command = "open",
-            url_open_plugin = nil,
-            full_path = true,
-            waterfox_profile_name = "default-default",
-            buku_include_tags = false,
-            debug = false,
-        },
-    },
-})
-require("telescope").load_extension("bookmarks")
 
-require("telescope").load_extension("frecency")
+vim.defer_fn(function()
+    local plugins = {
+        "telescope-live-grep-args.nvim",
+        "telescope-frecency.nvim",
+        "telescope-file-browser.nvim",
+        "telescope-bookmarks.nvim",
+    }
+    for _, v in ipairs(plugins) do
+        require("lazy").load({ plugins = { v } })
+    end
+    -- Hav eto do this for this stupid thing to work.
+    require("telescope").setup({
+        extensions = {
+            bookmarks = {
+                selected_browser = "waterfox",
+                url_open_command = "open",
+                url_open_plugin = nil,
+                full_path = true,
+                waterfox_profile_name = "default-default",
+                buku_include_tags = false,
+                debug = false,
+            },
+        },
+    })
+    require("telescope").load_extension("bookmarks")
+    require("telescope").load_extension("frecency")
+    
+end, 500)
 local hint_telescope = [[
  ^^      Git         ^^^^           Surfing               ^^^^
  ^^^^                                                     ^^^^

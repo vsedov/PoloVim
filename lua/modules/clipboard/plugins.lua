@@ -11,7 +11,7 @@ clipsub({
 --  REVISIT: (vsedov) (17:56:23 - 23/10/22): Is this even required ?
 clipsub({
     "ibhagwan/smartyank.nvim",
-    after = "yanky.nvim",
+    after = "gbprod/yanky.nvim",
     config = function()
         require("smartyank").setup({
             highlight = {

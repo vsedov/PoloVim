@@ -11,12 +11,36 @@ lsp({
 
 lsp({
     "williamboman/mason.nvim",
-    after = "nvim-lspconfig",
+
     dependencies = { "neovim/nvim-lspconfig", "williamboman/mason-lspconfig.nvim" },
     config = conf.mason_setup,
 })
 
-lsp({ "ii14/lsp-command", lazy = true, after = "nvim-lspconfig" })
+lsp({
+    "jose-elias-alvarez/null-ls.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
+    config = function()
+        require("modules.lsp.lsp.null-ls").setup()
+        -- require("typos").setup()
+    end,
+})
+
+lsp({
+    "jayp0521/mason-null-ls.nvim",
+    lazy = true,
+    dependencies = {
+        "williamboman/mason.nvim",
+        "jose-elias-alvarez/null-ls.nvim",
+    },
+    config = function()
+        require("mason-null-ls").setup({
+            automatic_installation = false,
+        })
+    end,
+})
+
+lsp({ "ii14/lsp-command", lazy = true, event = "BufEnter" })
 lsp({
     "p00f/clangd_extensions.nvim",
     lazy = true,
@@ -39,7 +63,15 @@ lsp({
 
 lsp({
     "ray-x/lsp_signature.nvim",
-    lazy = not lambda.config.lsp.use_lsp_signature,
+    init = function()
+    lambda.lazy_load({
+        events = "BufWinEnter",
+        augroup_name = "lsp_signature",
+        condition = lambda.config.lsp.use_lsp_signature,
+        plugin = "lsp_signature.nvim",
+    })
+    end,
+
     config = conf.lsp_sig,
 })
 
@@ -65,10 +97,10 @@ lsp({
 
 lsp({
     "joechrisellis/lsp-format-modifications.nvim",
-    modules = "lsp-format-modifications",
+    lazy = true, 
 })
 
-lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", after = "nvim-lspconfig", config = conf.rename })
+lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", config = conf.rename })
 
 -- lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
@@ -77,30 +109,6 @@ lsp({
     "liuchengxu/vista.vim",
     cmd = { "Vista" },
     config = conf.vista,
-})
-
-lsp({
-    "jose-elias-alvarez/null-ls.nvim",
-    event = "BufEnter",
-    dependencies = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
-    config = function()
-        require("modules.lsp.lsp.null-ls").setup()
-        -- require("typos").setup()
-    end,
-})
-
-lsp({
-    "jayp0521/mason-null-ls.nvim",
-    dependencies = {
-        "williamboman/mason.nvim",
-        "jose-elias-alvarez/null-ls.nvim",
-    },
-    after = "mason.nvim",
-    config = function()
-        require("mason-null-ls").setup({
-            automatic_installation = false,
-        })
-    end,
 })
 
 lsp({
@@ -119,9 +127,7 @@ lsp({
 
 lsp({
     "rmagatti/goto-preview",
-    -- keys = { "gI", "gt", "gR", "gC" },
-    dependencies = "telescope.nvim",
-    -- after = "nvim-lspconfig",
+    lazy = true,
     modules = "goto-preview",
     config = conf.goto_preview,
 })

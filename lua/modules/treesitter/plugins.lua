@@ -27,14 +27,15 @@ ts({
 
 ts({
     "nvim-treesitter/nvim-treesitter-refactor",
-    after = "nvim-treesitter-textobjects", -- manual loading
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects" },
     config = conf.treesitter_ref, -- let the last loaded config treesitter
     lazy = true,
 })
 
 ts({
     "David-Kunz/markid",
-    after = "nvim-treesitter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = "VeryLazy"
 })
 
 -- ts({ "nvim-treesitter/nvim-treesitter-context", event = "WinScrolled", config = conf.context })
@@ -66,12 +67,14 @@ ts({
 ts({
     "andrewferrier/textobj-diagnostic.nvim",
     ft = { "python", "lua" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = true,
 })
 
 ts({
     "andymass/vim-matchup",
-    after = "nvim-treesitter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    lazy = true,
     config = conf.matchup,
     init = conf.matchup_setup,
 })
@@ -84,8 +87,9 @@ ts({
 
 ts({
     "yioneko/nvim-yati",
-    after = "nvim-treesitter",
+    lazy = true, 
     dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
+    event = "VeryLazy", 
     config = conf.indent,
 })
 
@@ -93,14 +97,15 @@ ts({
 ts({
     "folke/paint.nvim",
     ft = "lua",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.paint,
 })
 
 ts({
     -- It uses hydra
     "Dkendal/nvim-treeclimber",
-    after = "nvim-treesitter",
-    dependencies = { "rktjmp/lush.nvim" },
+    lazy = true,
+    dependencies = { "rktjmp/lush.nvim", "nvim-treesitter/nvim-treesitter" },
     -- config = conf.climber,
 })
 

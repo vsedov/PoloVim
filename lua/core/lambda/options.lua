@@ -29,11 +29,8 @@ lambda.config = {
 
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
-
     -- Currently using nvim-yeti
-
     use_gitsigns = true,
-
     --  ──────────────────────────────────────────────────────────────────────
     use_lightspeed = false, -- if false then leap.nvim will be used.
     use_both_leap_light_speed = true,
@@ -43,9 +40,7 @@ lambda.config = {
     --  ──────────────────────────────────────────────────────────────────────
     use_use_hiPairs = true,
     use_music = false,
-
     use_scope = true, -- really fucks with neogit window
-
     use_scroll = false,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_wrapping = true, -- I am not sure if this is causing me to segfault.
