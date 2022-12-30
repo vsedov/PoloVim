@@ -13,7 +13,9 @@ git({
     config = conf.octo,
 })
 
-git({ "ThePrimeagen/git-worktree.nvim", event = { "CmdwinEnter", "CmdlineEnter" }, config = conf.worktree })
+
+-- need to find a usecase for this
+git({ "ThePrimeagen/git-worktree.nvim", lazy = true, config = conf.worktree })
 
 git({
     "sindrets/diffview.nvim",

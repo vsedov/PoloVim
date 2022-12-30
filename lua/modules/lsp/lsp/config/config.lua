@@ -254,17 +254,17 @@ local container = {
     end)(vim.diagnostic.open_float),
     on_attach_callback = {
         ["global"] = function(client, bufnr)
-            local navic_callback = {
-                "pylance",
-                "ltex",
-                "pylsp ",
-                "ruff_lsp",
-            }
-            if vim.tbl_contains(navic_callback, client.name) then
-                return
-            else
-                require("nvim-navic").attach(client, bufnr)
-            end
+            -- local navic_callback = {
+            --     "pylance",
+            --     "ltex",
+            --     "pylsp ",
+            --     "ruff_lsp",
+            -- }
+            -- if vim.tbl_contains(navic_callback, client.name) then
+            --     return
+            -- else
+            --     require("nvim-navic").attach(client, bufnr)
+            -- end
         end,
         ["jedi"] = function(client, bufnr)
             client.server_capabilities.semanticTokensProvider = {

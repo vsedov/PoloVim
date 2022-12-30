@@ -18,17 +18,8 @@ M.prepare = function()
     require("dap-python").resolve_python = function()
         return vim.fn.system("which python")
     end
-    require("dap-python").test_runner = "pytest"
 
-    local function test_method()
-        require("dap-python").test_method()
-    end
-    local function test_class()
-        require("dap-python").test_class()
-    end
-    local function debug_selection()
-        require("dap-python").debug_selection()
-    end
+    require("dap-python").test_runner = "pytest"
 
     vim.cmd([[command! BPToggle lua require"dap".toggle_breakpoint()]])
     vim.cmd([[command! Debug lua require"modules.lang.dap".StartDbg()]])

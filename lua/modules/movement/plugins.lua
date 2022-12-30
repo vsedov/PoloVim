@@ -6,11 +6,15 @@ local movement = require("core.pack").package
 movement({
     "ggandor/lightspeed.nvim",
     dependencies = { "tpope/vim-repeat" },
+    event = "VeryLazy",
+
     config = conf.lightspeed,
 })
 
 movement({
     "ggandor/leap.nvim",
+    event = "VeryLazy",
+
     dependencies = { "tpope/vim-repeat" },
     lazy = true,
     init = function()

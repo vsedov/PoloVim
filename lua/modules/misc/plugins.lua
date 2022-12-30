@@ -158,3 +158,12 @@ misc({
     requires = { "nvim-lua/plenary.nvim" },
     config = true,
 })
+
+misc({
+    "EricDriussi/remember-me.nvim",
+    lazy = not lambda.config.use_session,
+    cmd = {
+        "Memorize",
+        "Recall",
+    },
+})

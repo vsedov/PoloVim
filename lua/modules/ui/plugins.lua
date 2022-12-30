@@ -149,12 +149,12 @@ ui({
 
 ui({
     "xiyaowong/virtcolumn.nvim",
-    event = "BufEnter",
+    event = "VeryLazy",
 })
 
 ui({
     "stevearc/dressing.nvim",
-    event = "BufWinEnter",
+    event = "VeryLazy",
     config = conf.dressing,
 })
 

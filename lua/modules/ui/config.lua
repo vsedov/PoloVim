@@ -101,24 +101,9 @@ function config.neo_tree()
     local highlights = require("utils.ui.highlights")
 
     highlights.plugin("NeoTree", {
-        { NeoTreeNormal = { link = "PanelBackground" } },
-        { NeoTreeNormalNC = { link = "PanelBackground" } },
         { NeoTreeRootName = { underline = true } },
         { NeoTreeCursorLine = { link = "Visual" } },
         { NeoTreeStatusLine = { link = "PanelSt" } },
-        { NeoTreeTabActive = { bg = { from = "PanelBackground" }, bold = true } },
-        {
-            NeoTreeTabInactive = {
-                bg = { from = "PanelDarkBackground", alter = 15 },
-                fg = { from = "Comment" },
-            },
-        },
-        {
-            NeoTreeTabSeparatorInactive = {
-                inherit = "NeoTreeTabInactive",
-                fg = { from = "PanelDarkBackground", attr = "bg" },
-            },
-        },
         {
             NeoTreeTabSeparatorActive = {
                 inherit = "PanelBackground",

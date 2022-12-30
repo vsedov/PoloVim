@@ -124,6 +124,8 @@ user({
 
 user({
     "strash/everybody-wants-that-line.nvim",
+    lazy = true,
+    event = "BufWinEnter",
     config = function()
         -- or you can add it
         require("everybody-wants-that-line").setup({
@@ -146,4 +148,22 @@ user({
             separator = "│",
         })
     end,
+})
+user({
+    "tamton-aquib/mpv.nvim",
+    lazy = true,
+    cmd = "MpvToggle",
+    config = true,
+})
+
+user({
+    "meatballs/notebook.nvim",
+    ft = "ipynb",
+    dependencies = { "dccsillag/magma-nvim" },
+})
+
+user({
+    "Apeiros-46B/qalc.nvim",
+    config = true,
+    cmd = { "Qalc", "QalcAttach" },
 })

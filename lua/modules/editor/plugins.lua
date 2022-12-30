@@ -72,7 +72,7 @@ editor({
 editor({
     "chaoren/vim-wordmotion",
     lazy = true,
-    event = "BufWinEnter",
+    event = "VeryLazy",
     init = function()
         vim.g.wordmotion_uppercase_spaces = { "-" }
         vim.g.wordmotion_nomap = 1
@@ -198,6 +198,7 @@ editor({
 
 editor({
     "marklcrns/vim-smartq",
+    event = "VeryLazy"
 })
 
 editor({

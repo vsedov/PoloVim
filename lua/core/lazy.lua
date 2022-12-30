@@ -26,17 +26,12 @@ load_colourscheme() -- loads default colourscheme
 function Lazyload()
     _G.PLoader = loader
     if vim.wo.diff then
-        -- lprint("diffmode")
-        -- vim.cmd([[Lazy load ]])
         loader({ plugins = { "nvim-treesitter" } })
         require("nvim-treesitter.configs").setup({ highlight = { enable = true, use_languagetree = false } })
         return
     else
         loader({ plugins = { "nvim-treesitter" } })
-        -- loader("nvim-treesitter")
-        -- vim.cmd([[syntax on]])
     end
-    -- lprint("I am lazy")
 
     local disable_ft = {
         "NvimTree",
@@ -151,15 +146,11 @@ vim.defer_fn(function()
         loader({ plugins = { "project.nvim" } })
     end
     -- -- Notify
-    if lambda.config.simple_notify then
-        loader({ plugins = { "notifier.nvim" } })
-    else
-        if not lambda.config.ui.enable then
-            loader({ plugins = { "nvim-notify" } })
-        end
+    if not lambda.config.ui.enable then
+        loader({ plugins = { "nvim-notify" } })
     end
 
-    -- ths thing is quite laggy
+    -- this thing is quite laggy
     if lambda.config.use_ufo and vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()) < 500 then
         -- print("nvim-ufo loading")
         loader({ plugins = { "nvim-ufo" } })

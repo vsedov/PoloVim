@@ -92,45 +92,6 @@ function config.NeoWell()
     })
 end
 
-function config.session_config()
-    -- require("persisted").setup({
-    --     save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/
-    --     autosave = true,
-    --     autoload = true,
-    --     use_git_branch = true,
-    --     after_source = function()
-    --         -- Reload the LSP servers
-    --         vim.lsp.stop_client(vim.lsp.get_active_clients())
-    --     end,
-
-    --     telescope = {
-    --         before_source = function()
-    --             vim.api.nvim_input("<ESC>:%bd<CR>")
-    --         end,
-    --         after_source = function(session)
-    --             print("Loaded session " .. session.name)
-    --         end,
-    --     },
-    -- })
-    -- require("telescope").load_extension("persisted") -- To load the telescope extension
-    local resession = require("resession")
-    resession.setup({
-        autosave = {
-            enabled = true,
-            interval = 60,
-            notify = false, -- Fucking annoying
-        },
-        tab_buf_filter = function(tabpage, bufnr)
-            local dir = vim.fn.getcwd(-1, vim.api.nvim_tabpage_get_number(tabpage))
-            return vim.startswith(vim.api.nvim_buf_get_name(bufnr), dir)
-        end,
-    })
-
-    vim.keymap.set("n", "_ss", resession.save_tab)
-    vim.keymap.set("n", "_sl", resession.load)
-    vim.keymap.set("n", "_sd", resession.delete)
-end
-
 function config.autosave()
     require("save").setup()
 end

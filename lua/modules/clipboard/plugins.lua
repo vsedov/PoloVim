@@ -3,7 +3,7 @@ local conf = require("modules.clipboard.config")
 
 clipsub({
     "gbprod/yanky.nvim",
-    event = { "CursorMoved", "CmdlineEnter" },
+    event = "VeryLazy",
     config = conf.config_yanky,
     dependencies = { "nvim-telescope/telescope.nvim", "kkharji/sqlite.lua" },
 })
@@ -32,7 +32,7 @@ clipsub({
 clipsub({
     "gbprod/substitute.nvim",
     dependencies = "gbprod/yanky.nvim",
-    event = { "CursorMoved", "CmdlineEnter" },
+    event = "VeryLazy",
     config = conf.substitute,
 })
 

@@ -33,10 +33,8 @@ ai({
         "ChatGPT",
         "ChatGPTActAs",
     },
-    config = function()
-        require("chatgpt").setup({})
-    end,
-    requires = {
+    config = true,
+    dependencies = {
         "MunifTanjim/nui.nvim",
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",

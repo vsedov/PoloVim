@@ -117,7 +117,7 @@ lang({
 
 lang({
     "stevearc/overseer.nvim",
-    event = "BufWinEnter",
+    event = "VeryLazy",
     config = conf.overseer,
 })
 

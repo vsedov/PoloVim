@@ -39,15 +39,7 @@ lsp({
 
 lsp({
     "ray-x/lsp_signature.nvim",
-    lazy = true,
-    init = function()
-        lambda.lazy_load({
-            events = "BufWinEnter",
-            augroup_name = "lsp_sig",
-            condition = lambda.config.lsp.use_lsp_signature,
-            plugin = "lsp_signature.nvim",
-        })
-    end,
+    lazy = not lambda.config.lsp.use_lsp_signature,
     config = conf.lsp_sig,
 })
 
@@ -78,7 +70,7 @@ lsp({
 
 lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", after = "nvim-lspconfig", config = conf.rename })
 
-lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
+-- lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
 lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
 lsp({
@@ -118,31 +110,11 @@ lsp({
     module = "ltex_extra",
 })
 
--- lsp({
---     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
---     cmd = { "TL" },
---     init = function()
---         lambda.lazy_load({
---             events = "BufEnter",
---             augroup_name = "rcd",
---             condition = lambda.config.lsp.use_lsp_lines,
---             plugin = "lsp_lines.nvim",
---         })
---     end,
---     config = conf.lsp_lines,
--- })
 
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cmd = { "RCL" },
-    init = function()
-        lambda.lazy_load({
-            events = "BufEnter",
-            augroup_name = "rcd",
-            condition = lambda.config.lsp.use_rcd,
-            plugin = "right-corner-diagnostics.nvim",
-        })
-    end,
+    lazy = not lambda.config.lsp.use_rcd,
     config = conf.rcd,
 })
 
