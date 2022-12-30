@@ -155,7 +155,6 @@ misc({
         "MindReloadState",
         "MindClose",
     },
-    requires = { "nvim-lua/plenary.nvim" },
     config = true,
 })
 

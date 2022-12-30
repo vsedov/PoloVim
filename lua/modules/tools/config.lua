@@ -49,7 +49,6 @@ function config.vim_vista()
     -- vim.g['vista#renderer#icons'] = {['function'] = "", ['method'] = "ℱ", variable = "כֿ"}
 end
 
-
 function config.spellcheck()
     vim.cmd("highlight def link SpelunkerSpellBad SpellBad")
     vim.cmd("highlight def link SpelunkerComplexOrCompoundWord Rare")

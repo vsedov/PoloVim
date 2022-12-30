@@ -42,8 +42,6 @@ tools({
     end,
 })
 
-
-
 tools({
     "rhysd/vim-grammarous",
     lazy = true,

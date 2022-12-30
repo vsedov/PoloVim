@@ -105,7 +105,7 @@ git({
     config = conf.git_fixer,
 })
 
-git({ "rbong/vim-flog", requires = "vim-fugitive", cmd = { "Flog", "Flogsplit" }, lazy = true })
+git({ "rbong/vim-flog", cmd = { "Flog", "Flogsplit" }, lazy = true })
 -- return git
 
 -- @usage | this is to clone repos, which is interesting

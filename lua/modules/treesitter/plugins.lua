@@ -35,6 +35,11 @@ ts({
 ts({
     "David-Kunz/markid",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ft = {
+        "python",
+        "lua",
+        "tex",
+    },
 })
 
 ts({
@@ -84,9 +89,9 @@ ts({
 
 ts({
     "yioneko/nvim-yati",
-    lazy = true, 
+    lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
-    event = "VeryLazy", 
+    event = "VeryLazy",
     config = conf.indent,
 })
 
