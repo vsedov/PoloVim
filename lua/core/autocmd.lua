@@ -44,41 +44,41 @@ local function can_save()
         and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
--- lambda.augroup("VimrcIncSearchHighlight", {
---     {
---         event = { "CursorMoved" },
---         command = function()
---             hl_search()
---         end,
---     },
---     {
---         event = { "InsertEnter" },
---         command = function()
---             stop_hl()
---         end,
---     },
---     {
---         event = { "OptionSet" },
---         pattern = { "hlsearch" },
---         command = function()
---             vim.schedule(function()
---                 vim.cmd.redrawstatus()
---             end)
---         end,
---     },
---     {
---         event = "RecordingEnter",
---         command = function()
---             vim.opt.hlsearch = false
---         end,
---     },
---     {
---         event = "RecordingLeave",
---         command = function()
---             vim.opt.hlsearch = true
---         end,
---     },
--- })
+lambda.augroup("VimrcIncSearchHighlight", {
+    {
+        event = { "CursorMoved" },
+        command = function()
+            hl_search()
+        end,
+    },
+    {
+        event = { "InsertEnter" },
+        command = function()
+            stop_hl()
+        end,
+    },
+    {
+        event = { "OptionSet" },
+        pattern = { "hlsearch" },
+        command = function()
+            vim.schedule(function()
+                vim.cmd.redrawstatus()
+            end)
+        end,
+    },
+    {
+        event = "RecordingEnter",
+        command = function()
+            vim.opt.hlsearch = false
+        end,
+    },
+    {
+        event = "RecordingLeave",
+        command = function()
+            vim.opt.hlsearch = true
+        end,
+    },
+})
 
 local smart_close_filetypes = {
     "help",
@@ -257,36 +257,6 @@ lambda.augroup("buffer", {
             vim.opt_local.undofile = false
         end,
     },
-
-    -- {
-    --     event = "BufWritePre",
-    --     pattern = "*",
-    --     command = function()
-    --         local function auto_mkdir(dir, force)
-    --             if
-    --                 vim.fn.empty(dir) == 1
-    --                 or string.match(dir, "^%w%+://")
-    --                 or vim.fn.isdirectory(dir) == 1
-    --                 or string.match(dir, "^suda:")
-    --             then
-    --                 return
-    --             end
-    --             if not force then
-    --                 vim.fn.inputsave()
-    --                 local result = vim.fn.input(string.format('"%s" does not exist. Create? [y/N]', dir), "")
-    --                 if vim.fn.empty(result) == 1 then
-    --                     print("Canceled")
-    --                     return
-    --                 end
-    --                 vim.fn.inputrestore()
-    --             end
-    --             vim.fn.mkdir(dir, "p")
-    --         end
-
-    --         auto_mkdir(vim.fn.expand("%:p:h"), vim.v.cmdbang)
-    --     end,
-    --     nested = false,
-    -- },
 })
 
 local activate_spelling = {
@@ -424,24 +394,6 @@ local function should_show_cursorline(buf)
         and not vim.tbl_contains(cursorline_exclude, vim.bo[buf].filetype)
 end
 
--- -- might be something wrong with this, though im not sure what.
--- lambda.augroup("Cursorline", {
---     {
---         event = { "BufEnter" },
---         pattern = { "*" },
---         command = function(args)
---             vim.wo.cursorline = should_show_cursorline(args.buf)
---         end,
---     },
---     {
---         event = { "BufLeave" },
---         pattern = { "*" },
---         command = function()
---             vim.wo.cursorline = false
---         end,
---     },
--- })
-
 lambda.augroup("TerminalAutocommands", {
     {
         event = { "TermClose" },
@@ -504,46 +456,12 @@ lambda.augroup("CapLockDisable", {
     },
 })
 
-lambda.augroup("dwm", {
-    {
-        event = "TermOpen",
-        pattern = "*",
-        command = function()
-            vim.b.dwm_disabled = true
-        end,
-    },
-    {
-        event = "FileType",
-        pattern = "*",
-        command = function()
-            if vim.tbl_contains({ "neo-tree" }, vim.opt.filetype:get()) then
-                vim.b.dwm_disabled = true
-            end
-        end,
-    },
-    {
-        event = "BufRead",
-        pattern = "*",
-        command = function()
-            if vim.tbl_contains({ "nofile" }, vim.opt.buftype:get()) then
-                vim.b.dwm_disabled = true
-            end
-        end,
-    },
-
-    {
-        event = "BufRead",
-        pattern = "*",
-        command = [[if &previewwindow | let b:dwm_disabled = 1 | endif]],
-    },
-})
-
 lambda.augroup("PluginCustomFixes", {
     {
         event = "FileType",
         pattern = { "NeogitPopup", "NeogitCommitMessage" },
         command = function()
-            if lambda.config.ui.enable then
+            if lambda.config.ui.noice.enable then
                 vim.cmd([[Noice disable]])
                 print("Noice disabled")
             end
@@ -553,7 +471,7 @@ lambda.augroup("PluginCustomFixes", {
         event = "BufWinLeave",
         pattern = { "NeogitStatus" },
         command = function()
-            if lambda.config.ui.enable then
+            if lambda.config.ui.noice.enable then
                 if not vim.tbl_contains({ "NeogitPopup", "NeogitCommitMessage" }, vim.bo.filetype) then
                     vim.cmd([[Noice enable]])
                     print("Noice enable")
@@ -570,6 +488,20 @@ lambda.augroup("PluginCustomFixes", {
             end
         end,
         once = true,
+    },
+    {
+        event = { "RecordingEnter", "CmdlineEnter" },
+        pattern = "*",
+        command = function()
+            vim.opt.cmdheight = 1
+        end,
+    },
+    {
+        event = { "RecordingLeave", "CmdlineLeave" },
+        pattern = "*",
+        command = function()
+            vim.opt.cmdheight = 0
+        end,
     },
 })
 
