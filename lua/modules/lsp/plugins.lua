@@ -64,12 +64,12 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     init = function()
-    lambda.lazy_load({
-        events = "BufWinEnter",
-        augroup_name = "lsp_signature",
-        condition = lambda.config.lsp.use_lsp_signature,
-        plugin = "lsp_signature.nvim",
-    })
+        lambda.lazy_load({
+            events = "BufWinEnter",
+            augroup_name = "lsp_signature",
+            condition = lambda.config.lsp.use_lsp_signature,
+            plugin = "lsp_signature.nvim",
+        })
     end,
 
     config = conf.lsp_sig,
@@ -97,7 +97,7 @@ lsp({
 
 lsp({
     "joechrisellis/lsp-format-modifications.nvim",
-    lazy = true, 
+    lazy = true,
 })
 
 lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", config = conf.rename })

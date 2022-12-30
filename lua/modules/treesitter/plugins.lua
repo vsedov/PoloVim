@@ -33,14 +33,6 @@ ts({
 })
 
 ts({
-    "David-Kunz/markid",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    event = "VeryLazy"
-})
-
--- ts({ "nvim-treesitter/nvim-treesitter-context", event = "WinScrolled", config = conf.context })
-
-ts({
     "m-demare/hlargs.nvim",
     ft = {
         "c",
@@ -87,9 +79,9 @@ ts({
 
 ts({
     "yioneko/nvim-yati",
-    lazy = true, 
+    lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
-    event = "VeryLazy", 
+    event = "VeryLazy",
     config = conf.indent,
 })
 

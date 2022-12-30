@@ -93,7 +93,7 @@ completion({
 -- -- Lua
 completion({
     "abecodes/tabout.nvim",
-    lazy = true, 
+    lazy = true,
     event = "VeryLazy",
     config = conf.tabout,
 })

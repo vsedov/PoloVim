@@ -126,7 +126,7 @@ tools({
         "SudaRead",
         "SudaWrite",
     },
-    lazy = true, 
+    lazy = true,
     init = function()
         vim.g.suda_smart_edit = 1
     end,
@@ -137,7 +137,7 @@ tools({
     keys = {
         { "<C-;>" },
     },
-    lazy = true, 
+    lazy = true,
     config = function()
         require("capslock").setup()
         vim.keymap.set({ "n", "i", "c" }, "<C-;>", "<Plug>CapsLockToggle", {})

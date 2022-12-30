@@ -9,7 +9,7 @@ windows({
 --  Possible, ONE Can be causing huge LAG, it could be a viability : :think:
 windows({
     "mrjones2014/smart-splits.nvim",
-    lazy = true, 
+    lazy = true,
 })
 
 windows({

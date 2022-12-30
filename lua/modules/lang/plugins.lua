@@ -77,7 +77,7 @@ lang({
     dependencies = {
         "rcarriga/nvim-dap-ui",
         "mfussenegger/nvim-dap-python",
-        "ofirgall/goto-breakpoints.nvim"
+        "ofirgall/goto-breakpoints.nvim",
     },
 })
 

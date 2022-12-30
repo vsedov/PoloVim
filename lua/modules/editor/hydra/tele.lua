@@ -26,7 +26,6 @@ vim.defer_fn(function()
     })
     require("telescope").load_extension("bookmarks")
     require("telescope").load_extension("frecency")
-    
 end, 500)
 local hint_telescope = [[
  ^^      Git         ^^^^           Surfing               ^^^^
