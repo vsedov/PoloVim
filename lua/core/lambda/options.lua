@@ -51,7 +51,6 @@ lambda.config = {
     use_pet = false,
     use_beacon = false,
     use_fidget = false,
-
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 

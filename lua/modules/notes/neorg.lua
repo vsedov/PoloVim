@@ -1,4 +1,4 @@
-require("lazy").load({ plugins = { "neorg-telescope", "nvim-cmp" } })
+--require("lazy").load({ plugins = { "neorg-telescope", "nvim-cmp" } })
 
 require("neorg").setup({
     load = {

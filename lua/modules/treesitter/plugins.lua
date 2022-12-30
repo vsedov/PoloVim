@@ -31,6 +31,11 @@ ts({
     config = conf.treesitter_ref, -- let the last loaded config treesitter
     lazy = true,
 })
+-- cant lazy load will fix.
+ts({
+    "David-Kunz/markid",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+})
 
 ts({
     "m-demare/hlargs.nvim",
@@ -79,9 +84,9 @@ ts({
 
 ts({
     "yioneko/nvim-yati",
-    lazy = true,
+    lazy = true, 
     dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
-    event = "VeryLazy",
+    event = "VeryLazy", 
     config = conf.indent,
 })
 
