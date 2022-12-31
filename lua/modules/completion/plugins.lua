@@ -80,14 +80,8 @@ completion({
 
 completion({
     "windwp/nvim-autopairs",
-    init = function()
-        lambda.lazy_load({
-            events = { "InsertEnter", "CmdLineEnter" },
-            augroup_name = "autopairs",
-            condition = not lambda.config.use_luasnip_brackets,
-            plugin = "nvim-autopairs",
-        })
-    end,
+    events = { "InsertEnter", "CmdLineEnter" },
+
     keys = { "<C-c>" },
     config = conf.autopair,
 })

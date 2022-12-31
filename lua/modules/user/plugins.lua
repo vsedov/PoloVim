@@ -19,15 +19,7 @@ user({
 user({
     "samjwill/nvim-unception",
     lazy = true,
-    init = function()
-        lambda.lazy_load({
-            events = "CmdlineEnter",
-            pattern = "toggleterm",
-            augroup_name = "unception",
-            condition = lambda.config.use_unception,
-            plugin = "nvim-unception",
-        })
-    end,
+    event = "CmdlineEnter",
     config = function()
         vim.g.unception_delete_replaced_buffer = true
         vim.g.unception_enable_flavor_text = false
@@ -89,10 +81,10 @@ user({
 user({
     "kevinhwang91/nvim-fundo",
     event = "VeryLazy",
-    cmd = {"FundoDisable", "FundoEnable"}
+    cmd = { "FundoDisable", "FundoEnable" },
     dependencies = "kevinhwang91/promise-async",
     build = function()
         require("fundo").install()
     end,
-    config = true, 
+    config = true,
 })

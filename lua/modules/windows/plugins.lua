@@ -68,4 +68,5 @@ windows({
     "andrewferrier/wrapping.nvim",
     lazy = true,
     config = true,
+    ft = { "tex", "norg", "latex", "text" },
 })

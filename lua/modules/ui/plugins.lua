@@ -89,6 +89,7 @@ ui({
         {
             -- only needed if you want to use the "open_window_picker" command
             "s1n7ax/nvim-window-picker",
+            lazy = true,
             config = function()
                 require("window-picker").setup({
                     autoselect_one = true,
@@ -106,8 +107,8 @@ ui({
             end,
         },
     },
-    event = "VeryLazy",
-    -- cmd = { "Neotree", "NeoTreeShow", "NeoTreeFocus", "NeoTreeFocusToggle" },
+    -- event = "VeryLazy",
+    cmd = { "Neotree", "NeoTreeShow", "NeoTreeFocus", "NeoTreeFocusToggle" },
     config = conf.neo_tree,
 })
 
