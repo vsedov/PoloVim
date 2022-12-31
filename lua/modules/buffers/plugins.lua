@@ -7,6 +7,10 @@ buffer({
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     config = conf.nvim_bufferline,
+    dependencies = {
+        "stevearc/three.nvim",
+        config = true,
+    },
     lazy = true,
 })
 --  ──────────────────────────────────────────────────────────────────────

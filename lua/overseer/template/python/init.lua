@@ -50,8 +50,6 @@ return {
                 name = "Poetry run Project",
                 tskName = "Poetry run Project",
                 cmd = "poetry run task start",
-                -- Find pyproject.toml to root of the project
-                --  using vim.fs.find and upwards = true
                 condition = {
                     callback = isInProject,
                 },

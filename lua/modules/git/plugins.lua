@@ -71,6 +71,8 @@ git({
 
 git({
     "akinsho/git-conflict.nvim",
+    lazy = true,
+
     cmd = {
         "GitConflictChooseOurs",
         "GitConflictChooseTheirs",
@@ -80,7 +82,6 @@ git({
         "GitConflictPrevConflict",
         "GitConflictListQf",
     },
-    lazy = true,
     config = conf.git_conflict,
 })
 

@@ -129,7 +129,7 @@ function config.hi_pairs()
 end
 
 function config.indent()
-    local tm_fts = {  "javascript", "python" } -- or any other langs
+    local tm_fts = { "javascript", "python" } -- or any other langs
 
     require("nvim-treesitter.configs").setup({
         yati = {

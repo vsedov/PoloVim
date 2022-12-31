@@ -508,27 +508,24 @@ function lambda.lazy_load(tb)
             tb[i] = v()
         end
     end
-    api.nvim_create_autocmd(tb.events, {
-        group = api.nvim_create_augroup(tb.augroup_name, {}),
-        pattern = tb.pattern or "*",
-        callback = function()
-            if tb.condition then
-                vim.api.nvim_del_augroup_by_name(tb.augroup_name)
-                if
-                    not vim.tbl_contains(
-                        { "nvim-treesitter", "dashboard-nvim", "resession.nvim", "noice.nvim" },
-                        tb.plugin
-                    )
-                then
-                    vim.defer_fn(function()
-                        print(tb.plugin)
-                        require("lazy").load({ plugins = { tb.plugin } })
-                    end, 0)
-                else
-                    require("lazy").load({ plugins = { tb.plugin } })
-                end
-            end
-        end,
-        once = true,
-    })
+    -- api.nvim_create_autocmd(tb.events, {
+    --     group = api.nvim_create_augroup(tb.augroup_name, {}),
+    --     pattern = tb.pattern or "*",
+    --     callback = function()
+    --         if tb.condition then
+    --             vim.api.nvim_del_augroup_by_name(tb.augroup_name)
+    --             if
+    --                 not vim.tbl_contains(
+    --                     { "nvim-treesitter", "dashboard-nvim", "resession.nvim", "noice.nvim" },
+    --                     tb.plugin
+    --                 )
+    --             then
+    --                 -- vim.defer_fn(function()
+    --                     -- print(tb.plugin)
+    --                     require("lazy").load({ plugins = { tb.plugin } })
+    --               end
+    --             end
+    --     end,
+    --     once = true,
+    -- })
 end

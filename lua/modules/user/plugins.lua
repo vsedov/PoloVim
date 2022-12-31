@@ -85,3 +85,14 @@ user({
     config = true,
     cmd = { "Qalc", "QalcAttach" },
 })
+
+user({
+    "kevinhwang91/nvim-fundo",
+    event = "VeryLazy",
+    cmd = {"FundoDisable", "FundoEnable"}
+    dependencies = "kevinhwang91/promise-async",
+    build = function()
+        require("fundo").install()
+    end,
+    config = true, 
+})
