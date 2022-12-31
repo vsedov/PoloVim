@@ -521,6 +521,7 @@ function lambda.lazy_load(tb)
                     )
                 then
                     vim.defer_fn(function()
+                        print(tb.plugin)
                         require("lazy").load({ plugins = { tb.plugin } })
                     end, 0)
                 else

@@ -133,7 +133,6 @@ vim.defer_fn(function()
     if lambda.config.use_fzf_lua then
         loader({ plugins = { "fzf-lua" } })
     end
-    loader({ plugins = { "workspaces.nvim" } })
 
     if lambda.config.rooter_or_project then
         loader({ plugins = { "nvim-rooter.lua" } })
@@ -150,6 +149,13 @@ vim.defer_fn(function()
         -- print("nvim-ufo loading")
         loader({ plugins = { "nvim-ufo" } })
     end
+
+    if lambda.config.ui.use_illuminate then
+        loader({ plugins = { "vim-illuminate" } })
+    else
+        loader({ plugins = { "murmur.lua" } })
+    end
+
     -- lprint("all done")
 end, lazy_timer + 80)
 

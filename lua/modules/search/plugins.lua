@@ -25,10 +25,10 @@ search({
 
 search({
     "axkirillov/easypick.nvim",
-    event = "VeryLazy",
     lazy = true,
     config = conf.easypick,
 })
+
 search({
     "jvgrootveld/telescope-zoxide",
     lazy = true,

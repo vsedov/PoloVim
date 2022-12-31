@@ -50,6 +50,49 @@ function config.fidget()
     })
 end
 
+function config.h_line()
+    require("modules.ui.heirline")
+end
+
+function config.ever_body_line()
+    require("everybody-wants-that-line").setup({
+        buffer = {
+            show = true,
+            prefix = "λ:",
+            -- Symbol before buffer number, e.g. "0000.".
+            -- If you don't want additional symbols to be displayed, set `buffer.max_symbols = 0`.
+            symbol = "0",
+            -- Maximum number of symbols including buffer number.
+            max_symbols = 5,
+        },
+        filepath = {
+            path = "relative",
+            shorten = false,
+        },
+        filesize = {
+            metric = "decimal",
+        },
+        separator = "│",
+    })
+end
+
+function config.murmur()
+    require("murmur").setup({
+        -- cursor_rgb = 'purple', -- default to '#393939'
+        max_len = 80, -- maximum word-length to highlight
+        -- disable_on_lines = 2000, -- to prevent lagging on large files. Default to 2000 lines.
+        exclude_filetypes = {},
+        callbacks = {
+            -- to trigger the close_events of vim.diagnostic.open_float.
+            function()
+                -- Close floating diag. and make it triggerable again.
+                vim.cmd("doautocmd InsertEnter")
+                vim.w.diag_shown = false
+            end,
+        },
+    })
+end
+
 function config.notify()
     require("utils.ui.highlights").plugin("notify", {
         { NotifyERRORBorder = { bg = { from = "NormalFloat" } } },

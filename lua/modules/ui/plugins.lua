@@ -2,19 +2,58 @@ local ui = require("core.pack").package
 local conf = require("modules.ui.config")
 
 ui({
+    "strash/strash/everybody-wants-that-line.nvim",
+    -- lazy = true,
+    -- event = "VeryLazy",
+    config = conf.ever_body_line,
+})
+ui({
+    "xiyaowong/virtcolumn.nvim",
+    event = "VeryLazy",
+})
+
+ui({
+    "stevearc/dressing.nvim",
+    event = "VeryLazy",
+    config = conf.dressing,
+})
+
+ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
+
+--  ──────────────────────────────────────────────────────────────────────
+-- Force Lazy
+--  ──────────────────────────────────────────────────────────────────────
+
+ui({
+    "RRethy/vim-illuminate",
+    lazy = true,
+    config = conf.illuminate,
+})
+
+ui({
+    "nyngwang/murmur.lua",
+    lazy = true,
+    config = conf.murmur,
+})
+
+ui({
     "j-hui/fidget.nvim",
     lazy = true,
     config = conf.fidget,
 })
+-- ui({
+--     "mvllow/modes.nvim",
+--     lazy = true,
+--     config = conf.modes,
+-- })
+
+--  ──────────────────────────────────────────────────────────────────────
+--  ──────────────────────────────────────────────────────────────────────
 
 ui({
     "nvim-tree/nvim-web-devicons",
-
     config = function()
         require("nvim-web-devicons").setup({
-            -- your personnal icons can go here (to override)
-            -- you can specify color or cterm_color instead of specifying both of them
-            -- DevIcon will be appended to `name`
             override = {
                 zsh = {
                     icon = "",
@@ -23,34 +62,18 @@ ui({
                     name = "Zsh",
                 },
             },
-            -- globally enable different highlight colors per icon (default to true)
-            -- if set to false all icons will have the default icon's color
             color_icons = true,
-            -- globally enable default icons (default to false)
-            -- will get overriden by `get_icons` option
             default = true,
         })
     end,
 })
 
--- -- ui({
--- --     "rebelot/heirline.nvim",
--- --     after = "nvim-lspconfig",
--- --     config = function()
--- --         require("modules.ui.heirline")
--- --         -- require("modules.ui.heirline_min")
--- --     end,
--- -- })
-
-ui({ "mvllow/modes.nvim", event = "BufEnter", config = conf.modes })
 -- -- -- todo: FIX THIS
 ui({
     "rcarriga/nvim-notify",
     lazy = true,
     config = conf.notify,
 })
-
-ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
 
 -- -- -- Feels slow, might revert backto nvim tree
 ui({
@@ -130,30 +153,16 @@ ui({
 })
 
 --  REVISIT: (vsedov) (03:44:46 - 16/11/22): What does this plugin do again ?
-ui({
-    "Vonr/foldcus.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = conf.fold_focus,
-})
 
 ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
 
 ui({
-    "akinsho/clock.nvim",
+    "Vonr/foldcus.nvim",
     lazy = true,
-    init = conf.clock_setup,
-    config = conf.clock,
-})
-
-ui({
-    "xiyaowong/virtcolumn.nvim",
-    event = "VeryLazy",
-})
-
-ui({
-    "stevearc/dressing.nvim",
-    event = "VeryLazy",
-    config = conf.dressing,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    keys = { "z;", "z'" },
+    cmd = { "Foldcus", "Unfoldcus" },
+    config = conf.fold_focus,
 })
 
 ui({
@@ -166,50 +175,6 @@ ui({
     },
     config = conf.noice,
 })
-
-ui({
-    "RRethy/vim-illuminate",
-    lazy = true,
-    init = function()
-        lambda.lazy_load({
-            events = "BufWinEnter",
-            augroup_name = "illuminate",
-            condition = lambda.config.ui.illuminate,
-            plugin = "vim-illuminate",
-        })
-    end,
-    config = conf.illuminate,
-})
-
-ui({
-    "nyngwang/murmur.lua",
-    lazy = true,
-    init = function()
-        lambda.lazy_load({
-            events = "BufRead",
-            augroup_name = "murmur",
-            condition = lambda.config.ui.use_murmur,
-            plugin = "murmur.lua",
-        })
-    end,
-    config = function()
-        require("murmur").setup({
-            -- cursor_rgb = 'purple', -- default to '#393939'
-            max_len = 80, -- maximum word-length to highlight
-            -- disable_on_lines = 2000, -- to prevent lagging on large files. Default to 2000 lines.
-            exclude_filetypes = {},
-            callbacks = {
-                -- to trigger the close_events of vim.diagnostic.open_float.
-                function()
-                    -- Close floating diag. and make it triggerable again.
-                    vim.cmd("doautocmd InsertEnter")
-                    vim.w.diag_shown = false
-                end,
-            },
-        })
-    end,
-})
-
 ui({
     "samuzora/pet.nvim",
     lazy = true,
@@ -240,31 +205,3 @@ ui({
 
 -- True emotional Support
 ui({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })
-
-ui({
-    "strash/everybody-wants-that-line.nvim",
-    lazy = true,
-    event = "BufWinEnter",
-    config = function()
-        -- or you can add it
-        require("everybody-wants-that-line").setup({
-            buffer = {
-                show = true,
-                prefix = "λ:",
-                -- Symbol before buffer number, e.g. "0000.".
-                -- If you don't want additional symbols to be displayed, set `buffer.max_symbols = 0`.
-                symbol = "0",
-                -- Maximum number of symbols including buffer number.
-                max_symbols = 5,
-            },
-            filepath = {
-                path = "relative",
-                shorten = false,
-            },
-            filesize = {
-                metric = "decimal",
-            },
-            separator = "│",
-        })
-    end,
-})

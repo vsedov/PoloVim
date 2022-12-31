@@ -154,11 +154,11 @@ o.linebreak = true -- lines wrap at words rather than random characters
 o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "yes:3"
 o.ruler = false
-if lambda.config.ui.noice.enable then
-    o.cmdheight = 1 -- 0 , is still borked it seems
-else
-    o.cmdheight = 0
-end
+-- if lambda.config.ui.noice.enable then
+o.cmdheight = 1 -- 0 , is still borked it seems
+-- else
+--     o.cmdheight = 0
+-- end
 
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//

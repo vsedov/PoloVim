@@ -1,6 +1,8 @@
 local clipsub = require("core.pack").package
 local conf = require("modules.clipboard.config")
-
+--  ╭────────────────────────────────────────────────────────────────────╮
+--  │ VeryLazy                                                           │
+--  ╰────────────────────────────────────────────────────────────────────╯
 clipsub({
     "gbprod/yanky.nvim",
     event = "VeryLazy",
@@ -35,6 +37,7 @@ clipsub({
     event = "VeryLazy",
     config = conf.substitute,
 })
+--  ──────────────────────────────────────────────────────────────────────
 
 -- start = "gm", -- Mark word / region
 -- start_and_edit = "gM", -- Mark word / region and also edit

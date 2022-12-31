@@ -1,6 +1,18 @@
 local conf = require("modules.completion.config")
 local completion = require("core.pack").package
 
+--  ╭────────────────────────────────────────────────────────────────────╮
+--  │ VeryLazy                                                           │
+--  ╰────────────────────────────────────────────────────────────────────╯
+
+completion({
+    "abecodes/tabout.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    config = conf.tabout,
+})
+--  ──────────────────────────────────────────────────────────────────────
+
 completion({
     "hrsh7th/nvim-cmp",
     -- lazy = true,
@@ -14,24 +26,23 @@ completion({
             config = conf.tabnine,
             lazy = true,
         },
-        -- { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", lazy = true },
-        { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp", lazy = true },
-        { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", lazy = true },
-        { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", lazy = true },
-        { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", lazy = true },
-        { "hrsh7th/cmp-buffer", after = "nvim-cmp", lazy = true },
-        { "hrsh7th/cmp-path", after = "nvim-cmp", lazy = true },
-        { "hrsh7th/cmp-cmdline", after = "nvim-cmp", lazy = true },
+        -- { "hrsh7th/cmp-nvim-lsp-signature-help", , lazy = true },
+        { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
+        { "hrsh7th/cmp-nvim-lsp", lazy = true },
+        { "hrsh7th/cmp-nvim-lua", lazy = true },
+        { "kdheepak/cmp-latex-symbols", lazy = true },
+        { "hrsh7th/cmp-buffer", lazy = true },
+        { "hrsh7th/cmp-path", lazy = true },
+        { "hrsh7th/cmp-cmdline", lazy = true },
         {
             "petertriho/cmp-git",
-            after = "nvim-cmp",
             lazy = true,
             config = function()
                 require("cmp_git").setup({ filetypes = { "gitcommit", "NeogitCommitMessage" } })
             end,
         },
-        { "lukas-reineke/cmp-rg", after = "nvim-cmp" },
-        { "saadparwaiz1/cmp_luasnip", after = { "nvim-cmp", "LuaSnip" } },
+        -- { "lukas-reineke/cmp-rg", lazy = true},
+        { "saadparwaiz1/cmp_luasnip", lazy = true },
     },
     config = conf.cmp,
 })
@@ -39,15 +50,14 @@ completion({
 completion({
     "L3MON4D3/LuaSnip", -- need to be the first to load
     event = "InsertEnter",
-    module = "luasnip",
-    branch = "parse_from_ast",
+    -- module = "luasnip",
+    -- branch = "parse_from_ast",
     dependencies = {
         { "rafamadriz/friendly-snippets", event = "InsertEnter" },
     }, -- , event = "InsertEnter"
     config = function()
         require("modules.completion.snippets")
     end,
-    rocks = { "jsregexp" },
 })
 
 completion({
@@ -63,10 +73,8 @@ completion({
 completion({
     "kristijanhusak/vim-dadbod-completion",
     ft = { "sql" },
-    init = function()
+    config = function()
         vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
-        -- vim.cmd([[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })]])
-        -- body
     end,
 })
 
@@ -91,9 +99,3 @@ completion({
 })
 
 -- -- Lua
-completion({
-    "abecodes/tabout.nvim",
-    lazy = true,
-    event = "VeryLazy",
-    config = conf.tabout,
-})

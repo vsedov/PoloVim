@@ -489,20 +489,20 @@ lambda.augroup("PluginCustomFixes", {
         end,
         once = true,
     },
-    {
-        event = { "RecordingEnter", "CmdlineEnter" },
-        pattern = "*",
-        command = function()
-            vim.opt.cmdheight = 1
-        end,
-    },
-    {
-        event = { "RecordingLeave", "CmdlineLeave" },
-        pattern = "*",
-        command = function()
-            vim.opt.cmdheight = 0
-        end,
-    },
+    -- {
+    --     event = { "RecordingEnter", "CmdlineEnter" },
+    --     pattern = "*",
+    --     command = function()
+    --         vim.opt.cmdheight = 1
+    --     end,
+    -- },
+    -- {
+    --     event = { "RecordingLeave", "CmdlineLeave" },
+    --     pattern = "*",
+    --     command = function()
+    --         vim.opt.cmdheight = 0
+    --     end,
+    -- },
 })
 
 lambda.augroup("LSPAttachable", {

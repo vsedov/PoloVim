@@ -1,12 +1,15 @@
 local buffer = require("core.pack").package
 local conf = require("modules.buffers.config")
-
+--  ╭────────────────────────────────────────────────────────────────────╮
+--  │ very lazy                                                          │
+--  ╰────────────────────────────────────────────────────────────────────╯
 buffer({
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     config = conf.nvim_bufferline,
     lazy = true,
 })
+--  ──────────────────────────────────────────────────────────────────────
 
 buffer({
     "toppair/reach.nvim",
@@ -40,15 +43,7 @@ buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
 buffer({
     "kazhala/close-buffers.nvim",
     cmd = { "Kwbd", "BDelete", "BWipeout" },
-    module = "close-buffers",
     config = conf.buffers_close,
-})
-
-buffer({
-    "moll/vim-bbye",
-    cmd = { "Bdelete", "Bwipeout" },
-    keys = { "_q" },
-    config = conf.bbye,
 })
 
 buffer({

@@ -2,9 +2,19 @@ local conf = require("modules.python.config")
 local python = require("core.pack").package
 
 python({
-    "vsedov/py.nvim",
-    ft = "python",
+    "ranelpadon/python-copy-reference.vim",
     lazy = true,
+    ft = "python",
+    cmd = {
+        "PythonCopyReferenceDotted",
+        "PythonCopyReferencePytest",
+    },
+})
+
+python({
+    "vsedov/py.nvim",
+    lazy = true,
+    ft = "python",
     config = conf.python_dev,
 })
 
@@ -16,8 +26,9 @@ python({
 
 python({
     "AckslD/swenv.nvim",
-    cmd = { "VenvFind", "GetVenv" },
+    lazy = true,
     ft = "python",
+    cmd = { "VenvFind", "GetVenv" },
     config = conf.swenv,
 })
 

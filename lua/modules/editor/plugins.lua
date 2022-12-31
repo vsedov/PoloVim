@@ -9,7 +9,7 @@ editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
 
 editor({
     "folke/which-key.nvim",
-    module = "which-key",
+    event = "VeryLazy",
     config = function()
         require("modules.editor.which_key")
     end,
@@ -66,7 +66,11 @@ editor({
 -- -- -- -- `gbaf` - Toggle comment around a function (w/ LSP/treesitter support)
 -- -- -- -- `gbac` - Toggle comment around a class (w/ LSP/treesitter support)
 
-editor({ "numToStr/Comment.nvim", keys = { "g", "<ESC>" }, config = conf.comment })
+editor({
+    "numToStr/Comment.nvim",
+    keys = { { "g", mode = "n" }, { "g", mode = "v" } },
+    config = conf.comment,
+})
 
 editor({
     "LudoPinelli/comment-box.nvim",

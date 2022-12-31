@@ -1,9 +1,19 @@
 local conf = require("modules.tools.config")
 local tools = require("core.pack").package
 
-tools({ "neovim/nvimdev.nvim", ft = "lua", lazy = true, config = conf.nvimdev })
+tools({
+    "neovim/nvimdev.nvim",
+    lazy = true,
+    ft = "lua",
+    config = conf.nvimdev,
+})
 
-tools({ "gennaro-tedesco/nvim-jqx", ft = "json", cmd = { "JqxList", "JqxQuery" }, lazy = true })
+tools({
+    "gennaro-tedesco/nvim-jqx",
+    lazy = true,
+    ft = "json",
+    cmd = { "JqxList", "JqxQuery" },
+})
 
 tools({
     "is0n/fm-nvim",
@@ -24,6 +34,7 @@ tools({
     },
     config = conf.fm,
 })
+
 tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, lazy = true, config = true })
 
 tools({
@@ -34,6 +45,7 @@ tools({
 
 tools({
     "xiyaowong/link-visitor.nvim",
+    lazy = true,
     cmd = { "VisitLinkInBuffer", "VisitLinkUnderCursor", "VisitLinkNearCursor" },
     config = function()
         require("link-visitor").setup({
@@ -53,24 +65,25 @@ tools({
 
 tools({
     "plasticboy/vim-markdown",
+    lazy = true,
     ft = "markdown",
     dependencies = { "godlygeek/tabular" },
     cmd = { "Toc" },
     init = conf.markdown,
-    lazy = true,
 })
 
 tools({
     "iamcco/markdown-preview.nvim",
+    lazy = true,
     ft = { "markdown", "pandoc.markdown", "rmd" },
     cmd = { "MarkdownPreview" },
     init = conf.mkdp,
     build = [[sh -c "cd app && yarn install"]],
-    lazy = true,
 })
 
 tools({
     "akinsho/toggleterm.nvim",
+    lazy = true,
     cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm", "Htop", "GDash" },
     keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr", "<leader><Tab>" },
     config = function()
@@ -108,17 +121,17 @@ tools({
 
 tools({
     "ttibsi/pre-commit.nvim",
-    cmd = "Precommit",
     lazy = true,
+    cmd = "Precommit",
 })
 
 tools({
     "lambdalisue/suda.vim",
+    lazy = true,
     cmd = {
         "SudaRead",
         "SudaWrite",
     },
-    lazy = true,
     init = function()
         vim.g.suda_smart_edit = 1
     end,
@@ -126,10 +139,10 @@ tools({
 
 tools({
     "barklan/capslock.nvim",
+    lazy = true,
     keys = {
         { "<C-;>" },
     },
-    lazy = true,
     config = function()
         require("capslock").setup()
         vim.keymap.set({ "n", "i", "c" }, "<C-;>", "<Plug>CapsLockToggle", {})
@@ -138,6 +151,7 @@ tools({
 
 tools({
     "jbyuki/nabla.nvim",
+    lazy = true,
     keys = { "<localleader>s" },
     config = function()
         vim.keymap.set("n", "<localleader>s", [[:lua require("nabla").popup()<CR>]], {})
@@ -147,6 +161,7 @@ tools({
 
 tools({
     "dstein64/vim-startuptime",
+    lazy = true,
     cmd = "StartupTime",
     config = function()
         vim.g.startuptime_tries = 15
@@ -156,7 +171,7 @@ tools({
 
 tools({
     "stevearc/three.nvim",
-    modules = "three",
+    lazy = true,
     config = function()
         require("three").setup({
             bufferline = {
@@ -206,8 +221,8 @@ tools({
 })
 tools({
     "chrisgrieser/nvim-genghis",
-    dependencies = { "stevearc/dressing.nvim" },
     lazy = true,
+    dependencies = { "stevearc/dressing.nvim" },
     cmd = {
         "GenghiscopyFilepath",
         "GenghiscopyFilename",
