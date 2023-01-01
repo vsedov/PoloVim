@@ -15,9 +15,7 @@ completion({
 
 completion({
     "hrsh7th/nvim-cmp",
-    -- lazy = true,
-    event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
-    after = { "LuaSnip" }, -- "nvim-snippy",
+    lazy = true,
     dependencies = {
         {
             "tzachar/cmp-tabnine",
@@ -50,10 +48,12 @@ completion({
 completion({
     "L3MON4D3/LuaSnip", -- need to be the first to load
     event = "InsertEnter",
-    -- module = "luasnip",
-    -- branch = "parse_from_ast",
     dependencies = {
-        { "rafamadriz/friendly-snippets", event = "InsertEnter" },
+        {
+            "rafamadriz/friendly-snippets",
+            lazy = true,
+            "hrsh7th/nvim-cmp",
+        },
     }, -- , event = "InsertEnter"
     config = function()
         require("modules.completion.snippets")

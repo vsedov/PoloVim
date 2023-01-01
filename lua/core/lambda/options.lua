@@ -75,15 +75,15 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                -- "kanagawa.nvim",
+                "kanagawa.nvim",
                 -- "oh-lucy.nvim",
                 "catppuccin",
-                "mellifluous.nvim",
-                -- "nvim-tundra",
-                -- "tokyonight.nvim", -- allot
-                -- "rose", -- TSMethod'
-                -- "vim-dogrun",
-                -- "mellow.nvim",
+                -- "mellifluous.nvim",
+                "nvim-tundra",
+                "tokyonight.nvim", -- allot
+                "rose", -- TSMethod'
+                "vim-dogrun",
+                "mellow.nvim",
             },
             others = {
                 "horizon.nvim",
@@ -131,7 +131,7 @@ lambda.config.lsp = {
     latex = "texlab", -- texlab | ltex
     python = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
-        format = { "isort", "yapf" }, -- black -- Need to make it so it knows what formater to use :think:
+        format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = py_lang, -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
         use_inlay_hints = true,

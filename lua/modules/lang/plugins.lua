@@ -4,7 +4,7 @@ local lang = require("core.pack").package
 -- -- Inline functions dont seem to work .
 lang({
     "ThePrimeagen/refactoring.nvim",
-    module = "refactoring",
+    lazy = true,
     dependencies = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
@@ -16,6 +16,7 @@ lang({
 -- -- -- on startup, using lazy.lua
 lang({
     "andrewferrier/debugprint.nvim",
+    lazy = true,
     keys = {
         { "g?p", mode = "n" },
         { "g?P", mode = "n" },
@@ -28,7 +29,6 @@ lang({
         { "g?o", mode = "x" },
         { "g?O", mode = "x" },
     },
-    module = "debugprint",
     cmd = "DeleteDebugPrints",
     config = conf.debugprint,
 })

@@ -1,14 +1,16 @@
 local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 
-editor({ "nvim-lua/plenary.nvim", module = "plenary" })
-editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
+editor({ "nvim-lua/plenary.nvim", lazy = true })
+editor({ "rainbowhxch/accelerated-jk.nvim", lazy = true, keys = {
     "j",
     "k",
 }, config = conf.acc_jk })
 
 editor({
     "folke/which-key.nvim",
+    lazy = true,
+
     event = "VeryLazy",
     config = function()
         require("modules.editor.which_key")
@@ -16,6 +18,7 @@ editor({
 })
 editor({
     "nullchilly/fsread.nvim",
+    lazy = true,
     cmd = { "FSRead", "FSClear", "FSToggle" },
     config = function()
         vim.g.flow_strength = 0.7 -- low: 0.3, middle: 0.5, high: 0.7 (default)
@@ -68,15 +71,16 @@ editor({
 
 editor({
     "numToStr/Comment.nvim",
+    lazy = true,
     keys = { { "g", mode = "n" }, { "g", mode = "v" } },
     config = conf.comment,
 })
 
 editor({
     "LudoPinelli/comment-box.nvim",
+    lazy = true,
     keys = { "<Leader>cb", "<Leader>cc", "<Leader>cl", "<M-p>" },
     cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },
-    lazy = true,
     config = conf.comment_box,
 })
 
@@ -98,12 +102,7 @@ editor({
 
 editor({
     "anuvyklack/vim-smartword",
-    keys = {
-        "<Plug>(smartword-w)",
-        "<Plug>(smartword-b)",
-        "<Plug>(smartword-e)",
-        "<Plug>(smartword-ge)",
-    },
+    lazy = true,
 })
 -- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
@@ -171,12 +170,14 @@ editor({
 })
 editor({
     "haya14busa/vim-asterisk",
+    lazy = true,
     init = conf.asterisk_setup,
     event = "VeryLazy",
 })
 
 editor({
     "marklcrns/vim-smartq",
+    lazy = true,
     event = "VeryLazy",
 })
 

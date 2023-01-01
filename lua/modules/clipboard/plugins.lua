@@ -5,36 +5,38 @@ local conf = require("modules.clipboard.config")
 --  ╰────────────────────────────────────────────────────────────────────╯
 clipsub({
     "gbprod/yanky.nvim",
+    lazy = true,
     event = "VeryLazy",
     config = conf.config_yanky,
-    dependencies = { "nvim-telescope/telescope.nvim", "kkharji/sqlite.lua" },
-})
+    dependencies = {
 
---  REVISIT: (vsedov) (17:56:23 - 23/10/22): Is this even required ?
-clipsub({
-    "ibhagwan/smartyank.nvim",
-    after = "gbprod/yanky.nvim",
-    config = function()
-        require("smartyank").setup({
-            highlight = {
-                enabled = true, -- highlight yanked text
-                higroup = "IncSearch", -- highlight group of yanked text
-                timeout = 200, -- timeout for clearing the highlight
-            },
-            osc52 = {
-                enabled = true,
-                ssh_only = false, -- false to OSC52 yank also in local sessions
-                silent = false, -- true to disable the "n chars copied" echo
-                echo_hl = "Directory", -- highlight group of the OSC52 echo message
-            },
-        })
-    end,
+        "nvim-telescope/telescope.nvim",
+        "kkharji/sqlite.lua",
+        {
+            "ibhagwan/smartyank.nvim",
+            config = function()
+                require("smartyank").setup({
+                    highlight = {
+                        enabled = true, -- highlight yanked text
+                        higroup = "IncSearch", -- highlight group of yanked text
+                        timeout = 200, -- timeout for clearing the highlight
+                    },
+                    osc52 = {
+                        enabled = true,
+                        ssh_only = false, -- false to OSC52 yank also in local sessions
+                        silent = false, -- true to disable the "n chars copied" echo
+                        echo_hl = "Directory", -- highlight group of the OSC52 echo message
+                    },
+                })
+            end,
+        },
+    },
 })
 
 clipsub({
     "gbprod/substitute.nvim",
+    lazy = true,
     dependencies = "gbprod/yanky.nvim",
-    event = "VeryLazy",
     config = conf.substitute,
 })
 --  ──────────────────────────────────────────────────────────────────────
@@ -48,6 +50,7 @@ clipsub({
 -- apply_substitute_all = "\l", -- Substitute all
 clipsub({
     "otavioschwanck/cool-substitute.nvim",
+    lazy = true,
     keys = {
         "gm",
         "gM",
@@ -63,6 +66,7 @@ clipsub({
 
 clipsub({
     "mg979/vim-visual-multi",
+    lazy = true,
     keys = {
         "<Ctrl>",
         "<M>",
@@ -83,7 +87,6 @@ clipsub({
         "<M-LeftMouse>",
         "<M-C-RightMouse>",
     },
-    lazy = true,
     init = conf.vmulti,
 })
 

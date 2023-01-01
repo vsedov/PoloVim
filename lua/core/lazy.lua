@@ -75,11 +75,6 @@ function Lazyload()
         end, 60)
     end
 
-    -- local bytes = vim.fn.wordcount()['bytes']
-    if load_ts_plugins then
-        loader({ plugins = { "refactoring.nvim" } })
-    end
-
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { "vista", "guiha" },
         command = [[setlocal syntax=on]],
@@ -155,17 +150,20 @@ vim.defer_fn(function()
     else
         loader({ plugins = { "murmur.lua" } })
     end
-
-    -- lprint("all done")
-end, lazy_timer + 80)
+end, lazy_timer + 100)
 
 -- Load Leap, after 100, because why not, this is my core movement
 vim.defer_fn(function()
     if lambda.config.use_scroll then
         loader({ plugins = { "neoscroll.nvim" } })
     end
+
+    if lambda.config.record_your_self then
+        loader({ plugins = { "vim-wakatime" } })
+    end
+
     local movement = require("modules.movement.config")
     movement.leap()
     movement.leap_spooky()
     movement.leap_flit()
-end, 100)
+end, 120)

@@ -17,6 +17,7 @@ tools({
 
 tools({
     "is0n/fm-nvim",
+    lazy = true,
     cmd = {
         "Lazygit", -- 3 [ neogit + fugative + lazygit depends how i feel.]
         "Joshuto", -- 2
@@ -30,12 +31,12 @@ tools({
         "Fff",
         "Fzf",
         "Fzy",
-        "Fm",
+        -- "Fm",
     },
     config = conf.fm,
 })
 
-tools({ "rktjmp/paperplanes.nvim", cmd = { "PP" }, lazy = true, config = true })
+tools({ "rktjmp/paperplanes.nvim", lazy = true, cmd = { "PP" }, config = true })
 
 tools({
     "natecraddock/workspaces.nvim",
@@ -96,17 +97,19 @@ tools({
     lazy = true,
 })
 
-tools({ "ilAYAli/scMRU.nvim", cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" }, module = "mru" })
+tools({ "ilAYAli/scMRU.nvim", lazy = true, cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" } })
 
--- need quick fix  :vimgrep /\w\+/j % | copen
 tools({
     "kevinhwang91/nvim-bqf",
+    lazy = true,
     ft = "qf",
     config = conf.bqf,
 })
+
 tools({
     "barklan/nvim-pqf",
-    event = "BufReadPre",
+    lazy = true,
+    ft = "qf",
     config = true,
 })
 

@@ -7,14 +7,26 @@ misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" },
 
 misc({
     "kylechui/nvim-surround",
-    event = "BufWinEnter",
+    lazy = true,
+    -- event = "VeryLazy",
+    keys = {
+        { "<C-#>", mode = "i" }, --
+        { "ys", mode = "n" }, --
+        { "yss", mode = "n" }, --
+        { "yS", mode = "n" }, --
+        { "ySS", mode = "n" }, --
+        { "gs", mode = "v" }, --
+        { "gS", mode = "v" }, --
+        { "ds", mode = "n" }, --
+        { "cs", mode = "n" }, --
+    },
     config = conf.surround,
 })
 
 misc({
     "NMAC427/guess-indent.nvim",
-    cmd = "GuessIndent",
     lazy = true,
+    cmd = "GuessIndent",
     config = conf.guess_indent,
 })
 
@@ -96,28 +108,28 @@ misc({
 
 misc({
     "boorboor/save.nvim",
+    lazy = true,
     config = conf.autosave,
     keys = "<F4>",
-    lazy = true,
 })
 
 misc({
     "ellisonleao/carbon-now.nvim",
+    lazy = true,
     config = conf.carbon,
     cmd = "CarbonNow",
-    lazy = true,
 })
 
 misc({
     "nacro90/numb.nvim",
-    event = "CmdlineEnter",
     config = true,
+    event = "CmdlineEnter",
 })
 
 misc({
     "m-demare/attempt.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
     lazy = true,
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
     config = conf.attempt,
     keys = {
         "<leader>an",
@@ -140,6 +152,7 @@ misc({
 
 misc({
     "phaazon/mind.nvim",
+    lazy = true,
     cmd = {
         "MindOpenMain",
         "MindOpenProject",
@@ -152,7 +165,7 @@ misc({
 
 misc({
     "EricDriussi/remember-me.nvim",
-    lazy = not lambda.config.use_session,
+    lazy = true,
     cmd = {
         "Memorize",
         "Recall",

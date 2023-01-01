@@ -2,8 +2,7 @@ local conf = require("modules.search.config")
 local search = require("core.pack").package
 search({
     "nvim-telescope/telescope.nvim",
-    branch = "master",
-    module = "telescope",
+    lazy = true,
     dependencies = {
         { "vhyrro/neorg-telescope", lazy = true },
         { "nvim-lua/plenary.nvim", lazy = true },
@@ -39,8 +38,8 @@ search({
 
 search({
     "zane-/howdoi.nvim",
-    cmd = "Howdoi",
     lazy = true,
+    cmd = "Howdoi",
     config = function()
         vim.api.nvim_create_user_command("Howdoi", function()
             require("utils.telescope").howdoi()
@@ -63,11 +62,12 @@ search({
 -- :Lzi {query}: same as :Zi, but local to the current window
 -- :Tzi {query}: same as :Zi, but local to the current tab
 
-search({ "nanotee/zoxide.vim", cmd = { "Z", "Lz", "Zi", "Tz", "Tzi", "Lzi" } })
+search({ "nanotee/zoxide.vim", lazy = true, cmd = { "Z", "Lz", "Zi", "Tz", "Tzi", "Lzi" } })
 
 -- ze black magic
 search({
     "windwp/nvim-spectre",
+    lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
         ";e",
@@ -80,6 +80,7 @@ search({
 
 search({
     "ray-x/sad.nvim",
+    lazy = true,
     cmd = { "Sad" },
     dependencies = {
         "ray-x/guihua.lua",
@@ -98,7 +99,6 @@ search({
 
 search({
     "cshuaimin/ssr.nvim",
-    module = "ssr",
     lazy = true,
     config = function()
         require("ssr").setup({

@@ -3,8 +3,8 @@ local conf = require("modules.ui.config")
 
 ui({
     "strash/strash/everybody-wants-that-line.nvim",
-    -- lazy = true,
-    -- event = "VeryLazy",
+    lazy = true,
+    event = "VeryLazy",
     config = conf.ever_body_line,
 })
 ui({

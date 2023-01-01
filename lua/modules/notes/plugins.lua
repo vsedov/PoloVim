@@ -3,26 +3,30 @@ local notes = require("core.pack").package
 
 notes({
     "nvim-neorg/neorg",
+    lazy = true,
+    ft = "norg",
+    cmd = "Neorg",
     config = conf.norg,
-    event = "BufEnter",
 })
 
 notes({
     "AckslD/nvim-FeMaco.lua",
     lazy = true,
     ft = { "norg", "markdown" },
-    config = conf.femaco,
     cmd = "FeMaco",
+    config = conf.femaco,
 })
 
 notes({
     "jubnzv/mdeval.nvim",
+    lazy = true,
     ft = { "norg" },
     config = conf.mdeval,
 })
 
 notes({
     "lervag/vimtex",
+    lazy = true,
     ft = { "latex", "tex" },
     after = "nvim-treesitter/nvim-treesitter",
     config = conf.vimtex,
@@ -30,8 +34,8 @@ notes({
 
 notes({
     "dhruvasagar/vim-table-mode",
-    cmd = "TableModeToggle",
     lazy = true,
+    cmd = "TableModeToggle",
     ft = { "norg", "markdown" },
     conf = conf.table,
 })
