@@ -20,24 +20,25 @@ lsp({
     "jose-elias-alvarez/null-ls.nvim",
     lazy = true,
     event = "VeryLazy",
-    dependencies = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "poljar/typos.nvim",
+
+        {
+            "jayp0521/mason-null-ls.nvim",
+            dependencies = {
+                "williamboman/mason.nvim",
+            },
+            config = function()
+                require("mason-null-ls").setup({
+                    automatic_installation = false,
+                })
+            end,
+        },
+    },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
         -- require("typos").setup()
-    end,
-})
-
-lsp({
-    "jayp0521/mason-null-ls.nvim",
-    lazy = true,
-    dependencies = {
-        "williamboman/mason.nvim",
-        "jose-elias-alvarez/null-ls.nvim",
-    },
-    config = function()
-        require("mason-null-ls").setup({
-            automatic_installation = false,
-        })
     end,
 })
 
@@ -50,13 +51,13 @@ lsp({
     config = conf.clangd,
 })
 
-lsp({ "folke/neodev.nvim", lazy = true,ft = "lua",  dependencies = "neovim/nvim-lspconfig", config = conf.luadev })
+lsp({ "folke/neodev.nvim", lazy = true, ft = "lua", dependencies = "neovim/nvim-lspconfig", config = conf.luadev })
 
 lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
 
 lsp({
     "glepnir/lspsaga.nvim",
-    cmd = { "Lspsaga", "LSoutlineToggle" },
+    cmd = { "Lspsaga" },
     lazy = true,
     config = conf.saga,
     dependencies = "neovim/nvim-lspconfig",
