@@ -47,30 +47,14 @@ user({
 })
 
 user({
-    "elihunter173/dirbuf.nvim",
-    cmd = "DirBuf",
-    config = function()
-        require("dirbuf").setup({
-            hash_padding = 2,
-            show_hidden = true,
-            sort_order = "default",
-            write_cmd = "DirbufSync",
-        })
-    end,
-})
-
-user({
     "tamton-aquib/mpv.nvim",
     lazy = true,
     cmd = "MpvToggle",
     config = true,
 })
 
-user({
-    "meatballs/notebook.nvim",
-    ft = "ipynb",
-    dependencies = { "dccsillag/magma-nvim" },
-})
+
+
 
 user({
     "Apeiros-46B/qalc.nvim",
@@ -78,6 +62,10 @@ user({
     cmd = { "Qalc", "QalcAttach" },
 })
 
+
+
+
+-- The goal of nvim-fundo is to make Neovim's undo file become stable and useful.
 user({
     "kevinhwang91/nvim-fundo",
     event = "VeryLazy",
@@ -87,4 +75,35 @@ user({
         require("fundo").install()
     end,
     config = true,
+})
+
+
+user({
+    "stevearc/oil.nvim",
+    lazy = true, 
+    init = function()
+        vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+    end,
+    event = "VeryLazy",
+    config = true, 
+})
+
+user({
+    "AntonVanAssche/date-time-inserter.nvim",
+    lazy = true, 
+    cmd ={
+        "InsertDate",
+        "InsertTime",
+        "InsertDateTime"
+    },
+    config = true, 
+
+})
+
+user({
+    "2kabhishek/co-author.nvim",
+    lazy  = true, 
+    cmd = {
+        "GitCoAuthors",
+    }
 })

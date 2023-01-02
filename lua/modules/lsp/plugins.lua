@@ -11,7 +11,7 @@ lsp({
 
 lsp({
     "williamboman/mason.nvim",
-    lazy = true,
+    event = "VeryLazy",
     dependencies = { "neovim/nvim-lspconfig", "williamboman/mason-lspconfig.nvim" },
     config = conf.mason_setup,
 })
