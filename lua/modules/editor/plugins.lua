@@ -88,7 +88,7 @@ editor({
 editor({
     "chaoren/vim-wordmotion",
     lazy = true,
-    event = "VeryLazy",
+    event = "CursorMoved",
     init = function()
         vim.g.wordmotion_uppercase_spaces = { "-" }
         vim.g.wordmotion_nomap = 1
@@ -109,6 +109,7 @@ editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 
 editor({
     "monaqa/dial.nvim",
+    lazy = true,
     keys = {
         { "<C-x>", mode = "n" },
         { "<C-a>", mode = "n" },
@@ -122,12 +123,12 @@ editor({
         { "_a", mode = "n" },
         { "_x", mode = "n" },
     },
-    lazy = true,
     config = conf.dial,
 })
 
 editor({
     "anuvyklack/hydra.nvim",
+    lazy = true,
     dependencies = "anuvyklack/keymap-layer.nvim",
     config = conf.hydra,
     event = "VeryLazy",
@@ -140,26 +141,15 @@ editor({
     config = conf.venn,
 })
 
--- editor({
---     "aarondiel/spread.nvim",
---     after = "nvim-treesitter",
---     module = "spread",
---     keys = { "<leader>J", "<leader>j" },
---     config = function()
---         vim.keymap.set("n", "<leader>J", function()
---             require("spread").out()
---         end, { desc = "spread: expand" })
---         vim.keymap.set("n", "<leader>j", function()
---             require("spread").combine()
---         end, { desc = "spread: combine" })
---     end,
--- })
 editor({
     "Wansmer/treesj",
     keys = { "<leader>J", "<leader>j" },
-    config = function()
-        require("treesj").setup({})
-
+    cmd = {
+        "TSJToggle",
+        "TSJSplit",
+        "TSJJoin",
+    },
+    init = function()
         vim.keymap.set("n", "<leader>J", function()
             vim.cmd([[TSJToggle]])
         end, { desc = "Spread: Expand" })
@@ -167,12 +157,16 @@ editor({
             vim.cmd([[TSJJoin]])
         end, { desc = "Spread: Combine" })
     end,
+    config = true,
 })
+
 editor({
     "haya14busa/vim-asterisk",
     lazy = true,
+    keys = {
+        { "<Plug>(asterisk-", mode = "" },
+    },
     init = conf.asterisk_setup,
-    event = "VeryLazy",
 })
 
 editor({

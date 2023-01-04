@@ -3,6 +3,7 @@ local windows = require("core.pack").package
 -- --  Possible, ONE Can be causing huge LAG, it could be a viability : :think:
 windows({
     "szw/vim-maximizer",
+    lazy = true,
     cmd = "MaximizerToggle",
 })
 
@@ -34,7 +35,7 @@ windows({
     end,
 })
 
-windows({ "sindrets/winshift.nvim", cmd = "WinShift", lazy = true, config = conf.winshift })
+windows({ "sindrets/winshift.nvim", lazy = true, cmd = "WinShift", config = conf.winshift })
 
 windows({
     "anuvyklack/windows.nvim",

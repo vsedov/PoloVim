@@ -1,19 +1,14 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 
+--  TODO: (vsedov) (20:18:05 - 03/01/23): Figure out how to properly lazy load this scondif, as there
+--  are a few issues with this right now and im not sure why this does not work.
 lsp({
     "neovim/nvim-lspconfig",
-    lazy = true,
-    event = "VeryLazy",
+    -- lazy = true,
+    -- event = "BufEnter",
     init = conf.nvim_lsp_setup,
     config = conf.nvim_lsp,
-})
-
-lsp({
-    "williamboman/mason.nvim",
-    event = "VeryLazy",
-    dependencies = { "neovim/nvim-lspconfig", "williamboman/mason-lspconfig.nvim" },
-    config = conf.mason_setup,
 })
 
 lsp({
@@ -22,7 +17,7 @@ lsp({
     event = "VeryLazy",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "poljar/typos.nvim",
+        { "poljar/typos.nvim", config = true },
 
         {
             "jayp0521/mason-null-ls.nvim",
@@ -38,11 +33,21 @@ lsp({
     },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
-        -- require("typos").setup()
     end,
 })
 
+lsp({
+    "williamboman/mason.nvim",
+    lazy = true,
+    event = "BufEnter",
+    dependencies = {
+        "neovim/nvim-lspconfig",
+        "williamboman/mason-lspconfig.nvim",
+    },
+})
+
 lsp({ "ii14/lsp-command", lazy = true, cmd = { "Lsp" } })
+
 lsp({
     "p00f/clangd_extensions.nvim",
     lazy = true,

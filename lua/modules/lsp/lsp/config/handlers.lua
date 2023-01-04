@@ -47,24 +47,24 @@ function M.setup()
             end,
         })
 
-        local virt_text_handler = diagnostic.handlers.virtual_text
-        diagnostic.handlers.virtual_text = vim.tbl_extend("force", virt_text_handler, {
-            show = max_diagnostic(virt_text_handler.show),
-            hide = function(_, bufnr)
-                virt_text_handler.hide(ns, bufnr)
-            end,
-        })
-        lsp.handlers["window/showMessage"] = function(_, result, ctx)
-            local client = lsp.get_client_by_id(ctx.client_id)
-            local lvl = ({ "ERROR", "WARN", "INFO", "DEBUG" })[result.type]
-            vim.notify(result.message, lvl, {
-                title = "LSP | " .. client.name,
-                timeout = 8000,
-                keep = function()
-                    return lvl == "ERROR" or lvl == "WARN"
-                end,
-            })
-        end
+        -- local virt_text_handler = diagnostic.handlers.virtual_text
+        -- diagnostic.handlers.virtual_text = vim.tbl_extend("force", virt_text_handler, {
+        --     show = max_diagnostic(virt_text_handler.show),
+        --     hide = function(_, bufnr)
+        --         virt_text_handler.hide(ns, bufnr)
+        --     end,
+        -- })
+        -- lsp.handlers["window/showMessage"] = function(_, result, ctx)
+        --     local client = lsp.get_client_by_id(ctx.client_id)
+        --     local lvl = ({ "ERROR", "WARN", "INFO", "DEBUG" })[result.type]
+        --     vim.notify(result.message, lvl, {
+        --         title = "LSP | " .. client.name,
+        --         timeout = 8000,
+        --         keep = function()
+        --             return lvl == "ERROR" or lvl == "WARN"
+        --         end,
+        --     })
+        -- end
         lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, config.float)
         lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, config.float)
     end

@@ -19,10 +19,10 @@ completion({
     dependencies = {
         {
             "tzachar/cmp-tabnine",
-            build = "./install.sh",
+            lazy = true,
+            build = "bash ./install.sh",
             ft = { "python", "lua" },
             config = conf.tabnine,
-            lazy = true,
         },
         -- { "hrsh7th/cmp-nvim-lsp-signature-help", , lazy = true },
         { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },

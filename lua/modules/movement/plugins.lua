@@ -123,7 +123,7 @@ movement({ "mizlan/iswap.nvim", lazy = true, cmd = { "ISwap", "ISwapWith" }, con
 movement({
     "TheBlob42/houdini.nvim",
     lazy = true,
-    event = { "InsertEnter", "CmdlineEnter" },
+    event = "ModeChanged",
     config = conf.houdini,
 })
 

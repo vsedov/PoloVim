@@ -35,7 +35,6 @@ function M.common_capabilities()
 end
 
 function M.common_on_attach(client, bufnr)
-    config.on_attach_callback["global"](client, bufnr)
     if config.on_attach_callback[client.name] then
         config.on_attach_callback[client.name](client, bufnr)
     end

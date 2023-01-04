@@ -102,7 +102,7 @@ lang({
 lang({
     "rcarriga/neotest-vim-test",
     cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
-    dependencies = { "vim-test/vim-test", lazy = true },
+    dependencies = { "vim-test/vim-test" },
 })
 
 lang({
@@ -131,7 +131,6 @@ lang({
     lazy = true,
     config = conf.coverage,
 })
--- -- -- IPython Mappings
 
 lang({
     "bennypowers/nvim-regexplainer",
@@ -180,7 +179,6 @@ lang({
 lang({
     "michaelb/sniprun",
     build = "bash ./install.sh",
-    module = { "sniprun" },
     cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
-    config = function() end,
+    config = true,
 })

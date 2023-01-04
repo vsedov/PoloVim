@@ -5,6 +5,7 @@ docs({ "danymat/neogen", lazy = true, dependencies = { "L3MON4D3/LuaSnip" }, con
 
 docs({
     "prichrd/refgo.nvim",
+    lazy = true,
     cmd = { "RefCopy", "RefGo" },
 })
 

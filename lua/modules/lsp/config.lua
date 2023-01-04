@@ -6,17 +6,8 @@ end
 function config.nvim_lsp()
     require("modules.lsp.lsp")
 end
-
-function config.clangd()
-    require("modules.lsp.lsp.providers.c")
-end
-
-function config.luadev()
-    require("modules.lsp.lsp.providers.luadev")
-end
-
 function config.mason_setup()
-    require("modules.lsp.lsp.mason.foo")
+    require("modules.lsp.lsp.mason.python")
 
     local get_config = require("modules.lsp.lsp.mason.lsp_servers")
     require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
@@ -33,15 +24,18 @@ function config.mason_setup()
             end
         end,
     })
-    if lambda.config.lsp.python.lsp == "pylance" then
-        require("lspconfig").pylance.setup(
-            require("modules.lsp.lsp.config").enhance_attach(require("modules.lsp.lsp.providers.python.pylance").config)
-        )
-    end
 end
 
 function config.lsp_install()
     require("modules.lsp.lsp.providers.lsp_install")
+end
+
+function config.clangd()
+    require("modules.lsp.lsp.providers.c")
+end
+
+function config.luadev()
+    require("modules.lsp.lsp.providers.luadev")
 end
 
 function config.saga()

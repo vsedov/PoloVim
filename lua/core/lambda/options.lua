@@ -12,7 +12,7 @@ lambda.config = {
     overwrite_colours_use_styler = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
 
-    better_ts_highlights = py_lang ~= "pylance",
+    better_ts_highlights = false, -- This needs a direct toggle i think
 
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif

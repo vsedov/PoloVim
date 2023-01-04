@@ -13,11 +13,9 @@ local lsp_formatting = function(bufnr)
     })
 end
 
-local function augroup_setup(augroup, bufnr)
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-        group = augroup,
-        buffer = bufnr,
+local function augroup_setup(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWrite", {
+        pattern = "*",
         callback = function()
             lsp_formatting(bufnr)
         end,
@@ -79,23 +77,11 @@ function M.setup()
             ".git"
         ),
         on_attach = function(client, bufnr)
-            if client.supports_method("textDocument/formatting") then
-                local augroup = vim.api.nvim_create_augroup("FormatOnSave", {})
-                vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
-                    lsp_formatting(bufnr)
-                end, {})
-                -- local ammount = (vim.api.nvim_buf_line_count(bufnr) < 500 and active)
-                -- print(amount)
-                -- if not ammount then
-                --     print("Format modifcations active ")
-                --     local lsp_format_modifications = require("lsp-format-modifications")
-                --     lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
-                -- else
-                augroup_setup(augroup, bufnr)
-                -- end
-                --  REVISIT: (vsedov) (14:36:18 - 18/12/22): Pretty cerain im being stupid here, so
-                --  i will come back to this once i have tim e.
-            end
+            vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
+                lsp_formatting(bufnr)
+            end, {})
+
+            augroup_setup(client, nr)
         end,
     }
 

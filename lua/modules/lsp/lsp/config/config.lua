@@ -253,66 +253,6 @@ local container = {
         end
     end)(vim.diagnostic.open_float),
     on_attach_callback = {
-        ["global"] = function(client, bufnr)
-            -- local navic_callback = {
-            --     "pylance",
-            --     "ltex",
-            --     "pylsp ",
-            --     "ruff_lsp",
-            -- }
-            -- if vim.tbl_contains(navic_callback, client.name) then
-            --     return
-            -- else
-            --     require("nvim-navic").attach(client, bufnr)
-            -- end
-        end,
-        ["jedi"] = function(client, bufnr)
-            client.server_capabilities.semanticTokensProvider = {
-                legend = {
-                    tokenTypes = {
-                        "comment",
-                        "keyword",
-                        "string",
-                        "number",
-                        "regexp",
-                        "type",
-                        "class",
-                        "interface",
-                        "enum",
-                        "enumMember",
-                        "typeParameter",
-                        "function",
-                        "method",
-                        "property",
-                        "variable",
-                        "parameter",
-                        "module",
-                        "intrinsic",
-                        "selfParameter",
-                        "clsParameter",
-                        "magicFunction",
-                        "builtinConstant",
-                    },
-                    tokenModifiers = {
-                        "declaration",
-                        "static",
-                        "abstract",
-                        "async",
-                        "documentation",
-                        "typeHint",
-                        "typeHintComment",
-                        "readonly",
-                        "decorator",
-                        "builtin",
-                    },
-                },
-                range = true,
-                full = {
-                    delta = false,
-                },
-            }
-        end,
-
         ["pylance"] = function(client, bufnr)
             print("Pylance has been parsed")
             require("modules.lsp.lsp.providers.python.pylance").attach_config(client, bufnr)

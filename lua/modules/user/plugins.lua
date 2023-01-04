@@ -53,17 +53,11 @@ user({
     config = true,
 })
 
-
-
-
 user({
     "Apeiros-46B/qalc.nvim",
     config = true,
     cmd = { "Qalc", "QalcAttach" },
 })
-
-
-
 
 -- The goal of nvim-fundo is to make Neovim's undo file become stable and useful.
 user({
@@ -77,33 +71,78 @@ user({
     config = true,
 })
 
-
 user({
     "stevearc/oil.nvim",
-    lazy = true, 
+    lazy = true,
     init = function()
         vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
     end,
     event = "VeryLazy",
-    config = true, 
+    config = true,
 })
 
 user({
     "AntonVanAssche/date-time-inserter.nvim",
-    lazy = true, 
-    cmd ={
+    lazy = true,
+    cmd = {
         "InsertDate",
         "InsertTime",
-        "InsertDateTime"
+        "InsertDateTime",
     },
-    config = true, 
-
+    config = true,
 })
 
 user({
     "2kabhishek/co-author.nvim",
-    lazy  = true, 
+    lazy = true,
     cmd = {
         "GitCoAuthors",
-    }
+    },
+})
+user({
+    "petertriho/nvim-scrollbar",
+    lazy = true,
+    dependencies = { "kevinhwang91/nvim-hlslens" },
+    event = "BufReadPost",
+    config = function()
+        require("scrollbar.handlers.search").setup()
+        require("scrollbar").setup({
+            show = true,
+            set_highlights = true,
+            handle = {
+                color = "#777777",
+            },
+            marks = {
+                Search = { color = "#ff9e64" },
+                Error = { color = "#db4b4b" },
+                Warn = { color = "#e0af68" },
+                Info = { color = "#0db9d7" },
+                Hint = { color = "#1abc9c" },
+                Misc = { color = "#9d7cd8" },
+                GitAdd = {
+                    color = "#9ed072",
+                    text = "+",
+                },
+                GitDelete = {
+                    color = "#fc5d7c",
+                    text = "-",
+                },
+                GitChange = {
+                    color = "#76cce0",
+                    text = "*",
+                },
+            },
+            handlers = {
+                diagnostic = true,
+                search = true,
+                gitsigns = false,
+            },
+        })
+    end,
+})
+
+--  REVISIT: (vsedov) (20:21:39 - 03/01/23): No clue what this does
+user({
+    "inkarkat/vim-visualrepeat",
+    event = "ModeChanged",
 })

@@ -4,7 +4,8 @@ local lsp_util = require("vim.lsp.util")
 local path = require("mason-core.path")
 local util = require("lspconfig.util")
 local index = require("mason-registry.index")
-index["pylance"] = "modules.lsp.lsp.mason.foo"
+
+index["pylance"] = "modules.lsp.lsp.mason.python"
 
 local root_files = {
     "pyproject.toml",
