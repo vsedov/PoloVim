@@ -89,7 +89,7 @@ Hydra({
             border = lambda.style.border.type_0,
         },
     },
-    mode = { "n", "i", "v", "x" },
+    mode = { "n", "v", "x" },
     body = ";r",
     heads = {
         { "w", cmd("OverseerToggle"), { exit = true } },
