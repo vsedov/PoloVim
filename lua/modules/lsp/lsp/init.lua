@@ -25,8 +25,10 @@ local python_setup = {
         lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
     end,
     jedi = function()
-        lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
+        -- lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
+        print("Using Jedi")
     end,
+
     pylance = function()
         print("Using Pylance")
     end,

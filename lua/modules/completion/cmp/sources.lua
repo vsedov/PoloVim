@@ -2,6 +2,7 @@ local api = vim.api
 -- default sources
 local sources = {
     { name = "nvim_lsp", priority = 9 },
+    { name = "luasnip_choice", priority = 10 },
     { name = "luasnip", priority = 8 },
     { name = "neorg", priority = 6 },
     -- { name = "nvim_lsp_signature_help", priority = 10 },

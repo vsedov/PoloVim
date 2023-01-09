@@ -14,8 +14,9 @@ python({
 python({
     "vsedov/py.nvim",
     lazy = true,
+    cmd = { "Py" },
     ft = "python",
-    config = conf.python_dev,
+    config = true,
 })
 
 python({

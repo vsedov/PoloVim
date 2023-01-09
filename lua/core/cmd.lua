@@ -330,4 +330,3 @@ vim.cmd('vmap <LeftRelease> "*ygv')
 
 vim.cmd("imap <C-V> <C-R>*")
 vim.cmd('vmap <LeftRelease> "*ygv')
-

@@ -187,13 +187,23 @@ function config.close_buffers()
             end
         end,
     })
-    vim.api.nvim_create_user_command("Kwbd", function()
+    vim.api.nvim_create_user_command("BufKillThis", function()
         require("close_buffers").delete({ type = "this" })
     end, { range = true })
-end
 
-function config.bbye()
-    vim.keymap.set("n", "_q", "<Cmd>Bwipeout<CR>", { silent = true })
+    vim.api.nvim_create_user_command("BufKillNameless", function()
+        require("close_buffers").delete({ type = "nameless" })
+    end, { range = true })
+
+    vim.api.nvim_create_user_command("BufKillHidden", function()
+        require("close_buffers").delete({ type = "hidden", force = true }) -- delete all non a vis vis à vis buffers
+    end, { range = true })
+
+    vim.api.nvim_create_user_command("BufWipe", function()
+        require("close_buffers").wipe({ type = "other" }) -- Wipe all buffers except the current focused
+    end, { range = true })
+        
+    vim.keymap.set("n", "_q", "<Cmd>BWipeout other<CR>", { silent = true })
 end
 
 function config.sticky_buf()

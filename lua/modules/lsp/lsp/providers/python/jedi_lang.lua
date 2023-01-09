@@ -9,10 +9,8 @@ return {
             case_insensitive_completion = true,
             add_bracket_after_function = true,
             dynamic_params = true,
-            dynamic_array_additions = true,
-            fast_parser = true,
             -- Allot of machine learning models that are set from default.
-            autoImportModules = { "torch", "dearpygui", "numpy", "matplotlib" },
+            autoImportModules = { "torch" },
         },
     },
 }

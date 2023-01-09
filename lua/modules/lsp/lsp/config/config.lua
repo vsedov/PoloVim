@@ -146,13 +146,6 @@ local container = {
         normal_mode = {
             ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
             ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
-            ["D"] = {
-                function()
-                    vim.cmd([[Lspsaga show_line_diagnostics]])
-                end,
-                "Diagnostic Line",
-            },
-
             ["<leader>;"] = {
                 function()
                     require("modules.lsp.lsp.config.list").change_active("Quickfix")
@@ -160,9 +153,16 @@ local container = {
                 end,
                 "utils list quickfix change",
             },
-
-            ["K"] = { require("hover").hover, "hover" },
-
+            ["K"] = {
+                function()
+                    if lambda.config.lsp.use_ruff_lsp then
+                        vim.cmd([[Lspsaga hover_doc]])
+                    else
+                        require("hover").hover()
+                    end
+                end,
+                "hover",
+            },
             ["gK"] = { require("hover").hover_select, "Hover select" },
         },
         visual_mode = {
@@ -266,8 +266,6 @@ local container = {
     },
 
     on_init_callback = nil,
-
-    -- HACK(vsedov): Create a gloval check for this, useing lambda.config
     null_ls = {
         diagnostic = {
             "cppcheck",

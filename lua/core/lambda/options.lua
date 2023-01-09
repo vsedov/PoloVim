@@ -6,40 +6,31 @@ local use_lightspeed = true --  So the tldr here is when this is false, both lig
 local use_ts_yeti = true
 local use_glance = true
 
+local ruff_lsp = false
 local py_lang = "jedi"
+
 lambda.config = {
     use_hydra = true,
     overwrite_colours_use_styler = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
-
     better_ts_highlights = false, -- This needs a direct toggle i think
-
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
-
     record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
-
     loaded_confirm_quit = false, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
     save_clipboard_on_exit = true,
-
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
-
     sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_session = true, -- set to false to disable session
-
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
-    -- Currently using nvim-yeti
     use_gitsigns = true,
-    --  ──────────────────────────────────────────────────────────────────────
     use_lightspeed = false, -- if false then leap.nvim will be used.
     use_both_leap_light_speed = true,
     use_leap = true,
-    --  ──────────────────────────────────────────────────────────────────────
     use_quick_scope = false,
-    --  ──────────────────────────────────────────────────────────────────────
     use_use_hiPairs = true,
     use_music = false,
     use_scope = true, -- really fucks with neogit window
@@ -76,14 +67,14 @@ lambda.config.colourscheme = {
         dark = {
             core_themes = {
                 "kanagawa.nvim",
-                -- "oh-lucy.nvim",
-                "catppuccin",
-                -- "mellifluous.nvim",
-                "nvim-tundra",
-                "tokyonight.nvim", -- allot
-                "rose", -- TSMethod'
-                "vim-dogrun",
-                "mellow.nvim",
+                -- -- "oh-lucy.nvim",
+                -- "catppuccin",
+                -- -- "mellifluous.nvim",
+                -- "nvim-tundra",
+                -- "tokyonight.nvim", -- allot
+                -- "rose", -- TSMethod'
+                -- "vim-dogrun",
+                -- "mellow.nvim",
             },
             others = {
                 "horizon.nvim",
@@ -124,6 +115,7 @@ lambda.config.cmp = {
 }
 
 lambda.config.lsp = {
+    use_ruff_lsp = ruff_lsp,
     use_rcd = false,
     use_lsp_lines = false,
     use_lsp_signature = true,
@@ -137,6 +129,7 @@ lambda.config.lsp = {
         use_inlay_hints = true,
     },
 }
+
 lambda.config.ui = {
     use_illuminate = true,
     use_murmur = false, -- Do not use both illuminate and murmur
@@ -145,7 +138,6 @@ lambda.config.ui = {
     noice = {
         enable = noice_enabled,
         lsp = {
-            --  REVISIT: (vsedov) (03:05:41 - 31/10/22): Come back to this once this is owrking
             use_noice_signature = use_noice_docs, -- I would very much like to use this,l but for now this is broken
             use_noice_hover = use_noice_docs,
             use_markdown = {

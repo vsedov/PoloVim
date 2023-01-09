@@ -41,6 +41,13 @@ tools({ "rktjmp/paperplanes.nvim", lazy = true, cmd = { "PP" }, config = true })
 tools({
     "natecraddock/workspaces.nvim",
     lazy = true,
+    cmd = {
+        "WorkspacesAdd",
+        "WorkspacesRemove",
+        "WorkspacesRename",
+        "WorkspacesList",
+        "WorkspacesOpen",
+    },
     config = conf.workspace,
 })
 
@@ -199,4 +206,9 @@ tools({
         end, {})
         lambda.command("Genghismove", genghis.moveSelectionToNewFile, {})
     end,
+})
+
+tools({
+    "inkarkat/vim-visualrepeat",
+    event = "ModeChanged",
 })

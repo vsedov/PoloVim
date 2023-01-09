@@ -3,7 +3,6 @@ local map_cr = bind.map_cr
 local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
 local map_args = bind.map_args
-
 local plug_map = {
     -- Show syntax highlighting groups for word under cursor
     ["n|<localleader>c["] = map_cmd(function()
@@ -20,15 +19,12 @@ local plug_map = {
         return ":IncRename " .. vim.fn.expand("<cword>")
     end, "rename"):with_expr(),
 
-    -- ["n|dd"] = map_cmd(function()
-    --         if vim.api.nvim_get_current_line():match("^%s*$") then
-    --             return '"_dd'
-    --         else
-    --             return "dd"
-    --         end
-    --     end, "smard dd")
-    --     :with_noremap()
-    --     :with_expr(),
+    ["n|D"] = map_cmd(function()
+            return ":Lspsaga show_line_diagnostics<cr>"
+        end, "Diagnostic")
+        :with_noremap()
+        :with_expr()
+        :with_silent(),
 
     ["n|}"] = map_cmd(function()
         return ":lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow" .. "<cr>"

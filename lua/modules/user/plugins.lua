@@ -141,8 +141,19 @@ user({
     end,
 })
 
---  REVISIT: (vsedov) (20:21:39 - 03/01/23): No clue what this does
 user({
-    "inkarkat/vim-visualrepeat",
-    event = "ModeChanged",
+    "romainchapou/nostalgic-term.nvim",
+    lazy = true,
+    event = "TermOpen",
+    config = function()
+        require("nostalgic-term").setup({
+            mappings = {
+                { "<c-h>", "h" },
+                { "<c-j>", "j" },
+                { "<c-k>", "k" },
+                { "<c-l>", "l" },
+            },
+            add_normal_mode_mappings = true,
+        })
+    end,
 })

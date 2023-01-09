@@ -21,12 +21,15 @@ ai({
         vim.g["copilot_filetypes"] = copilot_filetypes
     end,
 })
--- https://github.com/f/awesome-chatgpt-prompts
 
 -- <C-c> to close chat window.
 -- <C-u> scroll up chat window.
 -- <C-d> scroll down chat window.
 -- <C-y> to copy/yank last answer.
+-- <C-o> Toggle settings window.
+-- <C-n> Start new session.
+-- <Tab> Cycle over windows.
+-- <C-i> [Edit Window] use response as input.
 ai({
     "jackMort/ChatGPT.nvim",
     cmd = {

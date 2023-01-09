@@ -5,8 +5,8 @@ local lsp = require("core.pack").package
 --  are a few issues with this right now and im not sure why this does not work.
 lsp({
     "neovim/nvim-lspconfig",
-    -- lazy = true,
-    -- event = "BufEnter",
+    lazy = true,
+    event = "BufEnter",
     init = conf.nvim_lsp_setup,
     config = conf.nvim_lsp,
 })
@@ -19,31 +19,24 @@ lsp({
         "nvim-lua/plenary.nvim",
         { "poljar/typos.nvim", config = true },
 
-        {
-            "jayp0521/mason-null-ls.nvim",
-            dependencies = {
-                "williamboman/mason.nvim",
-            },
-            config = function()
-                require("mason-null-ls").setup({
-                    automatic_installation = false,
-                })
-            end,
-        },
+        "jayp0521/mason-null-ls.nvim",
     },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
+        require("mason-null-ls").setup({
+            automatic_installation = false,
+        })
     end,
 })
 
 lsp({
     "williamboman/mason.nvim",
-    lazy = true,
-    event = "BufEnter",
+    -- event = "BufEnter",
     dependencies = {
         "neovim/nvim-lspconfig",
         "williamboman/mason-lspconfig.nvim",
     },
+    config = conf.mason_setup,
 })
 
 lsp({ "ii14/lsp-command", lazy = true, cmd = { "Lsp" } })

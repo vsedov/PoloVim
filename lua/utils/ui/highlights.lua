@@ -356,19 +356,7 @@ local function general_overrides()
         { CodeBlock = { background = { from = "Normal", alter = 30 } } },
         { markdownCode = { link = "CodeBlock" } },
         { markdownCodeBlock = { link = "CodeBlock" } },
-        -- {
-        --     CurSearch = {
-        --         background = { from = "String", attr = "fg" },
-        --         foreground = "white",
-        --         bold = true,
-        --     },
-        -- },
         { CursorLineNr = { bold = true } },
-        -- { FoldColumn = { background = "background" } },
-        -- Add undercurl to existing spellbad highlight
-        -- -- { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
-        -- -- { SpellRare = { undercurl = true } },
-
         { PmenuSbar = { background = P.grey } },
         { PmenuThumb = { background = { from = "Comment", attr = "fg" } } },
         { Pmenu = { background = normal_bg } },
@@ -378,8 +366,6 @@ local function general_overrides()
 
         {
             FloatBorder = {
-                -- bg = { from = 'Normal', alter = -15 },
-                -- fg = { from = 'Normal', alter = -15}
                 background = normal_bg,
                 foreground = P.grey,
             },

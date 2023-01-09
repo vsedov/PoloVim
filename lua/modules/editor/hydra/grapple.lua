@@ -4,7 +4,7 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
         return string.sub(String, 1, string.len(Start)) == Start
     end
 
-    local leader = "H"
+    local leader = "<leader>l"
     local hydra = require("hydra")
 
     local bracket = {}

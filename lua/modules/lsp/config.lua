@@ -13,7 +13,7 @@ function config.mason_setup()
     require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
     require("mason-lspconfig").setup({
         automatic_installation = {
-            exclude = { "sumneko_lua", "clangd", "ltex", "texlab", "jedi-language-server" },
+            exclude = { "sumneko_lua", "clangd", "ltex", "texlab" },
         },
     })
     require("mason-lspconfig").setup_handlers({
@@ -24,6 +24,8 @@ function config.mason_setup()
             end
         end,
     })
+
+
 end
 
 function config.lsp_install()

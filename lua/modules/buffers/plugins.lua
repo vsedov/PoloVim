@@ -43,8 +43,14 @@ buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
 
 buffer({
     "kazhala/close-buffers.nvim",
-    cmd = { "Kwbd", "BDelete", "BWipeout" },
-    config = conf.buffers_close,
+    cmd = {
+        "BufKillThis",
+        "BufKillNameless",
+        "BufKillHidden",
+        "BufWipe",
+    },
+    keys = { { "_q", mode = "n" } },
+    config = conf.close_buffers,
 })
 
 buffer({

@@ -57,6 +57,8 @@ local servers = {
             table.insert(new_config.cmd, new_rootdir .. "/.config.yaml")
         end,
     },
+    jedi_language_server = require("modules.lsp.lsp.providers.python.jedi_lang"),
+    ruff_lsp = lambda.config.lsp.use_ruff_lsp,
     sourcery = false, -- no clue what this does
     buf = true,
     grammarly = true,

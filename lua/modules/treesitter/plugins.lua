@@ -6,34 +6,38 @@ ts({ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", config = conf.nvim_
 
 ts({
     "nvim-treesitter/nvim-treesitter-textobjects",
-    after = "nvim-treesitter",
-    config = conf.treesitter_obj,
     lazy = true,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = conf.treesitter_obj,
 })
 
 ts({
     "RRethy/nvim-treesitter-textsubjects",
-    ft = { "lua", "rust", "go", "python", "javascript" },
     lazy = true,
+
+    ft = { "lua", "rust", "go", "python", "javascript" },
     config = conf.tsubject,
 })
 
 ts({
     "RRethy/nvim-treesitter-endwise",
-    ft = { "lua", "ruby", "vim" },
     lazy = true,
+    ft = { "lua", "ruby", "vim" },
     config = conf.endwise,
 })
 
 ts({
     "nvim-treesitter/nvim-treesitter-refactor",
+    lazy = true,
+
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects" },
     config = conf.treesitter_ref, -- let the last loaded config treesitter
-    lazy = true,
 })
 -- cant lazy load will fix.
 ts({
     "David-Kunz/markid",
+    lazy = true,
+
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     ft = {
         "python",
@@ -44,6 +48,8 @@ ts({
 
 ts({
     "m-demare/hlargs.nvim",
+    lazy = true,
+
     ft = {
         "c",
         "cpp",
@@ -68,6 +74,8 @@ ts({
 
 ts({
     "andrewferrier/textobj-diagnostic.nvim",
+    lazy = true,
+
     ft = { "python", "lua" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = true,
@@ -75,15 +83,18 @@ ts({
 
 ts({
     "andymass/vim-matchup",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
     lazy = true,
+    event = "BufEnter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.matchup,
     init = conf.matchup_setup,
 })
 
 ts({
     "Yggdroot/hiPairs",
-    lazy = not lambda.config.use_hiPairs,
+    lazy = true,
+    event = "BufWinEnter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hi_pairs,
 })
 
@@ -98,6 +109,8 @@ ts({
 -- -- Packer
 ts({
     "folke/paint.nvim",
+    lazy = true,
+
     ft = "lua",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.paint,
@@ -144,4 +157,16 @@ ts({
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })
     end,
+})
+
+ts({
+    "ckolkey/ts-node-action",
+    lazy = true,
+    ft = { "python", "lua", "json", "ruby" },
+    dependencies = { "nvim-treesitter" },
+    keys = "<leader>k",
+    init = function()
+        vim.keymap.set({ "n" }, "<leader>k", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+    end,
+    config = true,
 })
