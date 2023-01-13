@@ -163,7 +163,17 @@ local container = {
                 end,
                 "hover",
             },
-            ["gK"] = { require("hover").hover_select, "Hover select" },
+            ["gK"] = {
+
+                function()
+                    if lambda.config.lsp.use_ruff_lsp then
+                        vim.cmd([[Lspsaga hover_doc]])
+                    else
+                        require("hover").hover_select()
+                    end
+                end,
+                "Hover select",
+            },
         },
         visual_mode = {
             ["\\'"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },

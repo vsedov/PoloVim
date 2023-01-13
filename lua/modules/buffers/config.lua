@@ -202,7 +202,7 @@ function config.close_buffers()
     vim.api.nvim_create_user_command("BufWipe", function()
         require("close_buffers").wipe({ type = "other" }) -- Wipe all buffers except the current focused
     end, { range = true })
-        
+
     vim.keymap.set("n", "_q", "<Cmd>BWipeout other<CR>", { silent = true })
 end
 

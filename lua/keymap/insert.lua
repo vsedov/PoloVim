@@ -5,7 +5,7 @@ local plug_map = {
     ["i|jn"] = map_cmd("()<esc>i", "()"):with_silent(),
     ["i|jm"] = map_cmd("[]<esc>i", "[]"):with_silent(),
     ["i|jb"] = map_cmd("{}<esc>i", "{}"):with_silent(),
-    ["i|jj"] = map_cmd([[<esc>:call search("[)\\]}>,`'\"]", 'eW')<CR>]], ""):with_silent(),
+    ["i|<c-a>"] = map_cmd([[<esc>:call search("[)\\]}>,`'\"]", 'eW')<CR>]], ""):with_silent(),
 }
 
 return plug_map

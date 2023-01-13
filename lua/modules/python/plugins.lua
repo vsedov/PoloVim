@@ -87,3 +87,14 @@ python({
         ]])
     end,
 })
+
+python({
+    "kiyoon/jupynium.nvim",
+    lazy = true,
+    cmd = {
+        "JupyniumStartAndAttachToServer",
+        "JupyniumStartSync",
+    },
+    build = "pip3 install --user .",
+    config = true,
+})

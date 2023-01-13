@@ -6,7 +6,7 @@ local use_lightspeed = true --  So the tldr here is when this is false, both lig
 local use_ts_yeti = true
 local use_glance = true
 
-local ruff_lsp = false
+local ruff_lsp = true
 local py_lang = "jedi"
 
 lambda.config = {

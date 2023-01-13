@@ -157,3 +157,75 @@ user({
         })
     end,
 })
+
+user({
+    "linty-org/readline.nvim",
+    config = function()
+        local readline = require("readline")
+        vim.keymap.set("!", "<C-u>", readline.backward_kill_line)
+        vim.keymap.set("!", "<C-w>", readline.unix_word_rubout)
+
+        vim.keymap.set("!", "<C-d>", "<Delete>") -- delete-char
+        vim.keymap.set("!", "<C-h>", "<BS>") -- backward-delete-char
+
+        vim.keymap.set("!", "<C-a>", readline.beginning_of_line)
+        vim.keymap.set("!", "<C-e>", readline.end_of_line)
+
+        vim.keymap.set("!", "<c-F>", readline.forward_word)
+        vim.keymap.set("!", "<c-B>", readline.backward_word)
+
+        vim.keymap.set("!", "<C-f>", "<Right>") -- forward-char
+        vim.keymap.set("!", "<C-b>", "<Left>") -- backward-char
+        vim.keymap.set("!", "<C-n>", "<Down>") -- next-line
+        vim.keymap.set("!", "<C-p>", "<Up>") -- previous-line
+    end,
+})
+user({
+    "ThePrimeagen/vim-apm",
+    lazy = true,
+    event = "VimEnter",
+})
+
+user({
+    "luukvbaal/statuscol.nvim",
+    lazy = true,
+    dependencies = { "lewis6991/gitsigns.nvim" },
+    event = "VeryLazy",
+    config = function()
+        require("statuscol").setup({
+            thousands = true, -- or line number thousands separator string ("." / ",")
+            relculright = true, -- whether to right-align the cursor line number with 'relativenumber' set
+            setopt = true, -- whether to set the 'statuscolumn', providing builtin click actions
+        })
+    end,
+})
+
+user({
+    "sindrets/scratchpad.nvim",
+    cmd = { "Float", "FloatMove", "Scratchpad" },
+})
+
+user({
+    "gennaro-tedesco/nvim-possession",
+    keys = {
+        "<leader>sl",
+        "<leader>sn",
+        "<leader>su",
+    },
+    dependencies = {
+        "ibhagwan/fzf-lua",
+    },
+    config = true,
+    init = function()
+        local possession = require("nvim-possession")
+        vim.keymap.set("n", "<leader>sl", function()
+            possession.list()
+        end)
+        vim.keymap.set("n", "<leader>sn", function()
+            possession.new()
+        end)
+        vim.keymap.set("n", "<leader>su", function()
+            possession.update()
+        end)
+    end,
+})

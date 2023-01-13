@@ -15,22 +15,19 @@ windows({
 
 windows({
     "tamton-aquib/flirt.nvim",
-    keys = {
-        "<C-down>",
-        "<C-up>",
-        "<C-right>",
-        "<C-left>",
-        "<A-up>",
-        "<A-down>",
-        "<A-left>",
-        "<A-right>",
-    },
+    lazy = true,
+    event = "FileType",
     config = function()
         require("flirt").setup({
-            override_open = false, -- experimental
+            override_open = true, -- experimental
             close_command = "Q",
             default_move_mappings = true, -- <C-arrows> to move floats
             default_resize_mappings = true, -- <A-arrows> to resize floats
+            default_mouse_mappings = true, -- Drag floats with mouse
+            exclude_fts = { "notify", "cmp_menu", "harpoon", "hydra_hint" },
+            custom_filter = function(buffer, win_config)
+                return vim.bo[buffer].filetype == "cmp_menu" or vim.bo[buffer].buftype == "hydra_hint"
+            end,
         })
     end,
 })

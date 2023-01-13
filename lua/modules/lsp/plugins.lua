@@ -122,7 +122,6 @@ lsp({
 lsp({
     "rmagatti/goto-preview",
     lazy = true,
-    modules = "goto-preview",
     config = conf.goto_preview,
 })
 

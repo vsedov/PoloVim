@@ -14,7 +14,7 @@ local lsp_formatting = function(bufnr)
 end
 
 local function augroup_setup(client, bufnr)
-    vim.api.nvim_create_autocmd("BufWrite", {
+    vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*",
         callback = function()
             lsp_formatting(bufnr)
@@ -81,7 +81,7 @@ function M.setup()
                 lsp_formatting(bufnr)
             end, {})
 
-            augroup_setup(client, nr)
+            augroup_setup(client, bufnr)
         end,
     }
 

@@ -49,7 +49,7 @@ buffer({
         "BufKillHidden",
         "BufWipe",
     },
-    keys = { { "_q", mode = "n" } },
+    keys = { "_q" },
     config = conf.close_buffers,
 })
 
