@@ -2,7 +2,7 @@
 
 ## I love speed, I love plugins, Speed implies Plugins
 
-### /ᐠ.ꞈ.ᐟ\ /ᐠ.ꞈ.ᐟ\ /ᐠ.ꞈ.ᐟ\
+### (─‿‿─)
 
 ## Setup
 
