@@ -100,7 +100,7 @@ function config.code_runner()
                 return "cd " .. root_dir .. " && dotnet run$end"
             end,
         },
-        project_path = vim.fn.expand("~/.config/nvim/project_manager.json"),
+        -- project_path = vim.fn.expand("~/.config/nvim/project_manager.json"),
     })
 end
 

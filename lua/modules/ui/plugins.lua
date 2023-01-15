@@ -1,8 +1,6 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
 
-
-
 ui({
     "xiyaowong/virtcolumn.nvim",
     event = "VeryLazy",

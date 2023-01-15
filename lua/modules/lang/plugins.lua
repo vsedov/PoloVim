@@ -113,17 +113,15 @@ lang({
 
 lang({
     "CRAG666/code_runner.nvim",
-    -- lazy = true,
-    -- commit = "27038b0a07095a0ce5bdfc20ffe8c8ed6109462d",
-    -- cmd = {
-    --     "RunCode",
-    --     "RunFile",
-    --     "RunProject",
-    --     "RunClose",
-    --     "CRFiletype",
-    --     "CRProjects",
-    -- },
-    -- lazy = true,
+    lazy = true,
+    cmd = {
+        "RunCode",
+        "RunFile",
+        "RunProject",
+        "RunClose",
+        "CRFiletype",
+        "CRProjects",
+    },
     config = conf.code_runner,
 })
 

@@ -187,20 +187,6 @@ user({
 })
 
 user({
-    "luukvbaal/statuscol.nvim",
-    lazy = true,
-    dependencies = { "lewis6991/gitsigns.nvim" },
-    event = "VeryLazy",
-    config = function()
-        require("statuscol").setup({
-            thousands = true, -- or line number thousands separator string ("." / ",")
-            relculright = true, -- whether to right-align the cursor line number with 'relativenumber' set
-            setopt = true, -- whether to set the 'statuscolumn', providing builtin click actions
-        })
-    end,
-})
-
-user({
     "sindrets/scratchpad.nvim",
     cmd = { "Float", "FloatMove", "Scratchpad" },
 })
