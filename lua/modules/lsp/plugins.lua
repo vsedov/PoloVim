@@ -131,4 +131,3 @@ lsp({
     cmd = "Glance",
     config = conf.glance,
 })
-

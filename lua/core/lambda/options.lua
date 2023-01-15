@@ -10,6 +10,7 @@ local ruff_lsp = true
 local py_lang = "jedi"
 
 lambda.config = {
+    use_flirt = false,
     use_hydra = true,
     overwrite_colours_use_styler = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it

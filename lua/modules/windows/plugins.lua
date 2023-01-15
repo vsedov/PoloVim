@@ -15,8 +15,7 @@ windows({
 
 windows({
     "tamton-aquib/flirt.nvim",
-    lazy = true,
-    event = "FileType",
+    lazy = not lambda.config.use_flirt,
     config = function()
         require("flirt").setup({
             override_open = true, -- experimental
@@ -24,9 +23,9 @@ windows({
             default_move_mappings = true, -- <C-arrows> to move floats
             default_resize_mappings = true, -- <A-arrows> to resize floats
             default_mouse_mappings = true, -- Drag floats with mouse
-            exclude_fts = { "notify", "cmp_menu", "harpoon", "hydra_hint" },
+            exclude_fts = { "chatgpt", "TelescopePrompt", "prompt", "notify", "cmp_menu", "harpoon", "hydra_hint" },
             custom_filter = function(buffer, win_config)
-                return vim.bo[buffer].filetype == "cmp_menu" or vim.bo[buffer].buftype == "hydra_hint"
+                return vim.tbl_contains({ "cmp_menu", "hydra_hint", "prompt" }, vim.bo[buffer].buftype)
             end,
         })
     end,
