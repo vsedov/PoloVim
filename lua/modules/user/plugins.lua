@@ -19,7 +19,7 @@ user({
 user({
     "samjwill/nvim-unception",
     lazy = true,
-    event = "CmdlineEnter",
+    event = "CmdLineEnter",
     config = function()
         vim.g.unception_delete_replaced_buffer = true
         vim.g.unception_enable_flavor_text = false
@@ -213,5 +213,32 @@ user({
         vim.keymap.set("n", "<leader>su", function()
             possession.update()
         end)
+    end,
+})
+
+user({
+    "jackMort/pommodoro-clock.nvim",
+    lazy = true,
+    dependencies = {
+        "MunifTanjim/nui.nvim",
+    },
+    keys = {
+        ";1",
+        ";2",
+        ";3",
+        ";4",
+        ";5",
+    },
+    config = function()
+        require("pommodoro-clock").setup({})
+
+        local function pc(func)
+            return "<Cmd>lua require('pommodoro-clock')." .. func .. "()<CR>"
+        end
+        vim.keymap.set("n", ";1", pc("start_work"), { silent = true })
+        vim.keymap.set("n", ";2", pc("start_short_break"), { silent = true })
+        vim.keymap.set("n", ";2", pc("start_long_break"), { silent = true })
+        vim.keymap.set("n", ";3", pc("toggle_pause"), { silent = true })
+        vim.keymap.set("n", ";4", pc("close"), { silent = true })
     end,
 })
