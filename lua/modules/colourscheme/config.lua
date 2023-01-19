@@ -322,4 +322,8 @@ function config.melli()
     vim.cmd.colorscheme("mellifluous")
 end
 
+function config.palenightfall()
+    require("palenightfall").setup()
+    vim.cmd.colorscheme("palenightfall")
+end
 return config

@@ -77,3 +77,9 @@ colourscheme({
     lazy = true,
     config = conf.melli,
 })
+
+colourscheme({
+    "JoosepAlviste/palenightfall.nvim",
+    lazy = true,
+    config = conf.palenightfall,
+})
