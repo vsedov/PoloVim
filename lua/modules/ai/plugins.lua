@@ -37,7 +37,7 @@ ai({
         "ChatGPTActAs",
         "ChatGPTEditWithInstructions",
         "ChatGPTRunCustomCodeAction",
-        "ChatGPTRun"
+        "ChatGPTRun",
     },
     dependencies = {
         "MunifTanjim/nui.nvim",
