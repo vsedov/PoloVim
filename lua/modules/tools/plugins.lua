@@ -21,17 +21,13 @@ tools({
     cmd = {
         "Lazygit", -- 3 [ neogit + fugative + lazygit depends how i feel.]
         "Joshuto", -- 2
-        "Broot",
         "Ranger",
         "Xplr", -- Nice but, i think ranger tops this one for the.time
-        "Lf",
-        "Vifm",
         "Skim",
         "Nnn",
         "Fff",
         "Fzf",
         "Fzy",
-        -- "Fm",
     },
     config = conf.fm,
 })
