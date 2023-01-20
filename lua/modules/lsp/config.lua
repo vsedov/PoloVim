@@ -18,9 +18,10 @@ function config.mason_setup()
     })
     require("mason-lspconfig").setup_handlers({
         function(name)
+            -- print(name)
             local conf = get_config(name)
             if conf then
-                require("lspconfig")[name].setup(conf)
+                require("lspconfig")[name].setup(require("modules.lsp.lsp.config").enhance_attach({ conf }))
             end
         end,
     })

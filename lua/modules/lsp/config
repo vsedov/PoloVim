@@ -21,8 +21,9 @@ end
 function config.lsp_sig()
     local cfg = {
         bind = true,
-        fix_pos = true, -- set to true, the floating window will not auto-close until finish all parameters
-        doc_lines = 10,
+        fix_pos = true, -- set to true, the floatrequire("modules.lsp.lsp.config").enhance_attach({ conf
+            end
+            endes = 10,
         floating_window = false, -- show hint in a floating window, set to false for virtual text only mode ]]
         floating_window_above_cur_line = false,
         hint_enable = true, -- virtual hint enable
@@ -37,10 +38,8 @@ function config.lsp_sig()
             border = lambda.style.border.type_0, -- double, single, shadow, none
         },
 
-        transpancy = 80,
-        zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
-        log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-        padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
+    cmd = { "scala" },        zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
+    cmd = { "scala" },        padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
     }
 
     require("lsp_signature").setup(cfg)
@@ -304,4 +303,3 @@ return config
     print("There is something h")
 end
 return config
-
