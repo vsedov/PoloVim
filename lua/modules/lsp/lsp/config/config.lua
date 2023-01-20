@@ -292,7 +292,8 @@ local container = {
             "luacheck",
         },
         formatter = {
-            "brittany",
+            "scalafmt",
+            "stylish_haskell",
             "djlint",
             "fish_indent",
             "ktlint",

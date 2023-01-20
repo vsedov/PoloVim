@@ -37,7 +37,11 @@ local python_setup = {
     end,
 }
 
--- lspconfig.ruff_lsp.setup({})
+lspconfig.metals.setup(enhance_attach({
+    cmd = { "metals" },
+}))
+
+lspconfig.hls.setup({ enhance_attach({}) })
 
 local latex_setup = {
     texlab = function()
