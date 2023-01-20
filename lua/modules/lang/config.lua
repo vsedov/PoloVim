@@ -99,6 +99,8 @@ function config.code_runner()
                 local root_dir = require("lspconfig").util.root_pattern("*.csproj")(vim.loop.cwd())
                 return "cd " .. root_dir .. " && dotnet run$end"
             end,
+            scala = "scala $fileName",
+            haskell = "cd $dir && ghc -dynamic $fileName &&./$fileNameWithoutExt",
         },
         -- project_path = vim.fn.expand("~/.config/nvim/project_manager.json"),
     })
