@@ -48,8 +48,7 @@ local def_map = {
     -- when going to the end of the line in visual mode ignore whitespace characters
     ["n|$"] = map_cmd([[g_]]):with_noremap(),
 
-
-    -- ---------------------------------------------------------------------- 
+    -- ----------------------------------------------------------------------
     ["n|;gg"] = map_cmd(vim.cmd.ChatGPT):with_noremap(),
 
     ["n|;gp"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions):with_noremap(),
