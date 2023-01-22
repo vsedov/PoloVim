@@ -84,7 +84,7 @@ ts({
 ts({
     "andymass/vim-matchup",
     lazy = true,
-    event = "BufEnter",
+    event = "BufRead",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.matchup,
     init = conf.matchup_setup,

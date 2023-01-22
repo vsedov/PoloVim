@@ -103,6 +103,7 @@ function config.matchup()
     require("nvim-treesitter.configs").setup({
         matchup = {
             enable = true,
+            disable_virtual_text = false,
         },
     })
 end
