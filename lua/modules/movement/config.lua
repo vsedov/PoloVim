@@ -3,124 +3,6 @@ function config.syntax_surfer()
     require("modules.movement.syntax_surfer")
 end
 
-function config.lightspeed()
-    require("lightspeed").setup({
-        ignore_case = false,
-        exit_after_idle_msecs = { unlabeled = 1000 },
-        --- s/x ---
-        jump_to_unique_chars = { safety_timeout = 10 },
-        match_only_the_start_of_same_char_seqs = true,
-        force_beacons_into_match_width = false,
-        -- Display characters in a custom way in the highlighted matches.
-        -- substitute_chars = { ["\r"] = "¬" },
-        substitute_chars = { ["\r"] = "¬", ["\n"] = "¬" },
-
-        safe_labels = { "s", "f", "n", "u", "t", "/", "S", "F", "N", "L", "H", "M", "U", "G", "T", "?", "Z" },
-        labels = {
-            "s",
-            "f",
-            "n",
-            "j",
-            "k",
-            "l",
-            "h",
-            "o",
-            "d",
-            "w",
-            "e",
-            "m",
-            "b",
-            "u",
-            "y",
-            "v",
-            "r",
-            "g",
-            "t",
-            "c",
-            "x",
-            "/",
-            "z",
-            "S",
-            "F",
-            "N",
-            "J",
-            "K",
-            "L",
-            "H",
-            "O",
-            "D",
-            "W",
-            "E",
-            "M",
-            "B",
-            "U",
-            "Y",
-            "V",
-            "R",
-            "G",
-            "T",
-            "C",
-            "X",
-            "?",
-            "Z",
-        },
-
-        -- Leaving the appropriate list empty effectively disables "smart" mode,
-        -- and forces auto-jump to be on or off.
-        -- These keys are captured directly by the plugin at runtime.
-        special_keys = {
-            next_match_group = "<space>",
-            prev_match_group = "<tab>",
-        },
-        --- f/t ---
-        limit_ft_matches = nil,
-        repeat_ft_with_target_char = false,
-    })
-
-    local default_keymaps = {
-        { "n", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "x", "<c-s>", "<Plug>Lightspeed_omni_s" },
-        { "o", "<c-s>", "<Plug>Lightspeed_omni_s" },
-
-        { "x", "cS", "<Plug>Lightspeed_omni_gs" },
-        { "n", "cS", "<Plug>Lightspeed_omni_gs" },
-        { "o", "cS", "<Plug>Lightspeed_omni_gs" },
-    }
-    for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
-    end
-
-    vim.g.lightspeed_last_motion = ""
-    lambda.augroup("lightspeed_last_motion", {
-        {
-
-            event = "User",
-            pattern = { "LightspeedSxEnter" },
-            command = function()
-                vim.g.lightspeed_last_motion = "sx"
-            end,
-        },
-        {
-            event = "User",
-            pattern = { "LightspeedFxEnter" },
-            command = function()
-                vim.g.lightspeed_last_motion = "fx"
-            end,
-        },
-    })
-
-    local search_types = {
-        [";a"] = ";",
-        [";d"] = ",",
-    }
-
-    for k, v in pairs(search_types) do
-        vim.keymap.set("n", k, function()
-            return vim.g.lightspeed_last_motion == "sx" and "<Plug>Lightspeed_" .. v .. "_sx"
-                or "<Plug>Lightspeed_" .. v .. "_ft"
-        end, { desc = "Lightspeed_" .. v .. vim.g.lightspeed_last_motion, expr = true, noremap = true })
-    end
-end
 
 function config.leap()
     vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
@@ -201,11 +83,75 @@ function config.leap()
             prev_target = { "<tab>", "," },
             next_group = "<space>",
             prev_group = "<tab>",
-            -- multi_accept = "<enter>",
+            multi_accept = "<enter>",
             multi_revert = "<backspace>",
         },
     })
-    -- require('leap').add_default_mappings()
+    function paranormal(targets)
+        -- Get the :normal sequence to be executed.
+        local input = vim.fn.input("normal! ")
+        if #input < 1 then
+            return
+        end
+
+        local ns = vim.api.nvim_create_namespace("")
+
+        -- Set an extmark as an anchor for each target, so that we can also execute
+        -- commands that modify the positions of other targets (insert/change/delete).
+        for _, target in ipairs(targets) do
+            local line, col = unpack(target.pos)
+            id = vim.api.nvim_buf_set_extmark(0, ns, line - 1, col - 1, {})
+            target.extmark_id = id
+        end
+
+        -- Jump to each extmark (anchored to the "moving" targets), and execute the
+        -- command sequence.
+        for _, target in ipairs(targets) do
+            local id = target.extmark_id
+            local pos = vim.api.nvim_buf_get_extmark_by_id(0, ns, id, {})
+            vim.fn.cursor(pos[1] + 1, pos[2] + 1)
+            vim.cmd("normal! " .. input)
+        end
+
+        -- Clean up the extmarks.
+        vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+    end
+
+    require("leap").add_default_mappings()
+    local default_keymaps = {
+        {
+            { "n", "x", "o" },
+            "<c-s>",
+            function()
+                require("leap").leap({ target_windows = { vim.fn.win_getid() } })
+            end,
+        },
+        {
+            { "n", "x", "o" },
+            "cS",
+            function()
+                require("leap").leap({
+                    target_windows = vim.tbl_filter(function(win)
+                        return vim.api.nvim_win_get_config(win).focusable
+                    end, vim.api.nvim_tabpage_list_wins(0)),
+                })
+            end,
+        },
+        {
+            { "n", "x", "o" },
+            "<c-]>",
+            function()
+                require("leap").leap({
+                    target_windows = { vim.fn.win_getid() },
+                    action = paranormal,
+                    multiselect = true,
+                })
+            end,
+        },
+    }
+    for _, m in ipairs(default_keymaps) do
+        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
+    end
 end
 function config.leap_spooky()
     require("leap-spooky").setup({

@@ -1,18 +1,10 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
 
--- -- --------------------------------
-
-movement({
-    "ggandor/lightspeed.nvim",
-    dependencies = { "tpope/vim-repeat" },
-    event = "VeryLazy",
-    config = conf.lightspeed,
-})
 
 movement({
     "ggandor/leap.nvim",
-    dependencies = { "ggandor/leap.nvim" },
+    dependencies = { "tpope/vim-repeat" },
     lazy = true,
     init = function()
         vim.keymap.set("n", "f", "f")
