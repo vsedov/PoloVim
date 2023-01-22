@@ -62,9 +62,9 @@ function config.saga()
             },
         },
         diagnostic = {
-            twice_into = false,
+            twice_into = true,
             show_code_action = false,
-            show_source = false,
+            show_source = true,
             keys = {
                 exec_action = "o",
                 quit = "q",
@@ -96,12 +96,12 @@ function config.saga()
                 --float window normal bakcground color
                 normal_bg = "NONE",
                 --title background
-                title_bg = "#afd700",
+                title_bg = "#CBA6F7",
                 red = "#e95678",
                 magenta = "#b33076",
                 orange = "#FF8700",
                 yellow = "#f7bb3b",
-                green = "#afd700",
+                green = "#00bad7",
                 cyan = "#36d0e0",
                 blue = "#61afef",
                 purple = "#CBA6F7",

@@ -6,7 +6,7 @@ local lsp = require("core.pack").package
 lsp({
     "neovim/nvim-lspconfig",
     lazy = true,
-    event = "BufEnter",
+    event = "VeryLazy",
     init = conf.nvim_lsp_setup,
     config = conf.nvim_lsp,
 })
