@@ -8,23 +8,22 @@ local lsp_formatting = function(bufnr)
             return client.name == "null-ls"
         end,
         bufnr = bufnr,
-        async = false,
-        timeout_ms = 100,
     })
 end
 
 local function augroup_setup(client, bufnr)
-    vim.api.nvim_create_augroup("Format", { clear = false })
-    vim.api.nvim_clear_autocmds({ buffer = bufnr, group = "Format" })
-    vim.api.nvim_create_autocmd("BufWritePost", {
-        group = "Format",
-        buffer = bufnr,
-        callback = function()
-            lsp_formatting(bufnr)
-        end,
-    })
+    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    if client.supports_method("textDocument/formatting") then
+        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+                lsp_formatting(bufnr)
+            end,
+        })
+    end
 end
-
 function M.setup()
     local null_ls = require("null-ls")
     local hover = null_ls.builtins.hover
@@ -85,7 +84,7 @@ function M.setup()
                 lsp_formatting(bufnr)
             end, {})
 
-            augroup_setup(client, bufnr)
+            augroup_setup(client, nr)
         end,
     }
 
