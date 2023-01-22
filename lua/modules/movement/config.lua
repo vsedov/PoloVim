@@ -3,7 +3,6 @@ function config.syntax_surfer()
     require("modules.movement.syntax_surfer")
 end
 
-
 function config.leap()
     vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
 

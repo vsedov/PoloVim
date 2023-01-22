@@ -1,29 +1,31 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
 
-
 movement({
     "ggandor/leap.nvim",
-    dependencies = { "tpope/vim-repeat" },
     lazy = true,
-    init = function()
-        vim.keymap.set("n", "f", "f")
-        vim.keymap.set("n", "F", "F")
-        vim.keymap.set("n", "t", "t")
-        vim.keymap.set("n", "T", "T")
-    end,
+    event = "VeryLazy",
+    priority = 100,
+    dependencies = { "tpope/vim-repeat" },
+    config = conf.leap,
 })
 
 movement({
     "ggandor/leap-spooky.nvim",
     lazy = true,
+    event = "VeryLazy",
+    priority = 50,
     dependencies = { "ggandor/leap.nvim" },
+    config = conf.leap_spooky,
 })
 
 movement({
     "ggandor/flit.nvim",
     lazy = true,
+    event = "VeryLazy",
+    priority = 50,
     dependencies = { "ggandor/leap.nvim" },
+    config = conf.leap_flit,
 })
 
 --------------------------------

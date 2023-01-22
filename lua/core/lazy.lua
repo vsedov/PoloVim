@@ -161,9 +161,4 @@ vim.defer_fn(function()
     if lambda.config.record_your_self then
         loader({ plugins = { "vim-wakatime" } })
     end
-
-    local movement = require("modules.movement.config")
-    movement.leap()
-    movement.leap_spooky()
-    movement.leap_flit()
 end, 120)
