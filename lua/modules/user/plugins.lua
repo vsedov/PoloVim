@@ -282,3 +282,49 @@ user({
         })
     end,
 })
+
+user({
+    "tamton-aquib/staline.nvim",
+    lazy = true,
+    event = "BufWinEnter",
+    config = function()
+        require("staline").setup({
+
+            sections = {
+                left = {
+                    "mode",
+                    " ",
+                    "file_name",
+                    " ",
+                    "branch",
+                    " ",
+                },
+                mid = { "lsp" },
+                right = {
+                    "cool_symbol",
+                    " ",
+                    " ",
+                    "lsp_name",
+                    " ",
+                    "line_column",
+                    " ",
+                },
+            },
+
+            defaults = {
+                fg = "#986fec",
+                cool_symbol = "  ",
+                true_colors = true,
+                branch_symbol = " ",
+                line_column = "[%l:%c] 並%p%% ",
+                -- font_active = "bold"
+            },
+            mode_colors = {
+                i = "#d4be98",
+                n = "#CBA6F7",
+                c = "#8fbf7f",
+                v = "#fc802d",
+            },
+        })
+    end,
+})
