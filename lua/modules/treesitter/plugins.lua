@@ -2,7 +2,13 @@
 --  causing the error here, and its quite important that i figure this one out .
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
-ts({ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", config = conf.nvim_treesitter })
+
+ts({
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    -- init = conf.treesitter_init,
+    config = conf.nvim_treesitter,
+})
 
 ts({
     "nvim-treesitter/nvim-treesitter-textobjects",
@@ -153,7 +159,7 @@ autocmd User targets#mappings#user call targets#mappings#extend({
 ts({
     "chrisgrieser/nvim-various-textobjs",
     lazy = true,
-    ft = { "python", "lua" },
+    ft = { "python"},
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })
     end,
