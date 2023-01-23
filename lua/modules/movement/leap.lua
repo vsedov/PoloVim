@@ -45,6 +45,7 @@ function highlight()
         nocombine = true,
     })
 end
+
 function leap_to_window()
     target_windows = require("leap.util").get_enterable_windows()
     local targets = {}
@@ -90,9 +91,9 @@ function binds()
         },
         {
             { "n", "x", "o" },
-            "<c-[>",
+            "<c-#>",
             function()
-                local targets, target_windows = leap_to_window()
+                targets, target_windows = leap_to_window()
                 require("leap").leap({
                     target_windows = target_windows,
                     targets = targets,

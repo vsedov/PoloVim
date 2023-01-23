@@ -163,11 +163,9 @@ movement({
     "mfussenegger/nvim-treehopper",
     lazy = true,
     keys = {
-        { "H", mode = "o" },
-        { "H", mode = "x" },
-        { "H", mode = "n" },
+        { "H", mode = {"o", "x", "n"} },
         { "zf", mode = "n" },
     },
     dependencies = { "ggandor/leap.nvim" },
-    init = conf.treehopper,
+    config = conf.treehopper,
 })

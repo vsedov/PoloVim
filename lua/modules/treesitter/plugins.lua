@@ -6,7 +6,7 @@ local ts = require("core.pack").package
 ts({
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    -- init = conf.treesitter_init,
+    init = conf.treesitter_init,
     config = conf.nvim_treesitter,
 })
 
@@ -159,7 +159,7 @@ autocmd User targets#mappings#user call targets#mappings#extend({
 ts({
     "chrisgrieser/nvim-various-textobjs",
     lazy = true,
-    ft = { "python"},
+    event = "VeryLazy",
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })
     end,

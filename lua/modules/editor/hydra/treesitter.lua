@@ -223,4 +223,9 @@ end
 
 val = auto_hint_generate()
 new_hydra.hint = val
+
+
+
+
+
 hydra(new_hydra)
