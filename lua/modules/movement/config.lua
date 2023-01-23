@@ -3,177 +3,6 @@ function config.syntax_surfer()
     require("modules.movement.syntax_surfer")
 end
 
-function config.leap()
-    vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
-
-    vim.api.nvim_set_hl(0, "LeapMatch", {
-        fg = "white", -- for light themes, set to 'black' or similar
-        bold = true,
-        nocombine = true,
-    })
-    vim.api.nvim_set_hl(0, "LeapLabelPrimary", {
-        fg = "#ff2f87",
-        bold = true,
-        nocombine = true,
-    })
-
-    require("leap").setup({
-        max_phase_one_targets = nil,
-        highlight_unlabeled_phase_one_targets = true,
-        max_highlighted_traversal_targets = 50,
-        case_sensitive = false,
-        equivalence_classes = { " \t", "\r\n" },
-        substitute_chars = { ["\r"] = "¬", ["\n"] = "¬" },
-
-        safe_labels = { "s", "f", "n", "u", "t", "/", "S", "F", "N", "L", "H", "M", "U", "G", "T", "?", "Z" },
-        labels = {
-            "s",
-            "f",
-            "n",
-            "j",
-            "k",
-            "l",
-            "h",
-            "o",
-            "d",
-            "w",
-            "e",
-            "m",
-            "b",
-            "u",
-            "y",
-            "v",
-            "r",
-            "g",
-            "t",
-            "c",
-            "x",
-            "/",
-            "z",
-            "S",
-            "F",
-            "N",
-            "J",
-            "K",
-            "L",
-            "H",
-            "O",
-            "D",
-            "W",
-            "E",
-            "M",
-            "B",
-            "U",
-            "Y",
-            "V",
-            "R",
-            "G",
-            "T",
-            "C",
-            "X",
-            "?",
-            "Z",
-        },
-
-        special_keys = {
-            repeat_search = "<c-[>",
-            next_phase_one_target = "<c-]>",
-            next_target = { "<enter>", ";" },
-            prev_target = { "<tab>", "," },
-            next_group = "<space>",
-            prev_group = "<tab>",
-            multi_accept = "<enter>",
-            multi_revert = "<backspace>",
-        },
-    })
-    function paranormal(targets)
-        -- Get the :normal sequence to be executed.
-        local input = vim.fn.input("normal! ")
-        if #input < 1 then
-            return
-        end
-
-        local ns = vim.api.nvim_create_namespace("")
-
-        -- Set an extmark as an anchor for each target, so that we can also execute
-        -- commands that modify the positions of other targets (insert/change/delete).
-        for _, target in ipairs(targets) do
-            local line, col = unpack(target.pos)
-            id = vim.api.nvim_buf_set_extmark(0, ns, line - 1, col - 1, {})
-            target.extmark_id = id
-        end
-
-        -- Jump to each extmark (anchored to the "moving" targets), and execute the
-        -- command sequence.
-        for _, target in ipairs(targets) do
-            local id = target.extmark_id
-            local pos = vim.api.nvim_buf_get_extmark_by_id(0, ns, id, {})
-            vim.fn.cursor(pos[1] + 1, pos[2] + 1)
-            vim.cmd("normal! " .. input)
-        end
-
-        -- Clean up the extmarks.
-        vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
-    end
-
-    require("leap").add_default_mappings()
-    local default_keymaps = {
-        {
-            { "n", "x", "o" },
-            "<c-s>",
-            function()
-                require("leap").leap({ target_windows = { vim.fn.win_getid() } })
-            end,
-        },
-        {
-            { "n", "x", "o" },
-            "cS",
-            function()
-                require("leap").leap({
-                    target_windows = vim.tbl_filter(function(win)
-                        return vim.api.nvim_win_get_config(win).focusable
-                    end, vim.api.nvim_tabpage_list_wins(0)),
-                })
-            end,
-        },
-        {
-            { "n", "x", "o" },
-            "<c-]>",
-            function()
-                require("leap").leap({
-                    target_windows = { vim.fn.win_getid() },
-                    action = paranormal,
-                    multiselect = true,
-                })
-            end,
-        },
-    }
-    for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
-    end
-end
-function config.leap_spooky()
-    require("leap-spooky").setup({
-        affixes = {
-            remote = { window = "r", cross_window = "R" },
-            magnetic = { window = "m", cross_window = "M" },
-        },
-        paste_on_remote_yank = true,
-    })
-end
-
-function config.leap_flit()
-    require("flit").setup({
-        keys = { f = "f", F = "F", t = "t", T = "T" },
-        -- A string like "nv", "nvo", "o", etc.
-        labeled_modes = "nvo",
-        multiline = true,
-        -- Like `leap`s similar argument (call-specific overrides).
-        -- E.g.: opts = { equivalence_classes = {} }
-        opts = { equivalence_classes = { " \t", "\r\n" } },
-    })
-end
-
 function config.hop()
     require("hop").setup({
         -- keys = 'etovxqpdygfblzhckisuran',
@@ -516,6 +345,50 @@ function config.bookmark()
         -- virt_text = "𐇬", -- Show virt text at the end of bookmarked lines
         virt_pattern = { "*.python", "*.go", "*.lua", "*.sh", "*.php", "*.rust" }, -- Show virt text only on matched pattern
     })
+end
+
+function config.treehopper()
+    local function with_tsht()
+        local ok = pcall(vim.treesitter.get_parser, 0)
+        if not ok then
+            return false
+        end
+
+        -- tsht does not support injection
+        -- injected language could be detected by vim.inspect_pos().treesitter
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        local function f(ignore)
+            return {
+                vim.treesitter.get_node_at_pos(0, cursor[1], cursor[2], { ignore_injections = ignore }):range(),
+            }
+        end
+
+        local range_original = f(true)
+        local range_injection = f(false)
+        for i, v in pairs(range_original) do
+            if range_injection[i] ~= v then
+                return false
+            end
+        end
+
+        -- otherwise, set highlight and return true
+        vim.api.nvim_set_hl(0, "TSNodeUnmatched", { link = "Comment" })
+        vim.api.nvim_set_hl(0, "TSNodeKey", { link = "IncSearch" })
+        return true
+    end
+    vim.keymap.set({ "o", "x", "n" }, "H", function()
+        return with_tsht() and ":<C-U>lua require('tsht').nodes()<CR>" or [[<Plug>(leap-ast)]]
+    end, { expr = true, silent = true })
+
+    vim.keymap.set("n", "zf", function()
+        if with_tsht() then
+            require("tsht").nodes()
+        else
+            vim.cmd("normal! v")
+            require("leap-ast").leap()
+        end
+        vim.cmd("normal! Vzf")
+    end, { silent = true })
 end
 
 return config

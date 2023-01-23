@@ -1,13 +1,15 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
 
+local leap = require("modules.movement.leap")
+
 movement({
     "ggandor/leap.nvim",
     lazy = true,
     event = "VeryLazy",
     priority = 100,
     dependencies = { "tpope/vim-repeat" },
-    config = conf.leap,
+    config = leap.leap_config,
 })
 
 movement({
@@ -16,7 +18,7 @@ movement({
     event = "VeryLazy",
     priority = 50,
     dependencies = { "ggandor/leap.nvim" },
-    config = conf.leap_spooky,
+    config = leap.leap_spooky,
 })
 
 movement({
@@ -25,7 +27,19 @@ movement({
     event = "VeryLazy",
     priority = 50,
     dependencies = { "ggandor/leap.nvim" },
-    config = conf.leap_flit,
+    config = leap.leap_flit,
+})
+
+movement({
+    "ggandor/leap-ast.nvim",
+    lazy = true,
+    dependencies = { "ggandor/leap.nvim" },
+    keys = { "<Plug>(leap-ast)" },
+    init = function()
+        vim.keymap.set({ "n", "x", "o" }, ";a", function()
+            require("leap-ast").leap()
+        end, { noremap = true, silent = true })
+    end,
 })
 
 --------------------------------
@@ -144,4 +158,16 @@ movement({
         "<A-!>",
     },
     config = conf.sj,
+})
+movement({
+    "mfussenegger/nvim-treehopper",
+    lazy = true,
+    keys = {
+        { "H", mode = "o" },
+        { "H", mode = "x" },
+        { "H", mode = "n" },
+        { "zf", mode = "n" },
+    },
+    dependencies = { "ggandor/leap.nvim" },
+    init = conf.treehopper,
 })
