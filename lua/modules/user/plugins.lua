@@ -142,51 +142,6 @@ user({
 })
 
 user({
-    "romainchapou/nostalgic-term.nvim",
-    lazy = true,
-    event = "TermOpen",
-    config = function()
-        require("nostalgic-term").setup({
-            mappings = {
-                { "<c-h>", "h" },
-                { "<c-j>", "j" },
-                { "<c-k>", "k" },
-                { "<c-l>", "l" },
-            },
-            add_normal_mode_mappings = true,
-        })
-    end,
-})
-
-user({
-    "linty-org/readline.nvim",
-    config = function()
-        local readline = require("readline")
-        vim.keymap.set("!", "<C-u>", readline.backward_kill_line)
-        vim.keymap.set("!", "<C-w>", readline.unix_word_rubout)
-
-        vim.keymap.set("!", "<C-d>", "<Delete>") -- delete-char
-        vim.keymap.set("!", "<C-h>", "<BS>") -- backward-delete-char
-
-        vim.keymap.set("!", "<C-a>", readline.beginning_of_line)
-        vim.keymap.set("!", "<C-e>", readline.end_of_line)
-
-        vim.keymap.set("!", "<c-F>", readline.forward_word)
-        vim.keymap.set("!", "<c-B>", readline.backward_word)
-
-        vim.keymap.set("!", "<C-f>", "<Right>") -- forward-char
-        vim.keymap.set("!", "<C-b>", "<Left>") -- backward-char
-        vim.keymap.set("!", "<C-n>", "<Down>") -- next-line
-        vim.keymap.set("!", "<C-p>", "<Up>") -- previous-line
-    end,
-})
-user({
-    "ThePrimeagen/vim-apm",
-    lazy = true,
-    event = "VimEnter",
-})
-
-user({
     "sindrets/scratchpad.nvim",
     cmd = { "Float", "FloatMove", "Scratchpad" },
 })
@@ -198,12 +153,14 @@ user({
         "<leader>sn",
         "<leader>su",
     },
+    event = "VeryLazy",
     dependencies = {
         "ibhagwan/fzf-lua",
     },
     config = true,
     init = function()
         local possession = require("nvim-possession")
+
         vim.keymap.set("n", "<leader>sl", function()
             possession.list()
         end)
@@ -336,24 +293,42 @@ user({
     end,
 })
 
-user({ "segeljakt/vim-silicon", cmd = { "Silicon", "SiliconHighlight" } })
-
 user({
-    "tyru/open-browser.vim",
-    keys = { { "gx", "<Plug>(openbrowser-smart-search)", mode = { "n", "v" } } },
+    "segeljakt/vim-silicon",
+    lazy = true,
+    cmd = { "Silicon", "SiliconHighlight" },
+    config = function()
+        vim.cmd([[
+            let s:workhours = {
+                  \ 'Monday':    [8, 16],
+                  \ 'Tuesday':   [9, 17],
+                  \ 'Wednesday': [9, 17],
+                  \ 'Thursday':  [9, 17],
+                  \ 'Friday':    [9, 15],
+                  \ }
+
+            function! s:working()
+                let day = strftime('%u')
+                if has_key(s:workhours, day)
+                  let hour = strftime('%H')
+                  let [start_hour, stop_hour] = s:workhours[day]
+                  if start_hour <= hour && hour <= stop_hour
+                    return "~/Work-Snippets/"
+                  endif
+                endif
+                return "/home/viv/Pictures/Silicon/"
+            endfunction
+
+            let g:silicon['output'] = function('s:working')
+        ]])
+    end,
 })
 
 user({
-    "tyru/capture.vim",
-    cmd = "Capture",
-})
 
-user({
-    "thinca/vim-qfreplace",
-    cmd = "Qfreplace",
-})
-
-user({
-    "itchyny/vim-qfedit",
-    ft = "qf",
+    "michaelb/do-nothing.vim",
+    branch = "lua",
+    config = function()
+        require("do-nothing")
+    end,
 })

@@ -174,3 +174,20 @@ misc({
         require("remember_me").setup({})
     end,
 })
+
+misc({
+    "romainchapou/nostalgic-term.nvim",
+    lazy = true,
+    event = "TermOpen",
+    config = function()
+        require("nostalgic-term").setup({
+            mappings = {
+                { "<c-h>", "h" },
+                { "<c-j>", "j" },
+                { "<c-k>", "k" },
+                { "<c-l>", "l" },
+            },
+            add_normal_mode_mappings = true,
+        })
+    end,
+})

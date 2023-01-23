@@ -230,4 +230,24 @@ function config.smart_q()
     vim.g.smartq_zenmode_integration = 0
 end
 
+function config.readline()
+    local readline = require("readline")
+    vim.keymap.set("!", "<C-u>", readline.backward_kill_line)
+    vim.keymap.set("!", "<C-w>", readline.unix_word_rubout)
+
+    vim.keymap.set("!", "<C-d>", "<Delete>") -- delete-char
+    vim.keymap.set("!", "<C-h>", "<BS>") -- backward-delete-char
+
+    vim.keymap.set("!", "<C-a>", readline.beginning_of_line)
+    vim.keymap.set("!", "<C-e>", readline.end_of_line)
+
+    vim.keymap.set("!", "<c-F>", readline.forward_word)
+    vim.keymap.set("!", "<c-B>", readline.backward_word)
+
+    vim.keymap.set("!", "<C-f>", "<Right>") -- forward-char
+    vim.keymap.set("!", "<C-b>", "<Left>") -- backward-char
+    vim.keymap.set("!", "<C-n>", "<Down>") -- next-line
+    vim.keymap.set("!", "<C-p>", "<Up>") -- previous-line
+end
+
 return config

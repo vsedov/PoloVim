@@ -52,7 +52,7 @@ clipsub({
     "otavioschwanck/cool-substitute.nvim",
     lazy = true,
     keys = {
-        "gm",
+        { "gm", mode = { "n", "v" } },
         "gM",
         "g!M",
         "g!m",

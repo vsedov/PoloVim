@@ -147,10 +147,6 @@ ui({
     end,
 })
 
---  REVISIT: (vsedov) (03:44:46 - 16/11/22): What does this plugin do again ?
-
-ui({ "max397574/colortils.nvim", cmd = "Colortils", config = conf.colourutils })
-
 ui({
     "Vonr/foldcus.nvim",
     lazy = true,

@@ -99,7 +99,7 @@ ts({
 ts({
     "Yggdroot/hiPairs",
     lazy = true,
-    event = "BufWinEnter",
+    event = "FileType",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hi_pairs,
 })

@@ -24,10 +24,7 @@ local python_setup = {
     pylsp = function()
         lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
     end,
-    jedi = function()
-        -- lspconfig.jedi_language_server.setup(enhance_attach(require("modules.lsp.lsp.providers.python.jedi_lang")))
-        print("Using Jedi")
-    end,
+    jedi = function() end,
 
     pylance = function()
         print("Using Pylance")
@@ -51,6 +48,7 @@ local latex_setup = {
         lspconfig.ltex.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.ltex").config))
     end,
 }
+
 python_setup[lambda.config.lsp.python.lsp]()
 
 latex_setup[lambda.config.lsp.latex]()

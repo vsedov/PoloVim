@@ -208,3 +208,27 @@ tools({
     "inkarkat/vim-visualrepeat",
     event = "ModeChanged",
 })
+
+tools({
+    "tyru/open-browser.vim",
+    lazy = true,
+    keys = { { "gx", "<Plug>(openbrowser-smart-search)", mode = { "n", "v" } } },
+})
+
+tools({
+    "tyru/capture.vim",
+    lazy = true,
+    cmd = "Capture",
+})
+
+tools({
+    "thinca/vim-qfreplace",
+    lazy = true,
+    cmd = "Qfreplace",
+})
+
+tools({
+    "itchyny/vim-qfedit",
+    lazy = true,
+    ft = "qf",
+})

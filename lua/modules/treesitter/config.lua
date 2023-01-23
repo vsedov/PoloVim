@@ -70,7 +70,6 @@ function config.treesitter_init()
         end
         ts_utils.update_selection(0, node)
     end, { desc = "node incremental selection" })
-    
 end
 
 function config.nvim_treesitter()

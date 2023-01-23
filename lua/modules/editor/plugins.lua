@@ -184,3 +184,10 @@ editor({
     keys = { ";S" },
     cmd = { "Switch", "SwitchCase" },
 })
+
+editor({
+    "linty-org/readline.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    config = conf.readline,
+})
