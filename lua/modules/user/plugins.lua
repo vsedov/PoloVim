@@ -232,14 +232,21 @@ user({
     config = function()
         require("pommodoro-clock").setup({})
 
-        local function pc(func)
-            return "<Cmd>lua require('pommodoro-clock')." .. func .. "()<CR>"
-        end
-        vim.keymap.set("n", ";1", pc([[start("work")]]), { silent = true })
-        vim.keymap.set("n", ";2", pc([[start("short_break")]]), { silent = true })
-        vim.keymap.set("n", ";2", pc([[start("long_break")]]), { silent = true })
-        vim.keymap.set("n", ";3", pc([[toggle_pause()]]), { silent = true })
-        vim.keymap.set("n", ";4", pc([[close()]]), { silent = true })
+        vim.keymap.set("n", ";1", function()
+            require("pommodoro-clock").start("work")
+        end)
+        vim.keymap.set("n", ";2", function()
+            require("pommodoro-clock").start("short_break")
+        end)
+        vim.keymap.set("n", ";3", function()
+            require("pommodoro-clock").start("long_break")
+        end)
+        vim.keymap.set("n", ";4", function()
+            require("pommodoro-clock").toggle_pause()
+        end)
+        vim.keymap.set("n", ";5", function()
+            require("pommodoro-clock").close()
+        end)
     end,
 })
 user({
@@ -327,4 +334,26 @@ user({
             },
         })
     end,
+})
+
+user({ "segeljakt/vim-silicon", cmd = { "Silicon", "SiliconHighlight" } })
+
+user({
+    "tyru/open-browser.vim",
+    keys = { { "gx", "<Plug>(openbrowser-smart-search)", mode = { "n", "v" } } },
+})
+
+user({
+    "tyru/capture.vim",
+    cmd = "Capture",
+})
+
+user({
+    "thinca/vim-qfreplace",
+    cmd = "Qfreplace",
+})
+
+user({
+    "itchyny/vim-qfedit",
+    ft = "qf",
 })
