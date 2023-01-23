@@ -235,11 +235,11 @@ user({
         local function pc(func)
             return "<Cmd>lua require('pommodoro-clock')." .. func .. "()<CR>"
         end
-        vim.keymap.set("n", ";1", pc("start_work"), { silent = true })
-        vim.keymap.set("n", ";2", pc("start_short_break"), { silent = true })
-        vim.keymap.set("n", ";2", pc("start_long_break"), { silent = true })
-        vim.keymap.set("n", ";3", pc("toggle_pause"), { silent = true })
-        vim.keymap.set("n", ";4", pc("close"), { silent = true })
+        vim.keymap.set("n", ";1", pc([[start("work")]]), { silent = true })
+        vim.keymap.set("n", ";2", pc([[start("short_break")]]), { silent = true })
+        vim.keymap.set("n", ";2", pc([[start("long_break")]]), { silent = true })
+        vim.keymap.set("n", ";3", pc([[toggle_pause()]]), { silent = true })
+        vim.keymap.set("n", ";4", pc([[close()]]), { silent = true })
     end,
 })
 user({
@@ -249,7 +249,7 @@ user({
 
         local function diagnostic_click(args)
             if args.button == "l" then
-                vim.diagnostic.open_float({ border = Border, scope = "line", source = "always" })
+                vim.diagnostic.open_float({ border = lambda.style.border.type_0, scope = "line", source = "always" })
             elseif args.button == "m" then
                 vim.lsp.buf.code_action()
             end

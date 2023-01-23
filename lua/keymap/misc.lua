@@ -4,10 +4,10 @@ local map_cu = bind.map_cu
 
 local plug_map = {
 
-    ["n|<F2>"] = map_cu("UndotreeToggle", "Undo Tree"):with_noremap():with_silent(),
-    ["n|<f8>"] = map_cu("MruRepos", "MruRepos"):with_noremap():with_silent(),
-    ["n|<f9>"] = map_cu("Mru", "Mru"):with_noremap():with_silent(),
-    ["n|<f0>"] = map_cu("Mfu", "Mfu"):with_noremap():with_silent(),
+    ["n|<F1>"] = map_cu("UndotreeToggle", "Undo Tree"):with_noremap():with_silent(),
+    ["n|<leader>1"] = map_cu("MruRepos", "MruRepos"):with_noremap():with_silent(),
+    ["n|<leader>2"] = map_cu("Mru", "Mru"):with_noremap():with_silent(),
+    ["n|<leader>3"] = map_cu("Mfu", "Mfu"):with_noremap():with_silent(),
 
     ["n|<leader>tn"] = map_cu("tabedit", "tabedit"):with_noremap():with_silent(),
     ["n|<leader>tc"] = map_cu("tabclose", "tabclose"):with_noremap():with_silent(),

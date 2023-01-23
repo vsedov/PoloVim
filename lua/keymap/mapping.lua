@@ -49,13 +49,13 @@ local def_map = {
     ["n|$"] = map_cmd([[g_]]):with_noremap(),
 
     -- ----------------------------------------------------------------------
-    ["n|;gg"] = map_cmd(vim.cmd.ChatGPT):with_noremap(),
+    ["n|;gg"] = map_cmd(vim.cmd.ChatGPT, "ChatGpt"):with_noremap(),
 
-    ["n|;gp"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions):with_noremap(),
-    ["i|;gp"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions):with_noremap(),
+    ["n|;gp"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions, "GptInstructions"):with_noremap(),
+    ["i|;gp"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions, "GptInstructions"):with_noremap(),
 
-    ["n|;gr"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction):with_noremap(),
-    ["i|;gr"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction):with_noremap(),
+    ["n|;gr"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction, "CodeActions"):with_noremap(),
+    ["i|;gr"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction, "CodeActions"):with_noremap(),
     -- ----------------------------------------------------------------------
 }
 
