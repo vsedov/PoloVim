@@ -22,10 +22,22 @@ misc({
     },
     config = conf.surround,
 })
+misc({
+    "XXiaoA/ns-textobject.nvim",
+    lazy = true,
+    -- event = "ModeChanged",
+    dependencies = { "kylechui/nvim-surround" },
+    keys = {
+        { "aq", mode = { "x", "o" } },
+        { "iq", mode = { "x", "o" } },
+    },
+    config = conf.ns,
+})
 
 misc({
     "NMAC427/guess-indent.nvim",
     lazy = true,
+    event = lambda.config.guess_indent,
     cmd = "GuessIndent",
     config = conf.guess_indent,
 })

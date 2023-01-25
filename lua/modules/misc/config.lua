@@ -64,6 +64,21 @@ function config.surround()
     })
 end
 
+function config.ns()
+    local nstextobject = require("ns-textobject")
+    nstextobject.setup()
+
+    vim.keymap.set({ "x", "o" }, "aq", function()
+        nstextobject.create_textobj("q", "a")
+    end, { desc = "Around the quote" })
+
+    vim.keymap.set({ "x", "o" }, "iq", function()
+        nstextobject.create_textobj("q", "i")
+    end, { desc = "Inside the quote" })
+
+    nstextobject.map_textobj("q", "quotes")
+end
+
 function config.guess_indent()
     require("guess-indent").setup({
         auto_cmd = true, -- Set to false to disable automatic execution

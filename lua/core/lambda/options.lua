@@ -88,7 +88,7 @@ lambda.config.colourscheme = {
 }
 
 lambda.config.treesitter = {
-    use_guess_indent = not use_ts_yeti,
+    use_guess_indent = false,
     use_yeti = use_ts_yeti,
 }
 

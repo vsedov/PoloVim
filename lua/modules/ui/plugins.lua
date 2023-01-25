@@ -108,8 +108,8 @@ ui({
 
 ui({
     "lukas-reineke/indent-blankline.nvim",
-    branch = "develop",
     lazy = true,
+    event = "VeryLazy",
     config = conf.blankline,
 }) -- after="nvim-treesitter",
 
@@ -132,6 +132,8 @@ ui({
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     lazy = true,
+    cond = lambda.config.use_scroll,
+    event = "VeryLazy",
     config = function()
         require("neoscroll").setup({
             mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
@@ -158,7 +160,8 @@ ui({
 
 ui({
     "folke/noice.nvim",
-    lazy = not lambda.config.ui.noice.enable,
+    lazy = true,
+    cond = lambda.config.ui.noice.enable,
     dependencies = {
         "nui.nvim",
         "nvim-notify",
