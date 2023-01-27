@@ -38,7 +38,8 @@ lsp({
     },
     config = conf.mason_setup,
 })
-cmd = { "scala" }, lsp({ "ii14/lsp-command", lazy = true, cmd = { "Lsp" } })
+
+lsp({ "ii14/lsp-command", lazy = true, cmd = { "Lsp" } })
 
 lsp({
     "p00f/clangd_extensions.nvim",
