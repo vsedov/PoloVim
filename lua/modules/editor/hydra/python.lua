@@ -19,17 +19,17 @@ end
 
 local python_hints = [[
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^          Nice to Have          ^ ^
+^ ^        Documentation           ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^ _<enter>_ : Ruff Fixer         ^ ^
-^ ^ _e_ : VenvFind                 ^ ^
-^ ^ _E_ : GetVenv                  ^ ^
+^ ^ _a_ : CopyReferenceDotted      ^ ^
+^ ^ _s_ : CopyReferencePytest      ^ ^
+^ ^ _d_ : CopyReferenceImport      ^ ^
 ^ ^                                ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^        Poetry poetry           ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^ _a_ : inputDependency          ^ ^
-^ ^ _d_ : showPackage              ^ ^
+^ ^ _i_ : inputDependency          ^ ^
+^ ^ _D_ : showPackage              ^ ^
 ^ ^                                ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^        Poetry Taskipy          ^ ^
@@ -52,6 +52,13 @@ local python_hints = [[
 ^ ^ _B_ : f-sendIPythonToBuffer    ^ ^
 ^ ^                                ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
+^ ^          Nice to Have          ^ ^
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
+^ ^ _<enter>_ : Ruff Fixer         ^ ^
+^ ^ _e_ : VenvFind                 ^ ^
+^ ^ _E_ : GetVenv                  ^ ^
+^ ^                                ^ ^
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^ <Esc> : Exit                   ^ ^
 ]]
 local python_hints = {
@@ -71,8 +78,22 @@ local python_hints = {
     body = ";a",
     heads = {
         { "<enter>", fixer, { nowait = true } },
-        -- { "i", navy, { exit = true } },
-        -- { "f", toggle_fstring, { exit = true } },
+
+        {
+            "a",
+            cmd("PythonCopyReferenceDotted"),
+            { nowait = true, silent = true, desc = "Python Dotted", exit = true },
+        },
+        {
+            "s",
+            cmd("PythonCopyReferencePytest"),
+            { nowait = true, silent = true, desc = "Python Pytest", exit = true },
+        },
+        {
+            "d",
+            cmd("PythonCopyReferenceImport"),
+            { nowait = true, silent = true, desc = "Python import", exit = true },
+        },
 
         { "I", cmd("lua require('py.ipython').toggleIPython()"), { exit = true } },
         { "S", cmd("lua require('py.ipython').sendObjectsToIPython()"), { exit = true } },
@@ -82,8 +103,8 @@ local python_hints = {
         { "t", cmd("lua require('py.pytest').launchPytest()"), { exit = true } },
         { "r", cmd("lua require('py.pytest').showPytestResult()"), { exit = true } },
 
-        { "a", cmd("lua require('py.poetry').inputDependency()"), { exit = true } },
-        { "d", cmd("lua require('py.poetry').showPackage()"), { exit = true } },
+        { "i", cmd("lua require('py.poetry').inputDependency()"), { exit = true } },
+        { "D", cmd("lua require('py.poetry').showPackage()"), { exit = true } },
 
         { "w", cmd("lua require('py.taskipy').runTasks()"), { exit = true } },
         { "W", cmd("lua require('py.taskipy').runTaskInput()"), { exit = true } },
@@ -136,14 +157,5 @@ local magma = {
     },
 }
 
-lambda.augroup("PythonHydra", {
-    {
-        event = "FileType",
-        pattern = "python",
-        command = function()
-            Hydra(python_hints)
-            Hydra(magma)
-        end,
-        once = true,
-    },
-})
+Hydra(python_hints)
+-- Hydra(magma)

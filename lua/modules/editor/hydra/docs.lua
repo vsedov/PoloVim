@@ -40,12 +40,6 @@ local hints = [[
                            
     _j_: USearch          ▕          _o_: UShowLink
     _z_: Zeavim           ▕          _k_: DevDocs
-
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
- ^^^^               Language Specifc Docs          ^^^^
- ^^^^                                              ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-    _[_: Dotted                      _]_: Pytest
 ]]
 
 config.doc_binds = {
@@ -124,14 +118,6 @@ config.doc_binds = {
     -----------
 
     --- Python stuff Language specific stuff
-    ["["] = {
-        cmd("PythonCopyReferenceDotted"),
-        { nowait = true, silent = true, desc = "Python Dotted", exit = true },
-    },
-    ["]"] = {
-        cmd("PythonCopyReferencePytest"),
-        { nowait = true, silent = true, desc = "Python Pytest", exit = true },
-    },
 }
 
 local mapping = {
