@@ -8,6 +8,7 @@ python({
     cmd = {
         "PythonCopyReferenceDotted",
         "PythonCopyReferencePytest",
+        "PythonCopyReferenceImport",
     },
 })
 
