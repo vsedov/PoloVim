@@ -208,6 +208,8 @@ user({
 })
 user({
     "luukvbaal/statuscol.nvim",
+    lazy = true,
+    event = "VeryLazy",
     config = function()
         local builtin = require("statuscol.builtin")
 
