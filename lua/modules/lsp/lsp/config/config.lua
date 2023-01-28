@@ -164,7 +164,7 @@ local container = {
                 "hover",
             },
 
-            ["gK"] = {
+            ["gk"] = {
                 function()
                     vim.cmd([[Lspsaga hover_doc ++keep]])
                 end,

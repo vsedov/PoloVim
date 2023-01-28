@@ -88,7 +88,7 @@ local treesitter_obj = function()
                 border = "single",
                 peek_definition_code = {
                     ["gl"] = "@function.outer",
-                    ["gk"] = "@class.outer",
+                    ["gK"] = "@class.outer",
                 },
             },
             move = {
