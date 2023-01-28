@@ -96,10 +96,7 @@ function config.guess_indent()
     })
 end
 
-function config.headers()
-    local highlights = require("utils.ui.highlights")
-    require("headlines").setup()
-end
+
 
 function config.NeoWell()
     require("neo-well").setup({

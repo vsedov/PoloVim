@@ -42,11 +42,6 @@ misc({
     config = conf.guess_indent,
 })
 
-misc({
-    "lukas-reineke/headlines.nvim",
-    ft = { "norg", "md" },
-    config = conf.headers,
-})
 
 -- programming spell
 misc({ "psliwka/vim-dirtytalk", build = "DirtytalkUpdate" })
