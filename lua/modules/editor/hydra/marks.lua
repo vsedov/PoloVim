@@ -2,7 +2,7 @@ local function starts(String, Start)
     return string.sub(String, 1, string.len(Start)) == Start
 end
 
-local leader_key = "m"
+local leader_key = "M"
 local hydra = require("hydra")
 
 local bracket = { "<cr>", "m", "n", "N", "c" }

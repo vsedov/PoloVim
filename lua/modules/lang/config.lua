@@ -74,7 +74,6 @@ function config.debugprint()
         "<cmd>lua require('debugprint').debugprint({ ignore_treesitter = true, above = true, variable = true })<CR>",
         { noremap = true, desc = { "Debug print var above" } }
     )
-  
 end
 
 function config.code_runner()

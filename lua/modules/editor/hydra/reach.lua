@@ -36,7 +36,7 @@ local exit = { nil, { exit = true, desc = "EXIT" } }
 config.parenth_mode = {
     color = "red",
     body = leader,
-    mode = { "n", "v", "x", "o" },
+    mode = { "n", "v" },
     ["<ESC>"] = { nil, { exit = true } },
 
     b = {
@@ -212,4 +212,5 @@ end
 
 val = auto_hint_generate()
 new_hydra.hint = val
+
 hydra(new_hydra)
