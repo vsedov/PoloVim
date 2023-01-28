@@ -55,6 +55,7 @@ lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
 
 lsp({
     "glepnir/lspsaga.nvim",
+    event = "VeryLazy",
     cmd = { "Lspsaga" },
     lazy = true,
     config = conf.saga,

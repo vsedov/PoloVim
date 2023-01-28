@@ -163,16 +163,12 @@ local container = {
                 end,
                 "hover",
             },
-            ["gK"] = {
 
+            ["gK"] = {
                 function()
-                    if lambda.config.lsp.use_ruff_lsp then
-                        vim.cmd([[Lspsaga hover_doc]])
-                    else
-                        require("hover").hover_select()
-                    end
+                    vim.cmd([[Lspsaga hover_doc ++keep]])
                 end,
-                "Hover select",
+                "Hover Left",
             },
         },
         visual_mode = {
@@ -311,5 +307,4 @@ local container = {
         code_action = { "eslint_d", "gitrebase", "refactoring" },
     },
 }
-
 return container
