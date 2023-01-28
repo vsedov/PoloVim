@@ -9,6 +9,7 @@ user({
         "CphEdit",
         "CphDelete",
     },
+
     lazy = true,
     config = function()
         vim.g["cph#lang"] = "python"
@@ -206,9 +207,10 @@ user({
         end)
     end,
 })
+--
 user({
     "luukvbaal/statuscol.nvim",
-    lazy = true,
+    cond = false,
     event = "VeryLazy",
     config = function()
         local builtin = require("statuscol.builtin")
@@ -248,12 +250,12 @@ user({
         })
     end,
 })
-
+--
 user({
     "tamton-aquib/staline.nvim",
     lazy = true,
-    event = "BufWinEnter",
     config = function()
+        local wpm = require("wpm")
         require("staline").setup({
 
             sections = {
@@ -265,7 +267,7 @@ user({
                     "branch",
                     " ",
                 },
-                mid = { "lsp" },
+                mid = { wpm.wpm(),},
                 right = {
                     "cool_symbol",
                     " ",
@@ -276,8 +278,7 @@ user({
                     " ",
                 },
             },
-
-            defaults = {
+                        defaults = {
                 fg = "#986fec",
                 cool_symbol = "  ",
                 true_colors = true,
@@ -294,7 +295,7 @@ user({
         })
     end,
 })
-
+--
 user({
     "segeljakt/vim-silicon",
     lazy = true,
@@ -325,12 +326,22 @@ user({
         ]])
     end,
 })
-
 user({
-
-    "michaelb/do-nothing.vim",
-    branch = "lua",
+    
+    "jcdickinson/wpm.nvim",
+    lazy = true, 
     config = function()
-        require("do-nothing")
-    end,
+        require("wpm").setup({
+        })
+    end
+
 })
+
+-- user {
+--   'nvim-lualine/lualine.nvim',
+--   requires = { 'kyazdani42/nvim-web-devicons' },
+--   config =function (  )
+      
+--   end
+
+-- }
