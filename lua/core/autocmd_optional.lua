@@ -116,4 +116,7 @@ vim.defer_fn(function()
         --[[ is ]]
         require("utils.abbreviations").setup()
     end
+
+    require("utils.plugins.marks").setup()
+    require("utils.plugins.stalk").setup()
 end, 100)
