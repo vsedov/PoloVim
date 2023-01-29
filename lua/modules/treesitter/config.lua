@@ -190,7 +190,6 @@ function config.hi_pairs()
         return out
     end
     setglobal = setkey("g")
-    setglobal("hiPairs_enable_matchParen", 0)
     setglobal("hiPairs_hl_matchPair", {
         term = "underline,bold",
         cterm = "underline,bold",

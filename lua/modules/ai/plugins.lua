@@ -46,6 +46,7 @@ ai({
     },
     config = function()
         require("chatgpt").setup({
+            max_line_length = 1000000,
             openai_params = {
                 model = "text-davinci-003",
                 frequency_penalty = 0,
@@ -55,15 +56,6 @@ ai({
                 top_p = 1,
                 n = 1,
             },
-            -- openai_params = {
-            --     model = "code-davinci-002", -- code-babbage-001 , code-curious-001
-            --     frequency_penalty = 0,
-            --     presence_penalty = 0,
-            --     max_tokens = 1000,
-            --     temperature = 1,
-            --     top_p = 1,
-            --     n = 1,
-            -- },
         })
     end,
 })

@@ -155,7 +155,7 @@ o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "yes:3"
 o.ruler = false
 -- if lambda.config.ui.noice.enable then
-o.cmdheight = 0 -- 0 , is still borked it seems
+o.cmdheight = 1 -- 0 , is still borked it seems
 -- else
 --     o.cmdheight = 0
 -- end

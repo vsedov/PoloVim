@@ -1,6 +1,8 @@
 -- Quick Note: I think this is a great language server that provides almost everything you would
 -- need thoughthere are a few isseus that are a bit annoying, and i hope that they get resolved
 -- soon
+local py = require("modules.lsp.lsp.providers.python.utils.python_help")
+
 return {
     cmd = { "jedi-language-server" },
     filetypes = { "python" },
@@ -13,4 +15,28 @@ return {
             autoImportModules = { "torch" },
         },
     },
+
+    before_init = function(_, config)
+        local stub_path = require("lspconfig/util").path.join(
+            vim.fn.stdpath("data"),
+            "site",
+            "pack",
+            "packer",
+            "typings",
+            "opt",
+            "python-type-stubs"
+        )
+        config.settings.python.analysis.stubPath = stub_path
+    end,
+    on_new_config = function(new_config, new_root_dir)
+        py.env(new_root_dir)
+        new_config.settings.python.pythonPath = vim.fn.exepath("python") or vim.fn.exepath("python3") or "python"
+        -- new_config.cmd_env.PATH = py.env(new_root_dir) .. new_config.cmd_env.PATH
+
+        local pep582 = py.pep582(new_root_dir)
+
+        if pep582 ~= nil then
+            new_config.settings.python.analysis.extraPaths = { pep582 }
+        end
+    end,
 }

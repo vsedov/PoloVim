@@ -90,7 +90,7 @@ ts({
 ts({
     "andymass/vim-matchup",
     lazy = true,
-    event = "BufRead",
+    event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.matchup,
     init = conf.matchup_setup,
@@ -99,7 +99,8 @@ ts({
 ts({
     "Yggdroot/hiPairs",
     lazy = true,
-    event = "FileType",
+    cond = true,
+    event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hi_pairs,
 })

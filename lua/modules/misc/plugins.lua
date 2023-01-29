@@ -42,7 +42,6 @@ misc({
     config = conf.guess_indent,
 })
 
-
 -- programming spell
 misc({ "psliwka/vim-dirtytalk", build = "DirtytalkUpdate" })
 

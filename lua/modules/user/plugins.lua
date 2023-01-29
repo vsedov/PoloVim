@@ -30,6 +30,7 @@ user({
 user({
     "LunarVim/bigfile.nvim",
     event = "VeryLazy",
+    cond = false,
     config = function()
         local default_config = {
             filesize = 2,
@@ -38,7 +39,6 @@ user({
                 "indent_blankline",
                 "illuminate",
                 "syntax",
-                "matchparen",
                 "vimopts",
                 "filetype",
             },
@@ -46,14 +46,6 @@ user({
         require("bigfile").config(default_config)
     end,
 })
-
-user({
-    "tamton-aquib/mpv.nvim",
-    lazy = true,
-    cmd = "MpvToggle",
-    config = true,
-})
-
 user({
     "Apeiros-46B/qalc.nvim",
     config = true,
@@ -74,12 +66,67 @@ user({
 
 user({
     "stevearc/oil.nvim",
-    lazy = true,
+    event = "VeryLazy",
     init = function()
         vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
     end,
-    event = "VeryLazy",
-    config = true,
+    config = function()
+        require("oil").setup({
+            columns = {
+                "icon",
+                -- "permissions",
+                "mtime",
+            },
+            buf_options = {
+                buflisted = true,
+            },
+            -- Window-local options to use for oil buffers
+            win_options = {
+                wrap = true,
+                signcolumn = "no",
+                cursorcolumn = false,
+                foldcolumn = "0",
+                spell = false,
+                list = false,
+                conceallevel = 3,
+                concealcursor = "n",
+            },
+            -- Restore window options to previous values when leaving an oil buffer
+            restore_win_options = true,
+            -- Skip the confirmation popup for simple operations
+            skip_confirm_for_simple_edits = false,
+            keymaps = {
+                ["g?"] = "actions.show_help",
+                ["<CR>"] = "actions.select",
+                ["<C-s>"] = "actions.select_vsplit",
+                ["<C-h>"] = "actions.select_split",
+                ["<C-p>"] = "actions.preview",
+                ["<C-c>"] = "actions.close",
+                ["<C-l>"] = "actions.refresh",
+                ["-"] = "actions.parent",
+                ["_"] = "actions.open_cwd",
+                ["c"] = "actions.cd",
+                ["C"] = "actions.tcd",
+                ["g."] = "actions.toggle_hidden",
+            },
+            -- Set to false to disable all of the above keymaps
+            use_default_keymaps = false,
+            view_options = {
+                show_hidden = false,
+            },
+            -- Configuration for the floating window in oil.open_float
+            float = {
+                -- Padding around the floating window
+                padding = 2,
+                max_width = 0,
+                max_height = 0,
+                border = "rounded",
+                win_options = {
+                    winblend = 10,
+                },
+            },
+        })
+    end,
 })
 
 user({
@@ -136,7 +183,7 @@ user({
             handlers = {
                 diagnostic = true,
                 search = true,
-                gitsigns = false,
+                gitsigns = true,
             },
         })
     end,
@@ -189,18 +236,18 @@ user({
     },
     config = function()
         require("pommodoro-clock").setup({})
-
         vim.keymap.set("n", ";1", function()
+            require("pommodoro-clock").toggle_pause()
+        end)
+
+        vim.keymap.set("n", ";2", function()
             require("pommodoro-clock").start("work")
         end)
-        vim.keymap.set("n", ";2", function()
+        vim.keymap.set("n", ";3", function()
             require("pommodoro-clock").start("short_break")
         end)
-        vim.keymap.set("n", ";3", function()
-            require("pommodoro-clock").start("long_break")
-        end)
         vim.keymap.set("n", ";4", function()
-            require("pommodoro-clock").toggle_pause()
+            require("pommodoro-clock").start("long_break")
         end)
         vim.keymap.set("n", ";5", function()
             require("pommodoro-clock").close()
@@ -210,7 +257,7 @@ user({
 --
 user({
     "luukvbaal/statuscol.nvim",
-    cond = false,
+    cond = true,
     event = "VeryLazy",
     config = function()
         local builtin = require("statuscol.builtin")
@@ -250,51 +297,7 @@ user({
         })
     end,
 })
---
-user({
-    "tamton-aquib/staline.nvim",
-    lazy = true,
-    config = function()
-        local wpm = require("wpm")
-        require("staline").setup({
 
-            sections = {
-                left = {
-                    "mode",
-                    " ",
-                    "file_name",
-                    " ",
-                    "branch",
-                    " ",
-                },
-                mid = { wpm.wpm(),},
-                right = {
-                    "cool_symbol",
-                    " ",
-                    " ",
-                    "lsp_name",
-                    " ",
-                    "line_column",
-                    " ",
-                },
-            },
-                        defaults = {
-                fg = "#986fec",
-                cool_symbol = "  ",
-                true_colors = true,
-                branch_symbol = " ",
-                line_column = "[%l:%c] 並%p%% ",
-                -- font_active = "bold"
-            },
-            mode_colors = {
-                i = "#d4be98",
-                n = "#CBA6F7",
-                c = "#8fbf7f",
-                v = "#fc802d",
-            },
-        })
-    end,
-})
 --
 user({
     "segeljakt/vim-silicon",
@@ -326,22 +329,51 @@ user({
         ]])
     end,
 })
-user({
-    
-    "jcdickinson/wpm.nvim",
-    lazy = true, 
-    config = function()
-        require("wpm").setup({
-        })
-    end
 
+user({
+    "tamton-aquib/mpv.nvim",
+    lazy = true,
+    cmd = "MpvToggle",
+    config = { setup_widgets = true, timer = { throttle = 100 } },
 })
 
--- user {
---   'nvim-lualine/lualine.nvim',
---   requires = { 'kyazdani42/nvim-web-devicons' },
---   config =function (  )
-      
---   end
+user({
 
--- }
+    "strash/everybody-wants-that-line.nvim",
+    event = "VeryLazy", 
+    config = function()
+        require("everybody-wants-that-line").setup({
+            buffer = {
+                enabled = true,
+                prefix = "λ:",
+                symbol = "0",
+                max_symbols = 5,
+            },
+            diagnostics = {
+                enabled = true,
+            },
+            quickfix_list = {
+                enabled = true,
+            },
+            git_status = {
+                enabled = true,
+            },
+            filepath = {
+                enabled = true,
+                path = "relative",
+                shorten = false,
+            },
+            filesize = {
+                enabled = true,
+                metric = "decimal",
+            },
+            ruller = {
+                enabled = true,
+            },
+            filename = {
+                enabled = true,
+            },
+            separator = "│",
+        })
+    end,
+})

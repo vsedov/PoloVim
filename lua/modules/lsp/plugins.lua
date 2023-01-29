@@ -116,7 +116,7 @@ lsp({
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cmd = { "RCL" },
-    lazy = not lambda.config.lsp.use_rcd,
+    cond = lambda.config.lsp.use_rcd,
     config = conf.rcd,
 })
 

@@ -118,5 +118,6 @@ vim.defer_fn(function()
     end
 
     require("utils.plugins.marks").setup()
+    require("utils.plugins.marks_v2")
     require("utils.plugins.stalk").setup()
 end, 100)

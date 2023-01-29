@@ -93,7 +93,11 @@ function config.vimtex()
         "Unused global option(s)",
     }
 
-    vim.g.vimtex_quickfix_autoclose_after_keystrokes = 4
+    vim.g.vimtex_quickfix_autoclose_after_keystrokes = 1
+    vim.g.vimtex_quickfix_open_on_warning = 0
+    vim.g.vimtext_quickfix_mode = 1
+    -- QuickFix is just annoying
+    vim.g.vimtex_quickfix_enabled = 0
 
     -- Affichage des symbole math comme dans le document
     vim.opt.conceallevel = 2

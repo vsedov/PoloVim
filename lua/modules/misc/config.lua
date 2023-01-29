@@ -96,8 +96,6 @@ function config.guess_indent()
     })
 end
 
-
-
 function config.NeoWell()
     require("neo-well").setup({
         height = 10,
