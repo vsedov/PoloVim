@@ -70,7 +70,7 @@ hint = [[
 
    _d_: Bwipeout
 ]]
-config = {
+Hydra({
     hint = hint,
     name = "Buffer management",
     mode = "n",
@@ -147,5 +147,4 @@ config = {
         { "0", require("three").wrap(require("three").jump_to, 10), { desc = "Jump to buffer 10" } },
         { "#", require("three").wrap(require("three").next, { delta = 100 }), { desc = "Jump to last buffer" } },
     },
-}
-Hydra(config)
+})
