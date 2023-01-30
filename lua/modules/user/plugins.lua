@@ -340,7 +340,7 @@ user({
 user({
 
     "strash/everybody-wants-that-line.nvim",
-    event = "VeryLazy", 
+    event = "VeryLazy",
     config = function()
         require("everybody-wants-that-line").setup({
             buffer = {

@@ -95,7 +95,12 @@ lsp({
     lazy = true,
 })
 
-lsp({ "smjonas/inc-rename.nvim", lazy = true, config = conf.rename })
+lsp({
+    "smjonas/inc-rename.nvim",
+    lazy = true,
+    cmd = "IncRename",
+    config = conf.rename,
+})
 
 -- lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
