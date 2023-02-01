@@ -1,23 +1,25 @@
 local Hydra = require("hydra")
 local utils = require("modules.editor.hydra_rewrite.api.utils")
+local M = {}
 
 local opts = {}
 local config = {}
 
-function config.set_name_space(name_space)
+function M.set_name_space(name_space)
     opts.name_space = name_space
 end
 
-function config.ignore_binds(data)
+function M.ignore_binds(data)
     opts.ignore = data
 end
 
-function config.set_config_table(data)
+function M.set_config_table(data)
     config[opts.name_space] = data
-    vim.tbl_extend("keep", config[opts.name_space], { nil, { exit = true, desc = "EXIT" } })
 end
 
-function config.define_mapping(new_hydra)
+--  TODO: (vsedov) (07:31:02 - 30/01/23): There is something wrong, here im not sure why this does
+--  not work .
+function M.define_mapping(new_hydra)
     local mapping = {
         color = function(t, rhs)
             t.config.color = rhs
@@ -37,6 +39,7 @@ function config.define_mapping(new_hydra)
     }
     for name, spec in pairs(config) do
         for lhs, rhs in pairs(spec) do
+            -- P(mapping[lhs])
             local action = mapping[lhs]
             if action == nil then
                 new_hydra.heads[#new_hydra.heads + 1] = { lhs, table.unpack(rhs) }
@@ -46,11 +49,10 @@ function config.define_mapping(new_hydra)
         end
     end
 
-    config.new_hydra = new_hydra
+    return new_hydra
 end
-function config.auto_hint_generate(bind_tables, ignore)
+function M.auto_hint_generate(bind_tables, ignore)
     container = {}
-    opts.name_space = "default"
     for x, y in pairs(config[opts.name_space]) do
         local mapping = x
         if type(y[1]) == "function" then
@@ -66,20 +68,23 @@ function config.auto_hint_generate(bind_tables, ignore)
         table.insert(sorted, k)
     end
     table.sort(sorted)
-
     core_table = {}
+
+    utils.make_core_table(core_table, opts.ignore)
+
     for x, y in pairs(bind_tables) do
         data = utils.create_table_normal({}, sorted, y[1], y[2], ignore)
         utils.make_core_table(core_table, data)
     end
-    return core_table
+    return core_table, container
 end
 
-function config.generate_hint_table(bind_tables, ignore)
+function M.getn_hydra(bind_tables, new_hydra)
     hint_table = {}
     string_val = "^ ^      " .. opts.name_space .. "      ^ ^\n\n"
     string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
-    core_table = config.auto_hint_generate(bind_tables, ignore)
+    core_table, container = M.auto_hint_generate(bind_tables, opts.ignore)
+
     for _, v in pairs(core_table) do
         if v == "\n" then
             hint = "\n"
@@ -89,55 +94,11 @@ function config.generate_hint_table(bind_tables, ignore)
         end
         table.insert(hint_table, hint)
         string_val = string_val .. hint
-        -- end
     end
 
-    config.new_hydra.hint = string_val
-    Hydra(config.new_hydra)
+    new_hydra.hint = string_val
+    vim.tbl_deep_extend("force", new_hydra, config)
+    Hydra(new_hydra)
 end
 
--- Meta tables for hydra
-
--- config.set_name_space("default")
--- config.set_config_table({
---     color = "pink",
---     mode = { "n", "v", "x", "o" },
---     L = {
---         function()
---             require("substitute").operator()
---         end,
---         { nowait = true, desc = "Operator Sub", exit = true },
---     },
---
---     l = {
---         function()
---             require("substitute").line()
---         end,
---         { nowait = true, desc = "Operator line", exit = true },
---     },
---
---     k = {
---         function()
---             require("substitute").line()
---         end,
---         { nowait = true, desc = "Operator line", exit = true },
---     },
---     K = {
---         function()
---             require("substitute").line()
---         end,
---         { nowait = true, desc = "Operator line", exit = true },
---     },
---     a = {
---         function()
---             require("substitute").line()
---         end,
---         { nowait = true, desc = "Operator line", exit = true },
---     },
--- })
--- auto_hint_generate({
---     { 1, { "L", "l", "k", "K" } },
---     { 2, { "a" } },
--- })
---
--- return config
+return M
