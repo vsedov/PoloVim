@@ -32,7 +32,8 @@
 This basis for this setup was taken from ray-x, i loved the way it was layed out, i just felt that i needed to add more
 towards the setup to get become more optimal, please refer to his setup or Maxes setup if mine breaks or does something
 werid
-
+- [Glepnir](https://github.com/glepnir/nvim)
+   Without his initial config layout, this would not be possible.
 - [Akinsho](https://github.com/akinsho/dotfiles/tree/nightly/.config/nvim)
   It would be an understatement to say that majority of my main / core functions come from his statement,
 - [ray-x](https://github.com/ray-x/nvim)
