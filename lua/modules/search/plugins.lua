@@ -13,6 +13,7 @@ search({
         {
             "nvim-telescope/telescope-frecency.nvim",
             lazy = true,
+            config = function() end,
         },
         {
             "nvim-telescope/telescope-live-grep-args.nvim",
@@ -48,8 +49,20 @@ search({
 })
 
 search({
+    "danielfalk/smart-open.nvim",
+    lazy = true,
+    config = function()
+        require("telescope").load_extension("smart_open")
+    end,
+    dependencies = { "kkharji/sqlite.lua" },
+})
+
+search({
     "dhruvmanila/telescope-bookmarks.nvim",
     lazy = true,
+    config = function()
+        require("telescope").load_extension("bookmarks")
+    end,
     dependencies = {
         "kkharji/sqlite.lua",
     },
@@ -93,7 +106,6 @@ search({
             })
         end,
     },
-    lazy = true,
     config = conf.sad,
 })
 
