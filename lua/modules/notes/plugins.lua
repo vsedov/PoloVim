@@ -6,7 +6,8 @@ notes({
     lazy = true,
     ft = "norg",
     cmd = "Neorg",
-    config = conf.norg,
+    opts = require("modules.notes.neorg").opts,
+    -- config = require("modules.notes.neorg").config
 })
 
 notes({
@@ -28,7 +29,6 @@ notes({
     "lervag/vimtex",
     lazy = true,
     ft = { "latex", "tex" },
-    after = "nvim-treesitter/nvim-treesitter",
     config = conf.vimtex,
 })
 
