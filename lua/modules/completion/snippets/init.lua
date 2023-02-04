@@ -6,18 +6,6 @@ local i = ls.insert_node
 local f = ls.function_node
 local c = ls.choice_node
 local d = ls.dynamic_node
--- local r = ls.restore_node
--- local isn = ls.indent_snippet_node
--- local events = require("luasnip.util.events")
--- local ai = require("luasnip.nodes.absolute_indexer")
--- local types = require("luasnip.util.types")
--- local util = require("luasnip.util.util")
--- local l = require("luasnip.extras").lambda
--- local p = require("luasnip.extras").partial
--- local rep = require("luasnip.extras").rep
--- local m = require("luasnip.extras").match
--- local n = require("luasnip.extras").nonempty
--- local dl = require("luasnip.extras").dynamic_lambda
 local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
@@ -88,43 +76,6 @@ local snippets = {
             i(2),
             t({ "|" }),
             i(0),
-        }),
-    },
-    java = {
-        parse({ trig = "pus" }, public_string),
-        parse({ trig = "puv" }, public_void),
-        -- Very long example for a java class.
-        s("fn", {
-            d(6, utils.jdocsnip, { 2, 4, 5 }),
-            t({ "", "" }),
-            c(1, {
-                t("public "),
-                t("private "),
-            }),
-            c(2, {
-                t("void"),
-                t("char"),
-                t("int"),
-                t("double"),
-                t("boolean"),
-                t("float"),
-                i(nil, ""),
-            }),
-            t(" "),
-            i(3, "myFunc"),
-            t("("),
-            i(4),
-            t(")"),
-            c(5, {
-                t(""),
-                sn(nil, {
-                    t({ "", " throws " }),
-                    i(1),
-                }),
-            }),
-            t({ " {", "\t" }),
-            i(0),
-            t({ "", "}" }),
         }),
     },
     cpp = {
@@ -235,8 +186,4 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
     ls.add_snippets("tex", { snip })
 end
 ls.add_snippets("tex", require("modules.completion.snippets.latex.tex_math"), { type = "autosnippets" })
-
--- HACK: For some reason you have to load it twice
-require("luasnip/loaders/from_vscode").load({
-    paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
-})
+require("luasnip.loaders.from_vscode").lazy_load()

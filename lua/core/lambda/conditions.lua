@@ -1,2 +1,7 @@
-x = require("core.pack").repos
-P(x)
+function test()
+    print("test")
+end
+
+function pointer()
+    print("this is a pointer function")
+end
