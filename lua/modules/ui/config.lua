@@ -735,7 +735,7 @@ function config.dressing()
                     }
                 end
             end,
-            backend = "nui",
+            backend = "telescope",
             -- telescope = require("telescope.themes").get_dropdown({
             --     layout_config = { height = get_height },
             -- }),

@@ -28,25 +28,6 @@ user({
 })
 
 user({
-    "LunarVim/bigfile.nvim",
-    event = "VeryLazy",
-    cond = false,
-    config = function()
-        local default_config = {
-            filesize = 2,
-            pattern = { "*" },
-            features = {
-                "indent_blankline",
-                "illuminate",
-                "syntax",
-                "vimopts",
-                "filetype",
-            },
-        }
-        require("bigfile").config(default_config)
-    end,
-})
-user({
     "Apeiros-46B/qalc.nvim",
     config = true,
     cmd = { "Qalc", "QalcAttach" },
@@ -181,7 +162,7 @@ user({
             handlers = {
                 diagnostic = true,
                 search = true,
-                gitsigns = true,
+                gitsigns = false,
             },
         })
     end,
@@ -380,4 +361,55 @@ user({
     lazy = true,
     cmd = { "E" },
     config = true,
+})
+
+user({
+    "kwakzalver/duckytype.nvim",
+    lazy = true,
+    cmd = {
+        "PythonSpell",
+        "EnglishSpell",
+        "DuckyType",
+    },
+    opts = {
+        {
+            expected = "python_keywords",
+            number_of_words = 42,
+            average_word_length = 5.69,
+        },
+    },
+    init = function()
+        lambda.command("EnglishSpell", function()
+            require("duckytype").Start("english_common")
+        end, {})
+        lambda.command("PythonSpell", function()
+            require("duckytype").Start("python_keywords")
+        end, {})
+    end,
+})
+user({
+    "tummetott/reticle.nvim",
+    cond = false, -- very laggy right now
+    lazy = true,
+    init = function()
+        vim.wo.cursorline = true
+        vim.wo.cursorcolumn = true
+    end,
+    config = function()
+        require("reticle").setup({
+            -- add options here or leave empty
+        })
+    end,
+})
+
+user({
+    "Wansmer/sibling-swap.nvim",
+    dependencies = { "nvim-treesitter" },
+    opts = {
+        use_default_keymaps = false,
+        keymaps = {
+            ["]w"] = "swap_with_right",
+            ["[w"] = "swap_with_left",
+        },
+    },
 })

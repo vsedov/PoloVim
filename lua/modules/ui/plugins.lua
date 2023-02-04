@@ -35,11 +35,6 @@ ui({
     lazy = true,
     config = conf.fidget,
 })
--- ui({
---     "mvllow/modes.nvim",
---     lazy = true,
---     config = conf.modes,
--- })
 
 --  ──────────────────────────────────────────────────────────────────────
 --  ──────────────────────────────────────────────────────────────────────
@@ -160,7 +155,7 @@ ui({
 
 ui({
     "folke/noice.nvim",
-    lazy = true,
+    event = "VeryLazy",
     cond = lambda.config.ui.noice.enable,
     dependencies = {
         "nui.nvim",
@@ -199,3 +194,19 @@ ui({
 
 -- True emotional Support
 ui({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })
+
+ui({
+    "uga-rosa/ccc.nvim",
+    lazy = true,
+    cmd = {
+        "CccPick",
+        "CccConvert",
+        "CccHighlighterToggle",
+        "CccHighlighterEnable",
+        "CccHighlighterDisable",
+    },
+    opts = {
+        win_opts = { border = lambda.style.border.type_0 },
+        highlighter = { auto_enable = true, excludes = { "dart" } },
+    },
+})

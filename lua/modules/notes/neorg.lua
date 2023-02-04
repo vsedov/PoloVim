@@ -122,9 +122,6 @@ M.opts = {
 }
 
 M.config = function()
-
-
-
     local neorg_callbacks = require("neorg.callbacks")
     local neorg_leader = "_"
     neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
