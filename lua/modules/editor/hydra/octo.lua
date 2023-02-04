@@ -29,7 +29,6 @@ local function caller(options, ch)
                 "pr",
                 "repo",
                 "search",
-                "comment",
                 "label",
             }, ch),
             function()
