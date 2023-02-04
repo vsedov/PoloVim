@@ -22,6 +22,11 @@ local message = {
     "You are *not* prepared!",
 }
 
+if vim.g.loaded_confirm_quit ~= nil then
+    return
+end
+vim.g.loaded_confirm_quit = 1
+
 local function is_last_window()
     local wins = vim.api.nvim_list_wins()
     local count = 0
@@ -37,17 +42,19 @@ local function is_last_window()
     return false
 end
 
+local function random_message()
+    return message[math.random(#message)]
+end
+
 function _G.confirm_quit()
-    vim.defer_fn(function()
-        if vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == "q" then
-            if is_last_window() and vim.fn.tabpagenr("$") == 1 then
-                if vim.fn.confirm(random_message(message), "&Yes\n&No", 2) ~= 1 then
-                    return "false"
-                end
+    if vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == "q" then
+        if is_last_window() and vim.fn.tabpagenr("$") == 1 then
+            if vim.fn.confirm(random_message(), "&Yes\n&No", 2) ~= 1 then
+                return "false"
             end
         end
-        return "true"
-    end, 109)
+    end
+    return "true"
 end
 
 vim.cmd([[cnoreabbrev <expr> q (luaeval(v:lua.confirm_quit())) ? 'q' : '']])
@@ -56,23 +63,22 @@ vim.api.nvim_create_user_command("Q", "qall<bang>", { force = true, bang = true 
 
 vim.g.confirm_quit_isk_save = ""
 
-lambda.augroup("confirm-quit", {
-    {
-        -- automatically check for changed files outside vim
-        event = { "CmdlineEnter" },
-        pattern = ":",
-        command = function()
-            vim.g.confirm_quit_isk_save = vim.bo.iskeyword
-            vim.opt_local.iskeyword:append("!")
-        end,
-        once = false,
-    },
-    {
-        event = { "CmdlineLeave" },
-        pattern = ":",
-        command = function()
-            vim.bo.iskeyword = vim.g.confirm_quit_isk_save
-        end,
-        once = false,
-    },
+local group_name = "confirm-quit"
+vim.api.nvim_create_augroup(group_name, { clear = true })
+vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
+    group = group_name,
+    pattern = ":",
+    callback = function()
+        vim.g.confirm_quit_isk_save = vim.bo.iskeyword
+        vim.opt_local.iskeyword:append("!")
+    end,
+    once = false,
+})
+vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
+    group = group_name,
+    pattern = ":",
+    callback = function()
+        vim.bo.iskeyword = vim.g.confirm_quit_isk_save
+    end,
+    once = false,
 })

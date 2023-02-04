@@ -19,7 +19,7 @@ lambda.config = {
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
-    loaded_confirm_quit = false, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
+    loaded_confirm_quit = true, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
     save_clipboard_on_exit = true,
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
