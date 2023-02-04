@@ -89,6 +89,7 @@ function binds()
                 })
             end,
         },
+        -- leap-from-window)
         {
             { "n", "x", "o" },
             "<c-#>",
