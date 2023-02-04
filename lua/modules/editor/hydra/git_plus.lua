@@ -1,6 +1,19 @@
 local Hydra = require("hydra")
 local gitrepo = vim.fn.isdirectory(".git/index")
 local cmd = require("hydra.keymap-util").cmd
+local when = lambda.lib.when
+
+local default_choice = {
+    repo = "vsedov",
+    pr = "all",
+    issue = "all",
+    label = "Bug",
+    gist = "all",
+}
+
+local choice_edge_case = {
+    all = "",
+}
 
 local function caller(options, ch)
     vim.ui.select(options, {
@@ -9,33 +22,47 @@ local function caller(options, ch)
             return "Octo " .. ch .. " " .. item
         end,
     }, function(choice)
-        if
+        when(
             vim.tbl_contains({
                 "issue",
                 "gist",
                 "pr",
+                "repo",
                 "search",
                 "comment",
-            }, ch)
-        then
-            if
-                vim.tbl_contains({
-                    "search",
-                    "list",
-                    "edit",
-                    "create",
-                }, choice)
-            then
-                require("guihua.gui").input({
-                    prompt = "Enter a option for " .. ch .. " > ",
-                    default = " 1",
-                }, function(choice_2)
-                    vim.cmd("Octo " .. ch .. " " .. choice .. " " .. choice_2)
-                end)
+                "label",
+            }, ch),
+            function()
+                when(
+                    vim.tbl_contains({
+                        "search",
+                        "list",
+                        "edit",
+                        "create",
+                        "resolve",
+                        "unresolve",
+                        "add",
+                        "remove",
+                        "create",
+                    }, choice),
+                    function()
+                        vim.ui.input({
+                            prompt = "Enter a option for " .. ch .. " > ",
+                            default = default_choice[ch],
+                        }, function(choice_2)
+                            if vim.tbl_contains(options, choice_2) then
+                                choice_2 = choice_edge_case[choice_2]
+                            end
+                            vim.cmd("Octo " .. ch .. " " .. choice .. " " .. choice_2)
+                        end)
+                    end
+                )
+            end,
+            function()
+                command = "Octo " .. ch .. " " .. choice
+                vim.cmd(command)
             end
-        else
-            vim.cmd("Octo " .. ch .. " " .. choice)
-        end
+        )
     end)
 end
 
@@ -44,7 +71,7 @@ if gitrepo then
 ^ Navigation
 ^ _g_: Gists
 ^ _i_: Issues
-^ _p_: Pull Requests
+^ _p_: PR
 ^ _r_: Repos
 ^ _s_: Search
 ^ _C_: Card
@@ -71,12 +98,13 @@ if gitrepo then
         heads = {
             {
                 "g",
-                cmd("Octo gist"),
-                { exit = false },
+                function()
+                    caller({ "list" }, "gist")
+                end,
+                { exit = true },
             },
             {
                 "i",
-                -- cmd("Octo issue"),
                 function()
                     options = {
                         "close",
@@ -134,7 +162,14 @@ if gitrepo then
             },
             {
                 "s",
-                cmd("Octo Search"),
+                function()
+                    vim.ui.input({
+                        prompt = "Enter a option for search > ",
+                        default = "assignee:vedov is:pr",
+                    }, function(choice_2)
+                        vim.cmd("Octo search " .. choice_2)
+                    end)
+                end,
                 { exit = true },
             },
 
@@ -153,13 +188,24 @@ if gitrepo then
 
             {
                 "l",
-                cmd("Octo label"),
+                function()
+                    options = {
+                        "add",
+                        "remove",
+                        "create",
+                    }
+                    caller(options, "label")
+                end,
+
                 { exit = true },
             },
 
             {
                 "t",
-                cmd("Octo thread"),
+                function()
+                    caller({ "resolve", "unresolve" }, "thread")
+                end,
+
                 { exit = true },
             },
             {
