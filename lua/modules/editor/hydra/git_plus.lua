@@ -3,7 +3,7 @@ local gitrepo = vim.fn.isdirectory(".git/index")
 local cmd = require("hydra.keymap-util").cmd
 
 local function caller(options, ch)
-    require("guihua.gui").select(options, {
+    vim.ui.select(options, {
         prompt = "Select a choice",
         format_item = function(item)
             return "Octo " .. ch .. " " .. item
