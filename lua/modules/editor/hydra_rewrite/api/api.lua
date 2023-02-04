@@ -84,7 +84,6 @@ function M.getn_hydra(bind_tables, new_hydra)
     string_val = "^ ^      " .. opts.name_space .. "      ^ ^\n\n"
     string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
     core_table, container = M.auto_hint_generate(bind_tables, opts.ignore)
-
     for _, v in pairs(core_table) do
         if v == "\n" then
             hint = "\n"
@@ -97,8 +96,16 @@ function M.getn_hydra(bind_tables, new_hydra)
     end
 
     new_hydra.hint = string_val
-    vim.tbl_deep_extend("force", new_hydra, config)
-    Hydra(new_hydra)
+    -- vim.tbl_deep_extend("force", new_hydra, config)
+    return new_hydra
+end
+
+function M.parser(conf)
+    M.set_name_space(conf[1].name)
+    M.set_config_table(conf[2])
+    M.ignore_binds(conf[3])
+    data = M.getn_hydra(conf[4], M.define_mapping(conf[1]))
+    return data
 end
 
 return M

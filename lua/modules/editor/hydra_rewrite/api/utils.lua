@@ -1,4 +1,5 @@
 local M = {}
+local Hydra = require("hydra")
 
 --- Mx function, parses the feedkeys and type to feedkeys
 ---@param feedkeys Feedkeys to be parsed
@@ -9,6 +10,7 @@ function M.mx(feedkeys, type)
         if type == "v" then
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, true, true), "n", true)
         end
+
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), type, false)
     end
 end

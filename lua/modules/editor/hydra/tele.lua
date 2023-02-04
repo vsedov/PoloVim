@@ -10,11 +10,10 @@ vim.defer_fn(function()
     for _, v in ipairs(plugins) do
         require("lazy").load({ plugins = { v } })
     end
-    -- Hav eto do this for this stupid thing to work.
     require("telescope").setup({
         extensions = {
             bookmarks = {
-                selected_browser = "waterfox",
+                selected_browser = "firefox",
                 url_open_command = "open",
                 url_open_plugin = nil,
                 full_path = true,
@@ -24,9 +23,8 @@ vim.defer_fn(function()
             },
         },
     })
-    require("telescope").load_extension("bookmarks")
-    require("telescope").load_extension("frecency")
-end, 500)
+end, 3000)
+
 local hint_telescope = [[
  ^^      Git         ^^^^           Surfing               ^^^^
  ^^^^                                                     ^^^^
@@ -57,7 +55,7 @@ local hint_telescope = [[
  ^^^^                                                     ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
   _<Space>_: Frec     _\\_: FrecCWD     _B_: BookMarks
-
+                      _]_:  Smart Open
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
  ^^^^                     MRU/Misc                        ^^^^
  ^^^^                                                     ^^^^
@@ -148,6 +146,11 @@ Hydra({
         { "T", "<cmd>Easypick command_palette<CR>", { exit = true } },
         { "<Space>", require("telescope").extensions.frecency.frecency, { exit = true } },
         { "\\", ":Telescope frecency workspace=CWD<CR>", { exit = true } },
+        {
+            "]",
+            require("telescope").extensions.smart_open.smart_open,
+            { exit = true },
+        },
 
         { "q", nil, { exit = true, nowait = true } },
         { "<Esc>", nil, { exit = true, nowait = true } },

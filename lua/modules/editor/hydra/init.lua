@@ -1,6 +1,5 @@
 local fmt = string.format
 local api, fn, fs = vim.api, vim.fn, vim.fs
-local fmt = string.format
 
 local all_hydras = require("core.helper").get_config_path() .. "/lua/modules" .. "/editor/hydra/"
 local when = lambda.lib.when
@@ -9,6 +8,7 @@ local test_active = false
 -- loader("keymap-layer.nvim gitsigns.nvim")
 local exclude_table = {
     "init",
+    "utils",
 }
 
 -- this is to check if tests are currently active or not

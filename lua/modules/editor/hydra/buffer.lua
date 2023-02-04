@@ -6,12 +6,6 @@ local reach_options = {
         return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
     end,
 }
-
-local hint
-local config
-
--- Keymaps for bufferline
-
 local function buffer_move()
     vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
         idx = idx and tonumber(idx)
@@ -25,7 +19,7 @@ vim.api.nvim_create_user_command("ProjectDelete", function()
     require("three").remove_project()
 end, {})
 
-hint = [[
+local hint = [[
   ^^^^                Bufferline                  ^^^^
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
    _l_: next                _h_: prev

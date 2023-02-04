@@ -1,4 +1,3 @@
--- local km = require("core.keymap")
 local Hydra = require("hydra")
 local cmd = require("hydra.keymap-util").cmd
 
@@ -7,19 +6,7 @@ if table.unpack == nil then
 end
 
 local config = {}
-
 local exit = { nil, { exit = true, desc = "EXIT" } }
--- TODO: make a toggler for cursorhold events, so we can show peek
-function toggle(lhs, on_enter, on_exit)
-    return {
-        color = "pink",
-        body = lhs,
-        [lhs] = exit,
-        on_exit = on_exit,
-        on_enter = on_enter,
-    }
-end
-
 local hints = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
  ^^^^             Doc gen and References            ^^^^
@@ -89,8 +76,6 @@ config.doc_binds = {
         cmd("DD"),
         { nowait = true, silent = true, desc = "DevDoc Search", exit = true },
     },
-    ------------
-    ------------
 
     l = {
         function()
@@ -113,35 +98,11 @@ config.doc_binds = {
         end,
         { exit = true },
     },
-
-    ------------
-    -----------
-
-    --- Python stuff Language specific stuff
-}
-
-local mapping = {
-    color = function(t, rhs)
-        t.config.color = rhs
-    end,
-    body = function(t, rhs)
-        t.body = rhs
-    end,
-    on_enter = function(t, rhs)
-        t.config.on_enter = rhs
-    end,
-    on_exit = function(t, rhs)
-        t.config.on_exit = rhs
-    end,
-    mode = function(t, rhs)
-        t.config.mode = rhs
-    end,
 }
 
 local new_hydra = {
     hint = hints,
     name = "core",
-
     config = {
         hint = {
             position = "middle-right",
@@ -153,15 +114,4 @@ local new_hydra = {
     heads = {},
 }
 
-for name, spec in pairs(config) do
-    for lhs, rhs in pairs(spec) do
-        local action = mapping[lhs]
-        if action == nil then
-            new_hydra.heads[#new_hydra.heads + 1] = { lhs, table.unpack(rhs) }
-        else
-            action(new_hydra, rhs)
-        end
-    end
-end
-
-Hydra(new_hydra)
+Hydra(require("modules.editor.hydra.utils").new_hydra(config, new_hydra))

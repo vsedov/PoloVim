@@ -13,6 +13,7 @@ local mx = function(feedkeys, type)
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), type, false)
     end
 end
+
 local motion_type = {
     d = "Del",
     c = "Cut",
