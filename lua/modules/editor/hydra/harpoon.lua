@@ -7,10 +7,22 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "harpoon",
     group = group,
     callback = function()
+        local curline = vim.api.nvim_get_current_line()
+        local working_directory = vim.fn.getcwd() .. "/"
+
         vim.keymap.set("n", "<C-V>", function()
-            local harpooned = vim.api.nvim_get_current_line()
-            local pwd = vim.fn.getcwd() .. "/"
-            vim.cmd("vsplit | edit " .. pwd .. harpooned)
+            vim.cmd("vs")
+            vim.cmd("e " .. working_directory .. curline)
+        end, { buffer = true, noremap = true, silent = true })
+
+        vim.keymap.set("n", "<C-H>", function()
+            vim.cmd("hs")
+            vim.cmd("e " .. working_directory .. curline)
+        end, { buffer = true, noremap = true, silent = true })
+
+        vim.keymap.set("n", "<C-T>", function()
+            vim.cmd("tabnew")
+            vim.cmd("e " .. working_directory .. curline)
         end, { buffer = true, noremap = true, silent = true })
     end,
 })
