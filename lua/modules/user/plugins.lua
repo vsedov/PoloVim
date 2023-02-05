@@ -8,6 +8,7 @@ user({
         "CphReTest",
         "CphEdit",
         "CphDelete",
+        e,
     },
 
     lazy = true,
@@ -395,11 +396,29 @@ user({
         vim.wo.cursorline = true
         vim.wo.cursorcolumn = true
     end,
-    config = function()
-        require("reticle").setup({
-            -- add options here or leave empty
-        })
-    end,
+    opts = {
+
+        ignore = {
+            cursorline = {
+                "lspinfo",
+                "neotree",
+            },
+            cursorcolumn = {
+                "lspinfo",
+                "neotree",
+            },
+        },
+        never = {
+            cursorline = {
+                "TelescopePrompt",
+                "DressingInput",
+                "neotree",
+            },
+            cursorcolumn = {
+                "neotree",
+            },
+        },
+    },
 })
 
 user({
