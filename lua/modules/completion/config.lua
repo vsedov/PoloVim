@@ -5,7 +5,6 @@ function config.cmp()
     require("modules.completion.cmp")
 end
 
--- packer.nvim: Error running config for LuaSnip: [string "..."]:0: attempt to index global 'ls_types' (a nil value)
 function config.luasnip()
     require("modules.completion.snippets")
 end
