@@ -1,6 +1,19 @@
 local hydra = require("hydra")
 local leader = "<CR>"
-local bracket = { "<CR>", "w", "a", ";", "<leader>" }
+local bracket = { "<CR>", "W", "w", "a", ";", "<leader>" }
+
+local group = vim.api.nvim_create_augroup("Harpoon Augroup", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "harpoon",
+    group = group,
+    callback = function()
+        vim.keymap.set("n", "<C-V>", function()
+            local harpooned = vim.api.nvim_get_current_line()
+            local pwd = vim.fn.getcwd() .. "/"
+            vim.cmd("vsplit | edit " .. pwd .. harpooned)
+        end, { buffer = true, noremap = true, silent = true })
+    end,
+})
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -30,6 +43,36 @@ local function create_table_normal(var, sorted, string_len, start_val)
 
     return var
 end
+local function tmux_goto(term)
+    if vim.fn.getenv("TMUX") ~= vim.NIL then
+        require("harpoon.tmux").gotoTerminal(term)
+    else
+        require("harpoon.term").gotoTerminal(term)
+    end
+end
+local function isInteger(str)
+    return not (str == "" or str:find("%D")) -- str:match("%D") also works
+end
+
+local function terminal_send(term, cmd)
+    if isInteger(cmd) then
+        vim.notify("Using UI Command Leaders")
+        cmd = tonumber(cmd)
+    end
+    if vim.fn.getenv("TMUX") ~= vim.NIL then
+        require("harpoon.tmux").sendCommand(term, cmd)
+    else
+        local use_split = vim.fn.input("VSplit : yes or no > ")
+        if use_split then
+            local harpooned = vim.api.nvim_get_current_line()
+            local pwd = vim.fn.getcwd() .. "/"
+            vim.cmd("vsplit | edit " .. pwd .. harpooned)
+        end
+
+        require("harpoon.term").sendCommand(term, cmd)
+    end
+    tmux_goto(term)
+end
 
 local config = {}
 
@@ -39,11 +82,31 @@ config.parenth_mode = {
     body = leader,
     mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
+    ["["] = {
+        function()
+            vim.ui.input({ prompt = "enter the command: cmd >" }, function(value)
+                vim.ui.input({ prompt = "enter the terminal: term >" }, function(value2)
+                    term = tonumber(value2)
+                    terminal_send(term, value)
+                end)
+            end)
+        end,
+        { nowait = true, exit = true, desc = "Terminal GotoSend" },
+    },
+    ["]"] = {
+        function()
+            vim.ui.input({ prompt = "enter the terminal: term >" }, function(value2)
+                tmux_goto(tonumber(value2))
+            end)
+        end,
+        { nowait = true, exit = true, desc = "Terminal Goto" },
+    },
 
     ["<CR>"] = {
         function()
             require("harpoon.ui").toggle_quick_menu()
         end,
+
         { nowait = true, exit = true, desc = "Quick Menu" },
     },
     w = {
@@ -86,63 +149,15 @@ config.parenth_mode = {
         { nowait = true, exit = true, desc = "Quick ui Menu" },
     },
 
-    ["1"] = {
+    ["W"] = {
         function()
-            require("harpoon.ui").nav_file(1)
+            local index = vim.fn.input("Harpoon > ")
+            if index == nil or index == "" then
+                return
+            end
+            require("harpoon.ui").nav_file(tonumber(index))
         end,
-        { nowait = true, desc = "Jump File 1", exit = true },
-    },
-    ["2"] = {
-        function()
-            require("harpoon.ui").nav_file(2)
-        end,
-        { nowait = true, desc = "Jump File 2", exit = true },
-    },
-    ["3"] = {
-        function()
-            require("harpoon.ui").nav_file(3)
-        end,
-        { nowait = true, desc = "Jump File 3", exit = true },
-    },
-    ["4"] = {
-        function()
-            require("harpoon.ui").nav_file(4)
-        end,
-        { nowait = true, desc = "Jump File 4", exit = true },
-    },
-    ["5"] = {
-        function()
-            require("harpoon.ui").nav_file(5)
-        end,
-        { nowait = true, desc = "Jump File 5", exit = true },
-    },
-
-    ["6"] = {
-        function()
-            require("harpoon.ui").nav_file(6)
-        end,
-        { nowait = true, desc = "Jump File 6", exit = true },
-    },
-
-    ["7"] = {
-        function()
-            require("harpoon.ui").nav_file(7)
-        end,
-        { nowait = true, desc = "Jump File 7", exit = true },
-    },
-
-    ["8"] = {
-        function()
-            require("harpoon.ui").nav_file(8)
-        end,
-        { nowait = true, desc = "Jump File 8", exit = true },
-    },
-
-    ["9"] = {
-        function()
-            require("harpoon.ui").nav_file(9)
-        end,
-        { nowait = true, desc = "Jump File 9", exit = true },
+        { nowait = true, desc = "Jump File", exit = true },
     },
 }
 
@@ -177,9 +192,8 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    num = create_table_normal({}, sorted, 1, { "1", "2", "3", "4", "5", "6", "7", "8", "9" })
+    num = create_table_normal({}, sorted, 1, { "[", "]" })
     harpoon = create_table_normal({}, sorted, 1, { "n", "N" })
-    portal = create_table_normal({}, sorted, 1, { "[", "]" })
 
     core_table = {}
 

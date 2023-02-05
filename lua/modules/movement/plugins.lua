@@ -80,7 +80,19 @@ movement({
     lazy = true,
     config = conf.grapple,
 })
-movement({ "ThePrimeagen/harpoon", lazy = true, config = conf.harpoon })
+movement({
+    "ThePrimeagen/harpoon",
+    dependencies = { "pranavrao145/harpoon-tmux" },
+    lazy = true,
+    init = function()
+        vim.keymap.set("n", [[<C-\>]], function()
+            require("harpoon.term").gotoTerminal({
+                idx = vim.api.nvim_tabpage_get_number(vim.api.nvim_get_current_tabpage()),
+            })
+        end, { desc = "harpoon: create and go to terminal" })
+    end,
+    config = conf.harpoon,
+})
 
 --------------------------------
 
