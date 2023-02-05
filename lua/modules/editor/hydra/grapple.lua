@@ -63,6 +63,7 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
             end,
             { nowait = true, exit = true, desc = "[G] Tag" },
         },
+
         M = {
             function()
                 require("grapple").untag()

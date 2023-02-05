@@ -78,6 +78,13 @@ lambda.augroup("VimrcIncSearchHighlight", {
             vim.opt.hlsearch = true
         end,
     },
+    --     {
+    --     event = { "CursorHoldI" },
+    --     pattern = { "*" },
+    --     command = function()
+    --        vim.defer_fn(function() vim.cmd.stopinsert() end, 30000)
+    --     end,
+    -- },
 })
 
 local smart_close_filetypes = {

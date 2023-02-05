@@ -106,19 +106,13 @@ end
 
 vim.defer_fn(function()
     if lambda.config.loaded_confirm_quit then
-        -- this breaks neotree for some reason
         require("utils.plugins.exit")
     end
-
-    -- tbh, this can stay here, nothing changes with this
     if lambda.config.abbrev.enable then
-        -- or is it you , lets find out who the real problem maker in this thing
-        --[[ is ]]
         require("utils.abbreviations").setup()
     end
-
     require("utils.plugins.marks").setup()
     require("utils.plugins.marks_v2")
     require("utils.plugins.stalk").setup()
-    require("utils.plugins.auto_normal").setup(30000)
+    require("utils.plugins.auto_normal").setup(20000)
 end, 100)

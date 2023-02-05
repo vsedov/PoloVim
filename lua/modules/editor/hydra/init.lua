@@ -9,6 +9,7 @@ local test_active = false
 local exclude_table = {
     "init",
     "utils",
+    "buffer",
 }
 
 -- this is to check if tests are currently active or not
