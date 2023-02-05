@@ -5,16 +5,16 @@ function config.nvim_bufferline()
     local fmt = string.format
     local icons = lambda.style.icons.lsp
 
-    local highlights = require("utils.ui.highlights")
+    local gl = require("utils.ui.utils")
     local groups = require("bufferline.groups")
 
     local visible_tab = { highlight = "VisibleTab", attribute = "bg" }
 
     require("bufferline").setup({
         highlights = function(defaults)
-            local data = highlights.get("normal")
+            local data = gl.get("normal")
             local normal_bg, normal_fg = data.background, data.foreground
-            local visible = highlights.alter_color(normal_fg, -40)
+            local visible = gl.alter_color(normal_fg, -40)
             local diagnostic = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
 
             local hl = lambda.fold(function(accum, attrs, name)

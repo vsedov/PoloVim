@@ -1,11 +1,5 @@
 local Hydra = require("hydra")
-local reach_options = {
-    handle = "dynamic",
-    show_current = true,
-    sort = function(a, b)
-        return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
-    end,
-}
+
 local function buffer_move()
     vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
         idx = idx and tonumber(idx)
@@ -55,13 +49,6 @@ local hint = [[
   ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
 
    _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
-
-  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  ^^^^                   Reacher                  ^^^^
-  ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
-
-    _S_: ReachOpen buffers   _s_: ReachOpen Tabs
-
    _d_: Bwipeout
 ]]
 Hydra({
@@ -84,10 +71,7 @@ Hydra({
         { ">", ":+tabmove<CR>", { desc = "Move Next" } },
         { "<", ":-tabmove<CR>", { desc = "Move Prev" } },
         { "P", "<Cmd>tabonly<CR>", { desc = "Pick buffer to close", exit = true } },
-
-        { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },
-        { "s", ":ReachOpen tabpages<CR>", { desc = "Next buffer" } },
-
+        
         { "c", "<Cmd>BufferLinePick<CR>", { desc = "Pin buffer" } },
 
         { "H", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Next" } },

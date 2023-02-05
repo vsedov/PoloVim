@@ -2,31 +2,6 @@ local hydra = require("hydra")
 local leader = "<CR>"
 local bracket = { "<CR>", "W", "w", "a", ";", "<leader>" }
 
-local group = vim.api.nvim_create_augroup("Harpoon Augroup", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "harpoon",
-    group = group,
-    callback = function()
-        local curline = vim.api.nvim_get_current_line()
-        local working_directory = vim.fn.getcwd() .. "/"
-
-        vim.keymap.set("n", "<C-V>", function()
-            vim.cmd("vs")
-            vim.cmd("e " .. working_directory .. curline)
-        end, { buffer = true, noremap = true, silent = true })
-
-        vim.keymap.set("n", "<C-H>", function()
-            vim.cmd("hs")
-            vim.cmd("e " .. working_directory .. curline)
-        end, { buffer = true, noremap = true, silent = true })
-
-        vim.keymap.set("n", "<C-T>", function()
-            vim.cmd("tabnew")
-            vim.cmd("e " .. working_directory .. curline)
-        end, { buffer = true, noremap = true, silent = true })
-    end,
-})
-
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
         table.insert(core_table, v)
@@ -62,12 +37,26 @@ local function tmux_goto(term)
         require("harpoon.term").gotoTerminal(term)
     end
 end
-local function isInteger(str)
-    return not (str == "" or str:find("%D")) -- str:match("%D") also works
+
+local function plane()
+    data = vim.fn.system("tmux list-panes")
+    data = vim.split(data, "\n")
+    container = {}
+    for _, v in ipairs(data) do
+        output, output_2 = v:match("^(%d+):.*(%%%d+)")
+        if output ~= nil or output_2 ~= nil then
+            container[output] = output_2
+        end
+    end
+    container["1"] = nil
+    if #container >= 0 then
+        term = container
+    end
+    return term
 end
 
 local function terminal_send(term, cmd)
-    if isInteger(cmd) then
+    if not (cmd == "" or cmd:find("%D")) then
         vim.notify("Using UI Command Leaders")
         cmd = tonumber(cmd)
     end
@@ -97,8 +86,15 @@ config.parenth_mode = {
     ["["] = {
         function()
             vim.ui.input({ prompt = "enter the command: cmd >" }, function(value)
-                vim.ui.input({ prompt = "enter the terminal: term >" }, function(value2)
-                    term = tonumber(value2)
+                vim.ui.input({ prompt = "Do you want to use a Plane or Number >", default = "1" }, function(value2)
+                    if not (value2:find("%D")) then
+                        term = tonumber(value2)
+                    else
+                        term = vim.ui.select(plane(), { prompt = "Select a Plane " }, function(choice)
+                            choice = choice or 1
+                            return choice
+                        end)
+                    end
                     terminal_send(term, value)
                 end)
             end)

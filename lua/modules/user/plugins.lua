@@ -8,7 +8,6 @@ user({
         "CphReTest",
         "CphEdit",
         "CphDelete",
-        e,
     },
 
     lazy = true,
@@ -37,7 +36,7 @@ user({
 -- The goal of nvim-fundo is to make Neovim's undo file become stable and useful.
 user({
     "kevinhwang91/nvim-fundo",
-    event = "VeryLazy",
+    event = "BufReadPre",
     cmd = { "FundoDisable", "FundoEnable" },
     dependencies = "kevinhwang91/promise-async",
     build = function()
@@ -431,4 +430,12 @@ user({
             ["[w"] = "swap_with_left",
         },
     },
+})
+
+user({
+    "aserowy/tmux.nvim",
+    lazy = true,
+    cond = vim.fn.getenv("TMUX") ~= vim.NIL,
+    event = "InsertEnter",
+    config = true,
 })

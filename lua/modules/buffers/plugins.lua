@@ -5,7 +5,7 @@ local conf = require("modules.buffers.config")
 --  ╰────────────────────────────────────────────────────────────────────╯
 buffer({
     "akinsho/bufferline.nvim",
-    event = "VeryLazy",
+    event = "BufReadPre",
     config = conf.nvim_bufferline,
     dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true } },
     lazy = true,

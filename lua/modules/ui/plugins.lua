@@ -91,7 +91,7 @@ ui({
                             buftype = { "terminal", "quickfix", "nofile" },
                         },
                     },
-                    other_win_hl_color = require("utils.ui.highlights").get("Visual", "bg"),
+                    other_win_hl_color = require("utils.ui.utils").get("Visual", "bg"),
                 })
             end,
         },
