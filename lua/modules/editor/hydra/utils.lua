@@ -32,4 +32,32 @@ M.new_hydra = function(config, new_hydra)
     return new_hydra
 end
 
+M.make_core_table = function(core_table, second_table)
+    for _, v in pairs(second_table) do
+        table.insert(core_table, v)
+    end
+    table.insert(core_table, "\n")
+end
+M.create_table_normal = function(var, sorted, string_len, start_val, bracket)
+    start_val = start_val or nil
+    var = {}
+    for _, v in pairs(sorted) do
+        if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
+            if start_val ~= nil then
+                if vim.tbl_contains(start_val, v) then
+                    -- if starts(v, start_val) then
+                    table.insert(var, v)
+                end
+            else
+                table.insert(var, v)
+            end
+        end
+    end
+    table.sort(var, function(a, b)
+        return a:lower() < b:lower()
+    end)
+
+    return var
+end
+
 return M

@@ -1,71 +1,111 @@
-local hydra = require("hydra")
+local utils = require("modules.editor.hydra.utils")
 local leader = "<CR>"
-local bracket = { "<CR>", "W", "w", "a", ";", "<leader>" }
+local hydra = require("hydra")
+local bracket = { "<CR>", "W", "w", "t", "a", ";", "<leader>" }
+local input_prompt = "enter the command: cmd >"
+local terminal_prompt = "Enter a terminal Number "
+local default_terminal = "1"
 
-local function make_core_table(core_table, second_table)
-    for _, v in pairs(second_table) do
-        table.insert(core_table, v)
-    end
-    table.insert(core_table, "\n")
-end
+local cache = {
+    command = "ls -a",
+    tmux = {
+        selected_plane = "",
+    },
+}
+vim.g.goto_harpoon = false
 
-local function create_table_normal(var, sorted, string_len, start_val)
-    start_val = start_val or nil
-    var = {}
-    for _, v in pairs(sorted) do
-        if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
-            if start_val ~= nil then
-                if vim.tbl_contains(start_val, v) then
-                    -- if starts(v, start_val) then
-                    table.insert(var, v)
-                end
-            else
-                table.insert(var, v)
+local function plane()
+    data = vim.fn.system("tmux list-panes")
+    data = vim.split(data, "\n")
+
+    container = {}
+    for _, v in ipairs(data) do
+        output, output_2 = v:match("^(%d+):.*(%%%d+)")
+        if output ~= nil or output_2 ~= nil then
+            if output ~= "1" then
+                table.insert(container, output .. " : " .. output_2)
             end
         end
     end
-    table.sort(var, function(a, b)
-        return a:lower() < b:lower()
-    end)
 
-    return var
+    for i = 1, 5 do
+        table.insert(container, "B" .. " : " .. i)
+    end
+
+    return container
 end
+
 local function tmux_goto(term)
     if vim.fn.getenv("TMUX") ~= vim.NIL then
-        require("harpoon.tmux").gotoTerminal(term)
+        require("harpoon-tmux").gotoTerminal(term)
     else
         require("harpoon.term").gotoTerminal(term)
     end
 end
 
-local function plane()
-    data = vim.fn.system("tmux list-panes")
-    data = vim.split(data, "\n")
-    container = {}
-    for _, v in ipairs(data) do
-        output, output_2 = v:match("^(%d+):.*(%%%d+)")
-        if output ~= nil or output_2 ~= nil then
-            container[output] = output_2
+local function terminal_send(term, cmd)
+    local module
+    local goto_func
+    if vim.fn.getenv("TMUX") ~= vim.NIL then
+        module = string.find(term, "%%") and "harpoon.tmux" or "harpoon-tmux"
+        goto_func = "gotoTerminal"
+        if not string.find(term, "%%") then
+            term = tonumber(term)
         end
+    else
+        module = "harpoon.term"
+        goto_func = "gotoTerminal"
     end
-    container["1"] = nil
-    if #container >= 0 then
-        term = container
+
+    require(module).sendCommand(term, cmd)
+    if vim.g.goto_harpoon == true then
+        vim.defer_fn(function()
+            require(module)[goto_func](term)
+        end, string.find(module, "tmux") and 500 or 1000)
     end
-    return term
+end
+local function handle_tmux()
+    local data = plane()
+    local cache_str = cache.tmux.selected_plane and "0: cache : " .. cache.tmux.selected_plane or "0: cache"
+    table.insert(data, cache_str)
+    table.sort(data, function(a, b)
+        return a:lower() < b:lower()
+    end)
+
+    if cache.tmux.selected_plane == "" then
+        cache.tmux.selected_plane = vim.split(data[2], " : ")
+    end
+    --
+    vim.ui.select(data, { prompt = "Select a Plane " }, function(selected_plane)
+        cache.tmux.selected_plane = selected_plane == "cache" and cache.tmux.selected_plane
+            or vim.split(selected_plane, " : ")[2]
+
+        if not string.find(cache.tmux.selected_plane, "%%") then
+            cache.tmux.selected_plane = tonumber(cache.tmux.selected_plane)
+        end
+        if not string.find(cache.command, "%D") then
+            cache.command = tonumber(cache.command)
+        end
+        terminal_send(cache.tmux.selected_plane, cache.command)
+    end)
 end
 
-local function terminal_send(term, cmd)
-    if not (cmd == "" or cmd:find("%D")) then
-        vim.notify("Using UI Command Leaders")
-        cmd = tonumber(cmd)
-    end
+local function handle_non_tmux()
+    vim.ui.input({ prompt = terminal_prompt, default = default_terminal }, function(terminal_number)
+        if not string.find(terminal_number, "%D") then
+            local term = tonumber(terminal_number)
+            terminal_send(term, cache.command)
+        end
+    end)
+end
+
+local function handle_command_input(command)
+    cache.command = command ~= "" and command or cache.command
+
     if vim.fn.getenv("TMUX") ~= vim.NIL then
-        require("harpoon.tmux").sendCommand(term, cmd)
+        handle_tmux()
     else
-        vim.defer_fn(function()
-            require("harpoon.term").sendCommand(term, cmd)
-        end, 1000)
+        handle_non_tmux()
     end
 end
 
@@ -79,19 +119,7 @@ config.parenth_mode = {
     ["<ESC>"] = { nil, { exit = true } },
     s = {
         function()
-            vim.ui.input({ prompt = "enter the command: cmd >" }, function(value)
-                vim.ui.input({ prompt = "Do you want to use a Plane or Number >", default = "1" }, function(value2)
-                    if not (value2:find("%D")) then
-                        term = tonumber(value2)
-                    else
-                        term = vim.ui.select(plane(), { prompt = "Select a Plane " }, function(choice)
-                            choice = choice or 1
-                            return choice
-                        end)
-                    end
-                    terminal_send(term, value)
-                end)
-            end)
+            vim.ui.input({ prompt = input_prompt }, handle_command_input)
         end,
         { nowait = true, exit = true, desc = "Terminal GotoSend" },
     },
@@ -113,10 +141,18 @@ config.parenth_mode = {
     },
     w = {
         function()
+            vim.g.goto_harpoon = not vim.g.goto_harpoon
+            vim.notify("Goto Harpoon " .. vim.g.goto_harpoon)
+        end,
+        { nowait = true, exit = true, desc = "Toggle Goto" },
+    },
+    t = {
+        function()
             require("harpoon.mark").toggle_file()
         end,
         { nowait = true, exit = true, desc = "Toggle File" },
     },
+
     [";"] = {
         function()
             require("telescope").load_extension("harpoon")
@@ -151,13 +187,15 @@ config.parenth_mode = {
         { nowait = true, exit = true, desc = "Quick ui Menu" },
     },
 
-    ["W"] = {
+    W = {
         function()
-            local index = vim.fn.input("Harpoon > ")
-            if index == nil or index == "" then
-                return
-            end
-            require("harpoon.ui").nav_file(tonumber(index))
+            vim.ui.input({ prompt = "Harpoon > ", default = "1" }, function(index)
+                if index == nil or index == "" then
+                    return
+                end
+
+                require("harpoon.ui").nav_file(tonumber(index))
+            end)
         end,
         { nowait = true, desc = "Jump File", exit = true },
     },
@@ -194,14 +232,14 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    num = create_table_normal({}, sorted, 1, { "s", "S" })
-    harpoon = create_table_normal({}, sorted, 1, { "n", "N" })
+    num = utils.create_table_normal({}, sorted, 1, { "s", "S" }, bracket)
+    harpoon = utils.create_table_normal({}, sorted, 1, { "n", "N" }, bracket)
 
     core_table = {}
 
-    make_core_table(core_table, bracket)
-    make_core_table(core_table, num)
-    make_core_table(core_table, harpoon)
+    utils.make_core_table(core_table, bracket)
+    utils.make_core_table(core_table, num)
+    utils.make_core_table(core_table, harpoon)
 
     hint_table = {}
     string_val = "^ ^         Harpoon         ^ ^\n\n"
