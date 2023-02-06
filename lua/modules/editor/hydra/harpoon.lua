@@ -63,16 +63,10 @@ local function terminal_send(term, cmd)
     if vim.fn.getenv("TMUX") ~= vim.NIL then
         require("harpoon.tmux").sendCommand(term, cmd)
     else
-        local use_split = vim.fn.input("VSplit : yes or no > ")
-        if use_split then
-            local harpooned = vim.api.nvim_get_current_line()
-            local pwd = vim.fn.getcwd() .. "/"
-            vim.cmd("vsplit | edit " .. pwd .. harpooned)
-        end
-
-        require("harpoon.term").sendCommand(term, cmd)
+        vim.defer_fn(function()
+            require("harpoon.term").sendCommand(term, cmd)
+        end, 1000)
     end
-    tmux_goto(term)
 end
 
 local config = {}
@@ -83,7 +77,7 @@ config.parenth_mode = {
     body = leader,
     mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
-    ["["] = {
+    s = {
         function()
             vim.ui.input({ prompt = "enter the command: cmd >" }, function(value)
                 vim.ui.input({ prompt = "Do you want to use a Plane or Number >", default = "1" }, function(value2)
@@ -101,7 +95,7 @@ config.parenth_mode = {
         end,
         { nowait = true, exit = true, desc = "Terminal GotoSend" },
     },
-    ["]"] = {
+    S = {
         function()
             vim.ui.input({ prompt = "enter the terminal: term >" }, function(value2)
                 tmux_goto(tonumber(value2))
@@ -200,14 +194,14 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    num = create_table_normal({}, sorted, 1, { "[", "]" })
+    num = create_table_normal({}, sorted, 1, { "s", "S" })
     harpoon = create_table_normal({}, sorted, 1, { "n", "N" })
 
     core_table = {}
 
     make_core_table(core_table, bracket)
-    make_core_table(core_table, harpoon)
     make_core_table(core_table, num)
+    make_core_table(core_table, harpoon)
 
     hint_table = {}
     string_val = "^ ^         Harpoon         ^ ^\n\n"

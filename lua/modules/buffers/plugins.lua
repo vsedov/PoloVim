@@ -37,7 +37,13 @@ buffer({
     config = conf.scope,
 })
 
-buffer({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
+buffer({
+    "jlanzarotta/bufexplorer",
+    init = function()
+        vim.g.bufExplorerDisableDefaultKeyMapping = 1
+    end,
+    cmd = { "BufExplorer", "ToggleBufExplorer", "BufExplorerHorizontalSplit", "BufExplorerVerticalSplit" },
+})
 
 buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
 

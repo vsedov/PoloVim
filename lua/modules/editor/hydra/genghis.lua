@@ -96,6 +96,7 @@ local function auto_hint_generate()
             end
         end
     end
+
     sorted = {}
     for k, v in pairs(container) do
         table.insert(sorted, k)

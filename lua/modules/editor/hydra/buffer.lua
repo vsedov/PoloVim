@@ -2,12 +2,20 @@ local Hydra = require("hydra")
 local leader_key = "<leader>b"
 local cmd = require("hydra.keymap-util").cmd
 
-local bracket = { "l", "h", "tl", "th", "]", "[", "<leader>", "-", "+", "b" }
+local bracket = { "l", "h", "L", "H", "=", "+", "b", "<leader>" }
 local function buffer_move()
     vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
         idx = idx and tonumber(idx)
         if idx then
             require("three").move_buffer(idx)
+        end
+    end)
+end
+local function tab_move()
+    vim.ui.input({ prompt = "Move tab to:" }, function(idx)
+        idx = idx and tonumber(idx)
+        if idx then
+            require("three").move_tab(idx)
         end
     end)
 end
@@ -34,11 +42,11 @@ config.buffer = {
         function()
             vim.cmd("Telescope buffers")
         end,
-        { desc = "Buffers" },
+        { desc = "Buffers", exit = true },
     },
     l = {
         function()
-            cmd("BufferLineCycleNext")
+            vim.cmd("BufferLineCycleNext")
         end,
 
         { desc = "Next Buffers", exit = false },
@@ -51,14 +59,14 @@ config.buffer = {
         { desc = "Prev Buffers", exit = false },
     },
 
-    tl = {
+    L = {
         function()
             require("three").next()
         end,
 
         { desc = "[G]oto next [B]uffer", exit = false },
     },
-    th = {
+    H = {
         function()
             require("three").prev()
         end,
@@ -85,44 +93,31 @@ config.buffer = {
                 require("three").wrap(require("three").jump_to, value)
             end)
         end,
-        { desc = "Jump to buffer" },
+        { desc = "Jump to buffer", exit = true },
     },
-    ["-"] = {
-        function()
-            require("three").next()
-        end,
-        { desc = "Jump to last buffer", exit = false },
-    },
-    ["+"] = {
-        function()
-            require("three").prev()
-        end,
-        { desc = "Jump to last buffer", exit = false },
-    },
-
     q = {
         function()
             require("three").smart_close()
         end,
-        { desc = "[C]lose window or buffer" },
+        { desc = "[C]lose window or buffer", exit = true },
     },
     Q = {
         function()
             require("three").close_buffer()
         end,
-        { desc = "[B]uffer [C]lose" },
+        { desc = "[B]uffer [C]lose", exit = true },
     },
     M = {
         function()
             require("three").hide_buffer()
         end,
-        { desc = "[B]uffer [H]ide" },
+        { desc = "[B]uffer [H]ide", exit = true },
     },
     m = {
         function()
             buffer_move()
         end,
-        { desc = "[B]uffer [M]ove" },
+        { desc = "[B]uffer [M]ove", exit = true },
     },
 
     n = {
@@ -137,18 +132,6 @@ config.buffer = {
         end,
         { desc = "Tab close" },
     },
-    [">"] = {
-        function()
-            vim.cmd("+tabmove<CR>")
-        end,
-        { desc = "TabNext", exit = false },
-    },
-    ["<"] = {
-        function()
-            vim.cmd("-tabmove<CR>")
-        end,
-        { desc = "TabPrev", exit = false },
-    },
 
     P = {
         function()
@@ -161,15 +144,15 @@ config.buffer = {
         function()
             vim.cmd("BufferLinePick")
         end,
-        { desc = "Pin buffer" },
+        { desc = "Pick buffer" },
     },
-    H = {
+    ["+"] = {
         function()
             vim.cmd("BufferLineMoveNext")
         end,
         { desc = "Move Next", exit = false },
     },
-    L = {
+    ["="] = {
         function()
             vim.cmd("BufferLineMovePrev")
         end,
@@ -208,47 +191,74 @@ config.buffer = {
         { desc = "Sort RDir" },
     },
 
-    d = {
+    e = {
         function()
-            vim.cmd("Bwipeout")
+            vim.ui.input({ prompt = "Split H, V or Leave empty", default = "" }, function(value)
+                value = value:lower()
+                if value == "h" then
+                    vim.cmd("BufExplorerHorizontalSplit")
+                elseif value == "v" then
+                    vim.cmd("BufExplorerVerticalSplit")
+                else
+                    vim.cmd("ToggleBufExplorer")
+                end
+            end)
         end,
-        { desc = "delete buffer" },
+        { desc = "BufExplorer", exit = true },
+    },
+
+    [">"] = {
+        function()
+            vim.cmd("BufExplorerVerticalSplit")
+        end,
+
+        { desc = "Explore Vertical", exit = true },
+    },
+
+    ["<"] = {
+        function()
+            vim.cmd("BufExplorerHorizontalSplit")
+        end,
+
+        { desc = "Explore Horizontal", exit = true },
     },
     N = {
         function()
             vim.cmd("BufKillNameless")
         end,
-        { desc = "BufKillNameless" },
+        { desc = "BufKillNameless", exit = true },
     },
-    ["<CR>"] = {
+    d = {
         function()
             vim.cmd("BufKillHidden")
         end,
-        { desc = "BufKillHidden" },
+        { desc = "BufKillHidden", exit = true },
     },
-    A = {
+    ["<CR>"] = {
         function()
             vim.cmd("BufWipe")
         end,
-        { desc = "Wipe" },
+        { desc = "Wipe", exit = true },
     },
     o = {
         function()
             vim.cmd("BufKillThis")
         end,
-        { desc = "Killthis" },
+        { desc = "Killthis", exit = true },
     },
 }
 local function auto_hint_generate()
-    container = {}
     for x, y in pairs(config.buffer) do
         local mapping = x
         if type(y[1]) == "function" then
             for x, y in pairs(y[2]) do
-                container[mapping] = y
+                if x == "desc" then
+                    container[mapping] = y
+                end
             end
         end
     end
+
     sorted = {}
     for k, v in pairs(container) do
         table.insert(sorted, k)
@@ -258,10 +268,10 @@ local function auto_hint_generate()
     core_table = {}
 
     make_core_table(core_table, bracket)
+    make_core_table(core_table, { "n", "C", "[", "]", "P" })
     make_core_table(core_table, { "q", "Q", "M", "m" })
-    make_core_table(core_table, { "n", "C", ">", "<", "P" })
-    make_core_table(core_table, { "p", "c", "H", "L" })
-    make_core_table(core_table, { "<cr>", "D", "d", "N", "A", "o" })
+    make_core_table(core_table, { "e", ">", "<", "p", "c" })
+    make_core_table(core_table, { "D", "d", "N", "o" })
     make_core_table(core_table, { "1", "2", "3" })
 
     hint_table = {}
@@ -289,7 +299,7 @@ end
 val = auto_hint_generate()
 
 local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
-    name = "Harpoon",
+    name = "Buffers",
     config = {
         hint = {
             position = "middle-right",
