@@ -1,19 +1,23 @@
 local M = {}
 local function auto_normal(ms)
-    vim.on_key(
-        (function()
-            local timer = vim.loop.new_timer()
-            return function()
-                timer:stop()
-                timer = vim.defer_fn(vim.cmd[vim.api.nvim_get_mode().mode == "i" and "stopinsert" or "#!"], ms)
+    local timer = vim.loop.new_timer()
+    local function on_key()
+        timer:stop()
+        timer = vim.defer_fn(function()
+            if vim.api.nvim_get_mode().mode ~= "i" then
+                return
             end
-        end)(),
-        vim.api.nvim_create_namespace("auto_normal")
-    )
+
+            vim.schedule(vim.cmd.stopinsert)
+        end, ms)
+    end
+
+    vim.on_key(on_key, vim.api.nvim_create_namespace("auto_normal"))
 end
-M.setup = function(time)
-    time = time or 10000
-    auto_normal(time)
+M.setup = function(opt)
+    opt = opt or 5000
+
+    auto_normal(opt)
 end
 
 return M

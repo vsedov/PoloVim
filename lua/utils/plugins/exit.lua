@@ -57,28 +57,32 @@ function _G.confirm_quit()
     return "true"
 end
 
-vim.cmd([[cnoreabbrev <expr> q (luaeval(v:lua.confirm_quit())) ? 'q' : '']])
-vim.cmd([[cnoreabbrev qq  quit]])
-vim.api.nvim_create_user_command("Q", "qall<bang>", { force = true, bang = true })
+return {
+    setup = function()
+        vim.cmd([[cnoreabbrev <expr> q (luaeval(v:lua.confirm_quit())) ? 'q' : '']])
+        vim.cmd([[cnoreabbrev qq  quit]])
+        vim.api.nvim_create_user_command("Q", "qall<bang>", { force = true, bang = true })
 
-vim.g.confirm_quit_isk_save = ""
+        vim.g.confirm_quit_isk_save = ""
 
-local group_name = "confirm-quit"
-vim.api.nvim_create_augroup(group_name, { clear = true })
-vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
-    group = group_name,
-    pattern = ":",
-    callback = function()
-        vim.g.confirm_quit_isk_save = vim.bo.iskeyword
-        vim.opt_local.iskeyword:append("!")
+        local group_name = "confirm-quit"
+        vim.api.nvim_create_augroup(group_name, { clear = true })
+        vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
+            group = group_name,
+            pattern = ":",
+            callback = function()
+                vim.g.confirm_quit_isk_save = vim.bo.iskeyword
+                vim.opt_local.iskeyword:append("!")
+            end,
+            once = false,
+        })
+        vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
+            group = group_name,
+            pattern = ":",
+            callback = function()
+                vim.bo.iskeyword = vim.g.confirm_quit_isk_save
+            end,
+            once = false,
+        })
     end,
-    once = false,
-})
-vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
-    group = group_name,
-    pattern = ":",
-    callback = function()
-        vim.bo.iskeyword = vim.g.confirm_quit_isk_save
-    end,
-    once = false,
-})
+}
