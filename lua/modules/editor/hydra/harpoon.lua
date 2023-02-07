@@ -28,8 +28,9 @@ local function plane()
         end
     end
 
+    local unicode = { "Σ", "Φ", "Ψ", "λ", "Ω" }
     for i = 1, 5 do
-        table.insert(container, "B" .. " : " .. i)
+        table.insert(container, unicode[i] .. " : " .. i)
     end
 
     return container
@@ -139,7 +140,7 @@ config.parenth_mode = {
     w = {
         function()
             vim.g.goto_harpoon = not vim.g.goto_harpoon
-            vim.notify("Goto Harpoon " .. vim.g.goto_harpoon)
+            vim.notify("Goto Harpoon " .. tostring(vim.g.goto_harpoon))
         end,
         { nowait = true, exit = true, desc = "Toggle Goto" },
     },
