@@ -45,16 +45,14 @@ end
 
 local function terminal_send(term, cmd)
     local module
-    local goto_func
+    local goto_func = "gotoTerminal"
     if vim.fn.getenv("TMUX") ~= vim.NIL then
         module = string.find(term, "%%") and "harpoon.tmux" or "harpoon-tmux"
-        goto_func = "gotoTerminal"
         if not string.find(term, "%%") then
             term = tonumber(term)
         end
     else
         module = "harpoon.term"
-        goto_func = "gotoTerminal"
     end
 
     require(module).sendCommand(term, cmd)
@@ -66,26 +64,23 @@ local function terminal_send(term, cmd)
 end
 local function handle_tmux()
     local data = plane()
-    local cache_str = cache.tmux.selected_plane and "0: cache : " .. cache.tmux.selected_plane or "0: cache"
-    table.insert(data, cache_str)
+    local selected_plane = cache.tmux.selected_plane
+    if selected_plane == "" then
+        local filtered = vim.tbl_filter(function(item)
+            return string.find(item, "%%")
+        end, data)
+        selected_plane = #filtered > 0 and vim.split(filtered[1], " : ")[2] or vim.split(data[2], " : ")[2]
+    end
+    cache.tmux.selected_plane = selected_plane
+    table.insert(data, "0: cache : " .. selected_plane)
     table.sort(data, function(a, b)
         return a:lower() < b:lower()
     end)
-
-    if cache.tmux.selected_plane == "" then
-        cache.tmux.selected_plane = vim.split(data[2], " : ")
-    end
-    --
-    vim.ui.select(data, { prompt = "Select a Plane " }, function(selected_plane)
-        cache.tmux.selected_plane = selected_plane == "cache" and cache.tmux.selected_plane
-            or vim.split(selected_plane, " : ")[2]
-
-        if not string.find(cache.tmux.selected_plane, "%%") then
-            cache.tmux.selected_plane = tonumber(cache.tmux.selected_plane)
-        end
-        if not string.find(cache.command, "%D") then
-            cache.command = tonumber(cache.command)
-        end
+    vim.ui.select(data, { prompt = "Select a Plane " }, function(selected_item)
+        local selected_plane = selected_item == "cache" and cache.tmux.selected_plane
+            or vim.split(selected_item, " : ")[2]
+        cache.tmux.selected_plane = string.find(selected_plane, "%%") and selected_plane or tonumber(selected_plane)
+        cache.command = string.find(cache.command, "%D") and cache.command or tonumber(cache.command)
         terminal_send(cache.tmux.selected_plane, cache.command)
     end)
 end
@@ -112,6 +107,7 @@ end
 local config = {}
 
 local exit = { nil, { exit = true, desc = "EXIT" } }
+
 config.parenth_mode = {
     color = "red",
     body = leader,
@@ -134,6 +130,7 @@ config.parenth_mode = {
 
     ["<CR>"] = {
         function()
+            lambda.clever_tcd()
             require("harpoon.ui").toggle_quick_menu()
         end,
 
@@ -155,7 +152,6 @@ config.parenth_mode = {
 
     [";"] = {
         function()
-            require("telescope").load_extension("harpoon")
             vim.cmd("Telescope harpoon marks")
         end,
         { nowait = true, exit = true, desc = "Harpoon Tele" },
@@ -182,6 +178,7 @@ config.parenth_mode = {
 
     ["<leader>"] = {
         function()
+            lambda.clever_tcd()
             require("harpoon.cmd-ui").toggle_quick_menu()
         end,
         { nowait = true, exit = true, desc = "Quick ui Menu" },
