@@ -232,3 +232,100 @@ tools({
     lazy = true,
     ft = "qf",
 })
+
+tools({
+    "samjwill/nvim-unception",
+    lazy = true,
+    event = "CmdLineEnter",
+    config = function()
+        vim.g.unception_delete_replaced_buffer = true
+        vim.g.unception_enable_flavor_text = false
+    end,
+})
+
+tools({
+    "Apeiros-46B/qalc.nvim",
+    config = true,
+    cmd = { "Qalc", "QalcAttach" },
+})
+
+-- The goal of nvim-fundo is to make Neovim's undo file become stable and useful.
+tools({
+    "kevinhwang91/nvim-fundo",
+    event = "BufReadPre",
+    cmd = { "FundoDisable", "FundoEnable" },
+    dependencies = "kevinhwang91/promise-async",
+    build = function()
+        require("fundo").install()
+    end,
+    config = true,
+})
+
+tools({
+    "AntonVanAssche/date-time-inserter.nvim",
+    lazy = true,
+    cmd = {
+        "InsertDate",
+        "InsertTime",
+        "InsertDateTime",
+    },
+    config = true,
+})
+
+tools({
+    "aserowy/tmux.nvim",
+    lazy = true,
+    cond = vim.fn.getenv("TMUX") ~= vim.NIL,
+    event = "BufWinEnter",
+    config = function()
+        require("tmux").setup({
+            copy_sync = { enable = true },
+            navigation = {
+                cycle_navigation = false,
+                enable_default_keybindings = false,
+                persist_zoom = false,
+            },
+        })
+
+        keymaps = {
+            Up = function()
+                require("tmux").resize_top()
+            end,
+            Left = function()
+                require("tmux").resize_left()
+            end,
+            Right = function()
+                require("tmux").resize_right()
+            end,
+            Down = function()
+                require("tmux").resize_down()
+            end,
+        }
+        for k, v in pairs(keymaps) do
+            vim.keymap.set("n", "<A-" .. k .. ">", v, { noremap = true, silent = true })
+        end
+
+        for k, value in pairs({ left = "h", bottom = "j", top = "k", right = "l" }) do
+            vim.keymap.set(
+                "n",
+                "<c-" .. value .. ">",
+                "<cmd>lua require('tmux').move_" .. k .. "()<cr>",
+                { noremap = true, silent = true }
+            )
+        end
+    end,
+})
+tools({
+    "chomosuke/term-edit.nvim",
+    lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim
+    ft = { "toggleterm", "terminal" },
+    version = "1.*",
+})
+
+tools({
+    "mtikekar/nvim-send-to-term",
+    cmd = "SendHere",
+    init = function()
+        vim.g.send_disable_mapping = true
+    end,
+})

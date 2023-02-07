@@ -4,7 +4,6 @@ end
 
 local leader_key = "M"
 local hydra = require("hydra")
-
 local bracket = { "<cr>", "m", "n", "N", "c" }
 
 local function make_core_table(core_table, second_table)

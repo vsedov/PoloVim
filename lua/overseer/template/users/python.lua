@@ -17,6 +17,27 @@ return {
     },
 
     generator = function(_)
+        local ret = {}
+
+        table.insert(ret, {
+            name = "PythonFormat",
+            builder = function(params)
+                local file = vim.fn.expand("%:p")
+                local cmd = { "yapf", "--recursive", "--parallel", "--verbose", "--in-place", file }
+                return {
+                    cmd = cmd,
+                    components = {
+                        { "on_output_quickfix", set_diagnostics = true },
+                        "on_result_diagnostics",
+                        "default",
+                    },
+                }
+            end,
+            condition = {
+                filetype = { "python" },
+            },
+        })
+
         local commands = {
 
             {
@@ -27,13 +48,6 @@ return {
                     callback = isInProject,
                 },
 
-                unique = true,
-            },
-            {
-                name = "RunningPython",
-                tskName = "RunningPython",
-                cmd = "python " .. vim.fn.expand("%:p"),
-                condition = { filetype = "python" },
                 unique = true,
             },
             {
@@ -102,6 +116,7 @@ return {
                 cmd = "mkdir -p /tmp/work",
                 condition = { filetype = "python" },
             },
+
             {
                 name = "Show python version",
                 cmd = "python",
@@ -109,12 +124,6 @@ return {
 
                 unique = true,
                 condition = { filetype = "python" },
-            },
-            {
-                name = "Jedi upgrade",
-                cmd = "pipx upgrade jedi-language-server",
-                condition = { filetype = "python" },
-                unique = true,
             },
 
             {
@@ -127,7 +136,6 @@ return {
                 unique = true,
             },
         }
-        local ret = {}
         local priority = 60
         for _, command in pairs(commands) do
             local comps = {

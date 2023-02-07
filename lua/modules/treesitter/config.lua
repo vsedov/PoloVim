@@ -109,8 +109,12 @@ function config.playground()
 end
 
 function config.hlargs()
-    require("utils.ui.highlights").plugin("hlargs", {
-        { Hlargs = { fg = "#ef9062", italic = true, bold = false } },
+    require("utils.ui.utils").plugin("hlargs", {
+
+        theme = {
+            ["*"] = { { Hlargs = { italic = true, foreground = "#A5D6FF" } } },
+            ["horizon"] = { { Hlargs = { italic = true, foreground = { from = "Normal" } } } },
+        },
     })
     require("hlargs").setup({
         color = "#ef9062",

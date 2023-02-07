@@ -1,60 +1,158 @@
-local hydra = require("hydra")
+local utils = require("modules.editor.hydra.utils")
 local leader = "<CR>"
-local bracket = { "<CR>", "w", "a", ";", "<leader>" }
+local hydra = require("hydra")
+local bracket = { "<CR>", "W", "w", "t", "a", ";", "<leader>" }
+local input_prompt = "enter the command: cmd >"
+local terminal_prompt = "Enter a terminal Number "
+local default_terminal = "1"
 
-local function make_core_table(core_table, second_table)
-    for _, v in pairs(second_table) do
-        table.insert(core_table, v)
-    end
-    table.insert(core_table, "\n")
-end
+local cache = {
+    command = "ls -a",
+    tmux = {
+        selected_plane = "",
+    },
+}
+vim.g.goto_harpoon = false
 
-local function create_table_normal(var, sorted, string_len, start_val)
-    start_val = start_val or nil
-    var = {}
-    for _, v in pairs(sorted) do
-        if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
-            if start_val ~= nil then
-                if vim.tbl_contains(start_val, v) then
-                    -- if starts(v, start_val) then
-                    table.insert(var, v)
-                end
-            else
-                table.insert(var, v)
+local function plane()
+    data = vim.fn.system("tmux list-panes")
+    data = vim.split(data, "\n")
+
+    container = {}
+    for _, v in ipairs(data) do
+        output, output_2 = v:match("^(%d+):.*(%%%d+)")
+        if output ~= nil or output_2 ~= nil then
+            if output ~= "1" then
+                table.insert(container, output .. " : " .. output_2)
             end
         end
     end
-    table.sort(var, function(a, b)
+
+    local unicode = { "Σ", "Φ", "Ψ", "λ", "Ω" }
+    for i = 1, 5 do
+        table.insert(container, unicode[i] .. " : " .. i)
+    end
+
+    return container
+end
+
+local function tmux_goto(term)
+    if vim.fn.getenv("TMUX") ~= vim.NIL then
+        require("harpoon-tmux").gotoTerminal(term)
+    else
+        require("harpoon.term").gotoTerminal(term)
+    end
+end
+
+local function terminal_send(term, cmd)
+    local module
+    local goto_func = "gotoTerminal"
+    if vim.fn.getenv("TMUX") ~= vim.NIL then
+        module = string.find(term, "%%") and "harpoon.tmux" or "harpoon-tmux"
+        if not string.find(term, "%%") then
+            term = tonumber(term)
+        end
+    else
+        module = "harpoon.term"
+    end
+
+    require(module).sendCommand(term, cmd)
+    if vim.g.goto_harpoon == true then
+        vim.defer_fn(function()
+            require(module)[goto_func](term)
+        end, string.find(module, "tmux") and 500 or 1000)
+    end
+end
+local function handle_tmux()
+    local data = plane()
+    local selected_plane = cache.tmux.selected_plane
+    if selected_plane == "" then
+        local filtered = vim.tbl_filter(function(item)
+            return string.find(item, "%%")
+        end, data)
+        selected_plane = #filtered > 0 and vim.split(filtered[1], " : ")[2] or vim.split(data[2], " : ")[2]
+    end
+    cache.tmux.selected_plane = selected_plane
+    table.insert(data, "0: cache : " .. selected_plane)
+    table.sort(data, function(a, b)
         return a:lower() < b:lower()
     end)
+    vim.ui.select(data, { prompt = "Select a Plane " }, function(selected_item)
+        local selected_plane = selected_item == "cache" and cache.tmux.selected_plane
+            or vim.split(selected_item, " : ")[2]
+        cache.tmux.selected_plane = string.find(selected_plane, "%%") and selected_plane or tonumber(selected_plane)
+        cache.command = string.find(cache.command, "%D") and cache.command or tonumber(cache.command)
+        terminal_send(cache.tmux.selected_plane, cache.command)
+    end)
+end
 
-    return var
+local function handle_non_tmux()
+    vim.ui.input({ prompt = terminal_prompt, default = default_terminal }, function(terminal_number)
+        if not string.find(terminal_number, "%D") then
+            local term = tonumber(terminal_number)
+            terminal_send(term, cache.command)
+        end
+    end)
+end
+
+local function handle_command_input(command)
+    cache.command = command ~= "" and command or cache.command
+
+    if vim.fn.getenv("TMUX") ~= vim.NIL then
+        handle_tmux()
+    else
+        handle_non_tmux()
+    end
 end
 
 local config = {}
 
 local exit = { nil, { exit = true, desc = "EXIT" } }
+
 config.parenth_mode = {
     color = "red",
     body = leader,
     mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
+    s = {
+        function()
+            vim.ui.input({ prompt = input_prompt }, handle_command_input)
+        end,
+        { nowait = true, exit = true, desc = "Terminal GotoSend" },
+    },
+    S = {
+        function()
+            vim.ui.input({ prompt = "enter the terminal: term >" }, function(value2)
+                tmux_goto(tonumber(value2))
+            end)
+        end,
+        { nowait = true, exit = true, desc = "Terminal Goto" },
+    },
 
     ["<CR>"] = {
         function()
+            lambda.clever_tcd()
             require("harpoon.ui").toggle_quick_menu()
         end,
+
         { nowait = true, exit = true, desc = "Quick Menu" },
     },
     w = {
+        function()
+            vim.g.goto_harpoon = not vim.g.goto_harpoon
+            vim.notify("Goto Harpoon " .. tostring(vim.g.goto_harpoon))
+        end,
+        { nowait = true, exit = true, desc = "Toggle Goto" },
+    },
+    t = {
         function()
             require("harpoon.mark").toggle_file()
         end,
         { nowait = true, exit = true, desc = "Toggle File" },
     },
+
     [";"] = {
         function()
-            require("telescope").load_extension("harpoon")
             vim.cmd("Telescope harpoon marks")
         end,
         { nowait = true, exit = true, desc = "Harpoon Tele" },
@@ -81,90 +179,27 @@ config.parenth_mode = {
 
     ["<leader>"] = {
         function()
+            lambda.clever_tcd()
             require("harpoon.cmd-ui").toggle_quick_menu()
         end,
         { nowait = true, exit = true, desc = "Quick ui Menu" },
     },
 
-    ["1"] = {
+    W = {
         function()
-            require("harpoon.ui").nav_file(1)
-        end,
-        { nowait = true, desc = "Jump File 1", exit = true },
-    },
-    ["2"] = {
-        function()
-            require("harpoon.ui").nav_file(2)
-        end,
-        { nowait = true, desc = "Jump File 2", exit = true },
-    },
-    ["3"] = {
-        function()
-            require("harpoon.ui").nav_file(3)
-        end,
-        { nowait = true, desc = "Jump File 3", exit = true },
-    },
-    ["4"] = {
-        function()
-            require("harpoon.ui").nav_file(4)
-        end,
-        { nowait = true, desc = "Jump File 4", exit = true },
-    },
-    ["5"] = {
-        function()
-            require("harpoon.ui").nav_file(5)
-        end,
-        { nowait = true, desc = "Jump File 5", exit = true },
-    },
+            vim.ui.input({ prompt = "Harpoon > ", default = "1" }, function(index)
+                if index == nil or index == "" then
+                    return
+                end
 
-    ["6"] = {
-        function()
-            require("harpoon.ui").nav_file(6)
+                require("harpoon.ui").nav_file(tonumber(index))
+            end)
         end,
-        { nowait = true, desc = "Jump File 6", exit = true },
-    },
-
-    ["7"] = {
-        function()
-            require("harpoon.ui").nav_file(7)
-        end,
-        { nowait = true, desc = "Jump File 7", exit = true },
-    },
-
-    ["8"] = {
-        function()
-            require("harpoon.ui").nav_file(8)
-        end,
-        { nowait = true, desc = "Jump File 8", exit = true },
-    },
-
-    ["9"] = {
-        function()
-            require("harpoon.ui").nav_file(9)
-        end,
-        { nowait = true, desc = "Jump File 9", exit = true },
+        { nowait = true, desc = "Jump File", exit = true },
     },
 }
-local mapping = {
-    color = function(t, rhs)
-        t.config.color = rhs
-    end,
-    body = function(t, rhs)
-        t.body = rhs
-    end,
-    on_enter = function(t, rhs)
-        t.config.on_enter = rhs
-    end,
-    on_exit = function(t, rhs)
-        t.config.on_exit = rhs
-    end,
-    mode = function(t, rhs)
-        t.config.mode = rhs
-    end,
-}
--- Create a Auto Hinting Table same as above but with auto generated
 
-local new_hydra = {
+local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
     name = "Harpoon",
     config = {
         hint = {
@@ -175,20 +210,8 @@ local new_hydra = {
         invoke_on_body = true,
     },
     heads = {},
-}
+})
 
-for name, spec in pairs(config) do
-    for lhs, rhs in pairs(spec) do
-        local action = mapping[lhs]
-        if action == nil then
-            new_hydra.heads[#new_hydra.heads + 1] = { lhs, table.unpack(rhs) }
-        else
-            action(new_hydra, rhs)
-        end
-    end
-end
-
---
 local function auto_hint_generate()
     container = {}
     for x, y in pairs(config.parenth_mode) do
@@ -207,15 +230,14 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    num = create_table_normal({}, sorted, 1, { "1", "2", "3", "4", "5", "6", "7", "8", "9" })
-    harpoon = create_table_normal({}, sorted, 1, { "n", "N" })
-    portal = create_table_normal({}, sorted, 1, { "[", "]" })
+    num = utils.create_table_normal({}, sorted, 1, { "s", "S" }, bracket)
+    harpoon = utils.create_table_normal({}, sorted, 1, { "n", "N" }, bracket)
 
     core_table = {}
 
-    make_core_table(core_table, bracket)
-    make_core_table(core_table, harpoon)
-    make_core_table(core_table, num)
+    utils.make_core_table(core_table, bracket)
+    utils.make_core_table(core_table, num)
+    utils.make_core_table(core_table, harpoon)
 
     hint_table = {}
     string_val = "^ ^         Harpoon         ^ ^\n\n"

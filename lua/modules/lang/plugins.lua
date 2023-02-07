@@ -75,6 +75,8 @@ lang({
         "rcarriga/nvim-dap-ui",
         "mfussenegger/nvim-dap-python",
         "ofirgall/goto-breakpoints.nvim",
+        "jay-babu/mason-nvim-dap.nvim",
+        "theHamsta/nvim-dap-virtual-text",
     },
 })
 
@@ -99,16 +101,17 @@ lang({
     },
     config = conf.neotest,
 })
-lang({
-    "rcarriga/neotest-vim-test",
-    cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
-    dependencies = { "vim-test/vim-test" },
-})
 
 lang({
     "stevearc/overseer.nvim",
     event = "VeryLazy",
     config = conf.overseer,
+})
+
+lang({
+    "rcarriga/neotest-vim-test",
+    cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
+    dependencies = { "vim-test/vim-test" },
 })
 
 lang({

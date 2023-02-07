@@ -25,20 +25,22 @@ overseer.setup({
     },
 
     component_aliases = {
-        default = {
-            { "on_complete_notify", system = "unfocused" },
-            "on_output_summarize",
-            "on_exit_set_status",
-            "on_complete_notify",
-            "on_complete_dispose",
-        },
         default_neotest = {
             "on_output_summarize",
             "on_exit_set_status",
-            "on_complete_notify",
+            { "on_complete_notify", system = "unfocused" },
             "on_complete_dispose",
-            { "on_complete_notify", system = "unfocused", on_change = true },
+            "unique",
+            "display_duration",
         },
+        default = {
+            "on_output_summarize",
+            "on_exit_set_status",
+            { "on_complete_notify", system = "unfocused" },
+            "on_complete_dispose",
+            "display_duration",
+        },
+        always_restart = { "on_complete_restart", statuses = { STATUS.FAILURE, STATUS.SUCCESS } },
     },
     actions = {
 
@@ -59,7 +61,7 @@ overseer.setup({
         },
     },
 
-    templates = { "builtin", "python" },
+    templates = { "builtin", "users" },
 })
 
 vim.api.nvim_create_user_command(

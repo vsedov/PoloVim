@@ -96,7 +96,7 @@ Hydra({
         { "z", cmd("MaximizerToggle!"), { desc = "maximize" } },
         { "<C-z>", cmd("MaximizerToggle!"), { exit = true, desc = false } },
 
-        { "o", "<C-w>o", { exit = true, desc = "remain only" } },
+        { "o", cmd("BufOnly"), { exit = true, desc = "remain only" } },
         { "<C-o>", "<C-w>o", { exit = true, desc = false } },
 
         -- { "b", choose_buffer, { exit = true, desc = "choose buffer" } },
@@ -109,63 +109,3 @@ Hydra({
         { "<Esc>", nil, { exit = true, desc = false } },
     },
 })
-
--- Make Flirt work with this, so all movement based stuff like autoresize and some other stuff
--- i will use <c-w>] for the other things i will use <c-w>[
--- local window_hint = [[
---  ^^^^^^^^^^^^          Move            ^^    Size  ^^  ^^     Split
---  ^^^^^^^^^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ ^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^  ^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
---
---  ^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^ ^   _<Up>_     ^   ^_s_: horizontally
---  _h_ ^ ^ _l_  _wh_ _<cr>_ _wl_  _H_ ^ ^ _L_  _<Left>_ _<Right>_  _v_: vertically
---  ^ ^ _j_ ^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^   ^_q_, _c_: close
---  ^^ focus ^  ^^winshift^  ^^Split^^^^^^^^^^  ^_=_: equalize^     _z_: maximize
---  ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only
---  _b_: choose buffer  _?_ : Pick window
--- ]]
-
--- Hydra({
---     name = "Windows",
---     hint = window_hint,
---     config = {
---         invoke_on_body = true,
---         hint = {
---             border = "rounded",
---             offset = -1,
---         },
---     },
---     mode = "n",
---     body = "<C-w>]",
---     heads = {
---         { "h", "<C-w>h" },
---         { "j", "<C-w>j" },
---         { "k", "<C-w>k" },
---         { "l", "<C-w>l" },
---
---         {
---             "<Left>",
---             function()
---                 splits.resize_left(2)
---             end,
---         },
---         {
---             "<Down>",
---             function()
---                 splits.resize_down(2)
---             end,
---         },
---         {
---             "<Up>",
---             function()
---                 splits.resize_up(2)
---             end,
---         },
---         {
---             "<Right>",
---             function()
---                 splits.resize_right(2)
---             end,
---         },
---         { "<Esc>", nil, { exit = true, desc = false } },
---     },
--- })

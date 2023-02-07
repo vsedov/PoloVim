@@ -1,17 +1,8 @@
 local Hydra = require("hydra")
-local reach_options = {
-    handle = "dynamic",
-    show_current = true,
-    sort = function(a, b)
-        return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
-    end,
-}
+local leader_key = "<leader>b"
+local cmd = require("hydra.keymap-util").cmd
 
-local hint
-local config
-
--- Keymaps for bufferline
-
+local bracket = { "l", "h", "L", "H", "=", "+", "b", "<leader>" }
 local function buffer_move()
     vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
         idx = idx and tonumber(idx)
@@ -20,132 +11,304 @@ local function buffer_move()
         end
     end)
 end
+local function tab_move()
+    vim.ui.input({ prompt = "Move tab to:" }, function(idx)
+        idx = idx and tonumber(idx)
+        if idx then
+            require("three").move_tab(idx)
+        end
+    end)
+end
+
+local function make_core_table(core_table, second_table)
+    for _, v in pairs(second_table) do
+        table.insert(core_table, v)
+    end
+    table.insert(core_table, "\n")
+end
 
 vim.api.nvim_create_user_command("ProjectDelete", function()
     require("three").remove_project()
 end, {})
 
-hint = [[
-  ^^^^                Bufferline                  ^^^^
-  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-   _l_: next                _h_: prev
-   _p_: three pin           _c_: BufferLinePick
-   _H_: Move Next           _L_: Move Prev
-   _D_: Pick Close          _q_: Smart Close
-   _m_: Three Move          _Q_: Close Buffer
-   _ot_: Sort Tabs          _od_: Sort Dir
-   _or_: Sort relative dir  _b_:  Buffer Jump
-   _tl_: next               _th_: prev
-   
-  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  ^^^^               BufferJumper                 ^^^^
-  ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
+local exit = { nil, { exit = true, desc = "EXIT" } }
+local config = {}
+config.buffer = {
+    color = "red",
+    body = leader_key,
+    mode = { "n" },
 
-        _1_: Jump 1    _2_: Jump 2    _3_: Jump 3
-        _4_: Jump 4    _5_: Jump 5    _6_: Jump 6
-        _7_: Jump 7    _8_: Jump 8    _9_: Jump 9
-                     _0_: Jump 0
-                     _#_: last buffer
-
-  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  ^^^^                  Tabs                      ^^^^
-  ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
-
-    _[_: tabn                        _]_: tabp
-    _n_: $tabnew                     _C_: tabclose
-    _>_: +tabmove                    _<_: -tabmove
-                    _P_: tabonly
-
-  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  ^^^^                   Delete                   ^^^^
-  ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
-
-   _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
-
-  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  ^^^^                   Reacher                  ^^^^
-  ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
-
-    _S_: ReachOpen buffers   _s_: ReachOpen Tabs
-
-   _d_: Bwipeout
-]]
-config = {
-    hint = hint,
-    name = "Buffer management",
-    mode = "n",
-    color = "teal",
-    body = "<leader>b",
-    config = {
-        hint = { border = "single", position = "bottom-right" },
-        invoke_on_body = true,
+    b = {
+        function()
+            vim.cmd("Telescope buffers")
+        end,
+        { desc = "Buffers", exit = true },
     },
-    heads = {
+    l = {
+        function()
+            vim.cmd("BufferLineCycleNext")
+        end,
 
-        { "[", require("three").wrap(require("three").next_tab, { wrap = true }, { desc = "[G]oto next [T]ab" }) },
-        { "]", require("three").wrap(require("three").prev_tab, { wrap = true }, { desc = "[G]oto prev [T]ab" }) },
+        { desc = "Next Buffers", exit = false },
+    },
+    h = {
+        function()
+            vim.cmd("BufferLineCyclePrev")
+        end,
 
-        { "n", ":$tabnew<CR>", { desc = "Pin buffer" } },
-        { "C", ":tabclose<CR>", { desc = "Pin buffer" } },
-        { ">", ":+tabmove<CR>", { desc = "Move Next" } },
-        { "<", ":-tabmove<CR>", { desc = "Move Prev" } },
-        { "P", "<Cmd>tabonly<CR>", { desc = "Pick buffer to close", exit = true } },
+        { desc = "Prev Buffers", exit = false },
+    },
 
-        { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },
-        { "s", ":ReachOpen tabpages<CR>", { desc = "Next buffer" } },
+    L = {
+        function()
+            require("three").next()
+        end,
 
-        { "c", "<Cmd>BufferLinePick<CR>", { desc = "Pin buffer" } },
+        { desc = "[G]oto next [B]uffer", exit = false },
+    },
+    H = {
+        function()
+            require("three").prev()
+        end,
 
-        { "H", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Next" } },
-        { "L", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Prev" } },
-        { "D", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close", exit = true } },
-        { "ot", "<Cmd>BufferLineSortByTabs<CR>", { desc = "Sort by tabs", exit = true } },
-        { "od", "<Cmd>BufferLineSortByDirectory<CR>", { desc = "Sort by dir", exit = true } },
-        {
-            "or",
-            "<Cmd>BufferLineSortByRelativeDirectory<CR>",
-            { desc = "Sort by relative dir ", exit = true },
-        },
+        { desc = "[G]oto Prev [B]uffer", exit = false },
+    },
 
-        { "d", "<Cmd>Bwipeout<CR>", { desc = "delete buffer" } },
-        { "<Esc>", nil, { exit = true, desc = "Quit" } },
-        {
-            "b",
+    ["["] = {
+        function()
+            require("three").next_tab()
+        end,
+        { desc = "[G]oto next [T]ab", exit = false },
+    },
+    ["]"] = {
+        function()
+            require("three").prev_tab()
+        end,
+        { desc = "[G]oto prev [T]ab", exit = false },
+    },
+    --
+    ["<leader>"] = {
+        function()
+            vim.ui.input({ prompt = "enter the buffer you want to jump to" }, function(value)
+                require("three").wrap(require("three").jump_to, value)
+            end)
+        end,
+        { desc = "Jump to buffer", exit = true },
+    },
+    q = {
+        function()
+            require("three").smart_close()
+        end,
+        { desc = "[C]lose window or buffer", exit = true },
+    },
+    Q = {
+        function()
+            require("three").close_buffer()
+        end,
+        { desc = "[B]uffer [C]lose", exit = true },
+    },
+    M = {
+        function()
+            require("three").hide_buffer()
+        end,
+        { desc = "[B]uffer [H]ide", exit = true },
+    },
+    m = {
+        function()
+            buffer_move()
+        end,
+        { desc = "[B]uffer [M]ove", exit = true },
+    },
 
-            ":Telescope buffers<CR>",
-            { exit = true },
-        },
+    n = {
+        function()
+            vim.cmd("$tabnew<CR>")
+        end,
+        { desc = "Tab New", exit = false },
+    },
+    C = {
+        function()
+            vim.cmd("$tabclose<cr>")
+        end,
+        { desc = "Tab close" },
+    },
 
-        { "qh", "<cmd>BDelete hidden<CR>" },
-        { "qn", "<cmd>BDelete! nameless<CR>" },
-        { "qt", "<cmd>BDelete! this<CR>" },
+    P = {
+        function()
+            require("three").open_project()
+        end,
+        { desc = "Three Project", exit = true },
+    },
 
-        { "tl", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" } },
-        { "th", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
+    c = {
+        function()
+            vim.cmd("BufferLinePick")
+        end,
+        { desc = "Pick buffer" },
+    },
+    ["+"] = {
+        function()
+            vim.cmd("BufferLineMoveNext")
+        end,
+        { desc = "Move Next", exit = false },
+    },
+    ["="] = {
+        function()
+            vim.cmd("BufferLineMovePrev")
+        end,
+        { desc = "Move Prev", exit = false },
+    },
+    D = {
+        function()
+            vim.cmd("BufferLinePickClose")
+        end,
+        { desc = "Close Buf", exit = false },
+    },
+    p = {
+        function()
+            vim.cmd("BufferLineTogglePin")
+        end,
+        { desc = "Pin Buf" },
+    },
 
-        { "l", require("three").wrap(require("three").next, { wrap = true }, { desc = "[G]oto next [B]uffer" }) },
-        { "h", require("three").wrap(require("three").prev, { wrap = true }, { desc = "[G]oto prev [B]uffer" }) },
+    ["1"] = {
+        function()
+            vim.cmd("BufferLineSortByTabs")
+        end,
+        { desc = "Sort Tabs" },
+    },
+    ["2"] = {
+        function()
+            vim.cmd("BufferLineSortByDirectory")
+        end,
+        { desc = "Sort Dir" },
+        -- { desc = "Sort dir", exit = true },
+    },
+    ["3"] = {
+        function()
+            vim.cmd("BufferLineSortByRelativeDirectory")
+        end,
+        { desc = "Sort RDir" },
+    },
 
-        { "p", "<cmd>BufferLineTogglePin<cr>", { desc = "Pin buffer" } },
+    e = {
+        function()
+            vim.ui.input({ prompt = "Split H, V or Leave empty", default = "" }, function(value)
+                value = value:lower()
+                if value == "h" then
+                    vim.cmd("BufExplorerHorizontalSplit")
+                elseif value == "v" then
+                    vim.cmd("BufExplorerVerticalSplit")
+                else
+                    vim.cmd("ToggleBufExplorer")
+                end
+            end)
+        end,
+        { desc = "BufExplorer", exit = true },
+    },
 
-        { "q", require("three").smart_close, { desc = "[C]lose window or buffer" } },
-        { "Q", require("three").close_buffer, { desc = "[B]uffer [C]lose" } },
+    [">"] = {
+        function()
+            vim.cmd("BufExplorerVerticalSplit")
+        end,
 
-        { "H", require("three").hide_buffer, { desc = "[B]uffer [H]ide" } },
+        { desc = "Explore Vertical", exit = true },
+    },
 
-        { "m", buffer_move, { desc = "[B]uffer [M]ove" } },
+    ["<"] = {
+        function()
+            vim.cmd("BufExplorerHorizontalSplit")
+        end,
 
-        { "1", require("three").wrap(require("three").jump_to, 1), { desc = "Jump to buffer 1" } },
-        { "2", require("three").wrap(require("three").jump_to, 2), { desc = "Jump to buffer 2" } },
-        { "3", require("three").wrap(require("three").jump_to, 3), { desc = "Jump to buffer 3" } },
-        { "4", require("three").wrap(require("three").jump_to, 4), { desc = "Jump to buffer 4" } },
-        { "5", require("three").wrap(require("three").jump_to, 5), { desc = "Jump to buffer 5" } },
-        { "6", require("three").wrap(require("three").jump_to, 6), { desc = "Jump to buffer 6" } },
-        { "7", require("three").wrap(require("three").jump_to, 7), { desc = "Jump to buffer 7" } },
-        { "8", require("three").wrap(require("three").jump_to, 8), { desc = "Jump to buffer 8" } },
-        { "9", require("three").wrap(require("three").jump_to, 9), { desc = "Jump to buffer 9" } },
-        { "0", require("three").wrap(require("three").jump_to, 10), { desc = "Jump to buffer 10" } },
-        { "#", require("three").wrap(require("three").next, { delta = 100 }), { desc = "Jump to last buffer" } },
+        { desc = "Explore Horizontal", exit = true },
+    },
+    N = {
+        function()
+            vim.cmd("BufKillNameless")
+        end,
+        { desc = "BufKillNameless", exit = true },
+    },
+    d = {
+        function()
+            vim.cmd("BufKillHidden")
+        end,
+        { desc = "BufKillHidden", exit = true },
+    },
+    ["<CR>"] = {
+        function()
+            vim.cmd("BufWipe")
+        end,
+        { desc = "Wipe", exit = true },
+    },
+    o = {
+        function()
+            vim.cmd("BufKillThis")
+        end,
+        { desc = "Killthis", exit = true },
     },
 }
-Hydra(config)
+local function auto_hint_generate()
+    for x, y in pairs(config.buffer) do
+        local mapping = x
+        if type(y[1]) == "function" then
+            for x, y in pairs(y[2]) do
+                if x == "desc" then
+                    container[mapping] = y
+                end
+            end
+        end
+    end
+
+    sorted = {}
+    for k, v in pairs(container) do
+        table.insert(sorted, k)
+    end
+    table.sort(sorted)
+
+    core_table = {}
+
+    make_core_table(core_table, bracket)
+    make_core_table(core_table, { "n", "C", "[", "]", "P" })
+    make_core_table(core_table, { "q", "Q", "M", "m" })
+    make_core_table(core_table, { "e", ">", "<", "p", "c" })
+    make_core_table(core_table, { "D", "d", "N", "o" })
+    make_core_table(core_table, { "1", "2", "3" })
+
+    hint_table = {}
+    string_val = "^ ^          Buffers         ^ ^\n\n"
+    string_val = string_val
+        .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+    --
+    for _, v in pairs(core_table) do
+        if v == "\n" then
+            hint = "\n"
+            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^ ^\n"
+        else
+            if container[v] then
+                hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+            else
+                hint = "^ ^ _" .. v .. "_: " .. " ^ ^\n"
+            end
+        end
+        table.insert(hint_table, hint)
+        string_val = string_val .. hint
+    end
+    return string_val
+end
+
+val = auto_hint_generate()
+
+local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
+    name = "Buffers",
+    config = {
+        hint = {
+            position = "middle-right",
+            border = lambda.style.border.type_0,
+        },
+        timeout = false,
+        invoke_on_body = true,
+    },
+    heads = {},
+})
+new_hydra.hint = val
+Hydra(new_hydra)

@@ -1,4 +1,4 @@
-local h = require("utils.ui.highlights")
+local h = require("utils.ui.utils")
 
 function get_color_values(color)
     local red = tonumber(color:sub(2, 3), 16)

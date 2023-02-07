@@ -5,7 +5,7 @@ local conf = require("modules.buffers.config")
 --  ╰────────────────────────────────────────────────────────────────────╯
 buffer({
     "akinsho/bufferline.nvim",
-    event = "VeryLazy",
+    event = "BufReadPre",
     config = conf.nvim_bufferline,
     dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true } },
     lazy = true,
@@ -33,11 +33,16 @@ buffer({
 
 buffer({
     "tiagovla/scope.nvim",
-    lazy = true,
     config = conf.scope,
 })
 
-buffer({ "jlanzarotta/bufexplorer", cmd = "BufExplorer" })
+buffer({
+    "jlanzarotta/bufexplorer",
+    init = function()
+        vim.g.bufExplorerDisableDefaultKeyMapping = 1
+    end,
+    cmd = { "BufExplorer", "ToggleBufExplorer", "BufExplorerHorizontalSplit", "BufExplorerVerticalSplit" },
+})
 
 buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
 

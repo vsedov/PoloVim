@@ -127,3 +127,10 @@ git({
 
     config = conf.temp_clone,
 })
+git({
+    "2kabhishek/co-author.nvim",
+    lazy = true,
+    cmd = {
+        "GitCoAuthors",
+    },
+})

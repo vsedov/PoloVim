@@ -253,7 +253,6 @@ local function auto_hint_generate()
     make_core_table(core_table, range)
     make_core_table(core_table, eol)
     make_core_table(core_table, sub)
-
     make_core_table(core_table, core)
 
     hint_table = {}

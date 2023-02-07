@@ -63,6 +63,7 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
             end,
             { nowait = true, exit = true, desc = "[G] Tag" },
         },
+
         M = {
             function()
                 require("grapple").untag()
@@ -271,26 +272,8 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
             { nowait = true, desc = "Goto File 9", exit = false },
         },
     }
-    local mapping = {
-        color = function(t, rhs)
-            t.config.color = rhs
-        end,
-        body = function(t, rhs)
-            t.body = rhs
-        end,
-        on_enter = function(t, rhs)
-            t.config.on_enter = rhs
-        end,
-        on_exit = function(t, rhs)
-            t.config.on_exit = rhs
-        end,
-        mode = function(t, rhs)
-            t.config.mode = rhs
-        end,
-    }
-    -- Create a Auto Hinting Table same as above but with auto generated
 
-    local new_hydra = {
+    local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
         name = "Grapple",
         config = {
             hint = {
@@ -301,20 +284,8 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
             invoke_on_body = true,
         },
         heads = {},
-    }
+    })
 
-    for name, spec in pairs(config) do
-        for lhs, rhs in pairs(spec) do
-            local action = mapping[lhs]
-            if action == nil then
-                new_hydra.heads[#new_hydra.heads + 1] = { lhs, table.unpack(rhs) }
-            else
-                action(new_hydra, rhs)
-            end
-        end
-    end
-
-    --
     local function auto_hint_generate()
         container = {}
         for x, y in pairs(config.parenth_mode) do

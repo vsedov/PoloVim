@@ -21,81 +21,57 @@ config.parenth_mode = {
     ["<ESC>"] = { nil, { exit = true } },
 
     h = {
-        function()
-            tc.select_backward()
-        end,
+        tc.select_backward,
 
         { nowait = false, exit = true, desc = "TC Back" },
     },
     j = {
-        function()
-            tc.select_shrink()
-        end,
+        tc.select_shrink,
         { nowait = true, desc = "TC Shrink" },
     },
     k = {
-        function()
-            tc.select_expand()
-        end,
+        tc.select_expand,
         { nowait = true, desc = "TC Expand" },
     },
     l = {
-        function()
-            tc.select_forward()
-        end,
+        tc.select_forward,
         { nowait = true, desc = "TC >" },
     },
 
     w = {
-        function()
-            tc.show_control_flow()
-        end,
+        tc.show_control_flow,
         { nowait = true, desc = "TC Flow " },
     },
     c = {
-        function()
-            tc.select_current_node()
-        end,
+        tc.select_current_node,
         { nowait = true, desc = "TC [C] Node" },
     },
 
     e = {
-        function()
-            tc.select_forward_end()
-        end,
+        tc.select_forward_end,
         { nowait = true, desc = "TC [E] > Node" },
     },
 
     --
     s = {
-        function()
-            tc.select_siblings_backward()
-        end,
+        tc.select_siblings_backward,
         { nowait = true, desc = "TC [S] < Node" },
     },
     S = {
-        function()
-            tc.select_siblings_forward()
-        end,
+        tc.select_siblings_forward,
         { nowait = true, desc = "TC [S] > Node" },
     },
 
     ["["] = {
-        function()
-            tc.select_grow_forward()
-        end,
+        tc.select_grow_forward,
         { nowait = true, desc = "TC Grow >" },
     },
     ["]"] = {
-        function()
-            tc.select_grow_backward()
-        end,
+        tc.select_grow_backward,
         { nowait = true, desc = "TC Grow <" },
     },
     W = {
-        function()
-            tc.select_top_level()
-        end,
+        tc.select_top_level,
         { nowait = true, desc = "TC Top Level" },
     },
 }

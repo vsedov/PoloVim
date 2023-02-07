@@ -94,7 +94,7 @@ function config.murmur()
 end
 
 function config.notify()
-    require("utils.ui.highlights").plugin("notify", {
+    require("utils.ui.utils").plugin("notify", {
         { NotifyERRORBorder = { bg = { from = "NormalFloat" } } },
         { NotifyWARNBorder = { bg = { from = "NormalFloat" } } },
         { NotifyINFOBorder = { bg = { from = "NormalFloat" } } },
@@ -141,7 +141,7 @@ function config.notifier()
     })
 end
 function config.neo_tree()
-    local highlights = require("utils.ui.highlights")
+    local highlights = require("utils.ui.utils")
 
     highlights.plugin("NeoTree", {
         { NeoTreeRootName = { underline = true } },
@@ -345,7 +345,7 @@ end
 
 function config.ufo()
     local ufo = require("ufo")
-    local hl = require("utils.ui.highlights")
+    local hl = require("utils.ui.utils")
     local opt, strwidth = vim.opt, vim.api.nvim_strwidth
 
     local function handler(virt_text, _, end_lnum, width, truncate, ctx)
@@ -713,7 +713,7 @@ function config.dressing()
         return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
     end
 
-    require("utils.ui.highlights").plugin("dressing", { { FloatTitle = { inherit = "Visual", bold = true } } })
+    require("utils.ui.utils").plugin("dressing", { { FloatTitle = { inherit = "Visual", bold = true } } })
 
     require("dressing").setup({
         input = {
@@ -735,7 +735,7 @@ function config.dressing()
                     }
                 end
             end,
-            backend = "nui",
+            backend = "telescope",
             -- telescope = require("telescope.themes").get_dropdown({
             --     layout_config = { height = get_height },
             -- }),

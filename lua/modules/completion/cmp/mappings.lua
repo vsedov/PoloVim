@@ -1,6 +1,7 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local utils = require("modules.completion.cmp.utils")
+
 local mappings = {
 
     ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -106,7 +107,7 @@ local mappings = {
     -- }),
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.sell_your_soul then
-            local copilot_keys = vim.fn["copilot#Accept"]("")
+            local copilot_keys = vim.fn["copilot#Accept"]()
             if copilot_keys ~= "" then
                 vim.api.nvim_feedkeys(copilot_keys, "i", true)
             else

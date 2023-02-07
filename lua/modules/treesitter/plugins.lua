@@ -100,7 +100,7 @@ ts({
     "Yggdroot/hiPairs",
     lazy = true,
     cond = true,
-    event = "VeryLazy",
+    event = "BufRead",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hi_pairs,
 })
@@ -176,4 +176,15 @@ ts({
         vim.keymap.set({ "n" }, "<leader>k", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
     end,
     config = true,
+})
+ts({
+    "Wansmer/sibling-swap.nvim",
+    dependencies = { "nvim-treesitter" },
+    opts = {
+        use_default_keymaps = false,
+        keymaps = {
+            ["]w"] = "swap_with_right",
+            ["[w"] = "swap_with_left",
+        },
+    },
 })

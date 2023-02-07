@@ -35,11 +35,6 @@ ui({
     lazy = true,
     config = conf.fidget,
 })
--- ui({
---     "mvllow/modes.nvim",
---     lazy = true,
---     config = conf.modes,
--- })
 
 --  ──────────────────────────────────────────────────────────────────────
 --  ──────────────────────────────────────────────────────────────────────
@@ -96,7 +91,7 @@ ui({
                             buftype = { "terminal", "quickfix", "nofile" },
                         },
                     },
-                    other_win_hl_color = require("utils.ui.highlights").get("Visual", "bg"),
+                    other_win_hl_color = require("utils.ui.utils").get("Visual", "bg"),
                 })
             end,
         },
@@ -160,7 +155,7 @@ ui({
 
 ui({
     "folke/noice.nvim",
-    lazy = true,
+    event = "VeryLazy",
     cond = lambda.config.ui.noice.enable,
     dependencies = {
         "nui.nvim",
@@ -199,3 +194,171 @@ ui({
 
 -- True emotional Support
 ui({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })
+
+ui({
+    "uga-rosa/ccc.nvim",
+    lazy = true,
+    cmd = {
+        "CccPick",
+        "CccConvert",
+        "CccHighlighterToggle",
+        "CccHighlighterEnable",
+        "CccHighlighterDisable",
+    },
+    opts = {
+        win_opts = { border = lambda.style.border.type_0 },
+        highlighter = { auto_enable = true, excludes = { "dart" } },
+    },
+})
+ui({
+    "petertriho/nvim-scrollbar",
+    lazy = true,
+    dependencies = { "kevinhwang91/nvim-hlslens" },
+    event = "BufReadPost",
+    config = function()
+        require("scrollbar.handlers.search").setup()
+        require("scrollbar").setup({
+            show = true,
+            set_highlights = true,
+            handle = {
+                color = "#777777",
+            },
+            marks = {
+                Search = { color = "#ff9e64" },
+                Error = { color = "#db4b4b" },
+                Warn = { color = "#e0af68" },
+                Info = { color = "#0db9d7" },
+                Hint = { color = "#1abc9c" },
+                Misc = { color = "#9d7cd8" },
+                GitAdd = {
+                    color = "#9ed072",
+                    text = "+",
+                },
+                GitDelete = {
+                    color = "#fc5d7c",
+                    text = "-",
+                },
+                GitChange = {
+                    color = "#76cce0",
+                    text = "*",
+                },
+            },
+            handlers = {
+                diagnostic = true,
+                search = true,
+                gitsigns = false,
+            },
+        })
+    end,
+})
+ui({
+    "luukvbaal/statuscol.nvim",
+    cond = true,
+    event = "VeryLazy",
+    config = function()
+        local builtin = require("statuscol.builtin")
+
+        local function diagnostic_click(args)
+            if args.button == "l" then
+                vim.diagnostic.open_float({ border = lambda.style.border.type_0, scope = "line", source = "always" })
+            elseif args.button == "m" then
+                vim.lsp.buf.code_action()
+            end
+        end
+
+        require("statuscol").setup({
+            separator = "│",
+            -- separator = false,
+            setopt = true,
+            -- thousands = true,
+            -- relculright = true,
+            order = "NSFs",
+            -- Click actions
+            Lnum = builtin.lnum_click,
+            FoldPlus = builtin.foldplus_click,
+            FoldMinus = builtin.foldminus_click,
+            FoldEmpty = builtin.foldempty_click,
+            DapBreakpointRejected = builtin.toggle_breakpoint,
+            DapBreakpoint = builtin.toggle_breakpoint,
+            DapBreakpointCondition = builtin.toggle_breakpoint,
+            DiagnosticSignError = diagnostic_click,
+            DiagnosticSignHint = diagnostic_click,
+            DiagnosticSignInfo = diagnostic_click,
+            DiagnosticSignWarn = diagnostic_click,
+            GitSignsTopdelete = builtin.gitsigns_click,
+            GitSignsUntracked = builtin.gitsigns_click,
+            GitSignsAdd = builtin.gitsigns_click,
+            GitSignsChangedelete = builtin.gitsigns_click,
+            GitSignsDelete = builtin.gitsigns_click,
+        })
+    end,
+})
+ui({
+    "tummetott/reticle.nvim",
+    cond = false, -- very laggy right now
+    lazy = true,
+    init = function()
+        vim.wo.cursorline = true
+        vim.wo.cursorcolumn = true
+    end,
+    opts = {
+
+        ignore = {
+            cursorline = {
+                "lspinfo",
+                "neotree",
+            },
+            cursorcolumn = {
+                "lspinfo",
+                "neotree",
+            },
+        },
+        never = {
+            cursorline = {
+                "TelescopePrompt",
+                "DressingInput",
+                "neotree",
+            },
+            cursorcolumn = {
+                "neotree",
+            },
+        },
+    },
+})
+ui({
+    "strash/everybody-wants-that-line.nvim",
+    event = "VeryLazy",
+    opts = {
+        buffer = {
+            enabled = true,
+            prefix = "λ:",
+            symbol = "0",
+            max_symbols = 5,
+        },
+        diagnostics = {
+            enabled = true,
+        },
+        quickfix_list = {
+            enabled = true,
+        },
+        git_status = {
+            enabled = true,
+        },
+        filepath = {
+            enabled = true,
+            path = "relative",
+            shorten = false,
+        },
+        filesize = {
+            enabled = true,
+            metric = "decimal",
+        },
+        ruller = {
+            enabled = true,
+        },
+        filename = {
+            enabled = false,
+        },
+        separator = "│",
+    },
+})

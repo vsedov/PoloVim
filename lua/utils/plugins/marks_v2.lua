@@ -68,45 +68,38 @@ function M.refresh(bufnr)
     end
 end
 
--- local function get_visible_bufs()
---     local bufs = {}
---     local wins = vim.api.nvim_tabpage_list_wins(0)
---     for _, winid in ipairs(wins) do
---         bufs[vim.api.nvim_win_get_buf(winid)] = true
---     end
---     return vim.tbl_keys(bufs)
--- end
-
-local enabled = false
-local function toggle()
-    local bufnr = vim.api.nvim_get_current_buf()
-    if enabled then
-        enabled = false
-        M.clear_ns(bufnr)
-    else
-        enabled = true
-        M.refresh(bufnr)
-    end
-end
-
-vim.api.nvim_create_autocmd({ "BufEnter", "TextChanged", "ModeChanged" }, {
-    callback = function(args)
+function M.setup()
+    local enabled = false
+    local function toggle()
+        local bufnr = vim.api.nvim_get_current_buf()
         if enabled then
-            M.refresh(args.buf)
+            enabled = false
+            M.clear_ns(bufnr)
+        else
+            enabled = true
+            M.refresh(bufnr)
         end
-    end,
-    desc = "Set marks extmarks",
-})
-
-vim.api.nvim_create_user_command("MarksToggle", toggle, {})
-
-vim.keymap.set({ "n", "x" }, ";m", function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    local mark = vim.fn.getcharstr()
-    vim.api.nvim_buf_set_mark(0, mark, line, col, {})
-    if enabled then
-        M.refresh()
     end
-end)
+
+    vim.api.nvim_create_autocmd({ "BufEnter", "TextChanged", "ModeChanged" }, {
+        callback = function(args)
+            if enabled then
+                M.refresh(args.buf)
+            end
+        end,
+        desc = "Set marks extmarks",
+    })
+
+    vim.api.nvim_create_user_command("MarksToggle", toggle, {})
+
+    vim.keymap.set({ "n", "x" }, ";m", function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        local mark = vim.fn.getcharstr()
+        vim.api.nvim_buf_set_mark(0, mark, line, col, {})
+        if enabled then
+            M.refresh()
+        end
+    end)
+end
 
 return M

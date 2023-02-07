@@ -80,7 +80,13 @@ movement({
     lazy = true,
     config = conf.grapple,
 })
-movement({ "ThePrimeagen/harpoon", lazy = true, config = conf.harpoon })
+movement({
+    "ThePrimeagen/harpoon",
+    dependencies = { "pranavrao145/harpoon-tmux" },
+    lazy = true,
+    init = conf.harpoon_init,
+    config = conf.harpoon,
+})
 
 --------------------------------
 
@@ -101,6 +107,54 @@ movement({
     "0x00-ketsu/easymark.nvim",
     lazy = true,
     config = conf.easymark,
+})
+
+movement({
+    "LeonHeidelbach/trailblazer.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    cmd = {
+        "TrailBlazerNewTrailMark",
+        "TrailBlazerTrackBack",
+        "TrailBlazerPeekMovePreviousUp",
+        "TrailBlazerPeekMoveNextDown",
+        "TrailBlazerDeleteAllTrailMarks",
+        "TrailBlazerPasteAtLastTrailMark",
+        "TrailBlazerPasteAtAllTrailMarks",
+        "TrailBlazerTrailMarkSelectMode",
+        "TrailBlazerToggleTrailMarkList",
+        "TrailBlazerSwitchTrailMarkStack",
+        "TrailBlazerAddTrailMarkStack",
+        "TrailBlazerDeleteTrailMarkStacks",
+        "TrailBlazerDeleteAllTrailMarkStacks",
+        "TrailBlazerSwitchNextTrailMarkStack",
+        "TrailBlazerSwitchPreviousTrailMarkStack",
+        "TrailBlazerSetTrailMarkStackSortMode",
+    },
+    config = function()
+        require("trailblazer").setup({
+            mappings = {
+                nv = { -- Mode union: normal & visual mode. Can be extended by adding i, x, ...
+                    motions = {
+                        new_trail_mark = "\\a",
+                        track_back = "\\b",
+                        peek_move_next_down = "\\j",
+                        peek_move_previous_up = "\\k",
+                        toggle_trail_mark_list = "\\M",
+                    },
+                    actions = {
+                        delete_all_trail_marks = "\\L",
+                        paste_at_last_trail_mark = "\\n",
+                        paste_at_all_trail_marks = "\\N",
+                        set_trail_mark_select_mode = "\\t",
+                        switch_to_next_trail_mark_stack = "\\[",
+                        switch_to_previous_trail_mark_stack = "\\]",
+                        set_trail_mark_stack_sort_mode = "\\s",
+                    },
+                },
+            },
+        })
+    end,
 })
 
 movement({

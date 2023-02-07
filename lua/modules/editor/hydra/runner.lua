@@ -102,7 +102,13 @@ Hydra({
             "<Enter>",
             function()
                 local overseer = require("overseer")
-                overseer.run_template({ name = "Runner" }, function(task)
+                overseer.run_template({
+                    name = "Run "
+                        .. vim.bo.filetype:gsub("^%l", string.upper)
+                        .. " file ("
+                        .. vim.fn.expand("%:t")
+                        .. ")",
+                }, function(task)
                     task = task or "Poetry run file"
                     if task then
                         overseer.run_action(task, "open float")

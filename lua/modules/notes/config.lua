@@ -1,5 +1,6 @@
 local config = {}
-function config.norg()
+
+function config.neorg()
     require("modules.notes.neorg")
 end
 
@@ -55,23 +56,7 @@ function config.vimtex()
             "-interaction=nonstopmode",
         },
     }
-
-    local autocmd = vim.api.nvim_create_autocmd
     vim.g.vimtex_imaps_enabled = true
-
-    -- Compile on initialization, cleanup on quit
-    local vimtex_augroup = vim.api.nvim_create_augroup("vimtex_event_1", { clear = true })
-    autocmd("User", {
-        pattern = "VimtexEventInitPost",
-        command = "TSDisable highlight | call vimtex#compiler#compile()",
-        group = vimtex_augroup,
-    })
-    autocmd("User", {
-        pattern = "VimtexEventQuit",
-        command = "call vimtex#compiler#clean(0)",
-        group = vimtex_augroup,
-    })
-
     -- TOC settings
     vim.g.vimtex_toc_config = {
         name = "TOC",
@@ -98,10 +83,6 @@ function config.vimtex()
     vim.g.vimtext_quickfix_mode = 1
     -- QuickFix is just annoying
     vim.g.vimtex_quickfix_enabled = 0
-
-    -- Affichage des symbole math comme dans le document
-    vim.opt.conceallevel = 2
-    vim.g.tex_conceal = "abdmg"
 end
 function config.table()
     vim.g.table_mode_corner = "|"

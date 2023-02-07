@@ -1,7 +1,7 @@
 local leader = ";\\"
+local bracket = { "c", "C", "<cr>" }
 local hydra = require("hydra")
 
-local bracket = { "c", "C", "<cr>" }
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
         table.insert(core_table, v)
@@ -12,7 +12,7 @@ end
 local config = {}
 local exit = { nil, { exit = true, desc = "EXIT" } }
 
-config.parenth_mode = {
+config.genghis = {
     color = "pink",
     body = leader,
     ["<ESC>"] = { nil, { exit = true } },
@@ -70,23 +70,7 @@ config.parenth_mode = {
     },
 }
 
-local mapping = {
-    color = function(t, rhs)
-        t.config.color = rhs
-    end,
-    body = function(t, rhs)
-        t.body = rhs
-    end,
-    on_enter = function(t, rhs)
-        t.config.on_enter = rhs
-    end,
-    on_exit = function(t, rhs)
-        t.config.on_exit = rhs
-    end,
-}
--- Create a Auto Hinting Table same as above but with auto generated
-
-local new_hydra = {
+local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
     name = "Genghis",
     config = {
         hint = {
@@ -98,23 +82,11 @@ local new_hydra = {
     },
     mode = { "n" },
     heads = {},
-}
+})
 
-for name, spec in pairs(config) do
-    for lhs, rhs in pairs(spec) do
-        local action = mapping[lhs]
-        if action == nil then
-            new_hydra.heads[#new_hydra.heads + 1] = { lhs, table.unpack(rhs) }
-        else
-            action(new_hydra, rhs)
-        end
-    end
-end
-
---
 local function auto_hint_generate()
     container = {}
-    for x, y in pairs(config.parenth_mode) do
+    for x, y in pairs(config.genghis) do
         local mapping = x
         if type(y[1]) == "function" then
             for x, y in pairs(y[2]) do
@@ -124,6 +96,7 @@ local function auto_hint_generate()
             end
         end
     end
+
     sorted = {}
     for k, v in pairs(container) do
         table.insert(sorted, k)
