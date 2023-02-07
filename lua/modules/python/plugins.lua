@@ -19,6 +19,37 @@ python({
     ft = "python",
     config = true,
 })
+python({
+    "Josiah-tan/python-nvim",
+    lazy = true,
+    ft = "python",
+    config = function()
+        require("python_nvim").setup()
+        vim.keymap.set("n", "<leader>xv", function()
+            require("python_nvim.builtin").sourceVenv(1)
+        end, { desc = "Execute Venv" })
+
+        vim.keymap.set("n", "<leader>xi", function()
+            require("python_nvim.builtin").sourceInstallModules(1)
+        end, { desc = "sourceInstallModules" })
+
+        vim.keymap.set("n", "<leader>xl", function()
+            require("python_nvim.builtin").PythonInit(1)
+        end, { desc = "PythonInit" })
+
+        vim.keymap.set("n", "<leader>xs", function()
+            require("python_nvim.builtin").runPythonSelection(1)
+        end, { desc = "runPythonSelection" })
+
+        vim.keymap.set("n", "<leader>xS", function()
+            require("python_nvim.builtin").runPythonBlock(1)
+        end, { desc = "runPythonBlock" })
+
+        vim.keymap.set("n", "<leader>xv", function()
+            require("python_nvim.builtin").runPythonLineNoIndent(1)
+        end, { desc = "runPythonLineNoIndent" })
+    end,
+})
 
 python({
     "direnv/direnv.vim",
@@ -44,10 +75,10 @@ python({
     end,
 })
 
--- python({
---     "Vimjas/vim-python-pep8-indent",
---     ft = "python",
--- })
+python({
+    "Vimjas/vim-python-pep8-indent",
+    ft = "python",
+})
 
 python({
     "wookayin/vim-python-enhanced-syntax",

@@ -33,7 +33,6 @@ buffer({
 
 buffer({
     "tiagovla/scope.nvim",
-    lazy = true,
     config = conf.scope,
 })
 

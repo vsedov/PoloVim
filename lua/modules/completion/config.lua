@@ -45,6 +45,7 @@ function config.autopair()
         enable_afterquote = true,
         map_bs = true,
         map_c_w = true,
+        map_cr = false,
         -- disable_in_visualblock = false,
 
         disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
