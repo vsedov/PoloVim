@@ -15,22 +15,20 @@ local cache = {
 vim.g.goto_harpoon = false
 
 local function plane()
-    data = vim.fn.system("tmux list-panes")
-    data = vim.split(data, "\n")
+    local data = vim.fn.system("tmux list-panes")
+    local lines = vim.split(data, "\n")
+    local container = {}
 
-    container = {}
-    for _, v in ipairs(data) do
-        output, output_2 = v:match("^(%d+):.*(%%%d+)")
-        if output ~= nil or output_2 ~= nil then
-            if output ~= "1" then
-                table.insert(container, output .. " : " .. output_2)
-            end
+    for _, line in ipairs(lines) do
+        local output, output_2 = line:match("^(%d+):.*(%%%d+)")
+        if output ~= nil and output_2 ~= nil and output ~= "1" then
+            table.insert(container, output .. " : " .. output_2)
         end
     end
 
     local unicode = { "Σ", "Φ", "Ψ", "λ", "Ω" }
-    for i = 1, 5 do
-        table.insert(container, unicode[i] .. " : " .. i)
+    for i, symbol in ipairs(unicode) do
+        table.insert(container, symbol .. " : " .. i)
     end
 
     return container
@@ -70,7 +68,7 @@ local function handle_tmux()
         local filtered = vim.tbl_filter(function(item)
             return string.find(item, "%%")
         end, data)
-        selected_plane = #filtered > 0 and vim.split(filtered[1], " : ")[2] or vim.split(data[2], " : ")[2]
+        selected_plane = #filtered > 0 and vim.split(filtered[1], " : ")[2] or vim.split(data[1], " : ")[2]
     end
     cache.tmux.selected_plane = selected_plane
     table.insert(data, "0: cache : " .. selected_plane)
