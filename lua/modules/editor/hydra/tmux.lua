@@ -132,8 +132,8 @@ config.parenth_mode = {
 
     f = {
         function()
-            vim.ui.input({ prompt = "Enter Amount", default = 3 }, function(amount)
-                vim.ui.input({ prompt = "Enter Width", default = 100 }, function(width)
+            vim.ui.input({ prompt = "Enter Amount", default = "3" }, function(amount)
+                vim.ui.input({ prompt = "Enter Width", default = "100" }, function(width)
                     tmux_fibonacci_split_auto(tonumber(amount), tonumber(width))
                 end)
             end)
