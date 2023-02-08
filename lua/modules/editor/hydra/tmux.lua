@@ -61,8 +61,18 @@ local function tmux_fibonacci_split_auto(fib_amount, width)
         split_direction = split_direction == "h" and "v" or "h"
     end
 end
+local function new_pane(path)
+    local cmd = "tmux new-window "
+    if path then
+        if string.find(path, "/") then
+            cmd = "-c " .. path
+        end
+        cmd = cmd .. path
+    end
+    fn.jobstart(cmd)
+end
 
-function tmux_session()
+local function tmux_session()
     local input = { "tmux", "list-windows" }
     local opts = {
         finder = finders.new_oneshot_job(input),
@@ -80,7 +90,6 @@ end
 
 local bracket = { "s", "S" }
 silent_binds = {
-
     L = { "tmux splitw -h", "[T]-> Right [Hor]" },
     H = { "tmux splitw -bh", "[T]-> Left [Hori]" },
     U = { "tmux splitw -b", "[T]-> Up [Vert]" },
@@ -157,6 +166,15 @@ config.parenth_mode = {
         end,
         { nowait = true, exit = true, desc = "Rename " },
     },
+
+    p = {
+        function()
+            vim.ui.input({ prompt = "Enter Path", default = "" }, function(path)
+                new_pane(path)
+            end)
+        end,
+        { nowait = true, exit = true, desc = "New Pane" },
+    },
 }
 for x, y in pairs(silent_binds) do
     config.parenth_mode[x] = {
@@ -202,7 +220,7 @@ local function auto_hint_generate()
 
     utils.make_core_table(core_table, bracket)
     utils.make_core_table(core_table, { "n", "N" })
-    utils.make_core_table(core_table, { "f", "k", "t", "<cr>" })
+    utils.make_core_table(core_table, { "f", "k", "t", "<cr>", "p" })
     utils.make_core_table(core_table, { "l", "h", "u", "d" })
     utils.make_core_table(core_table, { "L", "H", "U", "D" })
 
