@@ -1,7 +1,7 @@
 local utils = require("modules.editor.hydra.utils")
 local leader = "<CR>"
 local hydra = require("hydra")
-local bracket = { "<CR>", "W", "w", "t", "a", ";", "<leader>" }
+local bracket = { "<CR>", "W", "w", "t", "a", ";", "<leader>", "c" }
 local input_prompt = "enter the command: cmd >"
 local terminal_prompt = "Enter a terminal Number "
 local default_terminal = "1"
@@ -194,6 +194,12 @@ config.parenth_mode = {
             end)
         end,
         { nowait = true, desc = "Jump File", exit = true },
+    },
+    c = {
+        function()
+            require("harpoon.tmux").clear_all()
+        end,
+        { nowait = true, desc = "Clear All", exit = true },
     },
 }
 
