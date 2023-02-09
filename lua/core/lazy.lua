@@ -108,12 +108,9 @@ vim.defer_fn(function()
 
     loader({ plugins = { "presence.nvim" } })
 
-    if lambda.config.tabby_or_bufferline ~= nil then
-        if lambda.config.use_scope then
-            loader({ plugins = { "scope.nvim" } })
-        end
+    if lambda.config.use_scope then
+        loader({ plugins = { "scope.nvim" } })
     end
-    -- lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
 vim.defer_fn(function()

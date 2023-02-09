@@ -160,21 +160,11 @@ function config.nvim_bufferline()
 
     require("modules.editor.hydra.buffer")
 end
-function config.tabby()
-    require("tabby").setup()
-end
 
 function config.reach()
     require("reach").setup({
         notifications = true,
     })
-end
-function config.cybu()
-    require("cybu").setup()
-end
-
-function config.scope()
-    require("scope").setup()
 end
 
 function config.close_buffers()

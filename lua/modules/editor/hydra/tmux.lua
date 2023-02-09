@@ -11,13 +11,12 @@ local actions_state = require("telescope.actions.state")
 
 local function tmux_split(tmux, percentage)
     command = "tmux split-window -" .. tmux .. " -p " .. percentage
-    fn.jobstart(command)
+    os.execute(command)
 end
 -- tmux_move_session("n")
 -- tmux_move_session("p")
 local function tmux_move_session(left_right)
-    local command = "tmux select-window -" .. left_right
-    fn.jobstart(command)
+    os.execute("tmux select-window -" .. left_right)
 end
 
 function switch_window(buf)
@@ -69,7 +68,7 @@ local function new_pane(path)
         end
         cmd = cmd .. path
     end
-    fn.jobstart(cmd)
+    os.execute(cmd)
 end
 
 local function tmux_session()
@@ -86,6 +85,21 @@ local function tmux_session()
     local picker = pickers.new(opts)
 
     picker:find()
+end
+
+local function auto_tmux_resize()
+    local tmux_width = tonumber(fn.system("tmux display -p '#{window_width}'"))
+    local tmux_height = tonumber(fn.system("tmux display -p '#{window_height}'"))
+    local vim_width = vim.o.columns
+    local vim_height = vim.o.lines
+
+    local width_diff = math.abs(tmux_width - vim_width)
+    local height_diff = math.abs(tmux_height - vim_height)
+
+    if width_diff > 1 or height_diff > 1 then
+        local cmd = "tmux resize-pane -t " .. vim.fn.expand("%:p") .. " -x " .. vim_width .. " -y " .. vim_height
+        os.execute(cmd)
+    end
 end
 
 local bracket = { "s", "S" }
@@ -161,7 +175,7 @@ config.parenth_mode = {
         function()
             vim.ui.input({ prompt = "Enter Name", default = "" }, function(name)
                 local command = "tmux rename-window " .. name
-                fn.jobstart(command)
+                os.execute(command)
             end)
         end,
         { nowait = true, exit = true, desc = "Rename " },
@@ -179,7 +193,7 @@ config.parenth_mode = {
 for x, y in pairs(silent_binds) do
     config.parenth_mode[x] = {
         function()
-            fn.jobstart(y[1])
+            os.execute(y[1])
         end,
         { nowait = true, exit = true, desc = y[2] },
     }

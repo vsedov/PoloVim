@@ -312,4 +312,3 @@ local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
 })
 new_hydra.hint = val
 Hydra(new_hydra)
-
