@@ -279,7 +279,7 @@ tools({
     event = "BufWinEnter",
     config = function()
         require("tmux").setup({
-            copy_sync = { enable = true },
+            copy_sync = { enable = false },
             navigation = {
                 cycle_navigation = false,
                 enable_default_keybindings = false,
