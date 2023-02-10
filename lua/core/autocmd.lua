@@ -498,20 +498,6 @@ lambda.augroup("PluginCustomFixes", {
         end,
         once = true,
     },
-    -- {
-    --     event = { "RecordingEnter", "CmdlineEnter" },
-    --     pattern = "*",
-    --     command = function()
-    --         vim.opt.cmdheight = 1
-    --     end,
-    -- },
-    -- {
-    --     event = { "RecordingLeave", "CmdlineLeave" },
-    --     pattern = "*",
-    --     command = function()
-    --         vim.opt.cmdheight = 0
-    --     end,
-    -- },
 })
 
 lambda.augroup("LSPAttachable", {
@@ -523,6 +509,32 @@ lambda.augroup("LSPAttachable", {
             -- vim.lsp.semantic_tokens.stop(bufnr, args.data.client_id)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
             client.server_capabilities.semanticTokensProvider = nil
+        end,
+    },
+})
+lambda.augroup("TabNLine", {
+    {
+        event = { "BufEnter", "VimEnter" },
+        pattern = "*",
+        command = function()
+            if #vim.fn.getbufinfo({ buflisted = 1 }) <= 1 then
+                vim.o.showtabline = 0
+            else
+                vim.o.showtabline = 2
+            end
+        end,
+    },
+
+    {
+        event = { "BufDelete" },
+        pattern = "*",
+        command = function()
+            local buf_type = vim.api.nvim_buf_get_option(0, "buftype")
+            if #vim.fn.getbufinfo({ buflisted = 1 }) <= 2 and buf_type ~= "nofile" then
+                vim.o.showtabline = 0
+            else
+                vim.o.showtabline = 2
+            end
         end,
     },
 })

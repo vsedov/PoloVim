@@ -42,7 +42,7 @@ function pack:boot_strap()
     local lazy = require("lazy")
     local opts = {
         lockfile = helper.get_data_path() .. "/lazy-lock.json",
-        dev = { path = "~/Workspace" },
+        dev = { path = "~/GitHub/neovim/personal/" },
     }
     self:load_modules_packages()
     lazy.setup(self.repos, opts)

@@ -51,6 +51,19 @@ local config = {
 
 if lambda.config.cmp.cmp_theme == "border" then
     local kind = require("utils.ui.kind")
+    local cmp_window = {
+        border = border,
+        winhighlight = table.concat({
+            "Normal:Normal",
+            "FloatBorder:None",
+            "CursorLine:None",
+            "Search:None",
+        }, ","),
+    }
+    config.window = {
+        completion = cmp.config.window.bordered(cmp_window),
+        documentation = cmp.config.window.bordered(cmp_window),
+    }
 
     config.window = {
         completion = {
@@ -59,7 +72,6 @@ if lambda.config.cmp.cmp_theme == "border" then
         },
         documentation = {
             border = border,
-            scrollbar = "║",
         },
     }
     config.formatting = {

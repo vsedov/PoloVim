@@ -1,11 +1,9 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = false
+local noice_enabled = true
 local use_noice_docs = false -- this creats an error for some reason , though im not sure why | It is nice to have though
 
-local use_lightspeed = true --  So the tldr here is when this is false, both lightspeed and leap are active, but when this is true only lightspeed will be active
 local use_ts_yeti = true
 local use_glance = true
-
 local ruff_lsp = true
 local py_lang = "jedi"
 
@@ -28,7 +26,6 @@ lambda.config = {
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_gitsigns = true,
-    use_lightspeed = false, -- if false then leap.nvim will be used.
     use_both_leap_light_speed = true,
     use_leap = true,
     use_quick_scope = false,
@@ -68,8 +65,8 @@ lambda.config.colourscheme = {
         dark = {
             core_themes = {
                 "kanagawa.nvim",
-                "nvim-tundra",
                 "catppuccin",
+                -- "nvim-tundra",
                 -- "palenightfall.nvim",
                 -- "oh-lucy.nvim",
                 -- "mellifluous.nvim",
@@ -107,13 +104,13 @@ lambda.config.abbrev = {
 lambda.config.cmp = {
     tabnine = {
         use_tabnine = true,
-        tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+        tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
         tabnine_overwrite_sort = true,
         tabnine_prefetch = true,
-        tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
+        tabnine_priority = 5, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
     },
-    use_rg = false, -- this will induce lag , so use this on your own risk
-    cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
+    use_rg = true, -- this will induce lag , so use this on your own risk
+    cmp_theme = "border", --- @usage "border" | "no-border" | "extra"
 }
 
 lambda.config.lsp = {
@@ -140,13 +137,8 @@ lambda.config.ui = {
     noice = {
         enable = noice_enabled,
         lsp = {
-            use_noice_signature = use_noice_docs, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = use_noice_docs,
-            use_markdown = {
-                convert_input_to_markdown_lines = use_noice_docs,
-                stylize_markdown = use_noice_docs, --  If use_noice_signature is false , then these boys have to be disabled too interested
-                get_documentation = use_noice_docs, --
-            },
+            use_noice_signature = false, -- I would very much like to use this,l but for now this is broken
+            use_noice_hover = false,
         },
     },
 }

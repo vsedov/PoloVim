@@ -32,6 +32,7 @@ completion({
         { "hrsh7th/cmp-buffer", lazy = true },
         { "hrsh7th/cmp-path", lazy = true },
         { "hrsh7th/cmp-cmdline", lazy = true },
+        { "andersevenrud/cmp-tmux", lazy = true },
         {
             "petertriho/cmp-git",
             lazy = true,

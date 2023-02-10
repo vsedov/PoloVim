@@ -744,8 +744,7 @@ function config.dressing()
 end
 
 function config.noice()
-    vim.o.lazyredraw = false
-    require("noice").setup({
+    return {
         cmdline = {
             enabled = true, -- enables the Noice cmdline UI
             view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
@@ -763,28 +762,15 @@ function config.noice()
             },
         },
         messages = {
-            -- NOTE: If you enable messages, then the cmdline is enabled automatically.
-            -- This is a current Neovim limitation.
             enabled = false, -- enables the Noice messages UI
-            view = "notify", -- default view for messages
-            view_error = "notify", -- view for errors
-            view_warn = "notify", -- view for warnings
-            view_history = "messages", -- view for :messages
-            view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
         },
         popupmenu = {
             enabled = true, -- enables the Noice popupmenu UI
-            ---@type 'nui'|'cmp'
             backend = "cmp", -- backend to use to show regular cmdline completions
-            ---@type NoicePopupmenuItemKind|false
-            -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
             kind_icons = {}, -- set to `false` to disable icons
         },
-        -- You can add any custom commands below that will be available with `:Noice command`
-        ---@type table<string, NoiceCommand>
         commands = {
             history = {
-                -- options for the message history that you get with `:Noice`
                 view = "split",
                 opts = { enter = true, format = "details" },
                 filter = {
@@ -814,7 +800,6 @@ function config.noice()
             },
             -- :Noice errors
             errors = {
-                -- options for the message history that you get with `:Noice`
                 view = "popup",
                 opts = { enter = true, format = "details" },
                 filter = { error = true },
@@ -836,7 +821,7 @@ function config.noice()
                 enabled = lambda.config.ui.noice.lsp.use_noice_hover,
             },
             progress = {
-                enabled = false,
+                enabled = true,
             },
             signature = {
                 enabled = lambda.config.ui.noice.lsp.use_noice_signature, -- this just does not work well .
@@ -846,11 +831,11 @@ function config.noice()
             },
             override = {
                 -- override the default lsp markdown formatter with Noice
-                ["vim.lsp.util.convert_input_to_markdown_lines"] = lambda.config.ui.noice.lsp.use_markdown.convert_input_to_markdown_lines,
+                ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
                 -- override the lsp markdown formatter with Noice
-                ["vim.lsp.util.stylize_markdown"] = lambda.config.ui.noice.lsp.use_markdown.stylize_markdown,
+                ["vim.lsp.util.stylize_markdown"] = false,
                 -- override cmp documentation with Noice (needs the other options to work)
-                ["cmp.entry.get_documentation"] = lambda.config.ui.noice.lsp.use_markdown.get_documentation,
+                ["cmp.entry.get_documentation"] = false,
             },
         },
         markdown = {
@@ -895,7 +880,7 @@ function config.noice()
                 opts = { skip = true },
             },
         },
-    })
+    }
 end
 
 function config.illuminate()

@@ -162,8 +162,9 @@ ui({
         "nvim-notify",
         "hrsh7th/nvim-cmp",
     },
-    config = conf.noice,
+    opts = conf.noice,
 })
+
 ui({
     "samuzora/pet.nvim",
     lazy = true,
@@ -295,12 +296,7 @@ ui({
 })
 ui({
     "tummetott/reticle.nvim",
-    cond = false, -- very laggy right now
-    lazy = true,
-    init = function()
-        vim.wo.cursorline = true
-        vim.wo.cursorcolumn = true
-    end,
+
     opts = {
 
         ignore = {

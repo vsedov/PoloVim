@@ -88,34 +88,33 @@ if lambda.config.neorg_auto_commit then
         },
     })
 end
-
-if lambda.config.save_clipboard_on_exit then
-    lambda.augroup("save_clipboard_on_exit", {
-        {
-            event = { "VimLeave" },
-            pattern = "*",
-            command = function()
-                if lambda.config.save_clipboard_on_exit then
-                    require("utils.plugins.save_clipboard_on_exit").save()
-                end
-            end,
-            once = false,
-        },
-    })
-end
-
 vim.defer_fn(function()
-    if lambda.config.loaded_confirm_quit then
-        require("utils.plugins.exit").setup()
-    end
+    local all_plugins = require("core.helper").get_config_path() .. "/lua/utils/plugins/"
+    local path_list = vim.split(vim.fn.glob(all_plugins .. "*.lua", true), "\n")
+    local exclude_table = {
+        "custom_neorg_save",
+        "git_pull_personal",
+        "coffee",
+    }
+    for _, path in ipairs(path_list) do
+        local name = vim.fn.fnamemodify(path, ":t:r")
+        local f = "utils.plugins." .. name
+        local enable = true
+        local config_options = {
+            ["save_clipboard_on_exit"] = lambda.config.save_clipboard_on_exit,
+            ["abbreviations"] = lambda.config.abbrev.enable,
+            ["exit"] = lambda.config.loaded_confirm_quit,
+        }
 
-    require("utils.plugins.marks_v2").setup()
-    require("utils.plugins.numbers").setup()
+        if config_options[name] ~= nil then
+            enable = config_options[name]
+        end
 
-    if lambda.config.abbrev.enable then
-        require("utils.abbreviations").setup()
+        lambda.lib.when(not vim.tbl_contains(exclude_table, name), function()
+            print(enable)
+            if enable then
+                require(f).setup()
+            end
+        end)
     end
-    require("utils.plugins.marks").setup()
-    require("utils.plugins.stalk").setup()
-    require("utils.plugins.auto_normal").setup()
 end, 100)

@@ -155,7 +155,7 @@ o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "yes:3"
 o.ruler = false
 -- if lambda.config.ui.noice.enable then
-o.cmdheight = 1 -- 0 , is still borked it seems
+o.cmdheight = 0 -- 0 , is still borked it seems
 -- else
 --     o.cmdheight = 0
 -- end
@@ -286,6 +286,8 @@ o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
 -- Folds {{{1
 -----------------------------------------------------------------------------//
 o.foldlevelstart = 20
+o.cursorline = true
+o.cursorcolumn = true
 
 -----------------------------------------------------------------------------//
 -- Git editor

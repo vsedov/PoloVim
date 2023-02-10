@@ -9,8 +9,15 @@ local sorters = require("telescope.sorters")
 local actions = require("telescope.actions")
 local actions_state = require("telescope.actions.state")
 
-local function tmux_split(tmux, percentage)
+local function tmux_split(tmux, percentage, external_command)
+    if external_command ~= nil then
+        external_command = external_command or "nvim ."
+    end
+
     command = "tmux split-window -" .. tmux .. " -p " .. percentage
+    if external_command ~= nil then
+        command = command .. " '" .. external_command .. "'"
+    end
     os.execute(command)
 end
 -- tmux_move_session("n")
@@ -51,7 +58,7 @@ local function tmux_fibonacci_split_auto(fib_amount, width)
     end
 
     local function split(direction, percentage)
-        tmux_split(direction, math.floor(width * (percentage / sum)))
+        tmux_split(direction, math.floor(width * (percentage / sum)), nil)
     end
 
     local split_direction = "h"
@@ -60,15 +67,8 @@ local function tmux_fibonacci_split_auto(fib_amount, width)
         split_direction = split_direction == "h" and "v" or "h"
     end
 end
-local function new_pane(path)
-    local cmd = "tmux new-window "
-    if path then
-        if string.find(path, "/") then
-            cmd = "-c " .. path
-        end
-        cmd = cmd .. path
-    end
-    os.execute(cmd)
+local function new_pane()
+    os.execute("tmux new-window ")
 end
 
 local function tmux_session()
@@ -102,7 +102,7 @@ local function auto_tmux_resize()
     end
 end
 
-local bracket = { "s", "S" }
+local bracket = { "s", "S", "w" }
 silent_binds = {
     L = { "tmux splitw -h", "[T]-> Right [Hor]" },
     H = { "tmux splitw -bh", "[T]-> Left [Hori]" },
@@ -126,7 +126,13 @@ config.parenth_mode = {
     s = {
         function()
             vim.ui.input({ prompt = "Enter Percentage", default = "40" }, function(percent)
-                tmux_split("h", tonumber(percent))
+                vim.ui.input({ prompt = "Enter Command", default = "nvim ." }, function(command)
+                    if command == "" or command == "nil" then
+                        command = nil
+                    end
+
+                    tmux_split("h", tonumber(percent), command)
+                end)
             end)
         end,
         { nowait = true, exit = true, desc = "Open Vertical" },
@@ -134,7 +140,13 @@ config.parenth_mode = {
     S = {
         function()
             vim.ui.input({ prompt = "Enter Percentage", default = "40" }, function(percent)
-                tmux_split("v", tonumber(percent))
+                vim.ui.input({ prompt = "Enter Command", default = "nvim ." }, function(command)
+                    if command == "" or command == "nil" then
+                        command = nil
+                    end
+
+                    tmux_split("v", tonumber(percent), command)
+                end)
             end)
         end,
         { nowait = true, exit = true, desc = "Open Horizontal" },
@@ -156,7 +168,14 @@ config.parenth_mode = {
     f = {
         function()
             vim.ui.input({ prompt = "Enter Amount", default = "3" }, function(amount)
-                vim.ui.input({ prompt = "Enter Width", default = "100" }, function(width)
+                defaults = {
+                    ["1"] = "40",
+                    ["2"] = "80",
+                    ["3"] = "100",
+                    ["4"] = "160",
+                }
+                default = defaults[amount] or "100"
+                vim.ui.input({ prompt = "Enter Width", default = default }, function(width)
                     tmux_fibonacci_split_auto(tonumber(amount), tonumber(width))
                 end)
             end)
@@ -181,13 +200,17 @@ config.parenth_mode = {
         { nowait = true, exit = true, desc = "Rename " },
     },
 
-    p = {
+    w = {
         function()
-            vim.ui.input({ prompt = "Enter Path", default = "" }, function(path)
-                new_pane(path)
-            end)
+            new_pane()
         end,
         { nowait = true, exit = true, desc = "New Pane" },
+    },
+    L = {
+
+        function()
+            fn.jobstart("tmux set-window-option automatic-rename on")
+        end,
     },
 }
 for x, y in pairs(silent_binds) do
@@ -234,7 +257,7 @@ local function auto_hint_generate()
 
     utils.make_core_table(core_table, bracket)
     utils.make_core_table(core_table, { "n", "N" })
-    utils.make_core_table(core_table, { "f", "k", "t", "<cr>", "p" })
+    utils.make_core_table(core_table, { "f", "k", "t", "<cr>" })
     utils.make_core_table(core_table, { "l", "h", "u", "d" })
     utils.make_core_table(core_table, { "L", "H", "U", "D" })
 

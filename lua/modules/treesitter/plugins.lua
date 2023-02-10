@@ -169,14 +169,20 @@ ts({
 ts({
     "ckolkey/ts-node-action",
     lazy = true,
-    ft = { "python", "lua", "json", "ruby" },
+    event = "InsertEnter",
     dependencies = { "nvim-treesitter" },
     keys = "<leader>k",
     init = function()
-        vim.keymap.set({ "n" }, "<leader>k", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+        vim.keymap.set(
+            "n",
+            "<leader>k",
+            require("ts-node-action").node_action,
+            { noremap = true, silent = true, desc = "Trigger Node Action" }
+        )
     end,
     config = true,
 })
+
 ts({
     "Wansmer/sibling-swap.nvim",
     dependencies = { "nvim-treesitter" },

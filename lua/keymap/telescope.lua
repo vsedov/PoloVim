@@ -32,6 +32,16 @@ local plug_map = {
     ["n|<Leader>yy"] = map_cmd('<cmd>lua require"utils.telescope".neoclip()<CR>', "NeoClip")
         :with_noremap()
         :with_silent(),
+
+    ["n|<Leader>J"] = map_cmd(":TSJJoin<Cr>", "TSJJoin"):with_noremap():with_silent(),
+    ["n|<Leader>j"] = map_cmd(":TSJToggle<cr>", "TSJToggle"):with_noremap():with_silent(),
 }
+-- vim.keymap.set("n", "<leader>J", function()
+--     vim.cmd([[TSJJoin]])
+-- end, { noremap = true, desc = "Spread: Expand" })
+--
+-- vim.keymap.set("n", "<leader>j", function()
+--     vim.cmd([[TSJToggle]])
+-- end, { noremap = true, desc = "Spread: Combine" })
 
 return plug_map

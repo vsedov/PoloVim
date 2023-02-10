@@ -12,7 +12,6 @@ local plug_map = {
     ["n|<leader>tn"] = map_cu("tabedit", "tabedit"):with_noremap():with_silent(),
     ["n|<leader>tc"] = map_cu("tabclose", "tabclose"):with_noremap():with_silent(),
     ["n|<leader>to"] = map_cu("tabonly", "tabonly"):with_noremap():with_silent(),
-    ["n|<leader>tm"] = map_cu("tabmove", "tabmove"):with_noremap():with_silent(),
 
     ["n|]t"] = map_cu("tabprev", "tabprev"):with_noremap():with_silent(),
     ["n|[t"] = map_cu("tabnext", "tabnext"):with_noremap():with_silent(),

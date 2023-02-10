@@ -121,3 +121,10 @@ user({
         end, {})
     end,
 })
+
+user({ "alanjcfs/rg.nvim", cmd = "Ripgrep" })
+
+user({
+    "0xAdk/full_visual_line.nvim",
+    config = true,
+})

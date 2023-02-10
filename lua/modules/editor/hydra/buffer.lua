@@ -3,6 +3,7 @@ local leader_key = "<leader>b"
 local cmd = require("hydra.keymap-util").cmd
 
 local bracket = { "l", "h", "L", "H", "=", "+", "b", "<leader>" }
+
 local function buffer_move()
     vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
         idx = idx and tonumber(idx)
@@ -32,6 +33,7 @@ vim.api.nvim_create_user_command("ProjectDelete", function()
 end, {})
 
 local exit = { nil, { exit = true, desc = "EXIT" } }
+
 local config = {}
 config.buffer = {
     color = "red",

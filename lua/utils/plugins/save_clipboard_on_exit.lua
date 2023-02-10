@@ -34,4 +34,18 @@ function M.save()
     end
 end
 
+function M.setup()
+    lambda.augroup("save_clipboard_on_exit", {
+        {
+            event = { "VimLeave" },
+            pattern = "*",
+            command = function()
+                if lambda.config.save_clipboard_on_exit then
+                    require("utils.plugins.save_clipboard_on_exit").save()
+                end
+            end,
+            once = false,
+        },
+    })
+end
 return M

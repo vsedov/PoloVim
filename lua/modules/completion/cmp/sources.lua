@@ -8,6 +8,7 @@ local sources = {
     -- { name = "nvim_lsp_signature_help", priority = 10 },
 
     { name = "path" },
+    { name = "tmux" },
     --  REVISIT: (vsedov) (07:34:00 - 11/11/22): Why do i need this ?
     -- {
     --     name = "buffer",
