@@ -111,7 +111,6 @@ vim.defer_fn(function()
         end
 
         lambda.lib.when(not vim.tbl_contains(exclude_table, name), function()
-            print(enable)
             if enable then
                 require(f).setup()
             end

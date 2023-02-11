@@ -64,7 +64,7 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
+                -- "kanagawa.nvim",
                 "catppuccin",
                 -- "nvim-tundra",
                 -- "palenightfall.nvim",
@@ -102,15 +102,18 @@ lambda.config.abbrev = {
 }
 
 lambda.config.cmp = {
+    codeium = {
+        use_codeium = true,
+    },
     tabnine = {
         use_tabnine = true,
-        tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
-        tabnine_overwrite_sort = true,
+        tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+        tabnine_bottom_sort = true,
         tabnine_prefetch = true,
-        tabnine_priority = 5, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
+        tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
     },
     use_rg = true, -- this will induce lag , so use this on your own risk
-    cmp_theme = "border", --- @usage "border" | "no-border" | "extra"
+    cmp_theme = "borderv2", --- @usage "border" | "no-border" | "extra"
 }
 
 lambda.config.lsp = {
