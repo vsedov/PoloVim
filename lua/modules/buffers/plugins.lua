@@ -14,8 +14,9 @@ buffer({
 
 buffer({
     "toppair/reach.nvim",
-    config = conf.reach,
     lazy = true,
+    keys = { ";b" },
+    config = conf.reach,
     cmd = { "ReachOpen" },
 })
 buffer({

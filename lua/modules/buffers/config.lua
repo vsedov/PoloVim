@@ -165,6 +165,7 @@ function config.reach()
     require("reach").setup({
         notifications = true,
     })
+    vim.keymap.set("n", ";b", "<cmd>Reach buffers", { noremap = true, silent = true })
 end
 
 function config.close_buffers()
