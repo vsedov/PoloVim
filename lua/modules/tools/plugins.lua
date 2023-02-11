@@ -146,12 +146,10 @@ tools({
 tools({
     "barklan/capslock.nvim",
     lazy = true,
-    keys = {
-        { "<C-;>" },
-    },
+    keys = "<leader><leader><leader>",
     config = function()
         require("capslock").setup()
-        vim.keymap.set({ "n", "i", "c" }, "<C-;>", "<Plug>CapsLockToggle", {})
+        vim.keymap.set({ "i", "c", "n" }, "<leader><leader><leader>", "<Plug>CapsLockToggle<Cr>", { noremap = true })
     end,
 })
 
