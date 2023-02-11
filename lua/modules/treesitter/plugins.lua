@@ -113,22 +113,18 @@ ts({
     config = conf.indent,
 })
 
--- -- Packer
 ts({
     "folke/paint.nvim",
     lazy = true,
-
     ft = "lua",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.paint,
 })
 
 ts({
-    -- It uses hydra
     "Dkendal/nvim-treeclimber",
     lazy = true,
     dependencies = { "rktjmp/lush.nvim", "nvim-treesitter/nvim-treesitter" },
-    -- config = conf.climber,
 })
 
 ts({

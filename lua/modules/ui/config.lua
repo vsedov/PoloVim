@@ -821,7 +821,7 @@ function config.noice()
                 enabled = lambda.config.ui.noice.lsp.use_noice_hover,
             },
             progress = {
-                enabled = true,
+                enabled = false, -- this is just annoying
             },
             signature = {
                 enabled = lambda.config.ui.noice.lsp.use_noice_signature, -- this just does not work well .

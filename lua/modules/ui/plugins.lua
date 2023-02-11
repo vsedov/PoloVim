@@ -322,17 +322,31 @@ ui({
 })
 ui({
     "ojroques/nvim-hardline",
-    lazy = true,
-    event = "VeryLazy",
-    dependencies = { "jcdickinson/wpm.nvim" },
+    dependencies = { "jcdickinson/wpm.nvim", config = true },
     config = function()
-        data = {
+        wpm = require("wpm")
+        require("hardline").setup({
             bufferline = true, -- disable bufferline
             bufferline_settings = {
                 exclude_terminal = true, -- don't show terminal buffers in bufferline
                 show_index = true, -- show buffer indexes (not the actual buffer numbers) in bufferline
             },
             theme = "catppuccin_minimal", -- change theme
-        }
+            sections = { -- define sections
+                { class = "mode", item = require("hardline.parts.mode").get_item },
+                { class = "high", item = require("hardline.parts.git").get_item, hide = 100 },
+                { class = "med", item = require("hardline.parts.filename").get_item },
+                "%<",
+                { class = "error", item = wpm.wpm },
+                { class = "error", item = wpm.historic_graph },
+                { class = "med", item = "%=" },
+                { class = "low", item = require("hardline.parts.wordcount").get_item, hide = 100 },
+                { class = "error", item = require("hardline.parts.lsp").get_error },
+                { class = "warning", item = require("hardline.parts.lsp").get_warning },
+                { class = "warning", item = require("hardline.parts.whitespace").get_item },
+                { class = "high", item = require("hardline.parts.filetype").get_item, hide = 60 },
+                { class = "mode", item = require("hardline.parts.line").get_item },
+            },
+        })
     end,
 })

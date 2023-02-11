@@ -125,6 +125,8 @@ user({
 user({ "alanjcfs/rg.nvim", cmd = "Ripgrep" })
 
 user({
-    "0xAdk/full_visual_line.nvim",
+    "lalitmee/browse.nvim",
+    lazy = true,
+    dependencies = { "nvim-telescope/telescope.nvim" },
     config = true,
 })
