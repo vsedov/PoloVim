@@ -41,18 +41,22 @@ ai({
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
     },
-    config = function()
-        require("chatgpt").setup({
-            max_line_length = 1000000,
-            openai_params = {
-                model = "text-davinci-003",
-                frequency_penalty = 0,
-                presence_penalty = 0,
-                max_tokens = 2000,
-                temperature = 1,
-                top_p = 1,
-                n = 1,
-            },
-        })
-    end,
+    config = conf.chatgpt,
+})
+
+ai({
+    "tzachar/cmp-tabnine",
+    lazy = true,
+    build = "bash ./install.sh",
+    ft = { "python", "lua" },
+    config = conf.tabnine,
+})
+
+ai({
+    "jcdickinson/codeium.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+    },
+    config = true,
 })

@@ -296,7 +296,6 @@ ui({
 })
 ui({
     "tummetott/reticle.nvim",
-
     opts = {
 
         ignore = {
@@ -322,39 +321,18 @@ ui({
     },
 })
 ui({
-    "strash/everybody-wants-that-line.nvim",
+    "ojroques/nvim-hardline",
+    lazy = true,
     event = "VeryLazy",
-    opts = {
-        buffer = {
-            enabled = true,
-            prefix = "λ:",
-            symbol = "0",
-            max_symbols = 5,
-        },
-        diagnostics = {
-            enabled = true,
-        },
-        quickfix_list = {
-            enabled = true,
-        },
-        git_status = {
-            enabled = true,
-        },
-        filepath = {
-            enabled = true,
-            path = "relative",
-            shorten = false,
-        },
-        filesize = {
-            enabled = true,
-            metric = "decimal",
-        },
-        ruller = {
-            enabled = true,
-        },
-        filename = {
-            enabled = false,
-        },
-        separator = "│",
-    },
+    dependencies = { "jcdickinson/wpm.nvim" },
+    config = function()
+        data = {
+            bufferline = true, -- disable bufferline
+            bufferline_settings = {
+                exclude_terminal = true, -- don't show terminal buffers in bufferline
+                show_index = true, -- show buffer indexes (not the actual buffer numbers) in bufferline
+            },
+            theme = "catppuccin_minimal", -- change theme
+        }
+    end,
 })

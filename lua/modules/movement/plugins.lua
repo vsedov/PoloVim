@@ -34,9 +34,9 @@ movement({
     "ggandor/leap-ast.nvim",
     lazy = true,
     dependencies = { "ggandor/leap.nvim" },
-    keys = { "<Plug>(leap-ast)" },
-    init = function()
-        vim.keymap.set({ "n", "x", "o" }, ";a", function()
+    keys = { "\\]" },
+    config = function()
+        vim.keymap.set({ "n", "x", "o" }, "\\]", function()
             require("leap-ast").leap()
         end, { noremap = true, silent = true })
     end,
