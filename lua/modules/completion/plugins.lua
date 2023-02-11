@@ -17,14 +17,6 @@ completion({
     "hrsh7th/nvim-cmp",
     lazy = true,
     dependencies = {
-        {
-            "tzachar/cmp-tabnine",
-            lazy = true,
-            build = "bash ./install.sh",
-            ft = { "python", "lua" },
-            config = conf.tabnine,
-        },
-        -- { "hrsh7th/cmp-nvim-lsp-signature-help", , lazy = true },
         { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
         { "hrsh7th/cmp-nvim-lsp", lazy = true },
         { "hrsh7th/cmp-nvim-lua", lazy = true },
@@ -40,7 +32,7 @@ completion({
                 require("cmp_git").setup({ filetypes = { "gitcommit", "NeogitCommitMessage" } })
             end,
         },
-        -- { "lukas-reineke/cmp-rg", lazy = true},
+        { "lukas-reineke/cmp-rg", lazy = true },
         { "saadparwaiz1/cmp_luasnip", lazy = true },
         {
             "doxnit/cmp-luasnip-choice",

@@ -65,7 +65,7 @@ local function define_highlights()
 
         if lambda.config.cmp.cmp_theme == "border" then
             border(values)
-        elseif lambda.config.cmp.cmp_theme == "no-border" then
+        else
             no_border(values)
         end
     end
@@ -77,7 +77,7 @@ local function define_highlights()
         end,
         lsp_hls,
         {
-            { CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false } },
+            -- { CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false } },
             { CmpItemAbbrMatch = { foreground = { from = "Keyword" } } },
             { CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" } },
             { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } } },

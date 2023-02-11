@@ -7,7 +7,15 @@ local fields = {
     "abbr",
     "menu",
 }
-
+local cmp_window = {
+    border = border,
+    winhighlight = table.concat({
+        "Normal:Normal",
+        "FloatBorder:SuggestWidgetBorder",
+        "CursorLine:Normal",
+        "Search:None",--[[ , ]]
+    }, ","),
+}
 local config = {
     snippet = {
         expand = function(args)
@@ -89,57 +97,30 @@ if lambda.config.cmp.cmp_theme == "border" then
             end,
         }),
     }
-elseif lambda.config.cmp.cmp_theme == "no-border" then
-    local kind = require("utils.ui.kind")
+elseif lambda.config.cmp.cmp_theme == "borderv2" then
+    config.formatting = {
+        fields = { "kind", "abbr", "menu" },
+        format = function(entry, vim_item)
+            vim_item.kind = lambda.style.lsp.kinds.codicons[vim_item.kind] or " "
+            vim_item.menu = ({
+                cmp_tabnine = "[Tn]",
+                cmp_codeium = "[]",
+                codeium = "[]",
+                norg = "[Norg]",
+                rg = "[Rg]",
+                git = "[Git]",
+            })[entry.source.name]
+            return vim_item
+        end,
+
+        border = border,
+    }
 
     config.window = {
-        completion = {
-            -- border = border,
-            winhighlight = "Normal:Pmenu,FloatBorder:CmpDocumentationBorder,Search:None",
-            left_side_padding = 0,
-            right_side_padding = 1,
-            col_offset = 1,
-        },
-        documentation = {
-            -- border = border,
-            winhighlight = "FloatBorder:CmpDocumentationBorder,Search:None",
-            max_width = 80,
-            col_offset = -1,
-            max_height = 12,
-        },
-    }
-    config.formatting = {
-        fields = fields,
-        format = function(entry, item)
-            item.surround_start = "▐"
-            item.surround_start_hl_group = ("CmpItemKindBlock%s"):format(item.kind)
-            item.surround_end_hl_group = ("CmpItemKindBlock%s"):format(item.kind)
-            item.menu_hl_group = ("CmpItemKindMenu%s"):format(item.kind)
-
-            item.padding = " "
-            item.kind = kind.presets.default[item.kind] or ""
-            item.dup = vim.tbl_contains({ "path", "buffer" }, entry.source.name)
-            item.abbr = utils.get_abbr(item, entry)
-
-            if entry.source.name == "cmp_tabnine" then
-                if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-                    item.menu = entry.completion_item.data.detail
-                end
-            end
-
-            return item
-        end,
+        completion = cmp.config.window.bordered(cmp_window),
+        documentation = cmp.config.window.bordered(cmp_window),
     }
 elseif lambda.config.cmp.cmp_theme == "extra" then
-    local cmp_window = {
-        border = border,
-        winhighlight = table.concat({
-            "Normal:NormalFloat",
-            "FloatBorder:FloatBorder",
-            "CursorLine:Visual",
-            "Search:None",
-        }, ","),
-    }
     config.window = {
         completion = cmp.config.window.bordered(cmp_window),
         documentation = cmp.config.window.bordered(cmp_window),
@@ -202,7 +183,7 @@ if lambda.config.cmp.tabnine.tabnine_sort then
     }
 end
 
-if lambda.config.cmp.tabnine_overwrite_sort then
+if lambda.config.cmp.tabnine_bottom_sort then
     config.sorting = {
         comparators = {
             compare.offset,

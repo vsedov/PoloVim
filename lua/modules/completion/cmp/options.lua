@@ -1,9 +1,15 @@
 return {
+    use_codeium = {
+        enable = true,
+        options = {
+            name = "codeium",
+            priority = 7,
+        },
+    },
     use_tabnine = {
         enable = lambda.config.cmp.tabnine.use_tabnine,
         options = {
             name = "cmp_tabnine",
-            keyword_length = 0,
             priority = lambda.config.cmp.tabnine.tabnine_priority, -- Make tabnine have the same priority as lsp
         },
     },
@@ -11,16 +17,12 @@ return {
         enable = lambda.config.cmp.use_rg,
         options = {
             name = "rg",
-            keyword_length = 4,
-            max_item_count = 10,
-            option = { additional_arguments = "--max-depth 8" },
-        },
-    },
-    use_neorg = {
-        enable = true,
-        options = {
-            name = "neorg",
-            priority = 6,
+            options = {
+                keyword_length = 3,
+                option = {
+                    additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/utils/abbreviations/dictionary.lua",
+                },
+            },
         },
     },
     use_path = {
@@ -30,7 +32,7 @@ return {
         },
     },
     use_overseer = {
-        enable = false,
+        enable = true,
         options = {
             name = "cmp_overseer",
         },

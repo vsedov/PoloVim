@@ -9,22 +9,6 @@ function config.luasnip()
     require("modules.completion.snippets")
 end
 
-function config.tabnine()
-    local tabnine = require("cmp_tabnine.config")
-    tabnine:setup({
-        max_lines = 1000,
-        max_num_results = 10,
-        sort = true,
-        run_on_every_keystroke = true,
-        snippet_placeholder = lambda.style.icons.misc.ellipsis,
-        ignored_file_types = {
-
-            norg = true,
-        },
-        show_prediction_strength = true,
-    })
-end
-
 function config.autopair()
     local has_autopairs, autopairs = pcall(require, "nvim-autopairs")
     if not has_autopairs then

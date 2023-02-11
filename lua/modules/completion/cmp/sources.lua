@@ -6,18 +6,16 @@ local sources = {
     { name = "luasnip", priority = 8 },
     { name = "neorg", priority = 6 },
     -- { name = "nvim_lsp_signature_help", priority = 10 },
-
     { name = "path" },
     { name = "tmux" },
-    --  REVISIT: (vsedov) (07:34:00 - 11/11/22): Why do i need this ?
-    -- {
-    --     name = "buffer",
-    --     options = {
-    --         get_bufnrs = function()
-    --             return vim.api.nvim_list_bufs()
-    --         end,
-    --     },
-    -- },
+    {
+        name = "buffer",
+        options = {
+            get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+            end,
+        },
+    },
     { name = "nvim_lua" },
 }
 local filetype = {
