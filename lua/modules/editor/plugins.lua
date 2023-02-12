@@ -87,26 +87,28 @@ editor({
 -- -- --[[ This thing causes issues with respect to cmdheight=0 ]]
 editor({
     "chaoren/vim-wordmotion",
-    event = "BufEnter",
+    lazy = true,
+    event = "VeryLazy",
     config = function()
-        vim.g.wordmotion_nomap = 1
-        for _, key in ipairs({"w", "W", "b", "B", "e", "E", "ge", "gE"}) do
-            vim.keymap.set({ "n", "x", "o" }, key, "<Plug>WordMotion_" .. key)
-        end
-
-        vim.keymap.set({ "x", "o" }, "aW", "<Plug>WordMotion_aW")
-        vim.keymap.set({ "x", "o" }, "aw", "<Plug>WordMotion_aw")
-        vim.keymap.set({ "x", "o" }, "iW", "<Plug>WordMotion_iW")
-        vim.keymap.set({ "x", "o" }, "iw", "<Plug>WordMotion_iw")
-
-        vim.keymap.set("c", "<C-R><C-W>", "<Plug>WordMotion_<C-R><C-W>")
-        vim.keymap.set("c", "<C-R><C-A>", "<Plug>WordMotion_<C-R><C-A>")
-  end
+        vim.g.wordmotion_prefix = ","
+    end,
 })
 
 editor({
     "anuvyklack/vim-smartword",
     lazy = true,
+})
+
+editor({
+    "ethanholz/nvim-lastplace",
+    event = "BufEnter",
+    config = function()
+        require("nvim-lastplace").setup({
+            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+            lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
+            lastplace_open_folds = true,
+        })
+    end,
 })
 -- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
@@ -183,7 +185,6 @@ editor({
 editor({
     "linty-org/readline.nvim",
     lazy = true,
-    event = "VeryLazy",
     config = conf.readline,
 })
 

@@ -127,7 +127,7 @@ ui({
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     lazy = true,
-    cond = lambda.config.use_scroll,
+    enabled = lambda.config.use_scroll,
     event = "VeryLazy",
     config = function()
         require("neoscroll").setup({
@@ -290,63 +290,80 @@ ui({
             GitSignsUntracked = builtin.gitsigns_click,
             GitSignsAdd = builtin.gitsigns_click,
             GitSignsChangedelete = builtin.gitsigns_click,
+
             GitSignsDelete = builtin.gitsigns_click,
         })
     end,
 })
 ui({
     "tummetott/reticle.nvim",
-    opts = {
 
-        ignore = {
-            cursorline = {
-                "lspinfo",
-                "neotree",
-            },
-            cursorcolumn = {
-                "lspinfo",
-                "neotree",
-            },
-        },
-        never = {
-            cursorline = {
-                "TelescopePrompt",
-                "DressingInput",
-                "neotree",
-            },
-            cursorcolumn = {
-                "neotree",
-            },
-        },
-    },
-})
-ui({
-    "ojroques/nvim-hardline",
-    dependencies = { "jcdickinson/wpm.nvim", config = true },
     config = function()
-        wpm = require("wpm")
-        require("hardline").setup({
-            bufferline = true, -- disable bufferline
-            bufferline_settings = {
-                exclude_terminal = true, -- don't show terminal buffers in bufferline
-                show_index = true, -- show buffer indexes (not the actual buffer numbers) in bufferline
+        require("reticle").setup({
+            -- Make the cursorline and cursorcolumn follow your active window. This
+            -- only works if the cursorline and cursorcolumn setting is switched on
+            -- globaly like explained in 'Usage'. Default is true for both values
+            follow = {
+                cursorline = true,
+                cursorcolumn = true,
             },
-            theme = "catppuccin_minimal", -- change theme
-            sections = { -- define sections
-                { class = "mode", item = require("hardline.parts.mode").get_item },
-                { class = "high", item = require("hardline.parts.git").get_item, hide = 100 },
-                { class = "med", item = require("hardline.parts.filename").get_item },
-                "%<",
-                { class = "error", item = wpm.wpm },
-                { class = "error", item = wpm.historic_graph },
-                { class = "med", item = "%=" },
-                { class = "low", item = require("hardline.parts.wordcount").get_item, hide = 100 },
-                { class = "error", item = require("hardline.parts.lsp").get_error },
-                { class = "warning", item = require("hardline.parts.lsp").get_warning },
-                { class = "warning", item = require("hardline.parts.whitespace").get_item },
-                { class = "high", item = require("hardline.parts.filetype").get_item, hide = 60 },
-                { class = "mode", item = require("hardline.parts.line").get_item },
+
+            -- Define filetypes where the cursorline / cursorcolumn is always on,
+            -- regardless of the global setting
+            always = {
+                cursorline = {
+                    "json",
+                },
+                cursorcolumn = {},
             },
+
+            -- Define filetypes where the cursorline / cursorcolumn is always on when
+            -- the window is focused, regardless of the global setting
+            on_focus = {
+                cursorline = {
+                    "help",
+                    "NvimTree",
+                },
+                cursorcolumn = {},
+            },
+
+            -- Define filetypes where the cursorline / cursorcolumn is never on,
+            -- regardless of the global setting
+            never = {
+                cursorline = {
+                    "qf",
+                },
+                cursorcolumn = {
+                    "qf",
+                },
+            },
+
+            -- Define filetypes which are ignored by the plugin
+            ignore = {
+                cursorline = {
+                    "lspinfo",
+                },
+                cursorcolumn = {
+                    "lspinfo",
+                },
+            },
+
+            -- By default, nvim highlights the cursorline number only when the cursorline setting is
+            -- switched on. When enabeling the following setting, the cursorline number
+            -- of every window is always highlighted, regardless of the setting
+            always_show_cl_number = true,
         })
+    end,
+})
+
+ui({
+    "rebelot/heirline.nvim",
+    lazy = true,
+    dependencies = { "jcdickinson/wpm.nvim", config = true },
+
+    event = "BufEnter",
+    enabled = true,
+    config = function()
+        require("modules.ui.heirline")
     end,
 })

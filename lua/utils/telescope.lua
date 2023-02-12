@@ -512,7 +512,7 @@ M.search_only_certain_files = function()
     })
 end
 
-M.grep_string_visual = function()
+M.grep_string_visual = function(opts)
     local visual_selection = function()
         local save_previous = vim.fn.getreg("a")
         vim.api.nvim_command('silent! normal! "ay')
@@ -520,8 +520,15 @@ M.grep_string_visual = function()
         vim.fn.setreg("a", save_previous)
         return vim.fn.substitute(selection, [[\n]], [[\\n]], "g")
     end
+    opts = opts or visual_selection()
+
+    opts = vim.fn.substitute(opts, [[\n]], [[\\n]], "g")
     builtin.live_grep({
-        default_text = visual_selection(),
+        default_text = opts,
+    })
+
+    builtin.live_grep({
+        default_text = opts,
     })
 end
 

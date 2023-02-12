@@ -105,7 +105,6 @@ buffer({
         },
         -- Restore window options to previous values when leaving an oil buffer
         restore_win_options = true,
-        -- Skip the confirmation popup for simple operations
         skip_confirm_for_simple_edits = false,
         keymaps = {
             ["g?"] = "actions.show_help",

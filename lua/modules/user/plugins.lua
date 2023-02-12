@@ -51,38 +51,6 @@ user({
     end,
 })
 --
---
-user({
-    "segeljakt/vim-silicon",
-    lazy = true,
-    cmd = { "Silicon", "SiliconHighlight" },
-    config = function()
-        vim.cmd([[
-            let s:workhours = {
-                  \ 'Monday':    [8, 16],
-                  \ 'Tuesday':   [9, 17],
-                  \ 'Wednesday': [9, 17],
-                  \ 'Thursday':  [9, 17],
-                  \ 'Friday':    [9, 15],
-                  \ }
-
-            function! s:working()
-                let day = strftime('%u')
-                if has_key(s:workhours, day)
-                  let hour = strftime('%H')
-                  let [start_hour, stop_hour] = s:workhours[day]
-                  if start_hour <= hour && hour <= stop_hour
-                    return "~/Work-Snippets/"
-                  endif
-                endif
-                return "/home/viv/Pictures/Silicon/"
-            endfunction
-
-            let g:silicon['output'] = function('s:working')
-        ]])
-    end,
-})
-
 user({
     "tamton-aquib/mpv.nvim",
     lazy = true,
@@ -122,11 +90,13 @@ user({
     end,
 })
 
-user({ "alanjcfs/rg.nvim", cmd = "Ripgrep" })
-
 user({
-    "lalitmee/browse.nvim",
-    lazy = true,
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    config = true,
+    "krivahtoo/silicon.nvim",
+    build = "./install.sh build",
+    config = function()
+        require("silicon").setup({
+            font = "FantasqueSansMono Nerd Font=16",
+            theme = "Monokai Extended",
+        })
+    end,
 })

@@ -107,10 +107,6 @@ vim.defer_fn(function()
     end, { force = true })
 
     loader({ plugins = { "presence.nvim" } })
-
-    if lambda.config.use_scope then
-        loader({ plugins = { "scope.nvim" } })
-    end
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
@@ -122,7 +118,7 @@ end, lazy_timer + 80)
 --  TODO: (vsedov) (01:32:08 - 28/10/22): WTF is this code viv ??
 --  REVISIT: (vsedov) (01:32:15 - 28/10/22): Change this once you have time
 vim.defer_fn(function()
-    if lambda.config.use_fzf_lua then
+    if lambda.config.extra_search.enable and lambda.config.extra_search.providers.use_fzf_lua then
         loader({ plugins = { "fzf-lua" } })
     end
 
@@ -130,10 +126,6 @@ vim.defer_fn(function()
         loader({ plugins = { "nvim-rooter.lua" } })
     else
         loader({ plugins = { "project.nvim" } })
-    end
-    -- -- Notify
-    if not lambda.config.ui.enable then
-        loader({ plugins = { "nvim-notify" } })
     end
 
     -- this thing is quite laggy

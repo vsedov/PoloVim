@@ -7,13 +7,16 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
     local leader = "<leader>l"
     local hydra = require("hydra")
 
-    local bracket = {}
+    local bracket = { "j", "t", "u" }
 
     local function make_core_table(core_table, second_table)
         for _, v in pairs(second_table) do
             table.insert(core_table, v)
         end
         table.insert(core_table, "\n")
+    end
+    local function isInteger(str)
+        return not (str == "" or str:find("%D")) -- str:match("%D") also works
     end
 
     local function create_table_normal(var, sorted, string_len, start_val)
@@ -95,181 +98,37 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
             { nowait = true, exit = true, desc = "[G] Reset" },
         },
 
-        ["t1"] = {
+        ["t"] = {
             function()
-                require("grapple").tag({ key = 1 })
+                vim.ui.input({ prompt = "Enter a number you want to tag > ", default = "1" }, function(index)
+                    if isInteger(index) then
+                        require("harpoon.ui").nav_file(tonumber(index))
+                    end
+                end)
             end,
-            { nowait = true, desc = "Tag File 1", exit = false },
-        },
-        ["t2"] = {
-            function()
-                require("grapple").tag({ key = 2 })
-            end,
-            { nowait = true, desc = "Tag File 2", exit = false },
-        },
-        ["t3"] = {
-            function()
-                require("grapple").tag({ key = 3 })
-            end,
-            { nowait = true, desc = "Tag File 3", exit = false },
-        },
-        ["t4"] = {
-            function()
-                require("grapple").tag({ key = 4 })
-            end,
-            { nowait = true, desc = "Tag File 4", exit = false },
-        },
-        ["t5"] = {
-            function()
-                require("grapple").tag({ key = 5 })
-            end,
-            { nowait = true, desc = "Tag File 5", exit = false },
+            { nowait = true, desc = "Tag File X", exit = false },
         },
 
-        ["t6"] = {
+        ["u"] = {
             function()
-                require("grapple").tag({ key = 6 })
+                vim.ui.input({ prompt = "Enter a number you want to untag > ", default = "1" }, function(index)
+                    if isInteger(index) then
+                        require("harpoon.ui").nav_file(tonumber(index))
+                    end
+                end)
             end,
-            { nowait = true, desc = "Tag File 6", exit = false },
+            { nowait = true, desc = "UnTag File X", exit = false },
         },
 
-        ["t7"] = {
+        ["j"] = {
             function()
-                require("grapple").tag({ key = 7 })
+                vim.ui.input({ prompt = "Enter a number to jump to   > ", default = "1" }, function(index)
+                    if isInteger(index) then
+                        require("harpoon.ui").nav_file(tonumber(index))
+                    end
+                end)
             end,
-            { nowait = true, desc = "Tag File 7", exit = false },
-        },
-
-        ["t8"] = {
-            function()
-                require("grapple").tag({ key = 8 })
-            end,
-            { nowait = true, desc = "Tag File 8", exit = false },
-        },
-
-        ["t9"] = {
-            function()
-                require("grapple").tag({ key = 9 })
-            end,
-            { nowait = true, desc = "Tag File 9", exit = false },
-        },
-
-        ["u1"] = {
-            function()
-                require("grapple").untag({ key = 1 })
-            end,
-            { nowait = true, desc = "UnTag File 1", exit = false },
-        },
-        ["u2"] = {
-            function()
-                require("grapple").untag({ key = 2 })
-            end,
-            { nowait = true, desc = "UnTag File 2", exit = false },
-        },
-        ["u3"] = {
-            function()
-                require("grapple").untag({ key = 3 })
-            end,
-            { nowait = true, desc = "UnTag File 3", exit = false },
-        },
-        ["u4"] = {
-            function()
-                require("grapple").untag({ key = 4 })
-            end,
-            { nowait = true, desc = "UnTag File 4", exit = false },
-        },
-        ["u5"] = {
-            function()
-                require("grapple").untag({ key = 5 })
-            end,
-            { nowait = true, desc = "UnTag File 5", exit = false },
-        },
-
-        ["u6"] = {
-            function()
-                require("grapple").untag({ key = 6 })
-            end,
-            { nowait = true, desc = "UnTag File 6", exit = false },
-        },
-
-        ["u7"] = {
-            function()
-                require("grapple").untag({ key = 7 })
-            end,
-            { nowait = true, desc = "UnTag File 7", exit = false },
-        },
-
-        ["u8"] = {
-            function()
-                require("grapple").untag({ key = 8 })
-            end,
-            { nowait = true, desc = "UnTag File 8", exit = false },
-        },
-
-        ["u9"] = {
-            function()
-                require("grapple").untag({ key = 9 })
-            end,
-            { nowait = true, desc = "UnTag File 9", exit = false },
-        },
-
-        ["1"] = {
-            function()
-                require("grapple").select({ key = 1 })
-            end,
-            { nowait = true, desc = "Goto File 1", exit = false },
-        },
-        ["2"] = {
-            function()
-                require("grapple").select({ key = 2 })
-            end,
-            { nowait = true, desc = "Goto File 2", exit = false },
-        },
-        ["3"] = {
-            function()
-                require("grapple").select({ key = 3 })
-            end,
-            { nowait = true, desc = "Goto File 3", exit = false },
-        },
-        ["4"] = {
-            function()
-                require("grapple").select({ key = 4 })
-            end,
-            { nowait = true, desc = "Goto File 4", exit = false },
-        },
-        ["5"] = {
-            function()
-                require("grapple").select({ key = 5 })
-            end,
-            { nowait = true, desc = "Goto File 5", exit = false },
-        },
-
-        ["6"] = {
-            function()
-                require("grapple").select({ key = 6 })
-            end,
-            { nowait = true, desc = "Goto File 6", exit = false },
-        },
-
-        ["7"] = {
-            function()
-                require("grapple").select({ key = 7 })
-            end,
-            { nowait = true, desc = "Goto File 7", exit = false },
-        },
-
-        ["8"] = {
-            function()
-                require("grapple").select({ key = 8 })
-            end,
-            { nowait = true, desc = "Goto File 8", exit = false },
-        },
-
-        ["9"] = {
-            function()
-                require("grapple").select({ key = 9 })
-            end,
-            { nowait = true, desc = "Goto File 9", exit = false },
+            { nowait = true, desc = "Goto File X", exit = false },
         },
     }
 
@@ -305,17 +164,11 @@ if lambda.config.use_lightspeed or lambda.config.use_both_leap_light_speed then
         table.sort(sorted)
 
         graple = create_table_normal({}, sorted, 1, { "k", "m", "M", "P", "s", "S", "R" })
-        tags = create_table_normal({}, sorted, 2, "t")
-        untags = create_table_normal({}, sorted, 2, "u")
-        go = create_table_normal({}, sorted, 1, { "1", "2", "3", "4", "5", "6", "7", "8", "9" })
 
         core_table = {}
 
         make_core_table(core_table, bracket)
         make_core_table(core_table, graple)
-        make_core_table(core_table, go)
-        make_core_table(core_table, tags)
-        make_core_table(core_table, untags)
 
         hint_table = {}
         string_val = "^ ^      Graple       ^ ^\n\n"

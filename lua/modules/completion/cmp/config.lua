@@ -22,8 +22,8 @@ local config = {
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    preselect = cmp.PreselectMode.None, -- None | Item
-    experimental = { ghost_text = false }, -- native_menu = false -- im not sure if this will make things faster
+    preselect = cmp.PreselectMode.Item, -- None | Item
+    experimental = { ghost_text = true }, -- native_menu = false -- im not sure if this will make things faster
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
     enabled = function()

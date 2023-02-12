@@ -18,7 +18,8 @@ local hint = [[
   _c_ %{cul} cursor line
   _n_ %{nu} number
   _r_ %{rnu} relative number
-  _l_ %{diag} diagnostics
+  _[_ %{cuc} cursorcolumn
+  _]_ %{cul} cursorline
   ^
        ^^^^                _<Esc>_
 ]]
@@ -30,15 +31,12 @@ Hydra({
         color = "amaranth",
         invoke_on_body = true,
         hint = {
-            border = "rounded",
-            position = "middle",
-            funcs = {
-                ["diag"] = diagnostic,
-            },
+            border = lambda.style.border.type_0,
+            position = "middle-right",
         },
     },
     mode = { "n", "x" },
-    body = "<leader>O",
+    body = ";o",
     heads = {
         {
             "n",
@@ -122,6 +120,22 @@ Hydra({
             { desc = "wrap" },
         },
         {
+            "[",
+            function()
+                vim.opt.cursorcolumn = not vim.opt.cursorcolumn
+            end,
+            { desc = "Toggle the cursorcolumn" },
+        },
+
+        {
+            "]",
+            function()
+                require("reticle").toggle_cursorline()
+            end,
+            { desc = "Toggle the cursorline" },
+        },
+
+        {
             "c",
             function()
                 if vim.o.cursorline == true then
@@ -132,13 +146,7 @@ Hydra({
             end,
             { desc = "cursor line" },
         },
-        {
-            "l",
-            function()
-                require("lsp_lines").toggle()
-            end,
-            { desc = "virtual line diagnostics" },
-        },
+
         { "<Esc>", nil, { exit = true } },
     },
 })

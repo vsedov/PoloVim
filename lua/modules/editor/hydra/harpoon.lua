@@ -201,6 +201,15 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "Clear All", exit = true },
     },
+    -- I am adding this cause this feels like it can be faster
+    z = {
+        function()
+            vim.ui.input({ prompt = "Harpoon , Enter Zoxide location : ", default = "year_3" }, function(item)
+                vim.cmd.Tz(item)
+            end)
+        end,
+        { nowait = true, desc = "Zoxide", exit = true },
+    },
 }
 
 local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
@@ -235,7 +244,7 @@ local function auto_hint_generate()
     table.sort(sorted)
 
     num = utils.create_table_normal({}, sorted, 1, { "s", "S" }, bracket)
-    harpoon = utils.create_table_normal({}, sorted, 1, { "n", "N" }, bracket)
+    harpoon = utils.create_table_normal({}, sorted, 1, { "z", "n", "N" }, bracket)
 
     core_table = {}
 

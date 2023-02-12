@@ -120,11 +120,38 @@ Hydra({
 
         -- -- -- register and buffer
         { "r", ":Telescope registers<CR>", { exit = true } },
-        { "a", require("utils.telescope").ag, { exit = true } },
         { "j", require("utils.telescope").jump, { exit = true } },
 
         -- grep -- need to change this
-        { "w", ":Telescope grep_string<CR>", { exit = true } }, -- grep string
+
+        {
+            "a",
+            function()
+                lambda.clever_tcd()
+                vim.defer_fn(function()
+                    vim.ui.input({ prompt = "Silver Surfer", default = "" }, function(item)
+                        if item == "" then
+                            require("utils.telescope").ag()
+                        else
+                            require("utils.telescope").ag(tostring(item))
+                        end
+                    end)
+                end, 100)
+            end,
+            { exit = true },
+        },
+        {
+            "w",
+            function()
+                lambda.clever_tcd()
+                vim.defer_fn(function()
+                    vim.ui.input({ prompt = "grep item", default = "item" }, function(item)
+                        require("utils.telescope").grep_string_visual(tostring(item))
+                    end)
+                end, 100)
+            end,
+            { exit = true },
+        }, -- grep string
         { "W", require("utils.telescope").curbuf, { exit = true } }, -- pass
         { "l", require("telescope.builtin").lsp_dynamic_workspace_symbols, { exit = true } }, -- pass
         { "e", require("telescope").extensions.live_grep_args.live_grep_args, { exit = true } }, -- pass

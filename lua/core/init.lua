@@ -2,6 +2,7 @@ local g, api = vim.g, vim.api
 -- require('internal.winbar')
 
 local cache_dir = vim.env.HOME .. "/.cache/nvim/"
+
 local vim = vim
 
 -- Create cache dir and subs dir

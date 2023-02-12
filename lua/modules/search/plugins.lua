@@ -55,6 +55,7 @@ search({
 search({
     "axkirillov/easypick.nvim",
     lazy = true,
+    cmd = "Easypick",
     config = conf.easypick,
 })
 
@@ -154,3 +155,11 @@ search({
         })
     end,
 })
+
+search({
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    build = "./install --bin",
+    config = conf.fzf,
+})
+search({ "alanjcfs/rg.nvim", cmd = "Ripgrep" })

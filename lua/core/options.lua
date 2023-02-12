@@ -31,9 +31,9 @@ o.eadirection = "hor"
 -- cursor
 -- screen
 -- -- topline
-if lambda.check_version(0, 9, 0)[1] then
-    opt.splitkeep = "screen"
-end
+
+opt.splitkeep = "screen"
+
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
 o.switchbuf = "useopen,uselast"
@@ -155,7 +155,7 @@ o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "yes:3"
 o.ruler = false
 -- if lambda.config.ui.noice.enable then
-o.cmdheight = 0 -- 0 , is still borked it seems
+o.cmdheight = 1 -- 0 , is still borked it seems
 -- else
 --     o.cmdheight = 0
 -- end

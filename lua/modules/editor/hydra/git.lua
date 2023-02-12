@@ -41,7 +41,7 @@ local function diffmaster()
 end
 
 if gitrepo then
-    require("lazy").load({ plugins = { "vgit.nvim", "gitsigns.nvim", "vim-fugitive" } })
+    require("lazy").load({ plugins = { "gitsigns.nvim", "vim-fugitive" } })
 
     local hint = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
@@ -92,7 +92,6 @@ if gitrepo then
 ]]
     local ok, gitsigns = pcall(require, "gitsigns")
     if ok then
-        local vgit = require("vgit")
         Hydra({
             name = "Git Mode",
             hint = hint,
@@ -182,13 +181,51 @@ if gitrepo then
                 { "M", diffmaster, { silent = true, exit = true } },
                 { "H", ":DiffviewFileHistory<CR>", { silent = true, exit = true } },
 
-                { "k", vgit.project_diff_preview, { exit = true } },
-                { "dd", vgit.buffer_diff_preview, { exit = true } },
-                { "g", vgit.buffer_diff_staged_preview, { exit = true } },
-                { "P", vgit.project_staged_hunks_preview },
-                { "f", vgit.project_hunks_qf },
-                { "U", vgit.buffer_unstage },
-                { "G", vgit.buffer_diff_staged_preview },
+                {
+                    "k",
+                    function()
+                        require("vgit").project_diff_preview()
+                    end,
+                    { exit = true },
+                },
+                {
+                    "dd",
+                    function()
+                        require("vgit").buffer_diff_preview()
+                    end,
+                    { exit = true },
+                },
+                {
+                    "g",
+                    function()
+                        require("vgit").buffer_diff_staged_preview()
+                    end,
+                    { exit = true },
+                },
+                {
+                    "P",
+                    function()
+                        require("vgit").project_staged_hunks_preview()
+                    end,
+                },
+                {
+                    "f",
+                    function()
+                        require("vgit").project_hunks_qf()
+                    end,
+                },
+                {
+                    "U",
+                    function()
+                        require("vgit").buffer_unstage()
+                    end,
+                },
+                {
+                    "G",
+                    function()
+                        require("vgit").buffer_diff_staged_preview()
+                    end,
+                },
 
                 { "<Enter>", ":silent lua lambda.clever_tcd()<cr>:Neogit<cr>", { exit = true } },
                 { "q", nil, { exit = true, nowait = true } },
