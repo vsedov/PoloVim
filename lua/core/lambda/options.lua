@@ -1,11 +1,8 @@
 -- pick random  item form dark but based on its probability
 local noice_enabled = true
-local use_noice_docs = false -- this creats an error for some reason , though im not sure why | It is nice to have though
-
 local use_ts_yeti = true
-local use_glance = true
-local ruff_lsp = true
-local py_lang = "jedi"
+local use_codium_cmp = true
+-- toggle core values within the list
 
 lambda.config = {
     use_flirt = false,
@@ -17,7 +14,7 @@ lambda.config = {
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
-    loaded_confirm_quit = true, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
+    loaded_confirm_quit = true,
     save_clipboard_on_exit = true,
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
@@ -45,17 +42,24 @@ lambda.config = {
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
+lambda.config.ai = {
+    codeium = {
+        use_codeium_cmp = use_codium_cmp,
+        use_codium_insert = not use_codium_cmp,
+    },
+}
+
 lambda.config.extra_search = {
     enable = true,
     providers = {
         use_azy = true,
-        use_fzf_lua = false, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
+        use_fzf_lua = true, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
     },
 }
 
 lambda.config.colourscheme = {
-    dim_background = false,
-    change_kitty_bg = false,
+    dim_background = true,
+    change_kitty_bg = true,
     --- @usage "main"' | '"moon"
     rose = "main",
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
@@ -103,7 +107,7 @@ lambda.config.abbrev = {
 
 lambda.config.cmp = {
     codeium = {
-        use_codeium = true,
+        use_codeium = use_codium_cmp,
     },
     tabnine = {
         use_tabnine = true,
@@ -112,12 +116,12 @@ lambda.config.cmp = {
         tabnine_prefetch = true,
         tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
     },
-    use_rg = true, -- this will induce lag , so use this on your own risk
+    use_rg = false, -- this will induce lag , so use this on your own risk
     cmp_theme = "borderv2", --- @usage "border" | "no-border" | "extra"
 }
 
 lambda.config.lsp = {
-    use_ruff_lsp = ruff_lsp,
+    use_ruff_lsp = true,
     use_rcd = false,
     use_lsp_lines = false,
     use_lsp_signature = true,
@@ -126,7 +130,7 @@ lambda.config.lsp = {
     python = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
         format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = py_lang, -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
         use_inlay_hints = true,
     },

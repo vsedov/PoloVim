@@ -330,13 +330,3 @@ vim.cmd('vmap <LeftRelease> "*ygv')
 
 vim.cmd("imap <C-V> <C-R>*")
 vim.cmd('vmap <LeftRelease> "*ygv')
-
-function _G.toggle_tabline()
-    local value = vim.api.nvim_get_option_value("showtabline", {})
-    if value == 2 then
-        value = 1
-    else
-        value = 2
-    end
-    vim.opt.showtabline = value
-end
