@@ -12,13 +12,13 @@ for _, v in pairs(sorted) do
     end
 end
 table.sort(single)
-douible = {}
+double = {}
 for _, v in pairs(sorted) do
     if string.len(v) == 2 and not vim.tbl_contains(bracket, v) then
-        table.insert(douible, v)
+        table.insert(double, v)
     end
 end
-table.sort(douible)
+table.sort(double)
 
 return {
     {

@@ -1,11 +1,11 @@
 -- pick random  item form dark but based on its probability
 local noice_enabled = true
 local use_ts_yeti = true
-local use_codium_cmp = true
+local use_codium_cmp = false
 -- toggle core values within the list
 
 lambda.config = {
-    use_flirt = false,
+    use_flirt = true,
     use_hydra = true,
     overwrite_colours_use_styler = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
@@ -47,6 +47,7 @@ lambda.config.ai = {
         use_codeium_cmp = use_codium_cmp,
         use_codium_insert = not use_codium_cmp,
     },
+    sell_your_soul = true,
 }
 
 lambda.config.extra_search = {
@@ -59,7 +60,7 @@ lambda.config.extra_search = {
 
 lambda.config.colourscheme = {
     dim_background = true,
-    change_kitty_bg = true,
+    change_kitty_bg = false,
     --- @usage "main"' | '"moon"
     rose = "main",
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
@@ -108,6 +109,7 @@ lambda.config.abbrev = {
 lambda.config.cmp = {
     codeium = {
         use_codeium = use_codium_cmp,
+        codium_priority = 10,
     },
     tabnine = {
         use_tabnine = true,
@@ -116,7 +118,18 @@ lambda.config.cmp = {
         tabnine_prefetch = true,
         tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
     },
-    use_rg = false, -- this will induce lag , so use this on your own risk
+    rg = {
+        use_rg = false, -- this will induce lag , so use this on your own risk
+        keyword_length = 3,
+        depth = 6,
+    },
+    luasnip = {
+        luasnip_choice = true,
+        luasnip = {
+            enable = true,
+            priority = 8,
+        },
+    },
     cmp_theme = "borderv2", --- @usage "border" | "no-border" | "extra"
 }
 
@@ -137,6 +150,7 @@ lambda.config.lsp = {
 }
 
 lambda.config.ui = {
+    use_cava = true, -- this can cause lag though im pretty certain
     use_illuminate = true,
     use_murmur = false, -- Do not use both illuminate and murmur
     use_modes = true,
@@ -146,6 +160,14 @@ lambda.config.ui = {
         lsp = {
             use_noice_signature = false, -- I would very much like to use this,l but for now this is broken
             use_noice_hover = false,
+        },
+    },
+    heirline = {
+        cava = {
+            use_cava = true,
+            fps = "240",
+            bars = "18",
+            audio = "average", --average, stero left right
         },
     },
 }

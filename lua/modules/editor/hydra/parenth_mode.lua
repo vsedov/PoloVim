@@ -143,18 +143,18 @@ local function auto_hint_generate()
         end
     end
     table.sort(single)
-    douible = {}
+    double = {}
     for _, v in pairs(sorted) do
         if string.len(v) == 2 and not vim.tbl_contains(bracket, v) then
-            table.insert(douible, v)
+            table.insert(double, v)
         end
     end
-    table.sort(douible)
+    table.sort(double)
 
     core_table = {}
 
     make_core_table(core_table, single)
-    make_core_table(core_table, douible)
+    make_core_table(core_table, double)
     make_core_table(core_table, bracket)
 
     hint_table = {}

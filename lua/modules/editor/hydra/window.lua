@@ -28,7 +28,8 @@ local window_hint = [[
  ^ ^ _j_ ^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^   ^_q_, _c_: close
  ^^ focus ^  ^^winshift^  ^^Split^^^^^^^^^^  ^_=_: equalize^     _z_: maximize
  ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only
- _?_ : Pick window
+ _?_ : Pick window  _[_ : Cava
+
 ]]
 
 Hydra({
@@ -83,6 +84,13 @@ Hydra({
             function()
                 splits.resize_right(2)
             end,
+        },
+        {
+            "[",
+            function()
+                lambda.config.ui.heirline.cava.use_cava = not lambda.config.ui.heirline.cava.use_cava
+            end,
+            { desc = "Soft Toggle Cava" },
         },
         { "=", "<C-w>=", { desc = "equalize" } },
 

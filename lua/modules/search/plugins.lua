@@ -162,4 +162,3 @@ search({
     build = "./install --bin",
     config = conf.fzf,
 })
-search({ "alanjcfs/rg.nvim", cmd = "Ripgrep" })

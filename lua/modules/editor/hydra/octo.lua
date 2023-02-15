@@ -71,6 +71,7 @@ end
 
 local octo_hint = [[
 ^    Octo
+^▔▔▔▔▔▔▔▔▔▔▔^
 ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^
 ^ _g_: Gists
 ^ _i_: Issues

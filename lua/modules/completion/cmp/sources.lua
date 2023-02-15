@@ -2,6 +2,50 @@ local api = vim.api
 -- default sources
 local plugins = {
     {
+        name = "luasnip_choice",
+        enable = lambda.config.cmp.luasnip.luasnip_choice,
+    },
+    {
+        name = "luasnip",
+        enable = lambda.config.cmp.luasnip.luasnip.enable,
+        options = {
+            priority = lambda.config.cmp.luasnip.luasnip.priority,
+        },
+    },
+    {
+        name = "neorg",
+        enable = true,
+        options = { priority = 6 },
+    },
+    {
+        name = "codeium",
+        enable = lambda.config.cmp.codeium.use_codeium,
+        options = {
+            priority = lambda.config.cmp.codeium.codium_priority,
+        },
+    },
+    {
+        name = "cmp_tabnine",
+        enable = lambda.config.cmp.tabnine.use_tabnine,
+        options = {
+            priority = lambda.config.cmp.tabnine.tabnine_priority,
+        },
+    },
+    {
+        name = "rg",
+        enable = lambda.config.cmp.rg.use_rg,
+        options = {
+            options = {
+                keyword_length = lambda.config.cmp.rg.keyword_length,
+                option = {
+                    additional_arguments = "--max-depth "
+                        .. lambda.config.cmp.rg.depth
+                        .. " --one-file-system --ignore-file ~/.config/nvim/utils/abbreviations/dictionary.lua",
+                },
+            },
+        },
+    },
+    {
         name = "buffer",
         enable = true,
         options = {
@@ -17,51 +61,7 @@ local plugins = {
             priority = 10,
         },
     },
-    {
-        name = "luasnip_choice",
-        enable = true,
-        options = {
-            priority = 10,
-        },
-    },
-    {
-        name = "luasnip",
-        enable = true,
-        options = {
-            priority = 8,
-        },
-    },
-    {
-        name = "neorg",
-        enable = true,
-        options = { priority = 6 },
-    },
-    {
-        name = "codeium",
-        enable = true,
-        options = {
-            priority = 8,
-        },
-    },
-    {
-        name = "cmp_tabnine",
-        enable = lambda.config.cmp.tabnine.use_tabnine,
-        options = {
-            priority = lambda.config.cmp.tabnine.tabnine_priority,
-        },
-    },
-    {
-        name = "rg",
-        enable = lambda.config.cmp.use_rg,
-        options = {
-            options = {
-                keyword_length = 3,
-                option = {
-                    additional_arguments = "--max-depth 6 --one-file-system --ignore-file ~/.config/nvim/utils/abbreviations/dictionary.lua",
-                },
-            },
-        },
-    },
+
     {
         name = "path",
         enable = true,
@@ -113,8 +113,8 @@ local function apply_options(t)
             if plugin.options then
                 plugin_entry.options = plugin.options
             end
+            table.insert(ret, plugin_entry)
         end
-        table.insert(ret, plugin_entry)
     end
     return ret
 end

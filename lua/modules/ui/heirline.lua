@@ -1,10 +1,90 @@
 -- local conditions = require("heirline.conditions")
-require("heirline")
+local uv = vim.loop
 local utils = require("heirline.utils")
 local conditions = require("heirline.conditions")
+local cava_config = lambda.config.ui.heirline.cava
+
 local wpm = require("wpm")
+local cava_text = "OK"
+
+vim.api.nvim_create_augroup("Heirline", { clear = true })
+
+local active = cava_config.use_cava
+local wpm_clicked = false
+local handle_pid = nil
+
+local complete_pkill = function()
+    if handle_pid then
+        os.execute("pkill -P " .. handle_pid)
+    end
+end
+
+local function on_exit(code, signal)
+    vim.notify("Cava process exited with code " .. code .. " and signal " .. signal)
+end
+
+local function cava_run()
+    local cava_path = vim.fn.expand("$HOME/.config/polybar/scripts/cava.py")
+    -- local cava_path = "/user/bin/cat"
+    local stdin = uv.new_pipe(false)
+    local stdout = uv.new_pipe(false)
+    local stderr = uv.new_pipe(false)
+
+    local handle = uv.spawn(cava_path, {
+        args = { "-f", cava_config.fps, "-b", cava_config.bars, "-c", cava_config.audio },
+        -- args = { "/tmp/nvim_pipe" },
+        stdio = { stdin, stdout, stderr },
+    }, function()
+        _G._cava_stop()
+    end)
+
+    handle_pid = tostring(handle:get_pid())
+
+    uv.read_start(
+        stdout,
+        vim.schedule_wrap(function(err, data)
+            if data then
+                cava_text = data:gsub("[\n\r]", " ")
+            end
+        end)
+    )
+    _G._cava_stop = function()
+        vim.defer_fn(function()
+            uv.close(handle, function()
+                uv.close(stdin)
+                uv.close(stdout)
+                uv.close(stderr)
+            end)
+            vim.schedule_wrap(function()
+                complete_pkill()
+                handle_pid = nil
+            end)
+
+            vim.notify(" . " .. tostring(handle:is_active()) .. " PID : " .. tostring(handle:get_pid()))
+        end, 0)
+    end
+end
+
+if cava_config.use_cava then
+    vim.defer_fn(function()
+        if cava_config.use_cava then
+            vim.notify("Cava Has started")
+            cava_run()
+        else
+            vim.notify("Cava has been disabled, Globally ")
+        end
+    end, 5000)
+    vim.api.nvim_create_autocmd({ "ExitPre" }, {
+        callback = function()
+            complete_pkill()
+            _G._cava_stop()
+        end,
+        group = "Heirline",
+    })
+end
+
 --- Blend two rgb colors using alpha
----@param color1 string | number first color
+---@param color1 string | number first color = false = false
 ---@param color2 string | number second color
 ---@param alpha number (0, 1) float determining the weighted average
 ---@return string color hex string of the blended color
@@ -24,6 +104,24 @@ end
 
 local function dim(color, n)
     return blend(color, "#000000", n)
+end
+
+local function run_file(ht)
+    local fts = {
+        rust = "cargo run",
+        python = "python %",
+        javascript = "npm start",
+        c = "make",
+        cpp = "make",
+        java = "java %",
+    }
+
+    local cmd = fts[vim.bo.ft]
+    vim.cmd(cmd and ("w | " .. (ht or "") .. "sp | term " .. cmd) or "echo 'No command for this filetype'")
+end
+
+function Bruh(id)
+    ({ run_file, require("mpv").toggle_player })[id]()
 end
 
 local function setup_colors()
@@ -49,6 +147,85 @@ local function setup_colors()
 end
 
 require("heirline").load_colors(setup_colors())
+
+local cava = {
+    condition = function()
+        return true
+    end,
+    on_click = {
+        name = "Cava",
+        callback = function()
+            if cava_config.use_cava then
+                if not active then
+                    cava_run()
+                    active = true
+                    vim.notify("Activating Cava")
+                else
+                    _G._cava_stop() -- stop Cava
+                    active = false
+                    vim.notify("Disabling Cava")
+                    cava_text = " Cava |"
+                end
+            end
+        end,
+    },
+
+    provider = function()
+        if active and cava_config.use_cava then
+            return cava_text .. " | "
+        end
+        return "Cava "
+    end,
+    hl = function(self)
+        local color = self:mode_color()
+        return { fg = color }
+    end,
+}
+
+local mpv = {
+    condition = function()
+        return true
+    end,
+    on_click = {
+        name = "mpv_commands",
+        callback = function()
+            vim.schedule_wrap(function()
+                vim.notify("Mpv Toggle")
+                vim.cmd([[MpvToggle]])
+            end)
+        end,
+    },
+    provider = function()
+        if vim.g.mpv_visualizer then
+            return vim.g.mpv_visualizer .. " | "
+        end
+        return "MPV"
+    end,
+    hl = function(self)
+        local color = self:mode_color()
+        return { fg = color }
+    end,
+}
+
+local wpm_input = {
+    condition = function()
+        return true
+    end,
+    on_click = {
+        name = "Wpm",
+        callback = function()
+            wpm_clicked = not wpm_clicked
+        end,
+    },
+    provider = function(self)
+        data = require("wpm").wpm()
+        if wpm_clicked then
+            data = data .. " | " .. require("wpm").historic_graph()
+        end
+        return data
+    end,
+    hl = { fg = "blue" },
+}
 
 local ViMode = {
     init = function(self)
@@ -103,21 +280,10 @@ local ViMode = {
         local color = self:mode_color()
         return { fg = color, bold = true }
     end,
+
     update = {
         "ModeChanged",
     },
-}
-
-local wpm_input = {
-    condition = function()
-        return true
-    end,
-    provider = function(self)
-        return wpm.wpm() .. " → " .. wpm.historic_graph()
-    end,
-
-    update = { "CursorMovedI" },
-    hl = { fg = "red" },
 }
 
 local FileNameBlock = {
@@ -583,14 +749,18 @@ local DefaultStatusline = {
     Space,
     Git,
     Space,
-    wpm_input,
-    Space,
     Diagnostics,
+    Space,
+    wpm_input,
     Align,
     DAPMessages,
+    Space,
+    cava,
+    Space,
+    mpv,
+    Space,
+    -- { flexible = 3, { cava, mpv }, { provider = "" } },
     LSPActive,
-    -- Space,
-    -- UltTest,
     Space,
     FileType,
     { flexible = 3, { Space, FileEncoding }, { provider = "" } },
@@ -699,10 +869,7 @@ local StatusLines = {
 
 require("heirline").setup({ statusline = StatusLines })
 
-vim.api.nvim_create_augroup("Heirline", { clear = true })
-
 vim.cmd([[au Heirline FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
-
 vim.api.nvim_create_autocmd("ColorScheme", {
     callback = function()
         local colors = setup_colors()

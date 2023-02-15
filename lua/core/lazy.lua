@@ -150,4 +150,6 @@ vim.defer_fn(function()
     if lambda.config.record_your_self then
         loader({ plugins = { "vim-wakatime" } })
     end
+
+    require("modules.ui.heirline")
 end, 120)

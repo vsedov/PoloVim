@@ -127,7 +127,7 @@ ui({
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     lazy = true,
-    enabled = lambda.config.use_scroll,
+    cond = lambda.config.use_scroll,
     event = "VeryLazy",
     config = function()
         require("neoscroll").setup({
@@ -342,9 +342,11 @@ ui({
             ignore = {
                 cursorline = {
                     "lspinfo",
+                    "neo-tree",
                 },
                 cursorcolumn = {
                     "lspinfo",
+                    "neo-tree",
                 },
             },
 
@@ -359,11 +361,12 @@ ui({
 ui({
     "rebelot/heirline.nvim",
     lazy = true,
-    dependencies = { "jcdickinson/wpm.nvim", config = true },
-
-    event = "BufEnter",
-    enabled = true,
-    config = function()
-        require("modules.ui.heirline")
-    end,
+    dependencies = {
+        "jcdickinson/wpm.nvim",
+        opts = { sample_interval = 1000 },
+        config = true,
+    },
 })
+-- ui({
+--     "uga-rosa/utf8.nvim",
+-- })

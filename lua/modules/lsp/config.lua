@@ -16,6 +16,7 @@ function config.mason_setup()
             exclude = { "sumneko_lua", "clangd", "ltex", "texlab" },
         },
     })
+
     require("mason-lspconfig").setup_handlers({
         function(name)
             -- print(name)
@@ -146,7 +147,6 @@ function config.lsp_sig()
         handler_opts = {
             border = lambda.style.border.type_0, -- double, single, shadow, none
         },
-
         transpancy = 80,
         zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
         log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",

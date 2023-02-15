@@ -56,12 +56,6 @@ git({
     config = conf.neogit,
 })
 
-git({
-    "ruifm/gitlinker.nvim",
-    lazy = true,
-    config = conf.gitlinker,
-})
-
 -- --  I think this gets loaded in the first place
 git({
     "tanvirtin/vgit.nvim", -- gitsign has similar features
@@ -133,4 +127,13 @@ git({
     cmd = {
         "GitCoAuthors",
     },
+})
+
+git({
+    "ruifm/gitlinker.nvim",
+    lazy = true,
+    opts = {
+        mappings = nil,
+    },
+    config = true,
 })

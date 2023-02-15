@@ -215,30 +215,6 @@ function config.neogit()
     vim.keymap.set("n", "<localleader>gp", neogit.popups.push.create, {})
 end
 
-function config.gitlinker()
-    require("gitlinker").setup()
-
-    vim.api.nvim_set_keymap(
-        "n",
-        "<leader>gT",
-        '<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-        { silent = true }
-    )
-    vim.api.nvim_set_keymap(
-        "v",
-        "<leader>gT",
-        '<cmd>lua require"gitlinker".get_buf_range_url("v", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-        {}
-    )
-    vim.api.nvim_set_keymap("n", "<leader>gY", '<cmd>lua require"gitlinker".get_repo_url()<cr>', { silent = true })
-    vim.api.nvim_set_keymap(
-        "n",
-        "<leader>gB",
-        '<cmd>lua require"gitlinker".get_repo_url({action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-        { silent = true }
-    )
-end
-
 function config.vgit()
     -- use this as a diff tool (faster than Diffview)
     -- there are overlaps with gitgutter. following are nice features

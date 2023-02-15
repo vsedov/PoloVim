@@ -55,7 +55,7 @@ user({
     "tamton-aquib/mpv.nvim",
     lazy = true,
     cmd = "MpvToggle",
-    config = { setup_widgets = true, timer = { throttle = 100 } },
+    opts = { setup_widgets = true, timer = { throttle = 100 } },
 })
 
 user({
@@ -92,7 +92,9 @@ user({
 
 user({
     "krivahtoo/silicon.nvim",
+    lazy = true,
     build = "./install.sh build",
+    cmd = { "Silicon" },
     config = function()
         require("silicon").setup({
             font = "FantasqueSansMono Nerd Font=16",

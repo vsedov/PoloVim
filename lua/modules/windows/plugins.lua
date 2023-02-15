@@ -15,7 +15,9 @@ windows({
 
 windows({
     "tamton-aquib/flirt.nvim",
-    lazy = not lambda.config.use_flirt,
+    cond = lambda.config.use_flirt,
+    lazy = true,
+    event = "BufWinEnter",
     config = function()
         require("flirt").setup({
             override_open = true, -- experimental
@@ -27,6 +29,7 @@ windows({
             custom_filter = function(buffer, win_config)
                 return vim.tbl_contains({ "cmp_menu", "hydra_hint", "prompt" }, vim.bo[buffer].buftype)
             end,
+
         })
     end,
 })
