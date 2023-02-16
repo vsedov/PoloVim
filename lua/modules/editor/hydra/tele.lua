@@ -13,16 +13,18 @@ vim.defer_fn(function()
     require("telescope").setup({
         extensions = {
             bookmarks = {
+
                 selected_browser = "firefox",
                 url_open_command = "open",
+                profile_name = "default-nightly-1",
                 url_open_plugin = nil,
                 full_path = true,
-                waterfox_profile_name = "default-default",
                 buku_include_tags = false,
                 debug = false,
             },
         },
     })
+    require("telescope").load_extension("bookmarks")
 end, 3000)
 
 local hint_telescope = [[

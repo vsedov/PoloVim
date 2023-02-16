@@ -1,11 +1,10 @@
 -- pick random  item form dark but based on its probability
 local noice_enabled = true
 local use_ts_yeti = true
-local use_codium_cmp = false
+local use_codium_cmp = true
 -- toggle core values within the list
 
 lambda.config = {
-    use_flirt = true,
     use_hydra = true,
     overwrite_colours_use_styler = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
@@ -44,6 +43,7 @@ lambda.config = {
 
 lambda.config.ai = {
     codeium = {
+        use_codeium = true,
         use_codeium_cmp = use_codium_cmp,
         use_codium_insert = not use_codium_cmp,
     },
@@ -139,6 +139,7 @@ lambda.config.lsp = {
     use_lsp_lines = false,
     use_lsp_signature = true,
     use_typos = true,
+    use_format_modifcation = true, 
     latex = "texlab", -- texlab | ltex
     python = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
@@ -150,7 +151,6 @@ lambda.config.lsp = {
 }
 
 lambda.config.ui = {
-    use_cava = true, -- this can cause lag though im pretty certain
     use_illuminate = true,
     use_murmur = false, -- Do not use both illuminate and murmur
     use_modes = true,
@@ -166,8 +166,12 @@ lambda.config.ui = {
         cava = {
             use_cava = true,
             fps = "240",
-            bars = "18",
-            audio = "average", --average, stero left right
+            bars = "30",
+            audio = "stereo", --average, stero left right
         },
+    },
+    flirt = {
+        use_flirt = true,
+        use_flirt_override = false,
     },
 }

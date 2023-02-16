@@ -218,6 +218,7 @@ function config.indent()
                 -- or any other fallback methods
                 return require("nvim-yati.fallback").vim_auto(lnum, computed, bufnr)
             end,
+            suppress_conflict_warning = true,
             enable = true,
             default_lazy = true,
         },

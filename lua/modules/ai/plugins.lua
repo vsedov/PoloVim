@@ -28,8 +28,7 @@ ai({
 ai({
     "Exafunction/codeium.vim",
     lazy = true,
-    enable = false,
-    cond = lambda.config.ai.codeium.use_codium_insert,
+    cond = (lambda.config.ai.codeium.use_codeium and lambda.config.ai.codeium.use_codium_insert),
     event = "BufEnter",
     init = function()
         vim.g.codeium_disable_bindings = 1
@@ -58,7 +57,6 @@ ai({
     "github/copilot.vim",
     cmd = "Copilot",
     lazy = true,
-    enable = true,
     init = function()
         vim.g.copilot_no_tab_map = true
         vim.g.copilot_assume_mapped = true
@@ -68,7 +66,6 @@ ai({
         for _, ft in pairs(excluded_filetypes) do
             copilot_filetypes[ft] = false
         end
-
         vim.g["copilot_filetypes"] = copilot_filetypes
     end,
 })

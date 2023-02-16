@@ -277,10 +277,11 @@ opt.fileformats = { "unix", "mac", "dos" }
 o.mousefocus = true
 o.mousemoveevent = true
 opt.mousescroll = { "ver:1", "hor:6" }
------------------------------------------------------------------------------//
+
 -- these only read ".vim" files
 o.secure = true -- Disable autocmd etc for project local vimrc files.
-o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
+-- Allow project local vimrc files example, .nvim.lua or .nvimrc see :h exrc
+o.exrc = lambda.has("nvim-0.9")
 
 -----------------------------------------------------------------------------//
 -- Folds {{{1
@@ -300,4 +301,4 @@ end
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
 
--- vim:foldmethod=marker
+-- vim:foldmethod=markc

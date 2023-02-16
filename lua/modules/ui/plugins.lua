@@ -121,6 +121,15 @@ ui({
 ui({
     "kevinhwang91/nvim-ufo",
     lazy = true,
+    cmd = {
+        "UfoAttach",
+        "UfoDetach",
+        "UfoEnable",
+        "UfoDisable",
+        "UfoInspect",
+        "UfoEnableFold",
+        "UfoDisableFold",
+    },
     config = conf.ufo,
 })
 
@@ -362,11 +371,12 @@ ui({
     "rebelot/heirline.nvim",
     lazy = true,
     dependencies = {
-        "jcdickinson/wpm.nvim",
-        opts = { sample_interval = 1000 },
-        config = true,
+        {
+            "jcdickinson/wpm.nvim",
+            lazy = true,
+            opts = { sample_interval = 1000 },
+            config = true,
+        },
+        { "uga-rosa/utf8.nvim", lazy = true },
     },
 })
--- ui({
---     "uga-rosa/utf8.nvim",
--- })

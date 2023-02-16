@@ -1,28 +1,23 @@
 -- local conditions = require("heirline.conditions")
-local uv = vim.loop
+local wpm = require("wpm")
 local utils = require("heirline.utils")
 local conditions = require("heirline.conditions")
-local cava_config = lambda.config.ui.heirline.cava
 
-local wpm = require("wpm")
+local uv = vim.loop
 local cava_text = "OK"
 
-vim.api.nvim_create_augroup("Heirline", { clear = true })
-
-local active = cava_config.use_cava
 local wpm_clicked = false
 local handle_pid = nil
 
+vim.api.nvim_create_augroup("Heirline", { clear = true })
 local complete_pkill = function()
     if handle_pid then
         os.execute("pkill -P " .. handle_pid)
     end
 end
 
-local function on_exit(code, signal)
-    vim.notify("Cava process exited with code " .. code .. " and signal " .. signal)
-end
-
+local cava_config = lambda.config.ui.heirline.cava
+local active = cava_config.use_cava
 local function cava_run()
     local cava_path = vim.fn.expand("$HOME/.config/polybar/scripts/cava.py")
     -- local cava_path = "/user/bin/cat"
@@ -64,7 +59,6 @@ local function cava_run()
         end, 0)
     end
 end
-
 if cava_config.use_cava then
     vim.defer_fn(function()
         if cava_config.use_cava then
@@ -169,12 +163,19 @@ local cava = {
             end
         end,
     },
-
-    provider = function()
+    provider = function(self)
         if active and cava_config.use_cava then
-            return cava_text .. " | "
+            -- if tostring(vim.fn.mode()) == "n" then
+            if vim.tbl_contains({ "n", "v" }, vim.fn.mode()) then
+                new_container = {}
+                for _, char in require("utf8").codes(cava_text) do
+                    table.insert(new_container, char)
+                end
+                return table.concat(new_container)
+                -- return cava_text
+            end
         end
-        return "Cava "
+        return "Cava"
     end,
     hl = function(self)
         local color = self:mode_color()
@@ -189,10 +190,10 @@ local mpv = {
     on_click = {
         name = "mpv_commands",
         callback = function()
-            vim.schedule_wrap(function()
+            vim.defer_fn(function()
                 vim.notify("Mpv Toggle")
                 vim.cmd([[MpvToggle]])
-            end)
+            end, 100)
         end,
     },
     provider = function()
@@ -636,7 +637,7 @@ local WorkDir = {
     hl = { fg = "blue", bold = true },
     on_click = {
         callback = function()
-            vim.cmd("NvimTreeToggle")
+            vim.cmd("NeoTreeFocusToggle")
         end,
         name = "heirline_workdir",
     },

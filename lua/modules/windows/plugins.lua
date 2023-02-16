@@ -15,21 +15,29 @@ windows({
 
 windows({
     "tamton-aquib/flirt.nvim",
-    cond = lambda.config.use_flirt,
+    cond = lambda.config.ui.flirt.use_flirt,
     lazy = true,
     event = "BufWinEnter",
     config = function()
         require("flirt").setup({
-            override_open = true, -- experimental
+            override_open = lambda.config.ui.flirt.use_flirt_override, -- experimental
             close_command = "Q",
             default_move_mappings = true, -- <C-arrows> to move floats
             default_resize_mappings = true, -- <A-arrows> to resize floats
             default_mouse_mappings = true, -- Drag floats with mouse
-            exclude_fts = { "chatgpt", "TelescopePrompt", "prompt", "notify", "cmp_menu", "harpoon", "hydra_hint" },
+            exclude_fts = {
+                "lspsagafinder",
+                "chatgpt",
+                "TelescopePrompt",
+                "prompt",
+                "notify",
+                "cmp_menu",
+                "harpoon",
+                "hydra_hint",
+            },
             custom_filter = function(buffer, win_config)
                 return vim.tbl_contains({ "cmp_menu", "hydra_hint", "prompt" }, vim.bo[buffer].buftype)
             end,
-
         })
     end,
 })
