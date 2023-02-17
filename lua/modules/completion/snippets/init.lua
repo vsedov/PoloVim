@@ -14,7 +14,7 @@ local pipe = utils.pipe
 local no_backslash = utils.no_backslash
 local is_math = utils.is_math
 local not_math = utils.not_math
--- -- prevent loading twice .
+
 require("modules.completion.snippets.luasnip")
 
 local parse = ls.parser.parse_snippet
@@ -61,11 +61,6 @@ ${0}]]
 
 local snippets = {
     all = require("modules.completion.snippets.all"),
-    lua = require("modules.completion.snippets.lua"),
-    python = require("modules.completion.snippets.python"),
-    norg = require("modules.completion.snippets.norg_snip"),
-    toml = require("modules.completion.snippets.toml"),
-
     help = {
         s({ trig = "con", wordTrig = true }, {
             i(1),
@@ -168,10 +163,6 @@ local snippets = {
 }
 
 ls.add_snippets("all", snippets.all)
-ls.add_snippets("lua", snippets.lua)
-ls.add_snippets("python", snippets.python)
-ls.add_snippets("norg", snippets.norg)
-ls.add_snippets("toml", snippets.toml)
 ls.add_snippets("help", snippets.help)
 ls.add_snippets("java", snippets.java)
 ls.add_snippets("cpp", snippets.cpp)
@@ -187,3 +178,5 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
 end
 ls.add_snippets("tex", require("modules.completion.snippets.latex.tex_math"), { type = "autosnippets" })
 require("luasnip.loaders.from_vscode").lazy_load()
+
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
