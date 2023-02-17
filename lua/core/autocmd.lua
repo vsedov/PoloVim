@@ -426,29 +426,6 @@ lambda.augroup("HoudiniFix", {
     },
 })
 
-lambda.augroup("AddTerminalMappings", {
-    {
-        event = { "TermOpen" },
-        pattern = { "term://*" },
-        command = function()
-            if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-                local opts = { silent = false, buffer = 0 }
-                vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-                vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
-
-                -- vim.keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", opts)
-                -- vim.keymap.set("t", "<C-j>", "<Cmd>wincmd j<CR>", opts)
-                -- vim.keymap.set("t", "<C-k>", "<Cmd>wincmd k<CR>", opts)
-                -- vim.keymap.set("t", "<C-l>", "<Cmd>wincmd l<CR>", opts)
-
-                vim.keymap.set("t", "]t", "<Cmd>tablast<CR>", {})
-                vim.keymap.set("t", "[t", "<Cmd>tabnext<CR>", {})
-                vim.keymap.set("t", "<S-Tab>", "<Cmd>bprev<CR>", {})
-                vim.keymap.set("t", "<leader><Tab>", "<Cmd>close \\| :bnext<cr>", {})
-            end
-        end,
-    },
-})
 
 --[[ Honestly cap locks are such a pain in the ass that its getting too annoying  ]]
 --[[ i will use <c-;> and <c-g>c to enable them when i need to just in case ]]
@@ -560,3 +537,5 @@ if has("autocmd")
 	autocmd BufWritePre *.txt,*.jl,*.js,*.py,*.wiki,*.sh,*.coffee,*.lua :call CleanExtraSpaces()
 endif
 ]])
+
+
