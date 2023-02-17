@@ -101,13 +101,20 @@ editor({
 
 editor({
     "ethanholz/nvim-lastplace",
-    event = "BufEnter",
+    event = "BufWinEnter",
     config = function()
-        require("nvim-lastplace").setup({
+        local lastplace_ok, lastplace = pcall(require, "nvim-lastplace")
+        if not lastplace_ok then
+            vim.notify("nvim-lastplace failed to load")
+            return
+        end
+
+        lastplace.setup({
             lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
             lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
-            lastplace_open_folds = true,
+            lastplace_open_folds = true
         })
+
     end,
 })
 -- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
@@ -116,6 +123,7 @@ editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 editor({
     "monaqa/dial.nvim",
     lazy = true,
+    cond = false,
     keys = {
         { "<C-x>", mode = "n" },
         { "<C-a>", mode = "n" },

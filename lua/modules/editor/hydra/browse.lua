@@ -56,7 +56,7 @@ end
 local bracket = { "<CR>", "w", "W", ";" }
 config.browse = {
     color = "red",
-    body = ";d",
+    body = "<leader>D",
     mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
 
@@ -152,6 +152,8 @@ local function auto_hint_generate()
     return string_val
 end
 
+--  TODO: (vsedov) (18:55:28 - 16/02/23): This might be a good idea to defer this stuff.
+--  Considering how laggy this thing can get, wouldne be too far fetched to say a good idea ?
 vim.defer_fn(function()
     local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
         name = "Browser",

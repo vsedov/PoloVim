@@ -44,33 +44,33 @@ config.doc_binds = {
     -- Reference Stuff
     i = {
         function()
-    vim.cmd("RefCopy")
+            vim.cmd("RefCopy")
         end,
         { nowait = true, silent = true, desc = "refCopy", exit = true },
     },
     p = {
 
         function()
-    vim.cmd("RefGo")
+            vim.cmd("RefGo")
         end,
         { nowait = true, silent = true, desc = "RefGo", exit = true },
     },
     -- Documentation types ?
     D = {
         function()
-    vim.cmd("DocsViewToggle")
+            vim.cmd("DocsViewToggle")
         end,
         { nowait = true, silent = true, desc = "Live Docs", exit = true },
     },
     z = {
         function()
-    vim.cmd("Zeavim")
+            vim.cmd("Zeavim")
         end,
         { nowait = true, silent = true, desc = "Zeal", exit = true },
     },
     k = {
         function()
-    vim.cmd("DD")
+            vim.cmd("DD")
         end,
         { nowait = true, silent = true, desc = "DevDoc Search", exit = true },
     },
