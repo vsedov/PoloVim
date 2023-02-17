@@ -102,3 +102,26 @@ user({
         })
     end,
 })
+user({
+    "giusgad/pets.nvim",
+    cmd = {
+        "PetsNew",
+        "PetsNewCustom",
+        "PetsList",
+        "PetsKill",
+        "PetsKillAll",
+        "PetsPauseToggle",
+        "PetsHideToggle",
+        "PetsSleepToggle",
+    },
+    dependencies = { "MunifTanjim/nui.nvim", "edluffy/hologram.nvim" },
+    opts = {
+        default_pet = "aloof",
+        default_style = "black",
+    },
+})
+user({
+
+    "ziontee113/SnippetGenie",
+    lazy = true,
+})
