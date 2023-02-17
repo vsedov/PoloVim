@@ -60,18 +60,12 @@ local function cava_run()
     end
 end
 if cava_config.use_cava then
-    vim.defer_fn(function()
-        if cava_config.use_cava then
-            vim.notify("Cava Has started")
-            cava_run()
-        else
-            vim.notify("Cava has been disabled, Globally ")
-        end
-    end, 5000)
     vim.api.nvim_create_autocmd({ "ExitPre" }, {
         callback = function()
             complete_pkill()
-            _G._cava_stop()
+            if _G._cava_stop then
+                _G._cava_stop()
+            end
         end,
         group = "Heirline",
     })
