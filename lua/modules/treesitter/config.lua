@@ -280,4 +280,86 @@ end
 function config.context()
     require("nvim_context_vt").setup({})
 end
+
+function config.select_ease()
+    local select_ease = require("SelectEase")
+
+    local lua_query = [[
+            ;; query
+            ((identifier) @cap)
+            ("string_content" @cap)
+            ((true) @cap)
+            ((false) @cap)
+        ]]
+    local python_query = [[
+            ;; query
+            ((identifier) @cap)
+            ((string) @cap)
+        ]]
+    local queries = {
+        lua = lua_query,
+        python = python_query,
+    }
+    local function create_keymaps(key_bindings, query_direction)
+        local keymaps = {}
+        for _, binding in ipairs(key_bindings) do
+            keymaps[binding] = {
+                ["\\\\k"] = function()
+                    select_ease.select_node({
+                        queries = queries,
+                        direction = query_direction,
+                        vertical_drill_jump = true,
+                    })
+                end,
+                ["\\\\j"] = function()
+                    select_ease.select_node({
+                        queries = queries,
+                        direction = query_direction,
+                        vertical_drill_jump = true,
+                    })
+                end,
+                ["\\\\h"] = function()
+                    select_ease.select_node({
+                        queries = queries,
+                        direction = query_direction,
+                        current_line_only = true,
+                    })
+                end,
+                ["\\\\l"] = function()
+                    select_ease.select_node({
+                        queries = queries,
+                        direction = query_direction,
+                        current_line_only = true,
+                    })
+                end,
+                ["\\\\p"] = function()
+                    select_ease.select_node({ queries = queries, direction = query_direction })
+                end,
+                ["\\\\n"] = function()
+                    select_ease.select_node({ queries = queries, direction = query_direction })
+                end,
+            }
+        end
+        return keymaps
+    end
+    local key_bindings = {
+        { "n", "s", "i" },
+        { "n", "s", "t" },
+        { "n", "s", "v" },
+    }
+
+    local keymaps_prev = create_keymaps(key_bindings, "previous")
+    for val, keymap in pairs(keymaps_prev) do
+        for x, y in pairs(keymap) do
+            vim.keymap.set(val, x, y, { noremap = true })
+        end
+    end
+
+    local keymaps_next = create_keymaps(key_bindings, "next")
+    for val, keymap in pairs(keymaps_next) do
+        for x, y in pairs(keymap) do
+            vim.keymap.set(val, x, y, { noremap = true })
+        end
+    end
+end
 return config

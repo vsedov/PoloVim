@@ -190,3 +190,9 @@ ts({
         },
     },
 })
+ts({
+    "ziontee113/SelectEase",
+    lazy = true,
+    ft = { "lua", "python" },
+    config = conf.select_ease,
+})
