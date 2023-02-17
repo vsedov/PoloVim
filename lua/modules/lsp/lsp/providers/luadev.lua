@@ -1,8 +1,10 @@
 local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 local lspconfig = require("lspconfig")
-local sumneko_root_path = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server"
-local sumneko_binary = vim.fn.expand("$HOME") .. "/GitHub/lua-language-server/bin/lua-language-server"
+local sumneko_root_path = "/home/viv/.local/share/nvim/mason/packages/lua-language-server/"
+local sumneko_binary = "/home/viv/.local/share/nvim/mason/packages/lua-language-server/bin/lua-language-server"
+
 local runtime_path = {}
+
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
@@ -12,8 +14,9 @@ require("neodev").setup({
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
     plugins = false, -- installed opt or start plugins in packpath
 })
+
 local sumneko_lua_server = enhance_attach({
-    cmd = { "lua-language-server" },
+    cmd = { sumneko_binary },
     settings = {
         Lua = {
             diagnostics = {
@@ -41,4 +44,4 @@ local sumneko_lua_server = enhance_attach({
         },
     },
 })
-lspconfig.sumneko_lua.setup(sumneko_lua_server)
+lspconfig.lua_ls.setup(sumneko_lua_server)

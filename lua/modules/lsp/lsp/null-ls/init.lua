@@ -86,9 +86,15 @@ function M.setup()
                 lsp_formatting(bufnr)
             end, {})
             if lambda.config.lsp.use_format_modifcation then
-                vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
-                
+                if vim.fn.isdirectory(".git/index") then
+                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                    lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
+                else
+                    vim.api.nvim_clear_autocmds({
+                        group = "NvimFormatModificationsDocumentFormattingGroup",
+                        buffer = bufnr,
+                    })
+                end
             else
                 augroup_setup(client, nr)
             end
