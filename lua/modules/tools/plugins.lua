@@ -317,13 +317,27 @@ tools({
     "chomosuke/term-edit.nvim",
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim
     ft = { "toggleterm", "terminal" },
-    version = "1.*",
 })
 
-tools({
-    "mtikekar/nvim-send-to-term",
-    cmd = "SendHere",
-    init = function()
-        vim.g.send_disable_mapping = true
-    end,
-})
+
+
+-- tools({
+--     "mtikekar/nvim-send-to-term",
+--     cmd = {"SendHere"},
+--     ft = {"python"},
+--     keys = {
+--         {"\\\\s",mode = "n"}, 
+--         {"\\\\S",mode = "n"}, 
+--         {"\\\\s",mode = "v"}, 
+--         {"\\\\ss",mode = "n"}, 
+
+--     },
+--     init = function()
+--         vim.g.send_disable_mapping = true 
+--         vim.g.send_disable_mapping = true
+    
+--         vim.keymap.set({"n" }, "\\\\ss", "<Plug>SendLine<Cr>", { noremap = true })
+--         vim.keymap.set({"n","v" }, "\\\\s", "<Plug>Send<Cr>", { noremap = true })
+--         vim.keymap.set({"n" }, "\\\\S", "<Plug>Send<Cr>", { noremap = true })
+--     end,
+-- })
