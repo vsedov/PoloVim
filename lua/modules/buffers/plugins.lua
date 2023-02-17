@@ -5,12 +5,18 @@ local conf = require("modules.buffers.config")
 --  ╰────────────────────────────────────────────────────────────────────╯
 buffer({
     "akinsho/bufferline.nvim",
+    lazy = true,
+    cond = true,
     event = "BufReadPre",
     config = conf.nvim_bufferline,
-    dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true } },
-    lazy = true,
+    dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, {"scope.nvim"} },
 })
---  ──────────────────────────────────────────────────────────────────────
+buffer({
+    "tiagovla/scope.nvim",
+    lazy = true,
+    config = true,
+})
+
 
 buffer({
     "toppair/reach.nvim",
@@ -32,11 +38,6 @@ buffer({
     },
 })
 
-buffer({
-    "tiagovla/scope.nvim",
-    lazy = true,
-    config = true,
-})
 
 buffer({
     "jlanzarotta/bufexplorer",
