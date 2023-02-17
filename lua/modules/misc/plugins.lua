@@ -156,19 +156,7 @@ misc({
     config = conf.noneck,
 })
 
-misc({
-    "phaazon/mind.nvim",
-    lazy = true,
-    cmd = {
-        "MindOpenMain",
-        "MindOpenProject",
-        "MindOpenSmartProject",
-        "MindReloadState",
-        "MindClose",
-    },
-    config = true,
-})
-
+--  TODO: (vsedov) (07:31:11 - 17/02/23): What was this Again ?
 misc({
     "EricDriussi/remember-me.nvim",
     lazy = true,
@@ -181,6 +169,7 @@ misc({
     end,
 })
 
+-- this does all my binds for terminal i guess ? 
 misc({
     "romainchapou/nostalgic-term.nvim",
     lazy = true,
