@@ -95,22 +95,21 @@ misc({
     end,
 })
 
--- -- misc({
--- --     "gbprod/stay-in-place.nvim",
--- --     keys = {
--- --         { "n", ">" },
--- --         { "n", "<" },
--- --         { "n", "=" },
--- --         { "n", ">>" },
--- --         { "n", "<<" },
--- --         { "x", ">" },
--- --         { "x", "<" },
--- --         { "x", "=" },
--- --     },
--- --     config = function()
--- --         require("stay-in-place").setup({})
--- --     end,
--- -- })
+misc({
+    "gbprod/stay-in-place.nvim",
+    keys = {
+        { ">", mode = "n" },
+        { "<", mode = "n" },
+        { "=", mode = "n" },
+        { ">>", mode = "n" },
+        { "<<", mode = "n" },
+        { "==", mode = "n" },
+        { ">", mode = "x" },
+        { "<", mode = "x" },
+        { "=", mode = "x" },
+    },
+    config = true,
+})
 
 misc({
     "boorboor/save.nvim",
@@ -156,20 +155,26 @@ misc({
     config = conf.noneck,
 })
 
---  TODO: (vsedov) (07:31:11 - 17/02/23): What was this Again ?
 misc({
     "EricDriussi/remember-me.nvim",
-    lazy = true,
-    cmd = {
-        "Memorize",
-        "Recall",
-    },
+    event = "VeryLazy",
     config = function()
-        require("remember_me").setup({})
+        require("remember_me").setup({
+            ignore_ft = { "man", "gitignore", "gitcommit" },
+            session_store = "~/.cache/remember-me/",
+            project_roots = { ".git", ".svn" },
+        })
+        lambda.command("Memorize", function()
+            require("remember_me").memorize()
+        end, { force = true })
+
+        lambda.command("Recall", function()
+            require("remember_me").memorize()
+        end, { force = true })
     end,
 })
 
--- this does all my binds for terminal i guess ? 
+-- this does all my binds for terminal i guess ?
 misc({
     "romainchapou/nostalgic-term.nvim",
     lazy = true,

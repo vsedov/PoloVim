@@ -44,49 +44,42 @@ local function can_save()
         and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
-lambda.augroup("VimrcIncSearchHighlight", {
-    {
-        event = { "CursorMoved" },
-        command = function()
-            hl_search()
-        end,
-    },
-    {
-        event = { "InsertEnter" },
-        command = function()
-            stop_hl()
-        end,
-    },
-    {
-        event = { "OptionSet" },
-        pattern = { "hlsearch" },
-        command = function()
-            vim.schedule(function()
-                vim.cmd.redrawstatus()
-            end)
-        end,
-    },
-    {
-        event = "RecordingEnter",
-        command = function()
-            vim.opt.hlsearch = false
-        end,
-    },
-    {
-        event = "RecordingLeave",
-        command = function()
-            vim.opt.hlsearch = true
-        end,
-    },
-    --     {
-    --     event = { "CursorHoldI" },
-    --     pattern = { "*" },
-    --     command = function()
-    --        vim.defer_fn(function() vim.cmd.stopinsert() end, 30000)
-    --     end,
-    -- },
-})
-
+-- lambda.augroup("VimrcIncSearchHighlight", {
+--     {
+--         event = { "CursorMoved" },
+--         command = function()
+--             hl_search()
+--         end,
+--     },
+--     {
+--         event = { "InsertEnter" },
+--         command = function()
+--             stop_hl()
+--         end,
+--     },
+--     {
+--         event = { "OptionSet" },
+--         pattern = { "hlsearch" },
+--         command = function()
+--             vim.schedule(function()
+--                 vim.cmd.redrawstatus()
+--             end)
+--         end,
+--     },
+--     {
+--         event = "RecordingEnter",
+--         command = function()
+--             vim.opt.hlsearch = false
+--         end,
+--     },
+--     {
+--         event = "RecordingLeave",
+--         command = function()
+--             vim.opt.hlsearch = true
+--         end,
+--     },
+-- })
+--
 local smart_close_filetypes = {
     "help",
     "git-status",
@@ -426,7 +419,6 @@ lambda.augroup("HoudiniFix", {
     },
 })
 
-
 --[[ Honestly cap locks are such a pain in the ass that its getting too annoying  ]]
 --[[ i will use <c-;> and <c-g>c to enable them when i need to just in case ]]
 lambda.augroup("CapLockDisable", {
@@ -537,5 +529,3 @@ if has("autocmd")
 	autocmd BufWritePre *.txt,*.jl,*.js,*.py,*.wiki,*.sh,*.coffee,*.lua :call CleanExtraSpaces()
 endif
 ]])
-
-

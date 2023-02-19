@@ -147,7 +147,7 @@ search({
                 close = "q",
                 next_match = "n",
                 prev_match = "N",
-                replace_all = "<leader><cr>",
+                replace_all = "<cr>",
             },
         })
     end,
@@ -156,6 +156,6 @@ search({
 search({
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    build = "./install --bin",
+    build = "bash /install --bin",
     config = conf.fzf,
 })

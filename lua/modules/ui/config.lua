@@ -1,4 +1,5 @@
 local api = vim.api
+
 local config = {}
 
 function config.fidget()
@@ -54,33 +55,14 @@ function config.h_line()
     require("modules.ui.heirline")
 end
 
-function config.ever_body_line()
-    require("everybody-wants-that-line").setup({
-        buffer = {
-            show = true,
-            prefix = "λ:",
-            -- Symbol before buffer number, e.g. "0000.".
-            -- If you don't want additional symbols to be displayed, set `buffer.max_symbols = 0`.
-            symbol = "0",
-            -- Maximum number of symbols including buffer number.
-            max_symbols = 5,
-        },
-        filepath = {
-            path = "relative",
-            shorten = false,
-        },
-        filesize = {
-            metric = "decimal",
-        },
-        separator = "│",
-    })
-end
-
 function config.murmur()
     require("murmur").setup({
-        -- cursor_rgb = 'purple', -- default to '#393939'
-        max_len = 80, -- maximum word-length to highlight
-        -- disable_on_lines = 2000, -- to prevent lagging on large files. Default to 2000 lines.
+        -- cursor_rgb = {
+        --  guibg = '#393939',
+        -- },
+        cursor_rgb_always_use_config = true, -- if set to `true`, then always use `cursor_rgb`.
+        max_len = 80,
+        min_len = 3, -- this is recommended since I prefer no cursorword highlighting on `if`.
         exclude_filetypes = {},
         callbacks = {
             -- to trigger the close_events of vim.diagnostic.open_float.
@@ -90,6 +72,36 @@ function config.murmur()
                 vim.w.diag_shown = false
             end,
         },
+    })
+
+    local FOO = "murmur"
+    vim.api.nvim_create_augroup(FOO, { clear = true })
+    -- To create IDE-like no blinking diagnostic message with `cursor` scope. (should be paired with the callback above)
+    vim.api.nvim_create_autocmd({ "CursorHold" }, {
+        group = FOO,
+        pattern = "*",
+        callback = function()
+            -- skip when a float-win already exists.
+            if vim.w.diag_shown then
+                return
+            end
+
+            -- open float-win when hovering on a cursor-word.
+            if vim.w.cursor_word ~= "" then
+                vim.diagnostic.open_float()
+                vim.w.diag_shown = true
+            end
+        end,
+    })
+
+    -- To create special cursorword coloring for the colortheme `typewriter-night`.
+    -- remember to change it to the name of yours.
+    vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+        group = FOO,
+        pattern = "typewriter-night",
+        callback = function()
+            vim.api.nvim_set_hl(0, "murmur_cursor_rgb", { fg = "#0a100d", bg = "#ffee32" })
+        end,
     })
 end
 
@@ -140,6 +152,7 @@ function config.notifier()
         },
     })
 end
+
 function config.neo_tree()
     local highlights = require("utils.ui.utils")
 
@@ -888,9 +901,9 @@ function config.illuminate()
     require("illuminate").configure({
         -- providers: provider used to get references in the buffer, ordered by priority
         providers = {
-            "lsp",
-            "treesitter",
+            [[ "lsp", ]],
             "regex",
+            "treesitter",
         },
         -- delay: delay in milliseconds
         delay = 100,
@@ -902,6 +915,25 @@ function config.illuminate()
         filetypes_denylist = {
             "dirvish",
             "fugitive",
+            "NvimTree",
+            "aerial",
+            "alpha",
+            "undotree",
+            "spectre_panel",
+            "dbui",
+            "toggleterm",
+            "notify",
+            "startuptime",
+            "packer",
+            "mason",
+            "help",
+            "terminal",
+            "lspinfo",
+            "TelescopePrompt",
+            "TelescopeResults",
+            "",
+            "neo-tree",
+            "neo-tree-popup",
         },
         -- filetypes_allowlist: filetypes to illuminate, this is overriden by filetypes_denylist
         filetypes_allowlist = {},

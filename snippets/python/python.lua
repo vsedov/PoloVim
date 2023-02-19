@@ -105,17 +105,15 @@ local function pycdoc(args, ostate)
     return snip
 end
 
-
 local function async_def(args, snip, old_state, placeholder)
     local nodes = {}
 
-    table.insert(nodes, snip.captures[1] == 'a' and t { 'async def' } or t { 'def' })
+    table.insert(nodes, snip.captures[1] == "a" and t({ "async def" }) or t({ "def" }))
 
     local snip_node = sn(nil, nodes)
     snip_node.old_state = old_state
     return snip_node
 end
-
 
 local auto_snippets = {
     s(
@@ -159,14 +157,14 @@ local auto_snippets = {
         )
     ),
     s(
-        { trig = '(a?)def', dscr = "Advanced Def" , regTrig = true},
+        { trig = "(a?)def", dscr = "Advanced Def", regTrig = true },
         fmt(
             [[
     {} {}({}{}):
     {}
     ]],
             {
-                d(1, async_def, {}, {user_args = {}}),
+                d(1, async_def, {}, { user_args = {} }),
                 i(2, "name"),
                 p(function()
             -- stylua: ignore
@@ -186,7 +184,6 @@ local auto_snippets = {
             }
         )
     ),
-
 }
 
 local python = {
@@ -395,27 +392,32 @@ if TYPE_CHECKING:
             i(2, "message"),
         })
     ),
-    s('clist', fmt('[{} for {} in {}{}]',{
-        rep(1),
-        i(1, 'i'),
-        i(2, 'Iterator'),
-        c(3, {
-            t{''},
-            sn(nil, {t' if ', i(1, 'condition') }),
-        }),
-    })),
-    s('cdict', fmt('{{ {}:{} for ({},{}) in {}{}}}',{
-        rep(1),
-        rep(2),
-        i(1, 'k'),
-        i(2, 'v'),
-        i(3, 'Iterator'),
-        c(4, {
-            t{''},
-            sn(nil, {t' if ', i(1, 'condition') }),
-        }),
-    })),
- 
+    s(
+        "clist",
+        fmt("[{} for {} in {}{}]", {
+            rep(1),
+            i(1, "i"),
+            i(2, "Iterator"),
+            c(3, {
+                t({ "" }),
+                sn(nil, { t(" if "), i(1, "condition") }),
+            }),
+        })
+    ),
+    s(
+        "cdict",
+        fmt("{{ {}:{} for ({},{}) in {}{}}}", {
+            rep(1),
+            rep(2),
+            i(1, "k"),
+            i(2, "v"),
+            i(3, "Iterator"),
+            c(4, {
+                t({ "" }),
+                sn(nil, { t(" if "), i(1, "condition") }),
+            }),
+        })
+    ),
 }
 
 return python, auto_snippets

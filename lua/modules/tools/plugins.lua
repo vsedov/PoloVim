@@ -269,6 +269,11 @@ tools({
     },
     config = true,
 })
+tools({
+    "wincent/terminus",
+    cond = vim.fn.getenv("TMUX") ~= vim.NIL,
+    event = "VeryLazy",
+})
 
 tools({
     "aserowy/tmux.nvim",
@@ -302,14 +307,18 @@ tools({
         for k, v in pairs(keymaps) do
             vim.keymap.set("n", "<A-" .. k .. ">", v, { noremap = true, silent = true })
         end
+    end,
+})
 
-        for k, value in pairs({ left = "h", bottom = "j", top = "k", right = "l" }) do
-            vim.keymap.set(
-                "n",
-                "<c-" .. value .. ">",
-                "<cmd>lua require('tmux').move_" .. k .. "()<cr>",
-                { noremap = true, silent = true }
-            )
+tools({
+    "numToStr/Navigator.nvim",
+    cond = vim.fn.getenv("TMUX") ~= vim.NIL,
+    config = function()
+        require("Navigator").setup()
+        for k, value in pairs({ left = "h", bottom = "j", top = "k", right = "l", previous = "=" }) do
+            vim.keymap.set("n", "<c-" .. value .. ">", function()
+                require("Navigator")[k]()
+            end, { noremap = true, silent = true })
         end
     end,
 })
@@ -318,26 +327,3 @@ tools({
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim
     ft = { "toggleterm", "terminal" },
 })
-
-
-
--- tools({
---     "mtikekar/nvim-send-to-term",
---     cmd = {"SendHere"},
---     ft = {"python"},
---     keys = {
---         {"\\\\s",mode = "n"}, 
---         {"\\\\S",mode = "n"}, 
---         {"\\\\s",mode = "v"}, 
---         {"\\\\ss",mode = "n"}, 
-
---     },
---     init = function()
---         vim.g.send_disable_mapping = true 
---         vim.g.send_disable_mapping = true
-    
---         vim.keymap.set({"n" }, "\\\\ss", "<Plug>SendLine<Cr>", { noremap = true })
---         vim.keymap.set({"n","v" }, "\\\\s", "<Plug>Send<Cr>", { noremap = true })
---         vim.keymap.set({"n" }, "\\\\S", "<Plug>Send<Cr>", { noremap = true })
---     end,
--- })

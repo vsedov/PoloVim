@@ -19,7 +19,7 @@ completion({
     dependencies = {
         {
             "jcdickinson/codeium.nvim",
-            cond = lambda.config.ai.codeium.use_codeium_cmp,
+            cond = lambda.config.ai.codeium.use_codeium_cmp and lambda.config.ai.codeium.use_codeium,
             lazy = true,
             dependencies = {
                 "nvim-lua/plenary.nvim",
@@ -72,7 +72,23 @@ completion({
 })
 
 completion({
+    "altermo/ultimate-autopair.nvim",
+    lazy = true,
+    event = { "InsertEnter", "CmdlineEnter" },
+    opts = conf.autopair(),
+})
+completion({
+
+    "ziontee113/SnippetGenie",
+    lazy = true,
+    event = "VeryLazy",
+    keys = { { "<cr>", mode = "x" }, { ";<cr>", mode = "n" } },
+    config = conf.snip_genie,
+})
+
+completion({
     "iurimateus/luasnip-latex-snippets.nvim",
+    lazy = true,
     ft = { "latex", "tex" },
     config = function()
         vim.defer_fn(function()
@@ -87,14 +103,6 @@ completion({
     config = function()
         vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
     end,
-})
-
-completion({
-    "windwp/nvim-autopairs",
-    events = { "InsertEnter", "CmdLineEnter" },
-
-    keys = { "<C-c>" },
-    config = conf.autopair,
 })
 
 completion({

@@ -161,9 +161,6 @@ function config.nvim_bufferline()
     require("modules.editor.hydra.buffer")
 end
 
-
-
-
 function config.reach()
     require("reach").setup({
         notifications = true,

@@ -47,7 +47,7 @@ lambda.config.ai = {
         use_codeium_cmp = use_codium_cmp,
         use_codium_insert = not use_codium_cmp,
     },
-    sell_your_soul = true,
+    sell_your_soul = false,
 }
 
 lambda.config.extra_search = {
@@ -71,6 +71,7 @@ lambda.config.colourscheme = {
             core_themes = {
                 -- "kanagawa.nvim",
                 "catppuccin",
+                -- "poimandres.nvim",
                 -- "nvim-tundra",
                 -- "palenightfall.nvim",
                 -- "oh-lucy.nvim",
@@ -90,7 +91,7 @@ lambda.config.colourscheme = {
 }
 
 lambda.config.treesitter = {
-    use_guess_indent = false,
+    use_guess_indent = not use_ts_yeti,
     use_yeti = use_ts_yeti,
 }
 
@@ -135,7 +136,7 @@ lambda.config.cmp = {
 
 lambda.config.lsp = {
     use_ruff_lsp = true,
-    use_rcd = false,
+    use_rcd = true,
     use_lsp_lines = false,
     use_lsp_signature = true,
     use_typos = true,
@@ -151,10 +152,10 @@ lambda.config.lsp = {
 }
 
 lambda.config.ui = {
-    use_illuminate = true,
-    use_murmur = false, -- Do not use both illuminate and murmur
+    use_illuminate = false,
+    use_murmur = true, -- Do not use both illuminate and murmur
     use_modes = true,
-    use_heirline = false,
+    use_heirline = true,
     noice = {
         enable = noice_enabled,
         lsp = {
@@ -173,5 +174,12 @@ lambda.config.ui = {
     flirt = {
         use_flirt = true,
         use_flirt_override = false,
+    },
+}
+
+lambda.config.movement = {
+    harpoon = {
+        goto_harpoon = false,
+        use_tmux_or_normal = "tmux", -- nvim
     },
 }

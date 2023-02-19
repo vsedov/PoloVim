@@ -7,16 +7,15 @@ buffer({
     "akinsho/bufferline.nvim",
     lazy = true,
     cond = true,
-    event = "BufReadPre",
+    event = "VeryLazy",
     config = conf.nvim_bufferline,
-    dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, {"scope.nvim"} },
+    dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, { "scope.nvim" } },
 })
 buffer({
     "tiagovla/scope.nvim",
     lazy = true,
     config = true,
 })
-
 
 buffer({
     "toppair/reach.nvim",
@@ -37,7 +36,6 @@ buffer({
         "CybuLastusedNext",
     },
 })
-
 
 buffer({
     "jlanzarotta/bufexplorer",

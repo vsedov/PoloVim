@@ -9,50 +9,74 @@ function config.luasnip()
     require("modules.completion.snippets")
 end
 
-function config.autopair()
-    local has_autopairs, autopairs = pcall(require, "nvim-autopairs")
-    if not has_autopairs then
-        print("autopairs not loaded")
-        has_autopairs, autopairs = pcall(require, "nvim-autopairs")
-        if not has_autopairs then
-            print("autopairs not installed")
-            return
-        end
-    end
-    local npairs = require("nvim-autopairs")
-    -- local Rule = require("nvim-autopairs.rule")
-    -- local cond = require("nvim-autopairs.conds")
-
-    npairs.setup({
-        enable_moveright = true,
-        disable_in_macro = false,
-        enable_afterquote = true,
-        map_bs = true,
-        map_c_w = true,
-        map_cr = false,
-        -- disable_in_visualblock = false,
-
-        disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
-        autopairs = { enable = true },
-        ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""), -- "[%w%.+-"']",
-        -- enable_check_bracket_line = true, -- Messes with abbrivaitions
-        html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
-        check_ts = false,
-        ts_config = {
-            lua = { "string", "source" },
-            javascript = { "string", "template_string" },
-            java = false,
-        },
-        fast_wrap = {
-            map = "<C-c>",
-            chars = { "{", "[", "(", '"', "'", "`" },
-            pattern = string.gsub([[ [%'%"%`%+%)%>%]%)%}%,%s] ]], "%s+", ""),
-            end_key = "$",
-            keys = "qwertyuiopzxcvbnmasdfghjkl",
-            check_comma = true,
-            hightlight = "Search",
-        },
+function config.snip_genie()
+    local genie = require("SnippetGenie")
+    genie.setup({
+        regex = [[-\+ Snippets goes here]],
+        snippets_directory = "/home/viv/.config/nvim/snippets/",
+        file_name = "generated",
+        snippet_skeleton = [[
+        s(
+            "{trigger}",
+            fmt([=[
+        {body}
+        ]=], {{
+                {nodes}
+            }})
+        ),
+        ]],
     })
+
+    vim.keymap.set("x", "<CR>", function()
+        genie.create_new_snippet_or_add_placeholder()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
+    end, {})
+
+    vim.keymap.set("n", ";<CR>", function()
+        genie.finalize_snippet()
+    end, {})
+end
+
+function config.autopair()
+    return {
+        bs = {
+            enable = true,
+            overjump = true,
+            space = true,
+            multichar = true,
+            fallback = nil,
+        },
+        cr = {
+            enable = true,
+            autoclose = false,
+            multichar = {
+                enable = false,
+                markdown = { { "```", "```", pair = true, noalpha = true, next = true } },
+                lua = { { "then", "end" }, { "do", "end" } },
+            },
+            addsemi = { "c", "cpp", "rust" },
+            fallback = nil,
+        },
+        fastwarp = {
+            enable = true,
+            hopout = true,
+            map = "<c-c>",
+            rmap = "<C-E>",
+            Wmap = "<C-e>",
+            cmap = "<c-e>",
+            rcmap = "<c-E>",
+            Wcmap = "<c-e>",
+            multiline = true,
+            fallback = nil,
+        },
+        fastend = {
+            enable = true,
+            map = "<c-;>",
+            cmap = "<c-;>",
+            smart = true,
+            fallback = nil,
+        },
+    }
 end
 
 function config.vim_sonictemplate()

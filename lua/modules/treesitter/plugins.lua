@@ -156,6 +156,7 @@ autocmd User targets#mappings#user call targets#mappings#extend({
 ts({
     "chrisgrieser/nvim-various-textobjs",
     lazy = true,
+    cond = false,
     event = "VeryLazy",
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })

@@ -112,9 +112,8 @@ editor({
         lastplace.setup({
             lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
             lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
-            lastplace_open_folds = true
+            lastplace_open_folds = true,
         })
-
     end,
 })
 -- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
@@ -123,7 +122,6 @@ editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 editor({
     "monaqa/dial.nvim",
     lazy = true,
-    cond = false,
     keys = {
         { "<C-x>", mode = "n" },
         { "<C-a>", mode = "n" },
@@ -143,7 +141,6 @@ editor({
 editor({
     "anuvyklack/hydra.nvim",
     lazy = true,
-    event = "BufEnter",
     dependencies = { "anuvyklack/keymap-layer.nvim" },
     config = conf.hydra,
 })
@@ -162,7 +159,11 @@ editor({
         "TSJSplit",
         "TSJJoin",
     },
-    config = true,
+    opts = {
+        use_default_keymaps = false,
+        check_syntax_error = true,
+        max_join_length = 500,
+    },
 })
 
 editor({
@@ -193,6 +194,7 @@ editor({
 editor({
     "linty-org/readline.nvim",
     lazy = true,
+    event = "VeryLazy",
     config = conf.readline,
 })
 
@@ -212,18 +214,34 @@ editor({
     dependencies = {
         "ibhagwan/fzf-lua",
     },
-    config = true,
     init = function()
         local possession = require("nvim-possession")
 
         vim.keymap.set("n", "<leader>sl", function()
             possession.list()
-        end)
+        end, { desc = "Possesion List" })
         vim.keymap.set("n", "<leader>sn", function()
             possession.new()
-        end)
+        end, { desc = "Possesion New" })
         vim.keymap.set("n", "<leader>su", function()
             possession.update()
-        end)
+        end, { desc = "Possesion Update" })
     end,
+    opts = {
+        sessions = {
+            sessions_icon = lambda.style.icons.misc.clock,
+        },
+        autoload = true, -- whether to autoload sessions in the cwd at startup
+        autosave = true, -- whether to autosave loaded sessions before quitting
+        autoswitch = {
+            enable = true, -- whether to enable autoswitch
+            exclude_ft = {}, -- list of filetypes to exclude from autoswitch
+        },
+        fzf_winopts = {
+            width = 0.5,
+            preview = {
+                vertical = "right:40%",
+            },
+        },
+    },
 })

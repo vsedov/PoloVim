@@ -134,11 +134,11 @@ vim.defer_fn(function()
         loader({ plugins = { "nvim-ufo" } })
     end
 
-    if lambda.config.ui.use_illuminate then
-        loader({ plugins = { "vim-illuminate" } })
-    else
-        loader({ plugins = { "murmur.lua" } })
-    end
+    -- if lambda.config.ui.use_illuminate == "illuminate" then
+    --     loader({ plugins = { "vim-illuminate" } })
+    -- elseif lambda.config.ui.use_illuminate == "murmur" then
+    --     loader({ plugins = { "murmur.lua" } })
+    -- end
 end, lazy_timer + 100)
 
 -- Load Leap, after 100, because why not, this is my core movement
@@ -151,5 +151,11 @@ vim.defer_fn(function()
         loader({ plugins = { "vim-wakatime" } })
     end
 
-    require("modules.ui.heirline")
+    if lambda.config.ui.use_heirline then
+        require("modules.ui.heirline")
+    end
 end, 120)
+
+vim.defer_fn(function()
+    loader({ plugins = { "hydra.nvim" } })
+end, 1000)

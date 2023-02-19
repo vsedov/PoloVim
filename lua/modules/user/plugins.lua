@@ -119,9 +119,17 @@ user({
         default_pet = "aloof",
         default_style = "black",
     },
+    config = true,
 })
-user({
 
-    "ziontee113/SnippetGenie",
-    lazy = true,
+-- user({
+--     "Davidyz/lsp-location-handler.nvim",
+--     lazy = true,
+--     event = "LspAttach",
+--     config = true,
+-- })
+user({
+    "glepnir/hlsearch.nvim",
+    event = "BufRead",
+    config = true,
 })

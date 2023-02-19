@@ -17,7 +17,8 @@ local complete_pkill = function()
 end
 
 local cava_config = lambda.config.ui.heirline.cava
-local active = cava_config.use_cava
+local active = false
+
 local function cava_run()
     local cava_path = vim.fn.expand("$HOME/.config/polybar/scripts/cava.py")
     -- local cava_path = "/user/bin/cat"
@@ -59,17 +60,17 @@ local function cava_run()
         end, 0)
     end
 end
-if cava_config.use_cava then
-    vim.api.nvim_create_autocmd({ "ExitPre" }, {
-        callback = function()
+vim.api.nvim_create_autocmd({ "ExitPre" }, {
+    callback = function()
+        if cava_config.use_cava and active then
             complete_pkill()
             if _G._cava_stop then
                 _G._cava_stop()
             end
-        end,
-        group = "Heirline",
-    })
-end
+        end
+    end,
+    group = "Heirline",
+})
 
 --- Blend two rgb colors using alpha
 ---@param color1 string | number first color = false = false
@@ -142,6 +143,7 @@ local cava = {
     end,
     on_click = {
         name = "Cava",
+
         callback = function()
             if cava_config.use_cava then
                 if not active then
@@ -221,7 +223,15 @@ local wpm_input = {
     end,
     hl = { fg = "blue" },
 }
-
+local possession = {
+    condition = function()
+        return require("nvim-possession").status() ~= nil or false
+    end,
+    provider = function(self)
+        return require("nvim-possession").status()
+    end,
+    hl = { fg = "red" },
+}
 local ViMode = {
     init = function(self)
         self.mode = vim.fn.mode(1)
@@ -763,6 +773,8 @@ local DefaultStatusline = {
     Ruler,
     Space,
     ScrollBar,
+    Space,
+    possession,
     {
         condition = vim.g.codeium_enabled,
         provider = function()

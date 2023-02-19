@@ -280,37 +280,8 @@ end
 function config.rcd()
     require("rcd").setup({
         position = "top",
-        auto_cmds = false,
+        auto_cmds = true,
     })
-    require("lsp_lines").setup()
-    local Diagnostics = vim.api.nvim_create_augroup("right_corner_diagnostics", { clear = true })
-
-    local create_auto_cmd = function()
-        vim.api.nvim_create_autocmd("InsertLeave", {
-            pattern = "*",
-            group = Diagnostics,
-            callback = function()
-                require("rcd").show()
-            end,
-        })
-        vim.api.nvim_create_autocmd("InsertEnter", {
-            pattern = "*",
-            group = Diagnostics,
-            callback = function()
-                require("rcd").hide()
-            end,
-        })
-    end
-    create_auto_cmd()
-    vim.api.nvim_create_user_command("RCD", function()
-        popup_toggle = lambda.config.lsp.use_rcd
-        if popup_toggle then
-            create_auto_cmd()
-        else
-            vim.api.nvim_clear_autocmds({ group = Diagnostics })
-            require("rcd").hide()
-        end
-    end, { force = true })
 end
 
 function config.goto_preview()

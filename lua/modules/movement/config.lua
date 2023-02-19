@@ -218,20 +218,25 @@ function config.harpoon_init()
         pattern = "harpoon",
         group = vim.api.nvim_create_augroup("Harpoon Augroup", { clear = true }),
         callback = function()
-            local curline = vim.api.nvim_get_current_line()
-            local working_directory = vim.fn.getcwd() .. "/"
-
             vim.keymap.set("n", "<C-V>", function()
+                local curline = vim.api.nvim_get_current_line()
+                local working_directory = vim.fn.getcwd() .. "/"
                 vim.cmd("vs")
                 vim.cmd("e " .. working_directory .. curline)
             end, { buffer = true, noremap = true, silent = true })
 
             vim.keymap.set("n", "<C-H>", function()
-                vim.cmd("hs")
+                local curline = vim.api.nvim_get_current_line()
+                local working_directory = vim.fn.getcwd() .. "/"
+
+                vim.cmd("split")
                 vim.cmd("e " .. working_directory .. curline)
             end, { buffer = true, noremap = true, silent = true })
 
             vim.keymap.set("n", "<C-T>", function()
+                local curline = vim.api.nvim_get_current_line()
+                local working_directory = vim.fn.getcwd() .. "/"
+
                 vim.cmd("tabnew")
                 vim.cmd("e " .. working_directory .. curline)
             end, { buffer = true, noremap = true, silent = true })

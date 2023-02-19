@@ -1,10 +1,11 @@
 local utils = require("modules.editor.hydra.utils")
 local leader = "<CR>"
 local hydra = require("hydra")
-local bracket = { "<CR>", "W", "w", "t", "a", ";", "<leader>", "c" }
+local bracket = { "<CR>", "<BS>", "W", "w", "t", "a", ";", "c", "<leader>" }
 local input_prompt = "enter the command: cmd >"
 local terminal_prompt = "Enter a terminal Number "
 local default_terminal = "1"
+local h_conf = lambda.config.movement.harpoon
 
 local cache = {
     command = "ls -a",
@@ -12,7 +13,6 @@ local cache = {
         selected_plane = "",
     },
 }
-vim.g.goto_harpoon = false
 
 local function plane()
     local data = vim.fn.system("tmux list-panes")
@@ -35,7 +35,7 @@ local function plane()
 end
 
 local function tmux_goto(term)
-    if vim.fn.getenv("TMUX") ~= vim.NIL then
+    if vim.fn.getenv("TMUX") ~= vim.NIL and h_conf.use_tmux_or_normal then
         require("harpoon-tmux").gotoTerminal(term)
     else
         require("harpoon.term").gotoTerminal(term)
@@ -55,7 +55,7 @@ local function terminal_send(term, cmd)
     end
 
     require(module).sendCommand(term, cmd)
-    if vim.g.goto_harpoon == true then
+    if h_conf.goto_harpoon == true then
         vim.defer_fn(function()
             require(module)[goto_func](term)
         end, string.find(module, "tmux") and 500 or 1000)
@@ -96,7 +96,7 @@ end
 local function handle_command_input(command)
     cache.command = command ~= "" and command or cache.command
 
-    if vim.fn.getenv("TMUX") ~= vim.NIL then
+    if vim.fn.getenv("TMUX") ~= vim.NIL and h_conf.use_tmux_or_normal == "tmux" then
         handle_tmux()
     else
         handle_non_tmux()
@@ -137,10 +137,25 @@ config.parenth_mode = {
     },
     w = {
         function()
-            vim.g.goto_harpoon = not vim.g.goto_harpoon
-            vim.notify("Goto Harpoon " .. tostring(vim.g.goto_harpoon))
+            h_conf.goto_harpoon = not h_conf.goto_harpoon
+            vim.notify("Goto Harpoon " .. tostring(h_conf.goto_harpoon))
         end,
         { nowait = true, exit = true, desc = "Toggle Goto" },
+    },
+
+    ["<BS>"] = {
+        function()
+            if h_conf.use_tmux_or_normal == "tmux" then
+                h_conf.use_tmux_or_normal = "nvim"
+            else
+                h_conf.use_tmux_or_normal = "tmux"
+            end
+            vim.defer_fn(function()
+                vim.notify("Current Config Set to : " .. h_conf.use_tmux_or_normal)
+            end, 500)
+            P(h_conf.use_tmux_or_normal:gsub("^%l", string.upper))
+        end,
+        { nowait = true, exit = false, desc = "Toggle: Nvim/Tmux" },
     },
     t = {
         function()

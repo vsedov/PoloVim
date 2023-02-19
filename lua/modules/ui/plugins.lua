@@ -21,12 +21,18 @@ ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
 ui({
     "RRethy/vim-illuminate",
     lazy = true,
+    cond = lambda.config.ui.use_illuminate,
+    event = "VeryLazy",
+
     config = conf.illuminate,
 })
 
 ui({
     "nyngwang/murmur.lua",
     lazy = true,
+    cond = lambda.config.ui.use_murmur,
+    event = "VeryLazy",
+
     config = conf.murmur,
 })
 
@@ -223,7 +229,16 @@ ui({
 ui({
     "petertriho/nvim-scrollbar",
     lazy = true,
-    dependencies = { "kevinhwang91/nvim-hlslens" },
+    dependencies = {
+        "kevinhwang91/nvim-hlslens",
+        config = function()
+            require("hlslens").setup({
+                calm_down = true,
+                nearest_only = true,
+                nearest_float_when = "always",
+            })
+        end,
+    },
     event = "BufReadPost",
     config = function()
         require("scrollbar.handlers.search").setup()
@@ -370,6 +385,7 @@ ui({
 ui({
     "rebelot/heirline.nvim",
     lazy = true,
+
     dependencies = {
         {
             "jcdickinson/wpm.nvim",
