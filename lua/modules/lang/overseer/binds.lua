@@ -2,7 +2,7 @@ local previous_cmd = ""
 local overseer = require("overseer")
 local ft = vim.api.nvim_create_user_command("T", function(param)
     vim.cmd("OverseerOpen!")
-    param = param or "python %"
+    param = "python %" or param
     vim.cmd("OverseerRunCmd " .. param)
     previous_cmd = param
 end, { nargs = "?", force = true })

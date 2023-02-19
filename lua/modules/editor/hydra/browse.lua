@@ -1,7 +1,5 @@
-local browse = require("browse")
 local utils = require("modules.editor.hydra.utils")
 local hydra = require("hydra")
-
 local config = {}
 local exit = { nil, { exit = true, desc = "EXIT" } }
 
@@ -48,15 +46,15 @@ for i, v in pairs(bookmarks) do
 end
 
 local bookmark_surfer = function()
-    vim.ui.select(items, { prompt = "search", default = "default" }, function(item)
+    vim.ui.select(items, { prompt = "search: ", default = "default" }, function(item)
         require("browse").open_bookmarks({ bookmarks = bookmarks[item] })
     end)
 end
 
-local bracket = { "<CR>", "w", "W", ";" }
+local bracket = { "<CR>", "s", "w", "W", ";" }
 config.browse = {
     color = "red",
-    body = "<leader>D",
+    body = "<leader><cr>",
     mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
 
@@ -74,11 +72,17 @@ config.browse = {
         { nowait = true, exit = true, desc = "BMSurfer" },
     },
 
-    ["<CR>"] = {
+    s = {
         function()
             require("browse").input_search()
         end,
         { nowait = true, exit = true, desc = "Search" },
+    },
+    ["<CR>"] = {
+        function()
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<leader>d", true, false, true), "x", true)
+        end,
+        { nowait = true, exit = true, desc = "Doc Hydra" },
     },
 
     W = {
@@ -102,6 +106,42 @@ config.browse = {
         { nowait = true, exit = true, desc = "DevDocsFT" },
     },
 
+    z = {
+        function()
+            vim.cmd("Zeavim")
+        end,
+        { nowait = true, silent = true, desc = "Zeal", exit = true },
+    },
+    K = {
+        function()
+            vim.cmd("DD")
+        end,
+        { nowait = true, silent = true, desc = "DevDocCursor", exit = true },
+    },
+
+    l = {
+        function()
+            require("updoc").lookup()
+        end,
+
+        { nowait = true, silent = true, desc = "UpDoc Lookup", exit = true },
+    },
+    j = {
+        function()
+            vim.defer_fn(function()
+                require("updoc").search()
+            end, 100)
+        end,
+        { nowait = true, silent = true, desc = "UpDoc Search", exit = true },
+    },
+
+    k = {
+        function()
+            require("updoc").show_hover_links()
+        end,
+
+        { nowait = true, silent = true, desc = "UpDoc Links", exit = true },
+    },
     ["<leader>"] = {
         function()
             require("browse.mdn").search()
@@ -131,7 +171,8 @@ local function auto_hint_generate()
     core_table = {}
 
     utils.make_core_table(core_table, bracket)
-    utils.make_core_table(core_table, { "d", "D", "<leader>" })
+    utils.make_core_table(core_table, { "d", "D", "z", "K" })
+    utils.make_core_table(core_table, { "l", "j", "k", "<leader>" })
 
     hint_table = {}
     string_val = "^ ^     Browser   ^ ^\n\n"
@@ -152,8 +193,6 @@ local function auto_hint_generate()
     return string_val
 end
 
---  TODO: (vsedov) (18:55:28 - 16/02/23): This might be a good idea to defer this stuff.
---  Considering how laggy this thing can get, wouldne be too far fetched to say a good idea ?
 vim.defer_fn(function()
     local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
         name = "Browser",

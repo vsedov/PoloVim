@@ -6,7 +6,7 @@ end
 
 local config = {}
 
-local bracket = { "d", "s", "c" }
+local bracket = { "d", "s", "c", "D" }
 local exit = { nil, { exit = true, desc = "EXIT" } }
 
 local function make_core_table(core_table, second_table)
@@ -62,42 +62,6 @@ config.doc_binds = {
         end,
         { nowait = true, silent = true, desc = "Live Docs", exit = true },
     },
-    z = {
-        function()
-            vim.cmd("Zeavim")
-        end,
-        { nowait = true, silent = true, desc = "Zeal", exit = true },
-    },
-    k = {
-        function()
-            vim.cmd("DD")
-        end,
-        { nowait = true, silent = true, desc = "DevDoc Search", exit = true },
-    },
-
-    l = {
-        function()
-            require("updoc").lookup()
-        end,
-
-        { nowait = true, silent = true, desc = "UpDoc Lookup", exit = true },
-    },
-    j = {
-        function()
-            vim.defer_fn(function()
-                require("updoc").search()
-            end, 100)
-        end,
-        { nowait = true, silent = true, desc = "UpDoc Search", exit = true },
-    },
-
-    o = {
-        function()
-            require("updoc").show_hover_links()
-        end,
-
-        { nowait = true, silent = true, desc = "UpDoc Links", exit = true },
-    },
 }
 
 local new_hydra = {
@@ -137,9 +101,7 @@ local function auto_hint_generate()
     core_table = {}
 
     make_core_table(core_table, bracket)
-    make_core_table(core_table, { "D", "z" })
     make_core_table(core_table, { "i", "p" })
-    make_core_table(core_table, { "k", "l", "j", "o" })
 
     hint_table = {}
     string_val = "^ ^       Docs       ^\n\n"

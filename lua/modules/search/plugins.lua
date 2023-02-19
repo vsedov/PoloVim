@@ -156,6 +156,6 @@ search({
 search({
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    build = "bash /install --bin",
+    build = "bash ./install --bin",
     config = conf.fzf,
 })

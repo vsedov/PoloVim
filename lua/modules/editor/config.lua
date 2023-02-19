@@ -221,7 +221,7 @@ function config.asterisk_setup()
         { "n", "gz#", "<Plug>(asterisk-gz#)" },
     }
     for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], {})
+        vim.keymap.set(m[1], m[2], m[3] .. "<Cmd>lua require('hlslens').start()<CR>", {})
     end
 end
 
