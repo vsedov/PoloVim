@@ -3,6 +3,7 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 local l = vim.log.levels
+P = vim.pretty_print
 
 lambda.foreach = function(callback, list)
     for k, v in pairs(list) do
@@ -12,20 +13,6 @@ end
 
 lambda.use_local = function(name, path)
     return os.getenv("HOME") .. "/GitHub/neovim/" .. path .. "/" .. name
-end
-
---- @class CommandArgs
---- @field args string
---- @field fargs table
---- @field bang boolean,
-
----Create an nvim command
----@param name any
----@param rhs string|fun(args: CommandArgs)
----@param opts table?
-lambda.command = function(name, rhs, opts)
-    opts = opts or {}
-    api.nvim_create_user_command(name, rhs, opts)
 end
 
 ---Source a lua or vimscript file
@@ -175,7 +162,7 @@ function lambda.map(callback, list)
 end
 
 ---@generic T : table
----@param callback fun(T, key: string | number): T
+---@param callback fun(T, key: string | number)
 ---@param list T[]
 function lambda.foreach(callback, list)
     for k, v in pairs(list) do
@@ -212,16 +199,12 @@ function lambda.find(matcher, haystack)
     return found
 end
 
----Check if a plugin is on the system not whether or not it is loaded
----@param plugin_name string
----@return boolean
-function lambda.plugin_installed(plugin_name)
-    for _, path in ipairs(lambda.list_installed_plugins()) do
-        if vim.endswith(path, plugin_name) then
-            return true
-        end
+function lambda.installed_plugins()
+    local ok, lazy = pcall(require, "lazy")
+    if not ok then
+        return 0
     end
-    return false
+    return lazy.stats().count
 end
 
 ---Check whether or not the location or quickfix list is open
@@ -344,15 +327,9 @@ end
 ---@param name string | Plug
 ---@param callback fun(module: table)
 function lambda.ftplugin_conf(name, callback)
-    local plugin_name = type(name) == "table" and name.plugin or nil
-    if plugin_name and not lambda.plugin_loaded(plugin_name) then
-        return
-    end
-
     local module = type(name) == "table" and name[1] or name
     local info = debug.getinfo(1, "S")
     local ok, plugin = lambda.require(module, { message = fmt("In file: %s", info.source) })
-
     if ok then
         callback(plugin)
     end
@@ -393,7 +370,7 @@ end
 
 P = vim.pretty_print
 
---- Validate the keys passed to lambda.augroup are valid
+--- Validate the keys passed to as.augroup are valid
 ---@param name string
 ---@param cmd Autocommand
 local function validate_autocmd(name, cmd)

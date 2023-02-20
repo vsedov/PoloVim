@@ -1,95 +1,38 @@
 local api = vim.api
+
 local config = {}
-
-function config.fidget()
-    local relative = "editor"
-    require("fidget").setup({
-        align = {
-            bottom = false, -- align fidgets along bottom edge of buffer
-            right = true, -- align fidgets along right edge of buffer
-        },
-        timer = {
-            spinner_rate = 100, -- frame rate of spinner animation, in ms
-            fidget_decay = 500, -- how long to keep around empty fidget, in ms
-            task_decay = 300, -- how long to keep around completed task, in ms
-        },
-        window = {
-            relative = relative, -- where to anchor the window, either `"win"` or `"editor"`
-            blend = 100, -- `&winblend` for the window
-            zindex = nil, -- the `zindex` value for the window
-        },
-        fmt = {
-            leftpad = true, -- right-justify text in fidget box
-            stack_upwards = false, -- list of tasks grows upwards
-            max_width = 0, -- maximum width of the fidget box
-            -- function to format fidget title
-            fidget = function(fidget_name, spinner)
-                return string.format("%s %s", spinner, fidget_name)
-            end,
-            -- function to format each task line
-            task = function(task_name, message, percentage)
-                return string.format(
-                    "%s%s [%s]",
-                    message,
-                    percentage and string.format(" (%s%%)", percentage) or "",
-                    task_name
-                )
-            end,
-        },
-
-        debug = {
-            logging = false, -- whether to enable logging, for debugging
-            strict = false, -- whether to interpret LSP strictly
-        },
-    })
-    lambda.augroup("CloseFidget", {
-        {
-            event = { "VimLeavePre", "LspDetach" },
-            command = "silent! FidgetClose",
-        },
-    })
-end
 
 function config.h_line()
     require("modules.ui.heirline")
 end
 
-function config.ever_body_line()
-    require("everybody-wants-that-line").setup({
-        buffer = {
-            show = true,
-            prefix = "λ:",
-            -- Symbol before buffer number, e.g. "0000.".
-            -- If you don't want additional symbols to be displayed, set `buffer.max_symbols = 0`.
-            symbol = "0",
-            -- Maximum number of symbols including buffer number.
-            max_symbols = 5,
-        },
-        filepath = {
-            path = "relative",
-            shorten = false,
-        },
-        filesize = {
-            metric = "decimal",
-        },
-        separator = "│",
-    })
-end
-
 function config.murmur()
     require("murmur").setup({
-        -- cursor_rgb = 'purple', -- default to '#393939'
-        max_len = 80, -- maximum word-length to highlight
-        -- disable_on_lines = 2000, -- to prevent lagging on large files. Default to 2000 lines.
+        max_len = 80,
+        min_len = 3, -- this is recommended since I prefer no cursorword highlighting on `if`.
         exclude_filetypes = {},
         callbacks = {
-            -- to trigger the close_events of vim.diagnostic.open_float.
             function()
-                -- Close floating diag. and make it triggerable again.
                 vim.cmd("doautocmd InsertEnter")
                 vim.w.diag_shown = false
             end,
         },
+    })
+
+    local FOO = "murmur"
+    vim.api.nvim_create_augroup(FOO, { clear = true })
+    vim.api.nvim_create_autocmd({ "CursorHold" }, {
+        group = FOO,
+        pattern = "*",
+        callback = function()
+            if vim.w.diag_shown then
+                return
+            end
+            if vim.w.cursor_word ~= "" then
+                vim.diagnostic.open_float()
+                vim.w.diag_shown = true
+            end
+        end,
     })
 end
 
@@ -140,6 +83,7 @@ function config.notifier()
         },
     })
 end
+
 function config.neo_tree()
     local highlights = require("utils.ui.utils")
 
@@ -322,23 +266,38 @@ function config.neo_tree()
     })
 end
 
-function config.satellite()
-    require("satellite").setup({
-        handlers = {
-            gitsigns = {
-                enable = true,
+function config.scrollbar()
+    require("scrollbar.handlers.search").setup()
+    require("scrollbar").setup({
+        show = true,
+        set_highlights = true,
+        handle = {
+            color = "#777777",
+        },
+        marks = {
+            Search = { color = "#ff9e64" },
+            Error = { color = "#db4b4b" },
+            Warn = { color = "#e0af68" },
+            Info = { color = "#0db9d7" },
+            Hint = { color = "#1abc9c" },
+            Misc = { color = "#9d7cd8" },
+            GitAdd = {
+                color = "#9ed072",
+                text = "+",
             },
-            marks = {
-                enable = false,
+            GitDelete = {
+                color = "#fc5d7c",
+                text = "-",
+            },
+            GitChange = {
+                color = "#76cce0",
+                text = "*",
             },
         },
-        excluded_filetypes = {
-            "packer",
-            "neo-tree",
-            "norg",
-            "neo-tree-popup",
-            "dapui_scopes",
-            "dapui_stacks",
+        handlers = {
+            diagnostic = true,
+            search = true,
+            gitsigns = false,
         },
     })
 end
@@ -420,6 +379,26 @@ function config.ufo()
     vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "open all folds" })
     vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "close all folds" })
     vim.keymap.set("n", "zP", ufo.peekFoldedLinesUnderCursor, { desc = "preview fold" })
+
+    local function nN(char)
+        local ok, winid = require("hlslens").nNPeekWithUFO(char)
+        if ok and winid then
+            -- Safe to override buffer scope keymaps remapped by ufo,
+            -- ufo will restore previous buffer keymaps before closing preview window
+            -- Type <CR> will switch to preview window and fire `trace` action
+            vim.keymap.set("n", "<CR>", function()
+                local keyCodes = api.nvim_replace_termcodes("<Tab><CR>", true, false, true)
+                api.nvim_feedkeys(keyCodes, "im", false)
+            end, { buffer = true })
+        end
+    end
+
+    vim.keymap.set({ "n", "x" }, ";n", function()
+        nN("n")
+    end)
+    vim.keymap.set({ "n", "x" }, ";N", function()
+        nN("N")
+    end)
 end
 
 function config.fold_focus()
@@ -718,8 +697,9 @@ function config.dressing()
     require("dressing").setup({
         input = {
             insert_only = false,
+            prefer_width = 40,
             win_options = {
-                winblend = 2,
+                winblend = 5,
             },
             border = lambda.style.border.type_0,
         },
@@ -744,8 +724,7 @@ function config.dressing()
 end
 
 function config.noice()
-    vim.o.lazyredraw = false
-    require("noice").setup({
+    return {
         cmdline = {
             enabled = true, -- enables the Noice cmdline UI
             view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
@@ -763,28 +742,15 @@ function config.noice()
             },
         },
         messages = {
-            -- NOTE: If you enable messages, then the cmdline is enabled automatically.
-            -- This is a current Neovim limitation.
             enabled = false, -- enables the Noice messages UI
-            view = "notify", -- default view for messages
-            view_error = "notify", -- view for errors
-            view_warn = "notify", -- view for warnings
-            view_history = "messages", -- view for :messages
-            view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
         },
         popupmenu = {
             enabled = true, -- enables the Noice popupmenu UI
-            ---@type 'nui'|'cmp'
             backend = "cmp", -- backend to use to show regular cmdline completions
-            ---@type NoicePopupmenuItemKind|false
-            -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
             kind_icons = {}, -- set to `false` to disable icons
         },
-        -- You can add any custom commands below that will be available with `:Noice command`
-        ---@type table<string, NoiceCommand>
         commands = {
             history = {
-                -- options for the message history that you get with `:Noice`
                 view = "split",
                 opts = { enter = true, format = "details" },
                 filter = {
@@ -814,7 +780,6 @@ function config.noice()
             },
             -- :Noice errors
             errors = {
-                -- options for the message history that you get with `:Noice`
                 view = "popup",
                 opts = { enter = true, format = "details" },
                 filter = { error = true },
@@ -836,7 +801,7 @@ function config.noice()
                 enabled = lambda.config.ui.noice.lsp.use_noice_hover,
             },
             progress = {
-                enabled = false,
+                enabled = false, -- this is just annoying
             },
             signature = {
                 enabled = lambda.config.ui.noice.lsp.use_noice_signature, -- this just does not work well .
@@ -846,11 +811,11 @@ function config.noice()
             },
             override = {
                 -- override the default lsp markdown formatter with Noice
-                ["vim.lsp.util.convert_input_to_markdown_lines"] = lambda.config.ui.noice.lsp.use_markdown.convert_input_to_markdown_lines,
+                ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
                 -- override the lsp markdown formatter with Noice
-                ["vim.lsp.util.stylize_markdown"] = lambda.config.ui.noice.lsp.use_markdown.stylize_markdown,
+                ["vim.lsp.util.stylize_markdown"] = false,
                 -- override cmp documentation with Noice (needs the other options to work)
-                ["cmp.entry.get_documentation"] = lambda.config.ui.noice.lsp.use_markdown.get_documentation,
+                ["cmp.entry.get_documentation"] = false,
             },
         },
         markdown = {
@@ -895,7 +860,7 @@ function config.noice()
                 opts = { skip = true },
             },
         },
-    })
+    }
 end
 
 function config.illuminate()
@@ -903,9 +868,9 @@ function config.illuminate()
     require("illuminate").configure({
         -- providers: provider used to get references in the buffer, ordered by priority
         providers = {
-            "lsp",
-            "treesitter",
+            [[ "lsp", ]],
             "regex",
+            "treesitter",
         },
         -- delay: delay in milliseconds
         delay = 100,
@@ -917,6 +882,25 @@ function config.illuminate()
         filetypes_denylist = {
             "dirvish",
             "fugitive",
+            "NvimTree",
+            "aerial",
+            "alpha",
+            "undotree",
+            "spectre_panel",
+            "dbui",
+            "toggleterm",
+            "notify",
+            "startuptime",
+            "packer",
+            "mason",
+            "help",
+            "terminal",
+            "lspinfo",
+            "TelescopePrompt",
+            "TelescopeResults",
+            "",
+            "neo-tree",
+            "neo-tree-popup",
         },
         -- filetypes_allowlist: filetypes to illuminate, this is overriden by filetypes_denylist
         filetypes_allowlist = {},

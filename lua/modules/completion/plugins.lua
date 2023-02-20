@@ -15,16 +15,19 @@ completion({
 
 completion({
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     lazy = true,
     dependencies = {
         {
-            "tzachar/cmp-tabnine",
+            "jcdickinson/codeium.nvim",
+            cond = lambda.config.ai.codeium.use_codeium_cmp and lambda.config.ai.codeium.use_codeium,
             lazy = true,
-            build = "bash ./install.sh",
-            ft = { "python", "lua" },
-            config = conf.tabnine,
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+                "MunifTanjim/nui.nvim",
+            },
+            config = true,
         },
-        -- { "hrsh7th/cmp-nvim-lsp-signature-help", , lazy = true },
         { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
         { "hrsh7th/cmp-nvim-lsp", lazy = true },
         { "hrsh7th/cmp-nvim-lua", lazy = true },
@@ -32,6 +35,7 @@ completion({
         { "hrsh7th/cmp-buffer", lazy = true },
         { "hrsh7th/cmp-path", lazy = true },
         { "hrsh7th/cmp-cmdline", lazy = true },
+        { "andersevenrud/cmp-tmux", lazy = true },
         {
             "petertriho/cmp-git",
             lazy = true,
@@ -39,10 +43,11 @@ completion({
                 require("cmp_git").setup({ filetypes = { "gitcommit", "NeogitCommitMessage" } })
             end,
         },
-        -- { "lukas-reineke/cmp-rg", lazy = true},
+        { "lukas-reineke/cmp-rg", lazy = true },
         { "saadparwaiz1/cmp_luasnip", lazy = true },
         {
             "doxnit/cmp-luasnip-choice",
+            lazy = true,
             config = function()
                 require("cmp_luasnip_choice").setup({
                     auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
@@ -69,7 +74,23 @@ completion({
 })
 
 completion({
+    "altermo/ultimate-autopair.nvim",
+    lazy = true,
+    event = { "InsertEnter", "CmdlineEnter" },
+    opts = conf.autopair(),
+})
+completion({
+
+    "ziontee113/SnippetGenie",
+    lazy = true,
+    event = "VeryLazy",
+    keys = { { "<cr>", mode = "x" }, { ";<cr>", mode = "n" } },
+    config = conf.snip_genie,
+})
+
+completion({
     "iurimateus/luasnip-latex-snippets.nvim",
+    lazy = true,
     ft = { "latex", "tex" },
     config = function()
         vim.defer_fn(function()
@@ -84,14 +105,6 @@ completion({
     config = function()
         vim.cmd([[autocmd FileType sql setlocal omnifunc=vim_dadbod_completion#omni]])
     end,
-})
-
-completion({
-    "windwp/nvim-autopairs",
-    events = { "InsertEnter", "CmdLineEnter" },
-
-    keys = { "<C-c>" },
-    config = conf.autopair,
 })
 
 completion({

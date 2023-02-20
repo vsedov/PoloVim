@@ -19,6 +19,35 @@ search({
             "nvim-telescope/telescope-live-grep-args.nvim",
             lazy = true,
         },
+        {
+            "tsakirist/telescope-lazy.nvim",
+            lazy = true,
+            config = function()
+                require("telescope").setup({
+                    extensions = {
+                        lazy = {
+                            -- Optional theme (the extension doesn't set a default theme)
+                            theme = "ivy",
+                            -- Whether or not to show the icon in the first column
+                            show_icon = true,
+                            -- Mappings for the actions
+                            mappings = {
+                                open_in_browser = "<C-o>",
+                                open_in_file_browser = "<M-b>",
+                                open_in_find_files = "<C-f>",
+                                open_in_live_grep = "<C-g>",
+                                open_plugins_picker = "<C-b>", -- Works only after having called first another action
+                                open_lazy_root_find_files = "<C-r>f",
+                                open_lazy_root_live_grep = "<C-r>g",
+                            },
+                            -- Other telescope configuration options
+                        },
+                    },
+                })
+
+                require("telescope").load_extension("lazy")
+            end,
+        },
     },
     config = conf.telescope,
 })
@@ -26,6 +55,7 @@ search({
 search({
     "axkirillov/easypick.nvim",
     lazy = true,
+    cmd = "Easypick",
     config = conf.easypick,
 })
 
@@ -60,9 +90,6 @@ search({
 search({
     "dhruvmanila/telescope-bookmarks.nvim",
     lazy = true,
-    config = function()
-        require("telescope").load_extension("bookmarks")
-    end,
     dependencies = {
         "kkharji/sqlite.lua",
     },
@@ -120,8 +147,15 @@ search({
                 close = "q",
                 next_match = "n",
                 prev_match = "N",
-                replace_all = "<leader><cr>",
+                replace_all = "<cr>",
             },
         })
     end,
+})
+
+search({
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    build = "bash ./install --bin",
+    config = conf.fzf,
 })

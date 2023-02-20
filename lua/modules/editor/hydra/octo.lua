@@ -72,6 +72,7 @@ end
 local octo_hint = [[
 ^    Octo
 ^▔▔▔▔▔▔▔▔▔▔▔^
+^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^
 ^ _g_: Gists
 ^ _i_: Issues
 ^ _p_: PR
@@ -84,10 +85,16 @@ local octo_hint = [[
 ^ _R_: Review
 ^ _-_: React
 ^ _q_: Quit
+
+^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^
+^ _1_: GL [Cur]
+^ _2_: GL [Yank]
+^ _3_: Git [Url]+
+^ _4_: Git [CurL]
 ]]
 Hydra({
     name = "Octo",
-    mode = "n",
+    mode = { "n", "v" },
     body = "<leader>o",
     hint = octo_hint,
     config = {
@@ -258,7 +265,38 @@ Hydra({
             end,
             { exit = true },
         },
-
+        {
+            "1",
+            function()
+                require("gitlinker").get_buf_range_url(
+                    "n",
+                    { action_callback = require("gitlinker.actions").open_in_browser }
+                )
+            end,
+            { exit = true, desc = "Current file" },
+        },
+        {
+            "2",
+            function()
+                require("gitlinker").get_repo_url()
+            end,
+            { exit = true, desc = "Copy url" },
+        },
+        {
+            "3",
+            function()
+                require("gitlinker").get_repo_url({ action_callback = require("gitlinker.actions").open_in_browser })
+            end,
+            { exit = true, desc = "Open Repo " },
+        },
+        {
+            "4",
+            function()
+                local mode = string.lower(vim.fn.mode())
+                require("gitlinker").get_buf_range_url(mode)
+            end,
+            { exit = true, desc = "current_line range" },
+        },
         { "q", nil, { exit = true } },
     },
 })

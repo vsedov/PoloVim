@@ -31,9 +31,9 @@ o.eadirection = "hor"
 -- cursor
 -- screen
 -- -- topline
-if lambda.check_version(0, 9, 0)[1] then
-    opt.splitkeep = "screen"
-end
+
+opt.splitkeep = "screen"
+
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
 o.switchbuf = "useopen,uselast"
@@ -155,7 +155,7 @@ o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "yes:3"
 o.ruler = false
 -- if lambda.config.ui.noice.enable then
-o.cmdheight = 1 -- 0 , is still borked it seems
+o.cmdheight = 0 -- 0 , is still borked it seems
 -- else
 --     o.cmdheight = 0
 -- end
@@ -233,6 +233,7 @@ opt.sessionoptions = {
     "curdir",
     "winpos",
     "tabpages",
+    "curdir",
 }
 opt.viewoptions = { "cursor", "folds" } -- save/restore just these (with `:{mk,load}view`)
 o.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
@@ -277,15 +278,18 @@ opt.fileformats = { "unix", "mac", "dos" }
 o.mousefocus = true
 o.mousemoveevent = true
 opt.mousescroll = { "ver:1", "hor:6" }
------------------------------------------------------------------------------//
+
 -- these only read ".vim" files
 o.secure = true -- Disable autocmd etc for project local vimrc files.
-o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
+-- Allow project local vimrc files example, .nvim.lua or .nvimrc see :h exrc
+o.exrc = lambda.has("nvim-0.9")
 
 -----------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
 o.foldlevelstart = 20
+o.cursorline = true
+o.cursorcolumn = true
 
 -----------------------------------------------------------------------------//
 -- Git editor
@@ -298,4 +302,4 @@ end
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
 
--- vim:foldmethod=marker
+-- vim:foldmethod=markc

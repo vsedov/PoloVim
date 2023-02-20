@@ -1,33 +1,20 @@
 local Hydra = require("hydra")
-local cmd = require("hydra.keymap-util").cmd
-
+-- local cmd = require("hydra.keymap-util").cmd
 if table.unpack == nil then
     table.unpack = unpack
 end
 
 local config = {}
+
+local bracket = { "d", "s", "c", "D" }
 local exit = { nil, { exit = true, desc = "EXIT" } }
-local hints = [[
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
- ^^^^             Doc gen and References            ^^^^
- ^^^^                                              ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-                    _d_: Gen Docs
 
-    _c_: Gen Class        ▕          _i_: Ref Type
-                        ▕
-    _s_: Gen Type         ▕          _p_: Ref Go
-
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
- ^^^^               Documentation Search           ^^^^
- ^^^^                                              ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-                    _D_: Live Docs
-                    _l_: ULook
-                           
-    _j_: USearch          ▕          _o_: UShowLink
-    _z_: Zeavim           ▕          _k_: DevDocs
-]]
+local function make_core_table(core_table, second_table)
+    for _, v in pairs(second_table) do
+        table.insert(core_table, v)
+    end
+    table.insert(core_table, "\n")
+end
 
 config.doc_binds = {
     color = "pink",
@@ -56,47 +43,24 @@ config.doc_binds = {
 
     -- Reference Stuff
     i = {
-        cmd("RefCopy"),
+        function()
+            vim.cmd("RefCopy")
+        end,
         { nowait = true, silent = true, desc = "refCopy", exit = true },
     },
     p = {
-        cmd("RefGo"),
+
+        function()
+            vim.cmd("RefGo")
+        end,
         { nowait = true, silent = true, desc = "RefGo", exit = true },
     },
     -- Documentation types ?
     D = {
-        cmd("DocsViewToggle"),
+        function()
+            vim.cmd("DocsViewToggle")
+        end,
         { nowait = true, silent = true, desc = "Live Docs", exit = true },
-    },
-    z = {
-        cmd("Zeavim"),
-        { nowait = true, silent = true, desc = "Zeal", exit = true },
-    },
-    k = {
-        cmd("DD"),
-        { nowait = true, silent = true, desc = "DevDoc Search", exit = true },
-    },
-
-    l = {
-        function()
-            require("updoc").lookup()
-        end,
-        { exit = true },
-    },
-    j = {
-        function()
-            vim.defer_fn(function()
-                require("updoc").search()
-            end, 100)
-        end,
-        { exit = true },
-    },
-
-    o = {
-        function()
-            require("updoc").show_hover_links()
-        end,
-        { exit = true },
     },
 }
 
@@ -114,4 +78,51 @@ local new_hydra = {
     heads = {},
 }
 
-Hydra(require("modules.editor.hydra.utils").new_hydra(config, new_hydra))
+require("modules.editor.hydra.utils").new_hydra(config, new_hydra)
+local function auto_hint_generate()
+    container = {}
+    for x, y in pairs(config.doc_binds) do
+        local mapping = x
+        if type(y[1]) == "function" then
+            for x, y in pairs(y[2]) do
+                if x == "desc" then
+                    container[mapping] = y
+                end
+            end
+        end
+    end
+
+    sorted = {}
+    for k, v in pairs(container) do
+        table.insert(sorted, k)
+    end
+    table.sort(sorted)
+
+    core_table = {}
+
+    make_core_table(core_table, bracket)
+    make_core_table(core_table, { "i", "p" })
+
+    hint_table = {}
+    string_val = "^ ^       Docs       ^\n\n"
+    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+
+    for _, v in pairs(core_table) do
+        if v == "\n" then
+            hint = "\n"
+            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+        else
+            if container[v] then
+                hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+            end
+        end
+        table.insert(hint_table, hint)
+        string_val = string_val .. hint
+        -- end
+    end
+    return string_val
+end
+
+val = auto_hint_generate()
+new_hydra.hint = val
+Hydra(new_hydra)

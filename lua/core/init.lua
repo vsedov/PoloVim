@@ -2,6 +2,7 @@ local g, api = vim.g, vim.api
 -- require('internal.winbar')
 
 local cache_dir = vim.env.HOME .. "/.cache/nvim/"
+
 local vim = vim
 
 -- Create cache dir and subs dir
@@ -80,7 +81,6 @@ end
 local leader_map = function()
     vim.g.mapleader = " "
     vim.g.maplocalleader = ","
-
     vim.keymap.set("n", "<SPACE>", "<Nop>", { noremap = true })
     vim.keymap.set("n", " ", "", { noremap = true })
     vim.keymap.set("x", " ", "", { noremap = true })

@@ -113,22 +113,18 @@ ts({
     config = conf.indent,
 })
 
--- -- Packer
 ts({
     "folke/paint.nvim",
     lazy = true,
-
     ft = "lua",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.paint,
 })
 
 ts({
-    -- It uses hydra
     "Dkendal/nvim-treeclimber",
     lazy = true,
     dependencies = { "rktjmp/lush.nvim", "nvim-treesitter/nvim-treesitter" },
-    -- config = conf.climber,
 })
 
 ts({
@@ -160,6 +156,7 @@ autocmd User targets#mappings#user call targets#mappings#extend({
 ts({
     "chrisgrieser/nvim-various-textobjs",
     lazy = true,
+    cond = false,
     event = "VeryLazy",
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })
@@ -169,14 +166,20 @@ ts({
 ts({
     "ckolkey/ts-node-action",
     lazy = true,
-    ft = { "python", "lua", "json", "ruby" },
+    event = "InsertEnter",
     dependencies = { "nvim-treesitter" },
     keys = "<leader>k",
     init = function()
-        vim.keymap.set({ "n" }, "<leader>k", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+        vim.keymap.set(
+            "n",
+            "<leader>k",
+            require("ts-node-action").node_action,
+            { noremap = true, silent = true, desc = "Trigger Node Action" }
+        )
     end,
     config = true,
 })
+
 ts({
     "Wansmer/sibling-swap.nvim",
     dependencies = { "nvim-treesitter" },
@@ -187,4 +190,10 @@ ts({
             ["[w"] = "swap_with_left",
         },
     },
+})
+ts({
+    "ziontee113/SelectEase",
+    lazy = true,
+    ft = { "lua", "python" },
+    config = conf.select_ease,
 })

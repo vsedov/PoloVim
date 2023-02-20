@@ -105,8 +105,9 @@ local mappings = {
     --     "i",
     --     "s",
     -- }),
-    ["<C-l>"] = cmp.mapping(function(fallback)
-        if lambda.config.sell_your_soul then
+    ["<C-k>"] = cmp.mapping(function(fallback)
+        if lambda.config.ai.sell_your_soul then
+            vim.notify("Copilot is no longer installed")
             local copilot_keys = vim.fn["copilot#Accept"]()
             if copilot_keys ~= "" then
                 vim.api.nvim_feedkeys(copilot_keys, "i", true)
@@ -121,6 +122,18 @@ local mappings = {
             else
                 fallback()
             end
+        end
+    end, {
+        "i",
+        "s",
+    }),
+    ["<C-j>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+        else
+            fallback()
         end
     end, {
         "i",

@@ -1,11 +1,6 @@
 local cmp = require("cmp")
 local tabnine_options = lambda.config.cmp.tabnine
 
-if not lambda.config.use_luasnip_brackets then
-    -- require("lazy").load("nvim-autopairs")
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
-end
 -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
 if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then
     cmp.setup.buffer({ completion = { enable = false } })

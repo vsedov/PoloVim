@@ -1,16 +1,10 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = false
-local use_noice_docs = false -- this creats an error for some reason , though im not sure why | It is nice to have though
-
-local use_lightspeed = true --  So the tldr here is when this is false, both lightspeed and leap are active, but when this is true only lightspeed will be active
+local noice_enabled = true
 local use_ts_yeti = true
-local use_glance = true
-
-local ruff_lsp = true
-local py_lang = "jedi"
+local use_codium_cmp = true
+-- toggle core values within the list
 
 lambda.config = {
-    use_flirt = false,
     use_hydra = true,
     overwrite_colours_use_styler = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
@@ -19,7 +13,7 @@ lambda.config = {
     simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
-    loaded_confirm_quit = true, --  not noice_enabled, -- not when noice is active, as that causes some stupid issue w
+    loaded_confirm_quit = true,
     save_clipboard_on_exit = true,
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     tabby_or_bufferline = false, -- false: Bufferline , true for tabby
@@ -28,7 +22,6 @@ lambda.config = {
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_gitsigns = true,
-    use_lightspeed = false, -- if false then leap.nvim will be used.
     use_both_leap_light_speed = true,
     use_leap = true,
     use_quick_scope = false,
@@ -48,16 +41,25 @@ lambda.config = {
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
+lambda.config.ai = {
+    codeium = {
+        use_codeium = true,
+        use_codeium_cmp = use_codium_cmp,
+        use_codium_insert = not use_codium_cmp,
+    },
+    sell_your_soul = false,
+}
+
 lambda.config.extra_search = {
     enable = true,
     providers = {
         use_azy = true,
-        use_fzf_lua = false, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
+        use_fzf_lua = true, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
     },
 }
 
 lambda.config.colourscheme = {
-    dim_background = false,
+    dim_background = true,
     change_kitty_bg = false,
     --- @usage "main"' | '"moon"
     rose = "main",
@@ -67,9 +69,10 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
-                "nvim-tundra",
+                -- "kanagawa.nvim",
                 "catppuccin",
+                -- "poimandres.nvim",
+                -- "nvim-tundra",
                 -- "palenightfall.nvim",
                 -- "oh-lucy.nvim",
                 -- "mellifluous.nvim",
@@ -88,7 +91,7 @@ lambda.config.colourscheme = {
 }
 
 lambda.config.treesitter = {
-    use_guess_indent = false,
+    use_guess_indent = not use_ts_yeti,
     use_yeti = use_ts_yeti,
 }
 
@@ -105,28 +108,44 @@ lambda.config.abbrev = {
 }
 
 lambda.config.cmp = {
+    codeium = {
+        use_codeium = use_codium_cmp,
+        codium_priority = 10,
+    },
     tabnine = {
         use_tabnine = true,
         tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
-        tabnine_overwrite_sort = true,
+        tabnine_bottom_sort = true,
         tabnine_prefetch = true,
         tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
     },
-    use_rg = false, -- this will induce lag , so use this on your own risk
-    cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
+    rg = {
+        use_rg = false, -- this will induce lag , so use this on your own risk
+        keyword_length = 3,
+        depth = 6,
+    },
+    luasnip = {
+        luasnip_choice = true,
+        luasnip = {
+            enable = true,
+            priority = 8,
+        },
+    },
+    cmp_theme = "borderv2", --- @usage "border" | "no-border" | "extra"
 }
 
 lambda.config.lsp = {
-    use_ruff_lsp = ruff_lsp,
-    use_rcd = false,
+    use_ruff_lsp = true,
+    use_rcd = true,
     use_lsp_lines = false,
     use_lsp_signature = true,
     use_typos = true,
+    use_format_modifcation = false,
     latex = "texlab", -- texlab | ltex
     python = {
         lint = { "flake8" }, -- pylint, pyflake, and other linters
         format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = py_lang, -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
         use_inlay_hints = true,
     },
@@ -134,19 +153,33 @@ lambda.config.lsp = {
 
 lambda.config.ui = {
     use_illuminate = true,
-    use_murmur = false, -- Do not use both illuminate and murmur
+    use_murmur = false, -- this causes issues with my yanky config -
     use_modes = true,
-    use_heirline = false,
+    use_heirline = true,
     noice = {
         enable = noice_enabled,
         lsp = {
-            use_noice_signature = use_noice_docs, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = use_noice_docs,
-            use_markdown = {
-                convert_input_to_markdown_lines = use_noice_docs,
-                stylize_markdown = use_noice_docs, --  If use_noice_signature is false , then these boys have to be disabled too interested
-                get_documentation = use_noice_docs, --
-            },
+            use_noice_signature = false, -- I would very much like to use this,l but for now this is broken
+            use_noice_hover = false,
         },
+    },
+    heirline = {
+        cava = {
+            use_cava = true,
+            fps = "240",
+            bars = "30",
+            audio = "stereo", --average, stero left right
+        },
+    },
+    flirt = {
+        use_flirt = true,
+        use_flirt_override = false,
+    },
+}
+
+lambda.config.movement = {
+    harpoon = {
+        goto_harpoon = false,
+        use_tmux_or_normal = "tmux", -- nvim
     },
 }

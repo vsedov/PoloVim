@@ -13,9 +13,10 @@ function config.mason_setup()
     require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
     require("mason-lspconfig").setup({
         automatic_installation = {
-            exclude = { "sumneko_lua", "clangd", "ltex", "texlab" },
+            exclude = { "lua_ls", "clangd", "ltex", "texlab" },
         },
     })
+
     require("mason-lspconfig").setup_handlers({
         function(name)
             -- print(name)
@@ -146,7 +147,6 @@ function config.lsp_sig()
         handler_opts = {
             border = lambda.style.border.type_0, -- double, single, shadow, none
         },
-
         transpancy = 80,
         zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
         log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
@@ -280,37 +280,8 @@ end
 function config.rcd()
     require("rcd").setup({
         position = "top",
-        auto_cmds = false,
+        auto_cmds = true,
     })
-    require("lsp_lines").setup()
-    local Diagnostics = vim.api.nvim_create_augroup("right_corner_diagnostics", { clear = true })
-
-    local create_auto_cmd = function()
-        vim.api.nvim_create_autocmd("InsertLeave", {
-            pattern = "*",
-            group = Diagnostics,
-            callback = function()
-                require("rcd").show()
-            end,
-        })
-        vim.api.nvim_create_autocmd("InsertEnter", {
-            pattern = "*",
-            group = Diagnostics,
-            callback = function()
-                require("rcd").hide()
-            end,
-        })
-    end
-    create_auto_cmd()
-    vim.api.nvim_create_user_command("RCD", function()
-        popup_toggle = lambda.config.lsp.use_rcd
-        if popup_toggle then
-            create_auto_cmd()
-        else
-            vim.api.nvim_clear_autocmds({ group = Diagnostics })
-            require("rcd").hide()
-        end
-    end, { force = true })
 end
 
 function config.goto_preview()

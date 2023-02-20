@@ -209,11 +209,8 @@ local auto_snippets = {
         })
     ),
 }
-ls.add_snippets("lua", auto_snippets, { type = "autosnippets" })
 
-vim.api.nvim_set_hl(0, "lasjdf", { sp = "#FF0000", bold = true })
 local lua = {
-
     parse({ trig = "time" }, time),
     parse({ trig = "M" }, module_snippet),
     parse({ trig = "lf" }, loc_func),
@@ -776,4 +773,4 @@ local lua = {
     ),
 }
 
-return lua
+return lua, auto_snippets

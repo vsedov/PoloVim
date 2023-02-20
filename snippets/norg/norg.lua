@@ -19,7 +19,7 @@ local fmta = require("luasnip.extras.fmt").fmta
 local types = require("luasnip.util.types")
 local conds = require("luasnip.extras.expand_conditions")
 
-local autosnippets = {
+local auto_snippets = {
     s({
         trig = "*([2-6])",
         name = "Heading",
@@ -52,7 +52,7 @@ local autosnippets = {
             name = "fast option",
         },
         -- = {
-        fmt([[ - [{}] ]], {
+        fmt([[ - ({}) ]], {
             -- return option "plugin"
             d(1, function()
                 local options = { " ", "x", "-", "=", "_", "!", "+", "?" }
@@ -92,7 +92,6 @@ local autosnippets = {
         condition = conds.line_begin,
     }),
 }
-ls.add_snippets("norg", autosnippets, { type = "autosnippets" })
 
 local hour_or_minute = function(args, _)
     local text = args[1][1] or ""
@@ -122,7 +121,7 @@ end
 
 local norg = {
     s("neorg checkbox", {
-        t("- [ ] "),
+        t("- ( ) "),
         i(1, "todo.."),
     }),
     -------------------------
@@ -340,4 +339,4 @@ local norg = {
     ),
 }
 
-return norg
+return norg, auto_snippets

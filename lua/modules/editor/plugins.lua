@@ -88,12 +88,33 @@ editor({
 editor({
     "chaoren/vim-wordmotion",
     lazy = true,
-    event = "CursorMoved",
+    event = "VeryLazy",
+    config = function()
+        vim.g.wordmotion_prefix = ","
+    end,
 })
 
 editor({
     "anuvyklack/vim-smartword",
     lazy = true,
+})
+
+editor({
+    "ethanholz/nvim-lastplace",
+    event = "BufWinEnter",
+    config = function()
+        local lastplace_ok, lastplace = pcall(require, "nvim-lastplace")
+        if not lastplace_ok then
+            vim.notify("nvim-lastplace failed to load")
+            return
+        end
+
+        lastplace.setup({
+            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+            lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
+            lastplace_open_folds = true,
+        })
+    end,
 })
 -- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
 editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
@@ -120,7 +141,6 @@ editor({
 editor({
     "anuvyklack/hydra.nvim",
     lazy = true,
-    event = "BufEnter",
     dependencies = { "anuvyklack/keymap-layer.nvim" },
     config = conf.hydra,
 })
@@ -134,21 +154,16 @@ editor({
 
 editor({
     "Wansmer/treesj",
-    keys = { "<leader>J", "<leader>j" },
     cmd = {
         "TSJToggle",
         "TSJSplit",
         "TSJJoin",
     },
-    init = function()
-        vim.keymap.set("n", "<leader>J", function()
-            vim.cmd([[TSJToggle]])
-        end, { desc = "Spread: Expand" })
-        vim.keymap.set("n", "<leader>j", function()
-            vim.cmd([[TSJJoin]])
-        end, { desc = "Spread: Combine" })
-    end,
-    config = true,
+    opts = {
+        use_default_keymaps = false,
+        check_syntax_error = true,
+        max_join_length = 500,
+    },
 })
 
 editor({
@@ -163,6 +178,13 @@ editor({
 editor({
     "marklcrns/vim-smartq",
     lazy = true,
+    init = function()
+        vim.g.smartq_q_buftypes = {
+            "quickfix",
+            "nofile",
+            "acwrite"
+        }
+    end,
     event = "VeryLazy",
 })
 
@@ -184,68 +206,6 @@ editor({
 })
 
 editor({
-    "stevearc/oil.nvim",
-    event = "VeryLazy",
-    init = function()
-        vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
-    end,
-    opts = {
-        columns = {
-            "icon",
-            -- "permissions",
-            "mtime",
-        },
-        buf_options = {
-            buflisted = true,
-        },
-        -- Window-local options to use for oil buffers
-        win_options = {
-            wrap = true,
-            signcolumn = "no",
-            cursorcolumn = false,
-            foldcolumn = "0",
-            spell = false,
-            list = false,
-            conceallevel = 3,
-            concealcursor = "n",
-        },
-        -- Restore window options to previous values when leaving an oil buffer
-        restore_win_options = true,
-        -- Skip the confirmation popup for simple operations
-        skip_confirm_for_simple_edits = false,
-        keymaps = {
-            ["g?"] = "actions.show_help",
-            ["<CR>"] = "actions.select",
-            ["<C-s>"] = "actions.select_vsplit",
-            ["<C-h>"] = "actions.select_split",
-            ["<C-p>"] = "actions.preview",
-            ["<C-c>"] = "actions.close",
-            ["<C-l>"] = "actions.refresh",
-            ["-"] = "actions.parent",
-            ["_"] = "actions.open_cwd",
-            ["c"] = "actions.cd",
-            ["C"] = "actions.tcd",
-            ["g."] = "actions.toggle_hidden",
-        },
-        -- Set to false to disable all of the above keymaps
-        use_default_keymaps = false,
-        view_options = {
-            show_hidden = false,
-        },
-        -- Configuration for the floating window in oil.open_float
-        float = {
-            -- Padding around the floating window
-            padding = 2,
-            max_width = 0,
-            max_height = 0,
-            border = "rounded",
-            win_options = {
-                winblend = 10,
-            },
-        },
-    },
-})
-editor({
     "sindrets/scratchpad.nvim",
     cmd = { "Float", "FloatMove", "Scratchpad" },
 })
@@ -261,18 +221,34 @@ editor({
     dependencies = {
         "ibhagwan/fzf-lua",
     },
-    config = true,
     init = function()
         local possession = require("nvim-possession")
 
         vim.keymap.set("n", "<leader>sl", function()
             possession.list()
-        end)
+        end, { desc = "Possesion List" })
         vim.keymap.set("n", "<leader>sn", function()
             possession.new()
-        end)
+        end, { desc = "Possesion New" })
         vim.keymap.set("n", "<leader>su", function()
             possession.update()
-        end)
+        end, { desc = "Possesion Update" })
     end,
+    opts = {
+        sessions = {
+            sessions_icon = lambda.style.icons.misc.clock,
+        },
+        autoload = true, -- whether to autoload sessions in the cwd at startup
+        autosave = true, -- whether to autosave loaded sessions before quitting
+        autoswitch = {
+            enable = true, -- whether to enable autoswitch
+            exclude_ft = {}, -- list of filetypes to exclude from autoswitch
+        },
+        fzf_winopts = {
+            width = 0.5,
+            preview = {
+                vertical = "right:40%",
+            },
+        },
+    },
 })

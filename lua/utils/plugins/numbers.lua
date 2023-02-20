@@ -17,8 +17,9 @@ local function readable_number()
     end
 end
 
-return {
-    setup = function()
-        lambda.command("ReadNumber", readable_number, { force = true })
-    end,
-}
+local M = {}
+
+function M.setup()
+    lambda.command("ReadNumber", readable_number, { force = true })
+end
+return M

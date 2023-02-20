@@ -107,13 +107,6 @@ vim.defer_fn(function()
     end, { force = true })
 
     loader({ plugins = { "presence.nvim" } })
-
-    if lambda.config.tabby_or_bufferline ~= nil then
-        if lambda.config.use_scope then
-            loader({ plugins = { "scope.nvim" } })
-        end
-    end
-    -- lprint("ui loaded + abbreviations")
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
@@ -125,7 +118,7 @@ end, lazy_timer + 80)
 --  TODO: (vsedov) (01:32:08 - 28/10/22): WTF is this code viv ??
 --  REVISIT: (vsedov) (01:32:15 - 28/10/22): Change this once you have time
 vim.defer_fn(function()
-    if lambda.config.use_fzf_lua then
+    if lambda.config.extra_search.enable and lambda.config.extra_search.providers.use_fzf_lua then
         loader({ plugins = { "fzf-lua" } })
     end
 
@@ -134,10 +127,6 @@ vim.defer_fn(function()
     else
         loader({ plugins = { "project.nvim" } })
     end
-    -- -- Notify
-    if not lambda.config.ui.enable then
-        loader({ plugins = { "nvim-notify" } })
-    end
 
     -- this thing is quite laggy
     if lambda.config.use_ufo and vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()) < 500 then
@@ -145,11 +134,11 @@ vim.defer_fn(function()
         loader({ plugins = { "nvim-ufo" } })
     end
 
-    if lambda.config.ui.use_illuminate then
-        loader({ plugins = { "vim-illuminate" } })
-    else
-        loader({ plugins = { "murmur.lua" } })
-    end
+    -- if lambda.config.ui.use_illuminate == "illuminate" then
+    --     loader({ plugins = { "vim-illuminate" } })
+    -- elseif lambda.config.ui.use_illuminate == "murmur" then
+    --     loader({ plugins = { "murmur.lua" } })
+    -- end
 end, lazy_timer + 100)
 
 -- Load Leap, after 100, because why not, this is my core movement
@@ -161,4 +150,12 @@ vim.defer_fn(function()
     if lambda.config.record_your_self then
         loader({ plugins = { "vim-wakatime" } })
     end
+
+    if lambda.config.ui.use_heirline then
+        require("modules.ui.heirline")
+    end
 end, 120)
+
+vim.defer_fn(function()
+    loader({ plugins = { "hydra.nvim" } })
+end, 1000)

@@ -1,5 +1,7 @@
 -- vim.cmd[[ Lazy load lsp-format-modifications.nvim]]
 local active = true
+local lsp_format_modifications = require("lsp-format-modifications")
+
 local M = {}
 
 local lsp_formatting = function(bufnr)
@@ -11,8 +13,8 @@ local lsp_formatting = function(bufnr)
     })
 end
 
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local function augroup_setup(client, bufnr)
-    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     if client.supports_method("textDocument/formatting") then
         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
         vim.api.nvim_create_autocmd("BufWritePre", {
@@ -83,8 +85,19 @@ function M.setup()
             vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
                 lsp_formatting(bufnr)
             end, {})
-
-            augroup_setup(client, nr)
+            if lambda.config.lsp.use_format_modifcation then
+                if vim.fn.isdirectory(".git/index") then
+                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                    lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
+                else
+                    vim.api.nvim_clear_autocmds({
+                        group = "NvimFormatModificationsDocumentFormattingGroup",
+                        buffer = bufnr,
+                    })
+                end
+            else
+                augroup_setup(client, nr)
+            end
         end,
     }
 

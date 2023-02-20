@@ -44,49 +44,42 @@ local function can_save()
         and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
-lambda.augroup("VimrcIncSearchHighlight", {
-    {
-        event = { "CursorMoved" },
-        command = function()
-            hl_search()
-        end,
-    },
-    {
-        event = { "InsertEnter" },
-        command = function()
-            stop_hl()
-        end,
-    },
-    {
-        event = { "OptionSet" },
-        pattern = { "hlsearch" },
-        command = function()
-            vim.schedule(function()
-                vim.cmd.redrawstatus()
-            end)
-        end,
-    },
-    {
-        event = "RecordingEnter",
-        command = function()
-            vim.opt.hlsearch = false
-        end,
-    },
-    {
-        event = "RecordingLeave",
-        command = function()
-            vim.opt.hlsearch = true
-        end,
-    },
-    --     {
-    --     event = { "CursorHoldI" },
-    --     pattern = { "*" },
-    --     command = function()
-    --        vim.defer_fn(function() vim.cmd.stopinsert() end, 30000)
-    --     end,
-    -- },
-})
-
+-- lambda.augroup("VimrcIncSearchHighlight", {
+--     {
+--         event = { "CursorMoved" },
+--         command = function()
+--             hl_search()
+--         end,
+--     },
+--     {
+--         event = { "InsertEnter" },
+--         command = function()
+--             stop_hl()
+--         end,
+--     },
+--     {
+--         event = { "OptionSet" },
+--         pattern = { "hlsearch" },
+--         command = function()
+--             vim.schedule(function()
+--                 vim.cmd.redrawstatus()
+--             end)
+--         end,
+--     },
+--     {
+--         event = "RecordingEnter",
+--         command = function()
+--             vim.opt.hlsearch = false
+--         end,
+--     },
+--     {
+--         event = "RecordingLeave",
+--         command = function()
+--             vim.opt.hlsearch = true
+--         end,
+--     },
+-- })
+--
 local smart_close_filetypes = {
     "help",
     "git-status",
@@ -415,36 +408,12 @@ lambda.augroup("TerminalAutocommands", {
 })
 lambda.augroup("HoudiniFix", {
     {
-        pattern = "LightspeedSxLeave",
+        pattern = "LeapSxLeave",
         event = "User",
         command = function()
             local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())
             if vim.opt.modifiable:get() and not ignore then
                 vim.cmd("normal! a")
-            end
-        end,
-    },
-})
-
-lambda.augroup("AddTerminalMappings", {
-    {
-        event = { "TermOpen" },
-        pattern = { "term://*" },
-        command = function()
-            if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-                local opts = { silent = false, buffer = 0 }
-                vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-                vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
-
-                -- vim.keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", opts)
-                -- vim.keymap.set("t", "<C-j>", "<Cmd>wincmd j<CR>", opts)
-                -- vim.keymap.set("t", "<C-k>", "<Cmd>wincmd k<CR>", opts)
-                -- vim.keymap.set("t", "<C-l>", "<Cmd>wincmd l<CR>", opts)
-
-                vim.keymap.set("t", "]t", "<Cmd>tablast<CR>", {})
-                vim.keymap.set("t", "[t", "<Cmd>tabnext<CR>", {})
-                vim.keymap.set("t", "<S-Tab>", "<Cmd>bprev<CR>", {})
-                vim.keymap.set("t", "<leader><Tab>", "<Cmd>close \\| :bnext<cr>", {})
             end
         end,
     },
@@ -498,20 +467,6 @@ lambda.augroup("PluginCustomFixes", {
         end,
         once = true,
     },
-    -- {
-    --     event = { "RecordingEnter", "CmdlineEnter" },
-    --     pattern = "*",
-    --     command = function()
-    --         vim.opt.cmdheight = 1
-    --     end,
-    -- },
-    -- {
-    --     event = { "RecordingLeave", "CmdlineLeave" },
-    --     pattern = "*",
-    --     command = function()
-    --         vim.opt.cmdheight = 0
-    --     end,
-    -- },
 })
 
 lambda.augroup("LSPAttachable", {
@@ -523,6 +478,32 @@ lambda.augroup("LSPAttachable", {
             -- vim.lsp.semantic_tokens.stop(bufnr, args.data.client_id)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
             client.server_capabilities.semanticTokensProvider = nil
+        end,
+    },
+})
+lambda.augroup("TabNLine", {
+    {
+        event = { "BufEnter", "VimEnter" },
+        pattern = "*",
+        command = function()
+            if #vim.fn.getbufinfo({ buflisted = 1 }) <= 1 then
+                vim.o.showtabline = 0
+            else
+                vim.o.showtabline = 2
+            end
+        end,
+    },
+
+    {
+        event = { "BufDelete" },
+        pattern = "*",
+        command = function()
+            local buf_type = vim.api.nvim_buf_get_option(0, "buftype")
+            if #vim.fn.getbufinfo({ buflisted = 1 }) <= 2 and buf_type ~= "nofile" then
+                vim.o.showtabline = 0
+            else
+                vim.o.showtabline = 2
+            end
         end,
     },
 })

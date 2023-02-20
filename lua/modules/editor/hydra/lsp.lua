@@ -106,7 +106,7 @@ local mapping = {
 -- Create a Auto Hinting Table same as above but with auto generated
 
 local new_hydra = {
-    name = "Test",
+    name = "LSP",
     config = {
         hint = {
             position = "middle-right",

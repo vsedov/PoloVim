@@ -20,16 +20,16 @@ end
 
 local hint = [[
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  ^^^^                    BreakPoints                     ^^^^
+  ^^^^                    breakpoints                     ^^^^
   ^^^^                                                    ^^^^
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  _b_: Toggle BP                    _Bc_: cond set BP
-  _BC_: clear BP                     _z_: float BP
+  _b_: toggle bp                    _bc_: cond set bp
+  _bc_: clear bp                     _z_: float bp
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  ^^^^                      Debug                         ^^^^
+  ^^^^                      debug                         ^^^^
   ^^^^                                                    ^^^^
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  _C_: Continue                         _c_: run to cursor
+  _c_: continue                         _c_: run to cursor
 
   _n_: step over                        _x_: exit debug
   _i_: step into                        _X_: Close

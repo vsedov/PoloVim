@@ -21,19 +21,19 @@ ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
 ui({
     "RRethy/vim-illuminate",
     lazy = true,
+    cond = lambda.config.ui.use_illuminate,
+    event = "VeryLazy",
+
     config = conf.illuminate,
 })
 
 ui({
     "nyngwang/murmur.lua",
     lazy = true,
-    config = conf.murmur,
-})
+    cond = lambda.config.ui.use_murmur,
+    event = "VeryLazy",
 
-ui({
-    "j-hui/fidget.nvim",
-    lazy = true,
-    config = conf.fidget,
+    config = conf.murmur,
 })
 
 --  ──────────────────────────────────────────────────────────────────────
@@ -121,6 +121,15 @@ ui({
 ui({
     "kevinhwang91/nvim-ufo",
     lazy = true,
+    cmd = {
+        "UfoAttach",
+        "UfoDetach",
+        "UfoEnable",
+        "UfoDisable",
+        "UfoInspect",
+        "UfoEnableFold",
+        "UfoDisableFold",
+    },
     config = conf.ufo,
 })
 
@@ -162,8 +171,9 @@ ui({
         "nvim-notify",
         "hrsh7th/nvim-cmp",
     },
-    config = conf.noice,
+    opts = conf.noice,
 })
+
 ui({
     "samuzora/pet.nvim",
     lazy = true,
@@ -213,7 +223,25 @@ ui({
 ui({
     "petertriho/nvim-scrollbar",
     lazy = true,
-    dependencies = { "kevinhwang91/nvim-hlslens" },
+    dependencies = {
+        "kevinhwang91/nvim-hlslens",
+        config = function()
+            require("hlslens").setup({
+                calm_down = true,
+                nearest_only = true,
+                nearest_float_when = "always",
+            })
+
+            vim.keymap.set({ "n", "x" }, ";L", function()
+                vim.schedule(function()
+                    if require("hlslens").exportLastSearchToQuickfix() then
+                        vim.cmd("cw")
+                    end
+                end)
+                return ":noh<CR>"
+            end, { expr = true })
+        end,
+    },
     event = "BufReadPost",
     config = function()
         require("scrollbar.handlers.search").setup()
@@ -289,76 +317,91 @@ ui({
             GitSignsUntracked = builtin.gitsigns_click,
             GitSignsAdd = builtin.gitsigns_click,
             GitSignsChangedelete = builtin.gitsigns_click,
+
             GitSignsDelete = builtin.gitsigns_click,
         })
     end,
 })
 ui({
     "tummetott/reticle.nvim",
-    cond = false, -- very laggy right now
-    lazy = true,
-    init = function()
-        vim.wo.cursorline = true
-        vim.wo.cursorcolumn = true
-    end,
-    opts = {
 
-        ignore = {
-            cursorline = {
-                "lspinfo",
-                "neotree",
+    config = function()
+        require("reticle").setup({
+            -- Make the cursorline and cursorcolumn follow your active window. This
+            -- only works if the cursorline and cursorcolumn setting is switched on
+            -- globaly like explained in 'Usage'. Default is true for both values
+            follow = {
+                cursorline = true,
+                cursorcolumn = true,
             },
-            cursorcolumn = {
-                "lspinfo",
-                "neotree",
+
+            -- Define filetypes where the cursorline / cursorcolumn is always on,
+            -- regardless of the global setting
+            always = {
+                cursorline = {
+                    "json",
+                },
+                cursorcolumn = {},
             },
+
+            -- Define filetypes where the cursorline / cursorcolumn is always on when
+            -- the window is focused, regardless of the global setting
+            on_focus = {
+                cursorline = {
+                    "help",
+                    "NvimTree",
+                },
+                cursorcolumn = {},
+            },
+
+            -- Define filetypes where the cursorline / cursorcolumn is never on,
+            -- regardless of the global setting
+            never = {
+                cursorline = {
+                    "qf",
+                },
+                cursorcolumn = {
+                    "qf",
+                },
+            },
+
+            -- Define filetypes which are ignored by the plugin
+            ignore = {
+                cursorline = {
+                    "lspinfo",
+                    "neo-tree",
+                },
+                cursorcolumn = {
+                    "lspinfo",
+                    "neo-tree",
+                },
+            },
+
+            -- By default, nvim highlights the cursorline number only when the cursorline setting is
+            -- switched on. When enabeling the following setting, the cursorline number
+            -- of every window is always highlighted, regardless of the setting
+            always_show_cl_number = true,
+        })
+    end,
+})
+
+ui({
+    "rebelot/heirline.nvim",
+    lazy = true,
+    dependencies = {
+        {
+            "jcdickinson/wpm.nvim",
+            lazy = true,
+            opts = { sample_interval = 1000 },
+            config = true,
         },
-        never = {
-            cursorline = {
-                "TelescopePrompt",
-                "DressingInput",
-                "neotree",
-            },
-            cursorcolumn = {
-                "neotree",
-            },
-        },
+        { "uga-rosa/utf8.nvim", lazy = true },
     },
 })
+
 ui({
-    "strash/everybody-wants-that-line.nvim",
+    "glepnir/hlsearch.nvim",
+    lazy = true,
     event = "VeryLazy",
-    opts = {
-        buffer = {
-            enabled = true,
-            prefix = "λ:",
-            symbol = "0",
-            max_symbols = 5,
-        },
-        diagnostics = {
-            enabled = true,
-        },
-        quickfix_list = {
-            enabled = true,
-        },
-        git_status = {
-            enabled = true,
-        },
-        filepath = {
-            enabled = true,
-            path = "relative",
-            shorten = false,
-        },
-        filesize = {
-            enabled = true,
-            metric = "decimal",
-        },
-        ruller = {
-            enabled = true,
-        },
-        filename = {
-            enabled = false,
-        },
-        separator = "│",
-    },
+    config = true,
 })

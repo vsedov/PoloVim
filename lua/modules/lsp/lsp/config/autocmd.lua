@@ -153,26 +153,28 @@ function M.setup_autocommands(client, bufnr)
             },
         }
     end)
-    augroup(FEATURES.REFERENCES, function()
-        return {
-            {
-                event = { "CursorHold", "CursorHoldI" },
-                buffer = bufnr,
-                desc = "LSP: References",
-                command = function()
-                    lsp.buf.document_highlight()
-                end,
-            },
-            {
-                event = "CursorMoved",
-                desc = "LSP: References Clear",
-                buffer = bufnr,
-                command = function()
-                    lsp.buf.clear_references()
-                end,
-            },
-        }
-    end)
+    if lambda.config.ui.use_illuminate == "lsp" then
+        augroup(FEATURES.REFERENCES, function()
+            return {
+                {
+                    event = { "CursorHold", "CursorHoldI" },
+                    buffer = bufnr,
+                    desc = "LSP: References",
+                    command = function()
+                        lsp.buf.document_highlight()
+                    end,
+                },
+                {
+                    event = "CursorMoved",
+                    desc = "LSP: References Clear",
+                    buffer = bufnr,
+                    command = function()
+                        lsp.buf.clear_references()
+                    end,
+                },
+            }
+        end)
+    end
 
     vim.b[bufnr].lsp_events = events
 end

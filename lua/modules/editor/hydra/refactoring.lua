@@ -8,13 +8,6 @@ local function vcmd(command)
     return table.concat({ [[<Esc><Cmd>]], command, [[<CR>]] })
 end
 
--- For rereference:
---   ^ VARIABLES ^                  ^ EXPRESSIONS ^                  ^ DEBUG PRINT    ^
---   _n_: Rename      _b_: Extract block   ^e^: Extract function      _p_: Print var  ^
---   _i_: Inline      _B_:   ... to file   ^f^:   ... to file         _c_: Clear up   ^
---   ^v^: Extract
---   ^ ^                   _q_: Format     _r_: Select refactor           _<Esc>_
---
 local hint_visual = [[
    ^ VARIABLES ^                  ^ EXPRESSIONS ^                  ^ DEBUG PRINT     ^
    ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^
@@ -29,7 +22,6 @@ local hint_normal = [[
     _n_: Rename                   _b_: Extract block                 _p_: Print var  ^
     _i_: Inline                   _B_:   ... to file                 _c_: Clear up   ^
    ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔    ^
-   ^                                                                                 ^
    ^ ^                   _q_: Format     _r_: Select refactor            _<Esc>_     ^
 ]]
 

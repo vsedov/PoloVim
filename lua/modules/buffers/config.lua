@@ -50,7 +50,7 @@ function config.nvim_bufferline()
             mode = "buffers", -- tabs
             sort_by = "insert_after_current",
             right_mouse_command = "vert sbuffer %d",
-            show_close_icon = false,
+            show_close_icon = true,
             indicator = { style = "underline" },
             show_buffer_close_icons = true,
             diagnostics = "nvim_lsp",
@@ -160,21 +160,12 @@ function config.nvim_bufferline()
 
     require("modules.editor.hydra.buffer")
 end
-function config.tabby()
-    require("tabby").setup()
-end
 
 function config.reach()
     require("reach").setup({
         notifications = true,
     })
-end
-function config.cybu()
-    require("cybu").setup()
-end
-
-function config.scope()
-    require("scope").setup()
+    vim.keymap.set("n", ";b", "<cmd>Reach buffers<cr>", { noremap = true, silent = true })
 end
 
 function config.close_buffers()

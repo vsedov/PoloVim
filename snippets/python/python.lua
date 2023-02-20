@@ -9,7 +9,7 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 local r = ls.restore_node
 local l = require("luasnip.extras").lambda
--- local rep = require("luasnip.extras").rep
+local rep = require("luasnip.extras").rep
 local p = require("luasnip.extras").partial
 -- local m = require("luasnip.extras").match
 -- local n = require("luasnip.extras").nonempty
@@ -105,9 +105,19 @@ local function pycdoc(args, ostate)
     return snip
 end
 
+local function async_def(args, snip, old_state, placeholder)
+    local nodes = {}
+
+    table.insert(nodes, snip.captures[1] == "a" and t({ "async def" }) or t({ "def" }))
+
+    local snip_node = sn(nil, nodes)
+    snip_node.old_state = old_state
+    return snip_node
+end
+
 local auto_snippets = {
     s(
-        { trig = "(d?)Cla", regTrig = true },
+        { trig = "(d?)cla", regTrig = true },
         fmt(
             [[
         {}class {}({}):
@@ -146,10 +156,37 @@ local auto_snippets = {
             }
         )
     ),
+    s(
+        { trig = "(a?)def", dscr = "Advanced Def", regTrig = true },
+        fmt(
+            [[
+    {} {}({}{}):
+    {}
+    ]],
+            {
+                d(1, async_def, {}, { user_args = {} }),
+                i(2, "name"),
+                p(function()
+            -- stylua: ignore
+            local get_current_class = require('utils.treesitter_utils').get_current_class
+            -- stylua: ignore
+            local has_ts = require('utils.treesitter_utils').has_ts()
+            -- stylua: ignore
+            if has_ts and get_current_class() then
+                -- stylua: ignore
+                return 'self, '
+            end
+            -- stylua: ignore
+            return ''
+                end),
+                i(3, "args"),
+                d(4, saved_text, {}, { user_args = { { text = "pass", indent = true } } }),
+            }
+        )
+    ),
 }
-ls.add_snippets("python", auto_snippets, { type = "autosnippets" })
 
-local M = {
+local python = {
     s({ trig = "cls", dscr = "Documented Class Structure" }, {
         t("class "),
         i(1, { "class_name" }),
@@ -229,13 +266,6 @@ local M = {
             i(2, "path"),
         })
     ),
-
-    s(
-        "pr",
-        fmt([[print({})]], {
-            i(1, "msg"),
-        })
-    ),
     s(
         "ic",
         fmt([[ic({})]], {
@@ -268,33 +298,6 @@ if TYPE_CHECKING:
         fmt([[import {}]], {
             i(1, "sys"),
         })
-    ),
-    s(
-        { trig = "def", dscr = "Advanced Def" },
-        fmt(
-            [[
-    def {}({}{}):
-    {}
-    ]],
-            {
-                i(1, "name"),
-                p(function()
-            -- stylua: ignore
-            local get_current_class = require('utils.treesitter_utils').get_current_class
-            -- stylua: ignore
-            local has_ts = require('utils.treesitter_utils').has_ts()
-            -- stylua: ignore
-            if has_ts and get_current_class() then
-                -- stylua: ignore
-                return 'self, '
-            end
-            -- stylua: ignore
-            return ''
-                end),
-                i(2, "args"),
-                d(3, saved_text, {}, { user_args = { { text = "pass", indent = true } } }),
-            }
-        )
     ),
 
     s(
@@ -363,7 +366,7 @@ if TYPE_CHECKING:
         d(2, saved_text, {}, { text = "pass", indent = true }),
     }),
 
-    s({ trig = "dcl", regTrig = true }, {
+    s({ trig = "dcla", regTrig = true }, {
         d(1, python_dataclass, {}, {}),
         t({ "class " }),
         i(2, "Class"),
@@ -392,7 +395,7 @@ if TYPE_CHECKING:
     s(
         "clist",
         fmt("[{} for {} in {}{}]", {
-            r(1),
+            rep(1),
             i(1, "i"),
             i(2, "Iterator"),
             c(3, {
@@ -404,8 +407,8 @@ if TYPE_CHECKING:
     s(
         "cdict",
         fmt("{{ {}:{} for ({},{}) in {}{}}}", {
-            r(1),
-            r(2),
+            rep(1),
+            rep(2),
             i(1, "k"),
             i(2, "v"),
             i(3, "Iterator"),
@@ -417,4 +420,4 @@ if TYPE_CHECKING:
     ),
 }
 
-return M
+return python, auto_snippets

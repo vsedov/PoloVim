@@ -11,26 +11,37 @@ local hint = [[
 ^ ^ _N_: ↑       ^ ^
 ]]
 
-local yanky_hydra = Hydra({
+yanky_hydra = Hydra({
     name = "Yank ring",
     mode = "n",
     config = {
         color = "amaranth",
-        invoke_on_body = true,
+        invoke_on_body = false,
         hint = {
             border = lambda.style.border.type_0,
             position = "middle-right",
         },
     },
     hint = hint,
+    body = "p",
     heads = {
         { "p", "<Plug>(YankyPutAfter)", { desc = "After" } },
         { "P", "<Plug>(YankyPutBefore)", { desc = "Before" } },
-        { "n", "<Plug>(YankyCycleForward)", { private = true, desc = "↓" } },
-        { "N", "<Plug>(YankyCycleBackward)", { private = true, desc = "↑" } },
+        { "n", "<Plug>(YankyCycleForward)", { noremap = true, private = true, desc = "↓" } },
+        { "N", "<Plug>(YankyCycleBackward)", { noremap = true, private = true, desc = "↑" } },
+        {
+            "<esc>",
+            nil,
+            { exit = true, desc = "quit" },
+        },
+
+        {
+            "q",
+            nil,
+            { exit = true, desc = "quit" },
+        },
     },
 })
-
 -- choose/change the mappings if you want
 for key, putAction in pairs({
     ["p"] = "<Plug>(YankyPutAfter)",
@@ -60,8 +71,8 @@ for key, putAction in pairs({
 }) do
     vim.keymap.set("n", key, function()
         vim.fn.feedkeys(t(putAction))
-        yanky_hydra:activate()
-    end)
+        vim.schedule_wrap(yanky_hydra:activate())
+    end, { noremap = true, silent = true })
 end
 
 require("telescope").load_extension("yank_history")

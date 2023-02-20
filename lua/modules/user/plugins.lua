@@ -51,43 +51,11 @@ user({
     end,
 })
 --
---
-user({
-    "segeljakt/vim-silicon",
-    lazy = true,
-    cmd = { "Silicon", "SiliconHighlight" },
-    config = function()
-        vim.cmd([[
-            let s:workhours = {
-                  \ 'Monday':    [8, 16],
-                  \ 'Tuesday':   [9, 17],
-                  \ 'Wednesday': [9, 17],
-                  \ 'Thursday':  [9, 17],
-                  \ 'Friday':    [9, 15],
-                  \ }
-
-            function! s:working()
-                let day = strftime('%u')
-                if has_key(s:workhours, day)
-                  let hour = strftime('%H')
-                  let [start_hour, stop_hour] = s:workhours[day]
-                  if start_hour <= hour && hour <= stop_hour
-                    return "~/Work-Snippets/"
-                  endif
-                endif
-                return "/home/viv/Pictures/Silicon/"
-            endfunction
-
-            let g:silicon['output'] = function('s:working')
-        ]])
-    end,
-})
-
 user({
     "tamton-aquib/mpv.nvim",
     lazy = true,
     cmd = "MpvToggle",
-    config = { setup_widgets = true, timer = { throttle = 100 } },
+    opts = { setup_widgets = true, timer = { throttle = 100 } },
 })
 
 user({
@@ -120,4 +88,67 @@ user({
             require("duckytype").Start("python_keywords")
         end, {})
     end,
+})
+
+user({
+    "krivahtoo/silicon.nvim",
+    lazy = true,
+    build = "./install.sh build",
+    cmd = { "Silicon" },
+    config = function()
+        require("silicon").setup({
+            font = "FantasqueSansMono Nerd Font=16",
+            theme = "Monokai Extended",
+        })
+    end,
+})
+user({
+    "giusgad/pets.nvim",
+    cmd = {
+        "PetsNew",
+        "PetsNewCustom",
+        "PetsList",
+        "PetsKill",
+        "PetsKillAll",
+        "PetsPauseToggle",
+        "PetsHideToggle",
+        "PetsSleepToggle",
+    },
+    dependencies = { "MunifTanjim/nui.nvim", "edluffy/hologram.nvim" },
+    opts = {
+        default_pet = "aloof",
+        default_style = "black",
+    },
+    config = true,
+})
+
+user({
+    "Davidyz/lsp-location-handler.nvim",
+    lazy = true,
+    event = "LspAttach",
+    config = true,
+})
+
+-- :NR  - Open the selected region in a new narrowed window
+-- :NW  - Open the current visual window in a new narrowed window
+-- :WR  - (In the narrowed window) write the changes back to the original buffer.
+-- :NRV - Open the narrowed window for the region that was last visually selected.
+-- :NUD - (In a unified diff) open the selected diff in 2 Narrowed windows
+-- :NRP - Mark a region for a Multi narrowed window
+-- :NRM - Create a new Multi narrowed window (after :NRP) - experimental!
+-- :NRS - Enable Syncing the buffer content back (default on)
+-- :NRN - Disable Syncing the buffer content back
+-- :NRL - Reselect the last selected region and open it again in a narrowed window
+user({
+    "chrisbra/NrrwRgn",
+    init = function()
+        vim.g.nrrw_rgn_vert = 1
+        -- Set the size (absolute=rows or cols, relative=percentage)
+        vim.g.nrrw_rgn_resize_window = 'relative'
+        -- Set the new buffer size
+        vim.g.nrrw_rgn_wdth = 20
+        vim.g.nrrw_rgn_rel_min = 50
+        vim.g.nrrw_rgn_rel_max = 50
+    end,
+    event = "VeryLazy",
 })

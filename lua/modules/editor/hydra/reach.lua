@@ -21,7 +21,7 @@ end
 local leader = ";;"
 local hydra = require("hydra")
 
-local bracket = { "b", "l", "m", "t", "c" }
+local bracket = { ";", "<cr>", "l", "m", "c" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -39,7 +39,7 @@ config.parenth_mode = {
     mode = { "n", "v" },
     ["<ESC>"] = { nil, { exit = true } },
 
-    b = {
+    [";"] = {
         function()
             require("reach").buffers(reach_options)
         end,
@@ -51,7 +51,7 @@ config.parenth_mode = {
         end,
         { nowait = true, exit = true, desc = "Reach Marks" },
     },
-    t = {
+    ["<cr>"] = {
         function()
             cmd("ReachOpen tabpages")
         end,

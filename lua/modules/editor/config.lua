@@ -8,8 +8,8 @@ function config.acc_jk()
         acceleration_table = { 7, 12, 17, 21, 24, 26, 28, 30 },
         deceleration_table = { { 150, 9999 } },
     })
-    vim.keymap.set("n", "j", "<Plug>(accelerated_jk_gj)", { noremap = true })
-    vim.keymap.set("n", "k", "<Plug>(accelerated_jk_gk)", { noremap = true })
+    vim.keymap.set("n", "j", "<Plug>(accelerated_jk_gj)", { noremap = true, silent = true })
+    vim.keymap.set("n", "k", "<Plug>(accelerated_jk_gk)", { noremap = true, silent = true })
 end
 
 function config.comment()
@@ -221,7 +221,7 @@ function config.asterisk_setup()
         { "n", "gz#", "<Plug>(asterisk-gz#)" },
     }
     for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], {})
+        vim.keymap.set(m[1], m[2], m[3] .. "<Cmd>lua require('hlslens').start()<CR>", {})
     end
 end
 
@@ -244,10 +244,10 @@ function config.readline()
     vim.keymap.set("!", "<c-F>", readline.forward_word)
     vim.keymap.set("!", "<c-B>", readline.backward_word)
 
-    vim.keymap.set("!", "<C-f>", "<Right>") -- forward-char
-    vim.keymap.set("!", "<C-b>", "<Left>") -- backward-char
-    vim.keymap.set("!", "<C-n>", "<Down>") -- next-line
-    vim.keymap.set("!", "<C-p>", "<Up>") -- previous-line
+    -- vim.keymap.set("!", "<C-f>", "<Right>") -- forward-char
+    -- vim.keymap.set("!", "<C-b>", "<Left>") -- backward-char
+    -- vim.keymap.set("!", "<C-w>", "<Down>") -- next-line
+    -- vim.keymap.set("!", "<C-W>", "<Up>") -- previous-line
 end
 
 return config

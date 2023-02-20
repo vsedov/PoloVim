@@ -28,10 +28,9 @@ lsp({
         })
     end,
 })
-
 lsp({
     "williamboman/mason.nvim",
-    -- event = "BufEnter",
+    -- event = "VeryLazy",
     dependencies = {
         "neovim/nvim-lspconfig",
         "williamboman/mason-lspconfig.nvim",
@@ -102,7 +101,7 @@ lsp({
     config = conf.rename,
 })
 
--- lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
+-- lsp({ "SmiteshP/nvim-navic", event = "VeryLazy", after = "nvim-lspconfig", config = conf.navic })
 
 lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
 lsp({
