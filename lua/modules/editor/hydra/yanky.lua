@@ -31,10 +31,13 @@ yanky_hydra = Hydra({
         { "N", "<Plug>(YankyCycleBackward)", { noremap = true, private = true, desc = "↑" } },
         {
             "<esc>",
-            function()
-                vim.notify("here i am")
-                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
-            end,
+            nil,
+            { exit = true, desc = "quit" },
+        },
+
+        {
+            "q",
+            nil,
             { exit = true, desc = "quit" },
         },
     },

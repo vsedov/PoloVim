@@ -178,6 +178,13 @@ editor({
 editor({
     "marklcrns/vim-smartq",
     lazy = true,
+    init = function()
+        vim.g.smartq_q_buftypes = {
+            "quickfix",
+            "nofile",
+            "acwrite"
+        }
+    end,
     event = "VeryLazy",
 })
 

@@ -1,7 +1,6 @@
 local previous_cmd = ""
 local overseer = require("overseer")
 local ft = vim.api.nvim_create_user_command("T", function(param)
-    vim.cmd("OverseerOpen!")
     param = "python %" or param
     vim.cmd("OverseerRunCmd " .. param)
     previous_cmd = param
@@ -10,14 +9,16 @@ end, { nargs = "?", force = true })
 vim.keymap.set("n", "_W", "<Cmd>OverseerToggle<CR>", { noremap = true, silent = true })
 
 vim.keymap.set("n", "_w", function()
+    vim.cmd("OverseerOpen")
     if previous_cmd == "" then
         vim.cmd([[T]])
+        return
+    else
+        vim.cmd("OverseerRunCmd " .. previous_cmd)
     end
-    vim.cmd("OverseerOpen")
-    vim.cmd("OverseerRunCmd " .. previous_cmd)
 end, { noremap = true, silent = true })
 
-vim.api.nvim_create_user_command("Tp", function(param)
+vim.api.nvim_create_user_command("Tp", function()
     -- vim.cmd("OverseerOpen")
     command = "Run " .. vim.bo.filetype:gsub("^%l", string.upper) .. " file (" .. vim.fn.expand("%:t") .. ")"
     overseer.run_template({ name = command }, function(task)

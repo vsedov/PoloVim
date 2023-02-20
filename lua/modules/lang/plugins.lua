@@ -33,12 +33,12 @@ lang({
     config = conf.debugprint,
 })
 
-lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", lazy = true })
+lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
 
-lang({ "nanotee/luv-vimdocs", lazy = true })
+lang({ "nanotee/luv-vimdocs", opt = true })
 
 -- -- -- builtin lua functions
-lang({ "milisims/nvim-luaref", lazy = true })
+lang({ "milisims/nvim-luaref", opt = true })
 
 lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, lazy = true, config = conf.trouble })
 

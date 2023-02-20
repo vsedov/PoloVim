@@ -280,16 +280,6 @@ function config.quick_scope()
     end
     lambda.augroup("LightspeedQuickscope", {
         {
-            event = "User",
-            pattern = "LightspeedSxEnter",
-            command = disable_quick_scope,
-        },
-        {
-            event = "User",
-            pattern = "LightspeedSxLeave",
-            command = enable_quick_scope,
-        },
-        {
             event = "ColorScheme",
             pattern = "*",
             command = function()

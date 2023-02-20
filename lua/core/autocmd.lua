@@ -408,7 +408,7 @@ lambda.augroup("TerminalAutocommands", {
 })
 lambda.augroup("HoudiniFix", {
     {
-        pattern = "LightspeedSxLeave",
+        pattern = "LeapSxLeave",
         event = "User",
         command = function()
             local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())

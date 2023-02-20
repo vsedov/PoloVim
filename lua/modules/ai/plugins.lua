@@ -21,7 +21,6 @@ ai({
     "tzachar/cmp-tabnine",
     lazy = true,
     build = "bash ./install.sh",
-    ft = { "python", "lua" },
     config = conf.tabnine,
 })
 
@@ -57,7 +56,7 @@ ai({
     "github/copilot.vim",
     cmd = "Copilot",
     lazy = true,
-    cond = lambda.config.ai.sell_your_soul,
+    -- cond = lambda.config.ai.sell_your_soul,
     init = function()
         vim.g.copilot_no_tab_map = true
         vim.g.copilot_assume_mapped = true

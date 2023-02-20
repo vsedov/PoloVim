@@ -142,12 +142,6 @@ config.browse = {
 
         { nowait = true, silent = true, desc = "UpDoc Links", exit = true },
     },
-    ["<leader>"] = {
-        function()
-            require("browse.mdn").search()
-        end,
-        { nowait = true, exit = true, desc = "mdn" },
-    },
 }
 
 local function auto_hint_generate()
@@ -172,7 +166,7 @@ local function auto_hint_generate()
 
     utils.make_core_table(core_table, bracket)
     utils.make_core_table(core_table, { "d", "D", "z", "K" })
-    utils.make_core_table(core_table, { "l", "j", "k", "<leader>" })
+    utils.make_core_table(core_table, { "l", "j", "k" })
 
     hint_table = {}
     string_val = "^ ^     Browser   ^ ^\n\n"

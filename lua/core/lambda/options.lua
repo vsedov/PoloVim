@@ -152,8 +152,8 @@ lambda.config.lsp = {
 }
 
 lambda.config.ui = {
-    use_illuminate = false,
-    use_murmur = true, -- Do not use both illuminate and murmur
+    use_illuminate = true,
+    use_murmur = false, -- this causes issues with my yanky config -
     use_modes = true,
     use_heirline = true,
     noice = {

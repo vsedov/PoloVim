@@ -15,6 +15,7 @@ completion({
 
 completion({
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     lazy = true,
     dependencies = {
         {
@@ -46,6 +47,7 @@ completion({
         { "saadparwaiz1/cmp_luasnip", lazy = true },
         {
             "doxnit/cmp-luasnip-choice",
+            lazy = true,
             config = function()
                 require("cmp_luasnip_choice").setup({
                     auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)

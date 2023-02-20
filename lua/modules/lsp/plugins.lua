@@ -28,7 +28,6 @@ lsp({
         })
     end,
 })
-
 lsp({
     "williamboman/mason.nvim",
     -- event = "VeryLazy",
@@ -98,20 +97,13 @@ lsp({
 lsp({
     "smjonas/inc-rename.nvim",
     lazy = true,
-    event = "VeryLazy",
     cmd = "IncRename",
     config = conf.rename,
 })
 
-lsp({
-    "Davidyz/lsp-location-handler.nvim",
-    lazy = true,
-    event = "LspAttach",
-    config = true,
-})
+-- lsp({ "SmiteshP/nvim-navic", event = "VeryLazy", after = "nvim-lspconfig", config = conf.navic })
 
 lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
-
 lsp({
     "liuchengxu/vista.vim",
     cmd = { "Vista" },
@@ -127,8 +119,8 @@ lsp({
 
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
-    event = "VeryLazy",
-    cond = false,
+    cmd = { "RCL" },
+    cond = lambda.config.lsp.use_rcd,
     config = conf.rcd,
 })
 

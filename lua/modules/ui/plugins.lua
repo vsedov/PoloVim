@@ -36,12 +36,6 @@ ui({
     config = conf.murmur,
 })
 
-ui({
-    "j-hui/fidget.nvim",
-    lazy = true,
-    config = conf.fidget,
-})
-
 --  ──────────────────────────────────────────────────────────────────────
 --  ──────────────────────────────────────────────────────────────────────
 
@@ -237,6 +231,15 @@ ui({
                 nearest_only = true,
                 nearest_float_when = "always",
             })
+
+            vim.keymap.set({ "n", "x" }, ";L", function()
+                vim.schedule(function()
+                    if require("hlslens").exportLastSearchToQuickfix() then
+                        vim.cmd("cw")
+                    end
+                end)
+                return ":noh<CR>"
+            end, { expr = true })
         end,
     },
     event = "BufReadPost",
@@ -385,7 +388,6 @@ ui({
 ui({
     "rebelot/heirline.nvim",
     lazy = true,
-
     dependencies = {
         {
             "jcdickinson/wpm.nvim",
@@ -395,4 +397,11 @@ ui({
         },
         { "uga-rosa/utf8.nvim", lazy = true },
     },
+})
+
+ui({
+    "glepnir/hlsearch.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    config = true,
 })

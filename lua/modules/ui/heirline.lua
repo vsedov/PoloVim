@@ -60,6 +60,7 @@ local function cava_run()
         end, 0)
     end
 end
+
 vim.api.nvim_create_autocmd({ "ExitPre" }, {
     callback = function()
         if cava_config.use_cava and active then

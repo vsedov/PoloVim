@@ -2,72 +2,17 @@ local api = vim.api
 
 local config = {}
 
-function config.fidget()
-    local relative = "editor"
-    require("fidget").setup({
-        align = {
-            bottom = false, -- align fidgets along bottom edge of buffer
-            right = true, -- align fidgets along right edge of buffer
-        },
-        timer = {
-            spinner_rate = 100, -- frame rate of spinner animation, in ms
-            fidget_decay = 500, -- how long to keep around empty fidget, in ms
-            task_decay = 300, -- how long to keep around completed task, in ms
-        },
-        window = {
-            relative = relative, -- where to anchor the window, either `"win"` or `"editor"`
-            blend = 100, -- `&winblend` for the window
-            zindex = nil, -- the `zindex` value for the window
-        },
-        fmt = {
-            leftpad = true, -- right-justify text in fidget box
-            stack_upwards = false, -- list of tasks grows upwards
-            max_width = 0, -- maximum width of the fidget box
-            -- function to format fidget title
-            fidget = function(fidget_name, spinner)
-                return string.format("%s %s", spinner, fidget_name)
-            end,
-            -- function to format each task line
-            task = function(task_name, message, percentage)
-                return string.format(
-                    "%s%s [%s]",
-                    message,
-                    percentage and string.format(" (%s%%)", percentage) or "",
-                    task_name
-                )
-            end,
-        },
-
-        debug = {
-            logging = false, -- whether to enable logging, for debugging
-            strict = false, -- whether to interpret LSP strictly
-        },
-    })
-    lambda.augroup("CloseFidget", {
-        {
-            event = { "VimLeavePre", "LspDetach" },
-            command = "silent! FidgetClose",
-        },
-    })
-end
-
 function config.h_line()
     require("modules.ui.heirline")
 end
 
 function config.murmur()
     require("murmur").setup({
-        -- cursor_rgb = {
-        --  guibg = '#393939',
-        -- },
-        cursor_rgb_always_use_config = true, -- if set to `true`, then always use `cursor_rgb`.
         max_len = 80,
         min_len = 3, -- this is recommended since I prefer no cursorword highlighting on `if`.
         exclude_filetypes = {},
         callbacks = {
-            -- to trigger the close_events of vim.diagnostic.open_float.
             function()
-                -- Close floating diag. and make it triggerable again.
                 vim.cmd("doautocmd InsertEnter")
                 vim.w.diag_shown = false
             end,
@@ -76,31 +21,17 @@ function config.murmur()
 
     local FOO = "murmur"
     vim.api.nvim_create_augroup(FOO, { clear = true })
-    -- To create IDE-like no blinking diagnostic message with `cursor` scope. (should be paired with the callback above)
     vim.api.nvim_create_autocmd({ "CursorHold" }, {
         group = FOO,
         pattern = "*",
         callback = function()
-            -- skip when a float-win already exists.
             if vim.w.diag_shown then
                 return
             end
-
-            -- open float-win when hovering on a cursor-word.
             if vim.w.cursor_word ~= "" then
                 vim.diagnostic.open_float()
                 vim.w.diag_shown = true
             end
-        end,
-    })
-
-    -- To create special cursorword coloring for the colortheme `typewriter-night`.
-    -- remember to change it to the name of yours.
-    vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-        group = FOO,
-        pattern = "typewriter-night",
-        callback = function()
-            vim.api.nvim_set_hl(0, "murmur_cursor_rgb", { fg = "#0a100d", bg = "#ffee32" })
         end,
     })
 end
@@ -335,23 +266,38 @@ function config.neo_tree()
     })
 end
 
-function config.satellite()
-    require("satellite").setup({
-        handlers = {
-            gitsigns = {
-                enable = true,
+function config.scrollbar()
+    require("scrollbar.handlers.search").setup()
+    require("scrollbar").setup({
+        show = true,
+        set_highlights = true,
+        handle = {
+            color = "#777777",
+        },
+        marks = {
+            Search = { color = "#ff9e64" },
+            Error = { color = "#db4b4b" },
+            Warn = { color = "#e0af68" },
+            Info = { color = "#0db9d7" },
+            Hint = { color = "#1abc9c" },
+            Misc = { color = "#9d7cd8" },
+            GitAdd = {
+                color = "#9ed072",
+                text = "+",
             },
-            marks = {
-                enable = false,
+            GitDelete = {
+                color = "#fc5d7c",
+                text = "-",
+            },
+            GitChange = {
+                color = "#76cce0",
+                text = "*",
             },
         },
-        excluded_filetypes = {
-            "packer",
-            "neo-tree",
-            "norg",
-            "neo-tree-popup",
-            "dapui_scopes",
-            "dapui_stacks",
+        handlers = {
+            diagnostic = true,
+            search = true,
+            gitsigns = false,
         },
     })
 end
@@ -433,6 +379,26 @@ function config.ufo()
     vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "open all folds" })
     vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "close all folds" })
     vim.keymap.set("n", "zP", ufo.peekFoldedLinesUnderCursor, { desc = "preview fold" })
+
+    local function nN(char)
+        local ok, winid = require("hlslens").nNPeekWithUFO(char)
+        if ok and winid then
+            -- Safe to override buffer scope keymaps remapped by ufo,
+            -- ufo will restore previous buffer keymaps before closing preview window
+            -- Type <CR> will switch to preview window and fire `trace` action
+            vim.keymap.set("n", "<CR>", function()
+                local keyCodes = api.nvim_replace_termcodes("<Tab><CR>", true, false, true)
+                api.nvim_feedkeys(keyCodes, "im", false)
+            end, { buffer = true })
+        end
+    end
+
+    vim.keymap.set({ "n", "x" }, ";n", function()
+        nN("n")
+    end)
+    vim.keymap.set({ "n", "x" }, ";N", function()
+        nN("N")
+    end)
 end
 
 function config.fold_focus()
@@ -731,8 +697,9 @@ function config.dressing()
     require("dressing").setup({
         input = {
             insert_only = false,
+            prefer_width = 40,
             win_options = {
-                winblend = 2,
+                winblend = 5,
             },
             border = lambda.style.border.type_0,
         },
