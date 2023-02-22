@@ -313,6 +313,7 @@ tools({
 tools({
     "numToStr/Navigator.nvim",
     cond = vim.fn.getenv("TMUX") ~= vim.NIL,
+    event = "VeryLazy",
     config = function()
         require("Navigator").setup()
         for k, value in pairs({ left = "h", bottom = "j", top = "k", right = "l", previous = "=" }) do
@@ -322,6 +323,7 @@ tools({
         end
     end,
 })
+
 tools({
     "chomosuke/term-edit.nvim",
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim

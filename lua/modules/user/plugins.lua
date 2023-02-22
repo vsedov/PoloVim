@@ -144,7 +144,7 @@ user({
     init = function()
         vim.g.nrrw_rgn_vert = 1
         -- Set the size (absolute=rows or cols, relative=percentage)
-        vim.g.nrrw_rgn_resize_window = 'relative'
+        vim.g.nrrw_rgn_resize_window = "relative"
         -- Set the new buffer size
         vim.g.nrrw_rgn_wdth = 20
         vim.g.nrrw_rgn_rel_min = 50

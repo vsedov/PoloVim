@@ -1,5 +1,5 @@
 local cmp = require("cmp")
-local tabnine_options = lambda.config.cmp.tabnine
+local tabnine_options = lambda.config.ai.tabnine.cmp
 
 -- require'cmp'.setup.cmdline(':', {sources = {{name = 'cmdline'}}})
 if vim.o.ft == "clap_input" or vim.o.ft == "guihua" or vim.o.ft == "guihua_rust" then

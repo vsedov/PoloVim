@@ -2,6 +2,7 @@
 local noice_enabled = true
 local use_ts_yeti = true
 local use_codium_cmp = true
+local use_tabnine_cmp = false
 -- toggle core values within the list
 
 lambda.config = {
@@ -46,6 +47,20 @@ lambda.config.ai = {
         use_codeium = true,
         use_codeium_cmp = use_codium_cmp,
         use_codium_insert = not use_codium_cmp,
+        cmp = {
+            codium_priority = 10,
+        },
+    },
+    tabnine = {
+        use_tabnine = true,
+        use_tabnine_cmp = use_tabnine_cmp,
+        use_tabnine_insert = not use_tabnine_cmp,
+        cmp = {
+            tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+            tabnine_bottom_sort = true,
+            tabnine_prefetch = true,
+            tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
+        },
     },
     sell_your_soul = false,
 }
@@ -108,24 +123,13 @@ lambda.config.abbrev = {
 }
 
 lambda.config.cmp = {
-    codeium = {
-        use_codeium = use_codium_cmp,
-        codium_priority = 10,
-    },
-    tabnine = {
-        use_tabnine = true,
-        tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
-        tabnine_bottom_sort = true,
-        tabnine_prefetch = true,
-        tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
-    },
     rg = {
         use_rg = false, -- this will induce lag , so use this on your own risk
         keyword_length = 3,
         depth = 6,
     },
     luasnip = {
-        luasnip_choice = true,
+        luasnip_choice = false,
         luasnip = {
             enable = true,
             priority = 8,
@@ -180,6 +184,6 @@ lambda.config.ui = {
 lambda.config.movement = {
     harpoon = {
         goto_harpoon = false,
-        use_tmux_or_normal = "tmux", -- nvim
+        use_tmux_or_normal = "nvim", -- nvim
     },
 }

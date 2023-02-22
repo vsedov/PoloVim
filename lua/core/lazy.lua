@@ -157,5 +157,9 @@ vim.defer_fn(function()
 end, 120)
 
 vim.defer_fn(function()
+    if vim.fn.getenv("TMUX") ~= nil then
+        lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
+    end
+
     loader({ plugins = { "hydra.nvim" } })
 end, 1000)

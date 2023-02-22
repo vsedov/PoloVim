@@ -95,7 +95,6 @@ local function general_overrides()
         { WinSeparator = { background = "NONE", foreground = { from = "NonText" } } },
         { mkdLineBreak = { link = "NONE" } },
         { Directory = { inherit = "Keyword", bold = true } },
-        { URL = { inherit = "Keyword", underline = true } },
         ---------------------------------------------------------------------------//
         -- Commandline
         -----------------------------------------------------------------------------//

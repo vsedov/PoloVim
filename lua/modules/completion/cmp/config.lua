@@ -166,11 +166,9 @@ elseif lambda.config.cmp.cmp_theme == "extra" then
     }
 end
 
-if lambda.config.cmp.tabnine.tabnine_sort then
-    config.sorting = {
-        priority_weight = 2,
+if lambda.config.ai.tabnine.use_tabnine then
+    local sorting = {
         comparators = {
-            require("cmp_tabnine.compare"),
             compare.offset,
             compare.exact,
             compare.score,
@@ -181,22 +179,16 @@ if lambda.config.cmp.tabnine.tabnine_sort then
             compare.order,
         },
     }
-end
 
-if lambda.config.cmp.tabnine_bottom_sort then
-    config.sorting = {
-        comparators = {
-            compare.offset,
-            compare.exact,
-            compare.score,
-            compare.recently_used,
-            compare.kind,
-            compare.sort_text,
-            compare.length,
-            compare.order,
-            require("cmp_tabnine.compare"),
-        },
-    }
-end
+    if lambda.config.ai.tabnine.cmp.tabnine_sort then
+        sorting.priority_weight = 2
+        table.insert(sorting.comparators, 1, require("cmp_tabnine.compare"))
+    end
 
+    if lambda.config.ai.tabnine.cmp.tabnine_bottom_sort then
+        table.insert(sorting.comparators, require("cmp_tabnine.compare"))
+    end
+
+    config.sorting = sorting
+end
 return config

@@ -60,7 +60,7 @@ function config.autopair()
         fastwarp = {
             enable = true,
             hopout = true,
-            map = "<c-c>",
+            map = "<c-e>",
             rmap = "<C-E>",
             Wmap = "<C-e>",
             cmap = "<c-e>",
@@ -71,8 +71,8 @@ function config.autopair()
         },
         fastend = {
             enable = true,
-            map = "<c-;>",
-            cmap = "<c-;>",
+            map = "<c-c>",
+            cmap = "<c-c>",
             smart = true,
             fallback = nil,
         },
@@ -86,12 +86,12 @@ end
 
 function config.tabout()
     require("tabout").setup({
-        tabkey = "<C-l>",
-        backwards_tabkey = "<C-h>",
+        tabkey = "<C-;>",
+        backwards_tabkey = "<C-j>",
         act_as_tab = true, -- shift content if tab out is not possible
         act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
         default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
-        default_shift_tab = "<C-f>", -- reverse shift default action,
+        default_shift_tab = "<C-i>", -- reverse shift default action,
         enable_backwards = true, -- well ...
         completion = true, -- if the tabkey is used in a completion pum
         tabouts = {

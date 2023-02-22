@@ -157,7 +157,7 @@ local auto_snippets = {
         )
     ),
     s(
-        { trig = "(a?)def", dscr = "Advanced Def", regTrig = true },
+        { trig = "(a?)deff", dscr = "Advanced Def", regTrig = true },
         fmt(
             [[
     {} {}({}{}):

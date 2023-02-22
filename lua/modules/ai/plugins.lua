@@ -1,5 +1,7 @@
 local ai = require("core.pack").package
 local conf = require("modules.ai.config")
+local ai_conf = lambda.config.ai
+
 ai({
     "jackMort/ChatGPT.nvim",
     cmd = {
@@ -20,30 +22,47 @@ ai({
 ai({
     "tzachar/cmp-tabnine",
     lazy = true,
+    cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_cmp),
+    event = "VeryLazy",
     build = "bash ./install.sh",
+    dependencies = {
+        "hrsh7th/nvim-cmp",
+    },
+    config = conf.tabnine_cmp,
+})
+
+ai({
+    "codota/tabnine-nvim",
+    lazy = true,
+    cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_insert),
+    event = "VeryLazy",
+    build = "bash ./dl_binaries.sh",
     config = conf.tabnine,
 })
 
 ai({
     "Exafunction/codeium.vim",
     lazy = true,
-    cond = (lambda.config.ai.codeium.use_codeium and lambda.config.ai.codeium.use_codium_insert),
+    cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codium_insert),
     event = "BufEnter",
     init = function()
         vim.g.codeium_disable_bindings = 1
         vim.g.codeium_enabled = lambda.config.ai.use_codium_insert
     end,
-    config = function()
-        vim.keymap.set("i", "<C-]>", vim.fn["codeium#Accept"], { expr = true })
-        vim.keymap.set("i", "<c-;>", function()
-            return vim.fn["codeium#CycleCompletions"](1)
-        end, { expr = true })
-        vim.keymap.set("i", "<c-,>", function()
-            return vim.fn["codeium#CycleCompletions"](-1)
-        end, { expr = true })
-        vim.keymap.set("i", "<c-e>", vim.fn["codeium#Clear"], { expr = true })
-    end,
+    config = conf.codeium,
 })
+ai({
+    "jcdickinson/codeium.nvim",
+    cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codeium_cmp),
+    lazy = true,
+    event = "VeryLazy",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+    },
+    config = true,
+})
+
 -- <C-c> to close chat window.
 -- <C-u> scroll up chat window.
 -- <C-d> scroll down chat window.
@@ -56,16 +75,5 @@ ai({
     "github/copilot.vim",
     cmd = "Copilot",
     lazy = true,
-    -- cond = lambda.config.ai.sell_your_soul,
-    init = function()
-        vim.g.copilot_no_tab_map = true
-        vim.g.copilot_assume_mapped = true
-        vim.g.copilot_tab_fallback = ""
-        local excluded_filetypes = { "norg", "nofile", "prompt" }
-        local copilot_filetypes = {}
-        for _, ft in pairs(excluded_filetypes) do
-            copilot_filetypes[ft] = false
-        end
-        vim.g["copilot_filetypes"] = copilot_filetypes
-    end,
+    init = conf.sell_your_soul,
 })
