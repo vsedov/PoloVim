@@ -132,7 +132,7 @@ local function auto_hint_generate()
     utils.make_core_table(core_table, { "s", "S", "d", "u" })
 
     hint_table = {}
-    string_val = "^ ^        Nrrwrgn       ^ ^\n\n"
+    string_val = "^ ^          Nrrwrgn       ^ ^\n\n"
     string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
 
     for _, v in pairs(core_table) do
