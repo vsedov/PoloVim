@@ -97,7 +97,7 @@ lsp({
 lsp({
     "smjonas/inc-rename.nvim",
     lazy = true,
-    cmd = "IncRename",
+    event = "VeryLazy",
     config = conf.rename,
 })
 

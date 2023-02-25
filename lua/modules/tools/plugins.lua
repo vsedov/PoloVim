@@ -146,10 +146,10 @@ tools({
 tools({
     "barklan/capslock.nvim",
     lazy = true,
-    keys = "<leader><leader><leader>",
+    keys = "<leader><leader>;",
     config = function()
         require("capslock").setup()
-        vim.keymap.set({ "i", "c", "n" }, "<leader><leader><leader>", "<Plug>CapsLockToggle<Cr>", { noremap = true })
+        vim.keymap.set({ "i", "c", "n" }, "<leader><leader>;", "<Plug>CapsLockToggle<Cr>", { noremap = true })
     end,
 })
 
@@ -310,18 +310,22 @@ tools({
     end,
 })
 
+-- Always load this
 tools({
     "numToStr/Navigator.nvim",
-    cond = vim.fn.getenv("TMUX") ~= vim.NIL,
+    event = "VeryLazy",
     config = function()
-        require("Navigator").setup()
-        for k, value in pairs({ left = "h", bottom = "j", top = "k", right = "l", previous = "=" }) do
-            vim.keymap.set("n", "<c-" .. value .. ">", function()
-                require("Navigator")[k]()
+        require("Navigator").setup({
+            auto_save = "all",
+        })
+        for k, value in pairs({ Left = "h", Down = "j", Up = "k", Right = "l", Previous = "=" }) do
+            vim.keymap.set({ "n", "t" }, "<c-" .. value .. ">", function()
+                vim.cmd("Navigator" .. k)
             end, { noremap = true, silent = true })
         end
     end,
 })
+
 tools({
     "chomosuke/term-edit.nvim",
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim

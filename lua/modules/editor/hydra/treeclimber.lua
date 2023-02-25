@@ -23,7 +23,7 @@ config.parenth_mode = {
     h = {
         tc.select_backward,
 
-        { nowait = false, exit = true, desc = "TC Back" },
+        { nowait = false, desc = "TC Back" },
     },
     j = {
         tc.select_shrink,
@@ -163,15 +163,3 @@ end
 val = auto_hint_generate()
 new_hydra.hint = val
 hydra(new_hydra)
-
--- local binds = {
---   "indentation": {"ii", "ia", "aI", "iI"},
---   "value" : {"iv", "av"},
---   "key": {"ik", "ak"},
--- "number": {"in", "an"},
---   "diag": {"!"},
---   "NearEol": {"n"},
---   "Col" : {"!"},
---   "RestOfPara": {"r"},
---   "subword": {"is", "aS"}
--- }

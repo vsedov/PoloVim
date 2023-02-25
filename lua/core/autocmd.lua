@@ -165,7 +165,30 @@ lambda.augroup("TextYankHighlight", {
         end,
     },
 })
+------------------------------------------------------------------------------//
+lambda.augroup("AddTerminalMappings", {
+    {
+        event = { "TermOpen" },
+        pattern = { "term://*" },
+        command = function()
+            -- FIXME: this still sets mappings on terminal buffers like fzf
+            if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
+                local opts = { silent = false, buffer = 0 }
+                vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+                vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+                vim.keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", opts)
+                vim.keymap.set("t", "<C-j>", "<Cmd>wincmd j<CR>", opts)
+                vim.keymap.set("t", "<C-k>", "<Cmd>wincmd k<CR>", opts)
+                vim.keymap.set("t", "<C-l>", "<Cmd>wincmd l<CR>", opts)
 
+                vim.keymap.set("t", "]t", "<Cmd>tablast<CR>")
+                vim.keymap.set("t", "[t", "<Cmd>tabnext<CR>")
+                vim.keymap.set("t", ";<S-Tab>", "<Cmd>bprev<CR>")
+                vim.keymap.set("t", ";<Tab>", "<Cmd>close \\| :bnext<cr>")
+            end
+        end,
+    },
+})
 lambda.augroup("Utilities", {
     {
         -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
@@ -408,7 +431,7 @@ lambda.augroup("TerminalAutocommands", {
 })
 lambda.augroup("HoudiniFix", {
     {
-        pattern = "LeapSxLeave",
+        pattern = "LeapLeave",
         event = "User",
         command = function()
             local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())

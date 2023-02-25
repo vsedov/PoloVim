@@ -30,7 +30,6 @@ local auto_resize = function()
         end
     end
 end
-
 lambda.command("DebugOpen", function()
     require("modules.lang.dap").prepare()
 end, { force = true })
@@ -324,6 +323,28 @@ lambda.command("ExtraHLToggle", function()
     })
     vim.cmd([[bufdo! %]])
 end, {})
+
+-- source https://superuser.com/a/540519
+-- write the visual selection to the filename passed in as a command argument then delete the
+-- selection placing into the black hole register
+lambda.command("MoveWrite", [[<line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]], {
+    nargs = 1,
+    bang = true,
+    range = true,
+    complete = "file",
+})
+lambda.command("MoveAppend", [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]], {
+    nargs = 1,
+    bang = true,
+    range = true,
+    complete = "file",
+})
+lambda.command("TreeInspect", function()
+    vim.treesitter.show_tree()
+end)
+lambda.command("Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
+
+vim.cmd([[ command! NeorgStart execute 'tabe ~/neorg/index.norg' ]])
 
 vim.cmd("imap <C-V> <C-R>*")
 vim.cmd('vmap <LeftRelease> "*ygv')

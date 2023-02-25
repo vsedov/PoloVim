@@ -1,38 +1,18 @@
-local Hydra = require("hydra")
+local hydra = require("hydra")
+local utils = require("modules.editor.hydra.utils")
+
+local cmd = function(cmd)
+    return function()
+        vim.cmd(cmd)
+    end
+end
+
 local match = lambda.lib.match
 local when = lambda.lib.when
-local cmd = require("hydra.keymap-util").cmd
 
-local hint = [[
-^ ^ _r_: Run Code   ^ ^
-^ ^ _s_: Stop Code  ^ ^
-^ ^ _p_: Pannel     ^ ^
-]]
-Hydra({
-    name = "Runner",
-    hint = hint,
-    config = {
-        color = "pink",
-        invoke_on_body = true,
-        hint = {
-            position = "middle-right",
-            border = lambda.style.border.type_0,
-        },
-    },
-    mode = { "n" },
-    body = "<localleader>r",
-    heads = {
-        { "r", cmd("Lab code run"), { exit = false } },
-        { "s", cmd("Lab code stop"), { exit = false } },
-        { "p", cmd("Lab code panel"), { exit = false } },
-        { "<Esc>", nil, { exit = true, desc = false } },
-    },
-})
---- @usage : Run :cd or <leader>cd -> <leader>r
----@param debug Debug is idk , idk why i have this here tbh
+local config = {}
 local run_or_test = function(debug)
     local ft = vim.bo.filetype
-    -- t([[<cmd>tcd %:p:h<cr><cmd>pwd<cr>]])
     if ft == "lua" then
         return ":RunCode<CR>"
     else
@@ -45,98 +25,115 @@ local run_or_test = function(debug)
     end
 end
 
-hint = [[
-^^^^                  Overseer                  ^^^^
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-_w_: OverseerToggle          _e_: OverseerRun
-_d_: OverseerQuickAction     _t_: TaskAction
-_b_: OverseerBuild           _l_:  LoadBundle
-              _<Enter>_: Runnner
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-
-                 Code Runners
-
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-_r_: Run Code                 _F_: Adv RUn
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-
-                 Lab Runners
-
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-_W_: Run Code                 _s_: Stop Code
-                  _p_: Pannel
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-
-                  SnipRun
-
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-_o_: SnipRun                 _v_: SnipRunV
-^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-
-
-^^^^ _C_: Pydoc _c_: Doc        _<Esc>_: quit   ^^^^
-
-]]
-
-Hydra({
-    name = "Runner",
-    hint = hint,
-    config = {
-        color = "pink",
-        invoke_on_body = true,
-        hint = {
-            position = "middle-right",
-            border = lambda.style.border.type_0,
-        },
-    },
-    mode = { "n", "v", "x" },
+local bracket = { "<cr>", "w", "e", "r", "f" }
+config.runner = {
+    color = "red",
     body = ";r",
-    heads = {
-        { "w", cmd("OverseerToggle"), { exit = true } },
-        { "e", cmd("OverseerRun") },
-        { "d", cmd("OverseerQuickAction") },
-        { "t", cmd("OverseerTaskAction") },
-        { "b", cmd("OverseerBuild") },
-        { "l", cmd("OverseerLoadBundle") },
-        {
-            "<Enter>",
-            function()
-                local overseer = require("overseer")
-                overseer.run_template({
-                    name = "Run "
-                        .. vim.bo.filetype:gsub("^%l", string.upper)
-                        .. " file ("
-                        .. vim.fn.expand("%:t")
-                        .. ")",
-                }, function(task)
-                    task = task or "Poetry run file"
-                    if task then
-                        overseer.run_action(task, "open float")
-                    end
-                end)
-            end,
-            { exit = true, desc = false },
-        },
-
-        { "<Esc>", nil, { exit = true, desc = false } },
-
-        { "r", cmd("RunCode"), { exit = true } },
-        { "F", run_or_test, { exit = true } },
-        { "W", cmd("Lab code run"), { exit = true } },
-        { "s", cmd("Lab code stop"), { exit = false } },
-        { "p", cmd("Lab code panel"), { exit = false } },
-        { "o", cmd([[lua require("sniprun").run()]]), { exit = true } },
-        { "v", cmd([[lua require("sniprun").run('v')]]), { exit = false } },
-        { "<Esc>", nil, { exit = true, desc = false } },
-        {
-            "c",
-            cmd("PythonCopyReferenceDotted"),
-            { desc = "Python Copy reference dot" },
-        },
-        {
-            "C",
-            cmd("PythonCopyReferencePytest"),
-            { desc = "Python Copy reference Pytest" },
-        },
+    ["<ESC>"] = { nil, { exit = true } },
+    w = { cmd("OverseerToggle"), { desc = "Overseer Toggle", exit = true } },
+    e = { cmd("OverseerRun"), { desc = "Overseer Run", exit = true } },
+    d = { cmd("OverseerQuickAction"), { desc = "Overseer Quick AcAction", exit = true } },
+    t = { cmd("OverseerTaskAction"), { desc = "OverseerTaskAction", exit = true } },
+    b = { cmd("OverseerBuild"), { desc = "OverseerBuild", exit = true } },
+    l = { cmd("OverseerLoadBundle"), { desc = "OverSeer Load", exit = true } },
+    ["<cr>"] = {
+        function()
+            local overseer = require("overseer")
+            overseer.run_template({
+                name = "Run " .. vim.bo.filetype:gsub("^%l", string.upper) .. " file (" .. vim.fn.expand("%:t") .. ")",
+            }, function(task)
+                task = task or "Poetry run file"
+                if task then
+                    overseer.run_action(task, "open float")
+                end
+            end)
+        end,
+        { exit = true, desc = "Overseer Fast Run" },
     },
-})
+
+    r = { cmd("RunCode"), { exit = true, desc = "RunCode" } },
+    f = {
+        function()
+            run_or_test()
+        end,
+        { exit = true, desc = "Run Code/Test" },
+    },
+    i = { cmd("Lab code run"), { exit = true, desc = "Lab Run" } },
+    o = { cmd("Lab code stop"), { exit = false, desc = "Lab Stop" } },
+    p = { cmd("Lab code panel"), { exit = false, desc = "Lab Panel" } },
+
+    s = {
+        function()
+            if vim.fn.mode() == "n" then
+                vim.cmd.SnipRun()
+            else
+                vim.cmd([['<,'>SnipRun]])
+            end
+        end,
+        { exit = true, desc = "SnipRun" },
+    },
+}
+
+local function auto_hint_generate()
+    container = {}
+    for x, y in pairs(config.runner) do
+        local mapping = x
+        if type(y[1]) == "function" then
+            for x, y in pairs(y[2]) do
+                if x == "desc" then
+                    container[mapping] = y
+                end
+            end
+        end
+    end
+    sorted = {}
+    for k, v in pairs(container) do
+        table.insert(sorted, k)
+    end
+    table.sort(sorted)
+
+    core_table = {}
+
+    utils.make_core_table(core_table, bracket)
+    utils.make_core_table(core_table, { "d", "t", "b", "l" })
+    utils.make_core_table(core_table, { "s", "i", "o", "p" })
+
+    hint_table = {}
+    string_val = "^ ^          Runner       ^ ^\n\n"
+    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+
+    for _, v in pairs(core_table) do
+        if v == "\n" then
+            hint = "\n"
+            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+        else
+            if container[v] then
+                hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+            end
+        end
+        table.insert(hint_table, hint)
+        string_val = string_val .. hint
+    end
+    return string_val
+end
+
+vim.defer_fn(function()
+    local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
+        name = "Runner",
+        config = {
+            hint = {
+                position = "middle-right",
+                border = lambda.style.border.type_0,
+            },
+            timeout = false,
+            invoke_on_body = true,
+        },
+        heads = {},
+        mode = { "n", "v", "x", "o" },
+    })
+
+    val = auto_hint_generate()
+    print(val)
+    new_hydra.hint = val
+    hydra(new_hydra)
+end, 100)

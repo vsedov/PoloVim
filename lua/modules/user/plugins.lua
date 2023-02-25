@@ -141,6 +141,9 @@ user({
 -- :NRL - Reselect the last selected region and open it again in a narrowed window
 user({
     "chrisbra/NrrwRgn",
+    lazy = true, 
+        event = "VeryLazy",
+
     init = function()
         vim.g.nrrw_rgn_vert = 1
         -- Set the size (absolute=rows or cols, relative=percentage)
@@ -150,5 +153,16 @@ user({
         vim.g.nrrw_rgn_rel_min = 50
         vim.g.nrrw_rgn_rel_max = 50
     end,
-    event = "VeryLazy",
+})
+
+
+user({
+    "axieax/urlview.nvim", 
+    keys = {"\\u", "\\U"},
+    cmd = {"UrlView"},
+    config = function()
+        require("urlview").setup({})
+        vim.keymap.set("n", "\\u", "<Cmd>UrlView<CR>", { desc = "view buffer URLs" })
+        vim.keymap.set("n", "\\U", "<Cmd>UrlView lazy<CR>", { desc = "view plugin URLs" })
+    end
 })

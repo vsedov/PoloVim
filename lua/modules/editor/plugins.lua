@@ -182,7 +182,7 @@ editor({
         vim.g.smartq_q_buftypes = {
             "quickfix",
             "nofile",
-            "acwrite"
+            "acwrite",
         }
     end,
     event = "VeryLazy",

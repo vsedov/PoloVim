@@ -1,5 +1,15 @@
 local api = vim.api
--- default sources
+local ai = lambda.config.ai
+local condium_cond = (ai.codeium.use_codeium and ai.codeium.use_codeium_cmp)
+local tabnine_cond = (ai.tabnine.use_tabnine and ai.tabnine.use_tabnine_cmp)
+-- if condium_cond then
+--     require("lazy").load({ plugins = { "codeium.nvim" } })
+-- end
+
+-- if tabnine_cond then
+--     require("lazy").load({ plugins = { "cmp-tabnine" } })
+-- end
+
 local plugins = {
     {
         name = "luasnip_choice",
@@ -19,16 +29,16 @@ local plugins = {
     },
     {
         name = "codeium",
-        enable = lambda.config.cmp.codeium.use_codeium,
+        enable = condium_cond,
         options = {
-            priority = lambda.config.cmp.codeium.codium_priority,
+            priority = ai.codeium.cmp.codium_priority,
         },
     },
     {
         name = "cmp_tabnine",
-        enable = lambda.config.cmp.tabnine.use_tabnine,
+        enable = tabnine_cond,
         options = {
-            priority = lambda.config.cmp.tabnine.tabnine_priority,
+            priority = ai.tabnine.cmp.tabnine_priority,
         },
     },
     {

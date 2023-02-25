@@ -18,16 +18,6 @@ completion({
     event = "InsertEnter",
     lazy = true,
     dependencies = {
-        {
-            "jcdickinson/codeium.nvim",
-            cond = lambda.config.ai.codeium.use_codeium_cmp and lambda.config.ai.codeium.use_codeium,
-            lazy = true,
-            dependencies = {
-                "nvim-lua/plenary.nvim",
-                "MunifTanjim/nui.nvim",
-            },
-            config = true,
-        },
         { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
         { "hrsh7th/cmp-nvim-lsp", lazy = true },
         { "hrsh7th/cmp-nvim-lua", lazy = true },
@@ -73,12 +63,13 @@ completion({
     end,
 })
 
-completion({
-    "altermo/ultimate-autopair.nvim",
-    lazy = true,
-    event = { "InsertEnter", "CmdlineEnter" },
-    opts = conf.autopair(),
-})
+-- completion({
+--     "altermo/ultimate-autopair.nvim",
+--     lazy = true,
+--     event = { "InsertEnter", "CmdlineEnter" },
+--     opts = conf.autopair(),
+-- })
+
 completion({
 
     "ziontee113/SnippetGenie",

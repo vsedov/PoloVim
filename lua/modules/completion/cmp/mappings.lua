@@ -54,7 +54,7 @@ local mappings = {
         elseif luasnip.expandable() then
             luasnip.expand()
         elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
         elseif not utils.check_backspace() then
             cmp.mapping.complete()(core, fallback)
         elseif utils.has_words_before() then
@@ -73,7 +73,7 @@ local mappings = {
         if cmp.visible() then
             cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
         else
             -- utils.smart_bs()
             vim.cmd(":<")
@@ -86,7 +86,6 @@ local mappings = {
 
     -- ["<C-j>"] = cmp.mapping(function(fallback)
     --     if luasnip.jumpable(-1) then
-    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
     --     else
     --         fallback()
     --     end
@@ -105,7 +104,7 @@ local mappings = {
     --     "i",
     --     "s",
     -- }),
-    ["<C-k>"] = cmp.mapping(function(fallback)
+    ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul then
             vim.notify("Copilot is no longer installed")
             local copilot_keys = vim.fn["copilot#Accept"]()
@@ -115,9 +114,7 @@ local mappings = {
                 fallback()
             end
         else
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
+            if luasnip.expand_or_jumpable() then
                 vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
             else
                 fallback()
