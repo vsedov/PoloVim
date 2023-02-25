@@ -2,6 +2,7 @@
 --  causing the error here, and its quite important that i figure this one out .
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
+local fn = vim.fn
 
 ts({
     "nvim-treesitter/nvim-treesitter",
@@ -156,10 +157,32 @@ autocmd User targets#mappings#user call targets#mappings#extend({
 ts({
     "chrisgrieser/nvim-various-textobjs",
     lazy = true,
-    cond = false,
+    cond = true,
     event = "VeryLazy",
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })
+        vim.keymap.set("n", "gx", function()
+            require("various-textobjs").url() -- select URL
+            local foundURL = fn.mode():find("v") -- only switches to visual mode if found
+            local url
+            if foundURL then
+                vim.cmd.normal({ '"zy', bang = true }) -- retrieve URL with "z as intermediary
+                url = fn.getreg("z")
+
+                local opener
+                if vim.fn.has("macunix") == 1 then
+                    opener = "open"
+                elseif vim.fn.has("linux") == 1 then
+                    opener = "xdg-open"
+                elseif vim.fn.has("win64") == 1 or fn.has("win32") == 1 then
+                    opener = "start"
+                end
+                os.execute(opener .. "'" .. url .. "'")
+            else
+                -- if not found in proximity, search whole buffer via urlview.nvim instead
+                vim.cmd.UrlView("buffer")
+            end
+        end, { desc = "Smart URL Opener" })
     end,
 })
 
@@ -195,5 +218,4 @@ ts({
     "ziontee113/SelectEase",
     lazy = true,
     ft = { "lua", "python" },
-    config = conf.select_ease,
 })
