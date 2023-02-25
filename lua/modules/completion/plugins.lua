@@ -63,12 +63,13 @@ completion({
     end,
 })
 
-completion({
-    "altermo/ultimate-autopair.nvim",
-    lazy = true,
-    event = { "InsertEnter", "CmdlineEnter" },
-    opts = conf.autopair(),
-})
+-- completion({
+--     "altermo/ultimate-autopair.nvim",
+--     lazy = true,
+--     event = { "InsertEnter", "CmdlineEnter" },
+--     opts = conf.autopair(),
+-- })
+
 completion({
 
     "ziontee113/SnippetGenie",

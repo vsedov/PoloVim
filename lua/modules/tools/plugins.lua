@@ -315,10 +315,12 @@ tools({
     cond = vim.fn.getenv("TMUX") ~= vim.NIL,
     event = "VeryLazy",
     config = function()
-        require("Navigator").setup()
-        for k, value in pairs({ left = "h", bottom = "j", top = "k", right = "l", previous = "=" }) do
-            vim.keymap.set("n", "<c-" .. value .. ">", function()
-                require("Navigator")[k]()
+        require("Navigator").setup({
+            auto_save = "all",
+        })
+        for k, value in pairs({ Left = "h", Down = "j", Up = "k", Right = "l", Previous = "=" }) do
+            vim.keymap.set({ "n", "t" }, "<c-" .. value .. ">", function()
+                vim.cmd("Navigator" .. k)
             end, { noremap = true, silent = true })
         end
     end,
@@ -328,4 +330,23 @@ tools({
     "chomosuke/term-edit.nvim",
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim
     ft = { "toggleterm", "terminal" },
+})
+
+-- Disable this for now, as i believe there are better things to do,. than use this
+tools({
+    "romainchapou/nostalgic-term.nvim",
+    lazy = true,
+    cond = (not vim.fn.getenv("TMUX") ~= vim.NIL and false),
+    event = "TermOpen",
+    config = function()
+        require("nostalgic-term").setup({
+            mappings = {
+                { "<c-h>", "h" },
+                { "<c-j>", "j" },
+                { "<c-k>", "k" },
+                { "<c-l>", "l" },
+            },
+            add_normal_mode_mappings = false,
+        })
+    end,
 })
