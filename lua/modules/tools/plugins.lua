@@ -146,10 +146,10 @@ tools({
 tools({
     "barklan/capslock.nvim",
     lazy = true,
-    keys = "<leader><leader><leader>",
+    keys = "<leader><leader>;",
     config = function()
         require("capslock").setup()
-        vim.keymap.set({ "i", "c", "n" }, "<leader><leader><leader>", "<Plug>CapsLockToggle<Cr>", { noremap = true })
+        vim.keymap.set({ "i", "c", "n" }, "<leader><leader>;", "<Plug>CapsLockToggle<Cr>", { noremap = true })
     end,
 })
 
@@ -310,9 +310,9 @@ tools({
     end,
 })
 
+-- Always load this
 tools({
     "numToStr/Navigator.nvim",
-    cond = vim.fn.getenv("TMUX") ~= vim.NIL,
     event = "VeryLazy",
     config = function()
         require("Navigator").setup({
@@ -330,23 +330,4 @@ tools({
     "chomosuke/term-edit.nvim",
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim
     ft = { "toggleterm", "terminal" },
-})
-
--- Disable this for now, as i believe there are better things to do,. than use this
-tools({
-    "romainchapou/nostalgic-term.nvim",
-    lazy = true,
-    cond = (not vim.fn.getenv("TMUX") ~= vim.NIL and false),
-    event = "TermOpen",
-    config = function()
-        require("nostalgic-term").setup({
-            mappings = {
-                { "<c-h>", "h" },
-                { "<c-j>", "j" },
-                { "<c-k>", "k" },
-                { "<c-l>", "l" },
-            },
-            add_normal_mode_mappings = false,
-        })
-    end,
 })
