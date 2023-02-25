@@ -44,7 +44,7 @@ ai({
     "Exafunction/codeium.vim",
     lazy = true,
     cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codium_insert),
-    event = "BufEnter",
+    event = "VeryLazy",
     init = function()
         vim.g.codeium_disable_bindings = 1
         vim.g.codeium_enabled = lambda.config.ai.use_codium_insert

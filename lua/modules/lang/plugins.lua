@@ -181,6 +181,7 @@ lang({
 })
 lang({
     "michaelb/sniprun",
+    lazy = true,
     build = "bash ./install.sh",
     cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
     config = true,
