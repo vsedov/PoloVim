@@ -4,7 +4,6 @@ function config.chatgpt()
     require("chatgpt").setup({
         max_line_length = 1000000,
         openai_params = {
-            model = "text-davinci-003",
             frequency_penalty = 0,
             presence_penalty = 0,
             max_tokens = 2000,

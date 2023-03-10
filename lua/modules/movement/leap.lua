@@ -31,6 +31,51 @@ function paranormal(targets)
     vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
 end
 
+function leap_to_window()
+    target_windows = require("leap.util").get_enterable_windows()
+    local targets = {}
+    for _, win in ipairs(target_windows) do
+        local wininfo = vim.fn.getwininfo(win)[1]
+        local pos = { wininfo.topline, 1 } -- top/left corner
+        table.insert(targets, { pos = pos, wininfo = wininfo })
+    end
+    return targets, target_windows
+end
+
+local function get_line_starts(winid)
+    local wininfo = vim.fn.getwininfo(winid)[1]
+    local cur_line = vim.fn.line(".")
+
+    -- Get targets.
+    local targets = {}
+    local lnum = wininfo.topline
+    while lnum <= wininfo.botline do
+        local fold_end = vim.fn.foldclosedend(lnum)
+        -- Skip folded ranges.
+        if fold_end ~= -1 then
+            lnum = fold_end + 1
+        else
+            if lnum ~= cur_line then
+                table.insert(targets, { pos = { lnum, 1 } })
+            end
+            lnum = lnum + 1
+        end
+    end
+    -- Sort them by vertical screen distance from cursor.
+    local cur_screen_row = vim.fn.screenpos(winid, cur_line, 1)["row"]
+    local function screen_rows_from_cur(t)
+        local t_screen_row = vim.fn.screenpos(winid, t.pos[1], t.pos[2])["row"]
+        return math.abs(cur_screen_row - t_screen_row)
+    end
+    table.sort(targets, function(t1, t2)
+        return screen_rows_from_cur(t1) < screen_rows_from_cur(t2)
+    end)
+
+    if #targets >= 1 then
+        return targets
+    end
+end
+
 function highlight()
     vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
 
@@ -45,18 +90,6 @@ function highlight()
         nocombine = true,
     })
 end
-
-function leap_to_window()
-    target_windows = require("leap.util").get_enterable_windows()
-    local targets = {}
-    for _, win in ipairs(target_windows) do
-        local wininfo = vim.fn.getwininfo(win)[1]
-        local pos = { wininfo.topline, 1 } -- top/left corner
-        table.insert(targets, { pos = pos, wininfo = wininfo })
-    end
-    return targets, target_windows
-end
-
 function binds()
     require("leap").add_default_mappings()
     local default_keymaps = {
@@ -66,6 +99,7 @@ function binds()
             function()
                 require("leap").leap({ target_windows = { vim.fn.win_getid() } })
             end,
+            "Leap Current Buffer",
         },
         {
             { "n", "x", "o" },
@@ -77,10 +111,11 @@ function binds()
                     end, vim.api.nvim_tabpage_list_wins(0)),
                 })
             end,
+            "Jump all windows",
         },
         {
             { "n", "x", "o" },
-            "<c-]>",
+            "cq",
             function()
                 require("leap").leap({
                     target_windows = { vim.fn.win_getid() },
@@ -88,11 +123,12 @@ function binds()
                     multiselect = true,
                 })
             end,
+            "multi_curosr_normal",
         },
         -- leap-from-window)
         {
             { "n", "x", "o" },
-            "<c-#>",
+            "<c-e>",
             function()
                 targets, target_windows = leap_to_window()
                 require("leap").leap({
@@ -103,10 +139,23 @@ function binds()
                     end,
                 })
             end,
+            "leap_to_window",
+        },
+        {
+            { "n", "x", "o" },
+            "<c-f>",
+            function()
+                winid = vim.api.nvim_get_current_win()
+                require("leap").leap({
+                    target_windows = { winid },
+                    targets = get_line_starts(winid),
+                })
+            end,
+            "leap_to_line",
         },
     }
     for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true })
+        vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true, desc = m[4] })
     end
 end
 
@@ -114,7 +163,7 @@ function leap_setup()
     require("leap").setup({
         max_phase_one_targets = nil,
         highlight_unlabeled_phase_one_targets = true,
-        max_highlighted_traversal_targets = 50,
+        max_highlighted_traversal_targets = 200,
         case_sensitive = false,
         equivalence_classes = { " \t", "\r\n" },
         substitute_chars = { ["\r"] = "¬", ["\n"] = "¬" },

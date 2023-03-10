@@ -71,6 +71,7 @@ ai({
 -- <C-n> Start new session.
 -- <Tab> Cycle over windows.
 -- <C-i> [Edit Window] use response as input.
+
 ai({
     "github/copilot.vim",
     cmd = "Copilot",

@@ -4,6 +4,7 @@ local completion = require("core.pack").package
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ VeryLazy                                                           │
 --  ╰────────────────────────────────────────────────────────────────────╯
+local socket_name = "unix:/tmp/kitty"
 
 completion({
     "abecodes/tabout.nvim",
@@ -26,6 +27,15 @@ completion({
         { "hrsh7th/cmp-path", lazy = true },
         { "hrsh7th/cmp-cmdline", lazy = true },
         { "andersevenrud/cmp-tmux", lazy = true },
+        {
+            "garyhurtz/cmp_kitty",
+            init = function()
+                local kitty = require("cmp_kitty")
+                -- work-around
+                kitty.kitty.config.listen_on = socket_name
+                kitty:setup()
+            end,
+        },
         {
             "petertriho/cmp-git",
             lazy = true,
@@ -71,7 +81,6 @@ completion({
 -- })
 
 completion({
-
     "ziontee113/SnippetGenie",
     lazy = true,
     event = "VeryLazy",

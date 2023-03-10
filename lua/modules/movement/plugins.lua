@@ -67,19 +67,7 @@ movement({
     },
     config = conf.syntax_surfer,
 })
-movement({
-    "cbochs/portal.nvim",
-    lazy = true,
-    dependencies = {
-        "ThePrimeagen/harpoon",
-        "cbochs/grapple.nvim",
-    },
-})
-movement({
-    "cbochs/grapple.nvim",
-    lazy = true,
-    config = conf.grapple,
-})
+
 movement({
     "ThePrimeagen/harpoon",
     dependencies = { "pranavrao145/harpoon-tmux" },

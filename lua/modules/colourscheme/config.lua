@@ -103,15 +103,18 @@ function config.kanagawa()
         specialException = true, -- special highlight for exception handling keywords
         transparent = false, -- do not set background color
         dimInactive = lambda.config.colourscheme.dim_background, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
-        colors = {},
-        overrides = {
-            Pmenu = { fg = "NONE", bg = "NONE" },
-            normalfloat = { bg = "NONE" },
+        colors = {
+            theme = {
+                all = {
+                    ui = {
+                        bg_gutter = "none",
+                    },
+                },
+            },
         },
     })
 
-    -- setup_colorscheme("kanagawa", lambda.config.colourscheme.use_cmd)
-    vim.cmd.colorscheme("kanagawa")
+    require("kanagawa").load(lambda.config.colourscheme.kanagawa_flavour)
 end
 
 function config.horizon()
@@ -326,5 +329,29 @@ end
 function config.palenightfall()
     require("palenightfall").setup()
     vim.cmd.colorscheme("palenightfall")
+end
+function config.sweetie()
+    require("sweetie").setup({
+        -- Pop-up menu pseudo-transparency
+        pumblend = {
+            enable = true,
+            transparency_amount = 20,
+        },
+        -- Override default highlighting groups options
+        overrides = {},
+        -- Custom plugins highlighting groups
+        integrations = {
+            lazy = true,
+            neorg = true,
+            neogit = true,
+            telescope = true,
+        },
+        -- Enable custom cursor coloring even in terminal Neovim sessions
+        cursor_color = true,
+        -- Use sweetie's palette in `:terminal` instead of your default terminal colorscheme
+        terminal_colors = true,
+    })
+
+    vim.cmd.colorscheme("sweetie")
 end
 return config

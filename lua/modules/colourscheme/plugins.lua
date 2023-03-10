@@ -83,3 +83,8 @@ colourscheme({
     lazy = true,
     config = conf.palenightfall,
 })
+colourscheme({
+    "NTBBloodbath/sweetie.nvim",
+    lazy = true,
+    config = conf.sweetie,
+})

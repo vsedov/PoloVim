@@ -150,7 +150,6 @@ misc({
 misc({
     "shortcuts/no-neck-pain.nvim",
     lazy = true,
-    cmd = "NoNeckPain",
     keys = { "zz" },
     config = conf.noneck,
 })

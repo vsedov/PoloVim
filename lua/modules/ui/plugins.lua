@@ -105,6 +105,7 @@ ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
     event = "VeryLazy",
+    dependencies = {"shell-Raining/hlchunk.nvim", config = true},
     config = conf.blankline,
 }) -- after="nvim-treesitter",
 

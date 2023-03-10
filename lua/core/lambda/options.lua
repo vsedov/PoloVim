@@ -33,9 +33,7 @@ lambda.config = {
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_wrapping = true, -- I am not sure if this is causing me to segfault.
     use_unception = true,
-    use_code_window = false,
     use_luasnip_brackets = true, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
-    use_clock = false, -- set to true to  see timer for config
     use_pet = false,
     use_beacon = false,
     use_fidget = false,
@@ -81,11 +79,15 @@ lambda.config.colourscheme = {
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
     catppuccin_flavour = "mocha",
     -- @usage theme_name : percentage chance
+
+    kanagawa_flavour = "dragon", -- dragon, lotus-> white
     themes = {
         dark = {
             core_themes = {
-                -- "kanagawa.nvim",
-                "catppuccin",
+                "kanagawa.nvim",
+                -- "catppuccin",
+                -- "sweetie.nvim",
+                -- "vim-dogrun",
                 -- "poimandres.nvim",
                 -- "nvim-tundra",
                 -- "palenightfall.nvim",
@@ -93,7 +95,6 @@ lambda.config.colourscheme = {
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
                 -- "rose", -- TSMethod'
-                -- "vim-dogrun",
                 -- "mellow.nvim",
             },
             others = {

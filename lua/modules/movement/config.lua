@@ -308,25 +308,7 @@ function config.quick_scope()
     })
 end
 
-function config.grapple()
-    require("grapple").setup({
-        log_level = "warn",
-        scope = "directory",
-        save_path = vim.fn.stdpath("data") .. "/" .. "grapple.json",
-        popup_options = {
-            relative = "editor",
-            width = 60,
-            height = 12,
-            style = "minimal",
-            focusable = false,
-            border = "single",
-        },
 
-        integrations = {
-            resession = true,
-        },
-    })
-end
 function config.easymark()
     require("easymark").setup({
         position = "bottom", -- position choices: bottom|top|left|right

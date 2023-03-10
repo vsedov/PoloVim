@@ -141,13 +141,13 @@ user({
 -- :NRL - Reselect the last selected region and open it again in a narrowed window
 user({
     "chrisbra/NrrwRgn",
-    lazy = true, 
-        event = "VeryLazy",
+    lazy = true,
+    event = "VeryLazy",
 
     init = function()
         vim.g.nrrw_rgn_vert = 1
         -- Set the size (absolute=rows or cols, relative=percentage)
-        vim.g.nrrw_rgn_resize_window = 'relative'
+        vim.g.nrrw_rgn_resize_window = "relative"
         -- Set the new buffer size
         vim.g.nrrw_rgn_wdth = 20
         vim.g.nrrw_rgn_rel_min = 50
@@ -155,14 +155,27 @@ user({
     end,
 })
 
-
 user({
-    "axieax/urlview.nvim", 
-    keys = {"\\u", "\\U"},
-    cmd = {"UrlView"},
+    "axieax/urlview.nvim",
+    keys = { "\\u", "\\U" },
+    cmd = { "UrlView" },
     config = function()
         require("urlview").setup({})
         vim.keymap.set("n", "\\u", "<Cmd>UrlView<CR>", { desc = "view buffer URLs" })
         vim.keymap.set("n", "\\U", "<Cmd>UrlView lazy<CR>", { desc = "view plugin URLs" })
-    end
+    end,
+})
+
+user({
+    "kiyoon/haskell-scope-highlighting.nvim",
+    lazy = true,
+    ft = { "haskell" },
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+    },
+    init = function()
+        -- Consider disabling other highlighting
+        vim.cmd([[autocmd FileType haskell syntax off]])
+        vim.cmd([[autocmd FileType haskell TSDIsable highlight]])
+    end,
 })

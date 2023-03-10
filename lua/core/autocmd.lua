@@ -222,8 +222,17 @@ lambda.augroup("Utilities", {
     {
         event = { "BufWritePre", "FileWritePre" },
         pattern = { "*" },
-        command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
+        command = function()
+            if vim.tbl_contains({ "oil" }, vim.bo.ft) then
+                return
+            end
+            local dir = vim.fn.expand("<afile>:p:h")
+            if vim.fn.isdirectory(dir) == 0 then
+                vim.fn.mkdir(dir, "p")
+            end
+        end,
     },
+
     {
         event = { "BufLeave" },
         pattern = { "*" },

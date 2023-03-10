@@ -473,7 +473,7 @@ function config.blankline()
             "norg",
             "org",
             "orgagenda",
-            "", -- for all buffers without a file type
+            "oil_preview", -- for all buffers without a file type
         },
         buftype_exclude = { "terminal", "nofile", "dashboard" },
         context_patterns = {

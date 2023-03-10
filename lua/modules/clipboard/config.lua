@@ -48,10 +48,15 @@ end
 
 function config.substitute()
     require("substitute").setup({
-        yank_substituted_text = true,
-        on_substitute = require("yanky.integration").substitute(),
-        motion1 = true,
-        motion2 = true,
+      range = {
+        prefix = "s",
+        prompt_current_text = false,
+        confirm = false,
+        complete_word = false,
+        motion1 = false,
+        motion2 = false,
+        suffix = "",
+      },
     })
 end
 

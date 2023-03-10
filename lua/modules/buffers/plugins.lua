@@ -81,6 +81,7 @@ buffer({
     event = "VeryLazy",
     init = function()
         vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+        vim.keymap.set("n", "<leader>-", require("oil").open_float, { desc = "Open parent directory" })
     end,
     opts = {
         columns = {
@@ -104,7 +105,7 @@ buffer({
         },
         -- Restore window options to previous values when leaving an oil buffer
         restore_win_options = true,
-        skip_confirm_for_simple_edits = false,
+        skip_confirm_for_simple_edits = true,
         keymaps = {
             ["g?"] = "actions.show_help",
             ["<CR>"] = "actions.select",
@@ -122,7 +123,7 @@ buffer({
         -- Set to false to disable all of the above keymaps
         use_default_keymaps = false,
         view_options = {
-            show_hidden = false,
+            show_hidden = true,
         },
         -- Configuration for the floating window in oil.open_float
         float = {
@@ -130,7 +131,7 @@ buffer({
             padding = 2,
             max_width = 0,
             max_height = 0,
-            border = "rounded",
+            border = lambda.style.border.type_0,
             win_options = {
                 winblend = 10,
             },

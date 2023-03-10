@@ -303,6 +303,7 @@ local container = {
             "stylua",
             "trim_newlines",
             "trim_whitespace",
+            "pyflyby",
         },
         code_action = { "eslint_d", "gitrebase", "refactoring" },
     },

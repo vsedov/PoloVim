@@ -38,7 +38,7 @@ function config.mdeval()
 end
 
 function config.vimtex()
-    vim.g.vimtex_view_method = "zathura"
+    vim.g.vimtex_view_method = "sioyek"
     vim.g.vimtex_compiler_method = "latexmk"
     vim.g.vimtex_compiler_latexmk = {
         build_dir = "build",

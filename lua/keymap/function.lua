@@ -42,11 +42,11 @@ local plug_map = {
         return ":ProjectRoot<cr>"
     end, "Diag show Prev"):with_expr(),
 
-    ["n|\\\\<leader>"] = map_cmd(function()
-        return ":NoNeckPain"
-    end, "NoNeckPain"):with_expr(),
+    -- ["n|\\\\<leader>"] = map_cmd(function()
+    --     return ":NoNeckPain"
+    -- end, "NoNeckPain"):with_expr(),
 
-    ["v|_d"] = map_cmd(function()
+    ["v|d"] = map_cmd(function()
             local l, c = unpack(vim.api.nvim_win_get_cursor(0))
             for _, line in ipairs(vim.api.nvim_buf_get_lines(0, l - 1, l, true)) do
                 if line:match("^%s*$") then
