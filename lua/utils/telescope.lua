@@ -518,15 +518,12 @@ M.grep_string_visual = function(opts)
         vim.api.nvim_command('silent! normal! "ay')
         local selection = vim.fn.trim(vim.fn.getreg("a"))
         vim.fn.setreg("a", save_previous)
+        if opts then
+            return vim.fn.substitute(opts, [[\n]], [[\\n]], "g")
+        end
         return vim.fn.substitute(selection, [[\n]], [[\\n]], "g")
     end
     opts = opts or visual_selection()
-
-    opts = vim.fn.substitute(opts, [[\n]], [[\\n]], "g")
-    builtin.live_grep({
-        default_text = opts,
-    })
-
     builtin.live_grep({
         default_text = opts,
     })
