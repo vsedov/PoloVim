@@ -153,6 +153,7 @@ function config.nvim_bufferline()
                             end
                         end,
                     },
+
                 },
             },
         },

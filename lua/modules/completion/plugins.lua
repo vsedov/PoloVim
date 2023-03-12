@@ -27,15 +27,16 @@ completion({
         { "hrsh7th/cmp-path", lazy = true },
         { "hrsh7th/cmp-cmdline", lazy = true },
         { "andersevenrud/cmp-tmux", lazy = true },
-        {
-            "garyhurtz/cmp_kitty",
-            init = function()
-                local kitty = require("cmp_kitty")
-                -- work-around
-                kitty.kitty.config.listen_on = socket_name
-                kitty:setup()
-            end,
-        },
+        -- { -- It would be nice but i have to have a kitty instance running always which, really is
+        -- just a pita
+        --     "garyhurtz/cmp_kitty",
+        --     cond = false,
+        --     init = function()
+        --         local kitty = require("cmp_kitty")
+        --         kitty.kitty.config.listen_on = socket_name
+        --         kitty:setup()
+        --     end,
+        -- },
         {
             "petertriho/cmp-git",
             lazy = true,

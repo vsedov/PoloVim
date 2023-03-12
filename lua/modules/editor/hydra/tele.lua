@@ -147,7 +147,7 @@ Hydra({
             function()
                 lambda.clever_tcd()
                 vim.defer_fn(function()
-                    vim.ui.input({ prompt = "grep item", default = "item" }, function(item)
+                    vim.ui.input({ prompt = "grep item" }, function(item)
                         require("utils.telescope").grep_string_visual(tostring(item))
                     end)
                 end, 100)

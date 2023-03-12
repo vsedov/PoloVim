@@ -44,6 +44,10 @@ local border = {
     --   { "╰", "FloatBorder" },
     --   { "│", "FloatBorder" },
 }
+local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
+local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
+
+
 local codes = {
     no_matching_function = {
         message = " Can't find a matching function",
@@ -235,6 +239,8 @@ local container = {
         focusable = true,
         border = border,
         source = "always",
+        max_width = max_width,
+        max_height = max_height,
     },
     open_float = (function(orig)
         return function(bufnr, opts)

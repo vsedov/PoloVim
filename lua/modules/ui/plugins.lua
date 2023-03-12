@@ -104,10 +104,13 @@ ui({
 ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
+    branch = "master",
     event = "VeryLazy",
-    dependencies = {"shell-Raining/hlchunk.nvim", config = true},
+    dependencies = { "shell-Raining/hlchunk.nvim", config = true },
     config = conf.blankline,
-}) -- after="nvim-treesitter",
+})
+
+-- after="nvim-treesitter",
 
 ui({
     "xiyaowong/nvim-transparent",
@@ -178,6 +181,8 @@ ui({
 ui({
     "samuzora/pet.nvim",
     lazy = true,
+    cond = lambda.config.use_pet,
+    event = "VimEnter",
     config = function()
         require("pet-nvim")
     end,

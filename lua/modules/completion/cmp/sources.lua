@@ -80,6 +80,12 @@ local plugins = {
     {
         name = "tmux",
         enable = true,
+        option = {
+            -- Source from all panes in session instead of adjacent panes
+            all_panes = true,
+            -- Completion popup label
+            label = "[tmux]",
+        },
     },
     {
         name = "nvim_lua",

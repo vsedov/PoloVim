@@ -344,6 +344,37 @@ lambda.command("TreeInspect", function()
 end)
 lambda.command("Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
 
+lambda.command("Vimrc", function(opts)
+    if opts.args == "" then
+        vim.cmd("edit $MYVIMRC")
+    else
+        local path = vim.fs.find({ opts.args .. ".lua" }, {
+            path = vim.fn.stdpath("config") .. "/lua",
+        })[1]
+
+        if not path then
+            vim.api.nvim_err_writeln(string.format("[Vimrc]: File %s.lua not found.", opts.args))
+            return
+        end
+        vim.cmd("edit " .. path)
+    end
+
+    vim.cmd("lcd " .. vim.fn.stdpath("config"))
+end, {
+    nargs = "?",
+    complete = function(line)
+        local paths = vim.fn.globpath(vim.fn.stdpath("config") .. "/lua", "**/*.lua")
+        local files = {}
+        for file in paths:gmatch("([^\n]+)") do
+            table.insert(files, file:match("^.+/(.+)%."))
+        end
+
+        return vim.tbl_filter(function(value)
+            return vim.startswith(value, line)
+        end, files)
+    end,
+})
+
 vim.cmd([[ command! NeorgStart execute 'tabe ~/neorg/index.norg' ]])
 
 vim.cmd("imap <C-V> <C-R>*")

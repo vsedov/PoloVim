@@ -71,6 +71,7 @@ vim.api.nvim_create_autocmd({ "ExitPre" }, {
         end
     end,
     group = "Heirline",
+    once = true,
 })
 
 --- Blend two rgb colors using alpha
@@ -116,7 +117,7 @@ end
 
 local function setup_colors()
     return {
-        bright_bg = utils.get_highlight("Folded").bg,
+        bright_bg = utils.get_highlight("Folded").bg or utils.get_highlight("Folded").fg,
         bright_fg = utils.get_highlight("Folded").fg,
         red = utils.get_highlight("DiagnosticError").fg,
         dark_red = utils.get_highlight("DiffDelete").bg,

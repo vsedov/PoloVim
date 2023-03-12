@@ -34,7 +34,7 @@ lambda.config = {
     use_wrapping = true, -- I am not sure if this is causing me to segfault.
     use_unception = true,
     use_luasnip_brackets = true, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
-    use_pet = false,
+    use_pet = true,
     use_beacon = false,
     use_fidget = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
@@ -72,6 +72,7 @@ lambda.config.extra_search = {
 }
 
 lambda.config.colourscheme = {
+    enable_transparent = true,
     dim_background = true,
     change_kitty_bg = false,
     --- @usage "main"' | '"moon"
@@ -84,8 +85,8 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
-                -- "catppuccin",
+                -- "kanagawa.nvim",
+                "catppuccin",
                 -- "sweetie.nvim",
                 -- "vim-dogrun",
                 -- "poimandres.nvim",

@@ -308,7 +308,6 @@ function config.quick_scope()
     })
 end
 
-
 function config.easymark()
     require("easymark").setup({
         position = "bottom", -- position choices: bottom|top|left|right

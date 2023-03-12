@@ -101,8 +101,8 @@ function config.kanagawa()
         variablebuiltinStyle = { italic = true },
         specialReturn = true, -- special highlight for the return keyword
         specialException = true, -- special highlight for exception handling keywords
-        transparent = false, -- do not set background color
-        dimInactive = lambda.config.colourscheme.dim_background, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
+        transparent = lambda.config.colourscheme.enable_transparent, -- do not set background color --  TODO: (vsedov) (01:24:03 - 10/03/23): If i set this everythign kinda breaks so il have to reverse from this at one point
+        dimInactive = (not lambda.config.colourscheme.enable_transparent and lambda.config.colourscheme.dim_background), -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
         colors = {
             theme = {
                 all = {

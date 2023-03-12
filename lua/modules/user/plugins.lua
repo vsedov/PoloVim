@@ -102,24 +102,24 @@ user({
         })
     end,
 })
+
+--
+-- PetsNew {name}: creates a pet with the style and type defined by the configuration, and name {name}
+-- PetsNewCustom {type} {style} {name}: creates a new pet with type, style and name specified in the command
+-- PetsList: prints the names of all the pets that are currently alive
+-- PetsKill {name}: kills the pet with given name, which will immediately blink out of existence. Forever.
+-- PetsKillAll: kills all the pets, poor creatures. Works just as PetsKill but for every pet.
+-- PetsPauseToggle: pause/resume animations for all pets, leaving them on screen as cute little statues
+-- PetsHideToggle: pause the animation for all pets and hide them / show all the pets again and resume animations
+-- PetsIdleToggle/PetsSleepToggle: basically a do-not-disturb mode, pets are still animated but do not move around
 user({
     "giusgad/pets.nvim",
-    cmd = {
-        "PetsNew",
-        "PetsNewCustom",
-        "PetsList",
-        "PetsKill",
-        "PetsKillAll",
-        "PetsPauseToggle",
-        "PetsHideToggle",
-        "PetsSleepToggle",
-    },
-    dependencies = { "MunifTanjim/nui.nvim", "edluffy/hologram.nvim" },
-    opts = {
-        default_pet = "aloof",
-        default_style = "black",
-    },
-    config = true,
+    dependencies = { "MunifTanjim/nui.nvim", "giusgad/hologram.nvim" },
+    config = function()
+        require("pets").setup({
+            -- your options here
+        })
+    end,
 })
 
 user({
@@ -143,7 +143,6 @@ user({
     "chrisbra/NrrwRgn",
     lazy = true,
     event = "VeryLazy",
-
     init = function()
         vim.g.nrrw_rgn_vert = 1
         -- Set the size (absolute=rows or cols, relative=percentage)

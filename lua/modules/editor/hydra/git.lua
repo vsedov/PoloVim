@@ -142,9 +142,20 @@ if gitrepo then
                     end,
                     { expr = true, desc = "prev hunk" },
                 },
-                { "s", ":Gitsigns stage_hunk<CR>", { silent = true } },
+                {
+                    "s",
+                    function()
+                        command = "Gitsigns stage_hunk"
+                        if vim.fn.mode() ~= "n" then
+                            command = "'<,'> " .. command
+                        end
+                        vim.cmd(command)
+                    end,
+                    { silent = true },
+                },
 
                 {
+
                     "i",
                     function()
                         local mode = vim.api.nvim_get_mode().mode:sub(1, 1)

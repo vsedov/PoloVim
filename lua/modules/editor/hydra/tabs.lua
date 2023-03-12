@@ -27,7 +27,7 @@ local cmd = function(cmd)
     end
 end
 
-local bracket = { "<cr>", "n", "N", "c", "e" }
+local bracket = { "<cr>", "<BS>", "z", "n", "N", "e" }
 local exit = { nil, { exit = false, desc = "EXIT" } }
 config.tab = {
     color = "red",
@@ -37,20 +37,29 @@ config.tab = {
         cmd("tN"),
         { nowait = true, exit = false, desc = "TabNext" },
     },
+    ["<BS>"] = {
+        cmd("tabc"),
+        { nowait = true, exit = false, desc = "TabClose" },
+    },
     N = {
         cmd("tabN"),
         { nowait = true, exit = false, desc = "TabPrev" },
     },
-    c = {
-        cmd("tabc"),
-        { nowait = true, exit = false, desc = "TabClose" },
+    z = {
+        function()
+            vim.cmd("Telescope zoxide list")
+        end,
+
+        { nowait = true, exit = false, desc = "Zoxide" },
     },
     d = {
-        cmd("tabdo"),
-        { nowait = true, exit = false, desc = "TabDo" },
+        cmd("tabdo oil"),
+        { nowait = true, exit = false, desc = "TabDo oil" },
     },
     e = {
+        --  TODO: (vsedov) (03:49:50 - 10/03/23): Make this into an input option that lists the files
         cmd("tabe"),
+
         { nowait = true, exit = false, desc = "TabEdit" },
     },
     f = {

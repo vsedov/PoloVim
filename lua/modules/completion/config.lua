@@ -37,8 +37,8 @@ function config.snip_genie()
     end, {})
 
     lambda.command("SnipCreate", function()
-      vim.notify("<cr> to start and ;<cr> to add the variables")
-    end, {force =true})
+        vim.notify("<cr> to start and ;<cr> to add the variables")
+    end, { force = true })
 end
 
 function config.autopair()
