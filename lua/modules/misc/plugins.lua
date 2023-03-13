@@ -25,7 +25,6 @@ misc({
 misc({
     "XXiaoA/ns-textobject.nvim",
     lazy = true,
-    -- event = "ModeChanged",
     dependencies = { "kylechui/nvim-surround" },
     keys = {
         { "aq", mode = { "x", "o" } },

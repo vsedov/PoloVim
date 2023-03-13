@@ -34,7 +34,7 @@ config.tab = {
     body = leader,
     ["<ESC>"] = { nil, { exit = false, desc = "EXIT" } },
     n = {
-        cmd("tN"),
+        cmd("tabnext"),
         { nowait = true, exit = false, desc = "TabNext" },
     },
     ["<BS>"] = {
@@ -42,7 +42,7 @@ config.tab = {
         { nowait = true, exit = false, desc = "TabClose" },
     },
     N = {
-        cmd("tabN"),
+        cmd("tabprevious"),
         { nowait = true, exit = false, desc = "TabPrev" },
     },
     z = {

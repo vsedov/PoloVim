@@ -776,7 +776,7 @@ local DefaultStatusline = {
     Space,
     ScrollBar,
     Space,
-    possession,
+    -- possession,
     {
         condition = vim.g.codeium_enabled,
         provider = function()

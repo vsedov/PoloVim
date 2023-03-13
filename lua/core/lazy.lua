@@ -162,12 +162,9 @@ vim.defer_fn(function()
     end
 
     loader({ plugins = { "hydra.nvim" } })
-
-
 end, 1000)
 
-
 vim.defer_fn(function()
-    loader({plugins = {"nvim-various-textobjs", "nvim-surround"}})
+    loader({ plugins = { "nvim-various-textobjs", "nvim-surround" } })
     require("modules.editor.hydra.parenth_mode")
 end, 2000)

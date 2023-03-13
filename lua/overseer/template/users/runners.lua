@@ -49,7 +49,7 @@ local filerunners = {
         end,
     },
     python = {
-        name = "Python",
+        name = "Python ipython",
         repl = "ipython",
         filerunner = function()
             return { "python", vim.fn.expand("%:p") }
@@ -208,6 +208,6 @@ return {
                 priority = 5,
             })
         end
-        cb(ret)
+        return ret
     end,
 }

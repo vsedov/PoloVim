@@ -364,7 +364,8 @@ function config.treehopper()
         local cursor = vim.api.nvim_win_get_cursor(0)
         local function f(ignore)
             return {
-                vim.treesitter.get_node_at_pos(0, cursor[1], cursor[2], { ignore_injections = ignore }):range(),
+                vim.treesitter.get_node({ 0, { cursor[1], cursor[2] }, { ignore_injections = ignore } }):range(),
+                -- vim.treesitter.get_node,
             }
         end
 
@@ -382,16 +383,22 @@ function config.treehopper()
         return true
     end
     vim.keymap.set({ "o", "x", "n" }, "H", function()
-        return with_tsht() and ":<C-U>lua require('tsht').nodes()<CR>" or [[<Plug>(leap-ast)]]
+        return with_tsht() and ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
+            or [[<Plug>(leap-ast)]]
     end, { expr = true, silent = true })
 
     vim.keymap.set("n", "zf", function()
         if with_tsht() then
-            require("tsht").nodes()
+            require("tsht").nodes({ ignore_injections = false })
         else
             vim.cmd("normal! v")
             require("leap-ast").leap()
         end
+        vim.cmd("normal! Vzf")
+    end, { silent = true })
+    vim.keymap.set("n", "zF", function()
+        vim.cmd("normal! v")
+        require("leap-ast").leap()
         vim.cmd("normal! Vzf")
     end, { silent = true })
 end

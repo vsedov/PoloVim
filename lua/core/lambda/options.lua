@@ -1,7 +1,8 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = true
+local noice_enabled = false
 local use_ts_yeti = true
-local use_codium_cmp = true
+
+local use_codium_cmp = false
 local use_tabnine_cmp = false
 -- toggle core values within the list
 
@@ -50,7 +51,7 @@ lambda.config.ai = {
         },
     },
     tabnine = {
-        use_tabnine = true,
+        use_tabnine = false,
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
         cmp = {

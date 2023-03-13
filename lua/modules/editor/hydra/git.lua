@@ -1,5 +1,6 @@
 local Hydra = require("hydra")
 local gitrepo = vim.fn.isdirectory(".git/index")
+local cmd = require("hydra.keymap-util").cmd
 
 local function wrap(fn, ...)
     local args = { ... }
@@ -7,6 +8,10 @@ local function wrap(fn, ...)
     return function()
         fn(unpack(args, nargs))
     end
+end
+
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(tostring(str), true, true, true)
 end
 
 local function diffmaster()
@@ -113,7 +118,7 @@ if gitrepo then
                     vim.cmd("echo") -- clear the echo area
                 end,
             },
-            mode = { "n", "x" },
+            mode = { "n", "x", "v" },
             body = "<leader>h",
             heads = {
                 {
@@ -142,34 +147,18 @@ if gitrepo then
                     end,
                     { expr = true, desc = "prev hunk" },
                 },
+
                 {
-                    "s",
-                    function()
-                        command = "Gitsigns stage_hunk"
-                        if vim.fn.mode() ~= "n" then
-                            command = "'<,'> " .. command
-                        end
-                        vim.cmd(command)
-                    end,
+                    "i",
+                    gitsigns.stage_hunk,
                     { silent = true },
                 },
 
-                {
-
-                    "i",
-                    function()
-                        local mode = vim.api.nvim_get_mode().mode:sub(1, 1)
-                        if mode == "V" then -- visual-line mode
-                            local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
-                            vim.api.nvim_feedkeys(esc, "x", false) -- exit visual mode
-                            vim.cmd("'<,'>gitsigns select_hunk")
-                        end
-                    end,
-                    { desc = "Select hunk" },
-                },
+                { "s", ":Gitsigns stage_hunk<cr>", { exit = false, nowait = true } },
 
                 { "u", gitsigns.undo_stage_hunk },
                 { "S", gitsigns.stage_buffer },
+
                 { "p", gitsigns.preview_hunk },
                 { "x", gitsigns.toggle_deleted, { nowait = true } },
                 { "r", gitsigns.reset_hunk },

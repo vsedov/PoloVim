@@ -146,7 +146,7 @@ ts({
 ts({
     "chrisgrieser/nvim-various-textobjs",
     lazy = true,
-    event = "VeryLazy", 
+    event = "VeryLazy",
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })
         vim.keymap.set("n", "gx", function()

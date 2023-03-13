@@ -70,6 +70,6 @@ return {
                 },
             },
         }
-        cb(ret)
+        return ret
     end,
 }

@@ -49,7 +49,7 @@ ai({
         vim.g.codeium_disable_bindings = 1
         vim.g.codeium_enabled = lambda.config.ai.use_codium_insert
     end,
-    config = conf.codeium,
+    config = conf.codium,
 })
 ai({
     "jcdickinson/codeium.nvim",

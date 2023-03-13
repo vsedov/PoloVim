@@ -49,19 +49,26 @@ function config.diaglist()
 end
 
 function config.surround()
+    local data = {
+        insert_line = "<C-#>", -- I am not sure how i feel about this
+        normal = "ys",
+        normal_cur = "yss",
+        normal_line = "yS",
+        normal_cur_line = "ySS",
+        visual = "gs",
+        visual_line = "gS",
+        delete = "ds",
+        change = "cs",
+    }
     require("nvim-surround").setup({
-        keymaps = {
-            insert_line = "<C-#>", -- I am not sure how i feel about this
-            normal = "ys",
-            normal_cur = "yss",
-            normal_line = "yS",
-            normal_cur_line = "ySS",
-            visual = "gs",
-            visual_line = "gS",
-            delete = "ds",
-            change = "cs",
-        },
+        keymaps = data,
     })
+
+    lambda.command("PrintSurroundBinds", function()
+        for i, _ in pairs(data) do
+            print(vim.inspect(data[i]))
+        end
+    end, {})
 end
 
 function config.ns()

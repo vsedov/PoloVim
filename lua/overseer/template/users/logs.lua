@@ -1,4 +1,17 @@
+-- https://github.com/Oliver-Leete/Configs/tree/master/nvim/lua
+local overseer = require("overseer")
+local constants = require("overseer.constants")
+local files = require("overseer.files")
+local STATUS = require("overseer.constants").STATUS
+local TAG = constants.TAG
+
 return {
+    condition = {
+        callback = function(opts)
+            return vim.bo.filetype == "lua"
+        end,
+    },
+
     generator = function(_, cb)
         local ret = {
             {
@@ -41,6 +54,6 @@ return {
                 params = {},
             })
         end
-        cb(ret)
+        return ret
     end,
 }
