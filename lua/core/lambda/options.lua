@@ -36,14 +36,12 @@ lambda.config = {
     use_unception = true,
     use_luasnip_brackets = true, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
     use_pet = true,
-    use_beacon = false,
-    use_fidget = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
 lambda.config.ai = {
     codeium = {
-        use_codeium = true,
+        use_codeium = false,
         use_codeium_cmp = use_codium_cmp,
         use_codium_insert = not use_codium_cmp,
         cmp = {
@@ -61,7 +59,7 @@ lambda.config.ai = {
             tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
         },
     },
-    sell_your_soul = false,
+    sell_your_soul = true,
 }
 
 lambda.config.extra_search = {
