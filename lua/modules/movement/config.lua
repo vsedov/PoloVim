@@ -49,7 +49,7 @@ function config.houdini()
             i = function(first, second)
                 local seq = first .. second
 
-                if vim.opt.filetype:get() == "terminal" then
+                if vim.opt.filetype:get() == "terminal" or vim.bo.buftype == "terminal" then
                     return "" -- disabled
                 end
 
