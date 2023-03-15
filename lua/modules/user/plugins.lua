@@ -178,3 +178,27 @@ user({
         vim.cmd([[autocmd FileType haskell TSDIsable highlight]])
     end,
 })
+
+user({
+    "liljaylj/codestats.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+        require("codestats").setup({
+            base_url = "https://codestats.net", -- codestats.net base url
+            api_key = os.getenv("CODESTAT_API_KEY"),
+            send_on_exit = true, -- send xp on nvim exit
+            send_on_timer = true, -- send xp on timer
+            timer_interval = 50000, -- timer interval in ms
+        })
+    end,
+})
+
+user({
+    "mikesmithgh/render.nvim",
+    cmd = { "Render", "RenderClean", "RenderQuickfix" },
+    lazy = true,
+    cond = false,
+    enable = false,
+    config = true,
+})
