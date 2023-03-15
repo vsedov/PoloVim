@@ -169,10 +169,10 @@ lambda.augroup("TextYankHighlight", {
 lambda.augroup("AddTerminalMappings", {
     {
         event = { "TermOpen" },
-        pattern = { "term://*" },
         command = function()
-            -- FIXME: this still sets mappings on terminal buffers like fzf
-            if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
+            vim.notify("Terminal is open")
+            if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" or vim.bo.buftype == "terminal" then
+                vim.notify("Terminal binds are being set")
                 local opts = { silent = false, buffer = 0 }
                 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
                 vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
