@@ -85,7 +85,6 @@ ts({
     config = conf.matchup,
     init = conf.matchup_setup,
 })
-
 ts({
     "Yggdroot/hiPairs",
     lazy = true,
@@ -191,17 +190,6 @@ ts({
     config = true,
 })
 
-ts({
-    "Wansmer/sibling-swap.nvim",
-    dependencies = { "nvim-treesitter" },
-    opts = {
-        use_default_keymaps = false,
-        keymaps = {
-            ["]w"] = "swap_with_right",
-            ["[w"] = "swap_with_left",
-        },
-    },
-})
 ts({
     "ziontee113/SelectEase",
     lazy = true,

@@ -396,6 +396,7 @@ function config.treehopper()
         end
         vim.cmd("normal! Vzf")
     end, { silent = true })
+
     vim.keymap.set("n", "zF", function()
         vim.cmd("normal! v")
         require("leap-ast").leap()
