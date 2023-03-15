@@ -106,7 +106,6 @@ local mappings = {
     -- }),
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul then
-            vim.notify("Copilot is no longer installed")
             local copilot_keys = vim.fn["copilot#Accept"]()
             if copilot_keys ~= "" then
                 vim.api.nvim_feedkeys(copilot_keys, "i", true)

@@ -50,7 +50,7 @@ config.tab = {
             vim.cmd("Telescope zoxide list")
         end,
 
-        { nowait = true, exit = false, desc = "Zoxide" },
+        { nowait = true, exit =false, desc = "Zoxide" },
     },
     d = {
         cmd("tabdo oil"),
