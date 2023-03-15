@@ -74,7 +74,10 @@ ai({
 
 ai({
     "github/copilot.vim",
-    cmd = "Copilot",
-    lazy = true,
+    -- lazy = true,
+    -- cmd = "Copilot",
+    cond = ai_conf.sell_your_soul,
+    -- event = "VeryLazy",
+
     init = conf.sell_your_soul,
 })
