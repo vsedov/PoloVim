@@ -25,13 +25,13 @@ local run_or_test = function(debug)
     end
 end
 
-local bracket = { "<cr>", "w", "e", "r", "f" }
+local bracket = { "<cr>", "w", "s", "r", "f" }
 config.runner = {
     color = "red",
     body = ";r",
     ["<ESC>"] = { nil, { exit = true } },
     w = { cmd("OverseerToggle"), { desc = "Overseer Toggle", exit = true } },
-    e = { cmd("OverseerRun"), { desc = "Overseer Run", exit = true } },
+    s = { cmd("OverseerRun"), { desc = "Overseer Run", exit = true } },
     d = { cmd("OverseerQuickAction"), { desc = "Overseer Quick AcAction", exit = true } },
     t = { cmd("OverseerTaskAction"), { desc = "OverseerTaskAction", exit = true } },
     b = { cmd("OverseerBuild"), { desc = "OverseerBuild", exit = true } },
