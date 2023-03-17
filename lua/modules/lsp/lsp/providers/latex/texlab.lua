@@ -1,5 +1,18 @@
 local forward_search_executable = "zathura"
 local zathura_args = { "--synctex-forward", "%l:1:%f", "%p" }
+
+local sioyk_search_executable = "sioyek"
+local sioyk_args = {
+    "--reuse-window",
+    "--inverse-search",
+    [[nvim-texlabconfig -file %1 -line %2]],
+    "--forward-search-file",
+    "%f",
+    "--forward-search-line",
+    "%l",
+    "%p",
+}
+
 return {
     cmd = { "texlab" },
     filetypes = { "tex", "bib" },
@@ -11,8 +24,10 @@ return {
                 executable = "latexmk",
                 args = {
                     "-pdf",
-                    "-interaction=nonstopmode",
+                    "-shell-escape",
+                    "-file-line-error",
                     "-synctex=1",
+                    "-interaction=nonstopmode",
                     "%f",
                 },
                 on_save = true,
@@ -32,17 +47,17 @@ return {
             },
             diagnostics = {
                 virtual_text = { spacing = 0, prefix = "" },
-                signs = true,
+                signs = false,
                 underline = true,
             },
             linters = { "chktex" },
             auto_save = true,
             ignore_errors = {},
-            diagnosticsDelay = 300,
-            formatterLineLength = 120,
+            diagnosticsDelay = 500,
+            formatterLineLength = 300,
             forwardSearch = {
-                args = zathura_args,
-                executable = forward_search_executable,
+                args = sioyk_args,
+                executable = sioyk_search_executable,
             },
             latexFormatter = "latexindent",
         },

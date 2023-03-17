@@ -35,7 +35,7 @@ lambda.config = {
     use_wrapping = true, -- I am not sure if this is causing me to segfault.
     use_unception = true,
     use_luasnip_brackets = true, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
-    use_pet = true,
+    use_pet = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
@@ -79,8 +79,8 @@ lambda.config.colourscheme = {
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
     catppuccin_flavour = "mocha",
     -- @usage theme_name : percentage chance
-
     kanagawa_flavour = "dragon", -- dragon, lotus-> white
+    use_wal = true,
     themes = {
         dark = {
             core_themes = {
@@ -157,10 +157,10 @@ lambda.config.lsp = {
 }
 
 lambda.config.ui = {
-    use_illuminate = true,
+    use_illuminate = false,
     use_murmur = false, -- this causes issues with my yanky config -
     use_modes = true,
-    use_heirline = true,
+    use_heirline = false,
     noice = {
         enable = noice_enabled,
         lsp = {
