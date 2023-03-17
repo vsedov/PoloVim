@@ -36,12 +36,6 @@ local plug_map = {
 
     ["n|<leader>cd"] = map_cmd(lambda.clever_tcd, "Cwd"):with_noremap():with_silent():with_nowait(),
 
-    -- New mapping for lspsaga
-    ["n|<leader><S-Tab>"] = map_cmd("<cmd>Lspsaga open_floaterm<cr>", "float_term"):with_noremap():with_silent(),
-    ["t|<leader><S-Tab>"] = map_cmd("<C-\\><C-n><cmd>Lspsaga close_floaterm<cr>", "float_term")
-        :with_noremap()
-        :with_silent(),
-
     -- check whats actually loaded
     ["n|<localleader>ps"] = map_cmd("<cmd>PackerStatus<cr>", "PackerStatus"):with_noremap():with_silent(),
     ["n|<localleader>pP"] = map_cmd("<cmd>StartupTime<cr>", "StartUpTime"):with_noremap():with_silent(),
@@ -55,22 +49,16 @@ local plug_map = {
         :with_silent(),
 
     --  REVISIT: (vsedov) (20:40:02 - 15/09/22): See if this works
-    ["n|\\;"] = map_cmd("<Cmd>Lspsaga code_action<cr>", "Code action Menu"):with_noremap():with_silent(),
+    ["n|cc"] = map_cmd("<Cmd>Lspsaga code_action<cr>", "Code action Menu"):with_noremap():with_silent(),
     -- ["n|cc"] = map_cmd("<Cmd>CodeActionMenu<cr>", "Code action Menu"):with_noremap():with_silent(),
+
     ["x|ga"] = map_cmd("<C-U>Lspsaga range_code_action<CR>", "Code action Menu"):with_noremap():with_silent(),
 
     ---- private peek
-    ["n|<localleader>D"] = map_cmd('<cmd>lua require"modules.lsp.lsp.config.peek".toggle_diagnostics_visibility()<CR>', "Toggle diagnostic Temp")
+    ["n|dpj"] = map_cmd('<cmd>lua require"modules.lsp.lsp.config.peek".peek()<CR>', "Peek Type definition")
         :with_noremap()
         :with_silent(),
-
-    ["n|dpj"] = map_cmd('<cmd>lua require"modules.lsp.lsp.config.peek".PeekTypeDefinition()<CR>', "Peek Type definition")
-        :with_noremap()
-        :with_silent(),
-
-    ["n|dpk"] = map_cmd('<cmd>lua require"modules.lsp.lsp.config.peek".PeekImplementation()<CR>', "Peek Implementation")
-        :with_noremap()
-        :with_silent(),
+    --
     ---- private peek
     ["n|<Leader>v"] = map_cu("Vista!!", "Vistaaa"):with_noremap():with_silent(),
 
