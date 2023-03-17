@@ -2,15 +2,14 @@ local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 
 editor({ "nvim-lua/plenary.nvim", lazy = true })
-editor({ "rainbowhxch/accelerated-jk.nvim", lazy = true, keys = {
-    "j",
-    "k",
-}, config = conf.acc_jk })
-
+-- editor({ "rainbowhxch/accelerated-jk.nvim", lazy = true, keys = {
+--     "j",
+--     "k",
+-- }, config = conf.acc_jk })
+--
 editor({
     "folke/which-key.nvim",
     lazy = true,
-
     event = "VeryLazy",
     config = function()
         require("modules.editor.which_key")
