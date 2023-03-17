@@ -13,7 +13,7 @@ notes({
 notes({
     "AckslD/nvim-FeMaco.lua",
     lazy = true,
-    ft = { "norg", "markdown" },
+    ft = { "norg", "markdown", "tex" },
     cmd = "FeMaco",
     config = conf.femaco,
 })
@@ -23,13 +23,6 @@ notes({
     lazy = true,
     ft = { "norg" },
     config = conf.mdeval,
-})
-
-notes({
-    "lervag/vimtex",
-    lazy = true,
-    ft = { "latex", "tex" },
-    config = conf.vimtex,
 })
 
 notes({

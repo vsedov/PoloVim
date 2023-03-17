@@ -20,19 +20,20 @@ return {
         texlab = {
             auxDirectory = nil,
             bibtexFormatter = "texlab",
-            build = {
-                executable = "latexmk",
-                args = {
-                    "-pdf",
-                    "-shell-escape",
-                    "-file-line-error",
-                    "-synctex=1",
-                    "-interaction=nonstopmode",
-                    "%f",
-                },
-                on_save = true,
-                forward_search_after = false,
-            },
+            -- build = {
+            --     executable = "latexmk",
+            --     args = {
+            --         "-pdf",
+            --         "-shell-escape",
+            --         "-file-line-error",
+            --         "-synctex=1",
+            --         "-interaction=nonstopmode",
+            --         "%f",
+            --     },
+            --     on_save = true,
+            --     forward_search_after = false,
+            -- },
+            build = _G.TeXMagicBuildConfig,
             chktex = {
                 on_open_and_save = true,
                 on_edit = false,

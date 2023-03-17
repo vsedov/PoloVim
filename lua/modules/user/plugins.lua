@@ -202,3 +202,31 @@ user({
     enable = false,
     config = true,
 })
+user({
+    "rawnly/gist.nvim",
+    cmd = { "CreateGist" },
+})
+
+user({
+    "jghauser/papis.nvim",
+    dependencies = {
+        "kkharji/sqlite.lua",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+        require("papis").setup({
+            -- These are configuration options of the `papis` program relevant to papis.nvim.
+            -- Papis.nvim can get them automatically from papis, but this is very slow. It is
+            -- recommended to copy the relevant settings from your papis configuration file.
+            papis_python = {
+                dir = "/home/viv/Documents/papers/",
+                info_name = "info.yaml", -- (when setting papis options `-` is replaced with `_`
+                -- in the keys names)
+                notes_name = [[notes.norg]],
+            },
+            enable_keymaps = true,
+        })
+    end,
+})

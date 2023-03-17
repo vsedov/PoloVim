@@ -248,7 +248,7 @@ ui({
             end, { expr = true })
         end,
     },
-    event = "BufReadPost",
+    -- event = "BufReadPost",
     config = function()
         require("scrollbar.handlers.search").setup()
         require("scrollbar").setup({
@@ -394,6 +394,8 @@ ui({
 ui({
     "rebelot/heirline.nvim",
     lazy = true,
+    cond = lambda.config.ui.use_heirline,
+    event = "VeryLazy",
     dependencies = {
         {
             "jcdickinson/wpm.nvim",
@@ -403,6 +405,9 @@ ui({
         },
         { "uga-rosa/utf8.nvim", lazy = true },
     },
+    config = function()
+        require("modules.ui.heirline")
+    end,
 })
 
 ui({
