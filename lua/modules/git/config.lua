@@ -193,13 +193,13 @@ function config.neogit()
 
     vim.keymap.set("n", ";gs", function()
         neogit.open()
-    end, {desc = "git_open", silent = true, noremap = true})
+    end, { desc = "git_open", silent = true, noremap = true })
 
     vim.keymap.set("n", ";gc", function()
         neogit.open({ "commit" })
-    end, {desc = "git_commit", silent = true, noremap = true})
-    vim.keymap.set("n", ";gl", neogit.popups.pull.create, {desc = "git_pull", silent = true, noremap = true})
-    vim.keymap.set("n", ";gp", neogit.popups.push.create, {desc = "git_push", silent = true, noremap = true})
+    end, { desc = "git_commit", silent = true, noremap = true })
+    vim.keymap.set("n", ";gl", neogit.popups.pull.create, { desc = "git_pull", silent = true, noremap = true })
+    vim.keymap.set("n", ";gp", neogit.popups.push.create, { desc = "git_push", silent = true, noremap = true })
 end
 
 function config.vgit()
