@@ -53,7 +53,7 @@ vim.keymap.set("n", "gk", keyword, { buffer = 0 })
 vim.opt_local.textwidth = 100
 vim.opt_local.formatoptions:remove("o")
 vim.o.smarttab = true
-vim.colorcolumn = "130"
+vim.o.colorcolumn = "130"
 
 -- local editing = function(options)
 --     local function set_options(keys, value)

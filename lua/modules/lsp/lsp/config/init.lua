@@ -38,6 +38,8 @@ function M.common_on_attach(client, bufnr)
     if config.on_attach_callback[client.name] then
         config.on_attach_callback[client.name](client, bufnr)
     end
+    require("nvim-navbuddy").attach(client, bufnr)
+
     -- Ideally if we are using noice , we really should not be using lsp_signature.
     add_lsp_buffer_keybindings(client, bufnr)
     require("modules.lsp.lsp.config.autocmd").setup_autocommands(client, bufnr)

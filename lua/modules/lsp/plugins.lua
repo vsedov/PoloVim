@@ -136,3 +136,13 @@ lsp({
     cmd = "Glance",
     config = conf.glance,
 })
+
+lsp({
+    "SmiteshP/nvim-navbuddy",
+    dependencies = {
+        "neovim/nvim-lspconfig",
+        "SmiteshP/nvim-navic",
+        "MunifTanjim/nui.nvim",
+    },
+    config = true,
+})

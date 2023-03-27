@@ -24,64 +24,59 @@
 
 --- @module lyaml.functional
 
-
 --- `lyaml.null` value.
 -- @table NULL
-local NULL = setmetatable({}, {_type='LYAML null'})
-
+local NULL = setmetatable({}, { _type = "LYAML null" })
 
 --- `lyaml.null` predicate.
 -- @param x operand
 -- @treturn bool `true` if *x* is `lyaml.null`.
 local function isnull(x)
-   return(getmetatable(x) or {})._type == 'LYAML null'
+    return (getmetatable(x) or {})._type == "LYAML null"
 end
-
 
 --- Callable predicate.
 -- @param x operand
 -- @treturn bool `true` if *x* is a function has a __call metamethod
 -- @usage r = iscallable(x) and x(...)
 local function iscallable(x)
-   if type(x) ~= 'function' then
-      x =(getmetatable(x) or {}).__call
-   end
-   if type(x) == 'function' then
-      return x
-   end
+    if type(x) ~= "function" then
+        x = (getmetatable(x) or {}).__call
+    end
+    if type(x) == "function" then
+        return x
+    end
 end
-
 
 --- Compose a function to try each callable with supplied args.
 -- @tparam table fns list of functions to try
 -- @treturn function a new function to call *...* functions, stopping
 --    and returning the first non-nil result, if any
 local function anyof(fns)
-   return function(...)
-      for _, fn in ipairs(fns) do
-         if iscallable(fn) then
-            local r = fn(...)
-            if r ~= nil then
-               return r
+    return function(...)
+        for _, fn in ipairs(fns) do
+            if iscallable(fn) then
+                local r = fn(...)
+                if r ~= nil then
+                    return r
+                end
             end
-         end
-      end
-   end
+        end
+    end
 end
-
 
 --- Return arguments unchanged.
 -- @param ... arguments
 -- @return *...*
 local function id(...)
-   return ...
+    return ...
 end
 
 --- @export
 return {
-   NULL = NULL,
-   anyof = anyof,
-   id = id,
-   iscallable = iscallable,
-   isnull = isnull,
+    NULL = NULL,
+    anyof = anyof,
+    id = id,
+    iscallable = iscallable,
+    isnull = isnull,
 }

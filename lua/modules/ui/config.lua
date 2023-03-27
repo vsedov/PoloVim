@@ -1,4 +1,6 @@
 local api = vim.api
+local r, api, fn = vim.regex, vim.api, vim.fn
+local strwidth = api.nvim_strwidth
 
 local config = {}
 
@@ -37,7 +39,7 @@ function config.murmur()
 end
 
 function config.notify()
-    require("utils.ui.utils").plugin("notify", {
+    require("utils.ui.utils_2").plugin("notify", {
         { NotifyERRORBorder = { bg = { from = "NormalFloat" } } },
         { NotifyWARNBorder = { bg = { from = "NormalFloat" } } },
         { NotifyINFOBorder = { bg = { from = "NormalFloat" } } },
@@ -303,83 +305,55 @@ function config.scrollbar()
 end
 
 function config.ufo()
-    local ufo = require("ufo")
-    local hl = require("utils.ui.utils")
-    local opt, strwidth = vim.opt, vim.api.nvim_strwidth
-
-    local function handler(virt_text, _, end_lnum, width, truncate, ctx)
-        local result = {}
-        local padding = ""
-        local cur_width = 0
-        local suffix_width = strwidth(ctx.text)
-        local target_width = width - suffix_width
-
-        for _, chunk in ipairs(virt_text) do
-            local chunk_text = chunk[1]
-            local chunk_width = strwidth(chunk_text)
-            if target_width > cur_width + chunk_width then
-                table.insert(result, chunk)
-            else
-                chunk_text = truncate(chunk_text, target_width - cur_width)
-                local hl_group = chunk[2]
-                table.insert(result, { chunk_text, hl_group })
-                chunk_width = strwidth(chunk_text)
-                if cur_width + chunk_width < target_width then
-                    padding = padding .. (" "):rep(target_width - cur_width - chunk_width)
-                end
-                break
-            end
-            cur_width = cur_width + chunk_width
-        end
-
-        local end_text = ctx.get_fold_virt_text(end_lnum)
-        -- reformat the end text to trim excess whitespace from indentation usually the first item is indentation
-        if end_text[1] and end_text[1][1] then
-            end_text[1][1] = end_text[1][1]:gsub("[%s\t]+", "")
-        end
-
-        table.insert(result, { " ⋯ ", "UfoFoldedEllipsis" })
-        vim.list_extend(result, end_text)
-        table.insert(result, { padding, "" })
-        return result
-    end
-
-    opt.foldlevelstart = 99
-    -- Don't add folds to sessions because they are added asynchronously and if the file does not
-    -- exist on a git branch for which the folds where saved it will cause an error on startup
-    -- opt.sessionoptions:append('folds')
-    hl.plugin("ufo", {
-        { Folded = { bold = false, italic = false, bg = { from = "Normal", alter = -7 } } },
-    })
-
-    lambda.augroup("UfoSettings", {
-        {
-            event = "FileType",
-            pattern = { "norg" },
-            command = function()
-                ufo.detach()
-            end,
-        },
-    })
-
-    local ft_map = {
-        dart = { "lsp", "treesitter" },
-    }
-
-    ufo.setup({
+    local ft_map = { rust = "lsp" }
+    require("ufo").setup({
         open_fold_hl_timeout = 0,
-        fold_virt_text_handler = handler,
-        enable_get_fold_virt_text = true,
         preview = { win_config = { winhighlight = "Normal:Normal,FloatBorder:Normal" } },
-        provider_selector = function(_, filetype)
-            return ft_map[filetype] or { "indent" }
+        enable_get_fold_virt_text = true,
+        close_fold_kinds = { "imports", "comment" },
+        provider_selector = function(_, ft)
+            return ft_map[ft] or { "treesitter", "indent" }
+        end,
+        fold_virt_text_handler = function(virt_text, _, end_lnum, width, truncate, ctx)
+            local result, cur_width, padding = {}, 0, ""
+            local suffix_width = strwidth(ctx.text)
+            local target_width = width - suffix_width
+
+            for _, chunk in ipairs(virt_text) do
+                local chunk_text = chunk[1]
+                local chunk_width = strwidth(chunk_text)
+                if target_width > cur_width + chunk_width then
+                    table.insert(result, chunk)
+                else
+                    chunk_text = truncate(chunk_text, target_width - cur_width)
+                    local hl_group = chunk[2]
+                    table.insert(result, { chunk_text, hl_group })
+                    chunk_width = strwidth(chunk_text)
+                    if cur_width + chunk_width < target_width then
+                        padding = padding .. (" "):rep(target_width - cur_width - chunk_width)
+                    end
+                    break
+                end
+                cur_width = cur_width + chunk_width
+            end
+
+            if ft_map[vim.bo[ctx.bufnr].ft] == "lsp" then
+                table.insert(result, { " ⋯ ", "UfoFoldedEllipsis" })
+                return result
+            end
+
+            local end_text = ctx.get_fold_virt_text(end_lnum)
+            -- reformat the end text to trim excess whitespace from
+            -- indentation usually the first item is indentation
+            if end_text[1] and end_text[1][1] then
+                end_text[1][1] = end_text[1][1]:gsub("[%s\t]+", "")
+            end
+
+            vim.list_extend(result, { { " ⋯ ", "UfoFoldedEllipsis" }, unpack(end_text) })
+            table.insert(result, { padding, "" })
+            return result
         end,
     })
-
-    vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "open all folds" })
-    vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "close all folds" })
-    vim.keymap.set("n", "zP", ufo.peekFoldedLinesUnderCursor, { desc = "preview fold" })
-
     local function nN(char)
         local ok, winid = require("hlslens").nNPeekWithUFO(char)
         if ok and winid then
@@ -400,7 +374,6 @@ function config.ufo()
         nN("N")
     end)
 end
-
 function config.fold_focus()
     local foldcus = require("foldcus")
     local NS = { noremap = true, silent = true }

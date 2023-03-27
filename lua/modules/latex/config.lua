@@ -7,15 +7,14 @@ function config.vimtex()
         callback = 1,
         continuous = 1,
         executable = "latexmk",
-        hooks = {},
         options = {
             "-pdf",
             "-shell-escape",
-            "-verbose",
-            "-file-line-error",
-            "-synctex=1",
-            "-pvc",
+            "-pdflatex",
             "-interaction=nonstopmode",
+            "-synctex=1",
+            "-outdir=.build",
+            "-pvc",
         },
     }
     vim.g.vimtex_imaps_enabled = true
@@ -45,5 +44,48 @@ function config.vimtex()
     vim.g.vimtext_quickfix_mode = 1
     -- QuickFix is just annoying
     vim.g.vimtex_quickfix_enabled = 0
+end
+function config.texmagic()
+    -- Run setup and specify two custom build engines
+    require("texmagic").setup({
+        engines = {
+            pdflatex = { -- This has the same name as a default engine but would
+                -- be preferred over the same-name default if defined
+                executable = "latexmk",
+                args = {
+                    "-pdflatex",
+                    "-interaction=nonstopmode",
+                    "-synctex=1",
+                    "-outdir=.build",
+                    "-pv",
+                    "%f",
+                },
+                isContinuous = true,
+            },
+            lualatex = { -- This is *not* one of the defaults, but it can be
+                -- called via magic comment if defined here
+                executable = "latexmk",
+                args = {
+                    "-pdflua",
+                    "-interaction=nonstopmode",
+                    "-synctex=1",
+                    "-pv",
+                    "%f",
+                },
+                isContinuous = false,
+            },
+        },
+    })
+    local lspconfig = require("lspconfig")
+    local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
+    local latex_setup = {
+        texlab = function()
+            lspconfig.texlab.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.texlab")))
+        end,
+        ltex = function()
+            lspconfig.ltex.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.ltex").config))
+        end,
+    }
+    latex_setup[lambda.config.lsp.latex]()
 end
 return config

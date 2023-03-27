@@ -5,7 +5,6 @@ local cache_dir = vim.env.HOME .. "/.cache/nvim/"
 
 local vim = vim
 
--- Create cache dir and subs dir
 local createdir = function()
     local data_dir = {
         cache_dir .. "backup",

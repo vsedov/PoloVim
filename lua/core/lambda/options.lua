@@ -84,8 +84,8 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                -- "kanagawa.nvim",
-                "catppuccin",
+                "kanagawa.nvim",
+                -- "catppuccin",
                 -- "sweetie.nvim",
                 -- "vim-dogrun",
                 -- "poimandres.nvim",

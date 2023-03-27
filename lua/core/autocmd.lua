@@ -1,6 +1,7 @@
 local vim = vim
 local fn = vim.fn
 local api = vim.api
+local fmt = string.format
 
 local function replace_termcodes(str)
     return api.nvim_replace_termcodes(str, true, true, true)
@@ -116,16 +117,11 @@ lambda.augroup("SmartClose", {
         -- Close certain filetypes by pressing q.
         event = { "FileType" },
         pattern = "*",
-        command = function()
+        command = function(args)
             local is_unmapped = fn.hasmapto("q", "n") == 0
-
-            local is_eligible = is_unmapped
-                or vim.wo.previewwindow
-                or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
-                or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
-
+            local is_eligible = is_unmapped or vim.wo.previewwindow or smart_close_filetypes[vim.bo[args.buf].ft]
             if is_eligible then
-                vim.keymap.set("n", "-q", smart_close, { buffer = 0, nowait = true })
+                vim.keymap.set("n", "-q", smart_close, { buffer = args.buf, nowait = true })
             end
         end,
     },
@@ -562,3 +558,18 @@ if has("autocmd")
 	autocmd BufWritePre *.txt,*.jl,*.js,*.py,*.wiki,*.sh,*.coffee,*.lua :call CleanExtraSpaces()
 endif
 ]])
+-- tmux and kitty are no longer able to access the current working directory of neovim
+-- since the TUI became a separate process
+-- see: https://github.com/neovim/neovim/issues/21771#issuecomment-1461710157
+if vim.env.TMUX or vim.env.KITTY_PID then
+    lambda.augroup("NvimCwd", {
+        {
+            event = { "DirChanged" },
+            command = function()
+                vim.schedule(function()
+                    fn.chansend(vim.v.stderr, fmt("\033]7;file://%s\033\\", vim.v.event.cwd))
+                end)
+            end,
+        },
+    })
+end

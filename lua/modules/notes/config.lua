@@ -37,7 +37,6 @@ function config.mdeval()
     end, {})
 end
 
-
 function config.table()
     vim.g.table_mode_corner = "|"
     vim.cmd([[

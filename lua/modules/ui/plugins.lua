@@ -1,9 +1,21 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
+local api, fn = vim.api, vim.fn
 
 ui({
     "xiyaowong/virtcolumn.nvim",
+    cond = false,
     event = "VeryLazy",
+})
+ui({
+    "lukas-reineke/virt-column.nvim",
+    event = "VimEnter",
+    opts = { char = "▕" },
+    init = function()
+        require("utils.ui.utils_2").plugin("virt_column", {
+            { VirtColumn = { fg = { from = "Comment", alter = 0.10 } } },
+        })
+    end,
 })
 
 ui({
@@ -119,6 +131,39 @@ ui({
 })
 
 ui({
+    "levouh/tint.nvim",
+    event = "WinNew",
+    -- branch = 'untint-forcibly-closed-windows',
+    opts = {
+        tint = -30,
+      -- stylua: ignore
+      highlight_ignore_patterns = {
+        'WinSeparator', 'St.*', 'Comment', 'Panel.*', 'Telescope.*',
+        'Bqf.*', 'VirtColumn', 'Headline.*', 'NeoTree.*',
+      },
+        window_ignore_function = function(win_id)
+            local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
+            -- TODO: ideally tint should just ignore all buffers with a special type other than maybe "acwrite"
+            -- since if there is a custom buftype it's probably a special buffer we always want to pay
+            -- attention to whilst its open.
+            -- BUG: neo-tree cannot be ignore as either nofile or by filetype as this causes tinting bugs
+            if win.diff or not lambda.falsy(fn.win_gettype(win_id)) then
+                return true
+            end
+            local ignore_bt = lambda.p_table({ terminal = true, prompt = true, nofile = false })
+            local ignore_ft = lambda.p_table({
+                ["Telescope.*"] = true,
+                ["Neogit.*"] = true,
+                ["flutterTools.*"] = true,
+                ["qf"] = true,
+            })
+            local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
+            return has_bt or has_ft
+        end,
+    },
+})
+
+ui({
     "kevinhwang91/promise-async",
     lazy = true,
 })
@@ -133,6 +178,29 @@ ui({
         "UfoInspect",
         "UfoEnableFold",
         "UfoDisableFold",
+    },
+    keys = {
+        {
+            "zR",
+            function()
+                require("ufo").openAllFolds()
+            end,
+            "open all folds",
+        },
+        {
+            "zM",
+            function()
+                require("ufo").closeAllFolds()
+            end,
+            "close all folds",
+        },
+        {
+            "zP",
+            function()
+                require("ufo").peekFoldedLinesUnderCursor()
+            end,
+            "preview fold",
+        },
     },
     config = conf.ufo,
 })

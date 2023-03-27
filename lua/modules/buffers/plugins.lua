@@ -9,12 +9,19 @@ buffer({
     cond = true,
     event = "VeryLazy",
     config = conf.nvim_bufferline,
-    dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, { "scope.nvim" } },
+    dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, { "tabscope.nvim" } },
 })
+-- buffer({
+--     "tiagovla/scope.nvim",
+--     lazy = true,
+--     config = true,
+-- })
+
 buffer({
-    "tiagovla/scope.nvim",
-    lazy = true,
-    config = true,
+    "backdround/tabscope.nvim",
+    lazy = true, 
+    event = "VeryLazy",
+    config = true, 
 })
 
 buffer({

@@ -45,6 +45,21 @@ function config.config_yanky()
         vim.keymap.set(m[1], m[2], m[3], {})
     end
 end
+function config.smart_yank()
+    require("smartyank").setup({
+        highlight = {
+            enabled = true, -- highlight yanked text
+            higroup = "IncSearch", -- highlight group of yanked text
+            timeout = 200, -- timeout for clearing the highlight
+        },
+        osc52 = {
+            enabled = true,
+            ssh_only = false, -- false to OSC52 yank also in local sessions
+            silent = false, -- true to disable the "n chars copied" echo
+            echo_hl = "Directory", -- highlight group of the OSC52 echo message
+        },
+    })
+end
 
 function config.substitute()
     require("substitute").setup({
