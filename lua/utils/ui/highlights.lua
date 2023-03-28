@@ -177,6 +177,7 @@ local function general_overrides()
         -- { TSVariable = {fg= { from = "Normal" } } },
         -- { TSNamespace = {fg= P.blue } },
         ------------------------------------------------------------------------------//
+        ------------------------------------------------------------------------------//
         --  Semantic tokens
         ------------------------------------------------------------------------------//
         { ["@lsp.type.parameter"] = { italic = true, fg = { from = "Normal" } } },
@@ -184,11 +185,11 @@ local function general_overrides()
         { ["@lsp.typemod.variable.global"] = { bold = true, inherit = "@constant.builtin" } },
         { ["@lsp.typemod.variable.defaultLibrary"] = { italic = true } },
         { ["@lsp.typemod.variable.readonly.typescript"] = { clear = true } },
-        { ["@lsp.typemod.operator.injected"] = { link = "@operator" } },
-        { ["@lsp.typemod.keyword"] = { link = "@keyword" } },
         { ["@lsp.typemod.parameter.label"] = { inherit = "@field", bold = false } },
-        { ["@lsp.typemod.string.injected"] = { link = "@string" } },
-        { ["@lsp.typemod.variable.injected"] = { link = "@variable" } },
+        { ["@lsp.typemod.operator"] = { link = "@operator" } },
+        { ["@lsp.typemod.keyword"] = { link = "@keyword" } },
+        { ["@lsp.typemod.string"] = { link = "@string" } },
+        { ["@lsp.typemod.variable"] = { link = "@variable" } },
         -----------------------------------------------------------------------------//
         -- Treesitter
         -----------------------------------------------------------------------------//
