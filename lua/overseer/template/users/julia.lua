@@ -477,7 +477,6 @@ return {
             priority = pr(),
             condition = hasBenchmark,
         })
-
-        cb(ret)
+        return ret
     end,
 }

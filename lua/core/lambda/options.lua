@@ -1,7 +1,8 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = true
+local noice_enabled = false
 local use_ts_yeti = true
-local use_codium_cmp = true
+
+local use_codium_cmp = false
 local use_tabnine_cmp = false
 -- toggle core values within the list
 
@@ -33,18 +34,14 @@ lambda.config = {
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_wrapping = true, -- I am not sure if this is causing me to segfault.
     use_unception = true,
-    use_code_window = false,
     use_luasnip_brackets = true, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
-    use_clock = false, -- set to true to  see timer for config
     use_pet = false,
-    use_beacon = false,
-    use_fidget = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
 lambda.config.ai = {
     codeium = {
-        use_codeium = true,
+        use_codeium = false,
         use_codeium_cmp = use_codium_cmp,
         use_codium_insert = not use_codium_cmp,
         cmp = {
@@ -52,7 +49,7 @@ lambda.config.ai = {
         },
     },
     tabnine = {
-        use_tabnine = true,
+        use_tabnine = false,
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
         cmp = {
@@ -62,7 +59,7 @@ lambda.config.ai = {
             tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
         },
     },
-    sell_your_soul = false,
+    sell_your_soul = true,
 }
 
 lambda.config.extra_search = {
@@ -74,6 +71,7 @@ lambda.config.extra_search = {
 }
 
 lambda.config.colourscheme = {
+    enable_transparent = true,
     dim_background = true,
     change_kitty_bg = false,
     --- @usage "main"' | '"moon"
@@ -81,11 +79,15 @@ lambda.config.colourscheme = {
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
     catppuccin_flavour = "mocha",
     -- @usage theme_name : percentage chance
+    kanagawa_flavour = "dragon", -- dragon, lotus-> white
+    use_wal = true,
     themes = {
         dark = {
             core_themes = {
-                -- "kanagawa.nvim",
-                "catppuccin",
+                "kanagawa.nvim",
+                -- "catppuccin",
+                -- "sweetie.nvim",
+                -- "vim-dogrun",
                 -- "poimandres.nvim",
                 -- "nvim-tundra",
                 -- "palenightfall.nvim",
@@ -93,7 +95,6 @@ lambda.config.colourscheme = {
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
                 -- "rose", -- TSMethod'
-                -- "vim-dogrun",
                 -- "mellow.nvim",
             },
             others = {
@@ -156,10 +157,10 @@ lambda.config.lsp = {
 }
 
 lambda.config.ui = {
-    use_illuminate = true,
+    use_illuminate = false,
     use_murmur = false, -- this causes issues with my yanky config -
     use_modes = true,
-    use_heirline = true,
+    use_heirline = false,
     noice = {
         enable = noice_enabled,
         lsp = {

@@ -25,7 +25,6 @@ misc({
 misc({
     "XXiaoA/ns-textobject.nvim",
     lazy = true,
-    -- event = "ModeChanged",
     dependencies = { "kylechui/nvim-surround" },
     keys = {
         { "aq", mode = { "x", "o" } },
@@ -150,7 +149,6 @@ misc({
 misc({
     "shortcuts/no-neck-pain.nvim",
     lazy = true,
-    cmd = "NoNeckPain",
     keys = { "zz" },
     config = conf.noneck,
 })

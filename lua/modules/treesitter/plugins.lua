@@ -21,7 +21,6 @@ ts({
 ts({
     "RRethy/nvim-treesitter-textsubjects",
     lazy = true,
-
     ft = { "lua", "rust", "go", "python", "javascript" },
     config = conf.tsubject,
 })
@@ -40,17 +39,9 @@ ts({
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects" },
     config = conf.treesitter_ref, -- let the last loaded config treesitter
 })
--- cant lazy load will fix.
 ts({
     "David-Kunz/markid",
-    lazy = true,
-
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    ft = {
-        "python",
-        "lua",
-        "tex",
-    },
 })
 
 ts({
@@ -90,13 +81,10 @@ ts({
 
 ts({
     "andymass/vim-matchup",
-    lazy = true,
-    event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.matchup,
     init = conf.matchup_setup,
 })
-
 ts({
     "Yggdroot/hiPairs",
     lazy = true,
@@ -128,36 +116,35 @@ ts({
     dependencies = { "rktjmp/lush.nvim", "nvim-treesitter/nvim-treesitter" },
 })
 
-ts({
-    "wellle/targets.vim",
-    lazy = true,
-    event = "VeryLazy",
-    init = function()
-        vim.g.targets_gracious = 1
-    end,
-    config = function()
-        vim.cmd([[
-autocmd User targets#mappings#user call targets#mappings#extend({
-    \ 's': { 'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
-    \                      {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
-    \                      {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}] },
-    \ '@': {
-    \     'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
-    \                   {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
-    \                   {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}],
-    \     'pair':      [{'o':'(', 'c':')'}, {'o':'[', 'c':']'}, {'o':'{', 'c':'}'}, {'o':'<', 'c':'>'}],
-    \     'quote':     [{'d':"'"}, {'d':'"'}, {'d':'`'}],
-    \     'tag':       [{}],
-    \     },
-    \ })
-      ]])
-    end,
-})
+-- ts({
+--     "wellle/targets.vim",
+--     lazy = true,
+--     event = "VeryLazy",
+--     init = function()
+--         vim.g.targets_gracious = 1
+--     end,
+--     config = function()
+--         vim.cmd([[
+-- autocmd User targets#mappings#user call targets#mappings#extend({
+--     \ 's': { 'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
+--     \                      {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
+--     \                      {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}] },
+--     \ '@': {
+--     \     'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
+--     \                   {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
+--     \                   {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}],
+--     \     'pair':      [{'o':'(', 'c':')'}, {'o':'[', 'c':']'}, {'o':'{', 'c':'}'}, {'o':'<', 'c':'>'}],
+--     \     'quote':     [{'d':"'"}, {'d':'"'}, {'d':'`'}],
+--     \     'tag':       [{}],
+--     \     },
+--     \ })
+--       ]])
+--     end,
+-- })
 
 ts({
     "chrisgrieser/nvim-various-textobjs",
     lazy = true,
-    cond = true,
     event = "VeryLazy",
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })
@@ -203,17 +190,6 @@ ts({
     config = true,
 })
 
-ts({
-    "Wansmer/sibling-swap.nvim",
-    dependencies = { "nvim-treesitter" },
-    opts = {
-        use_default_keymaps = false,
-        keymaps = {
-            ["]w"] = "swap_with_right",
-            ["[w"] = "swap_with_left",
-        },
-    },
-})
 ts({
     "ziontee113/SelectEase",
     lazy = true,

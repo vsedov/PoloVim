@@ -25,13 +25,13 @@ local run_or_test = function(debug)
     end
 end
 
-local bracket = { "<cr>", "w", "e", "r", "f" }
+local bracket = { "<cr>", "w", "s", "r", "f" }
 config.runner = {
     color = "red",
     body = ";r",
     ["<ESC>"] = { nil, { exit = true } },
     w = { cmd("OverseerToggle"), { desc = "Overseer Toggle", exit = true } },
-    e = { cmd("OverseerRun"), { desc = "Overseer Run", exit = true } },
+    s = { cmd("OverseerRun"), { desc = "Overseer Run", exit = true } },
     d = { cmd("OverseerQuickAction"), { desc = "Overseer Quick AcAction", exit = true } },
     t = { cmd("OverseerTaskAction"), { desc = "OverseerTaskAction", exit = true } },
     b = { cmd("OverseerBuild"), { desc = "OverseerBuild", exit = true } },
@@ -62,7 +62,7 @@ config.runner = {
     o = { cmd("Lab code stop"), { exit = false, desc = "Lab Stop" } },
     p = { cmd("Lab code panel"), { exit = false, desc = "Lab Panel" } },
 
-    s = {
+    S = {
         function()
             if vim.fn.mode() == "n" then
                 vim.cmd.SnipRun()
@@ -96,7 +96,7 @@ local function auto_hint_generate()
 
     utils.make_core_table(core_table, bracket)
     utils.make_core_table(core_table, { "d", "t", "b", "l" })
-    utils.make_core_table(core_table, { "s", "i", "o", "p" })
+    utils.make_core_table(core_table, { "S", "i", "o", "p" })
 
     hint_table = {}
     string_val = "^ ^          Runner       ^ ^\n\n"

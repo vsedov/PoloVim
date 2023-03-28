@@ -232,13 +232,30 @@ tools({
 })
 
 tools({
-    "samjwill/nvim-unception",
-    lazy = true,
-    event = "CmdLineEnter",
-    config = function()
-        vim.g.unception_delete_replaced_buffer = true
-        vim.g.unception_enable_flavor_text = false
-    end,
+    "willothy/flatten.nvim",
+    lazy = false,
+    priority = 1001,
+    config = {
+        window = { open = "current" },
+        callbacks = {
+            block_end = function()
+                require("toggleterm").toggle()
+            end,
+            pre_open = function()
+                require("toggleterm").toggle()
+            end,
+            post_open = function(bufnr, winnr)
+                local term = require("toggleterm.terminal").get_last_focused()
+                if term and term:is_float() then
+                    term:close()
+                    vim.cmd.buffer(bufnr)
+                else
+                    require("toggleterm").toggle()
+                    vim.api.nvim_set_current_win(winnr)
+                end
+            end,
+        },
+    },
 })
 
 tools({

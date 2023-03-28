@@ -49,7 +49,7 @@ function config.houdini()
             i = function(first, second)
                 local seq = first .. second
 
-                if vim.opt.filetype:get() == "terminal" then
+                if vim.opt.filetype:get() == "terminal" or vim.bo.buftype == "terminal" then
                     return "" -- disabled
                 end
 
@@ -308,25 +308,6 @@ function config.quick_scope()
     })
 end
 
-function config.grapple()
-    require("grapple").setup({
-        log_level = "warn",
-        scope = "directory",
-        save_path = vim.fn.stdpath("data") .. "/" .. "grapple.json",
-        popup_options = {
-            relative = "editor",
-            width = 60,
-            height = 12,
-            style = "minimal",
-            focusable = false,
-            border = "single",
-        },
-
-        integrations = {
-            resession = true,
-        },
-    })
-end
 function config.easymark()
     require("easymark").setup({
         position = "bottom", -- position choices: bottom|top|left|right
@@ -383,7 +364,8 @@ function config.treehopper()
         local cursor = vim.api.nvim_win_get_cursor(0)
         local function f(ignore)
             return {
-                vim.treesitter.get_node_at_pos(0, cursor[1], cursor[2], { ignore_injections = ignore }):range(),
+                vim.treesitter.get_node({ 0, { cursor[1], cursor[2] }, { ignore_injections = ignore } }):range(),
+                -- vim.treesitter.get_node,
             }
         end
 
@@ -401,16 +383,23 @@ function config.treehopper()
         return true
     end
     vim.keymap.set({ "o", "x", "n" }, "H", function()
-        return with_tsht() and ":<C-U>lua require('tsht').nodes()<CR>" or [[<Plug>(leap-ast)]]
+        return with_tsht() and ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
+            or [[<Plug>(leap-ast)]]
     end, { expr = true, silent = true })
 
     vim.keymap.set("n", "zf", function()
         if with_tsht() then
-            require("tsht").nodes()
+            require("tsht").nodes({ ignore_injections = false })
         else
             vim.cmd("normal! v")
             require("leap-ast").leap()
         end
+        vim.cmd("normal! Vzf")
+    end, { silent = true })
+
+    vim.keymap.set("n", "zF", function()
+        vim.cmd("normal! v")
+        require("leap-ast").leap()
         vim.cmd("normal! Vzf")
     end, { silent = true })
 end

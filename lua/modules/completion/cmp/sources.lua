@@ -2,13 +2,6 @@ local api = vim.api
 local ai = lambda.config.ai
 local condium_cond = (ai.codeium.use_codeium and ai.codeium.use_codeium_cmp)
 local tabnine_cond = (ai.tabnine.use_tabnine and ai.tabnine.use_tabnine_cmp)
--- if condium_cond then
---     require("lazy").load({ plugins = { "codeium.nvim" } })
--- end
-
--- if tabnine_cond then
---     require("lazy").load({ plugins = { "cmp-tabnine" } })
--- end
 
 local plugins = {
     {
@@ -56,6 +49,14 @@ local plugins = {
         },
     },
     {
+        name = "kitty",
+        enable = true,
+        options = {
+            listen_on = "unix:/tmp/kitty",
+            priority = 6,
+        },
+    },
+    {
         name = "buffer",
         enable = true,
         options = {
@@ -79,6 +80,12 @@ local plugins = {
     {
         name = "tmux",
         enable = true,
+        option = {
+            -- Source from all panes in session instead of adjacent panes
+            all_panes = true,
+            -- Completion popup label
+            label = "[tmux]",
+        },
     },
     {
         name = "nvim_lua",

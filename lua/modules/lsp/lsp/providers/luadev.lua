@@ -1,7 +1,7 @@
 local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 local lspconfig = require("lspconfig")
 local sumneko_root_path = "/home/viv/.local/share/nvim/mason/packages/lua-language-server/"
-local sumneko_binary = "/home/viv/.local/share/nvim/mason/packages/lua-language-server/bin/lua-language-server"
+local sumneko_binary = "/home/viv/.local/share/nvim/mason/packages/lua-language-server/lua-language-server"
 
 local runtime_path = {}
 
@@ -44,4 +44,5 @@ local sumneko_lua_server = enhance_attach({
         },
     },
 })
+
 lspconfig.lua_ls.setup(sumneko_lua_server)

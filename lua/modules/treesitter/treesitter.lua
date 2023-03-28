@@ -1,7 +1,5 @@
 local enable = true
-local langtree = true
 local lines = vim.fn.line("$")
-
 local treesitter = function()
     -- lprint("loading treesitter")
     if lines > 30000 then -- skip some settings for large file

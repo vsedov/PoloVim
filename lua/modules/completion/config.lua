@@ -35,6 +35,10 @@ function config.snip_genie()
     vim.keymap.set("n", ";<CR>", function()
         genie.finalize_snippet()
     end, {})
+
+    lambda.command("SnipCreate", function()
+        vim.notify("<cr> to start and ;<cr> to add the variables")
+    end, { force = true })
 end
 
 function config.autopair()
@@ -55,6 +59,7 @@ function config.autopair()
                 lua = { { "then", "end" }, { "do", "end" } },
             },
             addsemi = { "c", "cpp", "rust" },
+            -- extensions = require("ultimate-autopair.maps.cr").default_extensions,
             fallback = nil,
         },
         fastwarp = {
@@ -68,6 +73,10 @@ function config.autopair()
             Wcmap = "<c-e>",
             multiline = true,
             fallback = nil,
+            -- extensions = require("ultimate-autopair.maps.fastwarp").default_extensions,
+            -- endextensions = require("ultimate-autopair.maps.fastwarp").default_endextensions,
+            -- rextensions = require("ultimate-autopair.maps.rfastwarp").default_extensions,
+            -- rendextensions = require("ultimate-autopair.maps.rfastwarp").default_endextensions,
         },
         fastend = {
             enable = true,
@@ -75,6 +84,18 @@ function config.autopair()
             cmap = "<c-c>",
             smart = true,
             fallback = nil,
+        },
+        extensions = {
+            { "cmdtype", { "/", "?", "@" } },
+            "multichar",
+            "string",
+            { "treenode", { inside = { "comment" } } },
+            { "escape", { filter = true } },
+            "rules",
+            "filetype",
+            { "alpha", { before = { "'" } } },
+            { "suround", { '"', "'" } },
+            { "fly", { ")", "}", "]", " ", match = nil, nofilter = false } },
         },
     }
 end
@@ -86,12 +107,12 @@ end
 
 function config.tabout()
     require("tabout").setup({
-        tabkey = "<C-;>",
-        backwards_tabkey = "<C-j>",
+        tabkey = "<C-n>",
+        backwards_tabkey = "<C-p>",
         act_as_tab = true, -- shift content if tab out is not possible
-        act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+        act_as_shift_tab = true, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
         default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
-        default_shift_tab = "<C-i>", -- reverse shift default action,
+        default_shift_tab = "<C-;>", -- reverse shift default action,
         enable_backwards = true, -- well ...
         completion = true, -- if the tabkey is used in a completion pum
         tabouts = {

@@ -40,18 +40,7 @@ lspconfig.metals.setup(enhance_attach({
 
 lspconfig.hls.setup({ enhance_attach({}) })
 
-local latex_setup = {
-    texlab = function()
-        lspconfig.texlab.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.texlab")))
-    end,
-    ltex = function()
-        lspconfig.ltex.setup(enhance_attach(require("modules.lsp.lsp.providers.latex.ltex").config))
-    end,
-}
-
 python_setup[lambda.config.lsp.python.lsp]()
-
-latex_setup[lambda.config.lsp.latex]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 

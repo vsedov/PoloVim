@@ -37,18 +37,22 @@ config.browse = {
         end,
         { nowait = true, silent = true, desc = "Narrow[N] Window", exit = true },
     },
-    W = {
+    w = {
         function()
-            vim.cmd([[NR]])
+            if vim.fn.mode() == "n" then
+                return
+            else
+                vim.cmd([['<,'>NR]])
+            end
         end,
-        { nowait = true, silent = true, desc = "Narrow[N] Window", exit = true },
+        { desc = "Range Window", exit = false, visual = true },
     },
 
-    w = {
+    W = {
         function()
             vim.cmd([[NW]])
         end,
-        { nowait = true, silent = true, desc = "Narrow[V] Window", exit = true },
+        { nowait = true, silent = true, desc = "Current Window", exit = true },
     },
 
     [";"] = {
@@ -67,9 +71,13 @@ config.browse = {
 
     m = {
         function()
-            vim.cmd([[NRP]])
+            if vim.fn.mode() == "n" then
+                return
+            else
+                vim.cmd([['<,'>NRP]])
+            end
         end,
-        { nowait = true, silent = true, desc = "Mark region", exit = false },
+        { nowait = true, silent = true, desc = "Mark region", exit = false, visual = true },
     },
 
     M = {
@@ -92,6 +100,7 @@ config.browse = {
         end,
         { nowait = true, silent = true, desc = "In Window Save", exit = false },
     },
+
     d = {
         function()
             vim.cmd([[NRN]])
@@ -119,6 +128,7 @@ local function auto_hint_generate()
             end
         end
     end
+
     sorted = {}
     for k, v in pairs(container) do
         table.insert(sorted, k)

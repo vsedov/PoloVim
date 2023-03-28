@@ -110,9 +110,7 @@ vim.defer_fn(function()
 end, lazy_timer + 60)
 
 vim.defer_fn(function()
-    loader({ plugins = { "telescope.nvim" } })
-    loader({ plugins = { "telescope-zoxide" } })
-    loader({ plugins = { "nvim-neoclip.lua" } })
+    loader({ plugins = { "telescope.nvim", "telescope-zoxide", "nvim-neoclip.lua" } })
 end, lazy_timer + 80)
 
 --  TODO: (vsedov) (01:32:08 - 28/10/22): WTF is this code viv ??
@@ -129,8 +127,7 @@ vim.defer_fn(function()
     end
 
     -- this thing is quite laggy
-    if lambda.config.use_ufo and vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()) < 500 then
-        -- print("nvim-ufo loading")
+    if lambda.config.use_ufo then
         loader({ plugins = { "nvim-ufo" } })
     end
 
@@ -150,16 +147,16 @@ vim.defer_fn(function()
     if lambda.config.record_your_self then
         loader({ plugins = { "vim-wakatime" } })
     end
-
-    if lambda.config.ui.use_heirline then
-        require("modules.ui.heirline")
-    end
 end, 120)
 
 vim.defer_fn(function()
     if vim.fn.getenv("TMUX") ~= nil then
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
     end
-
     loader({ plugins = { "hydra.nvim" } })
 end, 1000)
+
+vim.defer_fn(function()
+    loader({ plugins = { "nvim-various-textobjs", "nvim-surround" } })
+    require("modules.editor.hydra.parenth_mode")
+end, 2000)

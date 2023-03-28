@@ -1,8 +1,5 @@
 local bind = require("keymap.bind")
-local map_cr = bind.map_cr
-local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
-local map_args = bind.map_args
 local plug_map = {
     -- Show syntax highlighting groups for word under cursor
     ["n|<localleader>c["] = map_cmd(function()
@@ -42,11 +39,12 @@ local plug_map = {
         return ":ProjectRoot<cr>"
     end, "Diag show Prev"):with_expr(),
 
-    ["n|\\\\<leader>"] = map_cmd(function()
-        return ":NoNeckPain"
-    end, "NoNeckPain"):with_expr(),
+    -- ["n|\\\\<leader>"] = map_cmd(function()
+    --     return ":NoNeckPain"
+    -- end, "NoNeckPain"):with_expr(),
 
-    ["v|_d"] = map_cmd(function()
+    -- Annoying mapping
+    ["v|D"] = map_cmd(function()
             local l, c = unpack(vim.api.nvim_win_get_cursor(0))
             for _, line in ipairs(vim.api.nvim_buf_get_lines(0, l - 1, l, true)) do
                 if line:match("^%s*$") then

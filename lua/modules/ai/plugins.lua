@@ -49,7 +49,7 @@ ai({
         vim.g.codeium_disable_bindings = 1
         vim.g.codeium_enabled = lambda.config.ai.use_codium_insert
     end,
-    config = conf.codeium,
+    config = conf.codium,
 })
 ai({
     "jcdickinson/codeium.nvim",
@@ -71,9 +71,13 @@ ai({
 -- <C-n> Start new session.
 -- <Tab> Cycle over windows.
 -- <C-i> [Edit Window] use response as input.
+
 ai({
     "github/copilot.vim",
-    cmd = "Copilot",
-    lazy = true,
+    -- lazy = true,
+    -- cmd = "Copilot",
+    cond = ai_conf.sell_your_soul,
+    -- event = "VeryLazy",
+
     init = conf.sell_your_soul,
 })

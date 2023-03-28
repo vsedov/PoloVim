@@ -1,6 +1,4 @@
-local api, notify, fmt = vim.api, vim.notify, string.format
-
-local M = {}
+local api, notify, fmt, fold, augroup = vim.api, vim.notify, string.format, lambda.fold, lambda.augroup
 
 ---@alias ErrorMsg {msg: string}
 
@@ -13,7 +11,14 @@ local M = {}
 ---@field italic boolean
 ---@field undercurl boolean
 ---@field underline boolean
----@field underdot boolean
+---@field underdotted boolean
+---@field underdashed boolean
+---@field underdouble boolean
+---@field strikethrough boolean
+---@field reverse boolean
+---@field nocombine boolean
+---@field link string
+---@field default boolean
 
 ---@class HLArgs
 ---@field blend integer
@@ -24,7 +29,14 @@ local M = {}
 ---@field italic boolean
 ---@field undercurl boolean
 ---@field underline boolean
----@field underdot boolean
+---@field underdotted boolean
+---@field underdashed boolean
+---@field underdouble boolean
+---@field strikethrough boolean
+---@field reverse boolean
+---@field nocombine boolean
+---@field link string
+---@field default boolean
 ---@field clear boolean
 ---@field inherit string
 
@@ -35,49 +47,56 @@ local attrs = {
     blend = true,
     bold = true,
     italic = true,
-    undercurl = true,
+    standout = true,
     underline = true,
-    underdot = true,
+    undercurl = true,
+    underdouble = true,
+    underdotted = true,
+    underdashed = true,
+    strikethrough = true,
+    reverse = true,
+    nocombine = true,
+    link = true,
+    default = true,
 }
----Convert a hex color to RGB
----@param color string
----@return number, number, number
-local function hex_to_rgb(color)
-    local hex = color:gsub("#", "")
-    return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5), 16)
+
+---@private
+---@param opts {name: string?, link: boolean?}?
+---@param ns integer?
+---@return HLData
+local function get_hl_as_hex(opts, ns)
+    ns, opts = ns or 0, opts or {}
+    opts.link = opts.link ~= nil and opts.link or false
+    local hl = api.nvim_get_hl(ns, opts)
+    hl.fg = hl.fg and ("#%06x"):format(hl.fg)
+    hl.bg = hl.bg and ("#%06x"):format(hl.bg)
+    -- FIXME: remove this once the nvim_get_hl function is fixed
+    if hl.link and not opts.link then
+        return get_hl_as_hex({ name = hl.link }, ns)
+    end
+    return hl
 end
 
-local function alter(attr, percent)
-    return math.floor(attr * (100 + percent) / 100)
-end
-
+--- Change the brightness of a color, negative numbers darken and positive ones brighten
 ---see:
 --- 1. https://stackoverflow.com/q/5560248
 --- 2. https://stackoverflow.com/a/37797380
 ---@param color string A hex color
----@param percent integer a negative number darkens and a positive one brightens
+---@param percent float a negative number darkens and a positive one brightens
 ---@return string
-function M.alter_color(color, percent)
-    assert(color, "cannot alter a color without specifying a color")
-    local r, g, b = hex_to_rgb(color)
+local function tint(color, percent)
+    assert(color and percent, "cannot alter a color without specifying a color and percentage")
+    local r = tonumber(color:sub(2, 3), 16)
+    local g = tonumber(color:sub(4, 5), 16)
+    local b = tonumber(color:sub(6), 16)
     if not r or not g or not b then
         return "NONE"
     end
-    r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
-    r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
-    return fmt("#%02x%02x%02x", r, g, b)
-end
-
----@param opts {name: string?, link: boolean?}?
----@param ns integer?
----@return HLData
-local function get_highlight(opts, ns)
-    ns, opts = ns or 0, opts or {}
-    opts.link = opts.link or false
-    local hl = api.nvim_get_hl(ns, opts)
-    hl.fg = hl.fg and "#" .. bit.tohex(hl.fg, 6)
-    hl.bg = hl.bg and "#" .. bit.tohex(hl.bg, 6)
-    return hl
+    local blend = function(component)
+        component = math.floor(component * (1 + percent))
+        return math.min(math.max(component, 0), 255)
+    end
+    return fmt("#%02x%02x%02x", blend(r), blend(g), blend(b))
 end
 
 ---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
@@ -88,9 +107,9 @@ end
 ---@param fallback string?
 ---@return string, ErrorMsg?
 ---@overload fun(group: string): HLData, ErrorMsg?
-function M.get(group, attribute, fallback)
+local function get(group, attribute, fallback)
     assert(group, "cannot get a highlight without specifying a group name")
-    local data = get_highlight({ name = group })
+    local data = get_hl_as_hex({ name = group })
     if not attribute then
         return data
     end
@@ -106,8 +125,23 @@ function M.get(group, attribute, fallback)
     return color
 end
 
+---@param hl string | HLAttrs
+---@param attr string
+---@return HLData
+---@return ErrorMsg?
+local function resolve_from_attribute(hl, attr)
+    if type(hl) ~= "table" or not hl.from then
+        return hl
+    end
+    local colour, err = get(hl.from, hl.attr or attr)
+    if hl.alter then
+        colour = tint(colour, hl.alter)
+    end
+    return colour, err
+end
+
 --- Sets a neovim highlight with some syntactic sugar. It takes a highlight table and converts
---- any highlights specified as `GroupName = { from = 'group'}` into the underlying colour
+--- any highlights specified as `GroupName = {fg = { from = 'group'}}` into the underlying colour
 --- by querying the highlight property of the from group so it can be used when specifying highlights
 --- as a shorthand to derive the right color.
 --- For example:
@@ -119,46 +153,30 @@ end
 --- is updated
 ---@param name string
 ---@param opts HLArgs
----@overload fun(namespace: integer, name: string, opts: HLArgs): ErrorMsg[]?
+---@overload fun(ns: integer, name: string, opts: HLArgs): ErrorMsg[]?
 ---@return ErrorMsg[]?
-function M.set(namespace, name, opts)
-    if type(namespace) == "string" and type(name) == "table" then
-        opts, name, namespace = name, namespace, 0
+local function set(ns, name, opts)
+    if type(ns) == "string" and type(name) == "table" then
+        opts, name, ns = name, ns, 0
     end
 
-    vim.validate({
-        opts = { opts, "table" },
-        name = { name, "string" },
-        namespace = { namespace, "number" },
-    })
+    vim.validate({ opts = { opts, "table" }, name = { name, "string" }, ns = { ns, "number" } })
 
-    local clear = opts.clear
-    if clear then
-        opts.clear = nil
-    end
-
-    local errs, hl = {}, {}
-    if not clear then
-        hl = get_highlight({ name = opts.inherit or name })
-        for attr, value in pairs(opts) do
-            if type(value) == "table" and value.from then
-                local new_attr, err = M.get(value.from, value.attr or attr)
-                if value.alter then
-                    new_attr = M.alter_color(new_attr, value.alter)
-                end
-                if err then
-                    table.insert(errs, err)
-                end
-                hl[attr] = new_attr
-            elseif attr ~= "inherit" then
-                hl[attr] = value
-            end
+    local hl, errs = get_hl_as_hex({ name = opts.inherit or name }), {}
+    for attribute, hl_data in pairs(opts) do
+        local new_data, err = resolve_from_attribute(hl_data, attribute)
+        if err then
+            table.insert(errs, err)
+        end
+        if attrs[attribute] then
+            hl[attribute] = new_data
         end
     end
 
-    if not pcall(api.nvim_set_hl, namespace, name, hl) then
+    local ok, err = pcall(api.nvim_set_hl, ns, name, hl)
+    if not ok then
         table.insert(errs, {
-            msg = fmt("failed to set highlight %s with values %s", name, vim.inspect(hl)),
+            msg = ("failed to set highlight %s with value %s, %s"):format(name, vim.inspect(hl), err),
         })
     end
     if #errs > 0 then
@@ -166,22 +184,12 @@ function M.set(namespace, name, opts)
     end
 end
 
---- Set window local highlights
----@param name string
----@param win_id number
----@param hls HLArgs[]
-function M.set_winhl(name, win_id, hls)
-    local namespace = api.nvim_create_namespace(name)
-    M.all(hls, namespace)
-    api.nvim_win_set_hl_ns(win_id, namespace)
-end
-
 ---Apply a list of highlights
 ---@param hls {[string]: HLArgs}[]
 ---@param namespace integer?
-function M.all(hls, namespace)
-    local errors = lambda.fold(function(errors, hl)
-        local errs = M.set(namespace or 0, next(hl))
+local function all(hls, namespace)
+    local errors = fold(function(errors, hl)
+        local errs = set(namespace or 0, next(hl))
         if errs then
             vim.list_extend(errors, errs)
         end
@@ -190,7 +198,7 @@ function M.all(hls, namespace)
     if #errors > 0 then
         vim.defer_fn(function()
             notify(
-                lambda.fold(function(acc, err)
+                fold(function(acc, err)
                     return acc .. "\n" .. err.msg
                 end, errors, ""),
                 "error"
@@ -199,13 +207,23 @@ function M.all(hls, namespace)
     end
 end
 
+--- Set window local highlights
+---@param name string
+---@param win_id number
+---@param hls HLArgs[]
+local function set_winhl(name, win_id, hls)
+    local namespace = api.nvim_create_namespace(name)
+    all(hls, namespace)
+    api.nvim_win_set_hl_ns(win_id, namespace)
+end
+
 ---------------------------------------------------------------------------------
 -- Plugin highlights
 ---------------------------------------------------------------------------------
 --- Takes the overrides for each theme and merges the lists, avoiding duplicates and ensuring
 --- priority is given to specific themes rather than the fallback
----@param theme table<string, table<string, string>>
----@return table<string, string>
+---@param theme {  [string]: HLArgs[] }
+---@return HLArgs[]
 local function add_theme_overrides(theme)
     local res, seen = {}, {}
     local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme["*"] or {})
@@ -220,8 +238,8 @@ local function add_theme_overrides(theme)
 end
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
----@param opts table<string, table> map of highlights
-function M.plugin(name, opts)
+---@param opts HLArgs[] | { theme: table<string, HLArgs[]> }
+local function plugin(name, opts)
     -- Options can be specified by theme name so check if they have been or there is a general
     -- definition otherwise use the opts as is
     if opts.theme then
@@ -230,19 +248,26 @@ function M.plugin(name, opts)
             return
         end
     end
+    all(opts)
     -- capitalise the name for autocommand convention sake
-    name = name:gsub("^%l", string.upper)
-    M.all(opts)
-    lambda.augroup(fmt("%sHighlightOverrides", name), {
+    augroup(fmt("%sHighlightOverrides", name:gsub("^%l", string.upper)), {
         {
             event = "ColorScheme",
             command = function()
                 -- Defer resetting these highlights to ensure they apply after other overrides
                 vim.defer_fn(function()
-                    M.all(opts)
+                    all(opts)
                 end, 1)
             end,
         },
     })
 end
-return M
+
+return {
+    get = get,
+    set = set,
+    all = all,
+    tint = tint,
+    plugin = plugin,
+    set_winhl = set_winhl,
+}

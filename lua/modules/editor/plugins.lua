@@ -6,11 +6,10 @@ editor({ "rainbowhxch/accelerated-jk.nvim", lazy = true, keys = {
     "j",
     "k",
 }, config = conf.acc_jk })
-
+--
 editor({
     "folke/which-key.nvim",
     lazy = true,
-
     event = "VeryLazy",
     config = function()
         require("modules.editor.which_key")
@@ -210,45 +209,47 @@ editor({
     cmd = { "Float", "FloatMove", "Scratchpad" },
 })
 
-editor({
-    "gennaro-tedesco/nvim-possession",
-    keys = {
-        "<leader>sl",
-        "<leader>sn",
-        "<leader>su",
-    },
-    event = "VeryLazy",
-    dependencies = {
-        "ibhagwan/fzf-lua",
-    },
-    init = function()
-        local possession = require("nvim-possession")
-
-        vim.keymap.set("n", "<leader>sl", function()
-            possession.list()
-        end, { desc = "Possesion List" })
-        vim.keymap.set("n", "<leader>sn", function()
-            possession.new()
-        end, { desc = "Possesion New" })
-        vim.keymap.set("n", "<leader>su", function()
-            possession.update()
-        end, { desc = "Possesion Update" })
-    end,
-    opts = {
-        sessions = {
-            sessions_icon = lambda.style.icons.misc.clock,
-        },
-        autoload = true, -- whether to autoload sessions in the cwd at startup
-        autosave = true, -- whether to autosave loaded sessions before quitting
-        autoswitch = {
-            enable = true, -- whether to enable autoswitch
-            exclude_ft = {}, -- list of filetypes to exclude from autoswitch
-        },
-        fzf_winopts = {
-            width = 0.5,
-            preview = {
-                vertical = "right:40%",
-            },
-        },
-    },
-})
+-- editor({
+--     "gennaro-tedesco/nvim-possession",
+--     keys = {
+--         "<leader>sl",
+--         "<leader>sn",
+--         "<leader>su",
+--     },
+--     event = "VeryLazy",
+--     dependencies = {
+--         "ibhagwan/fzf-lua",
+--     },
+--     init = function()
+--         local possession = require("nvim-possession")
+--
+--         vim.keymap.set("n", "<leader>sl", function()
+--             possession.list()
+--         end, { desc = "Possesion List" })
+--         vim.keymap.set("n", "<leader>sn", function()
+--             possession.new()
+--         end, { desc = "Possesion New" })
+--         vim.keymap.set("n", "<leader>su", function()
+--             possession.update()
+--         end, { desc = "Possesion Update" })
+--     end,
+--     opts = {
+--         sessions = {
+--             sessions_icon = lambda.style.icons.misc.clock,
+--         },
+--         autoload = true, -- whether to autoload sessions in the cwd at startup
+--         autosave = true, -- whether to autosave loaded sessions before quitting
+--         autoswitch = {
+--             enable = true, -- whether to enable autoswitch
+--             exclude_ft = {}, -- list of filetypes to exclude from autoswitch
+--         },
+--         fzf_winopts = {
+--             width = 0.5,
+--             preview = {
+--                 vertical = "right:40%",
+--             },
+--         },
+--     },
+--
+-- })
+--

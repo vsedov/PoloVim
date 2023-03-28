@@ -8,7 +8,6 @@ function config.nvim_lsp()
 end
 function config.mason_setup()
     require("modules.lsp.lsp.mason.python")
-
     local get_config = require("modules.lsp.lsp.mason.lsp_servers")
     require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
     require("mason-lspconfig").setup({

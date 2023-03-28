@@ -102,24 +102,24 @@ user({
         })
     end,
 })
+
+--
+-- PetsNew {name}: creates a pet with the style and type defined by the configuration, and name {name}
+-- PetsNewCustom {type} {style} {name}: creates a new pet with type, style and name specified in the command
+-- PetsList: prints the names of all the pets that are currently alive
+-- PetsKill {name}: kills the pet with given name, which will immediately blink out of existence. Forever.
+-- PetsKillAll: kills all the pets, poor creatures. Works just as PetsKill but for every pet.
+-- PetsPauseToggle: pause/resume animations for all pets, leaving them on screen as cute little statues
+-- PetsHideToggle: pause the animation for all pets and hide them / show all the pets again and resume animations
+-- PetsIdleToggle/PetsSleepToggle: basically a do-not-disturb mode, pets are still animated but do not move around
 user({
     "giusgad/pets.nvim",
-    cmd = {
-        "PetsNew",
-        "PetsNewCustom",
-        "PetsList",
-        "PetsKill",
-        "PetsKillAll",
-        "PetsPauseToggle",
-        "PetsHideToggle",
-        "PetsSleepToggle",
-    },
-    dependencies = { "MunifTanjim/nui.nvim", "edluffy/hologram.nvim" },
-    opts = {
-        default_pet = "aloof",
-        default_style = "black",
-    },
-    config = true,
+    dependencies = { "MunifTanjim/nui.nvim", "giusgad/hologram.nvim" },
+    config = function()
+        require("pets").setup({
+            -- your options here
+        })
+    end,
 })
 
 user({
@@ -141,13 +141,12 @@ user({
 -- :NRL - Reselect the last selected region and open it again in a narrowed window
 user({
     "chrisbra/NrrwRgn",
-    lazy = true, 
-        event = "VeryLazy",
-
+    lazy = true,
+    event = "VeryLazy",
     init = function()
         vim.g.nrrw_rgn_vert = 1
         -- Set the size (absolute=rows or cols, relative=percentage)
-        vim.g.nrrw_rgn_resize_window = 'relative'
+        vim.g.nrrw_rgn_resize_window = "relative"
         -- Set the new buffer size
         vim.g.nrrw_rgn_wdth = 20
         vim.g.nrrw_rgn_rel_min = 50
@@ -155,14 +154,111 @@ user({
     end,
 })
 
-
 user({
-    "axieax/urlview.nvim", 
-    keys = {"\\u", "\\U"},
-    cmd = {"UrlView"},
+    "axieax/urlview.nvim",
+    keys = { "\\u", "\\U" },
+    cmd = { "UrlView" },
     config = function()
         require("urlview").setup({})
         vim.keymap.set("n", "\\u", "<Cmd>UrlView<CR>", { desc = "view buffer URLs" })
         vim.keymap.set("n", "\\U", "<Cmd>UrlView lazy<CR>", { desc = "view plugin URLs" })
-    end
+    end,
+})
+
+user({
+    "kiyoon/haskell-scope-highlighting.nvim",
+    lazy = true,
+    ft = { "haskell" },
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+    },
+    init = function()
+        -- Consider disabling other highlighting
+        vim.cmd([[autocmd FileType haskell syntax off]])
+        vim.cmd([[autocmd FileType haskell TSDIsable highlight]])
+    end,
+})
+
+user({
+    "liljaylj/codestats.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+        require("codestats").setup({
+            base_url = "https://codestats.net", -- codestats.net base url
+            api_key = os.getenv("CODESTAT_API_KEY"),
+            send_on_exit = true, -- send xp on nvim exit
+            send_on_timer = true, -- send xp on timer
+            timer_interval = 50000, -- timer interval in ms
+        })
+    end,
+})
+
+user({
+    "mikesmithgh/render.nvim",
+    cmd = { "Render", "RenderClean", "RenderQuickfix" },
+    lazy = true,
+    cond = false,
+    enable = false,
+    config = true,
+})
+user({
+    "rawnly/gist.nvim",
+    cmd = { "CreateGist" },
+})
+
+user({
+    "jghauser/papis.nvim",
+    dependencies = {
+        "kkharji/sqlite.lua",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+        require("papis").setup({
+            -- These are configuration options of the `papis` program relevant to papis.nvim.
+            -- Papis.nvim can get them automatically from papis, but this is very slow. It is
+            -- recommended to copy the relevant settings from your papis configuration file.
+            papis_python = {
+                dir = "/home/viv/Documents/papers/",
+                info_name = "info.yaml", -- (when setting papis options `-` is replaced with `_`
+                -- in the keys names)
+                notes_name = [[notes.norg]],
+            },
+            enable_keymaps = true,
+        })
+    end,
+})
+
+user({
+    "JosefLitos/reform.nvim",
+    cond = false,
+    event = "VeryLazy",
+    build = "make",
+    config = true, -- automatically call reform.setup(), use [opts] to customize passed table
+})
+
+user({
+    "subnut/nvim-ghost.nvim",
+    event = "VeryLazy",
+    config = function()
+        vim.cmd([[
+        " Autocommand for a single website (i.e. stackoverflow.com)
+        au nvim_ghost_user_autocommands User www.stackoverflow.com setfiletype markdown
+
+        " Autocommand for a multiple websites
+        au nvim_ghost_user_autocommands User www.reddit.com,www.github.com setfiletype markdown
+
+        " Autocommand for a domain (i.e. github.com)
+        au nvim_ghost_user_autocommands User *github.com setfiletype markdown
+
+        " Multiple autocommands can be specified like so -
+        augroup nvim_ghost_user_autocommands
+          au User www.reddit.com,www.stackoverflow.com setfiletype markdown
+          au User www.reddit.com,www.github.com setfiletype markdown
+          au User *github.com setfiletype markdown
+        augroup END
+    ]])
+    end,
 })

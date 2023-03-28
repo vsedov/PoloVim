@@ -4,7 +4,6 @@ function config.chatgpt()
     require("chatgpt").setup({
         max_line_length = 1000000,
         openai_params = {
-            model = "text-davinci-003",
             frequency_penalty = 0,
             presence_penalty = 0,
             max_tokens = 2000,
@@ -35,7 +34,7 @@ function config.tabnine()
         disable_auto_comment = true,
         accept_keymap = "<C-l>",
         dismiss_keymap = "<C-e>",
-        debounce_ms = 800,
+        debounce_ms = 100,
         suggestion_color = { gui = "#808080", cterm = 244 },
         execlude_filetypes = { "TelescopePrompt" },
     })

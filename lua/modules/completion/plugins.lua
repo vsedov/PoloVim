@@ -4,6 +4,7 @@ local completion = require("core.pack").package
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ VeryLazy                                                           │
 --  ╰────────────────────────────────────────────────────────────────────╯
+local socket_name = "unix:/tmp/kitty"
 
 completion({
     "abecodes/tabout.nvim",
@@ -15,6 +16,7 @@ completion({
 
 completion({
     "hrsh7th/nvim-cmp",
+    cond = lambda.config.cmp.use_cmp,
     event = "InsertEnter",
     lazy = true,
     dependencies = {
@@ -26,6 +28,16 @@ completion({
         { "hrsh7th/cmp-path", lazy = true },
         { "hrsh7th/cmp-cmdline", lazy = true },
         { "andersevenrud/cmp-tmux", lazy = true },
+        -- { -- It would be nice but i have to have a kitty instance running always which, really is
+        -- just a pita
+        --     "garyhurtz/cmp_kitty",
+        --     cond = false,
+        --     init = function()
+        --         local kitty = require("cmp_kitty")
+        --         kitty.kitty.config.listen_on = socket_name
+        --         kitty:setup()
+        --     end,
+        -- },
         {
             "petertriho/cmp-git",
             lazy = true,
@@ -71,7 +83,65 @@ completion({
 -- })
 
 completion({
-
+    "altermo/npairs-integrate-upair",
+    event = "VeryLazy",
+    dependencies = { { "windwp/nvim-autopairs" }, { "altermo/ultimate-autopair.nvim" } },
+    config = function()
+        require("npairs-int-upair").setup({
+            map = "n", --which of them should be the insert mode autopair
+            cmap = "u", --which of them should be the cmd mode autopair (only 'u' supported)
+            bs = "n", --which of them should be the backspace
+            cr = "n", --which of them should be the newline
+            space = "u", --which of them should be the space (only 'u' supported)
+            c_h = "", --which of them should be the <C-h> (only 'n' supported)
+            c_w = "", --which of them should be the <C-w> (only 'n' supported)
+            fastwarp = "<c-c>", --ultimate-autopair's fastwarp mapping ('' for disable)
+            rfastwarp = "<c-x>", --ultimate-autopair's reverse fastwarp mapping ('' for disable)
+            fastwrap = "<c-s>", --nvim-autopairs's fastwrap mapping ('' for disable)
+            npairs_conf = {}, --nvim-autopairs's configuration
+            upair_conf = {
+                bs = {
+                    enable = true,
+                    overjump = true,
+                    space = true,
+                    multichar = true,
+                    fallback = nil,
+                },
+                cr = {
+                    enable = true,
+                    autoclose = true,
+                    multichar = {
+                        enable = true,
+                        markdown = { { "```", "```", pair = true, noalpha = true, next = true } },
+                        lua = { { "then", "end" }, { "do", "end" } },
+                    },
+                    addsemi = { "c", "cpp", "rust" },
+                    fallback = nil,
+                },
+                fastwarp = {
+                    enable = true,
+                    hopout = true,
+                    map = "<c-c>",
+                    rmap = "<C-x>",
+                    Wmap = "<C-c>",
+                    cmap = "<c-s>",
+                    rcmap = "<c-x>",
+                    Wcmap = "<c-e>",
+                    multiline = true,
+                    fallback = nil,
+                },
+                fastend = {
+                    enable = true,
+                    map = "<c-c>",
+                    cmap = "<c-c>",
+                    smart = true,
+                    fallback = nil,
+                },
+            },
+        })
+    end,
+})
+completion({
     "ziontee113/SnippetGenie",
     lazy = true,
     event = "VeryLazy",

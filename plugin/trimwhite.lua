@@ -46,11 +46,21 @@ local function trim_space(opts, preview_ns, preview_buf)
     end
 end
 
-if vim.fn.has("nvim-0.8") == 1 then
-    -- Create the user command
-    vim.api.nvim_create_user_command(
-        "TrimTrailingWhitespace",
-        trim_space,
-        { nargs = "?", range = "%", addr = "lines", preview = trim_space }
-    )
-end
+vim.api.nvim_create_user_command(
+    "TrimTrailingWhitespace",
+    trim_space,
+    { nargs = "?", range = "%", addr = "lines", preview = trim_space }
+)
+local hl = require("utils.ui.utils_2")
+hl.set("ExtraWhitespace", { fg = "red" })
+
+lambda.augroup("WhitespaceMatch", {
+    {
+        event = { "BufEnter" },
+        desc = "Add extra whitespace highlight",
+        pattern = { "*" },
+        command = function()
+            hl.set("ExtraWhitespace", { fg = "red" })
+        end,
+    },
+})

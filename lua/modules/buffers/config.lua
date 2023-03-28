@@ -7,57 +7,57 @@ function config.nvim_bufferline()
 
     local gl = require("utils.ui.utils")
     local groups = require("bufferline.groups")
-
     local visible_tab = { highlight = "VisibleTab", attribute = "bg" }
+    local highlight = require("utils.ui.utils_2")
 
     require("bufferline").setup({
         highlights = function(defaults)
-            local data = gl.get("normal")
-            local normal_bg, normal_fg = data.background, data.foreground
-            local visible = gl.alter_color(normal_fg, -40)
-            local diagnostic = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
+            local normal = highlight.get("Normal")
+            local visible = highlight.tint(normal.fg, -0.4)
+            local icons = lambda.style.icons.lsp
 
             local hl = lambda.fold(function(accum, attrs, name)
                 local formatted = name:lower()
                 local is_group = formatted:match("group")
                 local is_offset = formatted:match("offset")
                 local is_separator = formatted:match("separator")
-                if diagnostic:match_str(formatted) then
-                    attrs.fg = normal_fg
+                if pattern and pattern:match_str(formatted) then
+                    attrs.fg = normal.fg
                 end
                 if not is_group or (is_group and is_separator) then
-                    attrs.bg = normal_bg
+                    attrs.bg = normal.bg
                 end
                 if not is_group and not is_offset and is_separator then
-                    attrs.fg = normal_bg
+                    attrs.fg = normal.bg
                 end
                 accum[name] = attrs
                 return accum
             end, defaults.highlights)
 
-            -- make the visible buffers and selected tab more "visible"
+            -- Make the visible buffers and selected tab more "visible"
             hl.buffer_visible.bold = true
             hl.buffer_visible.italic = true
             hl.buffer_visible.fg = visible
             hl.tab_selected.bold = true
             hl.tab_selected.bg = visible_tab
             hl.tab_separator_selected.bg = visible_tab
-
             return hl
         end,
         options = {
             debug = { logging = true },
-            mode = "buffers", -- tabs
+            mode = "buffers",
             sort_by = "insert_after_current",
             right_mouse_command = "vert sbuffer %d",
-            show_close_icon = true,
-            indicator = { style = "underline" },
+            show_close_icon = false,
             show_buffer_close_icons = true,
+            indicator = { style = "underline" },
             diagnostics = "nvim_lsp",
             diagnostics_indicator = function(count, level)
+                level = level:match("warn") and "warn" or level
                 return (icons[level] or "?") .. " " .. count
             end,
             diagnostics_update_in_insert = false,
+            hover = { enabled = true, reveal = { "close" } },
             offsets = {
                 {
                     text = "EXPLORER",
@@ -79,12 +79,6 @@ function config.nvim_bufferline()
                     separator = true,
                 },
                 {
-                    text = " PACKER",
-                    filetype = "packer",
-                    highlight = "PanelHeading",
-                    separator = true,
-                },
-                {
                     text = " DATABASE VIEWER",
                     filetype = "dbui",
                     highlight = "PanelHeading",
@@ -98,9 +92,7 @@ function config.nvim_bufferline()
                 },
             },
             groups = {
-                options = {
-                    toggle_hidden_on_enter = true,
-                },
+                options = { toggle_hidden_on_enter = true },
                 items = {
                     groups.builtin.pinned:with({ icon = "" }),
                     groups.builtin.ungrouped,
@@ -109,8 +101,7 @@ function config.nvim_bufferline()
                         icon = "",
                         highlight = { fg = "#ECBE7B" },
                         matcher = function(buf)
-                            return vim.startswith(buf.path, fmt("%s/site/pack/packer", fn.stdpath("data")))
-                                or vim.startswith(buf.path, fn.expand("$VIMRUNTIME"))
+                            return vim.startswith(buf.path, vim.env.VIMRUNTIME)
                         end,
                     },
                     {
@@ -146,7 +137,10 @@ function config.nvim_bufferline()
                         name = "docs",
                         icon = "",
                         matcher = function(buf)
-                            for _, ext in ipairs({ "md", "txt", "norg", "wiki" }) do
+                            if vim.bo[buf.id].filetype == "man" or buf.path:match("man://") then
+                                return true
+                            end
+                            for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
                                 if ext == fn.fnamemodify(buf.path, ":e") then
                                     return true
                                 end

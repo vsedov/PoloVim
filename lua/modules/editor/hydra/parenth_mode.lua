@@ -21,7 +21,6 @@ local exit = { nil, { exit = true, desc = "EXIT" } }
 config.parenth_mode = {
     color = "pink",
     body = leader,
-    mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
     j = {
         function()
@@ -89,7 +88,7 @@ local mapping = {
 
 -- Create a Auto Hinting Table same as above but with auto generated
 
-local new_hydra = {
+local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
     name = "core",
     config = {
         hint = {
@@ -100,19 +99,9 @@ local new_hydra = {
         timeout = false,
     },
     heads = {},
-}
+    mode = { "n", "v", "x", "o" },
+})
 
-for name, spec in pairs(config) do
-    for lhs, rhs in pairs(spec) do
-        local action = mapping[lhs]
-        if action == nil then
-            new_hydra.heads[#new_hydra.heads + 1] = { lhs, table.unpack(rhs) }
-        else
-            action(new_hydra, rhs)
-        end
-    end
-end
---
 local function auto_hint_generate()
     container = {}
     for x, y in pairs(config.parenth_mode) do
@@ -176,6 +165,9 @@ local function auto_hint_generate()
     return string_val
 end
 
-val = auto_hint_generate()
-new_hydra.hint = val
-hydra(new_hydra)
+vim.defer_fn(function()
+    val = auto_hint_generate()
+    new_hydra.hint = val
+
+    hydra(new_hydra)
+end, 10)

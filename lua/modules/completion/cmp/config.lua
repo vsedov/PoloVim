@@ -108,6 +108,7 @@ elseif lambda.config.cmp.cmp_theme == "borderv2" then
                 codeium = "[]",
                 norg = "[Norg]",
                 rg = "[Rg]",
+                kitty = "[]",
                 git = "[Git]",
             })[entry.source.name]
             return vim_item

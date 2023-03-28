@@ -67,20 +67,6 @@ function config.diffview()
                 width = 35,
             },
         },
-        file_history_panel = {
-            log_options = { -- See ':h diffview-config-log_options'
-                single_file = {
-                    diff_merges = "combined",
-                },
-                multi_file = {
-                    diff_merges = "first-parent",
-                },
-            },
-            win_config = { -- See ':h diffview-config-win_config'
-                position = "bottom",
-                height = 16,
-            },
-        },
         commit_log_panel = {
             win_config = {}, -- See ':h diffview-config-win_config'
         },
@@ -205,14 +191,15 @@ function config.neogit()
         },
     })
 
-    vim.keymap.set("n", "<localleader>gs", function()
+    vim.keymap.set("n", ";gs", function()
         neogit.open()
-    end, {})
-    vim.keymap.set("n", "<localleader>gc", function()
-        neogit.open({ "commit" }, {})
-    end)
-    vim.keymap.set("n", "<localleader>gl", neogit.popups.pull.create, {})
-    vim.keymap.set("n", "<localleader>gp", neogit.popups.push.create, {})
+    end, { desc = "git_open", silent = true, noremap = true })
+
+    vim.keymap.set("n", ";gc", function()
+        neogit.open({ "commit" })
+    end, { desc = "git_commit", silent = true, noremap = true })
+    vim.keymap.set("n", ";gl", neogit.popups.pull.create, { desc = "git_pull", silent = true, noremap = true })
+    vim.keymap.set("n", ";gp", neogit.popups.push.create, { desc = "git_push", silent = true, noremap = true })
 end
 
 function config.vgit()
