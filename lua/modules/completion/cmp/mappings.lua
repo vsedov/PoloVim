@@ -84,26 +84,6 @@ local mappings = {
         "c",
     }),
 
-    -- ["<C-j>"] = cmp.mapping(function(fallback)
-    --     if luasnip.jumpable(-1) then
-    --     else
-    --         fallback()
-    --     end
-    -- end, {
-    --     "i",
-    --     "s",
-    -- }),
-
-    -- ["<C-k>"] = cmp.mapping(function(fallback)
-    --     if luasnip.expand_or_jumpable() then
-    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-    --     else
-    --         fallback()
-    --     end
-    -- end, {
-    --     "i",
-    --     "s",
-    -- }),
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul then
             local copilot_keys = vim.fn["copilot#Accept"]()
@@ -124,7 +104,7 @@ local mappings = {
         "s",
     }),
 
-    ["<C-k>"] = cmp.mapping(function(fallback)
+    ["<C-n>"] = cmp.mapping(function(fallback)
         if luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
         else
@@ -135,7 +115,7 @@ local mappings = {
         "s",
     }),
 
-    ["<C-j>"] = cmp.mapping(function(fallback)
+    ["<C-p>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
             cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then

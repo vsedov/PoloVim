@@ -107,8 +107,8 @@ end
 
 function config.tabout()
     require("tabout").setup({
-        tabkey = "<C-n>",
-        backwards_tabkey = "<C-p>",
+        tabkey = "<C-k>",
+        backwards_tabkey = "<C-j>",
         act_as_tab = true, -- shift content if tab out is not possible
         act_as_shift_tab = true, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
         default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)

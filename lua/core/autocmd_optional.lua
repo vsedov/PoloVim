@@ -4,7 +4,6 @@ local api = vim.api
 local fmt = string.format
 
 if lambda.config.colourscheme.change_kitty_bg then
-    local fn = vim.fn
     vim.g.ORIGINAL_KITTY_BG_COLOR = nil
 
     local split = function(str)

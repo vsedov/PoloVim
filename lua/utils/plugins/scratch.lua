@@ -12,7 +12,7 @@ M.toggle = function()
             buf = vim.api.nvim_create_buf(false, true)
             vim.api.nvim_buf_set_option(buf, "ft", "lua")
             vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
-            vim.keymap.set("n", "<leader>r", eval, { buffer = buf })
+            vim.keymap.set("n", "<leader>R", eval, { buffer = buf })
         end
 
         win = vim.api.nvim_open_win(buf, true, {
