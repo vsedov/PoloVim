@@ -116,14 +116,6 @@ lsp({
     ft = { "latex", "tex" },
     module = "ltex_extra",
 })
-
-lsp({
-    "santigo-zero/right-corner-diagnostics.nvim",
-    cmd = { "RCL" },
-    cond = lambda.config.lsp.use_rcd,
-    config = conf.rcd,
-})
-
 lsp({
     "rmagatti/goto-preview",
     lazy = true,
@@ -145,4 +137,24 @@ lsp({
         "MunifTanjim/nui.nvim",
     },
     config = true,
+})
+
+lsp({
+    "Davidyz/lsp-location-handler.nvim",
+    lazy = true,
+    event = "LspAttach",
+    config = true,
+})
+
+lsp({
+    "chikko80/error-lens.nvim",
+    event = "LspAttach",
+    config = true,
+})
+
+lsp({
+    "santigo-zero/right-corner-diagnostics.nvim",
+    cond = lambda.config.lsp.use_rcd,
+    event = "LspAttach",
+    config = conf.rcd,
 })

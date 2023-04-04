@@ -131,22 +131,6 @@ misc({
 })
 
 misc({
-    "m-demare/attempt.nvim",
-    lazy = true,
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-    config = conf.attempt,
-    keys = {
-        "<leader>an",
-        "<leader>ai",
-        "<leader>ar",
-        "<leader>ad",
-        "<leader>ac",
-        "<leader>al",
-        "<leader>aL",
-    },
-})
-
-misc({
     "shortcuts/no-neck-pain.nvim",
     lazy = true,
     keys = { "zz" },

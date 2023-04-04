@@ -88,4 +88,18 @@ function config.texmagic()
     }
     latex_setup[lambda.config.lsp.latex]()
 end
+function config.papis()
+    require("papis").setup({
+        -- These are configuration options of the `papis` program relevant to papis.nvim.
+        -- Papis.nvim can get them automatically from papis, but this is very slow. It is
+        -- recommended to copy the relevant settings from your papis configuration file.
+        papis_python = {
+            dir = "/home/viv/Documents/papers/",
+            info_name = "info.yaml", -- (when setting papis options `-` is replaced with `_`
+            -- in the keys names)
+            notes_name = [[notes.norg]],
+        },
+        enable_keymaps = true,
+    })
+end
 return config

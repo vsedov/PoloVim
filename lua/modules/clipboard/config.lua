@@ -142,11 +142,10 @@ function config.clipboardimage()
             img_name = img_func,
         },
         norg = {
-
             img_name = img_func,
             img_dir = "img",
             img_dir_txt = "img",
-            affix = "![](%s)",
+            affix = "!{%s}[image]",
         },
         tex = {
             img_dir = "img",

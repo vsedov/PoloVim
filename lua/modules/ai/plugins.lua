@@ -4,19 +4,49 @@ local ai_conf = lambda.config.ai
 
 ai({
     "jackMort/ChatGPT.nvim",
-    cmd = {
-        "ChatGPT",
-        "ChatGPTActAs",
-        "ChatGPTEditWithInstructions",
-        "ChatGPTRunCustomCodeAction",
-        "ChatGPTRun",
-    },
+    event = "VeryLazy",
+    config = conf.chatgpt,
     dependencies = {
         "MunifTanjim/nui.nvim",
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
     },
-    config = conf.chatgpt,
+})
+--
+ai({
+    "dpayne/CodeGPT.nvim",
+    event = "VeryLazy",
+    cmd = { "Chat" },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+    },
+    config = conf.codegpt,
+})
+
+ai({
+    "mikesoylu/ai.vim",
+    event = "VeryLazy",
+    cmd = { "AI" },
+    init = function()
+        vim.g.ai_completions_model = "gpt-4"
+
+        vim.keymap.set(
+            { "v", "x" },
+            "<leader>w",
+            ":AI fix grammar and spelling and replace slang and contractions with a formal academic writing style<CR>",
+            {
+                silent = true,
+            }
+        )
+    end,
+})
+
+ai({
+    "james1236/backseat.nvim",
+    lazy = true,
+    cmd = { "Backseat", "BackseatAsk", "BackseatClear", "BackseatClearLine" },
+    config = conf.backseat,
 })
 
 ai({
@@ -74,10 +104,8 @@ ai({
 
 ai({
     "github/copilot.vim",
-    -- lazy = true,
-    -- cmd = "Copilot",
+    lazy = true,
     cond = ai_conf.sell_your_soul,
-    -- event = "VeryLazy",
-
+    event = "VeryLazy",
     init = conf.sell_your_soul,
 })

@@ -84,18 +84,21 @@ config.parenth_mode = {
     },
     a = {
         function()
+            lambda.clever_tcd()
             cmd("WorkspacesAdd")
         end,
         { nowait = true, exit = true, desc = "Workspace Add" },
     },
     d = {
         function()
+            lambda.clever_tcd()
             cmd("WorkspacesRemove")
         end,
         { nowait = true, exit = true, desc = "Workspace Remove" },
     },
     r = {
         function()
+            lambda.clever_tcd()
             cmd("WorkspacesRename")
         end,
         { nowait = true, exit = true, desc = "Workspace Rename" },

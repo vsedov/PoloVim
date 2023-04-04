@@ -13,6 +13,15 @@ git({
     config = conf.octo,
 })
 
+git({
+    "rawnly/gist.nvim",
+    cmd = { "CreateGist" },
+})
+
+git({
+    "wintermute-cell/gitignore.nvim",
+    cmd = "Gitignore",
+})
 -- need to find a usecase for this
 git({ "ThePrimeagen/git-worktree.nvim", lazy = true, config = conf.worktree })
 

@@ -7,3 +7,5 @@ bind.nvim_load_mapping(require("keymap.function"))
 bind.nvim_load_mapping(require("keymap.misc"))
 bind.nvim_load_mapping(require("keymap.telescope"))
 bind.nvim_load_mapping(require("keymap.useful"))
+
+vim.cmd([[noremap <C-w> <c-g>u<Esc>[s1z=`]a<c-g>u]])

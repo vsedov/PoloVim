@@ -31,7 +31,6 @@ tools({
     },
     config = conf.fm,
 })
-
 tools({ "rktjmp/paperplanes.nvim", lazy = true, cmd = { "PP" }, config = true })
 
 tools({
@@ -259,16 +258,16 @@ tools({
 })
 
 -- The goal of nvim-fundo is to make Neovim's undo file become stable and useful.
-tools({
-    "kevinhwang91/nvim-fundo",
-    event = "BufReadPre",
-    cmd = { "FundoDisable", "FundoEnable" },
-    dependencies = "kevinhwang91/promise-async",
-    build = function()
-        require("fundo").install()
-    end,
-    config = true,
-})
+-- tools({
+--     "kevinhwang91/nvim-fundo",
+--     event = "BufReadPre",
+--     cmd = { "FundoDisable", "FundoEnable" },
+--     dependencies = "kevinhwang91/promise-async",
+--     build = function()
+--         require("fundo").install()
+--     end,
+--     config = true,
+-- })
 
 tools({
     "AntonVanAssche/date-time-inserter.nvim",
@@ -341,4 +340,9 @@ tools({
     "chomosuke/term-edit.nvim",
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim
     ft = { "toggleterm", "terminal" },
+})
+tools({
+    "subnut/nvim-ghost.nvim",
+    cmd = { "GhostTextStart", "GhostTextStop" },
+    config = conf.ghost,
 })

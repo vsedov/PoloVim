@@ -48,17 +48,17 @@ local plugins = {
             },
         },
     },
-    {
-        name = "kitty",
-        enable = true,
-        options = {
-            listen_on = "unix:/tmp/kitty",
-            priority = 6,
-        },
-    },
+    -- {
+    --     name = "kitty",
+    --     enable = true,
+    --     options = {
+    --         listen_on = "unix:/tmp/kitty",
+    --         priority = 6,
+    --     },
+    -- },
     {
         name = "buffer",
-        enable = true,
+        enable = false,
         options = {
             get_bufnrs = function()
                 return vim.api.nvim_list_bufs()

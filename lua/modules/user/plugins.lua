@@ -122,13 +122,6 @@ user({
     end,
 })
 
-user({
-    "Davidyz/lsp-location-handler.nvim",
-    lazy = true,
-    event = "LspAttach",
-    config = true,
-})
-
 -- :NR  - Open the selected region in a new narrowed window
 -- :NW  - Open the current visual window in a new narrowed window
 -- :WR  - (In the narrowed window) write the changes back to the original buffer.
@@ -180,21 +173,6 @@ user({
 })
 
 user({
-    "liljaylj/codestats.nvim",
-    event = "VeryLazy",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-        require("codestats").setup({
-            base_url = "https://codestats.net", -- codestats.net base url
-            api_key = os.getenv("CODESTAT_API_KEY"),
-            send_on_exit = true, -- send xp on nvim exit
-            send_on_timer = true, -- send xp on timer
-            timer_interval = 50000, -- timer interval in ms
-        })
-    end,
-})
-
-user({
     "mikesmithgh/render.nvim",
     cmd = { "Render", "RenderClean", "RenderQuickfix" },
     lazy = true,
@@ -203,62 +181,43 @@ user({
     config = true,
 })
 user({
-    "rawnly/gist.nvim",
-    cmd = { "CreateGist" },
-})
-
-user({
-    "jghauser/papis.nvim",
-    dependencies = {
-        "kkharji/sqlite.lua",
-        "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
-        "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-        require("papis").setup({
-            -- These are configuration options of the `papis` program relevant to papis.nvim.
-            -- Papis.nvim can get them automatically from papis, but this is very slow. It is
-            -- recommended to copy the relevant settings from your papis configuration file.
-            papis_python = {
-                dir = "/home/viv/Documents/papers/",
-                info_name = "info.yaml", -- (when setting papis options `-` is replaced with `_`
-                -- in the keys names)
-                notes_name = [[notes.norg]],
-            },
-            enable_keymaps = true,
-        })
-    end,
-})
-
-user({
     "JosefLitos/reform.nvim",
     cond = false,
     event = "VeryLazy",
     build = "make",
     config = true, -- automatically call reform.setup(), use [opts] to customize passed table
 })
-
 user({
-    "subnut/nvim-ghost.nvim",
-    event = "VeryLazy",
+    "glepnir/nerdicons.nvim",
+    cmd = "NerdIcons",
+    config = true,
+})
+user({
+    "letieu/hacker.nvim",
+    cmd = { "Hack", "HackFollow" },
     config = function()
-        vim.cmd([[
-        " Autocommand for a single website (i.e. stackoverflow.com)
-        au nvim_ghost_user_autocommands User www.stackoverflow.com setfiletype markdown
+        require("hacker").setup({
+            content = [[
+local plenary_dir = os.getenv("PLENARY_DIR") or "/tmp/plenary.nvim"
+local is_not_a_directory = vim.fn.isdirectory(plenary_dir) == 0
+if is_not_a_directory then
+  vim.fn.system({ "git", "clone", "https://github.com/nvim-lua/plenary.nvim", plenary_dir })
+end
 
-        " Autocommand for a multiple websites
-        au nvim_ghost_user_autocommands User www.reddit.com,www.github.com setfiletype markdown
+vim.opt.rtp:append(".")
+vim.opt.rtp:append(plenary_dir)
 
-        " Autocommand for a domain (i.e. github.com)
-        au nvim_ghost_user_autocommands User *github.com setfiletype markdown
+vim.cmd("runtime plugin/plenary.vim")
+require("plenary.busted")
 
-        " Multiple autocommands can be specified like so -
-        augroup nvim_ghost_user_autocommands
-          au User www.reddit.com,www.stackoverflow.com setfiletype markdown
-          au User www.reddit.com,www.github.com setfiletype markdown
-          au User *github.com setfiletype markdown
-        augroup END
-    ]])
+            ]], -- The code snippet that show when typing
+            filetype = "lua", -- filetype of code snippet
+            speed = { -- characters insert each time, random from min -> max
+                min = 2,
+                max = 10,
+            },
+            is_popup = false, -- show random float window when typing
+            popup_after = 5,
+        })
     end,
 })

@@ -2,8 +2,6 @@
 local noice_enabled = false
 local use_ts_yeti = true
 
-local use_codium_cmp = false
-local use_tabnine_cmp = false
 -- toggle core values within the list
 
 lambda.config = {
@@ -39,9 +37,16 @@ lambda.config = {
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 
+local use_codium_cmp = true
+local use_codium = true
+
+local use_tabnine_cmp = true
+local use_tabnine = false
+local use_copilot = true
+
 lambda.config.ai = {
     codeium = {
-        use_codeium = false,
+        use_codeium = use_codium,
         use_codeium_cmp = use_codium_cmp,
         use_codium_insert = not use_codium_cmp,
         cmp = {
@@ -49,7 +54,7 @@ lambda.config.ai = {
         },
     },
     tabnine = {
-        use_tabnine = false,
+        use_tabnine = use_tabnine,
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
         cmp = {
@@ -59,7 +64,7 @@ lambda.config.ai = {
             tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
         },
     },
-    sell_your_soul = true,
+    sell_your_soul = use_copilot,
 }
 
 lambda.config.extra_search = {
@@ -71,7 +76,7 @@ lambda.config.extra_search = {
 }
 
 lambda.config.colourscheme = {
-    enable_transparent = true,
+    enable_transparent = false,
     dim_background = true,
     change_kitty_bg = false,
     --- @usage "main"' | '"moon"
@@ -84,8 +89,8 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
-                -- "catppuccin",
+                -- "kanagawa.nvim",
+                "catppuccin",
                 -- "sweetie.nvim",
                 -- "vim-dogrun",
                 -- "poimandres.nvim",

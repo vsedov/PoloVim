@@ -150,17 +150,6 @@ completion({
 })
 
 completion({
-    "iurimateus/luasnip-latex-snippets.nvim",
-    lazy = true,
-    ft = { "latex", "tex" },
-    config = function()
-        vim.defer_fn(function()
-            require("luasnip-latex-snippets").setup()
-        end, 100)
-    end,
-})
-
-completion({
     "kristijanhusak/vim-dadbod-completion",
     ft = { "sql" },
     config = function()

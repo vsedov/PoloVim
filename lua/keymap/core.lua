@@ -93,8 +93,6 @@ local plug_map = {
         :with_noremap()
         :with_expr(),
 
-    ["n|<C-w>f"] = map_cmd([[<C-w>vgf]], "horizontal split"):with_noremap():with_silent(),
-
     ["n|<localleader>l"] = map_cmd([[<cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync fromstart<cr><c-l>]], "command line window - :<c-f>")
         :with_noremap()
         :with_silent(),

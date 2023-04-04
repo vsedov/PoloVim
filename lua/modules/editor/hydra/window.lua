@@ -43,7 +43,7 @@ Hydra({
         },
     },
     mode = "n",
-    body = "<C-w>[",
+    body = "<C-]>",
     heads = {
         { "h", "<C-w>h" },
         { "j", "<C-w>j" },
