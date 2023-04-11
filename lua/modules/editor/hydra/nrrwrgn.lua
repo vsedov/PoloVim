@@ -32,7 +32,11 @@ config.browse = {
                 if selected == nil then
                     return
                 end
-                vim.cmd(selected)
+                if vim.fn.mode() == "n" then
+                    vim.cmd(selected)
+                else
+                    vim.cmd([['<,'>]] .. selected)
+                end
             end)
         end,
         { nowait = true, silent = true, desc = "Narrow[N] Window", exit = true },

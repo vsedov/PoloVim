@@ -60,4 +60,51 @@ M.create_table_normal = function(var, sorted, string_len, start_val, bracket)
     return var
 end
 
+M.auto_hint_generate = function(config, listofcoretables, bracket, name)
+    container = {}
+    for x, y in pairs(config) do
+        local mapping = x
+        if type(y[1]) == "function" then
+            for x, y in pairs(y[2]) do
+                if x == "desc" then
+                    container[mapping] = y
+                end
+            end
+        end
+    end
+
+    sorted = {}
+    for k, v in pairs(container) do
+        table.insert(sorted, k)
+    end
+    table.sort(sorted)
+
+    core_table = {}
+    M.make_core_table(core_table, bracket)
+
+    for _, v in pairs(listofcoretables) do
+        M.make_core_table(core_table, v)
+    end
+
+    hint_table = {}
+    -- string_val = "^ ^       Docs       ^\n\n"
+    string_val = "^ ^       " .. name .. "       ^\n\n"
+    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+
+    for _, v in pairs(core_table) do
+        if v == "\n" then
+            hint = "\n"
+            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+        else
+            if container[v] then
+                hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+            end
+        end
+        table.insert(hint_table, hint)
+        string_val = string_val .. hint
+        -- end
+    end
+    return string_val
+end
+
 return M

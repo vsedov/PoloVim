@@ -133,7 +133,6 @@ vim.defer_fn(function()
     })
 
     val = auto_hint_generate()
-    print(val)
     new_hydra.hint = val
     hydra(new_hydra)
 end, 100)

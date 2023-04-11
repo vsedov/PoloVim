@@ -11,12 +11,6 @@ local fixer = function()
     vim.fn.system(ruff_cmd)
 end
 
-local navy = function()
-    current_path = vim.fn.expand("%:p")
-    vim.fn.system("cd " .. current_path)
-    vim.cmd([[NayvyImports]])
-end
-
 local python_hints = [[
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^        Documentation           ^ ^
@@ -75,7 +69,7 @@ local python_hints = {
     },
 
     mode = { "n", "x" },
-    body = ";a",
+    body = "<leader><leader>p",
     heads = {
         { "<enter>", fixer, { nowait = true } },
 

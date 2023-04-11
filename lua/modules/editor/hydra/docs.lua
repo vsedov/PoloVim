@@ -1,5 +1,7 @@
 local Hydra = require("hydra")
--- local cmd = require("hydra.keymap-util").cmd
+local utils = require("modules.editor.hydra.utils")
+local make_core_table = utils.make_core_table
+
 if table.unpack == nil then
     table.unpack = unpack
 end
@@ -8,13 +10,6 @@ local config = {}
 
 local bracket = { "d", "s", "c", "D" }
 local exit = { nil, { exit = true, desc = "EXIT" } }
-
-local function make_core_table(core_table, second_table)
-    for _, v in pairs(second_table) do
-        table.insert(core_table, v)
-    end
-    table.insert(core_table, "\n")
-end
 
 config.doc_binds = {
     color = "pink",
@@ -79,6 +74,7 @@ local new_hydra = {
 }
 
 require("modules.editor.hydra.utils").new_hydra(config, new_hydra)
+
 local function auto_hint_generate()
     container = {}
     for x, y in pairs(config.doc_binds) do
