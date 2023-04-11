@@ -3,6 +3,7 @@ local conf = require("modules.clipboard.config")
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ VeryLazy                                                           │
 --  ╰────────────────────────────────────────────────────────────────────╯
+
 clipsub({
     "gbprod/yanky.nvim",
     lazy = true,
@@ -25,6 +26,14 @@ clipsub({
     dependencies = "gbprod/yanky.nvim",
     config = conf.substitute,
 })
+
+clipsub({
+    "chrisgrieser/nvim-alt-substitute",
+    opts = true,
+    -- lazy-loading with `cmd =` does not work with incremental preview
+    event = "CmdlineEnter",
+})
+
 --  ──────────────────────────────────────────────────────────────────────
 
 -- start = "gm", -- Mark word / region
