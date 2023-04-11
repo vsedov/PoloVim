@@ -8,7 +8,7 @@ M.config = function()
         automatic_installation = true,
         automatic_setup = true,
     })
-    require("mason-nvim-dap").setup_handlers()
+    require("mason-nvim-dap")
     require("nvim-dap-virtual-text").setup()
     M.keymaps()
     M.commands()

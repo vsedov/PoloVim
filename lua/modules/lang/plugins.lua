@@ -113,7 +113,6 @@ lang({
     event = "VeryLazy",
     config = function()
         local resession = require("resession")
-
         resession.setup({
             autosave = {
                 enabled = true,
@@ -122,7 +121,6 @@ lang({
             },
             extensions = {
                 overseer = {
-                    -- customize here
                 },
             },
         })
@@ -132,7 +130,6 @@ lang({
 
         vim.api.nvim_create_autocmd("VimLeavePre", {
             callback = function()
-                -- Always save a special session named "last"
                 resession.save("last")
             end,
         })
