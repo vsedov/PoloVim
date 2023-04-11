@@ -171,7 +171,7 @@ lambda.augroup("AddTerminalMappings", {
                 vim.notify("Terminal binds are being set")
                 local opts = { silent = false, buffer = 0 }
                 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-                vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+                vim.keymap.set("t", "jn", [[<C-\><C-n>]], opts)
                 vim.keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", opts)
                 vim.keymap.set("t", "<C-j>", "<Cmd>wincmd j<CR>", opts)
                 vim.keymap.set("t", "<C-k>", "<Cmd>wincmd k<CR>", opts)
@@ -412,16 +412,6 @@ lambda.augroup("UpdateVim", {
 
 local cursorline_exclude = { "alpha", "toggleterm" }
 
----@param buf number
----@return boolean
-local function should_show_cursorline(buf)
-    return vim.bo[buf].buftype ~= "terminal"
-        and not vim.wo.previewwindow
-        and vim.wo.winhighlight == ""
-        and vim.bo[buf].filetype ~= ""
-        and not vim.tbl_contains(cursorline_exclude, vim.bo[buf].filetype)
-end
-
 lambda.augroup("TerminalAutocommands", {
     {
         event = { "TermClose" },
@@ -463,29 +453,6 @@ lambda.augroup("CapLockDisable", {
 })
 
 lambda.augroup("PluginCustomFixes", {
-    -- {
-    --     event = "FileType",
-    --     pattern = { "NeogitPopup", "NeogitCommitMessage" },
-    --     command = function()
-    --         if lambda.config.ui.noice.enable then
-    --             vim.cmd([[Noice disable]])
-    --             print("Noice disabled")
-    --         end
-    --     end,
-    -- },
-    -- {
-    --     event = "BufWinLeave",
-    --     pattern = { "NeogitStatus" },
-    --     command = function()
-    --         if lambda.config.ui.noice.enable then
-    --             if not vim.tbl_contains({ "NeogitPopup", "NeogitCommitMessage" }, vim.bo.filetype) then
-    --                 vim.cmd([[Noice enable]])
-    --                 print("Noice enable")
-    --             end
-    --         end
-    --     end,
-    -- },
-    --
     {
         event = "BufWritePost",
         pattern = "*",
@@ -504,7 +471,6 @@ lambda.augroup("LSPAttachable", {
         pattern = "*",
         command = function(args)
             local bufnr = args.buf
-            -- vim.lsp.semantic_tokens.stop(bufnr, args.data.client_id)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
             client.server_capabilities.semanticTokensProvider = nil
         end,

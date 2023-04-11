@@ -40,8 +40,8 @@ lambda.config = {
 local use_codium_cmp = true
 local use_codium = true
 
-local use_tabnine_cmp = true
 local use_tabnine = false
+local use_tabnine_cmp = true
 local use_copilot = true
 
 lambda.config.ai = {
@@ -141,6 +141,7 @@ lambda.config.cmp = {
             priority = 8,
         },
     },
+    buffer = false,
     cmp_theme = "borderv2", --- @usage "border" | "no-border" | "extra"
 }
 
