@@ -34,7 +34,40 @@ ai({
         vim.keymap.set(
             { "v", "x" },
             "<leader>w",
-            ":AI fix grammar and spelling and replace slang and contractions with a formal academic writing style<CR>",
+            ":AI fix grammar and spelling and replace slang and contractions with a formal academic writing style.<CR>",
+            {
+                silent = true,
+            }
+        )
+
+        vim.keymap.set(
+            { "v", "x" },
+            "<leader>aw",
+            ":AI fix grammar and spelling and rewrite this how tech would write this from the bad batch the tv show.<CR>",
+            {
+                silent = true,
+            }
+        )
+    end,
+})
+
+ai({
+    "meinside/openai.nvim",
+    dependencies = { { "nvim-lua/plenary.nvim" } },
+    config = function()
+        require("openai").setup({
+            models = {
+                completeChat = "gpt-4",
+                editCode = "code-davinci-edit-001",
+                editText = "text-davinci-edit-001",
+                moderation = "text-moderation-latest",
+            },
+            timeout = 60 * 1000,
+        })
+        vim.keymap.set(
+            { "v", "x" },
+            "<leader>aW",
+            ":OpenaiEditText fix grammar and spelling and replace slang and contractions with a formal academic writing style.<CR>",
             {
                 silent = true,
             }
@@ -81,6 +114,7 @@ ai({
     end,
     config = conf.codium,
 })
+
 ai({
     "jcdickinson/codeium.nvim",
     cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codeium_cmp),

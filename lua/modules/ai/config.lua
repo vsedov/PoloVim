@@ -7,14 +7,14 @@ function config.chatgpt()
             model = "gpt-4",
             frequency_penalty = 0,
             presence_penalty = 0,
-            max_tokens = 2000,
+            max_tokens = 6000,
             temperature = 1,
             top_p = 1,
             n = 1,
         },
         keymaps = {
             close = { "<C-c>" },
-            submit = "<C-s>",
+            -- submit = "<C-s>",
             yank_last = "<C-y>",
             yank_last_code = "<C-k>",
             scroll_up = "<C-u>",
@@ -38,7 +38,6 @@ function config.codegpt()
     vim.g["codegpt_openai_api_provider"] = "OpenAI" -- or Azure
     vim.g["codegpt_clear_visual_selection"] = true
     vim.g["codegpt_ui_commands"] = {
-        -- some default commands, you can remap the keys
         quit = "q", -- key to quit the popup
         use_as_output = "<c-o>", -- key to use the popup content as output and replace the original lines
         use_as_input = "<c-a>", -- key to use the popup content as input for a new API request
@@ -88,7 +87,6 @@ function config.tabnine_cmp()
         run_on_every_keystroke = true,
         snippet_placeholder = lambda.style.icons.misc.ellipsis,
         ignored_file_types = {
-
             norg = true,
         },
         show_prediction_strength = true,
