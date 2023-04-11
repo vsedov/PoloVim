@@ -296,7 +296,7 @@ return {
                     name = "Test " .. san_name,
                     builder = function()
                         require("neotest").run.run(location)
-                        return { cmd = "", name = "", components = { "user.dispose_now" } }
+                        return { cmd = "", name = "", components = { "users.dispose_now" } }
                     end,
                     priority = pr(),
                     params = {},
@@ -316,15 +316,19 @@ return {
                         return {
                             name = san_name .. " Infiltration",
                             cmd = [[julia --threads=auto --project -i -e "
-                                using Revise, TestItemRunner, Infiltrator, ]] .. vim.g.project .. [[;
-                                run(\`/home/viv/.config/bin/nvrWS 'lua No_Using_Toggle(\"Main.@infiltrate cond = ]] .. cond .. [[\")'\`)
+                                using Revise, TestItemRunner, Infiltrator, ]]
+                                .. vim.g.project
+                                .. [[;
+                                run(\`/home/viv/.config/bin/nvrWS 'lua No_Using_Toggle(\"Main.@infiltrate cond = ]]
+                                .. cond
+                                .. [[\")'\`)
                                 "]],
                             strategy = { "toggleterm", open_on_start = false },
                             components = {
                                 "default",
                                 "unique",
                                 {
-                                    "user.attach_toggleterm",
+                                    "users.attach_toggleterm",
                                     send_on_start = [[@run_package_tests filter=ti->(ti.name == ]] .. name .. [[)]],
                                     goto_prev = true,
                                 },
@@ -350,7 +354,7 @@ return {
                     name = "Benchmark " .. san_name,
                     builder = function()
                         require("neotest").run.run(location)
-                        return { cmd = "", name = "", components = { "user.dispose_now" } }
+                        return { cmd = "", name = "", components = { "users.dispose_now" } }
                     end,
                     priority = pr(),
                     params = {},
@@ -426,7 +430,7 @@ return {
             name = "Load profile data",
             builder = function()
                 Jul_perf_flat()
-                return { cmd = "", name = "", components = { "user.dispose_now" } }
+                return { cmd = "", name = "", components = { "users.dispose_now" } }
             end,
             priority = pr(),
             condition = {
@@ -472,7 +476,7 @@ return {
 
                 git_commits_againsthead()
 
-                return { cmd = "", name = "", components = { "user.dispose_now" } }
+                return { cmd = "", name = "", components = { "users.dispose_now" } }
             end,
             priority = pr(),
             condition = hasBenchmark,

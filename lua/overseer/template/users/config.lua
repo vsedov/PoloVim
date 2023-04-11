@@ -13,7 +13,7 @@ return {
                     return {
                         cmd = "",
                         name = "",
-                        components = { "user.dispose_now" },
+                        components = { "users.dispose_now" },
                     }
                 end,
                 priority = 59,
@@ -27,7 +27,7 @@ return {
                     return {
                         cmd = "",
                         name = "",
-                        components = { "user.dispose_now" },
+                        components = { "users.dispose_now" },
                     }
                 end,
                 priority = 59,
@@ -40,7 +40,7 @@ return {
                     return {
                         cmd = "",
                         name = "",
-                        components = { "user.dispose_now" },
+                        components = { "users.dispose_now" },
                     }
                 end,
                 priority = 59,

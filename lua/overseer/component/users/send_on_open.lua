@@ -8,7 +8,7 @@ return {
             desc = "What text to send to task once it has started",
             default = nil,
             optional = true,
-        },
+        }
     },
     constructor = function(params)
         return {
