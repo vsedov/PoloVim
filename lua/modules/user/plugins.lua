@@ -159,17 +159,12 @@ user({
 })
 
 user({
-    "kiyoon/haskell-scope-highlighting.nvim",
-    lazy = true,
-    ft = { "haskell" },
-    dependencies = {
-        "nvim-treesitter/nvim-treesitter",
+    "mrcjkb/haskell-tools.nvim",
+    requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim", -- optional
     },
-    init = function()
-        -- Consider disabling other highlighting
-        vim.cmd([[autocmd FileType haskell syntax off]])
-        vim.cmd([[autocmd FileType haskell TSDIsable highlight]])
-    end,
+    branch = "1.x.x", -- recommended
 })
 
 user({
@@ -192,6 +187,7 @@ user({
     cmd = "NerdIcons",
     config = true,
 })
+
 user({
     "letieu/hacker.nvim",
     cmd = { "Hack", "HackFollow" },
@@ -220,4 +216,209 @@ require("plenary.busted")
             popup_after = 5,
         })
     end,
+})
+user({
+    "chrisgrieser/nvim-early-retirement",
+    cond = true,
+    config = true,
+    event = "VeryLazy",
+})
+
+user({
+    "rebelot/terminal.nvim",
+    event = "VeryLazy",
+    config = function()
+        require("terminal").setup()
+
+        local term_map = require("terminal.mappings")
+        vim.keymap.set(
+            { "n", "x" },
+            "<leader>ts",
+            term_map.operator_send,
+            { expr = true, desc = "Operat1or: send to terminal" }
+        )
+        vim.keymap.set("n", "<leader>to", term_map.toggle, { desc = "toggle terminal" })
+        vim.keymap.set("n", "<leader>tO", term_map.toggle({ open_cmd = "enew" }), { desc = "toggle terminal" })
+        vim.keymap.set("n", "<leader>tr", term_map.run, { desc = "run terminal" })
+        vim.keymap.set(
+            "n",
+            "<leader>tR",
+            term_map.run(nil, { layout = { open_cmd = "enew" } }),
+            { desc = "run terminal" }
+        )
+        vim.keymap.set("n", "<leader>tk", term_map.kill, { desc = "kill terminal" })
+        vim.keymap.set("n", "<leader>t]", term_map.cycle_next, { desc = "cycle terminal" })
+        vim.keymap.set("n", "<leader>t[", term_map.cycle_prev, { desc = "cycle terminal" })
+        vim.keymap.set("n", "<leader>tl", term_map.move({ open_cmd = "belowright vnew" }), { desc = "move terminal" })
+        vim.keymap.set("n", "<leader>tL", term_map.move({ open_cmd = "botright vnew" }), { desc = "move terminal" })
+        vim.keymap.set("n", "<leader>th", term_map.move({ open_cmd = "belowright new" }), { desc = "move terminal" })
+        vim.keymap.set("n", "<leader>tH", term_map.move({ open_cmd = "botright new" }), { desc = "move terminal" })
+        vim.keymap.set("n", "<leader>tf", term_map.move({ open_cmd = "float" }), { desc = "move terminal" })
+
+        local ipython = require("terminal").terminal:new({
+            layout = { open_cmd = "botright vertical new" },
+            cmd = { "ipython" },
+            autoclose = true,
+        })
+
+        vim.api.nvim_create_user_command("IPython", function()
+            ipython:toggle(nil, true)
+            local bufnr = vim.api.nvim_get_current_buf()
+            vim.keymap.set("x", "<leader>ts", function()
+                vim.api.nvim_feedkeys('"+y', "n", false)
+                ipython:send("%paste")
+            end, { buffer = bufnr })
+            vim.keymap.set("n", "<leader>t?", function()
+                ipython:send(vim.fn.expand("<cexpr>") .. "?")
+            end, { buffer = bufnr })
+        end, {})
+
+        local lazygit = require("terminal").terminal:new({
+            layout = { open_cmd = "float", height = 0.9, width = 0.9 },
+            cmd = { "lazygit" },
+            autoclose = true,
+        })
+
+        vim.api.nvim_create_user_command("LazygitTerm", function(args)
+            lazygit.cwd = args.args and vim.fn.expand(args.args)
+            lazygit:toggle(nil, true)
+        end, { nargs = "?" })
+
+        local htop = require("terminal").terminal:new({
+            layout = { open_cmd = "float" },
+            cmd = { "htop" },
+            autoclose = true,
+        })
+        vim.api.nvim_create_user_command("HtopTerm", function()
+            htop:toggle(nil, true)
+        end, { nargs = "?" })
+
+        vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
+            callback = function(args)
+                if vim.startswith(vim.api.nvim_buf_get_name(args.buf), "term://") then
+                    vim.cmd("startinsert")
+                end
+            end,
+        })
+        vim.api.nvim_create_autocmd("TermOpen", {
+            command = [[setlocal nonumber norelativenumber winhl=Normal:NormalFloat]],
+        })
+    end,
+})
+
+user({
+    "monaqa/nvim-treesitter-clipping",
+    lazy = true,
+    keys = { "<leader>cc" },
+    dependencies = { "thinca/vim-partedit" },
+    config = function()
+        vim.keymap.set("n", "<leader>cc", "<Plug>(ts-clipping-clip)")
+    end,
+})
+
+user({
+    "m-demare/attempt.nvim",
+    lazy = true,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+        require("attempt").setup()
+        require("telescope").load_extension("attempt")
+    end,
+})
+
+user({
+    "bignos/bookmacro",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+        -- Load a macro
+        {
+            ";ml",
+            vim.cmd.MacroSelect,
+            desc = "Load a macro to a registry",
+        },
+
+        -- Execute a macro
+        {
+            ";mx",
+            vim.cmd.MacroExec,
+            desc = "Execute a macro from BookMacro",
+        },
+
+        -- Add a macro
+        {
+            ";ma",
+            vim.cmd.MacroAdd,
+            desc = "Add a macro to BookMacro",
+        },
+        -- Edit a macro
+        {
+            ";me",
+            vim.cmd.MacroEdit,
+            desc = "Edit a macro from BookMacro",
+        },
+        -- Edit the description of a macro
+        {
+            ";mD",
+            vim.cmd.MacroDescEdit,
+            desc = "Edit a description of a macro from BookMacro",
+        },
+
+        -- Edit a register
+        {
+            ";mr",
+            vim.cmd.MacroRegEdit,
+            desc = "Edit a macro from register",
+        },
+
+        -- Delete a macro
+        {
+            ";md",
+            vim.cmd.MacroDel,
+            desc = "Delete a macro from BookMacro",
+        },
+
+        -- Export BookMacro
+        {
+            ";mE",
+            vim.cmd.MacroExport,
+            desc = "Export BookMacro to a JSON file",
+        },
+
+        -- Export a Macro
+        {
+            ";mz",
+            vim.cmd.MacroExportTo,
+            desc = "Export a macro to a JSON file",
+        },
+
+        -- Import a BookMacro
+        {
+            ";mI",
+            vim.cmd.MacroImport,
+            desc = "Import BookMacro with a JSON file",
+        },
+
+        -- Import a macro
+        {
+            ";mZ",
+            vim.cmd.MacroImportFrom,
+            desc = "Import a macro from a JSON file",
+        },
+
+        -- Erase BookMacro
+        {
+            "<leader>ME",
+            vim.cmd.MacroErase,
+            desc = "Erase all macros from The Book",
+        },
+    },
+    config = function()
+        require("bookmacro").setup()
+    end,
+})
+user({
+    "Fildo7525/pretty_hover",
+    event = "LspAttach",
+    opts = {},
 })
