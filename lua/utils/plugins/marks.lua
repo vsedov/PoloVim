@@ -54,7 +54,6 @@ M.toggle = function()
 end
 
 M.setup = function()
-    -- vim.keymap.set('n', '<leader>b', toggle, {silent=true})
     vim.api.nvim_create_user_command("Bt", M.toggle, {})
 end
 
