@@ -20,27 +20,11 @@ local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 
 require("modules.lsp.lsp.providers.python.utils.semantic_tokens")
 
-local python_setup = {
-    pylsp = function()
-        lspconfig.pylsp.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pylsp-ls")))
-    end,
-    jedi = function() end,
-
-    pylance = function()
-        print("Using Pylance")
-    end,
-    pyright = function()
-        lspconfig.pyright.setup(enhance_attach(require("modules.lsp.lsp.providers.python.pyright").config))
-    end,
-}
-
 lspconfig.metals.setup(enhance_attach({
     cmd = { "metals" },
 }))
 
 lspconfig.hls.setup({ enhance_attach({}) })
-
-python_setup[lambda.config.lsp.python.lsp]()
 
 lspconfig.julials.setup(enhance_attach(require("modules.lsp.lsp.providers.julials")))
 
@@ -55,11 +39,6 @@ lspconfig.gopls.setup(enhance_attach({
         usePlaceholders = true,
         completeUnimported = true,
     },
-}))
-
-lspconfig.sqls.setup(enhance_attach({
-    filetypes = { "sql", "mysql" },
-    cmd = { "sql-language-server", "up", "--method", "stdio" },
 }))
 
 -- -- You will have to Build a package for this .
