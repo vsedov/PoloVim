@@ -48,17 +48,9 @@ local plugins = {
             },
         },
     },
-    -- {
-    --     name = "kitty",
-    --     enable = true,
-    --     options = {
-    --         listen_on = "unix:/tmp/kitty",
-    --         priority = 6,
-    --     },
-    -- },
     {
         name = "buffer",
-        enable = false,
+        enable = lambda.config.cmp.buffer,
         options = {
             get_bufnrs = function()
                 return vim.api.nvim_list_bufs()
@@ -81,9 +73,7 @@ local plugins = {
         name = "tmux",
         enable = true,
         option = {
-            -- Source from all panes in session instead of adjacent panes
             all_panes = true,
-            -- Completion popup label
             label = "[tmux]",
         },
     },
