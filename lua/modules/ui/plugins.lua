@@ -118,7 +118,7 @@ ui({
     lazy = true,
     branch = "master",
     event = "VeryLazy",
-    dependencies = { "shell-Raining/hlchunk.nvim", config = true },
+    -- dependencies = { "shell-Raining/hlchunk.nvim", conf = false, config = true },
     config = conf.blankline,
 })
 
