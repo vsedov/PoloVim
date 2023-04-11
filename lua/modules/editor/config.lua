@@ -61,15 +61,6 @@ function config.comment_box()
         line_blank_line_above = false, -- insert a blank line above the line
         line_blank_line_below = false, -- insert a blank line below the line
     })
-
-    local keymap = vim.keymap.set
-    local cb = require("comment-box")
-
-    keymap({ "n", "v" }, "<Leader>cb", cb.lbox, {})
-    keymap({ "n", "v" }, "<Leader>cc", cb.cbox, {})
-
-    keymap("n", "<Leader>cl", cb.line, {})
-    keymap("i", "<M-p>", cb.line, {})
 end
 
 function config.discord()
@@ -146,12 +137,12 @@ function config.dial()
         },
     })
     local map = vim.keymap.set
-    map("n", "<C-a>", dial.inc_normal(), { remap = false })
-    map("n", "<C-x>", dial.dec_normal(), { remap = false })
-    map("v", "<C-a>", dial.inc_visual(), { remap = false })
-    map("v", "<C-x>", dial.dec_visual(), { remap = false })
-    map("v", "g<C-a>", dial.inc_gvisual(), { remap = false })
-    map("v", "g<C-x>", dial.dec_gvisual(), { remap = false })
+    map("n", ";a", dial.inc_normal(), { remap = false })
+    map("n", ";x", dial.dec_normal(), { remap = false })
+    map("v", ";a", dial.inc_visual(), { remap = false })
+    map("v", "x;", dial.dec_visual(), { remap = false })
+    map("v", ";ga", dial.inc_gvisual(), { remap = false })
+    map("v", ";gx", dial.dec_gvisual(), { remap = false })
     map("n", "_a", require("dial.map").inc_normal("mygroup"), { noremap = true })
     map("n", "_x", require("dial.map").dec_normal("mygroup"), { noremap = true })
 end

@@ -78,8 +78,6 @@ editor({
 editor({
     "LudoPinelli/comment-box.nvim",
     lazy = true,
-    keys = { "<Leader>cb", "<Leader>cc", "<Leader>cl", "<M-p>" },
-    cmd = { "CBlbox", "CBcbox", "CBline", "CBcatalog" },
     config = conf.comment_box,
 })
 
@@ -115,21 +113,21 @@ editor({
         })
     end,
 })
--- -- -- -- Currently needs to be calle , not sure if i have to lazy load this or not.
+
 editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 
 editor({
     "monaqa/dial.nvim",
     lazy = true,
     keys = {
-        { "<C-x>", mode = "n" },
-        { "<C-a>", mode = "n" },
+        { ";x", mode = "n" },
+        { ";a", mode = "n" },
 
-        { "<C-a>", mode = "v" },
-        { "<C-x>", mode = "v" },
+        { ";a", mode = "v" },
+        { ";a", mode = "v" },
 
-        { "g<C-a>", mode = "v" },
-        { "g<C-x>", mode = "v" },
+        { ";ga", mode = "v" },
+        { ";gx", mode = "v" },
 
         { "_a", mode = "n" },
         { "_x", mode = "n" },
@@ -200,56 +198,7 @@ editor({
 editor({
     "linty-org/readline.nvim",
     lazy = true,
+    cond = false,
     event = "VeryLazy",
     config = conf.readline,
 })
-
-editor({
-    "sindrets/scratchpad.nvim",
-    cmd = { "Float", "FloatMove", "Scratchpad" },
-})
-
--- editor({
---     "gennaro-tedesco/nvim-possession",
---     keys = {
---         "<leader>sl",
---         "<leader>sn",
---         "<leader>su",
---     },
---     event = "VeryLazy",
---     dependencies = {
---         "ibhagwan/fzf-lua",
---     },
---     init = function()
---         local possession = require("nvim-possession")
---
---         vim.keymap.set("n", "<leader>sl", function()
---             possession.list()
---         end, { desc = "Possesion List" })
---         vim.keymap.set("n", "<leader>sn", function()
---             possession.new()
---         end, { desc = "Possesion New" })
---         vim.keymap.set("n", "<leader>su", function()
---             possession.update()
---         end, { desc = "Possesion Update" })
---     end,
---     opts = {
---         sessions = {
---             sessions_icon = lambda.style.icons.misc.clock,
---         },
---         autoload = true, -- whether to autoload sessions in the cwd at startup
---         autosave = true, -- whether to autosave loaded sessions before quitting
---         autoswitch = {
---             enable = true, -- whether to enable autoswitch
---             exclude_ft = {}, -- list of filetypes to exclude from autoswitch
---         },
---         fzf_winopts = {
---             width = 0.5,
---             preview = {
---                 vertical = "right:40%",
---             },
---         },
---     },
---
--- })
---
