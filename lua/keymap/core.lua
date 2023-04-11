@@ -43,7 +43,8 @@ local plug_map = {
     ["n|<Leader>so"] = map_cmd([[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]], "Source init.lua")
         :with_silent()
         :with_noremap(),
-    ["n|<leader>cp"] = map_cmd([[:let @"=expand("%:p")<CR>]], "expand current dir"):with_silent():with_noremap(),
+
+    ["n|<leader>cD"] = map_cmd([[:let @"=expand("%:p")<CR>]], "expand current dir"):with_silent():with_noremap(),
 
     ["i|<C-U>"] = map_cmd([[<ESC>b~A]], "end of line"):with_silent():with_noremap(),
     ["n|¢"] = map_cmd([[bl~lhe]], "first two words captal"):with_silent():with_noremap(),

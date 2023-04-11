@@ -44,9 +44,6 @@ local plug_map = {
     ["n|<Leader><leader>d"] = map_cr("Neotree diagnostics", "Diagnostics"):with_noremap():with_silent(),
 
     ["n|<Leader>F"] = map_cr("NeoTreeFocus", "NeoTree Focus"):with_noremap():with_silent(),
-    ["n|<Leader>cf"] = map_cr("Neotree float reveal_file=<cfile> reveal_force_cwd", "Float reveal file")
-        :with_noremap()
-        :with_silent(),
 
     --  REVISIT: (vsedov) (20:40:02 - 15/09/22): See if this works
     ["n|cc"] = map_cmd("<Cmd>Lspsaga code_action<cr>", "Code action Menu"):with_noremap():with_silent(),

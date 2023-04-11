@@ -49,9 +49,9 @@ local def_map = {
     ["n|$"] = map_cmd([[g_]]):with_noremap(),
 
     -- ----------------------------------------------------------------------
-    ["n|1"] = map_cmd(vim.cmd.ChatGPT, "ChatGpt"):with_noremap(),
-    ["n|2"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions, "GptInstructions"):with_noremap(),
-    ["n|3"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction, "CodeActions"):with_noremap(),
+    ["n|<leader>1"] = map_cmd(vim.cmd.ChatGPT, "ChatGpt"):with_noremap(),
+    ["n|<leader>2"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions, "GptInstructions"):with_noremap(),
+    ["n|<leader>3"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction, "CodeActions"):with_noremap(),
 
     ["i|<c-z>k"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions, "GptInstructions"):with_noremap(),
     ["i|<c-z>l"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction, "CodeActions"):with_noremap(),
