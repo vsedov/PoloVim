@@ -116,6 +116,13 @@ tools({
 })
 
 tools({
+    "izo0x90/quickfix_actually.nvim",
+    lazy = true,
+    ft = "qf",
+    config = true,
+})
+
+tools({
     "voldikss/vim-translator",
     lazy = true,
     init = function()
@@ -258,16 +265,16 @@ tools({
 })
 
 -- The goal of nvim-fundo is to make Neovim's undo file become stable and useful.
--- tools({
---     "kevinhwang91/nvim-fundo",
---     event = "BufReadPre",
---     cmd = { "FundoDisable", "FundoEnable" },
---     dependencies = "kevinhwang91/promise-async",
---     build = function()
---         require("fundo").install()
---     end,
---     config = true,
--- })
+tools({
+    "kevinhwang91/nvim-fundo",
+    event = "BufReadPre",
+    cmd = { "FundoDisable", "FundoEnable" },
+    dependencies = "kevinhwang91/promise-async",
+    build = function()
+        require("fundo").install()
+    end,
+    config = true,
+})
 
 tools({
     "AntonVanAssche/date-time-inserter.nvim",
