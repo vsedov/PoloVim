@@ -2,6 +2,26 @@ local ts_move = require("nvim-treesitter.textobjects.move")
 local leader = "L"
 local hydra = require("hydra")
 local cmd = require("hydra.keymap-util").cmd
+-- ["n|<leader><leader>Sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor")
+-- Replace word under cursor on Line (case-sensitive)
+-- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
+-- ["n|<leader><leader>Sl"] = map_cmd("
+-- ["n|<leader><leader>Sc"] = map_cmd(
+-- --
+--
+vim.keymap.set("n", "<leader>sl", function()
+    return [[:S ///g<Left><Left><Left>]]
+end, { desc = "Replace current", expr = true })
+
+--
+vim.keymap.set({ "n" }, "<leader>sc", function()
+    -- return ":S /<C-R><C-W>//gI<left><left><left>"
+    return ":S /<C-R><C-W>//gI<left><left><left>"
+end, { desc = "Replace current", expr = true })
+
+vim.keymap.set({ "n", "x" }, "<leader>sw", function()
+    return ":S /" .. vim.fn.expand("<cword>") .. "//g<Left><Left>"
+end, { desc = "󱗘 :AltSubstitute word under cursor", expr = true })
 
 local mx = function(feedkeys, type)
     local type = type or "m"
@@ -50,7 +70,6 @@ local exit = { nil, { exit = true, desc = "EXIT" } }
 config.parenth_mode = {
     color = "pink",
     body = leader,
-    mode = { "n", "v", "x", "o" },
     ["<ESC>"] = { nil, { exit = true } },
 
     L = {
@@ -145,14 +164,22 @@ config.parenth_mode = {
     },
     Xv = {
         function()
-            require("spectre").open_visual({ select_word = true })
+            if vim.fn.mode() == "v" then
+                require("spectre").open_visual({ select_word = true })
+            else
+                require("spectre").open_visual()
+            end
         end,
 
         { nowait = true, desc = "Specre Word", exit = true },
     },
     Xc = {
         function()
-            require("spectre").open_visual()
+            if vim.fn.mode() == "v" then
+                require("spectre").open_visual({ select_word = true })
+            else
+                require("spectre").open_file_search()
+            end
         end,
 
         { nowait = true, desc = "Spectre V", exit = true },
@@ -165,19 +192,20 @@ config.parenth_mode = {
     },
 
     -----------------------------
+
     w = {
-        mx("<leader><leader>Sc"),
+        mx("<leader>sw"),
+
         { nowait = true, desc = "Rep All", exit = true },
+    },
+    W = {
+        mx("<leader>sc"),
+        { nowait = true, desc = "Rep Word[C]", exit = true },
     },
 
     E = {
-        mx("<leader><leader>Sr"),
+        mx("<leader>sl"),
         { nowait = true, desc = "Rep Word", exit = false },
-    },
-
-    W = {
-        mx("<leader><leader>Sl"),
-        { nowait = true, desc = "Rep Word[C]", exit = true },
     },
 }
 local mapping = {
@@ -209,6 +237,7 @@ local new_hydra = {
         timeout = false,
         invoke_on_body = true,
     },
+    mode = { "n", "v", "x", "o" },
     heads = {},
 }
 

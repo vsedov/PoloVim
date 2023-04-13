@@ -29,8 +29,9 @@ clipsub({
 
 clipsub({
     "chrisgrieser/nvim-alt-substitute",
-    opts = true,
-    -- lazy-loading with `cmd =` does not work with incremental preview
+    opts = {
+        showNotification = true, -- whether to show the "x replacements made" notification
+    },
     event = "CmdlineEnter",
 })
 

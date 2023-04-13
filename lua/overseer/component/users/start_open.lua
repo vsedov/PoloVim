@@ -33,7 +33,7 @@ return {
             desc = "Start in insert mode",
             default = false,
             optional = true,
-        }
+        },
     },
     constructor = function(params)
         return {
@@ -60,5 +60,5 @@ return {
                 OpenTaskBufnr[task.name] = task.strategy.bufnr
             end,
         }
-    end
+    end,
 }

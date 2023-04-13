@@ -156,23 +156,23 @@ end
 ---@overload fun(ns: integer, name: string, opts: HLArgs): ErrorMsg[]?
 ---@return ErrorMsg[]?
 local function set(ns, name, opts)
-  if type(ns) == 'string' and type(name) == 'table' then
-    opts, name, ns = name, ns, 0
-  end
+    if type(ns) == "string" and type(name) == "table" then
+        opts, name, ns = name, ns, 0
+    end
 
-  vim.validate({ opts = { opts, 'table' }, name = { name, 'string' }, ns = { ns, 'number' } })
+    vim.validate({ opts = { opts, "table" }, name = { name, "string" }, ns = { ns, "number" } })
 
-  local hl = opts.clear and {} or get_hl_as_hex({ name = opts.inherit or name })
-  for attribute, hl_data in pairs(opts) do
-    local new_data = resolve_from_attribute(hl_data, attribute)
-    if attrs[attribute] then hl[attribute] = new_data end
-  end
+    local hl = opts.clear and {} or get_hl_as_hex({ name = opts.inherit or name })
+    for attribute, hl_data in pairs(opts) do
+        local new_data = resolve_from_attribute(hl_data, attribute)
+        if attrs[attribute] then
+            hl[attribute] = new_data
+        end
+    end
 
-  local msg = ('failed to set highlight "%s" with value %s'):format(name, vim.inspect(hl))
-  lambda.pcall(msg, api.nvim_set_hl, ns, name, hl)
+    local msg = ('failed to set highlight "%s" with value %s'):format(name, vim.inspect(hl))
+    lambda.pcall(msg, api.nvim_set_hl, ns, name, hl)
 end
-
-
 
 ---Apply a list of highlights
 ---@param hls {[string]: HLArgs}[]

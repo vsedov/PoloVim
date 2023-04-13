@@ -14,6 +14,30 @@ ai({
 })
 --
 ai({
+    "Bryley/neoai.nvim",
+    dependencies = {
+        "MunifTanjim/nui.nvim",
+    },
+    cmd = {
+        "NeoAI",
+        "NeoAIOpen",
+        "NeoAIClose",
+        "NeoAIToggle",
+        "NeoAIContext",
+        "NeoAIContextOpen",
+        "NeoAIContextClose",
+        "NeoAIInject",
+        "NeoAIInjectCode",
+        "NeoAIInjectContext",
+        "NeoAIInjectContextCode",
+    },
+    keys = {
+        { "<leader>as", desc = "summarize text" },
+        { "<leader>ag", desc = "generate git message" },
+    },
+    config = conf.neoai,
+})
+ai({
     "dpayne/CodeGPT.nvim",
     event = "VeryLazy",
     cmd = { "Chat" },
@@ -133,7 +157,7 @@ ai({
 -- <C-y> to copy/yank last answer.
 -- <C-o> Toggle settings window.
 -- <C-n> Start new session.
--- <Tab> Cycle over windows.
+-- <Tab> Cycle over windows.tr
 -- <C-i> [Edit Window] use response as input.
 
 ai({

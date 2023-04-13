@@ -133,43 +133,47 @@ end
 
 --
 local function auto_hint_generate()
-    container = {}
-    for x, y in pairs(config.parenth_mode) do
-        local mapping = x
-        if type(y[1]) == "function" then
-            for x, y in pairs(y[2]) do
-                if x == "desc" then
-                    container[mapping] = y
+    local container = {}
+    for key, value in pairs(config.parenth_mode) do
+        local mapping = key
+        if type(value[1]) == "function" then
+            for subkey, subvalue in pairs(value[2]) do
+                if subkey == "desc" then
+                    container[mapping] = subvalue
                 end
             end
         end
     end
-    sorted = {}
+    local sorted = {}
     for k, v in pairs(container) do
         table.insert(sorted, k)
     end
     table.sort(sorted)
 
-    core_table = {}
+    local core_table = {}
 
     make_core_table(core_table, bracket)
     make_core_table(core_table, { "d", "D", "r", "i", "t" })
     make_core_table(core_table, { "s", "S", "I", "c" })
 
-    hint_table = {}
-    string_val = "^ ^     LSP    ^ ^\n\n"
-    string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
-
+    local hint_table = {}
+    local string_val = "^ ^     LSP    ^ ^\n\n"
+    local max_desc_length = 0
+    for k, v in pairs(container) do
+        max_desc_length = math.max(max_desc_length, #v)
+        print(max_desc_length)
+    end
+    local separator = "^ ^▔" .. string.rep("▔", max_desc_length + 4) .. "^ ^\n"
+    string_val = string_val .. separator
     for _, v in pairs(core_table) do
         if v == "\n" then
-            hint = "\n"
-            hint = hint .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
+            hint = "\n" .. separator
         else
-            hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+            hint = "^ ^ _" .. v .. "_: " .. (container[v] or "")
+            hint = hint .. string.rep(" ", max_desc_length - (#container[v] or 0) + 2) .. "^ ^\n"
         end
         table.insert(hint_table, hint)
         string_val = string_val .. hint
-        -- end
     end
     return string_val
 end

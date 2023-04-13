@@ -21,15 +21,15 @@ local plug_map = {
 
     -- -- Replace word under cursor in Buffer (case-sensitive)
     -- -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
-    ["n|<leader><leader>Sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor")
-        :with_noremap()
-        :with_silent(),
-    -- Replace word under cursor on Line (case-sensitive)
-    -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
+    -- ["n|<leader><leader>Sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor")
+    --     :with_noremap()
+    --     :with_silent(),
+    -- -- Replace word under cursor on Line (case-sensitive)
+    -- -- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
     ["n|<leader><leader>Sl"] = map_cmd(":s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor on Line")
         :with_noremap()
         :with_silent(),
-    ["n|<leader><leader>Sc"] = map_cmd([[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], "replace current"):with_noremap(),
+    -- ["n|<leader><leader>Sc"] = map_cmd([[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], "replace current"):with_noremap(),
 
     -- ?ie | entire object
     ["x|ie"] = map_cmd([[gg0oG$]]):with_noremap():with_silent(),

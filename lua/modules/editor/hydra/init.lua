@@ -114,10 +114,3 @@ vim.api.nvim_create_user_command("ShowCoreHydraBinds", function()
         timeout = 10000,
     })
 end, {})
-
-vim.keymap.set("n", "<leader>sK", function()
-    vim.cmd([[ShowCoreHydraBinds]])
-end, { desc = "Show Core Hydra Binds" })
-vim.keymap.set("n", "<leader>sk", function()
-    vim.cmd([[ShowHydraBinds]])
-end, { desc = "Show all Hydra Binds " })

@@ -113,9 +113,6 @@ function config.sj()
             send_to_qflist = "<c-#>", --- send the search results to the quickfix list
         },
     })
-    vim.keymap.set("n", "<c-b>", function()
-        sj.run({ select_window = true })
-    end)
 
     vim.keymap.set("n", "<A-!>", function()
         sj.select_window()

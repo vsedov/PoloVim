@@ -163,4 +163,3 @@ vim.defer_fn(function()
     new_hydra.hint = val
     hydra(new_hydra)
 end, 100)
-

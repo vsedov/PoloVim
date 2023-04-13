@@ -176,7 +176,6 @@ movement({
         "<leader>sv",
         "<leader>sV",
         "<leader>sP",
-        "<c-b>",
         "<A-!>",
     },
     config = conf.sj,

@@ -2,8 +2,6 @@ local Hydra = require("hydra")
 local cmd = require("hydra.keymap-util").cmd
 
 local fixer = function()
-    -- vim.cmd[[ls]]
-    -- Run ruff --fix current file
     local current_path = vim.fn.expand("%:p")
     local current_dir = vim.fn.expand("%:p:h")
     local current_file = vim.fn.expand("%:t")
@@ -69,7 +67,7 @@ local python_hints = {
     },
 
     mode = { "n", "x" },
-    body = "<leader><leader>p",
+    body = "<leader>p",
     heads = {
         { "<enter>", fixer, { nowait = true } },
 
@@ -109,47 +107,3 @@ local python_hints = {
         { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
     },
 }
-
-magma = [[
-^ ^ _i_: MagmaInit       ^ ^
-^ ^ _v_: MagmaEvalVisual ^ ^
-^ ^ _R_: MagmaReevalCell ^ ^
-^ ^ _o_: MagmaShowOutput ^ ^
-^ ^ _O_: MagmaEnterOutput^ ^
-^ ^ _c_: MagmaInterrupt  ^ ^
-^ ^ _r_: MagmaRestart    ^ ^
-^ ^ _d_: MagmaDelete     ^ ^
-^ ^ _q_: MagmaDeinit     ^ ^
-]]
-
-local magma = {
-    name = "magma",
-    hint = magma,
-    config = {
-        color = "pink",
-        invoke_on_body = true,
-        hint = {
-            position = "bottom-right",
-            border = lambda.style.border.type_0,
-        },
-    },
-    mode = { "n", "x" },
-    body = "<leader>I",
-    heads = {
-
-        { "i", cmd("MagmaInit Python3"), { exit = true } },
-        { "v", cmd("MagmaEvaluateVisual"), { exit = true } },
-        { "R", cmd("MagmaReevaluateCell"), { exit = true } },
-        { "o", cmd("MagmaShowOutput"), { exit = true } },
-        { "O", cmd("MagmaEnterOutput"), exit = true },
-        { "c", cmd("MagmaInterrupt"), exit = true },
-        { "r", cmd("MagmaRestart"), exit = true },
-        { "d", cmd("MagmaDelete"), exit = true },
-        { "q", cmd("MagmaDeinit"), exit = true },
-
-        { "<Esc>", nil, { nowait = true, exit = true, desc = false } },
-    },
-}
-
-Hydra(python_hints)
--- Hydra(magma)

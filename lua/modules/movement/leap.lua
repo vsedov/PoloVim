@@ -128,7 +128,7 @@ function binds()
         -- leap-from-window)
         {
             { "n", "x", "o" },
-            "<c-e>",
+            "<c-p>",
             function()
                 targets, target_windows = leap_to_window()
                 require("leap").leap({
@@ -143,7 +143,7 @@ function binds()
         },
         {
             { "n", "x", "o" },
-            "<c-f>",
+            "<c-c>",
             function()
                 winid = vim.api.nvim_get_current_win()
                 require("leap").leap({

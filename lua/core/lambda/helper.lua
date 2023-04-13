@@ -119,7 +119,6 @@ lambda.dynamic_unload = function(module_name, reload)
     end
 end
 
-
 --- Call the given function and use `vim.notify` to notify of any errors
 --- this function is a wrapper around `xpcall` which allows having a single
 --- error handler for all errors
@@ -129,15 +128,17 @@ end
 ---@return boolean, any
 ---@overload fun(func: function, ...): boolean, any
 function lambda.pcall(msg, func, ...)
-  local args = { ... }
-  if type(msg) == 'function' then
-    local arg = func --[[@as any]]
-    args, func, msg = { arg, unpack(args) }, msg, nil
-  end
-  return xpcall(func, function(err)
-    msg = debug.traceback(msg and fmt('%s:\n%s', msg, err) or err)
-    vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
-  end, unpack(args))
+    local args = { ... }
+    if type(msg) == "function" then
+        local arg = func --[[@as any]]
+        args, func, msg = { arg, unpack(args) }, msg, nil
+    end
+    return xpcall(func, function(err)
+        msg = debug.traceback(msg and fmt("%s:\n%s", msg, err) or err)
+        vim.schedule(function()
+            vim.notify(msg, l.ERROR, { title = "ERROR" })
+        end)
+    end, unpack(args))
 end
 
 --- Check neovim version

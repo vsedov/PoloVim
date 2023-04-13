@@ -2,7 +2,6 @@ local conf = require("modules.documentation.config")
 local docs = require("core.pack").package
 
 docs({ "danymat/neogen", lazy = true, dependencies = { "L3MON4D3/LuaSnip" }, config = conf.neogen })
-
 docs({
     "prichrd/refgo.nvim",
     lazy = true,

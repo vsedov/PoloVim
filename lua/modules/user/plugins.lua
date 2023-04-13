@@ -160,6 +160,8 @@ user({
 
 user({
     "mrcjkb/haskell-tools.nvim",
+    lazy = true,
+    ft = { "haskell" },
     requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim", -- optional
@@ -171,17 +173,11 @@ user({
     "mikesmithgh/render.nvim",
     cmd = { "Render", "RenderClean", "RenderQuickfix" },
     lazy = true,
-    cond = false,
-    enable = false,
+    cond = true,
+    enable = true,
     config = true,
 })
-user({
-    "JosefLitos/reform.nvim",
-    cond = false,
-    event = "VeryLazy",
-    build = "make",
-    config = true, -- automatically call reform.setup(), use [opts] to customize passed table
-})
+
 user({
     "glepnir/nerdicons.nvim",
     cmd = "NerdIcons",
@@ -417,6 +413,8 @@ user({
         require("bookmacro").setup()
     end,
 })
+
+-- Trial run atm
 user({
     "Fildo7525/pretty_hover",
     event = "LspAttach",

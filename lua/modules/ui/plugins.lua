@@ -7,6 +7,7 @@ ui({
     cond = false,
     event = "VeryLazy",
 })
+
 ui({
     "lukas-reineke/virt-column.nvim",
     event = "VimEnter",
@@ -118,7 +119,7 @@ ui({
     lazy = true,
     branch = "master",
     event = "VeryLazy",
-    -- dependencies = { "shell-Raining/hlchunk.nvim", conf = false, config = true },
+    dependencies = { "shell-Raining/hlchunk.nvim", event = { "UIEnter" }, config = true },
     config = conf.blankline,
 })
 
@@ -133,20 +134,21 @@ ui({
 ui({
     "levouh/tint.nvim",
     event = "WinNew",
-    -- branch = 'untint-forcibly-closed-windows',
     opts = {
         tint = -30,
-      -- stylua: ignore
-      highlight_ignore_patterns = {
-        'WinSeparator', 'St.*', 'Comment', 'Panel.*', 'Telescope.*',
-        'Bqf.*', 'VirtColumn', 'Headline.*', 'NeoTree.*',
-      },
+        highlight_ignore_patterns = {
+            "WinSeparator",
+            "St.*",
+            "Comment",
+            "Panel.*",
+            "Telescope.*",
+            "Bqf.*",
+            "VirtColumn",
+            "Headline.*",
+            "NeoTree.*",
+        },
         window_ignore_function = function(win_id)
             local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-            -- TODO: ideally tint should just ignore all buffers with a special type other than maybe "acwrite"
-            -- since if there is a custom buftype it's probably a special buffer we always want to pay
-            -- attention to whilst its open.
-            -- BUG: neo-tree cannot be ignore as either nofile or by filetype as this causes tinting bugs
             if win.diff or not lambda.falsy(fn.win_gettype(win_id)) then
                 return true
             end
@@ -212,7 +214,7 @@ ui({
     event = "VeryLazy",
     config = function()
         require("neoscroll").setup({
-            mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+            mapping = {},
             hide_cursor = true, -- Hide cursor while scrolling
             stop_eof = true, -- Stop at <EOF> when scrolling downwards
             respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
@@ -222,6 +224,16 @@ ui({
             post_hook = nil, -- Function to run after the scrolling animation ends
             performance_mode = true, -- Disable "Performance Mode" on all buffers.
         })
+        local t = {}
+        t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "250" } }
+        t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "250" } }
+        t["<C-y>"] = { "scroll", { "-0.10", "false", "100" } }
+        t["<C-f>"] = { "scroll", { "0.10", "false", "100" } }
+        -- t["zt"] = { "zt", { "250" } }
+        -- t["zz"] = { "zz", { "250" } }
+        -- t["zb"] = { "zb", { "250" } }
+        --
+        require("neoscroll.config").set_mappings(t)
     end,
 })
 
