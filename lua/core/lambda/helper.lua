@@ -543,3 +543,38 @@ function lambda.falsy(item)
     end
     return item ~= nil
 end
+
+function lambda.better_cd_tcd_lcd(option, root_or_current)
+    local option = option or "tcd"
+    local root_or_current = root_or_current or "root"
+    local option_list = {
+        ["tcd"] = "tcd",
+        ["lcd"] = "lcd",
+        ["cd"] = "cd",
+    }
+
+    local option = option_list[option]
+
+    local function get_root_dir()
+        local root_dir = require("lspconfig").util.root_pattern("Project.toml", ".git")(vim.api.nvim_buf_get_name(0))
+        if root_dir == nil then
+            root_dir = " %:p:h"
+        end
+        return root_dir
+    end
+
+    local function get_current_dir()
+        return " %:p:h"
+    end
+
+    local function get_dir()
+        local dir = {
+            ["root"] = get_root_dir,
+            ["current"] = get_current_dir,
+        }
+        return dir[root_or_current]()
+    end
+
+    vim.cmd(option .. " " .. get_dir())
+    vim.cmd("pwd")
+end
