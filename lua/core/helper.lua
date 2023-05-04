@@ -1,4 +1,5 @@
 local helper = {}
+-- Able to write on docs faster
 local home = os.getenv("HOME")
 helper.path_sep = package.config:sub(1, 1) == "\\" and "\\" or "/"
 
