@@ -40,7 +40,8 @@ function config.neoai()
             width = 30, -- As percentage eg. 30%
             output_popup_height = 80, -- As percentage eg. 80%
         },
-        model = lambda.config.ai.model,
+        -- model =
+        -- lambda.config.ai.model,
         register_output = {
             ["g"] = function(output)
                 return output
@@ -87,45 +88,6 @@ function config.neoai()
     })
 end
 
-function config.codegpt()
-    require("codegpt.config")
-
-    vim.g["codegpt_openai_api_key"] = os.getenv("OPENAI_API_KEY")
-    vim.g["codegpt_chat_completions_url"] = "https://api.openai.com/v1/chat/completions"
-    vim.g["codegpt_openai_api_provider"] = "OpenAI" -- or Azure
-    vim.g["codegpt_clear_visual_selection"] = true
-    vim.g["codegpt_ui_commands"] = {
-        quit = "q", -- key to quit the popup
-        use_as_output = "<c-o>", -- key to use the popup content as output and replace the original lines
-        use_as_input = "<c-a>", -- key to use the popup content as input for a new API request
-    }
-
-    vim.g["codegpt_commands"] = {
-        ["tests"] = {
-            language_instructions = {
-                python = "Use the pytest framework.",
-            },
-        },
-        ["doc"] = {
-            language_instructions = {
-                python = "Use the numpy style docstrings Generate in Detail.",
-            },
-            max_tokens = 6000,
-        },
-        ["code_edit"] = {
-            system_message_template = "You are {{language}} developer.",
-            user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nEdit the above code. {{language_instructions}}",
-            callback_type = "code_popup",
-        },
-        ["modernize"] = {
-            user_message_template = "I have the following {{language}} code: ```{{filetype}}\n{{text_selection}}```\nModernize the above code. Use current best practices. Only return the code snippet and comments. {{language_instructions}}",
-            language_instructions = {
-                cpp = "Use modern C++ syntax. Use auto where possible. Do not import std. Use trailing return type. Use the c++11, c++14, c++17, and c++20 standards where applicable.",
-                python = "Use Best pythonic practices where possible, refactor this code",
-            },
-        },
-    }
-end
 function config.backseat()
     require("backseat").setup({
         openai_api_key = os.getenv("OPENAI_API_KEY"),

@@ -18,24 +18,7 @@ ai({
     dependencies = {
         "MunifTanjim/nui.nvim",
     },
-    cmd = {
-        "NeoAIShortcut",
-        "NeoAI",
-        "NeoAIOpen",
-        "NeoAIClose",
-        "NeoAIToggle",
-        "NeoAIContext",
-        "NeoAIContextOpen",
-        "NeoAIContextClose",
-        "NeoAIInject",
-        "NeoAIInjectCode",
-        "NeoAIInjectContext",
-        "NeoAIInjectContextCode",
-    },
-    keys = {
-        { "<leader>as", desc = "summarize text", mode = { "n", "v" } },
-        { "<leader>ag", desc = "generate git message", mode = { "n", "v" } },
-    },
+    event = "VeryLazy",
     config = conf.neoai,
 })
 
