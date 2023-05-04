@@ -1,11 +1,33 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
 local api, fn = vim.api, vim.fn
+local highlight = require("utils.ui.utils_2")
 
 ui({
     "xiyaowong/virtcolumn.nvim",
     cond = false,
     event = "VeryLazy",
+})
+ui({
+    "gorbit99/codewindow.nvim",
+    dev = false,
+    lazy = true,
+    event = "VeryLazy",
+    init = function()
+        highlight.plugin("codewindow", { { CodewindowBorder = { link = "Dim" } } })
+    end,
+    opts = {
+        auto_enable = false,
+        relative = "editor",
+        z_index = 1000,
+        minimap_width = 12,
+        max_minimap_height = math.floor(vim.o.lines * 0.7),
+      -- stylua: ignore
+      exclude_filetypes = {
+      'hydra_hint',
+        'lazy', 'neo-tree', 'undotree', 'alpha', 'gitcommit', 'gitrebase', 'Glance', 'help', 'mason',
+      },
+    },
 })
 
 ui({
@@ -13,8 +35,15 @@ ui({
     event = "VimEnter",
     opts = { char = "▕" },
     init = function()
-        require("utils.ui.utils_2").plugin("virt_column", {
-            { VirtColumn = { fg = { from = "Comment", alter = 0.10 } } },
+        lambda.augroup("VirtCol", {
+            {
+                event = { "VimEnter", "BufEnter", "WinEnter" },
+                command = function(args)
+                    lambda.style.decorations.set_colorcolumn(args.buf, function(virtcolumn)
+                        require("virt-column").setup_buffer({ virtcolumn = virtcolumn })
+                    end)
+                end,
+            },
         })
     end,
 })
@@ -36,7 +65,6 @@ ui({
     lazy = true,
     cond = lambda.config.ui.use_illuminate,
     event = "VeryLazy",
-
     config = conf.illuminate,
 })
 
@@ -262,7 +290,6 @@ ui({
     "samuzora/pet.nvim",
     lazy = true,
     cond = lambda.config.use_pet,
-    event = "VimEnter",
     config = function()
         require("pet-nvim")
     end,
@@ -410,7 +437,6 @@ ui({
 })
 ui({
     "tummetott/reticle.nvim",
-
     config = function()
         require("reticle").setup({
             -- Make the cursorline and cursorcolumn follow your active window. This
@@ -494,5 +520,16 @@ ui({
     "glepnir/hlsearch.nvim",
     lazy = true,
     event = "VeryLazy",
+    config = true,
+})
+
+ui({
+    "yaocccc/nvim-foldsign",
+    event = "CursorHold",
+    config = true,
+})
+ui({
+    "glepnir/nerdicons.nvim",
+    cmd = "NerdIcons",
     config = true,
 })
