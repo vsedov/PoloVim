@@ -4,7 +4,6 @@ search({
     "nvim-telescope/telescope.nvim",
     lazy = true,
     dependencies = {
-        { "vhyrro/neorg-telescope", lazy = true },
         { "nvim-lua/plenary.nvim", lazy = true },
         {
             "nvim-telescope/telescope-file-browser.nvim",
