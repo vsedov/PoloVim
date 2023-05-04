@@ -107,6 +107,7 @@ local function general_overrides()
         { markdownCode = { link = "CodeBlock" } },
         { markdownCodeBlock = { link = "CodeBlock" } },
         { CursorLineNr = { bold = true } },
+        { iCursor = { bg = P.dark_blue } },
         { PmenuSbar = { bg = P.grey } },
         { PmenuThumb = { bg = { from = "Comment", attr = "fg" } } },
         { Pmenu = { bg = normal_bg } },
@@ -179,14 +180,20 @@ local function general_overrides()
         ------------------------------------------------------------------------------//
         --  Semantic tokens
         ------------------------------------------------------------------------------//
+
+        ------------------------------------------------------------------------------//
+        --  Semantic tokens
+        ------------------------------------------------------------------------------//
+        { ["@lsp.type.variable"] = { clear = true } },
         { ["@lsp.type.parameter"] = { italic = true, fg = { from = "Normal" } } },
-        { ["@lsp.type.variable"] = { link = "@variable" } },
+        { ["@lsp.typemod.method"] = { link = "@method" } },
         { ["@lsp.typemod.variable.global"] = { bold = true, inherit = "@constant.builtin" } },
         { ["@lsp.typemod.variable.defaultLibrary"] = { italic = true } },
         { ["@lsp.typemod.variable.readonly.typescript"] = { clear = true } },
+        { ["@lsp.type.type.lua"] = { clear = true } },
+        { ["@lsp.typemod.number.injected"] = { link = "@number" } },
         { ["@lsp.typemod.operator.injected"] = { link = "@operator" } },
-        { ["@lsp.typemod.keyword"] = { link = "@keyword" } },
-        { ["@lsp.typemod.parameter.label"] = { inherit = "@field", bold = false } },
+        { ["@lsp.typemod.keyword.injected"] = { link = "@keyword" } },
         { ["@lsp.typemod.string.injected"] = { link = "@string" } },
         { ["@lsp.typemod.variable.injected"] = { link = "@variable" } },
         -----------------------------------------------------------------------------//
@@ -200,6 +207,7 @@ local function general_overrides()
         { ["@text.diff.add"] = { link = "DiffAdd" } },
         { ["@text.diff.delete"] = { link = "DiffDelete" } },
         { ["@text.title.markdown"] = { underdouble = true } },
+        -----------------------------------------------------------------------------//
 
         { TSNamespace = { bold = true } },
         { TSVariable = { bold = true } },

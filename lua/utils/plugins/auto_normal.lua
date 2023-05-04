@@ -15,7 +15,7 @@ local function auto_normal(ms)
     vim.on_key(on_key, vim.api.nvim_create_namespace("auto_normal"))
 end
 M.setup = function(opt)
-    opt = opt or 10000
+    opt = opt or 60000
 
     auto_normal(opt)
 end
