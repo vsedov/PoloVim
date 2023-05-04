@@ -11,6 +11,7 @@ buffer({
     config = conf.nvim_bufferline,
     dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, { "tabscope.nvim" } },
 })
+
 -- buffer({
 --     "tiagovla/scope.nvim",
 --     lazy = true,
@@ -144,4 +145,23 @@ buffer({
             },
         },
     },
+})
+
+-- Unlist hidden buffers that are git ignored.
+buffer({
+    "sQVe/bufignore.nvim",
+    event = "BufRead",
+    config = true,
+})
+buffer({
+    "chrisgrieser/nvim-early-retirement",
+    cond = true,
+    config = true,
+    event = "VeryLazy",
+})
+buffer({
+    "mskelton/local-yokel.nvim",
+    lazy = true,
+    cmd = { "E" },
+    config = true,
 })

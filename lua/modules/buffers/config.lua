@@ -5,46 +5,11 @@ function config.nvim_bufferline()
     local fmt = string.format
     local icons = lambda.style.icons.lsp
 
-    local gl = require("utils.ui.utils")
-    local groups = require("bufferline.groups")
-    local visible_tab = { highlight = "VisibleTab", attribute = "bg" }
-    local highlight = require("utils.ui.utils_2")
-
-    require("bufferline").setup({
-        highlights = function(defaults)
-            local normal = highlight.get("Normal")
-            local visible = highlight.tint(normal.fg, -0.4)
-            local icons = lambda.style.icons.lsp
-
-            local hl = lambda.fold(function(accum, attrs, name)
-                local formatted = name:lower()
-                local is_group = formatted:match("group")
-                local is_offset = formatted:match("offset")
-                local is_separator = formatted:match("separator")
-                if pattern and pattern:match_str(formatted) then
-                    attrs.fg = normal.fg
-                end
-                if not is_group or (is_group and is_separator) then
-                    attrs.bg = normal.bg
-                end
-                if not is_group and not is_offset and is_separator then
-                    attrs.fg = normal.bg
-                end
-                accum[name] = attrs
-                return accum
-            end, defaults.highlights)
-
-            -- Make the visible buffers and selected tab more "visible"
-            hl.buffer_visible.bold = true
-            hl.buffer_visible.italic = true
-            hl.buffer_visible.fg = visible
-            hl.tab_selected.bold = true
-            hl.tab_selected.bg = visible_tab
-            hl.tab_separator_selected.bg = visible_tab
-            return hl
-        end,
+    local bufferline = require("bufferline")
+    bufferline.setup({
         options = {
             debug = { logging = true },
+            style_preset = { bufferline.style_preset.minimal },
             mode = "buffers",
             sort_by = "insert_after_current",
             right_mouse_command = "vert sbuffer %d",
@@ -94,8 +59,8 @@ function config.nvim_bufferline()
             groups = {
                 options = { toggle_hidden_on_enter = true },
                 items = {
-                    groups.builtin.pinned:with({ icon = "" }),
-                    groups.builtin.ungrouped,
+                    bufferline.groups.builtin.pinned:with({ icon = "" }),
+                    bufferline.groups.builtin.ungrouped,
                     {
                         name = "Dependencies",
                         icon = "",
@@ -119,18 +84,15 @@ function config.nvim_bufferline()
                     {
                         name = "SQL",
                         matcher = function(buf)
-                            return buf.filename:match("%.sql$")
+                            return buf.name:match("%.sql$")
                         end,
                     },
                     {
                         name = "tests",
                         icon = "",
                         matcher = function(buf)
-                            local name = buf.filename
-                            if name:match("%.sql$") == nil then
-                                return false
-                            end
-                            return name:match("_spec") or name:match("_test")
+                            local name = buf.name
+                            return name:match("[_%.]spec") or name:match("[_%.]test")
                         end,
                     },
                     {
