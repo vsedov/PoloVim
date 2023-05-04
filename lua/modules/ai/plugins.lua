@@ -19,6 +19,7 @@ ai({
         "MunifTanjim/nui.nvim",
     },
     cmd = {
+        "NeoAIShortcut",
         "NeoAI",
         "NeoAIOpen",
         "NeoAIClose",
@@ -32,20 +33,10 @@ ai({
         "NeoAIInjectContextCode",
     },
     keys = {
-        { "<leader>as", desc = "summarize text" },
-        { "<leader>ag", desc = "generate git message" },
+        { "<leader>as", desc = "summarize text", mode = { "n", "v" } },
+        { "<leader>ag", desc = "generate git message", mode = { "n", "v" } },
     },
     config = conf.neoai,
-})
-ai({
-    "dpayne/CodeGPT.nvim",
-    event = "VeryLazy",
-    cmd = { "Chat" },
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
-    },
-    config = conf.codegpt,
 })
 
 ai({

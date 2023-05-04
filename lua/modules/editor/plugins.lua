@@ -7,14 +7,22 @@ editor({ "rainbowhxch/accelerated-jk.nvim", lazy = true, keys = {
     "k",
 }, config = conf.acc_jk })
 --
+-- editor({
+-- "folke/which-key.nvim",
+-- lazy = true,
+-- event = "VeryLazy",
+-- config = function()
+--     require("modules.editor.which_key")
+-- end,
+-- })
+
 editor({
-    "folke/which-key.nvim",
-    lazy = true,
-    event = "VeryLazy",
+    "Cassin01/wf.nvim",
     config = function()
-        require("modules.editor.which_key")
+        require("wf").setup()
     end,
 })
+
 editor({
     "nullchilly/fsread.nvim",
     lazy = true,
@@ -96,24 +104,6 @@ editor({
     lazy = true,
 })
 
-editor({
-    "ethanholz/nvim-lastplace",
-    event = "BufWinEnter",
-    config = function()
-        local lastplace_ok, lastplace = pcall(require, "nvim-lastplace")
-        if not lastplace_ok then
-            vim.notify("nvim-lastplace failed to load")
-            return
-        end
-
-        lastplace.setup({
-            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-            lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
-            lastplace_open_folds = true,
-        })
-    end,
-})
-
 editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })
 
 editor({
@@ -193,12 +183,4 @@ editor({
     end,
     keys = { ";S" },
     cmd = { "Switch", "SwitchCase" },
-})
-
-editor({
-    "linty-org/readline.nvim",
-    lazy = true,
-    cond = false,
-    event = "VeryLazy",
-    config = conf.readline,
 })

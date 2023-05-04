@@ -101,23 +101,25 @@ movement({
     },
     config = function()
         require("trailblazer").setup({
+            auto_save_trailblazer_state_on_exit = true,
+            auto_load_trailblazer_state_on_enter = true,
             mappings = {
                 nv = { -- Mode union: normal & visual mode. Can be extended by adding i, x, ...
                     motions = {
-                        new_trail_mark = "Ma",
-                        track_back = "Mb",
-                        peek_move_next_down = "Mj",
-                        peek_move_previous_up = "Mk",
-                        toggle_trail_mark_list = "MM",
+                        new_trail_mark = "ma",
+                        track_back = "mb",
+                        peek_move_next_down = "mj",
+                        peek_move_previous_up = "mk",
+                        toggle_trail_mark_list = "mM",
                     },
                     actions = {
-                        delete_all_trail_marks = "ML",
-                        paste_at_last_trail_mark = "Mn",
-                        paste_at_all_trail_marks = "MN",
-                        set_trail_mark_select_mode = "Mt",
-                        switch_to_next_trail_mark_stack = "M[",
-                        switch_to_previous_trail_mark_stack = "M]",
-                        set_trail_mark_stack_sort_mode = "Ms",
+                        delete_all_trail_marks = "mL",
+                        paste_at_last_trail_mark = "mn",
+                        paste_at_all_trail_marks = "mN",
+                        set_trail_mark_select_mode = "mt",
+                        switch_to_next_trail_mark_stack = "m[",
+                        switch_to_previous_trail_mark_stack = "m]",
+                        set_trail_mark_stack_sort_mode = "ms",
                     },
                 },
             },
@@ -168,8 +170,8 @@ movement({
     keys = {
         "<leader>sR",
         "<leader>sr",
-        "<leader>sn",
-        "<leader>sp",
+        -- "<leader>sn",
+        -- "<leader>sp",
         "<leader>sc",
         "c?",
         "c/",
@@ -180,6 +182,7 @@ movement({
     },
     config = conf.sj,
 })
+
 movement({
     "mfussenegger/nvim-treehopper",
     lazy = true,

@@ -4,7 +4,7 @@ function config.chatgpt()
     require("chatgpt").setup({
         max_line_length = 1000000,
         openai_params = {
-            model = "gpt-4",
+            model = lambda.config.ai.model,
             frequency_penalty = 0,
             presence_penalty = 0,
             max_tokens = 6000,
@@ -40,7 +40,7 @@ function config.neoai()
             width = 30, -- As percentage eg. 30%
             output_popup_height = 80, -- As percentage eg. 80%
         },
-        model = "gpt-4",
+        model = lambda.config.ai.model,
         register_output = {
             ["g"] = function(output)
                 return output
@@ -48,7 +48,7 @@ function config.neoai()
             ["c"] = require("neoai.utils").extract_code_snippets,
         },
         inject = {
-            cutoff_width = 100,
+            cutoff_width = 500,
         },
         prompts = {
             context_prompt = function(context)
@@ -58,7 +58,6 @@ function config.neoai()
                     .. context
             end,
         },
-        -- open_api_key_env = os.getenv("OPENAI_API_KEY"),
         shortcuts = {
             {
                 key = "<leader>as",
@@ -130,7 +129,7 @@ end
 function config.backseat()
     require("backseat").setup({
         openai_api_key = os.getenv("OPENAI_API_KEY"),
-        openai_model_id = "gpt-4", --gpt-4
+        openai_model_id = lambda.config.ai.model, --gpt-4
         additional_instruction = "Respond Like tech from the bad batch", -- (GPT-3 will probably deny this request, but GPT-4 complies)
         split_threshold = 200,
     })
@@ -184,4 +183,5 @@ function config.sell_your_soul()
     end
     vim.g["copilot_filetypes"] = copilot_filetypes
 end
+
 return config
