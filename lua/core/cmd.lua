@@ -1,5 +1,6 @@
 local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format
+
 -----------------------------------------------------------------------------//
 -- Autoresize
 -----------------------------------------------------------------------------//
@@ -276,10 +277,6 @@ end, { desc = "Go to the previous diagnostic" })
 lambda.command("DiagnosticPopulateLocList", function()
     vim.diagnostic.set_loclist({ open_loclist = false })
 end, { desc = "Populate the location list with the available diagnostics" })
-
-local fmt = string.format
-local api, fn, fs = vim.api, vim.fn, vim.fs
-
 lambda.command("LeapJumpCommands", function()
     local hints = {
         ["ca[r][R]b"] = "ca[r][R]b<leap> |Change around remote block",
@@ -380,5 +377,9 @@ vim.cmd([[ command! NeorgStart execute 'tabe ~/neorg/index.norg' ]])
 vim.cmd("imap <C-V> <C-R>*")
 vim.cmd('vmap <LeftRelease> "*ygv')
 
-vim.cmd("imap <C-V> <C-R>*")
-vim.cmd('vmap <LeftRelease> "*ygv')
+lambda.command("LOC", function(_)
+    local bufnr = api.nvim_get_current_buf()
+    local ft = vim.bo[bufnr].ft
+    vim.cmd.lcd(fn.expand("%:p:h"))
+    vim.cmd(("!tokei -t %s %%"):format(ft))
+end, { nargs = 0, desc = "Tokei current file" })
