@@ -7,33 +7,15 @@ editor({ "rainbowhxch/accelerated-jk.nvim", lazy = true, keys = {
     "k",
 }, config = conf.acc_jk })
 --
--- editor({
--- "folke/which-key.nvim",
--- lazy = true,
--- event = "VeryLazy",
--- config = function()
---     require("modules.editor.which_key")
--- end,
--- })
-
 editor({
-    "Cassin01/wf.nvim",
-    config = function()
-        require("wf").setup()
-    end,
-})
-
-editor({
-    "nullchilly/fsread.nvim",
+    "folke/which-key.nvim",
     lazy = true,
-    cmd = { "FSRead", "FSClear", "FSToggle" },
+    event = "VeryLazy",
     config = function()
-        vim.g.flow_strength = 0.7 -- low: 0.3, middle: 0.5, high: 0.7 (default)
-        vim.g.skip_flow_default_hl = true -- If you want to override default highlights
-        vim.api.nvim_set_hl(0, "FSPrefix", { fg = "#cdd6f4" })
-        vim.api.nvim_set_hl(0, "FSSuffix", { fg = "#6C7086" })
+        require("modules.editor.which_key")
     end,
 })
+
 -- -- -- -- NORMAL mode:
 -- -- -- -- `gcc` - Toggles the current line using linewise comment
 -- -- -- -- `gbc` - Toggles the current line using blockwise comment

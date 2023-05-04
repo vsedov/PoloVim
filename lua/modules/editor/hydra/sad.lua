@@ -15,13 +15,15 @@ end, { desc = "Replace current", expr = true })
 
 --
 vim.keymap.set({ "n" }, "<leader>sc", function()
-    -- return ":S /<C-R><C-W>//gI<left><left><left>"
-    return ":S /<C-R><C-W>//gI<left><left><left>"
+    return [[:%S /<C-R><C-W>//gI<left><left><left>]]
 end, { desc = "Replace current", expr = true })
+
 
 vim.keymap.set({ "n", "x" }, "<leader>sw", function()
     return ":S /" .. vim.fn.expand("<cword>") .. "//g<Left><Left>"
 end, { desc = "󱗘 :AltSubstitute word under cursor", expr = true })
+
+
 
 local mx = function(feedkeys, type)
     local type = type or "m"

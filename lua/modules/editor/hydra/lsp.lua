@@ -1,7 +1,7 @@
 local leader = ";l"
 local hydra = require("hydra")
 
-local bracket = { "J", "K" }
+local bracket = { "J", "K", "w" }
 
 local function make_core_table(core_table, second_table)
     for _, v in pairs(second_table) do
@@ -86,6 +86,12 @@ config.parenth_mode = {
             require("goto-preview").close_all_win()
         end,
         { nowait = true, exit = true, desc = "[G] Close" },
+    },
+    w = {
+        function()
+            vim.cmd([[LspLensToggle]])
+        end,
+        { nowait = true, exit = true, desc = "LspLensToggle" },
     },
 }
 
