@@ -144,8 +144,6 @@ movement({
 
 movement({
     "booperlv/nvim-gomove",
-    lazy = true,
-    keys = { "<M>" },
     config = conf.gomove,
 })
 

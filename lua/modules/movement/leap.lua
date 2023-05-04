@@ -235,6 +235,7 @@ function M.leap_config()
     binds()
     highlight()
 end
+
 function M.leap_spooky()
     require("leap-spooky").setup({
         affixes = {

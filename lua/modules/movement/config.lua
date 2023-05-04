@@ -24,7 +24,7 @@ end
 function config.gomove()
     require("gomove").setup({
         -- whether or not to map default key bindings, (true/false)
-        map_defaults = true,
+        map_defaults = false,
         -- what method to use for reindenting, ("vim-move" / "simple" / ("none"/nil))
         reindent_mode = "vim-move",
         -- whether to not to move past end column when moving blocks horizontally, (true/false)
@@ -172,20 +172,20 @@ function config.sj()
 
     --- prev/next match -----------------------------------
 
-    vim.keymap.set("n", "<leader>sp", function()
-        sj.prev_match()
-        if sj_cache.options.search_scope:match("^buffer") then
-            vim.cmd("normal! zzzv")
-        end
-    end, { desc = "Prev search " })
-
-    vim.keymap.set("n", "<leader>sn", function()
-        sj.next_match()
-        if sj_cache.options.search_scope:match("^buffer") then
-            vim.cmd("normal! zzzv")
-        end
-    end, { desc = "Next search " })
-
+    -- vim.keymap.set("n", "<leader>sp", function()
+    --      sj.prev_match()
+    --      if sj_cache.options.search_scope:match("^buffer") then
+    --          vim.cmd("normal! zzzv")
+    --      end
+    --  end, { desc = "Prev search " })
+    --
+    --  vim.keymap.set("n", "<leader>sn", function()
+    --      sj.next_match()
+    --      if sj_cache.options.search_scope:match("^buffer") then
+    --          vim.cmd("normal! zzzv")
+    --      end
+    --  end, { desc = "Next search " })
+    --
     --- redo ----------------------------------------------
 
     vim.keymap.set("n", "<leader>sr", function()
