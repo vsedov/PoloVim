@@ -1,6 +1,6 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = false
-local use_ts_yeti = true
+local noice_enabled = true
+local use_ts_yeti = false
 
 -- toggle core values within the list
 
@@ -40,11 +40,12 @@ lambda.config = {
 local use_codium_cmp = true
 local use_codium = true
 
-local use_tabnine = false
+local use_tabnine = true
 local use_tabnine_cmp = true
 local use_copilot = true
 
 lambda.config.ai = {
+    model = "gpt-4",
     codeium = {
         use_codeium = use_codium,
         use_codeium_cmp = use_codium_cmp,
@@ -61,7 +62,7 @@ lambda.config.ai = {
             tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
             tabnine_bottom_sort = true,
             tabnine_prefetch = true,
-            tabnine_priority = 3, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
+            tabnine_priority = 1, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
         },
     },
     sell_your_soul = use_copilot,
