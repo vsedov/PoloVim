@@ -101,6 +101,7 @@ lang({
     },
     config = conf.neotest,
 })
+lang({ "rcarriga/neotest-plenary", commit = "d49bfd9", dependencies = { "nvim-lua/plenary.nvim" } })
 
 lang({
     "stevearc/overseer.nvim",

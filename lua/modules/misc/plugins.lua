@@ -136,24 +136,3 @@ misc({
     keys = { "zz" },
     config = conf.noneck,
 })
-
-misc({
-    "EricDriussi/remember-me.nvim",
-    event = "VeryLazy",
-    config = function()
-        require("remember_me").setup({
-            ignore_ft = { "man", "gitignore", "gitcommit" },
-            session_store = "~/.cache/remember-me/",
-            project_roots = { ".git", ".svn" },
-        })
-        lambda.command("Memorize", function()
-            require("remember_me").memorize()
-        end, { force = true })
-
-        lambda.command("Recall", function()
-            require("remember_me").memorize()
-        end, { force = true })
-    end,
-})
-
--- this does all my binds for terminal i guess ?

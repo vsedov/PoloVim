@@ -131,6 +131,7 @@ lsp({
 
 lsp({
     "SmiteshP/nvim-navbuddy",
+    event = "LspAttach",
     dependencies = {
         "neovim/nvim-lspconfig",
         "SmiteshP/nvim-navic",
