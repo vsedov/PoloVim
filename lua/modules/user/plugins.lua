@@ -59,13 +59,6 @@ user({
 })
 
 user({
-    "mskelton/local-yokel.nvim",
-    lazy = true,
-    cmd = { "E" },
-    config = true,
-})
-
-user({
     "kwakzalver/duckytype.nvim",
     lazy = true,
     cmd = {
@@ -103,7 +96,6 @@ user({
     end,
 })
 
---
 -- PetsNew {name}: creates a pet with the style and type defined by the configuration, and name {name}
 -- PetsNewCustom {type} {style} {name}: creates a new pet with type, style and name specified in the command
 -- PetsList: prints the names of all the pets that are currently alive
@@ -112,8 +104,10 @@ user({
 -- PetsPauseToggle: pause/resume animations for all pets, leaving them on screen as cute little statues
 -- PetsHideToggle: pause the animation for all pets and hide them / show all the pets again and resume animations
 -- PetsIdleToggle/PetsSleepToggle: basically a do-not-disturb mode, pets are still animated but do not move around
+--  TODO: (vsedov) (12:44:30 - 01/05/23): Create a command for this
 user({
     "giusgad/pets.nvim",
+    lazy = true,
     dependencies = { "MunifTanjim/nui.nvim", "giusgad/hologram.nvim" },
     config = function()
         require("pets").setup({
@@ -159,28 +153,11 @@ user({
 })
 
 user({
-    "mrcjkb/haskell-tools.nvim",
-    lazy = true,
-    ft = { "haskell" },
-    requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim", -- optional
-    },
-    branch = "1.x.x", -- recommended
-})
-
-user({
     "mikesmithgh/render.nvim",
     cmd = { "Render", "RenderClean", "RenderQuickfix" },
     lazy = true,
     cond = true,
     enable = true,
-    config = true,
-})
-
-user({
-    "glepnir/nerdicons.nvim",
-    cmd = "NerdIcons",
     config = true,
 })
 
@@ -213,119 +190,14 @@ require("plenary.busted")
         })
     end,
 })
-user({
-    "chrisgrieser/nvim-early-retirement",
-    cond = true,
-    config = true,
-    event = "VeryLazy",
-})
 
-user({
-    "rebelot/terminal.nvim",
-    event = "VeryLazy",
-    config = function()
-        require("terminal").setup()
-
-        local term_map = require("terminal.mappings")
-        vim.keymap.set(
-            { "n", "x" },
-            "<leader>ts",
-            term_map.operator_send,
-            { expr = true, desc = "Operat1or: send to terminal" }
-        )
-        vim.keymap.set("n", "<leader>to", term_map.toggle, { desc = "toggle terminal" })
-        vim.keymap.set("n", "<leader>tO", term_map.toggle({ open_cmd = "enew" }), { desc = "toggle terminal" })
-        vim.keymap.set("n", "<leader>tr", term_map.run, { desc = "run terminal" })
-        vim.keymap.set(
-            "n",
-            "<leader>tR",
-            term_map.run(nil, { layout = { open_cmd = "enew" } }),
-            { desc = "run terminal" }
-        )
-        vim.keymap.set("n", "<leader>tk", term_map.kill, { desc = "kill terminal" })
-        vim.keymap.set("n", "<leader>t]", term_map.cycle_next, { desc = "cycle terminal" })
-        vim.keymap.set("n", "<leader>t[", term_map.cycle_prev, { desc = "cycle terminal" })
-        vim.keymap.set("n", "<leader>tl", term_map.move({ open_cmd = "belowright vnew" }), { desc = "move terminal" })
-        vim.keymap.set("n", "<leader>tL", term_map.move({ open_cmd = "botright vnew" }), { desc = "move terminal" })
-        vim.keymap.set("n", "<leader>th", term_map.move({ open_cmd = "belowright new" }), { desc = "move terminal" })
-        vim.keymap.set("n", "<leader>tH", term_map.move({ open_cmd = "botright new" }), { desc = "move terminal" })
-        vim.keymap.set("n", "<leader>tf", term_map.move({ open_cmd = "float" }), { desc = "move terminal" })
-
-        local ipython = require("terminal").terminal:new({
-            layout = { open_cmd = "botright vertical new" },
-            cmd = { "ipython" },
-            autoclose = true,
-        })
-
-        vim.api.nvim_create_user_command("IPython", function()
-            ipython:toggle(nil, true)
-            local bufnr = vim.api.nvim_get_current_buf()
-            vim.keymap.set("x", "<leader>ts", function()
-                vim.api.nvim_feedkeys('"+y', "n", false)
-                ipython:send("%paste")
-            end, { buffer = bufnr })
-            vim.keymap.set("n", "<leader>t?", function()
-                ipython:send(vim.fn.expand("<cexpr>") .. "?")
-            end, { buffer = bufnr })
-        end, {})
-
-        local lazygit = require("terminal").terminal:new({
-            layout = { open_cmd = "float", height = 0.9, width = 0.9 },
-            cmd = { "lazygit" },
-            autoclose = true,
-        })
-
-        vim.api.nvim_create_user_command("LazygitTerm", function(args)
-            lazygit.cwd = args.args and vim.fn.expand(args.args)
-            lazygit:toggle(nil, true)
-        end, { nargs = "?" })
-
-        local htop = require("terminal").terminal:new({
-            layout = { open_cmd = "float" },
-            cmd = { "htop" },
-            autoclose = true,
-        })
-        vim.api.nvim_create_user_command("HtopTerm", function()
-            htop:toggle(nil, true)
-        end, { nargs = "?" })
-
-        vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
-            callback = function(args)
-                if vim.startswith(vim.api.nvim_buf_get_name(args.buf), "term://") then
-                    vim.cmd("startinsert")
-                end
-            end,
-        })
-        vim.api.nvim_create_autocmd("TermOpen", {
-            command = [[setlocal nonumber norelativenumber winhl=Normal:NormalFloat]],
-        })
-    end,
-})
-
-user({
-    "monaqa/nvim-treesitter-clipping",
-    lazy = true,
-    keys = { "<leader>cc" },
-    dependencies = { "thinca/vim-partedit" },
-    config = function()
-        vim.keymap.set("n", "<leader>cc", "<Plug>(ts-clipping-clip)")
-    end,
-})
-
-user({
-    "m-demare/attempt.nvim",
-    lazy = true,
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-        require("attempt").setup()
-        require("telescope").load_extension("attempt")
-    end,
-})
+--
 
 user({
     "bignos/bookmacro",
     event = "VeryLazy",
     dependencies = { "nvim-lua/plenary.nvim" },
+
     keys = {
         -- Load a macro
         {
@@ -353,7 +225,7 @@ user({
             vim.cmd.MacroEdit,
             desc = "Edit a macro from BookMacro",
         },
-        -- Edit the description of a macro
+
         {
             ";mD",
             vim.cmd.MacroDescEdit,
@@ -404,19 +276,66 @@ user({
 
         -- Erase BookMacro
         {
-            "<leader>ME",
+            ";mE",
             vim.cmd.MacroErase,
             desc = "Erase all macros from The Book",
         },
     },
-    config = function()
-        require("bookmacro").setup()
+    config  =  function()
+            require("bookmacro").setup()
+        end,
+})
+
+user({
+
+    "superDross/spellbound.nvim",
+    event = "VeryLazy",
+    init = function()
+        vim.o.dictionary = "/usr/share/dict/cracklib-small"
+
+        -- default settings
+        vim.g.spellbound_settings = {
+            mappings = {
+                toggle_map = "zS",
+                fix_right = "<C-p>",
+                fix_left = "<C-n>",
+            },
+            language = "en_gb",
+            autospell_filetypes = { "*.txt", "*.md", "*.rst" },
+            autospell_gitfiles = true,
+            number_suggestions = 10,
+            return_to_position = false,
+        }
     end,
 })
 
--- Trial run atm
 user({
-    "Fildo7525/pretty_hover",
+    "Cassin01/wf.nvim",
+    cond = false,
+    lazy = true,
+    config = function()
+        require("wf").setup({
+            theme = "space",
+        })
+    end,
+})
+
+-- this could be  casing lag, im not sure
+user({
+    "VidocqH/lsp-lens.nvim",
     event = "LspAttach",
-    opts = {},
+    cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
+
+    opts = {
+        enable = false,
+        include_declaration = false, -- Reference include declaration
+        sections = { -- Enable / Disable specific request
+            definition = true,
+            references = true,
+            implementation = true,
+        },
+        ignore_filetype = {
+            "prisma",
+        },
+    },
 })
