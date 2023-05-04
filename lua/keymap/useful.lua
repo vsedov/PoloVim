@@ -50,12 +50,7 @@ local plug_map = {
     -- ["n|cc"] = map_cmd("<Cmd>CodeActionMenu<cr>", "Code action Menu"):with_noremap():with_silent(),
 
     ["x|ga"] = map_cmd("<C-U>Lspsaga range_code_action<CR>", "Code action Menu"):with_noremap():with_silent(),
-
-    ---- private peek
-    ["n|dpj"] = map_cmd('<cmd>lua require"modules.lsp.lsp.config.peek".peek()<CR>', "Peek Type definition")
-        :with_noremap()
-        :with_silent(),
-    --
+   --
     ---- private peek
     ["n|<Leader>v"] = map_cu("Vista!!", "Vistaaa"):with_noremap():with_silent(),
 
