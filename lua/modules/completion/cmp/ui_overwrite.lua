@@ -70,29 +70,12 @@ local function define_highlights()
         end
     end
 
-    local kind_hls = lambda.fold(
-        function(accum, value, key)
-            accum[#accum + 1] = { ["CmpItemKind" .. key] = { fg = { from = value } } }
-            return accum
-        end,
-        lsp_hls,
-        {
-            -- { CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false } },
-            { CmpItemAbbrMatch = { fg = { from = "Keyword" } } },
-            { CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" } },
-            { CmpItemAbbrMatchFuzzy = { italic = true, fg = { from = "Keyword" } } },
-            -- Make the source information less prominent
-            {
-                CmpItemMenu = {
-                    fg = { from = "Pmenu", attr = "bg", alter = 0.3 },
-                    italic = true,
-                    bold = false,
-                },
-            },
-        }
-    )
-
-    h.plugin("Cmp", kind_hls)
+    h.plugin("Cmp", {
+        { CmpItemKindVariable = { link = "Variable" } },
+        { CmpItemAbbrMatchFuzzy = { inherit = "CmpItemAbbrMatch", italic = true } },
+        { CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" } },
+        { CmpItemMenu = { inherit = "Comment", italic = true } },
+    })
 end
 
 define_highlights()

@@ -12,6 +12,7 @@ completion({
     event = "VeryLazy",
     config = conf.tabout,
 })
+
 --  ──────────────────────────────────────────────────────────────────────
 
 completion({
@@ -62,6 +63,7 @@ completion({
 
 completion({
     "L3MON4D3/LuaSnip", -- need to be the first to load
+    build = "make install_jsregexp",
     event = "InsertEnter",
     dependencies = {
         {

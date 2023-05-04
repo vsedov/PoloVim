@@ -3,9 +3,6 @@ local luasnip = require("luasnip")
 local utils = require("modules.completion.cmp.utils")
 
 local mappings = {
-
-    -- ["<C-p>"] = cmp.mapping.select_prev_item(),
-    -- ["<C-n>"] = cmp.mapping.select_next_item(),
     ["<C-e>"] = cmp.mapping({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
@@ -47,42 +44,61 @@ local mappings = {
     --     local keys = utils.smart_bs()
     --     vim.api.nvim_feedkeys(keys, "nt", true)
     -- end, { "i", "s" }),
-
-    ["<Tab>"] = cmp.mapping(function(core, fallback)
+    ["<Tab>"] = function(fallback)
         if cmp.visible() then
             cmp.select_next_item()
-        elseif luasnip.expandable() then
-            luasnip.expand()
-        -- elseif luasnip.expand_or_jumpable() then
-        --     luasnip.expand_or_jump() -- vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-        elseif not utils.check_backspace() then
-            cmp.mapping.complete()(core, fallback)
-        elseif utils.has_words_before() then
-            cmp.complete()
+        elseif luasnip.expand_or_jumpable() then
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
         else
-            utils.smart_tab()
-            -- vim.cmd(":>")
+            fallback()
         end
-    end, {
-        "i",
-        "s",
-        "c",
-    }),
-    -- Avoid full fallback as it acts retardedly
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
+    end,
+    ["<S-Tab>"] = function(fallback)
         if cmp.visible() then
             cmp.select_prev_item()
-        -- elseif luasnip.jumpable(-1) then
-        --     luasnip.jump(-1)
+        elseif luasnip.jumpable(-1) then
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
         else
-            -- utils.smart_bs()
-            vim.cmd(":<")
+            fallback()
         end
-    end, {
-        "i",
-        "s",
-        "c",
-    }),
+    end,
+
+    -- ["<Tab>"] = cmp.mapping(function(core, fallback)
+    --     if cmp.visible() then
+    --         cmp.select_next_item()
+    --     elseif luasnip.expandable() then
+    --         luasnip.expand()
+    --
+    --     -- elseif luasnip.expand_or_jumpable() then
+    --     --     luasnip.expand_or_jump() -- vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+    --     elseif not utils.check_backspace() then
+    --         cmp.mapping.complete()(core, fallback)
+    --     elseif utils.has_words_before() then
+    --         cmp.complete()
+    --     else
+    --         utils.smart_tab()
+    --         -- vim.cmd(":>")
+    --     end
+    -- end, {
+    --     "i",
+    --     "s",
+    --     "c",
+    -- }),
+    -- -- Avoid full fallback as it acts retardedly
+    -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+    --     if cmp.visible() then
+    --         cmp.select_prev_item()
+    --     -- elseif luasnip.jumpable(-1) then
+    --     --     luasnip.jump(-1)
+    --     else
+    --         -- utils.smart_bs()
+    --         vim.cmd(":<")
+    --     end
+    -- end, {
+    --     "i",
+    --     "s",
+    --     "c",
+    -- }),
 
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul then
@@ -126,7 +142,5 @@ local mappings = {
         "s",
     }),
 }
-
-
 
 return mappings
