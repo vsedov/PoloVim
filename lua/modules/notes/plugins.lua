@@ -3,11 +3,10 @@ local notes = require("core.pack").package
 
 notes({
     "nvim-neorg/neorg",
-    lazy = true,
-    ft = "norg",
-    cmd = "Neorg",
+    -- lazy = true,
+    -- ft = "norg",
+    -- cmd = "Neorg",
     opts = require("modules.notes.neorg").opts,
-    -- config = require("modules.notes.neorg").config
 })
 
 notes({
