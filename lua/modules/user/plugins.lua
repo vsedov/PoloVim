@@ -281,9 +281,9 @@ user({
             desc = "Erase all macros from The Book",
         },
     },
-    config  =  function()
-            require("bookmacro").setup()
-        end,
+    config = function()
+        require("bookmacro").setup()
+    end,
 })
 
 user({
@@ -320,22 +320,40 @@ user({
     end,
 })
 
--- this could be  casing lag, im not sure
 user({
-    "VidocqH/lsp-lens.nvim",
-    event = "LspAttach",
-    cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
-
+    "olimorris/persisted.nvim",
+    lazy = false,
+    init = function()
+        lambda.command("ListSessions", "Telescope persisted", {})
+        lambda.augroup("PersistedEvents", {
+            {
+                event = "User",
+                pattern = "PersistedTelescopeLoadPre",
+                command = function()
+                    vim.schedule(function()
+                        vim.cmd("%bd")
+                    end)
+                end,
+            },
+            {
+                event = "User",
+                pattern = "PersistedSavePre",
+                -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
+                -- so remove them when saving a session
+                command = function()
+                    vim.cmd("%argdelete")
+                end,
+            },
+        })
+    end,
     opts = {
-        enable = false,
-        include_declaration = false, -- Reference include declaration
-        sections = { -- Enable / Disable specific request
-            definition = true,
-            references = true,
-            implementation = true,
-        },
-        ignore_filetype = {
-            "prisma",
-        },
+        autoload = true,
+        use_git_branch = true,
+        allowed_dirs = { "/Github" },
+        ignored_dirs = { vim.fn.stdpath("data") },
     },
+    config = function(opts)
+        require("telescope").load_extension("persisted")
+        require("persisted").setup(opts)
+    end,
 })
