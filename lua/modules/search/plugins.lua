@@ -108,12 +108,6 @@ search({
     "windwp/nvim-spectre",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
-    keys = {
-        ";e",
-        ";W",
-        ";v",
-        ";c",
-    },
     config = conf.spectre,
 })
 
