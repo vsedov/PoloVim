@@ -39,7 +39,7 @@ function config.murmur()
 end
 
 function config.notify()
-    require("utils.ui.utils_2").plugin("notify", {
+    lambda.highlight.plugin("notify", {
         { NotifyERRORBorder = { bg = { from = "NormalFloat" } } },
         { NotifyWARNBorder = { bg = { from = "NormalFloat" } } },
         { NotifyINFOBorder = { bg = { from = "NormalFloat" } } },
@@ -87,7 +87,7 @@ function config.notifier()
 end
 
 function config.neo_tree()
-    local highlights = require("utils.ui.utils")
+    local highlights = lambda.highlight
 
     highlights.plugin("NeoTree", {
         { NeoTreeRootName = { underline = true } },
@@ -665,7 +665,7 @@ function config.dressing()
         return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
     end
 
-    require("utils.ui.utils").plugin("dressing", { { FloatTitle = { inherit = "Visual", bold = true } } })
+    lambda.highlight.plugin("dressing", { { FloatTitle = { inherit = "Visual", bold = true } } })
 
     require("dressing").setup({
         input = {

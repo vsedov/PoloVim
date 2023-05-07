@@ -1,7 +1,7 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
 local api, fn = vim.api, vim.fn
-local highlight = require("utils.ui.utils_2")
+local highlight = lambda.highlight
 
 ui({
     "xiyaowong/virtcolumn.nvim",
@@ -132,7 +132,7 @@ ui({
                             buftype = { "terminal", "quickfix", "nofile" },
                         },
                     },
-                    other_win_hl_color = require("utils.ui.utils").get("Visual", "bg"),
+                    other_win_hl_color = lambda.highlight.get("Visual", "bg"),
                 })
             end,
         },
@@ -494,25 +494,6 @@ ui({
             -- of every window is always highlighted, regardless of the setting
             always_show_cl_number = true,
         })
-    end,
-})
-
-ui({
-    "rebelot/heirline.nvim",
-    lazy = true,
-    cond = lambda.config.ui.use_heirline,
-    event = "VeryLazy",
-    dependencies = {
-        {
-            "jcdickinson/wpm.nvim",
-            lazy = true,
-            opts = { sample_interval = 1000 },
-            config = true,
-        },
-        { "uga-rosa/utf8.nvim", lazy = true },
-    },
-    config = function()
-        require("modules.ui.heirline")
     end,
 })
 
