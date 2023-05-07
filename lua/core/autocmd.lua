@@ -293,7 +293,7 @@ local activate_spelling = {
     "tex",
     "md",
 }
-
+--
 lambda.augroup("WindowBehaviours", {
     {
         -- map q to close command window on quit
@@ -368,7 +368,6 @@ lambda.augroup("WindowBehaviours", {
         end,
     },
 })
-
 lambda.augroup("CheckOutsideTime", {
     {
         -- automatically check for changed files outside vim
@@ -511,7 +510,6 @@ lambda.augroup("TabNLine", {
     },
 })
 
-
 if vim.env.TMUX or vim.env.KITTY_PID then
     lambda.augroup("NvimCwd", {
         {
@@ -530,7 +528,7 @@ mkview_filetype_blocklist = {
     gitcommit = true,
     hgcommit = true,
     ["neo-tree"] = true,
-    harpoon = true, 
+    harpoon = true,
 }
 
 local function should_mkview()

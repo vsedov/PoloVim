@@ -1,7 +1,7 @@
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local H = require("utils.ui.utils")
+local H = lambda.highlight
 
 local function fileicon()
     local name = fn.bufname()
