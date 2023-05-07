@@ -46,7 +46,7 @@ misc({
         "NeoWellOut",
         "NeoWellWipeOut",
     },
-    config = conf.NeoWell,
+    config = true,
 })
 
 misc({

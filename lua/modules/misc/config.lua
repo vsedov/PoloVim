@@ -86,12 +86,6 @@ function config.ns()
     nstextobject.map_textobj("q", "quotes")
 end
 
-function config.NeoWell()
-    require("neo-well").setup({
-        height = 10,
-    })
-end
-
 function config.autosave()
     require("save").setup()
 end
