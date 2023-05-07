@@ -8,27 +8,6 @@ ui({
     cond = false,
     event = "VeryLazy",
 })
-ui({
-    "gorbit99/codewindow.nvim",
-    dev = false,
-    lazy = true,
-    event = "VeryLazy",
-    init = function()
-        highlight.plugin("codewindow", { { CodewindowBorder = { link = "Dim" } } })
-    end,
-    opts = {
-        auto_enable = false,
-        relative = "editor",
-        z_index = 1000,
-        minimap_width = 12,
-        max_minimap_height = math.floor(vim.o.lines * 0.7),
-      -- stylua: ignore
-      exclude_filetypes = {
-      'hydra_hint',
-        'lazy', 'neo-tree', 'undotree', 'alpha', 'gitcommit', 'gitrebase', 'Glance', 'help', 'mason',
-      },
-    },
-})
 
 ui({
     "lukas-reineke/virt-column.nvim",
@@ -98,7 +77,6 @@ ui({
     end,
 })
 
--- -- -- todo: FIX THIS
 ui({
     "rcarriga/nvim-notify",
     lazy = true,
@@ -147,7 +125,7 @@ ui({
     lazy = true,
     branch = "master",
     event = "VeryLazy",
-    dependencies = { "shell-Raining/hlchunk.nvim", event = { "UIEnter" }, config = true },
+    dependencies = { "shell-Raining/hlchunk.nvim", event = { "VeryLazy" }, config = true },
     config = conf.blankline,
 })
 

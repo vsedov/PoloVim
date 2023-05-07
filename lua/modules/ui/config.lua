@@ -550,8 +550,6 @@ end
 
 function config.transparent()
     require("transparent").setup({
-        enable = false,
-        -- additional groups that should be clear
         extra_groups = {
             -- example of akinsho/nvim-bufferline.lua
             "BufferLineTabClose",
@@ -562,8 +560,10 @@ function config.transparent()
             "BufferLineIndicatorSelected",
         },
         -- groups you don't want to clear
-        exclude = {},
     })
+    -- [transparent.nvim] Please check the README for detailed information.
+    -- - "exclude" has been changed to "exclude_groups".
+    -- - "enable" has been removed.
 end
 
 function config.dim()
