@@ -167,7 +167,6 @@ local function auto_hint_generate()
     local max_desc_length = 0
     for k, v in pairs(container) do
         max_desc_length = math.max(max_desc_length, #v)
-        print(max_desc_length)
     end
     local separator = "^ ^▔" .. string.rep("▔", max_desc_length + 4) .. "^ ^\n"
     string_val = string_val .. separator

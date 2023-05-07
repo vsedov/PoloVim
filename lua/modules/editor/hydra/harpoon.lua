@@ -219,7 +219,7 @@ config.parenth_mode = {
     -- I am adding this cause this feels like it can be faster
     z = {
         function()
-            vim.ui.input({ prompt = "Harpoon , Enter Zoxide location : ", default = "year_3" }, function(item)
+            vim.ui.input({ prompt = "Harpoon , Enter Zoxide location : ", default = "." }, function(item)
                 vim.cmd.Tz(item)
             end)
         end,

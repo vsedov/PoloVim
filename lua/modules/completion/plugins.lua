@@ -165,4 +165,3 @@ completion({
     config = conf.vim_sonictemplate,
 })
 
--- -- Lua
