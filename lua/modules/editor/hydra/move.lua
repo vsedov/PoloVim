@@ -32,90 +32,45 @@ end
 -- xmap <C-l> <Plug>GoVSDRight
 -- ]])
 
-local bindsN = function(mode)
-    vim.notify(mode)
-    return {
-        H = { "<Plug>Go" .. mode .. "SMLeft", { desc = "Move Left" } },
-        J = { "<Plug>Go" .. mode .. "SMDown", { desc = "Move Down" } },
-        K = { "<Plug>Go" .. mode .. "SMUp", { desc = "Move Up" } },
-        L = { "<Plug>Go" .. mode .. "SMRight", { desc = "Move Right" } },
-        h = { "<Plug>Go" .. mode .. "SDLeft", { desc = "Duplicate Left" } },
-        j = { "<Plug>Go" .. mode .. "SDDown", { desc = "Duplicate Down" } },
-        k = { "<Plug>Go" .. mode .. "SDUp", { desc = "Duplicate Up" } },
-        l = { "<Plug>Go" .. mode .. "SDRight", { desc = "Duplicate Right" } },
-    }
-end
-
 config.move = {
     color = "red",
     body = "<leader><leader>m",
     ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
 
     H = {
-        function()
-            local plug_command = bindsN(string.upper(vim.fn.mode()))["H"][1]
-            return plug_command
-        end,
-
+        "<Plug>GoVSMLeft",
         { desc = "Move Left" },
     },
 
     J = {
-        function()
-            mode = vim.api.nvim_get_mode().mode
-            mode = string.upper(mode)
-            print(mode)
-            return bindsN(mode)["J"][1]
-        end,
+        "<Plug>GoVSMDown",
         { desc = "Move Down" },
     },
 
     K = {
-        function()
-            mode = vim.api.nvim_get_mode().mode
-            mode = string.upper(mode)
-            return bindsN(mode)["K"][1]
-        end,
+        "<Plug>GoVSMUp",
         { desc = "Move Up" },
     },
     L = {
-        function()
-            mode = vim.api.nvim_get_mode().mode
-            mode = string.upper(mode)
-            return bindsN(mode)["L"][1]
-        end,
+        "<Plug>GoVSMRight",
         { desc = "Move Right" },
     },
     ["<c-h>"] = {
-        function()
-            mode = vim.api.nvim_get_mode().mode
-            mode = string.upper(mode)
-            return bindsN(mode)["h"][1]
-        end,
+        "<Plug>GoVSDLeft",
         { desc = "Duplicate Left" },
     },
     ["<c-j>"] = {
-        function()
-            mode = vim.api.nvim_get_mode().mode
-            mode = string.upper(mode)
-            return bindsN(mode)["j"][1]
-        end,
+
+        "<Plug>GoVSDDown",
+
         { desc = "Duplicate Down" },
     },
     ["<c-k>"] = {
-        function()
-            mode = vim.api.nvim_get_mode().mode
-            mode = string.upper(mode)
-            return bindsN(mode)["k"][1]
-        end,
+        "<Plug>GoVSDUp",
         { desc = "Duplicate Up" },
     },
     ["<c-l>"] = {
-        function()
-            mode = vim.api.nvim_get_mode().mode
-            mode = string.upper(mode)
-            return bindsN(mode)["l"][1]
-        end,
+        "<Plug>GoVSDRight",
         { desc = "Duplicate Right" },
     },
 }
@@ -162,7 +117,7 @@ end
 
 vim.defer_fn(function()
     local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
-        name = "Movememt",
+        name = "Move Items ",
         config = {
             hint = {
                 position = "middle-right",

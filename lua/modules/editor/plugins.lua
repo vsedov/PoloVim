@@ -2,7 +2,7 @@ local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 
 editor({ "nvim-lua/plenary.nvim", lazy = true })
-editor({ "rainbowhxch/accelerated-jk.nvim", lazy = true, keys = {
+editor({ "rhysd/accelerated-jk", lazy = true, keys = {
     "j",
     "k",
 }, config = conf.acc_jk })
