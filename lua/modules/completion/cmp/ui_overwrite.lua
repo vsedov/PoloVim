@@ -1,4 +1,4 @@
-local h = require("utils.ui.utils_2")
+local h = lambda.highlight
 
 function get_color_values(color)
     local red = tonumber(color:sub(2, 3), 16)

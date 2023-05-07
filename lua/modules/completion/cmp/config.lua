@@ -1,4 +1,5 @@
 local cmp = require("cmp")
+local types = require("cmp.types")
 local compare = require("cmp.config.compare")
 local utils = require("modules.completion.cmp.utils")
 local border = lambda.style.border.type_0
@@ -22,10 +23,29 @@ local config = {
             require("luasnip").lsp_expand(args.body)
         end,
     },
+    performance = {
+        debounce = 60,
+        throttle = 30,
+        fetching_timeout = 500,
+    },
+
     preselect = cmp.PreselectMode.Item, -- None | Item
+    completion = {
+        types.cmp.TriggerEvent.TextChanged,
+        completeopt = "menu,menuone,noselect",
+        keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
+        keyword_length = 1,
+    },
+    confirmation = {
+        default_behavior = types.cmp.ConfirmBehavior.Insert,
+        get_commit_characters = function(commit_characters)
+            return commit_characters
+        end,
+    },
     experimental = { ghost_text = true }, -- native_menu = false -- im not sure if this will make things faster
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
+
     enabled = function()
         if vim.bo.ft == "TelescopePrompt" then
             return false
@@ -59,7 +79,7 @@ local config = {
 
 if lambda.config.cmp.cmp_theme == "border" then
     local kind = require("utils.ui.kind")
-    local cmp_window = {
+    cmp_window = {
         border = border,
         winhighlight = table.concat({
             "Normal:Normal",
