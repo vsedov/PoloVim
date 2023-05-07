@@ -101,43 +101,43 @@ ai({
     config = conf.tabnine,
 })
 
--- ai({
---     "Exafunction/codeium.vim",
---     lazy = true,
---     cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codium_insert),
---     event = "VeryLazy",
---     init = function()
---         vim.g.codeium_disable_bindings = 1
---         vim.g.codeium_enabled = lambda.config.ai.use_codium_insert
---     end,
---     config = conf.codium,
--- })
---
--- ai({
---     "jcdickinson/codeium.nvim",
---     cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codeium_cmp),
---     lazy = true,
---     event = "VeryLazy",
---     dependencies = {
---         "nvim-lua/plenary.nvim",
---         "MunifTanjim/nui.nvim",
---     },
---     config = true,
--- })
---
--- -- <C-c> to close chat window.
--- -- <C-u> scroll up chat window.
--- -- <C-d> scroll down chat window.
--- -- <C-y> to copy/yank last answer.
--- -- <C-o> Toggle settings window.
--- -- <C-n> Start new session.
--- -- <Tab> Cycle over windows.tr
--- -- <C-i> [Edit Window] use response as input.
---
--- ai({
---     "github/copilot.vim",
---     lazy = true,
---     cond = ai_conf.sell_your_soul,
---     event = "VeryLazy",
---     init = conf.sell_your_soul,
--- })
+ai({
+    "Exafunction/codeium.vim",
+    lazy = true,
+    cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codium_insert),
+    event = "VeryLazy",
+    init = function()
+        vim.g.codeium_disable_bindings = 1
+        vim.g.codeium_enabled = lambda.config.ai.use_codium_insert
+    end,
+    config = conf.codium,
+})
+
+ai({
+    "jcdickinson/codeium.nvim",
+    cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codeium_cmp),
+    lazy = true,
+    event = "VeryLazy",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+    },
+    config = true,
+})
+
+-- <C-c> to close chat window.
+-- <C-u> scroll up chat window.
+-- <C-d> scroll down chat window.
+-- <C-y> to copy/yank last answer.
+-- <C-o> Toggle settings window.
+-- <C-n> Start new session.
+-- <Tab> Cycle over windows.tr
+-- <C-i> [Edit Window] use response as input.
+
+ai({
+    "github/copilot.vim",
+    lazy = true,
+    cond = ai_conf.sell_your_soul,
+    event = "VeryLazy",
+    init = conf.sell_your_soul,
+})
