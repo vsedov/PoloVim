@@ -79,26 +79,6 @@ movement({
 --------------------------------
 movement({
     "LeonHeidelbach/trailblazer.nvim",
-    lazy = true,
-    event = "VeryLazy",
-    cmd = {
-        "TrailBlazerNewTrailMark",
-        "TrailBlazerTrackBack",
-        "TrailBlazerPeekMovePreviousUp",
-        "TrailBlazerPeekMoveNextDown",
-        "TrailBlazerDeleteAllTrailMarks",
-        "TrailBlazerPasteAtLastTrailMark",
-        "TrailBlazerPasteAtAllTrailMarks",
-        "TrailBlazerTrailMarkSelectMode",
-        "TrailBlazerToggleTrailMarkList",
-        "TrailBlazerSwitchTrailMarkStack",
-        "TrailBlazerAddTrailMarkStack",
-        "TrailBlazerDeleteTrailMarkStacks",
-        "TrailBlazerDeleteAllTrailMarkStacks",
-        "TrailBlazerSwitchNextTrailMarkStack",
-        "TrailBlazerSwitchPreviousTrailMarkStack",
-        "TrailBlazerSetTrailMarkStackSortMode",
-    },
     config = function()
         require("trailblazer").setup({
             auto_save_trailblazer_state_on_exit = true,
@@ -110,7 +90,7 @@ movement({
                         track_back = "mb",
                         peek_move_next_down = "mj",
                         peek_move_previous_up = "mk",
-                        toggle_trail_mark_list = "mM",
+                        toggle_trail_mark_list = "ml",
                     },
                     actions = {
                         delete_all_trail_marks = "mL",
