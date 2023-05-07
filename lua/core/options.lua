@@ -25,6 +25,7 @@ o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
+opt.smoothscroll = true
 o.splitbelow = true
 o.splitright = true
 o.eadirection = "hor"
@@ -262,7 +263,7 @@ o.shada = "!,'300,<50,@100,s10,h"
 o.ignorecase = true
 o.smartcase = true
 o.wrapscan = true -- Searches wrap around the end of the file
-o.scrolloff = 9 -- 9
+o.scrolloff = 999 -- 9
 o.sidescrolloff = 10
 o.sidescroll = 1
 o.magic = true

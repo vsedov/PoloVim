@@ -155,35 +155,6 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
-
---- Convert a list or map of items into a value by iterating all it's fields and transforming
---- them with a callback
----@generic T : table
----@param callback fun(T, T, key: string | number): T
----@param list T[]
----@param accum T?
----@return T
-function lambda.fold(callback, list, accum)
-    accum = accum or {}
-    for k, v in pairs(list) do
-        accum = callback(accum, v, k)
-        assert(accum ~= nil, "The accumulator must be returned on each iteration")
-    end
-    return accum
-end
-
----@generic T : table
----@param callback fun(item: T, key: string | number, list: T[]): T
----@param list T[]
----@return T[]
-function lambda.map(callback, list)
-    return lambda.fold(function(accum, v, k)
-        accum[#accum + 1] = callback(v, k, accum)
-        return accum
-    end, list, {})
-end
-
----@generic T : table
 ---@param callback fun(T, key: string | number)
 ---@param list T[]
 function lambda.foreach(callback, list)
@@ -220,6 +191,78 @@ function lambda.find(matcher, haystack)
     end
     return found
 end
+
+--- Autosize horizontal split to match its minimum content
+--- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
+---@param min_height number
+---@param max_height number
+function lambda.adjust_split_height(min_height, max_height)
+    api.nvim_win_set_height(0, math.max(math.min(fn.line("$"), max_height), min_height))
+end
+
+---------------------------------------------------------------------------------
+-- Quickfix and Location List
+---------------------------------------------------------------------------------
+
+lambda.list = { qf = {}, loc = {} }
+
+---@param list_type "loclist" | "quickfix"
+---@return boolean
+local function is_list_open(list_type)
+    return lambda.find(function(win)
+        return not lambda.falsy(win[list_type])
+    end, fn.getwininfo()) ~= nil
+end
+
+local silence = { mods = { silent = true, emsg_silent = true } }
+
+---@param callback fun(...)
+local function preserve_window(callback, ...)
+    local win = api.nvim_get_current_win()
+    callback(...)
+    if win ~= api.nvim_get_current_win() then
+        cmd.wincmd("p")
+    end
+end
+
+function lambda.list.qf.toggle()
+    if is_list_open("quickfix") then
+        cmd.cclose(silence)
+    elseif #fn.getqflist() > 0 then
+        preserve_window(cmd.copen, silence)
+    end
+end
+
+function lambda.list.loc.toggle()
+    if is_list_open("loclist") then
+        cmd.lclose(silence)
+    elseif #fn.getloclist(0) > 0 then
+        preserve_window(cmd.lopen, silence)
+    end
+end
+
+-- @see: https://vi.stackexchange.com/a/21255
+-- using range-aware function
+-- @see: https://vi.stackexchange.com/a/21255
+-- using range-aware function
+function lambda.list.qf.delete(buf)
+    buf = buf or api.nvim_get_current_buf()
+    local list = fn.getqflist()
+    local line = api.nvim_win_get_cursor(0)[1]
+    if api.nvim_get_mode().mode:match("[vV]") then
+        local first_line = fn.getpos("'<")[2]
+        local last_line = fn.getpos("'>")[2]
+        list = vim.iter(ipairs(list)):filter(function(i)
+            return i < first_line or i > last_line
+        end)
+    else
+        table.remove(list, line)
+    end
+    -- replace items in the current list, do not make a new copy of it; this also preserves the list title
+    fn.setqflist({}, "r", { items = list })
+    fn.setpos(".", { buf, line, 1, 0 }) -- restore current line
+end
+---------------------------------------------------------------------------------
 
 function lambda.installed_plugins()
     local ok, lazy = pcall(require, "lazy")
@@ -282,6 +325,98 @@ end
 function lambda.truncate(str, max_len)
     assert(str and max_len, "string and max_len must be provided")
     return api.nvim_strwidth(str) > max_len and str:sub(1, max_len) .. lambda.style.icons.misc.ellipsis or str
+end
+
+----------------------------------------------------------------------------------------------------
+--  FILETYPE HELPERS
+----------------------------------------------------------------------------------------------------
+
+---@class FiletypeSettings
+---@field g table<string, any>
+---@field bo vim.bo
+---@field wo vim.wo
+---@field opt vim.opt
+---@field plugins {[string]: fun(module: table)}
+
+---@param args {[1]: string, [2]: string, [3]: string, [string]: boolean | integer}[]
+---@param buf integer
+local function apply_ft_mappings(args, buf)
+    vim.iter(args):each(function(m)
+        assert(#m == 3, "map args must be a table with at least 3 items")
+        local opts = vim.iter(m):fold({ buffer = buf }, function(acc, key, item)
+            if type(key) == "string" then
+                acc[key] = item
+            end
+            return acc
+        end)
+        map(m[1], m[2], m[3], opts)
+    end)
+end
+
+--- A convenience wrapper that calls the ftplugin config for a plugin if it exists
+--- and warns me if the plugin is not installed
+---@param configs table<string, fun(module: table)>
+function lambda.ftplugin_conf(configs)
+    if type(configs) ~= "table" then
+        return
+    end
+    for name, callback in pairs(configs) do
+        local ok, plugin = lambda.pcall(require, name)
+        if ok then
+            callback(plugin)
+        end
+    end
+end
+
+--- This function is an alternative API to using ftplugin files. It allows defining
+--- filetype settings in a single place, then creating FileType autocommands from this definition
+---
+--- e.g.
+--- ```lua
+---   lambda.filetype_settings({
+---     lua = {
+---      opt = {foldmethod = 'expr' },
+---      bo = { shiftwidth = 2 }
+---     },
+---    [{'c', 'cpp'}] = {
+---      bo = { shiftwidth = 2 }
+---    }
+---   })
+--- ```
+--- One future idea is to generate the ftplugin files from this function, so the settings are still
+--- centralized but the curation of these files is automated. Although I'm not sure this actually
+--- has value over autocommands, unless ftplugin files specifically have that value
+---
+---@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs)}}
+function lambda.filetype_settings(map)
+    local commands = vim.iter(map):map(function(ft, settings)
+        local name = type(ft) == "table" and table.concat(ft, ",") or ft
+        return {
+            pattern = ft,
+            event = "FileType",
+            desc = ("ft settings for %s"):format(name),
+            command = function(args)
+                vim.iter(settings):each(function(key, value)
+                    if key == "opt" then
+                        key = "opt_local"
+                    end
+                    if key == "mappings" then
+                        return apply_ft_mappings(value, args.buf)
+                    end
+                    if key == "plugins" then
+                        return lambda.ftplugin_conf(value)
+                    end
+                    if type(key) == "function" then
+                        return lambda.pcall(key, args)
+                    end
+                    vim.iter(value):each(function(option, setting)
+                        vim[key][option] = setting
+                    end)
+                end)
+            end,
+        }
+    end)
+    lambda.augroup("filetype-settings", { unpack(commands:totable()) })
 end
 
 ---Determine if a value of any type is empty
@@ -392,25 +527,27 @@ end
 
 P = vim.pretty_print
 
---- Validate the keys passed to as.augroup are valid
+----------------------------------------------------------------------------------------------------
+-- API Wrappers
+----------------------------------------------------------------------------------------------------
+-- Thin wrappers over API functions to make their usage easier/terser
+
+local autocmd_keys = { "event", "buffer", "pattern", "desc", "command", "group", "once", "nested" }
+--- Validate the keys passed to lambda.augroup are valid
 ---@param name string
----@param cmd Autocommand
-local function validate_autocmd(name, cmd)
-    local keys = { "event", "buffer", "pattern", "desc", "command", "group", "once", "nested" }
-    local incorrect = lambda.fold(function(accum, _, key)
-        if not vim.tbl_contains(keys, key) then
-            table.insert(accum, key)
+---@param command Autocommand
+local function validate_autocmd(name, command)
+    local incorrect = vim.iter(command):map(function(key, _)
+        if not vim.tbl_contains(autocmd_keys, key) then
+            return key
         end
-        return accum
-    end, cmd, {})
-    if #incorrect == 0 then
-        return
-    end
-    vim.schedule(function()
-        vim.notify("Incorrect keys: " .. table.concat(incorrect, ", "), "error", {
-            title = fmt("Autocmd: %s", name),
-        })
     end)
+    if #incorrect > 0 then
+        vim.schedule(function()
+            local msg = ("Incorrect keys: %s"):format(table.concat(incorrect, ", "))
+            vim.notify(msg, "error", { title = ("Autocmd: %s"):format(name) })
+        end)
+    end
 end
 
 ---@class AutocmdArgs
@@ -499,6 +636,53 @@ function lambda.clever_tcd()
     end
     vim.cmd("tcd " .. root)
     vim.cmd("pwd")
+end
+
+------------------------------------------------------------------------------------------------------------------------
+--  Lazy Requires
+------------------------------------------------------------------------------------------------------------------------
+--- source: https://github.com/tjdevries/lazy-require.nvim
+
+--- Require on index.
+---
+--- Will only require the module after the first index of a module.
+--- Only works for modules that export a table.
+function lambda.reqidx(require_path)
+    return setmetatable({}, {
+        __index = function(_, key)
+            return require(require_path)[key]
+        end,
+        __newindex = function(_, key, value)
+            require(require_path)[key] = value
+        end,
+    })
+end
+
+--- Require when an exported method is called.
+---
+--- Creates a new function. Cannot be used to compare functions,
+--- set new values, etc. Only useful for waiting to do the require until you actually
+--- call the code.
+---
+--- ```lua
+--- -- This is not loaded yet
+--- local lazy_mod = lazy.require_on_exported_call('my_module')
+--- local lazy_func = lazy_mod.exported_func
+---
+--- -- ... some time later
+--- lazy_func(42)  -- <- Only loads the module now
+---
+--- ```
+---@param require_path string
+---@return table<string, fun(...): any>
+function lambda.reqcall(require_path)
+    return setmetatable({}, {
+        __index = function(_, k)
+            return function(...)
+                return require(require_path)[k](...)
+            end
+        end,
+    })
 end
 
 ---@generic T

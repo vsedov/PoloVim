@@ -511,30 +511,7 @@ lambda.augroup("TabNLine", {
     },
 })
 
-vim.cmd([[
-  augroup _general_settings
-    autocmd!
-    autocmd BufWinEnter * :set formatoptions-=cro
-    autocmd FileType qf set nobuflisted
-  augroup end
-  augroup _auto_resize
-    autocmd!
-    autocmd VimResized * tabdo wincmd =
-  augroup end
-fun! CleanExtraSpaces()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	silent! %s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
-endfun
-if has("autocmd")
-	autocmd BufWritePre *.txt,*.jl,*.js,*.py,*.wiki,*.sh,*.coffee,*.lua :call CleanExtraSpaces()
-endif
-]])
--- tmux and kitty are no longer able to access the current working directory of neovim
--- since the TUI became a separate process
--- see: https://github.com/neovim/neovim/issues/21771#issuecomment-1461710157
+
 if vim.env.TMUX or vim.env.KITTY_PID then
     lambda.augroup("NvimCwd", {
         {
@@ -552,6 +529,8 @@ mkview_filetype_blocklist = {
     diff = true,
     gitcommit = true,
     hgcommit = true,
+    ["neo-tree"] = true,
+    harpoon = true, 
 }
 
 local function should_mkview()
@@ -594,14 +573,14 @@ end
 
 lambda.augroup("RememberFold", {
     {
-        event = "BufWinLeave",
+        event = "BufReadPost",
         pattern = { "*" },
         command = function()
             mkview()
         end,
     },
     {
-        event = "BufWinEnter",
+        event = "BufEnter",
         pattern = { "*" },
         command = function()
             loadview()
