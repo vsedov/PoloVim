@@ -131,7 +131,6 @@ lsp({
 
 lsp({
     "SmiteshP/nvim-navbuddy",
-    event = "LspAttach",
     dependencies = {
         "neovim/nvim-lspconfig",
         "SmiteshP/nvim-navic",
@@ -158,4 +157,23 @@ lsp({
     cond = lambda.config.lsp.use_rcd,
     event = "LspAttach",
     config = conf.rcd,
+})-- this could be  casing lag, im not sure
+
+lsp({
+    "VidocqH/lsp-lens.nvim",
+    event = "LspAttach",
+    cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
+
+    opts = {
+        enable = false,
+        include_declaration = false, -- Reference include declaration
+        sections = { -- Enable / Disable specific request
+            definition = true,
+            references = true,
+            implementation = true,
+        },
+        ignore_filetype = {
+            "prisma",
+        },
+    },
 })
