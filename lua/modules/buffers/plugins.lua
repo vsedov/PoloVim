@@ -79,10 +79,6 @@ buffer({
     branch = "neo-zoom-original", -- UNCOMMENT THIS, if you prefer the old one
     cmd = { "NeoZoomToggle" },
 })
-buffer({
-    "nyngwang/NeoNoName.lua",
-    cmd = { "NeoNoName" },
-})
 
 buffer({
     "stevearc/oil.nvim",
