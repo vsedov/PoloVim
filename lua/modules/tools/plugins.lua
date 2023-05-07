@@ -230,13 +230,6 @@ tools({
     lazy = true,
     cmd = "Qfreplace",
 })
-
-tools({
-    "itchyny/vim-qfedit",
-    lazy = true,
-    ft = "qf",
-})
-
 tools({
     "willothy/flatten.nvim",
     lazy = false,
