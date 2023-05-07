@@ -86,23 +86,6 @@ function config.ns()
     nstextobject.map_textobj("q", "quotes")
 end
 
-function config.guess_indent()
-    require("guess-indent").setup({
-        auto_cmd = true, -- Set to false to disable automatic execution
-        filetype_exclude = { -- A list of filetypes for which the auto command gets disabled
-            "netrw",
-            "neo-tree",
-            "tutor",
-        },
-        buftype_exclude = { -- A list of buffer types for which the auto command gets disabled
-            "help",
-            "nofile",
-            "terminal",
-            "prompt",
-        },
-    })
-end
-
 function config.NeoWell()
     require("neo-well").setup({
         height = 10,

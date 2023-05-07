@@ -94,11 +94,19 @@ ts({
     config = conf.hi_pairs,
 })
 
+-- ts({
+--     "NMAC427/guess-indent.nvim",
+--     lazy = true,
+--     event = lambda.config.guess_indent,
+--     cmd = "GuessIndent",
+--     config = conf.guess_indent,
+-- })
+
 ts({
     "yioneko/nvim-yati",
+    event = "VeryLazy",
     lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
-    event = "VeryLazy",
     config = conf.indent,
 })
 
@@ -176,7 +184,6 @@ ts({
 ts({
     "ckolkey/ts-node-action",
     lazy = true,
-    event = "InsertEnter",
     dependencies = { "nvim-treesitter" },
     keys = "<leader>k",
     init = function()

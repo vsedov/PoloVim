@@ -109,7 +109,7 @@ function config.playground()
 end
 
 function config.hlargs()
-    require("utils.ui.utils").plugin("hlargs", {
+    lambda.highlight.plugin("hlargs", {
 
         theme = {
             ["*"] = { { Hlargs = { italic = true, foreground = "#A5D6FF" } } },
@@ -221,6 +221,22 @@ function config.indent()
             suppress_conflict_warning = true,
             enable = true,
             default_lazy = true,
+        },
+    })
+end
+function config.guess_indent()
+    require("guess-indent").setup({
+        auto_cmd = true, -- Set to false to disable automatic execution
+        filetype_exclude = { -- A list of filetypes for which the auto command gets disabled
+            "netrw",
+            "neo-tree",
+            "tutor",
+        },
+        buftype_exclude = { -- A list of buffer types for which the auto command gets disabled
+            "help",
+            "nofile",
+            "terminal",
+            "prompt",
         },
     })
 end

@@ -32,15 +32,6 @@ misc({
     },
     config = conf.ns,
 })
-
-misc({
-    "NMAC427/guess-indent.nvim",
-    lazy = true,
-    event = lambda.config.guess_indent,
-    cmd = "GuessIndent",
-    config = conf.guess_indent,
-})
-
 -- programming spell
 misc({ "psliwka/vim-dirtytalk", build = "DirtytalkUpdate" })
 
