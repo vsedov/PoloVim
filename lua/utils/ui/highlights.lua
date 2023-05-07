@@ -84,7 +84,7 @@ M.L = {
     info = P.waveAqua1,
 }
 
-local highlights = require("utils.ui.utils_2")
+local highlights = lambda.highlight
 local function general_overrides()
     local normal_bg = highlights.get("Normal", "bg")
     highlights.all({
