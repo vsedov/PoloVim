@@ -57,8 +57,25 @@ local plug_map = {
     ["n|<RightMouse>"] = map_cmd("<RightMouse><cmd>lua vim.lsp.buf.definition()<CR>", "rightclick def")
         :with_noremap()
         :with_silent(),
-    ["n|<C-ScrollWheelUp>"] = map_cmd("<C-i>", "Buf Move"):with_noremap():with_silent(),
-    ["n|<C-ScrollWheelDown>"] = map_cmd("<C-o>", "Buf Move"):with_noremap():with_silent(),
+
+
+    ["n|<c-d>"] = map_cmd("2<c-e>", "2 <c-e>")
+        :with_noremap()
+        :with_silent(),
+
+    ["n|<c-u>"] = map_cmd("2<c-u>", "2 <c-u>")
+        :with_noremap()
+        :with_silent(),
+
+
+
+    ["n|<c-u>"] = map_cmd("2<c-u>", "2 <c-u>")
+        :with_noremap()
+        :with_silent(),
+
 }
+
+-- if lambda.falsy(vim.fn.mapcheck('<ScrollWheelDown>')) then vim.keymap.set('<ScrollWheelDown>', '<c-d>',{noremap = true, silent = true}) end
+-- if lambda.falsy(vim.fn.mapcheck('<ScrollWheelUp>')) then vim.keymap.set('<ScrollWheelUp>', '<c-u>', {noremap = true, silent = true}) end
 
 return plug_map
