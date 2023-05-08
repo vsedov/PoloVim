@@ -99,6 +99,4 @@ local plug_map = {
         :with_silent(),
 }
 
-
-
 return plug_map
