@@ -1,23 +1,32 @@
 -- pick random  item form dark but based on its probability
 local noice_enabled = true
-local use_ts_yeti = false
+local use_ts_yeti = true
+
+--    ╭────────────────────────────────────────────────────────────────────╮
+--    │                                                                    │
+--    │                   Toggles for AI functionality:                    │
+--    │                                                                    │
+--    ╰────────────────────────────────────────────────────────────────────╯
+
+local use_codium_cmp = true
+local use_codium = true
+
+local use_tabnine = true
+local use_tabnine_cmp = true
+local use_copilot = true
 
 -- toggle core values within the list
 
 lambda.config = {
     use_hydra = true,
-    overwrite_colours_use_styler = false,
-    do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
+    do_you_want_lag = true, -- Enable Extra regex, -- Fuck it
     better_ts_highlights = false, -- This needs a direct toggle i think
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
-    simple_notify = false, -- notifier.nvim = true , else use nvim-notif
     record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
     loaded_confirm_quit = true,
     save_clipboard_on_exit = true,
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
-    tabby_or_bufferline = false, -- false: Bufferline , true for tabby
-    sell_your_soul = false, -- set to true to sell your soul to microsoft
     use_session = true, -- set to false to disable session
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
@@ -36,14 +45,6 @@ lambda.config = {
     use_pet = false,
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
-
-local use_codium_cmp = true
-local use_codium = true
-
-local use_tabnine = true
-local use_tabnine_cmp = true
-local use_copilot = true
-
 lambda.config.ai = {
     model = "gpt-4",
     codeium = {

@@ -39,12 +39,13 @@ config.runner = {
     ["<cr>"] = {
         function()
             local overseer = require("overseer")
-            overseer.run_template({
-                name = "Run " .. vim.bo.filetype:gsub("^%l", string.upper) .. " file (" .. vim.fn.expand("%:t") .. ")",
-            }, function(task)
-                task = task or "Poetry run file"
+            command = "Run " .. vim.bo.filetype:gsub("^%l", string.upper) .. " file (" .. vim.fn.expand("%:t") .. ")"
+            vim.notify(command)
+            overseer.run_template({ name = command }, function(task)
                 if task then
-                    overseer.run_action(task, "open float")
+                    overseer.run_action(task, "open")
+                else
+                    vim.notify("Task not found")
                 end
             end)
         end,
@@ -64,14 +65,26 @@ config.runner = {
 
     S = {
         function()
-            if vim.fn.mode() == "n" then
-                vim.cmd.SnipRun()
+            mode = vim.fn.mode()
+            if mode == "n" then
+                require("sniprun").run()
             else
-                vim.cmd([['<,'>SnipRun]])
+                require("sniprun").run("v")
             end
         end,
         { exit = true, desc = "SnipRun" },
     },
+    R = {
+        function()
+            require("sniprun").clear_repl()
+        end,
+        { exit = true, desc = "SnipRun Clear Repl" },
+    },
+
+    -- SnipInfo
+    -- SnipReset
+    -- SnipClose
+    -- SnipCreate
 }
 
 local function auto_hint_generate()
