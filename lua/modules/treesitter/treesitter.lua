@@ -18,7 +18,6 @@ local treesitter = function()
     local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
     parser_configs.markdown.filetype_to_parsername = "octo"
- 
 
     require("nvim-treesitter.configs").setup({
         autopairs = { enable = false },

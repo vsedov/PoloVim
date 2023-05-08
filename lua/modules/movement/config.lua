@@ -52,7 +52,6 @@ function config.houdini()
                 if vim.opt.filetype:get() == "terminal" or vim.bo.buftype == "terminal" then
                     return "" -- disabled
                 end
-
                 if seq == "AA" then
                     -- jump to the end of the line in insert mode
                     return "<BS><BS><End>"

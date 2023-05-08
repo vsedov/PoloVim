@@ -136,7 +136,6 @@ movement({
     event = "ModeChanged",
     config = conf.houdini,
 })
-
 --[[ jump to the first match by pressing the <Enter> key or <C-j> ; ]]
 --[[ jump to any matches by typing :, then the label assigned to the match ; ]]
 --[[ delete previous characters by pressing <Backspace> or <Control-h> ; ]]
@@ -148,6 +147,7 @@ movement({
     keys = {
         "<leader>sR",
         "<leader>sr",
+
         -- "<leader>sn",
         -- "<leader>sp",
         "<leader>sc",

@@ -94,13 +94,13 @@ ts({
     config = conf.hi_pairs,
 })
 
--- ts({
---     "NMAC427/guess-indent.nvim",
---     lazy = true,
---     event = lambda.config.guess_indent,
---     cmd = "GuessIndent",
---     config = conf.guess_indent,
--- })
+ts({
+    "NMAC427/guess-indent.nvim",
+    lazy = true,
+    event = lambda.config.guess_indent,
+    cmd = "GuessIndent",
+    config = conf.guess_indent,
+})
 
 ts({
     "yioneko/nvim-yati",
@@ -156,28 +156,19 @@ ts({
     event = "VeryLazy",
     config = function()
         require("various-textobjs").setup({ useDefaultKeymaps = true })
-        vim.keymap.set("n", "gx", function()
-            require("various-textobjs").url() -- select URL
-            local foundURL = fn.mode():find("v") -- only switches to visual mode if found
-            local url
-            if foundURL then
-                vim.cmd.normal({ '"zy', bang = true }) -- retrieve URL with "z as intermediary
-                url = fn.getreg("z")
 
-                local opener
-                if vim.fn.has("macunix") == 1 then
-                    opener = "open"
-                elseif vim.fn.has("linux") == 1 then
-                    opener = "xdg-open"
-                elseif vim.fn.has("win64") == 1 or fn.has("win32") == 1 then
-                    opener = "start"
-                end
-                os.execute(opener .. "'" .. url .. "'")
-            else
-                -- if not found in proximity, search whole buffer via urlview.nvim instead
-                vim.cmd.UrlView("buffer")
-            end
-        end, { desc = "Smart URL Opener" })
+        -- example: `?` for diagnostic textobj
+        vim.keymap.set({ "o", "x" }, "?", '<cmd>lua require("various-textobjs").diagnostic()<CR>')
+
+        -- example: `an` for outer subword, `in` for inner subword
+        vim.keymap.set({ "o", "x" }, "aS", '<cmd>lua require("various-textobjs").subword(false)<CR>')
+        vim.keymap.set({ "o", "x" }, "iS", '<cmd>lua require("various-textobjs").subword(true)<CR>')
+
+        -- exception: indentation textobj requires two parameters, the first for
+        -- exclusion of the starting border, the second for the exclusion of ending
+        -- border
+        vim.keymap.set({ "o", "x" }, "ii", '<cmd>lua require("various-textobjs").indentation(true, true)<CR>')
+        vim.keymap.set({ "o", "x" }, "ai", '<cmd>lua require("various-textobjs").indentation(false, true)<CR>')
     end,
 })
 
