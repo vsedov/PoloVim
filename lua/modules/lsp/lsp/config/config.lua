@@ -113,6 +113,8 @@ local get_extra_binds = function()
     if lambda.config.use_saga_maps then
         binds = {
             ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
+            ["gD"] = { require("definition-or-references").definition_or_references, "Goto Def" },
+
             ["gh"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
             ["gs"] = { "<cmd> Lspsaga goto_definition<cr>", "Goto Def" },
             -- ["<C-f>"] = { "<cmd> lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", "lsp scroll up" },
