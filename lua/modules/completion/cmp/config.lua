@@ -31,18 +31,13 @@ local config = {
 
     preselect = cmp.PreselectMode.Item, -- None | Item
     completion = {
-        types.cmp.TriggerEvent.TextChanged,
+        types.cmp.TriggerEvent.TextChanged, -- TextChanged | InsertEnter | None
         completeopt = "menu,menuone,noselect",
         keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
         keyword_length = 1,
     },
-    confirmation = {
-        default_behavior = types.cmp.ConfirmBehavior.Insert,
-        get_commit_characters = function(commit_characters)
-            return commit_characters
-        end,
-    },
-    experimental = { ghost_text = true }, -- native_menu = false -- im not sure if this will make things faster
+
+    experimental = { ghost_text = false }, -- native_menu = false -- im not sure if this will make things faster
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
 
