@@ -183,31 +183,6 @@ lang({
 lang({ "dccsillag/magma-nvim", ft = "python", build = ":UpdateRemotePlugins" })
 
 lang({
-    "0x100101/lab.nvim",
-    lazy = true,
-    build = "cd js && npm ci",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = {
-        "Lab code",
-        "Lab",
-    },
-    keys = {
-        "<localleader>rs",
-        "<localleader>rr",
-        "<localleader>rp",
-    },
-    config = function()
-        require("lab").setup({
-            code_runner = {
-                enabled = true,
-            },
-            quick_data = {
-                enabled = true,
-            },
-        })
-    end,
-})
-lang({
     "michaelb/sniprun",
     lazy = true,
     build = "bash ./install.sh",

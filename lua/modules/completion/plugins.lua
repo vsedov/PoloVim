@@ -164,4 +164,3 @@ completion({
     cmd = "Template",
     config = conf.vim_sonictemplate,
 })
-

@@ -1,4 +1,3 @@
-local ts_move = require("nvim-treesitter.textobjects.move")
 local leader = ";S"
 local hydra = require("hydra")
 local cmd = require("hydra.keymap-util").cmd

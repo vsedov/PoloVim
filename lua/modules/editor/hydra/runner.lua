@@ -43,7 +43,7 @@ config.runner = {
             vim.notify(command)
             overseer.run_template({ name = command }, function(task)
                 if task then
-                    overseer.run_action(task, "open")
+                    overseer.run_action(task, "open float")
                 else
                     vim.notify("Task not found")
                 end
@@ -59,10 +59,6 @@ config.runner = {
         end,
         { exit = true, desc = "Run Code/Test" },
     },
-    i = { cmd("Lab code run"), { exit = true, desc = "Lab Run" } },
-    o = { cmd("Lab code stop"), { exit = false, desc = "Lab Stop" } },
-    p = { cmd("Lab code panel"), { exit = false, desc = "Lab Panel" } },
-
     S = {
         function()
             mode = vim.fn.mode()
@@ -74,17 +70,24 @@ config.runner = {
         end,
         { exit = true, desc = "SnipRun" },
     },
-    R = {
+    C = {
         function()
             require("sniprun").clear_repl()
         end,
         { exit = true, desc = "SnipRun Clear Repl" },
     },
-
-    -- SnipInfo
-    -- SnipReset
-    -- SnipClose
-    -- SnipCreate
+    I = {
+        function()
+            require("sniprun").info()
+        end,
+        { exit = true, desc = "SnipRun Info" },
+    },
+    R = {
+        function()
+            require("sniprun.display").close_all()
+        end,
+        { exit = true, desc = "SnipRun Close All" },
+    },
 }
 
 local function auto_hint_generate()
@@ -109,7 +112,7 @@ local function auto_hint_generate()
 
     utils.make_core_table(core_table, bracket)
     utils.make_core_table(core_table, { "d", "t", "b", "l" })
-    utils.make_core_table(core_table, { "S", "i", "o", "p" })
+    utils.make_core_table(core_table, { "S", "C", "I", "R" })
 
     hint_table = {}
     string_val = "^ ^          Runner       ^ ^\n\n"
