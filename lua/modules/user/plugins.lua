@@ -297,8 +297,8 @@ user({
         vim.g.spellbound_settings = {
             mappings = {
                 toggle_map = "zS",
-                fix_right = "<C-p>",
-                fix_left = "<C-n>",
+                fix_right = "zp",
+                fix_left = "zn",
             },
             language = "en_gb",
             autospell_filetypes = { "*.txt", "*.md", "*.rst" },
