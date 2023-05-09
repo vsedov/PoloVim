@@ -310,17 +310,6 @@ user({
 })
 
 user({
-    "Cassin01/wf.nvim",
-    cond = false,
-    lazy = true,
-    config = function()
-        require("wf").setup({
-            theme = "space",
-        })
-    end,
-})
-
-user({
     "olimorris/persisted.nvim",
     lazy = false,
     init = function()
@@ -352,7 +341,7 @@ user({
         allowed_dirs = { "/Github" },
         ignored_dirs = { vim.fn.stdpath("data") },
     },
-    config = function(opts)
+    config = function(_, opts)
         require("telescope").load_extension("persisted")
         require("persisted").setup(opts)
     end,

@@ -400,6 +400,7 @@ function config.fold_focus()
         foldcus.unfold(tonumber(args.args))
     end, { nargs = "*" })
 end
+
 function config.blankline()
     vim.opt.termguicolors = true
     vim.opt.list = true
@@ -418,10 +419,10 @@ function config.blankline()
         char = "│", -- ┆ ┊ 
         context_char = "▎",
         char_priority = 12,
-        show_current_context = true,
-        show_current_context_start = true,
-        show_current_context_start_on_current_line = false,
-        show_first_indent_level = true,
+        show_current_context = false,
+        show_current_context_start = false,
+        show_current_context_start_on_current_line = true,
+        show_first_indent_level = false,
         filetype_exclude = {
             "dbout",
             "neo-tree-popup",
@@ -468,86 +469,6 @@ function config.blankline()
     -- {"WarningMsg", "Identifier", "Delimiter", "Type", "String", "Boolean"}
 end
 
-function config.indentguides()
-    require("indent_guides").setup({
-        -- put your options in here
-        indent_soft_pattern = "\\s",
-    })
-end
-
-function config.close_buffers()
-    require("close_buffers").setup({
-        preserve_window_layout = { "this" },
-        next_buffer_cmd = function(windows)
-            require("bufferline").cycle(1)
-            local bufnr = vim.api.nvim_get_current_buf()
-
-            for _, window in ipairs(windows) do
-                vim.api.nvim_win_set_buf(window, bufnr)
-            end
-        end,
-    })
-    vim.api.nvim_create_user_command("Kwbd", function()
-        require("close_buffers").delete({ type = "this" })
-    end, { range = true })
-end
-
-function config.modes()
-    require("modes").setup({
-        colors = {
-            copy = "#f5c359",
-            delete = "#c75c6a",
-            insert = "#78ccc5",
-            visual = "#9745be",
-        },
-
-        -- Set opacity for cursorline and number background
-        line_opacity = 0.15,
-
-        -- Enable cursor highlights
-        set_cursor = true,
-
-        -- Enable cursorline initially, and disable cursorline for inactive windows
-        -- or ignored filetypes
-        set_cursorline = true,
-
-        -- Enable line number highlights to match cursorline
-        set_number = true,
-
-        -- Disable modes highlights in specified filetypes
-        -- Please PR commonly ignored filetypes
-        ignore_filetypes = { "NvimTree", "TelescopePrompt", "NeoTree" },
-        plugins = {
-            presets = {
-                operators = false,
-            },
-        },
-    })
-end
-
-function config.modicator()
-    local modicator = require("modicator")
-
-    print("here")
-    modicator.setup({
-        line_numbers = true,
-        cursorline = false,
-        highlights = {
-            modes = {
-                ["n"] = modicator.get_highlight_fg("CursorLineNr"),
-                ["i"] = modicator.get_highlight_fg("Question"),
-                ["v"] = modicator.get_highlight_fg("Type"),
-                ["V"] = modicator.get_highlight_fg("Type"),
-                ["�"] = modicator.get_highlight_fg("Type"),
-                ["s"] = modicator.get_highlight_fg("Keyword"),
-                ["S"] = modicator.get_highlight_fg("Keyword"),
-                ["R"] = modicator.get_highlight_fg("Title"),
-                ["c"] = modicator.get_highlight_fg("Constant"),
-            },
-        },
-    })
-end
-
 function config.transparent()
     require("transparent").setup({
         extra_groups = {
@@ -564,22 +485,6 @@ function config.transparent()
     -- [transparent.nvim] Please check the README for detailed information.
     -- - "exclude" has been changed to "exclude_groups".
     -- - "enable" has been removed.
-end
-
-function config.dim()
-    require("neodim").setup({
-        alpha = 0.5,
-        blend_color = "#000000",
-        update_in_insert = {
-            enable = true,
-            delay = 100,
-        },
-        hide = {
-            virtual_text = true,
-            signs = true,
-            underline = true,
-        },
-    })
 end
 
 function config.tint()
@@ -612,46 +517,6 @@ function config.tint()
             return lambda.any(b.bt, ignore_bt) or lambda.any(b.ft, ignore_ft)
         end,
     })
-end
-
-function config.colourutils()
-    require("colortils").setup()
-end
-
-function config.clock_setup()
-    lambda.lazy_load({
-        events = "BufEnter",
-        augroup_name = "clock",
-        condition = function()
-            return lambda.config.use_clock and vim.fn.getcwd():match(vim.fn.stdpath("config"))
-        end,
-        plugin = "clock.nvim",
-    })
-end
-
-function config.clock()
-    local c = require("clock")
-    local f = vim.fn
-
-    c.setup({
-        border = {
-            "🭽",
-            "▔",
-            "🭾",
-            "▕",
-            "🭿",
-            "▁",
-            "🭼",
-            "▏",
-        },
-        row = vim.o.lines - 5,
-    })
-    if f.getcwd():match(f.stdpath("config")) then
-        c.Clock:new():count_up({
-            duration = { minutes = 30 },
-            threshold = { late = "00:15" }, -- at 15mins the clock will become red
-        })
-    end
 end
 
 function config.dressing()
