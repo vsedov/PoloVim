@@ -8,12 +8,11 @@ local mappings = {
         c = cmp.mapping.close(),
     }),
 
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-<leader>>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
     ["<C-' '>"] = cmp.mapping.confirm({ select = true }),
 
     ["<CR>"] = cmp.mapping.confirm({
-        select = false,
-        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
     }),
 
     ["<C-f>"] = cmp.mapping(function(fallback)
@@ -40,10 +39,7 @@ local mappings = {
         "i",
         "s",
     }),
-    -- ["<BS>"] = cmp.mapping(function(_fallback)
-    --     local keys = utils.smart_bs()
-    --     vim.api.nvim_feedkeys(keys, "nt", true)
-    -- end, { "i", "s" }),
+
     ["<Tab>"] = function(fallback)
         if cmp.visible() then
             cmp.select_next_item()
@@ -62,43 +58,6 @@ local mappings = {
             fallback()
         end
     end,
-
-    -- ["<Tab>"] = cmp.mapping(function(core, fallback)
-    --     if cmp.visible() then
-    --         cmp.select_next_item()
-    --     elseif luasnip.expandable() then
-    --         luasnip.expand()
-    --
-    --     -- elseif luasnip.expand_or_jumpable() then
-    --     --     luasnip.expand_or_jump() -- vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-    --     elseif not utils.check_backspace() then
-    --         cmp.mapping.complete()(core, fallback)
-    --     elseif utils.has_words_before() then
-    --         cmp.complete()
-    --     else
-    --         utils.smart_tab()
-    --         -- vim.cmd(":>")
-    --     end
-    -- end, {
-    --     "i",
-    --     "s",
-    --     "c",
-    -- }),
-    -- -- Avoid full fallback as it acts retardedly
-    -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-    --     if cmp.visible() then
-    --         cmp.select_prev_item()
-    --     -- elseif luasnip.jumpable(-1) then
-    --     --     luasnip.jump(-1)
-    --     else
-    --         -- utils.smart_bs()
-    --         vim.cmd(":<")
-    --     end
-    -- end, {
-    --     "i",
-    --     "s",
-    --     "c",
-    -- }),
 
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul then

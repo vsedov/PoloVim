@@ -41,9 +41,13 @@ function config.iswap()
     })
 end
 
+-- ["i|ll"] = map_cmd("()<esc>i", "()"):with_silent(),
+-- ["i|lj"] = map_cmd("[]<esc>i", "[]"):with_silent(),
+-- ["i|lm"] = map_cmd("{}<esc>i", "{}"):with_silent(),
+
 function config.houdini()
     require("houdini").setup({
-        mappings = { "jk", "AA", "II" },
+        mappings = { "jk", "AA", "II", "jj", "kk", "kj" },
         escape_sequences = {
             t = false,
             i = function(first, second)
@@ -51,6 +55,15 @@ function config.houdini()
 
                 if vim.opt.filetype:get() == "terminal" or vim.bo.buftype == "terminal" then
                     return "" -- disabled
+                end
+                if seq == "kj" then
+                    return "<BS><BS>()<esc>i"
+                end
+                if seq == "kk" then
+                    return "<BS><BS>{}<esc>i"
+                end
+                if seq == "jj" then
+                    return "<BS><BS>[]<esc>i"
                 end
                 if seq == "AA" then
                     -- jump to the end of the line in insert mode
