@@ -4,6 +4,7 @@ local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
 local fn = vim.fn
 
+-- Core
 ts({
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -11,6 +12,7 @@ ts({
     config = conf.nvim_treesitter,
 })
 
+-- Core
 ts({
     "nvim-treesitter/nvim-treesitter-textobjects",
     lazy = true,
@@ -18,6 +20,7 @@ ts({
     config = conf.treesitter_obj,
 })
 
+-- Core
 ts({
     "RRethy/nvim-treesitter-textsubjects",
     lazy = true,
@@ -25,6 +28,7 @@ ts({
     config = conf.tsubject,
 })
 
+-- Core
 ts({
     "RRethy/nvim-treesitter-endwise",
     lazy = true,
@@ -32,6 +36,7 @@ ts({
     config = conf.endwise,
 })
 
+-- Core
 ts({
     "nvim-treesitter/nvim-treesitter-refactor",
     lazy = true,
@@ -39,6 +44,8 @@ ts({
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects" },
     config = conf.treesitter_ref, -- let the last loaded config treesitter
 })
+
+-- Core
 ts({
     "David-Kunz/markid",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -47,7 +54,6 @@ ts({
 ts({
     "m-demare/hlargs.nvim",
     lazy = true,
-
     ft = {
         "c",
         "cpp",
