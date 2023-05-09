@@ -12,12 +12,6 @@ buffer({
     dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, { "tabscope.nvim" } },
 })
 
--- buffer({
---     "tiagovla/scope.nvim",
---     lazy = true,
---     config = true,
--- })
-
 buffer({
     "backdround/tabscope.nvim",
     lazy = true,
@@ -70,7 +64,7 @@ buffer({
 buffer({
     "stevearc/stickybuf.nvim",
     lazy = true,
-    cmd = { "PinBuffer", "PinBuftype", "PinBuftype", "UnpinBuffer" },
+    event = "BufEnter",
     config = conf.sticky_buf,
 })
 
@@ -82,7 +76,6 @@ buffer({
 
 buffer({
     "stevearc/oil.nvim",
-    event = "VeryLazy",
     init = function()
         vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         vim.keymap.set("n", "<leader>-", require("oil").open_float, { desc = "Open parent directory" })
@@ -149,11 +142,17 @@ buffer({
     event = "BufRead",
     config = true,
 })
+
 buffer({
     "chrisgrieser/nvim-early-retirement",
     cond = true,
     config = true,
     event = "VeryLazy",
+})
+buffer({
+    "axkirillov/hbac.nvim",
+    event = "VeryLazy",
+    config = true,
 })
 buffer({
     "mskelton/local-yokel.nvim",
