@@ -10,6 +10,7 @@ M.config = function()
     })
     require("mason-nvim-dap")
     require("nvim-dap-virtual-text").setup()
+    require("nvim-dap-repl-highlights").setup()
     M.keymaps()
     M.commands()
 end

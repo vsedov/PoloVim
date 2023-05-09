@@ -42,20 +42,6 @@ lang({ "milisims/nvim-luaref", opt = true })
 
 lang({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, lazy = true, config = conf.trouble })
 
--- -- lang({
--- --     "ram02z/dev-comments.nvim",
--- --     dependencies = {
--- --         "nvim-treesitter/nvim-treesitter",
--- --         "nvim-lua/plenary.nvim",
--- --         "nvim-telescope/telescope.nvim", -- optional
--- --     },
--- --     lazy = true,
--- --     after = "telescope.nvim",
--- --     config = conf.dev_comments,
--- -- })
--- -- -- -- not the same as folkes version
--- lang({ "bfredl/nvim-luadev", lazy = true, ft = "lua", init = conf.luadev })
-
 lang({
     "rafcamlet/nvim-luapad",
     ft = "lua",
@@ -77,6 +63,7 @@ lang({
         "ofirgall/goto-breakpoints.nvim",
         "jay-babu/mason-nvim-dap.nvim",
         "theHamsta/nvim-dap-virtual-text",
+        "LiadOz/nvim-dap-repl-highlights",
     },
 })
 
