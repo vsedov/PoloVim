@@ -64,7 +64,7 @@ buffer({
 buffer({
     "stevearc/stickybuf.nvim",
     lazy = true,
-    event = "BufEnter",
+    -- event = "BufEnter",
     config = conf.sticky_buf,
 })
 
