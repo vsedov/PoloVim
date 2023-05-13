@@ -1,5 +1,5 @@
 -- pick random  item form dark but based on its probability
-local noice_enabled = true
+local noice_enabled = false
 local use_ts_yeti = true
 
 --    ╭────────────────────────────────────────────────────────────────────╮
@@ -177,7 +177,7 @@ lambda.config.ui = {
     },
     heirline = {
         cava = {
-            use_cava = true,
+            use_cava = false,
             fps = "240",
             bars = "30",
             audio = "stereo", --average, stero left right
