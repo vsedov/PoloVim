@@ -80,8 +80,8 @@ function config.autopair()
         },
         fastend = {
             enable = true,
-            map = "<c-c>",
-            cmap = "<c-c>",
+            map = "<c-w>",
+            cmap = "<c-w>",
             smart = true,
             fallback = nil,
         },

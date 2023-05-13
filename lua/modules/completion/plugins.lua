@@ -87,47 +87,128 @@ completion({
             space = "u", --which of them should be the space (only 'u' supported)
             c_h = "", --which of them should be the <C-h> (only 'n' supported)
             c_w = "", --which of them should be the <C-w> (only 'n' supported)
-            fastwarp = "<c-c>", --ultimate-autopair's fastwarp mapping ('' for disable)
             rfastwarp = "<c-x>", --ultimate-autopair's reverse fastwarp mapping ('' for disable)
             fastwrap = "<c-s>", --nvim-autopairs's fastwrap mapping ('' for disable)
             npairs_conf = {}, --nvim-autopairs's configuration
             upair_conf = {
-                bs = {
+                config_type = "default",
+
+                map = true,
+                --whether to allow any insert map
+                cmap = true, --cmap stands for cmd-line map
+                --whether to allow any cmd-line map
+                pair_map = true,
+                --whether to allow pair insert map
+                pair_cmap = true,
+                --whether to allow pair cmd-line map
+                bs = { -- *ultimate-autopair-map-backspace-config*
                     enable = true,
-                    overjump = true,
+                    map = "<bs>", --string or table
+                    cmap = "<bs>",
+                    overjumps = true,
+                    --(|foo) > bs > |foo
                     space = true,
-                    multichar = true,
-                    fallback = nil,
+                    --( |foo ) > bs > (|foo)
                 },
-                cr = {
+                cr = { -- *ultimate-autopair-map-newline-config*
                     enable = true,
-                    autoclose = true,
-                    multichar = {
-                        enable = true,
-                        markdown = { { "```", "```", pair = true, noalpha = true, next = true } },
-                        lua = { { "then", "end" }, { "do", "end" } },
-                    },
-                    addsemi = { "c", "cpp", "rust" },
-                    fallback = nil,
+                    map = "<cr>", --string or table
+                    autoclose = false,
+                    --(| > cr > (\n|\n)
+                    --addsemi={}, --list of filetypes
                 },
-                fastwarp = {
+                space = { -- *ultimate-autopair-map-space-config*
                     enable = true,
+                    map = " ",
+                    cmap = " ",
+                    check_box_ft = { "markdown", "vimwiki" },
+                    --+ [|] > space > + [ ]
+                },
+                fastwarp = { -- *ultimate-autopair-map-fastwarp-config*
+                    enable = true,
+                    enable_normal = true,
+                    enable_reverse = true,
                     hopout = true,
-                    map = "<c-c>",
-                    rmap = "<C-x>",
-                    Wmap = "<C-c>",
-                    cmap = "<c-s>",
-                    rcmap = "<c-x>",
-                    Wcmap = "<c-e>",
+                    --{(|)} > fastwarp > {(}|)
+                    map = "<A-e>",
+                    rmap = "<A-E>",
+                    cmap = "<A-e>",
+                    rcmap = "<A-E>",
                     multiline = true,
-                    fallback = nil,
+                    --(|) > fastwarp > (\n|)
+                    nocursormove = true,
+                    --makes the cursor not move (|)foo > fastwarp > (|foo)
+                    --disables multiline feature
+                    do_nothing_if_fail = true,
+                    --add a module so that if fastwarp fails
+                    --then an `e` will not be inserted
                 },
-                fastend = {
-                    enable = true,
-                    map = "<c-c>",
-                    cmap = "<c-c>",
-                    smart = true,
-                    fallback = nil,
+                extensions = { -- *ultimate-autopair-extensions-default-config*
+                    cmdtype = { types = { "/", "?", "@" }, p = 90 },
+                    filetype = { p = 80, nft = { "TelescopePrompt" } },
+                    escape = { filter = true, p = 70 },
+                    string = { p = 60 },
+                    --treenode={inside={'comment'},p=50},
+                    rules = { p = 40 },
+                    alpha = { p = 30 },
+                    suround = { p = 20 },
+                    fly = { other_char = { " " }, nofilter = false, p = 10 },
+                },
+                internal_pairs = { -- *ultimate-autopair-pairs-default-config*
+                    {
+                        "[",
+                        "]",
+                        fly = true,
+                        dosuround = true,
+                        newline = true,
+                        space = true,
+                        fastwarp = true,
+                        backspace_suround = true,
+                    },
+                    {
+                        "(",
+                        ")",
+                        fly = true,
+                        dosuround = true,
+                        newline = true,
+                        space = true,
+                        fastwarp = true,
+                        backspace_suround = true,
+                    },
+                    {
+                        "{",
+                        "}",
+                        fly = true,
+                        dosuround = true,
+                        newline = true,
+                        space = true,
+                        fastwarp = true,
+                        backspace_suround = true,
+                    },
+                    {
+                        '"',
+                        '"',
+                        suround = true,
+                        rules = { { "when", { "filetype", "vim" }, { "not", { "regex", "^%s*$" } } } },
+                        string = true,
+                    },
+                    {
+                        "'",
+                        "'",
+                        suround = true,
+                        rules = { { "when", { "option", "lisp" }, { "instring" } } },
+                        alpha = true,
+                        nft = { "tex" },
+                        string = true,
+                    },
+                    { "`", "`", nft = { "tex" } },
+                    { "``", "''", ft = { "tex" } },
+                    { "```", "```", newline = true, ft = { "markdown" } },
+                    { "<!--", "-->", ft = { "markdown", "html" } },
+                    { '"""', '"""', newline = true, ft = { "python" } },
+                    { "'''", "'''", newline = true, ft = { "python" } },
+                    { "string", type = "tsnode", string = true },
+                    { "raw_string", type = "tsnode", string = true },
                 },
             },
         })
