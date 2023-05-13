@@ -108,12 +108,19 @@ user({
 user({
     "giusgad/pets.nvim",
     lazy = true,
+    cmd = {
+        "PetsNew",
+        "PetsNewCustom",
+        "PetsList",
+        "PetsKill",
+        "PetsKillAll",
+        "PetsPauseToggle",
+        "PetsHideToggle",
+        "PetsIdleToggle",
+        "PetsSleepToggle",
+    },
     dependencies = { "MunifTanjim/nui.nvim", "giusgad/hologram.nvim" },
-    config = function()
-        require("pets").setup({
-            -- your options here
-        })
-    end,
+    config = true,
 })
 
 -- :NR  - Open the selected region in a new narrowed window
@@ -138,6 +145,9 @@ user({
         vim.g.nrrw_rgn_wdth = 20
         vim.g.nrrw_rgn_rel_min = 50
         vim.g.nrrw_rgn_rel_max = 50
+
+        vim.g.nrrw_rgn_nomap_nr = 1
+        vim.g.nrrw_rgn_nomap_Nr = 1
     end,
 })
 
@@ -311,7 +321,8 @@ user({
 
 user({
     "olimorris/persisted.nvim",
-    lazy = false,
+    lazy = true,
+    cmd = { "Persisted", "PersistedLoad", "PersistedSave", "PersistedDelete", "PersistedList" },
     init = function()
         lambda.command("ListSessions", "Telescope persisted", {})
         lambda.augroup("PersistedEvents", {
@@ -345,4 +356,44 @@ user({
         require("telescope").load_extension("persisted")
         require("persisted").setup(opts)
     end,
+})
+
+-- Need to add these plugins, But, for now  i have these on hold
+-- ○ control-panel.nvim not core
+-- ○ leap-search.nvim core
+-- ○ leap-wide.nvim core  and its dependencies
+
+user({
+    "zakissimo/hook.nvim",
+    lazy = true,
+    keys = {
+        "<A-1>",
+        "<A-2>",
+        "<A-3>",
+        "<A-4>",
+        "<A-5>",
+        "<A-6>",
+        "<A-7>",
+        "<A-8>",
+        "<A-9>",
+    },
+    config = function()
+        require("hook").setup({
+            prefix = "", -- default is ">"
+        })
+        for i = 1, 9 do
+            vim.api.nvim_set_keymap(
+                "n",
+                "<A-" .. i .. ">",
+                "<cmd>lua require('hook').pull(" .. i .. ")<CR>",
+                { noremap = true, silent = true }
+            )
+        end
+    end,
+})
+
+user({
+    "aaron-p1/virt-notes.nvim",
+    keys = { "<leader>v" },
+    config = true,
 })
