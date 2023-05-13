@@ -97,33 +97,6 @@ lang({
 })
 
 lang({
-    "stevearc/resession.nvim",
-    event = "VeryLazy",
-    config = function()
-        local resession = require("resession")
-        resession.setup({
-            autosave = {
-                enabled = true,
-                interval = 60,
-                notify = true,
-            },
-            extensions = {
-                overseer = {},
-            },
-        })
-        vim.keymap.set("n", "<leader>Ss", resession.save)
-        vim.keymap.set("n", "<leader>Sl", resession.load)
-        vim.keymap.set("n", "<leader>Sd", resession.delete)
-
-        vim.api.nvim_create_autocmd("VimLeavePre", {
-            callback = function()
-                resession.save("last")
-            end,
-        })
-    end,
-})
-
-lang({
     "rcarriga/neotest-vim-test",
     cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
     dependencies = { "vim-test/vim-test" },
