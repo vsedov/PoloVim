@@ -1,7 +1,7 @@
 local utils = require("modules.editor.hydra.utils")
 local leader = "<CR>"
 local hydra = require("hydra")
-local bracket = { "<CR>", "<BS>", "W", "w", "t", "a", ";", "c", "<leader>" }
+local bracket = { "<CR>", "<BS>", "W", "G", "t", "a", ";", "c", "<leader>" }
 local input_prompt = "enter the command: cmd >"
 local terminal_prompt = "Enter a terminal Number "
 local default_terminal = "1"
@@ -135,7 +135,7 @@ config.parenth_mode = {
 
         { nowait = true, exit = true, desc = "Quick Menu" },
     },
-    w = {
+    G = {
         function()
             h_conf.goto_harpoon = not h_conf.goto_harpoon
             vim.notify("Goto Harpoon " .. tostring(h_conf.goto_harpoon))
@@ -225,6 +225,12 @@ config.parenth_mode = {
         end,
         { nowait = true, desc = "Zoxide", exit = true },
     },
+    w = {
+        function()
+            require("hook").toggle()
+        end,
+        { nowait = true, desc = "Jump", exit = true },
+    },
 }
 
 local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
@@ -258,7 +264,7 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    num = utils.create_table_normal({}, sorted, 1, { "s", "S" }, bracket)
+    num = utils.create_table_normal({}, sorted, 1, { "w", "s", "S" }, bracket)
     harpoon = utils.create_table_normal({}, sorted, 1, { "z", "n", "N" }, bracket)
 
     core_table = {}
