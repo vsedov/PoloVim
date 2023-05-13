@@ -76,6 +76,7 @@ ai({
 
 ai({
     "james1236/backseat.nvim",
+    event = "VeryLazy", -- "BufRead
     lazy = true,
     cmd = { "Backseat", "BackseatAsk", "BackseatClear", "BackseatClearLine" },
     config = conf.backseat,

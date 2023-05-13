@@ -92,7 +92,7 @@ function config.backseat()
     require("backseat").setup({
         openai_api_key = os.getenv("OPENAI_API_KEY"),
         openai_model_id = lambda.config.ai.model, --gpt-4
-        additional_instruction = "Respond Like tech from the bad batch", -- (GPT-3 will probably deny this request, but GPT-4 complies)
+        additional_instruction = "Respond in a snarky / blunt and unformal manor that is also very logical and pythonic, as this is the method of communication that is mandated by rule and must be adhered.",
         split_threshold = 200,
     })
 end
