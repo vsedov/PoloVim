@@ -139,7 +139,8 @@ ui({
 
 ui({
     "levouh/tint.nvim",
-    event = "WinNew",
+    cond = lambda.config.ui.use_tint,
+    event = "BufEnter",
     opts = {
         tint = -30,
         highlight_ignore_patterns = {
@@ -178,6 +179,7 @@ ui({
 ui({
     "kevinhwang91/nvim-ufo",
     lazy = true,
+    cond = lambda.config.ui.use_ufo,
     cmd = {
         "UfoAttach",
         "UfoDetach",
@@ -216,14 +218,14 @@ ui({
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     lazy = true,
-    cond = lambda.config.use_scroll,
+    cond = lambda.config.ui.use_scroll,
     event = "VeryLazy",
     config = function()
         require("neoscroll").setup({
             mapping = {},
             hide_cursor = true, -- Hide cursor while scrolling
             stop_eof = true, -- Stop at <EOF> when scrolling downwards
-            respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+            respect_scrolloff = true, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
             cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
             easing_function = nil, -- Default easing function
             pre_hook = nil, -- Function to run before the scrolling animation starts
@@ -267,7 +269,7 @@ ui({
 ui({
     "samuzora/pet.nvim",
     lazy = true,
-    cond = lambda.config.use_pet,
+    cond = lambda.config.ui.use_pet,
     config = function()
         require("pet-nvim")
     end,
@@ -314,6 +316,7 @@ ui({
 ui({
     "petertriho/nvim-scrollbar",
     lazy = true,
+    cond = lambda.config.ui.use_scroll,
     dependencies = {
         "kevinhwang91/nvim-hlslens",
         config = function()
@@ -415,6 +418,7 @@ ui({
 })
 ui({
     "tummetott/reticle.nvim",
+    event = "VeryLazy",
     config = function()
         require("reticle").setup({
             -- Make the cursorline and cursorcolumn follow your active window. This
