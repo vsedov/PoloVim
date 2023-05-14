@@ -53,37 +53,33 @@ function config.notify()
     })
 
     local notify = require("notify")
+
     notify.setup({
-        timeout = 1000,
-        stages = "slide",
+        timeout = 5000,
+        stages = "fade_in_slide_out",
         top_down = false,
         background_colour = "NormalFloat",
-
         max_width = function()
-            return math.floor(vim.o.columns * 0.8)
+            return math.floor(vim.o.columns * 0.6)
         end,
         max_height = function()
             return math.floor(vim.o.lines * 0.8)
         end,
+        on_open = function(win)
+            if not api.nvim_win_is_valid(win) then
+                return
+            end
+            vim.api.nvim_win_set_config(win, { border = lambda.style.border.type_0})
+        end,
         render = function(...)
-            local notif = select(2, ...)
-            local style = notif.title[1] == "" and "minimal" or "default"
+            local notification = select(2, ...)
+            local style = lambda.falsy(notification.title[1]) and "minimal" or "default"
             require("notify.render")[style](...)
         end,
     })
-    vim.notify = notify
 
     vim.keymap.set("n", "|+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
     require("telescope").load_extension("notify")
-end
-
-function config.notifier()
-    require("notifier").setup({
-        notify = {
-            clear_time = 10000, -- Time in milisecond before removing a vim.notifiy notification, 0 to make them sticky
-            min_level = vim.log.levels.INFO, -- Minimum log level to print the notification
-        },
-    })
 end
 
 function config.neo_tree()

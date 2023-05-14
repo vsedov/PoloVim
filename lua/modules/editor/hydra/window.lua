@@ -1,5 +1,4 @@
 local Hydra = require("hydra")
-local splits = require("smart-splits")
 
 local function cmd(command)
     return table.concat({ "<Cmd>", command, "<CR>" })
@@ -64,25 +63,25 @@ Hydra({
         {
             "<Left>",
             function()
-                splits.resize_left(2)
+                require("smart-splits").resize_left(2)
             end,
         },
         {
             "<Down>",
             function()
-                splits.resize_down(2)
+                require("smart-splits").resize_down(2)
             end,
         },
         {
             "<Up>",
             function()
-                splits.resize_up(2)
+                require("smart-splits").resize_up(2)
             end,
         },
         {
             "<Right>",
             function()
-                splits.resize_right(2)
+                require("smart-splits").resize_right(2)
             end,
         },
         {

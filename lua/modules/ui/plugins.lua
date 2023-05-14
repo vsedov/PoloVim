@@ -11,7 +11,7 @@ ui({
 
 ui({
     "lukas-reineke/virt-column.nvim",
-    event = "VimEnter",
+    cond = lambda.config.ui.use_virtcol,
     opts = { char = "▕" },
     init = function()
         lambda.augroup("VirtCol", {
@@ -123,9 +123,15 @@ ui({
 ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
+    cond = lambda.config.ui.use_indent_blankline,
     branch = "master",
     event = "VeryLazy",
-    dependencies = { "shell-Raining/hlchunk.nvim", event = { "VeryLazy" }, config = true },
+    dependencies = {
+        "shell-Raining/hlchunk.nvim",
+        cond = lambda.config.ui.use_indent_blankline,
+        event = { "VeryLazy" },
+        config = true,
+    },
     config = conf.blankline,
 })
 

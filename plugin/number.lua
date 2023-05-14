@@ -2,7 +2,7 @@ local api, fn = vim.api, vim.fn
 local ui = lambda.style
 local M = {}
 
-local number_buftype_ignored = { "quickfix" }
+local number_buftype_ignored = { "quickfix", "harpoon" }
 
 local function is_floating_win()
     return fn.win_gettype() == "popup"

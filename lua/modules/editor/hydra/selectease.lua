@@ -1,4 +1,3 @@
-local select_ease = require("SelectEase")
 local utils = require("modules.editor.hydra.utils")
 local hydra = require("hydra")
 local config = {}
@@ -21,19 +20,19 @@ local queries = {
 }
 
 local function select_node(direction, line_only)
-    select_ease.select_node({
+    require("SelectEase").select_node({
         queries = queries,
         direction = direction,
         vertical_drill_jump = not line_only,
         current_line_only = line_only,
         fallback = function()
-            select_ease.select_node({ queries = queries, direction = direction })
+            require("SelectEase").select_node({ queries = queries, direction = direction })
         end,
     })
 end
 
 local function swap_nodes(direction, line_only)
-    select_ease.swap_nodes({
+    require("SelectEase").swap_nodes({
         queries = queries,
         direction = direction,
         vertical_drill_jump = not line_only,
