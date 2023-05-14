@@ -48,9 +48,15 @@ local filerunners = {
             return { "nu", vim.fn.expand("%:p") }
         end,
     },
-    python = {
+    ipython = {
         name = "Python ipython",
         repl = "ipython",
+        filerunner = function()
+            return { "python", vim.fn.expand("%:p") }
+        end,
+    },
+    python = {
+        name = "Python",
         filerunner = function()
             return { "python", vim.fn.expand("%:p") }
         end,
