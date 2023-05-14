@@ -58,20 +58,6 @@ misc({
         })
     end,
 })
--- -- TODO(vsedov) (21:01:02 - 12/08/22): I am not sure if i want to keep this or not
--- -- I have mixed feeling about this as i like using tabs, but this kinda ruins the structure
--- -- every time, so i wonder if there  is a way to avoid this error in the first place
-misc({
-    "notjedi/nvim-rooter.lua",
-    lazy = true,
-    config = function()
-        require("nvim-rooter").setup({
-            rooter_patterns = { ".git", ".hg", ".svn", "pyproject.toml" },
-            trigger_patterns = { "*" },
-            manual = true,
-        })
-    end,
-})
 
 misc({
     "ahmedkhalf/project.nvim",

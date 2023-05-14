@@ -7,15 +7,16 @@ windows({
     cmd = "MaximizerToggle",
 })
 
---  Possible, ONE Can be causing huge LAG, it could be a viability : :think:
 windows({
     "mrjones2014/smart-splits.nvim",
+    lazy = true,
     build = "./kitty/install-kittens.bash",
+    config = true,
 })
 
 windows({
     "tamton-aquib/flirt.nvim",
-    cond = lambda.config.ui.flirt.use_flirt,
+    cond = lambda.config.ui.use_flirt,
     lazy = true,
     event = "BufWinEnter",
     config = function()
