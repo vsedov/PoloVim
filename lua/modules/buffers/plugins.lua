@@ -6,7 +6,6 @@ local conf = require("modules.buffers.config")
 buffer({
     "akinsho/bufferline.nvim",
     lazy = true,
-    cond = lambda.config.buffer.use_bufferline,
     event = "VeryLazy",
     config = conf.nvim_bufferline,
     dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, { "tabscope.nvim" } },
@@ -41,6 +40,7 @@ buffer({
 
 buffer({
     "jlanzarotta/bufexplorer",
+    lazy = true,
     init = function()
         vim.g.bufExplorerDisableDefaultKeyMapping = 1
     end,
@@ -64,7 +64,7 @@ buffer({
 buffer({
     "stevearc/stickybuf.nvim",
     lazy = true,
-    -- event = "BufEnter",
+    event = "BufEnter",
     config = conf.sticky_buf,
 })
 

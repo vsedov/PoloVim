@@ -113,8 +113,6 @@ function config.nvim_bufferline()
             },
         },
     })
-
-    require("modules.editor.hydra.buffer")
 end
 
 function config.reach()
