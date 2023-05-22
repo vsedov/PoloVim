@@ -44,7 +44,7 @@ movement({
 
 movement({
     "atusy/leap-search.nvim",
-    keys = { "\\n", "\\N", "\\/" , "\\s"},
+    keys = { "\\n", "\\N", "\\/", "\\s" },
     dependencies = { "ggandor/leap.nvim", "atusy/leap-wide.nvim" },
     config = function()
         vim.keymap.set("n", "\\n", function()
@@ -54,6 +54,7 @@ movement({
                 return vim.fn.search(pat)
             end
         end, {})
+
         vim.keymap.set("n", "\\N", function()
             local pat = vim.fn.getreg("/")
             local leapable = require("leap-search").leap(pat, {}, { backward = true })
