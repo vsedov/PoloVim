@@ -32,7 +32,7 @@ ai({
 
         vim.keymap.set(
             { "v", "x" },
-            "<leader>w",
+            "<localleader>w",
             ":AI fix grammar and spelling and replace slang and contractions with a formal academic writing style.<CR>",
             {
                 silent = true,
@@ -41,7 +41,7 @@ ai({
 
         vim.keymap.set(
             { "v", "x" },
-            "<leader>aw",
+            "<localleader>aw",
             ":AI fix grammar and spelling and rewrite this how tech would write this from the bad batch the tv show.<CR>",
             {
                 silent = true,
