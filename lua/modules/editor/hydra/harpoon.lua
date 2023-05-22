@@ -1,10 +1,12 @@
+local hydra = require("hydra")
 local utils = require("modules.editor.hydra.utils")
 local leader = "<CR>"
-local hydra = require("hydra")
 local bracket = { "<CR>", "<BS>", "W", "G", "t", "a", ";", "c", "<leader>" }
+
 local input_prompt = "enter the command: cmd >"
 local terminal_prompt = "Enter a terminal Number "
 local default_terminal = "1"
+
 local h_conf = lambda.config.movement.harpoon
 
 local cache = {
@@ -129,8 +131,11 @@ config.parenth_mode = {
 
     ["<CR>"] = {
         function()
-            lambda.clever_tcd()
-            require("harpoon.ui").toggle_quick_menu()
+            -- lambda.clever_tcd()
+
+            vim.defer_fn(function()
+                require("harpoon.ui").toggle_quick_menu()
+            end, 100)
         end,
 
         { nowait = true, exit = true, desc = "Quick Menu" },

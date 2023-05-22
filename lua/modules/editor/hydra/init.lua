@@ -9,7 +9,6 @@ local test_active = false
 local exclude_table = {
     "init",
     "utils",
-    "buffer",
     "parenth_mode",
 }
 
@@ -24,6 +23,6 @@ for _, path in ipairs(path_list) do
     local name = vim.fn.fnamemodify(path, ":t:r")
     local f = "modules.editor.hydra." .. name
     when(not vim.tbl_contains(exclude_table, name), function()
-        require(f)
+        vim.schedule_wrap(require(f))
     end)
 end

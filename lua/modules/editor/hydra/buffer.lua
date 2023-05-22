@@ -12,6 +12,7 @@ local function buffer_move()
         end
     end)
 end
+
 local function tab_move()
     vim.ui.input({ prompt = "Move tab to:" }, function(idx)
         idx = idx and tonumber(idx)
@@ -250,6 +251,7 @@ config.buffer = {
     },
 }
 local function auto_hint_generate()
+    container = {}
     for x, y in pairs(config.buffer) do
         local mapping = x
         if type(y[1]) == "function" then
@@ -298,19 +300,22 @@ local function auto_hint_generate()
     return string_val
 end
 
-val = auto_hint_generate()
-
-local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
-    name = "Buffers",
-    config = {
-        hint = {
-            position = "middle-right",
-            border = lambda.style.border.type_0,
+vim.defer_fn(function()
+    local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
+        name = "Buffers",
+        config = {
+            hint = {
+                position = "middle-right",
+                border = lambda.style.border.type_0,
+            },
+            timeout = false,
+            invoke_on_body = true,
         },
-        timeout = false,
-        invoke_on_body = true,
-    },
-    heads = {},
-})
-new_hydra.hint = val
-Hydra(new_hydra)
+        heads = {},
+        mode = { "n", "v", "x", "o" },
+    })
+
+    val = auto_hint_generate()
+    new_hydra.hint = val
+    Hydra(new_hydra)
+end, 100)
