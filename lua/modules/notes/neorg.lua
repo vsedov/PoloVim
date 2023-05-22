@@ -55,6 +55,7 @@ M.opts = {
                 use_folders = true,
             },
         },
+        ["core.ui.calendar"] = {},
     },
 }
 
