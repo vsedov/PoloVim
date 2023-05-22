@@ -115,7 +115,6 @@ clipsub({ "mbbill/undotree", lazy = true, cmd = { "UndotreeToggle" } })
 
 clipsub({
     "postfen/clipboard-image.nvim",
-    branch = "patch-1",
     cmd = { "PasteImg" },
     lazy = true,
     config = conf.clipboardimage,
