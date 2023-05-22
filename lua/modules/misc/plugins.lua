@@ -61,11 +61,10 @@ misc({
 
 misc({
     "ahmedkhalf/project.nvim",
-    lazy = true,
     config = function()
         require("project_nvim").setup({
             ignore_lsp = { "null-ls" },
-            silent_chdir = true,
+            silent_chdir = false,
             patterns = { ".git", ".hg", ".svn", "pyproject.toml" },
         })
     end,
