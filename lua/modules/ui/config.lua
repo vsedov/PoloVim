@@ -69,7 +69,7 @@ function config.notify()
             if not api.nvim_win_is_valid(win) then
                 return
             end
-            vim.api.nvim_win_set_config(win, { border = lambda.style.border.type_0})
+            vim.api.nvim_win_set_config(win, { border = lambda.style.border.type_0 })
         end,
         render = function(...)
             local notification = select(2, ...)
@@ -77,6 +77,7 @@ function config.notify()
             require("notify.render")[style](...)
         end,
     })
+    vim.notify = notify
 
     vim.keymap.set("n", "|+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
     require("telescope").load_extension("notify")
