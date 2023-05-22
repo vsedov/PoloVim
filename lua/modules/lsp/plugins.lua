@@ -142,28 +142,24 @@ lsp({
 lsp({
     "Davidyz/lsp-location-handler.nvim",
     lazy = true,
-    event = "LspAttach",
     config = true,
 })
 
 lsp({
     "chikko80/error-lens.nvim",
-    event = "LspAttach",
+    lazy = true,
     config = true,
 })
 
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cond = lambda.config.lsp.use_rcd,
-    event = "LspAttach",
     config = conf.rcd,
 }) -- this could be  casing lag, im not sure
 
 lsp({
     "VidocqH/lsp-lens.nvim",
-    event = "LspAttach",
     cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
-
     opts = {
         enable = false,
         include_declaration = false, -- Reference include declaration
@@ -180,6 +176,8 @@ lsp({
 
 lsp({
     "KostkaBrukowa/definition-or-references.nvim",
+    cond = true,
+    lazy = true,
     config = function()
         local make_entry = require("telescope.make_entry")
         local pickers = require("telescope.pickers")
