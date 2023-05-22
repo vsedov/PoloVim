@@ -306,9 +306,9 @@ user({
         -- default settings
         vim.g.spellbound_settings = {
             mappings = {
-                toggle_map = "zS",
-                fix_right = "zp",
-                fix_left = "zn",
+                toggle_map = "<leader>zS",
+                fix_right = "<leader>zp",
+                fix_left = "<leader>zn",
             },
             language = "en_gb",
             autospell_filetypes = { "*.txt", "*.md", "*.rst" },
@@ -321,6 +321,7 @@ user({
 
 user({
     "olimorris/persisted.nvim",
+    cond = false,
     lazy = true,
     cmd = { "Persisted", "PersistedLoad", "PersistedSave", "PersistedDelete", "PersistedList" },
     init = function()
@@ -366,6 +367,7 @@ user({
 user({
     "zakissimo/hook.nvim",
     lazy = true,
+    event = "VeryLazy",
     keys = {
         "<A-1>",
         "<A-2>",
