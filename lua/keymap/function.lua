@@ -32,12 +32,8 @@ local plug_map = {
     end, "Diag show Prev"):with_expr(),
 
     ["n|;R"] = map_cmd(function()
-        if lambda.config.rooter_or_project then
-            return ":RooterToggle<cr>"
-        end
-        --[[ i cannot remember what the command was for this  ]]
-        return ":ProjectRoot<cr>"
-    end, "Diag show Prev"):with_expr(),
+        return ":NeoRoot<cr>"
+    end, "root switch"):with_expr(),
 
     -- ["n|\\\\<leader>"] = map_cmd(function()
     --     return ":NoNeckPain"
