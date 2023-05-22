@@ -8,12 +8,12 @@ local use_ts_yeti = true
 --    │                                                                    │
 --    ╰────────────────────────────────────────────────────────────────────╯
 
-local use_codium_cmp = true
+local use_codium_cmp = false
 local use_codium = true
 
 local use_tabnine = true
 local use_tabnine_cmp = true
-local use_copilot = true
+local use_copilot = false
 
 -- toggle core values within the list
 
@@ -167,7 +167,8 @@ lambda.config.ui = {
     use_scroll = false,
     use_tint = false,
     use_pet = false,
-
+    use_virtcol = true,
+    use_indent_blankline = true,
     noice = {
         enable = noice_enabled,
         lsp = {

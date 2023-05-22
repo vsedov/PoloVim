@@ -5,12 +5,6 @@ local fmt = string.format
 local l = vim.log.levels
 P = vim.pretty_print
 
-lambda.foreach = function(callback, list)
-    for k, v in pairs(list) do
-        callback(v, k)
-    end
-end
-
 lambda.use_local = function(name, path)
     return os.getenv("HOME") .. "/GitHub/neovim/" .. path .. "/" .. name
 end
@@ -152,45 +146,6 @@ lambda.check_version = function(major, minor, patch)
     local version = vim.version()
     return { version.major >= major and version.minor >= minor and patch >= version.patch, version }
 end
-----------------------------------------------------------------------------------------------------
--- Utils
-----------------------------------------------------------------------------------------------------
----@param callback fun(T, key: string | number)
----@param list T[]
-function lambda.foreach(callback, list)
-    for k, v in pairs(list) do
-        callback(v, k)
-    end
-end
-
---- Check if the target matches  any item in the list.
----@param target string
----@param list string[]
----@return boolean
-function lambda.any(target, list)
-    for _, item in ipairs(list) do
-        if target:match(item) then
-            return true
-        end
-    end
-    return false
-end
-
----Find an item in a list
----@generic T
----@param matcher fun(arg: T):boolean
----@param haystack T[]
----@return T
-function lambda.find(matcher, haystack)
-    local found
-    for _, needle in ipairs(haystack) do
-        if matcher(needle) then
-            found = needle
-            break
-        end
-    end
-    return found
-end
 
 --- Autosize horizontal split to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
@@ -209,9 +164,9 @@ lambda.list = { qf = {}, loc = {} }
 ---@param list_type "loclist" | "quickfix"
 ---@return boolean
 local function is_list_open(list_type)
-    return lambda.find(function(win)
+    return vim.iter(fn.getwininfo()):find(function(win)
         return not lambda.falsy(win[list_type])
-    end, fn.getwininfo()) ~= nil
+    end) ~= nil
 end
 
 local silence = { mods = { silent = true, emsg_silent = true } }
@@ -629,15 +584,6 @@ function lambda.has(feature)
     return vim.fn.has(feature) > 0
 end
 
-function lambda.clever_tcd()
-    local root = require("lspconfig").util.root_pattern("Project.toml", ".git")(vim.api.nvim_buf_get_name(0))
-    if root == nil then
-        root = " %:p:h"
-    end
-    vim.cmd("tcd " .. root)
-    vim.cmd("pwd")
-end
-
 ------------------------------------------------------------------------------------------------------------------------
 --  Lazy Requires
 ------------------------------------------------------------------------------------------------------------------------
@@ -703,6 +649,17 @@ function lambda.p_table(map)
             end
         end,
     })
+end
+
+function lambda.clever_tcd()
+    local root = require("lspconfig").util.root_pattern("Project.toml", ".git")(vim.api.nvim_buf_get_name(0))
+    if root == nil then
+        root = " %:p:h"
+    end
+
+    vim.schedule_wrap(function()
+        vim.cmd.tcd(root)
+    end)()
 end
 
 ---Determine if a value of any type is empty

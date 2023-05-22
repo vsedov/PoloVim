@@ -348,7 +348,7 @@ lambda.style.decorations = {}
 
 ---@alias ui.OptionValue (boolean | string)
 
----Get the as.ui setting for a particular filetype
+---Get the lambda.style setting for a particular filetype
 ---@param opts {ft: string?, bt: string?, fname: string?, setting: DecorationType}
 ---@return {ft: ui.OptionValue?, bt: ui.OptionValue?, fname: ui.OptionValue?}
 function lambda.style.decorations.get(opts)
