@@ -119,44 +119,18 @@ vim.defer_fn(function()
     if lambda.config.extra_search.enable and lambda.config.extra_search.providers.use_fzf_lua then
         loader({ plugins = { "fzf-lua" } })
     end
-
-    if lambda.config.rooter_or_project then
-        loader({ plugins = { "nvim-rooter.lua" } })
-    else
-        loader({ plugins = { "project.nvim" } })
-    end
-
-    -- this thing is quite laggy
-    if lambda.config.use_ufo then
-        loader({ plugins = { "nvim-ufo" } })
-    end
-
-    -- if lambda.config.ui.use_illuminate == "illuminate" then
-    --     loader({ plugins = { "vim-illuminate" } })
-    -- elseif lambda.config.ui.use_illuminate == "murmur" then
-    --     loader({ plugins = { "murmur.lua" } })
-    -- end
 end, lazy_timer + 100)
 
 -- Load Leap, after 100, because why not, this is my core movement
 vim.defer_fn(function()
-    if lambda.config.use_scroll then
-        loader({ plugins = { "neoscroll.nvim" } })
-    end
-
     if lambda.config.record_your_self then
         loader({ plugins = { "vim-wakatime" } })
     end
 end, 120)
-
 vim.defer_fn(function()
     if vim.fn.getenv("TMUX") ~= nil then
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
     end
-    loader({ plugins = { "hydra.nvim" } })
-end, 1000)
-
-vim.defer_fn(function()
     loader({ plugins = { "nvim-various-textobjs", "nvim-surround" } })
     require("modules.editor.hydra.parenth_mode")
 end, 2000)

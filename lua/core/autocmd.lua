@@ -185,6 +185,7 @@ lambda.augroup("AddTerminalMappings", {
         end,
     },
 })
+
 lambda.augroup("Utilities", {
     {
         -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
@@ -569,20 +570,21 @@ function mkview()
     end
 end
 
-lambda.augroup("RememberFold", {
-    {
-        event = "BufReadPost",
-        pattern = { "*" },
-        command = function()
-            mkview()
-        end,
-    },
-    {
-        event = "BufEnter",
-        pattern = { "*" },
-        command = function()
-            loadview()
-        end,
-    },
-})
+-- lambda.augroup("RememberFold", {
+--     {
+--         event = "BufReadPost",
+--         pattern = { "*" },
+--         command = function()
+--             mkview()
+--         end,
+--     },
+--     {
+--         event = "BufEnter",
+--         pattern = { "*" },
+--         command = function()
+--             loadview()
+--         end,
+--     },
+-- })
+-- --
 --
