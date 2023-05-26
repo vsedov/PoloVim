@@ -401,3 +401,27 @@ lambda.command("Exrc", function()
         vim.notify(err, "error", { title = "Exrc Opener" })
     end
 end)
+
+lambda.command("Cd", function()
+    vim.cmd([[tcd %:h]])
+end, { force = true })
+
+lambda.command("Bonly", function()
+    vim.cmd([[.+,$bwipeout]])
+end, { force = true })
+
+lambda.command("TodoLocal", function()
+    vim.cmd([[botright silent! lvimgrep /\v\CTODO|FIXME|HACK|DEV/ %]])
+end, { force = true })
+
+lambda.command("Squeeze", function()
+    vim.cmd([[s/\v(\n\n)\n+/\1/e]])
+end, { force = true })
+
+lambda.command("DiffOrig", function()
+    vim.cmd([[vert new | set bt=nofile | r ++edit | wincmd p | diffthis]])
+end, { force = true })
+
+lambda.command("Stylua", function()
+    vim.cmd([[silent! write !stylua --search-parent-directories %]])
+end, { force = true })
