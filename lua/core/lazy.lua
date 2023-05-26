@@ -1,4 +1,5 @@
 local loader = require("lazy").load
+
 local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
 if fsize == nil or fsize < 0 then
     fsize = 1
@@ -12,6 +13,7 @@ if fsize > 1024 * 1024 then
     load_lsp = false
 end
 local function load_colourscheme()
+    require("utils.ui.highlights")
     math.randomseed(os.clock() * 100000000000)
     local theme = lambda.config.colourscheme.themes.dark.core_themes
 
