@@ -38,3 +38,9 @@ latex({
         require("luasnip-latex-snippets").setup({ use_treesitter = true })
     end,
 })
+
+latex({
+    "barreiroleo/ltex-extra.nvim",
+    lazy = true,
+    ft = { "latex", "tex" },
+})
