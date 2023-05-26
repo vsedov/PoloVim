@@ -136,16 +136,12 @@ user({
 user({
     "chrisbra/NrrwRgn",
     lazy = true,
-    event = "VeryLazy",
     init = function()
         vim.g.nrrw_rgn_vert = 1
-        -- Set the size (absolute=rows or cols, relative=percentage)
         vim.g.nrrw_rgn_resize_window = "relative"
-        -- Set the new buffer size
         vim.g.nrrw_rgn_wdth = 20
         vim.g.nrrw_rgn_rel_min = 50
         vim.g.nrrw_rgn_rel_max = 50
-
         vim.g.nrrw_rgn_nomap_nr = 1
         vim.g.nrrw_rgn_nomap_Nr = 1
     end,
@@ -160,15 +156,6 @@ user({
         vim.keymap.set("n", "\\u", "<Cmd>UrlView<CR>", { desc = "view buffer URLs" })
         vim.keymap.set("n", "\\U", "<Cmd>UrlView lazy<CR>", { desc = "view plugin URLs" })
     end,
-})
-
-user({
-    "mikesmithgh/render.nvim",
-    cmd = { "Render", "RenderClean", "RenderQuickfix" },
-    lazy = true,
-    cond = true,
-    enable = true,
-    config = true,
 })
 
 user({
@@ -306,9 +293,9 @@ user({
         -- default settings
         vim.g.spellbound_settings = {
             mappings = {
-                toggle_map = "<leader>zS",
-                fix_right = "<leader>zp",
-                fix_left = "<leader>zn",
+                toggle_map = "\\zS",
+                fix_right = "\\zp",
+                fix_left = "\\zn",
             },
             language = "en_gb",
             autospell_filetypes = { "*.txt", "*.md", "*.rst" },
@@ -321,9 +308,8 @@ user({
 
 user({
     "olimorris/persisted.nvim",
-    cond = false,
-    lazy = true,
-    cmd = { "Persisted", "PersistedLoad", "PersistedSave", "PersistedDelete", "PersistedList" },
+    cond = lambda.config.tools.use_session,
+    event = "VeryLazy",
     init = function()
         lambda.command("ListSessions", "Telescope persisted", {})
         lambda.augroup("PersistedEvents", {
@@ -354,8 +340,8 @@ user({
         ignored_dirs = { vim.fn.stdpath("data") },
     },
     config = function(_, opts)
-        require("telescope").load_extension("persisted")
         require("persisted").setup(opts)
+        require("telescope").load_extension("persisted")
     end,
 })
 
@@ -398,4 +384,74 @@ user({
     "aaron-p1/virt-notes.nvim",
     keys = { "<leader>v" },
     config = true,
+})
+
+user({
+    "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
+    event = "VeryLazy",
+    opts = { hide_cursor = true, mappings = { "<C-d>", "<C-u>", "zt", "zz", "zb" } },
+})
+
+user({ "tweekmonster/helpful.vim", cmd = "HelpfulVersion", ft = "help" })
+
+user({
+    "linty-org/readline.nvim",
+    keys = {
+        {
+            "<M-f>",
+            function()
+                require("readline").forward_word()
+            end,
+            mode = "!",
+        },
+        {
+            "<M-b>",
+            function()
+                require("readline").backward_word()
+            end,
+            mode = "!",
+        },
+        {
+            "<C-a>",
+            function()
+                require("readline").beginning_of_line()
+            end,
+            mode = "!",
+        },
+        {
+            "<C-e>",
+            function()
+                require("readline").end_of_line()
+            end,
+            mode = "!",
+        },
+        {
+            "<M-d>",
+            function()
+                require("readline").kill_word()
+            end,
+            mode = "!",
+        },
+        {
+            "<M-BS>",
+            function()
+                require("readline").backward_kill_word()
+            end,
+            mode = "!",
+        },
+        {
+            "<C-w>",
+            function()
+                require("readline").unix_word_rubout()
+            end,
+            mode = "!",
+        },
+        {
+            "<C-u>",
+            function()
+                require("readline").backward_kill_line()
+            end,
+            mode = "!",
+        },
+    },
 })
