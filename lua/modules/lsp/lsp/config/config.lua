@@ -161,7 +161,7 @@ local container = {
             },
             ["K"] = {
                 function()
-                    if lambda.config.lsp.use_ruff_lsp then
+                    if not lambda.config.lsp.use_hover then
                         vim.cmd([[Lspsaga hover_doc]])
                     else
                         require("hover").hover()

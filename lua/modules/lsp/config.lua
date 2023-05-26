@@ -72,7 +72,7 @@ function config.saga()
             },
         },
         symbol_in_winbar = {
-            enable = true,
+            enable = false,
             separator = " ",
             hide_keyword = true,
             show_file = true,
@@ -205,13 +205,6 @@ function config.lsp_lines()
             vim.diagnostic.config({ virtual_lines = false })
         end
     end, { force = true })
-end
-
-function config.rename()
-    require("inc_rename").setup({
-        input_buffer_type = "dressing",
-        hl_group = "Visual",
-    })
 end
 
 function config.navic()
