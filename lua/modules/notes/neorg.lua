@@ -56,6 +56,8 @@ M.opts = {
             },
         },
         ["core.ui.calendar"] = {},
+        ["core.summary"] = {},
+        ["core.manoeuvre"] = {},
     },
 }
 
