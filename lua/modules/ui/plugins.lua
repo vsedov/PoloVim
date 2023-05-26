@@ -22,6 +22,7 @@ ui({
         })
     end,
 })
+
 ui({
     "stevearc/dressing.nvim",
     event = "VeryLazy",
@@ -74,7 +75,6 @@ ui({
 
 ui({
     "rcarriga/nvim-notify",
-    lazy = true,
     config = conf.notify,
 })
 
@@ -86,26 +86,28 @@ ui({
 })
 ui({
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "main",
+    event = "VeryLazy",
+    branch = "v2.x",
     dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
         "MunifTanjim/nui.nvim",
         {
-            -- only needed if you want to use the "open_window_picker" command
+            -- only needed if you want to use the commands with "_with_window_picker" suffix
             "s1n7ax/nvim-window-picker",
-            lazy = true,
             config = function()
                 require("window-picker").setup({
                     autoselect_one = true,
-                    include_current = true,
+                    include_current = false,
                     filter_rules = {
                         -- filter using buffer options
                         bo = {
                             -- if the file type is one of following, the window will be ignored
-                            filetype = { "neo-tree", "neo-tree-popup", "notify", "quickfix" },
-                            buftype = { "terminal", "quickfix", "nofile" },
+                            filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                            buftype = { "terminal", "quickfix" },
                         },
                     },
-                    other_win_hl_color = lambda.highlight.get("Visual", "bg"),
+                    other_win_hl_color = "#e35e4f",
                 })
             end,
         },
@@ -118,12 +120,11 @@ ui({
 ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
-    cond = lambda.config.ui.use_indent_blankline,
-    branch = "master",
+    cond = lambda.config.ui.indent_blankline.use_indent_blankline,
     event = "VeryLazy",
     dependencies = {
         "shell-Raining/hlchunk.nvim",
-        cond = lambda.config.ui.use_indent_blankline,
+        cond = lambda.config.ui.indent_blankline.use_hlchunk,
         event = { "VeryLazy" },
         config = true,
     },
@@ -223,6 +224,38 @@ ui({
     keys = { "z;", "z'" },
     cmd = { "Foldcus", "Unfoldcus" },
     config = conf.fold_focus,
+})
+
+ui({
+    "jghauser/fold-cycle.nvim",
+    config = true,
+    keys = {
+        {
+            "<BS>",
+            function()
+                require("fold-cycle").open()
+            end,
+            desc = "fold-cycle: toggle",
+        },
+    },
+})
+ui({
+    "rainbowhxch/beacon.nvim",
+    event = "VeryLazy",
+    opts = {
+        minimal_jump = 20,
+        ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
+        ignore_filetypes = {
+            "harpoon",
+            "qf",
+            "dap_watches",
+            "dap_scopes",
+            "neo-tree",
+            "NeogitCommitMessage",
+            "NeogitPopup",
+            "NeogitStatus",
+        },
+    },
 })
 
 ui({
@@ -465,5 +498,3 @@ ui({
     cmd = "NerdIcons",
     config = true,
 })
---
---

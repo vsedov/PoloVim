@@ -400,13 +400,6 @@ end
 
 function config.blankline()
     vim.opt.termguicolors = true
-    vim.opt.list = true
-
-    -- test this for now, not sure if i like this or not .
-    -- vim.opt.listchars:append("space:⋅")
-    -- vim.opt.listchars:append("eol:↴")
-    -- vim.opt.listchars:append("space:⋅")
-    -- vim.opt.listchars:append("eol:↴")
     require("indent_blankline").setup({
         enabled = true,
         -- char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
@@ -421,6 +414,7 @@ function config.blankline()
         show_current_context_start_on_current_line = true,
         show_first_indent_level = false,
         filetype_exclude = {
+            "norg",
             "dbout",
             "neo-tree-popup",
             "dap-repl",
@@ -446,7 +440,7 @@ function config.blankline()
             "orgagenda",
             "oil_preview", -- for all buffers without a file type
         },
-        buftype_exclude = { "terminal", "nofile", "dashboard" },
+        buftype_exclude = { "terminal", "nofile", "dashboard", "norg" },
         context_patterns = {
             "class",
             "function",
@@ -461,9 +455,6 @@ function config.blankline()
             "for",
         },
     })
-    -- useing treesitter instead of char highlight
-    -- vim.g.indent_blankline_char_highlight_list =
-    -- {"WarningMsg", "Identifier", "Delimiter", "Type", "String", "Boolean"}
 end
 
 function config.transparent()
