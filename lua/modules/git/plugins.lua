@@ -84,7 +84,7 @@ git({
         "GitConflictListQf",
     },
     lazy = true,
-    config = conf.git_conflict,
+    opts = { disable_diagnostics = true },
 })
 
 -- --[[ My work flow requires me to use both neogit and fugative, so what i think  ]]
@@ -146,3 +146,5 @@ git({
     },
     config = true,
 })
+-- Diff arbitrary blocks of text with each other
+git({ "AndrewRadev/linediff.vim", cmd = "Linediff" })
