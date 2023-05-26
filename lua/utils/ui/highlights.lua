@@ -96,58 +96,48 @@ local function general_overrides()
         { URL = { inherit = "Keyword", underline = true } },
         { ErrorMsg = { bg = "NONE" } },
         { UnderlinedTitle = { bold = true, underline = true } },
-        ---------------------------------------------------------------------------//
-        -- Commandline
-        -----------------------------------------------------------------------------//
-        { MsgArea = { bg = { from = "Normal", alter = -0.1 } } },
-        { MsgSeparator = { link = "MsgArea" } },
 
+        -----------------------------------------------------------------------------//
+        -- Native
+        -----------------------------------------------------------------------------//
+        { VertSplit = { fg = { from = "Comment" } } },
+        { WinSeparator = { fg = { from = "Comment" } } },
+        { CursorLineNr = { bg = "NONE" } },
+        { iCursor = { bg = P.dark_blue } },
+        --------------------------------------------//
+        -- Floats
+        ---------------------------------------------//
+        { NormalFloat = { bg = { from = "Normal", alter = -0.15 } } },
+        { FloatBorder = { bg = { from = "NormalFloat" }, fg = { from = "Comment" } } },
+        { FloatTitle = { bold = true, fg = "white", bg = { from = "FloatBorder", attr = "fg" } } },
+        ---------------------------------------------//
+        -- Popup menu
+        ---------------------------------------------//
+        { Pmenu = { bg = { from = "Normal", alter = -0.15 } } },
+        -----------------------------------------------------------------------------//
+        -- Created highlights
+        -----------------------------------------------------------------------------//
+        { Dim = { fg = { from = "Normal", attr = "bg", alter = 0.25 } } },
+        { PickerBorder = { fg = P.grey, bg = "bg" } },
+        { UnderlinedTitle = { bold = true, underline = true } },
+        { StatusColSep = { link = "LineNr" } },
         -----------------------------------------------------------------------------//
         { CodeBlock = { bg = { from = "Normal", alter = 0.3 } } },
         { markdownCode = { link = "CodeBlock" } },
         { markdownCodeBlock = { link = "CodeBlock" } },
-        { CursorLineNr = { bold = true } },
-        { iCursor = { bg = P.dark_blue } },
-        { PmenuSbar = { bg = P.grey } },
-        { PmenuThumb = { bg = { from = "Comment", attr = "fg" } } },
-        { Pmenu = { bg = normal_bg } },
-
-        { NormalFloat = { inherit = "Pmenu" } },
-        -- todo fix this
-
-        {
-            FloatBorder = {
-                bg = normal_bg,
-                fg = P.grey,
-            },
-        },
-
-        -- { FloatBorder = { bg = { from = 'Normal', alter = -15 }, fg = { from = 'Comment' } } },
-        -- {NormalFloat = { inherit = "Pmenu" }},
-        -- {FloatBorder = { inherit = "NormalFloat",fg= { from = "NonText" }}},
-
-        -- {CodeBlock = {bg= code_block }},
-        -- {markdownCode = {bg= code_block }},
-        -- {markdownCodeBlock = {bg= code_block }},
-        -- -----------------------------------------------------------------------------//
-        { FoldColumn = { bg = "bg" } },
-        {
-            Folded = {
-                inherit = "Comment",
-                italic = true,
-                bold = true,
-                fg = P.springViolet1,
-                bg = P.sumiInk2,
-            },
-        },
-
-        -- -----------------------------------------------------------------------------//
-        -- -- Diff
         -----------------------------------------------------------------------------//
-        --[[ { DiffAdd = {bg= "#26332c",fg= "NONE", underline = false } }, ]]
-        --[[ { DiffDelete = {bg= "#572E33",fg= "#5c6370", underline = false } }, ]]
-        --[[ { DiffChange = {bg= "#273842",fg= "NONE", underline = false } }, ]]
-        --[[ { DiffText = {bg= "#314753",fg= "NONE" } }, ]]
+        --  Spell
+        -----------------------------------------------------------------------------//
+        { SpellBad = { undercurl = true, bg = "NONE", fg = "NONE", sp = "green" } },
+        { SpellRare = { undercurl = true } },
+        -----------------------------------------------------------------------------//
+        -- Diff
+        -----------------------------------------------------------------------------//
+        -- { DiffAdd = { bg = '#26332c', fg = 'NONE', underline = false } },
+        -- { DiffDelete = { bg = '#572E33', fg = '#5c6370', underline = false } },
+        -- { DiffChange = { bg = '#273842', fg = 'NONE', underline = false } },
+        -- { DiffText = { bg = '#314753', fg = 'NONE' } },
+        -- these highlights are syntax groups that are set in diff.vim
         { diffAdded = { link = "DiffAdd" } },
         { diffChanged = { link = "DiffChange" } },
         { diffRemoved = { link = "DiffDelete" } },
@@ -163,24 +153,14 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         -- colorscheme overrides
         -----------------------------------------------------------------------------//
-        { Comment = { italic = true } },
         { Type = { italic = true, bold = true } },
         { Include = { italic = true, bold = false } },
         { QuickFixLine = { inherit = "PmenuSbar", fg = "NONE", italic = true } },
-        -- -- Neither the sign column or end of buffer highlights require an explicit background
-        -- -- they should both just use thebgthat is in the window they are in.
-        -- -- if either are specified this can lead to issues when a winhighlight is set
-        -- { SignColumn = {bg= "NONE" } },
-        -- { EndOfBuffer = {bg= "NONE" } },
-        -- -----------------------------------------------------------------------------//
-        -- -- Treesitter
-        -- ---------------------------------------------------------------------------//
-        -- { TSVariable = {fg= { from = "Normal" } } },
-        -- { TSNamespace = {fg= P.blue } },
-        ------------------------------------------------------------------------------//
-        --  Semantic tokens
-        ------------------------------------------------------------------------------//
-
+        -- Neither the sign column or end of buffer highlights require an explicit bg
+        -- they should both just use the bg that is in the window they are in.
+        -- if either are specified this can lead to issues when a winhighlight is set
+        { SignColumn = { bg = "NONE" } },
+        { EndOfBuffer = { bg = "NONE" } },
         ------------------------------------------------------------------------------//
         --  Semantic tokens
         ------------------------------------------------------------------------------//
@@ -208,145 +188,26 @@ local function general_overrides()
         { ["@text.diff.delete"] = { link = "DiffDelete" } },
         { ["@text.title.markdown"] = { underdouble = true } },
         -----------------------------------------------------------------------------//
-
-        { TSNamespace = { bold = true } },
-        { TSVariable = { bold = true } },
-        { TSStorageClass = { bold = true } },
-        { TSNamespace = { bold = true } },
-
-        -- { ["@text.diff.add"] = { link = "DiffAdd" } },
-        -- { ["@text.diff.delete"] = { link = "DiffDelete" } },
-
-        -- { Comment = { italic = true } },
-        -- { Type = { italic = true, bold = true } },
-        -- { Include = { italic = true, bold = false } },
-        -- { QuickFixLine = { inherit = "PmenuSbar",fg= "NONE", italic = true } },
-        -- -- Neither the sign column or end of buffer highlights require an explicit background
-        -- -- they should both just use thebgthat is in the window they are in.
-        -- -- if either are specified this can lead to issues when a winhighlight is set
-        -- { SignColumn = {bg= "NONE" } },
-        -- { EndOfBuffer = {bg= "NONE" } },
+        -- LSP
         -----------------------------------------------------------------------------//
-        -- Treesitter
-        -----------------------------------------------------------------------------//
-        -- { ["@keyword.return"] = { italic = true,fg= { from = "Keyword" } } },
-        -- { ["@parameter"] = { italic = true, bold = true,fg= "NONE" } },
-        -- { ["@error"] = {fg= "fg",bg= "NONE" } },
-        -- /{ TSError = { undercurl = true, sp = "DarkRed",fg= "NONE" } },
-        -- -- FIXME: this should be removed once
-        -- -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
-        -- { yamlTSError = { link = "None" } },
-
-        -- -- highlight FIXME comments
-        { commentTSWarning = { bg = P.springBlue, fg = "bg", bold = true } },
-        { commentTSDanger = { bg = L.hint, fg = "bg", bold = true } },
-        { commentTSNote = { bg = P.green, fg = "bg", bold = true } },
-        { CommentTasksTodo = { link = "commentTSWarning" } },
-        { CommentTasksFixme = { link = "commentTSDanger" } },
-        { CommentTasksNote = { link = "commentTSNote" } },
-
-        -- -----------------------------------------------------------------------------//
-        -- -- LSP
-        -- -----------------------------------------------------------------------------//
-
         { LspCodeLens = { inherit = "Comment", bold = true, italic = false } },
         { LspCodeLensSeparator = { bold = false, italic = false } },
-        {
-            LspReferenceText = { underdotted = true, bg = "NONE", sp = { from = "Comment", attr = "fg" } },
-        },
-        {
-            LspReferenceRead = { underdotted = true, bg = "NONE", sp = { from = "Comment", attr = "fg" } },
-        },
-        -- This represents when a reference is assigned which is more interesting than regular
-        -- occurrences so should be highlighted more distinctly
-        {
-            LspReferenceWrite = {
-                bold = true,
-                italic = true,
-                bg = "NONE",
-                underline = true,
-                sp = { from = "Comment", attr = "fg" },
-            },
-        },
-
-        -- Base colours
-        { DiagnosticHint = { fg = L.hint } },
-        { DiagnosticError = { fg = L.error } },
-        { DiagnosticWarning = { fg = L.warn } },
-        { DiagnosticInfo = { fg = L.info } },
-        -- Underline
-        { DiagnosticUnderlineError = { undercurl = true, sp = L.error, fg = "none" } },
-        { DiagnosticUnderlineHint = { undercurl = true, sp = L.hint, fg = "none" } },
-        { DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, fg = "none" } },
-        { DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, fg = "none" } },
-        -- Virtual Text
-        { DiagnosticVirtualTextInfo = { bg = { from = "DiagnosticInfo", attr = "fg", alter = -0.7 } } },
-        { DiagnosticVirtualTextHint = { bg = { from = "DiagnosticHint", attr = "fg", alter = -0.7 } } },
-        { DiagnosticVirtualTextWarn = { bg = { from = "DiagnosticWarn", attr = "fg", alter = -0.8 } } },
-        {
-            DiagnosticVirtualTextError = { bg = { from = "DiagnosticError", attr = "fg", alter = -0.8 } },
-        },
+        { LspReferenceText = { bg = "NONE", underline = true, sp = { from = "Comment", attr = "fg" } } },
+        { LspReferenceRead = { link = "LspReferenceText" } },
+        { LspReferenceWrite = { inherit = "LspReferenceText", bold = true, italic = true, underline = true } },
+        { LspSignatureActiveParameter = { link = "Visual" } },
         -- Sign column line
         { DiagnosticSignInfoLine = { inherit = "DiagnosticVirtualTextInfo", fg = "NONE" } },
         { DiagnosticSignHintLine = { inherit = "DiagnosticVirtualTextHint", fg = "NONE" } },
         { DiagnosticSignErrorLine = { inherit = "DiagnosticVirtualTextError", fg = "NONE" } },
         { DiagnosticSignWarnLine = { inherit = "DiagnosticVirtualTextWarn", fg = "NONE" } },
-        -- Sign column signs
-        { DiagnosticSignInfo = { fg = { from = "DiagnosticInfo" } } },
-        { DiagnosticSignHint = { fg = { from = "DiagnosticHint" } } },
-        {
-            DiagnosticSignWarn = {
-                bg = { from = "DiagnosticVirtualTextWarn" },
-                fg = { from = "DiagnosticWarn" },
-            },
-        },
-        {
-            DiagnosticSignError = {
-                bg = { from = "DiagnosticVirtualTextError" },
-                fg = { from = "DiagnosticError" },
-            },
-        },
-        -- Sign column line number
-        { DiagnosticSignWarnNr = { link = "DiagnosticSignWarn" } },
-        { DiagnosticSignInfoNr = { link = "DiagnosticSignInfo" } },
-        { DiagnosticSignHintNr = { link = "DiagnosticSignHint" } },
-        { DiagnosticSignErrorNr = { link = "DiagnosticSignError" } },
-        -- Sign column cursor line number
-        { DiagnosticSignWarnCursorNr = { inherit = "DiagnosticSignWarn", bold = true } },
-        { DiagnosticSignInfoCursorNr = { inherit = "DiagnosticSignInfo", bold = true } },
-        { DiagnosticSignHintCursorNr = { inherit = "DiagnosticSignHint", bold = true } },
-        { DiagnosticSignErrorCursorNr = { inherit = "DiagnosticSignError", bold = true } },
         -- Floating windows
         { DiagnosticFloatingWarn = { link = "DiagnosticWarn" } },
         { DiagnosticFloatingInfo = { link = "DiagnosticInfo" } },
         { DiagnosticFloatingHint = { link = "DiagnosticHint" } },
         { DiagnosticFloatingError = { link = "DiagnosticError" } },
-
-        -- Temp Highlight change
-        {
-            Cursor = {
-                bg = { from = "black" },
-                fg = { from = "DiagnosticError" },
-            },
-        },
-
-        -- Sign column line number
-        { DiagnosticSignWarnNr = { link = "DiagnosticSignWarn" } },
-        { DiagnosticSignInfoNr = { link = "DiagnosticSignInfo" } },
-        { DiagnosticSignHintNr = { link = "DiagnosticSignHint" } },
-        { DiagnosticSignErrorNr = { link = "DiagnosticSignError" } },
-        -- Sign column cursor line number
-        { DiagnosticSignWarnCursorNr = { inherit = "DiagnosticSignWarn", bold = true } },
-        { DiagnosticSignInfoCursorNr = { inherit = "DiagnosticSignInfo", bold = true } },
-        { DiagnosticSignHintCursorNr = { inherit = "DiagnosticSignHint", bold = true } },
-        { DiagnosticSignErrorCursorNr = { inherit = "DiagnosticSignError", bold = true } },
-        -- Floating windows
-        { DiagnosticFloatingWarn = { link = "DiagnosticWarn" } },
-        { DiagnosticFloatingInfo = { link = "DiagnosticInfo" } },
-        { DiagnosticFloatingHint = { link = "DiagnosticHint" } },
-        { DiagnosticFloatingError = { link = "DiagnosticError" } },
-
-        { PanelDarkBackground = { bg = { from = "Normal", alter = -0.43 } } },
+        { DiagnosticFloatTitle = { inherit = "FloatTitle", bold = true } },
+        { DiagnosticFloatTitleIcon = { inherit = "FloatTitle", fg = { from = "@character" } } },
     })
 end
 
@@ -465,6 +326,7 @@ local function colorscheme_overrides()
 end
 
 function user_highlights()
+    vim.notify("Colourscheme is being set ")
     general_overrides()
     set_sidebar_highlight()
     colorscheme_overrides()
