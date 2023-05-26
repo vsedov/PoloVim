@@ -255,7 +255,7 @@ tools({
 tools({
     "kevinhwang91/nvim-fundo",
     event = "BufReadPre",
-    cond = false, -- messes with some buffers which is really not that amazing | will have to see if there is a better fix for this
+    cond = lambda.config.tools.use_fundo, -- messes with some buffers which is really not that amazing | will have to see if there is a better fix for this
     cmd = { "FundoDisable", "FundoEnable" },
     dependencies = "kevinhwang91/promise-async",
     build = function()
@@ -279,11 +279,6 @@ tools({
     "chomosuke/term-edit.nvim",
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim
     ft = { "toggleterm", "terminal" },
-})
-tools({
-    "subnut/nvim-ghost.nvim",
-    cmd = { "GhostTextStart", "GhostTextStop" },
-    config = conf.ghost,
 })
 
 tools({
