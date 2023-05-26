@@ -152,3 +152,16 @@ search({
     build = "bash ./install --bin",
     config = conf.fzf,
 })
+
+search({
+    "AckslD/muren.nvim",
+    lazy = true,
+    cmd = {
+        "MurenToggle",
+        "MurenOpen",
+        "MurenClose",
+        "MurenFresh",
+        "MurenUnique",
+    },
+    config = true,
+})
