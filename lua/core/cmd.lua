@@ -1,4 +1,5 @@
 local api, fn, fs = vim.api, vim.fn, vim.fs
+local uv = vim.loop
 local fmt = string.format
 
 -----------------------------------------------------------------------------//
@@ -125,8 +126,6 @@ end, {
     force = true,
     nargs = "*",
 })
-lambda.command("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|PERF/", {})
-lambda.command("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|PERF/ *<CR>", {})
 vim.cmd([[command! -nargs=+ F execute 'silent grep!' <q-args> | cw | redraw!]])
 
 lambda.command("CursorNodes", function()
@@ -410,10 +409,6 @@ lambda.command("Bonly", function()
     vim.cmd([[.+,$bwipeout]])
 end, { force = true })
 
-lambda.command("TodoLocal", function()
-    vim.cmd([[botright silent! lvimgrep /\v\CTODO|FIXME|HACK|DEV/ %]])
-end, { force = true })
-
 lambda.command("Squeeze", function()
     vim.cmd([[s/\v(\n\n)\n+/\1/e]])
 end, { force = true })
@@ -425,3 +420,6 @@ end, { force = true })
 lambda.command("Stylua", function()
     vim.cmd([[silent! write !stylua --search-parent-directories %]])
 end, { force = true })
+
+lambda.command("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|PERF/", {})
+lambda.command("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|PERF/ *<CR>", {})
