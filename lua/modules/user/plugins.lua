@@ -1,23 +1,6 @@
 local user = require("core.pack").package
 
 user({
-    "p00f/cphelper.nvim",
-    cmd = {
-        "CphReceive",
-        "CphTest",
-        "CphReTest",
-        "CphEdit",
-        "CphDelete",
-    },
-
-    lazy = true,
-    config = function()
-        vim.g["cph#lang"] = "python"
-        vim.g["cph#border"] = lambda.style.border.type_0
-    end,
-})
-
-user({
     "jackMort/pommodoro-clock.nvim",
     lazy = true,
     dependencies = {
@@ -349,50 +332,6 @@ user({
 -- ○ control-panel.nvim not core
 -- ○ leap-search.nvim core
 -- ○ leap-wide.nvim core  and its dependencies
-
-user({
-    "zakissimo/hook.nvim",
-    lazy = true,
-    event = "VeryLazy",
-    keys = {
-        "<A-1>",
-        "<A-2>",
-        "<A-3>",
-        "<A-4>",
-        "<A-5>",
-        "<A-6>",
-        "<A-7>",
-        "<A-8>",
-        "<A-9>",
-    },
-    config = function()
-        require("hook").setup({
-            prefix = "", -- default is ">"
-        })
-        for i = 1, 9 do
-            vim.api.nvim_set_keymap(
-                "n",
-                "<A-" .. i .. ">",
-                "<cmd>lua require('hook').pull(" .. i .. ")<CR>",
-                { noremap = true, silent = true }
-            )
-        end
-    end,
-})
-
-user({
-    "aaron-p1/virt-notes.nvim",
-    keys = { "<leader>v" },
-    config = true,
-})
-
-user({
-    "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    event = "VeryLazy",
-    opts = { hide_cursor = true, mappings = { "<C-d>", "<C-u>", "zt", "zz", "zb" } },
-})
-
-user({ "tweekmonster/helpful.vim", cmd = "HelpfulVersion", ft = "help" })
 
 user({
     "linty-org/readline.nvim",
