@@ -112,3 +112,5 @@ misc({
     keys = { "zz" },
     config = conf.noneck,
 })
+
+misc({ "tweekmonster/helpful.vim", cmd = "HelpfulVersion", ft = "help" })
