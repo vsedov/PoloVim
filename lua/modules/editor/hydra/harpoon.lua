@@ -238,19 +238,6 @@ config.parenth_mode = {
     },
 }
 
-local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
-    name = "Harpoon",
-    config = {
-        hint = {
-            position = "middle-right",
-            border = lambda.style.border.type_0,
-        },
-        timeout = false,
-        invoke_on_body = true,
-    },
-    heads = {},
-})
-
 local function auto_hint_generate()
     container = {}
     for x, y in pairs(config.parenth_mode) do
@@ -296,6 +283,21 @@ local function auto_hint_generate()
     return string_val
 end
 
-val = auto_hint_generate()
-new_hydra.hint = val
-hydra(new_hydra)
+vim.defer_fn(function()
+    local new_hydra = require("modules.editor.hydra.utils").new_hydra(config, {
+        name = "Harpoon",
+        config = {
+            hint = {
+                position = "middle-right",
+                border = lambda.style.border.type_0,
+            },
+            timeout = false,
+            invoke_on_body = true,
+        },
+        heads = {},
+        mode = { "n", "v", "x", "o" },
+    })
+    val = auto_hint_generate()
+    new_hydra.hint = val
+    hydra(new_hydra)
+end, 100)

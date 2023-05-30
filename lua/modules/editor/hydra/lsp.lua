@@ -1,4 +1,5 @@
 local leader = ";l"
+
 local hydra = require("hydra")
 
 local bracket = { "J", "K", "w" }

@@ -153,14 +153,14 @@ config.parenth_mode = {
     },
 
     -----------------------------------------------------------
-    Xo = {
+    O = {
         function()
             require("spectre").open()
         end,
 
         { nowait = true, desc = "Spectre Open", exit = true },
     },
-    Xv = {
+    V = {
         function()
             if vim.fn.mode() == "v" then
                 require("spectre").open_visual({ select_word = true })
@@ -171,7 +171,7 @@ config.parenth_mode = {
 
         { nowait = true, desc = "Specre Word", exit = true },
     },
-    Xc = {
+    X = {
         function()
             if vim.fn.mode() == "v" then
                 require("spectre").open_visual({ select_word = true })
@@ -182,7 +182,8 @@ config.parenth_mode = {
 
         { nowait = true, desc = "Spectre V", exit = true },
     },
-    Xf = {
+
+    F = {
         function()
             require("spectre").open_file_search()
         end,
@@ -269,21 +270,23 @@ local function auto_hint_generate()
     end
     table.sort(sorted)
 
-    core = create_table_normal({}, sorted, 2, nil)
+    core = create_table_normal({}, sorted, 1, { "O", "V", "X", "F" })
     sub = create_table_normal({}, sorted, 1, { "Q", "q", "C" })
     range = create_table_normal({}, sorted, 1, { "k", "K", "a" })
     eol = create_table_normal({}, sorted, 1, { "L", "l", "o" })
+    -- muren = create_table_normal({}, sorted, 1, {})
 
     core_table = {}
 
     make_core_table(core_table, bracket)
+    -- make_core_table(core_table, muren)
     make_core_table(core_table, range)
     make_core_table(core_table, eol)
     make_core_table(core_table, sub)
     make_core_table(core_table, core)
 
     hint_table = {}
-    string_val = "^ ^      SAD      ^ ^\n\n"
+    string_val = "^ ^SAD ^ ^\n\n"
     string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
 
     for _, v in pairs(core_table) do

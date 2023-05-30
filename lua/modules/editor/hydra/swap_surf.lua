@@ -238,7 +238,7 @@ local function auto_hint_generate()
     make_core_table(core_table, { "w", "H", "J", "K", "L" })
 
     hint_table = {}
-    string_val = "^ ^      SwapSurf       ^ ^\n\n"
+    string_val = "^ ^SwapSurf       ^ ^\n\n"
     string_val = string_val .. "^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^\n"
 
     for _, v in pairs(core_table) do

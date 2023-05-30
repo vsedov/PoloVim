@@ -8,12 +8,6 @@ M.new_hydra = function(config, new_hydra)
         body = function(t, rhs)
             t.body = rhs
         end,
-        on_enter = function(t, rhs)
-            t.config.on_enter = rhs
-        end,
-        on_exit = function(t, rhs)
-            t.config.on_exit = rhs
-        end,
         mode = function(t, rhs)
             t.config.mode = rhs
         end,

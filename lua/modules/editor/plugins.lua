@@ -183,9 +183,15 @@ editor({
 
 editor({
     "MaximilianLloyd/lazy-reload.nvim",
-    opts = {},
     keys = {
         -- Opens the command.
         { "<localleader>rl", "<cmd>lua require('lazy-reload').feed()<cr>", desc = "Reload a plugin" },
     },
+    config = true,
+})
+
+editor({
+    "aaron-p1/virt-notes.nvim",
+    keys = { "<leader>v" },
+    config = true,
 })
