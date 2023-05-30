@@ -22,7 +22,14 @@ ui({
         })
     end,
 })
-
+ui({
+    "rebelot/heirline.nvim",
+    cond = lambda.config.ui.use_heirline,
+    event = "VeryLazy",
+    config = function()
+        require("modules.ui.heirline")
+    end,
+})
 ui({
     "stevearc/dressing.nvim",
     event = "VeryLazy",
@@ -87,7 +94,6 @@ ui({
 ui({
     "nvim-neo-tree/neo-tree.nvim",
     event = "VeryLazy",
-    branch = "v2.x",
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -98,7 +104,7 @@ ui({
             config = function()
                 require("window-picker").setup({
                     autoselect_one = true,
-                    include_current = false,
+                    include_current = true,
                     filter_rules = {
                         -- filter using buffer options
                         bo = {
@@ -112,8 +118,6 @@ ui({
             end,
         },
     },
-    -- event = "VeryLazy",
-    cmd = { "Neotree", "NeoTreeShow", "NeoTreeFocus", "NeoTreeFocusToggle" },
     config = conf.neo_tree,
 })
 
@@ -236,24 +240,6 @@ ui({
                 require("fold-cycle").open()
             end,
             desc = "fold-cycle: toggle",
-        },
-    },
-})
-ui({
-    "rainbowhxch/beacon.nvim",
-    event = "VeryLazy",
-    opts = {
-        minimal_jump = 20,
-        ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
-        ignore_filetypes = {
-            "harpoon",
-            "qf",
-            "dap_watches",
-            "dap_scopes",
-            "neo-tree",
-            "NeogitCommitMessage",
-            "NeogitPopup",
-            "NeogitStatus",
         },
     },
 })
@@ -497,4 +483,9 @@ ui({
     "glepnir/nerdicons.nvim",
     cmd = "NerdIcons",
     config = true,
+})
+ui({
+    "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
+    event = "VeryLazy",
+    opts = { hide_cursor = true, mappings = { "<C-d>", "<C-u>", "zt", "zz", "zb" } },
 })
