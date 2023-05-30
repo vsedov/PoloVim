@@ -160,3 +160,33 @@ buffer({
     cmd = { "E" },
     config = true,
 })
+
+buffer({
+    "zakissimo/hook.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    keys = {
+        "<A-1>",
+        "<A-2>",
+        "<A-3>",
+        "<A-4>",
+        "<A-5>",
+        "<A-6>",
+        "<A-7>",
+        "<A-8>",
+        "<A-9>",
+    },
+    config = function()
+        require("hook").setup({
+            prefix = "", -- default is ">"
+        })
+        for i = 1, 9 do
+            vim.api.nvim_set_keymap(
+                "n",
+                "<A-" .. i .. ">",
+                "<cmd>lua require('hook').pull(" .. i .. ")<CR>",
+                { noremap = true, silent = true }
+            )
+        end
+    end,
+})
