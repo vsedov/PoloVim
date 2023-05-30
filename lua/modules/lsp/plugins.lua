@@ -111,7 +111,7 @@ lsp({
     },
 })
 
--- lsp({ "SmiteshP/nvim-navic", event = "VeryLazy", after = "nvim-lspconfig", config = conf.navic })
+lsp({ "SmiteshP/nvim-navic", event = "VeryLazy", after = "nvim-lspconfig", config = conf.navic })
 
 lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
 lsp({
@@ -122,6 +122,7 @@ lsp({
 })
 
 lsp({
+
     "rmagatti/goto-preview",
     lazy = true,
     config = conf.goto_preview,
@@ -164,9 +165,10 @@ lsp({
 lsp({
     "VidocqH/lsp-lens.nvim",
     cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
+    event = "VeryLazy",
     opts = {
-        enable = false,
-        include_declaration = false, -- Reference include declaration
+        enable = false, -- enable through lsp
+        include_declaration = true, -- Reference include declaration
         sections = { -- Enable / Disable specific request
             definition = true,
             references = true,

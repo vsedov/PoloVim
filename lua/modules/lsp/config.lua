@@ -212,7 +212,7 @@ function config.navic()
     local s = lambda.style
     local misc = s.icons.misc
 
-    highlights.plugin("navic", {
+    lambda.highlight.plugin("navic", {
         { NavicText = { bold = true } },
         { NavicSeparator = { link = "Directory" } },
     })
