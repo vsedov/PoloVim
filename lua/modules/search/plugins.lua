@@ -163,5 +163,6 @@ search({
         "MurenFresh",
         "MurenUnique",
     },
+
     config = true,
 })

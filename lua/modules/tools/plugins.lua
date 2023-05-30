@@ -232,7 +232,7 @@ tools({
 })
 tools({
     "willothy/flatten.nvim",
-    lazy = false,
+    lazy = true,
     priority = 1001,
     config = {
         window = { open = "alternate" },

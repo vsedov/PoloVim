@@ -15,6 +15,7 @@ M.opts = {
                 extensions = "all",
             },
         },
+
         ["core.concealer"] = {},
         ["core.esupports.metagen"] = {
             config = {
