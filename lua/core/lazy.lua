@@ -134,5 +134,6 @@ vim.defer_fn(function()
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
     end
     loader({ plugins = { "nvim-various-textobjs", "nvim-surround" } })
-    require("modules.editor.hydra.parenth_mode")
+    --  TODO: (vsedov) (08:50:09 - 30/05/23): Huge refactoring happening rn
+    -- require("modules.editor.hydra.parenth_mode")
 end, 2000)

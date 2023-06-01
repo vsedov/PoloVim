@@ -70,42 +70,6 @@ lambda.config.extra_search = {
     },
 }
 
-lambda.config.colourscheme = {
-    enable_transparent = false,
-    dim_background = false,
-    change_kitty_bg = false,
-    --- @usage "main"' | '"moon"
-    rose = "main",
-    --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
-    catppuccin_flavour = "mocha",
-    -- @usage theme_name : percentage chance
-    kanagawa_flavour = "dragon", -- dragon, lotus-> white
-    use_wal = true,
-    themes = {
-        dark = {
-            core_themes = {
-                -- "kanagawa.nvim",
-                "catppuccin",
-                -- "sweetie.nvim",
-                -- "vim-dogrun",
-                -- "poimandres.nvim",
-                -- "nvim-tundra",
-                -- "palenightfall.nvim",
-                -- "oh-lucy.nvim",
-                -- "mellifluous.nvim",
-                -- "tokyonight.nvim", -- allot
-                -- "rose", -- TSMethod'
-                -- "mellow.nvim",
-            },
-            others = {
-                "horizon.nvim",
-                "nvim-tundra", -- TSProperty'
-                "doom-one.nvim",
-            },
-        },
-    },
-}
-
 lambda.config.treesitter = {
     use_yati = true,
     use_matchup = true,
@@ -156,7 +120,7 @@ lambda.config.lsp = {
     --    ╰────────────────────────────────────────────────────────────────────╯
     latex = "texlab", -- texlab | ltex
     python = {
-        lint = { "flake8" }, -- pylint, pyflake, and other linters
+        lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
@@ -174,6 +138,8 @@ lambda.config.ui = {
     use_pet = false,
     use_virtcol = true,
     use_indent_blankline = true,
+    use_hlsearch = false,
+    use_status_col = true, -- true  for plugin or false for heirline
     noice = {
         enable = true,
         lsp = {
@@ -187,7 +153,42 @@ lambda.config.ui = {
     },
     indent_blankline = {
         use_indent_blankline = true,
-        use_hlchunk = true,
+        use_hlchunk = false,
+    },
+}
+lambda.config.colourscheme = {
+    enable_transparent = false,
+    dim_background = false,
+    change_kitty_bg = false,
+    --- @usage "main"' | '"moon"
+    rose = "main",
+    --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
+    catppuccin_flavour = "mocha",
+    -- @usage theme_name : percentage chance
+    kanagawa_flavour = "wave", -- {dragon, waave}, lotus-> white
+    use_wal = true,
+    themes = {
+        dark = {
+            core_themes = {
+                "kanagawa.nvim",
+                "catppuccin",
+                -- "sweetie.nvim",
+                -- "vim-dogrun",
+                -- "poimandres.nvim",
+                -- "nvim-tundra",
+                -- "palenightfall.nvim",
+                -- "oh-lucy.nvim",
+                -- "mellifluous.nvim",
+                -- "tokyonight.nvim", -- allot
+                -- "rose", -- TSMethod'
+                -- "mellow.nvim",
+            },
+            others = {
+                "horizon.nvim",
+                "nvim-tundra", -- TSProperty'
+                "doom-one.nvim",
+            },
+        },
     },
 }
 
@@ -197,7 +198,9 @@ lambda.config.movement = {
         use_tmux_or_normal = "nvim", -- nvim
     },
 }
+
 lambda.config.tools = {
     use_session = true,
     use_fundo = true, -- forgot the reason for why this was disabled
+    use_flatten = true,
 }
