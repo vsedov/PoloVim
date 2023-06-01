@@ -183,7 +183,7 @@ buffer({
         for i = 1, 9 do
             vim.api.nvim_set_keymap(
                 "n",
-                "<A-" .. i .. ">",
+                "<c-b>" .. i,
                 "<cmd>lua require('hook').pull(" .. i .. ")<CR>",
                 { noremap = true, silent = true }
             )
