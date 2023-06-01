@@ -143,8 +143,10 @@ lsp({
         "neovim/nvim-lspconfig",
         "SmiteshP/nvim-navic",
         "MunifTanjim/nui.nvim",
+        "numToStr/Comment.nvim", -- Optional
+        "nvim-telescope/telescope.nvim", -- Optional
     },
-    config = true,
+    opts = { lsp = { auto_attach = true } },
 })
 
 lsp({
@@ -261,4 +263,11 @@ lsp({
             priority = vim.highlight.priorities.user + 1,
         },
     },
+})
+
+lsp({
+    "neovim/nvimdev.nvim",
+    lazy = true,
+    ft = "lua",
+    config = conf.nvimdev,
 })
