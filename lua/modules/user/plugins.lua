@@ -1,86 +1,42 @@
 local user = require("core.pack").package
-
 user({
-    "p00f/cphelper.nvim",
-    cmd = {
-        "CphReceive",
-        "CphTest",
-        "CphReTest",
-        "CphEdit",
-        "CphDelete",
-    },
-
-    lazy = true,
-    config = function()
-        vim.g["cph#lang"] = "python"
-        vim.g["cph#border"] = lambda.style.border.type_0
-    end,
-})
-
-user({
-    "jackMort/pommodoro-clock.nvim",
+    "Dhanus3133/LeetBuddy.nvim",
     lazy = true,
     dependencies = {
-        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
     },
-    keys = {
-        ";1",
-        ";2",
-        ";3",
-        ";4",
-        ";5",
+    cmd = {
+
+        "LBQuestions",
+        "LBQuestion",
+        "LBReset",
+        "LBTest",
+        "LBSubmit",
+        "LeetActivate",
     },
     config = function()
-        require("pommodoro-clock").setup({})
-        vim.keymap.set("n", ";1", function()
-            require("pommodoro-clock").toggle_pause()
-        end)
-
-        vim.keymap.set("n", ";2", function()
-            require("pommodoro-clock").start("work")
-        end)
-        vim.keymap.set("n", ";3", function()
-            require("pommodoro-clock").start("short_break")
-        end)
-        vim.keymap.set("n", ";4", function()
-            require("pommodoro-clock").start("long_break")
-        end)
-        vim.keymap.set("n", ";5", function()
-            require("pommodoro-clock").close()
+        require("leetbuddy").setup({})
+        lambda.command("LeetActivate", function()
+            binds = {
+                ["<leader>lq"] = "LBQuestions",
+                ["<leader>ll"] = "LBQuestion",
+                ["<leader>lr"] = "LBReset",
+                ["<leader>lt"] = "LBTest",
+                ["<leader>ls"] = "LBSubmit",
+            }
+            for x, v in pairs(binds) do
+                vim.keymap.set("n", x[1], x[2], v, { noremap = true, silent = true })
+            end
         end)
     end,
 })
---
+
 user({
     "tamton-aquib/mpv.nvim",
     lazy = true,
     cmd = "MpvToggle",
     opts = { setup_widgets = true, timer = { throttle = 100 } },
-})
-
-user({
-    "kwakzalver/duckytype.nvim",
-    lazy = true,
-    cmd = {
-        "PythonSpell",
-        "EnglishSpell",
-        "DuckyType",
-    },
-    opts = {
-        {
-            expected = "python_keywords",
-            number_of_words = 42,
-            average_word_length = 5.69,
-        },
-    },
-    init = function()
-        lambda.command("EnglishSpell", function()
-            require("duckytype").Start("english_common")
-        end, {})
-        lambda.command("PythonSpell", function()
-            require("duckytype").Start("python_keywords")
-        end, {})
-    end,
 })
 
 user({
@@ -136,16 +92,12 @@ user({
 user({
     "chrisbra/NrrwRgn",
     lazy = true,
-    event = "VeryLazy",
     init = function()
         vim.g.nrrw_rgn_vert = 1
-        -- Set the size (absolute=rows or cols, relative=percentage)
         vim.g.nrrw_rgn_resize_window = "relative"
-        -- Set the new buffer size
         vim.g.nrrw_rgn_wdth = 20
         vim.g.nrrw_rgn_rel_min = 50
         vim.g.nrrw_rgn_rel_max = 50
-
         vim.g.nrrw_rgn_nomap_nr = 1
         vim.g.nrrw_rgn_nomap_Nr = 1
     end,
@@ -161,47 +113,6 @@ user({
         vim.keymap.set("n", "\\U", "<Cmd>UrlView lazy<CR>", { desc = "view plugin URLs" })
     end,
 })
-
-user({
-    "mikesmithgh/render.nvim",
-    cmd = { "Render", "RenderClean", "RenderQuickfix" },
-    lazy = true,
-    cond = true,
-    enable = true,
-    config = true,
-})
-
-user({
-    "letieu/hacker.nvim",
-    cmd = { "Hack", "HackFollow" },
-    config = function()
-        require("hacker").setup({
-            content = [[
-local plenary_dir = os.getenv("PLENARY_DIR") or "/tmp/plenary.nvim"
-local is_not_a_directory = vim.fn.isdirectory(plenary_dir) == 0
-if is_not_a_directory then
-  vim.fn.system({ "git", "clone", "https://github.com/nvim-lua/plenary.nvim", plenary_dir })
-end
-
-vim.opt.rtp:append(".")
-vim.opt.rtp:append(plenary_dir)
-
-vim.cmd("runtime plugin/plenary.vim")
-require("plenary.busted")
-
-            ]], -- The code snippet that show when typing
-            filetype = "lua", -- filetype of code snippet
-            speed = { -- characters insert each time, random from min -> max
-                min = 2,
-                max = 10,
-            },
-            is_popup = false, -- show random float window when typing
-            popup_after = 5,
-        })
-    end,
-})
-
---
 
 user({
     "bignos/bookmacro",
@@ -306,9 +217,9 @@ user({
         -- default settings
         vim.g.spellbound_settings = {
             mappings = {
-                toggle_map = "<leader>zS",
-                fix_right = "<leader>zp",
-                fix_left = "<leader>zn",
+                toggle_map = "\\zS",
+                fix_right = "\\zp",
+                fix_left = "\\zn",
             },
             language = "en_gb",
             autospell_filetypes = { "*.txt", "*.md", "*.rst" },
@@ -321,9 +232,8 @@ user({
 
 user({
     "olimorris/persisted.nvim",
-    cond = false,
-    lazy = true,
-    cmd = { "Persisted", "PersistedLoad", "PersistedSave", "PersistedDelete", "PersistedList" },
+    cond = lambda.config.tools.use_session,
+    event = "VeryLazy",
     init = function()
         lambda.command("ListSessions", "Telescope persisted", {})
         lambda.augroup("PersistedEvents", {
@@ -354,8 +264,8 @@ user({
         ignored_dirs = { vim.fn.stdpath("data") },
     },
     config = function(_, opts)
-        require("telescope").load_extension("persisted")
         require("persisted").setup(opts)
+        require("telescope").load_extension("persisted")
     end,
 })
 
@@ -365,37 +275,63 @@ user({
 -- ○ leap-wide.nvim core  and its dependencies
 
 user({
-    "zakissimo/hook.nvim",
-    lazy = true,
-    event = "VeryLazy",
+    "linty-org/readline.nvim",
     keys = {
-        "<A-1>",
-        "<A-2>",
-        "<A-3>",
-        "<A-4>",
-        "<A-5>",
-        "<A-6>",
-        "<A-7>",
-        "<A-8>",
-        "<A-9>",
+        {
+            "<M-f>",
+            function()
+                require("readline").forward_word()
+            end,
+            mode = "!",
+        },
+        {
+            "<M-b>",
+            function()
+                require("readline").backward_word()
+            end,
+            mode = "!",
+        },
+        {
+            "<C-a>",
+            function()
+                require("readline").beginning_of_line()
+            end,
+            mode = "!",
+        },
+        {
+            "<C-e>",
+            function()
+                require("readline").end_of_line()
+            end,
+            mode = "!",
+        },
+        {
+            "<M-d>",
+            function()
+                require("readline").kill_word()
+            end,
+            mode = "!",
+        },
+        {
+            "<M-BS>",
+            function()
+                require("readline").backward_kill_word()
+            end,
+            mode = "!",
+        },
+        {
+            "<C-w>",
+            function()
+                require("readline").unix_word_rubout()
+            end,
+            mode = "!",
+        },
+        {
+            "<C-u>",
+            function()
+                require("readline").backward_kill_line()
+            end,
+            mode = "!",
+        },
     },
-    config = function()
-        require("hook").setup({
-            prefix = "", -- default is ">"
-        })
-        for i = 1, 9 do
-            vim.api.nvim_set_keymap(
-                "n",
-                "<A-" .. i .. ">",
-                "<cmd>lua require('hook').pull(" .. i .. ")<CR>",
-                { noremap = true, silent = true }
-            )
-        end
-    end,
-})
-
-user({
-    "aaron-p1/virt-notes.nvim",
-    keys = { "<leader>v" },
-    config = true,
 })

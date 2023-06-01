@@ -188,7 +188,7 @@ elseif lambda.config.cmp.cmp_theme == "extra" then
     }
 end
 
-if lambda.config.ai.tabnine.use_tabnine then
+if lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_cmp then
     local sorting = {
         comparators = {
             compare.offset,

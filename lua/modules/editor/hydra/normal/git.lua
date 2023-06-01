@@ -241,6 +241,8 @@ if gitrepo then
                 { "hS", ":Squash<CR>", { silent = true } },
                 { "hr", ":Reword<CR>", { silent = true } },
                 { "a", ":GDash<CR>", { exit = true, silent = true } },
+                --  TODO: (vsedov) (02:10:52 - 27/05/23): Redo this, , remove lazygit this is not
+                --  viable. Best course is to use one of the terminal plugins and use that instead
                 { "L", ":Lazygit<CR>", { exit = true, silent = true } },
             },
         })

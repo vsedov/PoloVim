@@ -38,7 +38,10 @@ function M.common_on_attach(client, bufnr)
     if config.on_attach_callback[client.name] then
         config.on_attach_callback[client.name](client, bufnr)
     end
-    require("nvim-navbuddy").attach(client, bufnr)
+    if client.server_capabilities.documentSymbolProvider then
+        require("nvim-navic").attach(client, bufnr)
+        require("nvim-navbuddy").attach(client, bufnr)
+    end
 
     -- Ideally if we are using noice , we really should not be using lsp_signature.
     add_lsp_buffer_keybindings(client, bufnr)

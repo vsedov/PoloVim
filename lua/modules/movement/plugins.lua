@@ -200,7 +200,8 @@ movement({
     lazy = true,
     keys = {
         { "H", mode = { "o", "x", "n" } },
-        { "zf", mode = "n" },
+        { "zl", mode = "n" },
+        { "z<cr>", mode = "n" },
     },
     dependencies = { "ggandor/leap.nvim" },
     config = conf.treehopper,

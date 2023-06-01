@@ -12,10 +12,6 @@ local plug_map = {
 
     -- Scuffed way of doing this, but this works .
 
-    ["n|<Leader>gr"] = map_cmd(function()
-        return ":IncRename " .. vim.fn.expand("<cword>")
-    end, "rename"):with_expr(),
-
     ["n|D"] = map_cmd(function()
             return ":Lspsaga show_line_diagnostics<cr>"
         end, "Diagnostic")

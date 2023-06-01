@@ -1,4 +1,5 @@
 local loader = require("lazy").load
+
 local fsize = vim.fn.getfsize(vim.fn.expand("%:p:f"))
 if fsize == nil or fsize < 0 then
     fsize = 1
@@ -12,6 +13,7 @@ if fsize > 1024 * 1024 then
     load_lsp = false
 end
 local function load_colourscheme()
+    require("utils.ui.highlights")
     math.randomseed(os.clock() * 100000000000)
     local theme = lambda.config.colourscheme.themes.dark.core_themes
 
@@ -132,5 +134,6 @@ vim.defer_fn(function()
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
     end
     loader({ plugins = { "nvim-various-textobjs", "nvim-surround" } })
-    require("modules.editor.hydra.parenth_mode")
+    --  TODO: (vsedov) (08:50:09 - 30/05/23): Huge refactoring happening rn
+    -- require("modules.editor.hydra.parenth_mode")
 end, 2000)

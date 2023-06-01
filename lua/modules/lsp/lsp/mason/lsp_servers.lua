@@ -58,11 +58,11 @@ local servers = {
         end,
     },
     jedi_language_server = require("modules.lsp.lsp.providers.python.jedi_lang"),
-    -- ruff_lsp = lambda.config.lsp.use_ruff_lsp,
     sourcery = false, -- no clue what this does
     buf = true,
     grammarly = true,
     zls = true,
+    ruff_lsp = false, -- this breaks nvimnavbudy
 }
 
 return function(name)

@@ -28,14 +28,18 @@ end
 
 local M = {}
 M.setup = function()
-    lambda.augroup("External", {
-        {
-            event = { "BufEnter" },
-            pattern = "*",
-            command = function()
-                vim.o.titlestring = title_string()
-            end,
-        },
-    })
+    if vim.env.TMUX == nil then
+        return
+    else
+        lambda.augroup("External", {
+            {
+                event = { "BufEnter" },
+                pattern = "*",
+                command = function()
+                    vim.o.titlestring = title_string()
+                end,
+            },
+        })
+    end
 end
 return M

@@ -44,7 +44,7 @@ local mappings = {
         if cmp.visible() then
             cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+            vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-expand-or-jump", true, true, true), "")
         else
             fallback()
         end
@@ -53,7 +53,7 @@ local mappings = {
         if cmp.visible() then
             cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+            vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-jump-prev", true, true, true), "")
         else
             fallback()
         end
@@ -69,7 +69,7 @@ local mappings = {
             end
         else
             if luasnip.expand_or_jumpable() then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+                vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-expand-or-jump", true, true, true), "")
             else
                 fallback()
             end

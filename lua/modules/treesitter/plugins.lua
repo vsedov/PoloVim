@@ -48,6 +48,7 @@ ts({
 -- Core
 ts({
     "David-Kunz/markid",
+    cond = lambda.config.treesitter.use_extra_highlight,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
 })
 
@@ -79,7 +80,6 @@ ts({
 ts({
     "andrewferrier/textobj-diagnostic.nvim",
     lazy = true,
-
     ft = { "python", "lua" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = true,
@@ -87,6 +87,7 @@ ts({
 
 ts({
     "andymass/vim-matchup",
+    cond = lambda.config.treesitter.use_matchup,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.matchup,
     init = conf.matchup_setup,
@@ -110,6 +111,7 @@ ts({
 
 ts({
     "yioneko/nvim-yati",
+    cond = lambda.config.treesitter.use_yati,
     event = "VeryLazy",
     lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
@@ -192,9 +194,4 @@ ts({
         )
     end,
     config = true,
-})
-
-ts({
-    "ziontee113/SelectEase",
-    lazy = true,
 })

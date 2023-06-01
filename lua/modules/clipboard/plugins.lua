@@ -61,19 +61,6 @@ clipsub({
 })
 
 clipsub({
-    "AckslD/muren.nvim",
-    lazy = true,
-    cmd = {
-        "MurenToggle",
-        "MurenOpen",
-        "MurenClose",
-        "MurenFresh",
-        "MurenUnique",
-    },
-    config = true,
-})
-
-clipsub({
     "mg979/vim-visual-multi",
     lazy = true,
     keys = {

@@ -1,19 +1,25 @@
-local vim = vim
-local fn = vim.fn
-local api = vim.api
-local fmt = string.format
-
-local function replace_termcodes(str)
-    return api.nvim_replace_termcodes(str, true, true, true)
-end
+local fn, api, v, env, cmd, fmt = vim.fn, vim.api, vim.v, vim.env, vim.cmd, string.format
+----------------------------------------------------------------------------------------------------
+-- HLSEARCH
+----------------------------------------------------------------------------------------------------
+-- In order to get hlsearch working the way I like i.e. on when using /,?,N,n,*,#, etc. and off when
+-- When I'm not using them, I need to set the following:
+-- The mappings below are essentially faked user input this is because in order to automatically turn off
+-- the search highlight just changing the value of 'hlsearch' inside a function does not work
+-- read `:h nohlsearch`. So to have this workaround I check that the current mouse position is not a search
+-- result, if it is we leave highlighting on, otherwise I turn it off on cursor moved by faking my input
+-- using the expr mappings below.
+--
+-- This is blambda.d on the implementation discussed here:
+-- https://github.com/neovim/neovim/issues/5581
 
 vim.keymap.set({ "n", "v", "o", "i", "c" }, "<Plug>(StopHL)", 'execute("nohlsearch")[-1]', { expr = true })
 
 local function stop_hl()
-    if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
+    if v.hlsearch == 0 or api.nvim_get_mode().mode ~= "n" then
         return
     end
-    api.nvim_feedkeys(replace_termcodes("<Plug>(StopHL)"), "m", false)
+    api.nvim_feedkeys(vim.keycode("<Plug>(StopHL)"), "m", false)
 end
 
 local function hl_search()
@@ -30,75 +36,64 @@ local function hl_search()
     end
 end
 
-local save_excluded = {
-    "neo-tree",
-    "neo-tree-popup",
-    "lua.luapad",
-    "gitcommit",
-    "NeogitCommitMessage",
-}
-local function can_save()
-    return lambda.empty(fn.win_gettype())
-        and lambda.empty(vim.bo.buftype)
-        and not lambda.empty(vim.bo.filetype)
-        and vim.bo.modifiable
-        and not vim.tbl_contains(save_excluded, vim.bo.filetype)
+if not lambda.config.ui.use_hlsearch then
+    lambda.augroup("VimrcIncSearchHighlight", {
+
+        {
+            event = { "CursorMoved" },
+            command = function()
+                hl_search()
+            end,
+        },
+        {
+            event = { "InsertEnter" },
+            command = function()
+                stop_hl()
+            end,
+        },
+        {
+            event = { "OptionSet" },
+            pattern = { "hlsearch" },
+            command = function()
+                vim.schedule(function()
+                    cmd.redrawstatus()
+                end)
+            end,
+        },
+        {
+            event = "RecordingEnter",
+            command = function()
+                vim.o.hlsearch = false
+            end,
+        },
+        {
+            event = "RecordingLeave",
+            command = function()
+                vim.o.hlsearch = true
+            end,
+        },
+    })
 end
 
--- lambda.augroup("VimrcIncSearchHighlight", {
---     {
---         event = { "CursorMoved" },
---         command = function()
---             hl_search()
---         end,
---     },
---     {
---         event = { "InsertEnter" },
---         command = function()
---             stop_hl()
---         end,
---     },
---     {
---         event = { "OptionSet" },
---         pattern = { "hlsearch" },
---         command = function()
---             vim.schedule(function()
---                 vim.cmd.redrawstatus()
---             end)
---         end,
---     },
---     {
---         event = "RecordingEnter",
---         command = function()
---             vim.opt.hlsearch = false
---         end,
---     },
---     {
---         event = "RecordingLeave",
---         command = function()
---             vim.opt.hlsearch = true
---         end,
---     },
--- })
---
-local smart_close_filetypes = {
-    "help",
-    "git-status",
-    "git-log",
-    "gitcommit",
-    "dbui",
-    "fugitive",
-    "fugitiveblame",
-    "LuaTree",
-    "log",
-    "tsplayground",
-    "qf",
-    "startuptime",
-    "lspinfo",
-    "neotest-summary",
-}
+local smart_close_filetypes = lambda.p_table({
+    ["qf"] = true,
+    ["log"] = true,
+    ["help"] = true,
+    ["query"] = true,
+    ["dbui"] = true,
+    ["lspinfo"] = true,
+    ["git.*"] = true,
+    ["Neogit.*"] = true,
+    ["neotest.*"] = true,
+    ["fugitive.*"] = true,
+    ["copilot.*"] = true,
+    ["tsplayground"] = true,
+    ["startuptime"] = true,
+})
 
-local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
+local smart_close_buftypes = lambda.p_table({
+    ["nofile"] = true,
+})
 
 local function smart_close()
     if fn.winnr("$") ~= 1 then
@@ -116,19 +111,21 @@ lambda.augroup("SmartClose", {
     {
         -- Close certain filetypes by pressing q.
         event = { "FileType" },
-        pattern = "*",
         command = function(args)
             local is_unmapped = fn.hasmapto("q", "n") == 0
-            local is_eligible = is_unmapped or vim.wo.previewwindow or smart_close_filetypes[vim.bo[args.buf].ft]
+            local buf = vim.bo[args.buf]
+            local is_eligible = is_unmapped
+                or vim.wo.previewwindow
+                or smart_close_filetypes[buf.ft]
+                or smart_close_buftypes[buf.bt]
             if is_eligible then
-                vim.keymap.set("n", "-q", smart_close, { buffer = args.buf, nowait = true })
+                vim.keymap.set("n", "q", smart_close, { buffer = args.buf, nowait = true })
             end
         end,
     },
     {
-        -- Close quick fix window if the file containing it was closed
+        -- Close quick fix window if the file containing it wlambda.closed
         event = { "BufEnter" },
-        pattern = "*",
         command = function()
             if fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
                 api.nvim_buf_delete(0, { force = true })
@@ -138,182 +135,62 @@ lambda.augroup("SmartClose", {
     {
         -- automatically close corresponding loclist when quitting a window
         event = { "QuitPre" },
-        pattern = "*",
         nested = true,
         command = function()
             if vim.bo.filetype ~= "qf" then
-                vim.cmd("silent! lclose")
+                cmd.lclose({ mods = { silent = true } })
             end
         end,
     },
 })
+
+lambda.augroup("ExternalCommands", {
+    {
+        -- Open images in an image viewer (probably Preview)
+        event = { "BufEnter" },
+        pattern = { "*.png", "*.jpg", "*.gif" },
+        command = function()
+            cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. " " .. fn.expand("%")))
+        end,
+    },
+})
+
+lambda.augroup("CheckOutsideTime", {
+    {
+        -- automatically check for changed files outside vim
+        event = { "WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained" },
+        command = "silent! checktime",
+    },
+})
+
 lambda.augroup("TextYankHighlight", {
     {
-        -- don't execute silently in case of errors
+        -- don't execute silently in clambda. of errors
         event = { "TextYankPost" },
-        pattern = "*",
         command = function()
-            vim.highlight.on_yank({
-                timeout = 200,
-                on_visual = false,
-                higroup = "Visual",
-            })
-        end,
-    },
-})
-------------------------------------------------------------------------------//
-lambda.augroup("AddTerminalMappings", {
-    {
-        event = { "TermOpen" },
-        command = function()
-            vim.notify("Terminal is open")
-            if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" or vim.bo.buftype == "terminal" then
-                vim.notify("Terminal binds are being set")
-                local opts = { silent = false, buffer = 0 }
-                vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-                vim.keymap.set("t", "jn", [[<C-\><C-n>]], opts)
-                vim.keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", opts)
-                vim.keymap.set("t", "<C-j>", "<Cmd>wincmd j<CR>", opts)
-                vim.keymap.set("t", "<C-k>", "<Cmd>wincmd k<CR>", opts)
-                vim.keymap.set("t", "<C-l>", "<Cmd>wincmd l<CR>", opts)
-
-                vim.keymap.set("t", "]t", "<Cmd>tablast<CR>")
-                vim.keymap.set("t", "[t", "<Cmd>tabnext<CR>")
-                vim.keymap.set("t", ";<S-Tab>", "<Cmd>bprev<CR>")
-                vim.keymap.set("t", ";<Tab>", "<Cmd>close \\| :bnext<cr>")
-            end
+            vim.highlight.on_yank({ timeout = 500, on_visual = false, higroup = "Visual" })
         end,
     },
 })
 
-lambda.augroup("Utilities", {
+lambda.augroup("UpdateVim", {
     {
-        -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
-        event = { "BufReadCmd" },
-        pattern = { "file:///*" },
-        nested = true,
-        command = function(args)
-            vim.cmd.bdelete({ bang = true })
-            vim.cmd.edit(vim.uri_to_fname(args.file))
-        end,
-    },
-    {
-        event = { "FileType" },
-        pattern = { "gitcommit", "gitrebase" },
-        command = "set bufhidden=delete",
-    },
-    {
-        event = { "FileType" },
-        pattern = {
-            "norg",
-            "NeogitCommitMessage",
-            "markdown",
-        },
-        -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows        -- command = function(args)
-        --     vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000
-        -- end,
-        command = function(args)
-            vim.opt_local.spell = true
-        end,
-    },
-    {
-        event = { "BufWritePre", "FileWritePre" },
+        event = { "FocusLost" },
         pattern = { "*" },
-        command = function()
-            if vim.tbl_contains({ "oil" }, vim.bo.ft) then
-                return
-            end
-            local dir = vim.fn.expand("<afile>:p:h")
-            if vim.fn.isdirectory(dir) == 0 then
-                vim.fn.mkdir(dir, "p")
-            end
-        end,
+        command = "silent! wall",
     },
-
     {
-        event = { "BufLeave" },
+        event = { "VimResized" },
         pattern = { "*" },
-        command = function()
-            if can_save() then
-                vim.cmd.update({ mods = { silent = true } })
-            end
-        end,
-    },
-
-    {
-        event = { "BufWritePost" },
-        pattern = { "*" },
-        nested = true,
-        command = function()
-            if lambda.empty(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
-                vim.cmd([[
-            unlet! b:ftdetect
-            filetype detect
-            echom 'Filetype set to ' . &ft
-          ]])
-            end
-        end,
+        command = "wincmd =", -- Make windows equal size when vim resizes
     },
 })
 
-lambda.augroup("buffer", {
-    { event = { "BufRead", "BufNewFile" }, pattern = "*.norg", command = "setlocal filetype=norg" },
-    { event = { "BufEnter", "BufWinEnter" }, pattern = "*.norg", command = [[set foldlevel=1000]] },
-    {
-        event = { "BufNewFile", "BufRead", "BufWinEnter" },
-        pattern = "*.tex",
-        command = [[set filetype=tex]],
-    },
-    -- Reload vim config automatically
-    {
-        event = "BufWritePost",
-        pattern = [[$VIM_PATH/{*.vim,*.yaml,vimrc}]],
-        command = [[source $MYVIMRC | redraw]],
-        nested = true,
-    },
-
-    -- -- Reload Vim script automatically if setlocal autoread
-    {
-        event = { "BufWritePost", "FileWritePost" },
-        pattern = "*.vim",
-        command = [[ if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
-        nested = true,
-    },
-    {
-        event = "BufWritePre",
-        pattern = { "/tmp/*", "COMMIT_EDITMSG", "MERGE_MSG", "*.tmp", "*.bak" },
-        command = function()
-            vim.opt_local.undofile = false
-        end,
-    },
-})
-
-local activate_spelling = {
-    "txt",
-    "norg",
-    "tex",
-    "md",
-}
---
 lambda.augroup("WindowBehaviours", {
     {
-        -- map q to close command window on quit
-        event = { "CmdwinEnter" },
+        event = { "CmdwinEnter" }, -- map q to close command window on quit
         pattern = { "*" },
         command = "nnoremap <silent><buffer><nowait> q <C-W>c",
-    },
-    -- Automatically jump into the quickfix window on open
-    {
-        event = { "QuickFixCmdPost" },
-        pattern = { "[^l]*" },
-        nested = true,
-        command = "cwindow",
-    },
-    {
-        event = { "QuickFixCmdPost" },
-        pattern = { "l*" },
-        nested = true,
-        command = "lwindow",
     },
     {
         event = { "BufWinEnter" },
@@ -331,16 +208,6 @@ lambda.augroup("WindowBehaviours", {
             end
         end,
     },
-
-    { event = "CmdLineEnter", pattern = "*", command = [[set nosmartcase]] },
-    { event = "CmdLineLeave", pattern = "*", command = [[set smartcase]] },
-
-    -- Force write shada on leaving nvim
-    {
-        event = "VimLeave",
-        pattern = "*",
-        command = [[if has('nvim') | wshada! | else | wviminfo! | endif]],
-    },
     {
         event = "VimEnter",
         pattern = "*",
@@ -357,173 +224,125 @@ lambda.augroup("WindowBehaviours", {
             vim.bo.undofile = false
             vim.bo.fileformat = "unix"
         end,
-    },
-    {
-        event = "BufReadPost",
-        pattern = "*.pdf",
-        command = function(ev)
-            local filename = ev.file
-            vim.fn.jobstart({ "open", filename }, { detach = true })
-            -- require("mini.bufremove").delete(0, false)
-            vim.api.nvim_buf_delete(0, {})
-        end,
-    },
-})
-lambda.augroup("CheckOutsideTime", {
-    {
-        -- automatically check for changed files outside vim
-        event = { "WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained" },
-        pattern = "*",
-        command = "silent! checktime",
-    },
-})
-
---- automatically clear commandline messages after a few seconds delay
---- source: http://unix.stackexchange.com/a/613645
----@return function
-local function clear_commandline()
-    --- Track the timer object and stop any previous timers before setting
-    --- a new one so that each change waits for 10secs and that 10secs is
-    --- deferred each time
-    local timer
-    return function()
-        if timer then
-            timer:stop()
-        end
-        timer = vim.defer_fn(function()
-            if fn.mode() == "n" then
-                vim.cmd([[echon '']])
-            end
-        end, 10000)
-    end
-end
-
-lambda.augroup("ClearCommandMessages", {
-    {
-        event = { "CmdlineLeave", "CmdlineChanged" },
-        pattern = { ":" },
-        command = clear_commandline(),
-    },
-})
-
-lambda.augroup("UpdateVim", {
-    {
-        event = { "FocusLost" },
-        pattern = { "*" },
-        command = "silent! wall",
-    },
-    -- Make windows equal size when vim resizes
-    {
-        event = { "VimResized" },
-        pattern = { "*" },
-        command = "wincmd =",
-    },
-})
-
-lambda.augroup("TerminalAutocommands", {
-    {
-        event = { "TermClose" },
-        pattern = "*",
-        command = function()
-            --- automatically close a terminal if the job was successful
-            if not vim.v.event.status == 0 then
-                vim.cmd.bdelete({ fn.expand("<abuf>"), bang = true })
-            end
-        end,
-    },
-})
-lambda.augroup("HoudiniFix", {
-    {
-        pattern = "LeapLeave",
-        event = "User",
-        command = function()
-            local ignore = vim.tbl_contains({ "terminal", "prompt" }, vim.opt.buftype:get())
-            if vim.opt.modifiable:get() and not ignore then
-                vim.cmd("normal! a")
-            end
-        end,
-    },
-})
-
---[[ Honestly cap locks are such a pain in the ass that its getting too annoying  ]]
---[[ i will use <c-;> and <c-g>c to enable them when i need to just in case ]]
-lambda.augroup("CapLockDisable", {
-    {
-        event = "VimEnter",
-        pattern = "*",
-        command = "silent !setxkbmap -option ctrl:nocaps",
-    },
-    {
-        event = "VimLeave",
-        pattern = "*",
-        command = "silent !setxkbmap -option",
-    },
-})
-
-lambda.augroup("PluginCustomFixes", {
-    {
-        event = "BufWritePost",
-        pattern = "*",
-        command = function()
-            if lambda.config.use_ufo and vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf()) > 800 then
-                vim.cmd([[UfoDetach]])
-            end
-        end,
         once = true,
     },
 })
 
-lambda.augroup("LSPAttachable", {
-    {
-        event = "LspAttach",
-        pattern = "*",
-        command = function(args)
-            local bufnr = args.buf
-            local client = vim.lsp.get_client_by_id(args.data.client_id)
-            client.server_capabilities.semanticTokensProvider = nil
-        end,
-    },
-})
-lambda.augroup("TabNLine", {
-    {
-        event = { "BufEnter", "VimEnter" },
-        pattern = "*",
-        command = function()
-            if #vim.fn.getbufinfo({ buflisted = 1 }) <= 1 then
-                vim.o.showtabline = 0
-            else
-                vim.o.showtabline = 2
-            end
-        end,
-    },
-
-    {
-        event = { "BufDelete" },
-        pattern = "*",
-        command = function()
-            local buf_type = vim.api.nvim_buf_get_option(0, "buftype")
-            if #vim.fn.getbufinfo({ buflisted = 1 }) <= 2 and buf_type ~= "nofile" then
-                vim.o.showtabline = 0
-            else
-                vim.o.showtabline = 2
-            end
-        end,
-    },
-})
-
-if vim.env.TMUX or vim.env.KITTY_PID then
-    lambda.augroup("NvimCwd", {
-        {
-            event = { "DirChanged" },
-            command = function()
-                vim.schedule(function()
-                    fn.chansend(vim.v.stderr, fmt("\033]7;file://%s\033\\", vim.v.event.cwd))
-                end)
-            end,
-        },
-    })
+local save_excluded = {
+    "neo-tree",
+    "neo-tree-popup",
+    "lua.luapad",
+    "gitcommit",
+    "NeogitCommitMessage",
+}
+local function can_save()
+    return lambda.falsy(fn.win_gettype())
+        and lambda.falsy(vim.bo.buftype)
+        and not lambda.falsy(vim.bo.filetype)
+        and vim.bo.modifiable
+        and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
+-- lambda.augroup("Utilities", {
+--     {
+--         ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
+--         event = { "BufReadCmd" },
+--         pattern = { "file:///*" },
+--         nested = true,
+--         command = function(args)
+--             cmd.bdelete({ bang = true })
+--             cmd.edit(vim.uri_to_fname(args.file))
+--         end,
+--     },
+--     {
+--         event = { "BufWritePre", "FileWritePre" },
+--         pattern = { "*" },
+--         command = function()
+--             if vim.tbl_contains({ "oil" }, vim.bo.ft) then
+--                 return
+--             end
+--             local dir = vim.fn.expand("<afile>:p:h")
+--             if vim.fn.isdirectory(dir) == 0 then
+--                 vim.fn.mkdir(dir, "p")
+--             end
+--         end,
+--     },
+--     {
+--         event = { "FileType" },
+--         pattern = {
+--             "norg",
+--             "NeogitCommitMessage",
+--             "markdown",
+--         },
+--         -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows        -- command = function(args)
+--         --     vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000
+--         -- end,
+--         command = function(args)
+--             vim.opt_local.spell = true
+--         end,
+--     },
+--     {
+--         event = { "BufLeave" },
+--         pattern = { "*" },
+--         command = function(args)
+--             if api.nvim_buf_line_count(args.buf) <= 1 then
+--                 return
+--             end
+--             if can_save() then
+--                 cmd("silent! write ++p")
+--             end
+--         end,
+--     },
+--     {
+--         event = { "BufWritePost" },
+--         pattern = { "*" },
+--         nested = true,
+--         command = function()
+--             if lambda.falsy(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
+--                 cmd([[
+--         unlet! b:ftdetect
+--         filetype detect
+--         call v:lua.vim.notify('Filetype set to ' . &ft, "info", {})
+--       ]])
+--             end
+--         end,
+--     },
+-- })
+
+lambda.augroup("TerminalAutocommands", {
+    {
+        event = { "TermClose" },
+        command = function(args)
+            --- automatically close a terminal if the job wlambda.successful
+            if lambda.falsy(v.event.status) and lambda.falsy(vim.bo[args.buf].ft) then
+                cmd.bdelete({ args.buf, bang = true })
+            end
+        end,
+    },
+})
+------------------------------------------------------------------------------//
+
+lambda.augroup("AddTerminalMappings", {
+    {
+        event = { "TermOpen" },
+        command = function()
+            if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" or vim.bo.buftype == "terminal" then
+                local opts = { silent = false, buffer = 0 }
+                vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+                vim.keymap.set("t", "jn", [[<C-\><C-n>]], opts)
+                vim.keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", opts)
+                vim.keymap.set("t", "<C-j>", "<Cmd>wincmd j<CR>", opts)
+                vim.keymap.set("t", "<C-k>", "<Cmd>wincmd k<CR>", opts)
+                vim.keymap.set("t", "<C-l>", "<Cmd>wincmd l<CR>", opts)
+
+                vim.keymap.set("t", "]t", "<Cmd>tablast<CR>")
+                vim.keymap.set("t", "[t", "<Cmd>tabnext<CR>")
+                vim.keymap.set("t", ";<S-Tab>", "<Cmd>bprev<CR>")
+                vim.keymap.set("t", ";<Tab>", "<Cmd>close \\| :bnext<cr>")
+            end
+        end,
+    },
+})
 mkview_filetype_blocklist = {
     diff = true,
     gitcommit = true,
@@ -531,7 +350,6 @@ mkview_filetype_blocklist = {
     ["neo-tree"] = true,
     harpoon = true,
 }
-
 local function should_mkview()
     return vim.bo.buftype == ""
         and vim.fn.getcmdwintype() == ""
@@ -570,6 +388,8 @@ function mkview()
     end
 end
 
+--  TODO: (vsedov) (03:42:00 - 31/05/23): Need to fix this autocmd , there is something wrong with
+--  this one
 -- lambda.augroup("RememberFold", {
 --     {
 --         event = "BufReadPost",
@@ -586,5 +406,3 @@ end
 --         end,
 --     },
 -- })
--- --
---

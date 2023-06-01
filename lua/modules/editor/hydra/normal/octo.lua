@@ -298,5 +298,6 @@ Hydra({
             { exit = true, desc = "current_line range" },
         },
         { "q", nil, { exit = true } },
+        ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
     },
 })

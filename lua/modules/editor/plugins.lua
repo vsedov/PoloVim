@@ -135,6 +135,19 @@ editor({
         max_join_length = 500,
     },
 })
+editor({
+    "Wansmer/sibling-swap.nvim",
+    keys = { "]w", "[w" },
+    dependencies = { "nvim-treesitter" },
+    opts = {
+        use_default_keymaps = true,
+        highlight_node_at_cursor = true,
+        keymaps = {
+            ["]w"] = "swap_with_left",
+            ["[w"] = "swap_with_right",
+        },
+    },
+})
 
 editor({
     "haya14busa/vim-asterisk",
@@ -162,8 +175,23 @@ editor({
     "AndrewRadev/switch.vim",
     lazy = true,
     init = function()
-        vim.g.switch_mapping = ";S"
+        vim.g.switch_mapping = "<leader>S"
     end,
-    keys = { ";S" },
+    keys = { "<leader>S" },
     cmd = { "Switch", "SwitchCase" },
+})
+
+editor({
+    "MaximilianLloyd/lazy-reload.nvim",
+    keys = {
+        -- Opens the command.
+        { "<localleader>rl", "<cmd>lua require('lazy-reload').feed()<cr>", desc = "Reload a plugin" },
+    },
+    config = true,
+})
+
+editor({
+    "aaron-p1/virt-notes.nvim",
+    keys = { "<leader>v" },
+    config = true,
 })

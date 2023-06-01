@@ -18,7 +18,6 @@ local plugins = {
     {
         name = "neorg",
         enable = true,
-        options = { priority = 6 },
     },
     {
         name = "codeium",
@@ -71,7 +70,7 @@ local plugins = {
     },
     {
         name = "tmux",
-        enable = true,
+        enable = vim.env.TMUX ~= nil,
         option = {
             all_panes = true,
             label = "[tmux]",
@@ -84,13 +83,6 @@ local plugins = {
     {
         name = "cmp_overseer",
         enable = true,
-    },
-    {
-        name = "lab.quick_data",
-        enable = false,
-        options = {
-            keyword_length = 4,
-        },
     },
 }
 

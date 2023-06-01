@@ -18,7 +18,7 @@ windows({
     "tamton-aquib/flirt.nvim",
     cond = lambda.config.ui.flirt.use_flirt,
     lazy = true,
-    event = "BufWinEnter",
+    event = "BufEnter",
     config = function()
         require("flirt").setup({
             override_open = lambda.config.ui.flirt.use_flirt_override, -- experimental

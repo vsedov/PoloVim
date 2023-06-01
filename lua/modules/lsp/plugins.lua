@@ -97,26 +97,32 @@ lsp({
 lsp({
     "smjonas/inc-rename.nvim",
     lazy = true,
-    event = "VeryLazy",
-    config = conf.rename,
+    opts = { hl_group = "Visual", preview_empty_name = true },
+    keys = {
+        {
+            "<leader>gr",
+            function()
+                return string.format(":IncRename %s", vim.fn.expand("<cword>"))
+            end,
+            expr = true,
+            silent = false,
+            desc = "lsp: incremental rename",
+        },
+    },
 })
 
--- lsp({ "SmiteshP/nvim-navic", event = "VeryLazy", after = "nvim-lspconfig", config = conf.navic })
+lsp({ "SmiteshP/nvim-navic", event = "VeryLazy", after = "nvim-lspconfig", config = conf.navic })
 
 lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
 lsp({
+
     "liuchengxu/vista.vim",
     cmd = { "Vista" },
     config = conf.vista,
 })
 
 lsp({
-    "barreiroleo/ltex-extra.nvim",
-    lazy = true,
-    ft = { "latex", "tex" },
-    module = "ltex_extra",
-})
-lsp({
+
     "rmagatti/goto-preview",
     lazy = true,
     config = conf.goto_preview,
@@ -131,38 +137,40 @@ lsp({
 
 lsp({
     "SmiteshP/nvim-navbuddy",
+    lazy = true,
+    cond = lambda.config.lsp.use_navbuddy,
     dependencies = {
         "neovim/nvim-lspconfig",
         "SmiteshP/nvim-navic",
         "MunifTanjim/nui.nvim",
+        "numToStr/Comment.nvim", -- Optional
+        "nvim-telescope/telescope.nvim", -- Optional
     },
-    config = true,
-})
-
-lsp({
-    "Davidyz/lsp-location-handler.nvim",
-    lazy = true,
-    config = true,
+    opts = { lsp = { auto_attach = true } },
 })
 
 lsp({
     "chikko80/error-lens.nvim",
+    cond = lambda.config.lsp.use_error_lens,
     lazy = true,
+    event = "LspAttach",
     config = true,
 })
 
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cond = lambda.config.lsp.use_rcd,
+    event = "LspAttach",
     config = conf.rcd,
 }) -- this could be  casing lag, im not sure
 
 lsp({
     "VidocqH/lsp-lens.nvim",
     cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
+    event = "VeryLazy",
     opts = {
-        enable = false,
-        include_declaration = false, -- Reference include declaration
+        enable = false, -- enable through lsp
+        include_declaration = true, -- Reference include declaration
         sections = { -- Enable / Disable specific request
             definition = true,
             references = true,
@@ -176,7 +184,6 @@ lsp({
 
 lsp({
     "KostkaBrukowa/definition-or-references.nvim",
-    cond = true,
     lazy = true,
     config = function()
         local make_entry = require("telescope.make_entry")
@@ -227,4 +234,40 @@ lsp({
             on_references_result = handle_references_response,
         })
     end,
+})
+lsp({
+    "lvimuser/lsp-inlayhints.nvim",
+    lazy = true,
+    branch = "anticonceal",
+    init = function()
+        lambda.augroup("InlayHintsSetup", {
+            {
+                event = "LspAttach",
+                command = function(args)
+                    local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
+                    if not id then
+                        return
+                    end
+                    local client = vim.lsp.get_client_by_id(id)
+                    require("lsp-inlayhints").on_attach(client, args.buf)
+                end,
+            },
+        })
+        lambda.highlight.plugin("inlayHints", { { LspInlayHint = { inherit = "Comment", italic = false } } })
+    end,
+    opts = {
+        inlay_hints = {
+            labels_separator = " ⏐ ",
+            parameter_hints = { prefix = "󰊕" },
+            type_hints = { prefix = "=> ", remove_colon_start = true },
+            priority = vim.highlight.priorities.user + 1,
+        },
+    },
+})
+
+lsp({
+    "neovim/nvimdev.nvim",
+    lazy = true,
+    ft = "lua",
+    config = conf.nvimdev,
 })

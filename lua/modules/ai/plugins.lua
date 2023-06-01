@@ -29,6 +29,7 @@ ai({
     cmd = { "AI" },
     init = function()
         vim.g.ai_completions_model = "gpt-4"
+        vim.g.ai_no_mappings = 1 -- disbale default mappings
 
         vim.keymap.set(
             { "v", "x" },

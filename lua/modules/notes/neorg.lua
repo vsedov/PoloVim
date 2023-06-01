@@ -15,6 +15,7 @@ M.opts = {
                 extensions = "all",
             },
         },
+
         ["core.concealer"] = {},
         ["core.esupports.metagen"] = {
             config = {
@@ -56,6 +57,8 @@ M.opts = {
             },
         },
         ["core.ui.calendar"] = {},
+        ["core.summary"] = {},
+        ["core.manoeuvre"] = {},
     },
 }
 

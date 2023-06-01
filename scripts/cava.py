@@ -2,10 +2,8 @@
 
 import argparse
 import os
-import signal
 import subprocess
 import sys
-import tempfile
 
 fifo_path = "/tmp/nvim_pipe"
 if len(sys.argv) > 1 and sys.argv[1] == "--subproc":

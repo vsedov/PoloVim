@@ -84,7 +84,7 @@ git({
         "GitConflictListQf",
     },
     lazy = true,
-    config = conf.git_conflict,
+    opts = { disable_diagnostics = true },
 })
 
 -- --[[ My work flow requires me to use both neogit and fugative, so what i think  ]]
@@ -145,4 +145,20 @@ git({
         mappings = nil,
     },
     config = true,
+})
+-- Diff arbitrary blocks of text with each other
+git({ "AndrewRadev/linediff.vim", cmd = "Linediff" })
+git({
+    "topaxi/gh-actions.nvim",
+    cmd = "GhActions",
+    keys = {
+        { "<leader>gh", "<cmd>GhActions<cr>", desc = "Open Github Actions" },
+    },
+    -- optional, you can also install and use `yq` instead.
+    build = "make",
+    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
+    opts = {},
+    config = function(_, opts)
+        require("gh-actions").setup(opts)
+    end,
 })

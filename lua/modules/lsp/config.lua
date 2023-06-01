@@ -1,4 +1,5 @@
 local config = {}
+
 function config.nvim_lsp_setup()
     require("modules.lsp.lsp.config").setup()
 end
@@ -63,7 +64,7 @@ function config.saga()
         },
         diagnostic = {
             twice_into = true,
-            show_code_action = false,
+            show_code_action = true,
             show_source = true,
             keys = {
                 exec_action = "o",
@@ -72,7 +73,7 @@ function config.saga()
             },
         },
         symbol_in_winbar = {
-            enable = true,
+            enable = false,
             separator = " ",
             hide_keyword = true,
             show_file = true,
@@ -131,28 +132,36 @@ end
 function config.lsp_sig()
     local cfg = {
         bind = true,
-        fix_pos = true, -- set to true, the floating window will not auto-close until finish all parameters
         doc_lines = 10,
         floating_window = false, -- show hint in a floating window, set to false for virtual text only mode ]]
         floating_window_above_cur_line = false,
         hint_enable = true, -- virtual hint enable
+        fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
+
         hint_prefix = "🐼 ", -- Panda for parameter
         auto_close_after = 15, -- close after 15 seconds
         --[[ hint_prefix = " ", ]]
         toggle_key = "»",
-        select_signature_key = "<C-n>",
-        max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
-        max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
         handler_opts = {
             border = lambda.style.border.type_0, -- double, single, shadow, none
         },
-        transpancy = 80,
-        zindex = 300, -- by default it will be on top of all floating windows, set to 50 send it to bottom
+        zindex = 1002,
+        timer_interval = 100,
         log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
         padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
+        toggle_key = [[<M-x>]], -- toggle signature on and off in insert mode,  e.g. '<M-x>'
+        -- select_signature_key = [[<M-n>]], -- toggle signature on and off in insert mode,  e.g. '<M-x>'
+        select_signature_key = [[<M-c>]], -- toggle signature on and off in insert mode,  e.g. '<M-x>'
     }
 
     require("lsp_signature").setup(cfg)
+    vim.keymap.set({ "n" }, "<C-w>K", function()
+        require("lsp_signature").toggle_float_win()
+    end, { silent = true, noremap = true, desc = "toggle signature" })
+
+    vim.keymap.set({ "n" }, "<Leader>k", function()
+        vim.lsp.buf.signature_help()
+    end, { silent = true, noremap = true, desc = "toggle signature" })
 end
 
 function config.hover()
@@ -207,19 +216,12 @@ function config.lsp_lines()
     end, { force = true })
 end
 
-function config.rename()
-    require("inc_rename").setup({
-        input_buffer_type = "dressing",
-        hl_group = "Visual",
-    })
-end
-
 function config.navic()
     local highlights = require("utils.ui.highlights")
     local s = lambda.style
     local misc = s.icons.misc
 
-    highlights.plugin("navic", {
+    lambda.highlight.plugin("navic", {
         { NavicText = { bold = true } },
         { NavicSeparator = { link = "Directory" } },
     })
@@ -376,6 +378,10 @@ function config.glance()
             enable = true, -- Available strating from nvim-0.8+
         },
     })
+end
+function config.nvimdev()
+    vim.g.nvimdev_auto_ctags = 1
+    vim.g.nvimdev_auto_lint = 1
 end
 
 return config

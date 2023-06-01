@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd("FileType", {
     once = false,
 })
 
-if tabnine_options.use_tabnine and tabnine_options.tabnine_prefetch then
+if tabnine_options.use_tabnine and tabnine_options.tabnine_prefetch and lambda.ai.tabnine.use_tabnine_cmp then
     local prefetch = vim.api.nvim_create_augroup("prefetch", { clear = true })
     vim.api.nvim_create_autocmd("BufRead", {
         group = prefetch,

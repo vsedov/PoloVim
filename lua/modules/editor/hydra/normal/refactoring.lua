@@ -40,12 +40,12 @@ Hydra({
         color = "blue",
         invoke_on_body = true,
         hint = {
-            position = "bottom",
-            border = "rounded",
+            position = "middle-right",
+            border = lambda.style.border.type_0,
         },
     },
     mode = { "n" },
-    body = "<leader>R",
+    body = "<leader>r",
     heads = {
         { "<Esc>", nil, { exit = true, nowait = true } },
         { "r", require("refactoring").select_refactor, { desc = "Select refactor" } },

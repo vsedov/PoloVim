@@ -25,7 +25,7 @@ o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
-opt.smoothscroll = true
+opt.smoothscroll = false
 o.splitbelow = true
 o.splitright = true
 o.eadirection = "hor"
@@ -174,6 +174,8 @@ opt.listchars = {
     precedes = "‹", -- Alternatives: … «
     trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
+
+opt.matchpairs = { "(:)", "{:}", "[:]", "<:>" }
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//

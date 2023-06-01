@@ -214,6 +214,7 @@ completion({
         })
     end,
 })
+
 completion({
     "ziontee113/SnippetGenie",
     lazy = true,
