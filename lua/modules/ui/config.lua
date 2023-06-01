@@ -53,12 +53,12 @@ function config.notify()
     })
 
     local notify = require("notify")
-
     notify.setup({
         timeout = 5000,
         stages = "fade_in_slide_out",
         top_down = false,
-        background_colour = "NormalFloat",
+        -- background_colour = "#000000",                                                                          ▕
+
         max_width = function()
             return math.floor(vim.o.columns * 0.6)
         end,
@@ -97,6 +97,7 @@ function config.neo_tree()
             },
         },
     })
+
     vim.g.neo_tree_remove_legacy_commands = 1
     require("neo-tree").setup({
         sources = {
@@ -400,6 +401,7 @@ end
 
 function config.blankline()
     vim.opt.termguicolors = true
+    local cond = not lambda.config.ui.indent_blankline.use_hlchunk
     require("indent_blankline").setup({
         enabled = true,
         -- char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
@@ -409,8 +411,8 @@ function config.blankline()
         char = "│", -- ┆ ┊ 
         context_char = "▎",
         char_priority = 12,
-        show_current_context = false,
-        show_current_context_start = false,
+        show_current_context = cond,
+        show_current_context_start = cond,
         show_current_context_start_on_current_line = true,
         show_first_indent_level = false,
         filetype_exclude = {
@@ -572,7 +574,7 @@ function config.noice()
         },
         popupmenu = {
             enabled = true, -- enables the Noice popupmenu UI
-            backend = "cmp", -- backend to use to show regular cmdline completions
+            -- backend = "cmp", -- backend to use to show regular cmdline completions
             kind_icons = {}, -- set to `false` to disable icons
         },
         commands = {
@@ -747,30 +749,62 @@ function config.illuminate()
     })
 end
 
-function config.beacon()
-    local beacon = require("beacon")
-    beacon.setup({
-        minimal_jump = 20,
-        ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
-        ignore_filetypes = {
-            "qf",
-            "neo-tree",
-            "NeogitCommitMessage",
-            "NeogitPopup",
-            "NeogitStatus",
-            "packer",
-            "trouble",
+function config.reticle()
+    require("reticle").setup({
+        -- Make the cursorline and cursorcolumn follow your active window. This
+        -- only works if the cursorline and cursorcolumn setting is switched on
+        -- globaly like explained in 'Usage'. Default is true for both values
+        follow = {
+            cursorline = true,
+            cursorcolumn = true,
         },
-    })
-    lambda.augroup("BeaconCmds", {
-        {
-            event = "BufReadPre",
-            pattern = "*.norg",
-            command = function()
-                beacon.beacon_off()
-            end,
+
+        -- Define filetypes where the cursorline / cursorcolumn is always on,
+        -- regardless of the global setting
+        always = {
+            cursorline = {
+                "json",
+            },
+            cursorcolumn = {},
         },
+
+        -- Define filetypes where the cursorline / cursorcolumn is always on when
+        -- the window is focused, regardless of the global setting
+        on_focus = {
+            cursorline = {
+                "help",
+                "NvimTree",
+            },
+            cursorcolumn = {},
+        },
+
+        -- Define filetypes where the cursorline / cursorcolumn is never on,
+        -- regardless of the global setting
+        never = {
+            cursorline = {
+                "qf",
+            },
+            cursorcolumn = {
+                "qf",
+            },
+        },
+
+        -- Define filetypes which are ignored by the plugin
+        ignore = {
+            cursorline = {
+                "lspinfo",
+                "neo-tree",
+            },
+            cursorcolumn = {
+                "lspinfo",
+                "neo-tree",
+            },
+        },
+
+        -- By default, nvim highlights the cursorline number only when the cursorline setting is
+        -- switched on. When enabeling the following setting, the cursorline number
+        -- of every window is always highlighted, regardless of the setting
+        always_show_cl_number = true,
     })
 end
-
 return config

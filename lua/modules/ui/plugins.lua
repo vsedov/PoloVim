@@ -103,17 +103,16 @@ ui({
             "s1n7ax/nvim-window-picker",
             config = function()
                 require("window-picker").setup({
+                    use_winbar = "smart",
                     autoselect_one = true,
-                    include_current = true,
+                    include_current = false,
+                    other_win_hl_color = lambda.highlight.get("Visual", "bg"),
                     filter_rules = {
-                        -- filter using buffer options
                         bo = {
-                            -- if the file type is one of following, the window will be ignored
-                            filetype = { "neo-tree", "neo-tree-popup", "notify" },
-                            buftype = { "terminal", "quickfix" },
+                            filetype = { "neo-tree-popup", "quickfix" },
+                            buftype = { "terminal", "quickfix", "nofile" },
                         },
                     },
-                    other_win_hl_color = "#e35e4f",
                 })
             end,
         },
@@ -365,7 +364,7 @@ ui({
 })
 ui({
     "luukvbaal/statuscol.nvim",
-    cond = true,
+    cond = lambda.config.ui.use_status_col,
     config = function()
         local builtin = require("statuscol.builtin")
 
@@ -407,70 +406,16 @@ ui({
 })
 ui({
     "tummetott/reticle.nvim",
-    config = function()
-        require("reticle").setup({
-            -- Make the cursorline and cursorcolumn follow your active window. This
-            -- only works if the cursorline and cursorcolumn setting is switched on
-            -- globaly like explained in 'Usage'. Default is true for both values
-            follow = {
-                cursorline = true,
-                cursorcolumn = true,
-            },
-
-            -- Define filetypes where the cursorline / cursorcolumn is always on,
-            -- regardless of the global setting
-            always = {
-                cursorline = {
-                    "json",
-                },
-                cursorcolumn = {},
-            },
-
-            -- Define filetypes where the cursorline / cursorcolumn is always on when
-            -- the window is focused, regardless of the global setting
-            on_focus = {
-                cursorline = {
-                    "help",
-                    "NvimTree",
-                },
-                cursorcolumn = {},
-            },
-
-            -- Define filetypes where the cursorline / cursorcolumn is never on,
-            -- regardless of the global setting
-            never = {
-                cursorline = {
-                    "qf",
-                },
-                cursorcolumn = {
-                    "qf",
-                },
-            },
-
-            -- Define filetypes which are ignored by the plugin
-            ignore = {
-                cursorline = {
-                    "lspinfo",
-                    "neo-tree",
-                },
-                cursorcolumn = {
-                    "lspinfo",
-                    "neo-tree",
-                },
-            },
-
-            -- By default, nvim highlights the cursorline number only when the cursorline setting is
-            -- switched on. When enabeling the following setting, the cursorline number
-            -- of every window is always highlighted, regardless of the setting
-            always_show_cl_number = true,
-        })
-    end,
+    lazy = false,
+    config = conf.reticle,
 })
 
+--  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
+--  i wonder if they are any better that what ive had before
 ui({
     "glepnir/hlsearch.nvim",
-    lazy = true,
-    event = "VeryLazy",
+    cond = lambda.config.ui.use_hlsearch,
+    event = "CursorHold",
     config = true,
 })
 
@@ -486,6 +431,7 @@ ui({
 })
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
+    cond = lambda.config.ui.use_scroll,
     event = "VeryLazy",
     opts = { hide_cursor = true, mappings = { "<C-d>", "<C-u>", "zt", "zz", "zb" } },
 })
