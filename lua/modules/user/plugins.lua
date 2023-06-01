@@ -1,69 +1,42 @@
 local user = require("core.pack").package
-
 user({
-    "jackMort/pommodoro-clock.nvim",
+    "Dhanus3133/LeetBuddy.nvim",
     lazy = true,
     dependencies = {
-        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
     },
-    keys = {
-        ";1",
-        ";2",
-        ";3",
-        ";4",
-        ";5",
+    cmd = {
+
+        "LBQuestions",
+        "LBQuestion",
+        "LBReset",
+        "LBTest",
+        "LBSubmit",
+        "LeetActivate",
     },
     config = function()
-        require("pommodoro-clock").setup({})
-        vim.keymap.set("n", ";1", function()
-            require("pommodoro-clock").toggle_pause()
-        end)
-
-        vim.keymap.set("n", ";2", function()
-            require("pommodoro-clock").start("work")
-        end)
-        vim.keymap.set("n", ";3", function()
-            require("pommodoro-clock").start("short_break")
-        end)
-        vim.keymap.set("n", ";4", function()
-            require("pommodoro-clock").start("long_break")
-        end)
-        vim.keymap.set("n", ";5", function()
-            require("pommodoro-clock").close()
+        require("leetbuddy").setup({})
+        lambda.command("LeetActivate", function()
+            binds = {
+                ["<leader>lq"] = "LBQuestions",
+                ["<leader>ll"] = "LBQuestion",
+                ["<leader>lr"] = "LBReset",
+                ["<leader>lt"] = "LBTest",
+                ["<leader>ls"] = "LBSubmit",
+            }
+            for x, v in pairs(binds) do
+                vim.keymap.set("n", x[1], x[2], v, { noremap = true, silent = true })
+            end
         end)
     end,
 })
---
+
 user({
     "tamton-aquib/mpv.nvim",
     lazy = true,
     cmd = "MpvToggle",
     opts = { setup_widgets = true, timer = { throttle = 100 } },
-})
-
-user({
-    "kwakzalver/duckytype.nvim",
-    lazy = true,
-    cmd = {
-        "PythonSpell",
-        "EnglishSpell",
-        "DuckyType",
-    },
-    opts = {
-        {
-            expected = "python_keywords",
-            number_of_words = 42,
-            average_word_length = 5.69,
-        },
-    },
-    init = function()
-        lambda.command("EnglishSpell", function()
-            require("duckytype").Start("english_common")
-        end, {})
-        lambda.command("PythonSpell", function()
-            require("duckytype").Start("python_keywords")
-        end, {})
-    end,
 })
 
 user({
@@ -140,38 +113,6 @@ user({
         vim.keymap.set("n", "\\U", "<Cmd>UrlView lazy<CR>", { desc = "view plugin URLs" })
     end,
 })
-
-user({
-    "letieu/hacker.nvim",
-    cmd = { "Hack", "HackFollow" },
-    config = function()
-        require("hacker").setup({
-            content = [[
-local plenary_dir = os.getenv("PLENARY_DIR") or "/tmp/plenary.nvim"
-local is_not_a_directory = vim.fn.isdirectory(plenary_dir) == 0
-if is_not_a_directory then
-  vim.fn.system({ "git", "clone", "https://github.com/nvim-lua/plenary.nvim", plenary_dir })
-end
-
-vim.opt.rtp:append(".")
-vim.opt.rtp:append(plenary_dir)
-
-vim.cmd("runtime plugin/plenary.vim")
-require("plenary.busted")
-
-            ]], -- The code snippet that show when typing
-            filetype = "lua", -- filetype of code snippet
-            speed = { -- characters insert each time, random from min -> max
-                min = 2,
-                max = 10,
-            },
-            is_popup = false, -- show random float window when typing
-            popup_after = 5,
-        })
-    end,
-})
-
---
 
 user({
     "bignos/bookmacro",
