@@ -1,9 +1,10 @@
 local bracket = { "d", "s", "c", "D" }
+local leader = "<leader>d"
 
 local config = {
     Docs = {
         color = "pink",
-        body = "<leader>d",
+        body = leader,
         mode = { "n", "v", "x", "o" },
         ["<Esc>"] = { nil, { exit = true } },
         -- Neogen stuff
@@ -53,8 +54,8 @@ local config = {
 return {
     config,
     "Docs",
-    { "i", "p" },
+    { { "i", "p" } },
     { "d", "s", "c", "D" },
-    5,
     3,
+    0,
 }

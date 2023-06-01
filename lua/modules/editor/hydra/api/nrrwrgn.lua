@@ -1,5 +1,6 @@
 local exit = { nil, { exit = true, desc = "EXIT" } }
 local bracket = { "<cr>", "w", "W", "m", "M" }
+local leader = ";e"
 local options = {
     NR = ": Open the selected region in a new narrowed window",
     NW = ": Open the current visual window in a new narrowed window",
@@ -16,7 +17,8 @@ local options = {
 local config = {
     Nrrwrgn = {
         color = "pink",
-        body = ";e",
+        body = leader,
+        mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
         ["<cr>"] = {
             function()
@@ -124,6 +126,6 @@ return {
     "Nrrwrgn",
     { { ";", "l" }, { "s", "S", "d", "u" } },
     { "<cr>", "w", "W", "m", "M" },
-    0,
-    5,
+    6,
+    3,
 }

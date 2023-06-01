@@ -2,6 +2,8 @@ local fmt = string.format
 local M = {}
 M.__index = M
 
+--  TODO: (vsedov) (01:52:42 - 31/05/23): Need to rewrite this section here, could do with a nice
+--  rewrite
 function M.new(config, module_name)
     local self = setmetatable({}, M)
     self.config = config or {}
@@ -24,6 +26,27 @@ function M.new(config, module_name)
     self:buildHeads()
     return self
 end
+function M.create_table_normal(var, sorted, string_len, start_val)
+    start_val = start_val or nil
+    var = {}
+    for _, v in pairs(sorted) do
+        if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
+            if start_val ~= nil then
+                if vim.tbl_contains(start_val, v) then
+                    -- if starts(v, start_val) then
+                    table.insert(var, v)
+                end
+            else
+                table.insert(var, v)
+            end
+        end
+    end
+    table.sort(var, function(a, b)
+        return a:lower() < b:lower()
+    end)
+
+    return var
+end
 
 function M:buildHeads()
     local mapping = {
@@ -34,7 +57,7 @@ function M:buildHeads()
             t.body = rhs
         end,
         mode = function(t, rhs)
-            t.config.mode = rhs
+            t.mode = rhs
         end,
         on_enter = function(t, rhs)
             t.config.on_enter = rhs
@@ -60,25 +83,25 @@ function M:addToCoreTable(value)
     table.insert(self.core_table, value)
 end
 
-function M:auto_hint_generate(listofcoretables, bracket, amount, cali)
-    local cali = cali or 4
+function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2)
     local container = {}
     local maxLen = 0 -- Variable to store the maximum length of description + bind
 
+    local function updateContainer(mapping, description)
+        container[mapping] = description
+        local len = string.len(mapping) + string.len(description)
+        if len > maxLen then
+            maxLen = len
+        end
+    end
+
     for x, y in pairs(self.config[self.name]) do
         local mapping = x
-        if type(y[1]) == "function" then
-            for x, y in pairs(y[2]) do
-                if x == "desc" then
-                    container[mapping] = y
 
-                    -- Update maxLen if the current description + bind length is larger
-                    local len = string.len(mapping) + string.len(y)
-                    if len > maxLen then
-                        maxLen = len
-                    end
-                end
-            end
+        local desc = (type(y[1]) == "function") and y[2].desc or y[1]
+
+        if desc then
+            updateContainer(mapping, desc)
         end
     end
 
@@ -105,24 +128,16 @@ function M:auto_hint_generate(listofcoretables, bracket, amount, cali)
     end
 
     local hint_table = {}
-    local string_val = "^ ^"
-        .. self.name
-        .. string.rep(" ", maxLen + amount + cali - string.len(self.name))
-        .. "^ ^\n\n"
-    string_val = string_val .. "^ ^" .. string.rep("▔", maxLen + amount + cali) .. "^ ^\n" -- Adjust the length of the horizontal line
+    -- local string_val = fmt("^ ^%s%s^ ^\n\n", self.name, string.rep(" ", maxLen - cal_v2)) -- Adjust the alignment of the module name
+    string_val = "^ ^" .. self.name .. "^\n\n"
+    string_val = string_val .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n" -- Adjust the length of the horizontal line
     for _, v in pairs(self.core_table) do
         if v == "\n" then
             hint = "\n"
-            hint = hint .. "^ ^" .. string.rep("▔", maxLen + amount + cali) .. "^ ^\n" -- Adjust the length of the horizontal line
+            hint = hint .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n" -- Adjust the length of the horizontal line
         else
             if container[v] then
-                -- hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
-                hint = "^ ^ _"
-                    .. v
-                    .. "_: "
-                    .. container[v]
-                    .. string.rep(" ", maxLen - string.len(v) - string.len(container[v]) + amount)
-                    .. " ^ ^\n"
+                hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
             end
         end
         table.insert(hint_table, hint)

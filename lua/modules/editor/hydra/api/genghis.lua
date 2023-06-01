@@ -1,12 +1,12 @@
 local leader = ";\\"
 
-local config = {}
 local exit = { nil, { exit = true, desc = "EXIT" } }
 
-config = {
+local config = {
     Genghis = {
         color = "pink",
         body = leader,
+        mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
 
         c = {
@@ -65,8 +65,8 @@ config = {
 return {
     config,
     "Genghis",
-    { "r", "d", "n", "m", "T" },
+    { { "r", "d", "n", "m", "T" } },
     { "c", "C", "<cr>" },
-    -2,
     6,
+    3,
 }
