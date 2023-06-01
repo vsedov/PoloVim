@@ -107,7 +107,8 @@ local function general_overrides()
         --------------------------------------------//
         -- Floats
         ---------------------------------------------//
-        { NormalFloat = { bg = { from = "Normal", alter = -0.15 } } },
+        { NormalFloat = { bg = { from = "Normal", alter = 0 } } },
+        -- { NormalFloat = { bg = "NONE" } },
         { FloatBorder = { bg = { from = "NormalFloat" }, fg = { from = "Comment" } } },
         { FloatTitle = { bold = true, fg = "white", bg = { from = "FloatBorder", attr = "fg" } } },
         ---------------------------------------------//
