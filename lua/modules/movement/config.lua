@@ -396,7 +396,7 @@ function config.treehopper()
             or [[<Plug>(leap-ast)]]
     end, { expr = true, silent = true })
 
-    vim.keymap.set("n", "zF", function()
+    vim.keymap.set("n", "zl", function()
         if with_tsht() then
             require("tsht").nodes({ ignore_injections = false })
         else
@@ -406,7 +406,7 @@ function config.treehopper()
         vim.cmd("normal! Vzf")
     end, { silent = true })
 
-    vim.keymap.set("n", "zf", function()
+    vim.keymap.set("n", "z<cr>", function()
         vim.cmd("normal! v")
         require("leap-ast").leap()
         vim.cmd("normal! Vzf")
