@@ -109,11 +109,12 @@ lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
     use_lsp_lines = true,
     use_lsp_signature = true,
-    use_typos = true,
+    use_typos = false, -- this was getting annoying
     use_format_modifcation = false,
     use_navbuddy = true,
     use_error_lens = true,
     use_rcd = true,
+    use_inlay_hints = false,
 
     --    ╭────────────────────────────────────────────────────────────────────╮
     --    │     languages                                                      │
@@ -139,12 +140,18 @@ lambda.config.ui = {
     use_virtcol = true,
     use_indent_blankline = true,
     use_hlsearch = false,
-    use_status_col = true, -- true  for plugin or false for heirline
+    use_reticle = false,
+    heirline = {
+        use_status_col = false, -- true  for plugin or false for heirline
+        use_win_bar = false,
+    },
     noice = {
         enable = true,
         lsp = {
             use_noice_signature = false, -- I would very much like to use this,l but for now this is broken
             use_noice_hover = false,
+            use_markdown = true,
+            use_documentation = true,
         },
     },
     flirt = {
