@@ -9,15 +9,19 @@ local search_sources = {
     }),
 }
 
-cmp.setup.cmdline("/", search_sources)
-cmp.setup.cmdline("?", search_sources)
--- Regex that triggers on : but not on :q or :w
-regex = [[^[:blank:]*(:)[^qw]$]]
+-- `:` cmdline setup.
 cmp.setup.cmdline(":", {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        { name = "cmdline", keyword_pattern = [=[^[:blank:]*(:)[^qw]$]=] },
-        { name = "cmdline_history" },
         { name = "path" },
+        { name = "cmdline_history" },
+    }, {
+        {
+            name = "cmdline",
+            option = {
+                ignore_cmds = { "Man", "!" },
+            },
+        },
     }),
 })
 
