@@ -1,5 +1,29 @@
 local M = {}
 local api = vim.api
+local leap_binds = ""
+lambda.command("LeapBinds", function()
+    vim.notify(leap_binds)
+end, { force = true })
+
+local function leapAction(actionFn, actionDesc)
+    return function()
+        require("leap").leap({
+            target_windows = { vim.fn.win_getid() },
+            action = require("leap-spooky").spooky_action(actionFn, { keeppos = true }),
+        })
+    end
+end
+
+local function createEntry(key, actionFn, actionDesc)
+    leap_binds = leap_binds .. key .. " " .. actionDesc .. "\n"
+
+    return {
+        key,
+        leapAction(actionFn, actionDesc),
+        desc = actionDesc,
+        mode = { "x", "o" },
+    }
+end
 
 function paranormal(targets)
     -- Get the :normal sequence to be executed.
@@ -103,7 +127,7 @@ function binds()
         },
         {
             { "n", "x", "o" },
-            "cS",
+            "<c-w><cr>",
             function()
                 require("leap").leap({
                     target_windows = vim.tbl_filter(function(win)
@@ -115,7 +139,7 @@ function binds()
         },
         {
             { "n", "x", "o" },
-            "cq",
+            "\\<cr>",
             function()
                 require("leap").leap({
                     target_windows = { vim.fn.win_getid() },
@@ -143,7 +167,7 @@ function binds()
         },
         {
             { "n", "x", "o" },
-            "<c-c>",
+            "<c-e>",
             function()
                 winid = vim.api.nvim_get_current_win()
                 require("leap").leap({
@@ -153,9 +177,81 @@ function binds()
             end,
             "leap_to_line",
         },
+        {
+            { "n" },
+            "\\n",
+            function()
+                local pat = vim.fn.getreg("/")
+                local leapable = require("leap-search").leap(pat)
+                if not leapable then
+                    return vim.fn.search(pat)
+                end
+            end,
+            "leap_to_next_match",
+        },
+        {
+            { "n" },
+            "\\N",
+            function()
+                local pat = vim.fn.getreg("/")
+                local leapable = require("leap-search").leap(pat, {}, { backward = true })
+                if not leapable then
+                    return vim.fn.search(pat, "b")
+                end
+            end,
+            "leap_to_previous_match",
+        },
+
+        {
+            { "n" },
+            "\\/",
+            function()
+                require("leap-search").leap(nil, {
+                    engines = {
+                        { name = "string.find", plain = true, ignorecase = true },
+                        -- { name = "kensaku.query" }, -- to search Japanese string with romaji with https://github.com/lambdalisue/kensaku.vim
+                    },
+                    { target_windows = { vim.api.nvim_get_current_win() } },
+                })
+            end,
+            "leap search",
+        },
+        {
+            { "n" },
+            "\\k",
+            function()
+                local pat = vim.fn.expand("<cword>")
+                require("leap-search").leap(pat, {
+                    engines = {
+                        { name = "string.find", plain = true, ignorecase = true },
+                        -- { name = "kensaku.query" }, -- to search Japanese string with romaji with
+                    },
+                    { target_windows = { vim.api.nvim_get_current_win() } },
+                })
+            end,
+            "leap search",
+        },
+        {
+            { "n" },
+            "\\s",
+            function()
+                require("leap-search").leap(vim.fn.getreg("/"))
+            end,
+            "leap search current / reg",
+        },
+        {
+            { "n", "x", "o" },
+            "<c-g>",
+            function()
+                require("leap-ast").leap()
+            end,
+            "leap-ast",
+        },
     }
+
     for _, m in ipairs(default_keymaps) do
         vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true, desc = m[4] })
+        leap_binds = leap_binds .. m[2] .. " " .. m[4] .. "\n"
     end
 end
 
@@ -237,20 +333,59 @@ function M.leap_config()
 end
 
 function M.leap_spooky()
-    require("leap-spooky").setup({
-        affixes = {
-            remote = { window = "r", cross_window = "R" },
-            magnetic = { window = "m", cross_window = "M" },
-        },
-        paste_on_remote_yank = true,
-    })
+    local entries = {
+
+        createEntry("irf", function()
+            return "vif"
+        end, "inner function"),
+
+        createEntry("irc", function()
+            return "vic"
+        end, "inner classes"),
+
+        createEntry("irs", function()
+            return "vis"
+        end, "inner scopes"),
+        createEntry("imf", function()
+            return "vif"
+        end, "inner function"),
+        createEntry("imc", function()
+            return "vic"
+        end, "inner classes"),
+        createEntry("ims", function()
+            return "vis"
+        end, "inner scopes"),
+        createEntry("arf", function()
+            return "vaf"
+        end, "around function"),
+        createEntry("arc", function()
+            return "vac"
+        end, "around classes"),
+        createEntry("ars", function()
+            return "vas"
+        end, "around scopes"),
+
+        createEntry("amf", function()
+            return "vaf"
+        end, "around function"),
+
+        createEntry("amc", function()
+            return "vac"
+        end, "around classes"),
+
+        createEntry("ams", function()
+            return "vas"
+        end, "around scopes"),
+    }
+
+    return entries
 end
 
 function M.leap_flit()
     require("flit").setup({
         keys = { f = "f", F = "F", t = "t", T = "T" },
         -- A string like "nv", "nvo", "o", etc.
-        labeled_modes = "nvo",
+        labeled_modes = "nvoi",
         multiline = true,
         opts = { equivalence_classes = { " \t", "\r\n" } },
     })

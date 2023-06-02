@@ -14,11 +14,21 @@ movement({
 
 movement({
     "ggandor/leap-spooky.nvim",
-    lazy = true,
     event = "VeryLazy",
+    lazy = true,
     priority = 50,
-    dependencies = { "ggandor/leap.nvim" },
-    config = leap.leap_spooky,
+    dependencies = {
+        "leap.nvim",
+        "atusy/leap-wide.nvim",
+    },
+    opts = {
+        affixes = {
+            magnetic = { window = "m", cross_window = "M" },
+            remote = { window = "r", cross_window = "R" },
+        },
+        paste_on_remote_yank = true,
+    },
+    keys = leap.leap_spooky(),
 })
 
 movement({
@@ -26,64 +36,22 @@ movement({
     lazy = true,
     event = "VeryLazy",
     priority = 50,
-    dependencies = { "ggandor/leap.nvim" },
+    dependencies = { "ggandor/leap.nvim", "atusy/leap-wide.nvim" },
     config = leap.leap_flit,
 })
 
 movement({
     "ggandor/leap-ast.nvim",
     lazy = true,
-    dependencies = { "ggandor/leap.nvim" },
-    keys = { "<c-g>" },
-    config = function()
-        vim.keymap.set({ "n", "x", "o" }, "<c-g>", function()
-            require("leap-ast").leap()
-        end, { noremap = true, silent = true })
-    end,
+    dependencies = { "ggandor/leap.nvim", "atusy/leap-wide.nvim" },
 })
 
 movement({
     "atusy/leap-search.nvim",
-    keys = { "\\n", "\\N", "\\/", "\\s" },
-    dependencies = { "ggandor/leap.nvim", "atusy/leap-wide.nvim" },
-    config = function()
-        vim.keymap.set("n", "\\n", function()
-            local pat = vim.fn.getreg("/")
-            local leapable = require("leap-search").leap(pat)
-            if not leapable then
-                return vim.fn.search(pat)
-            end
-        end, {})
-
-        vim.keymap.set("n", "\\N", function()
-            local pat = vim.fn.getreg("/")
-            local leapable = require("leap-search").leap(pat, {}, { backward = true })
-            if not leapable then
-                return vim.fn.search(pat, "b")
-            end
-        end, {})
-        vim.keymap.set("n", "\\/", function()
-            require("leap-search").leap(nil, {
-                engines = {
-                    { name = "string.find", plain = true, ignorecase = true },
-                    -- { name = "kensaku.query" }, -- to search Japanese string with romaji with https://github.com/lambdalisue/kensaku.vim
-                },
-            }, { target_windows = { vim.api.nvim_get_current_win() } })
-        end, {})
-        vim.keymap.set("n", "\\s", function()
-            require("leap-search").leap(vim.fn.getreg("/"))
-        end, {})
-    end,
-})
-
---------------------------------
-
-movement({
-    "unblevable/quick-scope",
     lazy = true,
-    config = conf.quick_scope,
+    dependencies = { "ggandor/leap.nvim", "atusy/leap-wide.nvim" },
 })
---------------------------------
+
 movement({
     "ziontee113/syntax-tree-surfer",
     lazy = true,
@@ -113,6 +81,21 @@ movement({
 --------------------------------
 movement({
     "LeonHeidelbach/trailblazer.nvim",
+    lazy = true,
+    keys = {
+        "ma",
+        "mb",
+        "mj",
+        "mk",
+        "ml",
+        "mL",
+        "mn",
+        "mN",
+        "mt",
+        "m[",
+        "m]",
+        "ms",
+    },
     config = function()
         require("trailblazer").setup({
             auto_save_trailblazer_state_on_exit = true,
