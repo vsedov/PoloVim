@@ -1,14 +1,10 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 
---  TODO: (vsedov) (20:18:05 - 03/01/23): Figure out how to properly lazy load this scondif, as there
---  are a few issues with this right now and im not sure why this does not work.
 lsp({
     "neovim/nvim-lspconfig",
     lazy = true,
-    event = "VeryLazy",
     init = conf.nvim_lsp_setup,
-    config = conf.nvim_lsp,
 })
 
 lsp({
@@ -64,6 +60,7 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     lazy = true,
+    cond = lambda.config.lsp.use_lsp_signature,
     event = "VeryLazy",
     config = conf.lsp_sig,
 })
