@@ -141,6 +141,7 @@ movement({
     end,
 })
 
+--  TODO: (vsedov) (10:43:27 - 01/06/23): remove this as this is no longer maintained.
 movement({
     "phaazon/hop.nvim",
     lazy = true,
