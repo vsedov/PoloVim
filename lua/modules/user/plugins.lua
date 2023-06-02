@@ -17,7 +17,7 @@ user({
         "LeetActivate",
     },
     config = function()
-        require("leetbuddy").setup({})
+        require("leetbuddy").setup({ language = "py" })
         lambda.command("LeetActivate", function()
             binds = {
                 ["<leader>lq"] = "LBQuestions",
@@ -327,6 +327,7 @@ user({
         },
         {
             "<C-u>",
+
             function()
                 require("readline").backward_kill_line()
             end,
