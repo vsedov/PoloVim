@@ -45,7 +45,7 @@ Hydra({
         },
     },
     mode = { "n" },
-    body = "<leader>r",
+    body = "<leader>R",
     heads = {
         { "<Esc>", nil, { exit = true, nowait = true } },
         { "r", require("refactoring").select_refactor, { desc = "Select refactor" } },
