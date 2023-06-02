@@ -1,5 +1,11 @@
 local filerunners = {
-
+    -- These are handled better by julia specific provider
+    -- julia = {
+    --     name = "Julia",
+    --     repl = "julia",
+    --     projectRepl = { "julia", "--threads=auto", "--project" },
+    --     filerunner = function() return { "julia", vim.fn.expand("%:p") } end,
+    -- },
     go = {
         name = "Go",
         filerunner = function()
@@ -48,15 +54,9 @@ local filerunners = {
             return { "nu", vim.fn.expand("%:p") }
         end,
     },
-    ipython = {
-        name = "Python ipython",
-        repl = "ipython",
-        filerunner = function()
-            return { "python", vim.fn.expand("%:p") }
-        end,
-    },
     python = {
         name = "Python",
+        repl = "ipython",
         filerunner = function()
             return { "python", vim.fn.expand("%:p") }
         end,
@@ -77,7 +77,7 @@ local filerunners = {
     },
     rust = {
         name = "Rust",
-        repl = "papyrus",
+        repl = "irust",
         filerunner = function()
             return { "rustc", vim.fn.expand("%:p") }
         end,
@@ -191,7 +191,7 @@ return {
                     return {
                         cmd = ft.filerunner(),
                         name = "Running " .. vim.fn.expand("%:t:r"),
-                        components = { "default", "unique" },
+                        components = { "default", "unique", "users.start_open" },
                     }
                 end,
                 priority = 4,
@@ -209,11 +209,18 @@ return {
                     return {
                         cmd = ft.repl,
                         name = ft.name .. " REPL " .. ft.num,
+                        components = {
+                            "default",
+                            {
+                                "user.start_open",
+                                start_insert = true,
+                            },
+                        },
                     }
                 end,
                 priority = 5,
             })
         end
-        return ret
+        cb(ret)
     end,
 }

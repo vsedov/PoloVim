@@ -38,26 +38,17 @@ return {
     constructor = function(params)
         return {
             on_start = function(_, task)
-                local bufnr = OpenTaskBufnr[task.name]
-                local winids = get_win_id(bufnr)
-                if #winids > 0 then
-                    for _, winid in ipairs(winids) do
-                        vim.api.nvim_win_set_buf(winid, task.strategy.bufnr)
+                if task.cmd == "fish" then
+                    overseer.open()
+                    if not params.goto_prev then
+                        require("user.myfuncs").nav_dir("l")
+                        if params.start_insert then
+                            vim.cmd.startinsert()
+                        end
+                    else
+                        vim.cmd.wincmd({ args = { "p" } })
                     end
-                else
-                    overseer.run_action(task, "open")
                 end
-
-                if params.goto_prev then
-                    vim.cmd.wincmd({ args = { "p" } })
-                elseif #winids > 0 then
-                    vim.api.nvim_set_current_win(winids[1])
-                end
-
-                if params.start_insert then
-                    vim.cmd.startinsert()
-                end
-                OpenTaskBufnr[task.name] = task.strategy.bufnr
             end,
         }
     end,

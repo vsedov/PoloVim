@@ -46,6 +46,6 @@ return {
             end
         end
 
-        return ret
+        cb(ret)
     end,
 }

@@ -34,20 +34,7 @@ return {
                 params = {},
             },
             {
-                name = "Source NVim Module",
-                builder = function()
-                    require("telescope.builtin").reloader(require("telescope.themes").get_ivy())
-                    return {
-                        cmd = "",
-                        name = "",
-                        components = { "users.dispose_now" },
-                    }
-                end,
-                priority = 59,
-                params = {},
-            },
-            {
-                name = "Reload XMonad",
+                name = "Build and Reload XMonad",
                 builder = function()
                     return {
                         name = "Reload XMonad",
@@ -79,7 +66,6 @@ return {
                         name = "Log XMonad Stack",
                         cmd = { "/home/viv/.cabal/bin/xmonadctl-exe", "dump-stack" },
                         components = { "default", "unique" },
-                        strategy = { "toggleterm", open_on_start = false, hidden = true },
                     }
                 end,
                 priority = 61,
@@ -91,7 +77,6 @@ return {
                     return {
                         name = "Log XMonad Full Stack",
                         cmd = { "/home/viv/.cabal/bin/xmonadctl-exe", "dump-full-stack" },
-                        strategy = { "toggleterm", open_on_start = false, hidden = true },
                         components = { "default", "unique" },
                     }
                 end,
@@ -104,7 +89,14 @@ return {
                     return {
                         name = "View xsession Logs",
                         cmd = "tail --follow --retry ~/.xsession-errors | less -S",
-                        components = { "default", "unique" },
+                        components = {
+                            "default",
+                            "unique",
+                            {
+                                "users.start_open",
+                                goto_prev = true,
+                            },
+                        },
                     }
                 end,
                 priority = 60,
