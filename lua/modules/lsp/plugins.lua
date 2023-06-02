@@ -60,7 +60,7 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     lazy = true,
-    cond = lambda.config.lsp.use_lsp_signature,
+    cond = lambda.config.lsp.lsp_sig.use_lsp_signature,
     event = "VeryLazy",
     config = conf.lsp_sig,
 })
@@ -150,14 +150,14 @@ lsp({
     "chikko80/error-lens.nvim",
     cond = lambda.config.lsp.use_error_lens,
     lazy = true,
-    event = "LspAttach",
+    event = "VeryLazy",
     config = true,
 })
 
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cond = lambda.config.lsp.use_rcd,
-    event = "LspAttach",
+    event = "VeryLazy",
     config = true,
 }) -- this could be  casing lag, im not sure
 

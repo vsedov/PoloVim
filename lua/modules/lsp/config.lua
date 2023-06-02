@@ -124,23 +124,22 @@ function config.saga()
             },
         },
     })
-    vim.wo.winbar = require("lspsaga.symbolwinbar"):get_winbar()
 end
 function config.lsp_sig()
     local cfg = {
         bind = true,
         doc_lines = 10,
-        floating_window = false, -- show hint in a floating window, set to false for virtual text only mode ]]
-        floating_window_above_cur_line = false,
+        floating_window = lambda.config.lsp.lsp_sig.use_floating_window, -- show hint in a floating window, set to false for virtual text only mode ]]
+        floating_window_above_cur_line = true,
         hint_enable = true, -- virtual hint enable
-        fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
+        fix_pos = lambda.config.lsp.lsp_sig.fix_pos, -- set to true, the floating window will not auto-close until finish all parameters
 
         hint_prefix = "🐼 ", -- Panda for parameter
         auto_close_after = 15, -- close after 15 seconds
         --[[ hint_prefix = " ", ]]
         toggle_key = "»",
         handler_opts = {
-            border = lambda.style.border.type_0, -- double, single, shadow, none
+            border = "single",
         },
         zindex = 1002,
         timer_interval = 100,
@@ -152,6 +151,7 @@ function config.lsp_sig()
     }
 
     require("lsp_signature").setup(cfg)
+
     vim.keymap.set({ "n" }, "<C-w>K", function()
         require("lsp_signature").toggle_float_win()
     end, { silent = true, noremap = true, desc = "toggle signature" })
@@ -178,39 +178,6 @@ function config.hover()
         -- to a :h preview-window when pressing the hover keymap.
         preview_window = true,
     })
-end
-
-function config.lsp_lines()
-    require("lsp_lines").setup()
-    local Diagnostics = vim.api.nvim_create_augroup("Diagnostics", { clear = true })
-
-    local create_auto_cmd = function()
-        vim.api.nvim_create_autocmd("InsertLeave", {
-            pattern = "*",
-            group = Diagnostics,
-            callback = function()
-                vim.diagnostic.config({ virtual_lines = true })
-            end,
-        })
-        vim.api.nvim_create_autocmd("InsertEnter", {
-            pattern = "*",
-            group = Diagnostics,
-            callback = function()
-                vim.diagnostic.config({ virtual_lines = false })
-            end,
-        })
-    end
-
-    create_auto_cmd()
-    vim.api.nvim_create_user_command("TL", function()
-        popup_toggle = lambda.config.lsp.use_lsp_lines
-        if popup_toggle then
-            create_auto_cmd()
-        else
-            vim.api.nvim_clear_autocmds({ group = Diagnostics })
-            vim.diagnostic.config({ virtual_lines = false })
-        end
-    end, { force = true })
 end
 
 function config.navic()
