@@ -1,9 +1,15 @@
 local runner = require("core.pack").package
 local conf = require("modules.runner.config")
+
+runner({
+    "stevearc/overseer.nvim",
+    event = "VeryLazy",
+    config = conf.overseer,
+})
 runner({
     "google/executor.nvim",
     event = "VeryLazy",
-    config = true,
+    config = conf.executor,
 })
 
 runner({
@@ -20,11 +26,8 @@ runner({
     config = conf.code_runner,
 })
 
-runner({
-    "stevearc/overseer.nvim",
-    event = "VeryLazy",
-    config = conf.overseer,
-})
+--  ──────────────────────────────────────────────────────────────────────
+
 runner({ "dccsillag/magma-nvim", ft = "python", build = ":UpdateRemotePlugins" })
 
 runner({
@@ -34,6 +37,8 @@ runner({
     cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
     config = true,
 })
+--  ──────────────────────────────────────────────────────────────────────
+
 runner({
     "rcarriga/neotest",
     lazy = true,
