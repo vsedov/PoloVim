@@ -3,7 +3,7 @@ function M.noice()
     return {
         cmdline = {
             enabled = true, -- enables the Noice cmdline UI
-            view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+            view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
             opts = {}, -- global options for the cmdline. See section on views
             ---@type table<string, CmdlineFormat>
             format = {
@@ -87,11 +87,15 @@ function M.noice()
             },
             override = {
                 -- override the default lsp markdown formatter with Noice
-                ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+                ["vim.lsp.util.convert_input_to_markdown_lines"] = lambda.config.ui.noice.lsp.use_markdown,
                 -- override the lsp markdown formatter with Noice
-                ["vim.lsp.util.stylize_markdown"] = false,
+                ["vim.lsp.util.stylize_markdown"] = lambda.config.ui.noice.lsp.use_markdown,
                 -- override cmp documentation with Noice (needs the other options to work)
-                ["cmp.entry.get_documentation"] = false,
+                ["cmp.entry.get_documentation"] = lambda.config.ui.noice.lsp.use_documentation,
+
+                -- ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                -- ["vim.lsp.util.stylize_markdown"] = true,
+                -- ["cmp.entry.get_documentation"] = true,
             },
         },
         markdown = {
