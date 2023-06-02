@@ -11,7 +11,7 @@ windows({
     "mrjones2014/smart-splits.nvim",
     lazy = true,
     build = "./kitty/install-kittens.bash",
-    -- config = true,
+    config = true,
 })
 
 windows({
