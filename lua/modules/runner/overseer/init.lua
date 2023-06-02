@@ -70,4 +70,4 @@ vim.api.nvim_create_user_command(
     {}
 )
 
-require("modules.lang.overseer.binds")
+require("modules.runner.overseer.binds")
