@@ -243,86 +243,73 @@ local function can_save()
         and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
--- lambda.augroup("Utilities", {
---     {
---         ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
---         event = { "BufReadCmd" },
---         pattern = { "file:///*" },
---         nested = true,
---         command = function(args)
---             cmd.bdelete({ bang = true })
---             cmd.edit(vim.uri_to_fname(args.file))
---         end,
---     },
---     {
---         event = { "BufWritePre", "FileWritePre" },
---         pattern = { "*" },
---         command = function()
---             if vim.tbl_contains({ "oil" }, vim.bo.ft) then
---                 return
---             end
---             local dir = vim.fn.expand("<afile>:p:h")
---             if vim.fn.isdirectory(dir) == 0 then
---                 vim.fn.mkdir(dir, "p")
---             end
---         end,
---     },
---     {
---         event = { "FileType" },
---         pattern = {
---             "norg",
---             "NeogitCommitMessage",
---             "markdown",
---         },
---         -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows        -- command = function(args)
---         --     vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000
---         -- end,
---         command = function(args)
---             vim.opt_local.spell = true
---         end,
---     },
---     {
---         event = { "BufLeave" },
---         pattern = { "*" },
---         command = function(args)
---             if api.nvim_buf_line_count(args.buf) <= 1 then
---                 return
---             end
---             if can_save() then
---                 cmd("silent! write ++p")
---             end
---         end,
---     },
---     {
---         event = { "BufWritePost" },
---         pattern = { "*" },
---         nested = true,
---         command = function()
---             if lambda.falsy(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
---                 cmd([[
---         unlet! b:ftdetect
---         filetype detect
---         call v:lua.vim.notify('Filetype set to ' . &ft, "info", {})
---       ]])
---             end
---         end,
---     },
--- })
-
-lambda.augroup("TerminalAutocommands", {
+lambda.augroup("Utilities", {
     {
-        event = { "TermClose" },
+        ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
+        event = { "BufReadCmd" },
+        pattern = { "file:///*" },
+        nested = true,
         command = function(args)
-            --- automatically close a terminal if the job wlambda.successful
-            if lambda.falsy(v.event.status) and lambda.falsy(vim.bo[args.buf].ft) then
-                cmd.bdelete({ args.buf, bang = true })
+            cmd.bdelete({ bang = true })
+            cmd.edit(vim.uri_to_fname(args.file))
+        end,
+    },
+    {
+        event = { "BufWritePre", "FileWritePre" },
+        pattern = { "*" },
+        command = function()
+            if vim.tbl_contains({ "oil" }, vim.bo.ft) then
+                return
+            end
+            local dir = vim.fn.expand("<afile>:p:h")
+            if vim.fn.isdirectory(dir) == 0 then
+                vim.fn.mkdir(dir, "p")
+            end
+        end,
+    },
+    -- {
+    --     event = { "FileType" },
+    --     pattern = {
+    --         "norg",
+    --         "NeogitCommitMessage",
+    --         "markdown",
+    --     },
+    --     -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows        -- command = function(args)
+    --     --     vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000
+    --     -- end,
+    --     command = function(args)
+    --         vim.opt_local.spell = true
+    --     end,
+    -- },
+    -- {
+    --     event = { "BufLeave" },
+    --     pattern = { "*" },
+    --     command = function(args)
+    --         if api.nvim_buf_line_count(args.buf) <= 1 then
+    --             return
+    --         end
+    --         if can_save() then
+    --             cmd("silent! write ++p")
+    --         end
+    --     end,
+    -- },
+    {
+        event = { "BufWritePost" },
+        pattern = { "*" },
+        nested = true,
+        command = function()
+            if lambda.falsy(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
+                cmd([[
+        unlet! b:ftdetect
+        filetype detect
+        call v:lua.vim.notify('Filetype set to ' . &ft, "info", {})
+      ]])
             end
         end,
     },
 })
-------------------------------------------------------------------------------//
 
-lambda.augroup("AddTerminalMappings", {
+lambda.augroup("TerminalAutocommands", {
     {
         event = { "TermOpen" },
         command = function()
@@ -343,6 +330,8 @@ lambda.augroup("AddTerminalMappings", {
         end,
     },
 })
+------------------------------------------------------------------------------//
+
 mkview_filetype_blocklist = {
     diff = true,
     gitcommit = true,
