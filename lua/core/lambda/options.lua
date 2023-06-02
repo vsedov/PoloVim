@@ -18,13 +18,10 @@ local use_copilot = true
 
 lambda.config = {
     use_hydra = true,
-
     -- innter treesitter, although this can be changed
     do_you_want_lag = true, -- Enable Extra regex, -- Fuck it
     better_ts_highlights = false, -- This needs a direct toggle i think
-
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
-
     record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
     loaded_confirm_quit = true,
@@ -90,11 +87,6 @@ lambda.config.abbrev = {
 
 lambda.config.cmp = {
     buffer = true,
-    rg = {
-        use_rg = false, -- this will induce lag , so use this on your own risk
-        keyword_length = 3,
-        depth = 6,
-    },
     luasnip = {
         luasnip_choice = false,
         luasnip = {
