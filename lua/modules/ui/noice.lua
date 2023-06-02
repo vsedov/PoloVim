@@ -3,7 +3,7 @@ function M.noice()
     return {
         cmdline = {
             enabled = true, -- enables the Noice cmdline UI
-            view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+            view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
             opts = {}, -- global options for the cmdline. See section on views
             ---@type table<string, CmdlineFormat>
             format = {
@@ -22,7 +22,7 @@ function M.noice()
         },
         popupmenu = {
             enabled = true, -- enables the Noice popupmenu UI
-            -- backend = "cmp", -- backend to use to show regular cmdline completions
+            backend = "cmp", -- backend to use to show regular cmdline completions
             kind_icons = {}, -- set to `false` to disable icons
         },
         commands = {

@@ -416,6 +416,7 @@ function config.blankline()
         show_current_context_start_on_current_line = true,
         show_first_indent_level = false,
         filetype_exclude = {
+            "OverseerForm",
             "norg",
             "dbout",
             "neo-tree-popup",
