@@ -395,3 +395,27 @@ end
 --         end,
 --     },
 -- })
+
+lambda.augroup("SaveFoldsWhenWriting", {
+    {
+        event = "BufWritePost",
+        pattern = { "*" },
+        command = function()
+            vim.cmd("silent! mkview")
+        end,
+    },
+    {
+        event = "QuitPre",
+        pattern = { "*" },
+        command = function()
+            vim.cmd("silent! mkview")
+        end,
+    },
+    {
+        event = "BufWinEnter",
+        pattern = { "*" },
+        command = function()
+            vim.cmd("silent! loadview")
+        end,
+    },
+})
