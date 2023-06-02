@@ -68,62 +68,6 @@ lang({
 })
 
 lang({
-    "rcarriga/neotest",
-    lazy = true,
-    cmd = {
-        "TestNear",
-        "TestCurrent",
-        "TestSummary",
-        "TestOutput",
-        "TestStrat",
-        "TestStop",
-        "TestAttach",
-    },
-    dependencies = {
-        { "nvim-lua/plenary.nvim" },
-        { "nvim-treesitter/nvim-treesitter" },
-        { "rcarriga/neotest-python" },
-        { "rcarriga/neotest-plenary" },
-        { "stevearc/overseer.nvim" },
-    },
-    config = conf.neotest,
-})
-lang({ "rcarriga/neotest-plenary", commit = "d49bfd9", dependencies = { "nvim-lua/plenary.nvim" } })
-
-lang({
-    "stevearc/overseer.nvim",
-    event = "VeryLazy",
-    config = conf.overseer,
-})
-
-lang({
-    "rcarriga/neotest-vim-test",
-    cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
-    dependencies = { "vim-test/vim-test" },
-})
-
-lang({
-    "CRAG666/code_runner.nvim",
-    lazy = true,
-    cmd = {
-        "RunCode",
-        "RunFile",
-        "RunProject",
-        "RunClose",
-        "CRFiletype",
-        "CRProjects",
-    },
-    config = conf.code_runner,
-})
-
-lang({
-    "andythigpen/nvim-coverage",
-    cmd = { "Coverage", "CoverageShow", "CoverageHide", "CoverageToggle", "CoverageClear" },
-    lazy = true,
-    config = conf.coverage,
-})
-
-lang({
     "bennypowers/nvim-regexplainer",
     lazy = true,
     dependencies = {
@@ -138,14 +82,4 @@ lang({
         "RegexplainerToggle",
     },
     config = conf.regexplainer,
-})
-
-lang({ "dccsillag/magma-nvim", ft = "python", build = ":UpdateRemotePlugins" })
-
-lang({
-    "michaelb/sniprun",
-    lazy = true,
-    build = "bash ./install.sh",
-    cmd = { "SnipRun", "SnipInfo", "SnipReset", "SnipReplMemoryClean", "SnipClose", "SnipLive" },
-    config = true,
 })

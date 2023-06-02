@@ -1,21 +1,15 @@
 return {
-    desc = "Attach a toggleterm to the task",
+    desc = "Dispose of the task as it is made",
     editable = false,
     serializable = true,
-    params = {
-        send_on_open = {
-            type = "string",
-            desc = "What text to send to task once it has started",
-            default = nil,
-            optional = true,
-        },
-    },
-    constructor = function(params)
+    params = {},
+    constructor = function()
         return {
-            on_start = function(_, task)
-                if params.send_on_open then
-                    vim.fn.chansend(task.strategy.chan_id, params.send_on_open)
+            on_pre_start = function(_, task)
+                if task then
+                    task:dispose()
                 end
+                return false
             end,
         }
     end,

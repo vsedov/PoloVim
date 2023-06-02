@@ -88,15 +88,6 @@ local highlights = lambda.highlight
 local function general_overrides()
     local normal_bg = highlights.get("Normal", "bg")
     highlights.all({
-        { Dim = { fg = { from = "Normal", attr = "bg", alter = 0.25 } } },
-        { VertSplit = { fg = { from = "Comment" } } },
-        { WinSeparator = { fg = { from = "Comment" } } },
-        { mkdLineBreak = { clear = true } },
-        { Directory = { inherit = "Keyword", bold = true } },
-        { URL = { inherit = "Keyword", underline = true } },
-        { ErrorMsg = { bg = "NONE" } },
-        { UnderlinedTitle = { bold = true, underline = true } },
-
         -----------------------------------------------------------------------------//
         -- Native
         -----------------------------------------------------------------------------//
@@ -108,7 +99,6 @@ local function general_overrides()
         -- Floats
         ---------------------------------------------//
         { NormalFloat = { bg = { from = "Normal", alter = 0 } } },
-        -- { NormalFloat = { bg = "NONE" } },
         { FloatBorder = { bg = { from = "NormalFloat" }, fg = { from = "Comment" } } },
         { FloatTitle = { bold = true, fg = "white", bg = { from = "FloatBorder", attr = "fg" } } },
         ---------------------------------------------//
@@ -139,8 +129,8 @@ local function general_overrides()
         -- { DiffChange = { bg = '#273842', fg = 'NONE', underline = false } },
         -- { DiffText = { bg = '#314753', fg = 'NONE' } },
         -- these highlights are syntax groups that are set in diff.vim
-        { diffAdded = { link = "DiffAdd" } },
-        { diffChanged = { link = "DiffChange" } },
+        { diffAdded = { inherit = "DiffAdd" } },
+        { diffChanged = { inherit = "DiffChange" } },
         { diffRemoved = { link = "DiffDelete" } },
         { diffBDiffer = { link = "WarningMsg" } },
         { diffCommon = { link = "WarningMsg" } },
@@ -170,6 +160,7 @@ local function general_overrides()
         { ["@lsp.typemod.method"] = { link = "@method" } },
         { ["@lsp.typemod.variable.global"] = { bold = true, inherit = "@constant.builtin" } },
         { ["@lsp.typemod.variable.defaultLibrary"] = { italic = true } },
+        { ["@lsp.typemod.variable.readonly.typescriptreact"] = { clear = true } },
         { ["@lsp.typemod.variable.readonly.typescript"] = { clear = true } },
         { ["@lsp.type.type.lua"] = { clear = true } },
         { ["@lsp.typemod.number.injected"] = { link = "@number" } },

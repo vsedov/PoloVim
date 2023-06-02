@@ -122,36 +122,6 @@ function config.reach()
     vim.keymap.set("n", ";b", "<cmd>Reach buffers<cr>", { noremap = true, silent = true })
 end
 
-function config.close_buffers()
-    require("close_buffers").setup({
-        preserve_window_layout = { "this" },
-        next_buffer_cmd = function(windows)
-            require("bufferline").cycle(1)
-            local bufnr = vim.api.nvim_get_current_buf()
-
-            for _, window in ipairs(windows) do
-                vim.api.nvim_win_set_buf(window, bufnr)
-            end
-        end,
-    })
-    vim.api.nvim_create_user_command("BufKillThis", function()
-        require("close_buffers").delete({ type = "this" })
-    end, { range = true })
-
-    vim.api.nvim_create_user_command("BufKillNameless", function()
-        require("close_buffers").delete({ type = "nameless" })
-    end, { range = true })
-
-    vim.api.nvim_create_user_command("BufKillHidden", function()
-        require("close_buffers").delete({ type = "hidden", force = true }) -- delete all non a vis vis à vis buffers
-    end, { range = true })
-
-    vim.api.nvim_create_user_command("BufWipe", function()
-        require("close_buffers").wipe({ type = "other" }) -- Wipe all buffers except the current focused
-    end, { range = true })
-
-    vim.keymap.set("n", "_q", "<Cmd>BWipeout other<CR>", { silent = true })
-end
 function config.sticky_buf()
     require("stickybuf").setup({
         get_auto_pin = function(bufnr)

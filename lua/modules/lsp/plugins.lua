@@ -1,14 +1,10 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 
---  TODO: (vsedov) (20:18:05 - 03/01/23): Figure out how to properly lazy load this scondif, as there
---  are a few issues with this right now and im not sure why this does not work.
 lsp({
     "neovim/nvim-lspconfig",
     lazy = true,
-    event = "VeryLazy",
     init = conf.nvim_lsp_setup,
-    config = conf.nvim_lsp,
 })
 
 lsp({
@@ -64,7 +60,8 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     lazy = true,
-    ft = { "python" },
+    cond = lambda.config.lsp.use_lsp_signature,
+    event = "VeryLazy",
     config = conf.lsp_sig,
 })
 
@@ -121,8 +118,8 @@ lsp({
     config = conf.vista,
 })
 
+--  TODO: (vsedov) (02:14:46 - 02/06/23): This might not be neaded due to glance
 lsp({
-
     "rmagatti/goto-preview",
     lazy = true,
     config = conf.goto_preview,
@@ -146,7 +143,7 @@ lsp({
         "numToStr/Comment.nvim", -- Optional
         "nvim-telescope/telescope.nvim", -- Optional
     },
-    opts = { lsp = { auto_attach = true } },
+    opts = { lsp = { auto_attach = false } },
 })
 
 lsp({
@@ -161,13 +158,13 @@ lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cond = lambda.config.lsp.use_rcd,
     event = "LspAttach",
-    config = conf.rcd,
+    config = true,
 }) -- this could be  casing lag, im not sure
 
 lsp({
     "VidocqH/lsp-lens.nvim",
+    lazy = true,
     cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
-    event = "VeryLazy",
     opts = {
         enable = false, -- enable through lsp
         include_declaration = true, -- Reference include declaration
@@ -237,31 +234,29 @@ lsp({
 })
 lsp({
     "lvimuser/lsp-inlayhints.nvim",
+    cond = lambda.config.lsp.use_inlay_hints,
     lazy = true,
     branch = "anticonceal",
     init = function()
-        lambda.augroup("InlayHintsSetup", {
-            {
-                event = "LspAttach",
-                command = function(args)
-                    local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
-                    if not id then
-                        return
-                    end
-                    local client = vim.lsp.get_client_by_id(id)
-                    require("lsp-inlayhints").on_attach(client, args.buf)
-                end,
-            },
-        })
-        lambda.highlight.plugin("inlayHints", { { LspInlayHint = { inherit = "Comment", italic = false } } })
+        if lambda.config.lsp.use_inlay_hints then
+            lambda.augroup("InlayHintsSetup", {
+                {
+                    event = "LspAttach",
+                    command = function(args)
+                        local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
+                        if not id then
+                            return
+                        end
+                        local client = vim.lsp.get_client_by_id(id)
+                        require("lsp-inlayhints").on_attach(client, args.buf)
+                    end,
+                },
+            })
+            lambda.highlight.plugin("inlayHints", { { LspInlayHint = { inherit = "Comment", italic = false } } })
+        end
     end,
     opts = {
-        inlay_hints = {
-            labels_separator = " ⏐ ",
-            parameter_hints = { prefix = "󰊕" },
-            type_hints = { prefix = "=> ", remove_colon_start = true },
-            priority = vim.highlight.priorities.user + 1,
-        },
+        inlay_hints = { priority = vim.highlight.priorities.user + 1 },
     },
 })
 

@@ -1,4 +1,5 @@
 local user = require("core.pack").package
+local ui = lambda.highlight
 user({
     "Dhanus3133/LeetBuddy.nvim",
     lazy = true,
@@ -116,9 +117,7 @@ user({
 
 user({
     "bignos/bookmacro",
-    event = "VeryLazy",
     dependencies = { "nvim-lua/plenary.nvim" },
-
     keys = {
         -- Load a macro
         {
@@ -334,4 +333,50 @@ user({
             mode = "!",
         },
     },
+})
+user({
+    "Bekaboo/dropbar.nvim",
+    event = "VeryLazy",
+    dependencies = { "onsails/lspkind.nvim" },
+    keys = {
+        {
+            "<leader>wp",
+            function()
+                require("dropbar.api").pick()
+            end,
+            desc = "winbar: pick",
+        },
+    },
+    config = function()
+        require("dropbar").setup({
+            general = {
+                enable = function(buf, win)
+                    local b, w = vim.bo[buf], vim.wo[win]
+                    local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
+
+                    return decor.ft ~= false
+                        and b.bt == ""
+                        and not w.diff
+                        and not vim.api.nvim_win_get_config(win).zindex
+                        and vim.api.nvim_buf_get_name(buf) ~= ""
+                end,
+            },
+            icons = {
+                ui = { bar = { separator = " " .. lambda.style.icons.misc.arrow_right .. " " } },
+                kinds = {
+                    symbols = vim.tbl_map(function(value)
+                        return value .. " "
+                    end, require("lspkind").symbol_map),
+                },
+            },
+            menu = {
+                win_configs = {
+                    border = lambda.style.border.type_0,
+                    col = function(menu)
+                        return menu.parent_menu and menu.parent_menu._win_configs.width + 1 or 0
+                    end,
+                },
+            },
+        })
+    end,
 })

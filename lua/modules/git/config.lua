@@ -103,9 +103,9 @@ function config.gitsigns()
             return "<ignore>"
         end, { expr = true })
 
-        map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
+        -- map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
 
-        map({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>")
+        -- map({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>")
     end
 
     gitsigns.setup({

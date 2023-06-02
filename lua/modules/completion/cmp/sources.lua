@@ -34,20 +34,6 @@ local plugins = {
         },
     },
     {
-        name = "rg",
-        enable = lambda.config.cmp.rg.use_rg,
-        options = {
-            options = {
-                keyword_length = lambda.config.cmp.rg.keyword_length,
-                option = {
-                    additional_arguments = "--max-depth "
-                        .. lambda.config.cmp.rg.depth
-                        .. " --one-file-system --ignore-file ~/.config/nvim/utils/abbreviations/dictionary.lua",
-                },
-            },
-        },
-    },
-    {
         name = "buffer",
         enable = lambda.config.cmp.buffer,
         options = {
@@ -67,14 +53,6 @@ local plugins = {
     {
         name = "path",
         enable = true,
-    },
-    {
-        name = "tmux",
-        enable = vim.env.TMUX ~= nil,
-        option = {
-            all_panes = true,
-            label = "[tmux]",
-        },
     },
     {
         name = "nvim_lua",

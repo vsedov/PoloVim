@@ -4,9 +4,6 @@ function config.nvim_lsp_setup()
     require("modules.lsp.lsp.config").setup()
 end
 
-function config.nvim_lsp()
-    require("modules.lsp.lsp")
-end
 function config.mason_setup()
     require("modules.lsp.lsp.mason.python")
     local get_config = require("modules.lsp.lsp.mason.lsp_servers")

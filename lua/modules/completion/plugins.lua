@@ -21,14 +21,14 @@ completion({
     event = "InsertEnter",
     lazy = true,
     dependencies = {
-        { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
+        -- { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
         { "hrsh7th/cmp-nvim-lsp", lazy = true },
         { "hrsh7th/cmp-nvim-lua", lazy = true },
         { "kdheepak/cmp-latex-symbols", lazy = true },
         { "hrsh7th/cmp-buffer", lazy = true },
         { "hrsh7th/cmp-path", lazy = true },
         { "hrsh7th/cmp-cmdline", lazy = true },
-        { "andersevenrud/cmp-tmux", lazy = true },
+        -- { "andersevenrud/cmp-tmux", lazy = true },
         {
             "petertriho/cmp-git",
             lazy = true,
@@ -36,7 +36,6 @@ completion({
                 require("cmp_git").setup({ filetypes = { "gitcommit", "NeogitCommitMessage" } })
             end,
         },
-        { "lukas-reineke/cmp-rg", lazy = true },
         { "saadparwaiz1/cmp_luasnip", lazy = true },
         {
             "doxnit/cmp-luasnip-choice",

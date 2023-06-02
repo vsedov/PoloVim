@@ -49,17 +49,7 @@ buffer({
 
 buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
 
-buffer({
-    "kazhala/close-buffers.nvim",
-    cmd = {
-        "BufKillThis",
-        "BufKillNameless",
-        "BufKillHidden",
-        "BufWipe",
-    },
-    keys = { "_q" },
-    config = conf.close_buffers,
-})
+buffer({ "famiu/bufdelete.nvim", keys = { { "_q", "<Cmd>Bdelete<CR>", desc = "buffer delete" } } })
 
 buffer({
     "stevearc/stickybuf.nvim",

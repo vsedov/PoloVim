@@ -963,7 +963,6 @@ vim.o.showcmdloc = "statusline"
 config = {
 
     statusline = StatusLines,
-    winbar = WinBar,
     opts = {
         disable_winbar_cb = function(args)
             if vim.bo[args.buf].filetype == "neo-tree" then
@@ -977,17 +976,8 @@ config = {
         colors = setup_colors,
     },
 }
--- statuscolumn = Stc,
--- i want to add this to config at index 3
-if not lambda.config.ui.use_status_col then
-    table.insert(config.statusline, 3, Stc)
-end
 
 require("heirline").setup(config)
-
-if not lambda.config.ui.use_status_col then
-    vim.o.statuscolumn = require("heirline").eval_statuscolumn()
-end
 
 vim.api.nvim_create_augroup("Heirline", { clear = true })
 

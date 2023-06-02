@@ -123,7 +123,6 @@ local treesitter_obj = function()
         ensure_installed = {
             "dap_repl",
             "norg",
-            "norg_table",
             "norg_meta",
             "vim",
             "go",

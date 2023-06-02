@@ -80,7 +80,7 @@ tools({
     "akinsho/toggleterm.nvim",
     lazy = true,
     cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm", "Htop", "GDash" },
-    keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader>tv", "<leader>tr", "<leader><Tab>" },
+    keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader><Tab>" },
     config = function()
         require("modules.tools.toggleterm")
     end,

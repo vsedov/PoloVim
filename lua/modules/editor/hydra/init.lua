@@ -43,7 +43,6 @@ local function loadHydraAPI()
             local instance = M.new(data[1], data[2])
             local hyd = instance.new_hydra
             hyd.hint = instance:auto_hint_generate(data[3], data[4], data[5], data[6])
-            print(hyd.hint)
             vim.defer_fn(function()
                 hydra(hyd)
             end, 100)
