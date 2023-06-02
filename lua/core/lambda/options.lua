@@ -100,13 +100,17 @@ lambda.config.cmp = {
 lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
     use_lsp_lines = true,
-    use_lsp_signature = true,
     use_typos = false, -- this was getting annoying
     use_format_modifcation = false,
     use_navbuddy = true,
     use_error_lens = true,
     use_rcd = true,
     use_inlay_hints = false,
+    lsp_sig = {
+        use_lsp_signature = true,
+        use_floating_window = true,
+        fix_pos = false,
+    },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
     --    │     languages                                                      │
@@ -117,22 +121,20 @@ lambda.config.lsp = {
         format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
-        use_inlay_hints = true,
     },
 }
 
 lambda.config.ui = {
-    use_illuminate = true,
     use_murmur = false, -- this causes issues with my yanky config -
+    use_illuminate = true,
     use_heirline = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_scroll = true,
-    use_tint = false,
-    use_pet = false,
+    use_tint = true,
     use_virtcol = true,
     use_indent_blankline = true,
-    use_hlsearch = false,
-    use_reticle = false,
+    use_hlsearch = true,
+    use_reticle = true,
     heirline = {
         use_status_col = false, -- true  for plugin or false for heirline
         use_win_bar = false,
@@ -154,6 +156,7 @@ lambda.config.ui = {
         use_indent_blankline = true,
         use_hlchunk = false,
     },
+    use_pet = false,
 }
 lambda.config.colourscheme = {
     enable_transparent = false,
