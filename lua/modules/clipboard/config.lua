@@ -104,6 +104,8 @@ function config.vmulti()
     vim.g.VM_silent_exit = 1
     vim.g.VM_show_warnings = 0
     vim.g.VM_default_mappings = 1
+    vim.g.VM_highlight_matches = "underline"
+    vim.g.VM_theme = "codedark"
     vim.cmd([[
       let g:VM_maps = {}
       let g:VM_maps['Find Under'] = '<C-n>'
