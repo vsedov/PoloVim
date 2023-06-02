@@ -21,7 +21,6 @@ local config = {
         color = "red",
         body = leader_key,
         mode = { "n" },
-
         b = {
             function()
                 vim.cmd("Telescope buffers")
@@ -206,30 +205,21 @@ local config = {
 
             { desc = "Explore Horizontal", exit = true },
         },
-        N = {
-            function()
-                vim.cmd("BufKillNameless")
-            end,
-            { desc = "BufKillNameless", exit = true },
-        },
+
         d = {
             function()
-                vim.cmd("BufKillHidden")
-            end,
-            { desc = "BufKillHidden", exit = true },
-        },
-        ["<cr>"] = {
-            function()
-                vim.cmd("BufWipe")
-            end,
-            { desc = "Wipe", exit = true },
-        },
-        o = {
-            function()
-                vim.cmd("BufKillThis")
+                require("bufdelete").bufdelete(0, true)
             end,
             { desc = "Killthis", exit = true },
         },
+        ["<cr>"] = {
+            function()
+                vim.cmd("BufOnly")
+                -- Bdelete -- you could use this too,
+            end,
+            { desc = "Buf Wipe", exit = true },
+        },
+
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
     },
 }
@@ -241,7 +231,7 @@ return {
         { "n", "C", "[", "]", "P" },
         { "q", "Q", "M", "m" },
         { "e", ">", "<", "p", "c" },
-        { "D", "d", "N", "o" },
+        { "D", "d" },
         { "1", "2", "3" },
     },
     bracket,

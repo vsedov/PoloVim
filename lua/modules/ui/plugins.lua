@@ -3,6 +3,12 @@ local conf = require("modules.ui.config")
 local api, fn = vim.api, vim.fn
 local highlight = lambda.highlight
 ui({
+    "glepnir/nerdicons.nvim",
+    cmd = "NerdIcons",
+    config = true,
+})
+
+ui({
     "lukas-reineke/virt-column.nvim",
     cond = lambda.config.ui.use_virtcol,
     opts = { char = "▕" },
@@ -252,7 +258,8 @@ ui({
         "nvim-notify",
         "hrsh7th/nvim-cmp",
     },
-    opts = conf.noice,
+    opts = require("modules.ui.noice").noice,
+    config = require("modules.ui.noice").noice_setup,
 })
 
 ui({
@@ -404,8 +411,11 @@ ui({
         })
     end,
 })
+--  TODO: (vsedov) (02:31:08 - 02/06/23): This impacts dropbar, so this im not sure,
+--  Further testing is required
 ui({
     "tummetott/reticle.nvim",
+    cond = lambda.config.ui.use_reticle,
     lazy = false,
     config = conf.reticle,
 })
@@ -424,11 +434,7 @@ ui({
     event = "CursorHold",
     config = true,
 })
-ui({
-    "glepnir/nerdicons.nvim",
-    cmd = "NerdIcons",
-    config = true,
-})
+
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     cond = lambda.config.ui.use_scroll,
