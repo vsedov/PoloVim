@@ -1,25 +1,42 @@
 local M = {}
 local api = vim.api
-local leap_binds = ""
+local leap_binds = [[
+binds:
+<[c,d,y]arb>: [C, D, Y] around remote block [marked by leap motion]
+<yarw>: yank around remote word [marked by leap motion]
+
+──────────────────────────────────────────────────────────────────────
+<zfarp>: Delete/fold/comment/etc. paragraphs without leaving your position
+<yaRp>: Clone text objects in the blink of an eye, even from another window
+<yaRW>: Clone text objects in Insert mode
+<cimw>: Fix a typo with a short, atomic command sequence
+<drr>: Operate on distant lines
+<y[num]rr>: Use count y3rr yanks 3 lines, just as 3yy would do
+]]
 lambda.command("LeapBinds", function()
     vim.notify(leap_binds)
 end, { force = true })
 
-local function leapAction(actionFn, actionDesc)
+vim.keymap.set("n", "<localleader>l", function()
+    vim.notify(leap_binds)
+end, { silent = true })
+
+local function leapAction(actionFn, actionDesc, conds)
     return function()
         require("leap").leap({
             target_windows = { vim.fn.win_getid() },
-            action = require("leap-spooky").spooky_action(actionFn, { keeppos = true }),
+            action = require("leap-spooky").spooky_action(actionFn, conds),
         })
     end
 end
 
-local function createEntry(key, actionFn, actionDesc)
+local function createEntry(key, actionFn, actionDesc, conds)
     leap_binds = leap_binds .. key .. " " .. actionDesc .. "\n"
+    conds = conds or {}
 
     return {
         key,
-        leapAction(actionFn, actionDesc),
+        leapAction(actionFn, actionDesc, conds),
         desc = actionDesc,
         mode = { "x", "o" },
     }
@@ -253,6 +270,13 @@ function binds()
         vim.keymap.set(m[1], m[2], m[3], { noremap = true, silent = true, desc = m[4] })
         leap_binds = leap_binds .. m[2] .. " " .. m[4] .. "\n"
     end
+    --  TODO: (vsedov) (06:52:06 - 03/06/23): For some reason this is required for this to even work
+    --  .
+    vim.keymap.del({ "x", "o" }, "x")
+    vim.keymap.del({ "x", "o" }, "X")
+    -- To set alternative keys for "exclusive" selection:
+    vim.keymap.set({ "x", "o" }, "x", "<Plug>(leap-forward-till)")
+    vim.keymap.set({ "x", "o" }, "X", "<Plug>(leap-backward-till)")
 end
 
 function leap_setup()
@@ -349,25 +373,27 @@ function M.leap_spooky()
         createEntry("imf", function()
             return "vif"
         end, "inner function"),
+
         createEntry("imc", function()
             return "vic"
         end, "inner classes"),
+
         createEntry("ims", function()
             return "vis"
         end, "inner scopes"),
+
         createEntry("arf", function()
             return "vaf"
         end, "around function"),
+
         createEntry("arc", function()
             return "vac"
         end, "around classes"),
+
+        --  TODO: (vsedov) (06:47:42 - 03/06/23): replace ars
         createEntry("ars", function()
             return "vas"
         end, "around scopes"),
-
-        createEntry("amf", function()
-            return "vaf"
-        end, "around function"),
 
         createEntry("amc", function()
             return "vac"
@@ -384,7 +410,6 @@ end
 function M.leap_flit()
     require("flit").setup({
         keys = { f = "f", F = "F", t = "t", T = "T" },
-        -- A string like "nv", "nvo", "o", etc.
         labeled_modes = "nvoi",
         multiline = true,
         opts = { equivalence_classes = { " \t", "\r\n" } },

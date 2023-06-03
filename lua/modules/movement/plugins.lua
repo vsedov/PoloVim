@@ -7,7 +7,6 @@ movement({
     "ggandor/leap.nvim",
     lazy = true,
     event = "VeryLazy",
-    priority = 100,
     dependencies = { "tpope/vim-repeat" },
     config = leap.leap_config,
 })
@@ -16,11 +15,10 @@ movement({
     "ggandor/leap-spooky.nvim",
     event = "VeryLazy",
     lazy = true,
-    priority = 50,
     dependencies = {
         "leap.nvim",
-        "atusy/leap-wide.nvim",
     },
+
     opts = {
         affixes = {
             magnetic = { window = "m", cross_window = "M" },
@@ -35,21 +33,14 @@ movement({
     "ggandor/flit.nvim",
     lazy = true,
     event = "VeryLazy",
-    priority = 50,
-    dependencies = { "ggandor/leap.nvim", "atusy/leap-wide.nvim" },
+    dependencies = { "ggandor/leap.nvim" },
     config = leap.leap_flit,
-})
-
-movement({
-    "ggandor/leap-ast.nvim",
-    lazy = true,
-    dependencies = { "ggandor/leap.nvim", "atusy/leap-wide.nvim" },
 })
 
 movement({
     "atusy/leap-search.nvim",
     lazy = true,
-    dependencies = { "ggandor/leap.nvim", "atusy/leap-wide.nvim" },
+    dependencies = { "ggandor/leap.nvim" },
 })
 
 movement({
