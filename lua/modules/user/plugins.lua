@@ -381,3 +381,22 @@ user({
         })
     end,
 })
+
+--  TODO: (vsedov) (07:41:40 - 03/06/23): I am not sure if i need this yet
+user({
+    "yagiziskirik/AirSupport.nvim",
+    requires = {
+        { "nvim-telescope/telescope.nvim" },
+        { "nvim-lua/plenary.nvim" },
+    },
+    keys = {
+        {
+            "<leader>?",
+            function()
+                vim.cmd([[AirSupport]])
+            end,
+            mode = "n",
+        },
+    },
+    config = true,
+})
