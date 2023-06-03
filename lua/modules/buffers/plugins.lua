@@ -13,6 +13,7 @@ buffer({
 
 buffer({
     "backdround/tabscope.nvim",
+    cond = lambda.config.editor.use_tabscope,
     lazy = true,
     event = "VeryLazy",
     config = true,
@@ -53,6 +54,7 @@ buffer({ "famiu/bufdelete.nvim", keys = { { "_q", "<Cmd>Bdelete<CR>", desc = "bu
 
 buffer({
     "stevearc/stickybuf.nvim",
+    cond = lambda.config.buffer.use_sticky_buf,
     lazy = true,
     event = "BufEnter",
     config = conf.sticky_buf,
@@ -129,18 +131,20 @@ buffer({
 -- Unlist hidden buffers that are git ignored.
 buffer({
     "sQVe/bufignore.nvim",
+    cond = lambda.config.buffer.use_bufignore,
     event = "BufRead",
     config = true,
 })
 
 buffer({
     "chrisgrieser/nvim-early-retirement",
-    cond = true,
+    cond = lambda.config.buffer.use_early_retirement,
     config = true,
     event = "VeryLazy",
 })
 buffer({
     "axkirillov/hbac.nvim",
+    cond = lambda.config.buffer.use_hbac,
     event = "VeryLazy",
     config = true,
 })
