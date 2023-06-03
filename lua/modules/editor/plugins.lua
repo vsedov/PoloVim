@@ -160,6 +160,7 @@ editor({
 
 editor({
     "marklcrns/vim-smartq",
+    cond = lambda.config.editor.use_smart_q,
     lazy = true,
     init = function()
         vim.g.smartq_q_buftypes = {
@@ -167,6 +168,24 @@ editor({
             "nofile",
             "acwrite",
         }
+        local smart_close_filetypes = lambda.p_table({
+            ["diff"] = true,
+            ["git"] = true,
+            ["qf"] = true,
+            ["log"] = true,
+            ["help"] = true,
+            ["query"] = true,
+            ["dbui"] = true,
+            ["lspinfo"] = true,
+            ["git.*"] = true,
+            ["Neogit.*"] = true,
+            ["neotest.*"] = true,
+            ["fugitive.*"] = true,
+            ["copilot.*"] = true,
+            ["tsplayground"] = true,
+            ["startuptime"] = true,
+        })
+        vim.g.smartq_q_filetypes = smart_close_filetypes
     end,
     event = "VeryLazy",
 })

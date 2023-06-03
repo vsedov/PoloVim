@@ -113,7 +113,7 @@ Hydra({
                     end, { expr = true, desc = "j or gj" })
                 else
                     vim.o.wrap = false
-                    vim.keymap.del("n", "k")
+                    vjim.keymap.del("n", "k")
                     vim.keymap.del("n", "j")
                 end
             end,
