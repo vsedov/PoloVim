@@ -39,11 +39,9 @@ function M.common_on_attach(client, bufnr)
         config.on_attach_callback[client.name](client, bufnr)
     end
     if client.server_capabilities.documentSymbolProvider then
-        require("nvim-navic").attach(client, bufnr)
         require("nvim-navbuddy").attach(client, bufnr)
     end
 
-    -- Ideally if we are using noice , we really should not be using lsp_signature.
     add_lsp_buffer_keybindings(client, bufnr)
     require("modules.lsp.lsp.config.autocmd").setup_autocommands(client, bufnr)
 end
