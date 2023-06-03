@@ -75,75 +75,6 @@ if not lambda.config.ui.use_hlsearch then
     })
 end
 
-local smart_close_filetypes = lambda.p_table({
-    ["qf"] = true,
-    ["log"] = true,
-    ["help"] = true,
-    ["query"] = true,
-    ["dbui"] = true,
-    ["lspinfo"] = true,
-    ["git.*"] = true,
-    ["Neogit.*"] = true,
-    ["neotest.*"] = true,
-    ["fugitive.*"] = true,
-    ["copilot.*"] = true,
-    ["tsplayground"] = true,
-    ["startuptime"] = true,
-})
-
-local smart_close_buftypes = lambda.p_table({
-    ["nofile"] = true,
-})
-
-local function smart_close()
-    if fn.winnr("$") ~= 1 then
-        api.nvim_win_close(0, true)
-    end
-end
-
-lambda.augroup("SmartClose", {
-    {
-        -- Auto open grep quickfix window
-        event = { "QuickFixCmdPost" },
-        pattern = { "*grep*" },
-        command = "cwindow",
-    },
-    {
-        -- Close certain filetypes by pressing q.
-        event = { "FileType" },
-        command = function(args)
-            local is_unmapped = fn.hasmapto("q", "n") == 0
-            local buf = vim.bo[args.buf]
-            local is_eligible = is_unmapped
-                or vim.wo.previewwindow
-                or smart_close_filetypes[buf.ft]
-                or smart_close_buftypes[buf.bt]
-            if is_eligible then
-                vim.keymap.set("n", "q", smart_close, { buffer = args.buf, nowait = true })
-            end
-        end,
-    },
-    {
-        -- Close quick fix window if the file containing it wlambda.closed
-        event = { "BufEnter" },
-        command = function()
-            if fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
-                api.nvim_buf_delete(0, { force = true })
-            end
-        end,
-    },
-    {
-        -- automatically close corresponding loclist when quitting a window
-        event = { "QuitPre" },
-        nested = true,
-        command = function()
-            if vim.bo.filetype ~= "qf" then
-                cmd.lclose({ mods = { silent = true } })
-            end
-        end,
-    },
-})
-
 lambda.augroup("ExternalCommands", {
     {
         -- Open images in an image viewer (probably Preview)
@@ -396,24 +327,30 @@ end
 --     },
 -- })
 
+local valid = {
+    "python",
+    "lua",
+}
 lambda.augroup("SaveFoldsWhenWriting", {
     {
         event = "BufWritePost",
-        pattern = { "*" },
+        pattern = valid,
         command = function()
-            vim.cmd("silent! mkview")
+            if valid[vim.bo.filetype] then
+                vim.cmd("silent! mkview")
+            end
         end,
     },
     {
         event = "QuitPre",
-        pattern = { "*" },
+        pattern = valid,
         command = function()
             vim.cmd("silent! mkview")
         end,
     },
     {
         event = "BufWinEnter",
-        pattern = { "*" },
+        pattern = valid,
         command = function()
             vim.cmd("silent! loadview")
         end,

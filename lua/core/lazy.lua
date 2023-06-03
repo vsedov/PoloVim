@@ -115,15 +115,12 @@ vim.defer_fn(function()
     loader({ plugins = { "telescope.nvim", "telescope-zoxide", "nvim-neoclip.lua" } })
 end, lazy_timer + 80)
 
---  TODO: (vsedov) (01:32:08 - 28/10/22): WTF is this code viv ??
---  REVISIT: (vsedov) (01:32:15 - 28/10/22): Change this once you have time
 vim.defer_fn(function()
     if lambda.config.extra_search.enable and lambda.config.extra_search.providers.use_fzf_lua then
         loader({ plugins = { "fzf-lua" } })
     end
 end, lazy_timer + 100)
 
--- Load Leap, after 100, because why not, this is my core movement
 vim.defer_fn(function()
     if lambda.config.record_your_self then
         loader({ plugins = { "vim-wakatime" } })
@@ -134,6 +131,4 @@ vim.defer_fn(function()
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
     end
     loader({ plugins = { "nvim-various-textobjs", "nvim-surround" } })
-    --  TODO: (vsedov) (08:50:09 - 30/05/23): Huge refactoring happening rn
-    -- require("modules.editor.hydra.parenth_mode")
 end, 2000)
