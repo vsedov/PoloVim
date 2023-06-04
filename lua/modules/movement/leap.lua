@@ -49,13 +49,13 @@ function paranormal(targets)
         return
     end
 
-    local ns = vim.api.nvim_create_namespace("")
+    local ns = api.nvim_create_namespace("")
 
     -- Set an extmark as an anchor for each target, so that we can also execute
     -- commands that modify the positions of other targets (insert/change/delete).
     for _, target in ipairs(targets) do
         local line, col = unpack(target.pos)
-        id = vim.api.nvim_buf_set_extmark(0, ns, line - 1, col - 1, {})
+        id = api.nvim_buf_set_extmark(0, ns, line - 1, col - 1, {})
         target.extmark_id = id
     end
 
@@ -63,13 +63,13 @@ function paranormal(targets)
     -- command sequence.
     for _, target in ipairs(targets) do
         local id = target.extmark_id
-        local pos = vim.api.nvim_buf_get_extmark_by_id(0, ns, id, {})
+        local pos = api.nvim_buf_get_extmark_by_id(0, ns, id, {})
         vim.fn.cursor(pos[1] + 1, pos[2] + 1)
         vim.cmd("normal! " .. input)
     end
 
     -- Clean up the extmarks.
-    vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
+    api.nvim_buf_clear_namespace(0, ns, 0, -1)
 end
 
 function leap_to_window()
@@ -117,15 +117,15 @@ local function get_line_starts(winid)
     end
 end
 
-function highlight()
-    vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
+function M.highlight()
+    api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
 
-    vim.api.nvim_set_hl(0, "LeapMatch", {
+    api.nvim_set_hl(0, "LeapMatch", {
         fg = "white", -- for light themes, set to 'black' or similar
         bold = true,
         nocombine = true,
     })
-    vim.api.nvim_set_hl(0, "LeapLabelPrimary", {
+    api.nvim_set_hl(0, "LeapLabelPrimary", {
         fg = "#ff2f87",
         bold = true,
         nocombine = true,
@@ -144,12 +144,12 @@ function binds()
         },
         {
             { "n", "x", "o" },
-            "<c-w><cr>",
+            "<c-cr>",
             function()
                 require("leap").leap({
                     target_windows = vim.tbl_filter(function(win)
-                        return vim.api.nvim_win_get_config(win).focusable
-                    end, vim.api.nvim_tabpage_list_wins(0)),
+                        return api.nvim_win_get_config(win).focusable
+                    end, api.nvim_tabpage_list_wins(0)),
                 })
             end,
             "Jump all windows",
@@ -176,7 +176,7 @@ function binds()
                     target_windows = target_windows,
                     targets = targets,
                     action = function(target)
-                        vim.api.nvim_set_current_win(target.wininfo.winid)
+                        api.nvim_set_current_win(target.wininfo.winid)
                     end,
                 })
             end,
@@ -186,7 +186,7 @@ function binds()
             { "n", "x", "o" },
             "<c-e>",
             function()
-                winid = vim.api.nvim_get_current_win()
+                winid = api.nvim_get_current_win()
                 require("leap").leap({
                     target_windows = { winid },
                     targets = get_line_starts(winid),
@@ -228,7 +228,7 @@ function binds()
                         { name = "string.find", plain = true, ignorecase = true },
                         -- { name = "kensaku.query" }, -- to search Japanese string with romaji with https://github.com/lambdalisue/kensaku.vim
                     },
-                    { target_windows = { vim.api.nvim_get_current_win() } },
+                    { target_windows = { api.nvim_get_current_win() } },
                 })
             end,
             "leap search",
@@ -243,7 +243,7 @@ function binds()
                         { name = "string.find", plain = true, ignorecase = true },
                         -- { name = "kensaku.query" }, -- to search Japanese string with romaji with
                     },
-                    { target_windows = { vim.api.nvim_get_current_win() } },
+                    { target_windows = { api.nvim_get_current_win() } },
                 })
             end,
             "leap search",
@@ -255,14 +255,6 @@ function binds()
                 require("leap-search").leap(vim.fn.getreg("/"))
             end,
             "leap search current / reg",
-        },
-        {
-            { "n", "x", "o" },
-            "<c-g>",
-            function()
-                require("leap-ast").leap()
-            end,
-            "leap-ast",
         },
     }
 
@@ -353,7 +345,6 @@ end
 function M.leap_config()
     leap_setup()
     binds()
-    highlight()
 end
 
 function M.leap_spooky()

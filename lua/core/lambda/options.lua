@@ -20,7 +20,7 @@ lambda.config = {
     use_hydra = true,
     -- innter treesitter, although this can be changed
     do_you_want_lag = true, -- Enable Extra regex, -- Fuck it
-    better_ts_highlights = false, -- This needs a direct toggle i think
+
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
@@ -81,6 +81,7 @@ lambda.config.treesitter = {
     use_yati = true,
     use_matchup = true,
     use_extra_highlight = true,
+    better_ts_highlights = false, -- This needs a direct toggle i think markid
 }
 
 lambda.config.abbrev = {
@@ -109,12 +110,12 @@ lambda.config.cmp = {
 
 lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
-    use_lsp_lines = true,
+    use_error_lens = true,
+    use_rcd = false,
     use_typos = false, -- this was getting annoying
+    only_severe_diagnostics = false,
     use_format_modifcation = false,
     use_navbuddy = true,
-    use_error_lens = true,
-    use_rcd = true,
     use_inlay_hints = false,
     lsp_sig = {
         use_lsp_signature = true,
@@ -182,14 +183,14 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
+                -- "kanagawa.nvim",
                 "catppuccin",
-                -- "sweetie.nvim",
+                -- -- "sweetie.nvim",
                 -- "vim-dogrun",
-                -- "poimandres.nvim",
-                -- "nvim-tundra",
-                -- "palenightfall.nvim",
-                -- "oh-lucy.nvim",
+                -- -- "poimandres.nvim",
+                -- -- "nvim-tundra",
+                -- -- "palenightfall.nvim",
+                -- -- "oh-lucy.nvim",
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
                 -- "rose", -- TSMethod'

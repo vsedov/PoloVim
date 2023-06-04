@@ -48,7 +48,7 @@ ts({
 -- Core
 ts({
     "David-Kunz/markid",
-    cond = lambda.config.treesitter.use_extra_highlight,
+    cond = lambda.config.treesitter.better_ts_highlights 
     dependencies = { "nvim-treesitter/nvim-treesitter" },
 })
 
