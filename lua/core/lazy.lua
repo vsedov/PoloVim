@@ -131,4 +131,7 @@ vim.defer_fn(function()
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
     end
     loader({ plugins = { "nvim-various-textobjs", "nvim-surround" } })
+    loader({ plugins = { "leap.nvim", "leap-spooky.nvim", "flit.nvim", "leap-search.nvim" } })
 end, 2000)
+
+require("modules.movement.leap").highlight()

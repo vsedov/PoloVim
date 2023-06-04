@@ -310,22 +310,6 @@ end
 
 --  TODO: (vsedov) (03:42:00 - 31/05/23): Need to fix this autocmd , there is something wrong with
 --  this one
--- lambda.augroup("RememberFold", {
---     {
---         event = "BufReadPost",
---         pattern = { "*" },
---         command = function()
---             mkview()
---         end,
---     },
---     {
---         event = "BufEnter",
---         pattern = { "*" },
---         command = function()
---             loadview()
---         end,
---     },
--- })
 
 local valid = {
     "python",
