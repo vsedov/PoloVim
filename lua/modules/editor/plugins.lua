@@ -204,7 +204,7 @@ editor({
     "MaximilianLloyd/lazy-reload.nvim",
     keys = {
         -- Opens the command.
-        { "<localleader>rl", "<cmd>lua require('lazy-reload').feed()<cr>", desc = "Reload a plugin" },
+        { "<leader><leader>r", "<cmd>lua require('lazy-reload').feed()<cr>", desc = "Reload a plugin" },
     },
     config = true,
 })
