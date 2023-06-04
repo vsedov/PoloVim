@@ -11,13 +11,13 @@ end
 
 -- Define terminals
 local terminals = {
-    htop = Terminal:new({
+    Htop = Terminal:new({
         cmd = "htop",
         hidden = true,
         direction = "float",
         on_open = float_handler,
     }),
-    gh_dash = Terminal:new({
+    Ghdash = Terminal:new({
         cmd = "gh dash",
         hidden = true,
         direction = "float",
@@ -31,7 +31,7 @@ local terminals = {
             end,
         },
     }),
-    nap = Terminal:new({
+    Nap = Terminal:new({
         cmd = "nap",
         hidden = true,
         direction = "float",
@@ -59,6 +59,7 @@ local keymaps = {
         end,
     },
     { "<leader>tf", "<cmd>ToggleTerm direction='vertical'<cr>" },
+    { "<leader>th", "<cmd>ToggleTerm direction='vertical'<cr>" },
     { "<leader><Tab>", "<cmd>ToggleTerm direction='float'<cr>" },
 }
 
@@ -67,9 +68,11 @@ for _, mapping in ipairs(keymaps) do
     vim.keymap.set("n", mapping[1], mapping[2], mapping[3] or {})
 end
 
+-- captilize
+
 -- Create commands to toggle terminals
 for name, terminal in pairs(terminals) do
-    lambda.command(name:capitalize(), function()
+    lambda.command(name, function()
         terminal:toggle()
     end, {})
 end

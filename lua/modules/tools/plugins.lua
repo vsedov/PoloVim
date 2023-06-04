@@ -152,16 +152,6 @@ tools({
 })
 
 tools({
-    "jbyuki/nabla.nvim",
-    lazy = true,
-    keys = { "<localleader>s" },
-    config = function()
-        vim.keymap.set("n", "<localleader>s", [[:lua require("nabla").popup()<CR>]], {})
-        require("nabla").enable_virt()
-    end,
-})
-
-tools({
     "dstein64/vim-startuptime",
     lazy = true,
     cmd = "StartupTime",
