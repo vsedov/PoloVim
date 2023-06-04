@@ -102,6 +102,9 @@ Hydra({
 
         { "z", cmd("MaximizerToggle!"), { desc = "maximize" } },
         { "<C-z>", cmd("MaximizerToggle!"), { exit = true, desc = false } },
+        { "<C-o>", "<C-w>o", { exit = true, desc = false } },
+
+        -- { "b", choose_buffer, { exit = true, desc = "choose buffer" } },
 
         { "o", cmd("BufOnly"), { exit = true, desc = "remain only" } },
         { "<C-o>", "<C-w>o", { exit = true, desc = false } },

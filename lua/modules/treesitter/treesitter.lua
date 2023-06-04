@@ -21,10 +21,10 @@ local treesitter = function()
 
     require("nvim-treesitter.configs").setup({
         autopairs = { enable = false },
-        markid = { enable = lambda.config.better_ts_highlights },
+        markid = { enable = lambda.config.treesitter.better_ts_highlights },
         highlight = {
             enable = true, -- false will disable the whole extension
-            additional_vim_regex_highlighting = lambda.config.do_you_want_lag,
+            additional_vim_regex_highlighting = lambda.config.treesitter.use_extra_highlight,
         },
         incremental_selection = {
             enable = false,
@@ -32,7 +32,7 @@ local treesitter = function()
             keymaps = {
                 -- mappings for incremental selection (visual mappings)
                 init_selection = "gnn", -- maps in normal mode to init the node/scope selection
-                scope_incremental = "gnn", -- increment to the upper scope (as defined in locals.scm)
+                scope_incremental = "gnN", -- increment to the upper scope (as defined in locals.scm)
                 node_incremental = "<TAB>", -- increment to the upper named parent
                 node_decremental = "<S-TAB>", -- decrement to the previous node
             },

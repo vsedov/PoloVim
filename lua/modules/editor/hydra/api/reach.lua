@@ -58,12 +58,6 @@ local config = {
             { nowait = true, exit = true, desc = "Swap Last Buffer" },
         },
 
-        L = {
-            function()
-                cmd("WorkspacesList")
-            end,
-            { nowait = true, exit = true, desc = "Workspace List" },
-        },
         w = {
             function()
                 cmd("WorkspacesOpen")
@@ -120,7 +114,7 @@ local config = {
 return {
     config,
     "Reach",
-    { { "w", "a", "d", "r", "L" }, { "n", "N", "[", "]" } },
+    { { "w", "a", "d", "r" }, { "n", "N", "[", "]" } },
     bracket,
     6,
     3,

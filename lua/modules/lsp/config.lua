@@ -1,9 +1,5 @@
 local config = {}
 
-function config.nvim_lsp_setup()
-    require("modules.lsp.lsp.config").setup()
-end
-
 function config.mason_setup()
     require("modules.lsp.lsp.mason.python")
     local get_config = require("modules.lsp.lsp.mason.lsp_servers")
@@ -23,6 +19,7 @@ function config.mason_setup()
             end
         end,
     })
+    require("modules.lsp.lsp.config.handlers").setup()
 end
 
 function config.lsp_install()
@@ -34,7 +31,12 @@ function config.clangd()
 end
 
 function config.luadev()
-    require("modules.lsp.lsp.providers.luadev")
+    require("neodev").setup({
+        enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
+        runtime = true, -- runtime path
+        types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+        plugins = false, -- installed opt or start plugins in packpath
+    })
 end
 
 function config.saga()
@@ -124,23 +126,23 @@ function config.saga()
             },
         },
     })
-    vim.wo.winbar = require("lspsaga.symbolwinbar"):get_winbar()
 end
+
 function config.lsp_sig()
     local cfg = {
         bind = true,
         doc_lines = 10,
-        floating_window = false, -- show hint in a floating window, set to false for virtual text only mode ]]
-        floating_window_above_cur_line = false,
+        floating_window = lambda.config.lsp.lsp_sig.use_floating_window, -- show hint in a floating window, set to false for virtual text only mode ]]
+        floating_window_above_cur_line = true,
         hint_enable = true, -- virtual hint enable
-        fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
+        fix_pos = lambda.config.lsp.lsp_sig.fix_pos, -- set to true, the floating window will not auto-close until finish all parameters
 
         hint_prefix = "🐼 ", -- Panda for parameter
         auto_close_after = 15, -- close after 15 seconds
         --[[ hint_prefix = " ", ]]
         toggle_key = "»",
         handler_opts = {
-            border = lambda.style.border.type_0, -- double, single, shadow, none
+            border = "single",
         },
         zindex = 1002,
         timer_interval = 100,
@@ -152,6 +154,7 @@ function config.lsp_sig()
     }
 
     require("lsp_signature").setup(cfg)
+
     vim.keymap.set({ "n" }, "<C-w>K", function()
         require("lsp_signature").toggle_float_win()
     end, { silent = true, noremap = true, desc = "toggle signature" })
@@ -180,41 +183,7 @@ function config.hover()
     })
 end
 
-function config.lsp_lines()
-    require("lsp_lines").setup()
-    local Diagnostics = vim.api.nvim_create_augroup("Diagnostics", { clear = true })
-
-    local create_auto_cmd = function()
-        vim.api.nvim_create_autocmd("InsertLeave", {
-            pattern = "*",
-            group = Diagnostics,
-            callback = function()
-                vim.diagnostic.config({ virtual_lines = true })
-            end,
-        })
-        vim.api.nvim_create_autocmd("InsertEnter", {
-            pattern = "*",
-            group = Diagnostics,
-            callback = function()
-                vim.diagnostic.config({ virtual_lines = false })
-            end,
-        })
-    end
-
-    create_auto_cmd()
-    vim.api.nvim_create_user_command("TL", function()
-        popup_toggle = lambda.config.lsp.use_lsp_lines
-        if popup_toggle then
-            create_auto_cmd()
-        else
-            vim.api.nvim_clear_autocmds({ group = Diagnostics })
-            vim.diagnostic.config({ virtual_lines = false })
-        end
-    end, { force = true })
-end
-
 function config.navic()
-    local highlights = require("utils.ui.highlights")
     local s = lambda.style
     local misc = s.icons.misc
 
@@ -275,6 +244,7 @@ function config.vista()
         lua = "nvim_lsp",
     }
 end
+
 function config.rcd()
     require("rcd").setup({
         position = "top",
@@ -292,7 +262,8 @@ function config.goto_preview()
         opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
         resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
         post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-        references = { -- Configure the telescope UI for slowing the references cycling window.
+        references = {
+            -- Configure the telescope UI for slowing the references cycling window.
             telescope = {
                 require("telescope.themes").get_dropdown({
                     winblend = 15,
@@ -331,7 +302,8 @@ function config.glance()
             position = "right", -- Position of the list window 'left'|'right'
             width = 0.33, -- 33% width relative to the active window, min 0.1, max 0.5
         },
-        theme = { -- This feature might not work properly in nvim-0.7.2
+        theme = {
+            -- This feature might not work properly in nvim-0.7.2
             enable = true, -- Will generate colors for the plugin based on your current colorscheme
             mode = "auto", -- 'brighten'|'darken'|'auto', 'auto' will set mode based on the brightness of your colorscheme
         },
@@ -376,6 +348,7 @@ function config.glance()
         },
     })
 end
+
 function config.nvimdev()
     vim.g.nvimdev_auto_ctags = 1
     vim.g.nvimdev_auto_lint = 1

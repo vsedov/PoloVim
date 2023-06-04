@@ -110,7 +110,6 @@ end
 
 function config.hlargs()
     lambda.highlight.plugin("hlargs", {
-
         theme = {
             ["*"] = { { Hlargs = { italic = true, foreground = "#A5D6FF" } } },
             ["horizon"] = { { Hlargs = { italic = true, foreground = { from = "Normal" } } } },
@@ -122,6 +121,13 @@ function config.hlargs()
         excluded_filetypes = {},
         paint_arg_declarations = true,
         paint_arg_usages = true,
+        paint_catch_blocks = {
+            declarations = true,
+            usages = true,
+        },
+        extras = {
+            named_parameters = true,
+        },
         hl_priority = 10000,
         excluded_argnames = {
             declarations = {},
@@ -174,6 +180,7 @@ function config.matchup_setup()
         fullwidth = 1,
     }
 end
+
 function config.matchup()
     vim.keymap.set("n", "\\w", "<cmd>MatchupWhereAmI??<cr>", { noremap = true })
 
@@ -193,6 +200,7 @@ function config.hi_pairs()
 
         return out
     end
+
     setglobal = setkey("g")
     setglobal("hiPairs_hl_matchPair", {
         term = "underline,bold",
@@ -210,7 +218,6 @@ function config.indent()
 
     require("nvim-treesitter.configs").setup({
         yati = {
-
             default_fallback = function(lnum, computed, bufnr)
                 if vim.tbl_contains(tm_fts, vim.bo[bufnr].filetype) then
                     return require("tmindent").get_indent(lnum, bufnr) + computed
@@ -224,6 +231,7 @@ function config.indent()
         },
     })
 end
+
 function config.guess_indent()
     require("guess-indent").setup({
         auto_cmd = true, -- Set to false to disable automatic execution
@@ -338,4 +346,5 @@ function config.select_ease()
         })
     end
 end
+
 return config

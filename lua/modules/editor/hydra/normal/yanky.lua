@@ -44,14 +44,23 @@ yanky_hydra = Hydra({
 })
 -- choose/change the mappings if you want
 for key, putAction in pairs({
-    ["p"] = "<Plug>(YankyPutAfter)",
-    ["P"] = "<Plug>(YankyPutBefore)",
+    ["\\p"] = "<Plug>(YankyPutAfter)",
+    ["\\P"] = "<Plug>(YankyPutBefore)",
+
     ["gp"] = "<Plug>(YankyGPutAfter)",
     ["gP"] = "<Plug>(YankyGPutBefore)",
 }) do
     vim.keymap.set({ "n", "x" }, key, function()
         vim.fn.feedkeys(t(putAction))
         yanky_hydra:activate()
+    end)
+end
+for key, putAction in pairs({
+    ["p"] = "<Plug>(YankyPutAfter)",
+    ["P"] = "<Plug>(YankyPutBefore)",
+}) do
+    vim.keymap.set({ "n", "x" }, key, function()
+        vim.fn.feedkeys(t(putAction))
     end)
 end
 

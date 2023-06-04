@@ -4,7 +4,6 @@ local lsp = require("core.pack").package
 lsp({
     "neovim/nvim-lspconfig",
     lazy = true,
-    init = conf.nvim_lsp_setup,
 })
 
 lsp({
@@ -20,8 +19,10 @@ lsp({
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
         require("mason-null-ls").setup({
-            automatic_installation = false,
+            automatic_installation = true,
         })
+        require("modules.lsp.lsp.config").setup()
+        require("modules.lsp.lsp.config.handlers").setup()
     end,
 })
 lsp({
@@ -60,7 +61,7 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     lazy = true,
-    cond = lambda.config.lsp.use_lsp_signature,
+    cond = lambda.config.lsp.lsp_sig.use_lsp_signature,
     event = "VeryLazy",
     config = conf.lsp_sig,
 })
@@ -108,11 +109,10 @@ lsp({
     },
 })
 
-lsp({ "SmiteshP/nvim-navic", event = "VeryLazy", after = "nvim-lspconfig", config = conf.navic })
+lsp({ "SmiteshP/nvim-navic", lazy = true })
 
 lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
 lsp({
-
     "liuchengxu/vista.vim",
     cmd = { "Vista" },
     config = conf.vista,
@@ -150,16 +150,20 @@ lsp({
     "chikko80/error-lens.nvim",
     cond = lambda.config.lsp.use_error_lens,
     lazy = true,
-    event = "LspAttach",
-    config = true,
+    cmd = { "ErrorLensTelescope", "ErrorLensToggle" },
+    event = "BufRead",
+    dependencies = {
+        "nvim-telescope/telescope.nvim",
+    },
+    opts = true,
 })
 
 lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cond = lambda.config.lsp.use_rcd,
-    event = "LspAttach",
+    event = "BufRead",
     config = true,
-}) -- this could be  casing lag, im not sure
+})
 
 lsp({
     "VidocqH/lsp-lens.nvim",
@@ -168,7 +172,8 @@ lsp({
     opts = {
         enable = false, -- enable through lsp
         include_declaration = true, -- Reference include declaration
-        sections = { -- Enable / Disable specific request
+        sections = {
+            -- Enable / Disable specific request
             definition = true,
             references = true,
             implementation = true,

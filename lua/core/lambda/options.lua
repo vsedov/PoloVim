@@ -20,7 +20,7 @@ lambda.config = {
     use_hydra = true,
     -- innter treesitter, although this can be changed
     do_you_want_lag = true, -- Enable Extra regex, -- Fuck it
-    better_ts_highlights = false, -- This needs a direct toggle i think
+
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     record_your_self = true, -- waka time track , me.
     neorg_auto_commit = false,
@@ -66,11 +66,22 @@ lambda.config.extra_search = {
         use_fzf_lua = true, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
     },
 }
+lambda.config.buffer = {
+    use_tabscope = true,
+    use_sticky_buf = false,
+    use_bufignore = true,
+    use_early_retirement = true,
+    use_hbac = true,
+}
+lambda.config.editor = {
+    use_smart_q = true,
+}
 
 lambda.config.treesitter = {
     use_yati = true,
     use_matchup = true,
     use_extra_highlight = true,
+    better_ts_highlights = false, -- This needs a direct toggle i think markid
 }
 
 lambda.config.abbrev = {
@@ -99,14 +110,18 @@ lambda.config.cmp = {
 
 lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
-    use_lsp_lines = true,
-    use_lsp_signature = true,
+    use_error_lens = true,
+    use_rcd = false,
     use_typos = false, -- this was getting annoying
+    only_severe_diagnostics = false,
     use_format_modifcation = false,
     use_navbuddy = true,
-    use_error_lens = true,
-    use_rcd = true,
     use_inlay_hints = false,
+    lsp_sig = {
+        use_lsp_signature = true,
+        use_floating_window = true,
+        fix_pos = false,
+    },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
     --    │     languages                                                      │
@@ -117,22 +132,20 @@ lambda.config.lsp = {
         format = { "isort", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
-        use_inlay_hints = true,
     },
 }
 
 lambda.config.ui = {
-    use_illuminate = true,
     use_murmur = false, -- this causes issues with my yanky config -
+    use_illuminate = true,
     use_heirline = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_scroll = true,
-    use_tint = false,
-    use_pet = false,
+    use_tint = true,
     use_virtcol = true,
     use_indent_blankline = true,
-    use_hlsearch = false,
-    use_reticle = false,
+    use_hlsearch = true,
+    use_reticle = true,
     heirline = {
         use_status_col = false, -- true  for plugin or false for heirline
         use_win_bar = false,
@@ -154,6 +167,7 @@ lambda.config.ui = {
         use_indent_blankline = true,
         use_hlchunk = false,
     },
+    use_pet = false,
 }
 lambda.config.colourscheme = {
     enable_transparent = false,
@@ -169,14 +183,14 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
+                -- "kanagawa.nvim",
                 "catppuccin",
-                -- "sweetie.nvim",
+                -- -- "sweetie.nvim",
                 -- "vim-dogrun",
-                -- "poimandres.nvim",
-                -- "nvim-tundra",
-                -- "palenightfall.nvim",
-                -- "oh-lucy.nvim",
+                -- -- "poimandres.nvim",
+                -- -- "nvim-tundra",
+                -- -- "palenightfall.nvim",
+                -- -- "oh-lucy.nvim",
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
                 -- "rose", -- TSMethod'

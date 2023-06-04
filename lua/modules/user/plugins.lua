@@ -17,19 +17,19 @@ user({
         "LeetActivate",
     },
     config = function()
-        require("leetbuddy").setup({})
+        require("leetbuddy").setup({ language = "py" })
         lambda.command("LeetActivate", function()
-            binds = {
-                ["<leader>lq"] = "LBQuestions",
-                ["<leader>ll"] = "LBQuestion",
-                ["<leader>lr"] = "LBReset",
-                ["<leader>lt"] = "LBTest",
-                ["<leader>ls"] = "LBSubmit",
+            local binds = {
+                ["<leader>lq"] = ":LBQuestions<cr>",
+                ["<leader>ll"] = ":LBQuestion<cr>",
+                ["<leader>lr"] = ":LBReset<cr>",
+                ["<leader>lt"] = ":LBTest<cr>",
+                ["<leader>ls"] = ":LBSubmit<cr>",
             }
             for x, v in pairs(binds) do
-                vim.keymap.set("n", x[1], x[2], v, { noremap = true, silent = true })
+                vim.keymap.set("n", x, v, { noremap = true, silent = true })
             end
-        end)
+        end, {})
     end,
 })
 
@@ -106,108 +106,14 @@ user({
 
 user({
     "axieax/urlview.nvim",
-    keys = { "\\u", "\\U" },
-    cmd = { "UrlView" },
-    config = function()
-        require("urlview").setup({})
-        vim.keymap.set("n", "\\u", "<Cmd>UrlView<CR>", { desc = "view buffer URLs" })
-        vim.keymap.set("n", "\\U", "<Cmd>UrlView lazy<CR>", { desc = "view plugin URLs" })
-    end,
-})
-
-user({
-    "bignos/bookmacro",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    lazy = true,
     keys = {
-        -- Load a macro
-        {
-            ";ml",
-            vim.cmd.MacroSelect,
-            desc = "Load a macro to a registry",
-        },
-
-        -- Execute a macro
-        {
-            ";mx",
-            vim.cmd.MacroExec,
-            desc = "Execute a macro from BookMacro",
-        },
-
-        -- Add a macro
-        {
-            ";ma",
-            vim.cmd.MacroAdd,
-            desc = "Add a macro to BookMacro",
-        },
-        -- Edit a macro
-        {
-            ";me",
-            vim.cmd.MacroEdit,
-            desc = "Edit a macro from BookMacro",
-        },
-
-        {
-            ";mD",
-            vim.cmd.MacroDescEdit,
-            desc = "Edit a description of a macro from BookMacro",
-        },
-
-        -- Edit a register
-        {
-            ";mr",
-            vim.cmd.MacroRegEdit,
-            desc = "Edit a macro from register",
-        },
-
-        -- Delete a macro
-        {
-            ";md",
-            vim.cmd.MacroDel,
-            desc = "Delete a macro from BookMacro",
-        },
-
-        -- Export BookMacro
-        {
-            ";mE",
-            vim.cmd.MacroExport,
-            desc = "Export BookMacro to a JSON file",
-        },
-
-        -- Export a Macro
-        {
-            ";mz",
-            vim.cmd.MacroExportTo,
-            desc = "Export a macro to a JSON file",
-        },
-
-        -- Import a BookMacro
-        {
-            ";mI",
-            vim.cmd.MacroImport,
-            desc = "Import BookMacro with a JSON file",
-        },
-
-        -- Import a macro
-        {
-            ";mZ",
-            vim.cmd.MacroImportFrom,
-            desc = "Import a macro from a JSON file",
-        },
-
-        -- Erase BookMacro
-        {
-            ";mE",
-            vim.cmd.MacroErase,
-            desc = "Erase all macros from The Book",
-        },
+        { "\\u", vim.cmd.UrlView, desc = "view buffer URLS " },
     },
-    config = function()
-        require("bookmacro").setup()
-    end,
+    config = true,
 })
 
 user({
-
     "superDross/spellbound.nvim",
     event = "VeryLazy",
     init = function()
@@ -306,6 +212,7 @@ user({
         },
         {
             "<M-d>",
+
             function()
                 require("readline").kill_word()
             end,
@@ -327,6 +234,7 @@ user({
         },
         {
             "<C-u>",
+
             function()
                 require("readline").backward_kill_line()
             end,
@@ -379,4 +287,111 @@ user({
             },
         })
     end,
+})
+
+--  TODO: (vsedov) (07:41:40 - 03/06/23): I am not sure if i need this yet
+user({
+    "yagiziskirik/AirSupport.nvim",
+    requires = {
+        { "nvim-telescope/telescope.nvim" },
+        { "nvim-lua/plenary.nvim" },
+    },
+    keys = {
+        {
+            "<leader>?",
+            function()
+                vim.cmd([[AirSupport]])
+            end,
+            mode = "n",
+        },
+    },
+    config = true,
+})
+user({
+    "FluxxField/bionic-reading.nvim",
+    event = "VeryLazy",
+    config = true,
+})
+user({
+    "milanglacier/yarepl.nvim",
+    lazy = true,
+    cmd = {
+
+        "REPLStart",
+        "REPLAttachBufferToREPL",
+        "REPLDetachBufferToREPL",
+        "REPLCleanup",
+        "REPLFocus",
+        "REPLHide",
+        "REPLClose",
+        "REPLSwap",
+        "REPLSendVisual",
+        "REPLSendLine",
+        "REPLSendMotion",
+    },
+    init = function()
+        lambda.augroup("REPL", {
+            {
+                event = { "FileType" },
+                pattern = { "quarto", "markdown", "markdown.pandoc", "rmd", "python", "sh", "REPL" },
+                desc = "set up REPL keymap",
+                command = function()
+                    local utils = require("modules.editor.hydra.repl_utils")
+                    vim.keymap.set("n", "<localleader>r", function()
+                        utils.run_cmd_with_count("REPLStart " .. utils.ft_to_repl[vim.bo.filetype])()
+                        local data = require("hydra")(require("modules.editor.hydra.normal.repl"))
+                        data:activate()
+                        vim.schedule_wrap(data:activate())
+                    end, { desc = "Start an REPL", buffer = 0 })
+                    vim.keymap.set("n", "<localleader>sc", utils.send_a_code_chunk, {
+                        desc = "send a code chunk",
+                        expr = true,
+                        buffer = 0,
+                    })
+                end,
+            },
+        })
+    end,
+    config = function()
+        vim.g.REPL_use_floatwin = 0
+        require("yarepl").setup({
+            wincmd = function(bufnr, name)
+                if vim.g.REPL_use_floatwin == 1 then
+                    vim.api.nvim_open_win(bufnr, true, {
+                        relative = "editor",
+                        row = math.floor(vim.o.lines * 0.25),
+                        col = math.floor(vim.o.columns * 0.25),
+                        width = math.floor(vim.o.columns * 0.5),
+                        height = math.floor(vim.o.lines * 0.5),
+                        style = "minimal",
+                        title = name,
+                        border = "rounded",
+                        title_pos = "center",
+                    })
+                else
+                    vim.cmd([[belowright 15 split]])
+                    vim.api.nvim_set_current_buf(bufnr)
+                end
+            end,
+        })
+    end,
+})
+-- First of all, :Sayonara or :Sayonara!
+-- will only delete the buffer, if it isn't shown in any other window.
+-- Otherwise :bdelete would close these windows as well.
+-- Therefore both commands always only affect the current window.
+-- This is what the user expects and is easy reason about.
+user({
+    "akdevservices/vim-sayonara",
+    branch = "confirmations",
+    keys = {
+        {
+            "<leader>Q",
+            function()
+                vim.cmd([[Sayonara!]])
+            end,
+            desc = "Sayonara!",
+        },
+    },
+    cmd = { "Sayonara" },
 })

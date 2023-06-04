@@ -1,5 +1,5 @@
-local Hydra = require("hydra")
 local when = lambda.lib.when
+local leader = "<leader>o"
 
 local default_choice = {
     repo = "vsedov",
@@ -69,52 +69,19 @@ local function caller(options, ch)
     end)
 end
 
-local octo_hint = [[
-^    Octo
-^▔▔▔▔▔▔▔▔▔▔▔^
-^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^
-^ _g_: Gists
-^ _i_: Issues
-^ _p_: PR
-^ _r_: Repos
-^ _s_: Search
-^ _C_: Card
-^ _c_: Comment
-^ _l_: label
-^ _t_: thread
-^ _R_: Review
-^ _-_: React
-^ _q_: Quit
+local config = {
+    Octo = {
+        body = leader,
+        mode = { "n", "v" },
+        ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
 
-^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^
-^ _1_: GL [Cur]
-^ _2_: GL [Yank]
-^ _3_: Git [Url]+
-^ _4_: Git [CurL]
-]]
-Hydra({
-    name = "Octo",
-    mode = { "n", "v" },
-    body = "<leader>o",
-    hint = octo_hint,
-    config = {
-        hint = {
-            position = "middle-right",
-            border = lambda.style.border.type_0,
-        },
-        timeout = false,
-        invoke_on_body = true,
-    },
-    heads = {
-        {
-            "g",
+        g = {
             function()
                 caller({ "list" }, "gist")
             end,
-            { exit = true },
+            { exit = true, desc = "List Gists" },
         },
-        {
-            "i",
+        i = {
             function()
                 options = {
                     "close",
@@ -129,10 +96,9 @@ Hydra({
                 caller(options, "issue")
             end,
 
-            { exit = true },
+            { exit = true, desc = "Issue" },
         },
-        {
-            "p",
+        p = {
             function()
                 options = {
                     "create",
@@ -153,10 +119,9 @@ Hydra({
                 caller(options, "pr")
             end,
 
-            { exit = true },
+            { exit = true, desc = "Pull Request" },
         },
-        {
-            "r",
+        r = {
             function()
                 options = {
                     "list",
@@ -168,23 +133,21 @@ Hydra({
                 caller(options, "repo")
             end,
 
-            { exit = true },
+            { exit = true, desc = "Repo" },
         },
-        {
-            "s",
+        s = {
             function()
                 vim.ui.input({
-                    prompt = "Enter a option for search > ",
+                    prompt = "Enter an option for search > ",
                     default = "assignee:vsedov is:pr",
                 }, function(choice_2)
                     vim.cmd("Octo search " .. choice_2)
                 end)
             end,
-            { exit = true },
+            { exit = true, desc = "Search for pr|item" },
         },
 
-        {
-            "C",
+        C = {
             function()
                 options = {
                     "add",
@@ -193,11 +156,10 @@ Hydra({
                 }
                 caller(options, "card")
             end,
-            { exit = true },
+            { exit = true, desc = "Card Options" },
         },
 
-        {
-            "l",
+        l = {
             function()
                 options = {
                     "add",
@@ -207,19 +169,17 @@ Hydra({
                 caller(options, "label")
             end,
 
-            { exit = true },
+            { exit = true, desc = "Label Options" },
         },
 
-        {
-            "t",
+        t = {
             function()
                 caller({ "resolve", "unresolve" }, "thread")
             end,
 
-            { exit = true },
+            { exit = true, desc = "Thread Options" },
         },
-        {
-            "R",
+        R = {
             function()
                 options = {
                     "start",
@@ -232,10 +192,9 @@ Hydra({
                 }
                 caller(options, "review")
             end,
-            { exit = true },
+            { exit = true, desc = "Review Options" },
         },
-        {
-            "c",
+        c = {
             function()
                 options = {
                     "add",
@@ -243,10 +202,9 @@ Hydra({
                 }
                 caller(options, "comment")
             end,
-            { exit = true },
+            { exit = true, desc = "Comment Options" },
         },
-        {
-            "-",
+        ["-"] = {
             function()
                 options = {
                     "thumbs_up",
@@ -263,10 +221,9 @@ Hydra({
                 vim.notify("Active")
                 caller(options, "reaction")
             end,
-            { exit = true },
+            { exit = true, desc = "Reaction Options" },
         },
-        {
-            "1",
+        ["1"] = {
             function()
                 require("gitlinker").get_buf_range_url(
                     "n",
@@ -275,29 +232,33 @@ Hydra({
             end,
             { exit = true, desc = "Current file" },
         },
-        {
-            "2",
+        ["2"] = {
             function()
                 require("gitlinker").get_repo_url()
             end,
-            { exit = true, desc = "Copy url" },
+            { exit = true, desc = "Copy URL" },
         },
-        {
-            "3",
+        ["3"] = {
             function()
                 require("gitlinker").get_repo_url({ action_callback = require("gitlinker.actions").open_in_browser })
             end,
-            { exit = true, desc = "Open Repo " },
+            { exit = true, desc = "Open Repo" },
         },
-        {
-            "4",
+        ["4"] = {
+
             function()
                 local mode = string.lower(vim.fn.mode())
                 require("gitlinker").get_buf_range_url(mode)
             end,
-            { exit = true, desc = "current_line range" },
+            { exit = true, desc = "Current line range" },
         },
-        { "q", nil, { exit = true } },
-        ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
     },
-})
+}
+return {
+    config,
+    "Octo",
+    { { "1", "2", "3", "4" } },
+    { "i", "p", "R", "t", "r", "s", "c", "g", "C", "l", "-" },
+    6,
+    3,
+}
