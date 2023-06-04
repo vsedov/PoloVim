@@ -415,7 +415,7 @@ ui({
 --  Further testing is required
 ui({
     "tummetott/reticle.nvim",
-    cond = lambda.config.ui.use_reticle,
+    cond = lambda.config.ui.use_reticle and false,
     lazy = false,
     config = conf.reticle,
 })
