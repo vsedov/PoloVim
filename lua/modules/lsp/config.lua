@@ -1,9 +1,5 @@
 local config = {}
 
-function config.nvim_lsp_setup()
-    require("modules.lsp.lsp.config").setup()
-end
-
 function config.mason_setup()
     require("modules.lsp.lsp.mason.python")
     local get_config = require("modules.lsp.lsp.mason.lsp_servers")
@@ -23,6 +19,7 @@ function config.mason_setup()
             end
         end,
     })
+    require("modules.lsp.lsp.config.handlers").setup()
 end
 
 function config.lsp_install()
@@ -130,6 +127,7 @@ function config.saga()
         },
     })
 end
+
 function config.lsp_sig()
     local cfg = {
         bind = true,
@@ -186,7 +184,6 @@ function config.hover()
 end
 
 function config.navic()
-    local highlights = require("utils.ui.highlights")
     local s = lambda.style
     local misc = s.icons.misc
 
@@ -247,6 +244,7 @@ function config.vista()
         lua = "nvim_lsp",
     }
 end
+
 function config.rcd()
     require("rcd").setup({
         position = "top",
@@ -264,7 +262,8 @@ function config.goto_preview()
         opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
         resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
         post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-        references = { -- Configure the telescope UI for slowing the references cycling window.
+        references = {
+            -- Configure the telescope UI for slowing the references cycling window.
             telescope = {
                 require("telescope.themes").get_dropdown({
                     winblend = 15,
@@ -303,7 +302,8 @@ function config.glance()
             position = "right", -- Position of the list window 'left'|'right'
             width = 0.33, -- 33% width relative to the active window, min 0.1, max 0.5
         },
-        theme = { -- This feature might not work properly in nvim-0.7.2
+        theme = {
+            -- This feature might not work properly in nvim-0.7.2
             enable = true, -- Will generate colors for the plugin based on your current colorscheme
             mode = "auto", -- 'brighten'|'darken'|'auto', 'auto' will set mode based on the brightness of your colorscheme
         },
@@ -348,6 +348,7 @@ function config.glance()
         },
     })
 end
+
 function config.nvimdev()
     vim.g.nvimdev_auto_ctags = 1
     vim.g.nvimdev_auto_lint = 1

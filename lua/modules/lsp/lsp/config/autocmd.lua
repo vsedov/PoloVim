@@ -2,10 +2,7 @@ local lsp, fs, fn, api, fmt = vim.lsp, vim.fs, vim.fn, vim.api, string.format
 local diagnostic = vim.diagnostic
 local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 
-local icons = lambda.style.icons.lsp
-local border = lambda.style.border.type_0
 local augroup = lambda.augroup
-local command = lambda.command
 
 if vim.env.DEVELOPING then
     vim.lsp.set_log_level(L.DEBUG)
@@ -33,13 +30,7 @@ local provider = {
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
-    tsserver = {
-        semantic_tokens = function(bufnr, client, token)
-            if token.type == "variable" and token.modifiers["local"] and not token.modifiers.readonly then
-                lsp.semantic_tokens.highlight_token(token, bufnr, client.id, "@danger")
-            end
-        end,
-    },
+    tsserver = {},
 }
 
 -----------------------------------------------------------------------------//
@@ -55,17 +46,19 @@ local function setup_autocommands(client, buf)
 
     if not client.server_capabilities[provider.FORMATTING] then
         augroup(("LspFormatting%d"):format(buf), {
-            event = "BufWritePre",
-            buffer = buf,
-            desc = "LSP: Format on save",
-            command = function(args)
-                if not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
-                    local clients = vim.tbl_filter(function(c)
-                        return c.server_capabilities[provider.FORMATTING]
-                    end, lsp.get_active_clients({ buffer = buf }))
-                    lsp.buf.format({ bufnr = args.buf, async = #clients == 1 })
-                end
-            end,
+            {
+                event = "BufWritePre",
+                buffer = buf,
+                desc = "LSP: Format on save",
+                command = function(args)
+                    if not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
+                        local clients = vim.tbl_filter(function(c)
+                            return c.server_capabilities[provider.FORMATTING]
+                        end, lsp.get_active_clients({ buffer = buf }))
+                        lsp.buf.format({ bufnr = args.buf, async = #clients == 1 })
+                    end
+                end,
+            },
         })
     end
 

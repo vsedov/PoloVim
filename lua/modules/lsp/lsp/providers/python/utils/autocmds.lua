@@ -17,20 +17,6 @@ M.DocumentHighlightAU = function()
     })
 end
 
-M.SemanticTokensAU = function(bufnr)
-    lambda.augroup("SemanticTokens", {
-        {
-            -- event = { "BufEnter", "CursorHold", "InsertLeave" },
-            event = "TextChanged",
-            buffer = bufnr,
-            command = function()
-                vim.lsp.buf.semantic_tokens_full()
-            end,
-        },
-    })
-    vim.lsp.buf.semantic_tokens_full()
-end
-
 M.InlayHintsAU = function()
     require("modules.lsp.lsp.providers.python.inlay_hint_core").setup_autocmd()
 end
