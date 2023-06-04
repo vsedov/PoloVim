@@ -32,6 +32,11 @@ function config.catppuccin()
         },
         integrations = {
             treesitter = true,
+            dropbar = {
+                enabled = true,
+                color_mode = true, -- enable color for kind's texts, not just kind's icons
+            },
+
             native_lsp = {
                 enabled = true,
                 virtual_text = {
