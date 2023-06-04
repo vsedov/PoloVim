@@ -1,4 +1,3 @@
-local hydra = require("hydra")
 local leader = "\\l"
 
 local mx = function(feedkeys)
@@ -9,8 +8,6 @@ local mx = function(feedkeys)
 end
 
 local config = {}
-
-local exit = { nil, { exit = true, desc = "EXIT" } }
 
 config = {
     Parenth = {
