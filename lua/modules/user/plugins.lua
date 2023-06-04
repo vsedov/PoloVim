@@ -212,6 +212,7 @@ user({
         },
         {
             "<M-d>",
+
             function()
                 require("readline").kill_word()
             end,
@@ -305,4 +306,92 @@ user({
         },
     },
     config = true,
+})
+user({
+    "FluxxField/bionic-reading.nvim",
+    event = "VeryLazy",
+    config = true,
+})
+user({
+    "milanglacier/yarepl.nvim",
+    lazy = true,
+    cmd = {
+
+        "REPLStart",
+        "REPLAttachBufferToREPL",
+        "REPLDetachBufferToREPL",
+        "REPLCleanup",
+        "REPLFocus",
+        "REPLHide",
+        "REPLClose",
+        "REPLSwap",
+        "REPLSendVisual",
+        "REPLSendLine",
+        "REPLSendMotion",
+    },
+    init = function()
+        lambda.augroup("REPL", {
+            {
+                event = { "FileType" },
+                pattern = { "quarto", "markdown", "markdown.pandoc", "rmd", "python", "sh", "REPL" },
+                desc = "set up REPL keymap",
+                command = function()
+                    local utils = require("modules.editor.hydra.repl_utils")
+                    vim.keymap.set("n", "<localleader>r", function()
+                        utils.run_cmd_with_count("REPLStart " .. utils.ft_to_repl[vim.bo.filetype])()
+                        local data = require("hydra")(require("modules.editor.hydra.normal.repl"))
+                        data:activate()
+                        vim.schedule_wrap(data:activate())
+                    end, { desc = "Start an REPL", buffer = 0 })
+                    vim.keymap.set("n", "<localleader>sc", utils.send_a_code_chunk, {
+                        desc = "send a code chunk",
+                        expr = true,
+                        buffer = 0,
+                    })
+                end,
+            },
+        })
+    end,
+    config = function()
+        vim.g.REPL_use_floatwin = 0
+        require("yarepl").setup({
+            wincmd = function(bufnr, name)
+                if vim.g.REPL_use_floatwin == 1 then
+                    vim.api.nvim_open_win(bufnr, true, {
+                        relative = "editor",
+                        row = math.floor(vim.o.lines * 0.25),
+                        col = math.floor(vim.o.columns * 0.25),
+                        width = math.floor(vim.o.columns * 0.5),
+                        height = math.floor(vim.o.lines * 0.5),
+                        style = "minimal",
+                        title = name,
+                        border = "rounded",
+                        title_pos = "center",
+                    })
+                else
+                    vim.cmd([[belowright 15 split]])
+                    vim.api.nvim_set_current_buf(bufnr)
+                end
+            end,
+        })
+    end,
+})
+-- First of all, :Sayonara or :Sayonara!
+-- will only delete the buffer, if it isn't shown in any other window.
+-- Otherwise :bdelete would close these windows as well.
+-- Therefore both commands always only affect the current window.
+-- This is what the user expects and is easy reason about.
+user({
+    "akdevservices/vim-sayonara",
+    branch = "confirmations",
+    keys = {
+        {
+            "<leader>Q",
+            function()
+                vim.cmd([[Sayonara!]])
+            end,
+            desc = "Sayonara!",
+        },
+    },
+    cmd = { "Sayonara" },
 })
