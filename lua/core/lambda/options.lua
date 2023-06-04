@@ -87,7 +87,8 @@ lambda.config.treesitter = {
 lambda.config.abbrev = {
     enable = true,
     coding_support = true, -- system wide
-    globals = { -- dictionaries that ive defined to be global, you may not want this idk .
+    globals = {
+        -- dictionaries that ive defined to be global, you may not want this idk .
         ["spelling_support"] = true, -- i wonder if this would help reduce the lag
         ["month_date"] = true,
     },
@@ -140,6 +141,7 @@ lambda.config.ui = {
     use_illuminate = true,
     use_heirline = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
+    use_scrollbar = true,
     use_scroll = true,
     use_tint = true,
     use_virtcol = true,
