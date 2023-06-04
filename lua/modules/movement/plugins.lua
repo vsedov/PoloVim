@@ -6,14 +6,12 @@ local leap = require("modules.movement.leap")
 movement({
     "ggandor/leap.nvim",
     lazy = true,
-    event = "VeryLazy",
     dependencies = { "tpope/vim-repeat" },
     config = leap.leap_config,
 })
 
 movement({
     "ggandor/leap-spooky.nvim",
-    event = "VeryLazy",
     lazy = true,
     dependencies = {
         "leap.nvim",
@@ -32,7 +30,6 @@ movement({
 movement({
     "ggandor/flit.nvim",
     lazy = true,
-    event = "VeryLazy",
     dependencies = { "ggandor/leap.nvim" },
     config = leap.leap_flit,
 })

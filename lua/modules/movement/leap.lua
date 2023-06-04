@@ -17,10 +17,6 @@ lambda.command("LeapBinds", function()
     vim.notify(leap_binds)
 end, { force = true })
 
-vim.keymap.set("n", "<localleader>l", function()
-    vim.notify(leap_binds)
-end, { silent = true })
-
 local function leapAction(actionFn, actionDesc, conds)
     return function()
         require("leap").leap({
@@ -263,10 +259,6 @@ function binds()
         leap_binds = leap_binds .. m[2] .. " " .. m[4] .. "\n"
     end
     --  TODO: (vsedov) (06:52:06 - 03/06/23): For some reason this is required for this to even work
-    --  .
-    vim.keymap.del({ "x", "o" }, "x")
-    vim.keymap.del({ "x", "o" }, "X")
-    -- To set alternative keys for "exclusive" selection:
     vim.keymap.set({ "x", "o" }, "x", "<Plug>(leap-forward-till)")
     vim.keymap.set({ "x", "o" }, "X", "<Plug>(leap-backward-till)")
 end
