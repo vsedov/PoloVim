@@ -147,6 +147,7 @@ local function general_overrides()
         { Type = { italic = true, bold = true } },
         { Include = { italic = true, bold = false } },
         { QuickFixLine = { inherit = "PmenuSbar", fg = "NONE", italic = true } },
+
         -- Neither the sign column or end of buffer highlights require an explicit bg
         -- they should both just use the bg that is in the window they are in.
         -- if either are specified this can lead to issues when a winhighlight is set
@@ -224,7 +225,6 @@ local function set_telescope()
             { TelescopePromptBorder = { fg = P.sumiInk0, bg = P.sumiInk0 } },
             { TelescopePreviewBorder = { fg = P.sumiInk2, bg = P.sumiInk2 } },
             { TelescopeResultsBorder = { fg = P.sumiInk2, bg = P.sumiInk2 } },
-
             { TelescopePromptNormal = { fg = P.fujiWhite, bg = P.sumiInk0 } },
             { TelescopeNormal = { fg = P.red, bg = P.sumiInk2 } },
             { TelescopePreviewNormal = { bg = P.sumiInk2 } },

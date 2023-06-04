@@ -312,7 +312,7 @@ ui({
 ui({
     "petertriho/nvim-scrollbar",
     lazy = true,
-    cond = lambda.config.ui.use_scroll,
+    cond = lambda.config.ui.use_scrollbar,
     event = "VeryLazy",
     dependencies = {
         "kevinhwang91/nvim-hlslens",
