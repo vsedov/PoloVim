@@ -155,7 +155,7 @@ local function general_overrides()
         ------------------------------------------------------------------------------//
         --  Semantic tokens
         ------------------------------------------------------------------------------//
-        { ["@lsp.type.variable"] = { clear = true } },
+        -- { ["@lsp.type.variable"] = { clear = true } },
         { ["@lsp.type.parameter"] = { italic = true, fg = { from = "Normal" } } },
         { ["@lsp.typemod.method"] = { link = "@method" } },
         { ["@lsp.typemod.variable.global"] = { bold = true, inherit = "@constant.builtin" } },
@@ -173,9 +173,9 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         { ["@keyword.return"] = { italic = true, fg = { from = "Keyword" } } },
         { ["@type.qualifier"] = { inherit = "@keyword", italic = true } },
-        { ["@variable"] = { clear = true } },
+        -- { ["@variable"] = { clear = true } },
         { ["@parameter"] = { italic = true, bold = true, fg = "NONE" } },
-        { ["@error"] = { fg = "fg", bg = "NONE" } },
+        -- { ["@error"] = { fg = "fg", bg = "NONE" } },
         { ["@text.diff.add"] = { link = "DiffAdd" } },
         { ["@text.diff.delete"] = { link = "DiffDelete" } },
         { ["@text.title.markdown"] = { underdouble = true } },
