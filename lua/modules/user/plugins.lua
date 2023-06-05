@@ -1,4 +1,5 @@
 local user = require("core.pack").package
+
 local ui = lambda.highlight
 user({
     "Dhanus3133/LeetBuddy.nvim",
@@ -289,28 +290,34 @@ user({
     end,
 })
 
---  TODO: (vsedov) (07:41:40 - 03/06/23): I am not sure if i need this yet
-user({
-    "yagiziskirik/AirSupport.nvim",
-    requires = {
-        { "nvim-telescope/telescope.nvim" },
-        { "nvim-lua/plenary.nvim" },
-    },
-    keys = {
-        {
-            "<leader>?",
-            function()
-                vim.cmd([[AirSupport]])
-            end,
-            mode = "n",
-        },
-    },
-    config = true,
-})
 user({
     "FluxxField/bionic-reading.nvim",
-    event = "VeryLazy",
-    config = true,
+    event = {
+        "ColorScheme",
+        "FileType",
+        "TextChanged",
+        "TextChangedI",
+    },
+    config = function()
+        require("bionic-reading").setup({
+            auto_highlight = true,
+
+            file_types = { "python", "lua" },
+            hl_group_value = {
+                link = "Bold",
+            },
+            hl_offsets = {
+                ["1"] = 1,
+                ["2"] = 1,
+                ["3"] = 2,
+                ["4"] = 2,
+                ["default"] = 0.4,
+            },
+            prompt_user = false,
+            saccade_cadence = 1,
+            update_in_insert_mode = true,
+        })
+    end,
 })
 user({
     "milanglacier/yarepl.nvim",
@@ -338,10 +345,7 @@ user({
                 command = function()
                     local utils = require("modules.editor.hydra.repl_utils")
                     vim.keymap.set("n", "<localleader>r", function()
-                        utils.run_cmd_with_count("REPLStart " .. utils.ft_to_repl[vim.bo.filetype])()
-                        local data = require("hydra")(require("modules.editor.hydra.normal.repl"))
-                        data:activate()
-                        vim.schedule_wrap(data:activate())
+                        vim.schedule_wrap(require("hydra")(require("modules.editor.hydra.normal.repl")):activate())
                     end, { desc = "Start an REPL", buffer = 0 })
                     vim.keymap.set("n", "<localleader>sc", utils.send_a_code_chunk, {
                         desc = "send a code chunk",
@@ -394,4 +398,46 @@ user({
         },
     },
     cmd = { "Sayonara" },
+})
+user({
+    "Darazaki/indent-o-matic",
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
+})
+
+-- ╰─λ NVIM_PROFILE=start nvim
+-- to run this, you have to run the above
+user({
+    "stevearc/profile.nvim",
+    config = function()
+        local should_profile = os.getenv("NVIM_PROFILE")
+        if should_profile then
+            require("profile").instrument_autocmds()
+            if should_profile:lower():match("^start") then
+                require("profile").start("*")
+            else
+                require("profile").instrument("*")
+            end
+        end
+
+        local function toggle_profile()
+            local prof = require("profile")
+            if prof.is_recording() then
+                prof.stop()
+                vim.ui.input(
+                    { prompt = "Save profile to:", completion = "file", default = "profile.json" },
+                    function(filename)
+                        if filename then
+                            prof.export(filename)
+                            vim.notify(string.format("Wrote %s", filename))
+                        end
+                    end
+                )
+            else
+                prof.start("*")
+            end
+        end
+        vim.keymap.set("", "<f3>", toggle_profile)
+    end,
 })

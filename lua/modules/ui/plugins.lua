@@ -99,7 +99,37 @@ ui({
 })
 ui({
     "nvim-neo-tree/neo-tree.nvim",
-    event = "VeryLazy",
+    event = "VeryLazy", -- No clue why, but this is required for my hydra to work o_o
+    keys = {
+        {
+            "<leader>e",
+            vim.cmd.NeoTreeFocusToggle,
+            "NeoTree Focus Toggle",
+        },
+        {
+            "<Leader><leader>d",
+            function()
+                vim.cmd([[Neotree diagnostics]])
+            end,
+            "General: [t]oggle the [d]iagnostic explorer",
+        },
+
+        {
+            "<Leader>F",
+            vim.cmd.NeoTreeFocus,
+
+            "General: [F]ocus Current Buffer",
+        },
+
+        {
+            "<leader>gt",
+            function()
+                vim.cmd("Neotree . git_status reveal toggle")
+            end,
+            desc = "General: [t]oggle the [g]it control explorer",
+        },
+    },
+
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -250,19 +280,6 @@ ui({
 })
 
 ui({
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    cond = lambda.config.ui.noice.enable,
-    dependencies = {
-        "nui.nvim",
-        "nvim-notify",
-        "hrsh7th/nvim-cmp",
-    },
-    opts = require("modules.ui.noice").noice,
-    config = require("modules.ui.noice").noice_setup,
-})
-
-ui({
     "samuzora/pet.nvim",
     lazy = true,
     cond = lambda.config.ui.use_pet,
@@ -312,7 +329,7 @@ ui({
 ui({
     "petertriho/nvim-scrollbar",
     lazy = true,
-    cond = lambda.config.ui.use_scroll,
+    cond = lambda.config.ui.use_scrollbar,
     event = "VeryLazy",
     dependencies = {
         "kevinhwang91/nvim-hlslens",

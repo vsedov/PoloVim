@@ -14,7 +14,6 @@ completion({
 })
 
 --  ──────────────────────────────────────────────────────────────────────
-
 completion({
     "hrsh7th/nvim-cmp",
     cond = lambda.config.cmp.use_cmp,
@@ -76,7 +75,24 @@ completion({
 completion({
     "altermo/npairs-integrate-upair",
     event = "VeryLazy",
-    dependencies = { { "windwp/nvim-autopairs" }, { "altermo/ultimate-autopair.nvim" } },
+    dependencies = {
+        { "windwp/nvim-autopairs", dependencies = "nvim-treesitter/nvim-treesitter" },
+        { "altermo/ultimate-autopair.nvim", dependencies = "nvim-treesitter/nvim-treesitter" },
+    },
+    init = function()
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "IntPairsComp",
+            callback = function()
+                if not package.loaded["npairs-int-upair"] then
+                    require("lazy").load({ plugins = { "npairs-integrate-upair" } })
+                end
+
+                require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+            end,
+            once = true,
+        })
+    end,
+
     config = function()
         require("npairs-int-upair").setup({
             map = "n", --which of them should be the insert mode autopair
@@ -84,46 +100,35 @@ completion({
             bs = "n", --which of them should be the backspace
             cr = "n", --which of them should be the newline
             space = "u", --which of them should be the space (only 'u' supported)
-            c_h = "", --which of them should be the <C-h> (only 'n' supported)
-            c_w = "", --which of them should be the <C-w> (only 'n' supported)
+            c_h = "n", --which of them should be the <C-h> (only 'n' supported)
+            c_w = "n", --which of them should be the <C-w> (only 'n' supported)
             rfastwarp = "<c-x>", --ultimate-autopair's reverse fastwarp mapping ('' for disable)
             fastwrap = "<c-s>", --nvim-autopairs's fastwrap mapping ('' for disable)
-            npairs_conf = {}, --nvim-autopairs's configuration
-            upair_conf = {
-                config_type = "default",
+            npairs_conf = {
+                disable_filetype = {
+                    "aerial",
+                    "checkhealth",
+                    "dapui_breakpoints",
+                    "dapui_console",
+                    "dapui_scopes",
+                    "dapui_stacks",
+                    "DressingSelect",
+                    "help",
+                    "lazy",
+                    "lspinfo",
+                    "man",
+                    "mason",
+                    "netrw",
+                    "null-ls-info",
+                    "qf",
+                },
+                check_ts = true,
+                fast_wrap = { highlight = "Question", highlight_grey = "Dimmed" },
+            }, --nvim-autopairs's configuration
 
-                map = true,
-                --whether to allow any insert map
-                cmap = true, --cmap stands for cmd-line map
-                --whether to allow any cmd-line map
-                pair_map = true,
-                --whether to allow pair insert map
-                pair_cmap = true,
-                --whether to allow pair cmd-line map
-                bs = { -- *ultimate-autopair-map-backspace-config*
-                    enable = true,
-                    map = "<bs>", --string or table
-                    cmap = "<bs>",
-                    overjumps = true,
-                    --(|foo) > bs > |foo
-                    space = true,
-                    --( |foo ) > bs > (|foo)
-                },
-                cr = { -- *ultimate-autopair-map-newline-config*
-                    enable = true,
-                    map = "<cr>", --string or table
-                    autoclose = false,
-                    --(| > cr > (\n|\n)
-                    --addsemi={}, --list of filetypes
-                },
-                space = { -- *ultimate-autopair-map-space-config*
-                    enable = true,
-                    map = " ",
-                    cmap = " ",
-                    check_box_ft = { "markdown", "vimwiki" },
-                    --+ [|] > space > + [ ]
-                },
-                fastwarp = { -- *ultimate-autopair-map-fastwarp-config*
+            upair_conf = {
+                fastwarp = {
+                    -- *ultimate-autopair-map-fastwarp-config*
                     enable = true,
                     enable_normal = true,
                     enable_reverse = true,
@@ -142,9 +147,9 @@ completion({
                     --add a module so that if fastwarp fails
                     --then an `e` will not be inserted
                 },
-                extensions = { -- *ultimate-autopair-extensions-default-config*
+                extensions = {
+                    -- *ultimate-autopair-extensions-default-config*
                     cmdtype = { types = { "/", "?", "@" }, p = 90 },
-                    filetype = { p = 80, nft = { "TelescopePrompt" } },
                     escape = { filter = true, p = 70 },
                     string = { p = 60 },
                     --treenode={inside={'comment'},p=50},
@@ -152,6 +157,25 @@ completion({
                     alpha = { p = 30 },
                     suround = { p = 20 },
                     fly = { other_char = { " " }, nofilter = false, p = 10 },
+                    filetype = {
+                        nft = {
+                            "aerial",
+                            "checkhealth",
+                            "dapui_breakpoints",
+                            "dapui_console",
+                            "dapui_scopes",
+                            "dapui_stacks",
+                            "DressingSelect",
+                            "help",
+                            "lazy",
+                            "lspinfo",
+                            "man",
+                            "mason",
+                            "netrw",
+                            "null-ls-info",
+                            "qf",
+                        },
+                    },
                 },
                 internal_pairs = { -- *ultimate-autopair-pairs-default-config*
                     {

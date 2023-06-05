@@ -59,33 +59,6 @@ clipsub({
     },
     config = conf.cool_sub,
 })
-
-clipsub({
-    "mg979/vim-visual-multi",
-    lazy = true,
-    keys = {
-        "<Ctrl>",
-        "<M>",
-        "<C-n>",
-        "<C-n>",
-        "<M-n>",
-        "<S-Down>",
-        "<S-Up>",
-        "<M-Left>",
-        "<M-i>",
-        "<M-Right>",
-        "<M-D>",
-        "<M-Down>",
-        "<C-d>",
-        "<C-Down>",
-        "<S-Right>",
-        "<C-LeftMouse>",
-        "<M-LeftMouse>",
-        "<M-C-RightMouse>",
-    },
-    init = conf.vmulti,
-})
-
 clipsub({
     "johmsalas/text-case.nvim",
     lazy = true,

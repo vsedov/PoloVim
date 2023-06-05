@@ -7,9 +7,9 @@ vim.api.nvim_create_user_command("T", function(param)
     previous_cmd = param
 end, { nargs = "?", force = true })
 
-vim.keymap.set("n", "_W", "<Cmd>OverseerToggle<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "_w", "<Cmd>OverseerToggle<CR>", { noremap = true, silent = true })
 
-vim.keymap.set("n", "_w", function()
+vim.keymap.set("n", "_W", function()
     vim.cmd("OverseerOpen")
     if previous_cmd == "" then
         vim.cmd([[T]])

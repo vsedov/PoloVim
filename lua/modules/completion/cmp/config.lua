@@ -14,7 +14,7 @@ local cmp_window = {
         "Normal:Normal",
         "FloatBorder:SuggestWidgetBorder",
         "CursorLine:Normal",
-        "Search:None",--[[ , ]]
+        "Search:None", --[[ , ]]
     }, ","),
 }
 local config = {
@@ -23,12 +23,7 @@ local config = {
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    performance = {
-        debounce = 60,
-        throttle = 30,
-        fetching_timeout = 500,
-    },
-
+    performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
     preselect = cmp.PreselectMode.None, -- None | Item
     completion = {
         types.cmp.TriggerEvent.None,
@@ -36,13 +31,14 @@ local config = {
         keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
         keyword_length = 1,
     },
+    confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
     -- confirmation = {
     --     default_behavior = types.cmp.ConfirmBehavior.Insert,
     --     get_commit_characters = function(commit_characters)
     --         return commit_characters
     --     end,
     -- },
-    experimental = { ghost_text = false, native_menu = false }, -- native_menu = false -- im not sure if this will make things faster
+    experimental = { ghost_text = { hl_group = "Dimmed" } },
 
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
@@ -104,7 +100,6 @@ if lambda.config.cmp.cmp_theme == "border" then
         },
     }
     config.formatting = {
-
         format = kind.cmp_format({
             with_text = false,
             before = function(entry, vim_item)

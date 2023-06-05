@@ -43,59 +43,147 @@ end
 
 function config.autopair()
     return {
+        config_type = "default",
+        map = true,
+        --whether to allow any insert map
+        cmap = true, --cmap stands for cmd-line map
+        --whether to allow any cmd-line map
+        pair_map = true,
+        --whether to allow pair insert map
+        pair_cmap = true,
+        --whether to allow pair cmd-line map
         bs = {
+            -- *ultimate-autopair-map-backspace-config*
             enable = true,
-            overjump = true,
+            map = "<bs>", --string or table
+            cmap = "<bs>",
+            overjumps = true,
+            --(|foo) > bs > |foo
             space = true,
-            multichar = true,
-            fallback = nil,
+            --( |foo ) > bs > (|foo)
+            indent_ignore = false,
+            --(\n\t|\n) > bs > (|)
+            conf = {},
+            --contains extension config
         },
         cr = {
+            -- *ultimate-autopair-map-newline-config*
             enable = true,
+            map = "<cr>", --string or table
             autoclose = false,
-            multichar = {
-                enable = false,
-                markdown = { { "```", "```", pair = true, noalpha = true, next = true } },
-                lua = { { "then", "end" }, { "do", "end" } },
-            },
-            addsemi = { "c", "cpp", "rust" },
-            -- extensions = require("ultimate-autopair.maps.cr").default_extensions,
-            fallback = nil,
+            --(| > cr > (\n|\n)
+            --addsemi={}, --list of filetypes
+            conf = {},
+            --contains extension config
+        },
+        space = {
+            -- *ultimate-autopair-map-space-config*
+            enable = true,
+            map = " ",
+            cmap = " ",
+            check_box_ft = { "markdown", "vimwiki" },
+            --+ [|] > space > + [ ]
+            conf = {},
+            --contains extension config
+        },
+        space2 = {
+            -- *ultimate-autopair-map-space2-config*
+            enable = false,
+            match = [[\a]],
+            --what character activate
+            conf = {},
+            --contains extension config
         },
         fastwarp = {
+            -- *ultimate-autopair-map-fastwarp-config*
             enable = true,
-            hopout = true,
-            map = "<c-e>",
-            rmap = "<C-E>",
-            Wmap = "<C-e>",
-            cmap = "<c-e>",
-            rcmap = "<c-E>",
-            Wcmap = "<c-e>",
+            enable_normal = true,
+            enable_reverse = true,
+            hopout = false,
+            --{(|)} > fastwarp > {(}|)
+            map = "<c-c>",
+            rmap = "<c-c>",
+            cmap = "<c-c>",
+            rcmap = "<c-c>",
             multiline = true,
-            fallback = nil,
-            -- extensions = require("ultimate-autopair.maps.fastwarp").default_extensions,
-            -- endextensions = require("ultimate-autopair.maps.fastwarp").default_endextensions,
-            -- rextensions = require("ultimate-autopair.maps.rfastwarp").default_extensions,
-            -- rendextensions = require("ultimate-autopair.maps.rfastwarp").default_endextensions,
-        },
-        fastend = {
-            enable = true,
-            map = "<c-w>",
-            cmap = "<c-w>",
-            smart = true,
-            fallback = nil,
+            --(|) > fastwarp > (\n|)
+            nocursormove = true,
+            --makes the cursor not move (|)foo > fastwarp > (|foo)
+            --disables multiline feature
+            --only activates if prev char is start pair, otherwise fallback to normal
+            do_nothing_if_fail = true,
+            --add a module so that if fastwarp fails
+            --then an `e` will not be inserted
+            filter = false,
+            --whether to use filters (like inside string)
+            conf = {},
+            --contains extension config
         },
         extensions = {
-            { "cmdtype", { "/", "?", "@" } },
-            "multichar",
-            "string",
-            { "treenode", { inside = { "comment" } } },
-            { "escape", { filter = true } },
-            "rules",
-            "filetype",
-            { "alpha", { before = { "'" } } },
-            { "suround", { '"', "'" } },
-            { "fly", { ")", "}", "]", " ", match = nil, nofilter = false } },
+            -- *ultimate-autopair-extensions-default-config*
+            cmdtype = { types = { "/", "?", "@" }, p = 90 },
+            filetype = { p = 80, nft = { "TelescopePrompt" } },
+            escape = { filter = true, p = 70 },
+            string = { p = 60 },
+            rules = { p = 40, rules = nil },
+            alpha = { p = 30 },
+            suround = { p = 20 },
+            fly = { other_char = { " " }, nofilter = false, p = 10, undomapconf = {}, undomap = nil, undocmap = nil },
+        },
+        internal_pairs = { -- *ultimate-autopair-pairs-default-config*
+            {
+                "[",
+                "]",
+                fly = true,
+                dosuround = true,
+                newline = true,
+                space = true,
+                fastwarp = true,
+            },
+            {
+                "(",
+                ")",
+                fly = true,
+                dosuround = true,
+                newline = true,
+                space = true,
+                fastwarp = true,
+            },
+            {
+                "{",
+                "}",
+                fly = true,
+                dosuround = true,
+                newline = true,
+                space = true,
+                fastwarp = true,
+            },
+            {
+                '"',
+                '"',
+                suround = true,
+                rules = { { "when", { "filetype", "vim" }, { "not", { "regex", "^%s*$" } } } },
+                string = true,
+            },
+            {
+                "'",
+                "'",
+                suround = true,
+                rules = { { "when", { "option", "lisp" }, { "instring" } } },
+                alpha = true,
+                nft = {
+                    "tex",
+                },
+                string = true,
+            },
+            { "`", "`", nft = { "tex" } },
+            { "``", "''", ft = { "tex" } },
+            { "```", "```", newline = true, ft = { "markdown" } },
+            { "<!--", "-->", ft = { "markdown", "html" } },
+            { '"""', '"""', newline = true, ft = { "python" } },
+            { "'''", "'''", newline = true, ft = { "python" } },
+            { "string", type = "tsnode", string = true },
+            { "raw_string", type = "tsnode", string = true },
         },
     }
 end
@@ -129,4 +217,5 @@ function config.tabout()
     vim.api.nvim_set_keymap("i", "<A-x>", "<Plug>(TaboutMulti)", { silent = true })
     vim.api.nvim_set_keymap("i", "<A-z>", "<Plug>(TaboutBackMulti)", { silent = true })
 end
+
 return config

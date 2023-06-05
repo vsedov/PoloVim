@@ -1,13 +1,10 @@
 local fmt, api, fn, fs = string.format, vim.api, vim.fn, vim.fs
 local when = lambda.lib.when
-local hydra_helper = require("core.helper")
 
 local MODULE_PREFIX = "modules.editor.hydra."
 local EXCLUDE_TABLE = {
     "init",
-    "utils",
     "utils_rewrite",
-    "parenth_mode",
 }
 
 local test_active = false
@@ -22,7 +19,10 @@ local function loadHydraModules(path, prefix)
         local module_name = prefix .. name
         -- Load the module if it's not in the exclude_table
         when(not vim.tbl_contains(EXCLUDE_TABLE, name), function()
-            require(module_name)
+            local ok, err = pcall(require, module_name)
+            if not ok then
+                print(fmt("Error while loading Hydra module '%s': %s", module_name, err))
+            end
         end)
     end
 end
@@ -39,12 +39,32 @@ local function loadHydraAPI()
         local module_name = MODULE_PREFIX .. "api." .. name
 
         when(not vim.tbl_contains(exclude_table, name), function()
-            data = require(module_name)
+            local ok, data = pcall(require, module_name)
+            if not ok then
+                vim.notify(fmt("Error while loading Hydra API module '%s': %s", module_name, data), vim.log.levels.ERROR, {
+                    title = "Hydra Error",
+                })
+                return
+            end
             local instance = M.new(data[1], data[2])
             local hyd = instance.new_hydra
-            hyd.hint = instance:auto_hint_generate(data[3], data[4], data[5], data[6])
+            -- hyd.hint = instance:auto_hint_generate(data[3], data[4], data[5], data[6])
+            local hint_ok, hint = pcall(instance.auto_hint_generate, instance, data[3], data[4], data[5], data[6])
+            if not hint_ok then
+                vim.notify(fmt("Error while generating hint for Hydra '%s'", hyd.name), vim.log.levels.ERROR, {
+                    title = "Hydra Error",
+                })
+                return
+            end
+            hyd.hint = hint
+            lprint(hyd.name)
             vim.defer_fn(function()
-                hydra(hyd)
+                local ok, err = pcall(hydra, hyd)
+                if not ok then
+                    vim.notify(fmt("Error while running Hydra '%s': %s", hyd.name, err), vim.log.levels.ERROR, {
+                        title = "Hydra Error",
+                    })
+                end
             end, 100)
         end)
     end

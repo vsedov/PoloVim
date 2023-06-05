@@ -4,12 +4,13 @@ local lsp_format_modifications = require("lsp-format-modifications")
 
 local M = {}
 
-local lsp_formatting = function(bufnr)
+local lsp_formatting = function(bufnr, client)
     vim.lsp.buf.format({
         filter = function(client)
             return client.name == "null-ls"
         end,
         bufnr = bufnr,
+        async = #client == 1,
     })
 end
 
@@ -20,8 +21,11 @@ local function augroup_setup(client, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             group = augroup,
             buffer = bufnr,
-            callback = function()
-                lsp_formatting(bufnr)
+            callback = function(args)
+                local clients = vim.tbl_filter(function(c)
+                    return c.server_capabilities["documentFormattingProvider"]
+                end, vim.lsp.get_active_clients({ buffer = bufnr }))
+                lsp_formatting(args.bufnr, clients)
             end,
         })
     end
@@ -96,7 +100,7 @@ function M.setup()
                     })
                 end
             else
-                augroup_setup(client, nr)
+                augroup_setup(client, bufnr)
             end
         end,
     }

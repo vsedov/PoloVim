@@ -86,7 +86,6 @@ M.L = {
 
 local highlights = lambda.highlight
 local function general_overrides()
-    local normal_bg = highlights.get("Normal", "bg")
     highlights.all({
         -----------------------------------------------------------------------------//
         -- Native
@@ -94,7 +93,7 @@ local function general_overrides()
         { VertSplit = { fg = { from = "Comment" } } },
         { WinSeparator = { fg = { from = "Comment" } } },
         { CursorLineNr = { bg = "NONE" } },
-        { iCursor = { bg = P.dark_blue } },
+        { iCursor = { bg = P.waveBlue1 } },
         --------------------------------------------//
         -- Floats
         ---------------------------------------------//
@@ -147,6 +146,7 @@ local function general_overrides()
         { Type = { italic = true, bold = true } },
         { Include = { italic = true, bold = false } },
         { QuickFixLine = { inherit = "PmenuSbar", fg = "NONE", italic = true } },
+
         -- Neither the sign column or end of buffer highlights require an explicit bg
         -- they should both just use the bg that is in the window they are in.
         -- if either are specified this can lead to issues when a winhighlight is set
@@ -175,7 +175,7 @@ local function general_overrides()
         { ["@type.qualifier"] = { inherit = "@keyword", italic = true } },
         -- { ["@variable"] = { clear = true } },
         { ["@parameter"] = { italic = true, bold = true, fg = "NONE" } },
-        -- { ["@error"] = { fg = "fg", bg = "NONE" } },
+        { ["@error"] = { fg = "fg", bg = "NONE" } },
         { ["@text.diff.add"] = { link = "DiffAdd" } },
         { ["@text.diff.delete"] = { link = "DiffDelete" } },
         { ["@text.title.markdown"] = { underdouble = true } },
@@ -224,7 +224,6 @@ local function set_telescope()
             { TelescopePromptBorder = { fg = P.sumiInk0, bg = P.sumiInk0 } },
             { TelescopePreviewBorder = { fg = P.sumiInk2, bg = P.sumiInk2 } },
             { TelescopeResultsBorder = { fg = P.sumiInk2, bg = P.sumiInk2 } },
-
             { TelescopePromptNormal = { fg = P.fujiWhite, bg = P.sumiInk0 } },
             { TelescopeNormal = { fg = P.red, bg = P.sumiInk2 } },
             { TelescopePreviewNormal = { bg = P.sumiInk2 } },
@@ -318,7 +317,7 @@ local function colorscheme_overrides()
 end
 
 function user_highlights()
-    vim.notify("Colourscheme is being set ")
+    lprint("Setting user highlights")
     general_overrides()
     set_sidebar_highlight()
     colorscheme_overrides()

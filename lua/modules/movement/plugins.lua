@@ -71,31 +71,32 @@ movement({
     "LeonHeidelbach/trailblazer.nvim",
     lazy = true,
     keys = {
-        "ma",
-        "mb",
-        "mj",
-        "mk",
-        "ml",
-        "mL",
-        "mn",
-        "mN",
-        "mt",
-        "m[",
-        "m]",
-        "ms",
+        { "ma", desc = "New trail mark " },
+        { "mb", desc = "Track Back" },
+        { "mj", desc = "Peek Move Next Down" },
+        { "mk", desc = "Peek Move Previous Up" },
+        { "md", desc = "Toggle Trail Mark List" },
+        { "mL", desc = "Delete All Trail Marks" },
+        { "mn", desc = "Paste At Last Trail Mark" },
+        { "mN", desc = "Paste At All Trail Marks" },
+        { "mt", desc = "Set Trail Mark Select Mode" },
+        { "m[", desc = "Switch To Next Trail Mark Stack" },
+        { "m]", desc = "Switch To Previous Trail Mark Stack" },
+        { "ms", desc = "Set Trail Mark Stack Sort Mode" },
     },
     config = function()
         require("trailblazer").setup({
             auto_save_trailblazer_state_on_exit = true,
             auto_load_trailblazer_state_on_enter = true,
             mappings = {
-                nv = { -- Mode union: normal & visual mode. Can be extended by adding i, x, ...
+                nv = {
+                    -- Mode union: normal & visual mode. Can be extended by adding i, x, ...
                     motions = {
                         new_trail_mark = "ma",
                         track_back = "mb",
                         peek_move_next_down = "mj",
                         peek_move_previous_up = "mk",
-                        toggle_trail_mark_list = "ml",
+                        toggle_trail_mark_list = "md",
                     },
                     actions = {
                         delete_all_trail_marks = "mL",
@@ -173,7 +174,7 @@ movement({
     keys = {
         { "H", mode = { "o", "x", "n" } },
         { "zl", mode = "n" },
-        { "z<cr>", mode = "n" },
+        { "zk", mode = "n" },
     },
     dependencies = { "ggandor/leap.nvim" },
     config = conf.treehopper,

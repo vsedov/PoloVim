@@ -89,13 +89,6 @@ local container = {
 
             ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
             ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
-            ["<leader>;"] = {
-                function()
-                    require("modules.lsp.lsp.config.list").change_active("Quickfix")
-                    vim.lsp.buf.references()
-                end,
-                "utils list quickfix change",
-            },
             ["K"] = {
                 function()
                     if not lambda.config.lsp.use_hover then

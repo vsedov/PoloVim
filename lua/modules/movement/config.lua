@@ -20,6 +20,7 @@ function config.hop()
 
     vim.keymap.set("n", "g,", "<cmd>HopPattern<cr>", {})
 end
+
 -- use normal config for now
 function config.gomove()
     require("gomove").setup({
@@ -267,6 +268,7 @@ function config.harpoon()
 
     require("telescope").load_extension("harpoon")
 end
+
 function config.quick_scope()
     vim.g.qs_max_chars = 256
     vim.g.qs_buftype_blacklist = { "terminal", "nofile", "startify", "qf", "mason" }
@@ -406,7 +408,7 @@ function config.treehopper()
         vim.cmd("normal! Vzf")
     end, { silent = true })
 
-    vim.keymap.set("n", "z<cr>", function()
+    vim.keymap.set("n", "zk", function()
         vim.cmd("normal! v")
         require("leap-ast").leap()
         vim.cmd("normal! Vzf")

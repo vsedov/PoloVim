@@ -32,6 +32,9 @@ function config.chatgpt()
 end
 
 function config.neoai()
+    vim.treesitter.language.register("markdown", "neoai-output")
+    vim.o.conceallevel = 1
+
     require("neoai").setup({
         -- Below are the default options, feel free to override what you would like changed
         ui = {
@@ -39,9 +42,15 @@ function config.neoai()
             input_popup_text = "Prompt",
             width = 30, -- As percentage eg. 30%
             output_popup_height = 80, -- As percentage eg. 80%
+            submit = "<Enter>", -- Key binding to submit the prompt
         },
-        -- model =
-        -- lambda.config.ai.model,
+        models = {
+            {
+                name = "openai",
+                model = "gpt-4",
+                params = nil,
+            },
+        },
         register_output = {
             ["g"] = function(output)
                 return output
@@ -49,19 +58,26 @@ function config.neoai()
             ["c"] = require("neoai.utils").extract_code_snippets,
         },
         inject = {
-            cutoff_width = 500,
+            cutoff_width = 75,
         },
         prompts = {
             context_prompt = function(context)
-                return "Hi ChatGPT, I'd like to provide some context for future "
+                return "Hey, I'd like to provide some context for future "
                     .. "messages. Here is the code/text that I want to refer "
                     .. "to in our upcoming conversations:\n\n"
                     .. context
             end,
         },
+        mappings = {
+            ["select_up"] = "<C-k>",
+            ["select_down"] = "<C-j>",
+        },
+        open_api_key_env = "OPENAI_API_KEY",
         shortcuts = {
             {
+                name = "textify",
                 key = "<leader>as",
+                desc = "fix text with AI",
                 use_context = true,
                 prompt = [[
                 Please rewrite the text to make it more readable, clear,
@@ -72,7 +88,9 @@ function config.neoai()
                 strip_function = nil,
             },
             {
+                name = "gitcommit",
                 key = "<leader>ag",
+                desc = "generate git commit message",
                 use_context = false,
                 prompt = function()
                     return [[
@@ -122,6 +140,7 @@ function config.tabnine()
         execlude_filetypes = { "TelescopePrompt" },
     })
 end
+
 function config.codium()
     vim.keymap.set("i", "<C-l>", vim.fn["codeium#Accept"], { expr = true })
     vim.keymap.set("i", "<c-.>", function()
@@ -138,7 +157,7 @@ function config.sell_your_soul()
     vim.g.copilot_no_tab_map = true
     vim.g.copilot_assume_mapped = true
     vim.g.copilot_tab_fallback = ""
-    local excluded_filetypes = { "norg", "nofile", "prompt" }
+    local excluded_filetypes = { "norg", "nofile", "prompt", "neogit", "git", "commitmessage" }
     local copilot_filetypes = {}
     for _, ft in pairs(excluded_filetypes) do
         copilot_filetypes[ft] = false

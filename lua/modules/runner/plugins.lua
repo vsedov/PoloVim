@@ -42,15 +42,6 @@ runner({
 runner({
     "rcarriga/neotest",
     lazy = true,
-    cmd = {
-        "TestNear",
-        "TestCurrent",
-        "TestSummary",
-        "TestOutput",
-        "TestStrat",
-        "TestStop",
-        "TestAttach",
-    },
     dependencies = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },

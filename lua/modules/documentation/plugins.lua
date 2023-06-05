@@ -45,12 +45,12 @@ docs({
 })
 
 -- Able to write on docs faster
-docs({
-    "monaqa/nvim-treesitter-clipping",
-    lazy = true,
-    keys = { "<leader>cc" },
-    dependencies = { "thinca/vim-partedit" },
-    config = function()
-        vim.keymap.set("n", "<leader>cc", "<Plug>(ts-clipping-clip)")
-    end,
-})
+-- Honestly not really required when you have ai o_o
+-- docs({
+--     "monaqa/nvim-treesitter-clipping",
+--     lazy = true,
+--     dependencies = { "thinca/vim-partedit" },
+--     config = function()
+--         vim.keymap.set("n", "<leader>cc", "<Plug>(ts-clipping-clip)")
+--     end,
+-- })

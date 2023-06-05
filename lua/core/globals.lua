@@ -18,3 +18,5 @@ end
 _G.RELOAD = function(module)
     return require("plenary.reload").reload_module(module)
 end
+
+_G.lprint = require("utils.logs.log").lprint

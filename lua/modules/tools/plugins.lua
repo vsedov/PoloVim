@@ -95,23 +95,29 @@ tools({ "ilAYAli/scMRU.nvim", lazy = true, cmd = { "MruRepos", "Mru", "Mfu", "Mr
 
 tools({
     "kevinhwang91/nvim-bqf",
-    lazy = true,
-    ft = "qf",
+    event = "VeryLazy",
     config = conf.bqf,
 })
 
 tools({
-    "barklan/nvim-pqf",
-    lazy = true,
-    ft = "qf",
-    config = true,
+    url = "https://gitlab.com/yorickpeterse/nvim-pqf",
+    event = "VeryLazy",
+    config = function()
+        lambda.highlight.plugin("pqf", {
+            theme = {
+                ["doom-one"] = { { qfPosition = { link = "Todo" } } },
+                ["horizon"] = { { qfPosition = { link = "String" } } },
+            },
+        })
+        require("pqf").setup()
+    end,
 })
-
 tools({
-    "izo0x90/quickfix_actually.nvim",
-    lazy = true,
+    "kevinhwang91/nvim-bqf",
     ft = "qf",
-    config = true,
+    config = function()
+        lambda.highlight.plugin("bqf", { { BqfPreviewBorder = { fg = { from = "Comment" } } } })
+    end,
 })
 
 tools({
@@ -191,11 +197,6 @@ tools({
 })
 
 tools({
-    "inkarkat/vim-visualrepeat",
-    event = "ModeChanged",
-})
-
-tools({
     "tyru/open-browser.vim",
     lazy = true,
     keys = { { "gx", "<Plug>(openbrowser-smart-search)", mode = { "n", "v" } } },
@@ -271,10 +272,4 @@ tools({
         require("attempt").setup()
         require("telescope").load_extension("attempt")
     end,
-})
-
---  TODO: (vsedov) (03:44:50 - 31/05/23): I am not sure how ideal this is.
-tools({
-    "rebelot/terminal.nvim",
-    cond = false,
 })

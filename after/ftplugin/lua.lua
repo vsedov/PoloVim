@@ -49,29 +49,8 @@ local function keyword(word, callback)
     end
 end
 
-vim.keymap.set("n", "gk", keyword, { buffer = 0 })
+vim.keymap.set("n", "gK", keyword, { buffer = 0 })
 vim.opt_local.textwidth = 100
 vim.opt_local.formatoptions:remove("o")
 vim.o.smarttab = true
 vim.o.colorcolumn = "130"
-
--- local editing = function(options)
---     local function set_options(keys, value)
---         return function()
---             for _, key in ipairs(keys) do
---                 vim.opt_local[key] = value
---             end
---         end
---     end
-
---     for key, value in pairs(options) do
---         lambda.lib.match(key)({
---             indent = set_options({ "shiftwidth", "tabstop", "softtabstop" }, value),
---             spaces = set_options({ "expandtab" }, value),
---         })
---     end
--- end
--- editing({
---     indent = 4,
---     spaces = true,
--- })

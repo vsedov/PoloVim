@@ -120,14 +120,6 @@ ts({
 })
 
 ts({
-    "folke/paint.nvim",
-    lazy = true,
-    ft = "lua",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = conf.paint,
-})
-
-ts({
     "Dkendal/nvim-treeclimber",
     lazy = true,
     dependencies = { "rktjmp/lush.nvim", "nvim-treesitter/nvim-treesitter" },

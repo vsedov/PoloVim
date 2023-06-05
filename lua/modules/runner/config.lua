@@ -43,4 +43,78 @@ function config.code_runner()
         -- project_path = vim.fn.expand("~/.config/nvim/project_manager.json"),
     })
 end
+function config.neotest()
+    require("neotest").setup({
+        adapters = {
+            require("neotest-python")({
+                dap = { justMyCode = false },
+            }),
+            require("neotest-plenary"),
+            require("neotest-vim-test")({
+                ignore_file_types = { "python", "vim", "lua" },
+            }),
+        },
+        diagnostic = {
+            enabled = true,
+        },
+        consumers = {
+            overseer = require("neotest.consumers.overseer"),
+        },
+        overseer = {
+            enabled = true,
+            force_default = true,
+        },
+        highlights = {
+            adapter_name = "NeotestAdapterName",
+            border = "NeotestBorder",
+            dir = "NeotestDir",
+            expand_marker = "NeotestExpandMarker",
+            failed = "NeotestFailed",
+            file = "NeotestFile",
+            focused = "NeotestFocused",
+            indent = "NeotestIndent",
+            namespace = "NeotestNamespace",
+            passed = "NeotestPassed",
+            running = "NeotestRunning",
+            skipped = "NeotestSkipped",
+            test = "NeotestTest",
+        },
+        discovery = {
+            enabled = false,
+        },
+
+        summary = {
+            mappings = {
+                attach = "a",
+                expand = "l",
+                expand_all = "L",
+                jumpto = "gf",
+                output = "o",
+                run = "<C-r>",
+                short = "p",
+                stop = "u",
+            },
+        },
+        icons = {
+            passed = " ",
+            running = " ",
+            failed = " ",
+            unknown = " ",
+            running_animated = vim.tbl_map(function(s)
+                return s .. " "
+            end, { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }),
+        },
+        output = {
+            enabled = true,
+            open_on_run = true,
+        },
+        status = {
+            enabled = true,
+        },
+        quickfix = {
+            enabled = true,
+        },
+    })
+end
+
 return config

@@ -18,6 +18,7 @@ function config.fzf()
     vim.api.nvim_create_user_command("Col", "FzfLua colorschemems", { bang = true })
     vim.api.nvim_create_user_command("RG", "FzfLua grep", { bang = true })
 end
+
 function config.spectre()
     local spectre = require("spectre")
 
@@ -27,7 +28,6 @@ function config.spectre()
     end
 
     spectre.setup({
-
         color_devicons = true,
         highlight = {
             ui = "String",
@@ -203,6 +203,39 @@ function config.easypick()
     }
 
     easypick.setup({ pickers = custom_pickers })
+end
+
+function config.vmulti()
+    vim.g.VM_mouse_mappings = 1
+    -- mission control takes <C-up/down> so remap <M-up/down> to <C-Up/Down>
+    -- vim.api.nvim_set_keymap("n", "<M-n>", "<C-n>", {silent = true})
+    -- vim.api.nvim_set_keymap("n", "<M-Down>", "<C-Down>", {silent = true})
+    -- vim.api.nvim_set_keymap("n", "<M-Up>", "<C-Up>", {silent = true})
+    -- for mac C-L/R was mapped to mission control
+    -- print('vmulti')
+    vim.g.VM_silent_exit = 1
+    vim.g.VM_show_warnings = 0
+    vim.g.VM_default_mappings = 1
+    vim.g.VM_highlight_matches = "underline"
+    vim.g.VM_theme = "codedark"
+    vim.cmd([[
+      let g:VM_maps = {}
+      let g:VM_maps['Find Under'] = '<C-n>'
+      let g:VM_maps['Find Subword Under'] = '<C-n>'
+      let g:VM_maps['Select All'] = '<C-n>a'
+      let g:VM_maps['Seek Next'] = 'n'
+      let g:VM_maps['Seek Prev'] = 'N'
+      let g:VM_maps["Undo"] = 'u'
+      let g:VM_maps["Redo"] = '<C-r>'
+      let g:VM_maps["Remove Region"] = '<cr>'
+      let g:VM_maps["Add Cursor Down"] = '<M-Down>'
+      let g:VM_maps["Add Cursor Up"] = "<M-Up>"
+
+      let g:VM_maps["Mouse Cursor"] = "<c-LeftMouse>"
+      let g:VM_maps["Mouse Word"] = "<c-RightMouse>"
+
+      let g:VM_maps["Add Cursor At Pos"] = '<M-i>'
+  ]])
 end
 
 return config

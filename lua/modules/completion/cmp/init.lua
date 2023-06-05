@@ -1,5 +1,11 @@
 local cmp = require("cmp")
 cmp.setup(require("modules.completion.cmp.config"))
+require("cmp").event:on("menu_opened", function()
+    if vim.api.nvim_get_mode().mode:sub(1, 1) ~= "c" then
+        vim.api.nvim_exec_autocmds("User", { pattern = "IntPairsComp", modeline = false })
+    end
+end)
+
 local search_sources = {
     view = { entries = { name = "custom", selection_order = "near_cursor" } },
     sources = cmp.config.sources({
