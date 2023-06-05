@@ -117,7 +117,7 @@ end
 
 local auto_snippets = {
     s(
-        { trig = "(d?)cla", regTrig = true },
+        { trig = "(d?)clA", regTrig = true },
         fmt(
             [[
         {}class {}({}):
