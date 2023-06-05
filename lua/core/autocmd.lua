@@ -198,32 +198,6 @@ lambda.augroup("Utilities", {
             end
         end,
     },
-    -- {
-    --     event = { "FileType" },
-    --     pattern = {
-    --         "norg",
-    --         "NeogitCommitMessage",
-    --         "markdown",
-    --     },
-    --     -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows        -- command = function(args)
-    --     --     vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000
-    --     -- end,
-    --     command = function(args)
-    --         vim.opt_local.spell = true
-    --     end,
-    -- },
-    -- {
-    --     event = { "BufLeave" },
-    --     pattern = { "*" },
-    --     command = function(args)
-    --         if api.nvim_buf_line_count(args.buf) <= 1 then
-    --             return
-    --         end
-    --         if can_save() then
-    --             cmd("silent! write ++p")
-    --         end
-    --     end,
-    -- },
     {
         event = { "BufWritePost" },
         pattern = { "*" },
@@ -321,7 +295,7 @@ lambda.augroup("SaveFoldsWhenWriting", {
         pattern = valid,
         command = function()
             if valid[vim.bo.filetype] then
-                vim.cmd("silent! mkview")
+                mkview()
             end
         end,
     },
@@ -329,14 +303,18 @@ lambda.augroup("SaveFoldsWhenWriting", {
         event = "QuitPre",
         pattern = valid,
         command = function()
-            vim.cmd("silent! mkview")
+            if vim.fn.exists("b:mkview") == 1 then
+                mkview()
+            end
         end,
     },
     {
         event = "BufWinEnter",
         pattern = valid,
         command = function()
-            vim.cmd("silent! loadview")
+            if valid[vim.bo.filetype] then
+                loadview()
+            end
         end,
     },
 })
