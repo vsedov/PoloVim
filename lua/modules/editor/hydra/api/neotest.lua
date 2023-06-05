@@ -28,54 +28,59 @@ local config = {
         ["<ESC>"] = { nil, { exit = true } },
         ["<cr>"] = {
             function()
-                vim.cmd([[TestCurrent]])
+                require("neotest").run.run({ vim.api.nvim_buf_get_name(0) })
             end,
             { nowait = true, exit = false, desc = "Test Current" },
         },
 
         s = {
             function()
-                vim.cmd([[TestSummary]])
+                require("neotest").summary.toggle()
             end,
             { nowait = false, exit = false, desc = "Test Sum" },
         },
         o = {
             function()
-                vim.cmd([[TestOutput]])
+                require("neotest").output.open({ short = true })
             end,
             { nowait = false, exit = false, desc = "Test Output" },
         },
+
         d = {
             function()
-                vim.cmd([[TestStrat dap]])
+                require("neotest").run.run({ strategy = "dap" })
             end,
             { nowait = false, exit = false, desc = "Test dap" },
         },
         D = {
             function()
-                vim.cmd([[TestStrat integrated]])
+                require("neotest").run.run({ strategy = "integrated" })
             end,
             { nowait = false, exit = false, desc = "Test integrated" },
         },
 
         S = {
             function()
-                vim.cmd([[TestStop]])
+                require("neotest").run.stop()
             end,
             { nowait = false, exit = false, desc = "Test Stop" },
         },
         a = {
             function()
-                vim.cmd([[TestAttach]])
+                for _, adapter_id in ipairs(require("neotest").run.adapters()) do
+                    require("neotest").run.run({ suite = true, adapter = adapter_id })
+                end
             end,
-            { nowait = false, exit = false, desc = "Test Attach" },
+            { nowait = false, exit = false, desc = "Test Rune Adapters" },
         },
-        n = {
+
+        r = {
             function()
-                vim.cmd([[TestNearest]])
+                require("neotest").run.run()
             end,
             { nowait = false, exit = true, desc = "TestNearest" },
         },
+
         f = {
             function()
                 vim.cmd([[TestFile]])
@@ -84,7 +89,7 @@ local config = {
         },
         l = {
             function()
-                vim.cmd([[TestLast]])
+                require("neotest").run.run_last()
             end,
             { nowait = false, exit = true, desc = "TestLast" },
         },
@@ -120,7 +125,7 @@ local config = {
 return {
     config,
     "Test",
-    { { "d", "D", "S", "a" }, { "n", "f", "l", "v" }, { "w", "W", ";" } },
+    { { "d", "D", "S", "a" }, { "r", "f", "l", "v" }, { "w", "W", ";" } },
     bracket,
     6,
     3,
