@@ -75,7 +75,6 @@ completion({
 completion({
     "altermo/npairs-integrate-upair",
     event = "VeryLazy",
-    dependencies = { { "windwp/nvim-autopairs" }, { "altermo/ultimate-autopair.nvim" } },
     dependencies = {
         { "windwp/nvim-autopairs", dependencies = "nvim-treesitter/nvim-treesitter" },
         { "altermo/ultimate-autopair.nvim", dependencies = "nvim-treesitter/nvim-treesitter" },

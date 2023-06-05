@@ -101,10 +101,10 @@ function config.autopair()
             enable_reverse = true,
             hopout = false,
             --{(|)} > fastwarp > {(}|)
-            map = "<c-s>",
-            rmap = "<c-s>",
-            cmap = "<c-s>",
-            rcmap = "<c-s>",
+            map = "<c-c>",
+            rmap = "<c-c>",
+            cmap = "<c-c>",
+            rcmap = "<c-c>",
             multiline = true,
             --(|) > fastwarp > (\n|)
             nocursormove = true,
