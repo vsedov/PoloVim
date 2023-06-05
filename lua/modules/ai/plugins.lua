@@ -5,7 +5,8 @@ local ai_conf = lambda.config.ai
 
 ai({
     "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
+    lazy = true,
+    cmd = { "ChatGPT", "ChatGPTRun", "ChatGPTActAs", "ChatGPTCompleteCode", "ChatGPTEditWithInstructions" },
     config = conf.chatgpt,
     dependencies = {
         "MunifTanjim/nui.nvim",
@@ -16,16 +17,32 @@ ai({
 --
 ai({
     "Bryley/neoai.nvim",
+    lazy = true,
     dependencies = {
         "MunifTanjim/nui.nvim",
     },
-    event = "VeryLazy",
+    cmd = {
+        "NeoAI",
+        "NeoAIOpen",
+        "NeoAIClose",
+        "NeoAIToggle",
+        "NeoAIContext",
+        "NeoAIContextOpen",
+        "NeoAIContextClose",
+        "NeoAIInject",
+        "NeoAIInjectCode",
+        "NeoAIInjectContext",
+        "NeoAIInjectContextCode",
+    },
+    keys = {
+        { "<leader>as", desc = "summarize text", mode = "v" },
+        { "<leader>ag", desc = "generate git message", mode = "n" },
+    },
     config = conf.neoai,
 })
 
 ai({
     "mikesoylu/ai.vim",
-    event = "VeryLazy",
     cmd = { "AI" },
     init = function()
         vim.g.ai_completions_model = "gpt-4"
@@ -52,32 +69,7 @@ ai({
 })
 
 ai({
-    "meinside/openai.nvim",
-    dependencies = { { "nvim-lua/plenary.nvim" } },
-    config = function()
-        require("openai").setup({
-            models = {
-                completeChat = "gpt-4",
-                editCode = "code-davinci-edit-001",
-                editText = "text-davinci-edit-001",
-                moderation = "text-moderation-latest",
-            },
-            timeout = 60 * 1000,
-        })
-        vim.keymap.set(
-            { "v", "x" },
-            "<leader>aW",
-            ":OpenaiEditText fix grammar and spelling and replace slang and contractions with a formal academic writing style.<CR>",
-            {
-                silent = true,
-            }
-        )
-    end,
-})
-
-ai({
     "james1236/backseat.nvim",
-    event = "VeryLazy", -- "BufRead
     lazy = true,
     cmd = { "Backseat", "BackseatAsk", "BackseatClear", "BackseatClearLine" },
     config = conf.backseat,
@@ -139,8 +131,8 @@ ai({
 
 ai({
     "github/copilot.vim",
-    lazy = true,
     cond = ai_conf.sell_your_soul,
+    lazy = true,
     event = "VeryLazy",
     init = conf.sell_your_soul,
 })
