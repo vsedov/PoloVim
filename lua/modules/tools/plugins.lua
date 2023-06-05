@@ -100,12 +100,6 @@ tools({
 })
 
 tools({
-    "barklan/nvim-pqf",
-    lazy = true,
-    ft = "qf",
-    config = true,
-})
-tools({
     url = "https://gitlab.com/yorickpeterse/nvim-pqf",
     event = "VeryLazy",
     config = function()
@@ -128,8 +122,7 @@ tools({
 
 tools({
     "izo0x90/quickfix_actually.nvim",
-    lazy = true,
-    ft = "qf",
+    event = "VeryLazy",
     config = true,
 })
 
