@@ -166,3 +166,30 @@ search({
 
     config = true,
 })
+
+search({
+    "mg979/vim-visual-multi",
+    lazy = true,
+    keys = {
+        "<Ctrl>",
+        "<M>",
+        "<C-n>",
+        "<C-n>",
+        "<M-n>",
+        "<S-Down>",
+        "<S-Up>",
+        "<M-Left>",
+        "<M-i>",
+        "<M-Right>",
+        "<M-D>",
+        "<M-Down>",
+        "<C-d>",
+        "<C-Down>",
+        "<S-Right>",
+        "<C-LeftMouse>",
+        "<C-RightMouse>",
+        "\\\\",
+    },
+
+    init = conf.vmulti,
+})
