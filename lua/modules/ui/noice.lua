@@ -142,6 +142,7 @@ function M.noice()
         },
     }
 end
+
 function M.noice_setup(_, opts)
     require("noice").setup(opts)
 

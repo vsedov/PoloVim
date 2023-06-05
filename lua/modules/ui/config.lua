@@ -1,4 +1,4 @@
-local api = vim.api
+-- local api = vim.api
 local r, api, fn = vim.regex, vim.api, vim.fn
 local strwidth = api.nvim_strwidth
 
@@ -85,19 +85,9 @@ end
 
 function config.neo_tree()
     local highlights = lambda.highlight
-
-    highlights.plugin("NeoTree", {
-        { NeoTreeRootName = { underline = true } },
-        { NeoTreeCursorLine = { link = "Visual" } },
-        { NeoTreeStatusLine = { link = "PanelSt" } },
-        {
-            NeoTreeTabSeparatorActive = {
-                inherit = "PanelBackground",
-                fg = { from = "Comment" },
-            },
-        },
-    })
-
+    local symbols = require("lspkind").symbol_map
+    local lsp_kinds = lambda.style.lsp.highlights
+    local icons = lambda.style.icons
     vim.g.neo_tree_remove_legacy_commands = 1
     require("neo-tree").setup({
         sources = {
@@ -105,6 +95,7 @@ function config.neo_tree()
             "buffers",
             "git_status",
             "diagnostics",
+            "document_symbols",
         },
         source_selector = {
             winbar = true,
@@ -128,58 +119,43 @@ function config.neo_tree()
                     highlights.set("Cursor", { blend = 0 })
                 end,
             },
+            {
+                event = "neo_tree_window_after_close",
+                handler = function()
+                    highlights.set("Cursor", { blend = 0 })
+                end,
+            },
         },
-        use_popups_for_input = false,
+        use_popups_for_input = true,
+
         default_component_configs = {
-            indent = {
-                indent_size = 2,
-                padding = 1, -- extra padding on left hand side
-                -- indent guides
-                with_markers = true,
-                indent_marker = "│",
-                last_indent_marker = "└",
-                highlight = "NeoTreeIndentMarker",
-                -- expander config, needed for nesting files
-                with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-                expander_collapsed = "",
-                expander_expanded = "",
-                expander_highlight = "NeoTreeExpander",
-            },
-            diagnostics = {
-                highlights = {
-                    hint = "DiagnosticHint",
-                    info = "DiagnosticInfo",
-                    warn = "DiagnosticWarn",
-                    error = "DiagnosticError",
-                },
-            },
             icon = {
-                folder_closed = "",
-                folder_open = "",
-                folder_empty = "ﰊ",
-                default = "*",
-            },
-            modified = {
-                symbol = "[+]",
-                highlight = "NeoTreeModified",
+                folder_empty = icons.documents.open_folder,
             },
             name = {
-                trailing_slash = false,
-                use_git_status_colors = true,
+                highlight_opened_files = true,
+            },
+            document_symbols = {
+                follow_cursor = true,
+                kinds = vim.iter(symbols):fold({}, function(acc, k, v)
+                    acc[k] = { icon = v, hl = lsp_kinds[k] }
+                    return acc
+                end),
+            },
+            modified = {
+                symbol = icons.misc.circle .. " ",
             },
             git_status = {
                 symbols = {
-                    -- Change type
-                    added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-                    modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
-                    deleted = "✖", -- this can only be used in the git_status source
-                    renamed = "", -- this can only be used in the git_status source
-                    -- Status type
-                    untracked = "",
-                    ignored = "",
-                    unstaged = "",
-                    staged = "",
-                    conflict = "",
+                    added = icons.git.add,
+                    deleted = icons.git.remove,
+                    modified = icons.git.mod,
+                    renamed = icons.git.rename,
+                    untracked = icons.git.untracked,
+                    ignored = icons.git.ignored,
+                    unstaged = icons.git.unstaged,
+                    staged = icons.git.staged,
+                    conflict = icons.git.conflict,
                 },
             },
         },

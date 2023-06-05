@@ -23,7 +23,7 @@ windows({
         require("flirt").setup({
             override_open = lambda.config.ui.flirt.use_flirt_override, -- experimental
             close_command = "Q",
-            default_move_mappings = true, -- <C-arrows> to move floats
+            default_move_mappings = lambda.config.ui.flirt.move_mappings, -- <C-arrows> to move floats
             default_resize_mappings = true, -- <A-arrows> to resize floats
             default_mouse_mappings = true, -- Drag floats with mouse
             exclude_fts = {

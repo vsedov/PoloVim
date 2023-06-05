@@ -1,4 +1,3 @@
-
 local log_path = os.getenv("HOME") .. "/.cache/nvim/log"
 
 local log = function(...)

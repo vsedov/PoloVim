@@ -176,7 +176,7 @@ local function general_overrides()
         { ["@type.qualifier"] = { inherit = "@keyword", italic = true } },
         -- { ["@variable"] = { clear = true } },
         { ["@parameter"] = { italic = true, bold = true, fg = "NONE" } },
-        -- { ["@error"] = { fg = "fg", bg = "NONE" } },
+        { ["@error"] = { fg = "fg", bg = "NONE" } },
         { ["@text.diff.add"] = { link = "DiffAdd" } },
         { ["@text.diff.delete"] = { link = "DiffDelete" } },
         { ["@text.title.markdown"] = { underdouble = true } },
@@ -318,7 +318,7 @@ local function colorscheme_overrides()
 end
 
 function user_highlights()
-    vim.notify("Colourscheme is being set ")
+    lprint("Setting user highlights")
     general_overrides()
     set_sidebar_highlight()
     colorscheme_overrides()
