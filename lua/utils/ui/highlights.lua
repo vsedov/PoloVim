@@ -86,7 +86,6 @@ M.L = {
 
 local highlights = lambda.highlight
 local function general_overrides()
-    local normal_bg = highlights.get("Normal", "bg")
     highlights.all({
         -----------------------------------------------------------------------------//
         -- Native
@@ -94,7 +93,7 @@ local function general_overrides()
         { VertSplit = { fg = { from = "Comment" } } },
         { WinSeparator = { fg = { from = "Comment" } } },
         { CursorLineNr = { bg = "NONE" } },
-        { iCursor = { bg = P.dark_blue } },
+        { iCursor = { bg = P.waveBlue1 } },
         --------------------------------------------//
         -- Floats
         ---------------------------------------------//
