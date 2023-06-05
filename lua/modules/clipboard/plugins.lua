@@ -80,9 +80,10 @@ clipsub({
         "<C-Down>",
         "<S-Right>",
         "<C-LeftMouse>",
-        "<M-LeftMouse>",
-        "<M-C-RightMouse>",
+        "<C-RightMouse>",
+        "\\\\",
     },
+
     init = conf.vmulti,
 })
 

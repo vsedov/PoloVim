@@ -118,8 +118,8 @@ function config.vmulti()
       let g:VM_maps["Remove Region"] = '<cr>'
       let g:VM_maps["Add Cursor Down"] = '<M-Down>'
       let g:VM_maps["Add Cursor Up"] = "<M-Up>"
-      let g:VM_maps["Mouse Cursor"] = "<M-LeftMouse>"
-      let g:VM_maps["Mouse Word"] = "<M-RightMouse>"
+      let g:VM_maps["Mouse Cursor"] = "<c-LeftMouse>"
+      let g:VM_maps["Mouse Word"] = "<c-RightMouse>"
       let g:VM_maps["Add Cursor At Pos"] = '<M-i>'
   ]])
 end

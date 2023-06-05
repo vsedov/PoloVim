@@ -1,5 +1,5 @@
-local global = require("core.global")
-local log_path = global.log_path
+
+local log_path = os.getenv("HOME") .. "/.cache/nvim/log"
 
 local log = function(...)
     local arg = { ... }

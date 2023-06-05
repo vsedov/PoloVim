@@ -309,7 +309,7 @@ user({
 })
 user({
     "FluxxField/bionic-reading.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     config = true,
 })
 user({
