@@ -406,6 +406,8 @@ user({
     config = true,
 })
 
+-- ╰─λ NVIM_PROFILE=start nvim
+-- to run this, you have to run the above
 user({
     "stevearc/profile.nvim",
     config = function()
