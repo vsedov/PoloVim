@@ -12,7 +12,7 @@ lsp({
     event = "VeryLazy",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        { "poljar/typos.nvim", config = true },
+        { "poljar/typos.nvim", cond = lambda.config.lsp.use_typos, config = true },
 
         "jayp0521/mason-null-ls.nvim",
     },
@@ -44,8 +44,6 @@ lsp({
     dependencies = "nvim-lspconfig",
     config = conf.clangd,
 })
-
-lsp({ "folke/neodev.nvim", lazy = true, ft = "lua", dependencies = "neovim/nvim-lspconfig", config = conf.luadev })
 
 lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
 

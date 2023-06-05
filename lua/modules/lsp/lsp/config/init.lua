@@ -24,6 +24,7 @@ function M.common_on_init(client, bufnr)
         return
     end
 end
+
 function M.common_capabilities()
     local capabilities = require("modules.lsp.lsp.config.capabilities")
     local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -38,13 +39,12 @@ function M.common_on_attach(client, bufnr)
     if config.on_attach_callback[client.name] then
         config.on_attach_callback[client.name](client, bufnr)
     end
-    if client.server_capabilities.documentSymbolProvider then
+    if client.server_capabilities.documentSymbolProvider and lambda.config.lsp.use_navbuddy then
         require("nvim-navbuddy").attach(client, bufnr)
     end
 
     add_lsp_buffer_keybindings(client, bufnr)
     require("modules.lsp.lsp.config.autocmd")
-    -- .setup_autocommands(client, bufnr)
 end
 
 function M.get_common_opts()

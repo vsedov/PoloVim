@@ -14,7 +14,6 @@ local provider = {
     RENAME = "renameProvider",
     CODELENS = "codeLensProvider",
     CODEACTIONS = "codeActionProvider",
-    FORMATTING = "documentFormattingProvider",
     REFERENCES = "documentHighlightProvider",
     DEFINITION = "definitionProvider",
 }
@@ -40,28 +39,6 @@ local client_overrides = {
 ---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-    if client.name ~= "julials" then
-        require("modules.lsp.lsp.config.setup_autocmd")
-    end
-
-    if not client.server_capabilities[provider.FORMATTING] then
-        augroup(("LspFormatting%d"):format(buf), {
-            {
-                event = "BufWritePre",
-                buffer = buf,
-                desc = "LSP: Format on save",
-                command = function(args)
-                    if not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
-                        local clients = vim.tbl_filter(function(c)
-                            return c.server_capabilities[provider.FORMATTING]
-                        end, lsp.get_active_clients({ buffer = buf }))
-                        lsp.buf.format({ bufnr = args.buf, async = #clients == 1 })
-                    end
-                end,
-            },
-        })
-    end
-
     if client.server_capabilities[provider.CODELENS] then
         augroup(("LspCodeLens%d"):format(buf), {
             {
@@ -74,27 +51,27 @@ local function setup_autocommands(client, buf)
         })
     end
 
-    if client.server_capabilities[provider.REFERENCES] then
-        augroup(("LspReferences%d"):format(buf), {
-            {
-                event = { "CursorHold", "CursorHoldI" },
-
-                buffer = buf,
-                desc = "LSP: References",
-                command = function()
-                    lsp.buf.document_highlight()
-                end,
-            },
-            {
-                event = "CursorMoved",
-                desc = "LSP: References Clear",
-                buffer = buf,
-                command = function()
-                    lsp.buf.clear_references()
-                end,
-            },
-        })
-    end
+    -- if client.server_capabilities[provider.REFERENCES] then
+    --     -- augroup(("LspReferences%d"):format(buf), {
+    --     --     {
+    --     --         event = { "CursorHold", "CursorHoldI" },
+    --     --
+    --     --         buffer = buf,
+    --     --         desc = "LSP: References",
+    --     --         command = function()
+    --     --             lsp.buf.document_highlight()
+    --     --         end,
+    --     --     },
+    --     --     {
+    --     --         event = "CursorMoved",
+    --     --         desc = "LSP: References Clear",
+    --     --         buffer = buf,
+    --     --         command = function()
+    --     --             lsp.buf.clear_references()
+    --     --         end,
+    --     --     },
+    --     -- })
+    -- end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers
@@ -106,31 +83,35 @@ local function on_attach(client, bufnr)
     setup_autocommands(client, bufnr)
 end
 
-augroup("LspSetupCommands", {
-    {
-        event = "LspAttach",
-        desc = "setup the language server autocommands",
-        command = function(args)
-            local client = lsp.get_client_by_id(args.data.client_id)
-            if not client then
-                return
-            end
-            on_attach(client, args.buf)
-            local overrides = client_overrides[client.name]
-            if not overrides or not overrides.on_attach then
-                return
-            end
-            overrides.on_attach(client, args.buf)
-        end,
-    },
-    {
-        event = "DiagnosticChanged",
-        desc = "Update the diagnostic locations",
-        command = function(args)
-            diagnostic.setloclist({ open = false })
-            if #args.data.diagnostics == 0 then
-                vim.cmd("silent! lclose")
-            end
-        end,
-    },
-})
+-- augroup("LspSetupCommands", {
+--     {
+--         event = "LspAttach",
+--         desc = "setup the language server autocommands",
+--         command = function(args)
+--             local current_buftype = vim.bo.buftype
+--             if vim.tbl_contains({ "terminal", "nofile" }, current_buftype) then
+--                 return
+--             end
+--             local client = lsp.get_client_by_id(args.data.client_id)
+--             if not client then
+--                 return
+--             end
+--             on_attach(client, args.buf)
+--             local overrides = client_overrides[client.name]
+--             if not overrides or not overrides.on_attach then
+--                 return
+--             end
+--             overrides.on_attach(client, args.buf)
+--         end,
+--     },
+--     {
+--         event = "DiagnosticChanged",
+--         desc = "Update the diagnostic locations",
+--         command = function(args)
+--             diagnostic.setloclist({ open = false })
+--             if #args.data.diagnostics == 0 then
+--                 vim.cmd("silent! lclose")
+--             end
+--         end,
+--     },
+-- })
