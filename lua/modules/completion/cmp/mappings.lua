@@ -8,9 +8,6 @@ local mappings = {
         c = cmp.mapping.close(),
     }),
 
-    ["<C-<leader>>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-    ["<C-' '>"] = cmp.mapping.confirm({ select = true }),
-
     ["<CR>"] = cmp.mapping.confirm({
         select = true,
     }),
@@ -44,7 +41,8 @@ local mappings = {
         if cmp.visible() then
             cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
-            vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-expand-or-jump", true, true, true), "")
+            -- vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-expand-or-jump", true, true, true), "")
+            luasnip.expand_or_jump()
         else
             fallback()
         end
@@ -53,7 +51,7 @@ local mappings = {
         if cmp.visible() then
             cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
-            vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-jump-prev", true, true, true), "")
+            luasnip.jump(-1)
         else
             fallback()
         end

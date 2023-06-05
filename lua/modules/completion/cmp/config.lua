@@ -23,13 +23,7 @@ local config = {
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    -- performance = {
-    --     debounce = 60,
-    --     throttle = 30,
-    --     fetching_timeout = 500,
-    -- },
     performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
-
     preselect = cmp.PreselectMode.None, -- None | Item
     completion = {
         types.cmp.TriggerEvent.None,
