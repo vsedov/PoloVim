@@ -280,19 +280,6 @@ ui({
 })
 
 ui({
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    cond = lambda.config.ui.noice.enable,
-    dependencies = {
-        "nui.nvim",
-        "nvim-notify",
-        "hrsh7th/nvim-cmp",
-    },
-    opts = require("modules.ui.noice").noice,
-    config = require("modules.ui.noice").noice_setup,
-})
-
-ui({
     "samuzora/pet.nvim",
     lazy = true,
     cond = lambda.config.ui.use_pet,
