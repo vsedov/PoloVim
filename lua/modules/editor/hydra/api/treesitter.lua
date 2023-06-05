@@ -71,18 +71,6 @@ local config = {
     },
 }
 
-for surround, motion in pairs({ c = "ac", C = "ic", a = "af", A = "if", i = "aC", I = "iC" }) do
-    for doc, key in pairs({ d = "d", y = "y" }) do
-        local motiondoc = surround
-        -- local exit_call = false
-        local mapping = table.concat({ doc, surround })
-        config.Treesitter[mapping] = {
-            mx(table.concat({ key, motion })),
-            { desc = motion_type[doc] .. " [" .. key .. motion .. "]", exit = true },
-        }
-    end
-end
-
 local bracket = { "h", "j", "k", "l", "O", "J", "K" }
 
 return {
@@ -90,8 +78,6 @@ return {
     "Treesitter",
     {
         { "A", "a", "i", "I", "W", "w" },
-        { "yA", "ya", "yc", "yC", "yI", "yi" },
-        { "dA", "da", "dc", "dC", "dI", "di" },
     },
     bracket,
     6,
