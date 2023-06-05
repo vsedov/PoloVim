@@ -5,6 +5,7 @@ local fmt = string.format
 local l = vim.log.levels
 P = vim.pretty_print
 
+_G.lprint = require("utils.logs.log").lprint
 lambda.use_local = function(name, path)
     return os.getenv("HOME") .. "/GitHub/neovim/" .. path .. "/" .. name
 end
@@ -217,6 +218,7 @@ function lambda.list.qf.delete(buf)
     fn.setqflist({}, "r", { items = list })
     fn.setpos(".", { buf, line, 1, 0 }) -- restore current line
 end
+
 ---------------------------------------------------------------------------------
 
 function lambda.installed_plugins()
@@ -270,6 +272,7 @@ end
 function lambda.toggle_qf_list()
     toggle_list("quickfix")
 end
+
 function lambda.toggle_loc_list()
     toggle_list("location")
 end
