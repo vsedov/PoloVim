@@ -1,4 +1,5 @@
 local user = require("core.pack").package
+
 local ui = lambda.highlight
 user({
     "Dhanus3133/LeetBuddy.nvim",
@@ -309,8 +310,32 @@ user({
 })
 user({
     "FluxxField/bionic-reading.nvim",
-    event = "BufRead",
-    config = true,
+    event = {
+        "ColorScheme",
+        "FileType",
+        "TextChanged",
+        "TextChangedI",
+    },
+    config = function()
+        require("bionic-reading").setup({
+            auto_highlight = true,
+
+            file_types = { "python", "lua" },
+            hl_group_value = {
+                link = "Bold",
+            },
+            hl_offsets = {
+                ["1"] = 1,
+                ["2"] = 1,
+                ["3"] = 2,
+                ["4"] = 2,
+                ["default"] = 0.4,
+            },
+            prompt_user = false,
+            saccade_cadence = 1,
+            update_in_insert_mode = true,
+        })
+    end,
 })
 user({
     "milanglacier/yarepl.nvim",
@@ -338,10 +363,7 @@ user({
                 command = function()
                     local utils = require("modules.editor.hydra.repl_utils")
                     vim.keymap.set("n", "<localleader>r", function()
-                        utils.run_cmd_with_count("REPLStart " .. utils.ft_to_repl[vim.bo.filetype])()
-                        local data = require("hydra")(require("modules.editor.hydra.normal.repl"))
-                        data:activate()
-                        vim.schedule_wrap(data:activate())
+                        vim.schedule_wrap(require("hydra")(require("modules.editor.hydra.normal.repl")):activate())
                     end, { desc = "Start an REPL", buffer = 0 })
                     vim.keymap.set("n", "<localleader>sc", utils.send_a_code_chunk, {
                         desc = "send a code chunk",
@@ -394,4 +416,10 @@ user({
         },
     },
     cmd = { "Sayonara" },
+})
+user({
+    "Darazaki/indent-o-matic",
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
 })
