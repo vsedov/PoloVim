@@ -99,7 +99,37 @@ ui({
 })
 ui({
     "nvim-neo-tree/neo-tree.nvim",
-    event = "VeryLazy",
+    event = "VeryLazy", -- No clue why, but this is required for my hydra to work o_o
+    keys = {
+        {
+            "<leader>e",
+            vim.cmd.NeoTreeFocusToggle,
+            "NeoTree Focus Toggle",
+        },
+        {
+            "<Leader><leader>d",
+            function()
+                vim.cmd([[Neotree diagnostics]])
+            end,
+            "General: [t]oggle the [d]iagnostic explorer",
+        },
+
+        {
+            "<Leader>F",
+            vim.cmd.NeoTreeFocus,
+
+            "General: [F]ocus Current Buffer",
+        },
+
+        {
+            "<leader>gt",
+            function()
+                vim.cmd("Neotree . git_status reveal toggle")
+            end,
+            desc = "General: [t]oggle the [g]it control explorer",
+        },
+    },
+
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended

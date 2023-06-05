@@ -162,8 +162,9 @@ lambda.config.ui = {
         },
     },
     flirt = {
-        use_flirt = false,
+        use_flirt = true,
         use_flirt_override = false,
+        move_mappings = false, -- if you  do not want to use  smart split
     },
     indent_blankline = {
         use_indent_blankline = true,
