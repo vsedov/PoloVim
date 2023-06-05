@@ -121,12 +121,6 @@ tools({
 })
 
 tools({
-    "izo0x90/quickfix_actually.nvim",
-    event = "VeryLazy",
-    config = true,
-})
-
-tools({
     "voldikss/vim-translator",
     lazy = true,
     init = function()
