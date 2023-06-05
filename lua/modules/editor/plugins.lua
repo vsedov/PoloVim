@@ -116,13 +116,6 @@ editor({
 })
 
 editor({
-    "jbyuki/venn.nvim",
-    lazy = true,
-    cmd = "Venn",
-    config = conf.venn,
-})
-
-editor({
     "Wansmer/treesj",
     cmd = {
         "TSJToggle",
@@ -168,23 +161,23 @@ editor({
             "nofile",
             "acwrite",
         }
-        local smart_close_filetypes = lambda.p_table({
-            ["diff"] = true,
-            ["git"] = true,
-            ["qf"] = true,
-            ["log"] = true,
-            ["help"] = true,
-            ["query"] = true,
-            ["dbui"] = true,
-            ["lspinfo"] = true,
-            ["git.*"] = true,
-            ["Neogit.*"] = true,
-            ["neotest.*"] = true,
-            ["fugitive.*"] = true,
-            ["copilot.*"] = true,
-            ["tsplayground"] = true,
-            ["startuptime"] = true,
-        })
+        local smart_close_filetypes = {
+            "diff",
+            "git",
+            "qf",
+            "log",
+            "help",
+            "query",
+            "dbui",
+            "lspinfo",
+            "git.*",
+            "Neogit.*",
+            "neotest.*",
+            "fugitive.*",
+            "copilot.*",
+            "tsplayground",
+            "startuptime",
+        }
         vim.g.smartq_q_filetypes = smart_close_filetypes
     end,
     event = "VeryLazy",

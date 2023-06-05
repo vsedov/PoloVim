@@ -174,7 +174,7 @@ movement({
     keys = {
         { "H", mode = { "o", "x", "n" } },
         { "zl", mode = "n" },
-        { "z<cr>", mode = "n" },
+        { "zk", mode = "n" },
     },
     dependencies = { "ggandor/leap.nvim" },
     config = conf.treehopper,
