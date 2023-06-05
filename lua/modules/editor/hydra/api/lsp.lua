@@ -3,8 +3,6 @@ local leader = ";l"
 local lsp_lens_active = false
 local bracket = { "J", "K", "w" }
 
-local exit = { nil, { exit = true, desc = "EXIT" } }
-
 local config = {
     Lsp = {
         color = "pink",

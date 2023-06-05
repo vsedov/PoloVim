@@ -1,6 +1,6 @@
 local leader = "<leader><leader>m"
-local bracket = { "H", "J", "K", "L" }
 
+local bracket = { "H", "J", "K", "L" }
 -- Executes '<Plug>GoNMLineLeft based commands
 
 -- vim.cmd([[
@@ -39,7 +39,7 @@ local config = {
         },
 
         J = {
-            "<Plug>GoSMDown",
+            "<Plug>GoVSMDown",
 
             { desc = "Move Down" },
         },
