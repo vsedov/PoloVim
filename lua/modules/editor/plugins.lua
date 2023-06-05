@@ -7,14 +7,6 @@ editor({ "nvim-lua/plenary.nvim", lazy = true })
 --     "k",
 -- }, config = conf.acc_jk })
 --
-editor({
-    "folke/which-key.nvim",
-    lazy = true,
-    event = "VeryLazy",
-    config = function()
-        require("modules.editor.which_key")
-    end,
-})
 
 -- -- -- -- NORMAL mode:
 -- -- -- -- `gcc` - Toggles the current line using linewise comment
