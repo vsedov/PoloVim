@@ -1,13 +1,10 @@
 local fmt, api, fn, fs = string.format, vim.api, vim.fn, vim.fs
 local when = lambda.lib.when
-local hydra_helper = require("core.helper")
 
 local MODULE_PREFIX = "modules.editor.hydra."
 local EXCLUDE_TABLE = {
     "init",
-    "utils",
     "utils_rewrite",
-    "parenth_mode",
 }
 
 local test_active = false
@@ -51,7 +48,15 @@ local function loadHydraAPI()
             end
             local instance = M.new(data[1], data[2])
             local hyd = instance.new_hydra
-            hyd.hint = instance:auto_hint_generate(data[3], data[4], data[5], data[6])
+            -- hyd.hint = instance:auto_hint_generate(data[3], data[4], data[5], data[6])
+            local hint_ok, hint = pcall(instance.auto_hint_generate, instance, data[3], data[4], data[5], data[6])
+            if not hint_ok then
+                vim.notify(fmt("Error while generating hint for Hydra '%s'", hyd.name), vim.log.levels.ERROR, {
+                    title = "Hydra Error",
+                })
+                return
+            end
+            hyd.hint = hint
             lprint(hyd.name)
             vim.defer_fn(function()
                 local ok, err = pcall(hydra, hyd)
