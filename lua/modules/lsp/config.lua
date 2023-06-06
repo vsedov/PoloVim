@@ -19,7 +19,6 @@ function config.mason_setup()
             end
         end,
     })
-    require("modules.lsp.lsp.config.handlers").setup()
 end
 
 function config.lsp_install()
