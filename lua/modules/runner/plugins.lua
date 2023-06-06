@@ -42,6 +42,8 @@ runner({
 runner({
     "rcarriga/neotest",
     lazy = true,
+    event = "VeryLazy",
+    cmd = { "Neotest" },
     dependencies = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
