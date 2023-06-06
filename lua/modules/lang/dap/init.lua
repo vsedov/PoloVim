@@ -1,20 +1,6 @@
 local M = {}
 local fn, icons = vim.fn, lambda.style.icons
 
-M.config = function()
-    require("dap")
-    require("mason-nvim-dap").setup({
-        ensure_installed = { "python", "delve" },
-        automatic_installation = true,
-        automatic_setup = true,
-    })
-    require("mason-nvim-dap")
-    require("nvim-dap-virtual-text").setup()
-    require("nvim-dap-repl-highlights").setup()
-    M.keymaps()
-    M.commands()
-end
-
 M.keymaps = function()
     vim.keymap.set("n", "]d", require("goto-breakpoints").next, {})
     vim.keymap.set("n", "[d", require("goto-breakpoints").prev, {})
@@ -29,42 +15,31 @@ M.keymaps = function()
 end
 M.commands = function()
     vim.cmd([[command! BPToggle lua require"dap".toggle_breakpoint()]])
-    vim.cmd([[command! Debug lua require"modules.lang.dap".StartDbg()]])
     vim.cmd([[command! StopDebug lua require"modules.lang.dap".StopDbg()]])
 end
 
 M.prepare = function()
-    local loader = require("lazy").load
-
-    loader({ plugins = { "nvim-dap", "nvim-dap-ui" } }) -- "nvim-dap-python"
+    lambda.debug = { layout = { ft = { python = 2 } } }
     local dap = require("dap")
+    local ui_ok, dapui = pcall(require, "dapui")
 
-    require("dapui").setup({
-        windows = { indent = 2 },
-        floating = {
-            border = lambda.style.border.type_0,
-        },
+    fn.sign_define({
+        { name = "DapBreakpoint", texthl = "DapBreakpoint", text = icons.misc.bug, linehl = "", numhl = "" },
+        { name = "DapStopped", texthl = "DapStopped", text = icons.misc.bookmark, linehl = "", numhl = "" },
     })
-
-    local exclusions = { "dart" }
-    dap.listeners.after.event_initialized["dapui_config"] = function()
-        if vim.tbl_contains(exclusions, vim.bo.filetype) then
-            return
-        end
-        require("dapui").open()
-        vim.api.nvim_exec_autocmds("User", { pattern = "DapStarted" })
-    end
-    dap.listeners.before.event_terminated["dapui_config"] = function()
-        require("dapui").close()
+    if not ui_ok then
+        return
     end
     dap.listeners.before.event_exited["dapui_config"] = function()
-        require("dapui").close()
+        dapui.close()
+    end
+    dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+    end
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open(lambda.debug.layout.ft[vim.bo.ft])
     end
     require("dapui").open()
-end
-
-M.StartDbg = function()
-    require("dap").continue()
 end
 
 M.StopDbg = function()
@@ -72,6 +47,16 @@ M.StopDbg = function()
     require("dap").stop()
     require("dap").repl.close()
     require("dapui").close()
+end
+
+M.config = function()
+    require("mason-nvim-dap").setup({
+        ensure_installed = { "python", "delve" },
+        automatic_installation = true,
+        automatic_setup = true,
+    })
+    M.keymaps()
+    M.commands()
 end
 
 return M
