@@ -25,15 +25,20 @@ python({
     cmd = { "VenvFind", "GetVenv" },
     config = conf.swenv,
 })
-
 python({
-    "relastle/vim-nayvy",
-    ft = { "python" },
-    lazy = true,
-    config = function()
-        vim.g.nayvy_import_path_format = "all_relative"
-        vim.g.nayvy_import_config_path = "$HOME/.config/nayvy/nayvy.py"
-    end,
+    "linux-cultist/venv-selector.nvim",
+    dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
+    keys = {
+        {
+            "<leader>vs",
+            "<cmd>:VenvSelect<cr>",
+            -- key mapping for directly retrieve from cache. You may set autocmd if you prefer the no hand approach
+            "<leader>vs",
+            "<cmd>:VenvSelectCached<cr>",
+        },
+    },
+    config = true,
+    event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
 })
 
 python({
@@ -42,8 +47,8 @@ python({
 })
 
 python({
-    "wookayin/vim-python-enhanced-syntax",
-    ft = "python",
+    "purpleP/python-syntax",
+    ft = { "python" },
 })
 
 python({
