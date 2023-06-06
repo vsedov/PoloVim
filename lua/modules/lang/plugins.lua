@@ -56,12 +56,31 @@ lang({
     lazy = true,
     config = conf.dap_config,
     dependencies = {
-        "rcarriga/nvim-dap-ui",
-        "mfussenegger/nvim-dap-python",
+        {
+            "rcarriga/nvim-dap-ui",
+            opts = {
+                windows = { indent = 2 },
+                floating = { border = lambda.style.border.type_0 },
+                layouts = {
+                    {
+                        elements = {
+                            { id = "scopes", size = 0.25 },
+                            { id = "breakpoints", size = 0.25 },
+                            { id = "stacks", size = 0.25 },
+                            { id = "watches", size = 0.25 },
+                        },
+                        position = "left",
+                        size = 20,
+                    },
+                    { elements = { { id = "repl", size = 0.9 } }, position = "bottom", size = 10 },
+                },
+            },
+        },
+        { "theHamsta/nvim-dap-virtual-text", opts = { all_frames = true } },
+        { "LiadOz/nvim-dap-repl-highlights", config = true },
         "ofirgall/goto-breakpoints.nvim",
+        "mfussenegger/nvim-dap-python",
         "jay-babu/mason-nvim-dap.nvim",
-        "theHamsta/nvim-dap-virtual-text",
-        "LiadOz/nvim-dap-repl-highlights",
     },
 })
 
