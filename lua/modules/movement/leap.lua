@@ -127,6 +127,7 @@ function M.highlight()
         nocombine = true,
     })
 end
+
 function binds()
     require("leap").add_default_mappings()
     local default_keymaps = {
@@ -140,7 +141,7 @@ function binds()
         },
         {
             { "n", "x", "o" },
-            "<c-cr>",
+            "<S-cr>",
             function()
                 require("leap").leap({
                     target_windows = vim.tbl_filter(function(win)
@@ -333,7 +334,9 @@ function leap_setup()
             multi_revert = "<backspace>",
         },
     })
+    vim.cmd([[autocmd ColorScheme * lua require('leap').init_highlight(true)]])
 end
+
 function M.leap_config()
     leap_setup()
     binds()

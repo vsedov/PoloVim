@@ -114,18 +114,97 @@ movement({
 })
 
 --  TODO: (vsedov) (10:43:27 - 01/06/23): remove this as this is no longer maintained.
+-- vim.keymap.set("n", "<leader><leader>s", "<cmd>HopWord<cr>", {})
+-- vim.keymap.set("n", "<leader><leader>j", "<cmd>HopChar1<cr>", {})
+-- vim.keymap.set("n", "<leader><leader>k", "<cmd>HopChar2<cr>", {})
+-- vim.keymap.set("n", "<leader><leader>w", "<cmd>HopLine<cr>", {})
+-- vim.keymap.set("n", "<leader><leader>l", "<cmd>HopLineStart<cr>", {})
+-- vim.keymap.set("n", "g/", "<cmd>HopVertical<cr>", {})
+-- vim.keymap.set("n", "g,", "<cmd>HopPattern<cr>", {})
+
 movement({
-    "phaazon/hop.nvim",
+    "FluxxField/hop-revived.nvim",
     lazy = true,
-    config = conf.hop,
     keys = {
-        "<leader><leader>s",
-        "<leader><leader>j",
-        "<leader><leader>k",
-        "<leader><leader>w",
-        "<leader><leader>l",
-        "g/",
-        "g,",
+        {
+            "<leader><leader>s",
+            function()
+                vim.cmd("HopWord")
+            end,
+            desc = "Hop Word",
+        },
+        {
+            "<leader><leader>j",
+            function()
+                vim.cmd("HopChar1")
+            end,
+        },
+        {
+            "<leader><leader>k",
+            function()
+                vim.cmd("HopChar2")
+            end,
+            desc = "Hop Char2",
+        },
+        {
+            "<leader><leader>w",
+            function()
+                vim.cmd("HopLine")
+            end,
+            desc = "Hop Line",
+        },
+        {
+            "<leader><leader>l",
+            function()
+                vim.cmd("HopLineStart")
+            end,
+            desc = "Hop Line Start",
+        },
+        {
+            "g,",
+            function()
+                vim.cmd("HopVertical")
+            end,
+            desc = "Hop Vertical",
+        },
+        {
+            "g<cr>",
+            function()
+                vim.cmd("HopPattern")
+            end,
+            desc = "Hop Pattern",
+        },
+    },
+    config = conf.hop,
+})
+movement({
+    "rlane/pounce.nvim",
+    keys = {
+        {
+            "gS",
+            function()
+                require("pounce").pounce({ do_repeat = true })
+            end,
+            desc = "Pounce",
+        },
+        {
+            "gs",
+            function()
+                require("pounce").pounce({ query = vim.fn.expand("<cword>"), do_repeat = true })
+            end,
+            desc = "Pounce word under cursor",
+        },
+        {
+            "g/",
+            function()
+                require("pounce").pounce({ input = { reg = "/" } })
+            end,
+            desc = "Pounce last search",
+        },
+    },
+    lazy = true,
+    opts = {
+        do_repeat = true,
     },
 })
 

@@ -4,21 +4,13 @@ function config.syntax_surfer()
 end
 
 function config.hop()
-    require("hop").setup({
+    require("hop-revived").setup({
         -- keys = 'etovxqpdygfblzhckisuran',
         quit_key = "<ESC>",
         jump_on_sole_occurrence = true,
         case_insensitive = true,
         multi_windows = true,
     })
-    vim.keymap.set("n", "<leader><leader>s", "<cmd>HopWord<cr>", {})
-    vim.keymap.set("n", "<leader><leader>j", "<cmd>HopChar1<cr>", {})
-    vim.keymap.set("n", "<leader><leader>k", "<cmd>HopChar2<cr>", {})
-    vim.keymap.set("n", "<leader><leader>w", "<cmd>HopLine<cr>", {})
-    vim.keymap.set("n", "<leader><leader>l", "<cmd>HopLineStart<cr>", {})
-    vim.keymap.set("n", "g/", "<cmd>HopVertical<cr>", {})
-
-    vim.keymap.set("n", "g,", "<cmd>HopPattern<cr>", {})
 end
 
 -- use normal config for now
