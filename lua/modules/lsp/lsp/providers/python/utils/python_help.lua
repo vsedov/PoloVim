@@ -40,11 +40,7 @@ local _virtual_env = ""
 local _package = ""
 
 local function py_bin_dir()
-    if is_windows then
-        return path.join(_virtual_env, "Scripts;")
-    else
-        return path.join(_virtual_env, "bin:")
-    end
+    return path.join(_virtual_env, "bin:")
 end
 
 M.env = function(root_dir)
