@@ -52,7 +52,7 @@ local config = {
         },
         c = {
             function()
-                run("function() run_to_cursor")()
+                run("run_to_cursor")()
             end,
             { silent = true, desc = "Run to Cursor" },
         },
