@@ -103,22 +103,19 @@ ui({
     keys = {
         {
             "<leader>e",
-            vim.cmd.NeoTreeFocusToggle,
+            function()
+                if vim.bo.filetype == "neo-tree" then
+                    vim.cmd.NeoTreeClose()
+                end
+                vim.cmd.NeoTreeFocusToggle()
+            end,
             "NeoTree Focus Toggle",
         },
         {
-            "<Leader><leader>d",
-            function()
-                vim.cmd([[Neotree diagnostics]])
-            end,
-            "General: [t]oggle the [d]iagnostic explorer",
-        },
+            "<Leader>E",
+            vim.cmd.NeoTreeClose,
 
-        {
-            "<Leader>F",
-            vim.cmd.NeoTreeFocus,
-
-            "General: [F]ocus Current Buffer",
+            "General: [F]orce Close Current Buffer",
         },
 
         {
@@ -145,7 +142,7 @@ ui({
                     other_win_hl_color = lambda.highlight.get("Visual", "bg"),
                     filter_rules = {
                         bo = {
-                            filetype = { "neo-tree-popup", "quickfix" },
+                            filetype = { "neo-tree-popup", "quickfix", "edgy", "neo-tree" },
                             buftype = { "terminal", "quickfix", "nofile" },
                         },
                     },
