@@ -111,7 +111,6 @@ function config.edgy()
                 open = "OverseerToggle",
             },
             -- any other neo-tree windows
-            "neo-tree",
         },
         right = {
             {
@@ -119,6 +118,15 @@ function config.edgy()
                 title = "Vista",
                 open = "Vista",
                 size = { height = 0.5 },
+            },
+            {
+                ft = "neotest-output-panel",
+                pinned = true,
+                open = "Neotest output-panel",
+            },
+            {
+                ft = "neotest-summary",
+                pinned = true,
             },
         },
     }
