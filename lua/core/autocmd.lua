@@ -307,8 +307,10 @@ lambda.augroup("SaveFoldsWhenWriting", {
         event = "QuitPre",
         pattern = valid,
         command = function()
-            if vim.fn.exists("b:mkview") == 1 then
-                mkview()
+            if valid[vim.bo.filetype] then
+                if vim.fn.exists("b:mkview") == 1 then
+                    mkview()
+                end
             end
         end,
     },

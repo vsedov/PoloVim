@@ -79,6 +79,7 @@ lambda.config.treesitter = {
     use_matchup = true,
     use_extra_highlight = true,
     better_ts_highlights = false, -- This needs a direct toggle i think markid
+    use_highpairs = true,
 }
 
 lambda.config.abbrev = {

@@ -15,7 +15,6 @@ user({
         "LBReset",
         "LBTest",
         "LBSubmit",
-        "LeetActivate",
     },
     config = function()
         require("leetbuddy").setup({ language = "py" })

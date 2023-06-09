@@ -235,6 +235,7 @@ git({
 })
 -- Diff arbitrary blocks of text with each other
 git({ "AndrewRadev/linediff.vim", cmd = "Linediff" })
+
 git({
     "topaxi/gh-actions.nvim",
     cmd = "GhActions",

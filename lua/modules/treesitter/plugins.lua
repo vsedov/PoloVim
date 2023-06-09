@@ -138,7 +138,7 @@ ts({
 ts({
     "Yggdroot/hiPairs",
     lazy = true,
-    cond = true,
+    cond = lambda.config.treesitter.hipairs,
     event = "BufRead",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hi_pairs,
@@ -167,32 +167,6 @@ ts({
     dependencies = { "rktjmp/lush.nvim", "nvim-treesitter/nvim-treesitter" },
 })
 
--- ts({
---     "wellle/targets.vim",
---     lazy = true,
---     event = "VeryLazy",
---     init = function()
---         vim.g.targets_gracious = 1
---     end,
---     config = function()
---         vim.cmd([[
--- autocmd User targets#mappings#user call targets#mappings#extend({
---     \ 's': { 'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
---     \                      {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
---     \                      {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}] },
---     \ '@': {
---     \     'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
---     \                   {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
---     \                   {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}],
---     \     'pair':      [{'o':'(', 'c':')'}, {'o':'[', 'c':']'}, {'o':'{', 'c':'}'}, {'o':'<', 'c':'>'}],
---     \     'quote':     [{'d':"'"}, {'d':'"'}, {'d':'`'}],
---     \     'tag':       [{}],
---     \     },
---     \ })
---       ]])
---     end,
--- })
-
 ts({
     "ckolkey/ts-node-action",
     lazy = true,
@@ -207,4 +181,11 @@ ts({
         )
     end,
     config = true,
+})
+ts({
+    "echasnovski/mini.ai",
+    event = "VeryLazy",
+    config = function()
+        require("mini.ai").setup({ mappings = { around_last = "", inside_last = "" } })
+    end,
 })

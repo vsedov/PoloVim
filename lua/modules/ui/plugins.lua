@@ -310,18 +310,24 @@ ui({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })
 
 ui({
     "uga-rosa/ccc.nvim",
-    lazy = true,
-    cmd = {
-        "CccPick",
-        "CccConvert",
-        "CccHighlighterToggle",
-        "CccHighlighterEnable",
-        "CccHighlighterDisable",
-    },
-    opts = {
-        win_opts = { border = lambda.style.border.type_0 },
-        highlighter = { auto_enable = true, excludes = { "dart" } },
-    },
+    ft = { "lua", "vim", "typescript", "typescriptreact", "javascriptreact", "svelte" },
+    cmd = { "CccHighlighterToggle" },
+    opts = function()
+        local ccc = require("ccc")
+        local p = ccc.picker
+        p.hex.pattern = {
+            [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
+            [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
+        }
+        ccc.setup({
+            win_opts = { border = lambda.style.border.type_0 },
+            pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+            highlighter = {
+                auto_enable = true,
+                excludes = { "dart", "lazy", "orgagenda", "org", "NeogitStatus", "toggleterm" },
+            },
+        })
+    end,
 })
 ui({
     "petertriho/nvim-scrollbar",

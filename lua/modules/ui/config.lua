@@ -346,10 +346,11 @@ function config.ufo()
 
     vim.keymap.set({ "n", "x" }, ";n", function()
         nN("n")
-    end)
+    end, { desc = "hlslens.nNPeekWithUFO('n')", silent = true })
+
     vim.keymap.set({ "n", "x" }, ";N", function()
         nN("N")
-    end)
+    end, { desc = "hlslens.nNPeekWithUFO('N')", silent = true })
 end
 function config.fold_focus()
     local foldcus = require("foldcus")
