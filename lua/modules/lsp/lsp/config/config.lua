@@ -85,7 +85,12 @@ end
 local container = {
     buffer_mappings = {
         normal_mode = {
-            ["gD"] = { require("definition-or-references").definition_or_references, "Goto Def" },
+            ["gD"] = {
+                function()
+                    require("definition-or-references").definition_or_references()
+                end,
+                "Goto Def",
+            },
 
             ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
             ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },

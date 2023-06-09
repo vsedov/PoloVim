@@ -41,13 +41,19 @@ local config = {
             function()
                 require("neotest").run.run({ strategy = "dap" })
             end,
-            { nowait = false, exit = false, desc = "Test Dap" },
+            { nowait = false, exit = false, desc = "Run Dap" },
         },
         W = {
             function()
                 require("neotest").run.run({ vim.fn.expand("%"), strategy = "dap" })
             end,
-            { nowait = false, exit = false, desc = "Test Class" },
+            { nowait = false, exit = false, desc = "Run File Dap" },
+        },
+        o = {
+            function()
+                require("neotest").output.open({ short = true })
+            end,
+            { nowait = false, exit = false, desc = "Test Output" },
         },
 
         --
@@ -58,12 +64,6 @@ local config = {
                 end
             end,
             { nowait = false, exit = false, desc = "Test Rune Adapters" },
-        },
-        o = {
-            function()
-                require("neotest").output.open({ short = true })
-            end,
-            { nowait = false, exit = false, desc = "Test Output" },
         },
 
         f = {
@@ -118,14 +118,15 @@ for _, bind in ipairs(binds) do
 end
 
 local jump = { "J", "K" }
-local bracket = { "<cr>", "l", "W", "r", "S", "s", "o", "O", "a" }
+local bracket = { "<cr>", "l", "W", "r", "S" }
+local analyse = { "s", "o", "O", "a" }
 local summary = { "M", "R", "C" }
 local python = { "q", "w", "e" }
 local another_test = { "f", "v" }
 return {
     config,
     "Test",
-    { jump, summary, another_test, python },
+    { analyse, jump, summary, another_test, python },
     bracket,
     6,
     4,

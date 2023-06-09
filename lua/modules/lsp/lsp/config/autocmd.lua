@@ -84,26 +84,26 @@ local function on_attach(client, bufnr)
 end
 
 augroup("LspSetupCommands", {
-    {
-        event = "LspAttach",
-        desc = "setup the language server autocommands",
-        command = function(args)
-            local current_buftype = vim.bo.buftype
-            if vim.tbl_contains({ "terminal", "nofile" }, current_buftype) then
-                return
-            end
-            local client = lsp.get_client_by_id(args.data.client_id)
-            if not client then
-                return
-            end
-            on_attach(client, args.buf)
-            local overrides = client_overrides[client.name]
-            if not overrides or not overrides.on_attach then
-                return
-            end
-            overrides.on_attach(client, args.buf)
-        end,
-    },
+    -- {
+    --     event = "LspAttach",
+    --     desc = "setup the language server autocommands",
+    --     command = function(args)
+    --         local current_buftype = vim.bo.buftype
+    --         if vim.tbl_contains({ "terminal", "nofile" }, current_buftype) then
+    --             return
+    --         end
+    --         local client = lsp.get_client_by_id(args.data.client_id)
+    --         if not client then
+    --             return
+    --         end
+    --         on_attach(client, args.buf)
+    --         local overrides = client_overrides[client.name]
+    --         if not overrides or not overrides.on_attach then
+    --             return
+    --         end
+    --         overrides.on_attach(client, args.buf)
+    --     end,
+    -- },
     {
         event = "DiagnosticChanged",
         desc = "Update the diagnostic locations",

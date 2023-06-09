@@ -1,3 +1,4 @@
+local leader = "<leader>D"
 local function run(method, args)
     return function()
         local dap = require("dap")
@@ -20,60 +21,63 @@ local config = {
     Dap = {
         color = "red",
         mode = { "n", "x" },
-        body = "<localleader>b",
+        body = leader,
         ["<ESC>"] = { nil, { exit = true } },
-
         b = {
             function()
-                require("dap").toggle_breakpoint()
-                require("persistent-breakpoints.api").store_breakpoints(false)
+                require("persistent-breakpoints.api").toggle_breakpoint()
             end,
-            { silent = true, desc = "Toggle BP" },
+            { exit = false, silent = true, desc = "Toggle BP" },
         },
         B = {
             function()
-                require("dap").set_breakpoint(vim.fn.input("[Condition] > "))
-                require("persistent-breakpoints.api").store_breakpoints(false)
+                dap_uirun("float_element", "breakpoints")()
             end,
-            { silent = true, desc = "Set BP with Cond" },
+            { exit = false, silent = true, desc = "Float Break " },
+        },
+
+        C = {
+            function()
+                require("persistent-breakpoints.api").set_conditional_breakpoint()
+            end,
+            { exit = false, silent = true, desc = "Set BP with Cond" },
         },
         l = {
             function()
-                require("dap").clear_breakpoints()
-                require("persistent-breakpoints.api").store_breakpoints(true)
+                require("persistent-breakpoints.api").clear_all_breakpoints()
             end,
-            { silent = true, desc = "Clear all BP" },
+            { exit = false, silent = true, desc = "Clear all BP" },
         },
-        C = {
+        ["<cr>"] = {
             function()
                 run("continue")()
             end,
-            { silent = true, desc = "Continue" },
+            { exit = false, silent = true, desc = "Continue" },
         },
         c = {
             function()
                 run("run_to_cursor")()
             end,
-            { silent = true, desc = "Run to Cursor" },
+            { exit = false, silent = true, desc = "Run to Cursor" },
         },
         --
-        n = {
+        o = {
             function()
                 run("step_over")()
             end,
-            { silent = true, desc = "Step over" },
+            { exit = false, silent = true, desc = "Step over" },
         },
         i = {
             function()
                 run("step_into")()
             end,
-            { silent = true, desc = "Step into" },
+            { exit = false, silent = true, desc = "Step into" },
         },
-        o = {
+        O = {
             function()
                 run("step_out")()
             end,
-            { silent = true, desc = "Step Out" },
+            { exit = false, silent = true, desc = "Step Out" },
         },
         x = {
             function()
@@ -85,7 +89,7 @@ local config = {
             function()
                 run("close")()
             end,
-            { silent = true, desc = "Close" },
+            { exit = true, silent = true, desc = "Close" },
         },
 
         F = {
@@ -93,57 +97,57 @@ local config = {
                 require("dapui").close()
                 vim.cmd([[DapVirtualTextForceRefresh]])
             end,
-            { silent = true, desc = "Close UI" },
+            { exit = true, silent = true, desc = "Close UI" },
         },
 
         k = {
             function()
                 require("dap.ui.widgets").hover()
             end,
-            { silent = true, desc = "Hover" },
+            { exit = true, silent = true, desc = "Hover" },
         },
 
         K = {
             dap_uirun("eval"),
-            { silent = true, desc = "Evaluate" },
+            { exit = true, silent = true, desc = "Evaluate" },
         },
-        z = {
-            function()
-                dap_uirun("float_element", "breakpoints")()
-            end,
-            { silent = true, desc = "Float Break " },
-        },
-        a = {
+
+        S = {
             function()
                 dap_uirun("float_element", "scopes")()
             end,
-            { silent = true, desc = "Float Scope" },
+            { exit = true, silent = true, desc = "Float Scope" },
         },
-        f = {
+        s = {
             function()
                 dap_uirun("float_element", "stacks")()
             end,
-            { silent = true, desc = "Float Stack" },
+            { exit = true, silent = true, desc = "Float Stack" },
         },
         w = {
             function()
                 dap_uirun("float_element", "watches")()
             end,
-            { silent = true, desc = "Float Watches" },
+            { exit = true, silent = true, desc = "Float Watches" },
         },
         r = {
             function()
                 dap_uirun("float_element", "repl")()
             end,
-            { silent = true, desc = "Float repl" },
+            { exit = false, silent = true, desc = "Float repl" },
         },
     },
 }
+
 return {
     config,
     "Dap",
-    { { "k", "K", "F" }, { "n", "i", "o", "x", "X" }, { "z", "a", "f", "w", "r" } },
-    { "b", "B", "l", "C", "c" },
+    {
+        { "k", "K", "F" },
+        { "o", "i", "O", "x", "X" },
+        { "S", "s", "w", "r" },
+    },
+    { "b", "B", "C", "l", "<cr>", "c" },
     6,
     3,
 }
