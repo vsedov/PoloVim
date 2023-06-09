@@ -20,6 +20,49 @@ ts({
     config = conf.treesitter_obj,
 })
 
+ts({
+    "chrisgrieser/nvim-various-textobjs",
+    lazy = true,
+    event = "VeryLazy",
+    keys = {
+        {
+            "?",
+            function()
+                require("various-textobjs").diagnostic()
+            end,
+            mode = { "o", "x" },
+            desc = "diagnostic textobj",
+        },
+        {
+            "aS",
+            function()
+                require("various-textobjs").subword(false)
+            end,
+            mode = { "o", "x" },
+            desc = "outer subword",
+        },
+        {
+            "iS",
+            function()
+                require("various-textobjs").subword(true)
+            end,
+            mode = { "o", "x" },
+            desc = "inner subword",
+        },
+        {
+            "ii",
+            function()
+                require("various-textobjs").indentation(true, true)
+            end,
+            mode = { "o", "x" },
+            desc = "inner indentation",
+        },
+    },
+    opts = {
+        useDefaultKeymaps = true,
+    },
+})
+
 -- Core
 ts({
     "RRethy/nvim-treesitter-textsubjects",
@@ -40,7 +83,6 @@ ts({
 ts({
     "nvim-treesitter/nvim-treesitter-refactor",
     lazy = true,
-
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects" },
     config = conf.treesitter_ref, -- let the last loaded config treesitter
 })
@@ -150,28 +192,6 @@ ts({
 --       ]])
 --     end,
 -- })
-
-ts({
-    "chrisgrieser/nvim-various-textobjs",
-    lazy = true,
-    event = "VeryLazy",
-    config = function()
-        require("various-textobjs").setup({ useDefaultKeymaps = true })
-
-        -- example: `?` for diagnostic textobj
-        vim.keymap.set({ "o", "x" }, "?", '<cmd>lua require("various-textobjs").diagnostic()<CR>')
-
-        -- example: `an` for outer subword, `in` for inner subword
-        vim.keymap.set({ "o", "x" }, "aS", '<cmd>lua require("various-textobjs").subword(false)<CR>')
-        vim.keymap.set({ "o", "x" }, "iS", '<cmd>lua require("various-textobjs").subword(true)<CR>')
-
-        -- exception: indentation textobj requires two parameters, the first for
-        -- exclusion of the starting border, the second for the exclusion of ending
-        -- border
-        vim.keymap.set({ "o", "x" }, "ii", '<cmd>lua require("various-textobjs").indentation(true, true)<CR>')
-        vim.keymap.set({ "o", "x" }, "ai", '<cmd>lua require("various-textobjs").indentation(false, true)<CR>')
-    end,
-})
 
 ts({
     "ckolkey/ts-node-action",
