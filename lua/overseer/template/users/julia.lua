@@ -316,8 +316,12 @@ return {
                         return {
                             name = san_name .. " Infiltration",
                             cmd = [[julia --threads=auto --project -i -e "
-                                using Revise, TestItemRunner, Infiltrator, ]] .. vim.g.project .. [[;
-                                run(\`/home/viv/.config/bin/nvrWS 'lua No_Using_Toggle(\"Main.@infiltrate cond = ]] .. cond .. [[\")'\`)
+                                using Revise, TestItemRunner, Infiltrator, ]]
+                                .. vim.g.project
+                                .. [[;
+                                run(\`/home/viv/.config/bin/nvrWS 'lua No_Using_Toggle(\"Main.@infiltrate cond = ]]
+                                .. cond
+                                .. [[\")'\`)
                                 "]],
                             strategy = { "toggleterm", open_on_start = false },
                             components = {

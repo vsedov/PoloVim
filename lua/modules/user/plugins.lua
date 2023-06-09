@@ -245,6 +245,7 @@ user({
 })
 user({
     "Bekaboo/dropbar.nvim",
+    cond = lambda.config.ui.use_dropbar,
     event = "VeryLazy",
     dependencies = { "onsails/lspkind.nvim" },
     keys = {
@@ -280,7 +281,7 @@ user({
             },
             menu = {
                 win_configs = {
-                    border = lambda.style.border.type_0,
+                    border = lambda.style.border.type_1,
                     col = function(menu)
                         return menu.parent_menu and menu.parent_menu._win_configs.width + 1 or 0
                     end,
@@ -323,7 +324,6 @@ user({
     "milanglacier/yarepl.nvim",
     lazy = true,
     cmd = {
-
         "REPLStart",
         "REPLAttachBufferToREPL",
         "REPLDetachBufferToREPL",
@@ -452,6 +452,7 @@ user({
 
 user({
     "Zeioth/markmap.nvim",
+    lazy = true,
     build = "yarn global add markmap-cli",
     cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
     opts = {
@@ -461,5 +462,26 @@ user({
     },
     config = function(_, opts)
         require("markmap").setup(opts)
+    end,
+})
+user({
+    "romgrk/kirby.nvim",
+    cmd = { "Kirby", "KirbyToggle" },
+    dependencies = {
+        { "romgrk/fzy-lua-native", build = "make install" },
+        { "romgrk/kui.nvim" },
+        { "nvim-tree/nvim-web-devicons" },
+    },
+    config = function()
+        local kirby = require("kirby")
+
+        kirby.register({
+            id = "git-branch",
+            name = "Git checkout",
+            values = function()
+                return vim.fn["fugitive#CompleteObject"]("", " ", "")
+            end,
+            onAccept = "Git checkout",
+        })
     end,
 })

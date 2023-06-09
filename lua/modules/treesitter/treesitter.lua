@@ -11,7 +11,6 @@ local treesitter = function()
 
     if lines > 7000 then
         enable = false
-        langtree = false
         print("disable ts txtobj")
     end
     -- print('load treesitter refactor', vim.fn.line('$'))
@@ -49,11 +48,6 @@ local treesitter_obj = function()
 
     require("nvim-treesitter.configs").setup({
         indent = { enable = true, disable = { "python" } },
-        rainbow = {
-            enable = true,
-            extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-            max_file_lines = nil, -- Do not enable for files with more than n lines, int
-        },
         textobjects = {
             -- syntax-aware textobjects
             enable = enable,
@@ -115,8 +109,8 @@ local treesitter_obj = function()
             },
             swap = {
                 enable = enable,
-                swap_next = { ["<leader>a"] = "@parameter.inner" },
-                swap_previous = { ["<leader>A"] = "@parameter.inner" },
+                swap_next = { ["[W"] = "@parameter.inner" },
+                swap_previous = { ["]W"] = "@parameter.inner" },
             },
         },
         -- ensure_installed = "maintained"
@@ -182,7 +176,7 @@ local treesitter_ref = function()
     })
 end
 
-local endwise = function()
+local function endwise()
     require("nvim-treesitter.configs").setup({
         endwise = {
             enable = true,
@@ -211,6 +205,5 @@ return {
     treesitter_obj = treesitter_obj,
     treesitter_ref = treesitter_ref,
     textsubjects = textsubjects,
-    rainbow = rainbow,
     -- pyfold = pyfoldo,
 }
