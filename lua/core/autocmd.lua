@@ -204,6 +204,7 @@ lambda.augroup("Utilities", {
         nested = true,
         command = function()
             if lambda.falsy(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
+                -- This was rather anonying, so this deals with that issue.
                 if not vim.tbl_contains({ "gitcommit", "NeogitCommitMessage" }, vim.bo.filetype) then
                     return
                 end

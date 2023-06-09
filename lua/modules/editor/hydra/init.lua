@@ -57,7 +57,6 @@ local function loadHydraAPI()
                 return
             end
             hyd.hint = hint
-            lprint(hyd.name)
             vim.defer_fn(function()
                 local ok, err = pcall(hydra, hyd)
                 if not ok then
