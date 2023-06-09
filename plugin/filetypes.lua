@@ -35,22 +35,6 @@ settings({
             spelllang = "en_gb",
         },
     },
-    go = {
-        bo = {
-            expandtab = false,
-            softtabstop = 0,
-            tabstop = 4,
-            shiftwidth = 4,
-            textwidth = 120,
-        },
-        opt = { spell = true },
-        mappings = {
-            { "n", "<leader>gb", "<Cmd>GoBuild<CR>", desc = "build" },
-            { "n", "<leader>gfs", "<Cmd>GoFillStruct<CR>", desc = "fill struct" },
-            { "n", "<leader>gfp", "<Cmd>GoFixPlurals<CR>", desc = "fix plurals" },
-            { "n", "<leader>gie", "<Cmd>GoIfErr<CR>", desc = "if err" },
-        },
-    },
     NeogitCommitMessage = {
         opt = {
             spell = true,
@@ -61,8 +45,8 @@ settings({
             cmp = function(cmp)
                 cmp.setup.filetype("NeogitCommitMessage", {
                     sources = {
-                        { name = "git", group_index = 1 },
                         { name = "luasnip", group_index = 1 },
+                        { name = "git", group_index = 1 },
                         { name = "dictionary", group_index = 1 },
                         { name = "spell", group_index = 1 },
                         { name = "buffer", group_index = 2 },
@@ -100,6 +84,7 @@ settings({
             cmp = function(cmp)
                 cmp.setup.filetype("norg", {
                     sources = {
+                        { name = "luasnip", group_index = 1 },
                         { name = "neorg", group_index = 1 },
                         { name = "dictionary", group_index = 1 },
                         { name = "spell", group_index = 1 },
@@ -114,39 +99,6 @@ settings({
                         l = {
                             add = function()
                                 return { { "[" }, { "]{" .. vim.fn.getreg("*") .. "}" } }
-                            end,
-                        },
-                    },
-                })
-            end,
-        },
-    },
-    org = {
-        opt = {
-            spell = true,
-            signcolumn = "yes",
-        },
-        plugins = {
-            ufo = function(ufo)
-                ufo.detach()
-            end,
-            cmp = function(cmp)
-                cmp.setup.filetype("org", {
-                    sources = {
-                        { name = "orgmode", group_index = 1 },
-                        { name = "dictionary", group_index = 1 },
-                        { name = "spell", group_index = 1 },
-                        { name = "emoji", group_index = 1 },
-                        { name = "buffer", group_index = 2 },
-                    },
-                })
-            end,
-            ["nvim-surround"] = function(surround)
-                surround.buffer_setup({
-                    surrounds = {
-                        l = {
-                            add = function()
-                                return { { ("[[%s]["):format(fn.getreg("*")) }, { "]]" } }
                             end,
                         },
                     },

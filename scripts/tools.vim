@@ -6,6 +6,7 @@ fun! <SID>StripTrailingWhitespace()
     %s/\($\n\s*\)\+\%$//e
     call cursor(l, c)
 endfun
+command! -bar -nargs=0 StripTrailingWhitespace :call <SID>StripTrailingWhitespace()
 " autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
 
 " Search in project
@@ -62,6 +63,7 @@ function! FindRoot()
   return expand("%:p:h")
 endfunction
 
+command! Root let g:root_dir = FindRoot()
 " let g:root_dir = FindRoot() " Note disable root finder, null-ls will do this
 " autocmd BufEnter * silent! lcd g:root_dir  " 设置当前路径为项目路径
 
@@ -204,4 +206,4 @@ augroup maximizer
     au WinLeave * call s:restore()
 augroup END
 
-command! -bang -nargs=0 -range MaximizerToggle :call s:toggle(<bang>0)
+command! -bang -nargs=0 -range MaximizerToggleMain :call s:toggle(<bang>0)

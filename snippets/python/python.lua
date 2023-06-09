@@ -239,21 +239,6 @@ local python = {
     ),
 
     s(
-        "for",
-        fmt(
-            [[
-    for {} in {}:
-    {}
-    ]],
-            {
-                i(1, "i"),
-                i(2, "iterator"),
-                d(3, saved_text, {}, { user_args = { { text = "pass", indent = true } } }),
-            }
-        )
-    ),
-
-    s(
         "imp",
         fmt([[import {}]], {
             i(1, "sys"),
