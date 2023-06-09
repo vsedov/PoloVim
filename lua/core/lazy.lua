@@ -26,72 +26,12 @@ end
 load_colourscheme() -- loads default colourscheme
 
 function Lazyload()
-    _G.PLoader = loader
-
     loader({ plugins = { "nvim-treesitter" } })
-
-    local disable_ft = {
-        "NvimTree",
-        "guihua",
-        "guihua_rust",
-        "clap_input",
-        "clap_spinner",
-        "TelescopePrompt",
-        "csv",
-        "txt",
-        "defx",
-        "sidekick",
-        "neo-tree",
-    }
-
-    local syn_on = not vim.tbl_contains(disable_ft, vim.bo.filetype)
-    if not syn_on then
-        vim.cmd([[syntax manual]])
-    end
-    -- only works if you are working from one python file .
     if vim.bo.filetype == "lua" then
         loader({ plugins = { "neodev.nvim" } })
         loader({ plugins = { "luv-vimdocs" } })
         loader({ plugins = { "nvim-luaref" } })
     end
-
-    vim.g.vimsyn_embed = "lPr"
-
-    local gitrepo = vim.fn.isdirectory(".git/index")
-    if gitrepo and lambda.use_gitsigns then
-        loader({ plugins = { "gitsigns.nvim" } })
-    end
-    local condition = function()
-        if lambda.config.lsp.use_lsp_signature then
-            if lambda.config.ui.noice.lsp.use_noice_signature == false then
-                return true
-            end
-        end
-    end
-    if load_lsp then
-        vim.defer_fn(function()
-            loader({ plugins = { "lspsaga.nvim" } })
-            if condition() then
-                loader({ plugins = { "lsp_signature.nvim" } })
-            end
-        end, 60)
-    end
-
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "vista", "guiha" },
-        command = [[setlocal syntax=on]],
-    })
-
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = "*",
-        callback = function()
-            if vim.fn.wordcount()["bytes"] > 2048000 then
-                -- lprint("syntax off")
-                vim.notify("syntax off")
-                vim.cmd([[setlocal syntax=off]])
-            end
-        end,
-    })
 end
 
 local lazy_timer = 30
@@ -131,7 +71,6 @@ vim.defer_fn(function()
     end
     loader({ plugins = { "nvim-various-textobjs", "nvim-surround" } })
     loader({ plugins = { "leap.nvim", "leap-spooky.nvim", "flit.nvim", "leap-search.nvim" } })
+    require("modules.movement.leap").highlight()
     require("vscripts")
-end, 2000)
-
-require("modules.movement.leap").highlight()
+end, 150)

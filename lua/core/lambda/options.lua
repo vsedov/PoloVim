@@ -103,7 +103,7 @@ lambda.config.cmp = {
             priority = 8,
         },
     },
-    cmp_theme = "borderv2", --- @usage "border" | "no-border" | "extra"
+    cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
 }
 
 lambda.config.lsp = {
@@ -138,6 +138,7 @@ lambda.config.lsp = {
 }
 
 lambda.config.ui = {
+    use_virtcol = true,
     use_murmur = false, -- this causes issues with my yanky config -
     use_illuminate = true,
     use_heirline = false,
@@ -145,11 +146,11 @@ lambda.config.ui = {
     use_scrollbar = true,
     use_scroll = true,
     use_tint = false, -- Might not be great for certain colourschemes
-    use_virtcol = true,
-    use_indent_blankline = true,
     use_hlsearch = true,
-    use_reticle = true,
+    use_reticle = false,
+    use_dropbar = true, -- I am not sure if this is causing lag / issues or something
     heirline = {
+        use_heirline = true,
         use_status_col = false, -- true  for plugin or false for heirline
         use_win_bar = false,
     },
