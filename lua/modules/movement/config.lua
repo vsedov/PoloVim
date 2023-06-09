@@ -4,7 +4,7 @@ function config.syntax_surfer()
 end
 
 function config.hop()
-    require("hop-revived").setup({
+    require("hop").setup({
         -- keys = 'etovxqpdygfblzhckisuran',
         quit_key = "<ESC>",
         jump_on_sole_occurrence = true,

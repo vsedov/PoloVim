@@ -128,7 +128,7 @@ function M.highlight()
     })
 end
 
-function binds()
+local function binds()
     require("leap").add_default_mappings()
     local default_keymaps = {
         {

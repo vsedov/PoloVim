@@ -94,9 +94,15 @@ function config.neoai()
                 use_context = false,
                 prompt = function()
                     return [[
-                    Using the following git diff generate a consise and
-                    clear git commit message, with a short title summary
-                    that is 75 characters or less:
+                    Using the following git diff generate a consise and clear git commit message, it must use Conventional Commits standard. The title and topic should be informative.
+It should be in the following layout:
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+You are allowed to also have multope optional scopes like, feat(lsp, treesiter, movement):
+                    The description that is informative of the changes made, and a body that is a more and anything that May seem important.
                 ]] .. vim.fn.system("git diff --cached")
                 end,
                 modes = { "n" },
@@ -150,19 +156,6 @@ function config.codium()
         return vim.fn["codeium#CycleCompletions"](-1)
     end, { expr = true })
     vim.keymap.set("i", "<c-e>", vim.fn["codeium#Clear"], { expr = true })
-end
-
-function config.sell_your_soul()
-    vim.g.copilot_enabled = lambda.config.ai.sell_your_soul
-    vim.g.copilot_no_tab_map = true
-    vim.g.copilot_assume_mapped = true
-    vim.g.copilot_tab_fallback = ""
-    local excluded_filetypes = { "norg", "nofile", "prompt", "neogit", "git", "commitmessage" }
-    local copilot_filetypes = {}
-    for _, ft in pairs(excluded_filetypes) do
-        copilot_filetypes[ft] = false
-    end
-    vim.g["copilot_filetypes"] = copilot_filetypes
 end
 
 return config

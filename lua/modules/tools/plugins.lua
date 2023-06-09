@@ -197,12 +197,6 @@ tools({
 })
 
 tools({
-    "tyru/open-browser.vim",
-    lazy = true,
-    keys = { { "gx", "<Plug>(openbrowser-smart-search)", mode = { "n", "v" } } },
-})
-
-tools({
     "tyru/capture.vim",
     lazy = true,
     cmd = "Capture",
