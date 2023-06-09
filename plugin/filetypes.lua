@@ -35,35 +35,9 @@ settings({
             spelllang = "en_gb",
         },
     },
-    NeogitCommitMessage = {
-        opt = {
-            spell = true,
-            spelllang = "en_gb",
-            list = false,
-        },
-        plugins = {
-            cmp = function(cmp)
-                cmp.setup.filetype("NeogitCommitMessage", {
-                    sources = {
-                        { name = "luasnip", group_index = 1 },
-                        { name = "git", group_index = 1 },
-                        { name = "dictionary", group_index = 1 },
-                        { name = "spell", group_index = 1 },
-                        { name = "buffer", group_index = 2 },
-                    },
-                })
-            end,
-        },
-        function()
-            vim.schedule(function()
-                -- Schedule this call as highlights are not set correctly if there is not a delay
-                highlight.set_winhl("gitcommit", 0, { { VirtColumn = { fg = { from = "Variable" } } } })
-            end)
-            vim.treesitter.language.register("gitcommit", "NeogitCommitMessage")
-        end,
-    },
     netrw = {
         g = {
+
             netrw_liststyle = 3,
             netrw_banner = 0,
             netrw_browse_split = 0,
