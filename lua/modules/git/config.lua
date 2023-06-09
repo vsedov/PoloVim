@@ -39,42 +39,36 @@ function config.worktree()
     -- vim.cmd[[ Lazy load telescope.nvim]]
     -- require("telescope").load_extension("git_worktree")
 end
+function config.diffview_opts()
+    return {
+        default_args = { DiffviewFileHistory = { "%" } },
+        enhanced_diff_hl = true,
+        hooks = {
+            diff_buf_read = function()
+                local opt = vim.opt_local
+                opt.wrap, opt.list, opt.relativenumber = false, false, false
+                opt.colorcolumn = ""
+            end,
+        },
+        keymaps = {
+            view = { q = "<Cmd>DiffviewClose<CR>" },
+            file_panel = { q = "<Cmd>DiffviewClose<CR>" },
+            file_history_panel = { q = "<Cmd>DiffviewClose<CR>" },
+        },
+    }
+end
 
-function config.diffview()
-    local actions = require("diffview.actions")
-
-    require("diffview").setup({
-        diff_binaries = false, -- Show diffs for binaries
-        enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
-        git_cmd = { "git" }, -- The git executable followed by default args.
-        use_icons = true, -- Requires nvim-web-devicons
-        icons = { -- Only applies when use_icons is true.
-            folder_closed = "",
-            folder_open = "",
-        },
-        signs = {
-            fold_closed = "",
-            fold_open = "",
-        },
-        file_panel = {
-            listing_style = "tree", -- One of 'list' or 'tree'
-            tree_options = { -- Only applies when listing_style is 'tree'
-                flatten_dirs = true, -- Flatten dirs that only contain one single dir
-                folder_statuses = "only_folded", -- One of 'never', 'only_folded' or 'always'.
-            },
-            win_config = { -- See ':h diffview-config-win_config'
-                position = "left",
-                width = 35,
-            },
-        },
-        commit_log_panel = {
-            win_config = {}, -- See ':h diffview-config-win_config'
-        },
-        default_args = { -- Default args prepended to the arg-list for the listed commands
-            DiffviewOpen = {},
-            DiffviewFileHistory = {},
-        },
+function config.diffview(_, opts)
+    lambda.highlight.plugin("diffview", {
+        { DiffAddedChar = { bg = "NONE", fg = { from = "diffAdded", attr = "bg", alter = 0.3 } } },
+        { DiffChangedChar = { bg = "NONE", fg = { from = "diffChanged", attr = "bg", alter = 0.3 } } },
+        { DiffviewStatusAdded = { link = "DiffAddedChar" } },
+        { DiffviewStatusModified = { link = "DiffChangedChar" } },
+        { DiffviewStatusRenamed = { link = "DiffChangedChar" } },
+        { DiffviewStatusUnmerged = { link = "DiffChangedChar" } },
+        { DiffviewStatusUntracked = { link = "DiffAddedChar" } },
     })
+    require("diffview").setup(opts)
 end
 
 function config.gitsigns()
@@ -161,6 +155,15 @@ end
 
 function config.neogit()
     vim.cmd([[Lazy load diffview.nvim]])
+    lambda.highlight.plugin("neogit", { -- NOTE: highlights must be set AFTER neogit's setup
+        { NeogitDiffAdd = { link = "DiffAdd" } },
+        { NeogitDiffDelete = { link = "DiffDelete" } },
+        { NeogitDiffAddHighlight = { link = "DiffAdd" } },
+        { NeogitDiffDeleteHighlight = { link = "DiffDelete" } },
+        { NeogitDiffContextHighlight = { link = "NormalFloat" } },
+        { NeogitHunkHeader = { link = "TabLine" } },
+        { NeogitHunkHeaderHighlight = { link = "DiffText" } },
+    })
     local neogit = require("neogit")
     pcall(require("plenary"))
     neogit.setup({
@@ -190,16 +193,6 @@ function config.neogit()
             },
         },
     })
-
-    vim.keymap.set("n", ";gs", function()
-        neogit.open()
-    end, { desc = "git_open", silent = true, noremap = true })
-
-    vim.keymap.set("n", ";gc", function()
-        neogit.open({ "commit" })
-    end, { desc = "git_commit", silent = true, noremap = true })
-    vim.keymap.set("n", ";gl", neogit.popups.pull.create, { desc = "git_pull", silent = true, noremap = true })
-    vim.keymap.set("n", ";gp", neogit.popups.push.create, { desc = "git_push", silent = true, noremap = true })
 end
 
 function config.vgit()

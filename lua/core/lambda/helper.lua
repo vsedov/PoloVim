@@ -97,23 +97,6 @@ lambda.Format = function(json)
     end
 end
 
-lambda.unload = function(lib)
-    package.loaded[lib] = nil
-end
-
-lambda.dynamic_unload = function(module_name, reload)
-    reload = reload or false
-    for module, _ in pairs(package.loaded) do
-        if module:match(module_name) then
-            lambda.unload(module)
-            vim.notify(module .. "Unloaded succesfully ")
-            if reload then
-                require(module)
-            end
-        end
-    end
-end
-
 --- Call the given function and use `vim.notify` to notify of any errors
 --- this function is a wrapper around `xpcall` which allows having a single
 --- error handler for all errors
@@ -325,7 +308,6 @@ function lambda.ftplugin_conf(configs)
         end
     end
 end
-
 --- This function is an alternative API to using ftplugin files. It allows defining
 --- filetype settings in a single place, then creating FileType autocommands from this definition
 ---
@@ -341,9 +323,6 @@ end
 ---    }
 ---   })
 --- ```
---- One future idea is to generate the ftplugin files from this function, so the settings are still
---- centralized but the curation of these files is automated. Although I'm not sure this actually
---- has value over autocommands, unless ftplugin files specifically have that value
 ---
 ---@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs)}}
 function lambda.filetype_settings(map)
@@ -434,22 +413,6 @@ function lambda.wrap_err(msg, func, ...)
     end, unpack(args))
 end
 
----@alias Plug table<(string | number), string>
-
---- A convenience wrapper that calls the ftplugin config for a plugin if it exists
---- and warns me if the plugin is not installed
---- TODO: find out if it's possible to annotate the plugin as a module
----@param name string | Plug
----@param callback fun(module: table)
-function lambda.ftplugin_conf(name, callback)
-    local module = type(name) == "table" and name[1] or name
-    local info = debug.getinfo(1, "S")
-    local ok, plugin = lambda.require(module, { message = fmt("In file: %s", info.source) })
-    if ok then
-        callback(plugin)
-    end
-end
-
 ---Reload lua modules
 ---@param path string
 ---@param recursive boolean
@@ -491,9 +454,11 @@ P = vim.pretty_print
 -- Thin wrappers over API functions to make their usage easier/terser
 
 local autocmd_keys = { "event", "buffer", "pattern", "desc", "command", "group", "once", "nested" }
+
 --- Validate the keys passed to lambda.augroup are valid
 ---@param name string
 ---@param command Autocommand
+
 local function validate_autocmd(name, command)
     local incorrect = vim.iter(command):map(function(key, _)
         if not vim.tbl_contains(autocmd_keys, key) then
@@ -507,7 +472,6 @@ local function validate_autocmd(name, command)
         end)
     end
 end
-
 ---@class AutocmdArgs
 ---@field id number
 ---@field event string

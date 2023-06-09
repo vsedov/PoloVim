@@ -47,7 +47,36 @@ function config.neotest()
     require("neotest").setup({
         adapters = {
             require("neotest-python")({
-                dap = { justMyCode = false },
+                dap = {
+                    justMyCode = false,
+                    console = "integratedTerminal",
+                },
+                -- args = { "--log-level", "DEBUG", "--quiet"  },-- show stdoutput
+                -- - verbose output;
+                -- - standard output displayed;
+                -- - test duration displayed for the slowest 3 tests;
+                -- - long traceback for failed tests;
+                -- - execution stops after the first failure;
+                -- - local variables displayed in traceback;
+                -- - colored output;
+                -- - logging level set to 'warning'.
+                args = {
+                    "-v",
+                    "-s",
+                    "--durations",
+                    "3",
+                    "--tb",
+                    "long",
+                    "-x",
+                    "-l",
+                    "--color",
+                    "yes",
+                    "--log-level",
+                    "DEBUG",
+                    "--quiet",
+                }, -- show stdoutput
+
+                runner = "pytest",
             }),
             require("neotest-plenary"),
             require("neotest-vim-test")({
@@ -64,23 +93,8 @@ function config.neotest()
             enabled = true,
             force_default = true,
         },
-        highlights = {
-            adapter_name = "NeotestAdapterName",
-            border = "NeotestBorder",
-            dir = "NeotestDir",
-            expand_marker = "NeotestExpandMarker",
-            failed = "NeotestFailed",
-            file = "NeotestFile",
-            focused = "NeotestFocused",
-            indent = "NeotestIndent",
-            namespace = "NeotestNamespace",
-            passed = "NeotestPassed",
-            running = "NeotestRunning",
-            skipped = "NeotestSkipped",
-            test = "NeotestTest",
-        },
         discovery = {
-            enabled = false,
+            enabled = true,
         },
 
         summary = {
@@ -115,6 +129,58 @@ function config.neotest()
             enabled = true,
         },
     })
+    function setup_commands_keymaps()
+        local open_win_split = function(split_or_vsplit, size)
+            if split_or_vsplit == "split" then
+                vim.cmd(string.format([[ botright %dsplit ]], size))
+            else
+                vim.cmd(string.format([[ %dvsplit ]], size))
+            end
+            local win_id = vim.api.nvim_get_current_win()
+            vim.api.nvim_win_set_option(win_id, "number", false)
+            vim.api.nvim_win_set_option(win_id, "signcolumn", "no")
+            return win_id
+        end
+
+        lambda.command("NeotestOutputSplit", function(opts)
+            local height = tonumber(opts.args) or 20
+            require("neotest").output.open({
+                open_win = function()
+                    return open_win_split("split", height)
+                end,
+            })
+        end, { nargs = "?" })
+        lambda.command("NeotestOutputVSplit", function(opts)
+            local width = tonumber(opts.args) or 70
+            require("neotest").output.open({
+                open_win = function()
+                    return open_win_split("vsplit", width)
+                end,
+            })
+        end, { nargs = "?" })
+        lambda.command("NeotestRun", function()
+            require("neotest").run.run()
+        end, { nargs = 0 })
+        lambda.command("NeotestRunFile", function()
+            require("neotest").run.run(vim.fn.expand("%"))
+        end, { nargs = 0 })
+        lambda.command("NeotestStop", function()
+            require("neotest").run.stop()
+        end, { nargs = 0 })
+        lambda.command("NeotestOutput", function()
+            require("neotest").attach_or_output.open()
+        end, { nargs = 0 })
+        lambda.command("NeotestOutputPanel", function()
+            require("neotest").output_panel.open()
+        end, { nargs = 0 })
+        lambda.command("NeotestSummary", function()
+            require("neotest").summary.toggle()
+        end, { nargs = 0 })
+        lambda.command("TestOutput", function()
+            require("neotest").output.open()
+        end, { nargs = 0 })
+    end
+    setup_commands_keymaps()
 end
 
 return config

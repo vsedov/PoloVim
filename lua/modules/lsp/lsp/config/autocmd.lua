@@ -26,7 +26,7 @@ local provider = {
 
 --- A set of custom overrides for specific lsp clients
 --- This is a way of adding functionality for specific lsps
---- without putting all this logic in the general on_attach function
+--- without putting all this logic in the general on_Attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
     tsserver = {},
@@ -51,27 +51,27 @@ local function setup_autocommands(client, buf)
         })
     end
 
-    -- if client.server_capabilities[provider.REFERENCES] then
-    --     -- augroup(("LspReferences%d"):format(buf), {
-    --     --     {
-    --     --         event = { "CursorHold", "CursorHoldI" },
-    --     --
-    --     --         buffer = buf,
-    --     --         desc = "LSP: References",
-    --     --         command = function()
-    --     --             lsp.buf.document_highlight()
-    --     --         end,
-    --     --     },
-    --     --     {
-    --     --         event = "CursorMoved",
-    --     --         desc = "LSP: References Clear",
-    --     --         buffer = buf,
-    --     --         command = function()
-    --     --             lsp.buf.clear_references()
-    --     --         end,
-    --     --     },
-    --     -- })
-    -- end
+    if client.server_capabilities[provider.REFERENCES] then
+        augroup(("LspReferences%d"):format(buf), {
+            {
+                event = { "CursorHold", "CursorHoldI" },
+
+                buffer = buf,
+                desc = "LSP: References",
+                command = function()
+                    lsp.buf.document_highlight()
+                end,
+            },
+            {
+                event = "CursorMoved",
+                desc = "LSP: References Clear",
+                buffer = buf,
+                command = function()
+                    lsp.buf.clear_references()
+                end,
+            },
+        })
+    end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers
@@ -80,38 +80,38 @@ end
 ---@param client lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
-    setup_autocommands(client, bufnr)
+    -- setup_autocommands(client, bufnr)
 end
 
--- augroup("LspSetupCommands", {
---     {
---         event = "LspAttach",
---         desc = "setup the language server autocommands",
---         command = function(args)
---             local current_buftype = vim.bo.buftype
---             if vim.tbl_contains({ "terminal", "nofile" }, current_buftype) then
---                 return
---             end
---             local client = lsp.get_client_by_id(args.data.client_id)
---             if not client then
---                 return
---             end
---             on_attach(client, args.buf)
---             local overrides = client_overrides[client.name]
---             if not overrides or not overrides.on_attach then
---                 return
---             end
---             overrides.on_attach(client, args.buf)
---         end,
---     },
---     {
---         event = "DiagnosticChanged",
---         desc = "Update the diagnostic locations",
---         command = function(args)
---             diagnostic.setloclist({ open = false })
---             if #args.data.diagnostics == 0 then
---                 vim.cmd("silent! lclose")
---             end
---         end,
---     },
--- })
+augroup("LspSetupCommands", {
+    -- {
+    --     event = "LspAttach",
+    --     desc = "setup the language server autocommands",
+    --     command = function(args)
+    --         local current_buftype = vim.bo.buftype
+    --         if vim.tbl_contains({ "terminal", "nofile" }, current_buftype) then
+    --             return
+    --         end
+    --         local client = lsp.get_client_by_id(args.data.client_id)
+    --         if not client then
+    --             return
+    --         end
+    --         on_attach(client, args.buf)
+    --         local overrides = client_overrides[client.name]
+    --         if not overrides or not overrides.on_attach then
+    --             return
+    --         end
+    --         overrides.on_attach(client, args.buf)
+    --     end,
+    -- },
+    {
+        event = "DiagnosticChanged",
+        desc = "Update the diagnostic locations",
+        command = function(args)
+            diagnostic.setloclist({ open = false })
+            if #args.data.diagnostics == 0 then
+                vim.cmd("silent! lclose")
+            end
+        end,
+    },
+})

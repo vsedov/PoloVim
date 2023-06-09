@@ -154,7 +154,7 @@ o.breakindentopt = "sbr"
 o.linebreak = true -- lines wrap at words rather than random characters
 o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "yes:3"
-o.colorcolumn = 100
+o.colorcolumn = "100"
 o.ruler = false
 -- if lambda.config.ui.noice.enable then
 o.cmdheight = 0 -- 0 , is still borked it seems
@@ -306,5 +306,3 @@ end
 
 vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
-
--- vim:foldmethod=markc

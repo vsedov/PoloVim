@@ -11,10 +11,6 @@ local py = require("modules.lsp.lsp.providers.python.utils.python_help")
 local M = {}
 
 M.attach_config = function(client, bufnr)
-    local caps = client.server_capabilities
-    if lambda.config.lsp.python.use_inlay_hints then
-        utils.autocmds.InlayHintsAU()
-    end
     client.server_capabilities.semanticTokensProvider = {
         legend = {
             tokenTypes = {
@@ -117,7 +113,7 @@ M.config = {
     end,
     on_new_config = function(new_config, new_root_dir)
         py.env(new_root_dir)
-        new_config.settings.python.pythonPath = vim.fn.exepath("python") or vim.fn.exepath("python3") or "python"
+        -- new_config.settings.python.pythonPath = vim.fn.exepath("python") or vim.fn.exepath("python3") or "python"
         -- new_config.cmd_env.PATH = py.env(new_root_dir) .. new_config.cmd_env.PATH
 
         local pep582 = py.pep582(new_root_dir)

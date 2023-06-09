@@ -22,7 +22,6 @@ lsp({
             automatic_installation = true,
         })
         require("modules.lsp.lsp.config").setup()
-        require("modules.lsp.lsp.config.handlers").setup()
     end,
 })
 lsp({
@@ -146,10 +145,10 @@ lsp({
 
 lsp({
     "chikko80/error-lens.nvim",
-    cond = lambda.config.lsp.use_error_lens,
+    cond = lambda.config.lsp.diagnostics.use_error_lens,
     lazy = true,
     cmd = { "ErrorLensTelescope", "ErrorLensToggle" },
-    event = "BufRead",
+    event = "LspAttach",
     dependencies = {
         "nvim-telescope/telescope.nvim",
     },
@@ -157,9 +156,20 @@ lsp({
 })
 
 lsp({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    cond = lambda.config.lsp.diagnostics.use_lsp_lines,
+    lazy = true,
+    event = "LspAttach",
+    config = function()
+        require("lsp_lines").setup()
+        vim.keymap.set("", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+    end,
+})
+
+lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
-    cond = lambda.config.lsp.use_rcd,
-    event = "BufRead",
+    cond = lambda.config.lsp.diagnostics.use_rcd,
+    event = "LspAttach",
     config = true,
 })
 

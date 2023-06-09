@@ -20,14 +20,13 @@ completion({
     event = "InsertEnter",
     lazy = true,
     dependencies = {
-        -- { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
         { "hrsh7th/cmp-nvim-lsp", lazy = true },
         { "hrsh7th/cmp-nvim-lua", lazy = true },
         { "kdheepak/cmp-latex-symbols", lazy = true },
         { "hrsh7th/cmp-buffer", lazy = true },
         { "hrsh7th/cmp-path", lazy = true },
         { "hrsh7th/cmp-cmdline", lazy = true },
-        -- { "andersevenrud/cmp-tmux", lazy = true },
+        { "rcarriga/cmp-dap", lazy = true },
         {
             "petertriho/cmp-git",
             lazy = true,
@@ -56,21 +55,12 @@ completion({
     dependencies = {
         {
             "rafamadriz/friendly-snippets",
-            lazy = true,
-            "hrsh7th/nvim-cmp",
         },
     }, -- , event = "InsertEnter"
     config = function()
         require("modules.completion.snippets")
     end,
 })
-
--- completion({
---     "altermo/ultimate-autopair.nvim",
---     lazy = true,
---     event = { "InsertEnter", "CmdlineEnter" },
---     opts = conf.autopair(),
--- })
 
 completion({
     "altermo/npairs-integrate-upair",
@@ -95,10 +85,10 @@ completion({
 
     config = function()
         require("npairs-int-upair").setup({
-            map = "n", --which of them should be the insert mode autopair
+            map = "u", --which of them should be the insert mode autopair
             cmap = "u", --which of them should be the cmd mode autopair (only 'u' supported)
-            bs = "n", --which of them should be the backspace
-            cr = "n", --which of them should be the newline
+            bs = "u", --which of them should be the backspace
+            cr = "u", --which of them should be the newline
             space = "u", --which of them should be the space (only 'u' supported)
             c_h = "n", --which of them should be the <C-h> (only 'n' supported)
             c_w = "n", --which of them should be the <C-w> (only 'n' supported)
@@ -112,6 +102,7 @@ completion({
                     "dapui_console",
                     "dapui_scopes",
                     "dapui_stacks",
+                    "dap-repl",
                     "DressingSelect",
                     "help",
                     "lazy",
@@ -134,10 +125,10 @@ completion({
                     enable_reverse = true,
                     hopout = true,
                     --{(|)} > fastwarp > {(}|)
-                    map = "<A-e>",
-                    rmap = "<A-E>",
-                    cmap = "<A-e>",
-                    rcmap = "<A-E>",
+                    map = "<c-c>",
+                    rmap = "<c-e>",
+                    cmap = "<c-e>",
+                    rcmap = "<c-C>",
                     multiline = true,
                     --(|) > fastwarp > (\n|)
                     nocursormove = true,
@@ -164,6 +155,7 @@ completion({
                             "dapui_breakpoints",
                             "dapui_console",
                             "dapui_scopes",
+                            "dap-repl",
                             "dapui_stacks",
                             "DressingSelect",
                             "help",
@@ -241,7 +233,6 @@ completion({
 completion({
     "ziontee113/SnippetGenie",
     lazy = true,
-    event = "VeryLazy",
     keys = { { "<cr>", mode = "x" }, { ";<cr>", mode = "n" } },
     config = conf.snip_genie,
 })

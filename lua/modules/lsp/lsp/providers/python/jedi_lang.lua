@@ -29,12 +29,10 @@ return {
         config.settings.python.analysis.stubPath = stub_path
     end,
     on_new_config = function(new_config, new_root_dir)
-        py.env(new_root_dir)
         new_config.settings.python.pythonPath = vim.fn.exepath("python") or vim.fn.exepath("python3") or "python"
-        -- new_config.cmd_env.PATH = py.env(new_root_dir) .. new_config.cmd_env.PATH
+        new_config.cmd_env.PATH = py.env(new_root_dir) .. new_config.cmd_env.PATH
 
         local pep582 = py.pep582(new_root_dir)
-
         if pep582 ~= nil then
             new_config.settings.python.analysis.extraPaths = { pep582 }
         end

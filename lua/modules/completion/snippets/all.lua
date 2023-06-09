@@ -63,21 +63,6 @@ local function pair(pair_begin, pair_end, expand_func, ...)
     })
 end
 
-local iterator = function(delim)
-    local rec_ls
-    rec_ls = function()
-        return sn(nil, {
-            c(1, {
-                -- important!! Having the sn(...) as the first choice will cause infinite recursion.
-                t({ "" }),
-                -- The same dynamicNode as in the snippet (also note: self reference).
-                sn(nil, { t({ "", delim }), i(1), d(2, rec_ls, {}) }),
-            }),
-        })
-    end
-    return rec_ls
-end
-
 local all = {
     s(
         -- TODO(vsedov) (01:30:01 - 30/03/22): can probably make this smarter, need to finish it atm

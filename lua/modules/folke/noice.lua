@@ -92,10 +92,6 @@ function M.noice()
                 ["vim.lsp.util.stylize_markdown"] = lambda.config.ui.noice.lsp.use_markdown,
                 -- override cmp documentation with Noice (needs the other options to work)
                 ["cmp.entry.get_documentation"] = lambda.config.ui.noice.lsp.use_documentation,
-
-                -- ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                -- ["vim.lsp.util.stylize_markdown"] = true,
-                -- ["cmp.entry.get_documentation"] = true,
             },
         },
         markdown = {

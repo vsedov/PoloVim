@@ -101,6 +101,14 @@ function config.neo_tree()
             winbar = true,
             separator_active = " ",
         },
+        open_files_do_not_replace_types = {
+            "terminal",
+            "Trouble",
+            "qf",
+            "Outline",
+            "Vista",
+            "edgy",
+        },
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
         popup_border_style = "solid", -- "double", "none", "rounded", "shadow", "single" or "solid
         enable_git_status = true,

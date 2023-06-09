@@ -204,6 +204,9 @@ lambda.augroup("Utilities", {
         nested = true,
         command = function()
             if lambda.falsy(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
+                if not vim.tbl_contains({ "gitcommit", "NeogitCommitMessage" }, vim.bo.filetype) then
+                    return
+                end
                 cmd([[
         unlet! b:ftdetect
         filetype detect
@@ -237,7 +240,7 @@ lambda.augroup("TerminalAutocommands", {
 })
 ------------------------------------------------------------------------------//
 
-mkview_filetype_blocklist = {
+local mkview_filetype_blocklist = {
     diff = true,
     gitcommit = true,
     hgcommit = true,

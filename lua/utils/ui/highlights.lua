@@ -60,10 +60,24 @@ local P = {
 
     --- Custom
 
-    light_red = "#c43e1f",
-    grey = "#3E4556",
     green = "#98c379",
+    dark_green = "#10B981",
+    blue = "#82AAFE",
+    dark_blue = "#4e88ff",
+    bright_blue = "#51afef",
+    teal = "#15AABF",
+    pale_pink = "#b490c0",
+    magenta = "#c678dd",
+    pale_red = "#E06C75",
+    light_red = "#c43e1f",
+    dark_red = "#be5046",
+    dark_orange = "#FF922B",
+    bright_yellow = "#FAB005",
+    light_yellow = "#e5c07b",
     whitesmoke = "#9E9E9E",
+    light_gray = "#626262",
+    comment_grey = "#5c6370",
+    grey = "#3E4556",
 }
 
 local L = {
@@ -93,7 +107,7 @@ local function general_overrides()
         { VertSplit = { fg = { from = "Comment" } } },
         { WinSeparator = { fg = { from = "Comment" } } },
         { CursorLineNr = { bg = "NONE" } },
-        { iCursor = { bg = P.waveBlue1 } },
+        { iCursor = { bg = P.blue } },
         --------------------------------------------//
         -- Floats
         ---------------------------------------------//

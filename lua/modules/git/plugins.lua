@@ -1,5 +1,11 @@
 local conf = require("modules.git.config")
 local git = require("core.pack").package
+local neogit = lambda.reqidx("neogit")
+local gitlinker = lambda.reqidx("gitlinker")
+
+local function browser_open()
+    return { action_callback = require("gitlinker.actions").open_in_browser }
+end
 
 -- -- github GH ui
 git({
@@ -36,6 +42,17 @@ git({
         "DiffviewFocusFiles",
         "DiffviewRefresh",
     },
+    keys = {
+        { "<localleader>gd", "<Cmd>DiffviewOpen<CR>", desc = "diffview: open", mode = "n" },
+        { "gh", [[:'<'>DiffviewFileHistory<CR>]], desc = "diffview: file history", mode = "v" },
+        {
+            "<localleader>gh",
+            "<Cmd>DiffviewFileHistory<CR>",
+            desc = "diffview: file history",
+            mode = "n",
+        },
+    },
+    opts = conf.diffview_opts,
     config = conf.diffview,
 })
 
@@ -53,10 +70,34 @@ git({
     "TimUntersberger/neogit",
     -- branch = "git-escapes",
     keys = {
-        "<localleader>gs",
-        "<localleader>gc",
-        "<localleader>gl",
-        "<localleader>gp",
+        {
+            "<localleader>gs",
+            function()
+                neogit.open()
+            end,
+            desc = "open status buffer",
+        },
+        {
+            "<localleader>gc",
+            function()
+                neogit.open({ "commit" })
+            end,
+            desc = "open commit buffer",
+        },
+        {
+            "<localleader>gl",
+            function()
+                neogit.popups.pull.create()
+            end,
+            desc = "open pull popup",
+        },
+        {
+            "<localleader>gp",
+            function()
+                neogit.popups.push.create()
+            end,
+            desc = "open push popup",
+        },
     },
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
@@ -141,10 +182,56 @@ git({
 git({
     "ruifm/gitlinker.nvim",
     lazy = true,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+        {
+            "<localleader>gu",
+            function()
+                gitlinker.get_buf_range_url("n")
+            end,
+            desc = "gitlinker: copy line to clipboard",
+            mode = "n",
+        },
+        {
+            "<localleader>gu",
+            function()
+                gitlinker.get_buf_range_url("v")
+            end,
+            desc = "gitlinker: copy range to clipboard",
+            mode = "v",
+        },
+        {
+            "<localleader>go",
+            function()
+                gitlinker.get_repo_url(browser_open())
+            end,
+            desc = "gitlinker: open in browser",
+        },
+        {
+            "<localleader>go",
+            function()
+                gitlinker.get_buf_range_url("n", browser_open())
+            end,
+            desc = "gitlinker: open current line in browser",
+        },
+        {
+            "<localleader>go",
+            function()
+                gitlinker.get_buf_range_url("v", browser_open())
+            end,
+            desc = "gitlinker: open current selection in browser",
+            mode = "v",
+        },
+    },
     opts = {
         mappings = nil,
+        callbacks = {
+            ["github-work"] = function(url_data) -- Resolve the host for work repositories
+                url_data.host = "github.com"
+                return require("gitlinker.hosts").get_github_type_url(url_data)
+            end,
+        },
     },
-    config = true,
 })
 -- Diff arbitrary blocks of text with each other
 git({ "AndrewRadev/linediff.vim", cmd = "Linediff" })

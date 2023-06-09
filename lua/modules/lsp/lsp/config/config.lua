@@ -85,7 +85,12 @@ end
 local container = {
     buffer_mappings = {
         normal_mode = {
-            -- ["gD"] = { require("definition-or-references").definition_or_references, "Goto Def" },
+            ["gD"] = {
+                function()
+                    require("definition-or-references").definition_or_references()
+                end,
+                "Goto Def",
+            },
 
             ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
             ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
@@ -123,6 +128,9 @@ local container = {
         end,
         ["ltex"] = function(client, bufnr)
             require("modules.lsp.lsp.providers.latex.ltex").attach_config(client, bufnr)
+        end,
+        ["ruff_lsp"] = function(client, bufnr)
+            client.server_capabilities.hoverProvider = false
         end,
     },
 

@@ -112,20 +112,49 @@ movement({
         })
     end,
 })
-
---  TODO: (vsedov) (10:43:27 - 01/06/23): remove this as this is no longer maintained.
 movement({
     "phaazon/hop.nvim",
     lazy = true,
+    cmd = {
+        "HopAnywhere",
+        "HopChar1",
+        "HopChar2",
+        "HopLine",
+        "HopLineStart",
+        "HopVertical",
+        "HopPattern",
+        "HopWord",
+    },
     config = conf.hop,
+})
+movement({
+    "rlane/pounce.nvim",
     keys = {
-        "<leader><leader>s",
-        "<leader><leader>j",
-        "<leader><leader>k",
-        "<leader><leader>w",
-        "<leader><leader>l",
-        "g/",
-        "g,",
+        {
+            "gS",
+            function()
+                require("pounce").pounce({ do_repeat = true })
+            end,
+            desc = "Pounce",
+        },
+        {
+            "gs",
+            function()
+                require("pounce").pounce({ query = vim.fn.expand("<cword>"), do_repeat = true })
+            end,
+            desc = "Pounce word under cursor",
+        },
+        {
+            "g/",
+            function()
+                require("pounce").pounce({ input = { reg = "/" } })
+            end,
+            desc = "Pounce last search",
+        },
+    },
+    lazy = true,
+    opts = {
+        do_repeat = true,
     },
 })
 

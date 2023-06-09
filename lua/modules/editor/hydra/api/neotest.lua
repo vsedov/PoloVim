@@ -1,6 +1,4 @@
-local leader = "<leader>u"
-
-local bracket = { "<cr>", "s", "o" }
+local leader = "<leader><leader>d"
 
 local function test_method()
     if vim.bo.filetype == "python" then
@@ -18,7 +16,20 @@ local function debug_selection()
     end
 end
 
-local exit = { nil, { exit = true, desc = "EXIT" } }
+local binds = {
+    { "jump next", "J", { exit = false } },
+    { "jump prev", "K", { exit = false } },
+    { "output-panel toggle", "O" },
+    { "stop", "S" },
+
+    { "run file", "<cr>" },
+    { "run last", "l" },
+    { "summary toggle", "s" },
+
+    { "summary mark toggle", "M" },
+    { "summary mark run", "R" },
+    { "summary mark clear", "C" },
+}
 
 local config = {
     Test = {
@@ -26,18 +37,17 @@ local config = {
         body = leader,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
-        ["<cr>"] = {
+        r = {
             function()
-                require("neotest").run.run({ vim.api.nvim_buf_get_name(0) })
+                require("neotest").run.run({ strategy = "dap" })
             end,
-            { nowait = true, exit = false, desc = "Test Current" },
+            { nowait = false, exit = false, desc = "Run Dap" },
         },
-
-        s = {
+        W = {
             function()
-                require("neotest").summary.toggle()
+                require("neotest").run.run({ vim.fn.expand("%"), strategy = "dap" })
             end,
-            { nowait = false, exit = false, desc = "Test Sum" },
+            { nowait = false, exit = false, desc = "Run File Dap" },
         },
         o = {
             function()
@@ -46,25 +56,7 @@ local config = {
             { nowait = false, exit = false, desc = "Test Output" },
         },
 
-        d = {
-            function()
-                require("neotest").run.run({ strategy = "dap" })
-            end,
-            { nowait = false, exit = false, desc = "Test dap" },
-        },
-        D = {
-            function()
-                require("neotest").run.run({ strategy = "integrated" })
-            end,
-            { nowait = false, exit = false, desc = "Test integrated" },
-        },
-
-        S = {
-            function()
-                require("neotest").run.stop()
-            end,
-            { nowait = false, exit = false, desc = "Test Stop" },
-        },
+        --
         a = {
             function()
                 for _, adapter_id in ipairs(require("neotest").run.adapters()) do
@@ -74,24 +66,11 @@ local config = {
             { nowait = false, exit = false, desc = "Test Rune Adapters" },
         },
 
-        r = {
-            function()
-                require("neotest").run.run()
-            end,
-            { nowait = false, exit = true, desc = "TestNearest" },
-        },
-
         f = {
             function()
                 vim.cmd([[TestFile]])
             end,
             { nowait = false, exit = true, desc = "TestFile" },
-        },
-        l = {
-            function()
-                require("neotest").run.run_last()
-            end,
-            { nowait = false, exit = true, desc = "TestLast" },
         },
         v = {
             function()
@@ -104,29 +83,51 @@ local config = {
             function()
                 test_method()
             end,
-            { nowait = false, exit = true, desc = "TestMethod" },
+            { nowait = false, exit = true, desc = "Python TestMethod" },
         },
 
-        W = {
+        q = {
             function()
                 test_class()
             end,
-            { nowait = false, exit = true, desc = "TestClass" },
+            { nowait = false, exit = true, desc = "Python TestClass" },
         },
-        [";"] = {
+        e = {
             function()
                 debug_selection()
             end,
-            { nowait = false, exit = true, desc = "Selection" },
+            { nowait = false, exit = true, desc = "Python Selection" },
         },
     },
 }
+--
 
+for _, bind in ipairs(binds) do
+    local cmd = bind[1]
+    local key = bind[2]
+    local options = bind[3] or {}
+    if options.exit == nil then
+        options.exit = true
+    end
+    config.Test[key] = {
+        function()
+            vim.cmd("Neotest " .. cmd)
+        end,
+        { nowait = false, exit = options.exit, desc = cmd },
+    }
+end
+
+local jump = { "J", "K" }
+local bracket = { "<cr>", "l", "W", "r", "S" }
+local analyse = { "s", "o", "O", "a" }
+local summary = { "M", "R", "C" }
+local python = { "q", "w", "e" }
+local another_test = { "f", "v" }
 return {
     config,
     "Test",
-    { { "d", "D", "S", "a" }, { "r", "f", "l", "v" }, { "w", "W", ";" } },
+    { analyse, jump, summary, another_test, python },
     bracket,
     6,
-    3,
+    4,
 }

@@ -31,5 +31,25 @@ end
 if lambda.falsy(vim.fn.mapcheck("<ScrollWheelUp>")) then
     vim.keymap.set("n", "<ScrollWheelUp>", "<c-u>", { noremap = true, silent = true })
 end
+local function open(path)
+    vim.fn.jobstart({ "waterfox-g", path }, { detach = true })
+    vim.notify(string.format("Opening %s", path))
+end
+vim.keymap.set({ "x", "n" }, "gx", function()
+    local file = vim.fn.expand("<cfile>")
+    if not file or vim.fn.isdirectory(file) > 0 then
+        return vim.cmd.edit(file)
+    end
+
+    if file:match("http[s]?://") then
+        return open(file)
+    end
+
+    -- consider anything that looks like string/string a github link
+    local link = file:match("[%a%d%-%.%_]*%/[%a%d%-%.%_]*")
+    if link then
+        return open(string.format("https://www.github.com/%s", link))
+    end
+end, { noremap = true, silent = true })
 
 return plug_map

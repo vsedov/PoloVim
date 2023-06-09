@@ -4,7 +4,7 @@ local options = {
     expandtab = true,
     smarttab = true,
     conceallevel = 2,
-    colorcolumn = "130",
+    colorcolumn = "150",
     foldmethod = "syntax",
 }
 

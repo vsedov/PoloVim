@@ -130,9 +130,29 @@ ai({
 -- <C-i> [Edit Window] use response as input.
 
 ai({
-    "github/copilot.vim",
-    cond = ai_conf.sell_your_soul,
-    lazy = true,
-    event = "VeryLazy",
-    init = conf.sell_your_soul,
+    "zbirenbaum/copilot.lua",
+    -- init = conf.sell_your_soul,
+    -- cond = ai_conf.sell_your_soul,
+    event = "InsertEnter",
+    dependencies = { "nvim-cmp" },
+    opts = {
+        panel = {
+            enabled = true,
+            auto_refresh = true,
+            keymap = { open = "<M-CR>" },
+            layout = { position = "right", ratio = 0.4 },
+        },
+        suggestion = {
+            auto_trigger = true,
+            keymap = { accept = false, accept_word = "<M-w>", accept_line = "<M-l>" },
+        },
+        filetypes = {
+            gitcommit = false,
+            NeogitCommitMessage = false,
+            DressingInput = false,
+            TelescopePrompt = false,
+            ["neo-tree-popup"] = false,
+            ["dap-repl"] = false,
+        },
+    },
 })
