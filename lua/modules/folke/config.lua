@@ -76,6 +76,7 @@ function config.edgy()
             { ft = "qf", title = "QuickFix" },
             { ft = "help", size = { height = 20 } },
             { ft = "spectre_panel", size = { height = 0.4 } },
+            "dap-repl",
         },
         left = {
             -- Neo-tree filesystem always takes half the screen height
@@ -111,22 +112,20 @@ function config.edgy()
                 open = "OverseerToggle",
             },
             -- any other neo-tree windows
+            "dapui_breakpoints",
+            "dapui_stacks",
         },
         right = {
+            "dapui_watches",
+            "dapui_scopes",
+            "neotest-output-panel",
+            "neotest-summary",
+
             {
                 ft = "vista_kind",
                 title = "Vista",
                 open = "Vista",
                 size = { height = 0.5 },
-            },
-            {
-                ft = "neotest-output-panel",
-                pinned = true,
-                open = "Neotest output-panel",
-            },
-            {
-                ft = "neotest-summary",
-                pinned = true,
             },
         },
     }
