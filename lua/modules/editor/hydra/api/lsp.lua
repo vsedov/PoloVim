@@ -98,7 +98,7 @@ local config = {
     },
 }
 if lambda.config.lsp.use_navbuddy then
-    new_table = {
+    local new_table = {
         L = {
             function()
                 require("nvim-navbuddy").open()

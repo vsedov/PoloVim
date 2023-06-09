@@ -100,8 +100,7 @@ It should be in the following layout:
 
 [optional body]
 
-[optional footer(s)]
-You are allowed to also have multope optional scopes like, feat(lsp, treesiter, movement):
+You are allowed to also have multope optional scopes like, feat(lsp, treesiter):
                     The description that is informative of the changes made, and a body that is a more and anything that May seem important.
                 ]] .. vim.fn.system("git diff --cached")
                 end,
