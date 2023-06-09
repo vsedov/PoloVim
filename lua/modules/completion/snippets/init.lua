@@ -21,16 +21,6 @@ local parse = ls.parser.parse_snippet
 
 local gitcommmit_stylua = [[chore: autoformat with stylua]]
 
-local public_string = [[
-public String ${1:function_name}(${2:parameters}) {
-  ${0}
-}]]
-
-local public_void = [[
-public void ${1:function_name}(${2:parameters}) {
-  ${0}
-}]]
-
 local gitcommit_fix = [[
 fix(${1:scope}): ${2:title}
 
@@ -157,11 +147,68 @@ local snippets = {
         parse({ trig = "cleanup" }, gitcommit_cleanup),
         parse({ trig = "fix" }, gitcommit_fix),
         parse({ trig = "stylua" }, gitcommmit_stylua),
+        s(
+            "cc",
+            fmt("{type}({module}): {message}", {
+                type = c(1, {
+                    t("feat"),
+                    t("fix"),
+                    t("docs"),
+                    t("style"),
+                    t("refactor"),
+                    t("perf"),
+                    t("test"),
+                    t("build"),
+                    t("ci"),
+                    t("chore"),
+                    t("revert"),
+                }),
+                module = i(2, "module"),
+                message = i(3, "message"),
+            })
+        ),
     },
 
     tex = {},
 }
+local exp_generator = function(get_bufnr_fn)
+    return function(modifier)
+        return f(function()
+            local filename = vim.api.nvim_buf_get_name(get_bufnr_fn())
 
+            return vim.fn.fnamemodify(filename, modifier)
+        end)
+    end
+end
+local insert_exp = exp_generator(function()
+    return vim.api.nvim_get_current_buf()
+end)
+local fine_cmdline_exp = exp_generator(function()
+    return require("vimrc.plugins.fine-cmdline").get_related_bufnr()
+end)
+
+ls.add_snippets("all", {
+    s(
+        "exp",
+        c(1, {
+            insert_exp(":t"),
+            insert_exp(":t:r"),
+            insert_exp(":p"),
+            insert_exp(":h"),
+        })
+    ),
+})
+ls.add_snippets("fine-cmdline", {
+    s(
+        "exp",
+        c(1, {
+            fine_cmdline_exp(":t"),
+            fine_cmdline_exp(":t:r"),
+            fine_cmdline_exp(":p"),
+            fine_cmdline_exp(":h"),
+        })
+    ),
+})
 ls.add_snippets("all", snippets.all)
 ls.add_snippets("help", snippets.help)
 ls.add_snippets("java", snippets.java)
@@ -177,6 +224,6 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
     ls.add_snippets("tex", { snip })
 end
 ls.add_snippets("tex", require("modules.completion.snippets.latex.tex_math"), { type = "autosnippets" })
-require("luasnip.loaders.from_vscode").lazy_load()
 
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+require("luasnip.loaders.from_vscode").lazy_load()

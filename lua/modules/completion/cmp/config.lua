@@ -1,3 +1,6 @@
+local highlight, ui, k = lambda.highlight, lambda.ui, vim.keycode
+local api = vim.api
+
 local cmp = require("cmp")
 local types = require("cmp.types")
 local compare = require("cmp.config.compare")
@@ -17,6 +20,10 @@ local cmp_window = {
         "Search:None", --[[ , ]]
     }, ","),
 }
+local lspkind = require("lspkind")
+local ellipsis = lambda.style.icons.misc.ellipsis
+local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 25, math.min(50, math.floor(vim.o.columns * 0.5))
+
 local config = {
     snippet = {
         expand = function(args)
@@ -139,47 +146,51 @@ elseif lambda.config.cmp.cmp_theme == "borderv2" then
     }
 elseif lambda.config.cmp.cmp_theme == "extra" then
     config.window = {
-        completion = cmp.config.window.bordered(cmp_window),
-        documentation = cmp.config.window.bordered(cmp_window),
+        completion = cmp.config.window.bordered({
+            border = lambda.style.border.type_0,
+            winhighlight = "FloatBorder:FloatBorder",
+        }),
+        documentation = cmp.config.window.bordered({
+            border = lambda.style.border.type_0,
+            winhighlight = "FloatBorder:FloatBorder",
+        }),
     }
+
     config.formatting = {
         deprecated = true,
-        fields = fields,
-        format = function(entry, vim_item)
-            local MAX = math.floor(vim.o.columns * 0.5)
-            if #vim_item.abbr >= MAX then
-                vim_item.abbr = vim_item.abbr:sub(1, MAX) .. lambda.style.icons.misc.ellipsis
-            end
-            vim_item.kind = string.format("%s %s", lambda.style.lsp.kinds.codicons[vim_item.kind], vim_item.kind)
-            vim_item.menu = ({
+        deprecated = true,
+        fields = { "kind", "abbr", "menu" },
+        format = lspkind.cmp_format({
+            mode = "symbol",
+            maxwidth = MAX_MENU_WIDTH,
+            ellipsis_char = ellipsis,
+            before = function(_, vim_item)
+                local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
+                if length < MIN_MENU_WIDTH then
+                    vim_item.abbr = label .. string.rep(" ", MIN_MENU_WIDTH - length)
+                end
+                return vim_item
+            end,
+            menu = {
                 nvim_lsp = "[LSP]",
-                nvim_lua = "[Lua]",
-                path = "[Path]",
-                neorg = "[N]",
-                luasnip = "[SN]",
-                dictionary = "[D]",
-                buffer = "[B]",
-                spell = "[SP]",
-                cmdline = "[Cmd]",
-                cmdline_history = "[Hist]",
-                norg = "[Norg]",
-                -- Man this thing lagged like crazy if i remember correctly
-                rg = "[Rg]",
-                git = "[Git]",
-            })[entry.source.name]
-            if entry.source.name == "cmp_tabnine" then
-                local detail = (entry.completion_item.data or {}).detail
-                vim_item.kind = "[TN]"
-                if detail and detail:find(".*%%.*") then
-                    vim_item.kind = vim_item.kind .. " " .. detail
-                end
-
-                if (entry.completion_item.data or {}).multiline then
-                    vim_item.kind = vim_item.kind .. " " .. "[ML]"
-                end
-            end
-            return vim_item
-        end,
+                nvim_lua = "[LUA]",
+                emoji = "[EMOJI]",
+                path = "[PATH]",
+                neorg = "[NEORG]",
+                luasnip = "[SNIP]",
+                dictionary = "[DIC]",
+                buffer = "[BUF]",
+                spell = "[SPELL]",
+                orgmode = "[ORG]",
+                norg = "[NORG]",
+                rg = "[RG]",
+                git = "[GIT]",
+                cmp_tabnine = "[Tn]",
+                cmp_codeium = "[]",
+                codeium = "[]",
+                kitty = "[]",
+            },
+        }),
     }
 end
 

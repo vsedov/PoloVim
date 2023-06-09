@@ -1,6 +1,13 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local utils = require("modules.completion.cmp.utils")
+local function copilot()
+    local suggestion = require("copilot.suggestion")
+    if suggestion.is_visible() then
+        return suggestion.accept()
+    end
+    vim.api.nvim_feedkeys(lambda.replace_termcodes("<Tab>"), "n", false)
+end
 
 local mappings = {
     ["<C-e>"] = cmp.mapping({
@@ -59,12 +66,7 @@ local mappings = {
 
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul then
-            local copilot_keys = vim.fn["copilot#Accept"]()
-            if copilot_keys ~= "" then
-                vim.api.nvim_feedkeys(copilot_keys, "i", true)
-            else
-                fallback()
-            end
+            copilot()
         else
             if luasnip.expand_or_jumpable() then
                 vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-expand-or-jump", true, true, true), "")
