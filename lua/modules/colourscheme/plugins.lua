@@ -1,5 +1,6 @@
 local conf = require("modules.colourscheme.config")
 local colourscheme = require("core.pack").package
+
 colourscheme({
     "rebelot/kanagawa.nvim",
     lazy = true,

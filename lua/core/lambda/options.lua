@@ -77,7 +77,11 @@ lambda.config.editor = {
 }
 
 lambda.config.treesitter = {
-    use_yati = true,
+    indent = {
+        use_indent_O_matic = false,
+        use_guess_indent = true,
+        use_yati = false,
+    },
     use_matchup = true,
     use_extra_highlight = true,
     better_ts_highlights = false, -- This needs a direct toggle i think markid
@@ -116,16 +120,16 @@ lambda.config.lsp = {
     use_format_modifcation = false,
     use_navbuddy = true,
     use_inlay_hints = false,
-
     lsp_sig = {
         use_lsp_signature = true,
-        use_floating_window = true,
-        fix_pos = false,
+        use_floating_window = false,
+        use_floating_window_above_cur_line = true,
+        fix_pos = true,
     },
     diagnostics = {
-        use_error_lens = true,
+        use_error_lens = false,
         use_lsp_lines = false,
-        use_rcd = false,
+        use_rcd = true,
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -193,11 +197,11 @@ lambda.config.colourscheme = {
             core_themes = {
                 -- "kanagawa.nvim",
                 "catppuccin",
-                -- -- "sweetie.nvim",
+                "palenightfall.nvim",
+                -- "sweetie.nvim",
                 -- "vim-dogrun",
                 -- -- "poimandres.nvim",
                 -- -- "nvim-tundra",
-                -- -- "palenightfall.nvim",
                 -- -- "oh-lucy.nvim",
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
