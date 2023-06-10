@@ -114,12 +114,12 @@ function config.edgy()
             -- any other neo-tree windows
             "dapui_breakpoints",
             "dapui_stacks",
+            "dapui_watches",
         },
         right = {
-            "dapui_watches",
             "dapui_scopes",
-            "neotest-output-panel",
-            "neotest-summary",
+            -- "neotest-output-panel",
+            -- "neotest-summary",
 
             {
                 ft = "vista_kind",

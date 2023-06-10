@@ -60,12 +60,14 @@ lambda.config.extra_search = {
     enable = true,
     providers = {
         use_azy = true,
+
         use_fzf_lua = true, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
     },
 }
 lambda.config.buffer = {
     use_tabscope = true,
     use_sticky_buf = false,
+
     use_bufignore = true,
     use_early_retirement = true,
     use_hbac = true,

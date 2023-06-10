@@ -84,7 +84,7 @@ function config.neotest()
             }),
         },
         diagnostic = {
-            enabled = true,
+            enabled = false, -- this is not really required.
         },
         consumers = {
             overseer = require("neotest.consumers.overseer"),
@@ -126,7 +126,7 @@ function config.neotest()
             enabled = true,
         },
         quickfix = {
-            enabled = true,
+            enabled = false,
         },
     })
     function setup_commands_keymaps()
@@ -167,9 +167,7 @@ function config.neotest()
         lambda.command("NeotestStop", function()
             require("neotest").run.stop()
         end, { nargs = 0 })
-        lambda.command("NeotestOutput", function()
-            require("neotest").attach_or_output.open()
-        end, { nargs = 0 })
+
         lambda.command("NeotestOutputPanel", function()
             require("neotest").output_panel.open()
         end, { nargs = 0 })

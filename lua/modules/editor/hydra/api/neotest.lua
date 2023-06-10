@@ -1,4 +1,11 @@
-local leader = "<leader><leader>d"
+local leader = "<leader>d"
+local docs = { "<cr>", "l", "W", "r", "S" }
+local bracket = { "d", "L", ";", "i", "p", "D" }
+local jump = { "J", "K" }
+local analyse = { "s", "o", "O", "a" }
+local summary = { "M", "R", "C" }
+local python = { "q", "w", "e" }
+local another_test = { "f", "v" }
 
 local function test_method()
     if vim.bo.filetype == "python" then
@@ -22,7 +29,7 @@ local binds = {
     { "output-panel toggle", "O" },
     { "stop", "S" },
 
-    { "run file", "<cr>" },
+    { "run file", "W" },
     { "run last", "l" },
     { "summary toggle", "s" },
 
@@ -30,20 +37,61 @@ local binds = {
     { "summary mark run", "R" },
     { "summary mark clear", "C" },
 }
-
 local config = {
     Test = {
         color = "pink",
         body = leader,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
+        -- Neogen stuff
+        d = {
+            function()
+                require("neogen").generate()
+            end,
+            { nowait = true, silent = true, desc = "Gen Doc ", exit = true },
+        },
+        L = {
+            function()
+                require("neogen").generate({ type = "class" })
+            end,
+            { nowait = true, silent = true, desc = "Gen class ", exit = true },
+        },
+        [";"] = {
+            function()
+                require("neogen").generate({ type = "type" })
+            end,
+            { nowait = true, silent = true, desc = "Gen type ", exit = false },
+        },
+
+        -- Reference Stuff
+        i = {
+            function()
+                vim.cmd("RefCopy")
+            end,
+            { nowait = true, silent = true, desc = "refCopy ", exit = true },
+        },
+        p = {
+
+            function()
+                vim.cmd("RefGo")
+            end,
+            { nowait = true, silent = true, desc = "RefGo ", exit = true },
+        },
+        -- Documentation types ?
+        D = {
+            function()
+                vim.cmd("DocsViewToggle")
+            end,
+            { nowait = true, silent = true, desc = "Live Docs ", exit = true },
+        },
+
         r = {
             function()
                 require("neotest").run.run({ strategy = "dap" })
             end,
             { nowait = false, exit = false, desc = "Run Dap" },
         },
-        W = {
+        ["<cr>"] = {
             function()
                 require("neotest").run.run({ vim.fn.expand("%"), strategy = "dap" })
             end,
@@ -117,16 +165,10 @@ for _, bind in ipairs(binds) do
     }
 end
 
-local jump = { "J", "K" }
-local bracket = { "<cr>", "l", "W", "r", "S" }
-local analyse = { "s", "o", "O", "a" }
-local summary = { "M", "R", "C" }
-local python = { "q", "w", "e" }
-local another_test = { "f", "v" }
 return {
     config,
     "Test",
-    { analyse, jump, summary, another_test, python },
+    { docs, analyse, jump, summary, another_test, python },
     bracket,
     6,
     4,

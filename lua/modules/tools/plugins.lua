@@ -104,12 +104,6 @@ tools({
 tools({ "ilAYAli/scMRU.nvim", lazy = true, cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" } })
 
 tools({
-    "kevinhwang91/nvim-bqf",
-    event = "VeryLazy",
-    config = conf.bqf,
-})
-
-tools({
     url = "https://gitlab.com/yorickpeterse/nvim-pqf",
     event = "VeryLazy",
     config = function()
