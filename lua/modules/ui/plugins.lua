@@ -113,9 +113,10 @@ ui({
         },
         {
             "<Leader>E",
-            vim.cmd.NeoTreeClose,
-
-            "General: [F]orce Close Current Buffer",
+            function()
+                require("edgy").toggle()
+            end,
+            "General: [F]orce Close Edgy",
         },
 
         {
@@ -343,14 +344,14 @@ ui({
                 nearest_float_when = "always",
             })
 
-            vim.keymap.set({ "n", "x" }, ";L", function()
+            vim.keymap.set({ "n", "x" }, "<leader>F", function()
                 vim.schedule(function()
                     if require("hlslens").exportLastSearchToQuickfix() then
                         vim.cmd("cw")
                     end
                 end)
                 return ":noh<CR>"
-            end, { expr = true })
+            end, { expr = true, desc = "hlslens: search and replace" })
         end,
     },
     config = function()

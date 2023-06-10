@@ -1,4 +1,4 @@
-local leader = "<leader>c"
+local leader = "<leader>ai"
 local utils = require("modules.editor.hydra.repl_utils")
 local run_cmd_with_count = utils.run_cmd_with_count
 
@@ -23,12 +23,14 @@ local config = {
             run_cmd_with_count("REPLSendMotion aichat"),
             { nowait = true, desc = "Send current line to Aichat", exit = true },
         },
-        q = {
+        C = {
             run_cmd_with_count("REPLClose aichat"),
             { nowait = true, desc = "Quit Aichat", exit = true },
         },
         c = {
-            "<CMD>REPLCleanup<CR>",
+            function()
+                vim.cmd("REPLCleanup<CR>")
+            end,
             { nowait = true, desc = "Clear aichat REPLs.", exit = true },
         },
     },
@@ -36,7 +38,7 @@ local config = {
 return {
     config,
     "Repl",
-    { { "q", "c" } },
+    { { "C", "c" } },
     { "S", "s", "f", "h" },
     6,
     3,

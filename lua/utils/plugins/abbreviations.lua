@@ -21,11 +21,6 @@ M.setup = function(opts)
             utils.load_dict(abbrevs[item])
         end
     end
-
-    for _, value in ipairs(lambda.config.abbrev.languages) do
-        if abbrevs[value] ~= nil then
-            utils.load_dict(abbrevs[value])
-        end
-    end
+    utils.load_filetypes()
 end
 return M

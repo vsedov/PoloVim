@@ -147,15 +147,24 @@ ts({
 ts({
     "NMAC427/guess-indent.nvim",
     lazy = true,
-    event = lambda.config.guess_indent,
+    cond = lambda.config.treesitter.indent.use_guess_indent,
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
     cmd = "GuessIndent",
     config = conf.guess_indent,
+})
+ts({
+    "Darazaki/indent-o-matic",
+    lazy = true,
+    cond = lambda.config.treesitter.indent.use_indent_O_matic,
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
 })
 
 ts({
     "yioneko/nvim-yati",
-    cond = lambda.config.treesitter.use_yati,
-    event = "VeryLazy",
+    cond = lambda.config.treesitter.indent.use_yati,
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
     lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
     config = conf.indent,
@@ -188,4 +197,8 @@ ts({
     config = function()
         require("mini.ai").setup({ mappings = { around_last = "", inside_last = "" } })
     end,
+})
+ts({
+    "romgrk/equal.operator",
+    event = "VeryLazy",
 })

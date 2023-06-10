@@ -87,6 +87,7 @@ function config.edgy()
                     return vim.b[buf].neo_tree_source == "filesystem"
                 end,
                 size = { height = 0.5 },
+                open = "NeoTreeFocus",
             },
             {
                 title = "Neo-Tree Git",
@@ -118,8 +119,8 @@ function config.edgy()
         },
         right = {
             "dapui_scopes",
-            -- "neotest-output-panel",
-            -- "neotest-summary",
+            "neotest-output-panel",
+            "neotest-summary",
 
             {
                 ft = "vista_kind",

@@ -35,10 +35,10 @@ lang({
 
 lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
 
-lang({ "nanotee/luv-vimdocs", opt = true })
+lang({ "nanotee/luv-vimdocs", ft = "lua", opt = true })
 
 -- -- -- builtin lua functions
-lang({ "milisims/nvim-luaref", opt = true })
+lang({ "milisims/nvim-luaref", ft = "lua", opt = true })
 
 lang({
     "rafcamlet/nvim-luapad",

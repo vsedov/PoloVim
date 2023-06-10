@@ -1,7 +1,8 @@
 local cmd = vim.cmd
 local api = vim.api
-local auto_cmd_id = nil
 local M = {}
+local abbrevs = require("utils.abbreviations.dictionary")
+
 M.loaded_dicts = {}
 
 local has_element = function(table, element, type)
@@ -28,7 +29,6 @@ local remove_element_tbl = function(tbl, element)
         end
     end
 end
-
 M.inoreabbrev = function(l, r)
     vim.cmd({ cmd = "inoreabbrev", args = { l, r } })
 end
@@ -61,15 +61,13 @@ M.parse_iabbrev_pr = function(tabl, objective)
         end
     elseif objective == "buffer" then
         for index, value in pairs(tabl) do
-            local to_concat = "iabbrev <buffer> " .. index .. [[ ]] .. value
-            cmd(to_concat)
+            vim.cmd("iabbrev <buffer> " .. index .. [[ ]] .. value)
         end
     end
 
     return str_commands
 end
 
--- require("utils.abbreviations.utils").unload_dict(require("utils.abbreviations.dictionary").python)
 function M.load_dict(diction)
     local scope, items = diction.scope, diction.dict
     if scope == "global" then
@@ -79,22 +77,11 @@ function M.load_dict(diction)
 
         table.insert(M.loaded_dicts, diction)
         return
-    else
-        lambda.augroup("AutoCorrect" .. scope, {
-            {
-                event = { "FileType" }, -- this seems to be more reliable.
-                pattern = { scope },
-                command = function()
-                    M.parse_iabbrev_pr(items, "buffer")
-                end,
-            },
-        })
-        table.insert(M.loaded_dicts, diction)
-        return
     end
 end
+
 function M.unload_dict(diction)
-    scope, items = diction.scope, diction.dict
+    local scope, items = diction.scope, diction.dict
     if has_element(M.loaded_dicts, diction, "value") then
         if string.find(scope, "global") then
             for element in pairs(items) do
@@ -108,6 +95,25 @@ function M.unload_dict(diction)
         end
     end
     remove_element_tbl(M.loaded_dicts, diction)
+end
+
+function M.load_filetypes()
+    for _, value in ipairs(lambda.config.abbrev.languages) do
+        if abbrevs[value] ~= nil then
+            local scope = abbrevs[value].scope
+            local dictions = abbrevs[value].dict
+            lambda.augroup("Abbrev" .. scope, {
+                {
+                    event = "FileType",
+                    pattern = { scope },
+                    command = function()
+                        lprint("Loading abbreviations for " .. scope .. " with buffer " .. api.nvim_get_current_buf())
+                        M.parse_iabbrev_pr(dictions, "buffer")
+                    end,
+                },
+            })
+        end
+    end
 end
 
 return M
