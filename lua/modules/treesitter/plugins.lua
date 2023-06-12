@@ -202,3 +202,13 @@ ts({
     "romgrk/equal.operator",
     event = "VeryLazy",
 })
+ts({
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    lazy = true, -- will be loaded via Comment.nvim
+    config = function()
+        require("nvim-treesitter.configs").setup({
+            context_commentstring = { enable = true, enable_autocmd = false },
+        })
+    end,
+})

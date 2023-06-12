@@ -256,26 +256,59 @@ function config.treehopper()
         vim.api.nvim_set_hl(0, "TSNodeKey", { link = "IncSearch" })
         return true
     end
-    vim.keymap.set({ "o", "x", "n" }, "H", function()
-        return with_tsht() and ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
-            or [[<Plug>(leap-ast)]]
-    end, { expr = true, silent = true })
+    local function tsht()
+        vim.api.nvim_set_hl(0, "TSNodeUnmatched", { link = "Comment" })
+        vim.api.nvim_set_hl(0, "TSNodeKey", { link = "IncSearch" })
+        return ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
+    end
 
-    vim.keymap.set("n", "z<cr>", function()
-        if with_tsht() then
-            require("tsht").nodes({ ignore_injections = false })
-        else
-            vim.cmd("normal! v")
-            require("leap-ast").leap()
-        end
-        vim.cmd("normal! Vzf")
-    end, { silent = true })
-
-    vim.keymap.set("n", "z;", function()
-        vim.cmd("normal! v")
-        require("leap-ast").leap()
-        vim.cmd("normal! Vzf")
-    end, { silent = true })
+    return {
+        {
+            "\\m",
+            tsht,
+            mode = { "o", "x" },
+            expr = true,
+            silent = true,
+            desc = "treehopper: highlight current node",
+        },
+        {
+            "H",
+            function()
+                return with_tsht() and ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
+                    or [[<Plug>(leap-ast)]]
+            end,
+            mode = { "o", "x", "n" },
+            expr = true,
+            silent = true,
+            desc = "treehopper: highlight current node",
+        },
+        {
+            "z<cr>",
+            function()
+                if with_tsht() then
+                    require("tsht").nodes({ ignore_injections = false })
+                else
+                    vim.cmd("normal! v")
+                    require("leap-ast").leap()
+                end
+                vim.cmd("normal! Vzf")
+            end,
+            mode = "n",
+            silent = true,
+            desc = "God Fold",
+        },
+        {
+            "z;",
+            function()
+                vim.cmd("normal! v")
+                require("leap-ast").leap()
+                vim.cmd("normal! Vzf")
+            end,
+            mode = "n",
+            silent = true,
+        },
+        desc = "leap fold",
+    }
 end
 function config.asterisk_setup()
     vim.g["asterisk#keeppos"] = 1

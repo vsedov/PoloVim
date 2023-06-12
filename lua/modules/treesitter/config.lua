@@ -27,8 +27,7 @@ function config.treesitter_init()
     end
 
     local function get_node_range(node)
-        local a, b, c, d = vim.treesitter.get_node_range(node)
-        return { a, b, c, d }
+        return { vim.treesitter.get_node_range(node) }
     end
 
     local function get_curpos()

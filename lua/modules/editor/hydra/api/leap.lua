@@ -25,6 +25,12 @@ local config = {
                         { name = "string.find", plain = true, ignorecase = true },
                         -- { name = "kensaku.query" }, -- to search Japanese string with romaji with
                     },
+                    experimental = {
+                        backspace = true,
+                        autojump = true,
+                        ctrl_v = true,
+                    },
+                    hl_group = "WarningMsg",
                     { target_windows = { api.nvim_get_current_win() } },
                 })
             end,

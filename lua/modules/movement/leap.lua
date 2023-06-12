@@ -402,6 +402,7 @@ function M.leap_search()
                 "*",
                 function()
                     require("lasterisk").search({ is_whole = false })
+                    require("hlslens").start()
                     vim.schedule(search_win)
                     return "<C-\\><C-N>"
                 end,
@@ -432,7 +433,7 @@ function M.leap_search()
                 "#",
                 function()
                     require("lasterisk").search({ is_whole = false })
-                    -- require("hlslens").start()
+                    require("hlslens").start()
 
                     vim.schedule(search_win)
                     return "<C-\\><C-N>"
@@ -445,7 +446,6 @@ function M.leap_search()
                 "g#",
                 function()
                     require("lasterisk").search({ is_whole = false })
-                    -- require("hlslens").start()
                     search_win()
                 end,
                 desc = "Search cword",
