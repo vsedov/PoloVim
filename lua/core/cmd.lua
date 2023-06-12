@@ -423,3 +423,21 @@ end, { force = true })
 
 lambda.command("TodoLocal", "botright silent! lvimgrep /\\v\\CTODO|FIXME|HACK|PERF/", {})
 lambda.command("Todo", "botright silent! vimgrep /\\v\\CTODO|FIXME|HACK|PERF/ *<CR>", {})
+lambda.command("NorgSpec", function()
+    if vim.loop.fs_stat("./specs.norg") then
+        vim.fn.delete("./specs.norg")
+    end
+    vim.fn.system({
+        "curl",
+        "https://raw.githubusercontent.com/nvim-neorg/norg-specs/main/1.0-specification.norg",
+        "-o",
+        "./specs.norg",
+    })
+    vim.cmd.e("./specs.norg")
+    vim.keymap.set("n", "q", function()
+        vim.cmd.bdelete()
+        if vim.loop.fs_stat("./specs.norg") then
+            vim.fn.delete("./specs.norg")
+        end
+    end, { buffer = true })
+end, { desc = "View Norg Specification" })

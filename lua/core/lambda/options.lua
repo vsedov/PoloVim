@@ -175,9 +175,10 @@ lambda.config.ui = {
         use_flirt_override = false,
         move_mappings = false, -- if you  do not want to use  smart split
     },
-    indent_blankline = {
-        use_indent_blankline = true,
+    indent_lines = {
+        use_indent_blankline = false,
         use_hlchunk = false,
+        use_mini = true, -- you have to disable indent_blank_line for this
     },
     use_pet = false,
 }
@@ -197,12 +198,11 @@ lambda.config.colourscheme = {
             core_themes = {
                 -- "kanagawa.nvim",
                 "catppuccin",
-                "palenightfall.nvim",
+                -- "palenightfall.nvim",
                 -- "sweetie.nvim",
                 -- "vim-dogrun",
-                -- -- "poimandres.nvim",
+                -- "poimandres.nvim",
                 -- -- "nvim-tundra",
-                -- -- "oh-lucy.nvim",
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
                 -- "rose", -- TSMethod'
@@ -218,6 +218,8 @@ lambda.config.colourscheme = {
 }
 
 lambda.config.movement = {
+    use_lasterisk = true, -- for leap
+    use_asterisk = false,
     harpoon = {
         goto_harpoon = false,
         use_tmux_or_normal = "nvim", -- nvim

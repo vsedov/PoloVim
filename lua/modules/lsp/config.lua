@@ -140,10 +140,6 @@ function config.lsp_sig()
     }
 
     require("lsp_signature").setup(cfg)
-
-    vim.keymap.set({ "n" }, "<C-n>", function()
-        require("lsp_signature").toggle_float_win()
-    end, { silent = true, noremap = true, desc = "toggle signature" })
 end
 
 function config.hover()

@@ -16,7 +16,13 @@ cmp.setup.cmdline(":", {
     }),
 })
 cmp.setup.filetype({ "dap-repl", "dapui_watches" }, { sources = { { name = "dap" } } })
--- regex that ignore :q and :w
+cmp.mapping(function()
+    if cmp.get_active_entry() then
+        cmp.confirm()
+    else
+        require("ultimate-autopair.maps.cr").cmpnewline()
+    end
+end)
 
 require("modules.completion.cmp.extra")
 lambda.highlight.plugin("Cmp", {

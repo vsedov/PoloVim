@@ -286,9 +286,6 @@ function mkview()
     end
 end
 
---  TODO: (vsedov) (03:42:00 - 31/05/23): Need to fix this autocmd , there is something wrong with
---  this one
-
 local valid = {
     "python",
     "lua",

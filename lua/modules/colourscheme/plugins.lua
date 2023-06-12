@@ -67,12 +67,6 @@ colourscheme({
 })
 
 colourscheme({
-    "Yazeed1s/oh-lucy.nvim",
-    lazy = true,
-    config = conf.lucy,
-})
-
-colourscheme({
     "ramojus/mellifluous.nvim",
     dependencies = { "rktjmp/lush.nvim" },
     lazy = true,
