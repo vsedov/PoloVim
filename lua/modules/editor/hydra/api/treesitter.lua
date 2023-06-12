@@ -1,23 +1,16 @@
 local ts_move = require("nvim-treesitter.textobjects.move")
-local tc = require("nvim-treeclimber")
-local leader = "\\<leader>"
+local leader = ";s" --  TODO: (vsedov) (08:43:21 - 12/06/23): \\<leader>
 
 local mx = function(feedkeys, type)
     local type = type or "m"
     return function()
         if type == "v" then
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, true, true), "n", true)
+            vim.api.nvim_feedkeys(vim.keycode("v", true, true, true), "n", true)
         end
 
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), type, false)
+        vim.api.nvim_feedkeys(vim.keycode(feedkeys, true, false, true), type, false)
     end
 end
-
-local motion_type = {
-    d = "Del",
-    c = "Cut",
-    y = "Yank",
-}
 
 local config = {
     Treesitter = {
@@ -55,7 +48,7 @@ local config = {
         -- ]g finds the diagnostic after the cursor (excluding any diagnostic the cursor is sitting on)
         -- [g finds the diagnostic before the cursor (excluding any diagnostic the cursor is sitting on)
 
-        ["O"] = { mx("ig", "v"), { nowait = true, desc = "Diag A[Cur]" } }, -- ts: all class
+        ["L"] = { mx("ig", "v"), { nowait = true, desc = "Diag A[Cur]" } }, -- ts: all class
         ["J"] = { mx("]g", "v"), { nowait = true, desc = "Diag >[Cur]" } }, -- ts: all class
         ["K"] = { mx("[g", "v"), { nowait = true, desc = "Diag <[Cur]" } }, -- ts: all class
 
@@ -71,13 +64,14 @@ local config = {
     },
 }
 
-local bracket = { "h", "j", "k", "l", "O", "J", "K" }
+local bracket = { "h", "j", "k", "l" }
 
 return {
     config,
     "Treesitter",
     {
         { "A", "a", "i", "I", "W", "w" },
+        { "L", "J", "K" },
     },
     bracket,
     6,

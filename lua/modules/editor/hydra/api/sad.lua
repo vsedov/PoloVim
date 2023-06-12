@@ -8,33 +8,19 @@ local leader = "L"
 -- ["n|<leader><leader>Sc"] = map_cmd(
 -- --
 --
-vim.keymap.set("n", "<leader>sl", function()
-    return [[:S ///g<Left><Left><Left>]]
-end, { desc = "Replace current", expr = true })
+-- vim.keymap.set("n", "<leader>sl", function() end, { desc = "Replace current", expr = true })
 
 --
-vim.keymap.set({ "n" }, "<leader>sc", function()
-    return [[:%S /<C-R><C-W>//gI<left><left><left>]]
-end, { desc = "Replace current", expr = true })
+-- vim.keymap.set({ "n" }, "<leader>sc", function() end, { desc = "Replace current", expr = true })
+--
+-- vim.keymap.set(
+--     { "n", "x" },
+--     "<leader>sw",
+--     function() end,
+--     { desc = "󱗘 :AltSubstitute word under cursor", expr = true }
+-- )
 
-vim.keymap.set({ "n", "x" }, "<leader>sw", function()
-    return ":S /" .. vim.fn.expand("<cword>") .. "//g<Left><Left>"
-end, { desc = "󱗘 :AltSubstitute word under cursor", expr = true })
-
-local mx = function(feedkeys, type)
-    local type = type or "m"
-    return function()
-        if type == "v" then
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, true, true), "n", true)
-        end
-
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), type, false)
-    end
-end
-
-local config = {}
-local exit = { nil, { exit = true, desc = "EXIT" } }
-config = {
+local config = {
     Sad = {
         color = "pink",
         body = leader,
@@ -163,17 +149,19 @@ config = {
         -----------------------------
 
         w = {
-            mx("<leader>sw"),
+            ":S /" .. vim.fn.expand("<cword>") .. "//g<Left><Left>",
 
             { nowait = true, desc = "Rep All", exit = true },
         },
         W = {
-            mx("<leader>sc"),
+            [[:%S /<C-R><C-W>//gI<left><left><left>]],
+
             { nowait = true, desc = "Rep Word[C]", exit = true },
         },
 
         E = {
-            mx("<leader>sl"),
+            [[:S ///g<Left><Left><Left>]],
+
             { nowait = true, desc = "Rep Word", exit = false },
         },
     },

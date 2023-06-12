@@ -24,10 +24,10 @@ local window_hint = [[
 
  ^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^ ^   _<Up>_     ^   ^_s_: horizontally
  _h_ ^ ^ _l_  _wh_ _<cr>_ _wl_  _H_ ^ ^ _L_  _<Left>_ _<Right>_  _v_: vertically
- ^ ^ _j_ ^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^   ^_q_, _c_: close
- ^^ focus ^  ^^winshift^  ^^Split^^^^^^^^^^  ^_=_: equalize^     _z_: maximize
+ ^ ^ _j_^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^    ^_q_, _c_: close
+ ^^focus ^^  ^^winshift^  ^^Split^^^^^^^^^^   ^_=_: equalize^     _z_: maximize
  ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only
- _?_ : Pick window  _[_ : Cava
+ _?_ : Pick window  _m_: Template
 
 ]]
 
@@ -85,9 +85,9 @@ Hydra({
             end,
         },
         {
-            "[",
+            "m",
             function()
-                lambda.config.ui.heirline.cava.use_cava = not lambda.config.ui.heirline.cava.use_cava
+                vim.cmd([[Template main]])
             end,
             { desc = "Soft Toggle Cava" },
         },
@@ -104,13 +104,8 @@ Hydra({
         { "<C-z>", cmd("MaximizerToggle!"), { exit = true, desc = false } },
         { "<C-o>", "<C-w>o", { exit = true, desc = false } },
 
-        -- { "b", choose_buffer, { exit = true, desc = "choose buffer" } },
-
         { "o", cmd("BufOnly"), { exit = true, desc = "remain only" } },
         { "<C-o>", "<C-w>o", { exit = true, desc = false } },
-
-        -- { "b", choose_buffer, { exit = true, desc = "choose buffer" } },
-
         { "c", cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]) },
         { "q", cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]), { desc = "close window" } },
         { "<C-q>", cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]), { desc = false } },

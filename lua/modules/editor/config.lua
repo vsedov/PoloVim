@@ -196,24 +196,6 @@ function config.venn()
     end, { bang = true })
 end
 
-function config.asterisk_setup()
-    vim.g["asterisk#keeppos"] = 1
-
-    local default_keymaps = {
-        { "n", "*", "<Plug>(asterisk-*)" },
-        { "n", "#", "<Plug>(asterisk-#)" },
-        { "n", "g*", "<Plug>(asterisk-g*)" },
-        { "n", "g#", "<Plug>(asterisk-g#)" },
-        { "n", "z*", "<Plug>(asterisk-z*)" },
-        { "n", "gz*", "<Plug>(asterisk-gz*)" },
-        { "n", "z#", "<Plug>(asterisk-z#)" },
-        { "n", "gz#", "<Plug>(asterisk-gz#)" },
-    }
-    for _, m in ipairs(default_keymaps) do
-        vim.keymap.set(m[1], m[2], m[3] .. "<Cmd>lua require('hlslens').start()<CR>", {})
-    end
-end
-
 function config.smart_q()
     vim.g.smartq_goyo_integration = 0
     vim.g.smartq_zenmode_integration = 0

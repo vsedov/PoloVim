@@ -135,15 +135,6 @@ editor({
 })
 
 editor({
-    "haya14busa/vim-asterisk",
-    lazy = true,
-    keys = {
-        { "<Plug>(asterisk-", mode = "" },
-    },
-    init = conf.asterisk_setup,
-})
-
-editor({
     "marklcrns/vim-smartq",
     cond = lambda.config.editor.use_smart_q,
     lazy = true,

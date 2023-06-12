@@ -21,16 +21,15 @@ local config = {
         },
         s = {
             run_cmd_with_count("REPLSendMotion aichat"),
-            { nowait = true, desc = "Send current line to Aichat", exit = true },
+            { nowait = true, desc = "Send current line to Aichat", exit = false },
         },
         C = {
             run_cmd_with_count("REPLClose aichat"),
             { nowait = true, desc = "Quit Aichat", exit = true },
         },
         c = {
-            function()
-                vim.cmd("REPLCleanup<CR>")
-            end,
+            run_cmd_with_count("REPLCleanup"),
+
             { nowait = true, desc = "Clear aichat REPLs.", exit = true },
         },
     },
