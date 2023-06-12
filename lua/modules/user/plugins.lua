@@ -470,3 +470,11 @@ user({
     config = true,
 })
 --
+user({
+    "tzachar/highlight-undo.nvim",
+    keys = {
+        "<c-r>",
+        "u",
+    },
+    config = true,
+})

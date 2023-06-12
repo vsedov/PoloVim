@@ -112,6 +112,28 @@ local function get_line_starts(winid)
         return targets
     end
 end
+local function search_win()
+    local pat = vim.fn.getreg("/")
+    require("leap-search").leap(pat, {}, { target_windows = { vim.api.nvim_get_current_win() } })
+    require("hlslens").start()
+end
+
+local function search_ref()
+    local ref = require("illuminate.reference").buf_get_references(vim.api.nvim_get_current_buf())
+    if not ref or #ref == 0 then
+        return false
+    end
+
+    local targets = {}
+    for _, v in pairs(ref) do
+        table.insert(targets, {
+            pos = { v[1][1] + 1, v[1][2] + 1 },
+        })
+    end
+
+    require("leap").leap({ targets = targets, target_windows = { vim.api.nvim_get_current_win() } })
+    return true
+end
 
 function M.highlight()
     api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
@@ -191,34 +213,10 @@ local function binds()
             end,
             "leap_to_line",
         },
-        {
-            { "n" },
-            "\\n",
-            function()
-                local pat = vim.fn.getreg("/")
-                local leapable = require("leap-search").leap(pat)
-                if not leapable then
-                    return vim.fn.search(pat)
-                end
-            end,
-            "leap_to_next_match",
-        },
-        {
-            { "n" },
-            "\\N",
-            function()
-                local pat = vim.fn.getreg("/")
-                local leapable = require("leap-search").leap(pat, {}, { backward = true })
-                if not leapable then
-                    return vim.fn.search(pat, "b")
-                end
-            end,
-            "leap_to_previous_match",
-        },
 
         {
             { "n" },
-            "\\/",
+            "g/",
             function()
                 require("leap-search").leap(nil, {
                     engines = {
@@ -232,22 +230,7 @@ local function binds()
         },
         {
             { "n" },
-            "\\k",
-            function()
-                local pat = vim.fn.expand("<cword>")
-                require("leap-search").leap(pat, {
-                    engines = {
-                        { name = "string.find", plain = true, ignorecase = true },
-                        -- { name = "kensaku.query" }, -- to search Japanese string with romaji with
-                    },
-                    { target_windows = { api.nvim_get_current_win() } },
-                })
-            end,
-            "leap search",
-        },
-        {
-            { "n" },
-            "\\s",
+            "c/",
             function()
                 require("leap-search").leap(vim.fn.getreg("/"))
             end,
@@ -400,6 +383,77 @@ function M.leap_flit()
         multiline = true,
         opts = { equivalence_classes = { " \t", "\r\n" } },
     })
+end
+
+function M.leap_search()
+    -- https://github.com/hydeik/dotfiles/blob/main/private_dot_config/nvim/lua/rc/plugins/leap.lua
+    -- https://github.com/atusy/dotfiles/blob/main/dot_config/nvim/lua/plugins.lua#L2
+    if lambda.config.movement.use_lasterisk then
+        return {
+            {
+                "*",
+                function()
+                    require("lasterisk").search()
+                    search_win()
+                end,
+                desc = "Search cword",
+            },
+            {
+                "*",
+                function()
+                    require("lasterisk").search({ is_whole = false })
+                    vim.schedule(search_win)
+                    return "<C-\\><C-N>"
+                end,
+                mode = { "x" },
+                expr = true,
+                desc = "Search cword",
+            },
+            {
+                "g*",
+                function()
+                    require("lasterisk").search({ is_whole = false })
+                    search_win()
+                end,
+                desc = "Search cword",
+            },
+            {
+                "#",
+                function()
+                    if search_ref() then
+                        return
+                    end
+                    require("lasterisk").search()
+                    search_win()
+                end,
+                desc = "Search cword (ref)",
+            },
+            {
+                "#",
+                function()
+                    require("lasterisk").search({ is_whole = false })
+                    -- require("hlslens").start()
+
+                    vim.schedule(search_win)
+                    return "<C-\\><C-N>"
+                end,
+                mode = { "x" },
+                expr = true,
+                desc = "Search cword",
+            },
+            {
+                "g#",
+                function()
+                    require("lasterisk").search({ is_whole = false })
+                    -- require("hlslens").start()
+                    search_win()
+                end,
+                desc = "Search cword",
+            },
+        }
+    elseif lambda.config.movement.use_asterisk then
+        return {}
+    end
 end
 
 return M

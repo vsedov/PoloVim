@@ -157,15 +157,35 @@ ui({
 ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
-    cond = lambda.config.ui.indent_blankline.use_indent_blankline,
-    event = "VeryLazy",
-    dependencies = {
-        "shell-Raining/hlchunk.nvim",
-        cond = lambda.config.ui.indent_blankline.use_hlchunk,
-        event = { "VeryLazy" },
-        config = true,
-    },
+    cond = lambda.config.ui.indent_lines.use_indent_blankline,
+    event = { "UIEnter" },
     config = conf.blankline,
+})
+ui({
+    "shell-Raining/hlchunk.nvim",
+    cond = lambda.config.ui.indent_lines.use_hlchunk,
+    event = { "UIEnter" },
+    opts = {
+        blank = {
+            enable = false,
+        },
+    },
+})
+ui({
+    "echasnovski/mini.nvim",
+    cond = lambda.config.ui.indent_lines.use_mini,
+    version = false,
+    event = { "UIEnter" },
+    config = function()
+        require("mini.indentscope").setup({
+            symbol = "│",
+            options = {
+                border = "both",
+                indent_at_cursor = true,
+                try_as_border = false,
+            },
+        })
+    end,
 })
 
 -- after="nvim-treesitter",
@@ -258,7 +278,7 @@ ui({
     "Vonr/foldcus.nvim",
     lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    keys = { "z;", "z'" },
+    event = "VeryLazy",
     cmd = { "Foldcus", "Unfoldcus" },
     config = conf.fold_focus,
 })
@@ -344,6 +364,8 @@ ui({
                 nearest_float_when = "always",
             })
 
+            --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
+            --  now
             vim.keymap.set({ "n", "x" }, "<leader>F", function()
                 vim.schedule(function()
                     if require("hlslens").exportLastSearchToQuickfix() then
