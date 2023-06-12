@@ -60,12 +60,14 @@ lambda.config.extra_search = {
     enable = true,
     providers = {
         use_azy = true,
+
         use_fzf_lua = true, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
     },
 }
 lambda.config.buffer = {
     use_tabscope = true,
     use_sticky_buf = false,
+
     use_bufignore = true,
     use_early_retirement = true,
     use_hbac = true,
@@ -75,10 +77,15 @@ lambda.config.editor = {
 }
 
 lambda.config.treesitter = {
-    use_yati = true,
+    indent = {
+        use_indent_O_matic = false,
+        use_guess_indent = true,
+        use_yati = false,
+    },
     use_matchup = true,
     use_extra_highlight = true,
     better_ts_highlights = false, -- This needs a direct toggle i think markid
+    use_highpairs = true,
 }
 
 lambda.config.abbrev = {
@@ -113,16 +120,16 @@ lambda.config.lsp = {
     use_format_modifcation = false,
     use_navbuddy = true,
     use_inlay_hints = false,
-
     lsp_sig = {
         use_lsp_signature = true,
-        use_floating_window = true,
-        fix_pos = false,
+        use_floating_window = false,
+        use_floating_window_above_cur_line = true,
+        fix_pos = true,
     },
     diagnostics = {
-        use_error_lens = true,
+        use_error_lens = false,
         use_lsp_lines = false,
-        use_rcd = false,
+        use_rcd = true,
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -168,9 +175,10 @@ lambda.config.ui = {
         use_flirt_override = false,
         move_mappings = false, -- if you  do not want to use  smart split
     },
-    indent_blankline = {
-        use_indent_blankline = true,
+    indent_lines = {
+        use_indent_blankline = false,
         use_hlchunk = false,
+        use_mini = true, -- you have to disable indent_blank_line for this
     },
     use_pet = false,
 }
@@ -190,12 +198,11 @@ lambda.config.colourscheme = {
             core_themes = {
                 -- "kanagawa.nvim",
                 "catppuccin",
-                -- -- "sweetie.nvim",
+                -- "palenightfall.nvim",
+                -- "sweetie.nvim",
                 -- "vim-dogrun",
-                -- -- "poimandres.nvim",
+                -- "poimandres.nvim",
                 -- -- "nvim-tundra",
-                -- -- "palenightfall.nvim",
-                -- -- "oh-lucy.nvim",
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
                 -- "rose", -- TSMethod'
@@ -211,6 +218,8 @@ lambda.config.colourscheme = {
 }
 
 lambda.config.movement = {
+    use_lasterisk = true, -- for leap
+    use_asterisk = false,
     harpoon = {
         goto_harpoon = false,
         use_tmux_or_normal = "nvim", -- nvim

@@ -23,6 +23,12 @@ local config = {
         mode = { "n", "x" },
         body = leader,
         ["<ESC>"] = { nil, { exit = true } },
+        on_enter = function()
+            if require("dap").session() == nil then
+                require("dapui").open()
+            end
+        end,
+
         b = {
             function()
                 require("persistent-breakpoints.api").toggle_breakpoint()
@@ -79,25 +85,20 @@ local config = {
             end,
             { exit = false, silent = true, desc = "Step Out" },
         },
-        x = {
+        X = {
             function()
                 run("disconnect", { terminateDebuggee = false })()
             end,
             { exit = true, silent = true, desc = "Leave" },
         },
-        X = {
+        x = {
             function()
-                run("close")()
-            end,
-            { exit = true, silent = true, desc = "Close" },
-        },
-
-        F = {
-            function()
+                require("dap").close()
+                require("dap").close()
                 require("dapui").close()
                 vim.cmd([[DapVirtualTextForceRefresh]])
             end,
-            { exit = true, silent = true, desc = "Close UI" },
+            { exit = true, silent = true, desc = "Close" },
         },
 
         k = {
@@ -143,8 +144,8 @@ return {
     config,
     "Dap",
     {
-        { "k", "K", "F" },
-        { "o", "i", "O", "x", "X" },
+        { "k", "K", "x", "X" },
+        { "o", "i", "O" },
         { "S", "s", "w", "r" },
     },
     { "b", "B", "C", "l", "<cr>", "c" },

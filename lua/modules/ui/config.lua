@@ -331,25 +331,6 @@ function config.ufo()
             return result
         end,
     })
-    local function nN(char)
-        local ok, winid = require("hlslens").nNPeekWithUFO(char)
-        if ok and winid then
-            -- Safe to override buffer scope keymaps remapped by ufo,
-            -- ufo will restore previous buffer keymaps before closing preview window
-            -- Type <CR> will switch to preview window and fire `trace` action
-            vim.keymap.set("n", "<CR>", function()
-                local keyCodes = api.nvim_replace_termcodes("<Tab><CR>", true, false, true)
-                api.nvim_feedkeys(keyCodes, "im", false)
-            end, { buffer = true })
-        end
-    end
-
-    vim.keymap.set({ "n", "x" }, ";n", function()
-        nN("n")
-    end)
-    vim.keymap.set({ "n", "x" }, ";N", function()
-        nN("N")
-    end)
 end
 function config.fold_focus()
     local foldcus = require("foldcus")
@@ -367,7 +348,7 @@ function config.fold_focus()
     end, { nargs = "*" })
 
     -- Delete folds of multiline comments longer than or equal to 4 lines
-    vim.keymap.set("n", "z'", function()
+    vim.keymap.set("n", "z\\", function()
         foldcus.unfold(4)
     end, NS)
 
@@ -380,7 +361,6 @@ end
 
 function config.blankline()
     vim.opt.termguicolors = true
-    local cond = not lambda.config.ui.indent_blankline.use_hlchunk
     require("indent_blankline").setup({
         enabled = true,
         -- char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
@@ -390,8 +370,8 @@ function config.blankline()
         char = "│", -- ┆ ┊ 
         context_char = "▎",
         char_priority = 12,
-        show_current_context = cond,
-        show_current_context_start = cond,
+        show_current_context = true,
+        show_current_context_start = true,
         show_current_context_start_on_current_line = true,
         show_first_indent_level = false,
         filetype_exclude = {

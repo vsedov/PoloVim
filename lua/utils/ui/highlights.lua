@@ -176,7 +176,7 @@ local function general_overrides()
         { ["@lsp.typemod.variable.defaultLibrary"] = { italic = true } },
         { ["@lsp.typemod.variable.readonly.typescriptreact"] = { clear = true } },
         { ["@lsp.typemod.variable.readonly.typescript"] = { clear = true } },
-        { ["@lsp.type.type.lua"] = { clear = true } },
+        -- { ["@lsp.type.type.lua"] = { clear = true } },
         { ["@lsp.typemod.number.injected"] = { link = "@number" } },
         { ["@lsp.typemod.operator.injected"] = { link = "@operator" } },
         { ["@lsp.typemod.keyword.injected"] = { link = "@keyword" } },

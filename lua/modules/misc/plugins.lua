@@ -8,19 +8,9 @@ misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" },
 misc({
     "kylechui/nvim-surround",
     lazy = true,
-    -- event = "VeryLazy",
-    keys = {
-        { "<C-#>", mode = "i" }, --
-        { "ys", mode = "n" }, --
-        { "yss", mode = "n" }, --
-        { "yS", mode = "n" }, --
-        { "ySS", mode = "n" }, --
-        { "gs", mode = "v" }, --
-        { "gS", mode = "v" }, --
-        { "ds", mode = "n" }, --
-        { "cs", mode = "n" }, --
-    },
-    config = conf.surround,
+    event = "VeryLazy",
+    keys = { { "s", mode = "v" }, "<C-g>s", "<C-g>S", "ys", "yss", "yS", "cs", "ds" },
+    opts = { move_cursor = true, keymaps = { visual = "s" } },
 })
 misc({
     "XXiaoA/ns-textobject.nvim",
@@ -33,7 +23,13 @@ misc({
     config = conf.ns,
 })
 -- programming spell
-misc({ "psliwka/vim-dirtytalk", build = "DirtytalkUpdate" })
+misc({
+    "psliwka/vim-dirtytalk",
+    build = "DirtytalkUpdate",
+    config = function()
+        vim.opt.spelllang:append("programming")
+    end,
+})
 
 ----
 misc({

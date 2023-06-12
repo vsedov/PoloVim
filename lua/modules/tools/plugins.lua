@@ -23,7 +23,17 @@ tools({
     },
     config = conf.fm,
 })
-tools({ "rktjmp/paperplanes.nvim", lazy = true, cmd = { "PP" }, config = true })
+tools({
+    "rktjmp/paperplanes.nvim",
+    lazy = true,
+    cmd = { "PP" },
+    opts = {
+        register = "+",
+        provider = "dpaste.org",
+        provider_options = {},
+        notifier = vim.notify or print,
+    },
+})
 
 tools({
     "natecraddock/workspaces.nvim",
@@ -94,12 +104,6 @@ tools({
 tools({ "ilAYAli/scMRU.nvim", lazy = true, cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" } })
 
 tools({
-    "kevinhwang91/nvim-bqf",
-    event = "VeryLazy",
-    config = conf.bqf,
-})
-
-tools({
     url = "https://gitlab.com/yorickpeterse/nvim-pqf",
     event = "VeryLazy",
     config = function()
@@ -153,7 +157,12 @@ tools({
     keys = "<leader><leader>;",
     config = function()
         require("capslock").setup()
-        vim.keymap.set({ "i", "c", "n" }, "<leader><leader>;", "<Plug>CapsLockToggle<Cr>", { noremap = true })
+        vim.keymap.set(
+            { "i", "c", "n" },
+            "<leader><leader>;",
+            "<Plug>CapsLockToggle<Cr>",
+            { noremap = true, desc = "Toggle CapsLock" }
+        )
     end,
 })
 

@@ -139,7 +139,7 @@ local ViMode = {
         "ModeChanged",
         pattern = "*:*",
         callback = vim.schedule_wrap(function()
-            -- vim.cmd("redrawstatus")
+            vim.cmd("redrawstatus")
         end),
     },
 }

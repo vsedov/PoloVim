@@ -14,8 +14,6 @@ vim.api.nvim_create_user_command("ProjectDelete", function()
     require("three").remove_project()
 end, {})
 
-local exit = { nil, { exit = true, desc = "EXIT" } }
-
 local config = {
     Buffer = {
         color = "red",

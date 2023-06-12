@@ -46,10 +46,7 @@ M.prepare = function()
 end
 
 M.StopDbg = function()
-    require("dapui").close()
-    require("dap").repl.close()
-    require("dap").disconnect()
-    require("dap").stop()
+    require("dap").close()
 end
 
 M.config = function()

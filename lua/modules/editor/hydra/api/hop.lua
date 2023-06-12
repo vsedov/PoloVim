@@ -1,4 +1,19 @@
 local leader = ";h"
+
+-- {
+--     "g,",
+--     function()
+--         vim.cmd("HopVertical")
+--     end,
+--     desc = "Hop Vertical",
+-- },
+-- {
+--     "g<cr>",
+--     function()
+--         vim.cmd("HopPattern")
+--     end,
+--     desc = "Hop Pattern",
+-- },
 local config = {
     Hop = {
         color = "pink",
@@ -11,7 +26,7 @@ local config = {
             end,
             { nowait = true, silent = true, desc = "Hop pattern" },
         },
-        W = {
+        v = {
             function()
                 vim.cmd([[HopVertical]])
             end,
@@ -60,8 +75,8 @@ local config = {
 return {
     config,
     "Hop",
-    { { "c", "C" }, { "n", "s" } },
-    { "<cr>", "w", "a", "W" },
+    { { "c", "C", "n", "s" } },
+    { "<cr>", "w", "a" },
     6,
     3,
 }

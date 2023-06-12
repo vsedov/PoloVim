@@ -16,6 +16,17 @@ local config = {
             end,
             { desc = "Close tab", exit = true },
         },
+        C = {
+            function()
+                vim.ui.input({ prompt = "Close tab:", default = "1" }, function(idx)
+                    idx = idx and tonumber(idx)
+                    if idx then
+                        vim.cmd("tabclose " .. idx)
+                    end
+                end)
+            end,
+            { desc = "Close tab", exit = true },
+        },
         l = {
             function()
                 vim.cmd("tabnext")
@@ -61,7 +72,7 @@ return {
     {
         { "f", "L", "m" },
     },
-    { "n", "c", "l", "h" },
+    { "n", "C", "c", "l", "h" },
     6,
     3,
 }

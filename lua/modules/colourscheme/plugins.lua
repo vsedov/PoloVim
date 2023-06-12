@@ -1,5 +1,6 @@
 local conf = require("modules.colourscheme.config")
 local colourscheme = require("core.pack").package
+
 colourscheme({
     "rebelot/kanagawa.nvim",
     lazy = true,
@@ -63,12 +64,6 @@ colourscheme({
     "kvrohit/mellow.nvim",
     lazy = true,
     config = conf.mellow,
-})
-
-colourscheme({
-    "Yazeed1s/oh-lucy.nvim",
-    lazy = true,
-    config = conf.lucy,
 })
 
 colourscheme({

@@ -94,11 +94,22 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2)
             maxLen = len
         end
     end
+    -- remove on_exit and on_enter from self.config
+    self.config[self.name].on_exit = nil
+    self.config[self.name].on_enter = nil
 
     for x, y in pairs(self.config[self.name]) do
         local mapping = x
-
-        local desc = (type(y[1]) == "function") and y[2].desc or y[1]
+        local desc = ""
+        if type(y[1]) == "function" then
+            desc = y[2].desc
+        else
+            if type(y[2]) == "table" then
+                desc = y[2].desc
+            else
+                desc = y[2]
+            end
+        end
 
         if desc then
             updateContainer(mapping, desc)

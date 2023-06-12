@@ -15,7 +15,6 @@ user({
         "LBReset",
         "LBTest",
         "LBSubmit",
-        "LeetActivate",
     },
     config = function()
         require("leetbuddy").setup({ language = "py" })
@@ -245,8 +244,8 @@ user({
 })
 user({
     "Bekaboo/dropbar.nvim",
-    cond = lambda.config.ui.use_dropbar,
     event = "VeryLazy",
+    cond = lambda.config.ui.use_dropbar,
     dependencies = { "onsails/lspkind.nvim" },
     keys = {
         {
@@ -271,14 +270,15 @@ user({
                         and vim.api.nvim_buf_get_name(buf) ~= ""
                 end,
             },
-            icons = {
-                ui = { bar = { separator = " " .. lambda.style.icons.misc.arrow_right .. " " } },
-                kinds = {
-                    symbols = vim.tbl_map(function(value)
-                        return value .. " "
-                    end, require("lspkind").symbol_map),
-                },
-            },
+            -- might not be the best call here
+            -- icons = {
+            --     ui = { bar = { separator = " " .. lambda.style.icons.misc.arrow_right .. " " } },
+            --     kinds = {
+            --         symbols = vim.tbl_map(function(value)
+            --             return value .. " "
+            --         end, require("lspkind").symbol_map),
+            --     },
+            -- },
             menu = {
                 win_configs = {
                     border = lambda.style.border.type_1,
@@ -293,32 +293,23 @@ user({
 
 user({
     "FluxxField/bionic-reading.nvim",
-    event = {
-        "ColorScheme",
-        "FileType",
-        "TextChanged",
-        "TextChangedI",
+    lazy = true,
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    opts = {
+        file_types = {
+            ["text"] = {
+                "any", -- highlight any node
+            },
+            ["lua"] = {
+                "any",
+            },
+            ["python"] = { "any" },
+        },
+        hl_group_value = {
+            link = "Bold", -- you could do italic
+        },
+        treesitter = false, -- this does not work right now
     },
-    config = function()
-        require("bionic-reading").setup({
-            auto_highlight = true,
-
-            file_types = { "python", "lua" },
-            hl_group_value = {
-                link = "Bold",
-            },
-            hl_offsets = {
-                ["1"] = 1,
-                ["2"] = 1,
-                ["3"] = 2,
-                ["4"] = 2,
-                ["default"] = 0.4,
-            },
-            prompt_user = false,
-            saccade_cadence = 1,
-            update_in_insert_mode = true,
-        })
-    end,
 })
 user({
     "milanglacier/yarepl.nvim",
@@ -399,12 +390,6 @@ user({
     },
     cmd = { "Sayonara" },
 })
-user({
-    "Darazaki/indent-o-matic",
-    event = { "BufAdd", "BufReadPost", "BufNewFile" },
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    config = true,
-})
 
 -- ╰─λ NVIM_PROFILE=start nvim
 -- to run this, you have to run the above
@@ -464,24 +449,32 @@ user({
         require("markmap").setup(opts)
     end,
 })
-user({
-    "romgrk/kirby.nvim",
-    cmd = { "Kirby", "KirbyToggle" },
-    dependencies = {
-        { "romgrk/fzy-lua-native", build = "make install" },
-        { "romgrk/kui.nvim" },
-        { "nvim-tree/nvim-web-devicons" },
-    },
-    config = function()
-        local kirby = require("kirby")
 
-        kirby.register({
-            id = "git-branch",
-            name = "Git checkout",
-            values = function()
-                return vim.fn["fugitive#CompleteObject"]("", " ", "")
-            end,
-            onAccept = "Git checkout",
-        })
+user({
+    "mawkler/modicator.nvim",
+    ft = { "python", "lua", "sh", "rmd", "markdown", "markdown.pandoc", "quarto" },
+    init = function()
+        vim.o.cursorline = true
+        vim.o.number = true
+        vim.o.termguicolors = true
     end,
+    opts = {
+        bold = true,
+        italic = true,
+    },
+})
+
+user({
+    "mvllow/modes.nvim",
+    event = "VeryLazy",
+    config = true,
+})
+--
+user({
+    "tzachar/highlight-undo.nvim",
+    keys = {
+        "<c-r>",
+        "u",
+    },
+    config = true,
 })

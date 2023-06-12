@@ -204,6 +204,7 @@ lambda.augroup("Utilities", {
         nested = true,
         command = function()
             if lambda.falsy(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
+                -- This was rather anonying, so this deals with that issue.
                 if not vim.tbl_contains({ "gitcommit", "NeogitCommitMessage" }, vim.bo.filetype) then
                     return
                 end
@@ -285,9 +286,6 @@ function mkview()
     end
 end
 
---  TODO: (vsedov) (03:42:00 - 31/05/23): Need to fix this autocmd , there is something wrong with
---  this one
-
 local valid = {
     "python",
     "lua",
@@ -306,8 +304,10 @@ lambda.augroup("SaveFoldsWhenWriting", {
         event = "QuitPre",
         pattern = valid,
         command = function()
-            if vim.fn.exists("b:mkview") == 1 then
-                mkview()
+            if valid[vim.bo.filetype] then
+                if vim.fn.exists("b:mkview") == 1 then
+                    mkview()
+                end
             end
         end,
     },

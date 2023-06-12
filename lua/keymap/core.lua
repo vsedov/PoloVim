@@ -40,7 +40,7 @@ local plug_map = {
     ["x|0"] = map_cmd([[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'"]]):with_expr():with_noremap(),
 
     -- This line allows the current file to source the vimrc allowing me use bindings as they're added
-    ["n|<Leader>so"] = map_cmd([[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]], "Source init.lua")
+    ["n|<Leader><leader>so"] = map_cmd([[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]], "Source init.lua")
         :with_silent()
         :with_noremap(),
 

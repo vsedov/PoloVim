@@ -138,7 +138,7 @@ ts({
 ts({
     "Yggdroot/hiPairs",
     lazy = true,
-    cond = true,
+    cond = lambda.config.treesitter.hipairs,
     event = "BufRead",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hi_pairs,
@@ -147,15 +147,24 @@ ts({
 ts({
     "NMAC427/guess-indent.nvim",
     lazy = true,
-    event = lambda.config.guess_indent,
+    cond = lambda.config.treesitter.indent.use_guess_indent,
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
     cmd = "GuessIndent",
     config = conf.guess_indent,
+})
+ts({
+    "Darazaki/indent-o-matic",
+    lazy = true,
+    cond = lambda.config.treesitter.indent.use_indent_O_matic,
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
 })
 
 ts({
     "yioneko/nvim-yati",
-    cond = lambda.config.treesitter.use_yati,
-    event = "VeryLazy",
+    cond = lambda.config.treesitter.indent.use_yati,
+    event = { "BufAdd", "BufReadPost", "BufNewFile" },
     lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
     config = conf.indent,
@@ -166,32 +175,6 @@ ts({
     lazy = true,
     dependencies = { "rktjmp/lush.nvim", "nvim-treesitter/nvim-treesitter" },
 })
-
--- ts({
---     "wellle/targets.vim",
---     lazy = true,
---     event = "VeryLazy",
---     init = function()
---         vim.g.targets_gracious = 1
---     end,
---     config = function()
---         vim.cmd([[
--- autocmd User targets#mappings#user call targets#mappings#extend({
---     \ 's': { 'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
---     \                      {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
---     \                      {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}] },
---     \ '@': {
---     \     'separator': [{'d':','}, {'d':'.'}, {'d':';'}, {'d':':'}, {'d':'+'}, {'d':'-'},
---     \                   {'d':'='}, {'d':'~'}, {'d':'_'}, {'d':'*'}, {'d':'#'}, {'d':'/'},
---     \                   {'d':'\'}, {'d':'|'}, {'d':'&'}, {'d':'$'}],
---     \     'pair':      [{'o':'(', 'c':')'}, {'o':'[', 'c':']'}, {'o':'{', 'c':'}'}, {'o':'<', 'c':'>'}],
---     \     'quote':     [{'d':"'"}, {'d':'"'}, {'d':'`'}],
---     \     'tag':       [{}],
---     \     },
---     \ })
---       ]])
---     end,
--- })
 
 ts({
     "ckolkey/ts-node-action",
@@ -207,4 +190,25 @@ ts({
         )
     end,
     config = true,
+})
+ts({
+    "echasnovski/mini.ai",
+    event = "VeryLazy",
+    config = function()
+        require("mini.ai").setup({ mappings = { around_last = "", inside_last = "" } })
+    end,
+})
+ts({
+    "romgrk/equal.operator",
+    event = "VeryLazy",
+})
+ts({
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    lazy = true, -- will be loaded via Comment.nvim
+    config = function()
+        require("nvim-treesitter.configs").setup({
+            context_commentstring = { enable = true, enable_autocmd = false },
+        })
+    end,
 })

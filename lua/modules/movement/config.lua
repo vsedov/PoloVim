@@ -75,35 +75,38 @@ function config.houdini()
 end
 
 function config.sj()
-    local colors = {
-        black = "#000000",
-        light_gray = "#DDDDDD",
-        white = "#FFFFFF",
-
-        blue = "#5AA5DE",
-        dark_blue = "#345576",
-        darker_blue = "#005080",
-
-        green = "#40BC60",
-        magenta = "#C000C0",
-        orange = "#DE945A",
-    }
-
     local sj = require("sj")
+    local sj_cache = require("sj.cache")
+
+    --- Configuration ------------------------------------------------------------------------
+
     sj.setup({
-        pattern_type = "vim_very_magic",
         prompt_prefix = "/",
-        search_scope = "buffer",
 
-        highlights = {
-            SjFocusedLabel = { fg = colors.white, bg = colors.magenta, bold = false, italic = false },
-            SjLabel = { fg = colors.black, bg = colors.blue, bold = true, italic = false },
-            SjLimitReached = { fg = colors.black, bg = colors.orange, bold = true, italic = false },
-            SjMatches = { fg = colors.light_gray, bg = colors.darker_blue, bold = false, italic = false },
-            SjNoMatches = { fg = colors.orange, bold = false, italic = false },
-            SjOverlay = { fg = colors.dark_blue, bold = false, italic = false },
-        },
+  -- stylua: ignore
+  highlights = {
+    SjFocusedLabel = { bold = false, italic = false, fg = "#FFFFFF", bg = "#C000C0", },
+    SjLabel =        { bold = true , italic = false, fg = "#000000", bg = "#5AA5DE", },
+    SjLimitReached = { bold = true , italic = false, fg = "#000000", bg = "#DE945A", },
+    SjMatches =      { bold = false, italic = false, fg = "#DDDDDD", bg = "#005080", },
+    SjNoMatches =    { bold = false, italic = false, fg = "#DE945A",                 },
+    SjOverlay =      { bold = false, italic = false, fg = "#345576",                 },
+  },
+        auto_jump = true, -- if true, automatically jump on the sole match
+        forward_search = true, -- if true, the search will be done from top to bottom
+        highlights_timeout = 0, -- if > 0, wait for 'updatetime' + N ms to clear hightlights (sj.prev_match/sj.next_match)
+        max_pattern_length = 0, -- if > 0, wait for a label after N characters
+        pattern_type = "vim", -- how to interpret the pattern (lua_plain, lua, vim, vim_very_magic)
+        preserve_highlights = true, -- if true, create an autocmd to preserve highlights when switching colorscheme
+        search_scope = "buffer", -- (current_line, visible_lines_above, visible_lines_below, visible_lines, buffer)
+        select_window = false, -- if true, ask for a window to jump to before starting the search
+        separator = ":", -- character used to split the user input in <pattern> and <label> (can be empty)
+        update_search_register = true, -- if true, update the search register with the last used pattern
+        use_last_pattern = false, -- if true, reuse the last pattern for next calls
+        use_overlay = true, -- if true, apply an overlay to better identify labels and matches
+        wrap_jumps = vim.o.wrapscan, -- if true, wrap the jumps when focusing previous or next label
 
+        --- keymaps used during the search
         keymaps = {
             cancel = "<Esc>", -- cancel the search
             validate = "<CR>", -- jump to the focused match
@@ -115,99 +118,61 @@ function config.sj()
             delete_prev_word = "<C-w>", -- delete the previous word
             delete_pattern = "<C-u>", -- delete the whole pattern
             restore_pattern = "<c-BS>", -- restore the pattern to the last version having matches
-            send_to_qflist = "<c-#>", --- send the search results to the quickfix list
+            send_to_qflist = "<c-q>", --- send the search results to the quickfix list
         },
     })
+
+    --- Keymaps ------------------------------------------------------------------------------
+
+    vim.keymap.set("n", "!", function()
+        sj.run({ select_window = true })
+    end)
 
     vim.keymap.set("n", "<A-!>", function()
         sj.select_window()
     end)
 
-    --- visible lines -------------------------------------
-
-    vim.keymap.set({ "n", "o", "x" }, "<leader>sv", function()
-        vim.fn.setpos("''", vim.fn.getpos("."))
-        sj.run({
-            forward_search = false,
-        })
-    end, { desc = "CJ VL " })
-
-    vim.keymap.set({ "n", "o", "x" }, "<leader>sV", function()
-        vim.fn.setpos("''", vim.fn.getpos("."))
-        sj.run()
-    end, { desc = "CJ VL run" })
-
-    vim.keymap.set("n", "<leader>sP", function()
-        sj.run({
-            max_pattern_length = 1,
-            pattern_type = "lua_plain",
-        })
-    end, { desc = "CJ VL lua_plain" })
-
-    --- buffer --------------------------------------------
-
-    vim.keymap.set("n", "c/", function()
-        vim.fn.setpos("''", vim.fn.getpos("."))
-        sj.run({
-            forward_search = false,
-            search_scope = "buffer",
-            update_search_register = true,
-        })
-    end, { desc = "/" })
-
-    vim.keymap.set("n", "c?", function()
-        vim.fn.setpos("''", vim.fn.getpos("."))
-        sj.run({
-            search_scope = "buffer",
-            update_search_register = true,
-        })
-    end, { desc = "c?" })
-    local sj_cache = require("sj.cache")
-    --- current line --------------------------------------
-
-    vim.keymap.set({ "n", "o", "x" }, "<leader>sc", function()
-        sj.run({
-            auto_jump = true,
-            max_pattern_length = 1,
-            pattern_type = "lua_plain",
-            search_scope = "current_line",
-            use_overlay = false,
-        })
-    end, { desc = "Current line " })
-
     --- prev/next match -----------------------------------
 
-    -- vim.keymap.set("n", "<leader>sp", function()
-    --      sj.prev_match()
-    --      if sj_cache.options.search_scope:match("^buffer") then
-    --          vim.cmd("normal! zzzv")
-    --      end
-    --  end, { desc = "Prev search " })
-    --
-    --  vim.keymap.set("n", "<leader>sn", function()
-    --      sj.next_match()
-    --      if sj_cache.options.search_scope:match("^buffer") then
-    --          vim.cmd("normal! zzzv")
-    --      end
-    --  end, { desc = "Next search " })
-    --
-    --- redo ----------------------------------------------
+    vim.keymap.set("n", "<A-,>", function()
+        sj.prev_match()
+        if sj_cache.options.search_scope:match("^buffer") then
+            vim.cmd("normal! zzzv")
+        end
+    end)
 
-    vim.keymap.set("n", "<leader>sr", function()
+    vim.keymap.set("n", "<A-;>", function()
+        sj.next_match()
+        if sj_cache.options.search_scope:match("^buffer") then
+            vim.cmd("normal! zzzv")
+        end
+    end)
+
+    --- redo ----------------------------------------------S
+    vim.keymap.set("n", "<localleader>s", function()
         local relative_labels = sj_cache.options.relative_labels
         sj.redo({
             relative_labels = false,
             max_pattern_length = 1,
         })
         sj_cache.options.relative_labels = relative_labels
-    end, { desc = "Redo last " })
+    end)
 
-    vim.keymap.set("n", "<leader>sR", function()
+    vim.keymap.set("n", "<localleader>S", function()
         sj.redo({
             relative_labels = true,
             max_pattern_length = 1,
         })
-    end, { desc = "Redo Relative " })
+    end)
+
+    vim.keymap.set("n", ";/", function()
+        vim.fn.setpos("''", vim.fn.getpos("."))
+        sj.run({
+            forward_search = false,
+            search_scope = "buffer",
+            update_search_register = true,
+        })
+    end)
 end
 
 function config.harpoon_init()
@@ -261,100 +226,6 @@ function config.harpoon()
     require("telescope").load_extension("harpoon")
 end
 
-function config.quick_scope()
-    vim.g.qs_max_chars = 256
-    vim.g.qs_buftype_blacklist = { "terminal", "nofile", "startify", "qf", "mason" }
-    vim.g.qs_lazy_highlight = 1
-
-    require("utils.ui.highlights").plugin("QuickScope", {
-        { QuickScopePrimary = { ctermfg = 155, fg = "#ff5fff", underline = true, italic = true, bold = true } },
-        { QuickScopeSecondary = { ctermfg = 81, fg = "#5fffff", underline = true, italic = true, bold = true } },
-    })
-    local function disable_quick_scope()
-        if vim.g.qs_enable == 1 then
-            return vim.cmd("QuickScopeToggle")
-        end
-    end
-
-    local function enable_quick_scope()
-        if vim.g.qs_enable == 0 then
-            return vim.cmd("QuickScopeToggle")
-        end
-    end
-    lambda.augroup("LightspeedQuickscope", {
-        {
-            event = "ColorScheme",
-            pattern = "*",
-            command = function()
-                require("utils.ui.highlights").plugin("QuickScope", {
-                    {
-                        QuickScopePrimary = {
-                            ctermfg = 155,
-                            fg = "#ff5fff",
-                            italic = true,
-                            bold = true,
-                            underline = true,
-                        },
-                    },
-                    {
-                        QuickScopeSecondary = {
-                            ctermfg = 81,
-                            fg = "#5fffff",
-                            italic = true,
-                            bold = true,
-                            underline = true,
-                        },
-                    },
-                })
-            end,
-        },
-    })
-end
-
-function config.easymark()
-    require("easymark").setup({
-        position = "bottom", -- position choices: bottom|top|left|right
-        height = 10, -- might have to reduce this
-        width = 30,
-        pane_action_keys = {
-            close = "q", -- close mark window
-            cancel = "<esc>", -- close the preview and get back to your last position
-            refresh = "r", -- manually refresh
-            jump = { "<cr>", "<tab>" }, -- jump to the mark
-            jump_close = { "o" }, -- jump to the mark and close mark window
-            toggle_mode = "t", -- toggle mark between "marked" and "unmacked" mode
-            next = "j", -- next item
-            previous = "k", -- preview item
-        },
-        mark_opts = {
-            virt_text = "",
-            virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-        },
-        auto_preview = true,
-    })
-end
-
-function config.bookmark()
-    require("bookmarks").setup({
-        keymap = {
-            toggle = "<tab><tab>", -- toggle bookmarks
-            add = "\\a", -- add bookmarks
-            jump = "<CR>", -- jump from bookmarks
-            delete = "dd", -- delete bookmarks
-            order = "<\\o", -- order bookmarks by frequency or updated_time
-            show_desc = "\\sd",
-        },
-        width = 0.8, -- bookmarks window width:  (0, 1]
-        height = 0.6, -- bookmarks window height: (0, 1]
-        preview_ratio = 0.4, -- bookmarks preview window ratio (0, 1]
-        preview_ext_enable = true, -- if true, preview buf will add file ext, preview window may be highlighed(treesitter), but may be slower.
-        fix_enable = true, -- if true, when saving the current file, if the bookmark line number of the current file changes, try to fix it.
-        virt_text = "🐼", -- Show virt text at the end of bookmarked lines
-        -- virt_text = "𐇬", -- Show virt text at the end of bookmarked lines
-        virt_pattern = { "*.python", "*.go", "*.lua", "*.sh", "*.php", "*.rust" }, -- Show virt text only on matched pattern
-    })
-end
-
 function config.treehopper()
     local function with_tsht()
         local ok = pcall(vim.treesitter.get_parser, 0)
@@ -385,26 +256,76 @@ function config.treehopper()
         vim.api.nvim_set_hl(0, "TSNodeKey", { link = "IncSearch" })
         return true
     end
-    vim.keymap.set({ "o", "x", "n" }, "H", function()
-        return with_tsht() and ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
-            or [[<Plug>(leap-ast)]]
-    end, { expr = true, silent = true })
+    local function tsht()
+        vim.api.nvim_set_hl(0, "TSNodeUnmatched", { link = "Comment" })
+        vim.api.nvim_set_hl(0, "TSNodeKey", { link = "IncSearch" })
+        return ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
+    end
 
-    vim.keymap.set("n", "zl", function()
-        if with_tsht() then
-            require("tsht").nodes({ ignore_injections = false })
-        else
-            vim.cmd("normal! v")
-            require("leap-ast").leap()
-        end
-        vim.cmd("normal! Vzf")
-    end, { silent = true })
+    return {
+        {
+            "\\m",
+            tsht,
+            mode = { "o", "x" },
+            expr = true,
+            silent = true,
+            desc = "treehopper: highlight current node",
+        },
+        {
+            "H",
+            function()
+                return with_tsht() and ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
+                    or [[<Plug>(leap-ast)]]
+            end,
+            mode = { "o", "x", "n" },
+            expr = true,
+            silent = true,
+            desc = "treehopper: highlight current node",
+        },
+        {
+            "z<cr>",
+            function()
+                if with_tsht() then
+                    require("tsht").nodes({ ignore_injections = false })
+                else
+                    vim.cmd("normal! v")
+                    require("leap-ast").leap()
+                end
+                vim.cmd("normal! Vzf")
+            end,
+            mode = "n",
+            silent = true,
+            desc = "God Fold",
+        },
+        {
+            "z;",
+            function()
+                vim.cmd("normal! v")
+                require("leap-ast").leap()
+                vim.cmd("normal! Vzf")
+            end,
+            mode = "n",
+            silent = true,
+        },
+        desc = "leap fold",
+    }
+end
+function config.asterisk_setup()
+    vim.g["asterisk#keeppos"] = 1
 
-    vim.keymap.set("n", "zk", function()
-        vim.cmd("normal! v")
-        require("leap-ast").leap()
-        vim.cmd("normal! Vzf")
-    end, { silent = true })
+    local default_keymaps = {
+        { "n", "*", "<Plug>(asterisk-*)" },
+        { "n", "#", "<Plug>(asterisk-#)" },
+        { "n", "g*", "<Plug>(asterisk-g*)" },
+        { "n", "g#", "<Plug>(asterisk-g#)" },
+        { "n", "z*", "<Plug>(asterisk-z*)" },
+        { "n", "gz*", "<Plug>(asterisk-gz*)" },
+        { "n", "z#", "<Plug>(asterisk-z#)" },
+        { "n", "gz#", "<Plug>(asterisk-gz#)" },
+    }
+    -- for _, m in ipairs(default_keymaps) do
+    --     vim.keymap.set(m[1], m[2], m[3] .. "<Cmd>lua require('hlslens').start()<CR>", {})
+    -- end
 end
 
 return config

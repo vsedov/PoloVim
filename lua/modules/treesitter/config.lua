@@ -27,8 +27,7 @@ function config.treesitter_init()
     end
 
     local function get_node_range(node)
-        local a, b, c, d = vim.treesitter.get_node_range(node)
-        return { a, b, c, d }
+        return { vim.treesitter.get_node_range(node) }
     end
 
     local function get_curpos()
@@ -248,52 +247,6 @@ function config.guess_indent()
             "prompt",
         },
     })
-end
-
-function config.context()
-    require("nvim_context_vt").setup({})
-end
-
-function config.select_ease()
-    local select_ease = require("SelectEase")
-
-    local lua_query = [[
-        ;; query
-        ((identifier) @cap)
-        ("string_content" @cap)
-        ((true) @cap)
-        ((false) @cap)
-    ]]
-    local python_query = [[
-        ;; query
-        ((identifier) @cap)
-        ((string) @cap)
-    ]]
-    local queries = {
-        lua = lua_query,
-        python = python_query,
-    }
-
-    local function select_node(direction, line_only)
-        select_ease.select_node({
-            queries = queries,
-            direction = direction,
-            vertical_drill_jump = not line_only,
-            current_line_only = line_only,
-            fallback = function()
-                select_ease.select_node({ queries = queries, direction = direction })
-            end,
-        })
-    end
-
-    local function swap_nodes(direction, line_only)
-        select_ease.swap_nodes({
-            queries = queries,
-            direction = direction,
-            vertical_drill_jump = not line_only,
-            current_line_only = line_only,
-        })
-    end
 end
 
 return config

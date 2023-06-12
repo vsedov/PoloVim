@@ -88,7 +88,7 @@ function config.catppuccin()
             notify = true,
             telekasten = true,
             symbols_outline = true,
-            mini = false,
+            mini = true,
         },
     })
     vim.cmd.colorscheme("catppuccin")
@@ -275,15 +275,6 @@ function config.mellow()
     vim.g.mellow_bold_functions = true
 
     vim.cmd.colorscheme("mellow")
-end
-
-function config.lucy()
-    vim.g.oh_lucy_italic_functions = true
-    vim.g.oh_lucy_italic_comments = true
-
-    vim.g.oh_lucy_evening_italic_functions = true
-    vim.g.oh_lucy_evening_italic_comments = true
-    vim.cmd.colorscheme("oh-lucy-evening")
 end
 
 function config.melli()

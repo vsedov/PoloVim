@@ -45,9 +45,6 @@ if lambda.config.colourscheme.change_kitty_bg then
         end
     end
 
-    local autocmd = vim.api.nvim_create_autocmd
-    local autogroup = vim.api.nvim_create_augroup
-    local bg_change = autogroup("BackgroundChange", { clear = true })
     lambda.augroup("Background", {
         {
             event = "VimLeavePre",
@@ -71,9 +68,6 @@ if lambda.config.colourscheme.change_kitty_bg then
 end
 
 if lambda.config.neorg_auto_commit then
-    local t = function(str)
-        return vim.api.nvim_replace_termcodes(str, true, true, true)
-    end
     lambda.augroup("NeorgAutoCommit", {
         {
             event = { "BufEnter" },

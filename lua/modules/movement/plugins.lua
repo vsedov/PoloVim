@@ -11,6 +11,10 @@ movement({
 })
 
 movement({
+    "ggandor/leap-ast.nvim",
+    lazy = true,
+})
+movement({
     "ggandor/leap-spooky.nvim",
     lazy = true,
     dependencies = {
@@ -32,12 +36,27 @@ movement({
     lazy = true,
     dependencies = { "ggandor/leap.nvim" },
     config = leap.leap_flit,
+    keys = function()
+        local ret = {}
+        for _, key in ipairs({ "f", "F", "t", "T" }) do
+            ret[#ret + 1] = { key, mode = { "n", "x", "o" }, desc = key }
+        end
+        return ret
+    end,
 })
 
 movement({
     "atusy/leap-search.nvim",
-    lazy = true,
-    dependencies = { "ggandor/leap.nvim" },
+    dependencies = {
+        { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
+        "RRethy/vim-illuminate",
+    },
+    keys = leap.leap_search,
+})
+--  TODO: (vsedov) (15:48:04 - 12/06/23): need to create something for this too .
+movement({
+    "haya14busa/vim-asterisk",
+    cond = lambda.config.movement.use_asterisk,
 })
 
 movement({
@@ -113,6 +132,10 @@ movement({
     end,
 })
 movement({
+    "atusy/leap-wide.nvim",
+    lazy = true,
+})
+movement({
     "phaazon/hop.nvim",
     lazy = true,
     cmd = {
@@ -131,21 +154,21 @@ movement({
     "rlane/pounce.nvim",
     keys = {
         {
-            "gS",
+            ";gS",
             function()
                 require("pounce").pounce({ do_repeat = true })
             end,
             desc = "Pounce",
         },
         {
-            "gs",
+            ";gs",
             function()
                 require("pounce").pounce({ query = vim.fn.expand("<cword>"), do_repeat = true })
             end,
             desc = "Pounce word under cursor",
         },
         {
-            "g/",
+            "g?",
             function()
                 require("pounce").pounce({ input = { reg = "/" } })
             end,
@@ -181,18 +204,14 @@ movement({
     "woosaaahh/sj.nvim",
     lazy = true,
     keys = {
-        "<leader>sR",
-        "<leader>sr",
-
-        -- "<leader>sn",
-        -- "<leader>sp",
-        "<leader>sc",
-        "c?",
-        "c/",
-        "<leader>sv",
-        "<leader>sV",
-        "<leader>sP",
-        "<A-!>",
+        { "!", mode = { "n" } },
+        { "<A-!>", mode = { "n" } },
+        { "<A-,>", mode = { "n" } },
+        { "<A-;>", mode = { "n" } },
+        -- { "c/", mode = { "n" } },
+        { ";/", mode = { "n" } },
+        { "<localleader>s", mode = { "n" } },
+        { "<localleader>S", mode = { "n" } },
     },
     config = conf.sj,
 })
@@ -200,11 +219,6 @@ movement({
 movement({
     "mfussenegger/nvim-treehopper",
     lazy = true,
-    keys = {
-        { "H", mode = { "o", "x", "n" } },
-        { "zl", mode = "n" },
-        { "zk", mode = "n" },
-    },
     dependencies = { "ggandor/leap.nvim" },
-    config = conf.treehopper,
+    keys = conf.treehopper,
 })

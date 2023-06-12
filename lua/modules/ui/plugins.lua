@@ -113,9 +113,10 @@ ui({
         },
         {
             "<Leader>E",
-            vim.cmd.NeoTreeClose,
-
-            "General: [F]orce Close Current Buffer",
+            function()
+                require("edgy").toggle()
+            end,
+            "General: [F]orce Close Edgy",
         },
 
         {
@@ -156,15 +157,35 @@ ui({
 ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
-    cond = lambda.config.ui.indent_blankline.use_indent_blankline,
-    event = "VeryLazy",
-    dependencies = {
-        "shell-Raining/hlchunk.nvim",
-        cond = lambda.config.ui.indent_blankline.use_hlchunk,
-        event = { "VeryLazy" },
-        config = true,
-    },
+    cond = lambda.config.ui.indent_lines.use_indent_blankline,
+    event = { "UIEnter" },
     config = conf.blankline,
+})
+ui({
+    "shell-Raining/hlchunk.nvim",
+    cond = lambda.config.ui.indent_lines.use_hlchunk,
+    event = { "UIEnter" },
+    opts = {
+        blank = {
+            enable = false,
+        },
+    },
+})
+ui({
+    "echasnovski/mini.nvim",
+    cond = lambda.config.ui.indent_lines.use_mini,
+    version = false,
+    event = { "UIEnter" },
+    config = function()
+        require("mini.indentscope").setup({
+            symbol = "│",
+            options = {
+                border = "both",
+                indent_at_cursor = true,
+                try_as_border = false,
+            },
+        })
+    end,
 })
 
 -- after="nvim-treesitter",
@@ -257,7 +278,7 @@ ui({
     "Vonr/foldcus.nvim",
     lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    keys = { "z;", "z'" },
+    event = "VeryLazy",
     cmd = { "Foldcus", "Unfoldcus" },
     config = conf.fold_focus,
 })
@@ -310,18 +331,24 @@ ui({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })
 
 ui({
     "uga-rosa/ccc.nvim",
-    lazy = true,
-    cmd = {
-        "CccPick",
-        "CccConvert",
-        "CccHighlighterToggle",
-        "CccHighlighterEnable",
-        "CccHighlighterDisable",
-    },
-    opts = {
-        win_opts = { border = lambda.style.border.type_0 },
-        highlighter = { auto_enable = true, excludes = { "dart" } },
-    },
+    ft = { "lua", "vim", "typescript", "typescriptreact", "javascriptreact", "svelte" },
+    cmd = { "CccHighlighterToggle" },
+    opts = function()
+        local ccc = require("ccc")
+        local p = ccc.picker
+        p.hex.pattern = {
+            [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
+            [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
+        }
+        ccc.setup({
+            win_opts = { border = lambda.style.border.type_0 },
+            pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+            highlighter = {
+                auto_enable = true,
+                excludes = { "dart", "lazy", "orgagenda", "org", "NeogitStatus", "toggleterm" },
+            },
+        })
+    end,
 })
 ui({
     "petertriho/nvim-scrollbar",
@@ -337,14 +364,16 @@ ui({
                 nearest_float_when = "always",
             })
 
-            vim.keymap.set({ "n", "x" }, ";L", function()
+            --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
+            --  now
+            vim.keymap.set({ "n", "x" }, "<leader>F", function()
                 vim.schedule(function()
                     if require("hlslens").exportLastSearchToQuickfix() then
                         vim.cmd("cw")
                     end
                 end)
                 return ":noh<CR>"
-            end, { expr = true })
+            end, { expr = true, desc = "hlslens: search and replace" })
         end,
     },
     config = function()

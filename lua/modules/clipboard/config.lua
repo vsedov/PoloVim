@@ -143,8 +143,7 @@ function config.clipboardimage()
         utils.insert_txt(conf.affix, url)
     end
     -- Now let's create the command (works on neovim 0.7+)
-    local create_command = vim.api.nvim_create_user_command
-    create_command("PasteImgUrl", paste_url, { nargs = 1 })
+    lambda.command("PasteImgUrl", paste_url, { nargs = 1 })
 end
 
 function config.neoclip()
