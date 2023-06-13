@@ -22,11 +22,9 @@ local def_map = {
 
     -- Insert
     ["i|<C-w>"] = map_cmd("<C-[>diwa"):with_noremap(),
-    ["i|<C-h>"] = map_cmd("<BS>"):with_noremap(),
-    ["i|<C-d>"] = map_cmd("<Del>"):with_noremap(),
-    ["i|<C-u>"] = map_cmd("<C-G>u<C-U>"):with_noremap(),
-    ["i|<C-b>"] = map_cmd("<Left>"):with_noremap(),
-    ["i|<C-f>"] = map_cmd("<Right>"):with_noremap(),
+    -- ["i|<C-h>"] = map_cmd("<BS>"):with_noremap(),
+    -- ["i|<C-d>"] = map_cmd("<Del>"):with_noremap(),
+    -- ["i|<C-u>"] = map_cmd("<C-G>u<C-U>"):with_noremap(),
 
     -- command line
     ["c|<C-b>"] = map_cmd("<Left>"):with_noremap(),
@@ -47,15 +45,6 @@ local def_map = {
 
     -- when going to the end of the line in visual mode ignore whitespace characters
     ["n|$"] = map_cmd([[g_]]):with_noremap(),
-
-    -- ----------------------------------------------------------------------
-    ["n|<leader>1"] = map_cmd(vim.cmd.ChatGPT, "ChatGpt"):with_noremap(),
-    ["n|<leader>2"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions, "GptInstructions"):with_noremap(),
-    ["n|<leader>3"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction, "CodeActions"):with_noremap(),
-
-    ["i|<c-z>k"] = map_cmd(vim.cmd.ChatGPTEditWithInstructions, "GptInstructions"):with_noremap(),
-    ["i|<c-z>l"] = map_cmd(vim.cmd.ChatGPTRunCustomCodeAction, "CodeActions"):with_noremap(),
-    -- ----------------------------------------------------------------------
 }
 
 return def_map

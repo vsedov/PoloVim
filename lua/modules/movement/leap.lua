@@ -115,7 +115,6 @@ end
 local function search_win()
     local pat = vim.fn.getreg("/")
     require("leap-search").leap(pat, {}, { target_windows = { vim.api.nvim_get_current_win() } })
-    require("hlslens").start()
 end
 
 local function search_ref()
@@ -190,7 +189,7 @@ local function binds()
             { "n", "x", "o" },
             "<c-p>",
             function()
-                targets, target_windows = leap_to_window()
+                local targets, target_windows = leap_to_window()
                 require("leap").leap({
                     target_windows = target_windows,
                     targets = targets,
@@ -205,7 +204,7 @@ local function binds()
             { "n", "x", "o" },
             "<c-e>",
             function()
-                winid = api.nvim_get_current_win()
+                local winid = api.nvim_get_current_win()
                 require("leap").leap({
                     target_windows = { winid },
                     targets = get_line_starts(winid),
@@ -221,10 +220,15 @@ local function binds()
                 require("leap-search").leap(nil, {
                     engines = {
                         { name = "string.find", plain = true, ignorecase = true },
-                        -- { name = "kensaku.query" }, -- to search Japanese string with romaji with https://github.com/lambdalisue/kensaku.vim
+                        { name = "kensaku.query" },
                     },
-                    { target_windows = { api.nvim_get_current_win() } },
-                })
+                    experimental = {
+                        backspace = true,
+                        autojump = false,
+                        ctrl_v = true,
+                    },
+                    hl_group = "WarningMsg",
+                }, { target_windows = { vim.api.nvim_get_current_win() } })
             end,
             "leap search",
         },
@@ -371,6 +375,18 @@ function M.leap_spooky()
         createEntry("ams", function()
             return "vas"
         end, "around scopes"),
+        { "am", mode = { "o" }, desc = "Leap magnet" },
+        { "im", mode = { "o" }, desc = "Leap magnet" },
+        { "mm", mode = { "o" }, desc = "Leap magnet line" },
+        { "aM", mode = { "o" }, desc = "Leap magnet (windows)" },
+        { "iM", mode = { "o" }, desc = "Leap magnet (windows)" },
+        { "MM", mode = { "o" }, desc = "Leap magnet line (windows)" },
+        { "ar", mode = { "o" }, desc = "Leap remote" },
+        { "ir", mode = { "o" }, desc = "Leap remote" },
+        { "rr", mode = { "o" }, desc = "Leap remote line" },
+        { "aR", mode = { "o" }, desc = "Leap remote (windows)" },
+        { "iR", mode = { "o" }, desc = "Leap remote (windows)" },
+        { "RR", mode = { "o" }, desc = "Leap remote line (windows)" },
     }
 
     return entries

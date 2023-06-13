@@ -41,7 +41,7 @@ vim.defer_fn(function()
     if vim.fn.getenv("TMUX") ~= nil then
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
     end
-    loader({ plugins = { "leap.nvim", "leap-spooky.nvim", "flit.nvim", "leap-search.nvim" } })
+    loader({ plugins = { "leap.nvim" } })
     require("modules.movement.leap").highlight()
     require("vscripts")
 end, 150)

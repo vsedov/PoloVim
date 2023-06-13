@@ -97,3 +97,63 @@ python({
     build = "pip3 install --user .",
     config = true,
 })
+python({
+    "milanglacier/yarepl.nvim",
+    lazy = true,
+    cmd = {
+        "REPLStart",
+        "REPLAttachBufferToREPL",
+        "REPLDetachBufferToREPL",
+        "REPLCleanup",
+        "REPLFocus",
+        "REPLHide",
+        "REPLClose",
+        "REPLSwap",
+        "REPLSendVisual",
+        "REPLSendLine",
+        "REPLSendMotion",
+    },
+    init = function()
+        lambda.augroup("REPL", {
+            {
+                event = { "FileType" },
+                pattern = { "quarto", "markdown", "markdown.pandoc", "rmd", "python", "sh", "REPL" },
+                desc = "set up REPL keymap",
+                command = function()
+                    local utils = require("modules.editor.hydra.repl_utils")
+                    vim.keymap.set("n", "<localleader>r", function()
+                        vim.schedule_wrap(require("hydra")(require("modules.editor.hydra.normal.repl")):activate())
+                    end, { desc = "Start an REPL", buffer = 0 })
+                    vim.keymap.set("n", "<localleader>sc", utils.send_a_code_chunk, {
+                        desc = "send a code chunk",
+                        expr = true,
+                        buffer = 0,
+                    })
+                end,
+            },
+        })
+    end,
+    config = function()
+        vim.g.REPL_use_floatwin = 0
+        require("yarepl").setup({
+            wincmd = function(bufnr, name)
+                if vim.g.REPL_use_floatwin == 1 then
+                    vim.api.nvim_open_win(bufnr, true, {
+                        relative = "editor",
+                        row = math.floor(vim.o.lines * 0.25),
+                        col = math.floor(vim.o.columns * 0.25),
+                        width = math.floor(vim.o.columns * 0.5),
+                        height = math.floor(vim.o.lines * 0.5),
+                        style = "minimal",
+                        title = name,
+                        border = "rounded",
+                        title_pos = "center",
+                    })
+                else
+                    vim.cmd([[belowright 15 split]])
+                    vim.api.nvim_set_current_buf(bufnr)
+                end
+            end,
+        })
+    end,
+})

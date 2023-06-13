@@ -53,33 +53,6 @@ user({
     end,
 })
 
--- PetsNew {name}: creates a pet with the style and type defined by the configuration, and name {name}
--- PetsNewCustom {type} {style} {name}: creates a new pet with type, style and name specified in the command
--- PetsList: prints the names of all the pets that are currently alive
--- PetsKill {name}: kills the pet with given name, which will immediately blink out of existence. Forever.
--- PetsKillAll: kills all the pets, poor creatures. Works just as PetsKill but for every pet.
--- PetsPauseToggle: pause/resume animations for all pets, leaving them on screen as cute little statues
--- PetsHideToggle: pause the animation for all pets and hide them / show all the pets again and resume animations
--- PetsIdleToggle/PetsSleepToggle: basically a do-not-disturb mode, pets are still animated but do not move around
---  TODO: (vsedov) (12:44:30 - 01/05/23): Create a command for this
-user({
-    "giusgad/pets.nvim",
-    lazy = true,
-    cmd = {
-        "PetsNew",
-        "PetsNewCustom",
-        "PetsList",
-        "PetsKill",
-        "PetsKillAll",
-        "PetsPauseToggle",
-        "PetsHideToggle",
-        "PetsIdleToggle",
-        "PetsSleepToggle",
-    },
-    dependencies = { "MunifTanjim/nui.nvim", "giusgad/hologram.nvim" },
-    config = true,
-})
-
 -- :NR  - Open the selected region in a new narrowed window
 -- :NW  - Open the current visual window in a new narrowed window
 -- :WR  - (In the narrowed window) write the changes back to the original buffer.
@@ -118,7 +91,6 @@ user({
     event = "VeryLazy",
     init = function()
         vim.o.dictionary = "/usr/share/dict/cracklib-small"
-
         -- default settings
         vim.g.spellbound_settings = {
             mappings = {
@@ -136,86 +108,31 @@ user({
 })
 
 user({
-    "olimorris/persisted.nvim",
-    cond = lambda.config.tools.use_session,
-    event = "VeryLazy",
-    init = function()
-        lambda.command("ListSessions", "Telescope persisted", {})
-        lambda.augroup("PersistedEvents", {
-            {
-                event = "User",
-                pattern = "PersistedTelescopeLoadPre",
-                command = function()
-                    vim.schedule(function()
-                        vim.cmd("%bd")
-                    end)
-                end,
-            },
-            {
-                event = "User",
-                pattern = "PersistedSavePre",
-                -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
-                -- so remove them when saving a session
-                command = function()
-                    vim.cmd("%argdelete")
-                end,
-            },
-        })
-    end,
-    opts = {
-        autoload = true,
-        use_git_branch = true,
-        allowed_dirs = { "/Github" },
-        ignored_dirs = { vim.fn.stdpath("data") },
-    },
-    config = function(_, opts)
-        require("persisted").setup(opts)
-        require("telescope").load_extension("persisted")
-    end,
-})
-
--- Need to add these plugins, But, for now  i have these on hold
--- ○ control-panel.nvim not core
--- ○ leap-search.nvim core
--- ○ leap-wide.nvim core  and its dependencies
-
-user({
     "linty-org/readline.nvim",
+    lazy = true,
     keys = {
         {
-            "<M-f>",
+            "<C-k>",
             function()
-                require("readline").forward_word()
+                require("readline").kill_line()
             end,
+            desc = "readline: kill line",
             mode = "!",
         },
         {
-            "<M-b>",
+            "<C-u>",
             function()
-                require("readline").backward_word()
+                require("readline").backward_kill_line()
             end,
-            mode = "!",
-        },
-        {
-            "<C-a>",
-            function()
-                require("readline").beginning_of_line()
-            end,
-            mode = "!",
-        },
-        {
-            "<C-e>",
-            function()
-                require("readline").end_of_line()
-            end,
+            desc = "readline: backward kill line",
             mode = "!",
         },
         {
             "<M-d>",
-
             function()
                 require("readline").kill_word()
             end,
+            desc = "readline: kill word",
             mode = "!",
         },
         {
@@ -223,21 +140,83 @@ user({
             function()
                 require("readline").backward_kill_word()
             end,
+            desc = "readline: backward kill word",
             mode = "!",
         },
         {
-            "<C-w>",
+            "<C-r>", -- look in keymap folder
             function()
                 require("readline").unix_word_rubout()
             end,
+            desc = "readline: unix word rubout",
             mode = "!",
         },
         {
-            "<C-u>",
-
+            "<C-d>",
+            "<Delete>",
+            desc = "delete-char",
+            mode = "!",
+        },
+        {
+            "<C-h>",
+            "<BS>",
+            desc = "backward-delete-char",
+            mode = "!",
+        },
+        {
+            "<C-a>",
             function()
-                require("readline").backward_kill_line()
+                require("readline").beginning_of_line()
             end,
+            desc = "readline: beginning of line",
+            mode = "!",
+        },
+        {
+            "<C-e>",
+            function()
+                require("readline").end_of_line()
+            end,
+            desc = "readline: end of line",
+            mode = "!",
+        },
+        {
+            "<M-f>",
+            function()
+                require("readline").forward_word()
+            end,
+            desc = "readline: forward word",
+            mode = "!",
+        },
+        {
+            "<M-b>",
+            function()
+                require("readline").backward_word()
+            end,
+            desc = "readline: backward word",
+            mode = "!",
+        },
+        {
+            "<C-f>",
+            "<Right>",
+            desc = "forward-char",
+            mode = "!",
+        },
+        {
+            "<C-b>",
+            "<Left>",
+            desc = "backward-char",
+            mode = "!",
+        },
+        {
+            "<C-n>",
+            "<Down>",
+            desc = "next-line",
+            mode = "!",
+        },
+        {
+            "<C-p>",
+            "<Up>",
+            desc = "previous-line",
             mode = "!",
         },
     },
@@ -291,86 +270,6 @@ user({
     end,
 })
 
-user({
-    "FluxxField/bionic-reading.nvim",
-    lazy = true,
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    opts = {
-        file_types = {
-            ["text"] = {
-                "any", -- highlight any node
-            },
-            ["lua"] = {
-                "any",
-            },
-            ["python"] = { "any" },
-        },
-        hl_group_value = {
-            link = "Bold", -- you could do italic
-        },
-        treesitter = false, -- this does not work right now
-    },
-})
-user({
-    "milanglacier/yarepl.nvim",
-    lazy = true,
-    cmd = {
-        "REPLStart",
-        "REPLAttachBufferToREPL",
-        "REPLDetachBufferToREPL",
-        "REPLCleanup",
-        "REPLFocus",
-        "REPLHide",
-        "REPLClose",
-        "REPLSwap",
-        "REPLSendVisual",
-        "REPLSendLine",
-        "REPLSendMotion",
-    },
-    init = function()
-        lambda.augroup("REPL", {
-            {
-                event = { "FileType" },
-                pattern = { "quarto", "markdown", "markdown.pandoc", "rmd", "python", "sh", "REPL" },
-                desc = "set up REPL keymap",
-                command = function()
-                    local utils = require("modules.editor.hydra.repl_utils")
-                    vim.keymap.set("n", "<localleader>r", function()
-                        vim.schedule_wrap(require("hydra")(require("modules.editor.hydra.normal.repl")):activate())
-                    end, { desc = "Start an REPL", buffer = 0 })
-                    vim.keymap.set("n", "<localleader>sc", utils.send_a_code_chunk, {
-                        desc = "send a code chunk",
-                        expr = true,
-                        buffer = 0,
-                    })
-                end,
-            },
-        })
-    end,
-    config = function()
-        vim.g.REPL_use_floatwin = 0
-        require("yarepl").setup({
-            wincmd = function(bufnr, name)
-                if vim.g.REPL_use_floatwin == 1 then
-                    vim.api.nvim_open_win(bufnr, true, {
-                        relative = "editor",
-                        row = math.floor(vim.o.lines * 0.25),
-                        col = math.floor(vim.o.columns * 0.25),
-                        width = math.floor(vim.o.columns * 0.5),
-                        height = math.floor(vim.o.lines * 0.5),
-                        style = "minimal",
-                        title = name,
-                        border = "rounded",
-                        title_pos = "center",
-                    })
-                else
-                    vim.cmd([[belowright 15 split]])
-                    vim.api.nvim_set_current_buf(bufnr)
-                end
-            end,
-        })
-    end,
-})
 -- First of all, :Sayonara or :Sayonara!
 -- will only delete the buffer, if it isn't shown in any other window.
 -- Otherwise :bdelete would close these windows as well.
@@ -448,33 +347,4 @@ user({
     config = function(_, opts)
         require("markmap").setup(opts)
     end,
-})
-
-user({
-    "mawkler/modicator.nvim",
-    ft = { "python", "lua", "sh", "rmd", "markdown", "markdown.pandoc", "quarto" },
-    init = function()
-        vim.o.cursorline = true
-        vim.o.number = true
-        vim.o.termguicolors = true
-    end,
-    opts = {
-        bold = true,
-        italic = true,
-    },
-})
-
-user({
-    "mvllow/modes.nvim",
-    event = "VeryLazy",
-    config = true,
-})
---
-user({
-    "tzachar/highlight-undo.nvim",
-    keys = {
-        "<c-r>",
-        "u",
-    },
-    config = true,
 })

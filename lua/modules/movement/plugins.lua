@@ -12,11 +12,15 @@ movement({
 
 movement({
     "ggandor/leap-ast.nvim",
+    dependencies = {
+        "leap.nvim",
+    },
     lazy = true,
 })
 movement({
     "ggandor/leap-spooky.nvim",
     lazy = true,
+    event = { "BufReadPre", "BufNewFile", "BufEnter" },
     dependencies = {
         "leap.nvim",
     },
@@ -28,7 +32,7 @@ movement({
         },
         paste_on_remote_yank = true,
     },
-    keys = leap.leap_spooky(),
+    keys = leap.leap_spooky,
 })
 
 movement({
@@ -49,11 +53,13 @@ movement({
     "atusy/leap-search.nvim",
     dependencies = {
         { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
-        "RRethy/vim-illuminate",
+        { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
+        "leap.nvim",
     },
+    lazy = true,
     keys = leap.leap_search,
 })
---  TODO: (vsedov) (15:48:04 - 12/06/23): need to create something for this too .
+
 movement({
     "haya14busa/vim-asterisk",
     cond = lambda.config.movement.use_asterisk,
@@ -64,9 +70,9 @@ movement({
     lazy = true,
     keys = { "cU", "cD", "cd", "cu", "gfu", "gfo", "J", "cn", "cx" },
     cmd = {
-        "STSSwapNextVisual",
         "STSSwapPrevVisual",
         "STSSelectChildNode",
+        "STSSwapNextVisual",
         "STSSelectParentNode",
         "STSSelectPrevSiblingNode",
         "STSSelectNextSiblingNode",
@@ -132,10 +138,6 @@ movement({
     end,
 })
 movement({
-    "atusy/leap-wide.nvim",
-    lazy = true,
-})
-movement({
     "phaazon/hop.nvim",
     lazy = true,
     cmd = {
@@ -149,36 +151,6 @@ movement({
         "HopWord",
     },
     config = conf.hop,
-})
-movement({
-    "rlane/pounce.nvim",
-    keys = {
-        {
-            ";gS",
-            function()
-                require("pounce").pounce({ do_repeat = true })
-            end,
-            desc = "Pounce",
-        },
-        {
-            ";gs",
-            function()
-                require("pounce").pounce({ query = vim.fn.expand("<cword>"), do_repeat = true })
-            end,
-            desc = "Pounce word under cursor",
-        },
-        {
-            "g?",
-            function()
-                require("pounce").pounce({ input = { reg = "/" } })
-            end,
-            desc = "Pounce last search",
-        },
-    },
-    lazy = true,
-    opts = {
-        do_repeat = true,
-    },
 })
 
 movement({
@@ -222,3 +194,5 @@ movement({
     dependencies = { "ggandor/leap.nvim" },
     keys = conf.treehopper,
 })
+-- NOTE: (vsedov) (09:01:46 - 13/06/23): THIS IS A GREAT PLUGIN
+movement({ "tommcdo/vim-exchange", keys = { "cx", desc = "Exchange" } })
