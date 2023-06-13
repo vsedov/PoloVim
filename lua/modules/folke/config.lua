@@ -187,6 +187,6 @@ function config.which_key()
             ["r'"] = "single quoted string without the quotes",
             ["r`"] = "string in backticks without the backticks",
         },
-    }, { mode = "o" })
+    }, { mode = { "o", "v", "x" } })
 end
 return config

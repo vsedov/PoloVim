@@ -2,6 +2,7 @@ local ui = require("core.pack").package
 local conf = require("modules.ui.config")
 local api, fn = vim.api, vim.fn
 local highlight = lambda.highlight
+
 ui({
     "glepnir/nerdicons.nvim",
     cmd = "NerdIcons",
@@ -171,23 +172,6 @@ ui({
         },
     },
 })
-ui({
-    "echasnovski/mini.nvim",
-    cond = lambda.config.ui.indent_lines.use_mini,
-    version = false,
-    event = { "UIEnter" },
-    config = function()
-        require("mini.indentscope").setup({
-            symbol = "│",
-            options = {
-                border = "both",
-                indent_at_cursor = true,
-                try_as_border = false,
-            },
-        })
-    end,
-})
-
 -- after="nvim-treesitter",
 
 ui({
@@ -449,7 +433,41 @@ ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     cond = lambda.config.ui.use_scroll,
     event = "VeryLazy",
-    opts = { hide_cursor = true, mappings = { "<C-d>", "<C-u>", "zt", "zz", "zb" } },
+    config = function()
+        require("neoscroll").setup({
+            -- All these keys will be mapped to their corresponding default scrolling animation
+            --mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+            mappings = { "C-j", "C-k", "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>" },
+            hide_cursor = true, -- Hide cursor while scrolling
+            stop_eof = false, -- Stop at <EOF> when scrolling downwards
+            -- use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
+            -- respect_scrolloff = true, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+            -- cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
+        })
+
+        local t = {}
+        t["<c-k>"] = { "scroll", { "-vim.wo.scroll", "true", "250" } }
+        t["<c-j>"] = { "scroll", { "vim.wo.scroll", "true", "250" } }
+        require("neoscroll.config").set_mappings(t)
+    end,
+})
+ui({
+    "rainbowhxch/beacon.nvim",
+    cond = lambda.config.ui.use_beacon,
+    event = "VeryLazy",
+    opts = {
+        minimal_jump = 20,
+        ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
+        ignore_filetypes = {
+            "qf",
+            "dap_watches",
+            "dap_scopes",
+            "neo-tree",
+            "NeogitCommitMessage",
+            "NeogitPopup",
+            "NeogitStatus",
+        },
+    },
 })
 ui({
     "mawkler/modicator.nvim",
@@ -478,4 +496,78 @@ ui({
         "u",
     },
     config = true,
+})
+--  ╭────────────────────────────────────────────────────────────────────╮
+--  │                            MINI PLUGINS                            │
+--  │                                                                    │
+--  ╰────────────────────────────────────────────────────────────────────╯
+ui({
+    "echasnovski/mini.indentscope",
+    cond = lambda.config.ui.indent_lines.use_mini_indent_scope,
+    version = false,
+    event = { "UIEnter" },
+    init = function()
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = {
+                "help",
+                "alpha",
+                "dashboard",
+                "neo-tree",
+                "Trouble",
+                "lazy",
+                "mason",
+                "notify",
+                "toggleterm",
+                "lazyterm",
+            },
+            callback = function()
+                vim.b.miniindentscope_disable = true
+            end,
+        })
+    end,
+    opts = {
+        symbol = "│",
+        options = {
+            border = "both",
+            indent_at_cursor = true,
+            try_as_border = true,
+        },
+    },
+})
+ui({
+    "echasnovski/mini.animate",
+    cond = lambda.config.ui.use_mini_animate,
+    event = "VeryLazy",
+    config = function()
+        local animate = require("mini.animate")
+
+        animate.setup({
+            -- Cursor path
+            cursor = {
+                -- Whether to enable this animation
+                enable = true,
+                --<function: implements linear total 250ms animation duration>,
+                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+            },
+            -- Vertical scroll
+            scroll = {
+                enable = false,
+                -- enable = vim.g.loaded_gui and true or false,
+                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+                subscroll = animate.gen_subscroll.equal({ max_output_steps = 60 }),
+            },
+            -- Window resize -- we use the animation library that comes with windows.nvim instead
+            resize = {
+                enable = false,
+            },
+            -- Window open
+            open = {
+                enable = false,
+            },
+            -- Window close
+            close = {
+                enable = false,
+            },
+        })
+    end,
 })

@@ -334,3 +334,9 @@ tools({
         treesitter = false, -- this does not work right now
     },
 })
+-- NOTE: (vsedov) (15:53:38 - 13/06/23): this is nice to have so no point removing this
+tools({
+    "echasnovski/mini.trailspace",
+    event = "VeryLazy",
+    config = true,
+})

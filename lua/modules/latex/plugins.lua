@@ -20,7 +20,6 @@ latex({
     "jghauser/papis.nvim",
     lazy = true,
     ft = filetype,
-
     dependencies = {
         "kkharji/sqlite.lua",
         "nvim-lua/plenary.nvim",

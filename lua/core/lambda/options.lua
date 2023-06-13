@@ -155,6 +155,8 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_reticle = false,
     use_dropbar = true, -- I am not sure if this is causing lag / issues or something
+    use_beacon = true,
+    use_mini_animate = true,
     heirline = {
         use_heirline = true,
         use_status_col = false, -- true  for plugin or false for heirline
@@ -176,7 +178,7 @@ lambda.config.ui = {
     indent_lines = {
         use_indent_blankline = false,
         use_hlchunk = false,
-        use_mini = true, -- you have to disable indent_blank_line for this
+        use_mini_indent_scope = true,
     },
     use_pet = false,
 }
