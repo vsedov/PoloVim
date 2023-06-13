@@ -61,23 +61,8 @@ vim.keymap.set("n", "cu", function()
     return "g@l"
 end, { silent = true, expr = true })
 
-vim.keymap.set("n", "gfu", function() -- only jump to functions
-    sts.targeted_jump({ "function", "function_definition" })
-    --> In this example, the Lua language schema uses "function",
-    --  when the Python language uses "function_definition"
-    --  we include both, so this keymap will work on both languages
-end, opts)
-
 vim.keymap.set("n", "cx", "<cmd>STSSelectMasterNode<cr>", opts)
 vim.keymap.set("n", "cn", "<cmd>STSSelectCurrentNode<cr>", opts)
-
-vim.keymap.set("n", "gif", function() -- only jump to if_statements
-    sts.targeted_jump({ "if_statement", "else_clause", "else_statement", "elseif_statement" })
-end, opts)
-
-vim.keymap.set("n", "gfo", function() -- only jump to for_statements
-    sts.targeted_jump({ "for_statement", "do_clause", "while_statement" })
-end, opts)
 
 vim.keymap.set("n", "J", function() -- jump to all that you specify
     sts.targeted_jump({
