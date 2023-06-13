@@ -17,27 +17,6 @@ lambda.command("LeapBinds", function()
     vim.notify(leap_binds)
 end, { force = true })
 
-local function leapAction(actionFn, actionDesc, conds)
-    return function()
-        require("leap").leap({
-            target_windows = { vim.fn.win_getid() },
-            action = require("leap-spooky").spooky_action(actionFn, conds),
-        })
-    end
-end
-
-local function createEntry(key, actionFn, actionDesc, conds)
-    leap_binds = leap_binds .. key .. " " .. actionDesc .. "\n"
-    conds = conds or {}
-
-    return {
-        key,
-        leapAction(actionFn, actionDesc, conds),
-        desc = actionDesc,
-        mode = { "x", "o" },
-    }
-end
-
 function paranormal(targets)
     -- Get the :normal sequence to be executed.
     local input = vim.fn.input("normal! ")
@@ -328,53 +307,40 @@ function M.leap_config()
     leap_setup()
     binds()
 end
+local function createLeapSpookyEntry(keySequence, actionName, options, desc)
+    return {
+        keySequence,
+        function()
+            require("leap").leap({
+                target_windows = { vim.fn.win_getid() },
+                action = require("leap-spooky").spooky_action(function()
+                    return actionName
+                end, options),
+            })
+        end,
+        desc = desc,
+        mode = { "v", "x", "o" },
+    }
+end
 
 function M.leap_spooky()
     local entries = {
+        -- NOTE: (vsedov) (17:02:45 - 13/06/23): This is for internal buffers only,
+        -- if you wish to use the RR, then you would have to implement that in another variant in
+        -- a sense
+        createLeapSpookyEntry("irf", "vif", { keeppos = true }, "Inner function"),
+        createLeapSpookyEntry("irc", "vic", { keeppos = true }, "Inner Classes"),
+        createLeapSpookyEntry("irs", "vis", { keeppos = true }, "Inner Scopes"),
+        createLeapSpookyEntry("imf", "vif", { keeppos = true }, "Inner function"),
+        createLeapSpookyEntry("imc", "vic", { keeppos = true }, "Inner Classes"),
+        createLeapSpookyEntry("ims", "vis", { keeppos = true }, "Inner Scopes"),
+        createLeapSpookyEntry("arf", "vaf", { keeppos = true }, "Around function"),
+        createLeapSpookyEntry("arc", "vac", { keeppos = true }, "Around Classes"),
+        createLeapSpookyEntry("ars", "vas", { keeppos = true }, "Around Scopes"),
+        createLeapSpookyEntry("amf", "vaf", { keeppos = true }, "Around function"),
+        createLeapSpookyEntry("amc", "vac", { keeppos = true }, "Around Classes"),
+        createLeapSpookyEntry("ams", "vas", { keeppos = true }, "Around Scopes"),
 
-        createEntry("irf", function()
-            return "vif"
-        end, "inner function"),
-
-        createEntry("irc", function()
-            return "vic"
-        end, "inner classes"),
-
-        createEntry("irs", function()
-            return "vis"
-        end, "inner scopes"),
-        createEntry("imf", function()
-            return "vif"
-        end, "inner function"),
-
-        createEntry("imc", function()
-            return "vic"
-        end, "inner classes"),
-
-        createEntry("ims", function()
-            return "vis"
-        end, "inner scopes"),
-
-        createEntry("arf", function()
-            return "vaf"
-        end, "around function"),
-
-        createEntry("arc", function()
-            return "vac"
-        end, "around classes"),
-
-        --  TODO: (vsedov) (06:47:42 - 03/06/23): replace ars
-        createEntry("ars", function()
-            return "vas"
-        end, "around scopes"),
-
-        createEntry("amc", function()
-            return "vac"
-        end, "around classes"),
-
-        createEntry("ams", function()
-            return "vas"
-        end, "around scopes"),
         { "am", mode = { "o" }, desc = "Leap magnet" },
         { "im", mode = { "o" }, desc = "Leap magnet" },
         { "mm", mode = { "o" }, desc = "Leap magnet line" },
