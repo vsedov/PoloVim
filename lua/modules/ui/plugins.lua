@@ -296,39 +296,6 @@ ui({
         },
     },
 })
-
-ui({
-    "samuzora/pet.nvim",
-    lazy = true,
-    cond = lambda.config.ui.use_pet,
-    config = function()
-        require("pet-nvim")
-    end,
-})
-
-ui({
-    "tamton-aquib/duck.nvim",
-    cmd = {
-        "DuckUse",
-        "DuckStop",
-    },
-    config = function()
-        require("duck").setup({
-            height = 5,
-            width = 5,
-        })
-        lambda.command("DuckUse", function()
-            require("duck").hatch("🐼")
-        end, {})
-        lambda.command("DuckStop", function()
-            require("duck").cook()
-        end, {})
-    end,
-})
-
--- True emotional Support
-ui({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })
-
 ui({
     "uga-rosa/ccc.nvim",
     ft = { "lua", "vim", "typescript", "typescriptreact", "javascriptreact", "svelte" },
@@ -483,4 +450,32 @@ ui({
     cond = lambda.config.ui.use_scroll,
     event = "VeryLazy",
     opts = { hide_cursor = true, mappings = { "<C-d>", "<C-u>", "zt", "zz", "zb" } },
+})
+ui({
+    "mawkler/modicator.nvim",
+    ft = { "python", "lua", "sh", "rmd", "markdown", "markdown.pandoc", "quarto" },
+    init = function()
+        vim.o.cursorline = true
+        vim.o.number = true
+        vim.o.termguicolors = true
+    end,
+    opts = {
+        bold = true,
+        italic = true,
+    },
+})
+
+ui({
+    "mvllow/modes.nvim",
+    event = "VeryLazy",
+    config = true,
+})
+--
+ui({
+    "tzachar/highlight-undo.nvim",
+    keys = {
+        "<c-r>",
+        "u",
+    },
+    config = true,
 })

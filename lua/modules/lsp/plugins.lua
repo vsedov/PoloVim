@@ -58,7 +58,7 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     lazy = true,
-    cond = lambda.config.lsp.lsp_sig.use_lsp_signature,
+    cond = lambda.config.lsp.lsp_sig.use_lsp_signature and not lambda.config.ui.noice.lsp.use_noice_signature,
     event = "VeryLazy",
     config = conf.lsp_sig,
 })

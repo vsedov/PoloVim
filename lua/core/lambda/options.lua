@@ -148,7 +148,6 @@ lambda.config.ui = {
     use_virtcol = true,
     use_murmur = false, -- this causes issues with my yanky config -
     use_illuminate = true,
-    use_heirline = false,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_scrollbar = true,
     use_scroll = true,
@@ -159,15 +158,14 @@ lambda.config.ui = {
     heirline = {
         use_heirline = true,
         use_status_col = false, -- true  for plugin or false for heirline
-        use_win_bar = false,
     },
     noice = {
         enable = true,
         lsp = {
-            use_noice_signature = false, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = false,
-            use_markdown = false,
-            use_documentation = false,
+            use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
+            use_noice_hover = true,
+            use_markdown = true,
+            use_documentation = true,
         },
     },
     flirt = {

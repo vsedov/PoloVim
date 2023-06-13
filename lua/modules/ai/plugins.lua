@@ -7,12 +7,53 @@ ai({
     "jackMort/ChatGPT.nvim",
     lazy = true,
     cmd = { "ChatGPT", "ChatGPTRun", "ChatGPTActAs", "ChatGPTCompleteCode", "ChatGPTEditWithInstructions" },
-    config = conf.chatgpt,
+    keys = {
+        {
+            "<leader>ac",
+            function()
+                vim.cmd([[ChatGpt]])
+            end,
+            desc = "Chat with GPT-3",
+        },
+        {
+            "<leader>aa",
+            function()
+                vim.cmd([[ChatGptActAs]])
+            end,
+            mode = { "n", "v" },
+            desc = "Chat with run as",
+        },
+        {
+            "<leader>ar",
+            function()
+                vim.cmd([[ChatGptRun]])
+            end,
+            mode = { "n", "v" },
+            desc = "Chat with run as",
+        },
+        {
+            "<leader>ae",
+            function()
+                vim.cmd([[ChatGptEditWithInstructions]])
+            end,
+            mode = { "n", "v" },
+            desc = "Chatgpt edit instructions",
+        },
+        {
+            "<leader>ac",
+            function()
+                vim.cmd([[ChatGptCompleteCode]])
+            end,
+            mode = { "n", "v" },
+            desc = "Chat  Complete code",
+        },
+    },
     dependencies = {
         "MunifTanjim/nui.nvim",
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
     },
+    config = conf.chatgpt,
 })
 --
 ai({

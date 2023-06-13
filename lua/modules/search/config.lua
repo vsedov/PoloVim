@@ -235,6 +235,13 @@ function config.vmulti()
       let g:VM_maps["Mouse Word"] = "<c-RightMouse>"
 
       let g:VM_maps["Add Cursor At Pos"] = '<M-i>'
+
+    aug VMlens
+        au!
+        au User visual_multi_start lua require('vmlens').start()
+        au User visual_multi_exit lua require('vmlens').exit()
+    aug END
+
   ]])
 end
 
