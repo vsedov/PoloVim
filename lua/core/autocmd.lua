@@ -326,7 +326,7 @@ lambda.augroup("Norg", {
         event = "FileType",
         pattern = "norg",
         command = function()
-            -- todo: do this
+            vim.cmd([[StripTrailingWhitespace]])
         end,
     },
 })
