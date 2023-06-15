@@ -29,7 +29,7 @@ fun({
 fun({
     "samuzora/pet.nvim",
     lazy = true,
-    cond = lambda.config.ui.use_pet,
+    cond = lambda.config.fun.use_pet,
     config = function()
         require("pet-nvim")
     end,

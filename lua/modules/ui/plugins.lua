@@ -302,31 +302,34 @@ ui({
     end,
 })
 ui({
+    "kevinhwang91/nvim-hlslens",
+    event = "VeryLazy",
+    config = function()
+        require("hlslens").setup({
+            calm_down = true,
+            nearest_only = true,
+            nearest_float_when = "always",
+        })
+
+        --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
+        --  now
+        vim.keymap.set({ "n", "x" }, "<leader>F", function()
+            vim.schedule(function()
+                if require("hlslens").exportLastSearchToQuickfix() then
+                    vim.cmd("cw")
+                end
+            end)
+            return ":noh<CR>"
+        end, { expr = true, desc = "hlslens: search and replace" })
+    end,
+})
+
+ui({
     "petertriho/nvim-scrollbar",
     lazy = true,
-    cond = lambda.config.ui.use_scrollbar,
+    cond = lambda.config.ui.scroll_bar.use_scrollbar,
     event = "VeryLazy",
-    dependencies = {
-        "kevinhwang91/nvim-hlslens",
-        config = function()
-            require("hlslens").setup({
-                calm_down = true,
-                nearest_only = true,
-                nearest_float_when = "always",
-            })
-
-            --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
-            --  now
-            vim.keymap.set({ "n", "x" }, "<leader>F", function()
-                vim.schedule(function()
-                    if require("hlslens").exportLastSearchToQuickfix() then
-                        vim.cmd("cw")
-                    end
-                end)
-                return ":noh<CR>"
-            end, { expr = true, desc = "hlslens: search and replace" })
-        end,
-    },
+    dependencies = { "kevinhwang91/nvim-hlslens" },
     config = function()
         require("scrollbar.handlers.search").setup()
         require("scrollbar").setup({

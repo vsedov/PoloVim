@@ -149,7 +149,6 @@ lambda.config.ui = {
     use_murmur = false, -- this causes issues with my yanky config -
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_scrollbar = true,
     use_scroll = true,
     use_tint = false, -- Might not be great for certain colourschemes
     use_hlsearch = true,
@@ -180,6 +179,11 @@ lambda.config.ui = {
         use_hlchunk = false,
         use_mini_indent_scope = true,
     },
+    scroll_bar = {
+        use_scrollbar = true,
+    },
+}
+lambda.config.fun = {
     use_pet = false,
 }
 lambda.config.colourscheme = {

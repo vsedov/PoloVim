@@ -1,1 +1,2 @@
 require("core")
+--> Simple dashboard

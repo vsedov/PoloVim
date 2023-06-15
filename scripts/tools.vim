@@ -7,6 +7,7 @@ fun! <SID>StripTrailingWhitespace()
     call cursor(l, c)
 endfun
 command! -bar -nargs=0 StripTrailingWhitespace :call <SID>StripTrailingWhitespace()
+
 " autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
 
 " Search in project
@@ -87,7 +88,7 @@ if !exists("my_auto_commands_loaded")
     augroup END
   endif
 
-command! Scratch new | setlocal bt=nofile bh=wipe nobl noswapfile nu
+command! ScratchVim new | setlocal bt=nofile bh=wipe nobl noswapfile nu
 
 " let s:hidden_all = 0
 " function! ToggleHiddenAll()
