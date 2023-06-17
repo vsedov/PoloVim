@@ -64,7 +64,8 @@ local gae_hint = [[
 ^ ^ _<_: to dot case          _t_: to title case     ^ ^
 ^ ^ _a_: to phrase case                              ^ ^
 ^ ^                                                  ^ ^
-^ ^                             _<Esc>_: quit        ^ ^
+^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
+^ ^ e                           _<Esc>_: quit        ^ ^
 ]]
 
 hydra({
@@ -79,7 +80,7 @@ hydra({
     },
     name = "Change case",
     mode = "n",
-    body = "gaa",
+    body = "<leader>ga",
     heads = {
         { "[", cmd("TextCaseOpenTelescope") },
 
@@ -123,7 +124,7 @@ hydra({
     },
     name = "Change case",
     mode = "n",
-    body = "gae",
+    body = "<leader>ge",
     heads = {
         { "[", cmd("TextCaseOpenTelescope") },
         operator("u", "to_upper_case", "to_upper_case"),

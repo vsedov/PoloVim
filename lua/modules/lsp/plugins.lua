@@ -280,6 +280,7 @@ lsp({
                     event = "LspAttach",
                     command = function(args)
                         local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
+
                         if not id then
                             return
                         end
@@ -301,4 +302,10 @@ lsp({
     lazy = true,
     ft = "lua",
     config = conf.nvimdev,
+})
+
+lsp({
+    "yorickpeterse/nvim-dd",
+    event = "LspAttach",
+    config = true,
 })

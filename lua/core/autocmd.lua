@@ -139,24 +139,6 @@ lambda.augroup("WindowBehaviours", {
             end
         end,
     },
-    {
-        event = "VimEnter",
-        pattern = "*",
-        command = function()
-            if vim.fn.bufname("%") ~= "" then
-                return
-            end
-            local byte = vim.fn.line2byte(vim.fn.line("$") + 1)
-            if byte ~= -1 or byte > 1 then
-                return
-            end
-            vim.bo.buftype = "nofile"
-            vim.bo.swapfile = false
-            vim.bo.undofile = false
-            vim.bo.fileformat = "unix"
-        end,
-        once = true,
-    },
 })
 
 local save_excluded = {

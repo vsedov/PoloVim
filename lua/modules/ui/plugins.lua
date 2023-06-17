@@ -14,7 +14,7 @@ ui({
     init = function()
         lambda.augroup("VirtCol", {
             {
-                event = { "VimEnter", "BufEnter", "WinEnter" },
+                event = { "BufEnter", "WinEnter" },
                 command = function(args)
                     if vim.bo.filetype == "harpoon" then
                         return
@@ -495,80 +495,6 @@ ui({
         "u",
     },
     config = true,
-})
---  ╭────────────────────────────────────────────────────────────────────╮
---  │                            MINI PLUGINS                            │
---  │                                                                    │
---  ╰────────────────────────────────────────────────────────────────────╯
-ui({
-    "echasnovski/mini.indentscope",
-    cond = lambda.config.ui.indent_lines.use_mini_indent_scope,
-    version = false,
-    event = { "UIEnter" },
-    init = function()
-        vim.api.nvim_create_autocmd("FileType", {
-            pattern = {
-                "help",
-                "alpha",
-                "dashboard",
-                "neo-tree",
-                "Trouble",
-                "lazy",
-                "mason",
-                "notify",
-                "toggleterm",
-                "lazyterm",
-            },
-            callback = function()
-                vim.b.miniindentscope_disable = true
-            end,
-        })
-    end,
-    opts = {
-        symbol = "│",
-        options = {
-            border = "both",
-            indent_at_cursor = true,
-            try_as_border = true,
-        },
-    },
-})
-ui({
-    "echasnovski/mini.animate",
-    cond = lambda.config.ui.use_mini_animate,
-    event = "VeryLazy",
-    config = function()
-        local animate = require("mini.animate")
-
-        animate.setup({
-            -- Cursor path
-            cursor = {
-                -- Whether to enable this animation
-                enable = true,
-                --<function: implements linear total 250ms animation duration>,
-                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
-            },
-            -- Vertical scroll
-            scroll = {
-                enable = false,
-                -- enable = vim.g.loaded_gui and true or false,
-                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
-                subscroll = animate.gen_subscroll.equal({ max_output_steps = 60 }),
-            },
-            -- Window resize -- we use the animation library that comes with windows.nvim instead
-            resize = {
-                enable = false,
-            },
-            -- Window open
-            open = {
-                enable = false,
-            },
-            -- Window close
-            close = {
-                enable = false,
-            },
-        })
-    end,
 })
 ui({
     "HampusHauffman/block.nvim",
