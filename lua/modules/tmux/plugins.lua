@@ -21,7 +21,7 @@ tmux({
             },
         })
 
-        keymaps = {
+        local keymaps = {
             Up = function()
                 require("tmux").resize_top()
             end,

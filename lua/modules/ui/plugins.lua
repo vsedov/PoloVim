@@ -1,5 +1,7 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
+local highlight, foo, falsy, augroup = lambda.highlight, lambda.style, lambda.falsy, lambda.augroup
+local icons, border, rect = foo.icons.lsp, foo.border.type_0, foo.border.type_0
 
 ui({
     "glepnir/nerdicons.nvim",
@@ -35,10 +37,60 @@ ui({
         require("modules.ui.heirline")
     end,
 })
+
 ui({
     "stevearc/dressing.nvim",
     event = "VeryLazy",
-    config = conf.dressing,
+    opts = {
+        input = { enabled = false },
+        select = {
+            backend = { "fzf_lua", "builtin" },
+            builtin = {
+                border = lambda.style.border.type_0,
+                min_height = 10,
+                win_options = { winblend = 10 },
+                mappings = { n = { ["q"] = "Close" } },
+            },
+            get_config = function(opts)
+                opts.prompt = opts.prompt and opts.prompt:gsub(":", "")
+                if opts.kind == "codeaction" then
+                    return {
+                        backend = "fzf_lua",
+                        fzf_lua = lambda.fzf.cursor_dropdown({
+                            winopts = { title = opts.prompt },
+                        }),
+                    }
+                end
+                if opts.kind == "norg" then
+                    return {
+                        backend = "nui",
+                        nui = {
+                            position = "97%",
+                            border = { style = rect },
+                            min_width = vim.o.columns - 2,
+                        },
+                    }
+                end
+                return {
+                    backend = "fzf_lua",
+                    fzf_lua = lambda.fzf.dropdown({
+                        winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
+                    }),
+                }
+            end,
+            nui = {
+                min_height = 10,
+                win_options = {
+                    winhighlight = table.concat({
+                        "Normal:Italic",
+                        "FloatBorder:PickerBorder",
+                        "FloatTitle:Title",
+                        "CursorLine:Visual",
+                    }, ","),
+                },
+            },
+        },
+    },
 })
 
 ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
@@ -60,7 +112,6 @@ ui({
     lazy = true,
     cond = lambda.config.ui.use_murmur,
     event = "VeryLazy",
-
     config = conf.murmur,
 })
 
@@ -117,14 +168,6 @@ ui({
             end,
             "General: [F]orce Close Edgy",
         },
-
-        {
-            "<leader>gt",
-            function()
-                vim.cmd("Neotree . git_status reveal toggle")
-            end,
-            desc = "General: [t]oggle the [g]it control explorer",
-        },
     },
 
     dependencies = {
@@ -136,10 +179,9 @@ ui({
             "s1n7ax/nvim-window-picker",
             config = function()
                 require("window-picker").setup({
-                    use_winbar = "smart",
+                    hint = "floating-big-letter",
                     autoselect_one = true,
                     include_current = false,
-                    other_win_hl_color = lambda.highlight.get("Visual", "bg"),
                     filter_rules = {
                         bo = {
                             filetype = { "neo-tree-popup", "quickfix", "edgy", "neo-tree" },
@@ -183,32 +225,31 @@ ui({
     cond = lambda.config.ui.use_tint,
     event = "VeryLazy",
     opts = {
-        tint = -30,
+        tint = -15,
         highlight_ignore_patterns = {
             "WinSeparator",
             "St.*",
             "Comment",
             "Panel.*",
             "Telescope.*",
+            "IndentBlankline.*",
             "Bqf.*",
             "VirtColumn",
             "Headline.*",
             "NeoTree.*",
+            "LineNr",
+            "NeoTree.*",
+            "Telescope.*",
+            "VisibleTab",
         },
         window_ignore_function = function(win_id)
             local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-            if win.diff or not lambda.falsy(fn.win_gettype(win_id)) then
+            if win.diff or not falsy(fn.win_gettype(win_id)) then
                 return true
             end
-            local ignore_bt = lambda.p_table({ terminal = true, prompt = true, nofile = false })
-            local ignore_ft = lambda.p_table({
-                ["Telescope.*"] = true,
-                ["Neogit.*"] = true,
-                ["flutterTools.*"] = true,
-                ["qf"] = true,
-            })
-            local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
-            return has_bt or has_ft
+            local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
+            local ignore_ft = as.p_table({ ["Neogit.*"] = true, ["flutterTools.*"] = true, ["qf"] = true })
+            return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
         end,
     },
 })
