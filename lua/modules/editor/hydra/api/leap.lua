@@ -46,13 +46,15 @@ local config = {
                     },
                     experimental = {
                         backspace = true,
-                        autojump = false,
+                        autojump = true,
                         ctrl_v = true,
                     },
                     hl_group = "WarningMsg",
-                }, { target_windows = { vim.api.nvim_get_current_win() } })
+                }, {
+                    target_windows = { vim.api.nvim_get_current_win() },
+                })
             end,
-            { nowait = true, silent = true, desc = "Leap Search Word" },
+            { nowait = true, silent = true, exit = true, desc = "Leap Search Word" },
         },
         n = {
             function()

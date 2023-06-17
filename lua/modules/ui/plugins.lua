@@ -1,7 +1,5 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
-local api, fn = vim.api, vim.fn
-local highlight = lambda.highlight
 
 ui({
     "glepnir/nerdicons.nvim",
@@ -408,13 +406,11 @@ ui({
         })
     end,
 })
---  TODO: (vsedov) (02:31:08 - 02/06/23): This impacts dropbar, so this im not sure,
---  Further testing is required
 ui({
     "tummetott/reticle.nvim",
-    cond = lambda.config.ui.use_reticle and false,
-    lazy = false,
-    config = conf.reticle,
+    cond = lambda.config.ui.use_reticle,
+    event = { "WinNew", "WinLeave" },
+    config = true,
 })
 
 --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
@@ -572,5 +568,13 @@ ui({
                 enable = false,
             },
         })
+    end,
+})
+ui({
+    "HampusHauffman/block.nvim",
+    lazy = true,
+    cmd = { "Block", "BlockOn", "BlockOff" },
+    config = function()
+        require("block").setup({})
     end,
 })

@@ -960,7 +960,7 @@ local Stc = {
 vim.o.showcmdloc = "statusline"
 -- vim.o.showtabline = 2
 
-config = {
+local config = {
 
     statusline = StatusLines,
     opts = {
