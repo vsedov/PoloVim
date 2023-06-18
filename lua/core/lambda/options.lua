@@ -129,7 +129,7 @@ lambda.config.lsp = {
     diagnostics = {
         use_error_lens = false,
         use_lsp_lines = false,
-        use_rcd = true,
+        use_rcd = true, -- the least intrusive of the bunch
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -152,7 +152,6 @@ lambda.config.ui = {
     use_scroll = true,
     use_tint = false, -- Might not be great for certain colourschemes
     use_hlsearch = true,
-    use_reticle = true,
     use_dropbar = true, -- I am not sure if this is causing lag / issues or something
     use_beacon = true,
     use_mini_animate = true,

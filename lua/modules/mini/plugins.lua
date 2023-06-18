@@ -12,7 +12,6 @@ mini({
 mini({
     "echasnovski/mini.indentscope",
     cond = lambda.config.ui.indent_lines.use_mini_indent_scope,
-    version = false,
     event = { "UIEnter" },
     init = function()
         vim.api.nvim_create_autocmd("FileType", {

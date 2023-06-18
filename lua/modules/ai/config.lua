@@ -102,6 +102,7 @@ It should be in the following layout:
 
 You are allowed to also have multope optional scopes like, feat(lsp, treesiter):
                     The description that is informative of the changes made, and a body that is a more and anything that May seem important.
+                    Further more there are plugin names, when there is a plugin removed for example completion({"vsedov/plugin_name"...}), you have to state if there is a new plugin or if a previous plugin has been removed.
                 ]] .. vim.fn.system("git diff --cached")
                 end,
                 modes = { "n" },
