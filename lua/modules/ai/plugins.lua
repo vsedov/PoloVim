@@ -11,14 +11,14 @@ ai({
         {
             "<leader>ac",
             function()
-                vim.cmd([[ChatGpt]])
+                vim.cmd([[ChatGPT]])
             end,
             desc = "Chat with GPT-3",
         },
         {
             "<leader>aa",
             function()
-                vim.cmd([[ChatGptActAs]])
+                vim.cmd([[ChatGPTActAs]])
             end,
             mode = { "n", "v" },
             desc = "Chat with run as",
@@ -26,7 +26,7 @@ ai({
         {
             "<leader>ar",
             function()
-                vim.cmd([[ChatGptRun]])
+                vim.cmd([[ChatGPTRun]])
             end,
             mode = { "n", "v" },
             desc = "Chat with run as",
@@ -34,7 +34,7 @@ ai({
         {
             "<leader>ae",
             function()
-                vim.cmd([[ChatGptEditWithInstructions]])
+                vim.cmd([[ChatGPTEditWithInstructions]])
             end,
             mode = { "n", "v" },
             desc = "Chatgpt edit instructions",
@@ -42,7 +42,7 @@ ai({
         {
             "<leader>ac",
             function()
-                vim.cmd([[ChatGptCompleteCode]])
+                vim.cmd([[ChatGPTCompleteCode]])
             end,
             mode = { "n", "v" },
             desc = "Chat  Complete code",

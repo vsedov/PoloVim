@@ -350,4 +350,28 @@ function config.sweetie()
 
     vim.cmd.colorscheme("sweetie")
 end
+function config.text_to_colourscheme()
+    require("text-to-colorscheme").setup({
+        ai = {
+            openai_api_key = os.getenv("OPENAI_API_KEY"),
+        },
+        hex_palettes = {
+            {
+                name = "rage",
+                background_mode = "dark",
+                background = "#1e1a2b",
+                foreground = "#f0e9e9",
+                accents = {
+                    "#540091",
+                    "#9b59b6",
+                    "#f672b7",
+                    "#b83280",
+                    "#910000",
+                    "#7e4a9e",
+                    "#ff4b5c",
+                },
+            },
+        },
+    })
+end
 return config

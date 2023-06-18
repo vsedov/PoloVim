@@ -279,7 +279,7 @@ tools({
 tools({
     "olimorris/persisted.nvim",
     cond = lambda.config.tools.use_session,
-    event = "VeryLazy",
+    event = "VimEnter",
     init = function()
         lambda.command("ListSessions", "Telescope persisted", {})
         lambda.augroup("PersistedEvents", {
@@ -304,9 +304,9 @@ tools({
         })
     end,
     opts = {
+        autosave = true,
         autoload = true,
         use_git_branch = true,
-        allowed_dirs = { "/Github" },
         ignored_dirs = { vim.fn.stdpath("data") },
     },
     config = function(_, opts)

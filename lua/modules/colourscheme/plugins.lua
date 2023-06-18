@@ -83,3 +83,9 @@ colourscheme({
     lazy = true,
     config = conf.sweetie,
 })
+colourscheme({
+    "svermeulen/text-to-colorscheme.nvim",
+    lazy = true,
+    config = conf.text_to_colourscheme,
+    cmd = { "T2CSelect", "T2CGenerate" },
+})

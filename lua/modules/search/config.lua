@@ -5,11 +5,51 @@ function config.telescope()
 end
 
 function config.fzf()
-    require("fzf-lua").setup({
-        lsp = {
-            async_or_timeout = 3000,
+    local fzf = require("fzf-lua")
+
+    fzf.setup({
+        fzf_opts = {
+            ["--info"] = "default", -- hidden OR inline:⏐
+            ["--reverse"] = false,
+            ["--layout"] = "default",
+            ["--scrollbar"] = "▓",
+        },
+        fzf_colors = {
+            ["fg"] = { "fg", "CursorLine" },
+            ["bg"] = { "bg", "Normal" },
+            ["hl"] = { "fg", "Comment" },
+            ["fg+"] = { "fg", "Normal" },
+            ["bg+"] = { "bg", "PmenuSel" },
+            ["hl+"] = { "fg", "Statement", "italic" },
+            ["info"] = { "fg", "Comment", "italic" },
+            ["prompt"] = { "fg", "Underlined" },
+            ["pointer"] = { "fg", "Exception" },
+            ["marker"] = { "fg", "@character" },
+            ["spinner"] = { "fg", "DiagnosticOk" },
+            ["header"] = { "fg", "Comment" },
+            ["gutter"] = { "bg", "Normal" },
+            ["separator"] = { "fg", "Comment" },
+        },
+        previewers = {
+            builtin = { toggle_behavior = "extend" },
+        },
+        winopts = {
+            hl = { border = "PickerBorder" },
+        },
+        keymap = {
+            builtin = {
+                ["<c-/>"] = "toggle-help",
+                ["<c-e>"] = "toggle-preview",
+                ["<c-=>"] = "toggle-fullscreen",
+                ["<c-f>"] = "preview-page-down",
+                ["<c-b>"] = "preview-page-up",
+            },
+            fzf = {
+                ["esc"] = "abort",
+            },
         },
     })
+
     vim.api.nvim_create_user_command("GP", "FzfLua git_files", {})
     vim.api.nvim_create_user_command("GF", "FzfLua git_status", {})
     vim.api.nvim_create_user_command("Gf", "FzfLua git_status", {})

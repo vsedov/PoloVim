@@ -32,7 +32,7 @@ movement({
         },
         paste_on_remote_yank = true,
     },
-    keys = leap.leap_spooky,
+    keys = leap.leap_spooky(),
 })
 
 movement({

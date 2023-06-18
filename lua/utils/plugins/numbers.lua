@@ -20,6 +20,6 @@ end
 local M = {}
 
 function M.setup()
-    lambda.command("ReadNumber", readable_number, { force = true })
+    lambda.command("ReadNumber", readable_number, { force = true, range = true })
 end
 return M

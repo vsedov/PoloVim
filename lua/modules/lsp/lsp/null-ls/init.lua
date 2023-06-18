@@ -45,7 +45,10 @@ function M.setup()
     for _, py_diag in ipairs(lambda.config.lsp.python.lint) do
         table.insert(diagnostic, py_diag)
     end
-    local registered_sources = {}
+    local registered_sources = {
+        null_ls.builtins.hover.dictionary,
+        null_ls.builtins.hover.printenv,
+    }
     for builtin, sources in pairs({
         formatting = format,
         diagnostics = diagnostic,

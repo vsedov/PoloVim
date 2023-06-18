@@ -1,16 +1,9 @@
 local highlight, ui, k = lambda.highlight, lambda.ui, vim.keycode
 local api = vim.api
-
 local cmp = require("cmp")
 local types = require("cmp.types")
-local compare = require("cmp.config.compare")
 local utils = require("modules.completion.cmp.utils")
 local border = lambda.style.border.type_0
-local fields = {
-    "kind",
-    "abbr",
-    "menu",
-}
 local cmp_window = {
     border = border,
     winhighlight = table.concat({
@@ -38,13 +31,13 @@ local config = {
         keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
         keyword_length = 1,
     },
-    confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
-    -- confirmation = {
-    --     default_behavior = types.cmp.ConfirmBehavior.Insert,
-    --     get_commit_characters = function(commit_characters)
-    --         return commit_characters
-    --     end,
-    -- },
+    -- confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
+    confirmation = {
+        default_behavior = types.cmp.ConfirmBehavior.Insert,
+        get_commit_characters = function(commit_characters)
+            return commit_characters
+        end,
+    },
     experimental = { ghost_text = { hl_group = "Dimmed" } },
 
     mapping = require("modules.completion.cmp.mappings"),

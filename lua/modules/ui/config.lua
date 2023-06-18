@@ -79,7 +79,11 @@ function config.notify()
     })
     vim.notify = notify
 
-    vim.keymap.set("n", "|+", ":lua require('notify').dismiss()<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>nd", function()
+        notify.dismiss({ silent = true, pending = true })
+    end, {
+        desc = "dismiss notifications",
+    })
     require("telescope").load_extension("notify")
 end
 
@@ -469,48 +473,6 @@ function config.tint()
     })
 end
 
-function config.dressing()
-    -- NOTE: the limit is half the max lines because this is the cursor theme so
-    -- unless the cursor is at the top or bottom it realistically most often will
-    -- only have half the screen available
-    local function get_height(self, _, max_lines)
-        local results = #self.finder.results
-        local PADDING = 4 -- this represents the size of the telescope window
-        local LIMIT = math.floor(max_lines / 2)
-        return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
-    end
-
-    lambda.highlight.plugin("dressing", { { FloatTitle = { inherit = "Visual", bold = true } } })
-
-    require("dressing").setup({
-        input = {
-            insert_only = false,
-            prefer_width = 40,
-            win_options = {
-                winblend = 5,
-            },
-            border = lambda.style.border.type_0,
-        },
-        select = {
-            get_config = function(opts)
-                -- center the picker for treesitter prompts
-                if opts.kind == "codeaction" then
-                    return {
-                        backend = "telescope",
-                        telescope = require("telescope.themes").get_cursor({
-                            layout_config = { height = get_height },
-                        }),
-                    }
-                end
-            end,
-            backend = "telescope",
-            -- telescope = require("telescope.themes").get_dropdown({
-            --     layout_config = { height = get_height },
-            -- }),
-        },
-    })
-end
-
 function config.illuminate()
     -- default configuration
     require("illuminate").configure({
@@ -569,62 +531,4 @@ function config.illuminate()
     })
 end
 
-function config.reticle()
-    require("reticle").setup({
-        -- Make the cursorline and cursorcolumn follow your active window. This
-        -- only works if the cursorline and cursorcolumn setting is switched on
-        -- globaly like explained in 'Usage'. Default is true for both values
-        follow = {
-            cursorline = true,
-            cursorcolumn = true,
-        },
-
-        -- Define filetypes where the cursorline / cursorcolumn is always on,
-        -- regardless of the global setting
-        always = {
-            cursorline = {
-                "json",
-            },
-            cursorcolumn = {},
-        },
-
-        -- Define filetypes where the cursorline / cursorcolumn is always on when
-        -- the window is focused, regardless of the global setting
-        on_focus = {
-            cursorline = {
-                "help",
-                "NvimTree",
-            },
-            cursorcolumn = {},
-        },
-
-        -- Define filetypes where the cursorline / cursorcolumn is never on,
-        -- regardless of the global setting
-        never = {
-            cursorline = {
-                "qf",
-            },
-            cursorcolumn = {
-                "qf",
-            },
-        },
-
-        -- Define filetypes which are ignored by the plugin
-        ignore = {
-            cursorline = {
-                "lspinfo",
-                "neo-tree",
-            },
-            cursorcolumn = {
-                "lspinfo",
-                "neo-tree",
-            },
-        },
-
-        -- By default, nvim highlights the cursorline number only when the cursorline setting is
-        -- switched on. When enabeling the following setting, the cursorline number
-        -- of every window is always highlighted, regardless of the setting
-        always_show_cl_number = true,
-    })
-end
 return config

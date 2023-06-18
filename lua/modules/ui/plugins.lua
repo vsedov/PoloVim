@@ -1,7 +1,8 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
-local api, fn = vim.api, vim.fn
-local highlight = lambda.highlight
+local highlight, foo, falsy, augroup = lambda.highlight, lambda.style, lambda.falsy, lambda.augroup
+local icons, border, rect = foo.icons.lsp, foo.border.type_0, foo.border.type_0
+
 ui({
     "glepnir/nerdicons.nvim",
     cmd = "NerdIcons",
@@ -15,7 +16,7 @@ ui({
     init = function()
         lambda.augroup("VirtCol", {
             {
-                event = { "VimEnter", "BufEnter", "WinEnter" },
+                event = { "BufEnter", "WinEnter" },
                 command = function(args)
                     if vim.bo.filetype == "harpoon" then
                         return
@@ -36,12 +37,71 @@ ui({
         require("modules.ui.heirline")
     end,
 })
+
 ui({
     "stevearc/dressing.nvim",
-    event = "VeryLazy",
-    config = conf.dressing,
+    init = function()
+        ---@diagnostic disable-next-line: duplicate-set-field
+        vim.ui.select = function(...)
+            require("lazy").load({ plugins = { "dressing.nvim" } })
+            return vim.ui.select(...)
+        end
+    end,
+    opts = {
+        input = {
+            enabled = true,
+            border = lambda.style.border.type_0,
+            winhighlight = "Normal:CmpNormal,FloatBorder:CmpBorder",
+        },
+        select = {
+            backend = { "fzf_lua", "builtin" },
+            builtin = {
+                border = lambda.style.border.type_0,
+                min_height = 10,
+                win_options = { winblend = 10 },
+                mappings = { n = { ["q"] = "Close" } },
+            },
+            get_config = function(opts)
+                opts.prompt = opts.prompt and opts.prompt:gsub(":", "")
+                if opts.kind == "codeaction" then
+                    return {
+                        backend = "fzf_lua",
+                        fzf_lua = lambda.fzf.cursor_dropdown({
+                            winopts = { title = opts.prompt },
+                        }),
+                    }
+                end
+                if opts.kind == "norg" then
+                    return {
+                        backend = "nui",
+                        nui = {
+                            position = "97%",
+                            border = { style = rect },
+                            min_width = vim.o.columns - 2,
+                        },
+                    }
+                end
+                return {
+                    backend = "fzf_lua",
+                    fzf_lua = lambda.fzf.dropdown({
+                        winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
+                    }),
+                }
+            end,
+            nui = {
+                min_height = 10,
+                win_options = {
+                    winhighlight = table.concat({
+                        "Normal:Italic",
+                        "FloatBorder:PickerBorder",
+                        "FloatTitle:Title",
+                        "CursorLine:Visual",
+                    }, ","),
+                },
+            },
+        },
+    },
 })
-
 ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
 
 --  ──────────────────────────────────────────────────────────────────────
@@ -61,7 +121,6 @@ ui({
     lazy = true,
     cond = lambda.config.ui.use_murmur,
     event = "VeryLazy",
-
     config = conf.murmur,
 })
 
@@ -118,14 +177,6 @@ ui({
             end,
             "General: [F]orce Close Edgy",
         },
-
-        {
-            "<leader>gt",
-            function()
-                vim.cmd("Neotree . git_status reveal toggle")
-            end,
-            desc = "General: [t]oggle the [g]it control explorer",
-        },
     },
 
     dependencies = {
@@ -137,10 +188,9 @@ ui({
             "s1n7ax/nvim-window-picker",
             config = function()
                 require("window-picker").setup({
-                    use_winbar = "smart",
+                    hint = "floating-big-letter",
                     autoselect_one = true,
                     include_current = false,
-                    other_win_hl_color = lambda.highlight.get("Visual", "bg"),
                     filter_rules = {
                         bo = {
                             filetype = { "neo-tree-popup", "quickfix", "edgy", "neo-tree" },
@@ -171,23 +221,6 @@ ui({
         },
     },
 })
-ui({
-    "echasnovski/mini.nvim",
-    cond = lambda.config.ui.indent_lines.use_mini,
-    version = false,
-    event = { "UIEnter" },
-    config = function()
-        require("mini.indentscope").setup({
-            symbol = "│",
-            options = {
-                border = "both",
-                indent_at_cursor = true,
-                try_as_border = false,
-            },
-        })
-    end,
-})
-
 -- after="nvim-treesitter",
 
 ui({
@@ -201,32 +234,31 @@ ui({
     cond = lambda.config.ui.use_tint,
     event = "VeryLazy",
     opts = {
-        tint = -30,
+        tint = -15,
         highlight_ignore_patterns = {
             "WinSeparator",
             "St.*",
             "Comment",
             "Panel.*",
             "Telescope.*",
+            "IndentBlankline.*",
             "Bqf.*",
             "VirtColumn",
             "Headline.*",
             "NeoTree.*",
+            "LineNr",
+            "NeoTree.*",
+            "Telescope.*",
+            "VisibleTab",
         },
         window_ignore_function = function(win_id)
             local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-            if win.diff or not lambda.falsy(fn.win_gettype(win_id)) then
+            if win.diff or not falsy(fn.win_gettype(win_id)) then
                 return true
             end
-            local ignore_bt = lambda.p_table({ terminal = true, prompt = true, nofile = false })
-            local ignore_ft = lambda.p_table({
-                ["Telescope.*"] = true,
-                ["Neogit.*"] = true,
-                ["flutterTools.*"] = true,
-                ["qf"] = true,
-            })
-            local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
-            return has_bt or has_ft
+            local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
+            local ignore_ft = as.p_table({ ["Neogit.*"] = true, ["flutterTools.*"] = true, ["qf"] = true })
+            return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
         end,
     },
 })
@@ -318,31 +350,34 @@ ui({
     end,
 })
 ui({
+    "kevinhwang91/nvim-hlslens",
+    event = "VeryLazy",
+    config = function()
+        require("hlslens").setup({
+            calm_down = true,
+            nearest_only = true,
+            nearest_float_when = "always",
+        })
+
+        --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
+        --  now
+        vim.keymap.set({ "n", "x" }, "<leader>F", function()
+            vim.schedule(function()
+                if require("hlslens").exportLastSearchToQuickfix() then
+                    vim.cmd("cw")
+                end
+            end)
+            return ":noh<CR>"
+        end, { expr = true, desc = "hlslens: search and replace" })
+    end,
+})
+
+ui({
     "petertriho/nvim-scrollbar",
     lazy = true,
-    cond = lambda.config.ui.use_scrollbar,
+    cond = lambda.config.ui.scroll_bar.use_scrollbar,
     event = "VeryLazy",
-    dependencies = {
-        "kevinhwang91/nvim-hlslens",
-        config = function()
-            require("hlslens").setup({
-                calm_down = true,
-                nearest_only = true,
-                nearest_float_when = "always",
-            })
-
-            --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
-            --  now
-            vim.keymap.set({ "n", "x" }, "<leader>F", function()
-                vim.schedule(function()
-                    if require("hlslens").exportLastSearchToQuickfix() then
-                        vim.cmd("cw")
-                    end
-                end)
-                return ":noh<CR>"
-            end, { expr = true, desc = "hlslens: search and replace" })
-        end,
-    },
+    dependencies = { "kevinhwang91/nvim-hlslens" },
     config = function()
         require("scrollbar.handlers.search").setup()
         require("scrollbar").setup({
@@ -421,14 +456,6 @@ ui({
         })
     end,
 })
---  TODO: (vsedov) (02:31:08 - 02/06/23): This impacts dropbar, so this im not sure,
---  Further testing is required
-ui({
-    "tummetott/reticle.nvim",
-    cond = lambda.config.ui.use_reticle and false,
-    lazy = false,
-    config = conf.reticle,
-})
 
 --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
 --  i wonder if they are any better that what ive had before
@@ -449,7 +476,41 @@ ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     cond = lambda.config.ui.use_scroll,
     event = "VeryLazy",
-    opts = { hide_cursor = true, mappings = { "<C-d>", "<C-u>", "zt", "zz", "zb" } },
+    config = function()
+        require("neoscroll").setup({
+            -- All these keys will be mapped to their corresponding default scrolling animation
+            --mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+            mappings = { "C-j", "C-k", "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>" },
+            hide_cursor = true, -- Hide cursor while scrolling
+            stop_eof = false, -- Stop at <EOF> when scrolling downwards
+            -- use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
+            -- respect_scrolloff = true, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+            -- cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
+        })
+
+        local t = {}
+        t["<c-k>"] = { "scroll", { "-vim.wo.scroll", "true", "250" } }
+        t["<c-j>"] = { "scroll", { "vim.wo.scroll", "true", "250" } }
+        require("neoscroll.config").set_mappings(t)
+    end,
+})
+ui({
+    "rainbowhxch/beacon.nvim",
+    cond = lambda.config.ui.use_beacon,
+    event = "VeryLazy",
+    opts = {
+        minimal_jump = 20,
+        ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
+        ignore_filetypes = {
+            "qf",
+            "dap_watches",
+            "dap_scopes",
+            "neo-tree",
+            "NeogitCommitMessage",
+            "NeogitPopup",
+            "NeogitStatus",
+        },
+    },
 })
 ui({
     "mawkler/modicator.nvim",
@@ -478,4 +539,12 @@ ui({
         "u",
     },
     config = true,
+})
+ui({
+    "HampusHauffman/block.nvim",
+    lazy = true,
+    cmd = { "Block", "BlockOn", "BlockOff" },
+    config = function()
+        require("block").setup({})
+    end,
 })

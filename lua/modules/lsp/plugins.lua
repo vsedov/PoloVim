@@ -170,7 +170,30 @@ lsp({
     "santigo-zero/right-corner-diagnostics.nvim",
     cond = lambda.config.lsp.diagnostics.use_rcd,
     event = "LspAttach",
-    config = true,
+    config = function()
+        -- NOTE: Apply this settings before calling the `setup()`.
+        vim.diagnostic.config({
+            -- Disable default virtual text since you are using this plugin
+            -- already :)
+            virtual_text = false,
+
+            -- Do not display diagnostics while you are in insert mode, so if you have
+            -- `auto_cmds = true` it will not update the diagnostics while you type.
+            update_in_insert = false,
+        })
+
+        -- Default config:
+        require("rcd").setup({
+            -- Where to render the diagnostics: top or bottom, the latter sitting at
+            -- the bottom line of the buffer, not of the terminal.
+            position = "top", -- bottom
+
+            -- In order to print the diagnostics we need to use autocommands, you can
+            -- disable this behaviour and call the functions yourself if you think
+            -- your autocmds work better than the default ones with this option:
+            auto_cmds = true,
+        })
+    end,
 })
 
 lsp({
@@ -245,37 +268,16 @@ lsp({
         })
     end,
 })
-lsp({
-    "lvimuser/lsp-inlayhints.nvim",
-    cond = lambda.config.lsp.use_inlay_hints,
-    lazy = true,
-    branch = "anticonceal",
-    init = function()
-        if lambda.config.lsp.use_inlay_hints then
-            lambda.augroup("InlayHintsSetup", {
-                {
-                    event = "LspAttach",
-                    command = function(args)
-                        local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
-                        if not id then
-                            return
-                        end
-                        local client = vim.lsp.get_client_by_id(id)
-                        require("lsp-inlayhints").on_attach(client, args.buf)
-                    end,
-                },
-            })
-            lambda.highlight.plugin("inlayHints", { { LspInlayHint = { inherit = "Comment", italic = false } } })
-        end
-    end,
-    opts = {
-        inlay_hints = { priority = vim.highlight.priorities.user + 1 },
-    },
-})
 
 lsp({
     "neovim/nvimdev.nvim",
     lazy = true,
     ft = "lua",
     config = conf.nvimdev,
+})
+
+lsp({
+    "yorickpeterse/nvim-dd",
+    event = "LspAttach",
+    config = true,
 })

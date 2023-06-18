@@ -129,7 +129,7 @@ lambda.config.lsp = {
     diagnostics = {
         use_error_lens = false,
         use_lsp_lines = false,
-        use_rcd = true,
+        use_rcd = true, -- the least intrusive of the bunch
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -149,12 +149,12 @@ lambda.config.ui = {
     use_murmur = false, -- this causes issues with my yanky config -
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_scrollbar = true,
     use_scroll = true,
     use_tint = false, -- Might not be great for certain colourschemes
     use_hlsearch = true,
-    use_reticle = false,
     use_dropbar = true, -- I am not sure if this is causing lag / issues or something
+    use_beacon = true,
+    use_mini_animate = true,
     heirline = {
         use_heirline = true,
         use_status_col = false, -- true  for plugin or false for heirline
@@ -176,8 +176,13 @@ lambda.config.ui = {
     indent_lines = {
         use_indent_blankline = false,
         use_hlchunk = false,
-        use_mini = true, -- you have to disable indent_blank_line for this
+        use_mini_indent_scope = true,
     },
+    scroll_bar = {
+        use_scrollbar = true,
+    },
+}
+lambda.config.fun = {
     use_pet = false,
 }
 lambda.config.colourscheme = {

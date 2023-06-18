@@ -7,7 +7,6 @@ local function load_colourscheme()
 
     local rand = math.random(#theme)
     loader({ plugins = { theme[rand], "bionic-reading.nvim" } })
-    loader({ plugins = { "bionic-reading.nvim" } })
 end
 
 load_colourscheme() -- loads default colourscheme

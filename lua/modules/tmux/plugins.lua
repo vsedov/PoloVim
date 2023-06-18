@@ -20,8 +20,7 @@ tmux({
                 persist_zoom = false,
             },
         })
-
-        keymaps = {
+        local keymaps = {
             Up = function()
                 require("tmux").resize_top()
             end,
