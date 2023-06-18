@@ -1,16 +1,9 @@
 local highlight, ui, k = lambda.highlight, lambda.ui, vim.keycode
 local api = vim.api
-
 local cmp = require("cmp")
 local types = require("cmp.types")
-local compare = require("cmp.config.compare")
 local utils = require("modules.completion.cmp.utils")
 local border = lambda.style.border.type_0
-local fields = {
-    "kind",
-    "abbr",
-    "menu",
-}
 local cmp_window = {
     border = border,
     winhighlight = table.concat({
@@ -38,46 +31,47 @@ local config = {
         keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
         keyword_length = 1,
     },
-    confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
-    -- confirmation = {
-    --     default_behavior = types.cmp.ConfirmBehavior.Insert,
-    --     get_commit_characters = function(commit_characters)
-    --         return commit_characters
-    --     end,
-    -- },
-    experimental = { ghost_text = { hl_group = "Dimmed" } },
+    -- confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
+    confirmation = {
+        default_behavior = types.cmp.ConfirmBehavior.Insert,
+        get_commit_characters = function(commit_characters)
+            return commit_characters
+        end,
+        -- },
+        experimental = { ghost_text = { hl_group = "Dimmed" } },
 
-    mapping = require("modules.completion.cmp.mappings"),
-    sources = require("modules.completion.cmp.sources"),
+        mapping = require("modules.completion.cmp.mappings"),
+        sources = require("modules.completion.cmp.sources"),
 
-    enabled = function()
-        if vim.bo.ft == "TelescopePrompt" then
-            return false
-        end
-        if vim.bo.ft == "dashboard" then
-            return false
-        end
-        if vim.bo.ft == "lua" then
-            return true
-        end
-        local lnum, col = vim.fn.line("."), math.min(vim.fn.col("."), #vim.fn.getline("."))
-        for _, syn_id in ipairs(vim.fn.synstack(lnum, col)) do
-            syn_id = vim.fn.synIDtrans(syn_id) -- Resolve :highlight links
-            if vim.fn.synIDattr(syn_id, "name") == "Comment" then
+        enabled = function()
+            if vim.bo.ft == "TelescopePrompt" then
                 return false
             end
-        end
-        if string.find(vim.api.nvim_buf_get_name(0), "neorg://") then
-            return false
-        end
-        if string.find(vim.api.nvim_buf_get_name(0), "s_popup:/") then
-            return false
-        end
-        return true
-    end,
-    confirm_opts = {
-        behavior = cmp.ConfirmBehavior.Insert,
-        select = true,
+            if vim.bo.ft == "dashboard" then
+                return false
+            end
+            if vim.bo.ft == "lua" then
+                return true
+            end
+            local lnum, col = vim.fn.line("."), math.min(vim.fn.col("."), #vim.fn.getline("."))
+            for _, syn_id in ipairs(vim.fn.synstack(lnum, col)) do
+                syn_id = vim.fn.synIDtrans(syn_id) -- Resolve :highlight links
+                if vim.fn.synIDattr(syn_id, "name") == "Comment" then
+                    return false
+                end
+            end
+            if string.find(vim.api.nvim_buf_get_name(0), "neorg://") then
+                return false
+            end
+            if string.find(vim.api.nvim_buf_get_name(0), "s_popup:/") then
+                return false
+            end
+            return true
+        end,
+        confirm_opts = {
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = true,
+        },
     },
 }
 

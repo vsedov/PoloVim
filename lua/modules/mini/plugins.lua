@@ -17,23 +17,35 @@ mini({
     init = function()
         vim.api.nvim_create_autocmd("FileType", {
             pattern = {
-                "help",
                 "alpha",
+                "coc-explorer",
                 "dashboard",
-                "neo-tree",
-                "Trouble",
+                "fzf", -- fzf-lua
+                "help",
                 "lazy",
-                "mason",
-                "notify",
-                "toggleterm",
                 "lazyterm",
+                "lspsagafinder",
+                "mason",
+                "neo-tree",
+                "nnn",
+                "notify",
+                "NvimTree",
+                "qf",
+                "starter", -- mini.starter
+                "toggleterm",
+                "Trouble",
             },
             callback = function()
-                vim.b.miniindenminicope_disable = true
+                vim.b.miniindentscope_disable = true
+                vim.schedule(function()
+                    if MiniIndentscope then
+                        MiniIndentscope.undraw()
+                    end
+                end)
             end,
         })
     end,
-    opmini = {
+    opts = {
         symbol = "│",
         options = {
             border = "both",

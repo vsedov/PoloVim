@@ -3,28 +3,6 @@
 local M = {}
 local config = require("modules.lsp.lsp.config.config")
 
-local function add_lsp_buffer_keybindings(client, bufnr)
-    local mappings = {
-        normal_mode = "n",
-        insert_mode = "i",
-        visual_mode = "v",
-        extra_binds = "n",
-    }
-    for mode_name, mode_char in pairs(mappings) do
-        for key, remap in pairs(config.buffer_mappings[mode_name]) do
-            local opts = { buffer = bufnr, desc = remap[2], noremap = true, silent = true }
-            vim.keymap.set(mode_char, key, remap[1], opts)
-        end
-    end
-end
-
-function M.common_on_init(client, bufnr)
-    if config.on_init_callback then
-        config.on_init_callback(client, bufnr)
-        return
-    end
-end
-
 function M.common_capabilities()
     local capabilities = require("modules.lsp.lsp.config.capabilities")
     local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -42,14 +20,10 @@ function M.common_on_attach(client, bufnr)
     if client.server_capabilities.documentSymbolProvider and lambda.config.lsp.use_navbuddy then
         require("nvim-navbuddy").attach(client, bufnr)
     end
-
-    add_lsp_buffer_keybindings(client, bufnr)
-    require("modules.lsp.lsp.config.autocmd")
 end
 
 function M.get_common_opts()
     return {
-        on_init = M.common_on_init,
         on_attach = M.common_on_attach,
         capabilities = M.common_capabilities(),
     }

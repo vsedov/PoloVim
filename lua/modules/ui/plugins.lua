@@ -40,9 +40,15 @@ ui({
 
 ui({
     "stevearc/dressing.nvim",
-    event = "VeryLazy",
+    init = function()
+        ---@diagnostic disable-next-line: duplicate-set-field
+        vim.ui.select = function(...)
+            require("lazy").load({ plugins = { "dressing.nvim" } })
+            return vim.ui.select(...)
+        end
+    end,
     opts = {
-        input = { enabled = false },
+        input = { enabled = true },
         select = {
             backend = { "fzf_lua", "builtin" },
             builtin = {
@@ -92,7 +98,6 @@ ui({
         },
     },
 })
-
 ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
 
 --  ──────────────────────────────────────────────────────────────────────
