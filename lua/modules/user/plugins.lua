@@ -1,6 +1,5 @@
 local user = require("core.pack").package
 local api, fn = vim.api, vim.fn
-local ui = lambda.highlight
 user({
     "Dhanus3133/LeetBuddy.nvim",
     lazy = true,
@@ -337,4 +336,7 @@ user({
     config = function(_, opts)
         require("markmap").setup(opts)
     end,
+})
+user({
+    "lewis6991/fileline.nvim",
 })

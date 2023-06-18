@@ -48,7 +48,11 @@ ui({
         end
     end,
     opts = {
-        input = { enabled = true },
+        input = {
+            enabled = true,
+            border = lambda.style.border.type_0,
+            winhighlight = "Normal:CmpNormal,FloatBorder:CmpBorder",
+        },
         select = {
             backend = { "fzf_lua", "builtin" },
             builtin = {
@@ -451,12 +455,6 @@ ui({
             GitSignsDelete = builtin.gitsigns_click,
         })
     end,
-})
-ui({
-    "tummetott/reticle.nvim",
-    cond = lambda.config.ui.use_reticle,
-    event = { "WinNew", "WinLeave" },
-    config = true,
 })
 
 --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
