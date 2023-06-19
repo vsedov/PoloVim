@@ -190,7 +190,7 @@ local function general_overrides()
         { ["@type.qualifier"] = { inherit = "@keyword", italic = true } },
         -- { ["@variable"] = { clear = true } },
         { ["@parameter"] = { italic = true, bold = true, fg = "NONE" } },
-        { ["@error"] = { fg = "fg", bg = "NONE" } },
+        { ["@error"] = { fg = "fg", bg = "bg" } },
         { ["@text.diff.add"] = { link = "DiffAdd" } },
         { ["@text.diff.delete"] = { link = "DiffDelete" } },
         { ["@text.title.markdown"] = { underdouble = true } },

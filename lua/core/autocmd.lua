@@ -305,8 +305,8 @@ lambda.augroup("SaveFoldsWhenWriting", {
 })
 lambda.augroup("Norg", {
     {
-        event = "FileType",
-        pattern = "norg",
+        event = "BufWritePre",
+        pattern = "*.norg",
         command = function()
             vim.cmd([[StripTrailingWhitespace]])
         end,

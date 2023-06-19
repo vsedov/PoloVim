@@ -218,62 +218,43 @@ lsp({
 lsp({
     "KostkaBrukowa/definition-or-references.nvim",
     lazy = true,
-    config = function()
-        local make_entry = require("telescope.make_entry")
-        local pickers = require("telescope.pickers")
-        local finders = require("telescope.finders")
+    config = conf.definition_or_reference,
+})
 
-        local function filter_entries(results)
-            local current_file = vim.api.nvim_buf_get_name(0)
-            local current_line = vim.api.nvim_win_get_cursor(0)[1]
+lsp({
+    "lvimuser/lsp-inlayhints.nvim",
+    cond = lambda.config.lsp.use_inlay_hints,
+    lazy = true,
+    branch = "anticonceal",
+    init = function()
+        if lambda.config.lsp.use_inlay_hints then
+            lambda.augroup("InlayHintsSetup", {
+                {
+                    event = "LspAttach",
+                    command = function(args)
+                        local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
 
-            local function should_include_entry(entry)
-                -- if entry is on the same line
-                if entry.filename == current_file and entry.lnum == current_line then
-                    return false
-                end
-
-                -- if entry is closing tag - just before it there is a closing tag syntax '</'
-                if entry.col > 2 and entry.text:sub(entry.col - 2, entry.col - 1) == "</" then
-                    return false
-                end
-
-                return true
-            end
-
-            return vim.tbl_filter(should_include_entry, vim.F.if_nil(results, {}))
+                        if not id then
+                            return
+                        end
+                        local client = vim.lsp.get_client_by_id(id)
+                        require("lsp-inlayhints").on_attach(client, args.buf)
+                    end,
+                },
+            })
+            lambda.highlight.plugin("inlayHints", { { LspInlayHint = { inherit = "Comment", italic = false } } })
         end
-
-        local function handle_references_response(result)
-            local locations = vim.lsp.util.locations_to_items(result, "utf-8")
-            local filtered_entries = filter_entries(locations)
-            pickers
-                .new({}, {
-                    prompt_title = "LSP References",
-                    finder = finders.new_table({
-                        results = filtered_entries,
-                        entry_maker = make_entry.gen_from_quickfix(),
-                    }),
-                    previewer = require("telescope.config").values.qflist_previewer({}),
-                    sorter = require("telescope.config").values.generic_sorter({}),
-                    push_cursor_on_edit = true,
-                    push_tagstack_on_edit = true,
-                    initial_mode = "normal",
-                })
-                :find()
-        end
-
-        require("definition-or-references").setup({
-            on_references_result = handle_references_response,
-        })
     end,
+    opts = {
+        inlay_hints = { priority = vim.highlight.priorities.user + 1 },
+    },
 })
 
 lsp({
     "neovim/nvimdev.nvim",
     lazy = true,
     ft = "lua",
-    config = conf.nvimdev,
+    init = conf.nvimdev,
 })
 
 lsp({
