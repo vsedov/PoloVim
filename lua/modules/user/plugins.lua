@@ -302,3 +302,47 @@ user({
         require("markmap").setup(opts)
     end,
 })
+user({
+    "tomiis4/Hypersonic.nvim",
+    cmd = "Hypersonic",
+    keys = {
+        {
+            "<leader>r",
+            function()
+                vim.cmd([[Hypersonic]])
+            end,
+            mode = "v",
+        },
+    },
+    opts = {
+        border = lambda.style.border.type_0,
+    },
+})
+
+user({
+    "chrisbra/Recover.vim",
+    lazy = false,
+})
+user({
+    "tversteeg/registers.nvim",
+    keys = {
+        { '"', mode = { "n", "v" } },
+        { "<C-R>", mode = "i" },
+    },
+    cmd = "Registers",
+    config = true,
+})
+user({
+    "haya14busa/vim-edgemotion",
+    keys = {
+        { "<c-'>", "<Plug>(edgemotion-j)", mode = "" },
+        { "<c-#>", "<Plug>(edgemotion-k)", mode = "" },
+    },
+})
+user({
+    "norcalli/nvim-terminal.lua",
+    ft = "terminal",
+    config = function()
+        require("terminal").setup()
+    end,
+})

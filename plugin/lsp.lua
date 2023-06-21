@@ -24,7 +24,7 @@ local get_extra_binds = function()
     if lambda.config.use_saga_maps then
         binds = {
             ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
-            ["gh"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
+            ["gf"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
             ["gs"] = { "<cmd> Lspsaga goto_definition<cr>", "Goto Def" },
             ["gr"] = { "<cmd>Lspsaga rename<CR>", "rename" },
             ["gR"] = { "<cmd>Lspsaga rename ++project<CR>", "Rename Project" },
@@ -60,8 +60,9 @@ local buffer_mappings = {
             "Goto Def",
         },
 
-        ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
-        ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
+        -- NOTE: (vsedov) (13:38:09 - 20/06/23): Kinda pointless binds
+        -- ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
+        -- ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
         ["K"] = {
             function()
                 if not lambda.config.lsp.use_hover then
@@ -79,9 +80,15 @@ local buffer_mappings = {
             end,
             "Hover Left",
         },
+        ["cc"] = {
+            function()
+                vim.cmd([[Lspsaga code_action]])
+            end,
+            "Code action",
+        },
     },
     visual_mode = {
-        ["\\'"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
+        ["cc"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
     },
     insert_mode = {},
     extra_binds = get_extra_binds(),
@@ -198,20 +205,20 @@ local function setup_autocommands(client, buf)
         })
     end
 
-    -- if not vim.tbl_contains({ "norg" }, vim.bo.filetype) then
-    --     augroup(("LspInlayHints%d"):format(buf), {
-    --         {
-    --             event = { "BufReadPost", "BufEnter", "InsertLeave", "BufWritePost" },
-    --             desc = "LSP: Inlay Hints",
-    --             buffer = buf,
-    --             command = function()
-    --                 require("vim.lsp._inlay_hint").refresh()
-    --             end,
-    --         },
-    --     })
-    -- end
+    if client.supports_method("textDocument/inlayHint", { bufnr = buf }) then
+        augroup(("LspInlayHints%d"):format(buf), {
+            {
+                event = { "BufRead", "BufEnter", "InsertLeave", "BufWritePost" },
+                desc = "LSP: Inlay Hints",
+                buffer = buf,
+                command = function()
+                    vim.lsp._inlay_hint.refresh()
+                end,
+            },
+        })
+    end
 
-    if client.server_capabilities[provider.REFERENCES] then
+    if client.server_capabilities[provider.REFERENCES] and not lambda.config.ui.use_illuminate then
         augroup(("LspReferences%d"):format(buf), {
             {
                 event = { "CursorHold", "CursorHoldI" },
@@ -230,6 +237,9 @@ local function setup_autocommands(client, buf)
                 end,
             },
         })
+    end
+    if client.server_capabilities.documentSymbolProvider and lambda.config.lsp.use_navbuddy then
+        require("nvim-navbuddy").attach(client, buf)
     end
 end
 

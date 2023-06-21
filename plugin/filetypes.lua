@@ -20,13 +20,6 @@ settings({
             lambda.adjust_split_height(12, math.floor(vim.o.lines * 0.3))
         end,
     },
-    fzf = {
-        function(args)
-            -- remove the default terminal mappings
-            vim.keymap.del("t", "<esc>", { buffer = args.buf })
-            vim.keymap.del("t", "jk", { buffer = args.buf })
-        end,
-    },
     [{ "gitcommit", "gitrebase" }] = {
         bo = { bufhidden = "delete" },
         opt = {
