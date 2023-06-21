@@ -119,7 +119,6 @@ lambda.config.lsp = {
     only_severe_diagnostics = false,
     use_format_modifcation = false,
     use_navbuddy = true,
-    use_inlay_hints = true,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -221,14 +220,14 @@ lambda.config.colourscheme = {
 }
 
 lambda.config.movement = {
+    movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap
-    use_asterisk = false,
+    use_asterisk = true,
     harpoon = {
         goto_harpoon = false,
         use_tmux_or_normal = "nvim", -- nvim
     },
 }
-
 lambda.config.tools = {
     use_session = true,
     use_fundo = true, -- forgot the reason for why this was disabled
