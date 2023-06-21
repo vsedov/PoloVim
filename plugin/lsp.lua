@@ -178,14 +178,12 @@ local function setup_semantic_tokens(client, bufnr)
             buffer = bufnr,
             desc = fmt("Configure the semantic tokens for the %s", client.name),
             command = function(args)
-                if vim.tbl_contains({ "norg" }, vim.bo.filetype) then
-                    return
-                end
                 overrides.semantic_tokens(args.buf, client, args.data.token)
             end,
         },
     })
 end
+
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -206,16 +204,7 @@ local function setup_autocommands(client, buf)
     end
 
     if client.supports_method("textDocument/inlayHint", { bufnr = buf }) then
-        augroup(("LspInlayHints%d"):format(buf), {
-            {
-                event = { "BufRead", "BufEnter", "InsertLeave", "BufWritePost" },
-                desc = "LSP: Inlay Hints",
-                buffer = buf,
-                command = function()
-                    vim.lsp._inlay_hint.refresh()
-                end,
-            },
-        })
+        vim.lsp.buf.inlay_hint(buf, true)
     end
 
     if client.server_capabilities[provider.REFERENCES] and not lambda.config.ui.use_illuminate then

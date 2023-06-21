@@ -171,17 +171,6 @@ function config.treehopper()
             desc = "treehopper: highlight current node",
         },
         {
-            "H",
-            function()
-                return with_tsht() and ":<C-U>lua require('tsht').nodes({ignore_injections = false})<CR>"
-                    or [[<Plug>(leap-ast)]]
-            end,
-            mode = { "o", "x", "n" },
-            expr = true,
-            silent = true,
-            desc = "treehopper: highlight current node",
-        },
-        {
             "z<cr>",
             function()
                 if with_tsht() then
@@ -196,17 +185,6 @@ function config.treehopper()
             silent = true,
             desc = "God Fold",
         },
-        {
-            "z;",
-            function()
-                vim.cmd("normal! v")
-                require("leap-ast").leap()
-                vim.cmd("normal! Vzf")
-            end,
-            mode = "n",
-            silent = true,
-        },
-        desc = "leap fold",
     }
 end
 function config.asterisk_setup()

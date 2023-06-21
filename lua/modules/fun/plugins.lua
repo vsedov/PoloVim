@@ -57,3 +57,8 @@ fun({
 
 -- True emotional Support
 fun({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })
+
+fun({
+    "tjdevries/sPoNGe-BoB.NvIm",
+    cmd = "SpOnGeBoBtOgGlE",
+})

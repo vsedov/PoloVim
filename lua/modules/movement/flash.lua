@@ -1,33 +1,3 @@
-local api = vim.api
-function paranormal(targets)
-    -- Get the :normal sequence to be executed.
-    local input = vim.fn.input("normal! ")
-    if #input < 1 then
-        return
-    end
-
-    local ns = api.nvim_create_namespace("")
-
-    -- Set an extmark as an anchor for each target, so that we can also execute
-    -- commands that modify the positions of other targets (insert/change/delete).
-    for _, target in ipairs(targets) do
-        local line, col = unpack(target.pos)
-        id = api.nvim_buf_set_extmark(0, ns, line - 1, col - 1, {})
-        target.extmark_id = id
-    end
-
-    -- Jump to each extmark (anchored to the "moving" targets), and execute the
-    -- command sequence.
-    for _, target in ipairs(targets) do
-        local id = target.extmark_id
-        local pos = api.nvim_buf_get_extmark_by_id(0, ns, id, {})
-        vim.fn.cursor(pos[1] + 1, pos[2] + 1)
-        vim.cmd("normal! " .. input)
-    end
-
-    -- Clean up the extmarks.
-    api.nvim_buf_clear_namespace(0, ns, 0, -1)
-end
 local function get_windows()
     local wins = vim.api.nvim_tabpage_list_wins(0)
     local curr_win = vim.api.nvim_get_current_win()
@@ -42,7 +12,7 @@ local function jump_windows()
     require("flash").jump({
         search = { multi_window = true, wrap = true },
         highlight = { backdrop = true, label = { current = true } },
-        matcher = function(win)
+        matcher = function()
             return vim.tbl_map(function(window)
                 local wininfo = vim.fn.getwininfo(window)[1]
                 return {
@@ -82,6 +52,79 @@ local function jump_lines()
         end,
     })
 end
+
+vim.keymap.set({ "o", "x" }, "<c-w>", function()
+    local operator = vim.v.operator
+    local register = vim.v.register
+    vim.api.nvim_feedkeys(vim.keycode("<esc>"), "o", true)
+    vim.schedule(function()
+        require("flash").jump({
+            action = function(match, state)
+                local op_func = vim.go.operatorfunc
+                local saved_view = vim.fn.winsaveview()
+                vim.api.nvim_set_current_win(match.win)
+                vim.api.nvim_win_set_cursor(match.win, match.pos)
+                _G.flash_op = function()
+                    local start = vim.api.nvim_buf_get_mark(0, "[")
+                    local finish = vim.api.nvim_buf_get_mark(0, "]")
+                    vim.api.nvim_cmd({ cmd = "normal", bang = true, args = { "v" } }, {})
+                    vim.api.nvim_win_set_cursor(0, { start[1], start[2] })
+                    vim.cmd("normal! o")
+                    vim.api.nvim_win_set_cursor(0, { finish[1], finish[2] })
+                    vim.api.nvim_input('"' .. register .. operator)
+
+                    vim.schedule(function()
+                        vim.api.nvim_set_current_win(state.win)
+                        vim.fn.winrestview(saved_view)
+                        vim.go.operatorfunc = op_func
+                    end)
+
+                    _G.flash_op = nil
+                end
+                vim.go.operatorfunc = "v:lua.flash_op"
+                vim.api.nvim_feedkeys("g@", "n", false)
+            end,
+        })
+    end)
+end)
+local function search_win()
+    require("hlslens").start()
+    local pat = vim.fn.getreg("/")
+    require("flash").jump({
+        pattern = pat,
+        search = { multi_window = false, wrap = true },
+    })
+end
+
+local function search_ref()
+    local ref = require("illuminate.reference").buf_get_references(vim.api.nvim_get_current_buf())
+    if not ref or #ref == 0 then
+        return false
+    end
+
+    local targets = {}
+    for _, v in pairs(ref) do
+        table.insert(targets, {})
+    end
+
+    require("flash").jump({
+        matcher = function()
+            local results = {}
+            for _, v in pairs(ref) do
+                table.insert(results, {
+                    pos = { v[1][1] + 1, v[1][2] + 1 },
+                    end_pos = { v[1][1] + 1, v[1][2] + 1 },
+                })
+            end
+            return results
+        end,
+
+        search = { multi_window = true, wrap = true },
+    })
+
+    return true
+end
+
 local M = {}
 M.setup = function()
     require("flash").setup({
@@ -96,7 +139,24 @@ M.setup = function()
             -- add pattern to search register
             register = true,
             -- clear highlight after jump
-            nohlsearch = true,
+            nohlsearch = false,
+            autojump = true,
+        },
+        highlight = {
+            label = {
+                -- add a label for the first match in the current window.
+                -- you can always jump to the first match with `<CR>`
+                current = true,
+                -- show the label after the match
+                after = true, ---@type boolean|number[]
+                -- show the label before the match
+                before = true, ---@type boolean|number[]
+                -- position of the label extmark
+                style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
+                -- flash tries to re-use labels that were already assigned to a position,
+                -- when typing more characters. By default only lower-case labels are re-used.
+                reuse = "lowercase", ---@type "lowercase" | "all"
+            },
         },
         modes = {
             -- options used when flash is activated theough
@@ -104,23 +164,19 @@ M.setup = function()
             search = {
                 enabled = true, -- enable flash for search
                 highlight = { backdrop = true },
-                jump = { history = true, register = true, nohlsearch = true },
+                jump = { history = true, register = true, nohlsearch = false },
                 search = {
                     -- `forward` will be automatically set to the search direction
                     -- `mode` is always set to `search`
                     -- `incremental` is set to `true` when `incsearch` is enabled
                 },
             },
-            -- options used when flash is activated through
-            -- `f`, `F`, `t`, `T`, `;` and `,` motions
             char = {
                 enabled = true,
                 search = { wrap = true },
                 highlight = { backdrop = true },
                 jump = { register = true },
             },
-            -- options used for treesitter selections
-            -- `require("flash").treesitter()`
             treesitter = {
                 labels = "abcdefghijklmnopqrstuvwxyz",
                 jump = { pos = "range" },
@@ -183,21 +239,18 @@ M.binds = function()
             end,
         },
         {
-            "<c-s>", -- trree hopper thing replacement in some sense
+            "<S-cr>",
             mode = { "n", "o", "x" },
             function()
                 require("flash").jump()
             end,
         },
         {
-            "\\<cr>", -- this does not work yet.
+            "<c-s>",
             mode = { "n", "o", "x" },
             function()
                 require("flash").jump({
-                    search = { multi_window = true, wrap = true },
-                    highlight = { backdrop = true, label = { current = true } },
-
-                    action = paranormal,
+                    search = { multi_window = false },
                 })
             end,
         },
@@ -230,6 +283,87 @@ M.binds = function()
             function()
                 jump_lines()
             end,
+        },
+        {
+            "<c-w><c-w>",
+            mode = { "n" },
+            function()
+                require("flash").jump({
+                    search = {
+                        mode = function(str)
+                            return "\\<" .. str
+                        end,
+                    },
+                })
+            end,
+        },
+        {
+            "z<cr>",
+            function()
+                require("flash").treesitter()
+                vim.cmd("normal! Vzf")
+            end,
+            mode = "n",
+            silent = true,
+            desc = "God Fold",
+        },
+        {
+            "*",
+            function()
+                require("lasterisk").search()
+                vim.schedule(search_win)
+            end,
+            desc = "Search cword",
+        },
+        {
+            "*",
+            function()
+                require("lasterisk").search({ is_whole = false })
+                vim.schedule(search_win)
+                return "<C-\\><C-N>"
+            end,
+            mode = { "x" },
+            expr = true,
+            desc = "Search cword",
+        },
+        {
+            "g*",
+            function()
+                require("lasterisk").search({ is_whole = false })
+                vim.schedule(search_win)
+            end,
+            desc = "Search cword",
+        },
+        {
+            "#",
+            function()
+                if search_ref() then
+                    return
+                end
+                require("lasterisk").search()
+                vim.schedule(search_win)
+            end,
+            desc = "Search cword (ref)",
+        },
+        {
+            "#",
+            function()
+                require("lasterisk").search({ is_whole = false })
+
+                vim.schedule(search_win)
+                return "<C-\\><C-N>"
+            end,
+            mode = { "x" },
+            expr = true,
+            desc = "Search cword",
+        },
+        {
+            "g#",
+            function()
+                require("lasterisk").search({ is_whole = false })
+                vim.schedule(search_win)
+            end,
+            desc = "Search cword",
         },
     }
 end

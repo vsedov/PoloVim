@@ -197,6 +197,9 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         -- LSP
         -----------------------------------------------------------------------------//
+
+        { LspInlayHint = { bg = { from = "CursorLine" }, fg = { from = "Comment" } } },
+
         { LspCodeLens = { inherit = "Comment", bold = true, italic = false } },
         { LspCodeLensSeparator = { bold = false, italic = false } },
         { LspReferenceText = { bg = "NONE", underline = true, sp = { from = "Comment", attr = "fg" } } },

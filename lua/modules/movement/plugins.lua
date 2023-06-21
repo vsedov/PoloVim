@@ -71,6 +71,11 @@ else
     local flash = require("modules.movement.flash")
     movement({
         "folke/flash.nvim",
+        dependencies = {
+            { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
+            { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
+        },
+
         event = "VeryLazy",
         config = flash.setup,
         keys = flash.binds,
@@ -159,5 +164,4 @@ movement({
     config = conf.houdini,
 })
 
--- NOTE: (vsedov) (09:01:46 - 13/06/23): THIS IS A GREAT PLUGIN
 movement({ "tommcdo/vim-exchange", keys = { "cx", desc = "Exchange" } })
