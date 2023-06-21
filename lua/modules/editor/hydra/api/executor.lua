@@ -4,7 +4,7 @@ local cmd = function(cmd)
         vim.cmd(cmd)
     end
 end
-bracket = { "<cr>", "r" }
+local bracket = { "<cr>", "r" }
 
 local config = {
     Executor = {
@@ -31,13 +31,44 @@ local config = {
         s = { cmd("ExecutorSwapToPopup"), { exit = true, desc = "Swap to Popup view" } },
         I = { cmd("ExecutorShowDetail"), { exit = true, desc = "Show details" } },
         H = { cmd("ExecutorHideDetail"), { exit = true, desc = "Hide details" } },
+
+        [";"] = {
+            function()
+                local mode = vim.fn.mode()
+
+                if mode == "n" then
+                    require("sniprun").run()
+                else
+                    require("sniprun").run("v")
+                end
+            end,
+            { exit = true, desc = "SnipRun" },
+        },
+        C = {
+            function()
+                require("sniprun").clear_repl()
+            end,
+            { exit = true, desc = "SnipRun Clear Repl" },
+        },
+        D = {
+            function()
+                require("sniprun").info()
+            end,
+            { exit = true, desc = "SnipRun Info" },
+        },
+        A = {
+            function()
+                require("sniprun.display").close_all()
+            end,
+            { exit = true, desc = "SnipRun Close All" },
+        },
     },
 }
 
 return {
     config,
     "Executor",
-    { { "S", "s" }, { "R", "I", "H" } },
+    { { "S", "s" }, { "R", "I", "H" }, { ";", "C", "D", "A" } },
     bracket,
     6,
     3,

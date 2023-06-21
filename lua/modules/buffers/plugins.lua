@@ -13,7 +13,6 @@ buffer({
 
 buffer({
     "backdround/tabscope.nvim",
-    cond = lambda.config.editor.use_tabscope,
     lazy = true,
     event = "VeryLazy",
     config = true,
@@ -160,15 +159,15 @@ buffer({
     lazy = true,
     event = "VeryLazy",
     keys = {
-        "<A-1>",
-        "<A-2>",
-        "<A-3>",
-        "<A-4>",
-        "<A-5>",
-        "<A-6>",
-        "<A-7>",
-        "<A-8>",
-        "<A-9>",
+        "<c-b>1",
+        "<c-b>2",
+        "<c-b>3",
+        "<c-b>4",
+        "<c-b>5",
+        "<c-b>6",
+        "<c-b>7",
+        "<c-b>8",
+        "<c-b>9",
     },
     config = function()
         require("hook").setup({

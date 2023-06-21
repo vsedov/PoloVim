@@ -1,64 +1,81 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
 
-local leap = require("modules.movement.leap")
+if lambda.config.movement.movement_type == "leap" then
+    local leap = require("modules.movement.leap")
 
-movement({
-    "ggandor/leap.nvim",
-    lazy = true,
-    dependencies = { "tpope/vim-repeat" },
-    config = leap.leap_config,
-})
+    movement({
+        "ggandor/leap.nvim",
+        lazy = true,
+        dependencies = { "tpope/vim-repeat" },
+        config = leap.leap_config,
+    })
 
-movement({
-    "ggandor/leap-ast.nvim",
-    dependencies = {
-        "leap.nvim",
-    },
-    lazy = true,
-})
-movement({
-    "ggandor/leap-spooky.nvim",
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile", "BufEnter" },
-    dependencies = {
-        "leap.nvim",
-    },
-
-    opts = {
-        affixes = {
-            magnetic = { window = "m", cross_window = "M" },
-            remote = { window = "r", cross_window = "R" },
+    movement({
+        "ggandor/leap-ast.nvim",
+        dependencies = {
+            "leap.nvim",
         },
-        paste_on_remote_yank = true,
-    },
-    keys = leap.leap_spooky(),
-})
+        lazy = true,
+    })
+    movement({
+        "ggandor/leap-spooky.nvim",
+        lazy = true,
+        event = { "BufReadPre", "BufNewFile", "BufEnter" },
+        dependencies = {
+            "leap.nvim",
+        },
 
-movement({
-    "ggandor/flit.nvim",
-    lazy = true,
-    dependencies = { "ggandor/leap.nvim" },
-    config = leap.leap_flit,
-    keys = function()
-        local ret = {}
-        for _, key in ipairs({ "f", "F", "t", "T" }) do
-            ret[#ret + 1] = { key, mode = { "n", "x", "o" }, desc = key }
-        end
-        return ret
-    end,
-})
+        opts = {
+            affixes = {
+                magnetic = { window = "m", cross_window = "M" },
+                remote = { window = "r", cross_window = "R" },
+            },
+            paste_on_remote_yank = true,
+        },
+        keys = leap.leap_spooky(),
+    })
 
-movement({
-    "atusy/leap-search.nvim",
-    dependencies = {
-        { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
-        { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
-        "leap.nvim",
-    },
-    lazy = true,
-    keys = leap.leap_search,
-})
+    movement({
+        "ggandor/flit.nvim",
+        lazy = true,
+        dependencies = { "ggandor/leap.nvim" },
+        config = leap.leap_flit,
+        keys = function()
+            local ret = {}
+            for _, key in ipairs({ "f", "F", "t", "T" }) do
+                ret[#ret + 1] = { key, mode = { "n", "x", "o" }, desc = key }
+            end
+            return ret
+        end,
+    })
+
+    movement({
+        "atusy/leap-search.nvim",
+        dependencies = {
+            { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
+            { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
+            "leap.nvim",
+        },
+        lazy = true,
+        keys = leap.leap_search,
+    })
+    -- use leap for this
+    movement({
+        "mfussenegger/nvim-treehopper",
+        lazy = true,
+        dependencies = { "ggandor/leap.nvim" },
+        keys = conf.treehopper,
+    })
+else
+    local flash = require("modules.movement.flash")
+    movement({
+        "folke/flash.nvim",
+        event = "VeryLazy",
+        config = flash.setup,
+        keys = flash.binds,
+    })
+end
 
 movement({
     "haya14busa/vim-asterisk",
@@ -68,7 +85,7 @@ movement({
 movement({
     "ziontee113/syntax-tree-surfer",
     lazy = true,
-    keys = { "cU", "cD", "cd", "cu", "gfu", "gfo", "J", "cn", "cx" },
+    keys = { "cU", "cD", "cd", "cu", "J", "cn", "cx" },
     cmd = {
         "STSSwapPrevVisual",
         "STSSelectChildNode",
@@ -109,33 +126,7 @@ movement({
         { "m]", desc = "Switch To Previous Trail Mark Stack" },
         { "ms", desc = "Set Trail Mark Stack Sort Mode" },
     },
-    config = function()
-        require("trailblazer").setup({
-            auto_save_trailblazer_state_on_exit = true,
-            auto_load_trailblazer_state_on_enter = true,
-            mappings = {
-                nv = {
-                    -- Mode union: normal & visual mode. Can be extended by adding i, x, ...
-                    motions = {
-                        new_trail_mark = "ma",
-                        track_back = "mb",
-                        peek_move_next_down = "mj",
-                        peek_move_previous_up = "mk",
-                        toggle_trail_mark_list = "md",
-                    },
-                    actions = {
-                        delete_all_trail_marks = "mL",
-                        paste_at_last_trail_mark = "mn",
-                        paste_at_all_trail_marks = "mN",
-                        set_trail_mark_select_mode = "mt",
-                        switch_to_next_trail_mark_stack = "m[",
-                        switch_to_previous_trail_mark_stack = "m]",
-                        set_trail_mark_stack_sort_mode = "ms",
-                    },
-                },
-            },
-        })
-    end,
+    config = conf.trailblazer,
 })
 movement({
     "phaazon/hop.nvim",
@@ -167,32 +158,6 @@ movement({
     event = "ModeChanged",
     config = conf.houdini,
 })
---[[ jump to the first match by pressing the <Enter> key or <C-j> ; ]]
---[[ jump to any matches by typing :, then the label assigned to the match ; ]]
---[[ delete previous characters by pressing <Backspace> or <Control-h> ; ]]
---[[ delete the pattern by pressing <Control-u> ; ]]
---[[ cancel everything by pressing the <Escape> key. ]]
-movement({
-    "woosaaahh/sj.nvim",
-    lazy = true,
-    keys = {
-        { "!", mode = { "n" } },
-        { "<A-!>", mode = { "n" } },
-        { "<A-,>", mode = { "n" } },
-        { "<A-;>", mode = { "n" } },
-        -- { "c/", mode = { "n" } },
-        { ";/", mode = { "n" } },
-        { "<localleader>s", mode = { "n" } },
-        { "<localleader>S", mode = { "n" } },
-    },
-    config = conf.sj,
-})
 
-movement({
-    "mfussenegger/nvim-treehopper",
-    lazy = true,
-    dependencies = { "ggandor/leap.nvim" },
-    keys = conf.treehopper,
-})
 -- NOTE: (vsedov) (09:01:46 - 13/06/23): THIS IS A GREAT PLUGIN
 movement({ "tommcdo/vim-exchange", keys = { "cx", desc = "Exchange" } })

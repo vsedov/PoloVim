@@ -16,16 +16,7 @@ function config.neogen()
         },
     })
 end
-function config.dyn_help()
-    vim.keymap.set("n", "<leader>xw", function()
-        if require("dynamic_help.extras.statusline").available() ~= "" then
-            require("dynamic_help").float_help(vim.fn.expand("<cword>"))
-        else
-            local help = vim.fn.input("Help Tag> ")
-            require("dynamic_help").float_help(help)
-        end
-    end, {})
-end
+
 function config.nvim_doc_help()
     require("docs-view").setup({
         position = "bottom",
