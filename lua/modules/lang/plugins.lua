@@ -111,20 +111,3 @@ lang({
         "jay-babu/mason-nvim-dap.nvim",
     },
 })
-
-lang({
-    "bennypowers/nvim-regexplainer",
-    lazy = true,
-    dependencies = {
-        "nvim-treesitter/nvim-treesitter",
-        "MunifTanjim/nui.nvim",
-    },
-    cmd = {
-        "RegexplainerShow",
-        "RegexplainerShowSplit",
-        "RegexplainerShowPopup",
-        "RegexplainerHide",
-        "RegexplainerToggle",
-    },
-    config = conf.regexplainer,
-})

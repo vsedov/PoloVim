@@ -264,7 +264,15 @@ tools({
 tools({
     "chomosuke/term-edit.nvim",
     lazy = true, -- or ft = 'toggleterm' if you use toggleterm.nvim
-    ft = { "toggleterm", "terminal" },
+    event = "TermEnter",
+    config = function()
+        require("term-edit").setup({
+            prompt_end = "[»#$] ",
+            mapping = {
+                n = { s = false, S = false },
+            },
+        })
+    end,
 })
 
 tools({

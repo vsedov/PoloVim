@@ -222,35 +222,6 @@ lsp({
 })
 
 lsp({
-    "lvimuser/lsp-inlayhints.nvim",
-    cond = lambda.config.lsp.use_inlay_hints,
-    lazy = true,
-    branch = "anticonceal",
-    init = function()
-        if lambda.config.lsp.use_inlay_hints then
-            lambda.augroup("InlayHintsSetup", {
-                {
-                    event = "LspAttach",
-                    command = function(args)
-                        local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
-
-                        if not id then
-                            return
-                        end
-                        local client = vim.lsp.get_client_by_id(id)
-                        require("lsp-inlayhints").on_attach(client, args.buf)
-                    end,
-                },
-            })
-            lambda.highlight.plugin("inlayHints", { { LspInlayHint = { inherit = "Comment", italic = false } } })
-        end
-    end,
-    opts = {
-        inlay_hints = { priority = vim.highlight.priorities.user + 1 },
-    },
-})
-
-lsp({
     "neovim/nvimdev.nvim",
     lazy = true,
     ft = "lua",

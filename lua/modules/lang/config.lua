@@ -169,40 +169,4 @@ function config.python_dev()
         use_direnv = true,
     })
 end
-function config.regexplainer()
-    vim.cmd([[ Lazy load nui.nvim]])
-    require("regexplainer").setup({
-        -- 'narrative'
-        mode = "narrative", -- TODO: 'ascii', 'graphical'
-
-        -- automatically show the explainer when the cursor enters a regexp
-        auto = false,
-
-        -- filetypes (i.e. extensions) in which to run the autocommand
-        filetypes = {
-            "html",
-            "js",
-            "cjs",
-            "mjs",
-            "ts",
-            "jsx",
-            "tsx",
-            "cjsx",
-            "mjsx",
-            "go",
-            "lua",
-            "vim",
-            "python",
-        },
-
-        mappings = {
-            toggle = "<localleader><localleader>",
-        },
-
-        narrative = {
-            separator = "\n",
-        },
-    })
-end
-
 return config

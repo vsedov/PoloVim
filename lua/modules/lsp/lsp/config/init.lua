@@ -5,7 +5,7 @@ local config = require("modules.lsp.lsp.config.config")
 
 function M.common_capabilities()
     local capabilities = require("modules.lsp.lsp.config.capabilities")
-    local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+    local status_ok, cmp_nvim_lsp = lambda.pcall(require, "cmp_nvim_lsp")
 
     if status_ok then
         capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
@@ -16,9 +16,6 @@ end
 function M.common_on_attach(client, bufnr)
     if config.on_attach_callback[client.name] then
         config.on_attach_callback[client.name](client, bufnr)
-    end
-    if client.server_capabilities.documentSymbolProvider and lambda.config.lsp.use_navbuddy then
-        require("nvim-navbuddy").attach(client, bufnr)
     end
 end
 
