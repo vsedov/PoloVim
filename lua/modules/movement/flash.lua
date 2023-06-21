@@ -128,7 +128,8 @@ end
 local M = {}
 M.setup = function()
     require("flash").setup({
-        labels = "abcdefghijklmnopqrstuvwxyz",
+        labels = "sfnjklhodwembuyvrgtcx/zSFNJKLHODWEMBUYVRGTCX?Z",
+
         jump = {
             -- save location in the jumplist
             jumplist = true,
@@ -142,6 +143,7 @@ M.setup = function()
             nohlsearch = false,
             autojump = true,
         },
+
         highlight = {
             label = {
                 -- add a label for the first match in the current window.
@@ -150,12 +152,12 @@ M.setup = function()
                 -- show the label after the match
                 after = true, ---@type boolean|number[]
                 -- show the label before the match
-                before = true, ---@type boolean|number[]
+                before = false, ---@type boolean|number[]
                 -- position of the label extmark
                 style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
                 -- flash tries to re-use labels that were already assigned to a position,
                 -- when typing more characters. By default only lower-case labels are re-used.
-                reuse = "lowercase", ---@type "lowercase" | "all"
+                reuse = "all", ---@type "lowercase" | "all"
             },
         },
         modes = {
