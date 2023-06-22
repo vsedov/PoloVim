@@ -1,4 +1,4 @@
-constants = require("overseer.constants")
+local constants = require("overseer.constants")
 local files = require("overseer.files")
 local TAG = constants.TAG
 

@@ -84,7 +84,7 @@ ui({
                 return {
                     backend = "fzf_lua",
                     fzf_lua = lambda.fzf.dropdown({
-                        winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
+                        winopts = { title = opts.prompt, height = 0.33, row = 0.5, width = 0.8 },
                     }),
                 }
             end,
@@ -253,11 +253,11 @@ ui({
         },
         window_ignore_function = function(win_id)
             local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-            if win.diff or not falsy(fn.win_gettype(win_id)) then
+            if win.diff or not lambda.falsy(vim.fn.win_gettype(win_id)) then
                 return true
             end
-            local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
-            local ignore_ft = as.p_table({ ["Neogit.*"] = true, ["flutterTools.*"] = true, ["qf"] = true })
+            local ignore_bt = lambda.p_table({ terminal = true, prompt = true, nofile = false })
+            local ignore_ft = lambda.p_table({ ["Neogit.*"] = true, ["flutterTools.*"] = true, ["qf"] = true })
             return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
         end,
     },
@@ -354,9 +354,33 @@ ui({
     event = "VeryLazy",
     config = function()
         require("hlslens").setup({
-            calm_down = true,
-            nearest_only = true,
-            nearest_float_when = "always",
+            override_lens = function(render, posList, nearest, idx, relIdx)
+                local sfw = vim.v.searchforward == 1
+                local indicator, text, chunks
+                local absRelIdx = math.abs(relIdx)
+                if absRelIdx > 1 then
+                    indicator = ("%d%s"):format(absRelIdx, sfw ~= (relIdx > 1) and "▲" or "▼")
+                elseif absRelIdx == 1 then
+                    indicator = sfw ~= (relIdx == 1) and "▲" or "▼"
+                else
+                    indicator = ""
+                end
+
+                local lnum, col = unpack(posList[idx])
+                if nearest then
+                    local cnt = #posList
+                    if indicator ~= "" then
+                        text = ("[%s %d/%d]"):format(indicator, idx, cnt)
+                    else
+                        text = ("[%d/%d]"):format(idx, cnt)
+                    end
+                    chunks = { { " ", "Ignore" }, { text, "HlSearchLensNear" } }
+                else
+                    text = ("[%s %d]"):format(indicator, idx)
+                    chunks = { { " ", "Ignore" }, { text, "HlSearchLens" } }
+                end
+                render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
+            end,
         })
 
         --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
@@ -480,7 +504,7 @@ ui({
         require("neoscroll").setup({
             -- All these keys will be mapped to their corresponding default scrolling animation
             --mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-            mappings = { "C-j", "C-k", "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>" },
+            mappings = { "C-j", "C-k", "<C-u>", "<C-d>", "<C-b>", "<C-f>" },
             hide_cursor = true, -- Hide cursor while scrolling
             stop_eof = false, -- Stop at <EOF> when scrolling downwards
             -- use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope

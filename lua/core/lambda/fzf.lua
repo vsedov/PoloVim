@@ -1,8 +1,7 @@
-local fn, env, ui, reqcall = vim.fn, vim.env, lambda.style, lambda.reqcall
+local fn, env, ui = vim.fn, vim.env, lambda.style
 local icons, lsp_hls = ui.icons, ui.lsp.highlights
 local prompt = icons.misc.telescope .. "  "
 
-local fzf_lua = reqcall("fzf-lua") ---@module 'fzf-lua'
 ------------------------------------------------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------

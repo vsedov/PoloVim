@@ -48,7 +48,7 @@ function paranormal(targets)
 end
 
 function leap_to_window()
-    target_windows = require("leap.util").get_enterable_windows()
+    local target_windows = require("leap.util").get_enterable_windows()
     local targets = {}
     for _, win in ipairs(target_windows) do
         local wininfo = vim.fn.getwininfo(win)[1]
@@ -97,19 +97,27 @@ local function search_win()
 end
 
 local function search_ref()
-    local ref = require("illuminate.reference").buf_get_references(vim.api.nvim_get_current_buf())
-    if not ref or #ref == 0 then
-        return false
+    if lambda.config.ui.use_illuminate then
+        local ref = require("illuminate.reference").buf_get_references(vim.api.nvim_get_current_buf())
+        if not ref or #ref == 0 then
+            return false
+        end
+
+        local targets = {}
+        for _, v in pairs(ref) do
+            table.insert(targets, {
+                pos = { v[1][1] + 1, v[1][2] + 1 },
+            })
+        end
+        require("leap").leap({ targets = targets, target_windows = { vim.api.nvim_get_current_win() } })
+    else
+        require("leap-search").leap(
+            vim.fn.expand("<cword>"),
+            {},
+            { target_windows = { vim.api.nvim_get_current_win() } }
+        )
     end
 
-    local targets = {}
-    for _, v in pairs(ref) do
-        table.insert(targets, {
-            pos = { v[1][1] + 1, v[1][2] + 1 },
-        })
-    end
-
-    require("leap").leap({ targets = targets, target_windows = { vim.api.nvim_get_current_win() } })
     return true
 end
 
@@ -193,10 +201,29 @@ local function binds()
         },
 
         {
+            { "n", "x" },
+            "c/",
+            function()
+                require("leap-search").leap(nil, {
+                    engines = {
+                        { name = "string.find", plain = true, ignorecase = true },
+                        { name = "kensaku.query" },
+                    },
+                    experimental = {
+                        backspace = true,
+                        autojump = true,
+                        ctrl_v = true,
+                    },
+                    hl_group = "WarningMsg",
+                }, { target_windows = { vim.api.nvim_get_current_win() } })
+            end,
+            "leap search",
+        },
+        {
             { "n" },
             "g/",
             function()
-                require("leap-search").leap(nil, {
+                require("leap-search").leap(vim.fn.getreg("/"), {
                     engines = {
                         { name = "string.find", plain = true, ignorecase = true },
                         { name = "kensaku.query" },
@@ -208,14 +235,6 @@ local function binds()
                     },
                     hl_group = "WarningMsg",
                 }, { target_windows = { vim.api.nvim_get_current_win() } })
-            end,
-            "leap search",
-        },
-        {
-            { "n" },
-            "c/",
-            function()
-                require("leap-search").leap(vim.fn.getreg("/"))
             end,
             "leap search current / reg",
         },
@@ -234,7 +253,7 @@ function leap_setup()
     require("leap").setup({
         max_phase_one_targets = nil,
         highlight_unlabeled_phase_one_targets = true,
-        max_highlighted_traversal_targets = 200,
+        max_highlighted_traversal_targets = 10000,
         case_sensitive = false,
         equivalence_classes = { " \t", "\r\n" },
         substitute_chars = { ["\r"] = "¬", ["\n"] = "¬" },
@@ -396,6 +415,7 @@ function M.leap_search()
                 "g*",
                 function()
                     require("lasterisk").search({ is_whole = false })
+                    require("hlslens").start()
                     search_win()
                 end,
                 desc = "Search cword",
@@ -407,6 +427,7 @@ function M.leap_search()
                         return
                     end
                     require("lasterisk").search()
+                    require("hlslens").start()
                     search_win()
                 end,
                 desc = "Search cword (ref)",
@@ -428,7 +449,8 @@ function M.leap_search()
                 "g#",
                 function()
                     require("lasterisk").search({ is_whole = false })
-                    search_win()
+                    require("hlslens").start()
+                    vim.schedule(search_win)
                 end,
                 desc = "Search cword",
             },

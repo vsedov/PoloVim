@@ -86,51 +86,19 @@ if not configs["pylance"] then
             capabilities = vim.lsp.protocol.make_client_capabilities(),
             settings = {
                 editor = { formatOnType = true },
-                -- python = {
-                --     analysis = {
-                --         inlayHints = {
-                --             variableTypes = true,
-                --             functionReturnTypes = true,
-                --         },
-                --     },
-                -- },
-                --
                 python = {
                     analysis = {
-
-                        useLibraryCodeForTypes = true,
-                        typeCheckingMode = "basic", -- none
-                        completeFunctionParens = true,
                         autoSearchPaths = true,
-                        indexing = true,
-                        diagnosticMode = "openFilesOnly",
+                        useLibraryCodeForTypes = true,
+                        diagnosticMode = "workspace",
+                        typeCheckingMode = "basic",
+                        completeFunctionParens = true,
+                        indexing = false,
                         inlayHints = {
                             variableTypes = true,
                             functionReturnTypes = true,
-                        },
-                        -- Honestly just shut this thing up , its actually very annoying
-                        -- when it just keeps giving pointless error messages.
-                        diagnosticSeverityOverrides = {
-                            --felse: this can get very anonying
-                            reportMissingTypeStubs = false,
-                            -- stuff from top
-                            reportGeneralTypeIssues = true,
-                            reportUnboundVariable = false,
-                            reportUndefinedVariable = "error",
-                            reportUntypedClassDecorator = "none",
-                            reportUntypedFunctionDecorator = "none",
-                            reportFunctionMemberAccess = false,
-
-                            reportUnknownMemberType = false,
-                            reportUnknownVariableType = false,
-                            reportUnknownArgumentType = false,
-                            reportUnknownParameterType = false,
-                            reportUnknownLambdaType = false,
-                            strictParameterNoneValue = false,
-                            reportOptionalSubscript = false,
-                            reportOptionalMemberAccess = false,
-                            reportOptionalIterable = false,
-                            reportOptionalCall = "none",
+                            callArgumentNames = true,
+                            pytestParameters = true,
                         },
                     },
                 },

@@ -190,13 +190,16 @@ local function general_overrides()
         { ["@type.qualifier"] = { inherit = "@keyword", italic = true } },
         -- { ["@variable"] = { clear = true } },
         { ["@parameter"] = { italic = true, bold = true, fg = "NONE" } },
-        { ["@error"] = { fg = "fg", bg = "NONE" } },
+        { ["@error"] = { fg = "fg", bg = "bg" } },
         { ["@text.diff.add"] = { link = "DiffAdd" } },
         { ["@text.diff.delete"] = { link = "DiffDelete" } },
         { ["@text.title.markdown"] = { underdouble = true } },
         -----------------------------------------------------------------------------//
         -- LSP
         -----------------------------------------------------------------------------//
+
+        --         { LspInlayHint = { bg = { from = "CursorLine" }, fg = { from = "Comment" } } },
+
         { LspCodeLens = { inherit = "Comment", bold = true, italic = false } },
         { LspCodeLensSeparator = { bold = false, italic = false } },
         { LspReferenceText = { bg = "NONE", underline = true, sp = { from = "Comment", attr = "fg" } } },
@@ -255,8 +258,7 @@ local function set_telescope()
             { TelescopePromptTitle = { bg = P.grey, fg = { from = "Directory" }, bold = true } },
             { TelescopeResultsTitle = { bg = P.grey, fg = { from = "Normal" }, bold = true } },
             { TelescopePreviewTitle = { bg = P.grey, fg = { from = "Normal" }, bold = true } },
-            { TelescopePreviewBorder = { fg = P.grey, bg = { from = "PanelBackground" } } },
-            { TelescopePreviewNormal = { link = "PanelBackground" } },
+            -- { TelescopePreviewNormal = { link = "PanelBackground" } },
             { TelescopePromptPrefix = { link = "Statement" } },
             { TelescopeBorder = { fg = P.grey } },
             { TelescopeTitle = { inherit = "Normal", bold = true } },

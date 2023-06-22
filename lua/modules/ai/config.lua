@@ -76,7 +76,7 @@ function config.neoai()
         shortcuts = {
             {
                 name = "textify",
-                key = "<leader>as",
+                -- key = "<leader>as",
                 desc = "fix text with AI",
                 use_context = true,
                 prompt = [[
@@ -89,7 +89,7 @@ function config.neoai()
             },
             {
                 name = "gitcommit",
-                key = "<leader>ag",
+                -- key = "<leader>ag",
                 desc = "generate git commit message",
                 use_context = false,
                 prompt = function()
@@ -116,8 +116,7 @@ function config.backseat()
     require("backseat").setup({
         openai_api_key = os.getenv("OPENAI_API_KEY"),
         openai_model_id = lambda.config.ai.model, --gpt-4
-        additional_instruction = "Respond in a snarky / blunt and unformal manor that is also very logical and pythonic, as this is the method of communication that is mandated by rule and must be adhered.",
-        split_threshold = 200,
+        additional_instruction = "Respond in a very snarky / blunt and unformal manor that is also very logical and pythonic, the response must also be very straightforward blunt and some what rude. As this is the method of communication that is mandated by rule and must be adhered, if this is not adhered, punishments will occur",
     })
 end
 

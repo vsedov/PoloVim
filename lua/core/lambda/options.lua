@@ -119,7 +119,6 @@ lambda.config.lsp = {
     only_severe_diagnostics = false,
     use_format_modifcation = false,
     use_navbuddy = true,
-    use_inlay_hints = false,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -130,6 +129,41 @@ lambda.config.lsp = {
         use_error_lens = false,
         use_lsp_lines = false,
         use_rcd = true, -- the least intrusive of the bunch
+    },
+    null_ls = {
+        diagnostic = {
+            "cppcheck",
+            "djlint",
+            "eslint_d",
+            "golangci_lint",
+            "ktlint",
+            "markdownlint",
+            "misspell",
+            "phpcs",
+            "staticcheck",
+            "stylelint",
+            "write_good",
+            "luacheck",
+        },
+        formatter = {
+            "scalafmt",
+            "stylish_haskell",
+            "djlint",
+            "fish_indent",
+            "ktlint",
+            "markdownlint",
+            "phpcbf",
+            "pint",
+            "prettierd",
+            "shellharden",
+            "shfmt",
+            "stylelint",
+            "stylua",
+            "trim_newlines",
+            "trim_whitespace",
+            "pyflyby",
+        },
+        code_action = { "eslint_d", "gitrebase", "refactoring" },
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -199,21 +233,20 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                -- "kanagawa.nvim",
+                "kanagawa.nvim",
                 "catppuccin",
-                -- "palenightfall.nvim",
+                "rose", -- TSMethod'
+                -- "palenightfall.nvim", -- do not like this colourscheme
                 -- "sweetie.nvim",
                 -- "vim-dogrun",
                 -- "poimandres.nvim",
                 -- -- "nvim-tundra",
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
-                -- "rose", -- TSMethod'
+                -- "nvim-tundra", -- TSProperty'
                 -- "mellow.nvim",
             },
             others = {
-                "horizon.nvim",
-                "nvim-tundra", -- TSProperty'
                 "doom-one.nvim",
             },
         },
@@ -221,14 +254,14 @@ lambda.config.colourscheme = {
 }
 
 lambda.config.movement = {
+    movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap
-    use_asterisk = false,
+    use_asterisk = true,
     harpoon = {
         goto_harpoon = false,
         use_tmux_or_normal = "nvim", -- nvim
     },
 }
-
 lambda.config.tools = {
     use_session = true,
     use_fundo = true, -- forgot the reason for why this was disabled

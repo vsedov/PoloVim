@@ -403,6 +403,7 @@ end)
 
 lambda.command("Cd", function()
     vim.cmd([[tcd %:h]])
+    vim.notify("Changed directory to " .. fn.getcwd(), "info", { title = "Cd" })
 end, { force = true })
 
 lambda.command("Bonly", function()

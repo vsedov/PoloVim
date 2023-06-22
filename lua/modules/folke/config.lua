@@ -1,12 +1,5 @@
 local config = {}
-function config.luadev()
-    require("neodev").setup({
-        enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
-        runtime = true, -- runtime path
-        types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.LSP and others
-        plugins = false, -- installed opt or start plugins in pack path
-    })
-end
+
 function config.paint()
     require("paint").setup({
         -- @type PaintHighlight[]

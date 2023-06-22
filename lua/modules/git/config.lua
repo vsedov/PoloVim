@@ -205,7 +205,6 @@ function config.vgit()
             -- ["n <leader>bp"] = "buffer_blame_preview", -- buffer diff
             -- ["n <leader>bh"] = "buffer_history_preview", -- buffer commit history DiffviewFileHistory
             -- ["n <leader>gp"] = "buffer_staged_diff_preview", -- diff for staged changes
-            -- ["n <leader>pd"] = "project_diff_preview", -- diffview is slow
         },
         settings = {
             live_gutter = {

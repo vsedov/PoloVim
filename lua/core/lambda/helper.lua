@@ -112,7 +112,7 @@ function lambda.pcall(msg, func, ...)
         args, func, msg = { arg, unpack(args) }, msg, nil
     end
     return xpcall(func, function(err)
-        msg = debug.traceback(msg and fmt("%s:\n%s", msg, err) or err)
+        msg = debug.traceback(msg and fmt("%s:\n%s\n%s", msg, vim.inspect(args), err) or err)
         vim.schedule(function()
             vim.notify(msg, l.ERROR, { title = "ERROR" })
         end)
@@ -618,17 +618,9 @@ function lambda.p_table(map)
     })
 end
 
-function lambda.clever_tcd()
-    local root = require("lspconfig").util.root_pattern("Project.toml", ".git")(vim.api.nvim_buf_get_name(0))
-    if root == nil then
-        root = " %:p:h"
-    end
-
-    vim.schedule_wrap(function()
-        vim.cmd.tcd(root)
-    end)()
-end
-
+---Determine if a value of any type is empty
+---@param item any
+---@return boolean?
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean?
@@ -650,6 +642,17 @@ function lambda.falsy(item)
         return vim.tbl_isempty(item)
     end
     return item ~= nil
+end
+
+function lambda.clever_tcd()
+    local root = require("lspconfig").util.root_pattern("Project.toml", ".git")(vim.api.nvim_buf_get_name(0))
+    if root == nil then
+        root = " %:p:h"
+    end
+
+    vim.schedule_wrap(function()
+        vim.cmd.tcd(root)
+    end)()
 end
 
 function lambda.better_cd_tcd_lcd(option, root_or_current)

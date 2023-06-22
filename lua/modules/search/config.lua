@@ -50,7 +50,6 @@ function config.fzf()
         },
     })
 
-    vim.api.nvim_create_user_command("GP", "FzfLua git_files", {})
     vim.api.nvim_create_user_command("GF", "FzfLua git_status", {})
     vim.api.nvim_create_user_command("Gf", "FzfLua git_status", {})
     vim.api.nvim_create_user_command("B", "FzfLua buffers", { bang = true })

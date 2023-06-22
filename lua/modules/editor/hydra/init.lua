@@ -33,6 +33,9 @@ local function loadHydraAPI()
     local api_list = vim.split(fn.glob(api_path .. "*.lua", true), "\n")
     local M = require(MODULE_PREFIX .. "utils_rewrite")
     local exclude_table = { "init" }
+    if lambda.config.movement.movement_type == "flash" then
+        table.insert(exclude_table, "leap")
+    end
 
     for _, path in ipairs(api_list) do
         local name = fn.fnamemodify(path, ":t:r")

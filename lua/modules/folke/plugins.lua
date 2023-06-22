@@ -26,7 +26,12 @@ folke({
     event = "VeryLazy",
     config = conf.which_key,
 })
-folke({ "folke/trouble.nvim", cmd = { "Trouble", "TroubleToggle" }, lazy = true, config = true })
+folke({
+    "folke/trouble.nvim",
+    cmd = { "Trouble", "TroubleToggle" },
+    lazy = true,
+    config = true,
+})
 folke({
     "folke/todo-comments.nvim",
     event = "VeryLazy",
@@ -36,7 +41,14 @@ folke({
         lambda.command("TodoDots", ("TodoQuickFix cwd=%s keywords=TODO,FIXME"):format(vim.g.vim_dir))
     end,
 })
-folke({ "folke/neodev.nvim", lazy = true, ft = "lua", dependencies = "neovim/nvim-lspconfig", config = conf.luadev })
+folke({
+    "folke/neodev.nvim",
+    lazy = true,
+    ft = "lua",
+    opts = { library = {
+        plugins = { "nvim-dap-ui" },
+    } },
+})
 folke({
     "folke/paint.nvim",
     lazy = true,

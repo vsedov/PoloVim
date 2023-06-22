@@ -26,12 +26,6 @@ vim.defer_fn(function()
 end, lazy_timer + 80)
 
 vim.defer_fn(function()
-    if lambda.config.extra_search.enable and lambda.config.extra_search.providers.use_fzf_lua then
-        loader({ plugins = { "fzf-lua" } })
-    end
-end, lazy_timer + 100)
-
-vim.defer_fn(function()
     if lambda.config.record_your_self then
         loader({ plugins = { "vim-wakatime" } })
     end
@@ -40,7 +34,9 @@ vim.defer_fn(function()
     if vim.fn.getenv("TMUX") ~= nil then
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
     end
-    loader({ plugins = { "leap.nvim" } })
-    require("modules.movement.leap").highlight()
+    if lambda.config.movement.movement_type == "leap" then
+        loader({ plugins = { "leap.nvim" } })
+        require("modules.movement.leap").highlight()
+    end
     require("vscripts")
 end, 150)

@@ -33,6 +33,8 @@ mini({
                 "starter", -- mini.starter
                 "toggleterm",
                 "Trouble",
+                "neoai-input",
+                "neoai-*",
             },
             callback = function()
                 vim.b.miniindentscope_disable = true

@@ -7,47 +7,6 @@ ai({
     "jackMort/ChatGPT.nvim",
     lazy = true,
     cmd = { "ChatGPT", "ChatGPTRun", "ChatGPTActAs", "ChatGPTCompleteCode", "ChatGPTEditWithInstructions" },
-    keys = {
-        {
-            "<leader>ac",
-            function()
-                vim.cmd([[ChatGPT]])
-            end,
-            desc = "Chat with GPT-3",
-        },
-        {
-            "<leader>aa",
-            function()
-                vim.cmd([[ChatGPTActAs]])
-            end,
-            mode = { "n", "v" },
-            desc = "Chat with run as",
-        },
-        {
-            "<leader>ar",
-            function()
-                vim.cmd([[ChatGPTRun]])
-            end,
-            mode = { "n", "v" },
-            desc = "Chat with run as",
-        },
-        {
-            "<leader>ae",
-            function()
-                vim.cmd([[ChatGPTEditWithInstructions]])
-            end,
-            mode = { "n", "v" },
-            desc = "Chatgpt edit instructions",
-        },
-        {
-            "<leader>ac",
-            function()
-                vim.cmd([[ChatGPTCompleteCode]])
-            end,
-            mode = { "n", "v" },
-            desc = "Chat  Complete code",
-        },
-    },
     dependencies = {
         "MunifTanjim/nui.nvim",
         "nvim-lua/plenary.nvim",
@@ -74,10 +33,7 @@ ai({
         "NeoAIInjectCode",
         "NeoAIInjectContext",
         "NeoAIInjectContextCode",
-    },
-    keys = {
-        { "<leader>as", desc = "summarize text", mode = "v" },
-        { "<leader>ag", desc = "generate git message", mode = "n" },
+        "NeoAIShortcut",
     },
     config = conf.neoai,
 })
@@ -88,24 +44,6 @@ ai({
     init = function()
         vim.g.ai_completions_model = "gpt-4"
         vim.g.ai_no_mappings = 1 -- disbale default mappings
-
-        vim.keymap.set(
-            { "v", "x" },
-            "<localleader>w",
-            ":AI fix grammar and spelling and replace slang and contractions with a formal academic writing style.<CR>",
-            {
-                silent = true,
-            }
-        )
-
-        vim.keymap.set(
-            { "v", "x" },
-            "<localleader>aw",
-            ":AI fix grammar and spelling and rewrite this how tech would write this from the bad batch the tv show.<CR>",
-            {
-                silent = true,
-            }
-        )
     end,
 })
 
