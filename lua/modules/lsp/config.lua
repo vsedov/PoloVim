@@ -1,7 +1,7 @@
 local config = {}
 
 function config.mason_setup()
-    require("modules.lsp.lsp.mason.python")
+    require("modules.lsp.lsp.mason")
     local get_config = require("modules.lsp.lsp.mason.lsp_servers")
     require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
     require("mason-lspconfig").setup({
@@ -12,17 +12,13 @@ function config.mason_setup()
 
     require("mason-lspconfig").setup_handlers({
         function(name)
-            -- print(name)
+            print(name)
             local conf = get_config(name)
             if conf then
-                require("lspconfig")[name].setup(require("modules.lsp.lsp.config").enhance_attach({ conf }))
+                require("lspconfig")[name].setup(conf)
             end
         end,
     })
-end
-
-function config.lsp_install()
-    require("modules.lsp.lsp.providers.lsp_install")
 end
 
 function config.clangd()

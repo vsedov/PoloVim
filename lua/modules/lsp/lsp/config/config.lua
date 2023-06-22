@@ -1,20 +1,5 @@
+--  TODO: (vsedov) (17:37:21 - 22/06/23): refactor this into null-ls config instead
 local container = {
-    on_attach_callback = {
-        ["pylance"] = function(client, bufnr)
-            print("Pylance has been parsed")
-            require("modules.lsp.lsp.providers.python.pylance").attach_config(client, bufnr)
-        end,
-        ["pyright"] = function(client, bufnr)
-            require("modules.lsp.lsp.providers.python.pyright").attach_config(client, bufnr)
-        end,
-        ["ltex"] = function(client, bufnr)
-            require("modules.lsp.lsp.providers.latex.ltex").attach_config(client, bufnr)
-        end,
-        ["ruff_lsp"] = function(client, bufnr)
-            client.server_capabilities.hoverProvider = false
-        end,
-    },
-
     null_ls = {
         diagnostic = {
             "cppcheck",

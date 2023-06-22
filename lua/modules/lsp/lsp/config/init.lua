@@ -13,15 +13,8 @@ function M.common_capabilities()
     return capabilities
 end
 
-function M.common_on_attach(client, bufnr)
-    if config.on_attach_callback[client.name] then
-        config.on_attach_callback[client.name](client, bufnr)
-    end
-end
-
 function M.get_common_opts()
     return {
-        on_attach = M.common_on_attach,
         capabilities = M.common_capabilities(),
     }
 end

@@ -2,8 +2,8 @@
 -- Language servers
 -----------------------------------------------------------------------------//
 local fn = vim.fn
+local path = require("mason-core.path")
 local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
-
 local servers = {
     tsserver = true,
     graphql = true,
@@ -11,7 +11,6 @@ local servers = {
     bashls = true,
     terraformls = true,
     marksman = true,
-    pylance = true,
     gopls = {
         settings = {
             gopls = {
@@ -57,12 +56,11 @@ local servers = {
             table.insert(new_config.cmd, new_rootdir .. "/.config.yaml")
         end,
     },
-    jedi_language_server = require("modules.lsp.lsp.providers.python.jedi_lang"),
     sourcery = false, -- no clue what this does
     buf = true,
     grammarly = true,
     zls = true,
-    ruff_lsp = {}, -- this breaks nvimnavbudy
+    ruff_lsp = true, -- this breaks nvimnavbudy not like i use nvimnavybudy anyways or that either lol
     lua_ls = {
         settings = {
             Lua = {
@@ -90,6 +88,24 @@ local servers = {
         },
     },
 }
+
+local lsp_provider = {
+    jedi = "modules.lsp.lsp.providers.python.jedi_lang",
+    pyright = "modules.lsp.lsp.providers.python.pyright",
+}
+
+local config = lambda.config.lsp.python.lsp
+local python_lang = nil
+if config ~= "pylance" then
+    python_lang = require(lsp_provider[config])
+else
+    require("lspconfig").pylance.setup(require("modules.lsp.lsp.providers.python.pylance"))
+    python_lang = nil
+end
+
+if python_lang ~= nil then
+    vim.tbl_extend("force", servers, python_lang)
+end
 
 return function(name)
     local config = servers[name]
