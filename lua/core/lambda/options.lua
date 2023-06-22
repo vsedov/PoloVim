@@ -130,6 +130,41 @@ lambda.config.lsp = {
         use_lsp_lines = false,
         use_rcd = true, -- the least intrusive of the bunch
     },
+    null_ls = {
+        diagnostic = {
+            "cppcheck",
+            "djlint",
+            "eslint_d",
+            "golangci_lint",
+            "ktlint",
+            "markdownlint",
+            "misspell",
+            "phpcs",
+            "staticcheck",
+            "stylelint",
+            "write_good",
+            "luacheck",
+        },
+        formatter = {
+            "scalafmt",
+            "stylish_haskell",
+            "djlint",
+            "fish_indent",
+            "ktlint",
+            "markdownlint",
+            "phpcbf",
+            "pint",
+            "prettierd",
+            "shellharden",
+            "shfmt",
+            "stylelint",
+            "stylua",
+            "trim_newlines",
+            "trim_whitespace",
+            "pyflyby",
+        },
+        code_action = { "eslint_d", "gitrebase", "refactoring" },
+    },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
     --    │     languages                                                      │
@@ -198,21 +233,20 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                -- "kanagawa.nvim",
+                "kanagawa.nvim",
                 "catppuccin",
-                -- "palenightfall.nvim",
+                -- "palenightfall.nvim", -- do not like this colourscheme
                 -- "sweetie.nvim",
-                -- "vim-dogrun",
+                "vim-dogrun",
                 -- "poimandres.nvim",
                 -- -- "nvim-tundra",
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
-                -- "rose", -- TSMethod'
+                "nvim-tundra", -- TSProperty'
+                "rose", -- TSMethod'
                 -- "mellow.nvim",
             },
             others = {
-                "horizon.nvim",
-                "nvim-tundra", -- TSProperty'
                 "doom-one.nvim",
             },
         },

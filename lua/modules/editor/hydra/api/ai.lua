@@ -1,4 +1,7 @@
-local leader = "<leader>a"
+local leader = "<leader>A"
+--  TODO: (vsedov) (21:07:52 - 22/06/23): Some of this in inject so you have to give a prompt, il
+--  need to create a filter for those commands and then parse those through . for this i think this
+--  works though : Will need to come back to this for sure. I just needed more binds to work with
 local commands_table = {
     NeoAI = "Open NeoAI Side Bar",
     NeoAIToggle = "Toggle NeoAI window and send optional [prompt]",
@@ -32,8 +35,14 @@ local neoai_commands = function()
             }, function(inner_item)
                 vim.cmd(item .. " " .. inner_item)
             end)
+            -- if item contains Prompt then use vim.ui.input
+        elseif commands_table[item]:find("Prompt") then
+            vim.ui.input(commands_table[item], function(prompt)
+                vim.cmd(item .. " " .. prompt)
+            end)
+        else
+            vim.cmd(item)
         end
-        vim.cmd(item)
     end)
 end
 
@@ -73,25 +82,34 @@ local config = {
         },
         i = {
             function()
-                vim.cmd([[NeoAIInject]])
+                --  TODO: (vsedov) (21:29:08 - 22/06/23): arguments required
+                vim.ui.input("NeoAI Inject: ", function(prompt)
+                    vim.cmd("NeoAIInject " .. prompt)
+                end)
             end,
             { exit = true, desc = "NeoAI Inject" },
         },
         I = {
             function()
-                vim.cmd([[NeoAIInjectCode]])
+                vim.ui.input("NeoAI Inject Code: ", function(prompt)
+                    vim.cmd("NeoAIInjectCode " .. prompt)
+                end)
             end,
             { exit = true, desc = "NeoAI Inject Code" },
         },
         S = {
             function()
-                vim.cmd([[NeoAIInjectContext]])
+                vim.ui.input("NeoAI Inject Context: ", function(prompt)
+                    vim.cmd("NeoAIInjectContext " .. prompt)
+                end)
             end,
             { exit = true, desc = "NeoAI Inject Context" },
         },
         s = {
             function()
-                vim.cmd([[NeoAIInjectContextCode]])
+                vim.ui.input("NeoAI Inject Context Code: ", function(prompt)
+                    vim.cmd("NeoAIInjectContextCode " .. prompt)
+                end)
             end,
             { exit = true, desc = "NeoAI Inject Context Code" },
         },

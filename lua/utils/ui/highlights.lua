@@ -198,7 +198,7 @@ local function general_overrides()
         -- LSP
         -----------------------------------------------------------------------------//
 
-        { LspInlayHint = { bg = { from = "CursorLine" }, fg = { from = "Comment" } } },
+        --         { LspInlayHint = { bg = { from = "CursorLine" }, fg = { from = "Comment" } } },
 
         { LspCodeLens = { inherit = "Comment", bold = true, italic = false } },
         { LspCodeLensSeparator = { bold = false, italic = false } },
@@ -258,8 +258,7 @@ local function set_telescope()
             { TelescopePromptTitle = { bg = P.grey, fg = { from = "Directory" }, bold = true } },
             { TelescopeResultsTitle = { bg = P.grey, fg = { from = "Normal" }, bold = true } },
             { TelescopePreviewTitle = { bg = P.grey, fg = { from = "Normal" }, bold = true } },
-            { TelescopePreviewBorder = { fg = P.grey, bg = { from = "PanelBackground" } } },
-            { TelescopePreviewNormal = { link = "PanelBackground" } },
+            -- { TelescopePreviewNormal = { link = "PanelBackground" } },
             { TelescopePromptPrefix = { link = "Statement" } },
             { TelescopeBorder = { fg = P.grey } },
             { TelescopeTitle = { inherit = "Normal", bold = true } },

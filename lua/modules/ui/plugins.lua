@@ -84,7 +84,7 @@ ui({
                 return {
                     backend = "fzf_lua",
                     fzf_lua = lambda.fzf.dropdown({
-                        winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
+                        winopts = { title = opts.prompt, height = 0.33, row = 0.5, width = 0.8 },
                     }),
                 }
             end,
