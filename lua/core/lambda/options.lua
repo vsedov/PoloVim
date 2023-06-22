@@ -235,15 +235,15 @@ lambda.config.colourscheme = {
             core_themes = {
                 "kanagawa.nvim",
                 "catppuccin",
+                "rose", -- TSMethod'
                 -- "palenightfall.nvim", -- do not like this colourscheme
                 -- "sweetie.nvim",
-                "vim-dogrun",
+                -- "vim-dogrun",
                 -- "poimandres.nvim",
                 -- -- "nvim-tundra",
                 -- "mellifluous.nvim",
                 -- "tokyonight.nvim", -- allot
-                "nvim-tundra", -- TSProperty'
-                "rose", -- TSMethod'
+                -- "nvim-tundra", -- TSProperty'
                 -- "mellow.nvim",
             },
             others = {

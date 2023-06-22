@@ -33,10 +33,7 @@ ai({
         "NeoAIInjectCode",
         "NeoAIInjectContext",
         "NeoAIInjectContextCode",
-    },
-    keys = {
-        { "<leader>as", desc = "summarize text", mode = "v" },
-        { "<leader>ag", desc = "generate git message", mode = "n" },
+        "NeoAIShortcut",
     },
     config = conf.neoai,
 })

@@ -1,4 +1,8 @@
-local leader = "<leader>A"
+---@diagnostic disable: redefined-local
+local leader = "<leader>a"
+local utils = require("modules.editor.hydra.repl_utils")
+local run_cmd_with_count = utils.run_cmd_with_count
+
 --  TODO: (vsedov) (21:07:52 - 22/06/23): Some of this in inject so you have to give a prompt, il
 --  need to create a filter for those commands and then parse those through . for this i think this
 --  works though : Will need to come back to this for sure. I just needed more binds to work with
@@ -51,7 +55,7 @@ local config = {
         color = "red",
         body = leader,
         mode = { "n", "v", "x" },
-        ["<ESC>"] = { nil, { exit = true, desc = "exit" } },
+        ["<ESC>"] = { nil, { nowait = true, exit = true, desc = "exit" } },
 
         --  ╭────────────────────────────────────────────────────────────────────╮
         --  │         NEOAI Plugin                                               │
@@ -66,19 +70,19 @@ local config = {
             function()
                 vim.cmd([[NeoAIOpen]])
             end,
-            { exit = true, desc = "NeoAI Toggle" },
+            { nowait = true, exit = true, desc = "NeoAI Toggle" },
         },
         e = {
             function()
                 vim.cmd([[NeoAIContext]])
             end,
-            { exit = true, desc = "NeoAI Context" },
+            { nowait = true, exit = true, desc = "NeoAI Context" },
         },
         d = {
             function()
                 vim.cmd([[NeoAIContextOpen]])
             end,
-            { exit = true, desc = "NeoAI Context Open" },
+            { nowait = true, exit = true, desc = "NeoAI Context Open" },
         },
         i = {
             function()
@@ -87,7 +91,7 @@ local config = {
                     vim.cmd("NeoAIInject " .. prompt)
                 end)
             end,
-            { exit = true, desc = "NeoAI Inject" },
+            { nowait = true, exit = true, desc = "NeoAI Inject" },
         },
         I = {
             function()
@@ -95,82 +99,82 @@ local config = {
                     vim.cmd("NeoAIInjectCode " .. prompt)
                 end)
             end,
-            { exit = true, desc = "NeoAI Inject Code" },
+            { nowait = true, exit = true, desc = "NeoAI Inject Code" },
         },
-        S = {
+        w = {
             function()
                 vim.ui.input("NeoAI Inject Context: ", function(prompt)
                     vim.cmd("NeoAIInjectContext " .. prompt)
                 end)
             end,
-            { exit = true, desc = "NeoAI Inject Context" },
+            { nowait = true, exit = true, desc = "NeoAI Inject Context" },
         },
-        s = {
+        W = {
             function()
                 vim.ui.input("NeoAI Inject Context Code: ", function(prompt)
                     vim.cmd("NeoAIInjectContextCode " .. prompt)
                 end)
             end,
-            { exit = true, desc = "NeoAI Inject Context Code" },
+            { nowait = true, exit = true, desc = "NeoAI Inject Context Code" },
         },
         X = {
             function()
                 vim.cmd([[NeoAIContextClose]])
             end,
-            { exit = true, desc = "NeoAI Inject ContextClose" },
+            { nowait = true, exit = true, desc = "NeoAI Inject ContextClose" },
         },
         x = {
             function()
                 vim.cmd([[NeoAIClose]])
             end,
-            { exit = true, desc = "NeoAI Close" },
+            { nowait = true, exit = true, desc = "NeoAI Close" },
         },
 
         g = {
             function()
                 vim.cmd([[NeoAIShortcut gitcommit]])
             end,
-            { exit = true, desc = "NeoAI Shortcut gitcommit" },
+            { nowait = true, exit = true, desc = "NeoAI Shortcut gitcommit" },
         },
-        w = {
+        ["<leader>"] = {
             function()
                 vim.cmd([[NeoAIShortcut textify]])
             end,
-            { exit = true, desc = "NeoAI Shortcut textify" },
+            { nowait = true, exit = true, desc = "NeoAI Shortcut textify" },
         },
 
         --  ╭────────────────────────────────────────────────────────────────────╮
         --  │         CHATGPT Plugin                                             │
         --  ╰────────────────────────────────────────────────────────────────────╯
-        G = {
+        j = {
             function()
                 vim.cmd([[ChatGPT]])
             end,
-            { exit = true, desc = "Chat with GPT-3" },
+            { nowait = true, exit = true, desc = "Chat with GPT-4" },
         },
-        A = {
+        a = {
             function()
                 vim.cmd([[ChatGPTActAs]])
             end,
-            { exit = true, desc = "Chat with run as" },
+            { nowait = true, exit = true, desc = "Chat with Act as" },
         },
-        R = {
+        r = {
             function()
                 vim.cmd([[ChatGPTRun]])
             end,
-            { exit = true, desc = "Chat with run as" },
+            { nowait = true, exit = true, desc = "Chat with run as" },
         },
-        E = {
+        k = {
             function()
                 vim.cmd([[ChatGPTEditWithInstructions]])
             end,
-            { exit = true, desc = "Chatgpt edit instructions" },
+            { nowait = true, exit = true, desc = "Chatgpt edit instructions" },
         },
-        C = {
+        l = {
             function()
                 vim.cmd([[ChatGPTCompleteCode]])
             end,
-            { exit = true, desc = "Chat  Complete code" },
+            { nowait = true, exit = true, desc = "Chat  Complete code" },
         },
         --  ╭────────────────────────────────────────────────────────────────────╮
         --  │         Other AI PLugins                                           │
@@ -181,19 +185,47 @@ local config = {
                     [[AI fix grammar and spelling and replace slang and contractions with a formal academic writing style.]]
                 )
             end,
-            { exit = true, desc = "AI" },
+            { nowait = true, exit = true, desc = "AI: Fix grammar " },
         },
         ["-"] = {
             function()
                 local ask = vim.fn.input("Ask: ")
                 vim.cmd("AI " .. ask)
             end,
-            { exit = true, desc = "AI" },
+            { nowait = true, exit = true, desc = "AI: Ask - writes in buffer" },
+        },
+        S = {
+            run_cmd_with_count("REPLStart aichat"),
+            { nowait = true, desc = "Start an Aichat REPL", exit = true },
+        },
+        s = {
+            run_cmd_with_count("REPLSendMotion aichat"),
+            { nowait = true, desc = "Send current line to Aichat", exit = false },
+        },
+
+        f = {
+            run_cmd_with_count("REPLFocus aichat"),
+            { nowait = true, desc = "Focus on Aichat REPL", exit = true },
+        },
+        h = {
+            run_cmd_with_count("REPLHide aichat"),
+            { nowait = true, desc = "Hide Aichat REPL", exit = true },
+        },
+        C = {
+            run_cmd_with_count("REPLClose aichat"),
+            { nowait = true, desc = "Quit Aichat", exit = true },
+        },
+        c = {
+            run_cmd_with_count("REPLCleanup"),
+
+            { nowait = true, desc = "Clear aichat REPLs.", exit = true },
         },
     },
 }
-local brackets = { "<cr>", "o", "e", "d", "i", "I", "S", "s", "X", "x" }
-local inner = { { "g", "w" }, { "G", "A", "R", "E", "C" }, { ";", "-" } }
+
+local brackets = { "<cr>", "o", "e", "d", "i", "I", "w", "W", "x", "X" }
+local inner = { { "g", "<leader>" }, { "j", "k", "l", "a", "r" }, { "S", "s", "f", "h", "C", "c" }, { ";", "-" } }
+
 return {
     config,
     "AI",
