@@ -1,3 +1,12 @@
+local function highlight()
+    vim.api.nvim_set_hl(0, "FlashBackdrop", { link = "Conceal" })
+    vim.api.nvim_set_hl(0, "FlashLabel", {
+        fg = "#ff2f87",
+        bold = true,
+        nocombine = true,
+    })
+end
+
 local function get_windows()
     local wins = vim.api.nvim_tabpage_list_wins(0)
     local curr_win = vim.api.nvim_get_current_win()
@@ -29,64 +38,46 @@ local function jump_windows()
         end,
     })
 end
-
-local function jump_lines()
-    require("flash").jump({
-        search = { multi_window = true, wrap = true },
-        highlight = { backdrop = true, label = { current = true } },
-        matcher = function()
-            local results = {}
-            for i = vim.fn.line("w0"), vim.fn.line("w$") do
-                table.insert(results, {
-                    pos = { i, 1 },
-                    end_pos = { i, 0 },
-                })
-            end
-            return results
-        end,
-        action = function(match, _)
-            vim.api.nvim_set_current_win(match.win)
-            vim.api.nvim_win_call(match.win, function()
-                vim.api.nvim_win_set_cursor(match.win, { match.pos[1], 0 })
-            end)
-        end,
-    })
-end
-
-vim.keymap.set({ "o", "x" }, "<c-w>", function()
-    local operator = vim.v.operator
-    local register = vim.v.register
-    vim.api.nvim_feedkeys(vim.keycode("<esc>"), "o", true)
-    vim.schedule(function()
+-- TODO: jump to next one after first selection
+local function lsp_references()
+    local params = vim.lsp.util.make_position_params()
+    params.context = {
+        includeDeclaration = true,
+    }
+    local first = true
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.lsp.buf_request(bufnr, "textDocument/references", params, function(_, result, ctx)
+        if not vim.tbl_islist(result) then
+            result = { result }
+        end
+        if first and result ~= nil and not vim.tbl_isempty(result) then
+            first = false
+        else
+            return
+        end
         require("flash").jump({
-            action = function(match, state)
-                local op_func = vim.go.operatorfunc
-                local saved_view = vim.fn.winsaveview()
-                vim.api.nvim_set_current_win(match.win)
-                vim.api.nvim_win_set_cursor(match.win, match.pos)
-                _G.flash_op = function()
-                    local start = vim.api.nvim_buf_get_mark(0, "[")
-                    local finish = vim.api.nvim_buf_get_mark(0, "]")
-                    vim.api.nvim_cmd({ cmd = "normal", bang = true, args = { "v" } }, {})
-                    vim.api.nvim_win_set_cursor(0, { start[1], start[2] })
-                    vim.cmd("normal! o")
-                    vim.api.nvim_win_set_cursor(0, { finish[1], finish[2] })
-                    vim.api.nvim_input('"' .. register .. operator)
-
-                    vim.schedule(function()
-                        vim.api.nvim_set_current_win(state.win)
-                        vim.fn.winrestview(saved_view)
-                        vim.go.operatorfunc = op_func
-                    end)
-
-                    _G.flash_op = nil
-                end
-                vim.go.operatorfunc = "v:lua.flash_op"
-                vim.api.nvim_feedkeys("g@", "n", false)
+            mode = "references",
+            matcher = function()
+                local oe = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
+                return vim.tbl_map(function(loc)
+                    return {
+                        pos = { loc.lnum, loc.col - 1 },
+                        end_pos = { loc.end_lnum or loc.lnum, (loc.end_col or loc.col) - 1 },
+                    }
+                end, vim.lsp.util.locations_to_items(result, oe))
             end,
         })
     end)
-end)
+end
+
+local function jump_lines()
+    require("flash").jump({
+        search = { mode = "search" },
+        highlight = { label = { after = { 0, 0 }, before = false } },
+        pattern = "^",
+    })
+end
+
 local function search_win()
     require("hlslens").start()
     local pat = vim.fn.getreg("/")
@@ -129,6 +120,35 @@ local M = {}
 M.setup = function()
     require("flash").setup({
         labels = "sfnjklhodwembuyvrgtcx/zSFNJKLHODWEMBUYVRGTCX?Z",
+        search = {
+            -- search/jump in all windows
+            multi_window = true,
+            -- search direction
+            forward = true,
+            -- when `false`, find only matches in the given direction
+            wrap = true,
+            ---@type Flash.Pattern.Mode
+            -- Each mode will take ignorecase and smartcase into account.
+            -- * exact: exact match
+            -- * search: regular search
+            -- * fuzzy: fuzzy search
+            -- * fun(str): custom function that returns a pattern
+            --   For example, to only match at the beginning of a word:
+            --   mode = function(str)
+            --     return "\\<" .. str
+            --   end,
+            mode = "fuzzy", -- go with fuzzy for now, as i feel like this would feel the best right
+            -- behave like `incsearch`
+            incremental = false,
+            filetype_exclude = { "notify", "noice" },
+        },
+        char = {
+            keys = { "f", "F", "t", "T", ";", "," },
+            enabled = true,
+            search = { wrap = true },
+            highlight = { backdrop = true },
+            jump = { register = true },
+        },
 
         jump = {
             -- save location in the jumplist
@@ -150,9 +170,9 @@ M.setup = function()
                 -- you can always jump to the first match with `<CR>`
                 current = true,
                 -- show the label after the match
-                after = true, ---@type boolean|number[]
+                after = false, ---@type boolean|number[]
                 -- show the label before the match
-                before = false, ---@type boolean|number[]
+                before = true, ---@type boolean|number[]
                 -- position of the label extmark
                 style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
                 -- flash tries to re-use labels that were already assigned to a position,
@@ -173,12 +193,7 @@ M.setup = function()
                     -- `incremental` is set to `true` when `incsearch` is enabled
                 },
             },
-            char = {
-                enabled = true,
-                search = { wrap = true },
-                highlight = { backdrop = true },
-                jump = { register = true },
-            },
+
             treesitter = {
                 labels = "abcdefghijklmnopqrstuvwxyz",
                 jump = { pos = "range" },
@@ -190,8 +205,8 @@ M.setup = function()
             },
         },
     })
+    highlight()
 end
-
 M.binds = function()
     return {
         {
@@ -270,6 +285,13 @@ M.binds = function()
                         end)
                     end,
                 })
+            end,
+        },
+        {
+            "<leader>gd",
+            mode = { "n" },
+            function()
+                lsp_references()
             end,
         },
         {
@@ -366,6 +388,44 @@ M.binds = function()
                 vim.schedule(search_win)
             end,
             desc = "Search cword",
+        },
+        {
+            "<c-w>",
+            mode = { "o", "x" },
+            function()
+                local operator = vim.v.operator
+                local register = vim--[[  ]].v.register
+                vim.api.nvim_feedkeys(vim.keycode("<esc>"), "o", true)
+                vim.schedule(function()
+                    require("flash").jump({
+                        action = function(match, state)
+                            local op_func = vim.go.operatorfunc
+                            local saved_view = vim.fn.winsaveview()
+                            vim.api.nvim_set_current_win(match.win)
+                            vim.api.nvim_win_set_cursor(match.win, match.pos)
+                            _G.flash_op = function()
+                                local start = vim.api.nvim_buf_get_mark(0, "[")
+                                local finish = vim.api.nvim_buf_get_mark(0, "]")
+                                vim.api.nvim_cmd({ cmd = "normal", bang = true, args = { "v" } }, {})
+                                vim.api.nvim_win_set_cursor(0, { start[1], start[2] })
+                                vim.cmd("normal! o")
+                                vim.api.nvim_win_set_cursor(0, { finish[1], finish[2] })
+                                vim.go.operatorfunc = op_func
+                                vim.api.nvim_input('"' .. register .. operator)
+
+                                vim.schedule(function()
+                                    vim.api.nvim_set_current_win(state.win)
+                                    vim.fn.winrestview(saved_view)
+                                end)
+
+                                _G.flash_op = nil
+                            end
+                            vim.go.operatorfunc = "v:lua.flash_op"
+                            vim.api.nvim_feedkeys("g@", "n", false)
+                        end,
+                    })
+                end)
+            end,
         },
     }
 end

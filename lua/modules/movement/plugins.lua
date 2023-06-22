@@ -75,7 +75,6 @@ else
             { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
             { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
         },
-
         event = "VeryLazy",
         config = flash.setup,
         keys = flash.binds,

@@ -76,7 +76,7 @@ function config.neoai()
         shortcuts = {
             {
                 name = "textify",
-                key = "<leader>as",
+                -- key = "<leader>as",
                 desc = "fix text with AI",
                 use_context = true,
                 prompt = [[
@@ -89,7 +89,7 @@ function config.neoai()
             },
             {
                 name = "gitcommit",
-                key = "<leader>ag",
+                -- key = "<leader>ag",
                 desc = "generate git commit message",
                 use_context = false,
                 prompt = function()

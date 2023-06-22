@@ -201,7 +201,7 @@ local function binds()
         },
 
         {
-            { "n" },
+            { "n", "x" },
             "c/",
             function()
                 require("leap-search").leap(nil, {
@@ -211,7 +211,7 @@ local function binds()
                     },
                     experimental = {
                         backspace = true,
-                        autojump = false,
+                        autojump = true,
                         ctrl_v = true,
                     },
                     hl_group = "WarningMsg",
@@ -253,7 +253,7 @@ function leap_setup()
     require("leap").setup({
         max_phase_one_targets = nil,
         highlight_unlabeled_phase_one_targets = true,
-        max_highlighted_traversal_targets = 200,
+        max_highlighted_traversal_targets = 10000,
         case_sensitive = false,
         equivalence_classes = { " \t", "\r\n" },
         substitute_chars = { ["\r"] = "¬", ["\n"] = "¬" },
