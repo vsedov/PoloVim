@@ -219,6 +219,9 @@ M.setup = function()
 end
 M.binds = function()
     return {
+        --  ╭────────────────────────────────────────────────────────────────────╮
+        --  │         Word Jumpers                                               │
+        --  ╰────────────────────────────────────────────────────────────────────╯
         "/",
         "?",
         {
@@ -230,6 +233,7 @@ M.binds = function()
                     search = { forward = true, wrap = false, multi_window = false },
                 })
             end,
+            desc = "Operator Pending Flash Forward",
         },
         {
             "X",
@@ -239,6 +243,7 @@ M.binds = function()
                     search = { forward = false, wrap = false, multi_window = false },
                 })
             end,
+            desc = "Operator Pending Flash Backward",
         },
 
         {
@@ -250,6 +255,7 @@ M.binds = function()
                     search = { forward = true, wrap = false, multi_window = false },
                 })
             end,
+            desc = "Normal Mode Flash Forward",
         },
         {
             "S",
@@ -259,6 +265,7 @@ M.binds = function()
                     search = { forward = false, wrap = false, multi_window = false },
                 })
             end,
+            desc = "Normal Mode Flash Backward",
         },
         {
             "S", -- trree hopper thing replacement in some sense
@@ -266,6 +273,7 @@ M.binds = function()
             function()
                 require("flash").treesitter()
             end,
+            desc = "Operator Pending Flash Treesitter",
         },
         {
             "<S-cr>",
@@ -273,6 +281,8 @@ M.binds = function()
             function()
                 require("flash").jump()
             end,
+
+            desc = "Flash Current Screen",
         },
         {
             "<c-s>",
@@ -282,7 +292,50 @@ M.binds = function()
                     search = { multi_window = false },
                 })
             end,
+            desc = "Flash Current buffer",
         },
+        {
+            "<c-w><c-w>",
+            mode = { "n" },
+            function()
+                require("flash").jump({
+                    search = {
+                        mode = function(str)
+                            return "\\<" .. str
+                        end,
+                    },
+                })
+            end,
+            desc = "Match beginning of words only",
+        },
+        {
+            "<leader>ww",
+            mode = { "n", "x", "o" },
+            function()
+                local win = vim.api.nvim_get_current_win()
+                local view = vim.fn.winsaveview()
+                require("flash").jump({
+                    pattern = ".", -- initialize pattern with any char
+                    search = {
+                        mode = function(pattern)
+                            -- remove leading dot
+                            if pattern:sub(1, 1) == "." then
+                                pattern = pattern:sub(2)
+                            end
+                            -- return word pattern and proper skip pattern
+                            return ([[\v<%s\w*>]]):format(pattern), ([[\v<%s]]):format(pattern)
+                        end,
+                    },
+                    -- select the range
+                    jump = { pos = "range" },
+                })
+            end,
+            desc = "Select any word",
+        },
+
+        --  ╭────────────────────────────────────────────────────────────────────╮
+        --  │ lsp                                                                │
+        --  ╰────────────────────────────────────────────────────────────────────╯
 
         {
             "<leader>l",
@@ -307,20 +360,28 @@ M.binds = function()
                     end,
                 })
             end,
+            desc = "Show diagnostics at target, without changing cursor position",
         },
         {
-            "<leader>gd",
+            ";d",
             mode = { "n" },
             function()
                 lsp_references()
             end,
+            desc = "Flash Lsp References",
         },
+
+        --  ╭────────────────────────────────────────────────────────────────────╮
+        --  │         Window Jump and jump lines                                 │
+        --  ╰────────────────────────────────────────────────────────────────────╯
+
         {
             "<c-p>",
             mode = { "n" },
             function()
                 jump_windows()
             end,
+            desc = "Jump Windows",
         },
         {
             "<c-e>",
@@ -328,37 +389,34 @@ M.binds = function()
             function()
                 jump_lines()
             end,
+            desc = "Jump Lines",
         },
-        {
-            "<c-w><c-w>",
-            mode = { "n" },
-            function()
-                require("flash").jump({
-                    search = {
-                        mode = function(str)
-                            return "\\<" .. str
-                        end,
-                    },
-                })
-            end,
-        },
+
+        --  ╭────────────────────────────────────────────────────────────────────╮
+        --  │         Fold                                                       │
+        --  ╰────────────────────────────────────────────────────────────────────╯
         {
             "z<cr>",
             function()
                 require("flash").treesitter()
                 vim.cmd("normal! Vzf")
             end,
-            mode = "n",
+            mode = { "n" },
             silent = true,
             desc = "God Fold",
         },
+
+        --  ╭────────────────────────────────────────────────────────────────────╮
+        --  │         Lasterisk and better search                                │
+        --  ╰────────────────────────────────────────────────────────────────────╯
+
         {
             "*",
             function()
                 require("lasterisk").search()
                 vim.schedule(search_win)
             end,
-            desc = "Search cword",
+            desc = "Search cword *",
         },
         {
             "*",
@@ -369,7 +427,7 @@ M.binds = function()
             end,
             mode = { "x" },
             expr = true,
-            desc = "Search cword",
+            desc = "Search cword *",
         },
         {
             "g*",
@@ -377,7 +435,7 @@ M.binds = function()
                 require("lasterisk").search({ is_whole = false })
                 vim.schedule(search_win)
             end,
-            desc = "Search cword",
+            desc = "Search cword g*",
         },
         {
             "#",
@@ -388,7 +446,7 @@ M.binds = function()
                 require("lasterisk").search()
                 vim.schedule(search_win)
             end,
-            desc = "Search cword (ref)",
+            desc = "Search cword (ref) # ",
         },
         {
             "#",
@@ -400,7 +458,7 @@ M.binds = function()
             end,
             mode = { "x" },
             expr = true,
-            desc = "Search cword",
+            desc = "Search #",
         },
         {
             "g#",
@@ -408,45 +466,42 @@ M.binds = function()
                 require("lasterisk").search({ is_whole = false })
                 vim.schedule(search_win)
             end,
-            desc = "Search cword",
+            desc = "Search g#",
         },
+
+        --  ╭────────────────────────────────────────────────────────────────────╮
+        --  │         Remote Jumps  and treesitter bindings                      │
+        --  ╰────────────────────────────────────────────────────────────────────╯
+
         {
             "<c-w>",
             mode = { "o", "x" },
             function()
-                local operator = vim.v.operator
-                local register = vim--[[  ]].v.register
-                vim.api.nvim_feedkeys(vim.keycode("<esc>"), "o", true)
-                vim.schedule(function()
-                    require("flash").jump({
-                        action = function(match, state)
-                            local op_func = vim.go.operatorfunc
-                            local saved_view = vim.fn.winsaveview()
-                            vim.api.nvim_set_current_win(match.win)
-                            vim.api.nvim_win_set_cursor(match.win, match.pos)
-                            _G.flash_op = function()
-                                local start = vim.api.nvim_buf_get_mark(0, "[")
-                                local finish = vim.api.nvim_buf_get_mark(0, "]")
-                                vim.api.nvim_cmd({ cmd = "normal", bang = true, args = { "v" } }, {})
-                                vim.api.nvim_win_set_cursor(0, { start[1], start[2] })
-                                vim.cmd("normal! o")
-                                vim.api.nvim_win_set_cursor(0, { finish[1], finish[2] })
-                                vim.go.operatorfunc = op_func
-                                vim.api.nvim_input('"' .. register .. operator)
-
-                                vim.schedule(function()
-                                    vim.api.nvim_set_current_win(state.win)
-                                    vim.fn.winrestview(saved_view)
-                                end)
-
-                                _G.flash_op = nil
-                            end
-                            vim.go.operatorfunc = "v:lua.flash_op"
-                            vim.api.nvim_feedkeys("g@", "n", false)
-                        end,
-                    })
-                end)
+                require("flash").remote()
             end,
+            desc = "Remote Jump",
+        },
+        {
+
+            "<leader>s",
+            mode = { "n", "x", "o" },
+            function()
+                local win = vim.api.nvim_get_current_win()
+                local view = vim.fn.winsaveview()
+                require("flash").jump({
+                    action = function(match, state)
+                        state:hide()
+                        vim.api.nvim_set_current_win(match.win)
+                        vim.api.nvim_win_set_cursor(match.win, match.pos)
+                        require("flash").treesitter()
+                        vim.schedule(function()
+                            vim.api.nvim_set_current_win(win)
+                            vim.fn.winrestview(view)
+                        end)
+                    end,
+                })
+            end,
+            desc = "Jump to a position, make a Treesitter selection and jump back This should be bound to a keymap like <leader>t. Then you could do y<leader>t to remotely yank a Treesitter selection.",
         },
     }
 end

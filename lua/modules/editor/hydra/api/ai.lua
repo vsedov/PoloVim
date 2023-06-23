@@ -40,8 +40,8 @@ local neoai_commands = function()
                 vim.cmd(item .. " " .. inner_item)
             end)
             -- if item contains Prompt then use vim.ui.input
-        elseif commands_table[item]:find("Prompt") then
-            vim.ui.input(commands_table[item], function(prompt)
+        elseif commands_table[item]:find("prompt") then
+            vim.ui.input({ prompt = commands_table[item], default = "" }, function(prompt)
                 vim.cmd(item .. " " .. prompt)
             end)
         else
