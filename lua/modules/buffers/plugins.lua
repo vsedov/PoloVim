@@ -22,8 +22,8 @@ buffer({
     "toppair/reach.nvim",
     lazy = true,
     keys = { ";b" },
-    config = conf.reach,
     cmd = { "ReachOpen" },
+    config = conf.reach,
 })
 buffer({
     "ghillb/cybu.nvim",
@@ -57,12 +57,6 @@ buffer({
     lazy = true,
     event = "BufEnter",
     config = conf.sticky_buf,
-})
-
-buffer({
-    "nyngwang/NeoZoom.lua",
-    branch = "neo-zoom-original", -- UNCOMMENT THIS, if you prefer the old one
-    cmd = { "NeoZoomToggle" },
 })
 
 buffer({

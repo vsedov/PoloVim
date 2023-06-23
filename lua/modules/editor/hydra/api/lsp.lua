@@ -97,18 +97,6 @@ local config = {
         },
     },
 }
-if lambda.config.lsp.use_navbuddy then
-    local new_table = {
-        L = {
-            function()
-                require("nvim-navbuddy").open()
-            end,
-            { nowait = true, exit = true, desc = "NavBuddy" },
-        },
-    }
-    config.Lsp = vim.tbl_extend("force", config.Lsp, new_table)
-    bracket = { "J", "K", "L", "w" }
-end
 
 return {
     config,

@@ -295,7 +295,8 @@ M.binds = function()
             desc = "Flash Current buffer",
         },
         {
-            "<c-w><c-w>",
+            -- "<c-w><c-w>",
+            "<leader>S",
             mode = { "n" },
             function()
                 require("flash").jump({
@@ -309,7 +310,7 @@ M.binds = function()
             desc = "Match beginning of words only",
         },
         {
-            "<leader>ww",
+            "<leader>s",
             mode = { "n", "x", "o" },
             function()
                 local win = vim.api.nvim_get_current_win()
@@ -338,7 +339,7 @@ M.binds = function()
         --  ╰────────────────────────────────────────────────────────────────────╯
 
         {
-            "<leader>l",
+            ";a",
             mode = { "n" },
             function()
                 require("flash").jump({
@@ -474,7 +475,7 @@ M.binds = function()
         --  ╰────────────────────────────────────────────────────────────────────╯
 
         {
-            "<c-w>",
+            "r",
             mode = { "o", "x" },
             function()
                 require("flash").remote()
@@ -483,7 +484,7 @@ M.binds = function()
         },
         {
 
-            "\\<cr>",
+            "M",
             mode = { "n", "x", "o" },
             function()
                 local win = vim.api.nvim_get_current_win()

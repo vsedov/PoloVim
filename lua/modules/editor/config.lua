@@ -134,15 +134,14 @@ function config.dial()
             augend.date.alias["%Y年%-m月%-d日(%ja)"],
         },
     })
-    local map = vim.keymap.set
-    map("n", ";a", dial.inc_normal(), { remap = false })
-    map("n", ";x", dial.dec_normal(), { remap = false })
-    map("v", ";a", dial.inc_visual(), { remap = false })
-    map("v", "x;", dial.dec_visual(), { remap = false })
-    map("v", ";ga", dial.inc_gvisual(), { remap = false })
-    map("v", ";gx", dial.dec_gvisual(), { remap = false })
-    map("n", "_a", require("dial.map").inc_normal("mygroup"), { noremap = true })
-    map("n", "_x", require("dial.map").dec_normal("mygroup"), { noremap = true })
+    vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
+    vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
+    vim.keymap.set("n", "g<C-a>", require("dial.map").inc_gnormal(), { noremap = true })
+    vim.keymap.set("n", "g<C-x>", require("dial.map").dec_gnormal(), { noremap = true })
+    vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
+    vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
+    vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
+    vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
 end
 
 function config.hydra()

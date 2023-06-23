@@ -10,13 +10,6 @@ local cur_cur = nil
 
 local plug_map = {
     ["n|<M-w>"] = map_cmd("<cmd>NeoNoName<CR>", "NeoName Buffer"):with_noremap():with_silent():with_nowait(),
-    ["n|_<cr>"] = map_cmd(function()
-            vim.cmd("NeoZoomToggle")
-            vim.cmd("NeoWellJump") -- you can safely remove this line.
-        end, "NeoZoomToggle")
-        :with_noremap()
-        :with_silent()
-        :with_nowait(),
 
     ["n|<leader>cd"] = map_cmd(lambda.clever_tcd, "Cwd"):with_noremap():with_silent():with_nowait(),
 

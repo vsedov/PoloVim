@@ -57,10 +57,11 @@ ui({
             enabled = true,
             border = lambda.style.border.type_0,
             default_prompt = "➤ ",
-            win_options = { winhighlight = "Normal:Normal,NormalNC:Normal" },
+            win_options = { wrap = true, winhighlight = "Normal:Normal,NormalNC:Normal" },
             prefer_width = 100,
             min_width = 20,
             title_pos = "center",
+            relative = "editor",
         },
         select = {
             backend = { "fzf_lua", "builtin" },

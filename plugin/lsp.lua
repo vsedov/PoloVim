@@ -249,9 +249,6 @@ local function setup_autocommands(client, buf)
             },
         })
     end
-    if client.server_capabilities.documentSymbolProvider and lambda.config.lsp.use_navbuddy then
-        require("nvim-navbuddy").attach(client, buf)
-    end
 
     if client.server_capabilities.definitionProvider then
         vim.api.nvim_buf_set_option(buf, "tagfunc", "v:lua.vim.lsp.tagfunc")

@@ -77,15 +77,14 @@ local config = {
             end,
             { nowait = true, exit = true, desc = "NeoAI Context" },
         },
-        d = {
+        O = {
             function()
                 vim.cmd([[NeoAIContextOpen]])
             end,
-            { nowait = true, exit = true, desc = "NeoAI Context Open" },
+            { nowait = true, exit = true, desc = "NeoAI Context Toggle" },
         },
         i = {
             function()
-                --  TODO: (vsedov) (21:29:08 - 22/06/23): arguments required
                 vim.ui.input("NeoAI Inject: ", function(prompt)
                     vim.cmd("NeoAIInject " .. prompt)
                 end)
@@ -136,9 +135,7 @@ local config = {
             { nowait = true, exit = true, desc = "NeoAI Shortcut gitcommit" },
         },
         ["<leader>"] = {
-            function()
-                vim.cmd([[NeoAIShortcut textify]])
-            end,
+            "<C-v>:NeoAIShortcut textify<cr>",
             { nowait = true, exit = true, desc = "NeoAI Shortcut textify" },
         },
 
@@ -159,7 +156,25 @@ local config = {
         },
         r = {
             function()
-                vim.cmd([[ChatGPTRun]])
+                local options = {
+                    "fix_bugs",
+                    "keywords",
+                    "add_tests",
+                    "docstring",
+                    "summarize",
+                    "translate",
+                    "explain_code",
+                    "roxygen_edit",
+                    "complete_code",
+                    "optimize_code",
+                    "grammar_correction",
+                    "code_readability_analysis",
+                }
+                vim.ui.select(options, {
+                    prompt = "Chat with run as:",
+                }, function(inner_item)
+                    vim.cmd([[ChatGPTRun ]] .. inner_item)
+                end)
             end,
             { nowait = true, exit = true, desc = "Chat with run as" },
         },
@@ -222,7 +237,7 @@ local config = {
     },
 }
 
-local brackets = { "<cr>", "o", "e", "d", "i", "I", "w", "W", "x", "X" }
+local brackets = { "<cr>", "O", "o", "e", "i", "I", "w", "W", "x", "X" }
 local inner = { { "g", "<leader>" }, { "j", "k", "l", "a", "r" }, { "S", "s", "f", "h", "C", "c" }, { ";", "-" } }
 
 return {

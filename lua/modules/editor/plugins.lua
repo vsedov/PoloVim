@@ -84,17 +84,14 @@ editor({
     "monaqa/dial.nvim",
     lazy = true,
     keys = {
-        { ";x", mode = "n" },
-        { ";a", mode = "n" },
-
-        { ";a", mode = "v" },
-        { ";a", mode = "v" },
-
-        { ";ga", mode = "v" },
-        { ";gx", mode = "v" },
-
-        { "_a", mode = "n" },
-        { "_x", mode = "n" },
+        { "<c-a>", mode = "n" },
+        { "<c-x>", mode = "n" },
+        { "g<c-a>", mode = "n" },
+        { "g<c-x>", mode = "n" },
+        { "<c-a>", mode = "v" },
+        { "<c-x>", mode = "v" },
+        { "g<c-a>", mode = "v" },
+        { "g<c-x>", mode = "v" },
     },
     config = conf.dial,
 })
@@ -164,16 +161,6 @@ editor({
         vim.g.smartq_q_filetypes = smart_close_filetypes
     end,
     event = "VeryLazy",
-})
-
-editor({
-    "AndrewRadev/switch.vim",
-    lazy = true,
-    init = function()
-        vim.g.switch_mapping = "<leader>S"
-    end,
-    keys = { "<leader>S" },
-    cmd = { "Switch", "SwitchCase" },
 })
 
 editor({

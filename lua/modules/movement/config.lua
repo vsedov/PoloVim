@@ -3,16 +3,6 @@ function config.syntax_surfer()
     require("modules.movement.syntax_surfer")
 end
 
-function config.hop()
-    require("hop").setup({
-        -- keys = 'etovxqpdygfblzhckisuran',
-        quit_key = "<ESC>",
-        jump_on_sole_occurrence = true,
-        case_insensitive = true,
-        multi_windows = true,
-    })
-end
-
 -- use normal config for now
 function config.gomove()
     require("gomove").setup({
