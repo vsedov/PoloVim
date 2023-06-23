@@ -11,12 +11,6 @@ latex({
 })
 
 latex({
-    "jakewvincent/texmagic.nvim",
-    ft = filetype,
-    config = conf.texmagic,
-})
-
-latex({
     "jghauser/papis.nvim",
     lazy = true,
     ft = filetype,
@@ -42,4 +36,12 @@ latex({
     "barreiroleo/ltex-extra.nvim",
     lazy = true,
     ft = { "latex", "tex" },
+    config = function()
+        require("ltex_extra").setup({
+            load_langs = { "en-GB" }, -- table <string> : languages for witch dictionaries will be loaded
+            init_check = false, -- boolean : whether to load dictionaries on startup
+            path = nil, -- string : path to store dictionaries. Relative path uses current working directory
+            log_level = "none", -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
+        })
+    end,
 })

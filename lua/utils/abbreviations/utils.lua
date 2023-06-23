@@ -30,11 +30,12 @@ local remove_element_tbl = function(tbl, element)
     end
 end
 M.inoreabbrev = function(l, r)
-    vim.cmd({ cmd = "inoreabbrev", args = { l, r } })
+    vim.keymap.set("ia", l, r, { noremap = true })
 end
 
 M.cnoreabbrev = function(l, r)
     vim.cmd({ cmd = "cnoreabbrev", args = { l, r } })
+    -- vim.keymap.set("ca", l, r)
 end
 
 M.cnoremap = function(l, r)

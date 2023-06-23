@@ -84,7 +84,7 @@ lambda.config.treesitter = {
     },
     use_matchup = true,
     use_extra_highlight = true,
-    better_ts_highlights = false, -- This needs a direct toggle i think markid
+    better_ts_highlights = true, -- This needs a direct toggle i think markid
     use_highpairs = true,
 }
 
@@ -117,8 +117,7 @@ lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false,
-    use_format_modifcation = false,
-    use_navbuddy = true,
+    use_format_modifcation = true,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -173,7 +172,7 @@ lambda.config.lsp = {
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "pylance", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
     },
 }
@@ -184,9 +183,9 @@ lambda.config.ui = {
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_scroll = true,
-    use_tint = false, -- Might not be great for certain colourschemes
+    use_tint = true, -- Might not be great for certain colourschemes
     use_hlsearch = true,
-    use_dropbar = true, -- I am not sure if this is causing lag / issues or something
+    use_dropbar = true,
     use_beacon = true,
     use_mini_animate = true,
     heirline = {
@@ -201,11 +200,6 @@ lambda.config.ui = {
             use_markdown = true,
             use_documentation = true,
         },
-    },
-    flirt = {
-        use_flirt = true,
-        use_flirt_override = false,
-        move_mappings = false, -- if you  do not want to use  smart split
     },
     indent_lines = {
         use_indent_blankline = false,
@@ -235,13 +229,13 @@ lambda.config.colourscheme = {
             core_themes = {
                 "kanagawa.nvim",
                 "catppuccin",
-                "rose", -- TSMethod'
+                "vim-dogrun",
+                -- "rose", -- TSMethod'
                 -- "palenightfall.nvim", -- do not like this colourscheme
                 -- "sweetie.nvim",
-                -- "vim-dogrun",
                 -- "poimandres.nvim",
-                -- -- "nvim-tundra",
-                -- "mellifluous.nvim",
+                -- "nvim-tundra",
+                -- "mellifluous.nvim", -- BORKED
                 -- "tokyonight.nvim", -- allot
                 -- "nvim-tundra", -- TSProperty'
                 -- "mellow.nvim",
@@ -255,8 +249,8 @@ lambda.config.colourscheme = {
 
 lambda.config.movement = {
     movement_type = "flash", -- flash : leap
-    use_lasterisk = true, -- for leap
-    use_asterisk = true,
+    use_lasterisk = true, -- for leap and flash,
+    use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d
     harpoon = {
         goto_harpoon = false,
         use_tmux_or_normal = "nvim", -- nvim
@@ -266,4 +260,15 @@ lambda.config.tools = {
     use_session = true,
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = true,
+}
+
+lambda.config.windows = {
+    use_wrapping = true,
+    flirt = {
+        use_flirt = true,
+        use_flirt_override = false,
+        move_mappings = false, -- if you  do not want to use  smart split
+    },
+    use_navigator = false,
+    use_smart_splits = true,
 }

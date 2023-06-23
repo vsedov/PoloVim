@@ -90,7 +90,7 @@ local plug_map = {
     ["n|z0"] = map_cmd([[zCzO]]):with_noremap(),
 
     -- Toggle top/center/bottom
-    ["n|;d"] = map_cmd(
+    ["n|;D"] = map_cmd(
             [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
             "Toggle top center / bottom "
         )

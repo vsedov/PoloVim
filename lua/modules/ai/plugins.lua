@@ -17,6 +17,7 @@ ai({
 --
 ai({
     "Bryley/neoai.nvim",
+    event = "VimEnter",
     lazy = true,
     dependencies = {
         "MunifTanjim/nui.nvim",

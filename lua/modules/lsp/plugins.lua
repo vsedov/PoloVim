@@ -130,20 +130,6 @@ lsp({
 })
 
 lsp({
-    "SmiteshP/nvim-navbuddy",
-    lazy = true,
-    cond = lambda.config.lsp.use_navbuddy,
-    dependencies = {
-        "neovim/nvim-lspconfig",
-        "SmiteshP/nvim-navic",
-        "MunifTanjim/nui.nvim",
-        "numToStr/Comment.nvim", -- Optional
-        "nvim-telescope/telescope.nvim", -- Optional
-    },
-    opts = { lsp = { auto_attach = false } },
-})
-
-lsp({
     "chikko80/error-lens.nvim",
     cond = lambda.config.lsp.diagnostics.use_error_lens,
     lazy = true,

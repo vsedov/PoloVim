@@ -32,6 +32,7 @@ local container = {
             "trim_newlines",
             "trim_whitespace",
             "pyflyby",
+            "latexindent",
         },
         code_action = { "eslint_d", "gitrebase", "refactoring" },
     },

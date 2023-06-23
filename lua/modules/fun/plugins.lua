@@ -30,6 +30,7 @@ fun({
     "samuzora/pet.nvim",
     lazy = true,
     cond = lambda.config.fun.use_pet,
+    event = "VeryLazy",
     config = function()
         require("pet-nvim")
     end,

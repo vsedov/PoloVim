@@ -1,5 +1,6 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
+movement({ "tpope/vim-repeat", lazy = true })
 
 if lambda.config.movement.movement_type == "leap" then
     local leap = require("modules.movement.leap")
@@ -74,6 +75,7 @@ else
         dependencies = {
             { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
             { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
+            { "tpope/vim-repeat" },
         },
         event = "VeryLazy",
         config = flash.setup,

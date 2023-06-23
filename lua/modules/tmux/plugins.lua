@@ -43,6 +43,7 @@ tmux({
 -- Always load this
 tmux({
     "numToStr/Navigator.nvim",
+    cond = lambda.config.windows.use_navigator,
     event = "VeryLazy",
     config = function()
         require("Navigator").setup({

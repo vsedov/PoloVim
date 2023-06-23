@@ -171,7 +171,7 @@ local function general_overrides()
         --  Semantic tokens
         ------------------------------------------------------------------------------//
         -- { ["@lsp.type.variable"] = { clear = true } },
-        { ["@lsp.type.parameter"] = { italic = true, fg = { from = "Normal" } } },
+        { ["@lsp.type.parameter"] = { italic = true } },
         { ["@lsp.typemod.method"] = { link = "@method" } },
         { ["@lsp.typemod.variable.global"] = { bold = true, inherit = "@constant.builtin" } },
         { ["@lsp.typemod.variable.defaultLibrary"] = { italic = true } },

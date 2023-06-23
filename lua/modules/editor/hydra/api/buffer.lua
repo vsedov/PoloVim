@@ -1,5 +1,6 @@
 local bracket = { "l", "h", "L", "H", "=", "+", "b", "B", "<cr>" }
 local leader_key = "<leader>b"
+local hbac = require("hbac")
 
 local function buffer_move()
     vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
@@ -55,19 +56,6 @@ local config = {
             { desc = "[G]oto Prev [B]uffer", exit = false },
         },
 
-        ["["] = {
-            function()
-                require("three").next_tab()
-            end,
-            { desc = "[G]oto next [T]ab", exit = false },
-        },
-        ["]"] = {
-            function()
-                require("three").prev_tab()
-            end,
-            { desc = "[G]oto prev [T]ab", exit = false },
-        },
-
         B = {
             function()
                 vim.ui.input({ prompt = "enter the buffer you want to jump to" }, function(value)
@@ -99,19 +87,6 @@ local config = {
                 buffer_move()
             end,
             { desc = "[B]uffer [M]ove", exit = true },
-        },
-
-        n = {
-            function()
-                vim.cmd("$tabnew<CR>")
-            end,
-            { desc = "Tab New", exit = false },
-        },
-        C = {
-            function()
-                vim.cmd("$tabclose<cr>")
-            end,
-            { desc = "Tab close" },
         },
 
         P = {
@@ -219,6 +194,36 @@ local config = {
         },
 
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
+        ["<c-a>"] = {
+            function()
+                hbac.toggle_pin()
+            end,
+            { desc = "Hbac-Toggle Buf", exit = true },
+        },
+        ["<c-x>"] = {
+            function()
+                hbac.close_unpinned()
+            end,
+            { desc = "Hbac-Close Upin [C]", exit = true },
+        },
+        ["<c-p>"] = {
+            function()
+                hbac.pin_all()
+            end,
+            { desc = "Hbac-Pin All", exit = true },
+        },
+        ["<c-u>"] = {
+            function()
+                hbac.unpin_all()
+            end,
+            { desc = "Hbac-Unpin All", exit = true },
+        },
+        ["<c-t>"] = {
+            function()
+                hbac.toggle_autoclose()
+            end,
+            { desc = "Hbac AutoClose T", exit = true },
+        },
     },
 }
 
@@ -226,11 +231,11 @@ return {
     config,
     "Buffer",
     {
-        { "n", "C", "[", "]", "P" },
-        { "q", "Q", "M", "m" },
+        { "P", "q", "Q", "M", "m" },
         { "e", ">", "<", "p", "c" },
         { "D", "d" },
         { "1", "2", "3" },
+        { "<c-a>", "<c-x>", "<c-p>", "<c-u>", "<c-t>" },
     },
     bracket,
     6,
