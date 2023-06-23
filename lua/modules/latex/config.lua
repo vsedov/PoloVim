@@ -8,6 +8,7 @@ function config.vimtex()
         continuous = 1,
         executable = "latexmk",
         options = {
+            "-f",
             "-pdf",
             "-shell-escape",
             "-pdflatex",

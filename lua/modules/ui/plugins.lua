@@ -46,12 +46,21 @@ ui({
             require("lazy").load({ plugins = { "dressing.nvim" } })
             return vim.ui.select(...)
         end
+        ---@diagnostic disable-next-line: duplicate-set-field
+        vim.ui.input = function(...)
+            require("lazy").load({ plugins = { "dressing.nvim" } })
+            return vim.ui.input(...)
+        end
     end,
     opts = {
         input = {
             enabled = true,
             border = lambda.style.border.type_0,
-            winhighlight = "Normal:CmpNormal,FloatBorder:CmpBorder",
+            default_prompt = "➤ ",
+            win_options = { winhighlight = "Normal:Normal,NormalNC:Normal" },
+            prefer_width = 100,
+            min_width = 20,
+            title_pos = "center",
         },
         select = {
             backend = { "fzf_lua", "builtin" },
@@ -518,6 +527,7 @@ ui({
         require("neoscroll.config").set_mappings(t)
     end,
 })
+
 ui({
     "rainbowhxch/beacon.nvim",
     cond = lambda.config.ui.use_beacon,

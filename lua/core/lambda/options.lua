@@ -235,8 +235,8 @@ lambda.config.colourscheme = {
                 -- "palenightfall.nvim", -- do not like this colourscheme
                 -- "sweetie.nvim",
                 -- "poimandres.nvim",
-                -- -- "nvim-tundra",
-                -- "mellifluous.nvim",
+                -- "nvim-tundra",
+                -- "mellifluous.nvim", -- BORKED
                 -- "tokyonight.nvim", -- allot
                 -- "nvim-tundra", -- TSProperty'
                 -- "mellow.nvim",
