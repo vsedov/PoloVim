@@ -483,7 +483,7 @@ M.binds = function()
         },
         {
 
-            "<leader>s",
+            "\\<cr>",
             mode = { "n", "x", "o" },
             function()
                 local win = vim.api.nvim_get_current_win()

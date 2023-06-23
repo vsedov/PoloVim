@@ -33,7 +33,7 @@ ai({
         "NeoAIInjectCode",
         "NeoAIInjectContext",
         "NeoAIInjectContextCode",
-        "NeoAIShortcut"m,
+        "NeoAIShortcut",
     },
     config = conf.neoai,
 })
