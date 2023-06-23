@@ -87,7 +87,14 @@ local servers = {
             },
         },
     },
+    -- texlab = true,
+    texlab = require("modules.lsp.lsp.providers.latex.texlab"),
+    -- ltex = require("modules.lsp.lsp.providers.latex.ltex"),
 }
+
+-- local latex_providers = {
+-- }
+-- vim.tbl_extend("force", servers, latex_providers[lambda.config.lsp.latex])
 
 local lsp_provider = {
     jedi = "modules.lsp.lsp.providers.python.jedi_lang",
