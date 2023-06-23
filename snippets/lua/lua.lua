@@ -687,17 +687,17 @@ local lua = {
             },
         },
         -- = {
-        fmt([[{}[{}]], {
+        fmt([[{}("{}" {})]], {
             d(1, function()
-                local valid = {
-                    "completion",
-                    "editor",
-                    "lang",
-                    "tools",
-                    "ui",
-                    "useless",
-                    "user",
-                }
+                local files = vim.fn.globpath(vim.fn.stdpath("config") .. "/lua/modules", "*", true, true)
+                local valid = {}
+
+                for _, val in pairs(files) do
+                    local parts = vim.split(vim.fn.fnamemodify(val, ":t"), "/", true)
+                    local name = vim.split(parts[#parts], ".", true)[1]
+                    table.insert(valid, name)
+                end
+
                 -- get last dir name so completoin/snippets/init.lua would return snippets
                 local parts = vim.split(vim.fn.fnamemodify(vim.fn.expand("%:p"), ":h"), "/", true)
                 local file_dir = parts[#parts]
@@ -719,8 +719,8 @@ local lua = {
             end),
             d(2, function()
                 -- Get the author and URL in the clipboard and auto populate the author and project
-                local default = s("", { i(1, "author"), t("/"), t(2, "plugin") })
-                local clip = vim.fn.getreg("*") or vim.fn.getreg("+")
+                local default = s("", { i(1, "author"), t("/"), i(2, "plugin") })
+                local clip = vim.fn.getreg("*")
                 if not vim.startswith(clip, "https://github.com/") then
                     return default
                 end
@@ -729,46 +729,22 @@ local lua = {
                     return default
                 end
                 local author, project = parts[#parts - 1], parts[#parts]
-                local project_name = vim.split(project, ".", true)[1] -- remove .lua
-                return s("", {
-                    t({
-                        "'" .. author .. "/" .. project .. "']={",
-                    }),
-                    t({ "", "" }),
-                    t("    lazy = true,"),
-                    t({ "", "" }),
-                    t("    config = function()"),
-                    t({ "", "" }),
-                    t("        "),
-                    c(1, {
-                        fmt([[require("{}").setup({})]], {
-                            i(1, project_name),
-                            d(2, function()
-                                return sn(nil, {
-                                    t("{"),
-                                    i(1, ""),
-                                    t("}"),
-                                })
-                            end),
-                        }),
-                        fmt([[require("{}").setup({})]], {
-
-                            d(1, function()
-                                return s("", { t(project_name) })
-                            end),
-
-                            d(2, function()
-                                return s("", { t("{"), i(1, "module"), t("}") })
-                            end),
-                        }),
-                    }),
-
-                    t({ "", "" }),
-                    t("    end,"),
-                    t({ "", "" }),
-                    t("}"),
-                })
+                author = "{" .. author
+                return s("", { t(author .. "/" .. project) })
             end),
+            c(3, {
+                t(",config = true"),
+                fmt(
+                    [[
+              , config = function()
+                require("{}").setup()
+              end
+          ]],
+                    {
+                        i(1, "module"),
+                    }
+                ),
+            }),
         })
     ),
 }

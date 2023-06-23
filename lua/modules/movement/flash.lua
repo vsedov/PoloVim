@@ -1,12 +1,3 @@
-local function highlight()
-    vim.api.nvim_set_hl(0, "FlashBackdrop", { link = "Conceal" })
-    vim.api.nvim_set_hl(0, "FlashLabel", {
-        fg = "#ff2f87",
-        bold = true,
-        nocombine = true,
-    })
-end
-
 local function get_windows()
     local wins = vim.api.nvim_tabpage_list_wins(0)
     local curr_win = vim.api.nvim_get_current_win()
@@ -71,11 +62,7 @@ local function lsp_references()
 end
 
 local function jump_lines()
-    require("flash").jump({
-        search = { mode = "search" },
-        highlight = { label = { after = { 0, 0 }, before = false } },
-        pattern = "^",
-    })
+    require("flash").jump({ search = { mode = "search" }, highlight = { label = { after = { 0, 0 } } }, pattern = "^" })
 end
 
 local function search_win()
@@ -117,6 +104,15 @@ local function search_ref()
 end
 
 local M = {}
+function M.highlight()
+    vim.api.nvim_set_hl(0, "FlashBackdrop", { link = "Conceal" })
+    vim.api.nvim_set_hl(0, "FlashLabel", {
+        fg = "#ff2f87",
+        bold = true,
+        nocombine = true,
+    })
+end
+
 M.setup = function()
     require("flash").setup({
         labels = "sfnjklhodwembuyvrgtcx/zSFNJKLHODWEMBUYVRGTCX?Z",
@@ -191,6 +187,10 @@ M.setup = function()
                     -- `forward` will be automatically set to the search direction
                     -- `mode` is always set to `search`
                     -- `incremental` is set to `true` when `incsearch` is enabled
+                    search = {
+                        incremental = true,
+                        trigger = ";",
+                    },
                 },
             },
 
@@ -205,10 +205,22 @@ M.setup = function()
             },
         },
     })
-    highlight()
+
+    M.highlight()
+    lambda.augroup("Flash_Colourchange", {
+        {
+            event = { "ColorScheme" },
+            pattern = "*",
+            command = function()
+                M.highlight()
+            end,
+        },
+    })
 end
 M.binds = function()
     return {
+        "/",
+        "?",
         {
             "x",
             mode = { "o", "x" },
@@ -277,6 +289,15 @@ M.binds = function()
             mode = { "n" },
             function()
                 require("flash").jump({
+                    matcher = function(win)
+                        ---@param diag Diagnostic
+                        return vim.tbl_map(function(diag)
+                            return {
+                                pos = { diag.lnum + 1, diag.col },
+                                end_pos = { diag.end_lnum + 1, diag.end_col - 1 },
+                            }
+                        end, vim.diagnostic.get(vim.api.nvim_win_get_buf(win)))
+                    end,
                     action = function(match, state)
                         vim.api.nvim_win_call(match.win, function()
                             vim.api.nvim_win_set_cursor(match.win, match.pos)

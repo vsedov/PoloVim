@@ -302,6 +302,8 @@ user({
         require("markmap").setup(opts)
     end,
 })
+
+-- If there is regex, this seems very nice to work with .
 user({
     "tomiis4/Hypersonic.nvim",
     cmd = "Hypersonic",
@@ -317,11 +319,6 @@ user({
     opts = {
         border = lambda.style.border.type_0,
     },
-})
-
-user({
-    "chrisbra/Recover.vim",
-    lazy = false,
 })
 user({
     "tversteeg/registers.nvim",

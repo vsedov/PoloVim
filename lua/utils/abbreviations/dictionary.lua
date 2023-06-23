@@ -10,8 +10,10 @@ M.global_abbrevs = {
         { "fix:", [[<c-r>=printf(&commentstring, ' FIXME: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "bug:", [[<c-r>=printf(&commentstring, ' BUG: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "perf:", [[<c-r>=printf(&commentstring, ' PERF: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
+
         { "optim:", [[<c-r>=printf(&commentstring, ' OPTIM: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
         { "warn:", [[<c-r>=printf(&commentstring, ' WARNING: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },
+
         { "Ydate", [[<C-R>=strftime("%d-%b-%Y")<CR>]] },
         { "tdate:", [[<c-r>=strftime("%Y-%m-%d")<cr>]] },
         { ":FileName:", [[<c-r>=printf(&commentstring,fnamemodify(expand("%:p"), ":t"))<cr>]] },
