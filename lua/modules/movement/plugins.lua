@@ -1,5 +1,6 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
+
 movement({ "tpope/vim-repeat", lazy = true })
 
 if lambda.config.movement.movement_type == "leap" then
@@ -133,21 +134,6 @@ movement({
         { "ms", desc = "Set Trail Mark Stack Sort Mode" },
     },
     config = conf.trailblazer,
-})
-movement({
-    "phaazon/hop.nvim",
-    lazy = true,
-    cmd = {
-        "HopAnywhere",
-        "HopChar1",
-        "HopChar2",
-        "HopLine",
-        "HopLineStart",
-        "HopVertical",
-        "HopPattern",
-        "HopWord",
-    },
-    config = conf.hop,
 })
 
 movement({

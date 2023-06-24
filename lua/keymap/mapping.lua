@@ -11,12 +11,6 @@ local def_map = {
     ["n|[b"] = map_cu("bnext", "buf next"):with_noremap(),
 
     ["n|<Leader>w"] = map_cmd("<cmd>:w<cr>", "save"):with_noremap(),
-    -- ["n|<Leader>q"] = map_cmd(":q<CR>", "exit"):with_noremap(),
-
-    ["n|<C-h>"] = map_cmd("<C-w>h", "Jump h"):with_noremap(),
-    ["n|<C-l>"] = map_cmd("<C-w>l", "Jump l"):with_noremap(),
-    ["n|<C-J>"] = map_cmd("<C-w>j", "Jump j"):with_noremap(),
-    ["n|<C-k>"] = map_cmd("<C-w>k", "Jump k"):with_noremap(),
 
     ["n|<C-q>"] = map_cmd(":wq<CR>", "save exit"),
 

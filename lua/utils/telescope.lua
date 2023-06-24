@@ -24,7 +24,30 @@ local function reloader()
     RELOAD("telescope")
     RELOAD("utils.telescope")
 end
-
+local function flash(prompt_bufnr)
+    if lambda.config.movement.movement_type == "flash" then
+        require("flash").jump({
+            pattern = "^",
+            highlight = { label = { after = { 0, 0 } } },
+            search = {
+                mode = "search",
+                exclude = {
+                    function(win)
+                        return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "TelescopeResults"
+                    end,
+                },
+            },
+            action = function(match)
+                local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+                picker:set_selection(match.pos[1] - 1)
+            end,
+        })
+    else
+        vim.notify(
+            "you have reverted back to leap , but you =did not code this up yet, please insert the codeed version of this search"
+        )
+    end
+end
 local function rectangular_border(opts)
     return vim.tbl_deep_extend("force", opts or {}, {
         borderchars = {
@@ -135,6 +158,7 @@ M.setup = function()
             cycle_layout_list = { "flex", "horizontal", "vertical", "bottom_pane", "center" },
             mappings = {
                 n = {
+                    s = flash,
                     ["q"] = actions.close,
                     ["<C-j>"] = actions.move_selection_next,
                     ["<C-k>"] = actions.move_selection_previous,
@@ -152,17 +176,17 @@ M.setup = function()
                     ["<c-S>"] = custom_actions.multi_selection_open_split,
                     ["<c-t>"] = custom_actions.multi_selection_open_tab,
 
-                    -- ["<C-n>"] = function(prompt_bufnr)
-                    --     local results_win = state.get_status(prompt_bufnr).results_win
-                    --     local height = vim.api.nvim_win_get_height(results_win)
-                    --     action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
-                    -- end,
+                    ["<C-n>"] = function(prompt_bufnr)
+                        local results_win = state.get_status(prompt_bufnr).results_win
+                        local height = vim.api.nvim_win_get_height(results_win)
+                        action_set.shift_selection(prompt_bufnr, math.floor(height / 2))
+                    end,
 
-                    -- ["<C-p>"] = function(prompt_bufnr)
-                    --     local results_win = state.get_status(prompt_bufnr).results_win
-                    --     local height = vim.api.nvim_win_get_height(results_win)
-                    --     action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
-                    -- end,
+                    ["<C-s>"] = function(prompt_bufnr)
+                        local results_win = state.get_status(prompt_bufnr).results_win
+                        local height = vim.api.nvim_win_get_height(results_win)
+                        action_set.shift_selection(prompt_bufnr, -math.floor(height / 2))
+                    end,
 
                     ["<cr>"] = custom_actions.multi_selection_open,
                 },
@@ -171,16 +195,15 @@ M.setup = function()
                     ["<c-v>"] = custom_actions.multi_selection_open_vsplit,
                     ["<c-s>"] = custom_actions.multi_selection_open_split,
                     ["<c-t>"] = custom_actions.multi_selection_open_tab,
-
                     ["<C-j>"] = actions.move_selection_next,
-                    ["<c-p>"] = action_layout.toggle_prompt_position,
+                    ["<c-o>"] = action_layout.toggle_prompt_position,
                     ["<C-k>"] = actions.move_selection_previous,
                     ["<C-y>"] = set_prompt_to_entry_value,
                     ["<C-o>"] = actions.select_vertical,
                     ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
                     ["<C-a>"] = actions.send_to_qflist + actions.open_qflist,
-
-                    ["<C-h>"] = "which_key",
+                    ["<c-l>"] = flash,
+                    ["<C-w>"] = "which_key",
                     ["<C-l>"] = actions_layout.toggle_preview,
 
                     ["<C-d>"] = actions.preview_scrolling_down,

@@ -12,12 +12,41 @@ vim.cmd([[
 ]])
 
 local plug_map = {
-    -- new files
-    ["n|<localleader>ns"] = map_cmd([[:e <C-R>=expand("%:p:h") . "/" <CR>]], "newfiles"):with_silent(),
-    ["n|<localleader>nf"] = map_cmd([[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], "newfiles"):with_silent(),
+    ["n|<esc>"] = map_cmd(function()
+        require("notify").dismiss()
+        vim.cmd.nohl()
+    end, "Clear highlight from search and close notifications"):with_silent(),
 
-    ["n|<localleader>nh"] = map_cmd("<C-W>t <C-W>K", "horizontally split windows to vertical splits"):with_noremap(),
-    ["n|<localleader>nv"] = map_cmd("<C-W>t <C-W>H", "Change two vertically split windows to horizontal splits"):with_noremap(),
+    ["n|<leader>io"] = map_cmd(function()
+        local lines = {}
+        for _ = 1, math.max(vim.v.count, 1) do
+            table.insert(lines, "")
+        end
+        vim.api.nvim_buf_set_lines(
+            0,
+            vim.api.nvim_win_get_cursor(0)[1],
+            vim.api.nvim_win_get_cursor(0)[1],
+            false,
+            lines
+        )
+    end, " Insert empty line below"):with_silent(),
+
+    ["n|<leader>iO"] = map_cmd(function()
+        local lines = {}
+        for _ = 1, math.max(vim.v.count, 1) do
+            table.insert(lines, "")
+        end
+        vim.api.nvim_buf_set_lines(
+            0,
+            vim.api.nvim_win_get_cursor(0)[1] - 1,
+            vim.api.nvim_win_get_cursor(0)[1] - 1,
+            false,
+            lines
+        )
+    end, " Insert empty line above"):with_silent(),
+
+    ["n|<leader>ii"] = map_cmd("i <esc>l", " Insert space before"):with_noremap():with_silent(),
+    ["n|<leader>ia"] = map_cmd("a <esc>h", " Insert space after"):with_noremap():with_silent(),
 
     -- -- Replace word under cursor in Buffer (case-sensitive)
     -- -- nmap <leader>sr :%s/<C-R><C-W>//gI<left><left><left>
@@ -46,7 +75,6 @@ local plug_map = {
 
     ["n|<leader>cD"] = map_cmd([[:let @"=expand("%:p")<CR>]], "expand current dir"):with_silent():with_noremap(),
 
-    ["i|<C-U>"] = map_cmd([[<ESC>b~A]], "end of line"):with_silent():with_noremap(),
     ["n|¢"] = map_cmd([[bl~lhe]], "first two words captal"):with_silent():with_noremap(),
     ["n||_"] = map_cmd([[!v:count ? "<C-W>v<C-W><Right>" : '|']], "New Vertical Buffer"):with_silent():with_expr(),
     ["n|||"] = map_cmd([[!v:count ? "<C-W>s<C-W><Down>"  : '_']], "New Horizontal Buffer"):with_silent():with_expr(),
@@ -96,10 +124,6 @@ local plug_map = {
         )
         :with_noremap()
         :with_expr(),
-
-    ["n|<localleader>l"] = map_cmd([[<cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync fromstart<cr><c-l>]], "command line window - :<c-f>")
-        :with_noremap()
-        :with_silent(),
 }
 
 return plug_map

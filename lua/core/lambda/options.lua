@@ -84,7 +84,7 @@ lambda.config.treesitter = {
     },
     use_matchup = true,
     use_extra_highlight = true,
-    better_ts_highlights = true, -- This needs a direct toggle i think markid
+    better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
 }
 
@@ -117,7 +117,7 @@ lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false,
-    use_format_modifcation = true,
+    use_format_modifcation = false,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -227,10 +227,11 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
+                "tokyonight.nvim",
+                -- "kanagawa.nvim",
                 "catppuccin",
-                "vim-dogrun",
-                -- "rose", -- TSMethod'
+                -- "vim-dogrun",
+                "rose", -- TSMethod'
                 -- "palenightfall.nvim", -- do not like this colourscheme
                 -- "sweetie.nvim",
                 -- "poimandres.nvim",

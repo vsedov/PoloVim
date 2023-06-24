@@ -103,6 +103,11 @@ local function search_ref()
     return true
 end
 
+local function keybind_remove()
+    vim.keymap.del({ "o", "n" }, ";")
+    vim.keymap.del({ "o", "n" }, ",")
+end
+
 local M = {}
 function M.highlight()
     vim.api.nvim_set_hl(0, "FlashBackdrop", { link = "Conceal" })
@@ -133,10 +138,9 @@ M.setup = function()
             --   mode = function(str)
             --     return "\\<" .. str
             --   end,
-            mode = "fuzzy", -- go with fuzzy for now, as i feel like this would feel the best right
+            mode = "exact",
             -- behave like `incsearch`
             incremental = false,
-            filetype_exclude = { "notify", "noice" },
         },
         char = {
             keys = { "f", "F", "t", "T", ";", "," },
@@ -216,6 +220,8 @@ M.setup = function()
             end,
         },
     })
+
+    keybind_remove()
 end
 M.binds = function()
     return {
