@@ -1,3 +1,7 @@
+if not lambda then
+    return
+end
+
 local settings, highlight = lambda.filetype_settings, lambda.highlight
 local cmd, fn = vim.cmd, vim.fn
 

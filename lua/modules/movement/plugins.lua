@@ -1,5 +1,6 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
+
 movement({ "tpope/vim-repeat", lazy = true })
 
 if lambda.config.movement.movement_type == "leap" then
@@ -69,7 +70,8 @@ if lambda.config.movement.movement_type == "leap" then
         keys = conf.treehopper,
     })
 else
-    local flash = require("modules.movement.flash")
+    local binds = require("modules.movement.flash.binds")
+    local flash = require("modules.movement.flash.setup")
     movement({
         "folke/flash.nvim",
         dependencies = {
@@ -77,9 +79,9 @@ else
             { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
             { "tpope/vim-repeat" },
         },
-        event = "VeryLazy",
-        config = flash.setup,
-        keys = flash.binds,
+        opts = flash.opts(),
+        config = flash.config,
+        keys = binds,
     })
 end
 
@@ -133,21 +135,6 @@ movement({
         { "ms", desc = "Set Trail Mark Stack Sort Mode" },
     },
     config = conf.trailblazer,
-})
-movement({
-    "phaazon/hop.nvim",
-    lazy = true,
-    cmd = {
-        "HopAnywhere",
-        "HopChar1",
-        "HopChar2",
-        "HopLine",
-        "HopLineStart",
-        "HopVertical",
-        "HopPattern",
-        "HopWord",
-    },
-    config = conf.hop,
 })
 
 movement({

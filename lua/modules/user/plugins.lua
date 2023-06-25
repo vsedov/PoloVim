@@ -343,3 +343,8 @@ user({
         require("terminal").setup()
     end,
 })
+user({
+    "kiran94/maim.nvim",
+    config = true,
+    cmd = { "Maim", "MaimMarkdown" },
+})

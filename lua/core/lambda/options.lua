@@ -66,7 +66,7 @@ lambda.config.extra_search = {
 }
 lambda.config.buffer = {
     use_tabscope = true,
-    use_sticky_buf = false,
+    use_sticky_buf = true,
 
     use_bufignore = true,
     use_early_retirement = true,
@@ -84,7 +84,7 @@ lambda.config.treesitter = {
     },
     use_matchup = true,
     use_extra_highlight = true,
-    better_ts_highlights = true, -- This needs a direct toggle i think markid
+    better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
 }
 
@@ -117,7 +117,7 @@ lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false,
-    use_format_modifcation = true,
+    use_format_modifcation = false,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -172,7 +172,7 @@ lambda.config.lsp = {
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = "pylance", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         use_semantic_token = true,
     },
 }
@@ -182,7 +182,7 @@ lambda.config.ui = {
     use_murmur = false, -- this causes issues with my yanky config -
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_scroll = true,
+    use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
     use_tint = true, -- Might not be great for certain colourschemes
     use_hlsearch = true,
     use_dropbar = true,
@@ -190,7 +190,6 @@ lambda.config.ui = {
     use_mini_animate = true,
     heirline = {
         use_heirline = true,
-        use_status_col = false, -- true  for plugin or false for heirline
     },
     noice = {
         enable = true,
@@ -227,10 +226,11 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "kanagawa.nvim",
+                "tokyonight.nvim",
                 "catppuccin",
-                "vim-dogrun",
-                -- "rose", -- TSMethod'
+                "rose", -- TSMethod'
+                -- -- "kanagawa.nvim",
+                -- "vim-dogrun",
                 -- "palenightfall.nvim", -- do not like this colourscheme
                 -- "sweetie.nvim",
                 -- "poimandres.nvim",
@@ -262,6 +262,8 @@ lambda.config.tools = {
     use_flatten = true,
 }
 
+-- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux
+-- Tmux binding is not set properly for this yet.
 lambda.config.windows = {
     use_wrapping = true,
     flirt = {

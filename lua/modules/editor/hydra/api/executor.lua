@@ -27,12 +27,23 @@ local config = {
         },
 
         R = { cmd("ExecutorReset"), { exit = true, desc = "Reset Executor" } },
-        S = { cmd("ExecutorSwapToSplit"), { exit = true, desc = "Swap to Split view" } },
-        s = { cmd("ExecutorSwapToPopup"), { exit = true, desc = "Swap to Popup view" } },
-        I = { cmd("ExecutorShowDetail"), { exit = true, desc = "Show details" } },
-        H = { cmd("ExecutorHideDetail"), { exit = true, desc = "Hide details" } },
+        s = {
+            function()
+                vim.ui.select({ "popup", "split" }, function(selected)
+                    if selected == "popup" then
+                        cmd("ExecutorSwapToPopup")()
+                    else
+                        cmd("ExecutorSwapToSplit")()
+                    end
+                    vim.cmd("ExecutorToggleDetail")
+                end)
+            end,
+            { exit = true, desc = "Swap to popup/split" },
+        },
 
-        [";"] = {
+        S = { cmd("ExecutorToggleDetail"), { exit = true, desc = "Toggle details" } },
+
+        w = {
             function()
                 local mode = vim.fn.mode()
 
@@ -42,7 +53,7 @@ local config = {
                     require("sniprun").run("v")
                 end
             end,
-            { exit = true, desc = "SnipRun" },
+            { exit = true, desc = "SnipRun", mode = { "n", "v" } },
         },
         C = {
             function()
@@ -50,17 +61,18 @@ local config = {
             end,
             { exit = true, desc = "SnipRun Clear Repl" },
         },
-        D = {
-            function()
-                require("sniprun").info()
-            end,
-            { exit = true, desc = "SnipRun Info" },
-        },
-        A = {
+        c = {
             function()
                 require("sniprun.display").close_all()
             end,
             { exit = true, desc = "SnipRun Close All" },
+        },
+
+        i = {
+            function()
+                require("sniprun").info()
+            end,
+            { exit = true, desc = "SnipRun Info" },
         },
     },
 }
@@ -68,7 +80,7 @@ local config = {
 return {
     config,
     "Executor",
-    { { "S", "s" }, { "R", "I", "H" }, { ";", "C", "D", "A" } },
+    { { "S", "s", "S", "R" }, { "w", "C", "c", "i" } },
     bracket,
     6,
     3,

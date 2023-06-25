@@ -13,7 +13,6 @@ function config.animate()
         -- Vertical scroll
         scroll = {
             enable = false,
-            -- enable = vim.g.loaded_gui and true or false,
             timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             subscroll = animate.gen_subscroll.equal({ max_output_steps = 60 }),
         },

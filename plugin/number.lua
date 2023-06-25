@@ -1,3 +1,6 @@
+if not lambda then
+    return
+end
 local api, fn = vim.api, vim.fn
 local ui = lambda.style
 local M = {}

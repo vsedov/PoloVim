@@ -296,21 +296,27 @@ ui({
             function()
                 require("ufo").openAllFolds()
             end,
-            "open all folds",
+            desc = "ufo: open all folds",
         },
         {
             "zM",
             function()
                 require("ufo").closeAllFolds()
             end,
-            "close all folds",
         },
         {
-            "zP",
+            "zr",
             function()
-                require("ufo").peekFoldedLinesUnderCursor()
+                require("ufo").openFoldsExceptKinds()
             end,
-            "preview fold",
+            desc = "ufo: open folds except kinds",
+        },
+        {
+            "zm",
+            function()
+                require("ufo").closeFoldsWith()
+            end,
+            desc = "ufo: close folds with",
         },
     },
     config = conf.ufo,
