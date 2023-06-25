@@ -1,3 +1,6 @@
+if not lambda then
+    return
+end
 local fn, api, uv, cmd, command, fmt = vim.fn, vim.api, vim.loop, vim.cmd, lambda.command, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
@@ -132,8 +135,8 @@ nnoremap("g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]], {
 --  │ Custom Objects                                                     │
 --  ╰────────────────────────────────────────────────────────────────────╯
 -- -- ?ie | entire object
-xnoremap("ie", "gg0oG$", { desc = "entire object", silent = true })
-onoremap("ie", '<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>', { desc = "entire object", expr = true })
+xnoremap("ie", [[gg0oG$]])
+onoremap("ie", [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
 
 nnoremap("0", [[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^"']], { desc = "0", expr = true })
 xnoremap("0", [[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^"']], { desc = "0", expr = true })

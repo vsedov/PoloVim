@@ -1,3 +1,7 @@
+if not lambda then
+    return
+end
+
 local lsp, fs, fn, api, fmt = vim.lsp, vim.fs, vim.fn, vim.api, string.format
 local diagnostic = vim.diagnostic
 local L, S = vim.lsp.log_levels, vim.diagnostic.severity

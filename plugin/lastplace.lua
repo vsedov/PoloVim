@@ -1,3 +1,7 @@
+if not lambda then
+    return
+end
+
 local fn = vim.fn
 -- adapted from https://github.com/ethanholz/nvim-lastplace/blob/main/lua/nvim-lastplace/init.lua
 local ignore_buftype = { "quickfix", "nofile", "help", "terminal" }
