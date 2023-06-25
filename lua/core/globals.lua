@@ -1,5 +1,7 @@
 _G = _G or {}
 _G.lambda = {}
+_G.map = vim.keymap.set
+_G.P = vim.print
 require("core.lambda")
 
 P = vim.pretty_print
