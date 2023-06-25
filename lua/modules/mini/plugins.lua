@@ -25,7 +25,6 @@ mini({
                 "lazyterm",
                 "lspsagafinder",
                 "mason",
-                "neo-tree",
                 "nnn",
                 "notify",
                 "NvimTree",
@@ -36,6 +35,8 @@ mini({
                 "neoai-input",
                 "neoai-*",
                 "neoai-output",
+                "neo-tree",
+                "neo-*",
             },
             callback = function()
                 vim.b.miniindentscope_disable = true
@@ -60,7 +61,7 @@ mini({
     "echasnovski/mini.animate",
     cond = lambda.config.ui.use_mini_animate,
     event = "VeryLazy",
-    config = conf.mini,
+    config = conf.animate,
 })
 -- NOTE: (vsedov) (15:53:38 - 13/06/23): this is nice to have so no point removing this
 mini({

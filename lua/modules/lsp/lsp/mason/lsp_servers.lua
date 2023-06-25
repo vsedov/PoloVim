@@ -105,6 +105,7 @@ local config = lambda.config.lsp.python.lsp
 local python_lang = nil
 if config ~= "pylance" then
     python_lang = require(lsp_provider[config])
+    require("lspconfig").jedi_language_server.setup(python_lang)
 else
     require("lspconfig").pylance.setup(require("modules.lsp.lsp.providers.python.pylance"))
     python_lang = nil

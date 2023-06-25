@@ -394,12 +394,15 @@ diagnostic.config({
     underline = true,
     update_in_insert = false,
     severity_sort = true,
-    virtual_text = false and {
-        prefix = function(d)
-            local level = diagnostic.severity[d.severity]
-            return icons[level:lower()]
-        end,
-    },
+    virtual_text = false
+        and {
+            -- severity = { min = S.WARN },
+            spacing = 1,
+            prefix = function(d)
+                local level = diagnostic.severity[d.severity]
+                return icons[level:lower()]
+            end,
+        },
     float = {
         max_width = max_width,
         max_height = max_height,

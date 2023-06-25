@@ -37,30 +37,15 @@ function config.diaglist()
 
     vim.keymap.set(
         "n",
-        ";qw",
+        "<leader>qw",
         "<cmd>lua require('diaglist').open_all_diagnostics()<cr>",
         { noremap = true, silent = true }
     )
-    vim.keymap.set("n", ";qq", function()
+    vim.keymap.set("n", "<leader>qq", function()
         vim.diagnostic.setqflist()
 
         require("diaglist").open_buffer_diagnostics()
     end, { noremap = true, silent = true })
-end
-
-function config.ns()
-    local nstextobject = require("ns-textobject")
-    nstextobject.setup()
-
-    vim.keymap.set({ "x", "o" }, "aq", function()
-        nstextobject.create_textobj("q", "a")
-    end, { desc = "Around the quote" })
-
-    vim.keymap.set({ "x", "o" }, "iq", function()
-        nstextobject.create_textobj("q", "i")
-    end, { desc = "Inside the quote" })
-
-    nstextobject.map_textobj("q", "quotes")
 end
 
 function config.autosave()
@@ -126,7 +111,7 @@ function config.noneck()
         },
     })
 
-    vim.keymap.set("n", "zz", "<cmd>NoNeckPain<cr>", {})
+    vim.keymap.set("n", "<leader>Z", "<cmd>NoNeckPain<cr>", {})
 end
 
 return config

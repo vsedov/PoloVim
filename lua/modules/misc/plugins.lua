@@ -3,24 +3,31 @@ local misc = require("core.pack").package
 
 misc({ "fladson/vim-kitty", ft = { "conf" } })
 
-misc({ "onsails/diaglist.nvim", keys = { ";qq", ";qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+misc({ "onsails/diaglist.nvim", keys = { "<leader>qq", "<leader>qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 
 misc({
     "kylechui/nvim-surround",
     lazy = true,
     event = "VeryLazy",
-    keys = { { "s", mode = "v" }, "<C-g>s", "<C-g>S", "ys", "yss", "yS", "cs", "ds" },
     opts = { move_cursor = true, keymaps = { visual = "s" } },
 })
 misc({
     "XXiaoA/ns-textobject.nvim",
     lazy = true,
     dependencies = { "kylechui/nvim-surround" },
-    keys = {
-        { "aq", mode = { "x", "o" } },
-        { "iq", mode = { "x", "o" } },
+    opts = {
+        auto_mapping = {
+            -- automatically mapping for nvim-surround's aliases
+            aliases = true,
+            -- for nvim-surround's surrounds
+            surrounds = true,
+        },
+        disable_builtin_mapping = {
+            enabled = true,
+            -- list of char which shouldn't mapping by auto_mapping
+            chars = { "b", "B", "t", "`", "'", '"', "{", "}", "(", ")", "[", "]", "<", ">" },
+        },
     },
-    config = conf.ns,
 })
 -- programming spell
 misc({
@@ -83,13 +90,6 @@ misc({
 })
 
 misc({
-    "boorboor/save.nvim",
-    lazy = true,
-    config = conf.autosave,
-    keys = "<F4>",
-})
-
-misc({
     "ellisonleao/carbon-now.nvim",
     lazy = true,
     config = conf.carbon,
@@ -105,7 +105,7 @@ misc({
 misc({
     "shortcuts/no-neck-pain.nvim",
     lazy = true,
-    keys = { "zz" },
+    keys = { "<leader>Z" },
     config = conf.noneck,
 })
 

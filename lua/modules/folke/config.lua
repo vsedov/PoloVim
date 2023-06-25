@@ -70,6 +70,7 @@ function config.edgy()
             { ft = "help", size = { height = 20 } },
             { ft = "spectre_panel", size = { height = 0.4 } },
             "dap-repl",
+            "terminal",
         },
         left = {
             -- Neo-tree filesystem always takes half the screen height
