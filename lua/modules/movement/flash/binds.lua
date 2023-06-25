@@ -1,3 +1,7 @@
+local Treesitter = lambda.reqidx("flash.plugins.treesitter")
+local Search = lambda.reqidx("flash.search")
+local Remote = lambda.reqidx("flash.plugins.remote")
+
 local function get_windows()
     local wins = vim.api.nvim_tabpage_list_wins(0)
     local curr_win = vim.api.nvim_get_current_win()
@@ -114,6 +118,7 @@ return {
         function()
             -- default options: exact mode, multi window, all directions, with a backdrop
             require("flash").jump({
+                continue = true,
                 search = { forward = true, wrap = false, multi_window = false },
             })
         end,
@@ -124,6 +129,7 @@ return {
         mode = { "o", "x" },
         function()
             require("flash").jump({
+                continue = true,
                 search = { forward = false, wrap = false, multi_window = false },
             })
         end,
@@ -363,6 +369,7 @@ return {
             require("lasterisk").search({ is_whole = false })
             vim.schedule(search_win)
         end,
+
         desc = "Search g#",
     },
 
@@ -398,6 +405,32 @@ return {
             })
         end,
         desc = "Jump to a position, make a Treesitter selection and jump back This should be bound to a keymap like <leader>t. Then you could o yM to remotely yank a Treesitter selection.",
+    },
+
+    {
+
+        "R",
+
+        function()
+            Remote.save()
+            require("flash").jump({
+                matcher = function(win, state, opts)
+                    local search = Search.new(win, state)
+                    local matches = {}
+                    for _, m in ipairs(search:get(opts)) do
+                        vim.list_extend(matches, Treesitter.get_nodes(win, m.pos))
+                    end
+                    return matches
+                end,
+                jump = { pos = "range" },
+                highlight = {
+                    label = { before = true, after = true, style = "inline" },
+                    matches = false,
+                },
+            })
+            Remote.restore()
+        end,
+        mode = { "n", "x", "o" },
     },
     --    ╭────────────────────────────────────────────────────────────────────╮
     --    │                                                                    │

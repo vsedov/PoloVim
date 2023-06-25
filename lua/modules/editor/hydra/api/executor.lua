@@ -35,7 +35,7 @@ local config = {
                     else
                         cmd("ExecutorSwapToSplit")()
                     end
-                    vim.cmd("ExecutorToggleDetail")
+                    cmd("ExecutorToggleDetail")()
                 end)
             end,
             { exit = true, desc = "Swap to popup/split" },
@@ -80,7 +80,7 @@ local config = {
 return {
     config,
     "Executor",
-    { { "S", "s", "S", "R" }, { "w", "C", "c", "i" } },
+    { { "s", "S", "R" }, { "w", "C", "c", "i" } },
     bracket,
     6,
     3,

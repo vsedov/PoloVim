@@ -5,7 +5,6 @@ function M.noice()
             enabled = true, -- enables the Noice cmdline UI
             view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
             opts = {}, -- global options for the cmdline. See section on views
-            ---@type table<string, CmdlineFormat>
             format = {
                 cmdline = { pattern = "^:", icon = "", lang = "vim" },
                 search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
@@ -77,7 +76,7 @@ function M.noice()
                 enabled = lambda.config.ui.noice.lsp.use_noice_hover,
             },
             progress = {
-                enabled = false, -- this is just annoying
+                enabled = true, -- this is just annoying
             },
             signature = {
                 enabled = lambda.config.ui.noice.lsp.use_noice_signature, -- this just does not work well .
@@ -92,6 +91,18 @@ function M.noice()
                 ["vim.lsp.util.stylize_markdown"] = lambda.config.ui.noice.lsp.use_markdown,
                 -- override cmp documentation with Noice (needs the other options to work)
                 ["cmp.entry.get_documentation"] = lambda.config.ui.noice.lsp.use_documentation,
+            },
+            -- defaults for hover and signature help
+            documentation = {
+                view = "hover",
+                ---@type NoiceViewOptions
+                opts = {
+                    lang = "markdown",
+                    replace = true,
+                    render = "plain",
+                    format = { "{message}" },
+                    win_options = { concealcursor = "n", conceallevel = 3 },
+                },
             },
         },
         markdown = {
@@ -119,7 +130,7 @@ function M.noice()
         presets = {
             -- you can enable a preset by setting it to true, or a table that will override the preset config
             -- you can also add custom presets that you can enable/disable with enabled=true
-            bottom_search = true, -- use a classic bottom cmdline for search
+            bottom_search = false, -- use a classic bottom cmdline for search
             command_palette = true, -- position the cmdline and popupmenu together
             long_message_to_split = true, -- long messages will be sent to a split
             inc_rename = true, -- enables an input dialog for inc-rename.nvim

@@ -84,21 +84,12 @@ function config.noneck()
             buflisted = false,
             swapfile = false,
         },
-        -- window-scoped options: any `vim.wo` options is accepted here.
-        wo = {
-            cursorline = true,
-            cursorcolumn = true,
-            number = true,
-            relativenumber = true,
-            foldenable = true,
-            list = true,
-        },
     }
 
     require("no-neck-pain").setup({
         width = 130,
         debug = false,
-        disableOnLastBuffer = false,
+        disableOnLastBuffer = true,
         killAllBuffersOnDisable = true,
         buffers = {
             setNames = true,

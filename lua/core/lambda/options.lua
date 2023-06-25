@@ -107,7 +107,7 @@ lambda.config.cmp = {
         luasnip_choice = false,
         luasnip = {
             enable = true,
-            priority = 8,
+            priority = 6,
         },
     },
     cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
@@ -182,7 +182,7 @@ lambda.config.ui = {
     use_murmur = false, -- this causes issues with my yanky config -
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
+    use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
     use_tint = true, -- Might not be great for certain colourschemes
     use_hlsearch = true,
     use_dropbar = true,

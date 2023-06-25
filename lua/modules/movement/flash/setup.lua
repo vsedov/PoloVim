@@ -1,6 +1,7 @@
 local function opts()
     return {
         labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM,?/.;#",
+
         search = {
             -- search/jump in all windows
             multi_window = true,
@@ -20,7 +21,7 @@ local function opts()
             --   end,
             mode = "exact",
             -- behave like `incsearch`
-            incremental = false,
+            incremental = true, -- Enable this
         },
         jump = {
             -- save location in the jumplist
@@ -35,6 +36,14 @@ local function opts()
             nohlsearch = true,
             -- automatically jump when there is only one match
             autojump = true,
+            -- You can force inclusive/exclusive jumps by setting the
+            -- `inclusive` option. By default it will be automatically
+            -- set based on the mode.
+            inclusive = nil, ---@type boolean?
+            -- jump position offset. Not used for range jumps.
+            -- 0: default
+            -- 1: when pos == "end" and pos < current position
+            offset = nil, ---@type number
         },
         highlight = {
             label = {
@@ -93,15 +102,17 @@ local function opts()
             char = {
                 enabled = false,
                 -- by default all keymaps are enabled, but you can disable some of them,
-                keys = { "f", "F", "t", "T", "," },
-                search = { wrap = false },
+                -- by removing them from the list.
+                keys = { "f", "F", "t", "T", ";", "," },
+                search = { wrap = true },
                 highlight = { backdrop = true },
-                jump = { register = false },
+                jump = { register = true },
             },
             -- options used for treesitter selections
             -- `require("flash").treesitter()`
             treesitter = {
                 labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM,?/.;#",
+
                 jump = { pos = "range" },
                 highlight = {
                     label = { before = true, after = true, style = "inline" },

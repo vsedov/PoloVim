@@ -57,7 +57,6 @@ cnoremap("<C-d>", "<Del>", { desc = "delete character under cursor" })
 cnoremap("<C-h>", "<BS>", { desc = "delete character before cursor" })
 cnoremap("<C-t>", [[<C-R>=expand("%:p:h") . "/" <CR>]], { desc = "current dir expand" })
 cnoremap("::", [[<C-r>=fnameescape(expand('%:p:h'))<cr>/]], { desc = "fnameescape" })
-cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], { desc = "escape forward slash" })
 cnoremap("<C-f>", [[getcmdpos() > strlen(getcmdline())? &cedit: "\<Lt>Right>"]], {
     desc = "move cursor forward",
 })
@@ -90,12 +89,6 @@ end
 
 nnoremap("<localleader><tab>", [[:b <Tab>]], { silent = false, desc = "open buffer list" })
 nnoremap("<leader><leader>L", [[<c-^>]], { desc = "switch to last buffer" })
-nnoremap("||_", [[v:count ? "<C-W>v<C-W><Right>" : '|']], { desc = "New Vertical Buffer", silent = true, expr = true })
-nnoremap(
-    "|||",
-    [[v:count ? "<C-W>s<C-W><Down>"  : '_']],
-    { desc = "New Horizontal Buffer", silent = true, expr = true }
-)
 
 nnoremap("<esc>", function()
     require("notify").dismiss()
@@ -143,7 +136,7 @@ xnoremap("0", [[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^"']], { 
 onoremap("0", [[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^"']], { desc = "0", expr = true })
 --
 -- -- This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap("<Leader><leader>so", [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]], {
+nnoremap("<Leader><leader>so", [[<Cmd>source $MYVIMRC<cr> <bar> <cmd>:lua vim.notify('Sourced init.vim')<cr>]], {
     desc = "Source init.lua",
     silent = true,
 })
@@ -156,7 +149,7 @@ inoremap("?", [[<c-g>u?]], { desc = "?" })
 -- visually select the block of text I just pasted in Vim
 nnoremap("gV", [[`[v`]], { desc = "visually select the block of text", silent = true })
 
-xnoremap("@", ":<C-u>call ExecuteMacroOverVisualRange()<CR>", { desc = "Macro Execute" })
+xnoremap("@", "<cmd>:<C-u>call ExecuteMacroOverVisualRange()<CR>", { desc = "Macro Execute" })
 
 -- -- Credit: JGunn Choi ?il | inner line
 xnoremap("aL", "$o0", { desc = "inner line", silent = true })
@@ -165,6 +158,7 @@ onoremap("aL", [[<cmd>normal val<CR>]], { desc = "nromal val", silent = true })
 xnoremap("iL", [[<Esc>^vg_]], { desc = "inner line", silent = true })
 onoremap("iL", [[<cmd>normal! ^vg_<CR>]], { desc = "nromal val", silent = true })
 
+--  TODO: (vsedov) (20:25:37 - 25/06/23): Does not work
 nnoremap("<localleader><cr>", function()
     if fn.empty(fn.getbufvar(fn.bufnr(), "&buftype")) then
         return "@@"
@@ -191,44 +185,44 @@ nmap("zz", [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? '
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Lsp Diagnostics                                                    │
 --  ╰────────────────────────────────────────────────────────────────────╯
-nnoremap("D", "<cmd>LspSaga show_line_diagnostics<cr>", { desc = "Diagnostic", silent = true, expr = true })
+nnoremap("D", "<cmd>:Lspsaga show_line_diagnostics<cr>", { desc = "Diagnostic" })
 nnoremap(
     "}",
-    ":lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow<cr>",
-    { desc = "Diag show next", silent = true, expr = true }
+    "<cmd>:lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow<cr>",
+    { desc = "Diag show next", silent = true }
 )
 nnoremap(
     "{",
     ":lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow<cr>",
-    { desc = "Diag show Prev", silent = true, expr = true }
+    { desc = "Diag show Prev", silent = true }
 )
 
-nnoremap(";R", ":NeoRoot<cr>", { desc = "root switch", silent = true, expr = true })
+nnoremap(";R", "<cmd>:NeoRoot<cr>", { desc = "root switch", silent = true })
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Telscope Mappings                                                  │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<Leader>U", ":lua require'utils.telescope'.find_updir()<CR>", { desc = "Up dir", silent = true })
-nnoremap("<leader>xW", ":lua require'utils.telescope'.help_tags()<CR>", { desc = "Help tag", silent = true })
+nnoremap("<Leader>U", "<cmd>:lua require'utils.telescope'.find_updir()<CR>", { desc = "Up dir", silent = true })
+nnoremap("<leader>xW", "<cmd>:lua require'utils.telescope'.help_tags()<CR>", { desc = "Help tag", silent = true })
 nnoremap(
     "<Leader>gw",
-    ":lua require'utils.telescope'.grep_last_search()<CR>",
+    "<cmd>:lua require'utils.telescope'.grep_last_search()<CR>",
     { desc = "Grep last word", silent = true }
 )
 vnoremap(
     "<Leader>gw",
-    ":lua require'utils.telescope'.grep_string_visual()<CR>",
+    "<cmd>:lua require'utils.telescope'.grep_string_visual()<CR>",
     { desc = "Grep last word", silent = true }
 )
-nnoremap("<Leader>yy", ":lua require'utils.telescope'.neoclip()<CR>", { desc = "NeoClip", silent = true })
+nnoremap("<Leader>yy", "<cmd>:lua require'utils.telescope'.neoclip()<CR>", { desc = "NeoClip", silent = true })
 --
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ misc                                                               │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<F1>", ":UndotreeToggle<cr>", { desc = "Undo Tree", silent = true })
+nnoremap("<F1>", "<cmd>:UndotreeToggle<cr>", { desc = "Undo Tree", silent = true })
 
 nnoremap("<Leader>J", ":TSJJoin<Cr>", { desc = "TSJJoin", silent = true })
 nnoremap("<Leader>j", ":TSJToggle<cr>", { desc = "TSJToggle", silent = true })

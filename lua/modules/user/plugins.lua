@@ -66,6 +66,18 @@ user({
 user({
     "chrisbra/NrrwRgn",
     lazy = true,
+    cmd = {
+        "NR",
+        "NW",
+        "WR",
+        "NRV",
+        "NUD",
+        "NRP",
+        "NRM",
+        "NRS",
+        "NRN",
+        "NRL",
+    },
     init = function()
         vim.g.nrrw_rgn_vert = 1
         vim.g.nrrw_rgn_resize_window = "relative"
