@@ -18,7 +18,7 @@ local function swap_to_last_buffer()
     end
 end
 
-local bracket = { ";", "<cr>", "l", "m", "c" }
+local bracket = { "<cr>", "l", "m", "c" }
 
 local config = {
     Reach = {
@@ -26,13 +26,9 @@ local config = {
         body = leader,
         mode = { "n", "v" },
         ["<ESC>"] = { nil, { exit = true } },
-
-        [";"] = {
-            function()
-                require("reach").buffers(reach_options)
-            end,
-            { nowait = true, exit = true, desc = "Reach Buffers" },
-        },
+        on_enter = function()
+            require("reach").buffers(reach_options)
+        end,
         m = {
             function()
                 cmd("ReachOpen marks")
@@ -58,33 +54,6 @@ local config = {
             { nowait = true, exit = true, desc = "Swap Last Buffer" },
         },
 
-        w = {
-            function()
-                cmd("WorkspacesOpen")
-            end,
-            { nowait = true, exit = true, desc = "Workspace Open" },
-        },
-        a = {
-            function()
-                lambda.clever_tcd()
-                cmd("WorkspacesAdd")
-            end,
-            { nowait = true, exit = true, desc = "Workspace Add" },
-        },
-        d = {
-            function()
-                lambda.clever_tcd()
-                cmd("WorkspacesRemove")
-            end,
-            { nowait = true, exit = true, desc = "Workspace Remove" },
-        },
-        r = {
-            function()
-                lambda.clever_tcd()
-                cmd("WorkspacesRename")
-            end,
-            { nowait = true, exit = true, desc = "Workspace Rename" },
-        },
         n = {
             function()
                 cmd("CybuNext")
@@ -97,13 +66,13 @@ local config = {
             end,
             { nowait = true, exit = false, desc = "CybuPrev" },
         },
-        ["]"] = {
+        k = {
             function()
                 cmd("CybuLastusedPrev")
             end,
             { nowait = true, exit = false, desc = "CybuLastusedPrev" },
         },
-        ["["] = {
+        j = {
             function()
                 cmd("CybuLastusedNext")
             end,
@@ -114,7 +83,7 @@ local config = {
 return {
     config,
     "Reach",
-    { { "w", "a", "d", "r" }, { "n", "N", "[", "]" } },
+    { { "n", "N", "j", "k" } },
     bracket,
     6,
     3,

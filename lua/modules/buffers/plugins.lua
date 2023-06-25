@@ -21,7 +21,6 @@ buffer({
 buffer({
     "toppair/reach.nvim",
     lazy = true,
-    keys = { ";b" },
     cmd = { "ReachOpen" },
     config = conf.reach,
 })
@@ -132,7 +131,10 @@ buffer({
 buffer({
     "chrisgrieser/nvim-early-retirement",
     cond = lambda.config.buffer.use_early_retirement,
-    config = true,
+    opts = {
+        -- if a buffer has been inactive for this many minutes, close it
+        retirementAgeMins = 10,
+    },
     event = "VeryLazy",
 })
 buffer({

@@ -170,11 +170,8 @@ function config.rose()
         -- Change specific vim highlight groups
         highlight_groups = {
             ColorColumn = { bg = "rose" },
-
-            -- Blend colours against the "base" background
-            CursorLine = { bg = "foam", blend = 10 },
             StatusLine = { fg = "love", bg = "love", blend = 10 },
-            Conceal = { fg = "subtle", bg = "surface" },
+            Conceal = { fg = "muted", bg = "None", blend = 10 },
         },
     })
     vim.cmd.colorscheme("rose-pine")

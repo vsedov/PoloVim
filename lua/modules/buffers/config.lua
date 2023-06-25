@@ -144,13 +144,21 @@ function config.reach()
     require("reach").setup({
         notifications = true,
     })
-    vim.keymap.set("n", ";b", "<cmd>Reach buffers<cr>", { noremap = true, silent = true })
 end
 
 function config.sticky_buf()
     require("stickybuf").setup({
         get_auto_pin = function(bufnr)
             return require("stickybuf").should_auto_pin(bufnr)
+        end,
+    })
+    vim.api.nvim_create_autocmd("BufEnter", {
+        desc = "Pin the buffer to any window that is fixed width or height",
+        callback = function(args)
+            local stickybuf = require("stickybuf")
+            if not stickybuf.is_pinned() and (vim.wo.winfixwidth or vim.wo.winfixheight) then
+                stickybuf.pin()
+            end
         end,
     })
 end
