@@ -18,6 +18,7 @@
         "packer_plugins",
         "pending",
         "hs",
-        "spoon"
+        "spoon",
+        "local"
     ]
 }
