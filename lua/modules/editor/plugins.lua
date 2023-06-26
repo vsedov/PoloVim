@@ -114,7 +114,7 @@ editor({
     opts = {
         use_default_keymaps = false,
         check_syntax_error = true,
-        max_join_length = 500,
+        max_join_length = 9999999,
     },
 })
 editor({

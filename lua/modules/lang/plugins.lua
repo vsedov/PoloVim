@@ -33,12 +33,12 @@ lang({
     config = conf.debugprint,
 })
 
-lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", opt = true })
+lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", config = true })
 
-lang({ "nanotee/luv-vimdocs", ft = "lua", opt = true })
+lang({ "nanotee/luv-vimdocs", ft = "lua" })
 
 -- -- -- builtin lua functions
-lang({ "milisims/nvim-luaref", ft = "lua", opt = true })
+lang({ "milisims/nvim-luaref", ft = "lua" })
 
 lang({
     "rafcamlet/nvim-luapad",

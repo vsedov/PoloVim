@@ -29,5 +29,5 @@ notes({
     lazy = true,
     cmd = "TableModeToggle",
     ft = { "norg", "markdown" },
-    conf = conf.table,
+    config = conf.table,
 })

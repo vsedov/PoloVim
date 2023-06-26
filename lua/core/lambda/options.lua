@@ -86,6 +86,7 @@ lambda.config.treesitter = {
     use_extra_highlight = true,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
+    use_context_vt = true,
 }
 
 lambda.config.abbrev = {
@@ -260,6 +261,7 @@ lambda.config.tools = {
     use_session = true,
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = true,
+    use_live_command = true,
 }
 
 -- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux

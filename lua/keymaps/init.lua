@@ -73,8 +73,9 @@ nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], { desc = "surround with backticks" }
 nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { desc = "surround with single quotes" })
 nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], { desc = "surround with parentheses" })
 nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { desc = "surround with curly braces" })
-imap("<c-q>", [[<esc>:call search("[)\\]}>,`'\"]", 'eW')<CR>]], { desc = "Jump Brackets" })
-imap("<c-BS>", [[<esc>cvb]], { desc = "Jump Brackets" })
+
+inoremap("<c-q>", [[<esc>:call search("[)\\]}>,`'\"]", 'eW')<CR>]], { desc = "Jump Brackets" })
+inoremap("<c-BS>", [[<esc>cvb]], { desc = "Jump Brackets" })
 
 if lambda.falsy(fn.mapcheck("<ScrollWheelDown>")) then
     nmap("<ScrollWheelDown>", "<c-d>")
@@ -171,7 +172,7 @@ end, { desc = "repeat macros", expr = true })
 --  │ Folds                                                              │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<leader>Z", [[@=(foldlevel('.')?'za':"\<Space>")<CR>]], { desc = "toggle fold under cursor", silent = true })
+nnoremap("<leader>z", [[@=(foldlevel('.')?'za':"\<Space>")<CR>]], { desc = "toggle fold under cursor", silent = true })
 --     -- Refocus folds
 nnoremap("z<leader>", [[zMzvzz]], { desc = "center viewport" })
 --     -- Make zO recursively open whatever top level fold we're in, no matter where the
@@ -193,11 +194,11 @@ nnoremap(
 )
 nnoremap(
     "{",
-    ":lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow<cr>",
+    "<cmd>:lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow<cr>",
     { desc = "Diag show Prev", silent = true }
 )
 
-nnoremap(";R", "<cmd>:NeoRoot<cr>", { desc = "root switch", silent = true })
+nnoremap(";R", "<cmd>:NeoRootSwitchMode<cr>", { desc = "root switch", silent = true })
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Telscope Mappings                                                  │
@@ -240,6 +241,7 @@ end, { desc = "visual smart d", expr = true })
 --  │ Dir Changes                                                        │
 --  ╰────────────────────────────────────────────────────────────────────╯
 nnoremap("<leader>cD", [[:let @"=expand("%:p")<CR>]], { desc = "expand current dir", silent = true })
+
 nnoremap("<leader>cd", function()
     lambda.clever_tcd()
 end, { desc = "Clever cd", silent = true })

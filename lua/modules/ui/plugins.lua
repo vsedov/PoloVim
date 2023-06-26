@@ -585,7 +585,5 @@ ui({
     "HampusHauffman/block.nvim",
     lazy = true,
     cmd = { "Block", "BlockOn", "BlockOff" },
-    config = function()
-        require("block").setup({})
-    end,
+    opts = { percent = 1.05, depth = 10, automatic = true },
 })

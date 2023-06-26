@@ -19,13 +19,6 @@ python({
 })
 
 python({
-    "AckslD/swenv.nvim",
-    lazy = true,
-    ft = "python",
-    cmd = { "VenvFind", "GetVenv" },
-    config = conf.swenv,
-})
-python({
     "linux-cultist/venv-selector.nvim",
     dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
     cmd = { "VenvSelect", "VenvSelectCached" },

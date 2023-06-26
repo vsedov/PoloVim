@@ -247,7 +247,7 @@ user({
             desc = "winbar: pick",
         },
     },
-    config = {
+    opts = {
         general = {
             enable = function(buf, win)
                 local b, w = vim.bo[buf], vim.wo[win]
@@ -332,31 +332,26 @@ user({
         border = lambda.style.border.type_0,
     },
 })
-user({
-    "tversteeg/registers.nvim",
-    keys = {
-        { '"', mode = { "n", "v" } },
-        { "<C-R>", mode = "i" },
-    },
-    cmd = "Registers",
-    config = true,
-})
-user({
-    "haya14busa/vim-edgemotion",
-    keys = {
-        { "<c-'>", "<Plug>(edgemotion-j)", mode = "" },
-        { "<c-#>", "<Plug>(edgemotion-k)", mode = "" },
-    },
-})
-user({
-    "norcalli/nvim-terminal.lua",
-    ft = "terminal",
-    config = function()
-        require("terminal").setup()
-    end,
-})
+
 user({
     "kiran94/maim.nvim",
     config = true,
     cmd = { "Maim", "MaimMarkdown" },
+})
+
+user({
+    "huggingface/hfcc.nvim",
+    lazy = true,
+    cmd = "StarCoder",
+    opts = {
+        model = "bigcode/starcoder",
+        query_params = {
+            max_new_tokens = 200,
+        },
+    },
+    init = function()
+        vim.api.nvim_create_user_command("StarCoder", function()
+            require("hfcc.completion").complete()
+        end, {})
+    end,
 })

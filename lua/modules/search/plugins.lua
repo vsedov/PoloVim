@@ -67,17 +67,6 @@ search({
 })
 
 search({
-    "zane-/howdoi.nvim",
-    lazy = true,
-    cmd = "Howdoi",
-    config = function()
-        vim.api.nvim_create_user_command("Howdoi", function()
-            require("utils.telescope").howdoi()
-        end, { force = true })
-    end,
-})
-
-search({
     "danielfalk/smart-open.nvim",
     lazy = true,
     config = function()
