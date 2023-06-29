@@ -44,13 +44,9 @@ local function loadHydraAPI()
         when(not vim.tbl_contains(exclude_table, name), function()
             local ok, data = pcall(require, module_name)
             if not ok then
-                vim.notify(
-                    fmt("Error while loading Hydra API module '%s': %s", module_name, data),
-                    vim.log.levels.ERROR,
-                    {
-                        title = "Hydra Error",
-                    }
-                )
+                vim.notify(fmt("Error while loading Hydra API module '%s': %s", module_name, data), vim.log.levels.ERROR, {
+                    title = "Hydra Error",
+                })
                 return
             end
             local instance = M.new(data[1], data[2])
@@ -79,4 +75,5 @@ end
 vim.schedule_wrap(function()
     loadHydraModules(fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/normal/", MODULE_PREFIX .. "normal.")
     loadHydraAPI()
+    require("modules.editor.hydra.after.lsp")
 end)()

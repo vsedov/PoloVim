@@ -113,7 +113,7 @@ nnoremap("<leader>ia", "a <esc>h", { desc = " Insert space after", silent = t
 --  │ Search                                                             │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<leader><leader>Sl", ":%s/<C-R><C-W>//gI<left><left><left>", {
+nnoremap("<leader><leader>w", ":%s/<C-R><C-W>//gI<left><left><left>", {
     desc = "Replace word under cursor on Line",
     silent = true,
 })
@@ -178,15 +178,17 @@ nnoremap("z<leader>", [[zMzvzz]], { desc = "center viewport" })
 --     -- Make zO recursively open whatever top level fold we're in, no matter where the
 nnoremap("z0", [[zCzO]], { desc = "recursively open whatever top level fold" })
 vnoremap("$", "g_")
-nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], { expr = true, silent = true })
-nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], { expr = true, silent = true })
+
+if not lambda.config.movement.use_accelerated_jk then
+    nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], { expr = true, silent = true })
+    nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], { expr = true, silent = true })
+end
 -- Toggle top/center/bottom
 nmap("zz", [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']], { expr = true })
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Lsp Diagnostics                                                    │
 --  ╰────────────────────────────────────────────────────────────────────╯
-nnoremap("D", "<cmd>:Lspsaga show_line_diagnostics<cr>", { desc = "Diagnostic" })
 nnoremap(
     "}",
     "<cmd>:lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow<cr>",

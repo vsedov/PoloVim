@@ -1,4 +1,5 @@
-local leader = ";l"
+local leader = "L"
+local utils = require("modules.lsp.lsp.utils")
 
 local lsp_lens_active = false
 local bracket = { "J", "K", "w" }
@@ -95,13 +96,17 @@ local config = {
             end,
             { nowait = true, exit = true, desc = "LspLensToggle" },
         },
+        l = {
+            utils.format_range_operator,
+            { nowait = true, exit = true, desc = "Range Diagnostics", mode = { "v" } },
+        },
     },
 }
 
 return {
     config,
     "Lsp",
-    { { "d", "D", "r", "i", "t" }, { "s", "S", "I", "c" } },
+    { { "d", "D", "r", "i", "t" }, { "s", "S", "I", "c", "l" } },
     bracket,
     6,
     3,

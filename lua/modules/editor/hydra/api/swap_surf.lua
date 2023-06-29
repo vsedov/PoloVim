@@ -1,4 +1,4 @@
-local leader = ";S"
+local leader = ";W"
 
 local mx = function(feedkeys, type)
     local type = type or "m"

@@ -119,6 +119,8 @@ lambda.config.lsp = {
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false,
     use_format_modifcation = false,
+    use_navigator = true,
+    use_lsp_saga = false,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -183,20 +185,21 @@ lambda.config.ui = {
     use_murmur = false, -- this causes issues with my yanky config -
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
     use_tint = true, -- Might not be great for certain colourschemes
     use_hlsearch = true,
     use_dropbar = true,
     use_beacon = true,
+    use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
     use_mini_animate = true,
     heirline = {
+        use_statuscol = false,
         use_heirline = true,
     },
     noice = {
         enable = true,
         lsp = {
             use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = true,
+            use_noice_hover = false, -- Navigator really does not like this
             use_markdown = true,
             use_documentation = true,
         },
@@ -207,7 +210,7 @@ lambda.config.ui = {
         use_mini_indent_scope = true,
     },
     scroll_bar = {
-        use_scrollbar = true,
+        use_scrollbar = false,
     },
 }
 lambda.config.fun = {
@@ -252,6 +255,7 @@ lambda.config.movement = {
     movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap and flash,
     use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d
+    use_accelerated_jk = true,
     harpoon = {
         goto_harpoon = false,
         use_tmux_or_normal = "nvim", -- nvim
