@@ -201,7 +201,7 @@ local function opts()
                         lsp_utils.hover(function(err, result, ctx)
                             require("hover").hover()
                             -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
-                            -- vim.api.nvim_win_set_cursor(match.win, state.pos)
+                            vim.api.nvim_win_set_cursor(match.win, state.pos)
                         end)
                     end)
                 end,

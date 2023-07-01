@@ -180,13 +180,6 @@ ui({
             end,
             "NeoTree Focus Toggle",
         },
-        {
-            "<Leader>E",
-            function()
-                require("edgy").toggle()
-            end,
-            "General: [F]orce Close Edgy",
-        },
     },
 
     dependencies = {

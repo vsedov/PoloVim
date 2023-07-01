@@ -1,5 +1,5 @@
 local lib = require("modules.movement.flash.nav.lib")
-local Flash = require("flash")
+local Flash = lambda.reqidx("flash")
 
 return {
 

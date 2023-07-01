@@ -1,4 +1,5 @@
 local Flash = lambda.reqidx("flash")
+
 return {
     --  ╭────────────────────────────────────────────────────────────────────╮
     --  │         Remote Jumps  and treesitter bindings                      │

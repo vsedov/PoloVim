@@ -1,5 +1,6 @@
 local lib = require("modules.movement.flash.nav.lib")
 local Flash = lambda.reqidx("flash")
+
 return {
     --  ╭────────────────────────────────────────────────────────────────────╮
     --  │ lsp                                                                │
