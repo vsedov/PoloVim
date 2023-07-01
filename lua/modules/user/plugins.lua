@@ -237,7 +237,6 @@ user({
     "Bekaboo/dropbar.nvim",
     event = "VeryLazy",
     cond = lambda.config.ui.use_dropbar,
-    dependencies = { "onsails/lspkind.nvim" },
     keys = {
         {
             "<leader>wp",
@@ -247,28 +246,31 @@ user({
             desc = "winbar: pick",
         },
     },
-    opts = {
-        general = {
-            enable = function(buf, win)
-                local b, w = vim.bo[buf], vim.wo[win]
-                local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
-                return decor.ft ~= false
-                    and decor.bt ~= false
-                    and b.bt == ""
-                    and not w.diff
-                    and not api.nvim_win_get_config(win).zindex
-                    and api.nvim_buf_get_name(buf) ~= ""
-            end,
-        },
-        menu = {
-            win_configs = {
-                border = lambda.style.border.type_0,
-                col = function(menu)
-                    return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+    config = function()
+        require("dropbar").setup({
+            general = {
+                update_interval = 100,
+                enable = function(buf, win)
+                    local b, w = vim.bo[buf], vim.wo[win]
+                    local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
+                    return decor.ft ~= false
+                        and decor.bt ~= false
+                        and b.bt == ""
+                        and not w.diff
+                        and not api.nvim_win_get_config(win).zindex
+                        and api.nvim_buf_get_name(buf) ~= ""
                 end,
             },
-        },
-    },
+            menu = {
+                win_configs = {
+                    border = "shadow",
+                    col = function(menu)
+                        return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+                    end,
+                },
+            },
+        })
+    end,
 })
 
 -- First of all, :Sayonara or :Sayonara!
@@ -354,4 +356,10 @@ user({
             require("hfcc.completion").complete()
         end, {})
     end,
+})
+
+user({
+    "m4xshen/hardtime.nvim",
+    cmd = "Hardtime",
+    config = true,
 })

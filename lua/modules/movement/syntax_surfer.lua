@@ -64,7 +64,7 @@ end, { silent = true, expr = true })
 vim.keymap.set("n", "cx", "<cmd>STSSelectMasterNode<cr>", opts)
 vim.keymap.set("n", "cn", "<cmd>STSSelectCurrentNode<cr>", opts)
 
-vim.keymap.set("n", "J", function() -- jump to all that you specify
+vim.keymap.set("n", "<leader>ww", function() -- jump to all that you specify
     sts.targeted_jump({
         "function",
         "function_definition",

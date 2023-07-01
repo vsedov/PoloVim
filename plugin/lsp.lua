@@ -12,6 +12,7 @@ local border = lambda.style.border.type_0
 if vim.env.DEVELOPING then
     vim.lsp.set_log_level(L.DEBUG)
 end
+local utils = require("modules.lsp.lsp.utils")
 
 ---@enum
 local provider = {
@@ -28,29 +29,35 @@ local get_extra_binds = function()
     if lambda.config.use_saga_maps then
         binds = {
             ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
-            ["gf"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
-            ["gs"] = { "<cmd> Lspsaga goto_definition<cr>", "Goto Def" },
-            ["gr"] = { "<cmd>Lspsaga rename<CR>", "rename" },
+            ["gt"] = { "<cmd>Lspsaga peek_type_definition<CR>", "peek_type_definitions" },
+            ["gT"] = { "<cmd>Lspsaga goto_type_definition<CR>", "goto_type_definitions" },
+            ["gs"] = { "<cmd>Lspsaga signature_help<CR>", "Signature Help" },
+            ["gr"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
             ["gR"] = { "<cmd>Lspsaga rename ++project<CR>", "Rename Project" },
-            ["[E"] = {
+            ["gk"] = {
                 function()
-                    require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+                    vim.cmd([[Lspsaga hover_doc ++keep]])
                 end,
-                "Error Diagnostic",
+                "Hover Left",
             },
-            ["]E"] = {
+            ["cc"] = {
                 function()
-                    require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+                    vim.cmd([[Lspsaga code_action]])
                 end,
-                "Error Diagnostic",
+                "Code action",
             },
+
             ["[e"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Diagnostic Jump next" },
             ["]e"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Diagnostic Jump prev" },
-        }
-    else
-        binds = {
-            ["[e"] = { "<cmd> lua vim.diagnostic.goto_prev({ float = false })<cr>", "Diagnostic Jump next" },
-            ["]e"] = { "<cmd> lua vim.diagnostic.goto_next({ float = false })<cr>", "Diagnostic Jump prev" },
+            ["gL"] = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
+            ["gG"] = {
+                "<cmd>Lspsaga show_buf_diagnostics<CR>",
+                "Show Buffer Diagnostics",
+            },
+            ["gW"] = {
+                "<cmd>Lspsaga show_workspace_diagnostics<CR>",
+                "Show Workspace Diagnostics",
+            },
         }
     end
     return binds
@@ -63,32 +70,9 @@ local buffer_mappings = {
             end,
             "Goto Def",
         },
-
-        -- NOTE: (vsedov) (13:38:09 - 20/06/23): Kinda pointless binds
-        -- ["<leader>ap"] = { "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", "incoming calls" },
-        -- ["<leader>ao"] = { "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", "outgoing calls" },
         ["K"] = {
-            function()
-                if not lambda.config.lsp.use_hover then
-                    vim.cmd([[Lspsaga hover_doc]])
-                else
-                    require("hover").hover()
-                end
-            end,
+            utils.repeatable_hover,
             "hover",
-        },
-
-        ["gk"] = {
-            function()
-                vim.cmd([[Lspsaga hover_doc ++keep]])
-            end,
-            "Hover Left",
-        },
-        ["cc"] = {
-            function()
-                vim.cmd([[Lspsaga code_action]])
-            end,
-            "Code action",
         },
     },
     visual_mode = {
@@ -398,15 +382,14 @@ diagnostic.config({
     underline = true,
     update_in_insert = false,
     severity_sort = true,
-    virtual_text = false
-        and {
-            -- severity = { min = S.WARN },
-            spacing = 1,
-            prefix = function(d)
-                local level = diagnostic.severity[d.severity]
-                return icons[level:lower()]
-            end,
-        },
+    virtual_text = false and {
+        -- severity = { min = S.WARN },
+        spacing = 1,
+        prefix = function(d)
+            local level = diagnostic.severity[d.severity]
+            return icons[level:lower()]
+        end,
+    },
     float = {
         max_width = max_width,
         max_height = max_height,
@@ -422,3 +405,19 @@ diagnostic.config({
         end,
     },
 })
+vim.lsp.buf.cancel_formatting = function(bufnr)
+    vim.schedule(function()
+        bufnr = (bufnr == nil or bufnr == 0) and vim.api.nvim_get_current_buf() or bufnr
+        for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
+            for id, request in pairs(client.requests or {}) do
+                if
+                    request.type == "pending"
+                    and request.bufnr == bufnr
+                    and request.method == "textDocument/formatting"
+                then
+                    client.cancel_request(id)
+                end
+            end
+        end
+    end)
+end

@@ -281,6 +281,68 @@ ui({
     "kevinhwang91/nvim-ufo",
     lazy = true,
     cond = lambda.config.ui.use_ufo,
+
+    dependencies = {
+        "kevinhwang91/promise-async",
+        {
+            "luukvbaal/statuscol.nvim",
+            config = function()
+                local builtin = require("statuscol.builtin")
+                require("statuscol").setup({
+                    relculright = true,
+                    segments = {
+                        { text = { "%s" }, click = "v:lua.ScSa" },
+                        -- {
+                        --     --
+                        --
+                        --     -- Git Signs
+                        --     text = { "%s" },
+                        --     sign = { name = { "GitSigns" }, maxwidth = 1, colwidth = 1, auto = false },
+                        --     click = "v:lua.ScSa",
+                        -- },
+                        {
+                            -- Line Numbers
+                            text = { builtin.lnumfunc },
+                            click = "v:lua.ScLa",
+                        },
+                        {
+                            -- Dap Breakpoints
+                            sign = {
+                                name = { "DapBreakpoint" },
+                                maxwidth = 1,
+                                colwidth = 1,
+                                auto = false,
+                                fillchars = "",
+                            },
+                            click = "v:lua.ScSa",
+                        },
+                        {
+                            -- Fold Markers
+                            text = { builtin.foldfunc },
+                            click = "v:lua.ScFa",
+                        },
+                        -- {
+                        --     -- Diagnostics
+                        --     sign = { name = { "Diagnostic" }, maxwidth = 1, colwidth = 1, auto = false, fillchars = "" },
+                        --     click = "v:lua.ScSa",
+                        -- },
+                        -- {
+                        --     -- All Other Signs
+                        --     sign = {
+                        --         name = { ".*" },
+                        --         fillchars = "",
+                        --
+                        --         auto = false,
+                        --     },
+                        --     click = "v:lua.ScSa",
+                        -- },
+
+                        { text = { "│" } },
+                    },
+                })
+            end,
+        },
+    },
     cmd = {
         "UfoAttach",
         "UfoDetach",
@@ -401,7 +463,7 @@ ui({
 
         --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
         --  now
-        vim.keymap.set({ "n", "x" }, "<leader>F", function()
+        vim.keymap.set({ "n", "x" }, "<leader>L", function()
             vim.schedule(function()
                 if require("hlslens").exportLastSearchToQuickfix() then
                     vim.cmd("cw")
@@ -454,48 +516,6 @@ ui({
         })
     end,
 })
-ui({
-    "luukvbaal/statuscol.nvim",
-    cond = lambda.config.ui.use_status_col,
-    config = function()
-        local builtin = require("statuscol.builtin")
-
-        local function diagnostic_click(args)
-            if args.button == "l" then
-                vim.diagnostic.open_float({ border = lambda.style.border.type_0, scope = "line", source = "always" })
-            elseif args.button == "m" then
-                vim.lsp.buf.code_action()
-            end
-        end
-
-        require("statuscol").setup({
-            separator = "│",
-            -- separator = false,
-            setopt = true,
-            -- thousands = true,
-            -- relculright = true,
-            order = "NSFs",
-            -- Click actions
-            Lnum = builtin.lnum_click,
-            FoldPlus = builtin.foldplus_click,
-            FoldMinus = builtin.foldminus_click,
-            FoldEmpty = builtin.foldempty_click,
-            DapBreakpointRejected = builtin.toggle_breakpoint,
-            DapBreakpoint = builtin.toggle_breakpoint,
-            DapBreakpointCondition = builtin.toggle_breakpoint,
-            DiagnosticSignError = diagnostic_click,
-            DiagnosticSignHint = diagnostic_click,
-            DiagnosticSignInfo = diagnostic_click,
-            DiagnosticSignWarn = diagnostic_click,
-            GitSignsTopdelete = builtin.gitsigns_click,
-            GitSignsUntracked = builtin.gitsigns_click,
-            GitSignsAdd = builtin.gitsigns_click,
-            GitSignsChangedelete = builtin.gitsigns_click,
-
-            GitSignsDelete = builtin.gitsigns_click,
-        })
-    end,
-})
 
 --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
 --  i wonder if they are any better that what ive had before
@@ -508,6 +528,7 @@ ui({
 
 ui({
     "yaocccc/nvim-foldsign",
+    cond = false,
     event = "CursorHold",
     config = true,
 })
@@ -544,6 +565,7 @@ ui({
         ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
         ignore_filetypes = {
             "qf",
+            "neo-tree",
             "dap_watches",
             "dap_scopes",
             "neo-tree",

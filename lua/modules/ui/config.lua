@@ -2,6 +2,8 @@
 local r, api, fn = vim.regex, vim.api, vim.fn
 local strwidth = api.nvim_strwidth
 
+local symbols = lambda.reqidx("lspkind")
+
 local config = {}
 
 function config.h_line()
@@ -94,17 +96,6 @@ function config.neo_tree()
     local icons = lambda.style.icons
     vim.g.neo_tree_remove_legacy_commands = 1
     require("neo-tree").setup({
-        sources = {
-            "filesystem",
-            "buffers",
-            "git_status",
-            "diagnostics",
-            "document_symbols",
-        },
-        source_selector = {
-            winbar = true,
-            separator_active = " ",
-        },
         open_files_do_not_replace_types = {
             "terminal",
             "Trouble",
