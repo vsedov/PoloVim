@@ -1,8 +1,12 @@
 _G = _G or {}
 _G.lambda = {}
+require("core.lambda")
+
 _G.map = vim.keymap.set
 _G.P = vim.print
-require("core.lambda")
+_G.__remote_op_opfunc = function(motion)
+    vim.notify("hi " .. motion)
+end
 
 P = vim.pretty_print
 

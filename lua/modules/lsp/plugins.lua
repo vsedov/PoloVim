@@ -197,6 +197,7 @@ lsp({
         },
         ignore_filetype = {
             "prisma",
+            "lua", -- It already has its own inlay ints
         },
     },
 })
@@ -219,3 +220,4 @@ lsp({
     event = "LspAttach",
     config = true,
 })
+lsp({ "onsails/lspkind.nvim", lazy = true })

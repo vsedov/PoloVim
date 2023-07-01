@@ -121,6 +121,17 @@ if not configs["pylance"] then
                 description = "Organize Imports",
             },
         },
+        docs = {
+            package_json = vim.fn.expand(
+                "$HOME/.local/share/nvim/mason/packages/pylance/extension/package.json",
+                false,
+                true
+            )[1],
+            description = [[
+      https://github.com/microsoft/pyright
+      `pyright`, a static type checker and language server for python
+      ]],
+        },
     }
 end
 

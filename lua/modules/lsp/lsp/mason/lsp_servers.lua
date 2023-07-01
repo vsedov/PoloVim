@@ -60,7 +60,7 @@ local servers = {
     buf = true,
     grammarly = true,
     zls = true,
-    ruff_lsp = true,
+    ruff_lsp = false,
     lua_ls = {
         settings = {
             Lua = {
@@ -87,31 +87,14 @@ local servers = {
             },
         },
     },
-    -- texlab = true,
     texlab = require("modules.lsp.lsp.providers.latex.texlab"),
-    -- ltex = require("modules.lsp.lsp.providers.latex.ltex"),
+    jedi_language_server = require("modules.lsp.lsp.providers.python.jedi_lang"),
 }
 
--- local latex_providers = {
--- }
--- vim.tbl_extend("force", servers, latex_providers[lambda.config.lsp.latex])
-
-local lsp_provider = {
-    jedi = "modules.lsp.lsp.providers.python.jedi_lang",
-    pyright = "modules.lsp.lsp.providers.python.pyright",
-}
-
-local config = lambda.config.lsp.python.lsp
-local python_lang = nil
-if config ~= "pylance" then
-    python_lang = require(lsp_provider[config])
-else
+local con = lambda.config.lsp.python.lsp
+if con == "pylance" then
     require("lspconfig").pylance.setup(require("modules.lsp.lsp.providers.python.pylance"))
-    python_lang = nil
-end
-
-if python_lang ~= nil then
-    vim.tbl_extend("force", servers, python_lang)
+    servers.jedi_language_server = false
 end
 
 return function(name)
