@@ -1,11 +1,14 @@
 if not lambda then
     return
 end
-local api, fn = vim.api, vim.fn
 local ui = lambda.style
-local M = {}
 
-local number_buftype_ignored = { "quickfix", "harpoon" }
+-- Inspiration
+-- 1. vim-relativity
+-- 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim
+
+local api, fn = vim.api, vim.fn
+local M = {}
 
 local function is_floating_win()
     return fn.win_gettype() == "popup"
@@ -16,7 +19,7 @@ local is_enabled = true
 ---Determines whether or not a window should be ignored by this plugin
 ---@return boolean
 local function is_ignored()
-    return vim.tbl_contains(number_buftype_ignored, vim.bo.buftype) or is_floating_win()
+    return is_floating_win()
 end
 
 -- block list certain plugins and buffer types
@@ -61,7 +64,9 @@ lambda.command("ToggleRelativeNumber", function()
 end)
 
 lambda.augroup("ToggleRelativeLineNumbers", {
+
     {
+
         event = { "BufEnter", "FileType", "FocusGained", "InsertLeave" },
         command = enable_relative_number,
     },
@@ -70,3 +75,5 @@ lambda.augroup("ToggleRelativeLineNumbers", {
         command = disable_relative_number,
     },
 })
+
+return M

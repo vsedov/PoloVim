@@ -1,6 +1,5 @@
-local current_dir = "/home/viv/.config/nvim/lua/modules/movement/flash/keybinds/"
+local current_dir = vim.fn.expand(vim.fn.stdpath("config") .. "/lua/modules/movement/flash/keybinds")
 local keybinds = {}
--- jump, lsp , treesitter walk through dir
 
 local function add_keybinds(keybinds_list)
     for _, keybind in ipairs(keybinds_list) do

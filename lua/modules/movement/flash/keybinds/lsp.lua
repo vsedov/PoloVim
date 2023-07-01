@@ -9,7 +9,7 @@ return {
     -- 'gr' - references
     -- 'gd' - go to declaration
     {
-        "gf",
+        "g;",
         function()
             local prev_timeout = vim.opt.timeout
 
