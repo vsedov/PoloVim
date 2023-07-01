@@ -119,7 +119,6 @@ lambda.config.lsp = {
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false,
     use_format_modifcation = false,
-    use_navigator = true,
     use_lsp_saga = false,
     lsp_sig = {
         use_lsp_signature = true,
@@ -176,7 +175,6 @@ lambda.config.lsp = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
-        use_semantic_token = true,
     },
 }
 
@@ -198,10 +196,10 @@ lambda.config.ui = {
     noice = {
         enable = true,
         lsp = {
-            use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
+            use_noice_signature = false, -- I would very much like to use this,l but for now this is broken
             use_noice_hover = false, -- Navigator really does not like this
-            use_markdown = true,
-            use_documentation = true,
+            use_markdown = false,
+            use_documentation = false,
         },
     },
     indent_lines = {

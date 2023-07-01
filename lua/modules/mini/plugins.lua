@@ -31,7 +31,7 @@ mini({
                             local range = { node:range() } ---@type number[]
                             local row = (start and range[1] or range[3]) + 1
                             local col = (start and range[2] or range[4]) + 1
-                            if down and row > cursor[1] or (not down) and row < cursor[1] then
+                            if down and row > cursor[1] or not down and row < cursor[1] then
                                 table.insert(locs, { row, col })
                             end
                         end
@@ -126,23 +126,24 @@ mini({
         return {
             cursor = {
                 enable = true,
-                timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
+                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             },
             resize = {
                 enable = false,
-                -- timing = animate.gen_timing.linear { duration = 5, unit = "total" },
             },
             close = {
-                timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
+                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             },
             open = {
                 enable = false,
-                timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
+                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             },
             scroll = {
                 enable = not lambda.config.ui.use_scroll,
-                timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
+
+                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
                 subscroll = animate.gen_subscroll.equal({
+                    max_output_steps = 60,
                     predicate = function(total_scroll)
                         if mouse_scrolled then
                             mouse_scrolled = false

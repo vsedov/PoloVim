@@ -5,10 +5,11 @@ function M.noice()
             enabled = true, -- enables the Noice cmdline UI
             view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
             opts = {}, -- global options for the cmdline. See section on views
+            ---@type table<string, CmdlineFormat>
             format = {
                 cmdline = { pattern = "^:", icon = "", lang = "vim" },
-                search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-                search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+                -- search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+                -- search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
                 filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
                 lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" },
                 help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
@@ -76,7 +77,7 @@ function M.noice()
                 enabled = lambda.config.ui.noice.lsp.use_noice_hover,
             },
             progress = {
-                enabled = true, -- this is just annoying
+                enabled = false, -- this is just annoying
             },
             signature = {
                 enabled = lambda.config.ui.noice.lsp.use_noice_signature, -- this just does not work well .
