@@ -133,8 +133,8 @@ function M.hover(handler)
     if type(handler) == "table" then
         local config = handler
         handler = function(err, result, ctx)
-            -- vim.lsp.handlers.hover(err, result, ctx, config)
-            require("hover").hover()
+            vim.lsp.handlers.hover(err, result, ctx, config)
+            -- require("hover").hover()
         end
     end
     local params = vim.lsp.util.make_position_params()

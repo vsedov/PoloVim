@@ -195,10 +195,10 @@ lambda.config.ui = {
     noice = {
         enable = true,
         lsp = {
-            use_noice_signature = false, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = false, -- Navigator really does not like this
-            use_markdown = false,
-            use_documentation = false,
+            use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
+            use_noice_hover = true, -- Navigator really does not like this
+            use_markdown = true,
+            use_documentation = true,
         },
     },
     indent_lines = {
