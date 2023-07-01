@@ -69,7 +69,7 @@ ui({
                 border = lambda.style.border.type_0,
                 min_height = 10,
                 win_options = { winblend = 10 },
-                mappings = { n = { ["q"] = "Close" } },
+                mappings = { n = { ["q"] = "Close", ["<esc>"] = "Close" } },
             },
             get_config = function(opts)
                 opts.prompt = opts.prompt and opts.prompt:gsub(":", "")
@@ -95,6 +95,7 @@ ui({
                     backend = "fzf_lua",
                     fzf_lua = lambda.fzf.dropdown({
                         winopts = { title = opts.prompt, height = 0.33, row = 0.5, width = 0.8 },
+                        mappings = { n = { ["q"] = "Close", ["<esc>"] = "Close" } },
                     }),
                 }
             end,
