@@ -64,7 +64,7 @@ opt.fillchars = {
 
     fold = " ",
     foldopen = "",
-    -- foldsep = " ",
+    foldsep = " ",
     foldclose = "",
 }
 -----------------------------------------------------------------------------//
@@ -283,6 +283,7 @@ opt.fileformats = { "unix", "mac", "dos" }
 o.mousefocus = true
 o.mousemoveevent = true
 opt.mousescroll = { "ver:1", "hor:6" }
+opt.mousemodel = "extend"
 
 -- these only read ".vim" files
 o.secure = true -- Disable autocmd etc for project local vimrc files.
@@ -292,7 +293,12 @@ o.exrc = lambda.has("nvim-0.9")
 -----------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
-o.foldlevelstart = 20
+-- o.foldlevelstart = 20
+o.foldcolumn = "1" -- '0' is not bad
+o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevelstart = 99
+o.foldenable = true
+
 o.cursorline = true
 o.cursorcolumn = true
 

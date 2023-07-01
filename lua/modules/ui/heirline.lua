@@ -862,6 +862,7 @@ local WinBar = {
         },
     }),
 }
+
 local Stc = {
     static = {
         ---@return {name:string, text:string, texthl:string}[]
@@ -879,6 +880,7 @@ local Stc = {
                 end
             end
         end,
+
         handlers = {
             ["GitSigns.*"] = function(args)
                 require("gitsigns").preview_hunk_inline()
@@ -963,6 +965,7 @@ vim.o.showcmdloc = "statusline"
 local config = {
 
     statusline = StatusLines,
+    -- statuscolumn = Stc,
     opts = {
         disable_winbar_cb = function(args)
             if vim.bo[args.buf].filetype == "neo-tree" then
@@ -979,6 +982,7 @@ local config = {
 
 require("heirline").setup(config)
 
+-- vim.o.statuscolumn = require("heirline").eval_statuscolumn()
 vim.api.nvim_create_augroup("Heirline", { clear = true })
 
 vim.cmd([[au Heirline FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])

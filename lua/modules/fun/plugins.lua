@@ -23,7 +23,23 @@ fun({
         "PetsSleepToggle",
     },
     dependencies = { "MunifTanjim/nui.nvim", "giusgad/hologram.nvim" },
-    config = true,
+    opts = {
+        random = true,
+        row = 2,
+    },
+    init = function()
+        vim.api.nvim_create_user_command("LotsOPets", function()
+            local names = "abcdefghijklmnopqrstuvwxyz"
+
+            local chars = {}
+            for c in names:gmatch(".") do
+                vim.cmd.PetsNew(c)
+            end
+        end, {})
+    end,
+    config = function(_, opts)
+        require("pets").setup(opts)
+    end,
 })
 
 fun({

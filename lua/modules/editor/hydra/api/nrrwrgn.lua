@@ -1,5 +1,3 @@
-local exit = { nil, { exit = true, desc = "EXIT" } }
-local bracket = { "<cr>", "w", "W", "m", "M" }
 local leader = ";e"
 local options = {
     NR = ": Open the selected region in a new narrowed window",
@@ -38,20 +36,16 @@ local config = {
         },
         w = {
             function()
-                if vim.fn.mode() == "n" then
-                    return
-                else
-                    vim.cmd([['<,'>NR]])
-                end
+                vim.api.nvim_feedkeys(lambda.replace_termcodes("<ESC>gv:NR<CR>"), "n", true)
             end,
-            { desc = "Range Window", exit = false, visual = true },
+            { desc = "Range Window", exit = true, mode = { "n", "v" } },
         },
 
         W = {
             function()
                 vim.cmd([[NW]])
             end,
-            { nowait = true, silent = true, desc = "Current Window", exit = true },
+            { nowait = true, silent = true, desc = "Current Window", exit = true, mode = { "n", "v" } },
         },
 
         [";"] = {
@@ -70,13 +64,9 @@ local config = {
 
         m = {
             function()
-                if vim.fn.mode() == "n" then
-                    return
-                else
-                    vim.cmd([['<,'>NRP]])
-                end
+                vim.api.nvim_feedkeys(lambda.replace_termcodes("<ESC>gv:NRP<CR>"), "n", true)
             end,
-            { nowait = true, silent = true, desc = "Mark region", exit = false, visual = true },
+            { nowait = true, silent = true, desc = "Mark region", exit = false, mode = { "n", "v" } },
         },
 
         M = {

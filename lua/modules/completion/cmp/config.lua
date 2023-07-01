@@ -24,13 +24,10 @@ local config = {
         end,
     },
     performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
-    preselect = cmp.PreselectMode.None, -- None | Item
-    completion = {
-        types.cmp.TriggerEvent.None,
-        completeopt = "menu,menuone,noselect",
-        keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
-        keyword_length = 1,
-    },
+    preselect = cmp.PreselectMode.Item, -- None | Item
+    -- completion = {
+    --     types.cmp.TriggerEvent.Replace,
+    -- },
     -- confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
     confirmation = {
         default_behavior = types.cmp.ConfirmBehavior.Insert,
@@ -185,11 +182,23 @@ elseif lambda.config.cmp.cmp_theme == "extra" then
         }),
     }
 end
+config.matching = {
+    disallow_fuzzy_matching = false,
+    disallow_fullfuzzy_matching = false,
+    disallow_partial_fuzzy_matching = true,
+    disallow_partial_matching = false,
+    disallow_prefix_unmatching = false,
+}
+
+cmp.config.compare.locality.lines_count = 300
 local sorting = {
+    priority_weight = 2,
     comparators = {
         cmp.config.compare.offset,
         cmp.config.compare.exact,
         cmp.config.compare.score,
+        cmp.config.compare.recently_used,
+        cmp.config.compare.locality,
         function(entry1, entry2)
             local _, entry1_under = entry1.completion_item.label:find("^_+")
             local _, entry2_under = entry2.completion_item.label:find("^_+")
@@ -201,7 +210,6 @@ local sorting = {
                 return true
             end
         end,
-
         cmp.config.compare.kind,
         cmp.config.compare.sort_text,
         cmp.config.compare.length,
@@ -211,15 +219,13 @@ local sorting = {
 
 if lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_cmp then
     if lambda.config.ai.tabnine.cmp.tabnine_sort then
-        sorting.priority_weight = 2
         table.insert(sorting.comparators, 1, require("cmp_tabnine.compare"))
     end
 
     if lambda.config.ai.tabnine.cmp.tabnine_bottom_sort then
         table.insert(sorting.comparators, require("cmp_tabnine.compare"))
     end
-    config.sorting = sorting
-else
-    config.sorting = sorting
 end
+config.sorting = sorting
+
 return config

@@ -75,4 +75,5 @@ end
 vim.schedule_wrap(function()
     loadHydraModules(fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/normal/", MODULE_PREFIX .. "normal.")
     loadHydraAPI()
+    require("modules.editor.hydra.after.lsp")
 end)()

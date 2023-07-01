@@ -79,7 +79,7 @@ else
             { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
             { "tpope/vim-repeat" },
         },
-        opts = flash.opts(),
+        opts = flash.opts,
         config = flash.config,
         keys = binds,
     })
@@ -93,7 +93,7 @@ movement({
 movement({
     "ziontee113/syntax-tree-surfer",
     lazy = true,
-    keys = { "cU", "cD", "cd", "cu", "J", "cn", "cx" },
+    keys = { "cU", "cD", "cd", "cu", "H", "cn", "cx" },
     cmd = {
         "STSSwapPrevVisual",
         "STSSelectChildNode",
@@ -153,3 +153,30 @@ movement({
 })
 
 movement({ "tommcdo/vim-exchange", keys = { "cx", desc = "Exchange" } })
+
+movement({
+    "haya14busa/vim-edgemotion",
+    keys = {
+        { "<c-'>", "<Plug>(edgemotion-j)", mode = "" },
+        { "<c-#>", "<Plug>(edgemotion-k)", mode = "" },
+    },
+})
+
+movement({
+    "rainbowhxch/accelerated-jk.nvim",
+    cond = lambda.config.movement.use_accelerated_jk,
+    keys = {
+
+        {
+            "j",
+            "<Plug>(accelerated_jk_gj)",
+            mode = "n",
+        },
+
+        {
+            "k",
+            "<Plug>(accelerated_jk_gk)",
+            mode = "n",
+        },
+    },
+})

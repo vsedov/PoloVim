@@ -57,7 +57,6 @@ cnoremap("<C-d>", "<Del>", { desc = "delete character under cursor" })
 cnoremap("<C-h>", "<BS>", { desc = "delete character before cursor" })
 cnoremap("<C-t>", [[<C-R>=expand("%:p:h") . "/" <CR>]], { desc = "current dir expand" })
 cnoremap("::", [[<C-r>=fnameescape(expand('%:p:h'))<cr>/]], { desc = "fnameescape" })
-cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], { desc = "escape forward slash" })
 cnoremap("<C-f>", [[getcmdpos() > strlen(getcmdline())? &cedit: "\<Lt>Right>"]], {
     desc = "move cursor forward",
 })
@@ -74,8 +73,9 @@ nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], { desc = "surround with backticks" }
 nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { desc = "surround with single quotes" })
 nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], { desc = "surround with parentheses" })
 nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { desc = "surround with curly braces" })
-imap("<c-q>", [[<esc>:call search("[)\\]}>,`'\"]", 'eW')<CR>]], { desc = "Jump Brackets" })
-imap("<c-BS>", [[<esc>cvb]], { desc = "Jump Brackets" })
+
+inoremap("<c-q>", [[<esc>:call search("[)\\]}>,`'\"]", 'eW')<CR>]], { desc = "Jump Brackets" })
+inoremap("<c-BS>", [[<esc>cvb]], { desc = "Jump Brackets" })
 
 if lambda.falsy(fn.mapcheck("<ScrollWheelDown>")) then
     nmap("<ScrollWheelDown>", "<c-d>")
@@ -90,12 +90,6 @@ end
 
 nnoremap("<localleader><tab>", [[:b <Tab>]], { silent = false, desc = "open buffer list" })
 nnoremap("<leader><leader>L", [[<c-^>]], { desc = "switch to last buffer" })
-nnoremap("||_", [[v:count ? "<C-W>v<C-W><Right>" : '|']], { desc = "New Vertical Buffer", silent = true, expr = true })
-nnoremap(
-    "|||",
-    [[v:count ? "<C-W>s<C-W><Down>"  : '_']],
-    { desc = "New Horizontal Buffer", silent = true, expr = true }
-)
 
 nnoremap("<esc>", function()
     require("notify").dismiss()
@@ -119,7 +113,7 @@ nnoremap("<leader>ia", "a <esc>h", { desc = " Insert space after", silent = t
 --  │ Search                                                             │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<leader><leader>Sl", ":%s/<C-R><C-W>//gI<left><left><left>", {
+nnoremap("<leader><leader>w", ":%s/<C-R><C-W>//gI<left><left><left>", {
     desc = "Replace word under cursor on Line",
     silent = true,
 })
@@ -143,7 +137,7 @@ xnoremap("0", [[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^"']], { 
 onoremap("0", [[getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^"']], { desc = "0", expr = true })
 --
 -- -- This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap("<Leader><leader>so", [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]], {
+nnoremap("<Leader><leader>so", [[<Cmd>source $MYVIMRC<cr> <bar> <cmd>:lua vim.notify('Sourced init.vim')<cr>]], {
     desc = "Source init.lua",
     silent = true,
 })
@@ -156,7 +150,7 @@ inoremap("?", [[<c-g>u?]], { desc = "?" })
 -- visually select the block of text I just pasted in Vim
 nnoremap("gV", [[`[v`]], { desc = "visually select the block of text", silent = true })
 
-xnoremap("@", ":<C-u>call ExecuteMacroOverVisualRange()<CR>", { desc = "Macro Execute" })
+xnoremap("@", "<cmd>:<C-u>call ExecuteMacroOverVisualRange()<CR>", { desc = "Macro Execute" })
 
 -- -- Credit: JGunn Choi ?il | inner line
 xnoremap("aL", "$o0", { desc = "inner line", silent = true })
@@ -165,6 +159,7 @@ onoremap("aL", [[<cmd>normal val<CR>]], { desc = "nromal val", silent = true })
 xnoremap("iL", [[<Esc>^vg_]], { desc = "inner line", silent = true })
 onoremap("iL", [[<cmd>normal! ^vg_<CR>]], { desc = "nromal val", silent = true })
 
+--  TODO: (vsedov) (20:25:37 - 25/06/23): Does not work
 nnoremap("<localleader><cr>", function()
     if fn.empty(fn.getbufvar(fn.bufnr(), "&buftype")) then
         return "@@"
@@ -177,58 +172,60 @@ end, { desc = "repeat macros", expr = true })
 --  │ Folds                                                              │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<leader>Z", [[@=(foldlevel('.')?'za':"\<Space>")<CR>]], { desc = "toggle fold under cursor", silent = true })
+nnoremap("<leader>z", [[@=(foldlevel('.')?'za':"\<Space>")<CR>]], { desc = "toggle fold under cursor", silent = true })
 --     -- Refocus folds
 nnoremap("z<leader>", [[zMzvzz]], { desc = "center viewport" })
 --     -- Make zO recursively open whatever top level fold we're in, no matter where the
 nnoremap("z0", [[zCzO]], { desc = "recursively open whatever top level fold" })
 vnoremap("$", "g_")
-nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], { expr = true, silent = true })
-nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], { expr = true, silent = true })
+
+if not lambda.config.movement.use_accelerated_jk then
+    nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], { expr = true, silent = true })
+    nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], { expr = true, silent = true })
+end
 -- Toggle top/center/bottom
 nmap("zz", [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']], { expr = true })
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Lsp Diagnostics                                                    │
 --  ╰────────────────────────────────────────────────────────────────────╯
-nnoremap("D", "<cmd>LspSaga show_line_diagnostics<cr>", { desc = "Diagnostic", silent = true, expr = true })
 nnoremap(
     "}",
-    ":lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow<cr>",
-    { desc = "Diag show next", silent = true, expr = true }
+    "<cmd>:lua vim.diagnostic.goto_next({ float = false })<cr>:DiagWindowShow<cr>",
+    { desc = "Diag show next", silent = true }
 )
 nnoremap(
     "{",
-    ":lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow<cr>",
-    { desc = "Diag show Prev", silent = true, expr = true }
+    "<cmd>:lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow<cr>",
+    { desc = "Diag show Prev", silent = true }
 )
 
-nnoremap(";R", ":NeoRoot<cr>", { desc = "root switch", silent = true, expr = true })
+nnoremap(";R", "<cmd>:NeoRootSwitchMode<cr>", { desc = "root switch", silent = true })
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Telscope Mappings                                                  │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<Leader>U", ":lua require'utils.telescope'.find_updir()<CR>", { desc = "Up dir", silent = true })
-nnoremap("<leader>xW", ":lua require'utils.telescope'.help_tags()<CR>", { desc = "Help tag", silent = true })
+nnoremap("<Leader>U", "<cmd>:lua require'utils.telescope'.find_updir()<CR>", { desc = "Up dir", silent = true })
+nnoremap("<leader>xW", "<cmd>:lua require'utils.telescope'.help_tags()<CR>", { desc = "Help tag", silent = true })
 nnoremap(
     "<Leader>gw",
-    ":lua require'utils.telescope'.grep_last_search()<CR>",
+    "<cmd>:lua require'utils.telescope'.grep_last_search()<CR>",
     { desc = "Grep last word", silent = true }
 )
 vnoremap(
     "<Leader>gw",
-    ":lua require'utils.telescope'.grep_string_visual()<CR>",
+    "<cmd>:lua require'utils.telescope'.grep_string_visual()<CR>",
     { desc = "Grep last word", silent = true }
 )
-nnoremap("<Leader>yy", ":lua require'utils.telescope'.neoclip()<CR>", { desc = "NeoClip", silent = true })
+nnoremap("<Leader>yy", "<cmd>:lua require'utils.telescope'.neoclip()<CR>", { desc = "NeoClip", silent = true })
 --
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ misc                                                               │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<F1>", ":UndotreeToggle<cr>", { desc = "Undo Tree", silent = true })
+nnoremap("<F1>", "<cmd>:UndotreeToggle<cr>", { desc = "Undo Tree", silent = true })
 
 nnoremap("<Leader>J", ":TSJJoin<Cr>", { desc = "TSJJoin", silent = true })
 nnoremap("<Leader>j", ":TSJToggle<cr>", { desc = "TSJToggle", silent = true })
@@ -246,6 +243,7 @@ end, { desc = "visual smart d", expr = true })
 --  │ Dir Changes                                                        │
 --  ╰────────────────────────────────────────────────────────────────────╯
 nnoremap("<leader>cD", [[:let @"=expand("%:p")<CR>]], { desc = "expand current dir", silent = true })
+
 nnoremap("<leader>cd", function()
     lambda.clever_tcd()
 end, { desc = "Clever cd", silent = true })

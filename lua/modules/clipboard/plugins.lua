@@ -87,3 +87,12 @@ clipsub({
     dependencies = { "kkharji/sqlite.lua" },
     config = conf.neoclip,
 })
+clipsub({
+    "tversteeg/registers.nvim",
+    keys = {
+        { '"', mode = { "n", "v" } },
+        { "<C-R>", mode = "i" },
+    },
+    cmd = "Registers",
+    config = true,
+})

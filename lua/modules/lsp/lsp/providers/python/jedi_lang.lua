@@ -4,7 +4,6 @@
 local py = require("modules.lsp.lsp.providers.python.utils.python_help")
 
 return {
-    cmd = { "jedi-language-server" },
     filetypes = { "python" },
     init_options = {
         jediSettings = {

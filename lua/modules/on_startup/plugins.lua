@@ -81,6 +81,8 @@ startup({
     "chrisbra/Recover.vim",
     lazy = false,
 })
+
+-- nvim filename.py:10:20 -- you can open a file based on its filename and location.
 startup({
     "lewis6991/fileline.nvim",
 })

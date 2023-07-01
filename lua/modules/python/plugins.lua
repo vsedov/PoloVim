@@ -19,24 +19,9 @@ python({
 })
 
 python({
-    "AckslD/swenv.nvim",
-    lazy = true,
-    ft = "python",
-    cmd = { "VenvFind", "GetVenv" },
-    config = conf.swenv,
-})
-python({
     "linux-cultist/venv-selector.nvim",
     dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
-    keys = {
-        {
-            "<leader>vs",
-            "<cmd>:VenvSelect<cr>",
-            -- key mapping for directly retrieve from cache. You may set autocmd if you prefer the no hand approach
-            "<leader>vs",
-            "<cmd>:VenvSelectCached<cr>",
-        },
-    },
+    cmd = { "VenvSelect", "VenvSelectCached" },
     config = true,
     event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
 })
@@ -156,4 +141,9 @@ python({
             end,
         })
     end,
+})
+
+python({
+    "raimon49/requirements.txt.vim",
+    event = "BufReadPre requirements*.txt",
 })

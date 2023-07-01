@@ -220,7 +220,7 @@ tools({
     "willothy/flatten.nvim",
     cond = lambda.config.tools.use_flatten,
     priority = 1001,
-    config = {
+    opts = {
         window = { open = "alternate" },
         callbacks = {
             block_end = function()
@@ -304,4 +304,54 @@ tools({
         },
         treesitter = false, -- this does not work right now
     },
+})
+
+tools({
+    "tpope/vim-eunuch",
+    cmd = {
+        "Delete",
+        "Unlink",
+        "Move",
+        "Rename",
+        "Chmod",
+        "Mkdir",
+        "Cfind",
+        "Clocate",
+        "Lfind",
+        "Wall",
+        "SudoWrite",
+        "SudoEdit",
+    },
+})
+tools({
+    "smjonas/live-command.nvim",
+    cond = lambda.config.tools.use_live_command,
+    event = "VeryLazy",
+    opts = {
+        commands = {
+            Norm = { cmd = "norm" },
+            Glive = { cmd = "g" },
+            Dlive = { cmd = "d" },
+            Qlive = {
+                cmd = "norm",
+                -- This will transform ":5Qlive a" into ":norm 5@a"
+                args = function(opts)
+                    local reg = opts.fargs and opts.fargs[1] or "q"
+                    local count = opts.fargs and opts.fargs[2] or (opts.count == -1 and "" or opts.count)
+                    return count .. "@" .. reg
+                end,
+                range = "",
+            },
+        },
+    },
+    config = function(_, opts)
+        require("live-command").setup(opts)
+    end,
+})
+tools({
+    "norcalli/nvim-terminal.lua",
+    ft = "terminal",
+    config = function()
+        require("terminal").setup()
+    end,
 })

@@ -1,8 +1,5 @@
---  TODO: (vsedov) (08:58:48 - 08/11/22): Make all of this optional, because im not sure which is
---  causing the error here, and its quite important that i figure this one out .
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
-local fn = vim.fn
 
 -- Core
 ts({
@@ -129,13 +126,6 @@ ts({
 })
 
 ts({
-    "andymass/vim-matchup",
-    cond = lambda.config.treesitter.use_matchup,
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = conf.matchup,
-    init = conf.matchup_setup,
-})
-ts({
     "Yggdroot/hiPairs",
     lazy = true,
     cond = lambda.config.treesitter.hipairs,
@@ -204,4 +194,35 @@ ts({
             context_commentstring = { enable = true, enable_autocmd = false },
         })
     end,
+})
+
+ts({
+    "andymass/vim-matchup",
+    cond = lambda.config.treesitter.use_matchup,
+    event = "BufReadPost",
+    init = function()
+        vim.o.matchpairs = "(:),{:},[:],<:>"
+    end,
+    keys = {
+        {
+            "<leader><leader>w",
+            function()
+                vim.cmd([[MatchupWhereAmI!]])
+            end,
+        },
+    },
+    config = function()
+        vim.g.matchup_matchparen_deferred = 1
+        vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    end,
+})
+ts({ -- "haringsrob/nvim_context_vt",
+    "haringsrob/nvim_context_vt",
+    cond = lambda.config.treesitter.use_context_vt,
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+        prefix = "⤸",
+        -- "󱞿",
+        highlight = "DiagnosticVirtualTextInfo",
+    },
 })

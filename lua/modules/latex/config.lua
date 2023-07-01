@@ -1,11 +1,12 @@
 local config = {}
 function config.vimtex()
-    vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-        pattern = { "*.tex" },
-        callback = function()
-            vim.cmd([[VimtexCompile]])
-        end,
-    })
+    -- using kebab for this
+    -- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    --     pattern = { "*.tex" },
+    --     callback = function()
+    --         vim.cmd([[VimtexCompile]])
+    --     end,
+    -- })
     vim.g.vimtex_view_method = "sioyek" -- sioyek
     vim.g.vimtex_compiler_method = "latexmk"
     vim.g.vimtex_compiler_latexmk = {

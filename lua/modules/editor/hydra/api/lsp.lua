@@ -1,7 +1,8 @@
-local leader = ";l"
+local leader = "<leader>l"
+local utils = require("modules.lsp.lsp.utils")
 
 local lsp_lens_active = false
-local bracket = { "J", "K", "w" }
+local bracket = { "j", "k", "w" }
 
 local config = {
     Lsp = {
@@ -9,14 +10,14 @@ local config = {
         body = leader,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
-        J = {
+        j = {
             function()
                 vim.diagnostic.goto_prev()
             end,
             { exit = false, nowait = true, desc = "Diag [G] Prev" },
         },
 
-        K = {
+        k = {
             function()
                 vim.diagnostic.goto_next()
             end,
@@ -95,13 +96,17 @@ local config = {
             end,
             { nowait = true, exit = true, desc = "LspLensToggle" },
         },
+        l = {
+            utils.format_range_operator,
+            { nowait = true, exit = true, desc = "Range Diagnostics", mode = { "v" } },
+        },
     },
 }
 
 return {
     config,
     "Lsp",
-    { { "d", "D", "r", "i", "t" }, { "s", "S", "I", "c" } },
+    { { "d", "D", "r", "i", "t" }, { "s", "S", "I", "c", "l" } },
     bracket,
     6,
     3,

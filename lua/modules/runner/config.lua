@@ -14,6 +14,7 @@ function config.executor()
         },
     })
 end
+
 function config.code_runner()
     require("code_runner").setup({
         startinsert = true,

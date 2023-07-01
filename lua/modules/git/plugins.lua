@@ -180,7 +180,7 @@ git({
 })
 
 git({
-    "ruifm/gitlinker.nvim",
+    "linrongbin16/gitlinker.nvim",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {

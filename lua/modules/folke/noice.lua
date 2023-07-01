@@ -8,8 +8,8 @@ function M.noice()
             ---@type table<string, CmdlineFormat>
             format = {
                 cmdline = { pattern = "^:", icon = "", lang = "vim" },
-                search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-                search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+                -- search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+                -- search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
                 filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
                 lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" },
                 help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
@@ -93,6 +93,18 @@ function M.noice()
                 -- override cmp documentation with Noice (needs the other options to work)
                 ["cmp.entry.get_documentation"] = lambda.config.ui.noice.lsp.use_documentation,
             },
+            -- defaults for hover and signature help
+            documentation = {
+                view = "hover",
+                ---@type NoiceViewOptions
+                opts = {
+                    lang = "markdown",
+                    replace = true,
+                    render = "plain",
+                    format = { "{message}" },
+                    win_options = { concealcursor = "n", conceallevel = 3 },
+                },
+            },
         },
         markdown = {
             hover = {
@@ -119,7 +131,7 @@ function M.noice()
         presets = {
             -- you can enable a preset by setting it to true, or a table that will override the preset config
             -- you can also add custom presets that you can enable/disable with enabled=true
-            bottom_search = true, -- use a classic bottom cmdline for search
+            bottom_search = false, -- use a classic bottom cmdline for search
             command_palette = true, -- position the cmdline and popupmenu together
             long_message_to_split = true, -- long messages will be sent to a split
             inc_rename = true, -- enables an input dialog for inc-rename.nvim

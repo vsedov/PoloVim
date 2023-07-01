@@ -66,6 +66,18 @@ user({
 user({
     "chrisbra/NrrwRgn",
     lazy = true,
+    cmd = {
+        "NR",
+        "NW",
+        "WR",
+        "NRV",
+        "NUD",
+        "NRP",
+        "NRM",
+        "NRS",
+        "NRN",
+        "NRL",
+    },
     init = function()
         vim.g.nrrw_rgn_vert = 1
         vim.g.nrrw_rgn_resize_window = "relative"
@@ -225,7 +237,6 @@ user({
     "Bekaboo/dropbar.nvim",
     event = "VeryLazy",
     cond = lambda.config.ui.use_dropbar,
-    dependencies = { "onsails/lspkind.nvim" },
     keys = {
         {
             "<leader>wp",
@@ -235,28 +246,31 @@ user({
             desc = "winbar: pick",
         },
     },
-    config = {
-        general = {
-            enable = function(buf, win)
-                local b, w = vim.bo[buf], vim.wo[win]
-                local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
-                return decor.ft ~= false
-                    and decor.bt ~= false
-                    and b.bt == ""
-                    and not w.diff
-                    and not api.nvim_win_get_config(win).zindex
-                    and api.nvim_buf_get_name(buf) ~= ""
-            end,
-        },
-        menu = {
-            win_configs = {
-                border = lambda.style.border.type_0,
-                col = function(menu)
-                    return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+    config = function()
+        require("dropbar").setup({
+            general = {
+                update_interval = 100,
+                enable = function(buf, win)
+                    local b, w = vim.bo[buf], vim.wo[win]
+                    local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
+                    return decor.ft ~= false
+                        and decor.bt ~= false
+                        and b.bt == ""
+                        and not w.diff
+                        and not api.nvim_win_get_config(win).zindex
+                        and api.nvim_buf_get_name(buf) ~= ""
                 end,
             },
-        },
-    },
+            menu = {
+                win_configs = {
+                    border = "shadow",
+                    col = function(menu)
+                        return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+                    end,
+                },
+            },
+        })
+    end,
 })
 
 -- First of all, :Sayonara or :Sayonara!
@@ -320,31 +334,32 @@ user({
         border = lambda.style.border.type_0,
     },
 })
-user({
-    "tversteeg/registers.nvim",
-    keys = {
-        { '"', mode = { "n", "v" } },
-        { "<C-R>", mode = "i" },
-    },
-    cmd = "Registers",
-    config = true,
-})
-user({
-    "haya14busa/vim-edgemotion",
-    keys = {
-        { "<c-'>", "<Plug>(edgemotion-j)", mode = "" },
-        { "<c-#>", "<Plug>(edgemotion-k)", mode = "" },
-    },
-})
-user({
-    "norcalli/nvim-terminal.lua",
-    ft = "terminal",
-    config = function()
-        require("terminal").setup()
-    end,
-})
+
 user({
     "kiran94/maim.nvim",
     config = true,
     cmd = { "Maim", "MaimMarkdown" },
+})
+
+user({
+    "huggingface/hfcc.nvim",
+    lazy = true,
+    cmd = "StarCoder",
+    opts = {
+        model = "bigcode/starcoder",
+        query_params = {
+            max_new_tokens = 200,
+        },
+    },
+    init = function()
+        vim.api.nvim_create_user_command("StarCoder", function()
+            require("hfcc.completion").complete()
+        end, {})
+    end,
+})
+
+user({
+    "m4xshen/hardtime.nvim",
+    cmd = "Hardtime",
+    config = true,
 })
