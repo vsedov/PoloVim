@@ -56,7 +56,6 @@ local servers = {
             table.insert(new_config.cmd, new_rootdir .. "/.config.yaml")
         end,
     },
-    sourcery = false, -- no clue what this does
     buf = true,
     grammarly = true,
     zls = true,
@@ -88,13 +87,14 @@ local servers = {
         },
     },
     texlab = require("modules.lsp.lsp.providers.latex.texlab"),
-    jedi_language_server = require("modules.lsp.lsp.providers.python.jedi_lang"),
 }
 
 local con = lambda.config.lsp.python.lsp
-if con == "pylance" then
-    require("lspconfig").pylance.setup(require("modules.lsp.lsp.providers.python.pylance"))
-    servers.jedi_language_server = false
+for _, server in ipairs(con) do
+    if server == "pylance" then
+        require("lspconfig").pylance.setup(require("modules.lsp.lsp.providers.python.pylance"))
+    end
+    servers[server] = require("modules.lsp.lsp.providers.python." .. server)
 end
 
 return function(name)

@@ -1,15 +1,10 @@
 vim.g.navic_silence = true
 local util = require("lspconfig/util")
-
--- local venv_path = os.getenv("VIRTUAL_ENV") -- could be nil
-local python_path = "/usr/bin/python"
-local pylsp_path = "/home/viv/.local/bin/pylsp"
-
+local py = require("modules.lsp.lsp.providers.python.utils.python_help")
+local path = require("mason-core.path")
 return {
-    cmd = { "pylsp" },
     settings = {
         pylsp = {
-            -- configurationSources = { "flake8" },
             plugins = {
                 jedi_completion = {
                     enabled = true,
@@ -31,10 +26,9 @@ return {
                 pycodestyle = { enabled = false },
                 pydocstyle = { enabled = false },
                 pyflakes = { enabled = false },
+                rope = { enable = true },
+                ruff = { enable = false },
             },
-            rope = { enable = true },
-            flake8 = { enable = false },
-            yapf = { enable = false },
         },
     },
     root_dir = function(fname)
@@ -46,5 +40,28 @@ return {
             "Pipfile",
         }
         return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
+    end,
+    on_init = function(client)
+        client.config.settings.python.pythonPath = (function(workspace)
+            if vim.env.VIRTUAL_ENV then
+                return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+            end
+            if vim.fn.filereadable(path.concat({ workspace, "poetry.lock" })) then
+                local venv = vim.fn.trim(vim.fn.system("poetry env info -p"))
+                return path.concat({ venv, "bin", "python" })
+            end
+            local pep582 = py.pep582(client)
+            if pep582 ~= nil then
+                client.config.settings.python.analysis.extraPaths = { pep582 }
+            end
+            return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+        end)(client.config.root_dir)
+    end,
+    before_init = function(_, config)
+        config.settings.python.analysis.stubPath = path.concat({
+            vim.fn.stdpath("data"),
+            "lazy",
+            "python-type-stubs",
+        })
     end,
 }
