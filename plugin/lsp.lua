@@ -31,7 +31,6 @@ local get_extra_binds = function()
             ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
             ["gt"] = { "<cmd>Lspsaga peek_type_definition<CR>", "peek_type_definitions" },
             ["gT"] = { "<cmd>Lspsaga goto_type_definition<CR>", "goto_type_definitions" },
-            ["gs"] = { "<cmd>Lspsaga signature_help<CR>", "Signature Help" },
             ["gr"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
             ["gR"] = { "<cmd>Lspsaga rename ++project<CR>", "Rename Project" },
             ["gk"] = {

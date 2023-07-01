@@ -22,7 +22,7 @@ return {
                 local venv = vim.fn.trim(vim.fn.system("poetry env info -p"))
                 return path.concat({ venv, "bin", "python" })
             end
-            local pep582 = py.pep582(new_root_dir)
+            local pep582 = py.pep582(client)
             if pep582 ~= nil then
                 client.config.settings.python.analysis.extraPaths = { pep582 }
             end

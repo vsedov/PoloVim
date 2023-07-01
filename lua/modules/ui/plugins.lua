@@ -535,7 +535,7 @@ ui({
 
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    cond = lambda.config.ui.use_scroll,
+    cond = lambda.config.ui.scroll_bar.use_scroll,
     event = "VeryLazy",
     config = function()
         require("neoscroll").setup({

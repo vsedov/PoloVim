@@ -70,7 +70,6 @@ if lambda.config.movement.movement_type == "leap" then
         keys = conf.treehopper,
     })
 else
-    local binds = require("modules.movement.flash.binds")
     local flash = require("modules.movement.flash.setup")
     movement({
         "folke/flash.nvim",
@@ -81,7 +80,7 @@ else
         },
         opts = flash.opts,
         config = flash.config,
-        keys = binds,
+        keys = flash.binds,
     })
 end
 
@@ -93,7 +92,7 @@ movement({
 movement({
     "ziontee113/syntax-tree-surfer",
     lazy = true,
-    keys = { "cU", "cD", "cd", "cu", "H", "cn", "cx" },
+    keys = { "cU", "cD", "cd", "cu", ";f", "cn", "cx" },
     cmd = {
         "STSSwapPrevVisual",
         "STSSelectChildNode",

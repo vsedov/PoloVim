@@ -25,6 +25,7 @@ require("clangd_extensions").setup({
         hover_with_actions = true,
         -- These apply to the default ClangdSetInlayHints command
         inlay_hints = {
+
             -- Only show inlay hints for the current line
             only_current_line = true,
             -- Event which triggers a refersh of the inlay hints.

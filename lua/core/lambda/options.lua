@@ -174,7 +174,7 @@ lambda.config.lsp = {
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = "jedi", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = "pylance", -- jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
     },
 }
 
@@ -187,8 +187,7 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_dropbar = true,
     use_beacon = true,
-    use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
-    use_mini_animate = true,
+    use_mini_animate = false,
     heirline = {
         use_statuscol = false,
         use_heirline = true,
@@ -208,6 +207,7 @@ lambda.config.ui = {
         use_mini_indent_scope = true,
     },
     scroll_bar = {
+        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
         use_scrollbar = false,
     },
 }

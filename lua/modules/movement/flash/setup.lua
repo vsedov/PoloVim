@@ -51,14 +51,14 @@ local function opts()
             -- you can always jump to the first match with `<CR>`
             current = true,
             -- show the label after the match
-            after = false, ---@type boolean|number[]
+            after = true, ---@type boolean|number[]
             -- show the label before the match
-            before = true, ---@type boolean|number[]
+            before = false, ---@type boolean|number[]
             -- position of the label extmark
             style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
             -- flash tries to re-use labels that were already assigned to a position,
             -- when typing more characters. By default only lower-case labels are re-used.
-            reuse = "lowercase", ---@type "lowercase" | "all"
+            reuse = "all", ---@type "lowercase" | "all"
             -- for the current window, label targets closer to the cursor first
             distance = true,
             -- minimum pattern length to show labels
@@ -238,7 +238,7 @@ local function opts()
             -- `true`: always enter a new motion when doing a remote operation
             -- `false`: use the window's cursor position and jump target
             -- `nil`: act as `true` for remote windows, `false` for the current window
-            motion = false,
+            motion = true,
         },
     }
 end
@@ -268,4 +268,5 @@ end
 return {
     opts = opts,
     config = config,
+    binds = require("modules.movement.flash.keybinds"),
 }
