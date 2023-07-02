@@ -20,6 +20,9 @@ local function caller(options, ch)
             return "Octo " .. ch .. " " .. item
         end,
     }, function(choice)
+        if choice == nil then
+            return
+        end
         when(
             vim.tbl_contains({
                 "issue",
@@ -47,6 +50,9 @@ local function caller(options, ch)
                             prompt = "Enter a option for " .. ch .. " > ",
                             default = default_choice[ch],
                         }, function(choice_2)
+                            if choice_2 == nil then
+                                return
+                            end
                             if vim.tbl_contains(options, choice_2) then
                                 choice_2 = choice_edge_case[choice_2]
                             end
@@ -61,8 +67,7 @@ local function caller(options, ch)
             function()
                 vim.notify("No Optional Params listed")
                 if choice ~= nil and ch ~= nil then
-                    command = "Octo " .. ch .. " " .. choice
-                    vim.cmd(command)
+                    return
                 end
             end
         )

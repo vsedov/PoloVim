@@ -61,7 +61,13 @@ ui({
             prefer_width = 100,
             min_width = 20,
             title_pos = "center",
-            relative = "editor",
+            get_config = function()
+                if vim.api.nvim_win_get_width(0) < 50 then
+                    return {
+                        relative = "editor",
+                    }
+                end
+            end,
         },
         select = {
             backend = { "fzf_lua", "builtin" },
@@ -69,7 +75,7 @@ ui({
                 border = lambda.style.border.type_0,
                 min_height = 10,
                 win_options = { winblend = 10 },
-                mappings = { n = { ["q"] = "Close" } },
+                mappings = { n = { ["q"] = "Close", ["<esc>"] = "Close" } },
             },
             get_config = function(opts)
                 opts.prompt = opts.prompt and opts.prompt:gsub(":", "")
@@ -95,6 +101,7 @@ ui({
                     backend = "fzf_lua",
                     fzf_lua = lambda.fzf.dropdown({
                         winopts = { title = opts.prompt, height = 0.33, row = 0.5, width = 0.8 },
+                        mappings = { n = { ["q"] = "Close", ["<esc>"] = "Close" } },
                     }),
                 }
             end,
@@ -111,6 +118,22 @@ ui({
             },
         },
     },
+    config = function(_, opts)
+        require("dressing").setup(opts)
+        vim.keymap.set("n", "z=", function()
+            local word = vim.fn.expand("<cword>")
+            local suggestions = vim.fn.spellsuggest(word)
+            vim.ui.select(
+                suggestions,
+                {},
+                vim.schedule_wrap(function(selected)
+                    if selected then
+                        vim.cmd.normal({ args = { "ciw" .. selected }, bang = true })
+                    end
+                end)
+            )
+        end)
+    end,
 })
 ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
 
@@ -179,13 +202,6 @@ ui({
                 vim.cmd.NeoTreeFocusToggle()
             end,
             "NeoTree Focus Toggle",
-        },
-        {
-            "<Leader>E",
-            function()
-                require("edgy").toggle()
-            end,
-            "General: [F]orce Close Edgy",
         },
     },
 
@@ -535,7 +551,7 @@ ui({
 
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    cond = lambda.config.ui.use_scroll,
+    cond = lambda.config.ui.scroll_bar.use_scroll,
     event = "VeryLazy",
     config = function()
         require("neoscroll").setup({
@@ -577,7 +593,7 @@ ui({
 })
 ui({
     "mawkler/modicator.nvim",
-    ft = { "python", "lua", "sh", "rmd", "markdown", "markdown.pandoc", "quarto" },
+    event = "VeryLazy",
     init = function()
         vim.o.cursorline = true
         vim.o.number = true

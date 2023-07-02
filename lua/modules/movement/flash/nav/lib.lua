@@ -109,6 +109,7 @@ M.flash_diagnostics = function(opts)
     end
 
     require("flash").jump(vim.tbl_deep_extend("force", {
+        pattern = ".",
         matcher = function(win)
             local buf = vim.api.nvim_win_get_buf(win)
             ---@param diag Diagnostic

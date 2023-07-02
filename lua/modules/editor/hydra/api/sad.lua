@@ -1,4 +1,4 @@
-local leader = ";S"
+local leader = "L"
 -- local hydra = require("hydra")
 
 -- ["n|<leader><leader>Sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor")

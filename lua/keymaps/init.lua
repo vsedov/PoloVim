@@ -41,6 +41,15 @@ end
 local tnoremap = function(...)
     map("t", ...)
 end
+local function bufgrep(text)
+    vim.cmd.cclose()
+    vim.cmd("%argd")
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.cmd.bufdo({ args = { "argadd", "%" } })
+    vim.api.nvim_set_current_buf(bufnr)
+    vim.cmd.vimgrep({ args = { string.format("/%s/gj", text), "##" }, mods = { silent = true } })
+    vim.cmd("QFOpen!")
+end
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │                           Core Mappings                            │
@@ -267,3 +276,14 @@ vim.keymap.set({ "x", "n" }, "gx", function()
         return open(string.format("https://www.github.com/%s", link))
     end
 end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "gw", "<cmd>cclose | Grep <cword><CR>", { desc = "Grep for word" })
+vim.keymap.set("n", "gbw", function()
+    bufgrep(vim.fn.expand("<cword>"))
+end, { desc = "grep open buffers for word" })
+vim.keymap.set("n", "gbW", function()
+    bufgrep(vim.fn.expand("<cWORD>"))
+end, { desc = "Grep open buffers for WORD" })
+lambda.command("Bufgrep", function(params)
+    bufgrep(params.args)
+end, { nargs = "+" })

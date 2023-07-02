@@ -1,15 +1,9 @@
 --https://github.com/LunarVim/LunarVim/tree/rolling/lua/lvim/lsp
 -- Modified though
 local M = {}
-local config = require("modules.lsp.lsp.config.config")
 
 function M.common_capabilities()
     local capabilities = require("modules.lsp.lsp.config.capabilities")
-    local status_ok, cmp_nvim_lsp = lambda.pcall(require, "cmp_nvim_lsp")
-
-    if status_ok then
-        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-    end
     return capabilities
 end
 

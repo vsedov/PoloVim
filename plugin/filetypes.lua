@@ -1,11 +1,75 @@
 if not lambda then
     return
 end
+local function find_files()
+    local dir = require("oil").get_current_dir()
+    if vim.api.nvim_win_get_config(0).relative ~= "" then
+        vim.api.nvim_win_close(0, true)
+    end
+    require("telescope.builtin").find_files({ cwd = dir, hidden = true })
+end
+
+local function livegrep()
+    local dir = require("oil").get_current_dir()
+    if vim.api.nvim_win_get_config(0).relative ~= "" then
+        vim.api.nvim_win_close(0, true)
+    end
+    require("telescope.builtin").live_grep({ cwd = dir })
+end
 
 local settings, highlight = lambda.filetype_settings, lambda.highlight
 local cmd, fn = vim.cmd, vim.fn
-
+-- local ftplugin = require("ftplugin")
+-- ftplugin.set("oil", {
 settings({
+    ["oil"] = {
+        opt = {
+            conceallevel = 3,
+            concealcursor = "n",
+            list = false,
+            wrap = false,
+            signcolumn = "no",
+        },
+        mappings = {
+            {
+                "n",
+                "<leader>ff",
+                function()
+                    find_files()
+                end,
+                desc = "[F]ind [F]iles in dir",
+            },
+            {
+                "n",
+                "<leader>fg",
+                function()
+                    livegrep()
+                end,
+                desc = "[F]ind by [G]rep in dir",
+            },
+        },
+        --
+        function()
+            local oil = require("oil")
+
+            vim.api.nvim_buf_create_user_command(0, "Save", function(params)
+                oil.save({ confirm = not params.bang })
+            end, {
+                desc = "Save oil changes with a preview",
+                bang = true,
+            })
+            vim.api.nvim_buf_create_user_command(0, "EmptyTrash", function(params)
+                oil.empty_trash()
+            end, {
+                desc = "Empty the trash directory",
+            })
+            vim.api.nvim_buf_create_user_command(0, "OpenTerminal", function(params)
+                require("oil.adapters.ssh").open_terminal()
+            end, {
+                desc = "Open the debug terminal for ssh connections",
+            })
+        end, -- open startup time to the left
+    },
     chatgpt = {
         function()
             vim.treesitter.language.register("markdown", "chatgpt")

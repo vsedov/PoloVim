@@ -7,11 +7,29 @@ end
 local caps = vim.lsp.protocol.make_client_capabilities()
 caps = cmp_nvim_lsp.default_capabilities(caps)
 caps.textDocument.completion.completionItem.snippetSupport = true
-caps.textDocument.onTypeFormatting = { dynamicRegistration = false }
-caps.offsetEncoding = { "utf-16" }
 
+local util = require("lspconfig").util
 return {
-
+    cmd = { "pylyzer", "--server" },
+    filetypes = { "python" },
+    root_dir = function(fname)
+        local root_files = {
+            "setup.py",
+            "tox.ini",
+            "requirements.txt",
+            "Pipfile",
+            "pyproject.toml",
+        }
+        return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+    end,
+    settings = {
+        python = {
+            diagnostics = true,
+            inlayHints = true,
+            smartCompletion = true,
+            checkOnType = false,
+        },
+    },
     capabilities = caps,
     on_init = function(client)
         client.config.settings.python.pythonPath = (function(workspace)

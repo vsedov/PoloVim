@@ -363,3 +363,18 @@ user({
     cmd = "Hardtime",
     config = true,
 })
+user({
+    "stevearc/qf_helper.nvim",
+    ft = "qf",
+    cmd = {
+        "QFOpen",
+        "QFNext",
+        "QFPrev",
+        "QFToggle",
+    },
+    config = function()
+        require("qf_helper").setup({
+            prefer_loclist = false,
+        })
+    end,
+})

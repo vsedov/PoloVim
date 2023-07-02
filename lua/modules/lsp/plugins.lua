@@ -67,7 +67,14 @@ lsp({
     "aznhe21/actions-preview.nvim",
     lazy = true,
     keys = {
-        "\\;",
+        {
+            "<leader>ca",
+            function()
+                require("actions-preview").code_actions()
+            end,
+            desc = "lsp: code actions",
+            mode = { "n", "v" },
+        },
     },
     config = function()
         require("actions-preview").setup({
@@ -79,8 +86,6 @@ lsp({
             -- options for telescope.nvim: https://github.com/nvim-telescope/telescope.nvim#themes
             telescope = require("telescope.themes").get_dropdown(),
         })
-
-        vim.keymap.set({ "v", "n" }, "\\;", require("actions-preview").code_actions)
     end,
 })
 

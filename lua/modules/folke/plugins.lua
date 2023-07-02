@@ -4,6 +4,19 @@ local conf = require("modules.folke.config")
 folke({
     "folke/edgy.nvim",
     event = "VeryLazy",
+    keys = {
+        {
+            "<Leader>E",
+            function()
+                require("edgy").toggle()
+            end,
+            "General: [F]orce Close Edgy",
+        },
+    },
+    init = function()
+        vim.opt.laststatus = 3
+        vim.opt.splitkeep = "screen"
+    end,
     opts = conf.edgy,
 })
 
