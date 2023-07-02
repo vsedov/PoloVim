@@ -1,7 +1,7 @@
 local previous_cmd = ""
 local overseer = require("overseer")
 
-vim.api.nvim_create_user_command("T", function(param)
+lambda.command("T", function(param)
     param = "python %" or param
     vim.cmd("OverseerRunCmd " .. param)
     previous_cmd = param
@@ -19,7 +19,7 @@ vim.keymap.set("n", "_W", function()
     end
 end, { noremap = true, silent = true })
 
-vim.api.nvim_create_user_command("Tp", function()
+lambda.command("Tp", function()
     -- vim.cmd("OverseerOpen")
     command = "Run " .. vim.bo.filetype:gsub("^%l", string.upper) .. " file (" .. vim.fn.expand("%:t") .. ")"
     overseer.run_template({ name = command }, function(task)
@@ -29,7 +29,7 @@ vim.api.nvim_create_user_command("Tp", function()
     end)
 end, { nargs = "?", force = true })
 
-vim.api.nvim_create_user_command("WatchFormat", function()
+lambda.command("WatchFormat", function()
     overseer.run_template({ name = "PythonFormat" }, function(task)
         if task then
             -- task:add_component({ "format_on_save", path = vim.fn.expand("%:p") })
@@ -41,3 +41,35 @@ vim.api.nvim_create_user_command("WatchFormat", function()
         end
     end)
 end, {})
+lambda.command("OverseerDebugParser", 'lua require("overseer").debug_parser()', {})
+lambda.command("Grep", function(params)
+    local args = vim.fn.expandcmd(params.args)
+    -- Insert args at the '$*' in the grepprg
+    local cmd, num_subs = vim.o.grepprg:gsub("%$%*", args)
+    if num_subs == 0 then
+        cmd = cmd .. " " .. args
+    end
+    local cwd
+    local has_oil, oil = pcall(require, "oil")
+    if has_oil then
+        cwd = oil.get_current_dir()
+    end
+    local task = overseer.new_task({
+        cmd = cmd,
+        cwd = cwd,
+        name = "grep " .. args,
+        components = {
+            {
+                "on_output_quickfix",
+                errorformat = vim.o.grepformat,
+                open = not params.bang,
+                open_height = 8,
+                items_only = true,
+            },
+            -- We don't care to keep this around as long as most tasks
+            { "on_complete_dispose", timeout = 30 },
+            "default",
+        },
+    })
+    task:start()
+end, { nargs = "*", bang = true, bar = true, complete = "file" })

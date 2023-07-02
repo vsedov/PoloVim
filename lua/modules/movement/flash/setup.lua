@@ -151,7 +151,7 @@ local function opts()
                 -- by removing them from the list.
                 -- If you rather use another key, you can map them
                 -- to something else, e.g., { [";"] = "L", [","] = H }
-                keys = { "f", "F", "t", "T", [";"] = "L", [","] = "H" },
+                keys = { "f", "F", "t", "T", [";"] = "[s", [","] = "]s" },
                 search = { wrap = false },
                 highlight = { backdrop = true },
                 jump = { register = true },

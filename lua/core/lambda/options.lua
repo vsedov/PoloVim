@@ -24,7 +24,6 @@ lambda.config = {
     loaded_confirm_quit = true,
     save_clipboard_on_exit = true,
     rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
-    use_session = true, -- set to false to disable session
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_gitsigns = true,
@@ -173,8 +172,11 @@ lambda.config.lsp = {
     latex = "texlab", -- texlab | ltex
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
+        -- Keep this distinct from pylsp
         format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = { "pylsp", "sourcery" }, -- pylyzer, jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        -- Sourcery is nice to have, great little refactoring improvements
+        -- Pylsp offers more than jedi does, with rope so why not .
     },
 }
 
@@ -260,7 +262,10 @@ lambda.config.movement = {
     },
 }
 lambda.config.tools = {
-    use_session = true,
+    session = {
+        use_persisted = false,
+        use_resession = true,
+    },
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = true,
     use_live_command = true,

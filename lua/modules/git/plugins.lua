@@ -67,7 +67,7 @@ git({
 -- -- --  TODO: (vsedov) (20:55:15 - 26/10/22): Fix NeoGit is not a command.
 -- -- "TimUntersberger/neogit",ten3roberts
 git({
-    "TimUntersberger/neogit",
+    "NeogitOrg/neogit",
     -- branch = "git-escapes",
     keys = {
         {

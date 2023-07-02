@@ -136,6 +136,13 @@ buffer({
             },
         },
     },
+    config = function(_, opts)
+        local oil = require("oil")
+        oil.setup(opts)
+        vim.keymap.set("n", "__", function()
+            oil.open(vim.fn.getcwd())
+        end, { desc = "Open cwd" })
+    end,
 })
 
 -- Unlist hidden buffers that are git ignored.

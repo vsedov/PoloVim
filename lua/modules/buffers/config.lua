@@ -164,7 +164,8 @@ function config.sticky_buf()
 end
 
 function config.three()
-    require("three").setup({
+    local three = require("three")
+    three.setup({
         bufferline = {
             enabled = true,
             icon = {
@@ -201,5 +202,28 @@ function config.three()
             end,
         },
     })
+    lambda.command("BufCloseAllButCurrent", function()
+        three.close_all_buffers(function(info)
+            return info.bufnr ~= vim.api.nvim_get_current_buf()
+        end)
+    end, {})
+    lambda.command("BufCloseAllButPinned", function()
+        three.close_all_buffers(function(info)
+            return not info.pinned
+        end)
+    end, {})
+    lambda.command("BufHideAll", function()
+        three.hide_all_buffers()
+    end, {})
+    lambda.command("BufHideAllButCurrent", function()
+        three.hide_all_buffers(function(info)
+            return info.bufnr ~= vim.api.nvim_get_current_buf()
+        end)
+    end, {})
+    lambda.command("BufHideAllButPinned", function()
+        three.hide_all_buffers(function(info)
+            return not info.pinned
+        end)
+    end, {})
 end
 return config
