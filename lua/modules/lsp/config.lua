@@ -225,40 +225,6 @@ function config.rcd()
     })
 end
 
-function config.goto_preview()
-    require("goto-preview").setup({
-        width = 80, -- Width of the floating window
-        height = 15, -- Height of the floating window
-        border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
-        default_mappings = false, -- Bind default mappings
-        debug = false, -- Print debug information
-        opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
-        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-        references = {
-            -- Configure the telescope UI for slowing the references cycling window.
-            telescope = {
-                require("telescope.themes").get_dropdown({
-                    winblend = 15,
-                    layout_config = {
-                        prompt_position = "top",
-                        width = 64,
-                        height = 15,
-                    },
-                    border = {},
-                    previewer = false,
-                    shorten_path = false,
-                }),
-            },
-        },
-        -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
-        focus_on_open = false, -- Focus the floating window when opening it.
-        dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
-        force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-        bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
-    })
-end
-
 function config.glance()
     -- Lua configuration
     local glance = require("glance")
@@ -373,6 +339,162 @@ function config.definition_or_reference()
 
     require("definition-or-references").setup({
         on_references_result = handle_references_response,
+    })
+end
+function config.navigor()
+    require("navigator").setup({
+        debug = false,
+        mason = true,
+
+        default_mapping = false, -- set to false if you will remap every key or if you using old version of nvim-
+        keymaps = {
+
+            { key = "gr", func = require("navigator.reference").async_ref, desc = "async_ref" },
+            { key = "gR", func = require("navigator.reference").reference, desc = "reference" }, -- reference deprecated
+            {
+                key = "g0",
+                func = require("navigator.symbols").document_symbols,
+                desc = "document_symbols",
+            },
+            {
+                key = "gW",
+                func = require("navigator.workspace").workspace_symbol_live,
+                desc = "workspace_symbol_live",
+            },
+            {
+                key = "gd",
+                func = require("navigator.definition").definition,
+                desc = "definition",
+            },
+
+            {
+                key = "gp",
+                func = require("navigator.definition").definition_preview,
+                desc = "definition_preview",
+            },
+            {
+                key = "gP",
+                func = require("navigator.definition").type_definition_preview,
+                desc = "type_definition_preview",
+            },
+            {
+                key = "<Leader>gt",
+                func = require("navigator.treesitter").buf_ts,
+                desc = "buf_ts",
+            },
+            {
+                key = "<Leader>gT",
+                func = require("navigator.treesitter").bufs_ts,
+                desc = "bufs_ts",
+            },
+            {
+                key = "<Leader>ct",
+                func = require("navigator.ctags").ctags,
+                desc = "ctags",
+            },
+            {
+                key = "cc",
+                mode = "n",
+                func = require("navigator.codeAction").code_action,
+                desc = "code_action",
+            },
+            {
+                key = "cc",
+                mode = "v",
+                func = require("navigator.codeAction").range_code_action,
+                desc = "range_code_action",
+            },
+            {
+                key = "gL",
+                func = require("navigator.diagnostics").show_diagnostics,
+                desc = "show_diagnostics",
+            },
+            {
+                key = "gG",
+                func = require("navigator.diagnostics").show_buf_diagnostics,
+                desc = "show_buf_diagnostics",
+            },
+            {
+                key = "gW",
+                func = require("navigator.diagnostics").toggle_diagnostics,
+                desc = "toggle_diagnostics",
+            },
+            {
+                key = "]O",
+                func = vim.diagnostic.set_loclist,
+                desc = "diagnostics set loclist",
+            },
+            {
+                key = "]r",
+                func = require("navigator.treesitter").goto_next_usage,
+                desc = "goto_next_usage",
+            },
+            {
+                key = "[r",
+                func = require("navigator.treesitter").goto_previous_usage,
+                desc = "goto_previous_usage",
+            },
+            {
+                key = "<C-LeftMouse>",
+                func = vim.lsp.buf.definition,
+                desc = "definition",
+            },
+            {
+                key = "g<LeftMouse>",
+                func = vim.lsp.buf.implementation,
+                desc = "implementation",
+            },
+            {
+                key = "<Leader>K",
+                func = require("navigator.dochighlight").hi_symbol,
+                desc = "hi_symbol",
+            },
+            {
+                key = "<leader>wa",
+                func = require("navigator.workspace").add_workspace_folder,
+                desc = "add_workspace_folder",
+            },
+            {
+                key = "<leader>wr",
+                func = require("navigator.workspace").remove_workspace_folder,
+                desc = "remove_workspace_folder",
+            },
+            {
+                key = "<leader>F",
+                func = vim.lsp.buf.format,
+                mode = "n",
+                desc = "format",
+            },
+            {
+                key = "<leader>F",
+                func = vim.lsp.buf.range_formatting,
+                mode = "v",
+                desc = "range format",
+            },
+            {
+                key = "<leader>gm",
+                func = require("navigator.formatting").range_format,
+                mode = "n",
+                desc = "range format operator e.g gmip",
+            },
+            {
+                key = "<leader>wl",
+                func = require("navigator.workspace").list_workspace_folders,
+                desc = "list_workspace_folders",
+            },
+        }, -- a list of key maps
+        lsp = {
+            enable = false, --
+            code_action = { enable = false, sign = true, sign_priority = 40, virtual_text = true },
+            code_lens_action = { enable = false, sign = true, sign_priority = 40, virtual_text = true },
+            document_highlight = false, -- LSP reference highlight,
+            diagnostic_virtual_text = false, -- show virtual for diagnostic message
+            diagnostic_update_in_insert = false, -- update diagnostic message in insert mode
+            display_diagnostic_qf = false, -- always show quickfix if there are diagnostic errors, set to false if you want to ignore it
+            hover = {
+                enable = false,
+            },
+        },
     })
 end
 

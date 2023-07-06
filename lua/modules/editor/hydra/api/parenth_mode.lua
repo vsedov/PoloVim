@@ -1,4 +1,4 @@
-local leader = "\\l"
+local leader = "<leader>l"
 
 local mx = function(feedkeys)
     return function()

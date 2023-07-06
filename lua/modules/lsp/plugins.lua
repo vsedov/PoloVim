@@ -62,6 +62,15 @@ lsp({
     event = "VeryLazy",
     config = conf.lsp_sig,
 })
+lsp({
+    "ray-x/navigator.lua",
+    cond = lambda.config.lsp.use_navigator,
+    requires = {
+        { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+        { "neovim/nvim-lspconfig" },
+    },
+    config = conf.navigator,
+})
 
 lsp({
     "aznhe21/actions-preview.nvim",
@@ -113,18 +122,15 @@ lsp({
 
 lsp({ "SmiteshP/nvim-navic", lazy = true })
 
-lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
+lsp({
+    "cseickel/diagnostic-window.nvim",
+    cmd = "DiagWindowShow",
+    dependencies = { "MunifTanjim/nui.nvim" },
+})
 lsp({
     "liuchengxu/vista.vim",
     cmd = { "Vista" },
     config = conf.vista,
-})
-
---  TODO: (vsedov) (02:14:46 - 02/06/23): This might not be neaded due to glance
-lsp({
-    "rmagatti/goto-preview",
-    lazy = true,
-    config = conf.goto_preview,
 })
 
 lsp({

@@ -123,6 +123,21 @@ tools({
         lambda.highlight.plugin("bqf", { { BqfPreviewBorder = { fg = { from = "Comment" } } } })
     end,
 })
+tools({
+    "stevearc/qf_helper.nvim",
+    ft = "qf",
+    cmd = {
+        "QFOpen",
+        "QFNext",
+        "QFPrev",
+        "QFToggle",
+    },
+    config = function()
+        require("qf_helper").setup({
+            prefer_loclist = false,
+        })
+    end,
+})
 
 tools({
     "voldikss/vim-translator",

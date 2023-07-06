@@ -1,4 +1,4 @@
-local leader = "<leader>l"
+local leader = "H"
 local utils = require("modules.lsp.lsp.utils")
 
 local lsp_lens_active = false
@@ -29,17 +29,17 @@ local config = {
             end,
             { nowait = true, exit = true, desc = "Glance Def" },
         },
-        r = {
-            function()
-                vim.cmd([[Glance references]])
-            end,
-            { nowait = true, exit = true, desc = "Glance Ref" },
-        },
         D = {
             function()
                 vim.cmd([[Glance type_definitions]])
             end,
             { nowait = true, exit = true, desc = "Glance TDef" },
+        },
+        r = {
+            function()
+                vim.cmd([[Glance references]])
+            end,
+            { nowait = true, exit = true, desc = "Glance Ref" },
         },
 
         i = {
@@ -55,39 +55,6 @@ local config = {
             { nowait = true, exit = true, desc = "TroubleToggle" },
         },
 
-        s = {
-            function()
-                require("goto-preview").goto_preview_definition({
-                    focus_on_open = false,
-                    dismiss_on_move = true,
-                })
-            end,
-            { nowait = true, exit = true, desc = "[G] Def" },
-        },
-        S = {
-            function()
-                require("goto-preview").goto_preview_references({
-                    focus_on_open = false,
-                    dismiss_on_move = true,
-                })
-            end,
-            { nowait = true, exit = true, desc = "[G] Ref" },
-        },
-        I = {
-            function()
-                require("goto-preview").goto_preview_implementation({
-                    focus_on_open = false,
-                    dismiss_on_move = true,
-                })
-            end,
-            { nowait = true, exit = true, desc = "[G] Imp" },
-        },
-        c = {
-            function()
-                require("goto-preview").close_all_win()
-            end,
-            { nowait = true, exit = true, desc = "[G] Close" },
-        },
         w = {
             function()
                 vim.cmd([[LspLensToggle]])
@@ -106,7 +73,7 @@ local config = {
 return {
     config,
     "Lsp",
-    { { "d", "D", "r", "i", "t" }, { "s", "S", "I", "c", "l" } },
+    { { "d", "D", "r", "i", "t", "l" } },
     bracket,
     6,
     3,
