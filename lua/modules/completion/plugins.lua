@@ -87,3 +87,19 @@ completion({
     cmd = "Template",
     config = conf.vim_sonictemplate,
 })
+completion({
+    "huggingface/hfcc.nvim",
+    lazy = true,
+    cmd = "StarCoder",
+    opts = {
+        model = "bigcode/starcoder",
+        query_params = {
+            max_new_tokens = 200,
+        },
+    },
+    init = function()
+        vim.api.nvim_create_user_command("StarCoder", function()
+            require("hfcc.completion").complete()
+        end, {})
+    end,
+})

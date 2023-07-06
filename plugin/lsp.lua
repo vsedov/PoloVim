@@ -26,7 +26,7 @@ local provider = {
 }
 local get_extra_binds = function()
     local binds = {}
-    if lambda.config.use_saga_maps then
+    if not lambda.config.lsp.use_navigator then
         binds = {
             ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
             ["gt"] = { "<cmd>Lspsaga peek_type_definition<CR>", "peek_type_definitions" },
@@ -45,7 +45,6 @@ local get_extra_binds = function()
                 end,
                 "Code action",
             },
-
             ["[e"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Diagnostic Jump next" },
             ["]e"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Diagnostic Jump prev" },
             ["gL"] = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
@@ -380,15 +379,14 @@ diagnostic.config({
     underline = true,
     update_in_insert = false,
     severity_sort = true,
-    virtual_text = false
-        and {
-            -- severity = { min = S.WARN },
-            spacing = 1,
-            prefix = function(d)
-                local level = diagnostic.severity[d.severity]
-                return icons[level:lower()]
-            end,
-        },
+    virtual_text = false and {
+        -- severity = { min = S.WARN },
+        spacing = 1,
+        prefix = function(d)
+            local level = diagnostic.severity[d.severity]
+            return icons[level:lower()]
+        end,
+    },
     float = {
         max_width = max_width,
         max_height = max_height,

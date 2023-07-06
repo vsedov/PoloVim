@@ -110,3 +110,34 @@ misc({
 })
 
 misc({ "tweekmonster/helpful.vim", cmd = "HelpfulVersion", ft = "help" })
+-- If there is regex, this seems very nice to work with .
+misc({
+    "tomiis4/Hypersonic.nvim",
+    cmd = "Hypersonic",
+    keys = {
+        {
+            "<leader>r",
+            function()
+                vim.cmd([[Hypersonic]])
+            end,
+            mode = "v",
+        },
+    },
+    opts = {
+        border = lambda.style.border.type_0,
+    },
+})
+misc({
+    "kiran94/maim.nvim",
+    config = true,
+    cmd = { "Maim", "MaimMarkdown" },
+})
+misc({
+    "m4xshen/hardtime.nvim",
+    event = "CmdlineEnter",
+    cmd = "Hypersonic",
+    ops = {
+        ---@type 'none'|'single'|'double'|'rounded'|'solid'|'shadow'|table
+        border = "single",
+    },
+})

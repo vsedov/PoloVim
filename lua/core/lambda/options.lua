@@ -86,6 +86,7 @@ lambda.config.treesitter = {
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
     use_context_vt = true,
+    use_rainbow = true,
 }
 
 lambda.config.abbrev = {
@@ -119,6 +120,7 @@ lambda.config.lsp = {
     only_severe_diagnostics = false,
     use_format_modifcation = false,
     use_lsp_saga = false,
+    use_navigator = false,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -232,7 +234,7 @@ lambda.config.colourscheme = {
             core_themes = {
                 "tokyonight.nvim",
                 "catppuccin",
-                "rose", -- TSMethod'
+                -- "rose", -- TSMethod'
                 -- -- "kanagawa.nvim",
                 -- "vim-dogrun",
                 -- "palenightfall.nvim", -- do not like this colourscheme
