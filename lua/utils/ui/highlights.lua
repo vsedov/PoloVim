@@ -106,7 +106,7 @@ local function general_overrides()
         -----------------------------------------------------------------------------//
         { VertSplit = { fg = { from = "Comment" } } },
         { WinSeparator = { fg = { from = "Comment" } } },
-        { CursorLineNr = { bg = "NONE" } },
+        -- { CursorLineNr = { bg = "NONE" } },
         { iCursor = { bg = P.blue } },
         --------------------------------------------//
         -- Floats

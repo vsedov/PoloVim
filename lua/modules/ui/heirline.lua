@@ -886,6 +886,7 @@ local config = {
                 return
             end
             return conditions.buffer_matches({
+
                 buftype = { "nofile", "prompt", "help", "quickfix" },
                 filetype = { "^git.*", "fugitive", "Trouble", "dashboard" },
             }, args.buf)
