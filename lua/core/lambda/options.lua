@@ -129,8 +129,8 @@ lambda.config.lsp = {
     },
     diagnostics = {
         use_error_lens = false,
-        use_lsp_lines = false,
-        use_rcd = true, -- the least intrusive of the bunch
+        use_lsp_lines = true,
+        use_rcd = false, -- the least intrusive of the bunch
     },
     null_ls = {
         diagnostic = {

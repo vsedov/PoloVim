@@ -106,9 +106,9 @@ user({
         -- default settings
         vim.g.spellbound_settings = {
             mappings = {
-                toggle_map = "\\zS",
-                fix_right = "\\zp",
-                fix_left = "\\zn",
+                toggle_map = "<localleader>zS",
+                fix_right = "<localleader>zp",
+                fix_left = "<localleader>zn",
             },
             language = "en_gb",
             autospell_filetypes = { "*.txt", "*.md", "*.rst" },
@@ -319,6 +319,13 @@ user({
 
 user({
     "3rd/image.nvim",
+    ft = {
+        "python",
+        "markdown",
+        "org",
+        "norg",
+        "tex",
+    },
     config = function()
         require("image").setup({
             backend = "kitty",
@@ -343,4 +350,36 @@ user({
             kitty_tmux_write_delay = 10, -- makes rendering more reliable with Kitty+Tmux
         })
     end,
+})
+
+user({
+    "azabiong/vim-highlighter",
+    keys = {
+        {
+            "m<cr>",
+            desc = "Mark word",
+        },
+        {
+            "m<bs>",
+            desc = "Mark delete",
+        },
+        {
+            "mD>",
+            desc = "Mark clear",
+        },
+        {
+            "M<cr>",
+            "<cmd>Hi}<cr>",
+        },
+    },
+    init = function()
+        vim.cmd("let HiSet = 'm<cr>'")
+        vim.cmd("let HiErase = 'm<bs>'")
+        vim.cmd("let HiClear = 'mD'")
+    end,
+})
+user({
+    "Aasim-A/scrollEOF.nvim",
+    event = "VeryLazy",
+    config = true,
 })
