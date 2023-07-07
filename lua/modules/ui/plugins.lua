@@ -591,26 +591,13 @@ ui({
         },
     },
 })
-ui({
-    "mawkler/modicator.nvim",
-    event = "VeryLazy",
-    init = function()
-        vim.o.cursorline = true
-        vim.o.number = true
-        vim.o.termguicolors = true
-    end,
-    opts = {
-        bold = true,
-        italic = true,
-    },
-})
 
 ui({
     "mvllow/modes.nvim",
     event = "VeryLazy",
     config = true,
 })
---
+
 ui({
     "tzachar/highlight-undo.nvim",
     keys = {
