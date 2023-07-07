@@ -69,7 +69,7 @@ lsp({
         { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
         { "neovim/nvim-lspconfig" },
     },
-    config = conf.navigator,
+    config = conf.navigor,
 })
 
 lsp({

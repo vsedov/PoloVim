@@ -265,6 +265,7 @@ function config(_, op)
         },
     })
 end
+
 return {
     opts = opts,
     config = config,

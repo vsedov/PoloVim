@@ -383,3 +383,9 @@ user({
     event = "VeryLazy",
     config = true,
 })
+
+user({
+    "gaborvecsei/usage-tracker.nvim",
+    cond = lambda.config.tools.use_tracker,
+    event = "VeryLazy",
+})

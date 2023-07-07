@@ -26,6 +26,7 @@ local provider = {
 }
 local get_extra_binds = function()
     local binds = {}
+
     if not lambda.config.lsp.use_navigator then
         binds = {
             ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
@@ -56,18 +57,18 @@ local get_extra_binds = function()
                 "<cmd>Lspsaga show_workspace_diagnostics<CR>",
                 "Show Workspace Diagnostics",
             },
+            ["gD"] = {
+                function()
+                    require("definition-or-references").definition_or_references()
+                end,
+                "Goto Def",
+            },
         }
     end
     return binds
 end
 local buffer_mappings = {
     normal_mode = {
-        ["gD"] = {
-            function()
-                require("definition-or-references").definition_or_references()
-            end,
-            "Goto Def",
-        },
         ["K"] = {
             utils.repeatable_hover,
             "hover",

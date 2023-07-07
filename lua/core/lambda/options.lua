@@ -120,7 +120,7 @@ lambda.config.lsp = {
     only_severe_diagnostics = false,
     use_format_modifcation = false,
     use_lsp_saga = false,
-    use_navigator = false,
+    use_navigator = true,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -200,7 +200,7 @@ lambda.config.ui = {
         enable = true,
         lsp = {
             use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = true, -- Navigator really does not like this
+            use_noice_hover = false, -- Navigator really does not like this
             use_markdown = true,
             use_documentation = true,
         },
@@ -211,7 +211,7 @@ lambda.config.ui = {
         use_mini_indent_scope = true,
     },
     scroll_bar = {
-        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
+        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
         use_scrollbar = false,
     },
 }
@@ -268,6 +268,7 @@ lambda.config.tools = {
         use_persisted = false,
         use_resession = true,
     },
+    use_tracker = true,
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = true,
     use_live_command = true,
@@ -282,6 +283,5 @@ lambda.config.windows = {
         use_flirt_override = false,
         move_mappings = false, -- if you  do not want to use  smart split
     },
-    use_navigator = false,
     use_smart_splits = true,
 }

@@ -341,6 +341,7 @@ function config.definition_or_reference()
         on_references_result = handle_references_response,
     })
 end
+
 function config.navigor()
     require("navigator").setup({
         debug = false,
@@ -362,13 +363,13 @@ function config.navigor()
                 desc = "workspace_symbol_live",
             },
             {
-                key = "gd",
+                key = "gD",
                 func = require("navigator.definition").definition,
                 desc = "definition",
             },
 
             {
-                key = "gp",
+                key = "gd",
                 func = require("navigator.definition").definition_preview,
                 desc = "definition_preview",
             },
@@ -484,7 +485,7 @@ function config.navigor()
             },
         }, -- a list of key maps
         lsp = {
-            enable = false, --
+            enable = true, --
             code_action = { enable = false, sign = true, sign_priority = 40, virtual_text = true },
             code_lens_action = { enable = false, sign = true, sign_priority = 40, virtual_text = true },
             document_highlight = false, -- LSP reference highlight,
@@ -494,6 +495,12 @@ function config.navigor()
             hover = {
                 enable = false,
             },
+            diagnostic = {
+                underline = false,
+                virtual_text = false, -- show virtual for diagnostic message
+                update_in_insert = false, -- update diagnostic message in insert mode
+            },
+            diagnostic_scrollbar_sign = false,
         },
     })
 end
