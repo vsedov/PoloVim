@@ -101,20 +101,34 @@ user({
 user({
     "superDross/spellbound.nvim",
     event = "VeryLazy",
+    keys = {
+        {
+            "<c-g>w",
+            desc = "toggle spellbound",
+        },
+        {
+            "<c-g>n",
+            desc = "fix right",
+        },
+        {
+            "<c-g>p",
+            desc = "fix left",
+        },
+    },
     init = function()
         vim.o.dictionary = "/usr/share/dict/cracklib-small"
         -- default settings
         vim.g.spellbound_settings = {
             mappings = {
-                toggle_map = "<localleader>zS",
-                fix_right = "<localleader>zp",
-                fix_left = "<localleader>zn",
+                toggle_map = "<c-g>w",
+                fix_right = "<c-g>n",
+                fix_left = "<c-g>p",
             },
             language = "en_gb",
-            autospell_filetypes = { "*.txt", "*.md", "*.rst" },
+            autospell_filetypes = { "*.txt", "*.md", "*.rst", "*.norg" },
             autospell_gitfiles = true,
             number_suggestions = 10,
-            return_to_position = false,
+            return_to_position = true,
         }
     end,
 })
@@ -246,31 +260,38 @@ user({
             desc = "winbar: pick",
         },
     },
-    config = function()
-        require("dropbar").setup({
-            general = {
-                update_interval = 100,
-                enable = function(buf, win)
-                    local b, w = vim.bo[buf], vim.wo[win]
-                    local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
-                    return decor.ft ~= false
-                        and decor.bt ~= false
-                        and b.bt == ""
-                        and not w.diff
-                        and not api.nvim_win_get_config(win).zindex
-                        and api.nvim_buf_get_name(buf) ~= ""
-                end,
-            },
-            menu = {
-                win_configs = {
-                    border = "shadow",
-                    col = function(menu)
-                        return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
-                    end,
-                },
-            },
+    init = function()
+        lambda.highlight.plugin("DropBar", {
+            { DropBarIconUISeparator = { link = "Delimiter" } },
+            { DropBarMenuNormalFloat = { inherit = "Pmenu" } },
         })
     end,
+    config = {
+        general = {
+            update_interval = 100,
+            enable = function(buf, win)
+                local b, w = vim.bo[buf], vim.wo[win]
+                local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
+                return decor.ft ~= false
+                    and decor.bt ~= false
+                    and b.bt == ""
+                    and not w.diff
+                    and not api.nvim_win_get_config(win).zindex
+                    and api.nvim_buf_get_name(buf) ~= ""
+            end,
+        },
+        icons = {
+            ui = { bar = { separator = " " .. lambda.style.icons.misc.arrow_right .. " " } },
+        },
+        menu = {
+            win_configs = {
+                border = "shadow",
+                col = function(menu)
+                    return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+                end,
+            },
+        },
+    },
 })
 
 -- First of all, :Sayonara or :Sayonara!
@@ -316,42 +337,6 @@ user({
         require("markmap").setup(opts)
     end,
 })
-
-user({
-    "3rd/image.nvim",
-    ft = {
-        "python",
-        "markdown",
-        "org",
-        "norg",
-        "tex",
-    },
-    config = function()
-        require("image").setup({
-            backend = "kitty",
-            integrations = {
-                markdown = {
-                    enabled = true,
-                    sizing_strategy = "auto",
-                    download_remote_images = true,
-                    clear_in_insert_mode = false,
-                },
-                neorg = {
-                    enabled = true,
-                    download_remote_images = true,
-                    clear_in_insert_mode = false,
-                },
-            },
-            max_width = nil,
-            max_height = nil,
-            max_width_window_percentage = nil,
-            max_height_window_percentage = 50,
-            kitty_method = "normal",
-            kitty_tmux_write_delay = 10, -- makes rendering more reliable with Kitty+Tmux
-        })
-    end,
-})
-
 user({
     "azabiong/vim-highlighter",
     keys = {
@@ -380,12 +365,47 @@ user({
 })
 user({
     "Aasim-A/scrollEOF.nvim",
+    cond = false,
     event = "VeryLazy",
     config = true,
 })
-
 user({
-    "gaborvecsei/usage-tracker.nvim",
-    cond = lambda.config.tools.use_tracker,
-    event = "VeryLazy",
+    "KaitlynEthylia/TreePin",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    cmd = {
+        "TPPin",
+        "TPRoot",
+        "TPGrow",
+        "TPShrink",
+        "TPClear",
+        "TPGo",
+        "TpHide",
+        "TPToggle",
+    },
+    keys = {
+        { ",tp", "<cmd>TPPin<CR>", desc = "TreePin Pin" },
+        { ",tc", "<cmd>TPClear<CR>", desc = "TreePin Clear" },
+        { ",tt", "<cmd>TPToggle<CR>", desc = "TreePin Toggle" },
+        { ",tr", "<cmd>TPRoot<CR>", desc = "TreePin Root" },
+        { ",tj", "<cmd>TPGrow<CR>", desc = "TreePin Grow" },
+        { ",tk", "<cmd>TPShrink<CR>", desc = "TreePin Shrink" },
+        {
+            ",tg",
+            function()
+                vim.cmd("normal! m'")
+                vim.cmd("TPGo")
+            end,
+            desc = "TreePin Go",
+        },
+        { ",ts", "<cmd>TPShow<CR>", desc = "TreePin Show" },
+        { ",th", "<cmd>TPHide<CR>", desc = "TreePin Hide" },
+    },
+    init = function()
+        local wk = require("which-key")
+        wk.register({
+            mode = { "n" },
+            [",t"] = { name = "+TreePin" },
+        })
+    end,
+    config = true,
 })

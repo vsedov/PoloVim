@@ -245,7 +245,6 @@ local function set_telescope()
             { TelescopePromptNormal = { fg = P.fujiWhite, bg = P.sumiInk0 } },
             { TelescopeNormal = { fg = P.red, bg = P.sumiInk2 } },
             { TelescopePreviewNormal = { bg = P.sumiInk2 } },
-
             { TelescopePreviewTitle = { fg = P.sumiInk3, bg = P.green } },
             { TelescopePromptTitle = { fg = P.sumiInk3, bg = P.oniViolet } },
             { TelescopeResultsTitle = { fg = P.sumiInk3, bg = P.springBlue } },
