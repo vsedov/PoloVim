@@ -24,9 +24,9 @@ return {
     end,
     settings = {
         python = {
-            diagnostics = true,
+            diagnostics = false,
             inlayHints = true,
-            smartCompletion = true,
+            smartCompletion = false,
             checkOnType = false,
         },
     },

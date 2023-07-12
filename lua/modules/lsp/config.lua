@@ -4,11 +4,6 @@ function config.mason_setup()
     require("modules.lsp.lsp.mason")
     local get_config = require("modules.lsp.lsp.mason.lsp_servers")
     require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
-    require("mason-lspconfig").setup({
-        automatic_installation = {
-            exclude = { "lua_ls", "clangd", "ltex", "texlab" },
-        },
-    })
 
     require("mason-lspconfig").setup_handlers({
         function(name)
@@ -138,11 +133,82 @@ function config.lsp_sig()
 end
 
 function config.hover()
+    local diag = require("vim.diagnostic")
+    local diagnostic_severities = {
+        [diag.severity.ERROR] = "ERROR",
+        [diag.severity.WARN] = "WARN",
+        [diag.severity.INFO] = "INFO",
+        [diag.severity.HINT] = "HINT",
+    }
+
+    local LSPWithDiagSource = {
+        name = "LSPWithDiag",
+        priority = 1000,
+        enabled = function()
+            return true
+        end,
+        execute = function(done)
+            local util = require("vim.lsp.util")
+
+            local params = util.make_position_params()
+            ---@type table<string>
+            local lines = {}
+            vim.lsp.buf_request_all(0, "textDocument/hover", params, function(responses)
+                -- vim.notify("responses for hover request " .. vim.inspect(responses))
+                local lang = "markdown"
+                for _, response in pairs(responses) do
+                    if response.result and response.result.contents then
+                        lang = response.result.contents.language or "markdown"
+                        lines = util.convert_input_to_markdown_lines(
+                            response.result.contents or { kind = "markdown", value = "" }
+                        )
+                        lines = util.trim_empty_lines(lines or {})
+                    end
+                end
+
+                local unused
+                local _, row = unpack(vim.fn.getpos("."))
+                row = row - 1
+                -- vim.notify("row " .. row)
+                ---@type Diagnostic[]
+                local lineDiag = vim.diagnostic.get(0, { lnum = row })
+                -- vim.notify("curently " .. #lineDiag .. " diagnostics")
+                if #lineDiag > 0 then
+                    for _, d in pairs(lineDiag) do
+                        if d.message then
+                            lines = util.trim_empty_lines(util.convert_input_to_markdown_lines({
+                                language = lang,
+                                value = string.format(
+                                    "[%s] - %s:%s",
+                                    d.source,
+                                    diagnostic_severities[d.severity],
+                                    d.message
+                                ),
+                            }, lines or {}))
+                        end
+                    end
+                end
+                for _, l in pairs(lines) do
+                    l = l:gsub("\r", "")
+                end
+
+                if not vim.tbl_isempty(lines) then
+                    done({ lines = lines, filetype = "markdown" })
+                    return
+                end
+                -- no results
+                done()
+            end)
+        end,
+    }
+
     require("hover").setup({
         init = function()
+            -- require("hover.providers.lsp")
+            -- require("hover").register(LSPWithDiagSource)
             require("hover.providers.lsp")
             require("hover.providers.gh")
-            require("hover.providers.jira")
+            -- require("hover.providers.jira")
             require("hover.providers.man")
             require("hover.providers.dictionary")
         end,
@@ -153,50 +219,6 @@ function config.hover()
         -- Whether the contents of a currently open hover window should be moved
         -- to a :h preview-window when pressing the hover keymap.
         preview_window = true,
-    })
-end
-
-function config.navic()
-    local s = lambda.style
-    local misc = s.icons.misc
-
-    lambda.highlight.plugin("navic", {
-        { NavicText = { bold = true } },
-        { NavicSeparator = { link = "Directory" } },
-    })
-    require("nvim-navic").setup({
-        icons = {
-            File = " ",
-            Module = " ",
-            Namespace = " ",
-            Package = " ",
-            Class = " ",
-            Method = " ",
-            Property = " ",
-            Field = " ",
-            Constructor = " ",
-            Enum = "練",
-            Interface = "練",
-            Function = " ",
-            Variable = " ",
-            Constant = " ",
-            String = " ",
-            Number = " ",
-            Boolean = "◩ ",
-            Array = " ",
-            Object = " ",
-            Key = " ",
-            Null = "ﳠ ",
-            EnumMember = " ",
-            Struct = " ",
-            Event = " ",
-            Operator = " ",
-            TypeParameter = " ",
-        },
-        highlight = true,
-        separator = (" %s "):format(misc.arrow_right),
-        depth_limit = 0,
-        depth_limit_indicator = misc.ellipsis,
     })
 end
 
@@ -416,7 +438,7 @@ function config.navigor()
                 desc = "show_buf_diagnostics",
             },
             {
-                key = "gW",
+                key = "<c-g>l",
                 func = require("navigator.diagnostics").toggle_diagnostics,
                 desc = "toggle_diagnostics",
             },
@@ -444,11 +466,6 @@ function config.navigor()
                 key = "g<LeftMouse>",
                 func = vim.lsp.buf.implementation,
                 desc = "implementation",
-            },
-            {
-                key = "<Leader>K",
-                func = require("navigator.dochighlight").hi_symbol,
-                desc = "hi_symbol",
             },
             {
                 key = "<leader>wa",

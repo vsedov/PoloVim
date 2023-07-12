@@ -11,6 +11,7 @@ local use_tabnine = true
 local use_tabnine_cmp = true
 
 local use_copilot = true -- We really do sell our souls for this thing eh
+local use_navigator = false
 
 -- toggle core values within the list
 lambda.config = {
@@ -119,8 +120,7 @@ lambda.config.lsp = {
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false,
     use_format_modifcation = false,
-    use_lsp_saga = false,
-    use_navigator = true,
+    use_navigator = use_navigator,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -176,7 +176,7 @@ lambda.config.lsp = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         -- Keep this distinct from pylsp
         format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = { "pylsp", "sourcery" }, -- pylyzer, jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = { "pylsp", "sourcery", "ruff_lsp" }, -- pylyzer, jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         -- Sourcery is nice to have, great little refactoring improvements
         -- Pylsp offers more than jedi does, with rope so why not .
     },
@@ -200,7 +200,7 @@ lambda.config.ui = {
         enable = true,
         lsp = {
             use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = false, -- Navigator really does not like this
+            use_noice_hover = not use_navigator, -- Navigator really does not like this
             use_markdown = true,
             use_documentation = true,
         },

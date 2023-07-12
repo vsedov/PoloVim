@@ -136,7 +136,7 @@ local auto_snippets = {
         )
     ),
     s(
-        { trig = "fro(m ?)", regTrig = false },
+        { trig = "fr(m ?)", regTrig = false },
         fmt([[from {} import {}]], {
             i(1, "sys"),
             i(2, "path"),
@@ -167,17 +167,17 @@ local auto_snippets = {
                 d(1, async_def, {}, { user_args = {} }),
                 i(2, "name"),
                 p(function()
-            -- stylua: ignore
-            local get_current_class = require('utils.treesitter_utils').get_current_class
-            -- stylua: ignore
-            local has_ts = require('utils.treesitter_utils').has_ts()
-            -- stylua: ignore
-            if has_ts and get_current_class() then
-                -- stylua: ignore
-                return 'self, '
-            end
-            -- stylua: ignore
-            return ''
+                    -- stylua: ignore
+                    local get_current_class = require('utils.treesitter_utils').get_current_class
+                    -- stylua: ignore
+                    local has_ts = require('utils.treesitter_utils').has_ts()
+                    -- stylua: ignore
+                    if has_ts and get_current_class() then
+                        -- stylua: ignore
+                        return 'self, '
+                    end
+                    -- stylua: ignore
+                    return ''
                 end),
                 i(3, "args"),
                 d(4, saved_text, {}, { user_args = { { text = "pass", indent = true } } }),
@@ -242,13 +242,6 @@ local python = {
         "imp",
         fmt([[import {}]], {
             i(1, "sys"),
-        })
-    ),
-    s(
-        { trig = "fro(m?)", regTrig = true },
-        fmt([[from {} import {}]], {
-            i(1, "sys"),
-            i(2, "path"),
         })
     ),
     s(

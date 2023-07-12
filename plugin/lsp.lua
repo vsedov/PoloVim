@@ -29,34 +29,6 @@ local get_extra_binds = function()
 
     if not lambda.config.lsp.use_navigator then
         binds = {
-            ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
-            ["gt"] = { "<cmd>Lspsaga peek_type_definition<CR>", "peek_type_definitions" },
-            ["gT"] = { "<cmd>Lspsaga goto_type_definition<CR>", "goto_type_definitions" },
-            ["gr"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
-            ["gR"] = { "<cmd>Lspsaga rename ++project<CR>", "Rename Project" },
-            ["gk"] = {
-                function()
-                    vim.cmd([[Lspsaga hover_doc ++keep]])
-                end,
-                "Hover Left",
-            },
-            ["cc"] = {
-                function()
-                    vim.cmd([[Lspsaga code_action]])
-                end,
-                "Code action",
-            },
-            ["[e"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Diagnostic Jump next" },
-            ["]e"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Diagnostic Jump prev" },
-            ["gL"] = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
-            ["gG"] = {
-                "<cmd>Lspsaga show_buf_diagnostics<CR>",
-                "Show Buffer Diagnostics",
-            },
-            ["gW"] = {
-                "<cmd>Lspsaga show_workspace_diagnostics<CR>",
-                "Show Workspace Diagnostics",
-            },
             ["gD"] = {
                 function()
                     require("definition-or-references").definition_or_references()
@@ -74,9 +46,7 @@ local buffer_mappings = {
             "hover",
         },
     },
-    visual_mode = {
-        ["cc"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
-    },
+    visual_mode = {},
     insert_mode = {},
     extra_binds = get_extra_binds(),
 }
