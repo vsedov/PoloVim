@@ -39,20 +39,3 @@ tmux({
         end
     end,
 })
-
--- Always load this
-tmux({
-    "numToStr/Navigator.nvim",
-    cond = false,
-    event = "VeryLazy",
-    config = function()
-        require("Navigator").setup({
-            auto_save = "all",
-        })
-        for k, value in pairs({ Left = "h", Down = "j", Up = "k", Right = "l", Previous = "=" }) do
-            vim.keymap.set({ "n", "t" }, "<c-" .. value .. ">", function()
-                vim.cmd("Navigator" .. k)
-            end, { noremap = true, silent = true })
-        end
-    end,
-})

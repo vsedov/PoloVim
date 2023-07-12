@@ -223,7 +223,7 @@ ts({ -- "haringsrob/nvim_context_vt",
     opts = {
         prefix = "⤸",
         -- "󱞿",
-        highlight = "DiagnosticVirtualTextInfo",
+        highlight = "Normal",
     },
 })
 ts({

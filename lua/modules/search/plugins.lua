@@ -141,7 +141,6 @@ search({
     cond = lambda.config.extra_search.providers.use_fzf_lua,
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    build = "./install --bin",
     config = conf.fzf,
 })
 

@@ -1,33 +1,5 @@
-local previous_cmd = ""
 local overseer = require("overseer")
-
-lambda.command("T", function(param)
-    param = "python %" or param
-    vim.cmd("OverseerRunCmd " .. param)
-    previous_cmd = param
-end, { nargs = "?", force = true })
-
-vim.keymap.set("n", "_w", "<Cmd>OverseerToggle<CR>", { noremap = true, silent = true })
-
-vim.keymap.set("n", "_W", function()
-    vim.cmd("OverseerOpen")
-    if previous_cmd == "" then
-        vim.cmd([[T]])
-        return
-    else
-        vim.cmd("OverseerRunCmd " .. previous_cmd)
-    end
-end, { noremap = true, silent = true })
-
-lambda.command("Tp", function()
-    -- vim.cmd("OverseerOpen")
-    command = "Run " .. vim.bo.filetype:gsub("^%l", string.upper) .. " file (" .. vim.fn.expand("%:t") .. ")"
-    overseer.run_template({ name = command }, function(task)
-        if task then
-            overseer.run_action(task, "open")
-        end
-    end)
-end, { nargs = "?", force = true })
+local action_util = require("overseer.action_util")
 
 lambda.command("WatchFormat", function()
     overseer.run_template({ name = "PythonFormat" }, function(task)
@@ -42,6 +14,35 @@ lambda.command("WatchFormat", function()
     end)
 end, {})
 lambda.command("OverseerDebugParser", 'lua require("overseer").debug_parser()', {})
+lambda.command("OverseerRestartLast", function()
+    local overseer = require("overseer")
+    local tasks = overseer.list_tasks({ recent_first = true })
+    if vim.tbl_isempty(tasks) then
+        vim.notify("No tasks found", vim.log.levels.WARN)
+    else
+        overseer.run_action(tasks[1], "restart")
+    end
+end, {})
+lambda.command("Make", function(params)
+    local args = vim.fn.expandcmd(params.args)
+    -- Insert args at the '$*' in the makeprg
+    local cmd, num_subs = vim.o.makeprg:gsub("%$%*", args)
+    if num_subs == 0 then
+        cmd = cmd .. " " .. args
+    end
+    local task = require("overseer").new_task({
+        cmd = cmd,
+        components = {
+            { "on_output_quickfix", open = not params.bang, open_height = 8 },
+            "default",
+        },
+    })
+    task:start()
+end, {
+    desc = "Run your makeprg as an Overseer task",
+    nargs = "*",
+    bang = true,
+})
 lambda.command("Grep", function(params)
     local args = vim.fn.expandcmd(params.args)
     -- Insert args at the '$*' in the grepprg
@@ -73,3 +74,31 @@ lambda.command("Grep", function(params)
     })
     task:start()
 end, { nargs = "*", bang = true, bar = true, complete = "file" })
+--
+
+vim.keymap.set("n", "_l", "<cmd>OverseerRun<cr>")
+vim.keymap.set("n", "_w", function()
+    local overseer = require("overseer")
+    local tasks = overseer.list_tasks({ recent_first = true })
+    if vim.tbl_isempty(tasks) then
+        vim.notify("No tasks found", vim.log.levels.WARN)
+    else
+        overseer.run_action(tasks[1], "restart")
+    end
+end)
+vim.keymap.set("n", "_W", function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local task = vim.tbl_filter(function(t)
+        return (t.strategy.bufnr == bufnr)
+    end, overseer.list_tasks())[1]
+    if task then
+        action_util.run_task_action(task)
+    else
+        vim.cmd("OverseerTaskAction")
+    end
+end)
+vim.keymap.set("n", "_k", "<cmd>OverseerTaskAction<cr>")
+vim.keymap.set("n", "_<leader>", "<cmd>OverseerToggle<cr>")
+
+vim.keymap.set("n", "<leader>,", "<cmd>OverseerQuickAction open<cr>")
+vim.keymap.set("n", "<leader><", "<cmd>OverseerQuickAction open here<cr>")

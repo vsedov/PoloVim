@@ -91,7 +91,6 @@ end
 
 function config.neo_tree()
     local highlights = lambda.highlight
-    local symbols = require("lspkind").symbol_map
     local lsp_kinds = lambda.style.lsp.highlights
     local icons = lambda.style.icons
     vim.g.neo_tree_remove_legacy_commands = 1
@@ -168,7 +167,7 @@ function config.neo_tree()
             mappings = {
                 ["<space>"] = "toggle_node",
                 ["<2-LeftMouse>"] = "open",
-                ["<cr>"] = "open",
+                ["<CR>"] = "open_with_window_picker",
                 ["S"] = "open_split",
                 ["s"] = "open_vsplit",
                 ["t"] = "open_tabnew",
@@ -327,6 +326,7 @@ function config.ufo()
         end,
     })
 end
+
 function config.fold_focus()
     local foldcus = require("foldcus")
     local NS = { noremap = true, silent = true }
@@ -452,7 +452,7 @@ function config.tint()
             local ignore_bt = { "terminal", "prompt", "nofile" }
             local ignore_ft = {
                 "neo-tree",
-                "packer",
+                "bpacker",
                 "diff",
                 "toggleterm",
                 "Neogit.*",

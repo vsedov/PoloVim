@@ -196,9 +196,6 @@ ui({
         {
             "<leader>e",
             function()
-                if vim.bo.filetype == "neo-tree" then
-                    vim.cmd.NeoTreeClose()
-                end
                 vim.cmd.NeoTreeFocusToggle()
             end,
             "NeoTree Focus Toggle",
