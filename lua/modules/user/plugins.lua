@@ -365,7 +365,6 @@ user({
 })
 user({
     "Aasim-A/scrollEOF.nvim",
-    cond = false,
     event = "VeryLazy",
     config = true,
 })
@@ -407,5 +406,7 @@ user({
             [",t"] = { name = "+TreePin" },
         })
     end,
-    config = true,
+    opts = {
+        seperator = "▔",
+    },
 })

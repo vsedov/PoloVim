@@ -2,6 +2,7 @@ local overseer = require("overseer")
 local STATUS = require("overseer.constants").STATUS
 local util = require("overseer.util")
 local Border = lambda.style.border.type_0
+local counter = 0
 
 local function close_task(bufnr)
     for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
@@ -133,6 +134,7 @@ overseer.setup({
                 return bufnr and vim.api.nvim_buf_is_valid(bufnr)
             end,
             run = function(task)
+                vim.notify("Runner: opening task")
                 vim.cmd([[normal! m']])
                 close_task(task.strategy.bufnr)
                 vim.bo[task.strategy.bufnr].filetype = "OverseerPanelTask"
@@ -146,10 +148,4 @@ overseer.setup({
 })
 
 vim.api.nvim_set_hl(0, "OverseerTaskBorder", { link = "Normal" })
-vim.api.nvim_create_user_command(
-    "OverseerDebugParser",
-    'lua require("overseer.parser.debug").start_debug_session()',
-    {}
-)
-
 require("modules.runner.overseer.binds")

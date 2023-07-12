@@ -266,7 +266,9 @@ M.jump_windows = function()
     })
 end
 M.search_win = function()
-    require("hlslens").start()
+    if lambda.config.ui.use_hlslens then
+        require("hlslens").start()
+    end
     local pat = vim.fn.getreg("/")
     require("flash").jump({
         pattern = pat,

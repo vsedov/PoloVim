@@ -95,7 +95,6 @@ function config.edgy()
             },
         },
         left = {
-            -- Neo-tree filesystem always takes half the screen height
             {
                 title = "Neo-Tree",
                 ft = "neo-tree",
@@ -125,17 +124,10 @@ function config.edgy()
                     require("neotest").summary.toggle()
                 end,
             },
-            -- {
-            --     ft = "OverseerList",
-            --     open = "OverseerToggle",
-            -- },
-            -- any other neo-tree windows
-            -- "dapui_breakpoints",
-            -- "dapui_stacks",
-            -- "dapui_watches",
         },
         right = {
             -- "dapui_scopes",
+            "sagaoutline",
             "neotest-output-panel",
             "neotest-summary",
 
@@ -147,10 +139,9 @@ function config.edgy()
             },
         },
 
-        ---@type table<Edgy.Pos, {size:integer, wo?:vim.wo}>
         options = {
-            left = { size = 30 },
-            bottom = { size = 10 },
+            left = { size = 40 },
+            bottom = { size = 30 },
             right = { size = 30 },
             top = { size = 10 },
         },
@@ -165,13 +156,7 @@ function config.edgy()
             on_end = function()
                 vim.g.minianimate_disable = false
             end,
-            -- Spinner for pinned views that are loading.
-            -- if you have noice.nvim installed, you can use any spinner from it, like:
-            -- spinner = require("noice.util.spinners").spinners.circleFull,
-            spinner = {
-                frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
-                interval = 80,
-            },
+            spinner = require("noice.util.spinners").spinners.circleFull,
         },
         -- enable this to exit Neovim when only edgy windows are left
         exit_when_last = false,

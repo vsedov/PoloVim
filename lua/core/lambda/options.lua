@@ -192,6 +192,8 @@ lambda.config.ui = {
     use_dropbar = true,
     use_beacon = true,
     use_mini_animate = false,
+    use_hlslens = false,
+    use_statuscol = true,
     heirline = {
         use_statuscol = false,
         use_heirline = true,
@@ -212,7 +214,7 @@ lambda.config.ui = {
     },
     scroll_bar = {
         use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
-        use_scrollbar = false,
+        use_scrollbar = true,
     },
 }
 lambda.config.fun = {

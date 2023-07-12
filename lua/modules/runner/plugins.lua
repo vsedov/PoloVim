@@ -17,12 +17,6 @@ runner({ -- This plugin
 })
 
 runner({
-    "google/executor.nvim",
-    event = "VeryLazy",
-    config = conf.executor,
-})
-
-runner({
     "CRAG666/code_runner.nvim",
     lazy = true,
     cmd = {

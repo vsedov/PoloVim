@@ -293,14 +293,21 @@ lsp({
 
 lsp({
     "neovim/nvimdev.nvim",
-    lazy = true,
     ft = "lua",
     init = conf.nvimdev,
 })
 
 lsp({
     "yorickpeterse/nvim-dd",
-    event = "LspAttach",
+    event = { "LspAttach" },
+
     config = true,
 })
 lsp({ "onsails/lspkind.nvim", lazy = true })
+lsp({
+    "askfiy/lsp_extra_dim",
+    event = { "LspAttach" },
+    opts = {
+        disable_diagnostic_style = "all",
+    },
+})

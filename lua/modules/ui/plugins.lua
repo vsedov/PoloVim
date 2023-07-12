@@ -31,6 +31,7 @@ ui({
 })
 ui({
     "rebelot/heirline.nvim",
+
     cond = lambda.config.ui.heirline.use_heirline,
     event = "VeryLazy",
     config = function()
@@ -98,11 +99,7 @@ ui({
                     }
                 end
                 return {
-                    backend = "fzf_lua",
-                    fzf_lua = lambda.fzf.dropdown({
-                        winopts = { title = opts.prompt, height = 0.33, row = 0.5, width = 0.8 },
-                        mappings = { n = { ["q"] = "Close", ["<esc>"] = "Close" } },
-                    }),
+                    backend = "telescope",
                 }
             end,
             nui = {
@@ -136,11 +133,11 @@ ui({
     end,
 })
 ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
-
---  ──────────────────────────────────────────────────────────────────────
--- Force Lazy
---  ──────────────────────────────────────────────────────────────────────
-
+--
+-- --  ──────────────────────────────────────────────────────────────────────
+-- -- Force Lazy
+-- --  ──────────────────────────────────────────────────────────────────────
+--
 ui({
     "RRethy/vim-illuminate",
     lazy = true,
@@ -226,7 +223,7 @@ ui({
     },
     config = conf.neo_tree,
 })
-
+--
 ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
@@ -251,7 +248,7 @@ ui({
     cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
     config = conf.transparent,
 })
-
+--
 ui({
     "levouh/tint.nvim",
     cond = lambda.config.ui.use_tint,
@@ -285,76 +282,87 @@ ui({
         end,
     },
 })
-
+--
 ui({
     "kevinhwang91/promise-async",
     lazy = true,
 })
 ui({
+    "luukvbaal/statuscol.nvim",
+    cond = lambda.config.ui.use_statuscol,
+    event = "UIEnter",
+    config = function()
+        local builtin = require("statuscol.builtin")
+        require("statuscol").setup({
+            ft_ignore = {
+                "neotree",
+                "OverseerList",
+            }, -- lua table with filetypes for which 'statuscolumn' will be unset
+            bt_ignore = {
+                "nofile",
+                "terminal",
+            }, -- lua table with 'buftype' values for which 'statuscolumn' will be unset
+            relculright = true,
+            segments = {
+                { text = { "%s" }, click = "v:lua.ScSa" },
+                -- {
+                --     --
+                --
+                --     -- Git Signs
+                --     text = { "%s" },
+                --     sign = { name = { "GitSigns" }, maxwidth = 1, colwidth = 1, auto = false },
+                --     click = "v:lua.ScSa",
+                -- },
+                {
+                    -- Line Numbers
+                    text = { builtin.lnumfunc },
+                    click = "v:lua.ScLa",
+                },
+                {
+                    -- Dap Breakpoints
+                    sign = {
+                        name = { "DapBreakpoint" },
+                        maxwidth = 1,
+                        colwidth = 1,
+                        auto = false,
+                        fillchars = "",
+                    },
+                    click = "v:lua.ScSa",
+                },
+                {
+                    -- Fold Markers
+                    text = { builtin.foldfunc },
+                    click = "v:lua.ScFa",
+                },
+                -- {
+                --     -- Diagnostics
+                --     sign = { name = { "Diagnostic" }, maxwidth = 1, colwidth = 1, auto = false, fillchars = "" },
+                --     click = "v:lua.ScSa",
+                -- },
+                -- {
+                --     -- All Other Signs
+                --     sign = {
+                --         name = { ".*" },
+                --         fillchars = "",
+                --
+                --         auto = false,
+                --     },
+                --     click = "v:lua.ScSa",
+                -- },
+
+                { text = { "│" } },
+            },
+        })
+    end,
+})
+
+ui({
     "kevinhwang91/nvim-ufo",
     lazy = true,
     cond = lambda.config.ui.use_ufo,
-
+    event = "VeryLazy",
     dependencies = {
         "kevinhwang91/promise-async",
-        {
-            "luukvbaal/statuscol.nvim",
-            config = function()
-                local builtin = require("statuscol.builtin")
-                require("statuscol").setup({
-                    relculright = true,
-                    segments = {
-                        { text = { "%s" }, click = "v:lua.ScSa" },
-                        -- {
-                        --     --
-                        --
-                        --     -- Git Signs
-                        --     text = { "%s" },
-                        --     sign = { name = { "GitSigns" }, maxwidth = 1, colwidth = 1, auto = false },
-                        --     click = "v:lua.ScSa",
-                        -- },
-                        {
-                            -- Line Numbers
-                            text = { builtin.lnumfunc },
-                            click = "v:lua.ScLa",
-                        },
-                        {
-                            -- Dap Breakpoints
-                            sign = {
-                                name = { "DapBreakpoint" },
-                                maxwidth = 1,
-                                colwidth = 1,
-                                auto = false,
-                                fillchars = "",
-                            },
-                            click = "v:lua.ScSa",
-                        },
-                        {
-                            -- Fold Markers
-                            text = { builtin.foldfunc },
-                            click = "v:lua.ScFa",
-                        },
-                        -- {
-                        --     -- Diagnostics
-                        --     sign = { name = { "Diagnostic" }, maxwidth = 1, colwidth = 1, auto = false, fillchars = "" },
-                        --     click = "v:lua.ScSa",
-                        -- },
-                        -- {
-                        --     -- All Other Signs
-                        --     sign = {
-                        --         name = { ".*" },
-                        --         fillchars = "",
-                        --
-                        --         auto = false,
-                        --     },
-                        --     click = "v:lua.ScSa",
-                        -- },
-
-                        { text = { "│" } },
-                    },
-                })
-            end,
-        },
     },
     cmd = {
         "UfoAttach",
@@ -405,9 +413,9 @@ ui({
     cmd = { "Foldcus", "Unfoldcus" },
     config = conf.fold_focus,
 })
-
 ui({
     "jghauser/fold-cycle.nvim",
+    event = "VeryLazy",
     config = true,
     keys = {
         {
@@ -416,6 +424,23 @@ ui({
                 require("fold-cycle").open()
             end,
             desc = "fold-cycle: toggle",
+            silent = true,
+        },
+        {
+            "<C-BS>",
+            function()
+                require("fold-cycle").close()
+            end,
+            desc = "fold-cycle: toggle",
+            silent = true,
+        },
+        {
+            "zC",
+            function()
+                require("fold-cycle").close_all()
+            end,
+            desc = "fold-cycle: Close all ",
+            remap = true,
         },
     },
 })
@@ -440,96 +465,6 @@ ui({
         })
     end,
 })
-ui({
-    "kevinhwang91/nvim-hlslens",
-    event = "VeryLazy",
-    config = function()
-        require("hlslens").setup({
-            override_lens = function(render, posList, nearest, idx, relIdx)
-                local sfw = vim.v.searchforward == 1
-                local indicator, text, chunks
-                local absRelIdx = math.abs(relIdx)
-                if absRelIdx > 1 then
-                    indicator = ("%d%s"):format(absRelIdx, sfw ~= (relIdx > 1) and "▲" or "▼")
-                elseif absRelIdx == 1 then
-                    indicator = sfw ~= (relIdx == 1) and "▲" or "▼"
-                else
-                    indicator = ""
-                end
-
-                local lnum, col = unpack(posList[idx])
-                if nearest then
-                    local cnt = #posList
-                    if indicator ~= "" then
-                        text = ("[%s %d/%d]"):format(indicator, idx, cnt)
-                    else
-                        text = ("[%d/%d]"):format(idx, cnt)
-                    end
-                    chunks = { { " ", "Ignore" }, { text, "HlSearchLensNear" } }
-                else
-                    text = ("[%s %d]"):format(indicator, idx)
-                    chunks = { { " ", "Ignore" }, { text, "HlSearchLens" } }
-                end
-                render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
-            end,
-        })
-
-        --  TODO: (vsedov) (13:26:03 - 10/06/23): This might not be needed, dry mapping right
-        --  now
-        vim.keymap.set({ "n", "x" }, "<leader>L", function()
-            vim.schedule(function()
-                if require("hlslens").exportLastSearchToQuickfix() then
-                    vim.cmd("cw")
-                end
-            end)
-            return ":noh<CR>"
-        end, { expr = true, desc = "hlslens: search and replace" })
-    end,
-})
-
-ui({
-    "petertriho/nvim-scrollbar",
-    lazy = true,
-    cond = lambda.config.ui.scroll_bar.use_scrollbar,
-    event = "VeryLazy",
-    dependencies = { "kevinhwang91/nvim-hlslens" },
-    config = function()
-        require("scrollbar.handlers.search").setup()
-        require("scrollbar").setup({
-            show = true,
-            set_highlights = true,
-            handle = {
-                color = "#777777",
-            },
-            marks = {
-                Search = { color = "#ff9e64" },
-                Error = { color = "#db4b4b" },
-                Warn = { color = "#e0af68" },
-                Info = { color = "#0db9d7" },
-                Hint = { color = "#1abc9c" },
-                Misc = { color = "#9d7cd8" },
-                GitAdd = {
-                    color = "#9ed072",
-                    text = "+",
-                },
-                GitDelete = {
-                    color = "#fc5d7c",
-                    text = "-",
-                },
-                GitChange = {
-                    color = "#76cce0",
-                    text = "*",
-                },
-            },
-            handlers = {
-                diagnostic = true,
-                search = true,
-                gitsigns = false,
-            },
-        })
-    end,
-})
-
 --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
 --  i wonder if they are any better that what ive had before
 ui({
@@ -538,6 +473,67 @@ ui({
     event = "CursorHold",
     config = true,
 })
+--
+-- ui({
+--     "petertriho/nvim-scrollbar",
+--     lazy = true,
+--     cond = lambda.config.ui.scroll_bar.use_scrollbar,
+--     event = "VeryLazy",
+--     dependencies = { "kevinhwang91/nvim-hlslens" },
+--     config = function()
+--         require("scrollbar.handlers.search").setup()
+--         require("scrollbar").setup({
+--             show = true,
+--             set_highlights = true,
+--             handle = {
+--                 color = "#777777",
+--             },
+--             marks = {
+--                 Search = { color = "#ff9e64" },
+--                 Error = { color = "#db4b4b" },
+--                 Warn = { color = "#e0af68" },
+--                 Info = { color = "#0db9d7" },
+--                 Hint = { color = "#1abc9c" },
+--                 Misc = { color = "#9d7cd8" },
+--                 GitAdd = {
+--                     color = "#9ed072",
+--                     text = "+",
+--                 },
+--                 GitDelete = {
+--                     color = "#fc5d7c",
+--                     text = "-",
+--                 },
+--                 GitChange = {
+--                     color = "#76cce0",
+--                     text = "*",
+--                 },
+--             },
+--             handlers = {
+--                 diagnostic = true,
+--                 search = true,
+--                 gitsigns = false,
+--             },
+--         })
+--     end,
+-- })
+-- ui({
+--     "kevinhwang91/nvim-hlslens",
+--     config = function()
+--         require("hlslens").setup({
+--             build_position_cb = function(plist, _, _, _)
+--                 require("scrollbar.handlers.search").handler.show(plist.start_pos)
+--             end,
+--         })
+--
+--         vim.cmd([[
+--         augroup scrollbar_search_hide
+--             autocmd!
+--             autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
+--         augroup END
+--     ]])
+--     end,
+-- })
+--
 
 ui({
     "yaocccc/nvim-foldsign",
@@ -594,7 +590,7 @@ ui({
     event = "VeryLazy",
     config = true,
 })
-
+--
 ui({
     "tzachar/highlight-undo.nvim",
     keys = {
@@ -602,10 +598,4 @@ ui({
         "u",
     },
     config = true,
-})
-ui({
-    "HampusHauffman/block.nvim",
-    lazy = true,
-    cmd = { "Block", "BlockOn", "BlockOff" },
-    opts = { percent = 1.05, depth = 10, automatic = true },
 })

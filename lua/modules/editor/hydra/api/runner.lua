@@ -18,7 +18,7 @@ local config = {
         b = { cmd("OverseerBuild"), { desc = "OS Build", exit = true } },
         l = { cmd("OverseerLoadBundle"), { desc = "OS Load", exit = true } },
         r = { cmd("CompilerOpen"), { desc = "OS Compiler", exit = true } },
-        R = { cmd("OverseerRunCmd"), { desc = "OS Run Cmd", exit = true } },
+        ["<leader>"] = { cmd("OverseerRunCmd"), { desc = "OS Run Cmd", exit = true } },
 
         ["<cr>"] = {
             function()
@@ -68,12 +68,12 @@ local config = {
         },
     },
 }
-local bracket = { "<cr>", "r", ";", "w", "s", "R" }
+local bracket = { "<cr>", "r", ";", "w", "s", "<leader>" }
 
 return {
     config,
     "Runner",
-    { { "d", "D", "b", "l" }, { "W", "c", "c", "i" } },
+    { { "d", "D", "b", "l" }, { "W", "c", "C", "i" } },
     bracket,
     6,
     3,

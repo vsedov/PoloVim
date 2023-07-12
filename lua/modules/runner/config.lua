@@ -5,6 +5,7 @@ end
 
 function config.executor()
     require("executor").setup({
+        use_split = false,
         preset_commands = {
             ["*.py"] = {
                 "python -m unittest",

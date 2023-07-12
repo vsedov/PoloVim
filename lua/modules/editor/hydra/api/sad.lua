@@ -164,6 +164,37 @@ local config = {
 
             { nowait = true, desc = "Rep Word", exit = false },
         },
+        m = {
+            function()
+                vim.cmd("MurenToggle")
+            end,
+            { desc = "Toggle UI", exit = true },
+        },
+        M = {
+            function()
+                vim.cmd("MurenOpen")
+            end,
+            { desc = "Open UI", exit = true },
+        },
+        c = {
+            function()
+                vim.cmd("MurenClose")
+            end,
+            { desc = "Close UI", exit = true },
+        },
+
+        f = {
+            function()
+                vim.cmd("MurenFresh")
+            end,
+            { desc = "Open Fresh UI", exit = true },
+        },
+        u = {
+            function()
+                vim.cmd("MurenUnique")
+            end,
+            { desc = "Open Unique UI", exit = true },
+        },
     },
 }
 
@@ -172,10 +203,12 @@ range = { "a", "k", "K" }
 eol = { "L", "l", "o" }
 sub = { "C", "Q", "q" }
 core = { "O", "F", "V", "X" }
+Muren = { "m", "M", "c", "f", "u" }
+
 return {
     config,
     "Sad",
-    { range, eol, sub, core },
+    { Muren, range, eol, sub, core },
     bracket,
     6,
     3,
