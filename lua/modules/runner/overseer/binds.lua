@@ -13,7 +13,6 @@ lambda.command("WatchFormat", function()
         end
     end)
 end, {})
-lambda.command("OverseerDebugParser", 'lua require("overseer").debug_parser()', {})
 lambda.command("OverseerRestartLast", function()
     local overseer = require("overseer")
     local tasks = overseer.list_tasks({ recent_first = true })
@@ -75,18 +74,20 @@ lambda.command("Grep", function(params)
     task:start()
 end, { nargs = "*", bang = true, bar = true, complete = "file" })
 --
+lambda.command("OverseerDebugParser", 'lua require("overseer.parser.debug").start_debug_session()', {})
 
-vim.keymap.set("n", "_l", "<cmd>OverseerRun<cr>")
-vim.keymap.set("n", "_w", function()
+vim.keymap.set("n", "_r", "<cmd>CompilerOpen<cr>")
+vim.keymap.set("n", "_W", function()
     local overseer = require("overseer")
     local tasks = overseer.list_tasks({ recent_first = true })
     if vim.tbl_isempty(tasks) then
         vim.notify("No tasks found", vim.log.levels.WARN)
+        vim.cmd([[CompilerOpen]])
     else
         overseer.run_action(tasks[1], "restart")
     end
 end)
-vim.keymap.set("n", "_W", function()
+vim.keymap.set("n", "_l", function()
     local bufnr = vim.api.nvim_get_current_buf()
     local task = vim.tbl_filter(function(t)
         return (t.strategy.bufnr == bufnr)
@@ -98,7 +99,7 @@ vim.keymap.set("n", "_W", function()
     end
 end)
 vim.keymap.set("n", "_k", "<cmd>OverseerTaskAction<cr>")
-vim.keymap.set("n", "_<leader>", "<cmd>OverseerToggle<cr>")
+vim.keymap.set("n", "_w", "<cmd>OverseerToggle<cr>")
 
-vim.keymap.set("n", "<leader>,", "<cmd>OverseerQuickAction open<cr>")
+vim.keymap.set("n", "<leader>>", "<cmd>OverseerQuickAction open<cr>")
 vim.keymap.set("n", "<leader><", "<cmd>OverseerQuickAction open here<cr>")
