@@ -160,8 +160,17 @@ mini({
 mini({
     "echasnovski/mini.trailspace",
     event = "VeryLazy",
+    init = function()
+        lambda.command("TrimTrailSpace", function()
+            MiniTrailspace.trim()
+        end, {})
+        lambda.command("TrimLastLine", function()
+            MiniTrailspace.trim_last_lines()
+        end, {})
+    end,
     config = true,
 })
+
 mini({
     "echasnovski/mini.align",
     opts = {},

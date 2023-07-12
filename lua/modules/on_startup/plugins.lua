@@ -85,6 +85,7 @@ startup({
             enabled = true,
             notify = true,
         },
+
         tab_buf_filter = function(tabpage, bufnr)
             local dir = vim.fn.getcwd(-1, vim.api.nvim_tabpage_get_number(tabpage))
             return vim.startswith(vim.api.nvim_buf_get_name(bufnr), dir)
@@ -95,7 +96,13 @@ startup({
             end
             return visible_buffers[bufnr] or require("three").is_buffer_in_any_tab(bufnr)
         end,
-        extensions = { quickfix = {} },
+        extensions = {
+            overseer = {
+                filter = function(task)
+                    return task.metadata.run_on_open
+                end,
+            },
+        },
     },
     config = function(_, opts)
         local resession = require("resession")

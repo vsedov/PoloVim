@@ -44,6 +44,7 @@ function config.code_runner()
         -- project_path = vim.fn.expand("~/.config/nvim/project_manager.json"),
     })
 end
+
 function config.neotest()
     require("neotest").setup({
         adapters = {
@@ -179,6 +180,7 @@ function config.neotest()
             require("neotest").output.open()
         end, { nargs = 0 })
     end
+
     setup_commands_keymaps()
 end
 

@@ -69,28 +69,73 @@ function config.edgy()
             { ft = "qf", title = "QuickFix" },
             { ft = "help", size = { height = 20 } },
             { ft = "spectre_panel", size = { height = 0.4 } },
-            "dap-repl",
             "terminal",
+            { ft = "dapui_watches", title = "Watches" },
+            { ft = "dap-repl", title = "Debug REPL" },
+            { ft = "dapui_console", title = "Debug Console" },
+            {
+                ft = "OverseerPanelTask",
+                title = " Task",
+                open = "OverseerQuickAction open",
+            },
+            {
+                ft = "NoiceHistory",
+                title = " Log",
+                open = function()
+                    require("user.myfuncs").toggle_noice()
+                end,
+            },
+            {
+                ft = "neotest-output-panel",
+                title = " Test Output",
+                open = function()
+                    vim.cmd.vsplit()
+                    require("neotest").output_panel.toggle()
+                end,
+            },
         },
         left = {
             -- Neo-tree filesystem always takes half the screen height
             {
                 title = "Neo-Tree",
                 ft = "neo-tree",
+                pinned = true,
                 size = { height = 0.5 },
+            },
+            { ft = "dapui_scopes", title = "Scopes" },
+            { ft = "dapui_breakpoints", title = "Breakpoints" },
+            { ft = "dapui_stacks", title = "Stacks" },
+            {
+                ft = "DiffviewFileHistory",
+                title = " Diffs",
+            },
+            {
+                ft = "DiffviewFiles",
+                title = " Diffs",
             },
             {
                 ft = "OverseerList",
-                pinned = true,
-                open = "OverseerToggle",
+                title = "  Tasks",
+                open = "OverseerOpen",
             },
+            {
+                ft = "neotest-summary",
+                title = "  Tests",
+                open = function()
+                    require("neotest").summary.toggle()
+                end,
+            },
+            -- {
+            --     ft = "OverseerList",
+            --     open = "OverseerToggle",
+            -- },
             -- any other neo-tree windows
-            "dapui_breakpoints",
-            "dapui_stacks",
-            "dapui_watches",
+            -- "dapui_breakpoints",
+            -- "dapui_stacks",
+            -- "dapui_watches",
         },
         right = {
-            "dapui_scopes",
+            -- "dapui_scopes",
             "neotest-output-panel",
             "neotest-summary",
 
@@ -209,6 +254,7 @@ function config.edgy()
         fix_win_height = vim.fn.has("nvim-0.10.0") == 0,
     }
 end
+
 function config.which_key()
     lambda.highlight.plugin("whichkey", {
         theme = {
@@ -267,4 +313,5 @@ function config.which_key()
         },
     }, { mode = { "o", "v", "x" } })
 end
+
 return config

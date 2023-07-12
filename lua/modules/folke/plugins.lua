@@ -58,9 +58,11 @@ folke({
     "folke/neodev.nvim",
     lazy = true,
     ft = "lua",
-    opts = { library = {
-        plugins = { "nvim-dap-ui" },
-    } },
+    opts = {
+        library = {
+            plugins = { "nvim-dap-ui" },
+        },
+    },
 })
 folke({
     "folke/paint.nvim",

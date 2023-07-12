@@ -26,6 +26,9 @@ git({
 
 git({
     "wintermute-cell/gitignore.nvim",
+    dependencies = {
+        "nvim-telescope/telescope.nvim",
+    },
     cmd = "Gitignore",
 })
 -- need to find a usecase for this
@@ -124,6 +127,7 @@ git({
         "GitConflictPrevConflict",
         "GitConflictListQf",
     },
+
     lazy = true,
     opts = { disable_diagnostics = true },
 })
