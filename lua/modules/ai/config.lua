@@ -72,7 +72,11 @@ function config.neoai()
             ["select_up"] = "<C-k>",
             ["select_down"] = "<C-j>",
         },
-        open_api_key_env = "OPENAI_API_KEY",
+        open_ai = {
+            api_key = {
+                env = "OPENAI_API_KEY",
+            },
+        },
         shortcuts = {
             {
                 name = "textify",
