@@ -116,6 +116,9 @@ function config.edgy()
                 ft = "OverseerList",
                 title = "  Tasks",
                 open = "OverseerOpen",
+                size = {
+                    width = 0.35,
+                },
             },
             {
                 ft = "neotest-summary",
@@ -141,7 +144,7 @@ function config.edgy()
 
         options = {
             left = { size = 40 },
-            bottom = { size = 30 },
+            bottom = { size = 20 },
             right = { size = 30 },
             top = { size = 10 },
         },
