@@ -49,52 +49,36 @@ if gitrepo then
     require("lazy").load({ plugins = { "gitsigns.nvim", "vim-fugitive" } })
 
     local hint = [[
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
- ^^^^                      Speed                       ^^^^
- ^^^^                                                  ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-                   _c_ : Commit
-  _hr_ : Reword            ▕         _hf_ : Fixup
-  _ha_ : Amend             ▕         _hS_ : Sqash
-                   _a_ :  Dash
-                   _L_ :  LazyGit
-                         ▕
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
- ^^^^                     Gitsigns                    ^^^^
- ^^^^                                                 ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  _J_ : next hunk          ▕         _D_ : diffthis
-  _K_ : prev hunk          ▕         _p_ : Preview H
-  _s_ : stagehunk          ▕         _S_ : stage buf
-  _r_ : reset hunk         ▕         _R_ : Reset Buffer
-  _x_ : show del           ▕         _u_ : ustage hunk
-  _b_ : gutterView         ▕         _B_ : BlameLine
-  _/_ : show base          ▕         _i_ : Select hunk
-  _Qq_ : Setqflist all     ▕         _Qw_ : Stqflist
-                         ▕
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
- ^^^^                       VGIT                      ^^^^
- ^^^^                                                 ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  _k_ : proj diff          ▕         _g_ : diffStaged
-  _dd_ : diff preview      ▕         _P_ : projStaged
-  _f_ : proj hunkQF        ▕         _U_ : unstagebuf
-                    _G_ : stage diff
-
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
- ^^^^                      Personal                   ^^^^
- ^^^^                                                 ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-  _d_ : diftree            ▕         _M_ : difmast
-  _C_ : conflict           ▕         _m_ : merge
-  _H_ : filehist           ▕         _l_ : log
-
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
-
-        _<Enter>_ => Neogit _q_ => exit => _<Esc>_
-
-
+━━━━━━━━━━━━━━━━━━━━━
+_<CR>_:Neogit
+_J_: next hunk
+_K_: prev hunk
+━━━━━━━━━━━━━━━━━━━━━
+_D_: diffthis
+_p_: Preview H
+_s_: stagehunk
+_S_: stage buf
+━━━━━━━━━━━━━━━━━━━━━
+_r_: reset hunk
+_R_: Reset Buffer
+_x_: show del
+_u_: ustage hunk
+_b_: gutterView
+_B_: BlameLine
+━━━━━━━━━━━━━━━━━━━━━
+_q_: Setqflist all
+_Q_: Stqflist
+━━━━━━━━━━━━━━━━━━━━━
+_d_: diftree
+_M_: difmast
+_C_: conflict
+_m_: merge
+_H_: filehist
+_l_: log
+━━━━━━━━━━━━━━━━━━━━━
+_/_ : show base
 ]]
+
     local ok, gitsigns = pcall(require, "gitsigns")
     if ok then
         Hydra({
@@ -104,7 +88,7 @@ if gitrepo then
                 color = "pink",
                 invoke_on_body = true,
                 hint = {
-                    position = "bottom-right",
+                    position = "middle-right",
                     border = "single",
                 },
                 on_enter = function()
@@ -148,12 +132,6 @@ if gitrepo then
                     { expr = true, desc = "prev hunk" },
                 },
 
-                {
-                    "i",
-                    gitsigns.stage_hunk,
-                    { silent = true },
-                },
-
                 { "s", ":Gitsigns stage_hunk<cr>", { exit = false, nowait = true } },
 
                 { "u", gitsigns.undo_stage_hunk },
@@ -165,8 +143,8 @@ if gitrepo then
                 { "D", gitsigns.diffthis },
                 { "R", ":Gitsigns reset_buffer<CR>", { silent = true } },
 
-                { "Qq", wrap(gitsigns.setqflist, "all") },
-                { "Qw", wrap(gitsigns.setqflist) },
+                { "q", wrap(gitsigns.setqflist, "all") },
+                { "Q", wrap(gitsigns.setqflist) },
                 {
                     "B",
                     function()
@@ -181,69 +159,11 @@ if gitrepo then
                 { "M", diffmaster, { silent = true, exit = true } },
                 { "H", ":DiffviewFileHistory<CR>", { silent = true, exit = true } },
 
-                {
-                    "k",
-                    function()
-                        require("vgit").project_diff_preview()
-                    end,
-                    { exit = true },
-                },
-                {
-                    "dd",
-                    function()
-                        require("vgit").buffer_diff_preview()
-                    end,
-                    { exit = true },
-                },
-                {
-                    "g",
-                    function()
-                        require("vgit").buffer_diff_staged_preview()
-                    end,
-                    { exit = true },
-                },
-                {
-                    "P",
-                    function()
-                        require("vgit").project_staged_hunks_preview()
-                    end,
-                },
-                {
-                    "f",
-                    function()
-                        require("vgit").project_hunks_qf()
-                    end,
-                },
-                {
-                    "U",
-                    function()
-                        require("vgit").buffer_unstage()
-                    end,
-                },
-                {
-                    "G",
-                    function()
-                        require("vgit").buffer_diff_staged_preview()
-                    end,
-                },
-
-                { "<Enter>", ":silent lua lambda.clever_tcd()<cr>:Neogit<cr>", { exit = true } },
-                { "q", nil, { exit = true, nowait = true } },
-                { "<Esc>", nil, { exit = true, desc = false } },
-
-                { "l", ":Flogsplit<CR>", { exit = true, nowait = true } },
-                { "m", ":Git mergetool<CR>" },
+                { "<CR>", ":silent lua lambda.clever_tcd()<cr>:Neogit<cr>", { exit = true } },
+                { "l", ":Neogit log<CR>", { exit = true, nowait = true } },
+                { "m", ":Neogit merge<CR>", { exit = true, nowait = true } },
                 { "C", ":GitConflictListQf<CR>" },
-
-                { "c", ":Commit<CR>", { silent = true } },
-                { "hf", ":Fixup<CR>", { silent = true } },
-                { "ha", ":Amend<CR>", { silent = true } },
-                { "hS", ":Squash<CR>", { silent = true } },
-                { "hr", ":Reword<CR>", { silent = true } },
-                { "a", ":GDash<CR>", { exit = true, silent = true } },
-                --  TODO: (vsedov) (02:10:52 - 27/05/23): Redo this, , remove lazygit this is not
-                --  viable. Best course is to use one of the terminal plugins and use that instead
-                { "L", ":Lazygit<CR>", { exit = true, silent = true } },
+                { "<Esc>", nil, { exit = true, desc = false } },
             },
         })
     end
