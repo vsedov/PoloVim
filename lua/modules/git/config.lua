@@ -154,7 +154,6 @@ function config.gitsigns()
 end
 
 function config.neogit()
-    vim.cmd([[Lazy load diffview.nvim]])
     lambda.highlight.plugin("neogit", { -- NOTE: highlights must be set AFTER neogit's setup
         { NeogitDiffAdd = { link = "DiffAdd" } },
         { NeogitDiffDelete = { link = "DiffDelete" } },
@@ -164,17 +163,51 @@ function config.neogit()
         { NeogitHunkHeader = { link = "TabLine" } },
         { NeogitHunkHeaderHighlight = { link = "DiffText" } },
     })
+
     local neogit = require("neogit")
-    pcall(require("plenary"))
+
     neogit.setup({
         disable_signs = false,
-        disable_context_highlighting = false,
-        disable_commit_confirmation = false, -- nah i like this
         disable_hint = false,
+        disable_context_highlighting = false,
+        disable_commit_confirmation = false,
         auto_refresh = true,
-        disable_builtin_notifications = true,
-        use_magit_keybindings = true,
-        disable_insert_on_commit = false,
+        sort_branches = "-committerdate",
+        disable_builtin_notifications = false,
+        -- If enabled, use telescope for menu selection rather than vim.ui.select.
+        -- Allows multi-select and some things that vim.ui.select doesn't.
+        use_telescope = false,
+        -- Allows a different telescope sorter. Defaults to 'fuzzy_with_index_bias'. The example
+        -- below will use the native fzf sorter instead.
+        telescope_sorter = function()
+            return require("telescope").extensions.fzf.native_fzf_sorter()
+        end,
+        use_magit_keybindings = false,
+        -- Change the default way of opening neogit
+        kind = "tab",
+        -- The time after which an output console is shown for slow running commands
+        console_timeout = 2000,
+        -- Automatically show console if a command takes more than console_timeout milliseconds
+        auto_show_console = true,
+        -- Persist the values of switches/options within and across sessions
+        remember_settings = true,
+        -- Scope persisted settings on a per-project basis
+        use_per_project_settings = true,
+        -- Array-like table of settings to never persist. Uses format "Filetype--cli-value"
+        --   ie: `{ "NeogitCommitPopup--author", "NeogitCommitPopup--no-verify" }`
+        ignored_settings = {},
+        -- Change the default way of opening the commit popup
+        commit_popup = {
+            kind = "split",
+        },
+        -- Change the default way of opening the preview buffer
+        preview_buffer = {
+            kind = "split",
+        },
+        -- Change the default way of opening popups
+        popup = {
+            kind = "split",
+        },
         signs = {
             section = { "", "" }, -- "", ""
             item = { "▸", "▾" },
@@ -183,7 +216,6 @@ function config.neogit()
         integrations = {
             diffview = true,
         },
-        -- override/add mappings
         mappings = {
             -- modify status buffer mappings
             status = {

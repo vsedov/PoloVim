@@ -1,7 +1,5 @@
 local conf = require("modules.git.config")
 local git = require("core.pack").package
-local neogit = lambda.reqidx("neogit")
-local gitlinker = lambda.reqidx("gitlinker")
 
 local function browser_open()
     return { action_callback = require("gitlinker.actions").open_in_browser }
@@ -67,53 +65,12 @@ git({
     lazy = true,
 })
 
--- -- --  TODO: (vsedov) (20:55:15 - 26/10/22): Fix NeoGit is not a command.
--- -- "TimUntersberger/neogit",ten3roberts
 git({
-    "NeogitOrg/neogit",
-    -- branch = "git-escapes",
-    keys = {
-        {
-            "<localleader>gs",
-            function()
-                neogit.open()
-            end,
-            desc = "open status buffer",
-        },
-        {
-            "<localleader>gc",
-            function()
-                neogit.open({ "commit" })
-            end,
-            desc = "open commit buffer",
-        },
-        {
-            "<localleader>gl",
-            function()
-                neogit.popups.pull.create()
-            end,
-            desc = "open pull popup",
-        },
-        {
-            "<localleader>gp",
-            function()
-                neogit.popups.push.create()
-            end,
-            desc = "open push popup",
-        },
-    },
+    "NeogitOrg/neogit", -- keys = {
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
-
-    cmd = { "Neogit" },
     config = conf.neogit,
-})
-
--- --  I think this gets loaded in the first place
-git({
-    "tanvirtin/vgit.nvim", -- gitsign has similar features
-    lazy = true,
-    config = conf.vgit,
+    cmd = { "Neogit" },
 })
 
 git({
@@ -153,9 +110,7 @@ git({
     config = conf.git_fixer,
 })
 
-git({ "rbong/vim-flog", cmd = { "Flog", "Flogsplit" }, lazy = true })
 -- return git
-
 -- @usage | this is to clone repos, which is interesting
 -- you can remove and add repos with this, or temp ones that you can mess
 -- around with
@@ -184,14 +139,15 @@ git({
 })
 
 git({
-    "linrongbin16/gitlinker.nvim",
+    -- "linrongbin16/gitlinker.nvim",
+    "ruifm/gitlinker.nvim",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
         {
             "<localleader>gu",
             function()
-                gitlinker.get_buf_range_url("n")
+                require("gitlinker").get_buf_range_url("n")
             end,
             desc = "gitlinker: copy line to clipboard",
             mode = "n",
@@ -199,7 +155,7 @@ git({
         {
             "<localleader>gu",
             function()
-                gitlinker.get_buf_range_url("v")
+                require("gitlinker").get_buf_range_url("v")
             end,
             desc = "gitlinker: copy range to clipboard",
             mode = "v",
@@ -207,21 +163,21 @@ git({
         {
             "<localleader>go",
             function()
-                gitlinker.get_repo_url(browser_open())
+                require("gitlinker").get_repo_url(browser_open())
             end,
             desc = "gitlinker: open in browser",
         },
         {
             "<localleader>go",
             function()
-                gitlinker.get_buf_range_url("n", browser_open())
+                require("gitlinker").get_buf_range_url("n", browser_open())
             end,
             desc = "gitlinker: open current line in browser",
         },
         {
             "<localleader>go",
             function()
-                gitlinker.get_buf_range_url("v", browser_open())
+                require("gitlinker").get_buf_range_url("v", browser_open())
             end,
             desc = "gitlinker: open current selection in browser",
             mode = "v",
@@ -237,7 +193,7 @@ git({
         },
     },
 })
--- Diff arbitrary blocks of text with each other
+-- -- Diff arbitrary blocks of text with each other
 git({ "AndrewRadev/linediff.vim", cmd = "Linediff" })
 
 git({
