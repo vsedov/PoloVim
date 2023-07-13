@@ -227,6 +227,14 @@ lsp({
 lsp({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     cond = lambda.config.lsp.diagnostics.use_lsp_lines,
+    init = function()
+        lambda.highlight.plugin("Lines", {
+            { DiagnosticVirtualTextWarn = { bg = "NONE" } },
+            { DiagnosticVirtualTextError = { bg = "NONE" } },
+            { DiagnosticVirtualTextInfo = { bg = "NONE" } },
+            { DiagnosticVirtualTextHint = { bg = "NONE" } },
+        })
+    end,
     lazy = true,
     event = "LspAttach",
     config = function()
