@@ -40,7 +40,6 @@ return {
         function()
             -- Flash: exact mode, multi window, all directions, with a backdrop
             Flash.jump({
-                continue = true,
                 search = { forward = true, wrap = false, multi_window = false },
             })
         end,
@@ -51,7 +50,6 @@ return {
         mode = { "o", "x" },
         function()
             require("flash").jump({
-                continue = true,
                 search = { forward = false, wrap = false, multi_window = false },
             })
         end,
@@ -178,7 +176,6 @@ return {
         mode = { "n", "x", "o" },
         function()
             Flash.jump({
-                pattern = ".", -- initialize pattern with any char
                 search = {
                     mode = function(pattern)
                         -- remove leading dot
