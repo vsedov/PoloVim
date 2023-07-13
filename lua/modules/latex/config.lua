@@ -22,8 +22,8 @@ function config.vimtex()
     }
 
     vim.cmd([[
-    let g:Tex_FormatDependency_dvi='dvi,ps,pdf'
-    let g:Tex_DefaultTargetFormat='pdf'
+        let g:Tex_FormatDependency_dvi='dvi,ps,pdf'
+        let g:Tex_DefaultTargetFormat='pdf'
     ]])
     vim.g.vimtex_imaps_enabled = true
     -- TOC settings
@@ -37,7 +37,8 @@ function config.vimtex()
         show_numbers = 1,
         mode = 2,
     }
-
+    vim.g.vimtex_indent_enabled = 0
+    vim.g.vimtex_matchparen_enabled = 0
     -- Ignore undesired errors and warnings
     vim.g.vimtex_quickfix_ignore_filters = {
         "Underfull",
