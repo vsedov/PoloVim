@@ -250,7 +250,7 @@ M.jump_windows = function()
     require("flash").jump({
         pattern = ".",
         search = { multi_window = true, wrap = true },
-        highlight = { backdrop = true, label = { current = true } },
+        highlight = { backdrop = true },
         matcher = function()
             return vim.tbl_map(function(window)
                 local wininfo = vim.fn.getwininfo(window)[1]
