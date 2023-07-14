@@ -92,22 +92,11 @@ git({
 -- --[[ My work flow requires me to use both neogit and fugative, so what i think  ]]
 -- --[[ i will do is load this if Neogit is loaded as well, just to be in the same thing ]]
 -- -- get loaded through hydra
+
 git({
     "tpope/vim-fugitive",
     lazy = true,
     cmd = "Git",
-})
-
-git({
-    "LhKipp/nvim-git-fixer",
-    cmd = { "Fixup", "Amend", "Squash", "Commit", "Reword" },
-    dependencies = {
-        "telescope.nvim",
-        "tpope/vim-fugitive",
-        "lewis6991/gitsigns.nvim",
-    },
-    lazy = true,
-    config = conf.git_fixer,
 })
 
 -- return git
@@ -139,8 +128,7 @@ git({
 })
 
 git({
-    -- "linrongbin16/gitlinker.nvim",
-    "ruifm/gitlinker.nvim",
+    "linrongbin16/gitlinker.nvim",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {

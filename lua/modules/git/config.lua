@@ -191,6 +191,7 @@ function config.neogit()
         auto_show_console = true,
         -- Persist the values of switches/options within and across sessions
         remember_settings = true,
+
         -- Scope persisted settings on a per-project basis
         use_per_project_settings = true,
         -- Array-like table of settings to never persist. Uses format "Filetype--cli-value"
@@ -227,95 +228,16 @@ function config.neogit()
     })
 end
 
-function config.vgit()
-    -- use this as a diff tool (faster than Diffview)
-    -- there are overlaps with gitgutter. following are nice features
-    require("vgit").setup({
-        keymaps = {
-            -- ["n <leader>ga"] = "actions", -- show all commands in telescope
-            -- ["n <leader>ba"] = "buffer_gutter_blame_preview", -- show all blames
-            -- ["n <leader>bp"] = "buffer_blame_preview", -- buffer diff
-            -- ["n <leader>bh"] = "buffer_history_preview", -- buffer commit history DiffviewFileHistory
-            -- ["n <leader>gp"] = "buffer_staged_diff_preview", -- diff for staged changes
-        },
-        settings = {
-            live_gutter = {
-                enabled = false,
-                edge_navigation = false, -- This allows users to navigate within a hunk
-            },
-            scene = {
-                diff_preference = "unified",
-            },
-            live_blame = {
-                enabled = false,
-            },
-            authorship_code_lens = {
-                enabled = false,
-            },
-            diff_preview = {
-                keymaps = {
-                    buffer_stage = "S",
-                    buffer_unstage = "U",
-                    buffer_hunk_stage = "s",
-                    buffer_hunk_unstage = "u",
-                    toggle_view = "t",
-                },
-            },
-        },
-    })
-end
-
 function config.git_conflict()
     require("git-conflict").setup()
 end
+
 -- TODO(vsedov) (21:49:12 - 23/08/22): Add this to Hydra
-function config.git_fixer()
-    -- defaults shown --
-    require("fixer").setup({
-        stage_hunk_action = function()
-            require("gitsigns").stage_hunk()
-        end,
-        undo_stage_hunk_action = function()
-            require("gitsigns").undo_stage_hunk()
-        end,
-        refresh_hunks_action = function()
-            require("gitsigns").refresh()
-        end,
-    })
-
-    lambda.command("Fixup", function()
-        require("fixer/picker/telescope").commit({ hunk_only = true, type = "fixup" })
-    end, { bang = true })
-
-    lambda.command("Amend", function()
-        require("fixer/picker/telescope").commit({ type = "amend" })
-    end, { bang = true })
-
-    lambda.command("Squash", function()
-        require("fixer/picker/telescope").commit({ type = "squash" })
-    end, { bang = true })
-    lambda.command("Reword", function()
-        require("fixer/picker/telescope").commit({ type = "reword" })
-    end, { bang = true })
-
-    lambda.command("Commit", function()
-        require("fixer").commit_hunk()
-    end, {})
-end
-
 function config.temp_clone()
     require("tmpclone").setup()
     vim.keymap.set("n", "<leader>xc", [[<cmd>TmpcloneClone<cr>]], {})
     vim.keymap.set("n", "<leader>xo", [[<cmd>TmpcloneOpen<cr>]], {})
     vim.keymap.set("n", "<leader>xr", [[<cmd>TmpcloneRemove]], {})
-end
-
-function config.gitlens()
-    require("gitlens").setup({
-        ui = {
-            username = "vsedov",
-        },
-    })
 end
 
 return config

@@ -4,13 +4,13 @@
 --    │                                                                    │
 --    ╰────────────────────────────────────────────────────────────────────╯
 
-local use_codium = false
+local use_codium = true
 local use_codium_cmp = true
 
 local use_tabnine = true
-local use_tabnine_cmp = true
+local use_tabnine_cmp = false
 
-local use_copilot = true -- We really do sell our souls for this thing eh
+local use_copilot = false -- We really do sell our souls for this thing eh
 local use_navigator = false
 
 -- toggle core values within the list
@@ -192,7 +192,7 @@ lambda.config.ui = {
     use_dropbar = true,
     use_beacon = true,
     use_mini_animate = false,
-    use_hlslens = false,
+    use_hlslens = true,
     use_statuscol = true,
     heirline = {
         use_statuscol = false,

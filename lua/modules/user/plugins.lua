@@ -410,3 +410,7 @@ user({
         seperator = "▔",
     },
 })
+user({
+    "lewis6991/whatthejump.nvim",
+    keys = { "<c-i>", "<c-o>" },
+})

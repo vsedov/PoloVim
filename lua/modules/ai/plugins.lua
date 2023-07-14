@@ -68,7 +68,7 @@ ai({
 })
 
 ai({
-    'codota/tabnine-nvim'
+    "codota/tabnine-nvim",
     lazy = true,
     cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_insert),
     event = "VeryLazy",
