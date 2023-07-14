@@ -59,6 +59,9 @@ function M:buildHeads()
         mode = function(t, rhs)
             t.mode = rhs
         end,
+        on_key = function(t, rhs)
+            t.config.on_key = rhs
+        end,
         on_enter = function(t, rhs)
             t.config.on_enter = rhs
         end,

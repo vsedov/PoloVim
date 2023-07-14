@@ -68,7 +68,7 @@ ai({
 })
 
 ai({
-    "codota/tabnine-nvim",
+    'codota/tabnine-nvim'
     lazy = true,
     cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_insert),
     event = "VeryLazy",
@@ -112,7 +112,7 @@ ai({
 ai({
     "zbirenbaum/copilot.lua",
     -- init = conf.sell_your_soul,
-    -- cond = ai_conf.sell_your_soul,
+    cond = ai_conf.sell_your_soul,
     event = "InsertEnter",
     dependencies = { "nvim-cmp" },
     opts = {

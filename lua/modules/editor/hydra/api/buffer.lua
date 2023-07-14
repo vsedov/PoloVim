@@ -20,6 +20,7 @@ local config = {
         color = "red",
         body = leader_key,
         mode = { "n" },
+
         b = {
             function()
                 vim.cmd("Telescope buffers")
