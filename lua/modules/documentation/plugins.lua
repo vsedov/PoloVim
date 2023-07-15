@@ -43,14 +43,3 @@ docs({
     dependencies = { "nvim-telescope/telescope.nvim" },
     config = conf.browse,
 })
-
--- Able to write on docs faster
--- Honestly not really required when you have ai o_o
--- docs({
---     "monaqa/nvim-treesitter-clipping",
---     lazy = true,
---     dependencies = { "thinca/vim-partedit" },
---     config = function()
---         vim.keymap.set("n", "<leader>cc", "<Plug>(ts-clipping-clip)")
---     end,
--- })

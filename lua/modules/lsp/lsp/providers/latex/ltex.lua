@@ -3,7 +3,7 @@ return {
         ltex = {
             language = "en-GB",
             additionalRules = {
-                enablePickyRules = false,
+                enablePickyRules = true,
             },
             checkFrequency = "save",
         },

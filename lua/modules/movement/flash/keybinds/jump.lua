@@ -172,10 +172,11 @@ return {
         desc = "Toggle Flash Search",
     },
     {
-        "<leader>/",
+        "\\/",
         mode = { "n", "x", "o" },
         function()
             Flash.jump({
+                pattern = ".", -- initialize pattern with any char
                 search = {
                     mode = function(pattern)
                         -- remove leading dot
@@ -183,7 +184,7 @@ return {
                             pattern = pattern:sub(2)
                         end
                         -- return word pattern and proper skip pattern
-                        return ([[\v<%s\w*>]]):format(pattern), ([[\v<%s]]):format(pattern)
+                        return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
                     end,
                 },
                 -- select the range

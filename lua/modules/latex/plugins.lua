@@ -5,14 +5,12 @@ local filetype = { "latex", "tex" }
 
 latex({
     "lervag/vimtex",
-    lazy = true,
     ft = filetype,
     init = conf.vimtex,
 })
 
 latex({
     "jghauser/papis.nvim",
-    lazy = true,
     ft = filetype,
     dependencies = {
         "kkharji/sqlite.lua",
@@ -34,8 +32,8 @@ latex({
 
 latex({
     "barreiroleo/ltex-extra.nvim",
-    lazy = true,
-    ft = { "latex", "tex" },
+    cond = lambda.config.lsp.latex == "ltex",
+    ft = filetype,
     config = function()
         require("ltex_extra").setup({
             load_langs = { "en-GB" }, -- table <string> : languages for witch dictionaries will be loaded

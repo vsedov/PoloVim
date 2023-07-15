@@ -57,7 +57,6 @@ local servers = {
     buf = true,
     grammarly = true,
     zls = true,
-    ruff_lsp = false,
     lua_ls = {
         settings = {
             Lua = {
@@ -84,7 +83,6 @@ local servers = {
             },
         },
     },
-    texlab = require("modules.lsp.lsp.providers.latex.texlab"),
 }
 
 local con = lambda.config.lsp.python.lsp
@@ -102,6 +100,11 @@ for _, server in ipairs(con) do
             servers[server] = require("modules.lsp.lsp.providers.python." .. server)
         end
     end
+end
+if lambda.config.lsp.latex == "texlab" then
+    servers["texlab"] = require("modules.lsp.lsp.providers.latex.texlab")
+else
+    require("lspconfig").ltex.setup({})
 end
 
 return function(name)

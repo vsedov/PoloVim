@@ -217,11 +217,15 @@ lsp({
     cond = lambda.config.lsp.diagnostics.use_error_lens,
     lazy = true,
     cmd = { "ErrorLensTelescope", "ErrorLensToggle" },
-    event = "LspAttach",
+    event = "VeryLazy",
     dependencies = {
         "nvim-telescope/telescope.nvim",
     },
-    opts = true,
+    opts = {
+        auto_adjust = {
+            enable = true,
+        },
+    },
 })
 
 lsp({
@@ -242,43 +246,49 @@ lsp({
         vim.keymap.set("", "<Leader>L", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
     end,
 })
-
 lsp({
-    "santigo-zero/right-corner-diagnostics.nvim",
+    "dgagn/diagflow.nvim",
     cond = lambda.config.lsp.diagnostics.use_rcd,
-    event = "LspAttach",
-    config = function()
-        -- NOTE: Apply this settings before calling the `setup()`.
-        vim.diagnostic.config({
-            -- Disable default virtual text since you are using this plugin
-            -- already :)
-            virtual_text = false,
-
-            -- Do not display diagnostics while you are in insert mode, so if you have
-            -- `auto_cmds = true` it will not update the diagnostics while you type.
-            update_in_insert = false,
-        })
-
-        -- Default config:
-        require("rcd").setup({
-            -- Where to render the diagnostics: top or bottom, the latter sitting at
-            -- the bottom line of the buffer, not of the terminal.
-            position = "top", -- bottom
-
-            -- In order to print the diagnostics we need to use autocommands, you can
-            -- disable this behaviour and call the functions yourself if you think
-            -- your autocmds work better than the default ones with this option:
-            auto_cmds = true,
-        })
-    end,
+    event = "VeryLazy",
+    config = true,
 })
+-- lsp({
+--     "santigo-zero/right-corner-diagnostics.nvim",
+--     cond = lambda.config.lsp.diagnostics.use_rcd,
+--     event = "LspAttach",
+--     config = function()
+--         -- NOTE: Apply this settings before calling the `setup()`.
+--         vim.diagnostic.config({
+--             -- Disable default virtual text since you are using this plugin
+--             -- already :)
+--             virtual_text = false,
+--
+--             -- Do not display diagnostics while you are in insert mode, so if you have
+--             -- `auto_cmds = true` it will not update the diagnostics while you type.
+--             update_in_insert = false,
+--         })
+--
+--         -- Default config:
+--         require("rcd").setup({
+--             -- Where to render the diagnostics: top or bottom, the latter sitting at
+--             -- the bottom line of the buffer, not of the terminal.
+--             position = "top", -- bottom
+--
+--             -- In order to print the diagnostics we need to use autocommands, you can
+--             -- disable this behaviour and call the functions yourself if you think
+--             -- your autocmds work better than the default ones with this option:
+--             auto_cmds = true,
+--         })
+--     end,
+-- })
 
 lsp({
     "VidocqH/lsp-lens.nvim",
     lazy = true,
     cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
+    event = "LspAttach",
     opts = {
-        enable = false, -- enable through lsp
+        enable = true, -- enable through lsp
         include_declaration = true, -- Reference include declaration
         sections = {
             -- Enable / Disable specific request
@@ -308,7 +318,6 @@ lsp({
 lsp({
     "yorickpeterse/nvim-dd",
     event = { "LspAttach" },
-
     config = true,
 })
 lsp({ "onsails/lspkind.nvim", lazy = true })
