@@ -227,21 +227,32 @@ ts({ -- "haringsrob/nvim_context_vt",
     },
 })
 ts({
-    "HiPhish/nvim-ts-rainbow2",
+    "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     cond = lambda.config.treesitter.use_rainbow,
     event = "VeryLazy",
     config = function()
-        require("nvim-treesitter.configs").setup({
-            rainbow = {
-                enable = lambda.config.treesitter.use_rainbow,
-                -- list of languages you want to disable the plugin for
-                disable = { "jsx", "cpp" },
-                -- Which query to use for finding delimiters
-                query = "rainbow-parens",
-                -- Highlight the entire buffer all at once
-                strategy = require("ts-rainbow").strategy.global,
+        -- This module contains a number of default definitions
+        local rainbow_delimiters = require("rainbow-delimiters")
+
+        vim.g.rainbow_delimiters = {
+            strategy = {
+                [""] = rainbow_delimiters.strategy["global"],
+                vim = rainbow_delimiters.strategy["local"],
             },
-        })
+            query = {
+                [""] = "rainbow-delimiters",
+                lua = "rainbow-blocks",
+            },
+            highlight = {
+                "RainbowDelimiterRed",
+                "RainbowDelimiterYellow",
+                "RainbowDelimiterBlue",
+                "RainbowDelimiterOrange",
+                "RainbowDelimiterGreen",
+                "RainbowDelimiterViolet",
+                "RainbowDelimiterCyan",
+            },
+        }
     end,
 })

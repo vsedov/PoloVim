@@ -3,9 +3,7 @@ local notes = require("core.pack").package
 
 notes({
     "nvim-neorg/neorg",
-    lazy = true,
-    ft = "norg",
-    cmd = "Neorg",
+    build = ":Neorg sync-parser",
     opts = require("modules.notes.neorg").opts,
 })
 
