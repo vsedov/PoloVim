@@ -65,17 +65,10 @@ local hint_telescope = [[
       _L_: MRU                          _K_: MFU
       _A_: MruAdd                       _D_: MruDel
                           _T_: EP
-
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
- ^^^^                       DevDoc                        ^^^^
- ^^^^                                                     ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-      _;_: search ft    _'_: search     _#_: browse
-
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
   _q_ exit _<Esc>_ exit
 
 ]]
+
 local telescope = require("telescope")
 local function rectangular_border(opts)
     return vim.tbl_deep_extend("force", opts or {}, {
@@ -198,9 +191,5 @@ Hydra({
 
         { "A", ":MruAdd<cr>", { exit = true, desc = "Most frequently Add" } },
         { "D", ":MruDel<cr>", { exit = true, desc = "Most frequently Delete" } },
-
-        { ";", require("utils.telescope").devdocs_ft, { exit = true, desc = "Dev Doc search ft" } },
-        { "'", require("utils.telescope").devdocs_search, { exit = true, desc = "Dev Doc search" } },
-        { "#", require("utils.telescope").google_search, { exit = true, desc = "Google search" } },
     },
 })

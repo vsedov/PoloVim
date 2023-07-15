@@ -12,7 +12,7 @@ local function diffmaster()
     local branch = "origin/master"
     local master = vim.fn.systemlist("git rev-parse --verify develop")
     if not master[1]:find("^fatal") then
-        branch = "origin/master"
+        branch = "origin/develop"
     else
         master = vim.fn.systemlist("git rev-parse --verify master")
         if not master[1]:find("^fatal") then
@@ -43,19 +43,43 @@ local config = {
     Git = {
         color = "pink",
         body = leader,
+        -- on_enter = function()
+        --     vim.bo.modifiable = false
+        --     gitsigns.toggle_linehl(true)
+        --     gitsigns.toggle_deleted(true)
+        -- end,
+        -- on_exit = function()
+        --     gitsigns.toggle_linehl(false)
+        --     gitsigns.toggle_deleted(false)
+        --     vim.cmd("echo") -- clear the echo area
+        -- end,
+        on_key = function()
+            vim.wait(50)
+        end,
         on_enter = function()
-            vim.bo.modifiable = false
+            vim.cmd("mkview")
+            vim.cmd("silent! %foldopen!")
+            -- vim.bo.modifiable = false
+            gitsigns.toggle_signs(true)
             gitsigns.toggle_linehl(true)
             gitsigns.toggle_deleted(true)
         end,
         on_exit = function()
+            local cursor_pos = vim.api.nvim_win_get_cursor(0)
+            vim.cmd("loadview")
+            vim.api.nvim_win_set_cursor(0, cursor_pos)
+            vim.cmd("normal zv")
+            gitsigns.toggle_signs(true)
             gitsigns.toggle_linehl(false)
             gitsigns.toggle_deleted(false)
-            vim.cmd("echo") -- clear the echo area
         end,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
         ["<cr>"] = { ":silent lua lambda.clever_tcd()<cr>:Neogit<cr>", { exit = true, desc = "NeoGit" } },
+        l = { ":Neogit log<CR>", { exit = true, nowait = true, desc = "Log" } },
+        m = { ":Neogit merge<CR>", { exit = true, nowait = true, desc = "Merege" } },
+        H = { ":Neogit branch<CR>", { exit = true, nowait = true, desc = "Branch" } },
+
         J = {
             function()
                 if vim.wo.diff then
@@ -80,16 +104,17 @@ local config = {
             end,
             { expr = true, desc = "prev hunk" },
         },
-        s = { ":Gitsigns stage_hunk<cr>", { exit = false, nowait = true, desc = "Stage Hunk" } },
-        S = { gitsigns.stage_buffer, { exit = true, desc = "Stage Buffer" } },
+        s = { gitsigns.stage_hunk, { exit = false, desc = "Stage Hunk" } },
+        S = { gitsigns.stage_buffer, { exit = false, desc = "Stage Buffer" } },
 
         p = { gitsigns.preview_hunk, { desc = "Preview Hunk" } },
         u = { gitsigns.undo_stage_hunk, { desc = "Undo Stage Hunk" } },
         x = { gitsigns.toggle_deleted, { nowait = true, desc = "Toggle Deleted" } },
         D = { gitsigns.diffthis, { desc = "Diff This" } },
 
-        r = { ":Gitsigns reset_hunk<CR>", { desc = "Reset Hunk" } },
-        R = { ":Gitsigns reset_buffer<CR>", { desc = "Reset Buffer" } },
+        r = { gitsigns.reset_hunk, { desc = "Reset Hunk" } },
+        R = { gitsigns.reset_buffer, { desc = "Reset Buffer" } },
+
         q = { wrap(gitsigns.setqflist, "all"), { desc = "Quickfix List All" } },
         Q = { wrap(gitsigns.setqflist), { desc = "Quickfix List" } },
         B = {
@@ -102,18 +127,16 @@ local config = {
         b = { gitsigns.blame_line, { desc = "Blame Line" } },
         d = { ":DiffviewOpen<CR>", { silent = true, exit = true, desc = "DiffView" } },
         M = { diffmaster, { silent = true, exit = true, desc = "DiffMaster" } },
-        H = { ":DiffviewFileHistory<CR>", { silent = true, exit = true, desc = "DiffView" } },
-        l = { ":Neogit log<CR>", { exit = true, nowait = true, desc = "Log" } },
-        m = { ":Neogit merge<CR>", { exit = true, nowait = true, desc = "Merege" } },
         C = { ":GitConflictListQf<CR>", { exit = true, nowait = true, desc = "Conflict" } },
     },
 }
 local bracket = { "<cr>", "J", "K", "s", "S" }
 
 local binds = {
+    { "l", "m", "H" },
     { "r", "R", "x", "u" },
     { "D", "p", "b", "B", "q", "Q" },
-    { "d", "M", "C", "m", "H", "l", "/" },
+    { "d", "M", "C", "/" },
 }
 return {
     config,
