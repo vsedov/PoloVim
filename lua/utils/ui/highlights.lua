@@ -207,10 +207,12 @@ local function general_overrides()
         { LspReferenceWrite = { inherit = "LspReferenceText", bold = true, italic = true, underline = true } },
         { LspSignatureActiveParameter = { link = "Visual" } },
         -- Sign column line
-        { DiagnosticSignInfoLine = { inherit = "DiagnosticVirtualTextInfo", fg = "NONE" } },
-        { DiagnosticSignHintLine = { inherit = "DiagnosticVirtualTextHint", fg = "NONE" } },
-        { DiagnosticSignErrorLine = { inherit = "DiagnosticVirtualTextError", fg = "NONE" } },
-        { DiagnosticSignWarnLine = { inherit = "DiagnosticVirtualTextWarn", fg = "NONE" } },
+
+        -- { DiagnosticSignInfoLine = { inherit = "DiagnosticVirtualTextInfo", fg = "NONE" } },
+        -- { DiagnosticSignHintLine = { inherit = "DiagnosticVirtualTextHint", fg = "NONE" } },
+        -- { DiagnosticSignErrorLine = { inherit = "DiagnosticVirtualTextError", fg = "NONE" } },
+        -- { DiagnosticSignWarnLine = { inherit = "DiagnosticVirtualTextWarn", fg = "NONE" } },
+
         -- Floating windows
         { DiagnosticFloatingWarn = { link = "DiagnosticWarn" } },
         { DiagnosticFloatingInfo = { link = "DiagnosticInfo" } },

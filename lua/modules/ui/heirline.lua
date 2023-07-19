@@ -645,23 +645,6 @@ local SpecialStatusline = {
     Align,
 }
 
-local GitStatusline = {
-    condition = function()
-        return conditions.buffer_matches({
-            filetype = { "^git.*", "fugitive" },
-        })
-    end,
-    FileType,
-    Space,
-    {
-        provider = function()
-            return vim.fn.FugitiveStatusline()
-        end,
-    },
-    Space,
-    Align,
-}
-
 local TerminalStatusline = {
     condition = function()
         return conditions.buffer_matches({ buftype = { "terminal" } })

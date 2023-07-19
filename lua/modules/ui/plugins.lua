@@ -1,6 +1,10 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
 local highlight, foo, falsy, augroup = lambda.highlight, lambda.style, lambda.falsy, lambda.augroup
+ui({
+    "rcarriga/nvim-notify",
+    config = conf.notify,
+})
 local icons, border, rect = foo.icons.lsp, foo.border.type_0, foo.border.type_0
 
 ui({
@@ -173,11 +177,6 @@ ui({
             default = true,
         })
     end,
-})
-
-ui({
-    "rcarriga/nvim-notify",
-    config = conf.notify,
 })
 
 -- -- -- Feels slow, might revert backto nvim tree
