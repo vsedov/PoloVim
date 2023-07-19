@@ -133,6 +133,12 @@ function config.neogit()
         telescope_sorter = function()
             return require("telescope").extensions.fzf.native_fzf_sorter()
         end,
+        -- Allows a different telescope sorter. Defaults to 'fuzzy_with_index_bias'. The example
+        -- below will use the native fzf sorter instead.
+        telescope_sorter = function()
+            return require("telescope").extensions.fzf.native_fzf_sorter()
+        end,
+
         use_magit_keybindings = false,
         -- Change the default way of opening neogit
         kind = "tab",
@@ -166,6 +172,7 @@ function config.neogit()
             hunk = { "樂", "" },
         },
         integrations = {
+            telescope = true,
             diffview = true,
         },
     })
