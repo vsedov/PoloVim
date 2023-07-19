@@ -1,8 +1,6 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local fn = vim.fn
-local path = require("mason-core.path")
 local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
 local servers = {
     tsserver = true,
@@ -59,7 +57,6 @@ local servers = {
     buf = true,
     grammarly = true,
     zls = true,
-    ruff_lsp = false,
     lua_ls = {
         settings = {
             Lua = {
@@ -86,15 +83,28 @@ local servers = {
             },
         },
     },
-    texlab = require("modules.lsp.lsp.providers.latex.texlab"),
 }
 
 local con = lambda.config.lsp.python.lsp
 for _, server in ipairs(con) do
     if server == "pylance" then
         require("lspconfig").pylance.setup(require("modules.lsp.lsp.providers.python.pylance"))
+    else
+        if
+            vim.fn.filereadable(
+                vim.fn.expand("~/.config/nvim/lua/modules/lsp/lsp/providers/python/" .. server .. ".lua")
+            ) == 0
+        then
+            servers[server] = true
+        else
+            servers[server] = require("modules.lsp.lsp.providers.python." .. server)
+        end
     end
-    servers[server] = require("modules.lsp.lsp.providers.python." .. server)
+end
+if lambda.config.lsp.latex == "texlab" then
+    servers["texlab"] = require("modules.lsp.lsp.providers.latex.texlab")
+else
+    require("lspconfig").ltex.setup({})
 end
 
 return function(name)

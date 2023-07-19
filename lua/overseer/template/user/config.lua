@@ -13,7 +13,7 @@ return {
                     return {
                         cmd = "",
                         name = "",
-                        components = { "users.dispose_now" },
+                        components = { "user.dispose_now" },
                     }
                 end,
                 priority = 59,
@@ -27,7 +27,7 @@ return {
                     return {
                         cmd = "",
                         name = "",
-                        components = { "users.dispose_now" },
+                        components = { "user.dispose_now" },
                     }
                 end,
                 priority = 59,
@@ -93,7 +93,7 @@ return {
                             "default",
                             "unique",
                             {
-                                "users.start_open",
+                                "user.start_open",
                                 goto_prev = true,
                             },
                         },

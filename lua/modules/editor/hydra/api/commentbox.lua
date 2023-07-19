@@ -1,7 +1,7 @@
 local exit = { nil, { exit = true, desc = "EXIT" } }
 local bracket = { "<cr>", "lc", "cc", "rc", "aa" }
 local leader = "<leader>C"
-
+--  ──────────────────────────────────────────────────────────────────────
 local cb = require("comment-box")
 local options = {
     ll = { label = "[L] Aligned Box With [L]", fn = cb.llbox },

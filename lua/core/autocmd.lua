@@ -308,7 +308,7 @@ lambda.augroup("Norg", {
         event = "BufWritePre",
         pattern = "*.norg",
         command = function()
-            vim.cmd([[StripTrailingWhitespace]])
+            MiniTrailspace.trim()
         end,
     },
 })

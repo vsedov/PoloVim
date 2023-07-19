@@ -97,6 +97,23 @@ search({
     "windwp/nvim-spectre",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
+    -- event = "VeryLazy",
+    cmd = {
+        "Spectre",
+        "SpectreToggleLine",
+        "SpectreSelectEntry",
+        "SpectreRunCurrentReplace",
+        "SpectreRunReplace",
+        "SpectreSendToQF",
+        "SpectreReplaceCommand",
+        "SpectreToggleLiveUpdate",
+        "SpectreChangeView",
+        "SpectreResumeLastSearch",
+        "SpectreIgnoreCase",
+        "SpectreHidden",
+        "SpectreShowOptions",
+    },
+
     config = conf.spectre,
 })
 
@@ -141,7 +158,6 @@ search({
     cond = lambda.config.extra_search.providers.use_fzf_lua,
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    build = "./install --bin",
     config = conf.fzf,
 })
 

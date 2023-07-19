@@ -39,8 +39,8 @@ M.opts = {
                     recipes = "~/neorg/notes/recipes",
                 },
                 index = "index.norg",
-                --[[ autodetect = true,
-                  autochdir = false, ]]
+                autodetect = true,
+                [[ -- autochdir = false, ]],
             },
         },
 

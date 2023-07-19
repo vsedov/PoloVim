@@ -1,15 +1,3 @@
-" Strip trailing whitespace and newlines on save
-fun! <SID>StripTrailingWhitespace()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    %s/\($\n\s*\)\+\%$//e
-    call cursor(l, c)
-endfun
-command! -bar -nargs=0 StripTrailingWhitespace :call <SID>StripTrailingWhitespace()
-
-" autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
-
 " Search in project
 function! FindProjectRoot(lookFor)
     let s:root=expand('%:p:h')

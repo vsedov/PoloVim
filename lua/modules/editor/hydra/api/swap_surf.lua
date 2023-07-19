@@ -47,11 +47,6 @@ local config = {
             { nowait = true, desc = "IswapWith", exit = false },
         },
 
-        U = { mx("cU"), { nowait = true, desc = "Surf U", exit = true } }, -- ts: all class
-        u = { mx("cu"), { nowait = true, desc = "Surf u", exit = true } }, -- ts: inner class
-        D = { mx("cD"), { nowait = true, desc = "Surf D", exit = true } }, -- ts: all function
-        d = { mx("cd"), { nowait = true, desc = "Surf d", exit = true } }, -- ts: all conditional
-
         w = {
             function()
                 vim.cmd([[STSJumpToTop]])
@@ -122,7 +117,6 @@ return {
     config,
     "Swap",
     {
-        { "D", "d", "U", "u" },
         { "N", "n", "v", "V" },
         { "w", "H", "J", "K", "L" },
     },

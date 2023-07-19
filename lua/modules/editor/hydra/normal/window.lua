@@ -19,18 +19,17 @@ local function pick_window()
 end
 
 local window_hint = [[
- ^^^^^^^^^^^^          Move            ^^    Size  ^^  ^^     Split
- ^^^^^^^^^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ ^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^  ^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+^^^^^^^^^^^^          Move            ^^    Size  ^^  ^^     Split
+^^^^^^^^^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁ ^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^  ^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 
- ^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^ ^   _<Up>_     ^   ^_s_: horizontally
- _h_ ^ ^ _l_  _wh_ _<cr>_ _wl_  _H_ ^ ^ _L_  _<Left>_ _<Right>_  _v_: vertically
- ^ ^ _j_^ ^  ^  ^  _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^    ^_q_, _c_: close
- ^^focus ^^  ^^winshift^  ^^Split^^^^^^^^^^   ^_=_: equalize^     _z_: maximize
- ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only
- _?_ : Pick window  _m_: Template
+^ ^ _k_ ^ ^  ^  ^  _wk_  ^  ^  ^ ^ _K_ ^ ^  ^ ^   _<Up>_     ^   ^_s_: horizontally
+_h_ ^ ^ _l_  _wh_ _<cr>_ _wl_  _H_ ^ ^ _L_  _<Left>_ _<Right>_  _v_: vertically
+^ ^ _j_^ ^  ^  ^   _wj_  ^  ^  ^ ^ _J_ ^ ^  ^  ^ _<Down>_    ^   ^_q_, _c_: close
+^^focus ^^  ^^winshift^  ^^Split^^^^^^^^^^   ^_=_: equalize^     _z_: maximize
+^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^  ^ ^  ^ ^ ^ ^ ^ ^                    _o_: remain only
+_?_ : Pick window  _m_: Template
 
 ]]
-
 Hydra({
     name = "Windows",
     hint = window_hint,
@@ -42,12 +41,32 @@ Hydra({
         },
     },
     mode = "n",
-    body = "<C-]>",
+    body = "<C-w>;",
     heads = {
-        { "h", "<C-w>h" },
-        { "j", "<C-w>j" },
-        { "k", "<C-w>k" },
-        { "l", "<C-w>l" },
+        {
+            "h",
+            function()
+                require("smart-splits").move_cursor_left()
+            end,
+        },
+        {
+            "j",
+            function()
+                require("smart-splits").move_cursor_down()
+            end,
+        },
+        {
+            "k",
+            function()
+                require("smart-splits").move_cursor_up()
+            end,
+        },
+        {
+            "l",
+            function()
+                require("smart-splits").move_cursor_right()
+            end,
+        },
 
         { "wh", cmd([[WinShift left]]) },
         { "wj", cmd([[WinShift down]]) },

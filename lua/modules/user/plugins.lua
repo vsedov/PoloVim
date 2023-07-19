@@ -101,20 +101,34 @@ user({
 user({
     "superDross/spellbound.nvim",
     event = "VeryLazy",
+    keys = {
+        {
+            "<c-g>w",
+            desc = "toggle spellbound",
+        },
+        {
+            "<c-g>n",
+            desc = "fix right",
+        },
+        {
+            "<c-g>p",
+            desc = "fix left",
+        },
+    },
     init = function()
         vim.o.dictionary = "/usr/share/dict/cracklib-small"
         -- default settings
         vim.g.spellbound_settings = {
             mappings = {
-                toggle_map = "\\zS",
-                fix_right = "\\zp",
-                fix_left = "\\zn",
+                toggle_map = "<c-g>w",
+                fix_right = "<c-g>n",
+                fix_left = "<c-g>p",
             },
             language = "en_gb",
-            autospell_filetypes = { "*.txt", "*.md", "*.rst" },
+            autospell_filetypes = { "*.txt", "*.md", "*.rst", "*.norg" },
             autospell_gitfiles = true,
             number_suggestions = 10,
-            return_to_position = false,
+            return_to_position = true,
         }
     end,
 })
@@ -246,31 +260,38 @@ user({
             desc = "winbar: pick",
         },
     },
-    config = function()
-        require("dropbar").setup({
-            general = {
-                update_interval = 100,
-                enable = function(buf, win)
-                    local b, w = vim.bo[buf], vim.wo[win]
-                    local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
-                    return decor.ft ~= false
-                        and decor.bt ~= false
-                        and b.bt == ""
-                        and not w.diff
-                        and not api.nvim_win_get_config(win).zindex
-                        and api.nvim_buf_get_name(buf) ~= ""
-                end,
-            },
-            menu = {
-                win_configs = {
-                    border = "shadow",
-                    col = function(menu)
-                        return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
-                    end,
-                },
-            },
+    init = function()
+        lambda.highlight.plugin("DropBar", {
+            { DropBarIconUISeparator = { link = "Delimiter" } },
+            { DropBarMenuNormalFloat = { inherit = "Pmenu" } },
         })
     end,
+    config = {
+        general = {
+            update_interval = 100,
+            enable = function(buf, win)
+                local b, w = vim.bo[buf], vim.wo[win]
+                local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
+                return decor.ft ~= false
+                    and decor.bt ~= false
+                    and b.bt == ""
+                    and not w.diff
+                    and not api.nvim_win_get_config(win).zindex
+                    and api.nvim_buf_get_name(buf) ~= ""
+            end,
+        },
+        icons = {
+            ui = { bar = { separator = " " .. lambda.style.icons.misc.arrow_right .. " " } },
+        },
+        menu = {
+            win_configs = {
+                border = "shadow",
+                col = function(menu)
+                    return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+                end,
+            },
+        },
+    },
 })
 
 -- First of all, :Sayonara or :Sayonara!
@@ -316,31 +337,142 @@ user({
         require("markmap").setup(opts)
     end,
 })
-
 user({
-    "3rd/image.nvim",
-    config = function()
-        require("image").setup({
-            backend = "kitty",
-            integrations = {
-                markdown = {
-                    enabled = true,
-                    sizing_strategy = "auto",
-                    download_remote_images = true,
-                    clear_in_insert_mode = false,
-                },
-                neorg = {
-                    enabled = true,
-                    download_remote_images = true,
-                    clear_in_insert_mode = false,
+    "azabiong/vim-highlighter",
+    keys = {
+        {
+            "m<cr>",
+            desc = "Mark word",
+        },
+        {
+            "m<bs>",
+            desc = "Mark delete",
+        },
+        {
+            "mD>",
+            desc = "Mark clear",
+        },
+        {
+            "M<cr>",
+            "<cmd>Hi}<cr>",
+        },
+    },
+    init = function()
+        vim.cmd("let HiSet = 'm<cr>'")
+
+        vim.cmd("let HiErase = 'm<bs>'")
+        vim.cmd("let HiClear = 'mD'")
+    end,
+})
+user({
+    "Aasim-A/scrollEOF.nvim",
+    event = "VeryLazy",
+    config = true,
+})
+user({
+    "KaitlynEthylia/TreePin",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    cmd = {
+        "TPPin",
+        "TPRoot",
+        "TPGrow",
+        "TPShrink",
+        "TPClear",
+        "TPGo",
+        "TpHide",
+        "TPToggle",
+    },
+    keys = {
+        { ",tp", "<cmd>TPPin<CR>", desc = "TreePin Pin" },
+        { ",tc", "<cmd>TPClear<CR>", desc = "TreePin Clear" },
+        { ",tt", "<cmd>TPToggle<CR>", desc = "TreePin Toggle" },
+        { ",tr", "<cmd>TPRoot<CR>", desc = "TreePin Root" },
+        { ",tj", "<cmd>TPGrow<CR>", desc = "TreePin Grow" },
+        { ",tk", "<cmd>TPShrink<CR>", desc = "TreePin Shrink" },
+        {
+            ",tg",
+            function()
+                vim.cmd("normal! m'")
+                vim.cmd("TPGo")
+            end,
+            desc = "TreePin Go",
+        },
+        { ",ts", "<cmd>TPShow<CR>", desc = "TreePin Show" },
+        { ",th", "<cmd>TPHide<CR>", desc = "TreePin Hide" },
+    },
+    init = function()
+        local wk = require("which-key")
+        wk.register({
+            mode = { "n" },
+            [",t"] = { name = "+TreePin" },
+        })
+    end,
+    opts = {
+        seperator = "▔",
+    },
+})
+user({
+    "lewis6991/whatthejump.nvim",
+    keys = { "<c-i>", "<c-o>" },
+})
+user({
+    "vsedov/multicursors.nvim",
+    branch = "hydra_hint",
+    opts = function()
+        local N = require("multicursors.normal_mode")
+        local I = require("multicursors.insert_mode")
+        return {
+            normal_keys = {
+                -- to change default lhs of key mapping change the key
+                ["b"] = {
+                    -- assigning nil to method exits from multi cursor mode
+                    method = N.clear_others,
+                    -- description to show in hint window
+                    desc = "Clear others",
                 },
             },
-            max_width = nil,
-            max_height = nil,
-            max_width_window_percentage = nil,
-            max_height_window_percentage = 50,
-            kitty_method = "normal",
-            kitty_tmux_write_delay = 10, -- makes rendering more reliable with Kitty+Tmux
-        })
+            insert_keys = {
+                -- to change default lhs of key mapping change the key
+                ["<CR>"] = {
+                    -- assigning nil to method exits from multi cursor mode
+                    method = I.Cr_method,
+                    -- description to show in hint window
+                    desc = "new line",
+                },
+            },
+            hydra = {
+                border = "single",
+                position = "bottom",
+                hint = {},
+            },
+        }
+    end,
+    keys = {
+        {
+            "<Leader>m",
+            "<cmd>MCstart<cr>",
+            desc = "Create a selection for word under the cursor",
+        },
+    },
+})
+user({
+    "thinca/vim-qfreplace",
+    ft = "qf",
+    lazy = true,
+})
+user({ -- https://github.com/fregante/GhostText
+    "subnut/nvim-ghost.nvim",
+    build = ":call nvim_ghost#installer#install()",
+    lazy = false,
+    cmd = "GhostTextStart",
+    config = function()
+        vim.g.nvim_ghost_super_quiet = 1
+        vim.cmd([[
+				augroup nvim_ghost_user_autocommands
+					au User *github.com,*stackoverflow.com,*reddit.com setfiletype markdown
+					au User *github.com,*stackoverflow.com,*reddit.com let b:copilot_enabled=1
+					au User *github.com,*stackoverflow.com,*reddit.com setlocal spell
+				augroup END
+			]])
     end,
 })

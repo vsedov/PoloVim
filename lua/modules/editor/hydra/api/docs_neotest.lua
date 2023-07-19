@@ -1,10 +1,10 @@
 local leader = "<leader>d"
 local docs = { "<cr>", "l", "W", "r", "S" }
-local bracket = { "d", "D", "E", "i", "p", "L" }
+local bracket = { "d", "D", "E", "i", "p", "L", "j", "k", "w" }
 local jump = { "J", "K" }
 local analyse = { "s", "o", "O", "a" }
 local summary = { "M", "R", "C" }
-local python = { "q", "w", "e" }
+local python = { "q", "t", "e" }
 local another_test = { "f", "v" }
 
 local function test_method()
@@ -31,16 +31,17 @@ local binds = {
 
     { "run file", "W" },
     { "run last", "l" },
-    { "summary toggle", "s" },
+    { "Sum toggle", "s" },
 
-    { "summary mark toggle", "M" },
-    { "summary mark run", "R" },
-    { "summary mark clear", "C" },
+    { "Sum mark toggle", "M" },
+    { "Sum mark run", "R" },
+    { "Sum mark clear", "C" },
 }
 local config = {
     ["Docs/Test"] = {
         color = "pink",
         body = leader,
+        position = "bottom-right",
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
         -- Neogen stuff
@@ -127,7 +128,7 @@ local config = {
             { nowait = false, exit = true, desc = "TestVisit" },
         },
 
-        w = {
+        t = {
             function()
                 test_method()
             end,
@@ -146,6 +147,9 @@ local config = {
             end,
             { nowait = false, exit = true, desc = "Python Selection" },
         },
+        ["j"] = { require("utils.telescope").devdocs_ft, { exit = true, desc = "Dev Doc search ft" } },
+        ["k"] = { require("utils.telescope").devdocs_search, { exit = true, desc = "Dev Doc search" } },
+        ["w"] = { require("utils.telescope").google_search, { exit = true, desc = "Google search" } },
     },
 }
 --

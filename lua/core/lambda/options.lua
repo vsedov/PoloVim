@@ -4,13 +4,14 @@
 --    │                                                                    │
 --    ╰────────────────────────────────────────────────────────────────────╯
 
-local use_codium = false
+local use_codium = true
 local use_codium_cmp = true
 
 local use_tabnine = true
-local use_tabnine_cmp = true
+local use_tabnine_cmp = false
 
-local use_copilot = true -- We really do sell our souls for this thing eh
+local use_copilot = false -- We really do sell our souls for this thing eh
+local use_navigator = false
 
 -- toggle core values within the list
 lambda.config = {
@@ -85,7 +86,7 @@ lambda.config.treesitter = {
     use_extra_highlight = true,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
-    use_context_vt = true,
+    use_context_vt = false,
     use_rainbow = true,
 }
 
@@ -119,8 +120,7 @@ lambda.config.lsp = {
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false,
     use_format_modifcation = false,
-    use_lsp_saga = false,
-    use_navigator = false,
+    use_navigator = use_navigator,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
@@ -128,7 +128,6 @@ lambda.config.lsp = {
         fix_pos = true,
     },
     diagnostics = {
-        use_error_lens = false,
         use_lsp_lines = false,
         use_rcd = true, -- the least intrusive of the bunch
     },
@@ -165,7 +164,7 @@ lambda.config.lsp = {
             "trim_whitespace",
             "pyflyby",
         },
-        code_action = { "eslint_d", "gitrebase", "refactoring" },
+        code_action = { "eslint_d", "refactoring" },
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -174,11 +173,8 @@ lambda.config.lsp = {
     latex = "texlab", -- texlab | ltex
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
-        -- Keep this distinct from pylsp
         format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = { "pylsp", "sourcery" }, -- pylyzer, jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
-        -- Sourcery is nice to have, great little refactoring improvements
-        -- Pylsp offers more than jedi does, with rope so why not .
+        lsp = { "pylsp", "sourcery", "ruff_lsp" }, -- pylyzer, jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
     },
 }
 
@@ -191,7 +187,9 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_dropbar = true,
     use_beacon = true,
-    use_mini_animate = false,
+    use_mini_animate = true,
+    use_hlslens = true,
+    use_statuscol = true,
     heirline = {
         use_statuscol = false,
         use_heirline = true,
@@ -200,7 +198,7 @@ lambda.config.ui = {
         enable = true,
         lsp = {
             use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = true, -- Navigator really does not like this
+            use_noice_hover = not use_navigator, -- Navigator really does not like this
             use_markdown = true,
             use_documentation = true,
         },
@@ -211,8 +209,8 @@ lambda.config.ui = {
         use_mini_indent_scope = true,
     },
     scroll_bar = {
-        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
-        use_scrollbar = false,
+        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
+        use_scrollbar = true,
     },
 }
 lambda.config.fun = {
@@ -232,7 +230,7 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "tokyonight.nvim",
+                -- "tokyonight.nvim",
                 "catppuccin",
                 -- "rose", -- TSMethod'
                 -- -- "kanagawa.nvim",
@@ -268,6 +266,7 @@ lambda.config.tools = {
         use_persisted = false,
         use_resession = true,
     },
+    use_tracker = true,
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = true,
     use_live_command = true,
@@ -282,6 +281,5 @@ lambda.config.windows = {
         use_flirt_override = false,
         move_mappings = false, -- if you  do not want to use  smart split
     },
-    use_navigator = false,
     use_smart_splits = true,
 }

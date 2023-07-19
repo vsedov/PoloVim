@@ -38,32 +38,6 @@ sts.setup({
     },
 })
 
--- -- Normal Mode Swapping:
--- -- Swap The Master Node relative to the cursor with it's siblings, Dot Repeatable
-vim.keymap.set("n", "cU", function()
-    vim.opt.opfunc = "v:lua.STSSwapUpNormal_Dot"
-    return "g@l"
-end, { silent = true, expr = true })
-
-vim.keymap.set("n", "cD", function()
-    vim.opt.opfunc = "v:lua.STSSwapDownNormal_Dot"
-    return "g@l"
-end, { silent = true, expr = true })
-
--- Swap Current Node at the Cursor with it's siblings, Dot Repeatable
-vim.keymap.set("n", "cd", function()
-    vim.opt.opfunc = "v:lua.STSSwapCurrentNodeNextNormal_Dot"
-    return "g@l"
-end, { silent = true, expr = true })
-
-vim.keymap.set("n", "cu", function()
-    vim.opt.opfunc = "v:lua.STSSwapCurrentNodePrevNormal_Dot"
-    return "g@l"
-end, { silent = true, expr = true })
-
-vim.keymap.set("n", "cx", "<cmd>STSSelectMasterNode<cr>", opts)
-vim.keymap.set("n", "cn", "<cmd>STSSelectCurrentNode<cr>", opts)
-
 vim.keymap.set("n", ";f", function() -- jump to all that you specify
     sts.targeted_jump({
         "function",

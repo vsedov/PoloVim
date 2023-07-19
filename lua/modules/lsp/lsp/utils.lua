@@ -63,7 +63,7 @@ local hover_hydra
 -- Easily repeatable hover
 function M.repeatable_hover(hover, k)
     local hover_type = function()
-        if not lambda.config.lsp.use_hover then
+        if not lambda.config.lsp.use_hover and not lambda.config.lsp.use_navigator then
             vim.cmd([[Lspsaga hover_doc]])
         else
             require("hover").hover()

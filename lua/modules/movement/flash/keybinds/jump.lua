@@ -40,7 +40,6 @@ return {
         function()
             -- Flash: exact mode, multi window, all directions, with a backdrop
             Flash.jump({
-                continue = true,
                 search = { forward = true, wrap = false, multi_window = false },
             })
         end,
@@ -51,7 +50,6 @@ return {
         mode = { "o", "x" },
         function()
             require("flash").jump({
-                continue = true,
                 search = { forward = false, wrap = false, multi_window = false },
             })
         end,
@@ -174,7 +172,7 @@ return {
         desc = "Toggle Flash Search",
     },
     {
-        "<leader>/",
+        "\\/",
         mode = { "n", "x", "o" },
         function()
             Flash.jump({
@@ -186,7 +184,7 @@ return {
                             pattern = pattern:sub(2)
                         end
                         -- return word pattern and proper skip pattern
-                        return ([[\v<%s\w*>]]):format(pattern), ([[\v<%s]]):format(pattern)
+                        return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
                     end,
                 },
                 -- select the range

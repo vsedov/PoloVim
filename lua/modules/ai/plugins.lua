@@ -112,7 +112,7 @@ ai({
 ai({
     "zbirenbaum/copilot.lua",
     -- init = conf.sell_your_soul,
-    -- cond = ai_conf.sell_your_soul,
+    cond = ai_conf.sell_your_soul,
     event = "InsertEnter",
     dependencies = { "nvim-cmp" },
     opts = {

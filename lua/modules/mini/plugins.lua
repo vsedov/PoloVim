@@ -139,7 +139,7 @@ mini({
                 timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             },
             scroll = {
-                enable = not lambda.config.ui.use_scroll,
+                enable = false,
 
                 timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
                 subscroll = animate.gen_subscroll.equal({
@@ -160,8 +160,17 @@ mini({
 mini({
     "echasnovski/mini.trailspace",
     event = "VeryLazy",
+    init = function()
+        lambda.command("TrimTrailSpace", function()
+            MiniTrailspace.trim()
+        end, {})
+        lambda.command("TrimLastLine", function()
+            MiniTrailspace.trim_last_lines()
+        end, {})
+    end,
     config = true,
 })
+
 mini({
     "echasnovski/mini.align",
     opts = {},

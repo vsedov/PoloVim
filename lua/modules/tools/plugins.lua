@@ -90,10 +90,22 @@ tools({
     "akinsho/toggleterm.nvim",
     lazy = true,
     cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm", "Htop", "GDash" },
-    keys = { "<c-t>", "<leader>gh", "<leader>tf", "<leader><Tab>" },
     config = function()
         require("modules.tools.toggleterm")
     end,
+    keys = {
+        "<leader>t0",
+        "<leader>t1",
+        "<leader>t2",
+        "<leader>t3",
+        "<leader>t4",
+        "<leader>t!",
+        "<leader>gh",
+        "<leader>tf",
+        "<leader>th",
+        "<leader><Tab>",
+        "<c-t>",
+    },
 })
 
 tools({
@@ -227,33 +239,6 @@ tools({
 })
 
 tools({
-    "thinca/vim-qfreplace",
-    lazy = true,
-    cmd = "Qfreplace",
-})
-tools({
-    "willothy/flatten.nvim",
-    cond = lambda.config.tools.use_flatten,
-    priority = 1001,
-    opts = {
-        window = { open = "alternate" },
-        callbacks = {
-            block_end = function()
-                require("toggleterm").toggle()
-            end,
-            post_open = function(_, winnr, _, is_blocking)
-                if is_blocking then
-                    require("toggleterm").toggle()
-                else
-                    vim.api.nvim_set_current_win(winnr)
-                end
-            end,
-        },
-    },
-})
-
--- The goal of nvim-fundo is to make Neovim's undo file become stable and useful.
-tools({
     "kevinhwang91/nvim-fundo",
     event = "BufReadPre",
     cond = lambda.config.tools.use_fundo, -- messes with some buffers which is really not that amazing | will have to see if there is a better fix for this
@@ -318,6 +303,7 @@ tools({
             link = "Bold", -- you could do italic
         },
         treesitter = false, -- this does not work right now
+        update_in_insert_mode = true,
     },
 })
 

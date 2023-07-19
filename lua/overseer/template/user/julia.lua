@@ -3,28 +3,28 @@ local files = require("overseer.files")
 local TAG = constants.TAG
 
 local isInProject = function(opts)
-    return files.exists(files.join(opts.dir, "Project.toml"))
+    return files.exists(files.join(vim.fn.getcwd(), "Project.toml"))
 end
 local isFile = { filetype = "julia" }
 local isProject = { callback = isInProject }
 local hasTest = {
     callback = function(opts)
-        return isProject and files.exists(files.join(opts.dir, "test"))
+        return isInProject(opts) and files.exists(files.join(vim.fn.getcwd(), "test"))
     end,
 }
 local hasBenchmark = {
     callback = function(opts)
-        return isProject and files.exists(files.join(opts.dir, "benchmark"))
+        return isInProject(opts) and files.exists(files.join(vim.fn.getcwd(), "benchmark"))
     end,
 }
 local hasDocs = {
     callback = function(opts)
-        return isProject and files.exists(files.join(opts.dir, "docs"))
+        return isInProject(opts) and files.exists(files.join(vim.fn.getcwd(), "docs"))
     end,
 }
 local hasBuild = {
     callback = function(opts)
-        return isProject and files.exists(files.join(opts.dir, "build"))
+        return isInProject(opts) and files.exists(files.join(vim.fn.getcwd(), "build"))
     end,
 }
 
@@ -72,6 +72,13 @@ return {
                 return {
                     name = "Julia Repl " .. julReplNum,
                     cmd = juliaCommand,
+                    components = {
+                        "default",
+                        {
+                            "user.start_open",
+                            start_insert = true,
+                        },
+                    },
                 }
             end,
             priority = pr(),
@@ -83,6 +90,13 @@ return {
                 return {
                     name = vim.g.project .. " Project Repl " .. julReplNum,
                     cmd = juliaCommand .. "--project",
+                    components = {
+                        "default",
+                        {
+                            "user.start_open",
+                            start_insert = true,
+                        },
+                    },
                 }
             end,
             condition = isProject,
@@ -95,6 +109,13 @@ return {
                 return {
                     name = otherProjectName .. " Project Repl " .. julReplNum,
                     cmd = "julia --threads=auto --project=" .. otherProject,
+                    components = {
+                        "default",
+                        {
+                            "user.start_open",
+                            start_insert = true,
+                        },
+                    },
                 }
             end,
             condition = {
@@ -104,17 +125,42 @@ return {
             },
             priority = pr(),
         })
+        table.insert(ret, {
+            name = "Start Test Server",
+            builder = function()
+                return {
+                    name = vim.g.project .. " Test Server",
+                    cmd = juliaCommand
+                        .. [[--project -e 'using Revise, DaemonMode; print("Running test server"); serve(print_stack=true)']],
+                    components = { "default", "unique", "always_restart" },
+                    metadata = { run_on_open = true },
+                }
+            end,
+            condition = isProject,
+            priority = pr(),
+        })
+        table.insert(ret, {
+            name = "Start documentation Server",
+            builder = function()
+                return {
+                    name = vim.g.project .. " Doc Server",
+                    cmd = juliaCommand
+                        .. [[--project=docs -E 'using Revise, ]]
+                        .. vim.g.project
+                        .. [[, LiveServer; servedocs(
+                            launch_browser=true;
+                            literate=joinpath("docs","lit"),
+                            include_dirs = ["src", "data"],
+                        )']],
+                    components = { "default", "unique", "always_restart" },
+                    metadata = { run_on_open = true },
+                }
+            end,
+            condition = hasDocs,
+            priority = pr(),
+        })
 
         local commands = {
-            {
-                name = "Start Test Server",
-                tskName = vim.g.project .. " Test Server",
-                cmd = juliaCommand
-                    .. [[--project -e 'using Revise, DaemonMode; print("Running test server"); serve(print_stack=true)']],
-                condition = isProject,
-                strategy = { "toggleterm", open_on_start = false, hidden = true },
-                components = { "default", "unique", "always_restart" },
-            },
             {
                 name = "Build Documentation",
                 tskName = vim.g.project .. " Doc Build",
@@ -130,25 +176,12 @@ return {
                         files.exists(files.join(opts.dir, "docs", "build", "index.html"))
                     end,
                 },
-                strategy = { "toggleterm", open_on_start = false },
                 components = { "default", "unique" },
-            },
-            {
-                name = "Start documentation Server",
-                tskName = vim.g.project .. " Doc Server",
-                cmd = juliaCommand
-                    .. [[--project=docs -E 'using Revise, ]]
-                    .. vim.g.project
-                    .. [[, LiveServer; servedocs(launch_browser=true; include_dirs = ["src"])']],
-                strategy = { "toggleterm", open_on_start = false, hidden = true },
-                components = { "default", "unique", "always_restart" },
-                condition = hasDocs,
             },
             {
                 name = "Open Documentation Server",
                 cmd = "browser http://localhost:8000 & sleep 5",
                 condition = hasDocs,
-                strategy = { "toggleterm", open_on_start = false, hidden = true },
                 components = { "default", "unique" },
             },
             {
@@ -170,10 +203,11 @@ return {
                 name = "Format " .. vim.g.project,
                 tskName = vim.g.project .. " Formatting",
                 cmd = juliaCommand
-                    .. [[ -e 'using JuliaFormatter, PowderModel; format(]]
+                    .. [[ -e 'using JuliaFormatter, ]]
+                    .. vim.g.project
+                    .. [[; format(]]
                     .. vim.g.project
                     .. [[, format_markdown=true, verbose=true)']],
-                strategy = { "toggleterm", open_on_start = false, hidden = true },
                 components = { "default", "unique" },
             },
             {
@@ -217,6 +251,20 @@ return {
                 components = { "default", "unique" },
             },
             {
+                name = "Run Julia File in Project (" .. vim.fn.expand("%:t:r") .. ")",
+                tskName = "Running " .. vim.fn.expand("%:t:r"),
+                cmd = juliaCommand .. "--project " .. vim.fn.expand("%:p"),
+                condition = isFile,
+                components = { "default", "unique" },
+            },
+            {
+                name = "Run Julia File Interactivly (" .. vim.fn.expand("%:t:r") .. ")",
+                tskName = "Running " .. vim.fn.expand("%:t:r") .. "Interactivly",
+                cmd = juliaCommand .. "-i " .. vim.fn.expand("%:p"),
+                condition = isFile,
+                components = { "default", "unique", "user.start_open" },
+            },
+            {
                 name = "Profile Package Imports",
                 tskName = vim.g.project .. " Profile Imports",
                 cmd = [[julia -e 'using InteractiveUtils; @time_imports using ]] .. vim.g.project .. "'",
@@ -228,16 +276,7 @@ return {
                 tskName = "Profiling " .. vim.fn.expand("%:t:r"),
                 cmd = juliaCommand .. "-e ~/.config/nvim/filetype/julia/prof.jl " .. vim.fn.expand("%:p"),
                 condition = isFile,
-                components = {
-                    "default",
-                    "unique",
-                    {
-                        "on_complete_callback",
-                        on_complete = function()
-                            Jul_perf_flat()
-                        end,
-                    },
-                },
+                components = { "default", "unique", "load_prof" },
             },
             {
                 name = "Run Build",
@@ -273,7 +312,6 @@ return {
                         name = command.tskName or command.name,
                         cmd = command.cmd,
                         components = command.components,
-                        strategy = command.strategy,
                     }
                 end,
                 tags = command.tags,
@@ -296,7 +334,7 @@ return {
                     name = "Test " .. san_name,
                     builder = function()
                         require("neotest").run.run(location)
-                        return { cmd = "", name = "", components = { "users.dispose_now" } }
+                        return { cmd = "", name = "", components = { "user.dispose_now" } }
                     end,
                     priority = pr(),
                     params = {},
@@ -317,16 +355,18 @@ return {
                             name = san_name .. " Infiltration",
                             cmd = [[julia --threads=auto --project -i -e "
                                 using Revise, TestItemRunner, Infiltrator, ]] .. vim.g.project .. [[;
-                                run(\`/home/viv/.config/bin/nvrWS 'lua No_Using_Toggle(\"Main.@infiltrate cond = ]] .. cond .. [[\")'\`)
+                                run(\`/home/oleete/.config/bin/nvrWS 'lua No_Using_Toggle(\"Main.@infiltrate cond = ]] .. cond .. [[\")'\`)
                                 "]],
-                            strategy = { "toggleterm", open_on_start = false },
                             components = {
                                 "default",
                                 "unique",
                                 {
-                                    "users.attach_toggleterm",
-                                    send_on_start = [[@run_package_tests filter=ti->(ti.name == ]] .. name .. [[)]],
+                                    "user.start_open",
                                     goto_prev = true,
+                                },
+                                {
+                                    "user.send_on_open",
+                                    send_on_open = [[@run_package_tests filter=ti->(ti.name == ]] .. name .. [[)]],
                                 },
                             },
                         }
@@ -350,7 +390,7 @@ return {
                     name = "Benchmark " .. san_name,
                     builder = function()
                         require("neotest").run.run(location)
-                        return { cmd = "", name = "", components = { "users.dispose_now" } }
+                        return { cmd = "", name = "", components = { "user.dispose_now" } }
                     end,
                     priority = pr(),
                     params = {},
@@ -370,23 +410,14 @@ return {
                     return {
                         name = name .. " profiling",
                         cmd = juliaCommand
-                            .. "/home/viv/.config/nvim/filetype/julia/profBench.jl '"
+                            .. "/home/oleete/.config/nvim/filetype/julia/profBench.jl '"
                             .. vim.fn.getcwd()
                             .. "' '"
                             .. command
                             .. "' '"
                             .. setup
                             .. "'",
-                        components = {
-                            "default",
-                            "unique",
-                            {
-                                "on_complete_callback",
-                                on_complete = function(_, _, status)
-                                    return status == "SUCCESS" and Jul_perf_flat()
-                                end,
-                            },
-                        },
+                        components = { "default", "unique", "load_prof" },
                     }
                 end,
                 priority = pr(),
@@ -398,23 +429,14 @@ return {
                     return {
                         name = name .. " profiling allocs",
                         cmd = juliaCommand
-                            .. "/home/viv/.config/nvim/filetype/julia/profAllocBench.jl '"
+                            .. "/home/oleete/.config/nvim/filetype/julia/profAllocBench.jl '"
                             .. vim.fn.getcwd()
                             .. "' '"
                             .. command
                             .. "' '"
                             .. setup
                             .. "'",
-                        components = {
-                            "default",
-                            "unique",
-                            {
-                                "on_complete_callback",
-                                on_complete = function(_, _, status)
-                                    return status == "SUCCESS" and Jul_perf_flat()
-                                end,
-                            },
-                        },
+                        components = { "default", "unique", "load_prof" },
                     }
                 end,
                 priority = pr(),
@@ -426,7 +448,7 @@ return {
             name = "Load profile data",
             builder = function()
                 Jul_perf_flat()
-                return { cmd = "", name = "", components = { "users.dispose_now" } }
+                return { cmd = "", name = "", components = { "user.dispose_now" } }
             end,
             priority = pr(),
             condition = {
@@ -472,11 +494,12 @@ return {
 
                 git_commits_againsthead()
 
-                return { cmd = "", name = "", components = { "users.dispose_now" } }
+                return { cmd = "", name = "", components = { "user.dispose_now" } }
             end,
             priority = pr(),
             condition = hasBenchmark,
         })
-        return ret
+
+        cb(ret)
     end,
 }

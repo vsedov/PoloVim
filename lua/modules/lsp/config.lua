@@ -4,11 +4,6 @@ function config.mason_setup()
     require("modules.lsp.lsp.mason")
     local get_config = require("modules.lsp.lsp.mason.lsp_servers")
     require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
-    require("mason-lspconfig").setup({
-        automatic_installation = {
-            exclude = { "lua_ls", "clangd", "ltex", "texlab" },
-        },
-    })
 
     require("mason-lspconfig").setup_handlers({
         function(name)
@@ -138,11 +133,14 @@ function config.lsp_sig()
 end
 
 function config.hover()
+    local diag = require("vim.diagnostic")
     require("hover").setup({
         init = function()
+            -- require("hover.providers.lsp")
+            -- require("hover").register(LSPWithDiagSource)
             require("hover.providers.lsp")
             require("hover.providers.gh")
-            require("hover.providers.jira")
+            -- require("hover.providers.jira")
             require("hover.providers.man")
             require("hover.providers.dictionary")
         end,
@@ -153,50 +151,6 @@ function config.hover()
         -- Whether the contents of a currently open hover window should be moved
         -- to a :h preview-window when pressing the hover keymap.
         preview_window = true,
-    })
-end
-
-function config.navic()
-    local s = lambda.style
-    local misc = s.icons.misc
-
-    lambda.highlight.plugin("navic", {
-        { NavicText = { bold = true } },
-        { NavicSeparator = { link = "Directory" } },
-    })
-    require("nvim-navic").setup({
-        icons = {
-            File = " ",
-            Module = " ",
-            Namespace = " ",
-            Package = " ",
-            Class = " ",
-            Method = " ",
-            Property = " ",
-            Field = " ",
-            Constructor = " ",
-            Enum = "練",
-            Interface = "練",
-            Function = " ",
-            Variable = " ",
-            Constant = " ",
-            String = " ",
-            Number = " ",
-            Boolean = "◩ ",
-            Array = " ",
-            Object = " ",
-            Key = " ",
-            Null = "ﳠ ",
-            EnumMember = " ",
-            Struct = " ",
-            Event = " ",
-            Operator = " ",
-            TypeParameter = " ",
-        },
-        highlight = true,
-        separator = (" %s "):format(misc.arrow_right),
-        depth_limit = 0,
-        depth_limit_indicator = misc.ellipsis,
     })
 end
 
@@ -341,6 +295,7 @@ function config.definition_or_reference()
         on_references_result = handle_references_response,
     })
 end
+
 function config.navigor()
     require("navigator").setup({
         debug = false,
@@ -362,13 +317,13 @@ function config.navigor()
                 desc = "workspace_symbol_live",
             },
             {
-                key = "gd",
+                key = "gD",
                 func = require("navigator.definition").definition,
                 desc = "definition",
             },
 
             {
-                key = "gp",
+                key = "gd",
                 func = require("navigator.definition").definition_preview,
                 desc = "definition_preview",
             },
@@ -415,7 +370,7 @@ function config.navigor()
                 desc = "show_buf_diagnostics",
             },
             {
-                key = "gW",
+                key = "<c-g>l",
                 func = require("navigator.diagnostics").toggle_diagnostics,
                 desc = "toggle_diagnostics",
             },
@@ -443,11 +398,6 @@ function config.navigor()
                 key = "g<LeftMouse>",
                 func = vim.lsp.buf.implementation,
                 desc = "implementation",
-            },
-            {
-                key = "<Leader>K",
-                func = require("navigator.dochighlight").hi_symbol,
-                desc = "hi_symbol",
             },
             {
                 key = "<leader>wa",
@@ -484,7 +434,7 @@ function config.navigor()
             },
         }, -- a list of key maps
         lsp = {
-            enable = false, --
+            enable = true, --
             code_action = { enable = false, sign = true, sign_priority = 40, virtual_text = true },
             code_lens_action = { enable = false, sign = true, sign_priority = 40, virtual_text = true },
             document_highlight = false, -- LSP reference highlight,
@@ -494,6 +444,12 @@ function config.navigor()
             hover = {
                 enable = false,
             },
+            diagnostic = {
+                underline = false,
+                virtual_text = false, -- show virtual for diagnostic message
+                update_in_insert = false, -- update diagnostic message in insert mode
+            },
+            diagnostic_scrollbar_sign = false,
         },
     })
 end

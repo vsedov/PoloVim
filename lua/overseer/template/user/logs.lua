@@ -11,7 +11,7 @@ return {
                             "default",
                             "unique",
                             {
-                                "users.start_open",
+                                "user.start_open",
                                 goto_prev = true,
                             },
                         },
@@ -30,7 +30,7 @@ return {
                             "default",
                             "unique",
                             {
-                                "users.start_open",
+                                "user.start_open",
                                 goto_prev = true,
                             },
                         },
@@ -85,7 +85,7 @@ return {
                             "default",
                             "unique",
                             {
-                                "users.start_open",
+                                "user.start_open",
                                 goto_prev = true,
                             },
                         },

@@ -6,10 +6,14 @@ runner({
     event = "VeryLazy",
     config = conf.overseer,
 })
-runner({
-    "google/executor.nvim",
-    event = "VeryLazy",
-    config = conf.executor,
+
+runner({ -- This plugin
+    "Zeioth/compiler.nvim",
+    cmd = { "CompilerOpen", "CompilerToggleResults" },
+    dependencies = { "stevearc/overseer.nvim" },
+    config = function(_, opts)
+        require("compiler").setup(opts)
+    end,
 })
 
 runner({

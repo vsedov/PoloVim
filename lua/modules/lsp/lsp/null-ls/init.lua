@@ -1,6 +1,6 @@
 -- vim.cmd[[ Lazy load lsp-format-modifications.nvim]]
-local active = true
 local lsp_format_modifications = require("lsp-format-modifications")
+local config = lambda.config.lsp.null_ls
 
 local M = {}
 
@@ -12,6 +12,8 @@ local lsp_formatting = function(bufnr, client)
         bufnr = bufnr,
         async = #client == 1,
     })
+    MiniTrailspace.trim()
+    MiniTrailspace.trim_last_lines()
 end
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -32,10 +34,7 @@ local function augroup_setup(client, bufnr)
 end
 function M.setup()
     local null_ls = require("null-ls")
-    local hover = null_ls.builtins.hover
-    local actions = null_ls.builtins.code_actions
 
-    local config = require("modules.lsp.lsp.config.config").null_ls
     local format = config.formatter
     local diagnostic = config.diagnostic
 
@@ -89,9 +88,6 @@ function M.setup()
             ".git"
         ),
         on_attach = function(client, bufnr)
-            vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
-                lsp_formatting(bufnr)
-            end, {})
             if lambda.config.lsp.use_format_modifcation then
                 if vim.fn.isdirectory(".git/index") then
                     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
@@ -105,6 +101,9 @@ function M.setup()
             else
                 augroup_setup(client, bufnr)
             end
+            vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
+                lsp_formatting(bufnr)
+            end, {})
         end,
     }
 

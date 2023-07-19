@@ -72,7 +72,11 @@ function config.neoai()
             ["select_up"] = "<C-k>",
             ["select_down"] = "<C-j>",
         },
-        open_api_key_env = "OPENAI_API_KEY",
+        open_ai = {
+            api_key = {
+                env = "OPENAI_API_KEY",
+            },
+        },
         shortcuts = {
             {
                 name = "textify",
@@ -144,6 +148,9 @@ function config.tabnine()
         suggestion_color = { gui = "#808080", cterm = 244 },
         execlude_filetypes = { "TelescopePrompt" },
     })
+    vim.api.nvim_set_keymap("x", ";a", "", { noremap = true, callback = require("tabnine.chat").open })
+    vim.api.nvim_set_keymap("i", ";a", "", { noremap = true, callback = require("tabnine.chat").open })
+    vim.api.nvim_set_keymap("n", ";a", "", { noremap = true, callback = require("tabnine.chat").open })
 end
 
 function config.codium()

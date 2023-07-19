@@ -38,12 +38,10 @@ local function caller(options, ch)
                         "search",
                         "list",
                         "edit",
-                        "create",
                         "resolve",
                         "unresolve",
                         "add",
                         "remove",
-                        "create",
                     }, choice),
                     function()
                         vim.ui.input({

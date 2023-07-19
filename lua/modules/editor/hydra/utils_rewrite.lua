@@ -14,17 +14,69 @@ function M.new(config, module_name)
         hint = "",
         config = {
             hint = {
-                position = self.config.hint and self.config.hint.position or "middle-right",
-                border = self.config.hint and self.config.hint.border or lambda.style.border.type_0,
+                position = "middle-right",
+                border = lambda.style.border.type_0,
             },
-            timeout = self.config.timeout or false,
-            invoke_on_body = self.config.invoke_on_body or true,
+            timeout = false,
+            invoke_on_body = true,
         },
         heads = {},
         mode = { "n" },
     }
+
     self:buildHeads()
+    -- remove on_exit and on_enter from self.config
+    self.config[self.name].on_exit = nil
+    self.config[self.name].on_enter = nil
+    self.config[self.name].on_key = nil
+
     return self
+end
+function M:buildHeads()
+    local mapping = {
+        color = function(t, rhs)
+            t.config.color = rhs
+        end,
+        body = function(t, rhs)
+            t.body = rhs
+        end,
+        position = function(t, rhs)
+            t.config.hint.position = rhs
+        end,
+        border = function(t, rhs)
+            t.config.hint.border = rhs
+        end,
+        mode = function(t, rhs)
+            t.mode = rhs
+        end,
+        invoke_on_body = function(t, rhs)
+            t.config.invoke_on_body = rhs
+        end,
+        timeout = function(t, rhs)
+            t.config.timeout = rhs
+        end,
+        on_key = function(t, rhs)
+            t.config.on_key = rhs
+        end,
+        on_enter = function(t, rhs)
+            t.config.on_enter = rhs
+        end,
+        on_exit = function(t, rhs)
+            t.config.on_exit = rhs
+        end,
+    }
+
+    for _, spec in pairs(self.config) do
+        for lhs, rhs in pairs(spec) do
+            local action = mapping[lhs]
+
+            if action == nil then
+                table.insert(self.new_hydra.heads, { lhs, table.unpack(rhs) })
+            else
+                action(self.new_hydra, rhs)
+            end
+        end
+    end
 end
 function M.create_table_normal(var, sorted, string_len, start_val)
     start_val = start_val or nil
@@ -48,37 +100,6 @@ function M.create_table_normal(var, sorted, string_len, start_val)
     return var
 end
 
-function M:buildHeads()
-    local mapping = {
-        color = function(t, rhs)
-            t.config.color = rhs
-        end,
-        body = function(t, rhs)
-            t.body = rhs
-        end,
-        mode = function(t, rhs)
-            t.mode = rhs
-        end,
-        on_enter = function(t, rhs)
-            t.config.on_enter = rhs
-        end,
-        on_exit = function(t, rhs)
-            t.config.on_exit = rhs
-        end,
-    }
-
-    for name, spec in pairs(self.config) do
-        for lhs, rhs in pairs(spec) do
-            local action = mapping[lhs]
-            if action == nil then
-                table.insert(self.new_hydra.heads, { lhs, table.unpack(rhs) })
-            else
-                action(self.new_hydra, rhs)
-            end
-        end
-    end
-end
-
 function M:addToCoreTable(value)
     table.insert(self.core_table, value)
 end
@@ -94,9 +115,6 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2)
             maxLen = len
         end
     end
-    -- remove on_exit and on_enter from self.config
-    self.config[self.name].on_exit = nil
-    self.config[self.name].on_enter = nil
 
     for x, y in pairs(self.config[self.name]) do
         local mapping = x

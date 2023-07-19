@@ -23,10 +23,12 @@ local treesitter = function()
         markid = { enable = lambda.config.treesitter.better_ts_highlights },
         matchup = {
             enable = lambda.config.treesitter.use_matchup,
+            disable = { "latex", "tex", "bib" },
         },
         highlight = {
             enable = true, -- false will disable the whole extension
             additional_vim_regex_highlighting = lambda.config.treesitter.use_extra_highlight,
+            disable = { "latex", "tex", "bib" },
         },
         incremental_selection = {
             enable = false,
@@ -120,7 +122,6 @@ local treesitter_obj = function()
         ensure_installed = {
             "dap_repl",
             "norg",
-            "norg_meta",
             "vim",
             "go",
             "css",

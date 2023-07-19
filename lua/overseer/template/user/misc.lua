@@ -3,16 +3,16 @@ return {
     generator = function(_, cb)
         ret = {
             {
-                name = "Fish",
+                name = "Zsh",
                 builder = function()
                     OvTermNum = OvTermNum + 1
                     return {
-                        name = "Fish " .. OvTermNum,
-                        cmd = "fish",
+                        name = "Zsh" .. OvTermNum,
+                        cmd = "zsh",
                         components = {
                             "default",
                             {
-                                "users.start_open",
+                                "user.start_open",
                                 start_insert = true,
                             },
                         },
@@ -30,10 +30,10 @@ return {
                         components = {
                             "default",
                             "unique",
-                            {
-                                "users.start_open",
-                                start_insert = true,
-                            },
+                            -- {
+                            --     "user.start_open",
+                            --     start_insert = true,
+                            -- },
                         },
                     }
                 end,
@@ -73,10 +73,10 @@ return {
                         components = {
                             "default",
                             "unique",
-                            {
-                                "users.start_open",
-                                start_insert = true,
-                            },
+                            -- {
+                            --     "user.start_open",
+                            --     start_insert = true,
+                            -- },
                         },
                     }
                 end,
@@ -93,7 +93,7 @@ return {
                             "default",
                             "unique",
                             {
-                                "users.start_open",
+                                "user.start_open",
                                 goto_prev = true,
                             },
                         },
@@ -112,6 +112,55 @@ return {
                 end,
                 priority = 5,
                 params = {},
+            },
+            {
+                name = "Build Document",
+                builder = function()
+                    return {
+                        name = "Build Document",
+                        cmd = "latexmk -synctex=1 -f -silent",
+                        components = { "default", "unique" },
+                    }
+                end,
+                priority = 5,
+                condition = {
+                    dir = "/home/viv/GitHub/PhD/Thesis/thesis",
+                },
+            },
+            {
+                name = "Verbose Build Document",
+                builder = function()
+                    return {
+                        name = "Build Document",
+                        cmd = "latexmk -synctex=1 -f",
+                        components = {
+                            "default",
+                            "unique",
+                            {
+                                "user.start_open",
+                                goto_prev = true,
+                            },
+                        },
+                    }
+                end,
+                priority = 5,
+                condition = {
+                    dir = "/home/viv/GitHub/PhD/Thesis/thesis",
+                },
+            },
+            {
+                name = "Clean Build Files",
+                builder = function()
+                    return {
+                        name = "Clean Build Files",
+                        cmd = "latexmk -c",
+                        components = { "default", "unique" },
+                    }
+                end,
+                priority = 5,
+                condition = {
+                    dir = "/home/viv/GitHub/PhD/Thesis/thesis",
+                },
             },
             {
                 name = "Make",
@@ -135,7 +184,7 @@ return {
                 builder = function()
                     require("neotest").output_panel.open()
                     vim.cmd("edit")
-                    return { cmd = "", name = "", components = { "users.dispose_now" } }
+                    return { cmd = "", name = "", components = { "user.dispose_now" } }
                 end,
                 priority = 6,
                 params = {},

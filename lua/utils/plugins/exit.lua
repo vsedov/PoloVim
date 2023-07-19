@@ -21,67 +21,103 @@ local message = {
     "It's not like I'll miss you or anything, b-baka!",
     "You are *not* prepared!",
 }
-if vim.g.loaded_confirm_quit ~= nil then
-    return
-end
-vim.g.loaded_confirm_quit = 1
+local config = {
+    overwrite_q_command = true,
+}
+local M = {}
 
 local function is_last_window()
     local wins = vim.api.nvim_list_wins()
     local count = 0
-    for i, v in ipairs(wins) do
+
+    for _, v in ipairs(wins) do
         local win = vim.api.nvim_win_get_config(v).relative
+
         if win == "" then
             count = count + 1
         end
     end
-    if count == 1 then
-        return true
-    end
-    return false
-end
 
+    return count == 1
+end
 local function random_message()
     return message[math.random(#message)]
 end
 
-function _G.confirm_quit()
-    if vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == "q" then
-        if is_last_window() and vim.fn.tabpagenr("$") == 1 then
-            if vim.fn.confirm(random_message(), "&Yes\n&No", 2) ~= 1 then
-                return "false"
-            end
+local function user_wants_to_quit()
+    return vim.fn.confirm(random_message(), "&Yes\n&No", 2, "Question") == 1
+end
+
+local function quit(opts)
+    local ok, result = pcall(vim.cmd.quit, opts)
+    if not ok then
+        if result then
+            vim.notify(result)
+        else
+            vim.notify("ConfirmQuit: Error while quitting")
         end
     end
-    return "true"
 end
 
-local M = {}
-M.setup = function()
-    vim.cmd([[cnoreabbrev <expr> q (luaeval(v:lua.confirm_quit())) ? 'q' : '']])
-    vim.cmd([[cnoreabbrev qq  quit]])
-    vim.api.nvim_create_user_command("Q", "qall<bang>", { force = true, bang = true })
-
-    vim.g.confirm_quit_isk_save = ""
-
-    local group_name = "confirm-quit"
-    vim.api.nvim_create_augroup(group_name, { clear = true })
-    vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
-        group = group_name,
-        pattern = ":",
-        callback = function()
-            vim.g.confirm_quit_isk_save = vim.bo.iskeyword
-            vim.opt_local.iskeyword:append("!")
-        end,
-        once = false,
-    })
-    vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
-        group = group_name,
-        pattern = ":",
-        callback = function()
-            vim.bo.iskeyword = vim.g.confirm_quit_isk_save
-        end,
-        once = false,
-    })
+local function quitall(opts)
+    local ok, result = pcall(vim.cmd.quit, opts)
+    if not ok then
+        if result then
+            vim.notify(result)
+        else
+            vim.notify("ConfirmQuit: Error while quitting")
+        end
+    end
 end
+
+function M.confirm_quit(opts)
+    if opts.bang == true then
+        quit({ bang = true })
+    end
+
+    local is_last_tab_page = vim.fn.tabpagenr("$") == 1
+
+    if not is_last_window() then
+        quit()
+        return
+    end
+    if not is_last_tab_page then
+        quit()
+        return
+    end
+
+    if user_wants_to_quit() then
+        quit()
+    end
+end
+
+function M.confirm_quit_all(opts)
+    if opts.bang == true then
+        quitall({ bang = true })
+    end
+    if user_wants_to_quit() then
+        quitall()
+    end
+end
+
+local function setup_cmdline_quit()
+    if config.overwrite_q_command then
+        vim.cmd([[ cnoreabbrev <expr> q (getcmdtype() == ":" && getcmdline() ==# "q") ? "ConfirmQuit" : "q" ]])
+        vim.cmd([[ cnoreabbrev qq quit ]])
+        vim.cmd([[ cnoreabbrev Q quit ]])
+    end
+
+    vim.api.nvim_create_user_command("ConfirmQuit", function(opts)
+        M.confirm_quit(opts)
+    end, { force = true, bang = true })
+
+    vim.api.nvim_create_user_command("ConfirmQuitAll", function(opts)
+        M.confirm_quit_all(opts)
+    end, { force = true, bang = true })
+end
+
+function M.setup()
+    setup_cmdline_quit()
+end
+
 return M

@@ -1,4 +1,19 @@
 local config = {}
+local toggle_noice = function()
+    local oldbufnr = vim.api.nvim_get_current_buf()
+    for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.api.nvim_win_is_valid(winnr) then
+            local bufnr = vim.api.nvim_win_get_buf(winnr)
+            if vim.bo[bufnr].filetype == "NoiceHistory" then
+                vim.api.nvim_win_close(winnr, true)
+            end
+        end
+    end
+    require("noice").cmd("history")
+    if oldbufnr ~= vim.api.nvim_get_current_buf() then
+        vim.bo.filetype = "NoiceHistory"
+    end
+end
 
 function config.paint()
     require("paint").setup({
@@ -65,32 +80,83 @@ function config.edgy()
                     return not vim.b[buf].lazyterm_cmd
                 end,
             },
-            "Trouble",
             { ft = "qf", title = "QuickFix" },
             { ft = "help", size = { height = 20 } },
             { ft = "spectre_panel", size = { height = 0.4 } },
-            "dap-repl",
             "terminal",
+
+            { ft = "dapui_watches", title = "Watches" },
+            { ft = "dap-repl", title = "Debug REPL" },
+            { ft = "dapui_console", title = "Debug Console" },
+            {
+                ft = "Trouble",
+                title = " Trouble",
+                open = function()
+                    require("trouble").toggle({ mode = "quickfix" })
+                end,
+            },
+            {
+                ft = "OverseerPanelTask",
+                title = " Task",
+                open = "OverseerQuickAction open",
+            },
+            {
+                ft = "NoiceHistory",
+                title = " Log",
+                open = function()
+                    toggle_noice()
+                end,
+            },
+            {
+                ft = "neotest-output-panel",
+                title = " Test Output",
+                open = function()
+                    vim.cmd.vsplit()
+                    require("neotest").output_panel.toggle()
+                end,
+            },
+            {
+                ft = "DiffviewFileHistory",
+                title = " Diffs",
+            },
         },
         left = {
-            -- Neo-tree filesystem always takes half the screen height
             {
                 title = "Neo-Tree",
                 ft = "neo-tree",
+                pinned = true,
                 size = { height = 0.5 },
+            },
+            { ft = "dapui_scopes", title = "Scopes" },
+            { ft = "dapui_breakpoints", title = "Breakpoints" },
+            { ft = "dapui_stacks", title = "Stacks" },
+            {
+                ft = "DiffviewFileHistory",
+                title = " Diffs",
+            },
+            {
+                ft = "DiffviewFiles",
+                title = " Diffs",
             },
             {
                 ft = "OverseerList",
-                pinned = true,
-                open = "OverseerToggle",
+                title = "  Tasks",
+                open = "OverseerOpen",
+                size = {
+                    width = 0.35,
+                },
             },
-            -- any other neo-tree windows
-            "dapui_breakpoints",
-            "dapui_stacks",
-            "dapui_watches",
+            {
+                ft = "neotest-summary",
+                title = "  Tests",
+                open = function()
+                    require("neotest").summary.toggle()
+                end,
+            },
         },
         right = {
-            "dapui_scopes",
+            -- "dapui_scopes",
+            "sagaoutline",
             "neotest-output-panel",
             "neotest-summary",
 
@@ -102,10 +168,9 @@ function config.edgy()
             },
         },
 
-        ---@type table<Edgy.Pos, {size:integer, wo?:vim.wo}>
         options = {
-            left = { size = 30 },
-            bottom = { size = 10 },
+            left = { size = 40 },
+            bottom = { size = 20 },
             right = { size = 30 },
             top = { size = 10 },
         },
@@ -120,13 +185,7 @@ function config.edgy()
             on_end = function()
                 vim.g.minianimate_disable = false
             end,
-            -- Spinner for pinned views that are loading.
-            -- if you have noice.nvim installed, you can use any spinner from it, like:
-            -- spinner = require("noice.util.spinners").spinners.circleFull,
-            spinner = {
-                frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
-                interval = 80,
-            },
+            spinner = require("noice.util.spinners").spinners.circleFull,
         },
         -- enable this to exit Neovim when only edgy windows are left
         exit_when_last = false,
@@ -209,6 +268,7 @@ function config.edgy()
         fix_win_height = vim.fn.has("nvim-0.10.0") == 0,
     }
 end
+
 function config.which_key()
     lambda.highlight.plugin("whichkey", {
         theme = {
@@ -267,4 +327,5 @@ function config.which_key()
         },
     }, { mode = { "o", "v", "x" } })
 end
+
 return config

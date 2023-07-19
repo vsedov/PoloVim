@@ -9,15 +9,17 @@ local config = {
     Runner = {
         color = "red",
         body = leader,
-        mode = { "n" },
+        mode = { "n", "v", "x", "o" },
+        on_enter = function() end,
         ["<ESC>"] = { nil, { exit = true } },
         w = { cmd("OverseerToggle"), { desc = "OS Toggle", exit = true } },
         s = { cmd("OverseerRun"), { desc = "OS Run", exit = true } },
-        d = { cmd("OverseerQuickAction"), { desc = "OS Quick Action", exit = true } },
+        d = { cmd("OverseerQuickAction open"), { desc = "OS Quick Action", exit = true } },
         D = { cmd("OverseerTaskAction"), { desc = "OS Action", exit = true } },
         b = { cmd("OverseerBuild"), { desc = "OS Build", exit = true } },
         l = { cmd("OverseerLoadBundle"), { desc = "OS Load", exit = true } },
-        R = { cmd("OverseerRunCmd"), { desc = "OS Run Cmd", exit = true } },
+        r = { cmd("CompilerOpen"), { desc = "OS Compiler", exit = true } },
+        ["<leader>"] = { cmd("OverseerRunCmd"), { desc = "OS Run Cmd", exit = true } },
 
         ["<cr>"] = {
             function()
@@ -27,27 +29,52 @@ local config = {
                     .. " file ("
                     .. vim.fn.expand("%:t")
                     .. ")"
-                vim.notify(command)
-                overseer.run_template({ name = command }, function(task)
-                    if task then
-                        overseer.run_action(task, "open float")
-                    else
-                        vim.notify("Task not found")
-                    end
-                end)
+
+                overseer.run_template({ name = command })
             end,
-            { exit = false, desc = "OS Fast Run" },
+            { exit = true, desc = "OS Fast Run" },
         },
 
-        r = { cmd("RunCode"), { exit = true, desc = "RunCode" } },
+        [";"] = { cmd("RunCode"), { exit = true, desc = "RunCode" } },
+        W = {
+            function()
+                local mode = vim.fn.mode()
+
+                if mode == "n" then
+                    require("sniprun").run()
+                else
+                    require("sniprun").run("v")
+                end
+            end,
+            { exit = true, desc = "SnipRun", mode = { "n", "v" } },
+        },
+        C = {
+            function()
+                require("sniprun").clear_repl()
+            end,
+            { exit = true, desc = "SnipRun Clear Repl" },
+        },
+        c = {
+            function()
+                require("sniprun.display").close_all()
+            end,
+            { exit = true, desc = "SnipRun Close All" },
+        },
+
+        i = {
+            function()
+                require("sniprun").info()
+            end,
+            { exit = true, desc = "SnipRun Info" },
+        },
     },
 }
-local bracket = { "<cr>", "w", "s", "r", "R" }
+local bracket = { "<cr>", "r", ";", "w", "s", "<leader>" }
 
 return {
     config,
     "Runner",
-    { { "d", "D", "b", "l" } },
+    { { "d", "D", "b", "l" }, { "W", "c", "C", "i" } },
     bracket,
     6,
     3,

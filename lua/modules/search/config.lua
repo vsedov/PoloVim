@@ -62,9 +62,6 @@ function config.spectre()
     local spectre = require("spectre")
 
     local sed_args = nil
-    if vim.fn.has("mac") == 1 then
-        sed_args = { "-I", "" }
-    end
 
     spectre.setup({
         color_devicons = true,
@@ -189,6 +186,27 @@ function config.spectre()
         is_open_target_win = true, --open file on opener window
         is_insert_mode = false, -- start open panel on is_insert_mode
     })
+    vim.api.nvim_create_user_command("Spectre", "lua require('spectre').open()", {})
+    vim.api.nvim_create_user_command("SpectreToggleLine", "lua require('spectre').toggle_line()", {})
+    vim.api.nvim_create_user_command("SpectreSelectEntry", "lua require('spectre.actions').select_entry()", {})
+    vim.api.nvim_create_user_command(
+        "SpectreRunCurrentReplace",
+        "lua require('spectre.actions').run_current_replace()",
+        {}
+    )
+    vim.api.nvim_create_user_command("SpectreRunReplace", "lua require('spectre.actions').run_replace()", {})
+    vim.api.nvim_create_user_command("SpectreSendToQF", "lua require('spectre.actions').send_to_qf()", {})
+    vim.api.nvim_create_user_command("SpectreReplaceCommand", "lua require('spectre.actions').replace_cmd()", {})
+    vim.api.nvim_create_user_command("SpectreToggleLiveUpdate", "lua require('spectre').toggle_live_update()", {})
+    vim.api.nvim_create_user_command("SpectreChangeView", "lua require('spectre').change_view()", {})
+    vim.api.nvim_create_user_command("SpectreResumeLastSearch", "lua require('spectre').resume_last_search()", {})
+    vim.api.nvim_create_user_command("SpectreIgnoreCase", "lua require('spectre').change_options('ignore-case')", {})
+    vim.api.nvim_create_user_command("SpectreHidden", "lua require('spectre').change_options('hidden')", {})
+    vim.api.nvim_create_user_command("SpectreShowOptions", "lua require('spectre').show_options()", {})
+
+    vim.keymap.set("n", "<A-s>", function()
+        vim.cmd("Spectre")
+    end, { noremap = true, silent = true, desc = "Spectre" })
 end
 
 function config.sad()

@@ -66,23 +66,6 @@ function config.substitute()
     require("substitute").setup({
         on_substitute = require("yanky.integration").substitute(),
         yank_substituted_text = true,
-        highlight_substituted_text = {
-            enabled = true,
-            timer = 500,
-        },
-        range = {
-            prefix = "s",
-            prompt_current_text = true,
-            confirm = false,
-            complete_word = true,
-            motion1 = true,
-            motion2 = true,
-            suffix = "",
-        },
-        exchange = {
-            motion = true,
-            use_esc_to_cancel = true,
-        },
     })
 end
 

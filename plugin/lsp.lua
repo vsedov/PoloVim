@@ -26,35 +26,14 @@ local provider = {
 }
 local get_extra_binds = function()
     local binds = {}
+
     if not lambda.config.lsp.use_navigator then
         binds = {
-            ["gd"] = { "<cmd> Lspsaga peek_definition<cr>", "preview_definition" },
-            ["gt"] = { "<cmd>Lspsaga peek_type_definition<CR>", "peek_type_definitions" },
-            ["gT"] = { "<cmd>Lspsaga goto_type_definition<CR>", "goto_type_definitions" },
-            ["gr"] = { "<cmd> Lspsaga lsp_finder<cr>", "lsp_finder" },
-            ["gR"] = { "<cmd>Lspsaga rename ++project<CR>", "Rename Project" },
-            ["gk"] = {
+            ["gD"] = {
                 function()
-                    vim.cmd([[Lspsaga hover_doc ++keep]])
+                    require("definition-or-references").definition_or_references()
                 end,
-                "Hover Left",
-            },
-            ["cc"] = {
-                function()
-                    vim.cmd([[Lspsaga code_action]])
-                end,
-                "Code action",
-            },
-            ["[e"] = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Diagnostic Jump next" },
-            ["]e"] = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Diagnostic Jump prev" },
-            ["gL"] = { "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics" },
-            ["gG"] = {
-                "<cmd>Lspsaga show_buf_diagnostics<CR>",
-                "Show Buffer Diagnostics",
-            },
-            ["gW"] = {
-                "<cmd>Lspsaga show_workspace_diagnostics<CR>",
-                "Show Workspace Diagnostics",
+                "Goto Def",
             },
         }
     end
@@ -62,20 +41,12 @@ local get_extra_binds = function()
 end
 local buffer_mappings = {
     normal_mode = {
-        ["gD"] = {
-            function()
-                require("definition-or-references").definition_or_references()
-            end,
-            "Goto Def",
-        },
         ["K"] = {
             utils.repeatable_hover,
             "hover",
         },
     },
-    visual_mode = {
-        ["cc"] = { "<cmd>Lspsaga range_code_action()<CR>", "Code action" },
-    },
+    visual_mode = {},
     insert_mode = {},
     extra_binds = get_extra_binds(),
 }
@@ -379,14 +350,15 @@ diagnostic.config({
     underline = true,
     update_in_insert = false,
     severity_sort = true,
-    virtual_text = false and {
-        -- severity = { min = S.WARN },
-        spacing = 1,
-        prefix = function(d)
-            local level = diagnostic.severity[d.severity]
-            return icons[level:lower()]
-        end,
-    },
+    virtual_text = false
+        and {
+            -- severity = { min = S.WARN },
+            spacing = 1,
+            prefix = function(d)
+                local level = diagnostic.severity[d.severity]
+                return icons[level:lower()]
+            end,
+        },
     float = {
         max_width = max_width,
         max_height = max_height,
