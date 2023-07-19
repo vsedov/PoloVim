@@ -4,7 +4,7 @@
 --    │                                                                    │
 --    ╰────────────────────────────────────────────────────────────────────╯
 
-local use_codium = true
+local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = true
 
 local use_tabnine = true

@@ -36,41 +36,22 @@ local function loadHydraAPI()
     if lambda.config.movement.movement_type == "flash" then
         table.insert(exclude_table, "leap")
     end
+    if not (lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_insert) then
+        table.insert(exclude_table, "tabnine")
+    end
 
     for _, path in ipairs(api_list) do
         local name = fn.fnamemodify(path, ":t:r")
         local module_name = MODULE_PREFIX .. "api." .. name
 
         when(not vim.tbl_contains(exclude_table, name), function()
-            local ok, data = pcall(require, module_name)
-            if not ok then
-                vim.notify(
-                    fmt("Error while loading Hydra API module '%s': %s", module_name, data),
-                    vim.log.levels.ERROR,
-                    {
-                        title = "Hydra Error",
-                    }
-                )
-                return
-            end
+            local data = require(module_name)
             local instance = M.new(data[1], data[2])
             local hyd = instance.new_hydra
-            -- hyd.hint = instance:auto_hint_generate(data[3], data[4], data[5], data[6])
-            local hint_ok, hint = pcall(instance.auto_hint_generate, instance, data[3], data[4], data[5], data[6])
-            if not hint_ok then
-                vim.notify(fmt("Error while generating hint for Hydra '%s'", hyd.name), vim.log.levels.ERROR, {
-                    title = "Hydra Error",
-                })
-                return
-            end
+            local hint = instance:auto_hint_generate(data[3], data[4], data[5], data[6])
             hyd.hint = hint
             vim.defer_fn(function()
-                local ok, err = pcall(hydra, hyd)
-                if not ok then
-                    vim.notify(fmt("Error while running Hydra '%s': %s", hyd.name, err), vim.log.levels.ERROR, {
-                        title = "Hydra Error",
-                    })
-                end
+                hydra(hyd)
             end, 100)
         end)
     end
