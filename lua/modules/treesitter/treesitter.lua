@@ -29,7 +29,6 @@ local treesitter = function()
             enable = true, -- false will disable the whole extension
             additional_vim_regex_highlighting = lambda.config.treesitter.use_extra_highlight,
             disable = { "latex", "tex", "bib" },
-
         },
         incremental_selection = {
             enable = false,

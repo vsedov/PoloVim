@@ -359,6 +359,7 @@ user({
     },
     init = function()
         vim.cmd("let HiSet = 'm<cr>'")
+
         vim.cmd("let HiErase = 'm<bs>'")
         vim.cmd("let HiClear = 'mD'")
     end,
@@ -413,4 +414,65 @@ user({
 user({
     "lewis6991/whatthejump.nvim",
     keys = { "<c-i>", "<c-o>" },
+})
+user({
+    "vsedov/multicursors.nvim",
+    branch = "hydra_hint",
+    opts = function()
+        local N = require("multicursors.normal_mode")
+        local I = require("multicursors.insert_mode")
+        return {
+            normal_keys = {
+                -- to change default lhs of key mapping change the key
+                ["b"] = {
+                    -- assigning nil to method exits from multi cursor mode
+                    method = N.clear_others,
+                    -- description to show in hint window
+                    desc = "Clear others",
+                },
+            },
+            insert_keys = {
+                -- to change default lhs of key mapping change the key
+                ["<CR>"] = {
+                    -- assigning nil to method exits from multi cursor mode
+                    method = I.Cr_method,
+                    -- description to show in hint window
+                    desc = "new line",
+                },
+            },
+            hydra = {
+                border = "single",
+                position = "bottom",
+                hint = {},
+            },
+        }
+    end,
+    keys = {
+        {
+            "<Leader>m",
+            "<cmd>MCstart<cr>",
+            desc = "Create a selection for word under the cursor",
+        },
+    },
+})
+user({
+    "thinca/vim-qfreplace",
+    ft = "qf",
+    lazy = true,
+})
+user({ -- https://github.com/fregante/GhostText
+    "subnut/nvim-ghost.nvim",
+    build = ":call nvim_ghost#installer#install()",
+    lazy = false,
+    cmd = "GhostTextStart",
+    config = function()
+        vim.g.nvim_ghost_super_quiet = 1
+        vim.cmd([[
+				augroup nvim_ghost_user_autocommands
+					au User *github.com,*stackoverflow.com,*reddit.com setfiletype markdown
+					au User *github.com,*stackoverflow.com,*reddit.com let b:copilot_enabled=1
+					au User *github.com,*stackoverflow.com,*reddit.com setlocal spell
+				augroup END
+			]])
+    end,
 })

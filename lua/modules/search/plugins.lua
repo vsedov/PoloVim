@@ -97,6 +97,23 @@ search({
     "windwp/nvim-spectre",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
+    -- event = "VeryLazy",
+    cmd = {
+        "Spectre",
+        "SpectreToggleLine",
+        "SpectreSelectEntry",
+        "SpectreRunCurrentReplace",
+        "SpectreRunReplace",
+        "SpectreSendToQF",
+        "SpectreReplaceCommand",
+        "SpectreToggleLiveUpdate",
+        "SpectreChangeView",
+        "SpectreResumeLastSearch",
+        "SpectreIgnoreCase",
+        "SpectreHidden",
+        "SpectreShowOptions",
+    },
+
     config = conf.spectre,
 })
 
