@@ -79,6 +79,11 @@ clipsub({
     lazy = true,
     config = conf.clipboardimage,
 })
+clipsub({
+    "TobinPalmer/pastify.nvim",
+    cmd = { "Pastify" },
+    config = true,
+})
 
 -- -- manual call
 clipsub({
@@ -86,13 +91,4 @@ clipsub({
     lazy = true,
     dependencies = { "kkharji/sqlite.lua" },
     config = conf.neoclip,
-})
-clipsub({
-    "tversteeg/registers.nvim",
-    keys = {
-        { '"', mode = { "n", "v" } },
-        { "<C-R>", mode = "i" },
-    },
-    cmd = "Registers",
-    config = true,
 })

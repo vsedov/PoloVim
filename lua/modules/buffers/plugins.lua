@@ -157,7 +157,6 @@ buffer({
     "chrisgrieser/nvim-early-retirement",
     cond = lambda.config.buffer.use_early_retirement,
     opts = {
-        -- if a buffer has been inactive for this many minutes, close it
         retirementAgeMins = 10,
     },
     event = "VeryLazy",
@@ -166,8 +165,31 @@ buffer({
     "axkirillov/hbac.nvim",
     cond = lambda.config.buffer.use_hbac,
     event = "VeryLazy",
-    config = true,
+    opts = {
+        autoclose = true, -- set autoclose to false if you want to close manually
+        threshold = 10, -- hbac will start closing unedited buffers once that number is reached
+        close_command = function(bufnr)
+            vim.api.nvim_buf_delete(bufnr, {})
+        end,
+        close_buffers_with_windows = false, -- hbac will close buffers with associated windows if this option is `true`
+        telescope = {
+            mappings = {
+                n = {
+                    close_unpinned = "<c-c>",
+                    delete_buffer = "<c-x>",
+                    pin_all = "<c-a>",
+                    unpin_all = "<c-u>",
+                    toggle_selections = "<c-y>",
+                },
+            },
+            pin_icons = {
+                pinned = { "󰐃 ", hl = "DiagnosticOk" },
+                unpinned = { "󰤱 ", hl = "DiagnosticError" },
+            },
+        },
+    },
 })
+
 buffer({
     "mskelton/local-yokel.nvim",
     lazy = true,
@@ -178,7 +200,6 @@ buffer({
 buffer({
     "zakissimo/hook.nvim",
     lazy = true,
-    event = "VeryLazy",
     keys = {
         "<c-b>1",
         "<c-b>2",
