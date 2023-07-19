@@ -86,7 +86,7 @@ lambda.config.treesitter = {
     use_extra_highlight = true,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
-    use_context_vt = true,
+    use_context_vt = false,
     use_rainbow = true,
 }
 
@@ -128,9 +128,8 @@ lambda.config.lsp = {
         fix_pos = true,
     },
     diagnostics = {
-        use_error_lens = false,
-        use_lsp_lines = true,
-        use_rcd = false, -- the least intrusive of the bunch
+        use_lsp_lines = false,
+        use_rcd = true, -- the least intrusive of the bunch
     },
     null_ls = {
         diagnostic = {
@@ -165,7 +164,7 @@ lambda.config.lsp = {
             "trim_whitespace",
             "pyflyby",
         },
-        code_action = { "eslint_d", "gitrebase", "refactoring" },
+        code_action = { "eslint_d", "refactoring" },
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -174,11 +173,8 @@ lambda.config.lsp = {
     latex = "texlab", -- texlab | ltex
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
-        -- Keep this distinct from pylsp
         format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = { "pylsp", "sourcery", "ruff_lsp" }, -- pylyzer, jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
-        -- Sourcery is nice to have, great little refactoring improvements
-        -- Pylsp offers more than jedi does, with rope so why not .
     },
 }
 
@@ -191,7 +187,7 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_dropbar = true,
     use_beacon = true,
-    use_mini_animate = false,
+    use_mini_animate = true,
     use_hlslens = true,
     use_statuscol = true,
     heirline = {
@@ -234,7 +230,7 @@ lambda.config.colourscheme = {
     themes = {
         dark = {
             core_themes = {
-                "tokyonight.nvim",
+                -- "tokyonight.nvim",
                 "catppuccin",
                 -- "rose", -- TSMethod'
                 -- -- "kanagawa.nvim",

@@ -14,7 +14,7 @@ git({
         "nvim-tree/nvim-web-devicons",
     },
     cmd = "Octo",
-    config = conf.octo,
+    config = true,
 })
 
 git({
@@ -29,8 +29,6 @@ git({
     },
     cmd = "Gitignore",
 })
--- need to find a usecase for this
-git({ "ThePrimeagen/git-worktree.nvim", lazy = true, config = conf.worktree })
 
 git({
     "sindrets/diffview.nvim",
@@ -87,16 +85,6 @@ git({
 
     lazy = true,
     opts = { disable_diagnostics = true },
-})
-
--- --[[ My work flow requires me to use both neogit and fugative, so what i think  ]]
--- --[[ i will do is load this if Neogit is loaded as well, just to be in the same thing ]]
--- -- get loaded through hydra
-
-git({
-    "tpope/vim-fugitive",
-    lazy = true,
-    cmd = "Git",
 })
 
 -- return git

@@ -1,4 +1,19 @@
 local config = {}
+local toggle_noice = function()
+    local oldbufnr = vim.api.nvim_get_current_buf()
+    for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.api.nvim_win_is_valid(winnr) then
+            local bufnr = vim.api.nvim_win_get_buf(winnr)
+            if vim.bo[bufnr].filetype == "NoiceHistory" then
+                vim.api.nvim_win_close(winnr, true)
+            end
+        end
+    end
+    require("noice").cmd("history")
+    if oldbufnr ~= vim.api.nvim_get_current_buf() then
+        vim.bo.filetype = "NoiceHistory"
+    end
+end
 
 function config.paint()
     require("paint").setup({
@@ -65,14 +80,21 @@ function config.edgy()
                     return not vim.b[buf].lazyterm_cmd
                 end,
             },
-            "Trouble",
             { ft = "qf", title = "QuickFix" },
             { ft = "help", size = { height = 20 } },
             { ft = "spectre_panel", size = { height = 0.4 } },
             "terminal",
+
             { ft = "dapui_watches", title = "Watches" },
             { ft = "dap-repl", title = "Debug REPL" },
             { ft = "dapui_console", title = "Debug Console" },
+            {
+                ft = "Trouble",
+                title = " Trouble",
+                open = function()
+                    require("trouble").toggle({ mode = "quickfix" })
+                end,
+            },
             {
                 ft = "OverseerPanelTask",
                 title = " Task",
@@ -82,7 +104,7 @@ function config.edgy()
                 ft = "NoiceHistory",
                 title = " Log",
                 open = function()
-                    require("user.myfuncs").toggle_noice()
+                    toggle_noice()
                 end,
             },
             {
@@ -92,6 +114,10 @@ function config.edgy()
                     vim.cmd.vsplit()
                     require("neotest").output_panel.toggle()
                 end,
+            },
+            {
+                ft = "DiffviewFileHistory",
+                title = " Diffs",
             },
         },
         left = {

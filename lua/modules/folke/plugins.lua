@@ -39,12 +39,14 @@ folke({
     event = "VeryLazy",
     config = conf.which_key,
 })
+
 folke({
     "folke/trouble.nvim",
     cmd = { "Trouble", "TroubleToggle" },
     lazy = true,
     config = true,
 })
+
 folke({
     "folke/todo-comments.nvim",
     event = "VeryLazy",
@@ -66,8 +68,7 @@ folke({
 })
 folke({
     "folke/paint.nvim",
-    lazy = true,
-    ft = "lua",
+    event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.paint,
 })

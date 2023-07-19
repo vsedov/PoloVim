@@ -139,7 +139,7 @@ mini({
                 timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             },
             scroll = {
-                enable = not lambda.config.ui.use_scroll,
+                enable = false,
 
                 timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
                 subscroll = animate.gen_subscroll.equal({

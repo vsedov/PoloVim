@@ -22,6 +22,9 @@ function config.iswap()
         keys = "qwertyuiop",
         autoswap = true,
     })
+
+    -- Use cx to be consistent with vim-exchange
+    vim.keymap.set("n", "<Leader>cx", "<Cmd>ISwap<CR>", {})
 end
 
 -- ["i|ll"] = map_cmd("()<esc>i", "()"):with_silent(),

@@ -1,7 +1,18 @@
 local conf = require("modules.movement.config")
 local movement = require("core.pack").package
 
-movement({ "tpope/vim-repeat", lazy = true })
+-- NOTE: (vsedov) (17:18:44 - 19/07/23): Update
+
+movement({
+    "tommcdo/vim-exchange",
+    event = "CursorMoved",
+})
+
+movement({
+    "tpope/vim-repeat",
+    lazy = true,
+    event = "VeryLazy",
+})
 
 if lambda.config.movement.movement_type == "leap" then
     local leap = require("modules.movement.leap")
@@ -92,7 +103,7 @@ movement({
 movement({
     "ziontee113/syntax-tree-surfer",
     lazy = true,
-    keys = { "cU", "cD", "cd", "cu", ";f", "cn", "cx" },
+    keys = { ";f" },
     cmd = {
         "STSSwapPrevVisual",
         "STSSelectChildNode",
@@ -141,7 +152,13 @@ movement({
     config = conf.gomove,
 })
 
-movement({ "mizlan/iswap.nvim", lazy = true, cmd = { "ISwap", "ISwapWith" }, config = conf.iswap })
+movement({
+    "mizlan/iswap.nvim",
+    lazy = true,
+    cmd = { "ISwap", "ISwapWith" },
+    keys = { "<leader>cx" },
+    config = conf.iswap,
+})
 
 --  JK  AA II
 movement({
@@ -150,8 +167,6 @@ movement({
     event = "ModeChanged",
     config = conf.houdini,
 })
-
-movement({ "tommcdo/vim-exchange", keys = { "cx", desc = "Exchange" } })
 
 movement({
     "haya14busa/vim-edgemotion",
