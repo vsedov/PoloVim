@@ -1,4 +1,4 @@
-local leader = "<leader>R"
+local leader = ";e"
 local config = {
     Refactor = {
         body = leader,

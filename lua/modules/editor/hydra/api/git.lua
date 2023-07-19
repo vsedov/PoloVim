@@ -125,8 +125,8 @@ local config = {
         },
         ["/"] = { gitsigns.show, { exit = true, desc = "Show" } },
         b = { gitsigns.blame_line, { desc = "Blame Line" } },
-        d = { ":DiffviewOpen<CR>", { silent = true, exit = true, desc = "DiffView" } },
         M = { diffmaster, { silent = true, exit = true, desc = "DiffMaster" } },
+        d = { ":DiffviewOpen<CR>", { silent = true, exit = true, desc = "DiffView" } },
         C = { ":GitConflictListQf<CR>", { exit = true, nowait = true, desc = "Conflict" } },
     },
 }

@@ -1,30 +1,15 @@
 local leader = "L"
--- local hydra = require("hydra")
-
--- ["n|<leader><leader>Sr"] = map_cmd(":%s/<C-R><C-W>//gI<left><left><left>", "Replace word under cursor")
--- Replace word under cursor on Line (case-sensitive)
--- nmap <leader>sl :s/<C-R><C-W>//gI<left><left><left>
--- ["n|<leader><leader>Sl"] = map_cmd("
--- ["n|<leader><leader>Sc"] = map_cmd(
--- --
---
--- vim.keymap.set("n", "<leader>sl", function() end, { desc = "Replace current", expr = true })
-
---
--- vim.keymap.set({ "n" }, "<leader>sc", function() end, { desc = "Replace current", expr = true })
---
--- vim.keymap.set(
---     { "n", "x" },
---     "<leader>sw",
---     function() end,
---     { desc = "󱗘 :AltSubstitute word under cursor", expr = true }
--- )
+local cmd = function(cmd)
+    return function()
+        vim.cmd(cmd)
+    end
+end
 
 local config = {
     Sad = {
         color = "pink",
         body = leader,
-        mode = { "n", "v", "x", "o" },
+        mode = { "n", "x", "v" },
         ["<ESC>"] = { nil, { exit = true } },
         L = {
             function()
@@ -40,56 +25,20 @@ local config = {
             { nowait = true, desc = "Operator line", exit = true },
         },
         ----------------------------------------------------------
+        -- local core = { "o", "g", "<cr>" }
 
-        o = {
+        K = {
             function()
                 require("substitute").eol()
             end,
             { nowait = true, desc = "Operator eol", exit = true },
         },
-        ----------------------------------------------------------
-
-        K = {
-            function()
-                require("substitute.range").operator({ motion1 = "iW" })
-            end,
-            { nowait = true, desc = "range Sub", exit = true },
-        },
 
         k = {
-            function()
-                require("substitute.range").word()
-            end,
-            { nowait = true, desc = "range word", exit = true },
-        },
-
-        a = {
-            function()
-                require("substitute.range").operator({ motion1 = "iw", motion2 = "ap" })
-            end,
-            { nowait = true, desc = "range word", exit = true },
-        },
-
-        ----------------------------------------------------------
-        Q = {
             function()
                 require("substitute.exchange").operator()
             end,
             { nowait = true, desc = "Exchange Sub", exit = true },
-        },
-
-        q = {
-            function()
-                require("substitute.exchange").word()
-            end,
-            { nowait = true, desc = "Exchange Sub", exit = true },
-        },
-
-        C = {
-            function()
-                require("substitute.exchange").cancel()
-            end,
-            { desc = "Exchange Sub", nowait = true, exit = true },
         },
 
         ----------------------------------------------------------
@@ -109,43 +58,60 @@ local config = {
         },
 
         -----------------------------------------------------------
-        O = {
-            function()
-                require("spectre").open()
-            end,
-
-            { nowait = true, desc = "Spectre Open", exit = true },
+        o = {
+            cmd("Spectre"),
+            { nowait = true, silent = true, desc = "Open" },
         },
-        V = {
-            function()
-                if vim.fn.mode() == "v" then
-                    require("spectre").open_visual({ select_word = true })
-                else
-                    require("spectre").open_visual()
-                end
-            end,
-
-            { nowait = true, desc = "Specre Word", exit = true },
+        g = {
+            cmd("SpectreToggleLine"),
+            { nowait = true, silent = true, desc = "Toggle line" },
         },
-        X = {
-            function()
-                if vim.fn.mode() == "v" then
-                    require("spectre").open_visual({ select_word = true })
-                else
-                    require("spectre").open_file_search()
-                end
-            end,
-
-            { nowait = true, desc = "Spectre V", exit = true },
+        ["<CR>"] = {
+            cmd("SpectreSelectEntry"),
+            { nowait = true, silent = true, desc = "Select entry" },
         },
-
-        F = {
-            function()
-                require("spectre").open_file_search()
-            end,
-            { nowait = true, desc = "Spectre FS", exit = true },
+        q = {
+            cmd("SpectreSendToQF"),
+            { nowait = true, silent = true, desc = "Send to quickfix" },
+        },
+        n = {
+            cmd("SpectreReplaceCommand"),
+            { nowait = true, silent = true, desc = "Replace command" },
+        },
+        r = {
+            cmd("SpectreRunCurrentReplace"),
+            { nowait = true, silent = true, desc = "Run current replace" },
+        },
+        R = {
+            cmd("SpectreRunReplace"),
+            { nowait = true, silent = true, desc = "Run replace" },
+        },
+        I = {
+            cmd("SpectreIgnoreCase"),
+            { nowait = true, silent = true, desc = "Toggle ignore case" },
         },
 
+        H = {
+            cmd("SpectreHidden"),
+            { nowait = true, silent = true, desc = "Toggle hidden" },
+        },
+        U = {
+            cmd("SpectreToggleLiveUpdate"),
+            { nowait = true, silent = true, desc = "Toggle live update" },
+        },
+        v = {
+            cmd("SpectreChangeView"),
+            { nowait = true, silent = true, desc = "Change view" },
+        },
+        [";"] = {
+            cmd("SpectreResumeLastSearch"),
+            { nowait = true, silent = true, desc = "Resume last search" },
+        },
+        p = {
+            cmd("SpectreShowOptions"),
+            { nowait = true, silent = true, desc = "Show option" },
+        },
+        --
         -----------------------------
 
         w = {
@@ -183,7 +149,7 @@ local config = {
             { desc = "Close UI", exit = true },
         },
 
-        f = {
+        F = {
             function()
                 vim.cmd("MurenFresh")
             end,
@@ -198,17 +164,15 @@ local config = {
     },
 }
 
-bracket = { "s", "W", "w", "S", "E" }
-range = { "a", "k", "K" }
-eol = { "L", "l", "o" }
-sub = { "C", "Q", "q" }
-core = { "O", "F", "V", "X" }
-Muren = { "m", "M", "c", "f", "u" }
+local bracket = { "s", "W", "w", "S", "E" }
+local Muren = { "m", "M", "c", "F", "u" }
+local eol = { "L", "l", "K", "k" }
+local spectre = { "o", "g", "<CR>", "q", "n", "r", "R", "I", "H", "U", "v", ";", "p" }
 
 return {
     config,
     "Sad",
-    { Muren, range, eol, sub, core },
+    { Muren, spectre, eol },
     bracket,
     6,
     3,

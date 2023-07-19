@@ -1,4 +1,4 @@
-local leader = ";e"
+local leader = ";E"
 local options = {
     NR = ": Open the selected region in a new narrowed window",
     NW = ": Open the current visual window in a new narrowed window",

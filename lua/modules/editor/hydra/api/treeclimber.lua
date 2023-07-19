@@ -1,9 +1,8 @@
+--  TODO: (vsedov) (16:38:03 - 17/07/23): fix
 local leader = ";w"
 local tc = require("nvim-treeclimber")
 
 local bracket = { "h", "j", "k", "l", "w" }
-
-local exit = { nil, { exit = true, desc = "EXIT" } }
 
 local config = {
     Climber = {
