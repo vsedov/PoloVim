@@ -251,6 +251,7 @@ M.setup = function()
                         ["n"] = {},
                     },
                 },
+
                 frecency = {
                     default_workspace = "CWD",
                     show_unindexed = false, -- Show all files or only those that have been indexed
