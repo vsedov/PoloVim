@@ -41,7 +41,7 @@ function config.diaglist()
         "<cmd>lua require('diaglist').open_all_diagnostics()<cr>",
         { noremap = true, silent = true }
     )
-    vim.keymap.set("n", "<leader>qq", function()
+    vim.keymap.set("n", "<leader>qf", function()
         vim.diagnostic.setqflist()
 
         require("diaglist").open_buffer_diagnostics()

@@ -476,3 +476,157 @@ user({ -- https://github.com/fregante/GhostText
 			]])
     end,
 })
+--  TODO: (vsedov) (04:19:41 - 20/07/23): this can be a potential hydra: But im not sure if the usecase meets the need.
+user({
+    "RutaTang/quicknote.nvim",
+    event = "VeryLazy",
+    init = function()
+        local quicknote_path = vim.fn.stdpath("state") .. "/quicknote"
+        if not vim.loop.fs_stat(quicknote_path) then
+            vim.fn.system({ "mkdir", quicknote_path })
+        end
+    end,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function(_, opts)
+        require("quicknote").setup(opts)
+        require("quicknote").ShowNoteSigns()
+        -- NOTE: (vsedov) (04:55:24 - 20/07/23): Need to be revamped the binds arent the best and
+        -- there are some intrusive things about this that i think could be improved.
+
+        vim.defer_fn(function()
+            local make_hydra = require("modules.editor.hydra.make_hydra").make_hydra
+            local config = {
+                QuickNote = {
+                    color = "red",
+                    body = "<leader>qq",
+                    mode = { "n" },
+                    on_key = function()
+                        vim.wait(50)
+                    end,
+
+                    ["<ESC>"] = { nil, { exit = true } },
+                    n = {
+                        function()
+                            require("quicknote").NewNoteAtCurrentLine()
+                            require("quicknote").ShowNoteSigns()
+                            require("quicknote").OpenNoteAtCurrentLine()
+                        end,
+                        { exit = true, desc = "New Sign" },
+                    },
+                    ["<cr>"] = {
+                        function()
+                            require("quicknote").OpenNoteAtCurrentLine()
+                        end,
+                        { exit = true, desc = "Open at line" },
+                    },
+                    d = {
+                        function()
+                            require("quicknote").DeleteNoteAtCurrentLine()
+                        end,
+                        { exit = false, desc = "Delete at line" },
+                    },
+                    l = {
+                        function()
+                            require("quicknote").ListNotesForCurrentBuffer()
+                        end,
+                        { exit = true, desc = "List C buffer" },
+                    },
+                    j = {
+                        function()
+                            require("quicknote").JumpToNextNote()
+                        end,
+                        { exit = false, desc = "Jump to next note" },
+                    },
+                    k = {
+                        function()
+                            require("quicknote").JumpToPreviousNote()
+                        end,
+                        { exit = false, desc = "Jump to previous note" },
+                    },
+                    s = {
+                        function()
+                            require("quicknote").ToggleNoteSigns()
+                        end,
+                        { exit = false, desc = "Toggle note signs" },
+                    },
+                    m = {
+                        function()
+                            require("quicknote").ToggleMode()
+                        end,
+                        { exit = true, desc = "Toggle mode" },
+                    },
+                    i = {
+                        function()
+                            require("quicknote").ImportNotesForCurrentBuffer()
+                        end,
+                        { exit = true, desc = "Import C buffer" },
+                    },
+                    x = {
+                        function()
+                            require("quicknote").ExportNotesForCurrentBuffer()
+                        end,
+                        { exit = true, desc = "Export C buffer" },
+                    },
+                    -- Using uppercase letters
+                    N = {
+                        function()
+                            require("quicknote").NewNoteAtCWD()
+                        end,
+                        { exit = true, desc = "New at CWD" },
+                    },
+                    ["<leader>"] = {
+                        function()
+                            require("quicknote").OpenNoteAtCWD()
+                        end,
+                        { exit = true, desc = "Open at CWD" },
+                    },
+                    D = {
+                        function()
+                            require("quicknote").DeleteNoteAtCWD()
+                        end,
+                        { exit = true, desc = "Delete at CWD" },
+                    },
+                    L = {
+                        function()
+                            require("quicknote").ListNotesForCWD()
+                        end,
+                        { exit = true, desc = "List for CWD" },
+                    },
+                    I = {
+                        function()
+                            require("quicknote").ImportNotesForCWD()
+                        end,
+                        { exit = true, desc = "Import for CWD" },
+                    },
+                    X = {
+                        function()
+                            require("quicknote").ExportNotesForCWD()
+                        end,
+                        { exit = true, desc = "Export for CWD" },
+                    },
+
+                    G = {
+                        function()
+                            require("quicknote").SwitchToResidentMode()
+                            -- Use the mode switch functions according to the current mode
+                        end,
+                        { exit = true, desc = "Switch to Resident Mode" },
+                    },
+                    P = {
+                        function()
+                            require("quicknote").SwitchToPortableMode()
+                            -- Use the mode switch functions according to the current mode
+                        end,
+                        { exit = true, desc = "Switch to Portable Mode" },
+                    },
+                },
+            }
+            make_hydra({
+                config,
+                "QuickNote",
+                { { "<leader>", "N", "D", "L" }, { "I", "X", "G", "P" }, { "m", "i", "x" } },
+                { "<cr>", "n", "d", "j", "k", "s", "l" },
+            })
+        end, 500)
+    end,
+})

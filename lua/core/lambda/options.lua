@@ -4,7 +4,7 @@
 --    │                                                                    │
 --    ╰────────────────────────────────────────────────────────────────────╯
 
-local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
+local use_codium = true -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = true
 
 local use_tabnine = true
@@ -105,6 +105,7 @@ lambda.config.abbrev = {
 
 lambda.config.cmp = {
     buffer = true,
+    use_ghost = false,
     luasnip = {
         luasnip_choice = false,
         luasnip = {

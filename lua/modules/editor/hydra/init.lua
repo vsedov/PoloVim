@@ -28,10 +28,8 @@ local function loadHydraModules(path, prefix)
 end
 
 local function loadHydraAPI()
-    local hydra = require("hydra")
     local api_path = fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/api/"
     local api_list = vim.split(fn.glob(api_path .. "*.lua", true), "\n")
-    local M = require(MODULE_PREFIX .. "utils_rewrite")
     local exclude_table = { "init" }
     if lambda.config.movement.movement_type == "flash" then
         table.insert(exclude_table, "leap")
@@ -40,19 +38,14 @@ local function loadHydraAPI()
         table.insert(exclude_table, "tabnine")
     end
 
+    local M = require(MODULE_PREFIX .. "utils_rewrite")
     for _, path in ipairs(api_list) do
         local name = fn.fnamemodify(path, ":t:r")
         local module_name = MODULE_PREFIX .. "api." .. name
 
         when(not vim.tbl_contains(exclude_table, name), function()
             local data = require(module_name)
-            local instance = M.new(data[1], data[2])
-            local hyd = instance.new_hydra
-            local hint = instance:auto_hint_generate(data[3], data[4], data[5], data[6])
-            hyd.hint = hint
-            vim.defer_fn(function()
-                hydra(hyd)
-            end, 100)
+            require(MODULE_PREFIX .. "make_hydra").make_hydra(data)
         end)
     end
 end
