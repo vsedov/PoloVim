@@ -353,7 +353,7 @@ user({
             desc = "Mark clear",
         },
         {
-            "M<cr>",
+            "m<leader>",
             "<cmd>Hi}<cr>",
         },
     },
@@ -440,11 +440,6 @@ user({
                     desc = "new line",
                 },
             },
-            hydra = {
-                border = "single",
-                position = "bottom",
-                hint = {},
-            },
         }
     end,
     keys = {
@@ -478,7 +473,8 @@ user({ -- https://github.com/fregante/GhostText
 })
 --  TODO: (vsedov) (04:19:41 - 20/07/23): this can be a potential hydra: But im not sure if the usecase meets the need.
 user({
-    "RutaTang/quicknote.nvim",
+    "vsedov/quicknote.nvim",
+    branch = "custom_filetype",
     event = "VeryLazy",
     init = function()
         local quicknote_path = vim.fn.stdpath("state") .. "/quicknote"
@@ -488,7 +484,9 @@ user({
     end,
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function(_, opts)
-        require("quicknote").setup(opts)
+        require("quicknote").setup({
+            filetype = "norg",
+        })
         require("quicknote").ShowNoteSigns()
         -- NOTE: (vsedov) (04:55:24 - 20/07/23): Need to be revamped the binds arent the best and
         -- there are some intrusive things about this that i think could be improved.
@@ -497,8 +495,8 @@ user({
             local make_hydra = require("modules.editor.hydra.make_hydra").make_hydra
             local config = {
                 QuickNote = {
-                    color = "red",
-                    body = "<leader>qq",
+                    color = "pink",
+                    body = ";q",
                     mode = { "n" },
                     on_key = function()
                         vim.wait(50)
@@ -629,4 +627,11 @@ user({
             })
         end, 500)
     end,
+})
+
+user({
+    "mvllow/stand.nvim",
+    dependencies = { "rcarriga/nvim-notify" },
+    event = "VeryLazy",
+    config = true,
 })

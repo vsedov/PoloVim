@@ -79,7 +79,6 @@ startup({
 startup({
     "stevearc/resession.nvim",
     cond = lambda.config.tools.session.use_resession,
-    event = "VimEnter",
     opts = {
         autosave = {
             enabled = true,
@@ -139,14 +138,17 @@ startup({
             vim.cmd("wa")
             vim.cmd("qa")
         end)
+        local function loadAndDeleteSession(sessionName)
+            resession.load(sessionName, { attach = false })
+            local ok, err = pcall(resession.delete, sessionName)
+            if not ok then
+                vim.notify(string.format("Error deleting session: %s", err), vim.log.levels.WARN)
+            end
+        end
 
         if vim.tbl_contains(resession.list(), "__quicksave__") then
             vim.defer_fn(function()
-                resession.load("__quicksave__", { attach = false })
-                local ok, err = pcall(resession.delete, "__quicksave__")
-                if not ok then
-                    vim.notify(string.format("Error deleting quicksave session: %s", err), vim.log.levels.WARN)
-                end
+                loadAndDeleteSession("__quicksave__")
             end, 50)
         end
 

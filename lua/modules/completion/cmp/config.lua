@@ -23,14 +23,14 @@ local config = {
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
-    preselect = cmp.PreselectMode.Item, -- None | Item
+    -- performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
+    -- preselect = cmp.PreselectMode.Item, -- None | Item
     -- completion = {
     --     types.cmp.TriggerEvent.Replace,
     -- },
     -- confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
     confirmation = {
-        default_behavior = types.cmp.ConfirmBehavior.Replace, -- Item
+        -- default_behavior = types.cmp.ConfirmBehavior.Replace, -- Item
         get_commit_characters = function(commit_characters)
             return commit_characters
         end,
@@ -66,10 +66,10 @@ local config = {
         end
         return true
     end,
-    confirm_opts = {
-        behavior = cmp.ConfirmBehavior.Insert,
-        select = true,
-    },
+    -- confirm_opts = {
+    --     behavior = cmp.ConfirmBehavior.Insert,
+    --     select = true,
+    -- },
 }
 
 if lambda.config.cmp.cmp_theme == "border" then

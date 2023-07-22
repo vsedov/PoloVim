@@ -233,7 +233,7 @@ lambda.config.colourscheme = {
             core_themes = {
                 -- "tokyonight.nvim",
                 "catppuccin",
-                -- "rose", -- TSMethod'
+                "rose", -- TSMethod'
                 -- -- "kanagawa.nvim",
                 -- "vim-dogrun",
                 -- "palenightfall.nvim", -- do not like this colourscheme

@@ -21,25 +21,11 @@ end
 
 function config.saga()
     require("lspsaga").setup({
-        saga_winblend = 10,
-        move_in_saga = { prev = "<C-,>", next = "<C-.>" },
-        diagnostic_header = { " ", " ", " ", "ﴞ " },
-        max_preview_lines = 10,
-        code_action_icon = "",
-        code_action_num_shortcut = false,
         lightbulb = {
             enable = false,
-            enable_in_insert = false,
-            sign = false,
-            sign_priority = 40,
-            virtual_text = false,
         },
         code_action = {
             num_shortcut = false,
-            keys = {
-                quit = "q",
-                exec = "<CR>",
-            },
         },
         diagnostic = {
             twice_into = true,
@@ -58,37 +44,6 @@ function config.saga()
             show_file = true,
             folder_level = 2,
             respect_root = false,
-        },
-        ui = {
-            -- currently only round theme
-            theme = "round",
-            -- border type can be single,double,rounded,solid,shadow.
-            border = "single",
-            winblend = 0,
-            expand = "",
-            collapse = "",
-            preview = " ",
-            code_action = "💡",
-            diagnostic = "🐞",
-            incoming = " ",
-            outgoing = " ",
-            colors = {
-                --float window normal bakcground color
-                normal_bg = "NONE",
-                --title background
-                title_bg = "#CBA6F7",
-                red = "#e95678",
-                magenta = "#b33076",
-                orange = "#FF8700",
-                yellow = "#f7bb3b",
-                green = "#00bad7",
-                cyan = "#36d0e0",
-                blue = "#61afef",
-                purple = "#CBA6F7",
-                white = "#d1d4cf",
-                black = "#1c1c19",
-            },
-            kind = {},
         },
         outline = {
             win_position = "right",

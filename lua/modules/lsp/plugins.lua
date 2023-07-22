@@ -48,11 +48,13 @@ lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
 
 lsp({
     "glepnir/lspsaga.nvim",
+    event = "LspAttach",
     cond = not lambda.config.lsp.use_navigator,
-    event = "VeryLazy",
     cmd = { "Lspsaga" },
     keys = {
         { "gr", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
+        { "gR", "<cmd>Lspsaga finder imp<CR>", desc = "Toggle Lspsaga finder" },
+
         { "cc", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
         {
             "gd",
@@ -70,7 +72,7 @@ lsp({
             desc = "Toggle Lspsaga goto_type_definition",
         },
         {
-            "gR",
+            "<leader>gR",
             "<cmd>Lspsaga rename ++project<CR>",
             desc = "Toggle Lspsaga rename ++project",
         },
@@ -88,18 +90,14 @@ lsp({
         {
             "[E",
             function()
-                require("lspsaga.diagnostic").goto_prev({
-                    severity = vim.diagnostic.severity.ERROR,
-                })
+                require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
             end,
             desc = "Toggle Lspsaga diagnostic_prev ERROR",
         },
         {
             "]E",
             function()
-                require("lspsaga.diagnostic").goto_next({
-                    severity = vim.diagnostic.severity.ERROR,
-                })
+                require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
             end,
             desc = "Toggle Lspsaga diagnostic_next ERROR",
         },

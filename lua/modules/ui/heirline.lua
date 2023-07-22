@@ -541,7 +541,7 @@ local SearchCount = {
         return vim.v.hlsearch ~= 0 and vim.o.cmdheight == 0
     end,
     init = function(self)
-        local ok, search = pcall(vim.fn.searchcount)
+        local ok, search = lambda.pcall(vim.fn.searchcount)
         if ok and search.total then
             self.search = search
         end

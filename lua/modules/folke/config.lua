@@ -82,7 +82,7 @@ function config.edgy()
             },
             { ft = "qf", title = "QuickFix" },
             { ft = "help", size = { height = 20 } },
-            { ft = "spectre_panel", size = { height = 0.4 } },
+            -- { ft = "spectre_panel", size = { height = 0.4 } },
             "terminal",
 
             { ft = "dapui_watches", title = "Watches" },
@@ -121,6 +121,7 @@ function config.edgy()
             },
         },
         left = {
+            { ft = "calendar" },
             {
                 title = "Neo-Tree",
                 ft = "neo-tree",

@@ -66,9 +66,29 @@ git({
 git({
     "NeogitOrg/neogit", -- keys = {
     lazy = true,
-    dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "nvim-telescope/telescope.nvim" },
-    cmd = { "Neogit" },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "sindrets/diffview.nvim",
+        "nvim-telescope/telescope.nvim",
+        "nvim-telescope/telescope-fzf-native.nvim",
+    },
+    event = "VeryLazy",
     config = conf.neogit,
+    opts = {
+        disable_insert_on_commit = "auto",
+        signs = {
+            section = { "", "" }, -- "", ""
+            item = { "▸", "▾" },
+            hunk = { "樂", "" },
+        },
+        telescope_sorter = function()
+            return require("telescope").extensions.fzf.native_fzf_sorter()
+        end,
+        integrations = {
+            telescope = true,
+            diffview = true,
+        },
+    },
 })
 
 git({
@@ -169,8 +189,6 @@ git({
         },
     },
 })
--- -- Diff arbitrary blocks of text with each other
-git({ "AndrewRadev/linediff.vim", cmd = "Linediff" })
 
 git({
     "topaxi/gh-actions.nvim",
