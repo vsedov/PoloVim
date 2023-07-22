@@ -416,8 +416,7 @@ user({
     keys = { "<c-i>", "<c-o>" },
 })
 user({
-    "vsedov/multicursors.nvim",
-    branch = "hydra_hint",
+    "smoka7/multicursors.nvim",
     opts = function()
         local N = require("multicursors.normal_mode")
         local I = require("multicursors.insert_mode")
@@ -464,7 +463,6 @@ user({ -- https://github.com/fregante/GhostText
     "subnut/nvim-ghost.nvim",
     build = ":call nvim_ghost#installer#install()",
     lazy = false,
-    cmd = "GhostTextStart",
     config = function()
         vim.g.nvim_ghost_super_quiet = 1
         vim.cmd([[
@@ -478,14 +476,21 @@ user({ -- https://github.com/fregante/GhostText
 })
 --  TODO: (vsedov) (04:19:41 - 20/07/23): this can be a potential hydra: But im not sure if the usecase meets the need.
 user({
-    "RutaTang/quicknote.nvim",
-    event = "VeryLazy",
+    "vsedov/quicknote.nvim",
+    branch = "custom_filetype",
+
+    keys = {
+        ";q",
+    },
     init = function()
         local quicknote_path = vim.fn.stdpath("state") .. "/quicknote"
         if not vim.loop.fs_stat(quicknote_path) then
             vim.fn.system({ "mkdir", quicknote_path })
         end
     end,
+    opts = {
+        filetype = "norg",
+    },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function(_, opts)
         require("quicknote").setup(opts)
@@ -498,7 +503,7 @@ user({
             local config = {
                 QuickNote = {
                     color = "red",
-                    body = "<leader>qq",
+                    body = ";q",
                     mode = { "n" },
                     on_key = function()
                         vim.wait(50)
@@ -507,14 +512,14 @@ user({
                     ["<ESC>"] = { nil, { exit = true } },
                     n = {
                         function()
-                            require("quicknote").NewNoteAtCurrentLine()
-                            require("quicknote").ShowNoteSigns()
                             require("quicknote").OpenNoteAtCurrentLine()
                         end,
                         { exit = true, desc = "New Sign" },
                     },
                     ["<cr>"] = {
                         function()
+                            require("quicknote").NewNoteAtCurrentLine()
+                            require("quicknote").ShowNoteSigns()
                             require("quicknote").OpenNoteAtCurrentLine()
                         end,
                         { exit = true, desc = "Open at line" },
