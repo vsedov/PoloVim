@@ -76,6 +76,7 @@ local config = {
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
         ["<cr>"] = { ":silent lua lambda.clever_tcd()<cr>:Neogit<cr>", { exit = true, desc = "NeoGit" } },
+        c = { ":Neogit commit<CR>", { exit = true, nowait = true, desc = "Commit" } },
         l = { ":Neogit log<CR>", { exit = true, nowait = true, desc = "Log" } },
         m = { ":Neogit merge<CR>", { exit = true, nowait = true, desc = "Merege" } },
         H = { ":Neogit branch<CR>", { exit = true, nowait = true, desc = "Branch" } },
@@ -133,7 +134,7 @@ local config = {
 local bracket = { "<cr>", "J", "K", "s", "S" }
 
 local binds = {
-    { "l", "m", "H" },
+    { "c", "l", "m", "H" },
     { "r", "R", "x", "u" },
     { "D", "p", "b", "B", "q", "Q" },
     { "d", "M", "C", "/" },

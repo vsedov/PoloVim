@@ -112,13 +112,22 @@ mini({
     cond = lambda.config.ui.use_mini_animate,
     event = "VeryLazy",
     opts = function()
+        -- don't use animate when scrolling with the mouse
+        local mouse_scrolled = false
+        for _, scroll in ipairs({ "Up", "Down" }) do
+            local key = "<ScrollWheel" .. scroll .. ">"
+            vim.keymap.set({ "", "i" }, key, function()
+                mouse_scrolled = true
+                return key
+            end, { expr = true })
+        end
+
         local animate = require("mini.animate")
         return {
             cursor = {
                 enable = true,
                 timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             },
-            -- NOTE: (vsedov) (18:32:46 - 22/07/23): HAVE TO DISABLE THIS FOR NEOGIT TELESCOPE TO WORK
             resize = {
                 enable = false,
             },
@@ -131,6 +140,18 @@ mini({
             },
             scroll = {
                 enable = false,
+
+                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+                subscroll = animate.gen_subscroll.equal({
+                    max_output_steps = 60,
+                    predicate = function(total_scroll)
+                        if mouse_scrolled then
+                            mouse_scrolled = false
+                            return false
+                        end
+                        return total_scroll > 1
+                    end,
+                }),
             },
         }
     end,
