@@ -150,15 +150,6 @@ ui({
     config = conf.illuminate,
 })
 
-ui({
-    "nyngwang/murmur.lua",
-    lazy = true,
-    cond = lambda.config.ui.use_murmur,
-    event = "VeryLazy",
-    config = conf.murmur,
-})
-
---  ──────────────────────────────────────────────────────────────────────
 --  ──────────────────────────────────────────────────────────────────────
 
 ui({

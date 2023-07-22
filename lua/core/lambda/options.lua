@@ -181,7 +181,6 @@ lambda.config.lsp = {
 
 lambda.config.ui = {
     use_virtcol = true,
-    use_murmur = false, -- this causes issues with my yanky config -
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_tint = true, -- Might not be great for certain colourschemes
