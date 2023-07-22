@@ -30,12 +30,13 @@ local config = {
     -- },
     -- confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
     confirmation = {
-        default_behavior = types.cmp.ConfirmBehavior.Insert,
+        default_behavior = types.cmp.ConfirmBehavior.Replace, -- Item
         get_commit_characters = function(commit_characters)
             return commit_characters
         end,
     },
-    experimental = { ghost_text = { hl_group = "Dimmed" } },
+    -- experimental = { ghost_text = { hl_group = "Dimmed" } },
+    experimental = { ghost_text = lambda.config.cmp.use_ghost },
 
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
@@ -182,15 +183,15 @@ elseif lambda.config.cmp.cmp_theme == "extra" then
         }),
     }
 end
+
 config.matching = {
     disallow_fuzzy_matching = false,
     disallow_fullfuzzy_matching = false,
-    disallow_partial_fuzzy_matching = true,
+    disallow_partial_fuzzy_matching = false,
     disallow_partial_matching = false,
     disallow_prefix_unmatching = false,
 }
 
-cmp.config.compare.locality.lines_count = 300
 local sorting = {
     priority_weight = 2,
     comparators = {

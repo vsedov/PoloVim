@@ -65,3 +65,8 @@ notes({
         kitty_tmux_write_delay = 10,
     },
 })
+notes({
+    "aaron-p1/virt-notes.nvim",
+    keys = { "<leader>va", "<leader>vc", "<leader>ve", "<leader>vp", "<leader>vx", "<leader>vd" },
+    config = true,
+})

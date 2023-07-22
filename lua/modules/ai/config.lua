@@ -144,13 +144,9 @@ function config.tabnine()
         disable_auto_comment = true,
         accept_keymap = "<C-l>",
         dismiss_keymap = "<C-e>",
-        debounce_ms = 100,
         suggestion_color = { gui = "#808080", cterm = 244 },
         execlude_filetypes = { "TelescopePrompt" },
     })
-    vim.api.nvim_set_keymap("x", ";a", "", { noremap = true, callback = require("tabnine.chat").open })
-    vim.api.nvim_set_keymap("i", ";a", "", { noremap = true, callback = require("tabnine.chat").open })
-    vim.api.nvim_set_keymap("n", ";a", "", { noremap = true, callback = require("tabnine.chat").open })
 end
 
 function config.codium()

@@ -171,9 +171,3 @@ editor({
     },
     config = true,
 })
-
-editor({
-    "aaron-p1/virt-notes.nvim",
-    keys = { "<leader>v" },
-    config = true,
-})

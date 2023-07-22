@@ -2,6 +2,7 @@ local config = {}
 
 function config.telescope()
     require("utils.telescope").setup()
+    require("telescope").load_extension("fzf")
 end
 
 function config.fzf()

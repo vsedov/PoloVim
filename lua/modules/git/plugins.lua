@@ -67,8 +67,8 @@ git({
     "NeogitOrg/neogit", -- keys = {
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "nvim-telescope/telescope.nvim" },
-    config = conf.neogit,
     cmd = { "Neogit" },
+    config = conf.neogit,
 })
 
 git({
