@@ -1,14 +1,7 @@
 local files = require("overseer.files")
 
 return {
-
-    condition = {
-        callback = function(opts)
-            return vim.bo.filetype == "haskell"
-        end,
-    },
-
-    generator = function(_)
+    generator = function(_, cb)
         local ret = {}
         local priority = 60
         local pr = function()
@@ -31,6 +24,7 @@ return {
             },
             priority = pr(),
         })
-        return ret
+
+        cb(ret)
     end,
 }

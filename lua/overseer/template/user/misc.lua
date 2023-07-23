@@ -7,15 +7,9 @@ return {
                 builder = function()
                     OvTermNum = OvTermNum + 1
                     return {
-                        name = "Zsh" .. OvTermNum,
+                        name = "zsh" .. OvTermNum,
                         cmd = "zsh",
-                        components = {
-                            "default",
-                            {
-                                "user.start_open",
-                                start_insert = true,
-                            },
-                        },
+                        components = { "default" },
                     }
                 end,
                 priority = 1,
@@ -27,14 +21,7 @@ return {
                     return {
                         name = "lazygit",
                         cmd = "lazygit",
-                        components = {
-                            "default",
-                            "unique",
-                            -- {
-                            --     "user.start_open",
-                            --     start_insert = true,
-                            -- },
-                        },
+                        components = { "default", "unique" },
                     }
                 end,
                 priority = 2,
@@ -70,14 +57,7 @@ return {
                     return {
                         name = "lazydocker",
                         cmd = "lazydocker",
-                        components = {
-                            "default",
-                            "unique",
-                            -- {
-                            --     "user.start_open",
-                            --     start_insert = true,
-                            -- },
-                        },
+                        components = { "default", "unique" },
                     }
                 end,
                 priority = 3,
@@ -89,14 +69,7 @@ return {
                     return {
                         name = "btop",
                         cmd = "btop",
-                        components = {
-                            "default",
-                            "unique",
-                            {
-                                "user.start_open",
-                                goto_prev = true,
-                            },
-                        },
+                        components = { "default", "unique" },
                     }
                 end,
                 priority = 3,
@@ -124,7 +97,7 @@ return {
                 end,
                 priority = 5,
                 condition = {
-                    dir = "/home/viv/GitHub/PhD/Thesis/thesis",
+                    dir = "/home/viv/GitHub/PhD/paper/",
                 },
             },
             {
@@ -145,7 +118,7 @@ return {
                 end,
                 priority = 5,
                 condition = {
-                    dir = "/home/viv/GitHub/PhD/Thesis/thesis",
+                    dir = "/home/viv/GitHub/PhD/paper/",
                 },
             },
             {
@@ -159,7 +132,7 @@ return {
                 end,
                 priority = 5,
                 condition = {
-                    dir = "/home/viv/GitHub/PhD/Thesis/thesis",
+                    dir = "/home/viv/GitHub/PhD/paper/",
                 },
             },
             {

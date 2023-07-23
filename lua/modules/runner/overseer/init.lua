@@ -2,7 +2,6 @@ local overseer = require("overseer")
 local STATUS = require("overseer.constants").STATUS
 local util = require("overseer.util")
 local Border = lambda.style.border.type_0
-local counter = 0
 
 local function close_task(bufnr)
     for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(0)) do

@@ -61,6 +61,16 @@ buffer({
 buffer({
     "stevearc/oil.nvim",
     init = function()
+        vim.api.nvim_create_autocmd("BufNew", {
+            callback = function(args)
+                if vim.fn.isdirectory(args.file) == 1 then
+                    require("lazy").load({ plugins = { "oil.nvim" } })
+                    -- Once oil is loaded, we can delete this autocmd
+                    return true
+                end
+            end,
+        })
+
         vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
         vim.keymap.set("n", "<leader>-", require("oil").open_float, { desc = "Open parent directory" })
         if vim.fn.argc() == 1 then
@@ -69,17 +79,6 @@ buffer({
             if stat and stat.type == "directory" then
                 require("lazy").load({ plugins = { "oil.nvim" } })
             end
-        end
-        if not require("lazy.core.config").plugins["oil.nvim"]._.loaded then
-            vim.api.nvim_create_autocmd("BufNew", {
-                callback = function(args)
-                    if vim.fn.isdirectory(args.file) == 1 then
-                        require("lazy").load({ plugins = { "oil.nvim" } })
-                        -- Once oil is loaded, we can delete this autocmd
-                        return true
-                    end
-                end,
-            })
         end
     end,
     opts = {

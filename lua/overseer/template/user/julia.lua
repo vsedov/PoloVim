@@ -1,3 +1,5 @@
+-- https://github.com/Oliver-Leete/Configs/tree/master/nvim/lua/neotest/adapters
+--  TODO: (vsedov) (19:06:07 - 23/07/23): Need to come back and refactor this
 local constants = require("overseer.constants")
 local files = require("overseer.files")
 local TAG = constants.TAG
@@ -72,13 +74,7 @@ return {
                 return {
                     name = "Julia Repl " .. julReplNum,
                     cmd = juliaCommand,
-                    components = {
-                        "default",
-                        {
-                            "user.start_open",
-                            start_insert = true,
-                        },
-                    },
+                    components = { "default" },
                 }
             end,
             priority = pr(),
@@ -90,13 +86,7 @@ return {
                 return {
                     name = vim.g.project .. " Project Repl " .. julReplNum,
                     cmd = juliaCommand .. "--project",
-                    components = {
-                        "default",
-                        {
-                            "user.start_open",
-                            start_insert = true,
-                        },
-                    },
+                    components = { "default" },
                 }
             end,
             condition = isProject,
@@ -109,13 +99,7 @@ return {
                 return {
                     name = otherProjectName .. " Project Repl " .. julReplNum,
                     cmd = "julia --threads=auto --project=" .. otherProject,
-                    components = {
-                        "default",
-                        {
-                            "user.start_open",
-                            start_insert = true,
-                        },
-                    },
+                    components = { "default" },
                 }
             end,
             condition = {
@@ -262,7 +246,7 @@ return {
                 tskName = "Running " .. vim.fn.expand("%:t:r") .. "Interactivly",
                 cmd = juliaCommand .. "-i " .. vim.fn.expand("%:p"),
                 condition = isFile,
-                components = { "default", "unique", "user.start_open" },
+                components = { "default", "unique" },
             },
             {
                 name = "Profile Package Imports",
@@ -354,16 +338,16 @@ return {
                         return {
                             name = san_name .. " Infiltration",
                             cmd = [[julia --threads=auto --project -i -e "
-                                using Revise, TestItemRunner, Infiltrator, ]] .. vim.g.project .. [[;
-                                run(\`/home/oleete/.config/bin/nvrWS 'lua No_Using_Toggle(\"Main.@infiltrate cond = ]] .. cond .. [[\")'\`)
+                                using Revise, TestItemRunner, Infiltrator, ]]
+                                .. vim.g.project
+                                .. [[;
+                                run(\`/home/viv/.config/bin/nvrWS 'lua No_Using_Toggle(\"Main.@infiltrate cond = ]]
+                                .. cond
+                                .. [[\")'\`)
                                 "]],
                             components = {
                                 "default",
                                 "unique",
-                                {
-                                    "user.start_open",
-                                    goto_prev = true,
-                                },
                                 {
                                     "user.send_on_open",
                                     send_on_open = [[@run_package_tests filter=ti->(ti.name == ]] .. name .. [[)]],
@@ -410,7 +394,7 @@ return {
                     return {
                         name = name .. " profiling",
                         cmd = juliaCommand
-                            .. "/home/oleete/.config/nvim/filetype/julia/profBench.jl '"
+                            .. "/home/viv/.config/nvim/filetype/julia/profBench.jl '"
                             .. vim.fn.getcwd()
                             .. "' '"
                             .. command
@@ -429,7 +413,7 @@ return {
                     return {
                         name = name .. " profiling allocs",
                         cmd = juliaCommand
-                            .. "/home/oleete/.config/nvim/filetype/julia/profAllocBench.jl '"
+                            .. "/home/viv/.config/nvim/filetype/julia/profAllocBench.jl '"
                             .. vim.fn.getcwd()
                             .. "' '"
                             .. command

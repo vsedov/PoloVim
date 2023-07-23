@@ -1,4 +1,5 @@
 local leader = "<leader>h"
+local gitrepo = vim.fn.isdirectory(".git/index")
 local gitsigns = lambda.reqidx("gitsigns")
 local function wrap(fn, ...)
     local args = { ... }
@@ -7,6 +8,7 @@ local function wrap(fn, ...)
         fn(unpack(args, nargs))
     end
 end
+-- Check if git is here
 
 local function diffmaster()
     local branch = "origin/master"
@@ -60,18 +62,23 @@ local config = {
             vim.cmd("mkview")
             vim.cmd("silent! %foldopen!")
             -- vim.bo.modifiable = false
-            gitsigns.toggle_signs(true)
-            gitsigns.toggle_linehl(true)
-            gitsigns.toggle_deleted(true)
+            -- if vim.
+            if gitrepo then
+                gitsigns.toggle_signs(true)
+                gitsigns.toggle_linehl(true)
+                gitsigns.toggle_deleted(true)
+            end
         end,
         on_exit = function()
             local cursor_pos = vim.api.nvim_win_get_cursor(0)
             vim.cmd("loadview")
             vim.api.nvim_win_set_cursor(0, cursor_pos)
             vim.cmd("normal zv")
-            gitsigns.toggle_signs(true)
-            gitsigns.toggle_linehl(false)
-            gitsigns.toggle_deleted(false)
+            if gitrepo then
+                gitsigns.toggle_signs(true)
+                gitsigns.toggle_linehl(false)
+                gitsigns.toggle_deleted(false)
+            end
         end,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
@@ -124,7 +131,6 @@ local config = {
             end,
             { exit = true, desc = "blame_line" },
         },
-        ["/"] = { gitsigns.show, { exit = true, desc = "Show" } },
         b = { gitsigns.blame_line, { desc = "Blame Line" } },
         M = { diffmaster, { silent = true, exit = true, desc = "DiffMaster" } },
         d = { ":DiffviewOpen<CR>", { silent = true, exit = true, desc = "DiffView" } },
@@ -137,7 +143,7 @@ local binds = {
     { "c", "l", "m", "H" },
     { "r", "R", "x", "u" },
     { "D", "p", "b", "B", "q", "Q" },
-    { "d", "M", "C", "/" },
+    { "d", "M", "C" },
 }
 return {
     config,

@@ -84,7 +84,6 @@ function config.edgy()
             { ft = "help", size = { height = 20 } },
             { ft = "spectre_panel", size = { height = 0.4 } },
             "terminal",
-
             { ft = "dapui_watches", title = "Watches" },
             { ft = "dap-repl", title = "Debug REPL" },
             { ft = "dapui_console", title = "Debug Console" },

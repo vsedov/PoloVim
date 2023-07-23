@@ -1,10 +1,6 @@
 local conf = require("modules.git.config")
 local git = require("core.pack").package
 
-local function browser_open()
-    return { action_callback = require("gitlinker.actions").open_in_browser }
-end
-
 -- -- github GH ui
 git({
     "pwntester/octo.nvim",
@@ -121,53 +117,15 @@ git({
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
         {
-            "<localleader>gu",
-            function()
-                require("gitlinker").get_buf_range_url("n")
-            end,
-            desc = "gitlinker: copy line to clipboard",
-            mode = "n",
+            "<leader>gl",
+            mode = { "v", "n" },
         },
         {
-            "<localleader>gu",
-            function()
-                require("gitlinker").get_buf_range_url("v")
-            end,
-            desc = "gitlinker: copy range to clipboard",
-            mode = "v",
-        },
-        {
-            "<localleader>go",
-            function()
-                require("gitlinker").get_repo_url(browser_open())
-            end,
-            desc = "gitlinker: open in browser",
-        },
-        {
-            "<localleader>go",
-            function()
-                require("gitlinker").get_buf_range_url("n", browser_open())
-            end,
-            desc = "gitlinker: open current line in browser",
-        },
-        {
-            "<localleader>go",
-            function()
-                require("gitlinker").get_buf_range_url("v", browser_open())
-            end,
-            desc = "gitlinker: open current selection in browser",
-            mode = "v",
+            "<leader>gL",
+            mode = { "v", "n" },
         },
     },
-    opts = {
-        mappings = nil,
-        callbacks = {
-            ["github-work"] = function(url_data) -- Resolve the host for work repositories
-                url_data.host = "github.com"
-                return require("gitlinker.hosts").get_github_type_url(url_data)
-            end,
-        },
-    },
+    config = true,
 })
 -- -- Diff arbitrary blocks of text with each other
 git({ "AndrewRadev/linediff.vim", cmd = "Linediff" })

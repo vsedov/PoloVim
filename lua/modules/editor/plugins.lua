@@ -63,16 +63,6 @@ editor({
     config = conf.comment_box,
 })
 
--- -- --[[ This thing causes issues with respect to cmdheight=0 ]]
-editor({
-    "chaoren/vim-wordmotion",
-    lazy = true,
-    event = "VeryLazy",
-    config = function()
-        vim.g.wordmotion_prefix = ","
-    end,
-})
-
 editor({
     "anuvyklack/vim-smartword",
     lazy = true,

@@ -7,14 +7,7 @@ return {
                     return {
                         name = "View LSP Logs",
                         cmd = "tail --follow --retry ~/.local/state/nvim/lsp.log | less -S",
-                        components = {
-                            "default",
-                            "unique",
-                            {
-                                "user.start_open",
-                                goto_prev = true,
-                            },
-                        },
+                        components = { "default", "unique" },
                     }
                 end,
                 priority = 150,
@@ -26,14 +19,7 @@ return {
                     return {
                         name = "View Neovim Logs",
                         cmd = "tail --follow --retry ~/.local/state/nvim/log | less -S",
-                        components = {
-                            "default",
-                            "unique",
-                            {
-                                "user.start_open",
-                                goto_prev = true,
-                            },
-                        },
+                        components = { "default", "unique" },
                     }
                 end,
                 priority = 150,
@@ -81,14 +67,7 @@ return {
                     return {
                         name = "Show " .. log,
                         cmd = "tail --follow --retry " .. log,
-                        components = {
-                            "default",
-                            "unique",
-                            {
-                                "user.start_open",
-                                goto_prev = true,
-                            },
-                        },
+                        components = { "default", "unique" },
                     }
                 end,
                 priority = 150,
