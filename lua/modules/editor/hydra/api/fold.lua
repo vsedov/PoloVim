@@ -16,7 +16,7 @@ local config = {
     Fold = {
         color = "pink",
         body = leader,
-        mode = { "n", "v", "x", "o" },
+        mode = { "n" },
         ["<ESC>"] = { nil, { exit = true } },
         ["<cr>"] = {
             function() end,

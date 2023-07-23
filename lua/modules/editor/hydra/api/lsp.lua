@@ -1,16 +1,27 @@
-local leader = "H"
+local leader = "J"
 local utils = require("modules.lsp.lsp.utils")
+local mx = function(feedkeys, type)
+    local type = type or "m"
+    return function()
+        if type == "v" then
+            vim.api.nvim_feedkeys(vim.keycode("v", true, true, true), "n", true)
+        end
 
+        vim.api.nvim_feedkeys(vim.keycode(feedkeys, true, false, true), type, false)
+    end
+end
 local lsp_lens_active = false
-local bracket = { "j", "k", "w" }
+local bracket = { "J", "j", "k", "w" }
 
 local config = {
     Lsp = {
         color = "pink",
         body = leader,
-        mode = { "n", "v", "x", "o" },
+        mode = { "n", "v" },
 
         ["<ESC>"] = { nil, { exit = true } },
+        ["J"] = { mx("g;"), { nowait = true, desc = "Core g Key ", exit = true } }, -- ts: inner conditional
+
         j = {
             function()
                 vim.diagnostic.goto_prev()

@@ -62,6 +62,17 @@ local config = {
             cmd("Spectre"),
             { nowait = true, silent = true, desc = "Open" },
         },
+        O = {
+            function()
+                if vim.fn.mode() == "n" then
+                    require("spectre").open_visual({ select_word = true })
+                else
+                    require("spectre").open_visual()
+                end
+            end,
+            { nowait = true, silent = true, desc = "Open", mode = { "v", "n" } },
+        },
+
         g = {
             cmd("SpectreToggleLine"),
             { nowait = true, silent = true, desc = "Toggle line" },
@@ -111,6 +122,7 @@ local config = {
             cmd("SpectreShowOptions"),
             { nowait = true, silent = true, desc = "Show option" },
         },
+
         --
         -----------------------------
 
@@ -167,7 +179,7 @@ local config = {
 local bracket = { "s", "W", "w", "S", "E" }
 local Muren = { "m", "M", "c", "F", "u" }
 local eol = { "L", "l", "K", "k" }
-local spectre = { "o", "g", "<CR>", "q", "n", "r", "R", "I", "H", "U", "v", ";", "p" }
+local spectre = { "o", "O", "g", "<CR>", "q", "n", "r", "R", "I", "H", "U", "v", ";", "p" }
 
 return {
     config,

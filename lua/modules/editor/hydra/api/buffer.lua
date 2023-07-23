@@ -59,8 +59,11 @@ local config = {
 
         B = {
             function()
-                vim.ui.input({ prompt = "enter the buffer you want to jump to" }, function(value)
-                    require("three").wrap(require("three").jump_to, value)
+                vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
+                    idx = idx and tonumber(idx)
+                    if idx then
+                        require("three").move_buffer(idx)
+                    end
                 end)
             end,
             { desc = "Jump to Buf", exit = true },
@@ -82,12 +85,6 @@ local config = {
                 require("three").hide_buffer()
             end,
             { desc = "[B]uffer [H]ide", exit = true },
-        },
-        m = {
-            function()
-                buffer_move()
-            end,
-            { desc = "[B]uffer [M]ove", exit = true },
         },
 
         P = {
@@ -199,31 +196,31 @@ local config = {
             function()
                 hbac.toggle_pin()
             end,
-            { desc = "Hbac-Toggle Buf", exit = true },
+            { desc = "Hbac-Toggle Buf", exit = false },
         },
         ["<c-x>"] = {
             function()
                 hbac.close_unpinned()
             end,
-            { desc = "Hbac-Close Upin [C]", exit = true },
+            { desc = "Hbac-Close Upin [C]", exit = false },
         },
         ["<c-p>"] = {
             function()
                 hbac.pin_all()
             end,
-            { desc = "Hbac-Pin All", exit = true },
+            { desc = "Hbac-Pin All", exit = false },
         },
         ["<c-u>"] = {
             function()
                 hbac.unpin_all()
             end,
-            { desc = "Hbac-Unpin All", exit = true },
+            { desc = "Hbac-Unpin All", exit = false },
         },
         ["<c-t>"] = {
             function()
                 hbac.toggle_autoclose()
             end,
-            { desc = "Hbac AutoClose T", exit = true },
+            { desc = "Hbac AutoClose T", exit = false },
         },
     },
 }
@@ -232,7 +229,7 @@ return {
     config,
     "Buffer",
     {
-        { "P", "q", "Q", "M", "m" },
+        { "P", "q", "Q", "M" },
         { "e", ">", "<", "p", "c" },
         { "D", "d" },
         { "1", "2", "3" },

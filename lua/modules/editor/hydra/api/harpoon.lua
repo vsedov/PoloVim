@@ -110,7 +110,7 @@ local config = {
     Harpoon = {
         color = "red",
         body = leader,
-        mode = { "n", "v", "x", "o" },
+        mode = { "n" },
         ["<ESC>"] = { nil, { exit = true } },
         s = {
             function()

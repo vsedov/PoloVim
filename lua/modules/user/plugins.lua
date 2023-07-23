@@ -2,6 +2,7 @@ local user = require("core.pack").package
 local api, fn = vim.api, vim.fn
 user({
     "Dhanus3133/LeetBuddy.nvim",
+
     lazy = true,
     dependencies = {
         "nvim-lua/plenary.nvim",
@@ -439,10 +440,14 @@ user({
                     desc = "new line",
                 },
             },
-            hydra = {
-                border = "single",
-                position = "bottom",
-                hint = {},
+            -- accepted values:
+            -- -1 true: generate hints
+            -- -2 false: don't generate hints
+            -- -3 [[multi line string]] provide your own hints
+            generate_hints = {
+                normal = true,
+                insert = true,
+                extend = true,
             },
         }
     end,
@@ -454,11 +459,14 @@ user({
         },
     },
 })
+
+--  ──────────────────────────────────────────────────────────────────────
 user({
     "thinca/vim-qfreplace",
     ft = "qf",
     lazy = true,
 })
+--  ──────────────────────────────────────────────────────────────────────
 user({ -- https://github.com/fregante/GhostText
     "subnut/nvim-ghost.nvim",
     build = ":call nvim_ghost#installer#install()",
@@ -474,9 +482,10 @@ user({ -- https://github.com/fregante/GhostText
 			]])
     end,
 })
+--  ──────────────────────────────────────────────────────────────────────
 --  TODO: (vsedov) (04:19:41 - 20/07/23): this can be a potential hydra: But im not sure if the usecase meets the need.
 user({
-    "vsedov/quicknote.nvim",
+    "RutaTang/quicknote.nvim",
     branch = "custom_filetype",
 
     keys = {
@@ -643,65 +652,4 @@ user({
     config = function()
         vim.g.wordmotion_prefix = ","
     end,
-})
-
-user({
-    "00sapo/visual.nvim",
-    dependencies = { "anuvyklack/keymap-amend.nvim" },
-    cond = false,
-    config = function()
-        require("visual").setup({
-            mappings = {
-                -- a list of command names, mapped to a lhs of mapping for visual and
-                -- normal mode
-                WORD_end_next = "E", -- select next WORD (punctuation included), cursor at end, previous space included
-                word_end_next = "e", -- same as E but without punctuation
-                WORD_end_prev = "gE", -- same as E but for previous words
-                word_end_prev = "ge", -- same as e but for previous words
-                WORD_start_next = "W", -- select next word including next its space, cursor at beginning, with punctuation
-                word_start_next = "w", -- same as W but without punctuation
-                WORD_start_prev = "B", -- select previous WORD including its next space, with punctuation, cursor at beginnning
-                word_start_prev = "b", -- same as B but without punctuation
-                append_at_cursor = "a", -- append at cursor position
-                insert_at_cursor = "i", -- insert at cursor position
-                select_inside = "I", -- select inside
-                select_around = "A", -- select around
-                extending_mode = "-",
-                next_selection = "L", -- under work
-                prev_selection = "H", -- under work
-            },
-            commands = {
-                -- what each command name does:
-                WORD_end_next = {
-                    pre_keys = { "E", countable = true },
-                    -- The editor is switched to normal mode and these keys are executed.
-                    -- The editor is not switched to normal mode if pre_keys=nil.
-                    keys = { "gElo", countable = false },
-                    -- Then, the editor is switched to visual mode and these keys are executed
-                    -- In place of keys, you can use one or more functions (no argument
-                    -- allowed), or both of them.
-                    -- No switch to visual mode happens if keys=nil.
-                    -- The `countable` parameters allows each command to be counted.
-                    -- It is true by default.
-                },
-
-                word_end_next = { { "e" }, { "gelo", countable = false } },
-                WORD_end_prev = { { "gE" }, { "gElo", countable = false } },
-                word_end_prev = { { "ge" }, { "gelo", countable = false } },
-                word_start_next = { { "w" }, { "who", countable = false } },
-                WORD_start_next = { { "W" }, { "Who", countable = false } },
-                word_start_prev = { { "b" }, { "iwwho", countable = false } },
-                WORD_start_prev = { { "B" }, { "iWWho", countable = false } },
-                find_next = { false, { "f" } },
-                find_prev = { false, { "F" } },
-                till_next = { false, { "t" } },
-                till_prev = { false, { "T" } },
-                append_at_cursor = { false, { "<esc>a", countable = false } },
-                insert_at_cursor = { false, { "<esc>i", countable = false } },
-                select_inside = { false, { "<esc>vi", countable = false } },
-                select_around = { false, { "<esc>va", countable = false } },
-            },
-        })
-    end,
-    event = "VeryLazy", -- this is for making sure our keymaps are applied after the others: we call the previous mapppings, but other plugins/configs usually not!
 })
