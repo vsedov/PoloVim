@@ -1,4 +1,4 @@
-# A Full Neovim IDE
+# A Full Neovim IDE ; The one true hydra god 
 
 ## I love speed, I love plugins, Speed implies Plugins
 
