@@ -190,6 +190,27 @@ local config = {
             end,
             { nowait = true, exit = true, desc = "Chat  Complete code" },
         },
+        B = {
+            function()
+                vim.cmd([[Backseat]])
+            end,
+            { nowait = true, exit = true, desc = "Backseat" },
+        },
+        b = {
+            function()
+                vim.ui.input({ prompt = "Enter Backseat ask: " }, function(question)
+                    vim.cmd([[BackseatAsk ]] .. question)
+                end)
+            end,
+            { nowait = true, exit = true, desc = "Backseat Ask" },
+        },
+        L = {
+            function()
+                vim.cmd([[BackseatClear]])
+            end,
+            { nowait = true, exit = true, desc = "Backseat Clear" },
+        },
+
         --  ╭────────────────────────────────────────────────────────────────────╮
         --  │         Other AI PLugins                                           │
         --  ╰────────────────────────────────────────────────────────────────────╯
@@ -238,7 +259,12 @@ local config = {
 }
 
 local brackets = { "<cr>", "O", "o", "e", "i", "I", "w", "W", "x", "X" }
-local inner = { { "g", "<leader>" }, { "j", "k", "l", "a", "r" }, { "S", "s", "f", "h", "C", "c" }, { ";", "-" } }
+local inner = {
+    { "g", "<leader>", "B", "b", "L" },
+    { "j", "k", "l", "a", "r" },
+    { "S", "s", "f", "h", "C", "c" },
+    { ";", "-" },
+}
 
 return {
     config,

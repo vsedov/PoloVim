@@ -161,28 +161,28 @@ local function setup_autocommands(client, buf)
     end
 
     if client.supports_method("textDocument/inlayHint", { bufnr = buf }) then
-        vim.lsp.inlay_hint(buf, true)
-
-        -- TODO: temporarily disable inlay hints in insert mode due to
-        -- https://github.com/neovim/neovim/issues/24075
-        augroup(("LspInlayHints%d"):format(buf), {
-            {
-                event = "InsertEnter",
-                buffer = buf,
-                desc = "LSP: Inlay Hints (insert disable)",
-                command = function()
-                    vim.lsp.inlay_hint(buf, false)
-                end,
-            },
-            {
-                event = "InsertLeave",
-                buffer = buf,
-                desc = "LSP: Inlay Hints (insert enable)",
-                command = function()
-                    vim.lsp.inlay_hint(buf, true)
-                end,
-            },
-        })
+        -- vim.lsp.inlay_hint(buf, true)
+        --
+        -- -- TODO: temporarily disable inlay hints in insert mode due to
+        -- -- https://github.com/neovim/neovim/issues/24075
+        -- augroup(("LspInlayHints%d"):format(buf), {
+        --     {
+        --         event = "InsertEnter",
+        --         buffer = buf,
+        --         desc = "LSP: Inlay Hints (insert disable)",
+        --         command = function()
+        --             vim.lsp.inlay_hint(buf, false)
+        --         end,
+        --     },
+        --     {
+        --         event = "InsertLeave",
+        --         buffer = buf,
+        --         desc = "LSP: Inlay Hints (insert enable)",
+        --         command = function()
+        --             vim.lsp.inlay_hint(buf, true)
+        --         end,
+        --     },
+        -- })
     end
 
     if client.server_capabilities[provider.REFERENCES] and not lambda.config.ui.use_illuminate then
@@ -350,15 +350,14 @@ diagnostic.config({
     underline = true,
     update_in_insert = false,
     severity_sort = true,
-    virtual_text = false
-        and {
-            -- severity = { min = S.WARN },
-            spacing = 1,
-            prefix = function(d)
-                local level = diagnostic.severity[d.severity]
-                return icons[level:lower()]
-            end,
-        },
+    virtual_text = false and {
+        -- severity = { min = S.WARN },
+        spacing = 1,
+        prefix = function(d)
+            local level = diagnostic.severity[d.severity]
+            return icons[level:lower()]
+        end,
+    },
     float = {
         max_width = max_width,
         max_height = max_height,

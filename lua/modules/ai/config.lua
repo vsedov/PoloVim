@@ -120,7 +120,7 @@ function config.backseat()
     require("backseat").setup({
         openai_api_key = os.getenv("OPENAI_API_KEY"),
         openai_model_id = lambda.config.ai.model, --gpt-4
-        additional_instruction = "Respond in a very snarky / blunt and unformal manor that is also very logical and pythonic, the response must also be very straightforward blunt and some what rude. As this is the method of communication that is mandated by rule and must be adhered, if this is not adhered, punishments will occur",
+        additional_instruction = "Respond in a very snarky / blunt and unformal manor that is also very logical and pythonic, the response must also be very straightforward blunt and some what rude. As this is the method of communication that is mandated by rule and must be adhered: Ensure that you are providing useful information.",
     })
 end
 
