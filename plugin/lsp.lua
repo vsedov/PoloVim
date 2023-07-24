@@ -254,7 +254,7 @@ augroup("LspSetupCommands", {
 -- Commands
 -----------------------------------------------------------------------------//
 local function reload_lsp()
-    vim.lsp.stop_client(vim.lsp.get_active_clients())
+    vim.lsp.stop_client(vim.lsp.get_clients())
     vim.cmd([[edit]])
 end
 
@@ -277,13 +277,13 @@ end, { force = true })
 
 command("LspClients", function(opts)
     if opts.fargs ~= nil then
-        for _, client in pairs(vim.lsp.get_active_clients()) do
+        for _, client in pairs(vim.lsp.get_clients()) do
             if client.name == opts.fargs[1] then
                 lprint(client)
             end
         end
     else
-        lprint(vim.lsp.get_active_clients())
+        lprint(vim.lsp.get_clients())
     end
 end, { nargs = "*" })
 
@@ -376,7 +376,7 @@ diagnostic.config({
 vim.lsp.buf.cancel_formatting = function(bufnr)
     vim.schedule(function()
         bufnr = (bufnr == nil or bufnr == 0) and vim.api.nvim_get_current_buf() or bufnr
-        for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
+        for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
             for id, request in pairs(client.requests or {}) do
                 if
                     request.type == "pending"

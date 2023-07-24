@@ -134,6 +134,7 @@ user({
     end,
 })
 
+--  TODO: (vsedov) (22:29:48 - 23/07/23): Make a hydra for this to activate when the mode is !
 user({
     "linty-org/readline.nvim",
     lazy = true,
@@ -486,7 +487,6 @@ user({ -- https://github.com/fregante/GhostText
 --  TODO: (vsedov) (04:19:41 - 20/07/23): this can be a potential hydra: But im not sure if the usecase meets the need.
 user({
     "RutaTang/quicknote.nvim",
-    branch = "custom_filetype",
 
     keys = {
         ";q",

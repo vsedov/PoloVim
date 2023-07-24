@@ -19,8 +19,8 @@ local function get_poetry_envs()
 end
 
 local function get_python_client()
-    local pylance = vim.lsp.get_active_clients({ name = "pylance" })
-    local pyright = vim.lsp.get_active_clients({ name = "pyright" })
+    local pylance = vim.lsp.get_clients({ name = "pylance" })
+    local pyright = vim.lsp.get_clients({ name = "pyright" })
     local clients = vim.tbl_extend("force", pylance, pyright)
     if #clients > 0 then
         return clients[1]

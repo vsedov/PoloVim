@@ -75,6 +75,9 @@ settings({
             vim.treesitter.language.register("markdown", "chatgpt")
         end,
     },
+['Neogit*'] = {
+    wo = { winbar = '' },
+  },
     checkhealth = {
         opt = { spell = false },
     },

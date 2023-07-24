@@ -26,7 +26,7 @@ local function augroup_setup(client, bufnr)
             callback = function(args)
                 local clients = vim.tbl_filter(function(c)
                     return c.server_capabilities["documentFormattingProvider"]
-                end, vim.lsp.get_active_clients({ buffer = bufnr }))
+                end, vim.lsp.get_clients({ buffer = bufnr }))
                 lsp_formatting(args.bufnr, clients)
             end,
         })
