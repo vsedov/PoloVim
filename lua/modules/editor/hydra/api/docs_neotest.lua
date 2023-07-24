@@ -1,6 +1,6 @@
 local leader = "<leader>d"
 local docs = { "<cr>", "l", "W", "r", "S" }
-local bracket = { "d", "D", "E", "i", "p", "L", "j", "k", "w" }
+local bracket = { "d", "D", "E", "i", "p" }
 local jump = { "J", "K" }
 local analyse = { "s", "o", "O", "a" }
 local summary = { "M", "R", "C" }
@@ -147,9 +147,6 @@ local config = {
             end,
             { nowait = false, exit = true, desc = "Python Selection" },
         },
-        ["j"] = { require("utils.telescope").devdocs_ft, { exit = true, desc = "Dev Doc search ft" } },
-        ["k"] = { require("utils.telescope").devdocs_search, { exit = true, desc = "Dev Doc search" } },
-        ["w"] = { require("utils.telescope").google_search, { exit = true, desc = "Google search" } },
     },
 }
 --

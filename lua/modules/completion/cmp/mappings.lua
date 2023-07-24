@@ -48,7 +48,6 @@ local mappings = {
         if cmp.visible() then
             cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
-            -- vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-expand-or-jump", true, true, true), "")
             luasnip.expand_or_jump()
         else
             fallback()
@@ -69,7 +68,7 @@ local mappings = {
             copilot()
         else
             if luasnip.expand_or_jumpable() then
-                vim.api.nvim_feedkeys(vim.keycode("<Plug>luasnip-expand-or-jump", true, true, true), "")
+                luasnip.expand_or_jump()
             else
                 fallback()
             end

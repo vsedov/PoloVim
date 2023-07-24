@@ -27,15 +27,15 @@ local plugins = {
         enable = tabnine_cond,
         priority = ai.tabnine.cmp.tabnine_priority,
     },
-    {
-        name = "buffer",
-        enable = lambda.config.cmp.buffer,
-        options = {
-            get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-            end,
-        },
-    },
+    -- {
+    --     name = "buffer",
+    --     enable = lambda.config.cmp.buffer,
+    --     options = {
+    --         get_bufnrs = function()
+    --             return vim.api.nvim_list_bufs()
+    --         end,
+    --     },
+    -- },
     {
         name = "nvim_lsp",
         enable = true,

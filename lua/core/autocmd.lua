@@ -207,7 +207,7 @@ lambda.augroup("TerminalAutocommands", {
             if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" or vim.bo.buftype == "terminal" then
                 local opts = { silent = false, buffer = 0 }
                 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-                vim.keymap.set("t", "jn", [[<C-\><C-n>]], opts)
+                vim.keymap.set("t", "<c-s>", [[<C-\><C-n>]], opts)
                 vim.keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", opts)
                 vim.keymap.set("t", "<C-j>", "<Cmd>wincmd j<CR>", opts)
                 vim.keymap.set("t", "<C-k>", "<Cmd>wincmd k<CR>", opts)
@@ -335,23 +335,6 @@ lambda.augroup("Omega", {
                 then
                     table.insert(bufs, args.buf)
                     vim.t.bufs = bufs
-                end
-            end
-        end,
-    },
-    {
-        event = "BufDelete",
-        command = function(args)
-            for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
-                local bufs = vim.t[tab].bufs
-                if bufs then
-                    for i, bufnr in ipairs(bufs) do
-                        if bufnr == args.buf then
-                            table.remove(bufs, i)
-                            vim.t[tab].bufs = bufs
-                            break
-                        end
-                    end
                 end
             end
         end,

@@ -3,7 +3,7 @@ local misc = require("core.pack").package
 
 misc({ "fladson/vim-kitty", ft = { "conf" } })
 
-misc({ "onsails/diaglist.nvim", keys = { "<leader>qq", "<leader>qw" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+misc({ "onsails/diaglist.nvim", keys = { "<leader>qw", "<leader>qf" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 
 misc({
     "kylechui/nvim-surround",

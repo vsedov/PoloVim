@@ -1,5 +1,4 @@
 local leader = "<leader><cr>"
-local exit = { nil, { exit = true, desc = "EXIT" } }
 
 local bookmarks = {
     default = {
@@ -49,12 +48,13 @@ local bookmark_surfer = function()
     end)
 end
 
-local bracket = { "<CR>", "s", "w", "W", ";" }
 local config = {
     Browse = {
         color = "red",
         body = leader,
         mode = { "n", "v", "x", "o" },
+        position = "bottom-right",
+
         ["<ESC>"] = { nil, { exit = true } },
 
         [";"] = {
@@ -141,8 +141,13 @@ local config = {
 
             { nowait = true, silent = true, desc = "UpDoc Links", exit = true },
         },
+
+        g = { require("utils.telescope").devdocs_ft, { exit = true, desc = "Dev Doc search ft" } },
+        f = { require("utils.telescope").devdocs_search, { exit = true, desc = "Dev Doc search" } },
+        F = { require("utils.telescope").google_search, { exit = true, desc = "Google search" } },
     },
 }
+local bracket = { "<CR>", "s", "w", "W", ";", "g", "f", "F" }
 
 return {
     config,

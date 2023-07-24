@@ -67,6 +67,6 @@ notes({
 })
 notes({
     "aaron-p1/virt-notes.nvim",
-    keys = { "<leader>va", "<leader>vc", "<leader>ve", "<leader>vp", "<leader>vx", "<leader>vd" },
+    keys = { "<leader>va", "<leader>vc", "<leader>ve", "<leader>vp", "<leader>vx", "<leader>vdd", "<leader>vdl" },
     config = true,
 })

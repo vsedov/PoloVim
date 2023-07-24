@@ -155,7 +155,7 @@ movement({
 movement({
     "mizlan/iswap.nvim",
     lazy = true,
-    cmd = { "ISwap", "ISwapWith" },
+    cmd = { "ISwapWith", "ISwap" },
     keys = { "<leader>cx" },
     config = conf.iswap,
 })

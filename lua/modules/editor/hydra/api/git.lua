@@ -45,16 +45,7 @@ local config = {
     Git = {
         color = "pink",
         body = leader,
-        -- on_enter = function()
-        --     vim.bo.modifiable = false
-        --     gitsigns.toggle_linehl(true)
-        --     gitsigns.toggle_deleted(true)
-        -- end,
-        -- on_exit = function()
-        --     gitsigns.toggle_linehl(false)
-        --     gitsigns.toggle_deleted(false)
-        --     vim.cmd("echo") -- clear the echo area
-        -- end,
+        position = "bottom-right",
         on_key = function()
             vim.wait(50)
         end,

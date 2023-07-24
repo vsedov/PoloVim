@@ -419,17 +419,30 @@ user({
 })
 user({
     "smoka7/multicursors.nvim",
+    -- event = "VeryLazy",
+    cmd = {
+        "MCstart",
+        "MCvisual",
+        "MCpattern",
+        "MCvisualPattern",
+        "MCunderCursor",
+        "MCclear",
+    },
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+    },
     opts = function()
         local N = require("multicursors.normal_mode")
         local I = require("multicursors.insert_mode")
+
         return {
             normal_keys = {
                 -- to change default lhs of key mapping change the key
-                ["b"] = {
+                [","] = {
                     -- assigning nil to method exits from multi cursor mode
                     method = N.clear_others,
-                    -- description to show in hint window
-                    desc = "Clear others",
+                    -- you can pass :map-arguments here
+                    opts = { desc = "Clear others" },
                 },
             },
             insert_keys = {
@@ -437,28 +450,17 @@ user({
                 ["<CR>"] = {
                     -- assigning nil to method exits from multi cursor mode
                     method = I.Cr_method,
-                    -- description to show in hint window
-                    desc = "new line",
+                    -- you can pass :map-arguments here
+                    opts = { desc = "New line" },
                 },
-            },
-            -- accepted values:
-            -- -1 true: generate hints
-            -- -2 false: don't generate hints
-            -- -3 [[multi line string]] provide your own hints
-            generate_hints = {
-                normal = true,
-                insert = true,
-                extend = true,
+                generate_hints = {
+                    normal = true,
+                    insert = true,
+                    extend = true,
+                },
             },
         }
     end,
-    keys = {
-        {
-            "<Leader>m",
-            "<cmd>MCstart<cr>",
-            desc = "Create a selection for word under the cursor",
-        },
-    },
 })
 
 --  ──────────────────────────────────────────────────────────────────────
@@ -487,16 +489,9 @@ user({ -- https://github.com/fregante/GhostText
 --  TODO: (vsedov) (04:19:41 - 20/07/23): this can be a potential hydra: But im not sure if the usecase meets the need.
 user({
     "RutaTang/quicknote.nvim",
-
     keys = {
         ";q",
     },
-    init = function()
-        local quicknote_path = vim.fn.stdpath("state") .. "/quicknote"
-        if not vim.loop.fs_stat(quicknote_path) then
-            vim.fn.system({ "mkdir", quicknote_path })
-        end
-    end,
     opts = {
         filetype = "norg",
     },

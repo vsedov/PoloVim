@@ -115,18 +115,24 @@ tools({
 tools({ "ilAYAli/scMRU.nvim", lazy = true, cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" } })
 
 tools({
-    url = "https://gitlab.com/yorickpeterse/nvim-pqf",
+    "ashfinal/qfview.nvim",
     event = "VeryLazy",
-    config = function()
-        lambda.highlight.plugin("pqf", {
-            theme = {
-                ["doom-one"] = { { qfPosition = { link = "Todo" } } },
-                ["horizon"] = { { qfPosition = { link = "String" } } },
-            },
-        })
-        require("pqf").setup()
-    end,
+    config = true,
 })
+
+-- tools({
+--     url = "https://gitlab.com/yorickpeterse/nvim-pqf",
+--     ft = "qf",
+--     config = function()
+--         lambda.highlight.plugin("pqf", {
+--             theme = {
+--                 ["doom-one"] = { { qfPosition = { link = "Todo" } } },
+--                 ["horizon"] = { { qfPosition = { link = "String" } } },
+--             },
+--         })
+--         require("pqf").setup()
+--     end,
+-- })
 tools({
     "kevinhwang91/nvim-bqf",
     ft = "qf",

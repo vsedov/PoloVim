@@ -429,7 +429,6 @@ ui({
 })
 ui({
     "uga-rosa/ccc.nvim",
-    ft = { "lua", "vim", "typescript", "typescriptreact", "javascriptreact", "svelte" },
     cmd = { "CccHighlighterToggle" },
     opts = function()
         local ccc = require("ccc")
@@ -562,14 +561,5 @@ ui({
 ui({
     "mvllow/modes.nvim",
     event = "VeryLazy",
-    config = true,
-})
---
-ui({
-    "tzachar/highlight-undo.nvim",
-    keys = {
-        "<c-r>",
-        "u",
-    },
     config = true,
 })

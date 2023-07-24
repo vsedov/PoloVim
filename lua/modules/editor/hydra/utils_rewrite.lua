@@ -14,7 +14,7 @@ function M.new(config, module_name)
         hint = "",
         config = {
             hint = {
-                position = "middle-right",
+                position = "bottom-right",
                 border = lambda.style.border.type_0,
             },
             timeout = false,

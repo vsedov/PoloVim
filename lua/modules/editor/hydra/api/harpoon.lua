@@ -111,6 +111,8 @@ local config = {
         color = "red",
         body = leader,
         mode = { "n" },
+        position = "bottom-right",
+
         ["<ESC>"] = { nil, { exit = true } },
         s = {
             function()
