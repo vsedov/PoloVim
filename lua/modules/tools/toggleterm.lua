@@ -60,7 +60,6 @@ local keymaps = {
     },
     { "<leader>tf", "<cmd>ToggleTerm direction='vertical'<cr>" },
     { "<leader>th", "<cmd>ToggleTerm direction='vertical'<cr>" },
-    { "<leader><Tab>", "<cmd>ToggleTerm direction='float'<cr>" },
 }
 
 -- Create keymap bindings from the table

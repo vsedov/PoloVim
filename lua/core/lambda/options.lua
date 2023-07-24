@@ -119,7 +119,7 @@ lambda.config.cmp = {
 lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
-    only_severe_diagnostics = false,
+    only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
     use_navigator = use_navigator,
     lsp_sig = {
@@ -205,12 +205,11 @@ lambda.config.ui = {
     },
     indent_lines = {
         use_indent_blankline = false,
-        use_hlchunk = false,
-        use_mini_indent_scope = true,
+        use_hlchunk = true,
+        use_mini_indent_scope = false,
     },
     scroll_bar = {
         use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
-        use_scrollbar = true,
     },
 }
 lambda.config.fun = {
@@ -263,7 +262,6 @@ lambda.config.movement = {
 }
 lambda.config.tools = {
     session = {
-        use_persisted = false,
         use_resession = true,
     },
     use_tracker = true,

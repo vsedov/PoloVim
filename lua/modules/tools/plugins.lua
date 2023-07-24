@@ -89,7 +89,7 @@ tools({
 tools({
     "akinsho/toggleterm.nvim",
     lazy = true,
-    cmd = { "FocusTerm", "TermTrace", "TermExec", "ToggleTerm", "Htop", "GDash" },
+    cmd = { "FocusTerm", "TermExec", "ToggleTerm", "Htop", "GDash" },
     config = function()
         require("modules.tools.toggleterm")
     end,
@@ -103,7 +103,6 @@ tools({
         "<leader>gh",
         "<leader>tf",
         "<leader>th",
-        "<leader><Tab>",
         "<c-t>",
     },
 })
@@ -351,7 +350,7 @@ tools({
 })
 tools({
     "norcalli/nvim-terminal.lua",
-    ft = "terminal",
+    event = "TermEnter",
     config = function()
         require("terminal").setup()
     end,

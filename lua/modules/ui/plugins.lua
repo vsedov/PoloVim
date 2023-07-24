@@ -231,13 +231,6 @@ ui({
         },
     },
 })
--- after="nvim-treesitter",
-
-ui({
-    "xiyaowong/nvim-transparent",
-    cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
-    config = conf.transparent,
-})
 --
 ui({
     "levouh/tint.nvim",
