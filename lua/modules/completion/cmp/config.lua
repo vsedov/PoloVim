@@ -36,7 +36,10 @@ local config = {
         end,
     },
     -- experimental = { ghost_text = { hl_group = "Dimmed" } },
-    experimental = { ghost_text = lambda.config.cmp.use_ghost },
+    experimental = {
+        ghost_text = lambda.config.cmp.use_ghost,
+        native_menu = false,
+    },
 
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
@@ -72,117 +75,116 @@ local config = {
     },
 }
 
-if lambda.config.cmp.cmp_theme == "border" then
-    local kind = require("utils.ui.kind")
-    cmp_window = {
-        border = border,
-        winhighlight = table.concat({
-            "Normal:Normal",
-            "FloatBorder:None",
-            "CursorLine:None",
-            "Search:None",
-        }, ","),
-    }
-    config.window = {
-        completion = cmp.config.window.bordered(cmp_window),
-        documentation = cmp.config.window.bordered(cmp_window),
-    }
-
-    config.window = {
-        completion = {
-            border = border,
-            scrollbar = "║",
-        },
-        documentation = {
-            border = border,
-        },
-    }
-    config.formatting = {
-        format = kind.cmp_format({
-            with_text = false,
-            before = function(entry, vim_item)
-                vim_item.abbr = utils.get_abbr(vim_item, entry)
-                vim_item.dup = ({
-                    buffer = 1,
-                    path = 1,
-                    nvim_lsp = 0,
-                })[entry.source.name] or 0
-                return vim_item
-            end,
-        }),
-    }
-elseif lambda.config.cmp.cmp_theme == "borderv2" then
-    config.formatting = {
-        fields = { "kind", "abbr", "menu" },
-        format = function(entry, vim_item)
-            vim_item.kind = lambda.style.lsp.kinds.codicons[vim_item.kind] or " "
-            vim_item.menu = ({
-                cmp_tabnine = "[Tn]",
-                cmp_codeium = "[]",
-                codeium = "[]",
-                norg = "[Norg]",
-                rg = "[Rg]",
-                kitty = "[]",
-                git = "[Git]",
-            })[entry.source.name]
-            return vim_item
-        end,
-
-        border = border,
-    }
-
-    config.window = {
-        completion = cmp.config.window.bordered(cmp_window),
-        documentation = cmp.config.window.bordered(cmp_window),
-    }
-elseif lambda.config.cmp.cmp_theme == "extra" then
-    config.window = {
-        completion = cmp.config.window.bordered({
-            border = lambda.style.border.type_0,
-            winhighlight = "FloatBorder:FloatBorder",
-        }),
-        documentation = cmp.config.window.bordered({
-            border = lambda.style.border.type_0,
-            winhighlight = "FloatBorder:FloatBorder",
-        }),
-    }
-
-    config.formatting = {
-        deprecated = true,
-        fields = { "kind", "abbr", "menu" },
-        format = lspkind.cmp_format({
-            mode = "symbol",
-            maxwidth = MAX_MENU_WIDTH,
-            ellipsis_char = ellipsis,
-            before = function(_, vim_item)
-                local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
-                if length < MIN_MENU_WIDTH then
-                    vim_item.abbr = label .. string.rep(" ", MIN_MENU_WIDTH - length)
-                end
-                return vim_item
-            end,
-            menu = {
-                nvim_lsp = "[LSP]",
-                nvim_lua = "[LUA]",
-                emoji = "[EMOJI]",
-                path = "[PATH]",
-                neorg = "[NEORG]",
-                luasnip = "[SNIP]",
-                dictionary = "[DIC]",
-                buffer = "[BUF]",
-                spell = "[SPELL]",
-                orgmode = "[ORG]",
-                norg = "[NORG]",
-                rg = "[RG]",
-                git = "[GIT]",
-                cmp_tabnine = "[Tn]",
-                cmp_codeium = "[]",
-                codeium = "[]",
-                kitty = "[]",
-            },
-        }),
-    }
+local function setWindowConfiguration(theme, border)
+    local winhighlight = "Normal:Normal,FloatBorder:None,CursorLine:None,Search:None"
+    if theme == "border" then
+        config.window = {
+            completion = cmp.config.window.bordered({ border = border, winhighlight = winhighlight }),
+            documentation = cmp.config.window.bordered({ border = border, winhighlight = winhighlight }),
+        }
+    elseif theme == "borderv2" then
+        config.window = {
+            completion = cmp.config.window.bordered(cmp_window),
+            documentation = cmp.config.window.bordered(cmp_window),
+        }
+    elseif theme == "extra" then
+        config.window = {
+            completion = cmp.config.window.bordered({
+                border = lambda.style.border.type_0,
+                winhighlight = "FloatBorder:FloatBorder",
+            }),
+            documentation = cmp.config.window.bordered({
+                border = lambda.style.border.type_0,
+                winhighlight = "FloatBorder:FloatBorder",
+            }),
+        }
+    end
 end
+
+local function setFormattingConfiguration(theme)
+    if theme == "border" then
+        config.formatting = {
+            format = kind.cmp_format({
+                with_text = false,
+                before = function(entry, vim_item)
+                    vim_item.abbr = utils.get_abbr(vim_item, entry)
+                    vim_item.dup = ({ buffer = 1, path = 1, nvim_lsp = 0 })[entry.source.name] or 0
+                    return vim_item
+                end,
+            }),
+        }
+    elseif theme == "borderv2" then
+        config.formatting = {
+            fields = { "kind", "abbr", "menu" },
+            format = function(entry, vim_item)
+                vim_item.kind = lambda.style.lsp.kinds.codicons[vim_item.kind] or " "
+                vim_item.menu = ({
+                    cmp_tabnine = "[Tn]",
+                    cmp_codeium = "[]",
+                    codeium = "[]",
+                    norg = "[Norg]",
+                    rg = "[Rg]",
+                    kitty = "[]",
+                    git = "[Git]",
+                })[entry.source.name]
+                return vim_item
+            end,
+            border = border,
+        }
+    elseif theme == "extra" then
+        config.window = {
+            completion = cmp.config.window.bordered({
+                border = lambda.style.border.type_0,
+                winhighlight = "FloatBorder:FloatBorder",
+            }),
+            documentation = cmp.config.window.bordered({
+                border = lambda.style.border.type_0,
+                winhighlight = "FloatBorder:FloatBorder",
+            }),
+        }
+
+        config.formatting = {
+            deprecated = true,
+            fields = { "kind", "abbr", "menu" },
+            format = lspkind.cmp_format({
+                mode = "symbol",
+                maxwidth = MAX_MENU_WIDTH,
+                ellipsis_char = ellipsis,
+                before = function(_, vim_item)
+                    local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
+                    if length < MIN_MENU_WIDTH then
+                        vim_item.abbr = label .. string.rep(" ", MIN_MENU_WIDTH - length)
+                    end
+                    return vim_item
+                end,
+                menu = {
+                    nvim_lsp = "[LSP]",
+                    nvim_lua = "[LUA]",
+                    emoji = "[EMOJI]",
+                    path = "[PATH]",
+                    neorg = "[NEORG]",
+                    luasnip = "[SNIP]",
+                    dictionary = "[DIC]",
+                    buffer = "[BUF]",
+                    spell = "[SPELL]",
+                    orgmode = "[ORG]",
+                    norg = "[NORG]",
+                    rg = "[RG]",
+                    git = "[GIT]",
+                    cmp_tabnine = "[Tn]",
+                    cmp_codeium = "[]",
+                    codeium = "[]",
+                    kitty = "[]",
+                },
+            }),
+        }
+    end
+end
+
+local theme = lambda.config.cmp.cmp_theme
+
+setWindowConfiguration(theme, border)
+setFormattingConfiguration(theme)
 
 config.matching = {
     disallow_fuzzy_matching = false,
@@ -198,8 +200,8 @@ local sorting = {
         cmp.config.compare.offset,
         cmp.config.compare.exact,
         cmp.config.compare.score,
-        cmp.config.compare.recently_used,
-        cmp.config.compare.locality,
+        -- cmp.config.compare.recently_used,
+        -- cmp.config.compare.locality,
         function(entry1, entry2)
             local _, entry1_under = entry1.completion_item.label:find("^_+")
             local _, entry2_under = entry2.completion_item.label:find("^_+")

@@ -11,9 +11,7 @@ local plugins = {
     {
         name = "luasnip",
         enable = lambda.config.cmp.luasnip.luasnip.enable,
-        options = {
-            priority = lambda.config.cmp.luasnip.luasnip.priority,
-        },
+        priority = lambda.config.cmp.luasnip.luasnip.priority,
     },
     {
         name = "neorg",
@@ -22,16 +20,12 @@ local plugins = {
     {
         name = "codeium",
         enable = condium_cond,
-        options = {
-            priority = ai.codeium.cmp.codium_priority,
-        },
+        priority = ai.codeium.cmp.codium_priority,
     },
     {
         name = "cmp_tabnine",
         enable = tabnine_cond,
-        options = {
-            priority = ai.tabnine.cmp.tabnine_priority,
-        },
+        priority = ai.tabnine.cmp.tabnine_priority,
     },
     {
         name = "buffer",
@@ -45,9 +39,7 @@ local plugins = {
     {
         name = "nvim_lsp",
         enable = true,
-        options = {
-            priority = 10,
-        },
+        priority = 10,
     },
 
     {
