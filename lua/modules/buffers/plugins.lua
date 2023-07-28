@@ -54,7 +54,7 @@ buffer({
     "stevearc/stickybuf.nvim",
     cond = lambda.config.buffer.use_sticky_buf,
     lazy = true,
-    event = "BufEnter",
+    event = "VeryLazy",
     config = conf.sticky_buf,
 })
 

@@ -456,54 +456,11 @@ ui({
     config = true,
 })
 --
--- ui({
---     "petertriho/nvim-scrollbar",
---     lazy = true,
---     cond = lambda.config.ui.scroll_bar.use_scrollbar,
---     event = "VeryLazy",
---     dependencies = { "kevinhwang91/nvim-hlslens" },
---     config = function()
---         require("scrollbar.handlers.search").setup()
---         require("scrollbar").setup({
---             show = true,
---             set_highlights = true,
---             handle = {
---                 color = "#777777",
---             },
---             marks = {
---                 Search = { color = "#ff9e64" },
---                 Error = { color = "#db4b4b" },
---                 Warn = { color = "#e0af68" },
---                 Info = { color = "#0db9d7" },
---                 Hint = { color = "#1abc9c" },
---                 Misc = { color = "#9d7cd8" },
---                 GitAdd = {
---                     color = "#9ed072",
---                     text = "+",
---                 },
---                 GitDelete = {
---                     color = "#fc5d7c",
---                     text = "-",
---                 },
---                 GitChange = {
---                     color = "#76cce0",
---                     text = "*",
---                 },
---             },
---             handlers = {
---                 diagnostic = true,
---                 search = true,
---                 gitsigns = false,
---             },
---         })
---     end,
--- })
 ui({
     "kevinhwang91/nvim-hlslens",
     cond = lambda.config.ui.use_hlslens,
     lazy = true,
     config = true,
-
     event = "VeryLazy",
 })
 --

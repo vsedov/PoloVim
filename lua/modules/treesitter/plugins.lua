@@ -94,25 +94,7 @@ ts({
 
 ts({
     "m-demare/hlargs.nvim",
-    lazy = true,
-    ft = {
-        "c",
-        "cpp",
-        "go",
-        "java",
-        "javascript",
-        "jsx",
-        "lua",
-        "php",
-        "python",
-        "r",
-        "ruby",
-        "rust",
-        "tsx",
-        "typescript",
-        "vim",
-        "zig",
-    },
+    event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
 })
@@ -183,7 +165,28 @@ ts({
 })
 ts({
     "romgrk/equal.operator",
-    event = "VeryLazy",
+    keys = {
+        {
+            "il",
+            mode = { "o", "x" },
+            desc = "select inside RHS",
+        },
+        {
+            "ih",
+            mode = { "o", "x" },
+            desc = "select inside LHS",
+        },
+        {
+            "al",
+            mode = { "o", "x" },
+            desc = "select all RHS",
+        },
+        {
+            "ah",
+            mode = { "o", "x" },
+            desc = "select all LHS",
+        },
+    },
 })
 ts({
     "JoosepAlviste/nvim-ts-context-commentstring",

@@ -4,10 +4,7 @@ local condium_cond = (ai.codeium.use_codeium and ai.codeium.use_codeium_cmp)
 local tabnine_cond = (ai.tabnine.use_tabnine and ai.tabnine.use_tabnine_cmp)
 
 local plugins = {
-    {
-        name = "luasnip_choice",
-        enable = lambda.config.cmp.luasnip.luasnip_choice,
-    },
+
     {
         name = "luasnip",
         enable = lambda.config.cmp.luasnip.luasnip.enable,
@@ -27,15 +24,16 @@ local plugins = {
         enable = tabnine_cond,
         priority = ai.tabnine.cmp.tabnine_priority,
     },
-    -- {
-    --     name = "buffer",
-    --     enable = lambda.config.cmp.buffer,
-    --     options = {
-    --         get_bufnrs = function()
-    --             return vim.api.nvim_list_bufs()
-    --         end,
-    --     },
-    -- },
+    {
+        name = "buffer",
+        options = {
+            get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+            end,
+        },
+        group_index = 2,
+    },
+    { name = "spell", group_index = 2 },
     {
         name = "nvim_lsp",
         enable = true,

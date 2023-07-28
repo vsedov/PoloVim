@@ -44,6 +44,7 @@ lsp({
     config = conf.clangd,
 })
 
+-- NOTE: (vsedov) (20:56:48 - 27/07/23): Does not work if you have multiple language clients
 lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
 
 lsp({
@@ -284,6 +285,7 @@ lsp({
 lsp({ "onsails/lspkind.nvim", lazy = true })
 lsp({
     "askfiy/lsp_extra_dim",
+    cond = lambda.config.lsp.use_lsp_dim,
     event = { "LspAttach" },
     opts = {
         disable_diagnostic_style = "all",

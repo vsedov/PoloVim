@@ -47,7 +47,7 @@ return {
         desc = "Go to definition on jump",
     },
     {
-        "H",
+        "<c-;>",
         desc = "Hover",
         function()
             Flash.jump({ mode = "hover" })

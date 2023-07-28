@@ -26,7 +26,7 @@ local function opts()
             --   end,
             mode = "exact",
             -- behave like `incsearch`
-            incremental = false,
+            incremental = true,
         },
         jump = {
             -- save location in the jumplist
@@ -199,7 +199,8 @@ local function opts()
                     vim.api.nvim_win_call(match.win, function()
                         vim.api.nvim_win_set_cursor(match.win, match.pos)
                         lsp_utils.hover(function(err, result, ctx)
-                            require("hover").hover()
+                            vim.cmd([[Lspsaga hover_doc]])
+
                             -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
                             vim.api.nvim_win_set_cursor(match.win, state.pos)
                         end)

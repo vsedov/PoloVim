@@ -3,8 +3,8 @@ local python = require("core.pack").package
 
 python({
     "ranelpadon/python-copy-reference.vim",
+    event = "BufReadPre *.py",
     lazy = true,
-    ft = "python",
     cmd = {
         "PythonCopyReferenceDotted",
         "PythonCopyReferencePytest",
@@ -14,8 +14,8 @@ python({
 
 python({
     "direnv/direnv.vim",
+    event = "BufReadPre *.py",
     lazy = true,
-    ft = { "python", "julia" },
 })
 
 python({
@@ -23,17 +23,16 @@ python({
     dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
     cmd = { "VenvSelect", "VenvSelectCached" },
     config = true,
-    event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
 })
 
 python({
     "Vimjas/vim-python-pep8-indent",
-    ft = "python",
+    event = "BufReadPre *.py",
 })
 
 python({
     "purpleP/python-syntax",
-    ft = { "python" },
+    event = "BufReadPre *.py",
 })
 
 python({

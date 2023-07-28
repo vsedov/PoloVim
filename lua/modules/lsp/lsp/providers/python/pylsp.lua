@@ -23,7 +23,7 @@ return {
                 jedi_signature_help = { enabled = true },
                 jedi_symbols = { enabled = true, all_scopes = true },
                 rope = { enable = true },
-                rope_completion = { enabled = true },
+                rope_completion = { enabled = false },
             },
         },
     },

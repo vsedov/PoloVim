@@ -101,7 +101,6 @@ user({
 
 user({
     "superDross/spellbound.nvim",
-    event = "VeryLazy",
     keys = {
         {
             "<c-g>w",
@@ -366,11 +365,7 @@ user({
         vim.cmd("let HiClear = 'mD'")
     end,
 })
-user({
-    "Aasim-A/scrollEOF.nvim",
-    event = "VeryLazy",
-    config = true,
-})
+
 user({
     "KaitlynEthylia/TreePin",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -419,15 +414,7 @@ user({
 })
 user({
     "smoka7/multicursors.nvim",
-    -- event = "VeryLazy",
-    cmd = {
-        "MCstart",
-        "MCvisual",
-        "MCpattern",
-        "MCvisualPattern",
-        "MCunderCursor",
-        "MCclear",
-    },
+    lazy = true,
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
     },
@@ -453,11 +440,11 @@ user({
                     -- you can pass :map-arguments here
                     opts = { desc = "New line" },
                 },
-                generate_hints = {
-                    normal = true,
-                    insert = true,
-                    extend = true,
-                },
+            },
+            generate_hints = {
+                normal = true,
+                insert = true,
+                extend = true,
             },
         }
     end,
@@ -646,25 +633,5 @@ user({
     event = "VeryLazy",
     config = function()
         vim.g.wordmotion_prefix = ","
-    end,
-})
-user({
-    "mrshmllow/open-handlers.nvim",
-    lazy = false,
-    event = "VeryLazy",
-    cond = vim.ui.open ~= nil,
-
-    config = function()
-        local oh = require("open-handlers")
-
-        oh.setup({
-            -- In order, each handler is tried.
-            -- The first handler to successfully open will be used.
-            handlers = {
-                oh.issue, -- A builtin which handles github and gitlab issues
-                oh.commit, -- A builtin which handles git commits
-                oh.native, -- Default native handler. Should always be last
-            },
-        })
     end,
 })

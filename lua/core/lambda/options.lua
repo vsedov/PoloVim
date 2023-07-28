@@ -122,12 +122,14 @@ lambda.config.lsp = {
     only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
     use_navigator = use_navigator,
+    use_lsp_dim = true,
     lsp_sig = {
         use_lsp_signature = true,
         use_floating_window = false,
         use_floating_window_above_cur_line = true,
         fix_pos = true,
     },
+
     diagnostics = {
         use_lsp_lines = false,
         use_rcd = true, -- the least intrusive of the bunch
@@ -254,7 +256,7 @@ lambda.config.movement = {
     movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap and flash,
     use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d
-    use_accelerated_jk = true,
+    use_accelerated_jk = false,
     harpoon = {
         goto_harpoon = false,
         use_tmux_or_normal = "nvim", -- nvim

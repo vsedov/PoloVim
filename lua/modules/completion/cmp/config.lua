@@ -23,18 +23,18 @@ local config = {
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
-    preselect = cmp.PreselectMode.Item, -- None | Item
+    -- performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
+    -- preselect = cmp.PreselectMode.Item, -- None | Item
     -- completion = {
     --     types.cmp.TriggerEvent.Replace,
     -- },
     -- confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
-    confirmation = {
-        default_behavior = types.cmp.ConfirmBehavior.Replace, -- Item
-        get_commit_characters = function(commit_characters)
-            return commit_characters
-        end,
-    },
+    -- confirmation = {
+    --     default_behavior = types.cmp.ConfirmBehavior.Replace, -- Item
+    --     get_commit_characters = function(commit_characters)
+    --         return commit_characters
+    --     end,
+    -- },
     -- experimental = { ghost_text = { hl_group = "Dimmed" } },
     experimental = {
         ghost_text = lambda.config.cmp.use_ghost,
@@ -90,8 +90,9 @@ local function setWindowConfiguration(theme, border)
     elseif theme == "extra" then
         config.window = {
             completion = cmp.config.window.bordered({
-                border = lambda.style.border.type_0,
-                winhighlight = "FloatBorder:FloatBorder",
+                scrollbar = false,
+                border = "shadow",
+                winhighlight = "NormalFloat:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder",
             }),
             documentation = cmp.config.window.bordered({
                 border = lambda.style.border.type_0,
@@ -185,14 +186,6 @@ local theme = lambda.config.cmp.cmp_theme
 
 setWindowConfiguration(theme, border)
 setFormattingConfiguration(theme)
-
-config.matching = {
-    disallow_fuzzy_matching = false,
-    disallow_fullfuzzy_matching = false,
-    disallow_partial_fuzzy_matching = false,
-    disallow_partial_matching = false,
-    disallow_prefix_unmatching = false,
-}
 
 local sorting = {
     priority_weight = 2,

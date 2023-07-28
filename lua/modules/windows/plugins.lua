@@ -150,8 +150,8 @@ windows({
 -- What tf is this plugin ?
 windows({
     "andrewferrier/wrapping.nvim",
+    ft = { "tex", "norg", "latex", "text" },
     cond = lambda.config.windows.use_wrapping,
     lazy = true,
     config = true,
-    ft = { "tex", "norg", "latex", "text" },
 })

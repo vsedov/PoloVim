@@ -64,8 +64,8 @@ function config.tabout()
             { open = "[", close = "]" },
             { open = "{", close = "}" },
         },
-        ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
         exclude = {}, -- tabout will ignore these filetypes
+        ignore_beginning = false,
     })
     vim.api.nvim_set_keymap("i", "<A-x>", "<Plug>(TaboutMulti)", { silent = true })
     vim.api.nvim_set_keymap("i", "<A-z>", "<Plug>(TaboutBackMulti)", { silent = true })
@@ -74,7 +74,7 @@ function config.autopair()
     require("npairs-int-upair").setup({
         map = "u", --which of them should be the insert mode autopair
         cmap = "u", --which of them should be the cmd mode autopair (only 'u' supported)
-        bs = "u", --which of them should be the backspace
+        bs = "n", --which of them should be the backspace
         cr = "u", --which of them should be the newline
         space = "u", --which of them should be the space (only 'u' supported)
         c_h = "n", --which of them should be the <C-h> (only 'n' supported)
@@ -122,7 +122,7 @@ function config.autopair()
                 --balance:
                 --  Will prioritize balanced spaces
                 --  ( |foo  ) > bs > ( |foo )
-                indent_ignore = false,
+                indent_ignore = true,
                 --(\n\t|\n) > bs > (|)
                 conf = {},
                 --contains extension config
@@ -169,31 +169,33 @@ function config.autopair()
             },
         },
     })
-    local npairs = require("nvim-autopairs")
-    local function backspace()
-        local col = vim.api.nvim_win_get_cursor(0)[2]
-        local char = vim.api.nvim_get_current_line():sub(col, col)
-        if char == " " then
-            -- expression from a deleted reddit user
-            vim.cmd([[
-            let g:exprvalue =
-            \ (&indentexpr isnot '' ? &indentkeys : &cinkeys) =~? '!\^F' &&
-            \ &backspace =~? '.*eol\&.*start\&.*indent\&' &&
-            \ !search('\S','nbW',line('.')) ? (col('.') != 1 ? "\<C-U>" : "") .
-            \ "\<bs>" . (getline(line('.')-1) =~ '\S' ? "" : "\<C-F>") : "\<bs>"
-        ]])
-            return vim.g.exprvalue
-        else
-            return npairs.autopairs_bs()
-        end
-    end
-
-    vim.keymap.set(
-        "i",
-        "<BS>",
-        backspace,
-        { expr = true, noremap = true, replace_keycodes = false, desc = "Better Backspace" }
-    )
+    -- local npairs = require("nvim-autopairs")
+    -- local function backspace()
+    --     local col = vim.api.nvim_win_get_cursor(0)[2]
+    --     local char = vim.api.nvim_get_current_line():sub(col, col)
+    --     if char == " " then
+    --         -- expression from a deleted reddit user
+    --         vim.cmd([[
+    --         let g:exprvalue =
+    --         \ (&indentexpr isnot '' ? &indentkeys : &cinkeys) =~? '!\^F' &&
+    --         \ &backspace =~? '.*eol\&.*start\&.*indent\&' &&
+    --         \ !search('\S','nbW',line('.')) ? (col('.') != 1 ? "\<C-U>" : "") .
+    --         \ "\<bs>" . (getline(line('.')-1) =~ '\S' ? "" : "\<C-F>") : "\<bs>"
+    --     ]])
+    --         return vim.g.exprvalue
+    --     else
+    --         return npairs.autopairs_bs()
+    --     end
+    -- end
+    -- -- map <bs> to <c-<bs>>
+    -- -- vim.api.nvim_set_keymap("i", "<c-<bs>>", ""
+    --
+    -- vim.keymap.set(
+    --     "i",
+    --     "<BS>",
+    --     backspace,
+    --     { expr = true, noremap = true, replace_keycodes = false, desc = "Better Backspace" }
+    -- )
 end
 
 return config

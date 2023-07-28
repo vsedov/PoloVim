@@ -109,16 +109,20 @@ function config.playground()
 end
 
 function config.hlargs()
-    lambda.highlight.plugin("hlargs", {
-        theme = {
-            ["*"] = { { Hlargs = { italic = true, foreground = "#A5D6FF" } } },
-            ["horizon"] = { { Hlargs = { italic = true, foreground = { from = "Normal" } } } },
-        },
-    })
     require("hlargs").setup({
         color = "#ef9062",
         highlight = {},
-        excluded_filetypes = {},
+        excluded_filetypes = {
+            "oil",
+            "trouble",
+            "vim",
+            "help",
+            "dashboard",
+            "packer",
+            "lazy",
+            "config",
+            "nofile",
+        },
         paint_arg_declarations = true,
         paint_arg_usages = true,
         paint_catch_blocks = {

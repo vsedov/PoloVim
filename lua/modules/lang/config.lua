@@ -151,22 +151,4 @@ function config.dap_config()
     require("modules.lang.dap.init").config()
 end
 
-function config.python_dev()
-    require("py").setup({
-        leader = "<leader><leader>",
-        mappings = false,
-        taskipy = true,
-        poetry_install_every = 1,
-        ipython_in_vsplit = 1,
-        ipython_auto_install = 1,
-        ipython_auto_reload = 1,
-        ipython_send_imports = 1,
-        envrc = {
-            "layout_poetry",
-            "export PYTHONPATH=$(pwd)",
-            '#eval "$(register-python-argcomplete cz)"',
-        },
-        use_direnv = true,
-    })
-end
 return config

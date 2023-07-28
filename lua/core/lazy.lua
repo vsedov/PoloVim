@@ -30,6 +30,7 @@ vim.defer_fn(function()
         loader({ plugins = { "vim-wakatime" } })
     end
 end, 120)
+
 vim.defer_fn(function()
     if vim.fn.getenv("TMUX") ~= nil then
         lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"

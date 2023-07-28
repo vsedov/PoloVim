@@ -53,6 +53,7 @@ local mappings = {
             fallback()
         end
     end,
+
     ["<S-Tab>"] = function(fallback)
         if cmp.visible() then
             cmp.select_prev_item()

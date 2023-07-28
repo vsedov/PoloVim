@@ -132,12 +132,3 @@ misc({
     config = true,
     cmd = { "Maim", "MaimMarkdown" },
 })
-misc({
-    "m4xshen/hardtime.nvim",
-    event = "CmdlineEnter",
-    cmd = "Hypersonic",
-    ops = {
-        ---@type 'none'|'single'|'double'|'rounded'|'solid'|'shadow'|table
-        border = "single",
-    },
-})

@@ -19,13 +19,12 @@ completion({
     event = "InsertEnter",
     lazy = true,
     dependencies = {
-        { "hrsh7th/cmp-nvim-lsp", lazy = true },
-        { "hrsh7th/cmp-nvim-lua", lazy = true },
-        { "kdheepak/cmp-latex-symbols", lazy = true },
-        { "hrsh7th/cmp-buffer", lazy = true },
-        { "hrsh7th/cmp-path", lazy = true },
-        { "hrsh7th/cmp-cmdline", lazy = true },
-        { "rcarriga/cmp-dap", lazy = true },
+        { "hrsh7th/cmp-nvim-lsp" },
+        { "hrsh7th/cmp-nvim-lua" },
+        { "hrsh7th/cmp-buffer" },
+        { "hrsh7th/cmp-path" },
+        { "hrsh7th/cmp-cmdline" },
+        { "rcarriga/cmp-dap" },
         {
             "petertriho/cmp-git",
             lazy = true,
@@ -34,15 +33,7 @@ completion({
             end,
         },
         { "saadparwaiz1/cmp_luasnip", lazy = true },
-        {
-            "doxnit/cmp-luasnip-choice",
-            lazy = true,
-            config = function()
-                require("cmp_luasnip_choice").setup({
-                    auto_open = false, -- Automatically open nvim-cmp on choice node (default: true)
-                })
-            end,
-        },
+        { "f3fora/cmp-spell", ft = { "gitcommit", "NeogitCommitMessage", "markdown", "norg", "org" } },
     },
     config = conf.cmp,
 })
