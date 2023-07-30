@@ -15,6 +15,7 @@ local use_navigator = false
 
 -- toggle core values within the list
 lambda.config = {
+    use_firenvim = false,
     use_hydra = true,
     -- innter treesitter, although this can be changed
     do_you_want_lag = true, -- Enable Extra regex, -- Fuck it
@@ -119,7 +120,7 @@ lambda.config.cmp = {
 lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
-    only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
+    only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
     use_navigator = use_navigator,
     use_lsp_dim = true,
@@ -134,6 +135,8 @@ lambda.config.lsp = {
         use_lsp_lines = false,
         use_rcd = true, -- the least intrusive of the bunch
     },
+    -- considering that this imght no longer be supported; mightbe best to get rid of this
+    -- just in case
     null_ls = {
         diagnostic = {
             "cppcheck",
@@ -167,7 +170,7 @@ lambda.config.lsp = {
             "trim_whitespace",
             "pyflyby",
         },
-        code_action = { "eslint_d", "refactoring" },
+        code_action = { "eslint_d", "refactoring", "ts_node_action" },
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -197,7 +200,7 @@ lambda.config.ui = {
         use_heirline = true,
     },
     noice = {
-        enable = true,
+        enable = use_noice,
         lsp = {
             use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
             use_noice_hover = not use_navigator, -- Navigator really does not like this
@@ -211,7 +214,7 @@ lambda.config.ui = {
         use_mini_indent_scope = false,
     },
     scroll_bar = {
-        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
+        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
     },
 }
 lambda.config.fun = {
@@ -227,26 +230,25 @@ lambda.config.colourscheme = {
     catppuccin_flavour = "mocha",
     -- @usage theme_name : percentage chance
     kanagawa_flavour = "wave", -- {dragon, waave}, lotus-> white
-    use_wal = true,
     themes = {
         dark = {
             core_themes = {
-                -- "tokyonight.nvim",
+                "tokyonight.nvim",
                 "catppuccin",
-                -- "rose", -- TSMethod'
-                -- -- "kanagawa.nvim",
-                -- "vim-dogrun",
-                -- "palenightfall.nvim", -- do not like this colourscheme
-                -- "sweetie.nvim",
-                -- "poimandres.nvim",
-                -- "nvim-tundra",
-                -- "mellifluous.nvim", -- BORKED
-                -- "tokyonight.nvim", -- allot
-                -- "nvim-tundra", -- TSProperty'
-                -- "mellow.nvim",
+                "rose", -- TSMethod'
+                "kanagawa.nvim",
             },
             others = {
                 "doom-one.nvim",
+                "vim-dogrun",
+                "palenightfall.nvim", -- do not like this colourscheme
+                "sweetie.nvim",
+                "poimandres.nvim",
+                "nvim-tundra",
+                "mellifluous.nvim", -- BORKED
+                "tokyonight.nvim", -- allot
+                "nvim-tundra", -- TSProperty'
+                "mellow.nvim",
             },
         },
     },

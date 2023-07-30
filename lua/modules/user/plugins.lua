@@ -1,4 +1,5 @@
 local user = require("core.pack").package
+local uv = vim.uv or vim.loop
 local api, fn = vim.api, vim.fn
 user({
     "Dhanus3133/LeetBuddy.nvim",
@@ -415,6 +416,14 @@ user({
 user({
     "smoka7/multicursors.nvim",
     lazy = true,
+    cmd = {
+        "MCstart",
+        "MCvisual",
+        "MCpattern",
+        "MCvisualPattern",
+        "MCunderCursor",
+        "MCclear",
+    },
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
     },
@@ -457,6 +466,7 @@ user({
     lazy = true,
 })
 --  ──────────────────────────────────────────────────────────────────────
+
 user({ -- https://github.com/fregante/GhostText
     "subnut/nvim-ghost.nvim",
     build = ":call nvim_ghost#installer#install()",
@@ -465,6 +475,9 @@ user({ -- https://github.com/fregante/GhostText
         vim.g.nvim_ghost_super_quiet = 1
         vim.cmd([[
 				augroup nvim_ghost_user_autocommands
+					au User *overleaf.com  setfiletype tex
+					au User *overleaf.com  setlocal spell
+
 					au User *github.com,*stackoverflow.com,*reddit.com setfiletype markdown
 					au User *github.com,*stackoverflow.com,*reddit.com let b:copilot_enabled=1
 					au User *github.com,*stackoverflow.com,*reddit.com setlocal spell
@@ -484,8 +497,9 @@ user({
     },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function(_, opts)
-        require("quicknote").setup(opts)
-        require("quicknote").ShowNoteSigns()
+        local quicknote = require("quicknote")
+        quicknote.setup(opts)
+        quicknote.ShowNoteSigns()
         -- NOTE: (vsedov) (04:55:24 - 20/07/23): Need to be revamped the binds arent the best and
         -- there are some intrusive things about this that i think could be improved.
 
@@ -503,114 +517,114 @@ user({
                     ["<ESC>"] = { nil, { exit = true } },
                     n = {
                         function()
-                            require("quicknote").OpenNoteAtCurrentLine()
+                            quicknote.OpenNoteAtCurrentLine()
                         end,
                         { exit = true, desc = "New Sign" },
                     },
                     ["<cr>"] = {
                         function()
-                            require("quicknote").NewNoteAtCurrentLine()
-                            require("quicknote").ShowNoteSigns()
-                            require("quicknote").OpenNoteAtCurrentLine()
+                            quicknote.NewNoteAtCurrentLine()
+                            quicknote.ShowNoteSigns()
+                            quicknote.OpenNoteAtCurrentLine()
                         end,
                         { exit = true, desc = "Open at line" },
                     },
                     d = {
                         function()
-                            require("quicknote").DeleteNoteAtCurrentLine()
+                            quicknote.DeleteNoteAtCurrentLine()
                         end,
                         { exit = false, desc = "Delete at line" },
                     },
                     l = {
                         function()
-                            require("quicknote").ListNotesForCurrentBuffer()
+                            quicknote.ListNotesForCurrentBuffer()
                         end,
                         { exit = true, desc = "List C buffer" },
                     },
                     j = {
                         function()
-                            require("quicknote").JumpToNextNote()
+                            quicknote.JumpToNextNote()
                         end,
                         { exit = false, desc = "Jump to next note" },
                     },
                     k = {
                         function()
-                            require("quicknote").JumpToPreviousNote()
+                            quicknote.JumpToPreviousNote()
                         end,
                         { exit = false, desc = "Jump to previous note" },
                     },
                     s = {
                         function()
-                            require("quicknote").ToggleNoteSigns()
+                            quicknote.ToggleNoteSigns()
                         end,
                         { exit = false, desc = "Toggle note signs" },
                     },
                     m = {
                         function()
-                            require("quicknote").ToggleMode()
+                            quicknote.ToggleMode()
                         end,
                         { exit = true, desc = "Toggle mode" },
                     },
                     i = {
                         function()
-                            require("quicknote").ImportNotesForCurrentBuffer()
+                            quicknote.ImportNotesForCurrentBuffer()
                         end,
                         { exit = true, desc = "Import C buffer" },
                     },
                     x = {
                         function()
-                            require("quicknote").ExportNotesForCurrentBuffer()
+                            quicknote.ExportNotesForCurrentBuffer()
                         end,
                         { exit = true, desc = "Export C buffer" },
                     },
                     -- Using uppercase letters
                     N = {
                         function()
-                            require("quicknote").NewNoteAtCWD()
+                            quicknote.NewNoteAtCWD()
                         end,
                         { exit = true, desc = "New at CWD" },
                     },
                     ["<leader>"] = {
                         function()
-                            require("quicknote").OpenNoteAtCWD()
+                            quicknote.OpenNoteAtCWD()
                         end,
                         { exit = true, desc = "Open at CWD" },
                     },
                     D = {
                         function()
-                            require("quicknote").DeleteNoteAtCWD()
+                            quicknote.DeleteNoteAtCWD()
                         end,
                         { exit = true, desc = "Delete at CWD" },
                     },
                     L = {
                         function()
-                            require("quicknote").ListNotesForCWD()
+                            quicknote.ListNotesForCWD()
                         end,
                         { exit = true, desc = "List for CWD" },
                     },
                     I = {
                         function()
-                            require("quicknote").ImportNotesForCWD()
+                            quicknote.ImportNotesForCWD()
                         end,
                         { exit = true, desc = "Import for CWD" },
                     },
                     X = {
                         function()
-                            require("quicknote").ExportNotesForCWD()
+                            quicknote.ExportNotesForCWD()
                         end,
                         { exit = true, desc = "Export for CWD" },
                     },
 
                     G = {
                         function()
-                            require("quicknote").SwitchToResidentMode()
+                            quicknote.SwitchToResidentMode()
                             -- Use the mode switch functions according to the current mode
                         end,
                         { exit = true, desc = "Switch to Resident Mode" },
                     },
                     P = {
                         function()
-                            require("quicknote").SwitchToPortableMode()
+                            quicknote.SwitchToPortableMode()
                             -- Use the mode switch functions according to the current mode
                         end,
                         { exit = true, desc = "Switch to Portable Mode" },
@@ -634,4 +648,30 @@ user({
     config = function()
         vim.g.wordmotion_prefix = ","
     end,
+})
+
+user({
+    "glacambre/firenvim",
+    cond = lambda.config.use_firenvim,
+    lazy = not vim.g.started_by_firenvim,
+    build = function()
+        vim.fn["firenvim#install"](0)
+    end,
+    config = function()
+        local group = vim.api.nvim_create_augroup("FireNvimFT", {})
+        vim.api.nvim_create_autocmd("BufEnter", {
+            pattern = "github.com_*.txt",
+            command = "set filetype=markdown",
+            group = group,
+        })
+        vim.api.nvim_create_autocmd("BufEnter", {
+            pattern = "overleaf.com_*.tex",
+            command = "set filetype=tex",
+            group = group,
+        })
+    end,
+})
+user({
+    "creativenull/dotfyle-metadata.nvim",
+    cmd = "DotfyleGenerate",
 })

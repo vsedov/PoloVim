@@ -226,6 +226,21 @@ ui({
     cond = lambda.config.ui.indent_lines.use_hlchunk,
     event = { "UIEnter" },
     opts = {
+        indent = {
+            chars = { "│", "¦", "┆", "┊" }, -- more code can be found in https://unicodeplus.com/
+        },
+        chunk = {
+            enable = true,
+            use_treesitter = true,
+            notify = true, -- notify if some situation(like disable chunk mod double time)
+            exclude_filetypes = {
+                aerial = true,
+                dashboard = true,
+                sagaoutline = true,
+                oil_preview = true,
+                oil = true,
+            },
+        },
         blank = {
             enable = false,
         },
@@ -280,6 +295,7 @@ ui({
             ft_ignore = {
                 "neotree",
                 "OverseerList",
+                "sagaoutline",
             }, -- lua table with filetypes for which 'statuscolumn' will be unset
             bt_ignore = {
                 "nofile",

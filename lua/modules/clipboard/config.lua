@@ -178,3 +178,5 @@ function config.neoclip()
 end
 
 return config
+
+

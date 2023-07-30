@@ -75,6 +75,7 @@ ai({
     build = "bash ./dl_binaries.sh",
     config = conf.tabnine,
 })
+-- another module
 
 ai({
     "Exafunction/codeium.vim",

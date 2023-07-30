@@ -1,5 +1,22 @@
 local buffer = require("core.pack").package
 local conf = require("modules.buffers.config")
+local uv = vim.uv or vim.loop
+local function find_files()
+    local dir = oil.get_current_dir()
+    if vim.api.nvim_win_get_config(0).relative ~= "" then
+        vim.api.nvim_win_close(0, true)
+    end
+    require("telescope.builtin").find_files({ cwd = dir, hidden = true })
+end
+
+local function livegrep()
+    local dir = oil.get_current_dir()
+    if vim.api.nvim_win_get_config(0).relative ~= "" then
+        vim.api.nvim_win_close(0, true)
+    end
+    require("telescope.builtin").live_grep({ cwd = dir })
+end
+
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ very lazy                                                          │
 --  ╰────────────────────────────────────────────────────────────────────╯
@@ -60,24 +77,17 @@ buffer({
 
 buffer({
     "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     init = function()
-        vim.api.nvim_create_autocmd("BufNew", {
-            callback = function(args)
-                if vim.fn.isdirectory(args.file) == 1 then
-                    require("lazy").load({ plugins = { "oil.nvim" } })
-                    -- Once oil is loaded, we can delete this autocmd
-                    return true
-                end
-            end,
-        })
+        if vim.fn.argc() == 0 then
+            require("oil").open()
+        end
 
-        vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
-        vim.keymap.set("n", "<leader>-", require("oil").open_float, { desc = "Open parent directory" })
         if vim.fn.argc() == 1 then
-            local arg = vim.fn.argv(0)
-            local stat = vim.loop.fs_stat(arg)
+            ---@diagnostic disable-next-line: param-type-mismatch
+            local stat = vim.loop.fs_stat(vim.fn.argv(0))
             if stat and stat.type == "directory" then
-                require("lazy").load({ plugins = { "oil.nvim" } })
+                require("oil")
             end
         end
     end,
@@ -113,7 +123,7 @@ buffer({
             ["<C-c>"] = "actions.close",
             ["<C-l>"] = "actions.refresh",
             ["-"] = "actions.parent",
-            ["_"] = "actions.open_cwd",
+            ["w"] = "actions.open_cwd",
             ["c"] = "actions.cd",
             ["C"] = "actions.tcd",
             ["g."] = "actions.toggle_hidden",
@@ -141,6 +151,8 @@ buffer({
         vim.keymap.set("n", "__", function()
             oil.open(vim.fn.getcwd())
         end, { desc = "Open cwd" })
+        vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+        vim.keymap.set("n", "<leader>-", require("oil").open_float, { desc = "Open parent directory" })
     end,
 })
 

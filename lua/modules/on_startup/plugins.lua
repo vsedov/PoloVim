@@ -4,6 +4,7 @@ local visible_buffers = {}
 -- to run this, you have to run the above
 startup({
     "stevearc/profile.nvim",
+    lazy = true,
     config = function()
         local should_profile = os.getenv("NVIM_PROFILE")
         if should_profile then
@@ -36,46 +37,6 @@ startup({
     end,
 })
 
-startup({
-    "olimorris/persisted.nvim",
-    cond = lambda.config.tools.session.use_persisted,
-    event = "VimEnter",
-    init = function()
-        if lambda.config.tools.session.use_persisted then
-            lambda.command("ListSessions", "Telescope persisted", {})
-            lambda.augroup("PersistedEvents", {
-                {
-                    event = "User",
-                    pattern = "PersistedTelescopeLoadPre",
-                    command = function()
-                        vim.schedule(function()
-                            vim.cmd("%bd")
-                        end)
-                    end,
-                },
-                {
-                    event = "User",
-                    pattern = "PersistedSavePre",
-                    -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
-                    -- so remove them when saving a session
-                    command = function()
-                        vim.cmd("%argdelete")
-                    end,
-                },
-            })
-        end
-    end,
-    opts = {
-        autosave = true,
-        autoload = true,
-        use_git_branch = true,
-        ignored_dirs = { vim.fn.stdpath("data") },
-    },
-    config = function(_, opts)
-        require("persisted").setup(opts)
-        require("telescope").load_extension("persisted")
-    end,
-})
 startup({
     "stevearc/resession.nvim",
     cond = lambda.config.tools.session.use_resession,
@@ -189,6 +150,7 @@ startup({
                 end
             end,
         },
+
         block_for = {
             gitcommit = true,
             gitrebase = true,
@@ -209,6 +171,10 @@ startup({
                 })
             end
         end,
+        one_per = {
+            kitty = false, -- Flatten all instance in the current Kitty session
+            wezterm = false, -- Flatten all instance in the current Wezterm session
+        },
     },
 })
 

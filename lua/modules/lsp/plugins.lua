@@ -152,7 +152,7 @@ lsp({
     lazy = true,
     keys = {
         {
-            "<leader>ca",
+            "\\;",
             function()
                 require("actions-preview").code_actions()
             end,
@@ -250,7 +250,7 @@ lsp({
     cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
     event = "LspAttach",
     opts = {
-        enable = true, -- enable through lsp
+        enable =false, -- enable through lsp
         include_declaration = true, -- Reference include declaration
         sections = {
             -- Enable / Disable specific request

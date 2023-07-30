@@ -1,6 +1,7 @@
 local leader = "<leader>h"
 local gitrepo = vim.fn.isdirectory(".git/index")
 local gitsigns = lambda.reqidx("gitsigns")
+
 local function wrap(fn, ...)
     local args = { ... }
     local nargs = select("#", ...)
@@ -8,6 +9,7 @@ local function wrap(fn, ...)
         fn(unpack(args, nargs))
     end
 end
+
 -- Check if git is here
 
 local function diffmaster()
@@ -50,22 +52,22 @@ local config = {
             vim.wait(50)
         end,
         on_enter = function()
-            vim.cmd("mkview")
-            vim.cmd("silent! %foldopen!")
-            -- vim.bo.modifiable = false
-            -- if vim.
             if gitrepo then
+                vim.cmd("mkview")
+                vim.cmd("silent! %foldopen!")
+                -- vim.bo.modifiable = false
+                -- if vim.
                 gitsigns.toggle_signs(true)
                 gitsigns.toggle_linehl(true)
                 gitsigns.toggle_deleted(true)
             end
         end,
         on_exit = function()
-            local cursor_pos = vim.api.nvim_win_get_cursor(0)
-            vim.cmd("loadview")
-            vim.api.nvim_win_set_cursor(0, cursor_pos)
-            vim.cmd("normal zv")
             if gitrepo then
+                local cursor_pos = vim.api.nvim_win_get_cursor(0)
+                vim.cmd("loadview")
+                vim.api.nvim_win_set_cursor(0, cursor_pos)
+                vim.cmd("normal zv")
                 gitsigns.toggle_signs(true)
                 gitsigns.toggle_linehl(false)
                 gitsigns.toggle_deleted(false)
