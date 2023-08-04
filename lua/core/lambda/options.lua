@@ -197,16 +197,7 @@ lambda.config.ui = {
     use_statuscol = true,
     heirline = {
         use_statuscol = false,
-        use_heirline = true,
-    },
-    noice = {
-        enable = use_noice,
-        lsp = {
-            use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = not use_navigator, -- Navigator really does not like this
-            use_markdown = true,
-            use_documentation = true,
-        },
+        use_heirline = false,
     },
     indent_lines = {
         use_indent_blankline = false,
@@ -284,4 +275,21 @@ lambda.config.windows = {
         move_mappings = false, -- if you  do not want to use  smart split
     },
     use_smart_splits = true,
+}
+lambda.config.folke = {
+    noice = {
+        enable = use_noice,
+        lsp = {
+            use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
+            use_noice_hover = not use_navigator, -- Navigator really does not like this
+            use_markdown = true,
+            use_documentation = true,
+        },
+    },
+
+    edge = {
+
+        enable = true,
+        use_animate = false,
+    },
 }

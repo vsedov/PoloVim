@@ -1,22 +1,5 @@
 local buffer = require("core.pack").package
 local conf = require("modules.buffers.config")
-local uv = vim.uv or vim.loop
-local function find_files()
-    local dir = oil.get_current_dir()
-    if vim.api.nvim_win_get_config(0).relative ~= "" then
-        vim.api.nvim_win_close(0, true)
-    end
-    require("telescope.builtin").find_files({ cwd = dir, hidden = true })
-end
-
-local function livegrep()
-    local dir = oil.get_current_dir()
-    if vim.api.nvim_win_get_config(0).relative ~= "" then
-        vim.api.nvim_win_close(0, true)
-    end
-    require("telescope.builtin").live_grep({ cwd = dir })
-end
-
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ very lazy                                                          │
 --  ╰────────────────────────────────────────────────────────────────────╯

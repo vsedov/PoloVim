@@ -1,21 +1,7 @@
 local enable = true
 local lines = vim.fn.line("$")
 local treesitter = function()
-    -- lprint("loading treesitter")
-    if lines > 30000 then -- skip some settings for large file
-        -- vim.cmd[[syntax on]]
-        print("skip treesitter")
-        require("nvim-treesitter.configs").setup({ highlight = { enable = enable } })
-        return
-    end
-
-    if lines > 7000 then
-        enable = false
-        print("disable ts txtobj")
-    end
-    -- print('load treesitter refactor', vim.fn.line('$'))
     local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-
     parser_configs.markdown.filetype_to_parsername = "octo"
 
     require("nvim-treesitter.configs").setup({

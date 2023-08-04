@@ -74,24 +74,24 @@ function M.noice()
 
         lsp = {
             hover = {
-                enabled = lambda.config.ui.noice.lsp.use_noice_hover,
+                enabled = lambda.config.folke.noice.lsp.use_noice_hover,
             },
             progress = {
                 enabled = false, -- this is just annoying
             },
             signature = {
-                enabled = lambda.config.ui.noice.lsp.use_noice_signature, -- this just does not work well .
+                enabled = lambda.config.folke.noice.lsp.use_noice_signature, -- this just does not work well .
             },
             message = {
                 enabled = true,
             },
             override = {
                 -- override the default lsp markdown formatter with Noice
-                ["vim.lsp.util.convert_input_to_markdown_lines"] = lambda.config.ui.noice.lsp.use_markdown,
+                ["vim.lsp.util.convert_input_to_markdown_lines"] = lambda.config.folke.noice.lsp.use_markdown,
                 -- override the lsp markdown formatter with Noice
-                ["vim.lsp.util.stylize_markdown"] = lambda.config.ui.noice.lsp.use_markdown,
+                ["vim.lsp.util.stylize_markdown"] = lambda.config.folke.noice.lsp.use_markdown,
                 -- override cmp documentation with Noice (needs the other options to work)
-                ["cmp.entry.get_documentation"] = lambda.config.ui.noice.lsp.use_documentation,
+                ["cmp.entry.get_documentation"] = lambda.config.folke.noice.lsp.use_documentation,
             },
             -- defaults for hover and signature help
             documentation = {

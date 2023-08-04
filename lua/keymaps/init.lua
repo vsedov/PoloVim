@@ -168,15 +168,6 @@ onoremap("aL", [[<cmd>normal val<CR>]], { desc = "nromal val", silent = true })
 xnoremap("iL", [[<Esc>^vg_]], { desc = "inner line", silent = true })
 onoremap("iL", [[<cmd>normal! ^vg_<CR>]], { desc = "nromal val", silent = true })
 
---  TODO: (vsedov) (20:25:37 - 25/06/23): Does not work
-nnoremap("<localleader><cr>", function()
-    if fn.empty(fn.getbufvar(fn.bufnr(), "&buftype")) then
-        return "@@"
-    else
-        return "<CR>"
-    end
-end, { desc = "repeat macros", expr = true })
-
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Folds                                                              │
 --  ╰────────────────────────────────────────────────────────────────────╯

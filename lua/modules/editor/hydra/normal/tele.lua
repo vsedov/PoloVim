@@ -1,32 +1,5 @@
 local Hydra = require("hydra")
 
-vim.defer_fn(function()
-    local plugins = {
-        "telescope-live-grep-args.nvim",
-        "telescope-frecency.nvim",
-        "telescope-file-browser.nvim",
-        "telescope-bookmarks.nvim",
-    }
-    for _, v in ipairs(plugins) do
-        require("lazy").load({ plugins = { v } })
-    end
-    require("telescope").setup({
-        extensions = {
-            bookmarks = {
-
-                selected_browser = "firefox",
-                url_open_command = "open",
-                profile_name = "default-nightly-1",
-                url_open_plugin = nil,
-                full_path = true,
-                buku_include_tags = false,
-                debug = false,
-            },
-        },
-    })
-    require("telescope").load_extension("bookmarks")
-end, 3000)
-
 local hint_telescope = [[
  ^^      Git         ^^^^           Surfing               ^^^^
  ^^^^                                                     ^^^^
@@ -137,15 +110,12 @@ Hydra({
         },
         {
             "w",
+
             function()
-                lambda.clever_tcd()
-                vim.defer_fn(function()
-                    vim.ui.input({ prompt = "grep item" }, function(item)
-                        require("utils.telescope").grep_string_visual(tostring(item))
-                    end)
-                end, 100)
+                require("utils.telescope").egrep()
             end,
-            { exit = true },
+
+            { desc = "egrepify", exit = true },
         }, -- grep string
         { "W", require("utils.telescope").curbuf, { exit = true } }, -- pass
         { "l", require("telescope.builtin").lsp_dynamic_workspace_symbols, { exit = true } }, -- pass

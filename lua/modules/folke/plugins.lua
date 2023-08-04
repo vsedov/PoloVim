@@ -23,7 +23,7 @@ folke({
 folke({
     "folke/noice.nvim",
     event = "VeryLazy",
-    cond = lambda.config.ui.noice.enable,
+    cond = lambda.config.folke.noice.enable,
     dependencies = {
         "nui.nvim",
         "nvim-notify",

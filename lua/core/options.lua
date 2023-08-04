@@ -1,5 +1,4 @@
-local o, opt, fn = vim.o, vim.opt, vim.fn
-local cache_dir = vim.env.HOME .. "/.cache/nvim/"
+local o, opt, fn, icons = vim.o, vim.opt, vim.fn, lambda.style.icons
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -20,21 +19,15 @@ opt.shortmess = {
 -----------------------------------------------------------------------------//
 o.updatetime = 300
 o.timeout = true
-o.timeoutlen = 300
+o.timeoutlen = 500
 o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
-opt.smoothscroll = false
+o.splitkeep = "screen"
 o.splitbelow = true
 o.splitright = true
 o.eadirection = "hor"
--- cursor
--- screen
--- -- topline
-
-opt.splitkeep = "screen"
-
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
 o.switchbuf = "useopen,uselast"
@@ -80,6 +73,7 @@ opt.diffopt = opt.diffopt
         "context:4",
         "algorithm:histogram",
         "indent-heuristic",
+        "linematch:60",
     }
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
@@ -99,15 +93,28 @@ opt.formatoptions = {
     l = true,
     v = true,
 }
-opt.ssop:append({ "localoptions" })
+-----------------------------------------------------------------------------//
+-- Folds {{{1
+-----------------------------------------------------------------------------//
+-- unfortunately folding in (n)vim is a mess, if you set the fold level to start
+-- at X then it will auto fold anything at that level, all good so far. If you then
+-- try to edit the content of your fold and the foldmethod=manual then it will
+-- recompute the fold which when using nvim-ufo means it will be closed again...
+o.foldlevelstart = 999
+-- o.foldlevelstart = 20
+o.foldcolumn = "1" -- '0' is not bad
+o.foldenable = true
 
+o.cursorline = true
+o.cursorcolumn = true
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
-if lambda.executable("rg") then
+-- Use faster grep alternatives if possible
+if lambda and not lambda.falsy(fn.executable("rg")) then
     vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
     opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
-elseif lambda.executable("ag") then
+elseif lambda and not lambda.falsy(fn.executable("ag")) then
     vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
     opt.grepformat = opt.grepformat ^ { "%f:%l:%c:%m" }
 end
@@ -115,13 +122,9 @@ end
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
 o.wildcharm = ("\t"):byte()
-o.wildmode = "longest:full,full" -- Shows a menu bar as opposed to an enormous list
+o.wildmode = "list:full" -- Shows a menu bar as opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
--- Binary
 opt.wildignore = {
-    "*.aux",
-    "*.out",
-    "*.toc",
     "*.o",
     "*.obj",
     "*.dll",
@@ -136,32 +139,22 @@ opt.wildignore = {
     "*.png",
     "*.avi",
     "*.wav",
-    -- Temp/System
-    "*.*~",
-    "*~ ",
     "*.swp",
     ".lock",
     ".DS_Store",
     "tags.lock",
 }
-o.wildoptions = "pum"
-o.pumblend = 3 -- Make popup window translucent
+opt.wildoptions = { "pum", "fuzzy" }
+o.pumblend = 0 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
 o.conceallevel = 2
 o.breakindentopt = "sbr"
 o.linebreak = true -- lines wrap at words rather than random characters
-o.synmaxcol = 1024 -- don't syntax highlight long lines
-o.signcolumn = "yes:3"
-o.colorcolumn = "100"
+o.signcolumn = "yes:4"
 o.ruler = false
--- if lambda.config.ui.noice.enable then
-o.cmdheight = 0 -- 0 , is still borked it seems
--- else
---     o.cmdheight = 0
--- end
-
+o.cmdheight = 0
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1
@@ -169,13 +162,14 @@ o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 o.list = true -- invisible chars
 opt.listchars = {
     eol = nil,
+    -- tab = "  ", -- Alternatives: '▷▷',
     tab = "│ ",
+    -- extends = "…", -- Alternatives: … » ›
+    -- precedes = "░", -- Alternatives: … « ‹
     extends = "›", -- Alternatives: … »
     precedes = "‹", -- Alternatives: … «
     -- trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2)
 }
-
-opt.matchpairs = { "(:)", "{:}", "[:]", "<:>" }
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
@@ -187,8 +181,6 @@ o.shiftround = true
 o.expandtab = true
 o.shiftwidth = 2
 -----------------------------------------------------------------------------//
--- vim.o.debug = "msg"
-o.gdefault = true
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
 opt.completeopt = { "menuone", "noselect" }
@@ -208,6 +200,7 @@ o.emoji = false
 -----------------------------------------------------------------------------//
 -- Cursor {{{1
 -----------------------------------------------------------------------------//
+-- This is from the help docs, it enables mode shapes, "Cursor" highlight, and blinking
 opt.guicursor = {
     "n-v-c-sm:block-Cursor",
     "i-ci-ve:ver25-iCursor",
@@ -215,14 +208,8 @@ opt.guicursor = {
     "a:blinkon0",
 }
 opt.cursorlineopt = { "both" }
------------------------------------------------------------------------------//
--- Title {{{1
------------------------------------------------------------------------------//
-function lambda.modified_icon()
-    return vim.bo.modified and lambda.style.icons.misc.circle or ""
-end
-o.titlestring = '%{fnamemodify(getcwd(), ":t")} %{v:lua.lambda.modified_icon()}'
-o.titleold = fn.fnamemodify(vim.loop.os_getenv("SHELL"), ":t")
+
+o.titleold = fn.fnamemodify(vim.uv.os_getenv("SHELL"), ":t")
 o.title = true
 o.titlelen = 70
 -----------------------------------------------------------------------------//
@@ -237,8 +224,10 @@ opt.sessionoptions = {
     "buffers",
     "curdir",
     "winpos",
+    "winsize",
+    "help",
     "tabpages",
-    "curdir",
+    "terminal",
 }
 opt.viewoptions = { "cursor", "folds" } -- save/restore just these (with `:{mk,load}view`)
 o.virtualedit = "block" -- allow cursor to move where there is no text in visual block mode
@@ -250,14 +239,8 @@ opt.jumpoptions = { "stack" } -- make the jumplist behave like a browser stack
 -- BACKUP AND SWAPS {{{
 -------------------------------------------------------------------------------
 o.backup = false
-o.writebackup = false
 o.undofile = true
-o.swapfile = true
-o.directory = cache_dir .. "swag/"
-o.undodir = cache_dir .. "undo/"
-o.backupdir = cache_dir .. "backup/"
-o.viewdir = cache_dir .. "view/"
-o.shada = "!,'300,<50,@100,s10,h"
+o.swapfile = false
 --}}}
 -----------------------------------------------------------------------------//
 -- Match and search {{{1
@@ -265,50 +248,19 @@ o.shada = "!,'300,<50,@100,s10,h"
 o.ignorecase = true
 o.smartcase = true
 o.wrapscan = true -- Searches wrap around the end of the file
-o.scrolloff = 999 -- 9
+o.scrolloff = 9
 o.sidescrolloff = 10
 o.sidescroll = 1
-o.magic = true
 -----------------------------------------------------------------------------//
 -- Spelling {{{1
 -----------------------------------------------------------------------------//
 opt.spellsuggest:prepend({ 12 })
 opt.spelloptions:append({ "camel", "noplainbuffer" })
 opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
-opt.fileformats = { "unix", "mac", "dos" }
---opt.spelllang:append("programming") -- NOTE: (vsedov) (16:01:13 - 29/12/22): No longer works
 -----------------------------------------------------------------------------//
 -- Mouse {{{1
 -----------------------------------------------------------------------------//
 o.mousefocus = true
 o.mousemoveevent = true
 opt.mousescroll = { "ver:1", "hor:6" }
-opt.mousemodel = "extend"
-
--- these only read ".vim" files
-o.secure = true -- Disable autocmd etc for project local vimrc files.
--- Allow project local vimrc files example, .nvim.lua or .nvimrc see :h exrc
-o.exrc = lambda.has("nvim-0.9")
-
------------------------------------------------------------------------------//
--- Folds {{{1
------------------------------------------------------------------------------//
--- o.foldlevelstart = 20
-o.foldcolumn = "1" -- '0' is not bad
-o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-o.foldlevelstart = 99
-o.foldenable = true
-
-o.cursorline = true
-o.cursorcolumn = true
-
------------------------------------------------------------------------------//
--- Git editor
------------------------------------------------------------------------------//
-if lambda.executable("nvr") then
-    vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-    vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-end
-
-vim.cmd([[syntax off]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])

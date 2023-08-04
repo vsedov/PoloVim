@@ -649,28 +649,6 @@ user({
         vim.g.wordmotion_prefix = ","
     end,
 })
-
-user({
-    "glacambre/firenvim",
-    cond = lambda.config.use_firenvim,
-    lazy = not vim.g.started_by_firenvim,
-    build = function()
-        vim.fn["firenvim#install"](0)
-    end,
-    config = function()
-        local group = vim.api.nvim_create_augroup("FireNvimFT", {})
-        vim.api.nvim_create_autocmd("BufEnter", {
-            pattern = "github.com_*.txt",
-            command = "set filetype=markdown",
-            group = group,
-        })
-        vim.api.nvim_create_autocmd("BufEnter", {
-            pattern = "overleaf.com_*.tex",
-            command = "set filetype=tex",
-            group = group,
-        })
-    end,
-})
 user({
     "creativenull/dotfyle-metadata.nvim",
     cmd = "DotfyleGenerate",

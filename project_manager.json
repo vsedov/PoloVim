@@ -1,9 +1,0 @@
-{
-
-  "~/GitHub/active_development/PROJECT/": {
-    "name": "Final Year Project",
-    "description": "Final year Project using Gans",
-    "command": "poetry run python -u"
-  },
-
-}

@@ -129,17 +129,22 @@ local new_maker = function(filepath, bufnr, opts)
     }):sync()
 end
 
--- telescope.load_extension("zf-native")
--- telescope.load_extension("frecency")
--- telescope.load_extension("live_grep_args")
-
--- telescope.load_extension("notify")
-
 local M = {}
+M.multi_selection_open_vsplit = function(prompt_bufnr)
+    M._multiopen(prompt_bufnr, "vsplit")
+end
+M.multi_selection_open_split = function(prompt_bufnr)
+    M._multiopen(prompt_bufnr, "split")
+end
+M.multi_selection_open_tab = function(prompt_bufnr)
+    M._multiopen(prompt_bufnr, "tabe")
+end
+M.multi_selection_open = function(prompt_bufnr)
+    M._multiopen(prompt_bufnr, "edit")
+end
 
 M.setup = function()
     local icons = lambda.style.icons
-    local P = lambda.style.palette
 
     require("telescope").setup({
         defaults = {
@@ -152,7 +157,7 @@ M.setup = function()
                 hide_on_startup = true,
             },
             buffer_previewer_maker = new_maker,
-            -- dynamic_preview_title = fa,
+            dynamic_preview_title = fa,
             prompt_prefix = icons.misc.telescope .. " ",
             selection_caret = icons.misc.chevron_right .. " ",
             cycle_layout_list = { "flex", "horizontal", "vertical", "bottom_pane", "center" },
@@ -231,9 +236,10 @@ M.setup = function()
                 "^.git/",
                 "^node_modules/",
                 "^site-packages/",
+                "^abbreviations/",
+                "abbreviations/",
+                "abbreviations",
             },
-            path_display = { "truncate" },
-            winblend = 5,
             history = {
                 path = vim.fn.stdpath("data") .. "/telescope_history.sqlite3",
             },
@@ -244,6 +250,7 @@ M.setup = function()
                 },
             },
             extensions = {
+
                 file_browser = {
                     -- theme = "ivy",
                     mappings = {
@@ -251,7 +258,16 @@ M.setup = function()
                         ["n"] = {},
                     },
                 },
-
+                ast_grep = {
+                    command = {
+                        "ast-grep",
+                        "--json=stream",
+                        "run",
+                        "-p",
+                    }, -- must have --json and -p
+                    grep_open_files = false, -- search in opened files
+                    lang = nil, -- string value, specify language for ast-grep `nil` for default
+                },
                 frecency = {
                     default_workspace = "CWD",
                     show_unindexed = false, -- Show all files or only those that have been indexed
@@ -259,6 +275,20 @@ M.setup = function()
                     workspaces = {
                         conf = vim.env.DOTFILES,
                         project = vim.env.PROJECTS_DIR,
+                    },
+                },
+                fzf = {
+                    fuzzy = true, -- false will only do exact matching
+                    override_generic_sorter = true, -- override the generic sorter
+                    override_file_sorter = true, -- override the file sorter
+                    case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                    -- the default case_mode is "smart_case"
+                },
+                egrepify = {
+                    prefixes = {
+                        ["!"] = {
+                            flag = "invert-match",
+                        },
                     },
                 },
             },
@@ -313,6 +343,7 @@ M.setup = function()
                 },
                 reloader = dropdown(),
             },
+            --
         },
     })
 end
@@ -343,19 +374,6 @@ M._multiopen = function(prompt_bufnr, open_cmd)
         end
     end
 end
-M.multi_selection_open_vsplit = function(prompt_bufnr)
-    M._multiopen(prompt_bufnr, "vsplit")
-end
-M.multi_selection_open_split = function(prompt_bufnr)
-    M._multiopen(prompt_bufnr, "split")
-end
-M.multi_selection_open_tab = function(prompt_bufnr)
-    M._multiopen(prompt_bufnr, "tabe")
-end
-M.multi_selection_open = function(prompt_bufnr)
-    M._multiopen(prompt_bufnr, "edit")
-end
-
 M.projects = function()
     telescope.extensions.projects.projects()
 end
@@ -454,6 +472,12 @@ M.jump = function()
     builtin.jumplist({ layout_strategy = "vertical" })
 end
 
+M.egrep = function()
+    local dropdown = require("telescope.themes").get_ivy({})
+
+    require("telescope").extensions.egrepify.egrepify(dropdown)
+end
+
 M.ag = function(text_to_find)
     text_to_find = text_to_find or vim.fn.input(" Enter item you want to surf: ")
     local default_opts = {
@@ -533,23 +557,6 @@ M.search_only_certain_files = function()
             "--type",
             vim.fn.input("Type: "),
         },
-    })
-end
-
-M.grep_string_visual = function(opts)
-    local visual_selection = function()
-        local save_previous = vim.fn.getreg("a")
-        vim.api.nvim_command('silent! normal! "ay')
-        local selection = vim.fn.trim(vim.fn.getreg("a"))
-        vim.fn.setreg("a", save_previous)
-        if opts then
-            return vim.fn.substitute(opts, [[\n]], [[\\n]], "g")
-        end
-        return vim.fn.substitute(selection, [[\n]], [[\\n]], "g")
-    end
-    opts = opts or visual_selection()
-    builtin.live_grep({
-        default_text = opts,
     })
 end
 
@@ -799,7 +806,6 @@ end
 
 M.file_browser = function()
     reloader()
-    telescope.load_extension("file_browser")
     local opts
 
     opts = {

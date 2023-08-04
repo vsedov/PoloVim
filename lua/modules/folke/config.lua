@@ -175,7 +175,7 @@ function config.edgy()
         },
         -- edgebar animations
         animate = {
-            enabled = true,
+            enabled = lambda.config.folke.edge.use_animate,
             fps = 100, -- frames per second
             cps = 120, -- cells per second
             on_begin = function()

@@ -99,14 +99,8 @@ function config.neoai()
                 prompt = function()
                     return [[
                     Using the following git diff generate a consise and clear git commit message, it must use Conventional Commits standard. The title and topic should be informative.
-It should be in the following layout:
-<type>[optional scope]: <description>
+It should be in the following layout: <type>[optional scope]: <description> it should also be pythonic.
 
-[optional body]
-
-You are allowed to also have multope optional scopes like, feat(lsp, treesiter):
-                    The description that is informative of the changes made, and a body that is a more and anything that May seem important.
-                    Further more there are plugin names, when there is a plugin removed for example completion({"vsedov/plugin_name"...}), you have to state if there is a new plugin or if a previous plugin has been removed.
                 ]] .. vim.fn.system("git diff --cached")
                 end,
                 modes = { "n" },
@@ -124,6 +118,7 @@ function config.backseat()
     })
 end
 
+-- NOTE: (vsedov) (08:27:38 - 31/07/23): This is nice, until its not.  Hence i do not think its viable. As it also causes heavy lag ive noticed.
 function config.tabnine_cmp()
     local tabnine = require("cmp_tabnine.config")
     tabnine:setup({
@@ -139,6 +134,7 @@ function config.tabnine_cmp()
     })
 end
 
+-- NOTE: (vsedov) (08:27:24 - 31/07/23): I do not think you can refactor this into cmp directly using <c-l>
 function config.tabnine()
     require("tabnine").setup({
         disable_auto_comment = true,
@@ -149,6 +145,7 @@ function config.tabnine()
     })
 end
 
+--  TODO: (vsedov) (08:27:17 - 31/07/23): refactor this into cmp
 function config.codium()
     vim.keymap.set("i", "<C-l>", vim.fn["codeium#Accept"], { expr = true })
     vim.keymap.set("i", "<c-.>", function()
