@@ -53,7 +53,7 @@ vim.keymap.set("n", ";f", function() -- jump to all that you specify
         "while_statement",
         "switch_statement",
     })
-end, opts)
+end, { noremap = true, silent = true, desc = "Node Jumps " })
 
 lambda.command("STSJumpToTop", function()
     require("syntax-tree-surfer").go_to_top_node_and_execute_commands(

@@ -61,7 +61,29 @@ completion({
 completion({
     "ziontee113/SnippetGenie",
     lazy = true,
-    keys = { { "<cr>", mode = "x" }, { ";<cr>", mode = "n" } },
+    keys = {
+        {
+            "<cr>",
+
+            function()
+                require("SnippetGenie").create_new_snippet_or_add_placeholder()
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
+            end,
+            mode = "x",
+            desc = "Genie Snippet X mode",
+        },
+        {
+            ";<cr>",
+            function()
+                require("SnippetGenie").finalize_snippet()
+            end,
+            mode = "n",
+            desc = "Genie Snippet N Mode ",
+        },
+    },
+    cmd = {
+        "SnipCreate",
+    },
     config = conf.snip_genie,
 })
 

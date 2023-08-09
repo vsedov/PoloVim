@@ -71,7 +71,18 @@ clipsub({
     cmd = { "Snek", "Camel", "CamelB", "Kebab" },
 })
 
-clipsub({ "mbbill/undotree", lazy = true, cmd = { "UndotreeToggle" } })
+clipsub({
+    "mbbill/undotree",
+    lazy = true,
+    keys = {
+        {
+            "<f2>",
+            vim.cmd.UndotreeToggle,
+            desc = "UndoTree toggle",
+        },
+    },
+    cmd = { "UndotreeToggle", "UndotreeHide", "UndotreeFocus", "UndotreeShow" },
+})
 
 clipsub({
     "postfen/clipboard-image.nvim",

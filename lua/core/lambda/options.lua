@@ -4,6 +4,7 @@
 --    │                                                                    │
 --    ╰────────────────────────────────────────────────────────────────────╯
 
+local use_noice = true
 local use_codium = true -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = true
 
@@ -15,7 +16,6 @@ local use_navigator = false
 
 -- toggle core values within the list
 lambda.config = {
-    use_firenvim = false,
     use_hydra = true,
     -- innter treesitter, although this can be changed
     do_you_want_lag = true, -- Enable Extra regex, -- Fuck it
@@ -119,7 +119,7 @@ lambda.config.cmp = {
 
 lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
-    use_typos = false, -- this was getting annoying
+    use_typos = true, -- this was getting annoying
     only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
     use_navigator = use_navigator,
@@ -179,7 +179,11 @@ lambda.config.lsp = {
     latex = "texlab", -- texlab | ltex
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
-        format = { "ruff", "black" }, -- black -- Need to make it so it knows what formater to use :think:
+        format = {
+            "isort",
+            "ruff",
+            "black",
+        }, -- black -- Need to make it so it knows what formater to use :think:
         lsp = { "pylsp", "sourcery", "ruff_lsp" }, -- pylyzer, jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
     },
 }
@@ -212,6 +216,7 @@ lambda.config.fun = {
     use_pet = false,
 }
 lambda.config.colourscheme = {
+    use_light_theme = false,
     enable_transparent = false,
     dim_background = false,
     change_kitty_bg = false,
@@ -221,29 +226,46 @@ lambda.config.colourscheme = {
     catppuccin_flavour = "mocha",
     -- @usage theme_name : percentage chance
     kanagawa_flavour = "wave", -- {dragon, waave}, lotus-> white
+    tokyonight_flavour = "night",
     themes = {
+        light = {
+            "tokyonight.nvim",
+            "sweetie.nvim",
+            "kanagawa.nvim",
+            "catppuccin",
+        },
         dark = {
-            core_themes = {
-                "tokyonight.nvim",
-                "catppuccin",
-                "rose", -- TSMethod'
-                "kanagawa.nvim",
-            },
-            others = {
-                "doom-one.nvim",
-                "vim-dogrun",
-                "palenightfall.nvim", -- do not like this colourscheme
-                "sweetie.nvim",
-                "poimandres.nvim",
-                "nvim-tundra",
-                "mellifluous.nvim", -- BORKED
-                "tokyonight.nvim", -- allot
-                "nvim-tundra", -- TSProperty'
-                "mellow.nvim",
-            },
+            "tokyonight.nvim",
+            "catppuccin",
+            "sweetie.nvim",
+            "rose", -- TSMethod'
+            "kanagawa.nvim",
+        },
+        others = {
+            "doom-one.nvim",
+            "vim-dogrun",
+            "palenightfall.nvim", -- do not like this colourscheme
+            "poimandres.nvim",
+            "nvim-tundra",
+            "mellifluous.nvim", -- BORKED
+            "tokyonight.nvim", -- allot
+            "nvim-tundra", -- TSProperty'
+            "mellow.nvim",
         },
     },
 }
+
+if lambda.config.colourscheme.use_light_theme then
+    vim.opt.background = "light"
+    --- @usage "main"' | '"moon"
+    lambda.config.colourscheme.rose = "moon"
+    --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
+    lambda.config.colourscheme.catppuccin_flavour = "latte"
+    -- @usage theme_name : percentage chance
+
+    lambda.config.colourscheme.kanagawa_flavour = "lotus" -- {dragon, waave}, lotus-> white
+    lambda.config.colourscheme.tokyonight_flavour = "day"
+end
 
 lambda.config.movement = {
     movement_type = "flash", -- flash : leap

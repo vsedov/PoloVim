@@ -1,4 +1,3 @@
-local fmt = string.format
 local M = {}
 M.__index = M
 
@@ -78,27 +77,6 @@ function M:buildHeads()
         end
     end
 end
-function M.create_table_normal(var, sorted, string_len, start_val)
-    start_val = start_val or nil
-    var = {}
-    for _, v in pairs(sorted) do
-        if string.len(v) == string_len and not vim.tbl_contains(bracket, v) then
-            if start_val ~= nil then
-                if vim.tbl_contains(start_val, v) then
-                    -- if starts(v, start_val) then
-                    table.insert(var, v)
-                end
-            else
-                table.insert(var, v)
-            end
-        end
-    end
-    table.sort(var, function(a, b)
-        return a:lower() < b:lower()
-    end)
-
-    return var
-end
 
 function M:addToCoreTable(value)
     table.insert(self.core_table, value)
@@ -158,7 +136,7 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2)
 
     local hint_table = {}
     -- local string_val = fmt("^ ^%s%s^ ^\n\n", self.name, string.rep(" ", maxLen - cal_v2)) -- Adjust the alignment of the module name
-    string_val = "^ ^" .. self.name .. "^\n\n"
+    local string_val = "^ ^" .. self.name .. "^\n\n"
     string_val = string_val .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n" -- Adjust the length of the horizontal line
     for _, v in pairs(self.core_table) do
         if v == "\n" then

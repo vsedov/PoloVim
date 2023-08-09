@@ -180,14 +180,13 @@ local function opts()
                 -- label = { before = true, after = false },
                 -- },
             },
-            -- options used for remote flash
-            remote = {
-                remote_op = { restore = true, motion = true },
-            },
             leap = {
                 search = {
                     max_length = 2,
                 },
+            },
+            textcase = {
+                search = { mode = lib.mode_textcase },
             },
             search_diagnostics = {
                 search = { mode = "fuzzy" },
@@ -215,6 +214,15 @@ local function opts()
                 },
             },
             references = {},
+            diagnostics = {
+                search = { multi_window = true, wrap = true, incremental = true },
+                label = { current = true },
+                highlight = { backdrop = true },
+            },
+            remote = {
+                search = { mode = "fuzzy" },
+                jump = { autojump = true },
+            },
         },
         -- options for the floating window that shows the prompt,
         -- for regular jumps

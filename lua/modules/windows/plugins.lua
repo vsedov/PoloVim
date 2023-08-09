@@ -134,16 +134,27 @@ windows({
         "WindowsDisableAutowidth",
     },
     keys = {
-        ";z",
-        ";Z",
+        {
+            ";z",
+
+            function()
+                vim.cmd([[WindowsMaximize]])
+            end,
+            desc = "Window Maximize",
+        },
+        {
+            ";Z",
+            function()
+                vim.cmd([[WindowsDisableAutowidth]])
+            end,
+            desc = "Window Disable",
+        },
     },
     config = function()
         vim.o.winwidth = 10
         vim.o.winminwidth = 10
         vim.o.equalalways = false
         require("windows").setup()
-        vim.keymap.set("n", ";z", "<Cmd>WindowsMaximize<CR>")
-        vim.keymap.set("n", ";Z", "<Cmd>WindowsDisableAutowidth<CR>")
     end,
 })
 

@@ -43,18 +43,14 @@ function pack:boot_strap()
     local opts = {
         lockfile = helper.get_data_path() .. "/lazy-lock.json",
         dev = { path = "~/GitHub/neovim/personal/" },
-        defaults = {
-            version = nil,
-        },
-        checker = {
-            enabled = false,
-            concurrency = nil, ---@type number? set to 1 to check for updates very slowly
-            notify = true, -- get a notification when new updates are found
-            frequency = 3600, -- check for updates every hour
-        },
     }
     self:load_modules_packages()
     lazy.setup(self.repos, opts)
+    for k, v in pairs(self) do
+        if type(v) ~= "function" then
+            self[k] = nil
+        end
+    end
 end
 
 function pack.package(repo)

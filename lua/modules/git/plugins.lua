@@ -64,7 +64,20 @@ git({
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "nvim-telescope/telescope.nvim" },
     cmd = { "Neogit" },
-    config = conf.neogit,
+    opts = {
+        telescope_sorter = function()
+            return require("telescope").extensions.fzf.native_fzf_sorter()
+        end,
+        signs = {
+            section = { "", "" }, -- "", ""
+            item = { "▸", "▾" },
+            hunk = { "樂", "" },
+        },
+        integrations = {
+            telescope = true,
+            diffview = true,
+        },
+    },
 })
 
 git({

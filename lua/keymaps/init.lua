@@ -225,8 +225,6 @@ nnoremap("<Leader>yy", "<cmd>:lua require'utils.telescope'.neoclip()<CR>", { des
 --  │ misc                                                               │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap("<F1>", "<cmd>:UndotreeToggle<cr>", { desc = "Undo Tree", silent = true })
-
 nnoremap("<Leader>J", ":TSJJoin<Cr>", { desc = "TSJJoin", silent = true })
 nnoremap("<Leader>j", ":TSJToggle<cr>", { desc = "TSJToggle", silent = true })
 vnoremap("D", function()

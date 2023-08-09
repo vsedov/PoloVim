@@ -17,6 +17,7 @@ folke({
         vim.opt.laststatus = 3
         vim.opt.splitkeep = "screen"
     end,
+
     opts = conf.edgy,
 })
 
@@ -35,6 +36,7 @@ folke({
 
 folke({
     "folke/which-key.nvim",
+    cond = false,
     lazy = true,
     event = "VeryLazy",
     config = conf.which_key,

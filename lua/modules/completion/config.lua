@@ -27,15 +27,6 @@ function config.snip_genie()
         ]],
     })
 
-    vim.keymap.set("x", "<CR>", function()
-        genie.create_new_snippet_or_add_placeholder()
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
-    end, { desc = "genie snippit" })
-
-    vim.keymap.set("n", ";<CR>", function()
-        genie.finalize_snippet()
-    end, { desc = "genie snippit" })
-
     lambda.command("SnipCreate", function()
         vim.notify("<cr> to start and ;<cr> to add the variables")
     end, { force = true })

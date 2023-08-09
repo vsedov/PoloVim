@@ -126,9 +126,15 @@ function config.edgy()
                 pinned = true,
                 size = { height = 0.5 },
             },
+            { ft = "undotree", title = "Undo Tree" },
             { ft = "dapui_scopes", title = "Scopes" },
             { ft = "dapui_breakpoints", title = "Breakpoints" },
             { ft = "dapui_stacks", title = "Stacks" },
+            {
+                ft = "diff",
+                title = " Diffs",
+            },
+
             {
                 ft = "DiffviewFileHistory",
                 title = " Diffs",

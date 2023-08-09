@@ -295,6 +295,8 @@ tools({
     lazy = true,
     dependencies = "nvim-treesitter/nvim-treesitter",
     opts = {
+        auto_highlight = true,
+
         file_types = {
             ["text"] = {
                 "any", -- highlight any node
@@ -307,6 +309,7 @@ tools({
         hl_group_value = {
             link = "Bold", -- you could do italic
         },
+
         treesitter = false, -- this does not work right now
         update_in_insert_mode = true,
     },

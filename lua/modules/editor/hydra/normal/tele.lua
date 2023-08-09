@@ -5,9 +5,9 @@ local hint_telescope = [[
  ^^^^                                                     ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   _g_: Git Files       ▕    _w_: live G    _a_: AG
-  _u_: Git Diff        ▕    _W_: CurBuf    _e_: L grep ++
-  _S_: Git Status      ▕    _z_: zoxide    _M_: Marks
-  _h_: Git Conflict    ▕    _l_: Lsp       _p_: Workspaces
+  _u_: Git Diff        ▕    _W_: CurBuf    _E_: L grep ++
+  _S_: Git Status      ▕    _z_: zoxide    _e_: Ast Surf
+  _h_: Git Conflict    ▕    _l_: Lsp       _M_: Marks
                      ▕
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▕ ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
  ^^ Register and Buffer^^▕             Commands
@@ -119,7 +119,8 @@ Hydra({
         }, -- grep string
         { "W", require("utils.telescope").curbuf, { exit = true } }, -- pass
         { "l", require("telescope.builtin").lsp_dynamic_workspace_symbols, { exit = true } }, -- pass
-        { "e", require("telescope").extensions.live_grep_args.live_grep_args, { exit = true } }, -- pass
+        { "e", ":Telescope ast_grep<cr>", { exit = true } }, -- pass
+        { "E", require("telescope").extensions.live_grep_args.live_grep_args, { exit = true } }, -- pass
 
         -- misc
         { "p", ":Telescope workspaces<CR>", { exit = true } }, -- pass

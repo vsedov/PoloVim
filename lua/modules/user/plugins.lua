@@ -42,19 +42,6 @@ user({
     opts = { setup_widgets = true, timer = { throttle = 100 } },
 })
 
-user({
-    "krivahtoo/silicon.nvim",
-    lazy = true,
-    build = "./install.sh build",
-    cmd = { "Silicon" },
-    config = function()
-        require("silicon").setup({
-            font = "FantasqueSansMono Nerd Font=16",
-            theme = "Monokai Extended",
-        })
-    end,
-})
-
 -- :NR  - Open the selected region in a new narrowed window
 -- :NW  - Open the current visual window in a new narrowed window
 -- :WR  - (In the narrowed window) write the changes back to the original buffer.
@@ -262,12 +249,6 @@ user({
             desc = "winbar: pick",
         },
     },
-    init = function()
-        lambda.highlight.plugin("DropBar", {
-            { DropBarIconUISeparator = { link = "Delimiter" } },
-            { DropBarMenuNormalFloat = { inherit = "Pmenu" } },
-        })
-    end,
     config = {
         general = {
             update_interval = 100,
@@ -287,7 +268,7 @@ user({
         },
         menu = {
             win_configs = {
-                border = "shadow",
+                border = "single",
                 col = function(menu)
                     return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
                 end,
@@ -398,13 +379,6 @@ user({
         { ",ts", "<cmd>TPShow<CR>", desc = "TreePin Show" },
         { ",th", "<cmd>TPHide<CR>", desc = "TreePin Hide" },
     },
-    init = function()
-        local wk = require("which-key")
-        wk.register({
-            mode = { "n" },
-            [",t"] = { name = "+TreePin" },
-        })
-    end,
     opts = {
         seperator = "▔",
     },
@@ -489,8 +463,12 @@ user({ -- https://github.com/fregante/GhostText
 --  TODO: (vsedov) (04:19:41 - 20/07/23): this can be a potential hydra: But im not sure if the usecase meets the need.
 user({
     "RutaTang/quicknote.nvim",
+    event = "VeryLazy",
     keys = {
-        ";q",
+        {
+            ";q",
+            desc = "[Hydra] QuickNote",
+        },
     },
     opts = {
         filetype = "norg",
@@ -510,9 +488,6 @@ user({
                     color = "red",
                     body = ";q",
                     mode = { "n" },
-                    on_key = function()
-                        vim.wait(50)
-                    end,
 
                     ["<ESC>"] = { nil, { exit = true } },
                     n = {
@@ -524,7 +499,6 @@ user({
                     ["<cr>"] = {
                         function()
                             quicknote.NewNoteAtCurrentLine()
-                            quicknote.ShowNoteSigns()
                             quicknote.OpenNoteAtCurrentLine()
                         end,
                         { exit = true, desc = "Open at line" },
@@ -652,4 +626,17 @@ user({
 user({
     "creativenull/dotfyle-metadata.nvim",
     cmd = "DotfyleGenerate",
+})
+user({
+    "okuuva/auto-save.nvim",
+    cmd = "ASToggle", -- optional for lazy loading on command
+    event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
+    opts = {
+        execution_message = {
+            enabled = true,
+            message = function() -- message to print on save
+                return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+            end,
+        },
+    },
 })

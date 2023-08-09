@@ -221,6 +221,7 @@ ui({
     event = { "UIEnter" },
     config = conf.blankline,
 })
+-- dropbar_menu
 ui({
     "shell-Raining/hlchunk.nvim",
     cond = lambda.config.ui.indent_lines.use_hlchunk,
@@ -235,6 +236,7 @@ ui({
             notify = true, -- notify if some situation(like disable chunk mod double time)
             exclude_filetypes = {
                 aerial = true,
+                dropbar_menu = true,
                 dashboard = true,
                 sagaoutline = true,
                 oil_preview = true,

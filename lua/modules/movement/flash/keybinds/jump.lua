@@ -157,7 +157,6 @@ return {
             Flash.jump({
                 search = {
                     multi_window = false,
-                    mode = "textcase",
                 },
             })
         end,
