@@ -1,5 +1,4 @@
 local M = {}
-
 M.global_abbrevs = {
     iabbrevs = {
         { "note:", [[<c-r>=printf(&commentstring, 'NOTE: (vsedov) ('.strftime("%T - %d/%m/%y").'):')<CR>]] },

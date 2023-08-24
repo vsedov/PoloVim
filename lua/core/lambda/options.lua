@@ -6,9 +6,9 @@
 
 local use_noice = true
 local use_codium = true -- Want to see what this would be like without codeium, ; but just the lsp support
-local use_codium_cmp = true
+local use_codium_cmp = false
 
-local use_tabnine = true
+local use_tabnine = false
 local use_tabnine_cmp = false
 
 local use_copilot = false -- We really do sell our souls for this thing eh
@@ -229,16 +229,16 @@ lambda.config.colourscheme = {
     tokyonight_flavour = "night",
     themes = {
         light = {
-            "tokyonight.nvim",
-            "sweetie.nvim",
+            -- "tokyonight.nvim",
+            -- "sweetie.nvim",
+            -- "catppuccin",
             "kanagawa.nvim",
-            "catppuccin",
         },
         dark = {
-            "tokyonight.nvim",
+            -- "tokyonight.nvim",
             "catppuccin",
-            "sweetie.nvim",
-            "rose", -- TSMethod'
+            -- "sweetie.nvim",
+            -- "rose", -- TSMethod'
             "kanagawa.nvim",
         },
         others = {

@@ -235,6 +235,7 @@ ui({
             use_treesitter = true,
             notify = true, -- notify if some situation(like disable chunk mod double time)
             exclude_filetypes = {
+                harpoon = true,
                 aerial = true,
                 dropbar_menu = true,
                 dashboard = true,

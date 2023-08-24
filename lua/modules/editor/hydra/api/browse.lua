@@ -1,4 +1,4 @@
-local leader = "<leader><cr>"
+local leader = ";b"
 
 local bookmarks = {
     default = {
@@ -52,17 +52,8 @@ local config = {
     Browse = {
         color = "red",
         body = leader,
-        mode = { "n", "v", "x", "o" },
-        position = "bottom-right",
-
+        mode = { "n" },
         ["<ESC>"] = { nil, { exit = true } },
-
-        [";"] = {
-            function()
-                vim.cmd([[Telescope bookmarks]])
-            end,
-            { nowait = true, exit = true, desc = "BookMarks" },
-        },
 
         w = {
             function()
@@ -147,7 +138,7 @@ local config = {
         F = { require("utils.telescope").google_search, { exit = true, desc = "Google search" } },
     },
 }
-local bracket = { "<CR>", "s", "w", "W", ";", "g", "f", "F" }
+local bracket = { "<CR>", "s", "w", "W", "g", "f", "F" }
 
 return {
     config,

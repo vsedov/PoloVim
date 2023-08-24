@@ -63,7 +63,9 @@ buffer({
     dependencies = { "nvim-tree/nvim-web-devicons" },
     init = function()
         if vim.fn.argc() == 0 then
-            require("oil").open()
+            vim.defer_fn(function()
+                require("oil").open()
+            end, 1000)
         end
 
         if vim.fn.argc() == 1 then

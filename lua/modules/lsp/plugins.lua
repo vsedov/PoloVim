@@ -291,3 +291,8 @@ lsp({
         disable_diagnostic_style = "all",
     },
 })
+lsp({
+    "ivanjermakov/troublesum.nvim",
+    event = { "LspAttach" },
+    config = true,
+})

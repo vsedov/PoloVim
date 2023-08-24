@@ -459,162 +459,7 @@ user({ -- https://github.com/fregante/GhostText
 			]])
     end,
 })
---  ──────────────────────────────────────────────────────────────────────
---  TODO: (vsedov) (04:19:41 - 20/07/23): this can be a potential hydra: But im not sure if the usecase meets the need.
-user({
-    "RutaTang/quicknote.nvim",
-    event = "VeryLazy",
-    keys = {
-        {
-            ";q",
-            desc = "[Hydra] QuickNote",
-        },
-    },
-    opts = {
-        filetype = "norg",
-    },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function(_, opts)
-        local quicknote = require("quicknote")
-        quicknote.setup(opts)
-        quicknote.ShowNoteSigns()
-        -- NOTE: (vsedov) (04:55:24 - 20/07/23): Need to be revamped the binds arent the best and
-        -- there are some intrusive things about this that i think could be improved.
 
-        vim.defer_fn(function()
-            local make_hydra = require("modules.editor.hydra.make_hydra").make_hydra
-            local config = {
-                QuickNote = {
-                    color = "red",
-                    body = ";q",
-                    mode = { "n" },
-
-                    ["<ESC>"] = { nil, { exit = true } },
-                    n = {
-                        function()
-                            quicknote.OpenNoteAtCurrentLine()
-                        end,
-                        { exit = true, desc = "New Sign" },
-                    },
-                    ["<cr>"] = {
-                        function()
-                            quicknote.NewNoteAtCurrentLine()
-                            quicknote.OpenNoteAtCurrentLine()
-                        end,
-                        { exit = true, desc = "Open at line" },
-                    },
-                    d = {
-                        function()
-                            quicknote.DeleteNoteAtCurrentLine()
-                        end,
-                        { exit = false, desc = "Delete at line" },
-                    },
-                    l = {
-                        function()
-                            quicknote.ListNotesForCurrentBuffer()
-                        end,
-                        { exit = true, desc = "List C buffer" },
-                    },
-                    j = {
-                        function()
-                            quicknote.JumpToNextNote()
-                        end,
-                        { exit = false, desc = "Jump to next note" },
-                    },
-                    k = {
-                        function()
-                            quicknote.JumpToPreviousNote()
-                        end,
-                        { exit = false, desc = "Jump to previous note" },
-                    },
-                    s = {
-                        function()
-                            quicknote.ToggleNoteSigns()
-                        end,
-                        { exit = false, desc = "Toggle note signs" },
-                    },
-                    m = {
-                        function()
-                            quicknote.ToggleMode()
-                        end,
-                        { exit = true, desc = "Toggle mode" },
-                    },
-                    i = {
-                        function()
-                            quicknote.ImportNotesForCurrentBuffer()
-                        end,
-                        { exit = true, desc = "Import C buffer" },
-                    },
-                    x = {
-                        function()
-                            quicknote.ExportNotesForCurrentBuffer()
-                        end,
-                        { exit = true, desc = "Export C buffer" },
-                    },
-                    -- Using uppercase letters
-                    N = {
-                        function()
-                            quicknote.NewNoteAtCWD()
-                        end,
-                        { exit = true, desc = "New at CWD" },
-                    },
-                    ["<leader>"] = {
-                        function()
-                            quicknote.OpenNoteAtCWD()
-                        end,
-                        { exit = true, desc = "Open at CWD" },
-                    },
-                    D = {
-                        function()
-                            quicknote.DeleteNoteAtCWD()
-                        end,
-                        { exit = true, desc = "Delete at CWD" },
-                    },
-                    L = {
-                        function()
-                            quicknote.ListNotesForCWD()
-                        end,
-                        { exit = true, desc = "List for CWD" },
-                    },
-                    I = {
-                        function()
-                            quicknote.ImportNotesForCWD()
-                        end,
-                        { exit = true, desc = "Import for CWD" },
-                    },
-                    X = {
-                        function()
-                            quicknote.ExportNotesForCWD()
-                        end,
-                        { exit = true, desc = "Export for CWD" },
-                    },
-
-                    G = {
-                        function()
-                            quicknote.SwitchToResidentMode()
-                            -- Use the mode switch functions according to the current mode
-                        end,
-                        { exit = true, desc = "Switch to Resident Mode" },
-                    },
-                    P = {
-                        function()
-                            quicknote.SwitchToPortableMode()
-                            -- Use the mode switch functions according to the current mode
-                        end,
-                        { exit = true, desc = "Switch to Portable Mode" },
-                    },
-                },
-            }
-            make_hydra({
-                config,
-                "QuickNote",
-                { { "<leader>", "N", "D", "L" }, { "I", "X", "G", "P" }, { "m", "i", "x" } },
-                { "<cr>", "n", "d", "j", "k", "s", "l" },
-            })
-        end, 500)
-    end,
-})
--- --[[ This thing causes issues with respect to cmdheight=0 ]]
 user({
     "chaoren/vim-wordmotion",
     lazy = true,
@@ -623,6 +468,7 @@ user({
         vim.g.wordmotion_prefix = ","
     end,
 })
+
 user({
     "creativenull/dotfyle-metadata.nvim",
     cmd = "DotfyleGenerate",
@@ -639,4 +485,55 @@ user({
             end,
         },
     },
+})
+user({
+    "roobert/f-string-toggle.nvim",
+    keys = {
+        {
+            "\\<cr>",
+            desc = "Toggle F Bind",
+        },
+    },
+    config = function()
+        require("f-string-toggle").setup({
+            key_binding = "\\<cr>",
+        })
+    end,
+})
+user({
+    "piersolenski/wtf.nvim",
+    dependencies = {
+        "dpayne/CodeGPT.nvim", -- Optional, if you want to use AI
+    },
+    opts = {
+        -- Default AI popup type
+        popup_type = "popup",
+    },
+    keys = {
+        {
+            ";d",
+            mode = { "n" },
+            function()
+                require("wtf").ai()
+            end,
+            desc = "Debug diagnostic with AI",
+        },
+        {
+            ";D",
+            mode = { "n" },
+            function()
+                require("wtf").search()
+            end,
+            desc = "Search diagnostic with Google",
+        },
+    },
+})
+user({
+    "FabijanZulj/blame.nvim",
+    cmd = {
+        "ToggleBlame",
+        "EnableBlame",
+        "DisableBlame",
+    },
+    config = true,
 })
