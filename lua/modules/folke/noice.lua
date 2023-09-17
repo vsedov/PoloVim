@@ -2,7 +2,7 @@ local M = {}
 function M.noice()
     return {
         cmdline = {
-            enabled = false, -- enables the Noice cmdline UI
+            enabled = true, -- enables the Noice cmdline UI
             view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
             opts = {}, -- global options for the cmdline. See section on views
             ---@type table<string, CmdlineFormat>

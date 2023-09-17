@@ -36,7 +36,7 @@ folke({
 
 folke({
     "folke/which-key.nvim",
-    cond = false,
+    cond = lambda.config.tools.use_which_key_or_use_mini_clue == "which",
     lazy = true,
     event = "VeryLazy",
     config = conf.which_key,

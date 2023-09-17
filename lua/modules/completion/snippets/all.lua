@@ -126,21 +126,4 @@ local all = {
     ),
 }
 
-if lambda.config.use_luasnip_brackets then
-    local extensions = {
-        pair("(", ")", neg, char_count_same),
-        pair("{", "}", neg, char_count_same),
-        pair("[", "]", neg, char_count_same),
-        pair("<", ">", neg, char_count_same),
-        pair("'", "'", neg, even_count),
-        pair('"', '"', neg, even_count),
-        pair("`", "`", neg, even_count),
-    }
-    -- table.insert(all, extensions)
-    for _, y in ipairs(extensions) do
-        table.insert(all, y)
-    end
-    -- ls.add_snippets("all", extensions, { type = "autosnippets" })
-end
-
 return all

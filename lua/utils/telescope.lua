@@ -476,6 +476,11 @@ M.egrep = function()
     require("telescope").extensions.egrepify.egrepify(dropdown)
 end
 
+M.buffers = function()
+    local dropdown = require("telescope.themes").get_ivy({})
+    builtin.buffers(dropdown)
+end
+
 M.ag = function(text_to_find)
     text_to_find = text_to_find or vim.fn.input(" Enter item you want to surf: ")
     local default_opts = {

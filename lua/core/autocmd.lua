@@ -342,8 +342,10 @@ lambda.augroup("Omega", {
     {
         event = { "BufNewFile", "BufRead", "TabEnter", "TermOpen" },
         command = function()
-            if #vim.fn.getbufinfo({ buflisted = 1 }) >= 2 or #vim.api.nvim_list_tabpages() >= 2 then
-                vim.opt.showtabline = 2
+            if lambda.config.buffer.use_bufferline then
+                if #vim.fn.getbufinfo({ buflisted = 1 }) >= 2 or #vim.api.nvim_list_tabpages() >= 2 then
+                    vim.opt.showtabline = 2
+                end
             end
         end,
     },

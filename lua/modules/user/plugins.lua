@@ -336,7 +336,7 @@ user({
             desc = "Mark clear",
         },
         {
-            "M<cr>",
+            "m;",
             "<cmd>Hi}<cr>",
         },
     },
@@ -347,7 +347,26 @@ user({
         vim.cmd("let HiClear = 'mD'")
     end,
 })
+user({
+    "chentoast/marks.nvim",
+    event = "VeryLazy",
+    config = function()
+        lambda.highlight.plugin("marks", {
+            { MarkSignHL = { link = "Directory" } },
+            { MarkSignNumHL = { link = "Directory" } },
+        })
+        vim.keymap.set("n", ";mb", "<Cmd>MarksListBuf<CR>", { desc = "list buffer" })
+        vim.keymap.set("n", ";mg", "<Cmd>MarksQFListGlobal<CR>", { desc = "list global" })
+        vim.keymap.set("n", ";m0", "<Cmd>BookmarksQFList 0<CR>", { desc = "list bookmark" })
 
+        require("marks").setup({
+            force_write_shada = false, -- This can cause data loss
+            excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
+            bookmark_0 = { sign = "⚑", virt_text = "" },
+            mappings = { annotate = "m?" },
+        })
+    end,
+})
 user({
     "KaitlynEthylia/TreePin",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -387,6 +406,7 @@ user({
     "lewis6991/whatthejump.nvim",
     keys = { "<c-i>", "<c-o>" },
 })
+
 user({
     "smoka7/multicursors.nvim",
     lazy = true,
@@ -443,6 +463,7 @@ user({
 
 user({ -- https://github.com/fregante/GhostText
     "subnut/nvim-ghost.nvim",
+  cond =false, 
     build = ":call nvim_ghost#installer#install()",
     lazy = false,
     config = function()
@@ -473,67 +494,24 @@ user({
     "creativenull/dotfyle-metadata.nvim",
     cmd = "DotfyleGenerate",
 })
-user({
-    "okuuva/auto-save.nvim",
-    cmd = "ASToggle", -- optional for lazy loading on command
-    event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
-    opts = {
-        execution_message = {
-            enabled = true,
-            message = function() -- message to print on save
-                return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
-            end,
-        },
-    },
-})
+
 user({
     "roobert/f-string-toggle.nvim",
     keys = {
         {
-            "\\<cr>",
+            "\\f",
             desc = "Toggle F Bind",
         },
     },
     config = function()
         require("f-string-toggle").setup({
-            key_binding = "\\<cr>",
+            key_binding = "\\f",
         })
     end,
 })
+
 user({
-    "piersolenski/wtf.nvim",
-    dependencies = {
-        "dpayne/CodeGPT.nvim", -- Optional, if you want to use AI
-    },
-    opts = {
-        -- Default AI popup type
-        popup_type = "popup",
-    },
-    keys = {
-        {
-            ";d",
-            mode = { "n" },
-            function()
-                require("wtf").ai()
-            end,
-            desc = "Debug diagnostic with AI",
-        },
-        {
-            ";D",
-            mode = { "n" },
-            function()
-                require("wtf").search()
-            end,
-            desc = "Search diagnostic with Google",
-        },
-    },
-})
-user({
-    "FabijanZulj/blame.nvim",
-    cmd = {
-        "ToggleBlame",
-        "EnableBlame",
-        "DisableBlame",
-    },
+    "smjonas/duplicate.nvim",
+    cond = true,
     config = true,
 })

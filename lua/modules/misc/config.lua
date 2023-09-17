@@ -48,10 +48,6 @@ function config.diaglist()
     end, { noremap = true, silent = true })
 end
 
-function config.autosave()
-    require("save").setup()
-end
-
 function config.carbon()
     require("carbon-now").setup({
         options = {

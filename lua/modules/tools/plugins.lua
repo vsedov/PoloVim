@@ -177,9 +177,17 @@ tools({
     cmd = {
         "SudaRead",
         "SudaWrite",
+        "SudoRead",
+        "SudoWrite",
     },
     init = function()
         vim.g.suda_smart_edit = 1
+        lambda.command("SudoWrite", function()
+            vim.cmd([[SudaWrite]])
+        end, {})
+        lambda.command("SudoReadk", function()
+            vim.cmd([[SudaRead]])
+        end, {})
     end,
 })
 
@@ -328,10 +336,9 @@ tools({
         "Clocate",
         "Lfind",
         "Wall",
-        "SudoWrite",
-        "SudoEdit",
     },
 })
+
 tools({
     "smjonas/live-command.nvim",
     cond = lambda.config.tools.use_live_command,

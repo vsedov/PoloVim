@@ -157,3 +157,12 @@ git({
         require("gh-actions").setup(opts)
     end,
 })
+git({
+    "FabijanZulj/blame.nvim",
+    cmd = {
+        "ToggleBlame",
+        "EnableBlame",
+        "DisableBlame",
+    },
+    config = true,
+})

@@ -124,6 +124,7 @@ startup({
 -- enabled by default, will need to load on boot
 startup({
     "chrisbra/Recover.vim",
+    cond = false,
     lazy = false,
 })
 
@@ -172,7 +173,7 @@ startup({
             end
         end,
         one_per = {
-            kitty = false, -- Flatten all instance in the current Kitty session
+            kitty = true, -- Flatten all instance in the current Kitty session
             wezterm = false, -- Flatten all instance in the current Wezterm session
         },
     },

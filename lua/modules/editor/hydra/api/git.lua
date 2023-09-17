@@ -48,9 +48,6 @@ local config = {
         color = "pink",
         body = leader,
         position = "bottom-right",
-        on_key = function()
-            vim.wait(50)
-        end,
         on_enter = function()
             if gitrepo then
                 vim.cmd("mkview")

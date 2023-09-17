@@ -1,4 +1,4 @@
-local leader = "<CR>"
+local leader = "<cr>"
 local bracket = { "<CR>", "<BS>", "W", "G", "t", "a", ";", "c", "<leader>" }
 
 local input_prompt = "enter the command: cmd >"

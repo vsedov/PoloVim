@@ -182,38 +182,7 @@ function config.edgy()
         -- edgebar animations
         animate = {
             enabled = lambda.config.folke.edge.use_animate,
-            fps = 100, -- frames per second
-            cps = 120, -- cells per second
-            on_begin = function()
-                vim.g.minianimate_disable = true
-            end,
-            on_end = function()
-                vim.g.minianimate_disable = false
-            end,
-            spinner = require("noice.util.spinners").spinners.circleFull,
         },
-        -- enable this to exit Neovim when only edgy windows are left
-        exit_when_last = false,
-        -- close edgy when all windows are hidden instead of opening one of them
-        -- disable to always keep at least one edgy split visible in each open section
-        close_when_all_hidden = true,
-        -- global window options for edgebar windows
-        ---@type vim.wo
-        wo = {
-            -- Setting to `true`, will add an edgy winbar.
-            -- Setting to `false`, won't set any winbar.
-            -- Setting to a string, will set the winbar to that string.
-            winbar = true,
-            winfixwidth = true,
-            winfixheight = false,
-            winhighlight = "WinBar:EdgyWinBar,Normal:EdgyNormal",
-            spell = false,
-            signcolumn = "no",
-        },
-        -- buffer-local keymaps to be added to edgebar buffers.
-        -- Existing buffer-local keymaps will never be overridden.
-        -- Set to false to disable a builtin.
-        ---@type table<string, fun(win:Edgy.Window)|false>
         keys = {
             -- close window
             ["q"] = function(win)

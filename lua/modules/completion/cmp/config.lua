@@ -24,10 +24,11 @@ local config = {
         end,
     },
     -- performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
-    -- preselect = cmp.PreselectMode.Item, -- None | Item
-    -- completion = {
-    --     types.cmp.TriggerEvent.Replace,
-    -- },
+    preselect = cmp.PreselectMode.Item, -- None | Item
+    completion = {
+        types.cmp.TriggerEvent.Replace,
+        completeopt = "menu,menuone,preview"
+    },
     -- confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
     -- confirmation = {
     --     default_behavior = types.cmp.ConfirmBehavior.Replace, -- Item
@@ -38,9 +39,7 @@ local config = {
     -- experimental = { ghost_text = { hl_group = "Dimmed" } },
     experimental = {
         ghost_text = lambda.config.cmp.use_ghost,
-        native_menu = false,
     },
-
     mapping = require("modules.completion.cmp.mappings"),
     sources = require("modules.completion.cmp.sources"),
 
@@ -105,7 +104,7 @@ end
 local function setFormattingConfiguration(theme)
     if theme == "border" then
         config.formatting = {
-            format = kind.cmp_format({
+            format = lspkind.cmp_format({
                 with_text = false,
                 before = function(entry, vim_item)
                     vim_item.abbr = utils.get_abbr(vim_item, entry)

@@ -1,4 +1,5 @@
-local bracket = { "l", "h", "L", "H", "=", "+", "b", "B", "<cr>" }
+local bracket = { "w", "j", "k", "n", "N", "m", "C", "T", "L" }
+
 local leader_key = "<leader>b"
 local hbac = require("hbac")
 
@@ -10,6 +11,23 @@ local function buffer_move()
         end
     end)
 end
+local cmd = vim.cmd
+
+local reach_options = {
+    handle = "dynamic",
+    show_current = true,
+    sort = function(a, b)
+        return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
+    end,
+}
+
+-- Function to swap to the last buffer for this window.
+local function swap_to_last_buffer()
+    local last_buffer = vim.fn.bufnr("#")
+    if last_buffer ~= -1 then
+        vim.cmd("buffer " .. last_buffer)
+    end
+end
 
 vim.api.nvim_create_user_command("ProjectDelete", function()
     require("three").remove_project()
@@ -20,36 +38,98 @@ local config = {
         color = "red",
         body = leader_key,
         mode = { "n" },
+        on_enter = function() end,
+
+        m = {
+            function()
+                cmd("ReachOpen marks")
+            end,
+            { nowait = true, exit = true, desc = "Reach Marks" },
+        },
+        T = {
+            function()
+                cmd("ReachOpen tabpages")
+            end,
+            { nowait = true, exit = true, desc = "Reach TabPage" },
+        },
+        C = {
+            function()
+                cmd("ReachOpen colorschemes")
+            end,
+            { nowait = true, exit = true, desc = "Reach Colour" },
+        },
+        L = {
+            function()
+                swap_to_last_buffer()
+            end,
+            { nowait = true, exit = true, desc = "Swap Last Buffer" },
+        },
+
+        n = {
+            function()
+                cmd("CybuNext")
+            end,
+            { nowait = true, exit = false, desc = "CybuNext" },
+        },
+        N = {
+            function()
+                cmd("CybuPrev")
+            end,
+            { nowait = true, exit = false, desc = "CybuPrev" },
+        },
+
+        k = {
+            function()
+                cmd("CybuLastusedPrev")
+            end,
+            { nowait = true, exit = false, desc = "CybuLastusedPrev" },
+        },
+        j = {
+            function()
+                cmd("CybuLastusedNext")
+            end,
+            { nowait = true, exit = false, desc = "CybuLastusedNext" },
+        },
+        w = {
+            function()
+                require("reach").buffers(reach_options)
+            end,
+            { nowait = true, exit = false, desc = "Reach" },
+        },
 
         b = {
             function()
-                vim.cmd("Telescope buffers")
+                require("utils.telescope").buffers()
             end,
             { desc = "Buffers", exit = true },
         },
         l = {
             function()
-                vim.cmd("BufferLineCycleNext")
+                if lambda.config.buffer.use_bufferline then
+                    vim.cmd("BufferLineCycleNext")
+                end
             end,
 
             { desc = "Next Buffers", exit = false },
         },
         h = {
             function()
-                vim.cmd("BufferLineCyclePrev")
+                if lambda.config.buffer.use_bufferline then
+                    vim.cmd("BufferLineCyclePrev")
+                end
             end,
 
             { desc = "Prev Buffers", exit = false },
         },
 
-        L = {
+        J = {
             function()
                 require("three").next()
             end,
 
             { desc = "[G]oto next [B]uffer", exit = false },
         },
-        H = {
+        K = {
             function()
                 require("three").prev()
             end,
@@ -229,7 +309,10 @@ return {
     config,
     "Buffer",
     {
+        { "l", "h", "J", "K", "=", "+", "b", "B", "<cr>" },
+
         { "P", "q", "Q", "M" },
+
         { "e", ">", "<", "p", "c" },
         { "D", "d" },
         { "1", "2", "3" },

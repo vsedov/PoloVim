@@ -38,9 +38,64 @@ ui({
 
     cond = lambda.config.ui.heirline.use_heirline,
     event = "VeryLazy",
-    config = function()
-        require("modules.ui.heirline")
-    end,
+  config = function()
+    local comp = require("modules.ui.heirline_components")
+    local utils = require("heirline.utils")
+
+    require("heirline").load_colors(comp.setup_colors())
+    local aug = vim.api.nvim_create_augroup("Heirline", { clear = true })
+    vim.api.nvim_create_autocmd("ColorScheme", {
+      desc = "Update Heirline colors",
+      group = aug,
+      callback = function()
+        local colors = comp.setup_colors()
+        utils.on_colorscheme(colors)
+      end,
+    })
+
+    require("heirline").setup({
+      statusline = utils.insert(
+        {
+          static = comp.stl_static,
+          hl = { bg = "bg" },
+        },
+        comp.ViMode,
+        comp.lpad(comp.LSPActive),
+        comp.lpad(comp.Diagnostics),
+        require("modules.ui.statusline").left_components,
+        { provider = "%=" },
+        require("modules.ui.statusline").right_components,
+        comp.rpad(comp.ConjoinStatus),
+        comp.rpad(comp.ArduinoStatus),
+        comp.rpad(comp.SessionName),
+        comp.rpad(comp.Overseer),
+        comp.rpad(comp.FileType),
+        comp.Ruler
+      ),
+
+      winbar = {
+        comp.FullFileName,
+      },
+
+      opts = {
+        disable_winbar_cb = function(args)
+          local buf = args.buf
+          local ignore_buftype = vim.tbl_contains({ "prompt", "nofile", "terminal", "quickfix" }, vim.bo[buf].buftype)
+          local filetype = vim.bo[buf].filetype
+          local ignore_filetype = filetype == "fugitive" or filetype == "qf" or filetype:match("^git")
+          local is_float = vim.api.nvim_win_get_config(0).relative ~= ""
+          return ignore_buftype or ignore_filetype or is_float
+        end,
+      },
+    })
+
+    vim.api.nvim_create_user_command("HeirlineResetStatusline", function()
+      vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
+    end, {})
+
+    -- -- Because heirline is lazy loaded, we need to manually set the winbar on startup
+    -- vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    end
 })
 
 ui({
@@ -170,12 +225,6 @@ ui({
     end,
 })
 
--- -- -- Feels slow, might revert backto nvim tree
-ui({
-    "mrbjarksen/neo-tree-diagnostics.nvim",
-    dependencies = "nvim-neo-tree/neo-tree.nvim",
-    lazy = true,
-})
 ui({
     "nvim-neo-tree/neo-tree.nvim",
     event = "VeryLazy", -- No clue why, but this is required for my hydra to work o_o
@@ -499,18 +548,13 @@ ui({
         require("neoscroll").setup({
             -- All these keys will be mapped to their corresponding default scrolling animation
             --mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-            mappings = { "C-j", "C-k", "<C-u>", "<C-d>", "<C-b>", "<C-f>" },
+            mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>" },
             hide_cursor = true, -- Hide cursor while scrolling
             stop_eof = false, -- Stop at <EOF> when scrolling downwards
             -- use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
             -- respect_scrolloff = true, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
             -- cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
         })
-
-        local t = {}
-        t["<c-k>"] = { "scroll", { "-vim.wo.scroll", "true", "250" } }
-        t["<c-j>"] = { "scroll", { "vim.wo.scroll", "true", "250" } }
-        require("neoscroll.config").set_mappings(t)
     end,
 })
 
@@ -536,6 +580,7 @@ ui({
 
 ui({
     "mvllow/modes.nvim",
+    cond = false, 
     event = "VeryLazy",
     config = true,
 })

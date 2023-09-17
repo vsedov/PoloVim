@@ -15,8 +15,7 @@ return {
                 pycodestyle = { enabled = false },
                 pydocstyle = { enabled = false },
                 ruff = { enable = false },
-
-                flake8 = { enabled = true },
+                flake8 = { enabled = false},
                 jedi_completion = { fuzzy = true, enabled = true },
                 jedi_hover = { enabled = true },
                 jedi_references = { enabled = true },

@@ -5,7 +5,8 @@
 --    ╰────────────────────────────────────────────────────────────────────╯
 
 local use_noice = true
-local use_codium = true -- Want to see what this would be like without codeium, ; but just the lsp support
+
+local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 
 local use_tabnine = false
@@ -18,19 +19,19 @@ local use_navigator = false
 lambda.config = {
     use_hydra = true,
     -- innter treesitter, although this can be changed
-    do_you_want_lag = true, -- Enable Extra regex, -- Fuck it
+    do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
 
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
-    record_your_self = true, -- waka time track , me.
+    --  ──────────────────────────────────────────────────────────────────────
+    record_your_self = false, -- waka time track, also might not be needed
     neorg_auto_commit = false,
-    loaded_confirm_quit = true,
+    loaded_confirm_quit = false, -- this is not needed
+    --  ──────────────────────────────────────────────────────────────────────
     save_clipboard_on_exit = true,
-    rooter_or_project = true, --- @usage  true | nvim-rooter - false | for project.nvim, if you want None : Then turn to True for nvim -- rooter as that has
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_gitsigns = true,
     use_wrapping = true, -- I am not sure if this is causing me to segfault.
-    use_luasnip_brackets = false, --  REVISIT: (vsedov) (03:43:32 - 27/10/22): This is not good enough , Need something smarter
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 lambda.config.ai = {
@@ -48,10 +49,10 @@ lambda.config.ai = {
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
         cmp = {
-            tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+            tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
             tabnine_bottom_sort = true,
             tabnine_prefetch = true,
-            tabnine_priority = 1, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
+            tabnine_priority = 6, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
         },
     },
     sell_your_soul = use_copilot,
@@ -66,9 +67,9 @@ lambda.config.extra_search = {
     },
 }
 lambda.config.buffer = {
+    use_bufferline = true,
     use_tabscope = true,
     use_sticky_buf = true,
-
     use_bufignore = true,
     use_early_retirement = true,
     use_hbac = true,
@@ -88,11 +89,11 @@ lambda.config.treesitter = {
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
     use_context_vt = false,
-    use_rainbow = true,
+    use_rainbow = false,
 }
 
 lambda.config.abbrev = {
-    enable = true,
+    enable = false,
     coding_support = true, -- system wide
     globals = {
         -- dictionaries that ive defined to be global, you may not want this idk .
@@ -130,7 +131,11 @@ lambda.config.lsp = {
         use_floating_window_above_cur_line = true,
         fix_pos = true,
     },
-
+    lint_formatting = {
+        use_ale = false,
+        use_null_ls = false,
+        use_conform = true,
+    },
     diagnostics = {
         use_lsp_lines = false,
         use_rcd = true, -- the least intrusive of the bunch
@@ -188,6 +193,11 @@ lambda.config.lsp = {
     },
 }
 
+-- if lambda.config.lsp.python.lsp
+if vim.tbl_contains(lambda.config.lsp.python.lsp, "pylsp") then
+    lambda.config.lsp.python.lint = {}
+end
+
 lambda.config.ui = {
     use_virtcol = true,
     use_illuminate = true,
@@ -195,17 +205,17 @@ lambda.config.ui = {
     use_tint = true, -- Might not be great for certain colourschemes
     use_hlsearch = true,
     use_dropbar = true,
-    use_beacon = true,
-    use_mini_animate = true,
-    use_hlslens = true,
+    use_beacon = false,
+    use_mini_animate = false,
+    use_hlslens = false,
     use_statuscol = true,
     heirline = {
         use_statuscol = false,
         use_heirline = false,
     },
     indent_lines = {
-        use_indent_blankline = false,
         use_hlchunk = true,
+        use_indent_blankline = false,
         use_mini_indent_scope = false,
     },
     scroll_bar = {
@@ -236,7 +246,7 @@ lambda.config.colourscheme = {
         },
         dark = {
             -- "tokyonight.nvim",
-            "catppuccin",
+            -- "catppuccin",
             -- "sweetie.nvim",
             -- "rose", -- TSMethod'
             "kanagawa.nvim",
@@ -278,13 +288,14 @@ lambda.config.movement = {
     },
 }
 lambda.config.tools = {
+    use_which_key_or_use_mini_clue = "which", -- "which or mini"
     session = {
         use_resession = true,
     },
     use_tracker = true,
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = true,
-    use_live_command = true,
+    use_live_command = false, -- Disabled due to large files, this might noe be nice to have
 }
 
 -- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux
@@ -308,9 +319,7 @@ lambda.config.folke = {
             use_documentation = true,
         },
     },
-
     edge = {
-
         enable = true,
         use_animate = false,
     },

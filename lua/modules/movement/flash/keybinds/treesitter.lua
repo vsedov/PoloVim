@@ -2,7 +2,7 @@ local Flash = lambda.reqidx("flash")
 local lib = require("modules.movement.flash.nav.lib")
 
 local O = {
-    goto_prefix = "<cr>",
+    goto_prefix = ";;",
     goto_next = "]",
     goto_previous = "[",
     goto_next_outer = "]]",
@@ -13,7 +13,7 @@ local O = {
     goto_previous_outer_end = "<leader>[[", -- "((",
     select = "&",
     select_dynamic = "m",
-    select_remote = ";r",
+    select_remote = "r",
     select_remote_dynamic = "ir",
     select_outer = "<M-S-7>", -- M-&
     select_next = "in",
@@ -79,131 +79,154 @@ return {
     },
     {
         O.select_remote_dynamic,
-        mode = { "o" },
+        mode = { "o", "x" },
         desc = "Remote Node",
         function()
-            require("flash").jump({ mode = ";remote_ts" })
+            require("flash").jump({ mode = "remote_ts" })
         end,
     },
     {
-        O.select_remote_dynamic .. O.select_remote_dynamic,
-        mode = { "x" },
-        desc = "Remote Node",
-        function()
-            require("flash").jump({ mode = ";remote_ts" })
-        end,
-    },
-    {
-        O.goto_next .. O.select_dynamic,
+        O.goto_next .. O.select_remote_dynamic,
         mode = { "o", "x" },
         function()
-            require("flash").jump({ mode = ";remote_ts", treesitter = { starting_from_pos = true } })
+            require("flash").jump({ mode = "remote_ts", treesitter = { starting_from_pos = true } })
         end,
         desc = "Select node",
     },
     {
-        O.goto_prev .. O.select_dynamic,
+        O.goto_prev .. O.select_remote_dynamic,
         mode = { "o", "x" },
         function()
-            require("flash").jump({ mode = ";remote_ts", treesitter = { ending_at_pos = true } })
+            require("flash").jump({ mode = "remote_ts", treesitter = { ending_at_pos = true } })
         end,
         desc = "Select node",
     },
     {
-        O.goto_prev .. O.select_dynamic,
-        mode = { "o", "x" },
+        O.goto_next .. O.select_remote_dynamic,
+        mode = "n",
         function()
-            require("flash").jump({ mode = ";remote_ts", treesitter = { ending_at_pos = true } })
+            require("flash").jump({ mode = "remote_ts", treesitter = { end_of_node = true }, jump = { pos = "end" } })
         end,
-        desc = "Select node",
+        desc = "Jump to end of node",
     },
     {
-        "<c-g>" .. "w",
+        O.goto_prev .. O.select_remote_dynamic,
+        mode = "n",
+        function()
+            require("flash").jump({
+                mode = "remote_ts",
+                treesitter = { start_of_node = true },
+                jump = { pos = "start" },
+            })
+        end,
+        desc = "Jump to start of node",
+    },
+    {
+        O.goto_prefix .. "w", -- TODO: stop verbs from being labels
         -- TODO: allow searching continuations
         function()
             require("flash").jump({ mode = "textcase", pattern = vim.fn.expand("<cword>") })
         end,
+        desc = "Flash <cword>",
     },
     {
-        "<c-g>" .. "W",
+        O.goto_prefix .. "W",
         function()
             require("flash").jump({ mode = "textcase", pattern = vim.fn.expand("<cWORD>") })
         end,
+        desc = "Flash <cWORD>",
     },
     {
-        ";rX",
+        O.goto_prefix .. "n",
+        function()
+            require("flash").jump({ continue = true })
+        end,
+        desc = "Continue Flash",
+    },
+    {
+        "rix", -- TODO: better keymap?
+        -- FIXME: its broken??
         mode = { "x", "n" },
         desc = "Exchange <motion1> with <node>",
         function()
-            lib.swap_with({ mode = ";remote_ts" })
+            lib.swap_with({ mode = "remote_ts" })
         end,
     },
-    {
-        ";rx",
-        mode = { "x", "n" },
-        desc = "Exchange <motion1> with <motion2>",
-        function()
-            lib.swap_with({})
-        end,
-    },
+    -- TODO: y<motion><something><leap><motion>
+    -- {
+    --   "rx",
+    --   mode = { "n", "x" },
+    --   desc = "Exchange <motion1> with <motion2>",
+    --   -- TODO: use leap?
+    --   function()lib.swap_with() end,
+    -- },
+    -- {
+    --   "rxx",
+    --   mode = { "n", "x" },
+    --   desc = "Exchange V<motion1> with V<motion2>",
+    --   -- TODO: use leap?
+    --   function()
+    --lib.swap_with { exchange = {
+    --       visual_mode = "V",
+    --     } }
+    --   end,
+    -- },
+    -- {
+    --   "R",
+    --   mode = { "n" },
+    --   desc = "Remote Replace",
+    --   function()
+    --     vim.api.nvim_feedkeys("r", "m", false)
+    --     vim.schedule(function() require("flash").jump {} end)
+    --   end,
+    -- },
     -- TODO: Copy there, Paste here
-    {
-        ";rR", -- TODO: better keymap?
-        mode = { "n" },
-        desc = "Remote Replace",
-        function()
-            vim.api.nvim_feedkeys(";r", "m", false)
-            vim.schedule(function()
-                require("flash").jump({ mode = ";remote_ts" })
-            end)
-        end,
-    },
-    { -- TODO: this
-        ";ry",
+    { -- FIXME: this
+        "ry",
         mode = { "x", "n" },
         desc = "Replace with <remote-motion>",
         function()
             lib.swap_with({ exchange = { not_there = true } })
         end,
     },
-    { -- TODO: this
-        ";rd",
+    { -- FIXME: this
+        "rd",
         mode = { "x", "n" },
         desc = "Replace with d<remote-motion>",
         function()
             lib.swap_with({ exchange = { not_there = true } })
         end,
     },
-    { -- TODO: this
-        ";rc",
+    { -- FIXME: this
+        "rc",
         mode = { "x", "n" },
         desc = "Replace with c<remote-motion>",
         function()
             lib.swap_with({ exchange = { not_there = true } })
         end,
     },
-    { -- TODO: this
-        ";rY",
+    { -- FIXME: this
+        "rY",
         mode = { "n" },
         desc = "Replace with <node>",
         function()
-            lib.swap_with({ exchange = { not_there = true } })
+            lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
         end,
     },
-    { -- TODO: this
-        ";rD",
+    { -- FIXME: this
+        "rD",
         mode = { "x", "n" },
         desc = "Replace with d<node>",
         function()
-            lib.swap_with({ exchange = { not_there = true } })
+            lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
         end,
     },
-    { -- TODO: this
-        ";rC",
+    { -- FIXME: this
+        "rC",
         mode = { "x", "n" },
         desc = "Replace with c<node>",
         function()
-            lib.swap_with({ exchange = { not_there = true } })
+            lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
         end,
     },
 }

@@ -9,7 +9,7 @@ local function load_colourscheme()
     end
 
     local rand = math.random(#theme)
-    loader({ plugins = { theme[rand], "bionic-reading.nvim" } })
+    loader({ plugins = { theme[rand] } })
     require("utils.ui.highlights")
 end
 

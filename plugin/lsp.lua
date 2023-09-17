@@ -3,15 +3,17 @@ if not lambda then
 end
 
 local lsp, fs, fn, api, fmt = vim.lsp, vim.fs, vim.fn, vim.api, string.format
-local diagnostic = vim.diagnostic
-local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 local augroup, command = lambda.augroup, lambda.command
 
 local icons = lambda.style.icons.lsp
 local border = lambda.style.border.type_0
+local diagnostic = vim.diagnostic
+local L, S = vim.lsp.log_levels, vim.diagnostic.severity
+local M = vim.lsp.protocol.Methods
 if vim.env.DEVELOPING then
     vim.lsp.set_log_level(L.DEBUG)
 end
+
 local utils = require("modules.lsp.lsp.utils")
 
 ---@enum
@@ -29,21 +31,95 @@ local get_extra_binds = function()
 
     if not lambda.config.lsp.use_navigator then
         binds = {
-            ["gD"] = {
+             {
+                "gD", 
                 function()
                     require("definition-or-references").definition_or_references()
                 end,
-                "Goto Def",
+                desc = "Goto Def",
             },
+        { "gr", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
+        { "cc", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
+        {
+            "gd",
+            "<cmd>Lspsaga peek_definition<CR>",
+            desc = "Toggle Lspsaga peek_definition",
+        },
+        {
+            "gt",
+            "<cmd>Lspsaga peek_type_definition<CR>",
+            desc = "Toggle Lspsaga peek_type_definition",
+        },
+        {
+            "gT",
+            "<cmd>Lspsaga goto_type_definition<CR>",
+            desc = "Toggle Lspsaga goto_type_definition",
+        },
+        {
+            "gR",
+            "<cmd>Lspsaga rename ++project<CR>",
+            desc = "Toggle Lspsaga rename ++project",
+        },
+
+        {
+            "]e",
+            "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+            desc = "Toggle Lspsaga diagnostic_jump_prev",
+        },
+        {
+            "[e",
+            "<cmd>Lspsaga diagnostic_jump_next<CR>",
+            desc = "Toggle Lspsaga diagnostic_jump_next",
+        },
+        {
+            "[E",
+            function()
+                require("lspsaga.diagnostic").goto_prev({
+                    severity = vim.diagnostic.severity.ERROR,
+                })
+            end,
+            desc = "Toggle Lspsaga diagnostic_prev ERROR",
+        },
+        {
+            "]E",
+            function()
+                require("lspsaga.diagnostic").goto_next({
+                    severity = vim.diagnostic.severity.ERROR,
+                })
+            end,
+            desc = "Toggle Lspsaga diagnostic_next ERROR",
+        },
+        { "<leader>O", "<cmd>Lspsaga outline<cr>", desc = "Toggle Lspsaga outline" },
+        {
+            "gL",
+            "<cmd>Lspsaga show_line_diagnostics<CR>",
+            desc = "Toggle Lspsaga show_line_diagnostics",
+        },
+
+        {
+            "gG",
+            "<cmd>Lspsaga show_buf_diagnostics<CR>",
+            desc = "Toggle Lspsaga show_buf_diagnostics",
+        },
+        { "<leader>ca", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
+        { "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>", desc = "Toggle Lspsaga outgoing_calls" },
+        { "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", desc = "Toggle Lspsaga incoming_calls" },
+        -- {
+        --     "gW",
+        --     "<cmd>Lspsaga show_workspace_diagnostics<CR>",
+        --     desc = "Toggle Lspsaga show_workspace_diagnostics",
+        -- },
+
         }
     end
     return binds
 end
 local buffer_mappings = {
     normal_mode = {
-        ["K"] = {
+         {
+            "K",
             utils.repeatable_hover,
-            "hover",
+            desc = "hover",
         },
     },
     visual_mode = {},
@@ -59,15 +135,24 @@ local function setup_lsp_binds(client, bufnr)
         extra_binds = "n",
     }
     for mode_name, mode_char in pairs(mappings) do
-        for key, remap in pairs(buffer_mappings[mode_name]) do
-            local opts = { buffer = bufnr, desc = remap[2], noremap = true, silent = true }
-            vim.keymap.set(mode_char, key, remap[1], opts)
-        end
+        -- for key, remap in pairs(buffer_mappings[mode_name]) do
+        --     local opts = { buffer = bufnr, desc = remap[2], noremap = true, silent = true }
+        --     vim.keymap.set(mode_char, key, remap[1], opts)
+        -- end
+
+        for _, key in ipairs(buffer_mappings[mode_name]) do
+    local opts = {buffer = bufnr , desc = key["desc"], noremap = true, silent = true }
+            vim.keymap.set(mode_char, key[1], key[2], opts)
+    end
+
+
+
     end
 end
 
 ----------------------------------------------------------------------------------------------------
 --  Related Locations
+----------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------
 -- This relates to:
 -- 1. https://github.com/neovim/neovim/issues/19649#issuecomment-1327287313
@@ -92,10 +177,25 @@ local function show_related_locations(diag)
     return diag
 end
 
-local handler = lsp.handlers["textDocument/publishDiagnostics"]
-lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+local handler = lsp.handlers[M.textDocument_publishDiagnostics]
+---@diagnostic disable-next-line: duplicate-set-field
+lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
     result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
     handler(err, result, ctx, config)
+end
+
+-----------------------------------------------------------------------------//
+-- Mappings
+-----------------------------------------------------------------------------//
+local function prev_diagnostic(lvl)
+    return function()
+        diagnostic.goto_prev({ float = true, severity = { min = lvl } })
+    end
+end
+local function next_diagnostic(lvl)
+    return function()
+        diagnostic.goto_next({ float = true, severity = { min = lvl } })
+    end
 end
 
 -----------------------------------------------------------------------------//
@@ -103,7 +203,6 @@ end
 -----------------------------------------------------------------------------//
 
 ---@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
-
 --- A set of custom overrides for specific lsp clients
 --- This is a way of adding functionality for specific lsps
 --- without putting all this logic in the general on_attach function
@@ -148,7 +247,7 @@ end
 ---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-    if client.server_capabilities[provider.CODELENS] then
+    if client.supports_method(M.textDocument_codeLens) then
         augroup(("LspCodeLens%d"):format(buf), {
             {
                 event = { "BufEnter", "InsertLeave", "BufWritePost" },
@@ -160,32 +259,11 @@ local function setup_autocommands(client, buf)
         })
     end
 
-    if client.supports_method("textDocument/inlayHint", { bufnr = buf }) then
-        -- vim.lsp.inlay_hint(buf, true)
-        --
-        -- -- TODO: temporarily disable inlay hints in insert mode due to
-        -- -- https://github.com/neovim/neovim/issues/24075
-        -- augroup(("LspInlayHints%d"):format(buf), {
-        --     {
-        --         event = "InsertEnter",
-        --         buffer = buf,
-        --         desc = "LSP: Inlay Hints (insert disable)",
-        --         command = function()
-        --             vim.lsp.inlay_hint(buf, false)
-        --         end,
-        --     },
-        --     {
-        --         event = "InsertLeave",
-        --         buffer = buf,
-        --         desc = "LSP: Inlay Hints (insert enable)",
-        --         command = function()
-        --             vim.lsp.inlay_hint(buf, true)
-        --         end,
-        --     },
-        -- })
+    if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
+        vim.lsp.inlay_hint(buf, true)
     end
 
-    if client.server_capabilities[provider.REFERENCES] and not lambda.config.ui.use_illuminate then
+    if client.supports_method(M.textDocument_documentHighlight) and not lambda.config.ui.use_illuminate then
         augroup(("LspReferences%d"):format(buf), {
             {
                 event = { "CursorHold", "CursorHoldI" },
@@ -205,10 +283,6 @@ local function setup_autocommands(client, buf)
             },
         })
     end
-
-    if client.server_capabilities.definitionProvider then
-        vim.api.nvim_buf_set_option(buf, "tagfunc", "v:lua.vim.lsp.tagfunc")
-    end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers
@@ -227,10 +301,17 @@ augroup("LspSetupCommands", {
         event = "LspAttach",
         desc = "setup the language server autocommands",
         command = function(args)
+            --        - gd -> goto definition
+            --        - gr -> goto references
+
             local client = lsp.get_client_by_id(args.data.client_id)
             if not client then
                 return
             end
+        require("sg").setup({
+                on_attach = on_attach
+        })
+
             on_attach(client, args.buf)
             local overrides = client_overrides[client.name]
             if not overrides or not overrides.on_attach then

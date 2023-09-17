@@ -60,9 +60,12 @@ local servers = {
     lua_ls = {
         settings = {
             Lua = {
-                codeLens = { enable = true },
+                IntelliSense = {
+                    traceLocalSet = true,
+                },
+                codeLens = { enable = false },
                 hint = {
-                    enable = true,
+                    enable = false,
                 },
                 format = { enable = false },
                 diagnostics = {

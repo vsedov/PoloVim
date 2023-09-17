@@ -4,41 +4,6 @@ local config = {
         body = "<leader>m",
         mode = { "n", "v" },
         position = "bottom-right",
-        m = {
-            function()
-                if vim.fn.mode() == "n" then
-                    vim.cmd([[MCstart]])
-                else
-                    vim.cmd([[MCvisual]])
-                end
-            end,
-            { exit = true, mode = { "n", "v" }, desc = "MC: Start" },
-        },
-        ["<cr>"] = {
-            function()
-                if vim.fn.mode() == "n" then
-                    vim.cmd([[MCpattern]])
-                else
-                    vim.cmd([[MCvisualPattern]])
-                end
-            end,
-
-            { exit = true, mode = { "n" }, desc = "MC: Pattern Match" },
-        },
-        w = {
-            function()
-                vim.cmd([[MCunderCursor]])
-            end,
-
-            { exit = true, mode = { "n" }, desc = "MC: Cursor Word" },
-        },
-        c = {
-            function()
-                vim.cmd([[MCclear]])
-            end,
-
-            { exit = true, mode = { "n" }, desc = "MC: Clear" },
-        },
         H = {
             "<Plug>GoVSMLeft",
             { desc = "Move Left" },
@@ -81,7 +46,6 @@ local config = {
 return {
     config,
     "Multi",
-    { { "H", "J", "K", "L" }, { "<c-h>", "<c-j>", "<c-k>", "<c-l>" } },
-
-    { "w", "m", "<cr>", "c" },
+    { { "<c-h>", "<c-j>", "<c-k>", "<c-l>" } },
+    { "H", "J", "K", "L" },
 }

@@ -1,5 +1,8 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
+local prettier = { "prettierd", "prettier" }
+local slow_format_filetypes = {}
+
 
 lsp({
     "neovim/nvim-lspconfig",
@@ -8,6 +11,7 @@ lsp({
 
 lsp({
     "jose-elias-alvarez/null-ls.nvim",
+    cond = lambda.config.lsp.lint_formatting.use_null_ls, -- need to find a replacement for this asap
     lazy = true,
     event = "VeryLazy",
     dependencies = {
@@ -24,6 +28,85 @@ lsp({
         require("modules.lsp.lsp.config").setup()
     end,
 })
+
+lsp({
+    "dense-analysis/ale",
+    cond = lambda.config.lsp.lint_formatting.use_ale,
+    event = { "BufReadPre", "BufNewFile" },
+    config = require("modules.lsp.lint_format").ale,
+})
+lsp({
+    "mfussenegger/nvim-lint",
+    opts = {
+        linters_by_ft = {
+            javascript = { "eslint_d" },
+            ["javascript.jsx"] = { "eslint_d" },
+            javascriptreact = { "eslint_d" },
+            lua = { "luacheck" },
+            python = lambda.config.lsp.python.lint,
+            rst = { "rstlint" },
+            sh = { "shellcheck" },
+            typescript = { "eslint_d" },
+            ["typescript.tsx"] = { "eslint_d" },
+            typescriptreact = { "eslint_d" },
+            vim = { "vint" },
+            yaml = { "yamllint" },
+        },
+        linters = {},
+    },
+
+    config = require("modules.lsp.lint_format").nvim_lint,
+})
+
+lsp({
+    "stevearc/conform.nvim",
+    cond = lambda.config.lsp.lint_formatting.use_conform,
+    cmd = { "ConformInfo" },
+    keys = {
+        {
+            ";;f",
+            function()
+                require("conform").format({
+                    async = true,
+                    lsp_fallback = require("modules.lsp.lint_format").get_lsp_fallback(0),
+                })
+            end,
+            mode = "",
+            desc = "Format buffer",
+        },
+    },
+    opts ={
+        formatters_by_ft = {
+            python = lambda.config.lsp.python.format,
+            lua = { "stylua" },
+            go = { "goimports", "gofmt" },
+            sh = { "shfmt" },
+            zig = { "zigfmt" },
+            ["_"] = { "trim_whitespace", "trim_newlines" },
+        },
+
+        format_on_save = function(bufnr)
+            if slow_format_filetypes[vim.bo[bufnr].filetype] then
+                return
+            end
+            local function on_format(err)
+                if err and err:match("timed out$") then
+                    slow_format_filetypes[vim.bo[bufnr].filetype] = true
+                end
+            end
+
+            return { timeout_ms =500, lsp_fallback = require("modules.lsp.lint_format").get_lsp_fallback(bufnr) }, on_format
+        end,
+        format_after_save = function(bufnr)
+            if not slow_format_filetypes[vim.bo[bufnr].filetype] then
+                return
+            end
+            return { lsp_fallback =  require("modules.lsp.lint_format").get_lsp_fallback(bufnr) }
+        end,
+    },
+    config = require("modules.lsp.lint_format").conform,
+})
+
 lsp({
     "williamboman/mason.nvim",
     -- event = "VeryLazy",
@@ -52,82 +135,39 @@ lsp({
     cond = not lambda.config.lsp.use_navigator,
     event = "VeryLazy",
     cmd = { "Lspsaga" },
-    keys = {
-        { "gr", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
-        { "cc", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
-        {
-            "gd",
-            "<cmd>Lspsaga peek_definition<CR>",
-            desc = "Toggle Lspsaga peek_definition",
-        },
-        {
-            "gt",
-            "<cmd>Lspsaga peek_type_definition<CR>",
-            desc = "Toggle Lspsaga peek_type_definition",
-        },
-        {
-            "gT",
-            "<cmd>Lspsaga goto_type_definition<CR>",
-            desc = "Toggle Lspsaga goto_type_definition",
-        },
-        {
-            "gR",
-            "<cmd>Lspsaga rename ++project<CR>",
-            desc = "Toggle Lspsaga rename ++project",
-        },
-
-        {
-            "]e",
-            "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-            desc = "Toggle Lspsaga diagnostic_jump_prev",
-        },
-        {
-            "[e",
-            "<cmd>Lspsaga diagnostic_jump_next<CR>",
-            desc = "Toggle Lspsaga diagnostic_jump_next",
-        },
-        {
-            "[E",
-            function()
-                require("lspsaga.diagnostic").goto_prev({
-                    severity = vim.diagnostic.severity.ERROR,
-                })
-            end,
-            desc = "Toggle Lspsaga diagnostic_prev ERROR",
-        },
-        {
-            "]E",
-            function()
-                require("lspsaga.diagnostic").goto_next({
-                    severity = vim.diagnostic.severity.ERROR,
-                })
-            end,
-            desc = "Toggle Lspsaga diagnostic_next ERROR",
-        },
-        { "<leader>O", "<cmd>Lspsaga outline<cr>", desc = "Toggle Lspsaga outline" },
-        {
-            "gL",
-            "<cmd>Lspsaga show_line_diagnostics<CR>",
-            desc = "Toggle Lspsaga show_line_diagnostics",
-        },
-
-        {
-            "gG",
-            "<cmd>Lspsaga show_buf_diagnostics<CR>",
-            desc = "Toggle Lspsaga show_buf_diagnostics",
-        },
-        { "<leader>ca", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
-        { "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>", desc = "Toggle Lspsaga outgoing_calls" },
-        { "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", desc = "Toggle Lspsaga incoming_calls" },
-        {
-            "gW",
-            "<cmd>Lspsaga show_workspace_diagnostics<CR>",
-            desc = "Toggle Lspsaga show_workspace_diagnostics",
-        },
-    },
     lazy = true,
     config = conf.saga,
     dependencies = "neovim/nvim-lspconfig",
+})
+lsp({
+    "sourcegraph/sg.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
+    build = "cargo build --workspace",
+    config = function()
+        -- nnoremap <space>ss <cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>
+        vim.keymap.set(
+            "n",
+            "<leader>ss",
+            "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<cr>",
+            { desc = "Cody Fuzzy results" }
+        )
+        -- Toggle cody chat
+        vim.keymap.set("n", "<space>cc", function()
+            require("sg.cody.commands").toggle()
+        end, { desc = "Cody Commands" })
+
+        vim.keymap.set("n", "<space>cn", function()
+            local name = vim.fn.input("chat name: ")
+            require("sg.cody.commands").chat(name)
+        end, { desc = "Cody Commands" })
+        vim.keymap.set("v", "<space>a", ":CodyContext<CR>", { desc = "Cody Context" })
+        vim.keymap.set("v", "<space>w", ":CodyExplain<CR>", { desc = "Cody Explain" })
+
+        vim.keymap.set("n", "<space>ss", function()
+            require("sg.extensions.telescope").fuzzy_search_results()
+        end, { desc = "Sg Extension tele" })
+    end,
 })
 
 lsp({
@@ -136,15 +176,6 @@ lsp({
     cond = lambda.config.lsp.lsp_sig.use_lsp_signature and not lambda.config.folke.noice.lsp.use_noice_signature,
     event = "VeryLazy",
     config = conf.lsp_sig,
-})
-lsp({
-    "ray-x/navigator.lua",
-    cond = lambda.config.lsp.use_navigator,
-    requires = {
-        { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
-        { "neovim/nvim-lspconfig" },
-    },
-    config = conf.navigor,
 })
 
 lsp({

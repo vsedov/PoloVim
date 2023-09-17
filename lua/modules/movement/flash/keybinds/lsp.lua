@@ -54,6 +54,7 @@ return {
             Flash.jump({ mode = "hover" })
         end,
     },
+    --  ──────────────────────────────────────────────────────────────────────
     {
         "D",
         mode = { "n" },
@@ -66,6 +67,31 @@ return {
         end,
         desc = "Show diagnostics at target, without changing cursor position",
     },
+    {
+        ";d",
+        mode = { "n" },
+        function()
+            lib.flash_diagnostics({
+                action = function()
+                    require("wtf").ai()
+                end,
+            })
+        end,
+        desc = "Debug diagnostic with AI",
+    },
+    {
+        ";D",
+        mode = { "n" },
+        function()
+            lib.flash_diagnostics({
+                action = function()
+                    require("wtf").search()
+                end,
+            })
+        end,
+        desc = "Search diagnostic with Google",
+    },
+    --  ──────────────────────────────────────────────────────────────────────
     {
         "<leader>s",
         mode = { "n" },

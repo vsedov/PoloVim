@@ -6,12 +6,14 @@ local conf = require("modules.buffers.config")
 buffer({
     "akinsho/bufferline.nvim",
     lazy = true,
+    cond = lambda.config.buffer.use_bufferline,
     event = "VeryLazy",
     config = conf.nvim_bufferline,
     dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, { "tabscope.nvim" } },
 })
 
 buffer({
+
     "backdround/tabscope.nvim",
     lazy = true,
     event = "VeryLazy",
@@ -60,22 +62,8 @@ buffer({
 
 buffer({
     "stevearc/oil.nvim",
+    event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    init = function()
-        if vim.fn.argc() == 0 then
-            vim.defer_fn(function()
-                require("oil").open()
-            end, 1000)
-        end
-
-        if vim.fn.argc() == 1 then
-            ---@diagnostic disable-next-line: param-type-mismatch
-            local stat = vim.loop.fs_stat(vim.fn.argv(0))
-            if stat and stat.type == "directory" then
-                require("oil")
-            end
-        end
-    end,
     opts = {
         columns = {
             "icon",

@@ -35,14 +35,15 @@ windows({
                 require("smart-splits").move_cursor_left()
             end,
             desc = "move left",
-            {
-                "<C-j>",
-                function()
-                    require("smart-splits").move_cursor_down()
-                end,
-                desc = "move down",
-            },
         },
+        {
+            "<C-j>",
+            function()
+                require("smart-splits").move_cursor_down()
+            end,
+            desc = "move down",
+        },
+
         {
             "<C-k>",
             function()

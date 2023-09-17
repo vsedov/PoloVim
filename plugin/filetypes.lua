@@ -21,7 +21,11 @@ local settings, highlight = lambda.filetype_settings, lambda.highlight
 local cmd, fn = vim.cmd, vim.fn
 -- local ftplugin = require("ftplugin")
 -- ftplugin.set("oil", {
+vim.treesitter.language.register("gitcommit", "NeogitCommitMessage")
 settings({
+    checkhealth = {
+        opt = { spell = false },
+    },
     ["oil"] = {
         opt = {
             conceallevel = 3,
