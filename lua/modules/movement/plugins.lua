@@ -130,6 +130,7 @@ movement({
 movement({
     "LeonHeidelbach/trailblazer.nvim",
     lazy = true,
+    cond = lambda.config.movement.use_trailblazer,
     keys = {
         { "ma", desc = "New trail mark " },
         { "mb", desc = "Track Back" },
@@ -146,9 +147,48 @@ movement({
     },
     config = conf.trailblazer,
 })
+movement({
+    "chentoast/marks.nvim",
+    cond = not lambda.config.movement.use_trailblazer,
+    event = "VeryLazy",
+    config = function()
+        lambda.highlight.plugin("marks", {
+            { MarkSignHL = { link = "Directory" } },
+            { MarkSignNumHL = { link = "Directory" } },
+        })
+
+        require("marks").setup({
+            force_write_shada = false, -- This can cause data loss
+            excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
+            bookmark_0 = { sign = "⚑", virt_text = "->" },
+            mappings = { annotate = "m?" },
+        })
+    end,
+    keys = {
+        {
+            "m?",
+        },
+        {
+            "mb",
+            "<Cmd>MarksListBuf<CR>",
+            desc = "list buffer",
+        },
+        {
+            "mg",
+            "<Cmd>MarksQFListGlobal<CR>",
+            desc = "list global",
+        },
+        {
+            "m0",
+            "<Cmd>BookmarksQFList 0<CR>",
+            desc = "list bookmark",
+        },
+    },
+})
 
 movement({
     "booperlv/nvim-gomove",
+    event = "VeryLazy",
     config = conf.gomove,
 })
 

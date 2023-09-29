@@ -1,18 +1,19 @@
 local config = {}
 
 function config.mason_setup()
-    require("modules.lsp.lsp.mason")
-    local get_config = require("modules.lsp.lsp.mason.lsp_servers")
-    require("mason").setup({ ui = { border = lambda.style.border.type_0 } })
+    vim.defer_fn(function()
+        local get_config = require("modules.lsp.lsp.mason.lsp_servers")
 
-    require("mason-lspconfig").setup_handlers({
-        function(name)
-            local conf = get_config(name)
-            if conf then
-                require("lspconfig")[name].setup(conf)
-            end
-        end,
-    })
+        require("mason-lspconfig").setup_handlers({
+            function(name)
+                local conf = get_config(name)
+                if conf then
+                    require("lspconfig")[name].setup(conf)
+                end
+            end,
+        })
+        require("modules.lsp.lsp.mason")
+    end, 100)
 end
 
 function config.clangd()

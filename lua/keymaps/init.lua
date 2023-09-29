@@ -218,7 +218,6 @@ vnoremap(
     "<cmd>:lua require'utils.telescope'.grep_string_visual()<CR>",
     { desc = "Grep last word", silent = true }
 )
-nnoremap("<Leader>yy", "<cmd>:lua require'utils.telescope'.neoclip()<CR>", { desc = "NeoClip", silent = true })
 --
 
 --  ╭────────────────────────────────────────────────────────────────────╮
@@ -227,6 +226,7 @@ nnoremap("<Leader>yy", "<cmd>:lua require'utils.telescope'.neoclip()<CR>", { des
 
 nnoremap("<Leader>J", ":TSJJoin<Cr>", { desc = "TSJJoin", silent = true })
 nnoremap("<Leader>j", ":TSJToggle<cr>", { desc = "TSJToggle", silent = true })
+
 vnoremap("D", function()
     local l, c = unpack(vim.api.nvim_win_get_cursor(0))
     for _, line in ipairs(vim.api.nvim_buf_get_lines(0, l - 1, l, true)) do

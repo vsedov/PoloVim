@@ -154,7 +154,7 @@ o.breakindentopt = "sbr"
 o.linebreak = true -- lines wrap at words rather than random characters
 o.signcolumn = "yes:4"
 o.ruler = false
-o.cmdheight = 0
+o.cmdheight = 1
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1

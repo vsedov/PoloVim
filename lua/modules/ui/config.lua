@@ -354,66 +354,6 @@ function config.fold_focus()
     end, { nargs = "*" })
 end
 
-function config.blankline()
-    vim.opt.termguicolors = true
-    require("indent_blankline").setup({
-        enabled = true,
-        -- char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
-        show_foldtext = false,
-        -- context_char = "┃",
-        -- indent_blankline_context_char_list = { "", "┊", "┆", "¦", "|", "¦", "┆", "┊", "" },
-        char = "│", -- ┆ ┊ 
-        context_char = "▎",
-        char_priority = 12,
-        show_current_context = true,
-        show_current_context_start = true,
-        show_current_context_start_on_current_line = true,
-        show_first_indent_level = false,
-        filetype_exclude = {
-            "OverseerForm",
-            "norg",
-            "dbout",
-            "neo-tree-popup",
-            "dap-repl",
-            "startify",
-            "dashboard",
-            "log",
-            "fugitive",
-            "gitcommit",
-            "packer",
-            "vimwiki",
-            "markdown",
-            "json",
-            "txt",
-            "vista",
-            "help",
-            "NvimTree",
-            "git",
-            "TelescopePrompt",
-            "undotree",
-            "flutterToolsOutline",
-            "norg",
-            "org",
-            "orgagenda",
-            "oil_preview", -- for all buffers without a file type
-        },
-        buftype_exclude = { "terminal", "nofile", "dashboard", "norg" },
-        context_patterns = {
-            "class",
-            "function",
-            "method",
-            "block",
-            "list_literal",
-            "selector",
-            "^if",
-            "^table",
-            "if_statement",
-            "while",
-            "for",
-        },
-    })
-end
-
 function config.tint()
     require("tint").setup({
         tint = -30,

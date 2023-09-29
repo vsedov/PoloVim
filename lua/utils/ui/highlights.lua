@@ -346,6 +346,8 @@ lambda.augroup("UserHighlights", {
     {
         event = "ColorScheme",
         command = function()
+            vim.notify("here activated")
+
             user_highlights()
         end,
     },

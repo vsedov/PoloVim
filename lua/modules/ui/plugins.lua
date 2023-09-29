@@ -38,64 +38,65 @@ ui({
 
     cond = lambda.config.ui.heirline.use_heirline,
     event = "VeryLazy",
-  config = function()
-    local comp = require("modules.ui.heirline_components")
-    local utils = require("heirline.utils")
+    config = function()
+        local comp = require("modules.ui.heirline_components")
+        local utils = require("heirline.utils")
 
-    require("heirline").load_colors(comp.setup_colors())
-    local aug = vim.api.nvim_create_augroup("Heirline", { clear = true })
-    vim.api.nvim_create_autocmd("ColorScheme", {
-      desc = "Update Heirline colors",
-      group = aug,
-      callback = function()
-        local colors = comp.setup_colors()
-        utils.on_colorscheme(colors)
-      end,
-    })
+        require("heirline").load_colors(comp.setup_colors())
+        local aug = vim.api.nvim_create_augroup("Heirline", { clear = true })
+        vim.api.nvim_create_autocmd("ColorScheme", {
+            desc = "Update Heirline colors",
+            group = aug,
+            callback = function()
+                local colors = comp.setup_colors()
+                utils.on_colorscheme(colors)
+            end,
+        })
 
-    require("heirline").setup({
-      statusline = utils.insert(
-        {
-          static = comp.stl_static,
-          hl = { bg = "bg" },
-        },
-        comp.ViMode,
-        comp.lpad(comp.LSPActive),
-        comp.lpad(comp.Diagnostics),
-        require("modules.ui.statusline").left_components,
-        { provider = "%=" },
-        require("modules.ui.statusline").right_components,
-        comp.rpad(comp.ConjoinStatus),
-        comp.rpad(comp.ArduinoStatus),
-        comp.rpad(comp.SessionName),
-        comp.rpad(comp.Overseer),
-        comp.rpad(comp.FileType),
-        comp.Ruler
-      ),
+        require("heirline").setup({
+            statusline = utils.insert(
+                {
+                    static = comp.stl_static,
+                    hl = { bg = "bg" },
+                },
+                comp.ViMode,
+                comp.lpad(comp.LSPActive),
+                comp.lpad(comp.Diagnostics),
+                require("modules.ui.statusline").left_components,
+                { provider = "%=" },
+                require("modules.ui.statusline").right_components,
+                comp.rpad(comp.ConjoinStatus),
+                comp.rpad(comp.ArduinoStatus),
+                comp.rpad(comp.SessionName),
+                comp.rpad(comp.Overseer),
+                comp.rpad(comp.FileType),
+                comp.Ruler
+            ),
 
-      winbar = {
-        comp.FullFileName,
-      },
+            winbar = {
+                comp.FullFileName,
+            },
 
-      opts = {
-        disable_winbar_cb = function(args)
-          local buf = args.buf
-          local ignore_buftype = vim.tbl_contains({ "prompt", "nofile", "terminal", "quickfix" }, vim.bo[buf].buftype)
-          local filetype = vim.bo[buf].filetype
-          local ignore_filetype = filetype == "fugitive" or filetype == "qf" or filetype:match("^git")
-          local is_float = vim.api.nvim_win_get_config(0).relative ~= ""
-          return ignore_buftype or ignore_filetype or is_float
-        end,
-      },
-    })
+            opts = {
+                disable_winbar_cb = function(args)
+                    local buf = args.buf
+                    local ignore_buftype =
+                        vim.tbl_contains({ "prompt", "nofile", "terminal", "quickfix" }, vim.bo[buf].buftype)
+                    local filetype = vim.bo[buf].filetype
+                    local ignore_filetype = filetype == "fugitive" or filetype == "qf" or filetype:match("^git")
+                    local is_float = vim.api.nvim_win_get_config(0).relative ~= ""
+                    return ignore_buftype or ignore_filetype or is_float
+                end,
+            },
+        })
 
-    vim.api.nvim_create_user_command("HeirlineResetStatusline", function()
-      vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
-    end, {})
+        vim.api.nvim_create_user_command("HeirlineResetStatusline", function()
+            vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
+        end, {})
 
-    -- -- Because heirline is lazy loaded, we need to manually set the winbar on startup
-    -- vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
-    end
+        -- -- Because heirline is lazy loaded, we need to manually set the winbar on startup
+        -- vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    end,
 })
 
 ui({
@@ -267,8 +268,32 @@ ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
     cond = lambda.config.ui.indent_lines.use_indent_blankline,
-    event = { "UIEnter" },
-    config = conf.blankline,
+    branch = "v3",
+    event = "VeryLazy",
+    opts = {
+        exclude = {
+        -- stylua: ignore
+        filetypes = {
+          'dbout', 'neo-tree-popup', 'log', 'gitcommit',
+          'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
+          'undotree', 'markdown', 'norg', 'org', 'orgagenda',
+        },
+        },
+        indent = {
+            char = "│", -- ▏┆ ┊ 
+            tab_char = "│",
+        },
+        scope = {
+            char = "▎",
+        },
+        show_first_indent_level = true,
+    },
+    config = function(_, opts)
+        require("ibl").setup(opts)
+        local hooks = require("ibl.hooks")
+        hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+        hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+    end,
 })
 -- dropbar_menu
 ui({
@@ -284,6 +309,7 @@ ui({
             use_treesitter = true,
             notify = true, -- notify if some situation(like disable chunk mod double time)
             exclude_filetypes = {
+
                 harpoon = true,
                 aerial = true,
                 dropbar_menu = true,
@@ -580,7 +606,7 @@ ui({
 
 ui({
     "mvllow/modes.nvim",
-    cond = false, 
+    cond = false,
     event = "VeryLazy",
     config = true,
 })

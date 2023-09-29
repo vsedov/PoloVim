@@ -25,11 +25,7 @@ local config = {
     },
     -- performance = { debounce = 42, throttle = 42, fetching_timeout = 284 },
     preselect = cmp.PreselectMode.Item, -- None | Item
-    completion = {
-        types.cmp.TriggerEvent.Replace,
-        completeopt = "menu,menuone,preview"
-    },
-    -- confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
+    confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
     -- confirmation = {
     --     default_behavior = types.cmp.ConfirmBehavior.Replace, -- Item
     --     get_commit_characters = function(commit_characters)

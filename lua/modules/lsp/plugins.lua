@@ -3,10 +3,54 @@ local lsp = require("core.pack").package
 local prettier = { "prettierd", "prettier" }
 local slow_format_filetypes = {}
 
-
 lsp({
     "neovim/nvim-lspconfig",
     lazy = true,
+})
+lsp({
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    build = ":MasonUpdate",
+    opts = { ui = { border = border, height = 0.8 } },
+})
+
+lsp({
+    "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+        "mason.nvim",
+        {
+            "neovim/nvim-lspconfig",
+            dependencies = {
+                {
+                    "folke/neodev.nvim",
+                    ft = "lua",
+                    opts = { library = { plugins = { "nvim-dap-ui" } } },
+                },
+                {
+                    "folke/neoconf.nvim",
+                    cmd = { "Neoconf" },
+                    opts = { local_settings = ".nvim.json", global_settings = "nvim.json" },
+                },
+            },
+            config = function()
+                -- lambda.ui.highlight.plugin("lspconfig", { { LspInfoBorder = { link = "FloatBorder" } } })
+                require("lspconfig.ui.windows").default_options.border = lambda.style.border.type_0
+                require("lspconfig")
+            end,
+        },
+    },
+    opts = {
+        automatic_installation = true,
+        handlers = {
+            function(name)
+                local config = require("modules.lsp.lsp.mason.lsp_servers")(name)
+                if config then
+                    require("lspconfig")[name].setup(config)
+                end
+            end,
+        },
+    },
 })
 
 lsp({
@@ -23,7 +67,7 @@ lsp({
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
         require("mason-null-ls").setup({
-            automatic_installation = true,
+            automatic_installation = false,
         })
         require("modules.lsp.lsp.config").setup()
     end,
@@ -37,6 +81,7 @@ lsp({
 })
 lsp({
     "mfussenegger/nvim-lint",
+    cond = lambda.config.lsp.lint_formatting.use_conform,
     opts = {
         linters_by_ft = {
             javascript = { "eslint_d" },
@@ -61,6 +106,7 @@ lsp({
 lsp({
     "stevearc/conform.nvim",
     cond = lambda.config.lsp.lint_formatting.use_conform,
+    event = "VeryLazy",
     cmd = { "ConformInfo" },
     keys = {
         {
@@ -75,7 +121,7 @@ lsp({
             desc = "Format buffer",
         },
     },
-    opts ={
+    opts = {
         formatters_by_ft = {
             python = lambda.config.lsp.python.format,
             lua = { "stylua" },
@@ -95,26 +141,18 @@ lsp({
                 end
             end
 
-            return { timeout_ms =500, lsp_fallback = require("modules.lsp.lint_format").get_lsp_fallback(bufnr) }, on_format
+            return { timeout_ms = 1000, lsp_fallback = require("modules.lsp.lint_format").get_lsp_fallback(bufnr) },
+                on_format
         end,
         format_after_save = function(bufnr)
             if not slow_format_filetypes[vim.bo[bufnr].filetype] then
                 return
             end
-            return { lsp_fallback =  require("modules.lsp.lint_format").get_lsp_fallback(bufnr) }
+
+            return { lsp_fallback = require("modules.lsp.lint_format").get_lsp_fallback(bufnr) }
         end,
     },
     config = require("modules.lsp.lint_format").conform,
-})
-
-lsp({
-    "williamboman/mason.nvim",
-    -- event = "VeryLazy",
-    dependencies = {
-        "neovim/nvim-lspconfig",
-        "williamboman/mason-lspconfig.nvim",
-    },
-    config = conf.mason_setup,
 })
 
 lsp({ "ii14/lsp-command", lazy = true, cmd = { "Lsp" } })
@@ -138,36 +176,6 @@ lsp({
     lazy = true,
     config = conf.saga,
     dependencies = "neovim/nvim-lspconfig",
-})
-lsp({
-    "sourcegraph/sg.nvim",
-    event = "VeryLazy",
-    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
-    build = "cargo build --workspace",
-    config = function()
-        -- nnoremap <space>ss <cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>
-        vim.keymap.set(
-            "n",
-            "<leader>ss",
-            "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<cr>",
-            { desc = "Cody Fuzzy results" }
-        )
-        -- Toggle cody chat
-        vim.keymap.set("n", "<space>cc", function()
-            require("sg.cody.commands").toggle()
-        end, { desc = "Cody Commands" })
-
-        vim.keymap.set("n", "<space>cn", function()
-            local name = vim.fn.input("chat name: ")
-            require("sg.cody.commands").chat(name)
-        end, { desc = "Cody Commands" })
-        vim.keymap.set("v", "<space>a", ":CodyContext<CR>", { desc = "Cody Context" })
-        vim.keymap.set("v", "<space>w", ":CodyExplain<CR>", { desc = "Cody Explain" })
-
-        vim.keymap.set("n", "<space>ss", function()
-            require("sg.extensions.telescope").fuzzy_search_results()
-        end, { desc = "Sg Extension tele" })
-    end,
 })
 
 lsp({
@@ -245,6 +253,35 @@ lsp({
 })
 
 lsp({
+    "KostkaBrukowa/definition-or-references.nvim",
+    lazy = true,
+    config = conf.definition_or_reference,
+})
+
+lsp({ "onsails/lspkind.nvim", lazy = true })
+
+lsp({
+    "yorickpeterse/nvim-dd",
+    cond = false,
+    event = { "LspAttach" },
+    config = true,
+})
+
+lsp({
+    "askfiy/lsp_extra_dim",
+    cond = lambda.config.lsp.use_lsp_dim,
+    event = { "LspAttach" },
+    opts = {
+        disable_diagnostic_style = "all",
+    },
+})
+lsp({
+    "ivanjermakov/troublesum.nvim",
+    cond = lambda.config.lsp.diagnostics.use_trouble_some,
+    event = { "LspAttach" },
+    config = true,
+})
+lsp({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     cond = lambda.config.lsp.diagnostics.use_lsp_lines,
     lazy = true,
@@ -268,10 +305,10 @@ lsp({
     cond = lambda.config.lsp.diagnostics.use_rcd,
     event = "VeryLazy",
     opts = {
-        placement = "inline",
-        inline_padding_left = 3,
+        format = function(diagnostic)
+            return "[LSP] " .. diagnostic.message
+        end,
         toggle_event = { "InsertEnter" },
-        update_event = { "DiagnosticChanged" },
     },
 })
 
@@ -297,33 +334,31 @@ lsp({
 })
 
 lsp({
-    "KostkaBrukowa/definition-or-references.nvim",
-    lazy = true,
-    config = conf.definition_or_reference,
-})
+    "sourcegraph/sg.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
+    config = function()
+        -- nnoremap <space>ss <cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>
+        vim.keymap.set(
+            "n",
+            "<leader>ss",
+            "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<cr>",
+            { desc = "Cody Fuzzy results" }
+        )
+        -- Toggle cody chat
+        vim.keymap.set("n", "<space>cc", function()
+            require("sg.cody.commands").toggle()
+        end, { desc = "Cody Commands" })
 
-lsp({
-    "neovim/nvimdev.nvim",
-    ft = "lua",
-    init = conf.nvimdev,
-})
+        vim.keymap.set("n", "<space>cn", function()
+            local name = vim.fn.input("chat name: ")
+            require("sg.cody.commands").chat(name)
+        end, { desc = "Cody Commands" })
 
-lsp({
-    "yorickpeterse/nvim-dd",
-    event = { "LspAttach" },
-    config = true,
-})
-lsp({ "onsails/lspkind.nvim", lazy = true })
-lsp({
-    "askfiy/lsp_extra_dim",
-    cond = lambda.config.lsp.use_lsp_dim,
-    event = { "LspAttach" },
-    opts = {
-        disable_diagnostic_style = "all",
-    },
-})
-lsp({
-    "ivanjermakov/troublesum.nvim",
-    event = { "LspAttach" },
-    config = true,
+        vim.keymap.set("v", "<space>a", ":CodyContext<CR>", { desc = "Cody Context" })
+        vim.keymap.set("v", "<space>w", ":CodyExplain<CR>", { desc = "Cody Explain" })
+        vim.keymap.set("n", "<space>ss", function()
+            require("sg.extensions.telescope").fuzzy_search_results()
+        end, { desc = "Sg Extension tele" })
+    end,
 })

@@ -85,4 +85,11 @@ for key, putAction in pairs({
 end
 
 require("telescope").load_extension("yank_history")
-vim.keymap.set("n", "<leader>yu", "<cmd>Telescope yank_history<cr>", {})
+
+vim.keymap.set("n", "<leader>YU", "<cmd>Telescope yank_history<cr>", { desc = "Yank History" })
+vim.keymap.set(
+    "n",
+    "<leader>YY",
+    "<cmd>:lua require'utils.telescope'.neoclip()<CR>",
+    { desc = "NeoClip", silent = true }
+)

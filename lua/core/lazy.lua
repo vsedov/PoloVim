@@ -1,6 +1,7 @@
 local loader = require("lazy").load
 
 local function load_colourscheme()
+    require("utils.ui.highlights")
     math.randomseed(os.clock() * 100000000000)
 
     local theme = lambda.config.colourscheme.themes.dark
@@ -10,7 +11,6 @@ local function load_colourscheme()
 
     local rand = math.random(#theme)
     loader({ plugins = { theme[rand] } })
-    require("utils.ui.highlights")
 end
 
 load_colourscheme() -- loads default colourscheme

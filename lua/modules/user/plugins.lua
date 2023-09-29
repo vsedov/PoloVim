@@ -325,15 +325,15 @@ user({
     keys = {
         {
             "m<cr>",
-            desc = "Mark word",
+            desc = "Highlight word",
         },
         {
             "m<bs>",
-            desc = "Mark delete",
+            desc = "Highlight delete",
         },
         {
             "mD>",
-            desc = "Mark clear",
+            desc = "Higlihgt clear",
         },
         {
             "m;",
@@ -347,26 +347,7 @@ user({
         vim.cmd("let HiClear = 'mD'")
     end,
 })
-user({
-    "chentoast/marks.nvim",
-    event = "VeryLazy",
-    config = function()
-        lambda.highlight.plugin("marks", {
-            { MarkSignHL = { link = "Directory" } },
-            { MarkSignNumHL = { link = "Directory" } },
-        })
-        vim.keymap.set("n", ";mb", "<Cmd>MarksListBuf<CR>", { desc = "list buffer" })
-        vim.keymap.set("n", ";mg", "<Cmd>MarksQFListGlobal<CR>", { desc = "list global" })
-        vim.keymap.set("n", ";m0", "<Cmd>BookmarksQFList 0<CR>", { desc = "list bookmark" })
 
-        require("marks").setup({
-            force_write_shada = false, -- This can cause data loss
-            excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
-            bookmark_0 = { sign = "⚑", virt_text = "" },
-            mappings = { annotate = "m?" },
-        })
-    end,
-})
 user({
     "KaitlynEthylia/TreePin",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -463,7 +444,7 @@ user({
 
 user({ -- https://github.com/fregante/GhostText
     "subnut/nvim-ghost.nvim",
-  cond =false, 
+    cond = false,
     build = ":call nvim_ghost#installer#install()",
     lazy = false,
     config = function()
@@ -514,4 +495,13 @@ user({
     "smjonas/duplicate.nvim",
     cond = true,
     config = true,
+})
+user({
+    "mikesmithgh/kitty-scrollback.nvim",
+    enabled = true,
+    lazy = true,
+    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+    config = function()
+        require("kitty-scrollback").setup()
+    end,
 })

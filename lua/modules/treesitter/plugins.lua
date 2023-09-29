@@ -230,7 +230,7 @@ ts({ -- "haringsrob/nvim_context_vt",
     },
 })
 ts({
-    "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
+    "HiPhish/rainbow-delimiters.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     cond = lambda.config.treesitter.use_rainbow,
     event = "VeryLazy",
