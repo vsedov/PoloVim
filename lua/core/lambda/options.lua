@@ -291,6 +291,7 @@ lambda.config.movement = {
     },
 }
 lambda.config.tools = {
+    use_bionic_reading = true,
     use_which_key_or_use_mini_clue = "which", -- "which or mini"
     session = {
         use_resession = true,

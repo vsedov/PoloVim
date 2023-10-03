@@ -177,6 +177,7 @@ mini({
     opts = {},
     keys = { { "ga" } },
 })
+
 mini({
     "echasnovski/mini.clue",
     cond = lambda.config.tools.use_which_key_or_use_mini_clue == "mini",

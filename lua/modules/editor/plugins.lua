@@ -101,6 +101,17 @@ editor({
         "TSJSplit",
         "TSJJoin",
     },
+
+    --  ╭────────────────────────────────────────────────────────────────────╮
+    --  │ misc                                                               │
+    --  ╰────────────────────────────────────────────────────────────────────╯
+
+    -- nnoremap("<Leader>J", ":TSJJoin<Cr>", { desc = "TSJJoin", silent = true })
+    -- nnoremap("<Leader>j", ":TSJToggle<cr>", { desc = "TSJToggle", silent = true })
+    keys = {
+        { "<leader>j", ":TSJToggle<cr>", desc = "TSJToggle", silent = true },
+    },
+
     opts = {
         use_default_keymaps = false,
         check_syntax_error = true,

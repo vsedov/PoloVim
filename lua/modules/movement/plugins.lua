@@ -2,7 +2,26 @@ local conf = require("modules.movement.config")
 local movement = require("core.pack").package
 
 -- NOTE: (vsedov) (17:18:44 - 19/07/23): Update
-
+-- cx
+--
+-- On the first use, define the first {motion} to exchange. On the second use, define the second {motion} and perform the exchange.
+--
+-- cxx
+--
+-- Like cx, but use the current line.
+--
+-- X
+--
+-- Like cx, but for Visual mode.
+--
+-- cxc
+--
+-- Clear any {motion} pending for exchange.
+-- Some notes
+--
+--     If you're using the same motion again (e.g. exchanging two words using cxiw), you can use . the second time.
+--     If one region is fully contained within the other, it will replace the containing region.
+--
 movement({
     "tommcdo/vim-exchange",
     event = "CursorMoved",
@@ -188,7 +207,7 @@ movement({
 
 movement({
     "booperlv/nvim-gomove",
-    event = "VeryLazy",
+    lazy = true,
     config = conf.gomove,
 })
 

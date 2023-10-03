@@ -9,7 +9,7 @@ local recursive_map = function(mode, lhs, rhs, opts)
     map(mode, lhs, rhs, opts)
 end
 local function open(path)
-    vim.fn.jobstart({ "waterfox-g", path }, { detach = true })
+    vim.fn.jobstart({ "waterfox-g6", path }, { detach = true })
     vim.notify(string.format("Opening %s", path))
 end
 
@@ -219,13 +219,6 @@ vnoremap(
     { desc = "Grep last word", silent = true }
 )
 --
-
---  ╭────────────────────────────────────────────────────────────────────╮
---  │ misc                                                               │
---  ╰────────────────────────────────────────────────────────────────────╯
-
-nnoremap("<Leader>J", ":TSJJoin<Cr>", { desc = "TSJJoin", silent = true })
-nnoremap("<Leader>j", ":TSJToggle<cr>", { desc = "TSJToggle", silent = true })
 
 vnoremap("D", function()
     local l, c = unpack(vim.api.nvim_win_get_cursor(0))
