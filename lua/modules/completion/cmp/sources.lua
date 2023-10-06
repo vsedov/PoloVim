@@ -14,6 +14,7 @@ local plugins = {
         name = "neorg",
         enable = true,
     },
+    { name = "cmp_zotcite", enable = true },
     {
         name = "codeium",
         enable = condium_cond,

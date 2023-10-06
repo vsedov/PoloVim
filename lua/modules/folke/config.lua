@@ -301,5 +301,8 @@ function config.which_key()
         },
     }, { mode = { "o", "v", "x" } })
 end
+function zen()
+
+end
 
 return config

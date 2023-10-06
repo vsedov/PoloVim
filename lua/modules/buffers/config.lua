@@ -104,7 +104,7 @@ function config.nvim_bufferline()
                             if vim.bo[buf.id].filetype == "man" or buf.path:match("man://") then
                                 return true
                             end
-                            for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
+                            for _, ext in ipairs({ "txt", "org", "wiki" }) do
                                 if ext == fn.fnamemodify(buf.path, ":e") then
                                     return true
                                 end

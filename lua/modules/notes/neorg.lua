@@ -150,7 +150,7 @@ M.opts = {
                         file = "${title}_${date}",
                         title = "${title}",
                         lines = { "", "* ${heading1}", "" },
-                },
+                    },
                     {
                         name = "Author Template",
                         file = "${title}_${date}",
@@ -226,5 +226,18 @@ M.opts = {
 
 M.config = function(_, op)
     require("neorg").setup(op)
+    function ToggleToc()
+        if vim.bo.filetype == "norg" then
+            vim.cmd("Neorg toc left")
+            local current_win = vim.api.nvim_get_current_win()
+            vim.api.nvim_win_set_width(current_win, 27)
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>l", true, true, true), "n", true)
+        end
+    end
+
+    -- Neorg
+    -- vim.keymap.set("n", "<leader>;", ":lua ToggleToc()<CR>", { noremap = true, silent = true })
+    -- vim.keymap.set("n", "<leader>nt", ":Neorg mode traverse-heading <cr>", {})
+    -- vim.keymap.set("n", "<leader>nT", ":Neorg mode norg <cr>", {})
 end
 return M

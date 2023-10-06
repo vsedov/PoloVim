@@ -303,15 +303,6 @@ lambda.augroup("SaveFoldsWhenWriting", {
         end,
     },
 })
-lambda.augroup("Norg", {
-    {
-        event = "BufWritePre",
-        pattern = "*.norg",
-        command = function()
-            MiniTrailspace.trim()
-        end,
-    },
-})
 
 -- ref: https://github.com/omega-nvim/omega-nvim/blob/main/lua/omega/core/autocommands.lua
 lambda.augroup("Omega", {

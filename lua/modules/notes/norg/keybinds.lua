@@ -40,7 +40,7 @@ end
 
 return {
     hook = function(kb)
-        local norg_utils = require("modules.norg.notes.utils")
+        local norg_utils = require("modules.notes.norg.utils")
         kb.map("norg", "n", "\\" .. "e", function()
             norg_utils.export_file(".md", { open_file = true, open_markdown_preview = false })
         end, { desc = "Neorg: export to markdown and open file" })
@@ -51,6 +51,7 @@ return {
 
         kb.map_event("norg", "n", "\\" .. "c", "core.looking-glass.magnify-code-block")
         kb.map("norg", "n", "\\" .. "q", "<Cmd>Neorg return<CR>")
+
         kb.map("norg", "n", "[h", function()
             goto_headline("previous")
         end, { desc = "Neorg: Go to previous headline" })

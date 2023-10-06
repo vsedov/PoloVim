@@ -51,6 +51,20 @@ local y = {}    end
         )
     ),
 
+        s(
+            "test",
+            fmt([=[
+        "<cr>",
+        
+        function()
+            require("SnippetGenie").create_new_snippet_or_add_placeholder()
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
+        end,
+        ]=], {
+                
+            })
+        ),
+        
     ------------------------------------------------------ Snippets goes here
 }
 

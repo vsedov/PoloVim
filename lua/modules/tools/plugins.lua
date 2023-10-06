@@ -71,7 +71,7 @@ tools({
 tools({
     "plasticboy/vim-markdown",
     lazy = true,
-    ft = "markdown",
+    ft = { "markdown", "pandoc.markdown", "rmd" },
     dependencies = { "godlygeek/tabular" },
     cmd = { "Toc" },
     init = conf.markdown,
@@ -80,9 +80,7 @@ tools({
 tools({
     "iamcco/markdown-preview.nvim",
     lazy = true,
-    ft = { "markdown", "pandoc.markdown", "rmd" },
-    cmd = { "MarkdownPreview" },
-    init = conf.mkdp,
+    ft = { "markdown", "pandoc.markdown", "rmd", "norg" },
     build = [[sh -c "cd app && yarn install"]],
 })
 

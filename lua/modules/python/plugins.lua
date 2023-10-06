@@ -144,7 +144,7 @@ python({
 python({
     "kiyoon/jupynium.nvim",
     build = "pip3 install --user .",
-    ft = { "python" },
+    cond = false,
     config = true,
 })
 -- I forget this existed

@@ -8,8 +8,13 @@ local completion = require("core.pack").package
 completion({
     "abecodes/tabout.nvim",
     lazy = true,
-    event = "VeryLazy",
-    config = conf.tabout,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = "InsertEnter",
+    opts = {
+        -- tabkey = "",
+        -- backwards_tabkey = "",
+        ignore_beginning = true,
+    },
 })
 
 --  ──────────────────────────────────────────────────────────────────────
@@ -67,14 +72,9 @@ completion({
             enable = true,
             enable_normal = true,
             enable_reverse = true,
-                hopout = false,
-            --{(|)} > fastwarp > {(}|)
-            map = "<c-e>", --string or table
-            rmap = "<c-e>", --string or table
-            cmap = "<c-e>", --string or table
-            rcmap = "<c-e>", --string or table
+            hopout = true,
         },
-        },
+    },
 })
 completion({
     "ziontee113/SnippetGenie",

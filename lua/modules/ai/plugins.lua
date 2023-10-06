@@ -14,30 +14,6 @@ ai({
     },
     config = conf.chatgpt,
 })
---
-ai({
-    "Bryley/neoai.nvim",
-    event = "VimEnter",
-    lazy = true,
-    dependencies = {
-        "MunifTanjim/nui.nvim",
-    },
-    cmd = {
-        "NeoAI",
-        "NeoAIOpen",
-        "NeoAIClose",
-        "NeoAIToggle",
-        "NeoAIContext",
-        "NeoAIContextOpen",
-        "NeoAIContextClose",
-        "NeoAIInject",
-        "NeoAIInjectCode",
-        "NeoAIInjectContext",
-        "NeoAIInjectContextCode",
-        "NeoAIShortcut",
-    },
-    config = conf.neoai,
-})
 
 ai({
     "mikesoylu/ai.vim",

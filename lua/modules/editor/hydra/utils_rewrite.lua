@@ -83,7 +83,7 @@ function M:addToCoreTable(value)
 end
 local vim = vim -- Assuming you're in the Neovim environment
 
-local max_hint_length = 45
+local max_hint_length = 30
 
 --- Creates a hint for a mapping and description
 ---@param mapping string
@@ -113,8 +113,10 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
     local maxLen = 0 -- Variable to store the maximum length of description + bind
     if column == 1 then
         maxLen = 0
-    else 
+    else
         maxLen = max_hint_length
+        cal_v2 = 0
+        cali = 10
     end
 
     local function updateContainer(mapping, description)
@@ -186,7 +188,7 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
             count = 0
         else
             if container[v] then
-                    hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^"
+                hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^"
                 count = count + 1
 
                 if count < column then
@@ -198,8 +200,8 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
 
                     line = "" -- reset the line
                     count = 0 -- reset the count
+                end
             end
-        end
         end
     end
 

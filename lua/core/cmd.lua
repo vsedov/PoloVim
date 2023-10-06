@@ -192,10 +192,6 @@ lambda.command("ClearUndo", function()
     vim.opt.undolevels = old
 end, {})
 
-lambda.command("NeorgToMd", function()
-    vim.cmd("Neorg export to-file " .. fn.expand("%:t:r") .. ".md")
-end, { force = true })
-
 local function read_file(file, line_handler)
     for line in io.lines(file) do
         line_handler(line)
