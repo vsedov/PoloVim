@@ -152,25 +152,28 @@ return {
             lib.swap_with({ mode = "remote_ts" })
         end,
     },
-    -- TODO: y<motion><something><leap><motion>
-    -- {
-    --   "rx",
-    --   mode = { "n", "x" },
-    --   desc = "Exchange <motion1> with <motion2>",
-    --   -- TODO: use leap?
-    --   function()lib.swap_with() end,
-    -- },
-    -- {
-    --   "rxx",
-    --   mode = { "n", "x" },
-    --   desc = "Exchange V<motion1> with V<motion2>",
-    --   -- TODO: use leap?
-    --   function()
-    --lib.swap_with { exchange = {
-    --       visual_mode = "V",
-    --     } }
-    --   end,
-    -- },
+
+    {
+        "rx",
+        mode = { "n", "x" },
+        desc = "Exchange <motion1> with <motion2>",
+        -- TODO: use leap?
+        function()
+            lib.swap_with()
+        end,
+    },
+    {
+        "rxx",
+        mode = { "n", "x" },
+        desc = "Exchange V<motion1> with V<motion2>",
+        -- TODO: use leap?
+        function()
+            lib.swap_with({ exchange = {
+                visual_mode = "V",
+            } })
+        end,
+    },
+
     -- {
     --   "R",
     --   mode = { "n" },
@@ -182,7 +185,7 @@ return {
     -- },
     -- TODO: Copy there, Paste here
     { -- FIXME: this
-        "ry",
+        O.goto_prefix .. "ry",
         mode = { "x", "n" },
         desc = "Replace with <remote-motion>",
         function()
@@ -190,7 +193,7 @@ return {
         end,
     },
     { -- FIXME: this
-        "rd",
+        O.goto_prefix .. "rd",
         mode = { "x", "n" },
         desc = "Replace with d<remote-motion>",
         function()
@@ -198,7 +201,7 @@ return {
         end,
     },
     { -- FIXME: this
-        "rc",
+        O.goto_prefix .. "rc",
         mode = { "x", "n" },
         desc = "Replace with c<remote-motion>",
         function()
@@ -206,7 +209,7 @@ return {
         end,
     },
     { -- FIXME: this
-        "rY",
+        O.goto_prefix .. "rY",
         mode = { "n" },
         desc = "Replace with <node>",
         function()
@@ -214,7 +217,7 @@ return {
         end,
     },
     { -- FIXME: this
-        "rD",
+        O.goto_prefix .. "rD",
         mode = { "x", "n" },
         desc = "Replace with d<node>",
         function()
@@ -222,7 +225,7 @@ return {
         end,
     },
     { -- FIXME: this
-        "rC",
+        O.goto_prefix .. "rC",
         mode = { "x", "n" },
         desc = "Replace with c<node>",
         function()

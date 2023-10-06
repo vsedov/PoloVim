@@ -81,10 +81,41 @@ end
 function M:addToCoreTable(value)
     table.insert(self.core_table, value)
 end
+local vim = vim -- Assuming you're in the Neovim environment
 
-function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2)
+local max_hint_length = 45
+
+--- Creates a hint for a mapping and description
+---@param mapping string
+---@param description string
+---@return string
+local function get_hint(mapping, description)
+    if description == "" then
+        return ""
+    end
+
+    local hint = " _" .. mapping .. "_ : " .. description .. "^"
+    local length = string.len(hint) -- Using Lua's string.len
+    if length < max_hint_length then
+        hint = hint .. string.rep(" ", max_hint_length - length)
+    elseif length > max_hint_length then
+        hint = string.sub(hint, 0, max_hint_length - 5) .. "... "
+    end
+
+    return hint
+end
+
+function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
+    column = column or 2 -- If not provided, default to 2
+
     local container = {}
+
     local maxLen = 0 -- Variable to store the maximum length of description + bind
+    if column == 1 then
+        maxLen = 0
+    else 
+        maxLen = max_hint_length
+    end
 
     local function updateContainer(mapping, description)
         container[mapping] = description
@@ -93,7 +124,6 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2)
             maxLen = len
         end
     end
-
     for x, y in pairs(self.config[self.name]) do
         local mapping = x
         local desc = ""
@@ -133,22 +163,44 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2)
         end
         self:addToCoreTable("\n")
     end
+    local string_val = "^ ^" .. self.name .. "^\n\n"
+    string_val = string_val .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n"
+
+    local columns = math.floor(vim.api.nvim_get_option_value("columns", {}) / max_hint_length)
 
     local hint_table = {}
-    -- local string_val = fmt("^ ^%s%s^ ^\n\n", self.name, string.rep(" ", maxLen - cal_v2)) -- Adjust the alignment of the module name
     local string_val = "^ ^" .. self.name .. "^\n\n"
     string_val = string_val .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n" -- Adjust the length of the horizontal line
+
+    local line = "" -- to store current line being built
+    local count = 0 -- to track how many items have been added in the current line
     for _, v in pairs(self.core_table) do
         if v == "\n" then
-            hint = "\n"
-            hint = hint .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n" -- Adjust the length of the horizontal line
+            table.insert(hint_table, line) -- insert the current line to hint_table
+            string_val = string_val .. line .. "\n"
+
+            -- Add the divider and reset the line and count
+            table.insert(hint_table, "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n")
+            string_val = string_val .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n"
+            line = ""
+            count = 0
         else
             if container[v] then
-                hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^\n"
+                    hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^"
+                count = count + 1
+
+                if count < column then
+                    line = line .. hint .. string.rep(" ", max_hint_length - string.len(hint))
+                else
+                    line = line .. hint
+                    table.insert(hint_table, line) -- insert the current line to hint_table
+                    string_val = string_val .. line .. "\n"
+
+                    line = "" -- reset the line
+                    count = 0 -- reset the count
             end
         end
-        table.insert(hint_table, hint)
-        string_val = string_val .. hint
+        end
     end
 
     return string_val

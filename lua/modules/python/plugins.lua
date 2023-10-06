@@ -55,8 +55,8 @@ python({
             call jukit#send#send_to_split(cmd)
         endfun
         
-        vnoremap H :call PythonHelp()<cr>
-        vnoremap C :call DFColumns()<cr>
+        vnoremap ;H :call PythonHelp()<cr>
+        vnoremap ;C :call DFColumns()<cr>
 
             nnoremap ;<leader>os :call jukit#splits#output()<cr>
             "   - Opens a new output window and executes the command specified in `g:jukit_shell_cmd`
@@ -135,12 +135,6 @@ python({
             "   - Convert file to pdf (including all saved outputs) and open it using the command specified in `g:jukit_pdf_viewer'. If `g:jukit_pdf_viewer` is not defined, then will default to `g:jukit_pdf_viewer='xdg-open'`. Arguments: 1.: Whether to rerun all cells when converting 2.: Whether to open it after converting 3.: filetype to convert to. NOTE: If the function doesn't work there may be issues with your nbconvert or latex version - to debug, try converting to pdf using `jupyter nbconvert --to pdf --allow-errors --log-level='ERROR' --HTMLExporter.theme=dark </abs/path/to/ipynb> && xdg-open </abs/path/to/pdf>` in your terminal and check the output for possible issues.
             nnoremap ;<leader>rpd :call jukit#convert#save_nb_to_file(1,1,'pdf')<cr>
             "   - same as above, but will (re-)run all cells when converting to pdf. NOTE: If the function doesn't work there may be issues with your nbconvert or latex version - to debug, try converting to pdf using `jupyter nbconvert --to pdf --allow-errors --log-level='ERROR' --HTMLExporter.theme=dark </abs/path/to/ipynb> && xdg-open </abs/path/to/pdf>` in your terminal and check the output for possible issues.
-
-
-
-
-
-
         ]])
     end,
 })

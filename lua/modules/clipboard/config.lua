@@ -111,7 +111,7 @@ function config.clipboardimage()
             img_name = img_func,
             img_dir = "img",
             img_dir_txt = "img",
-            affix = "!{%s}[image]",
+            affix = ".image %s",
         },
         tex = {
             img_dir = "img",
@@ -178,5 +178,3 @@ function config.neoclip()
 end
 
 return config
-
-

@@ -3,8 +3,50 @@ local notes = require("core.pack").package
 
 notes({
     "nvim-neorg/neorg",
-    build = ":Neorg sync-parser",
+    ft = "norg",
+    lazy = true,
+    cmd = "Neorg",
+    init = function()
+        require("modules.notes.norg.commands").setup({})
+        require("modules.notes.norg.autocmd").setup({})
+    end,
+    dependencies = {
+        "3rd/image.nvim",
+        {
+            "jarvismkennedy/neorg-roam.nvim",
+            branch = "dev",
+            dependencies = {
+                "nvim-telescope/telescope.nvim",
+                "nvim-lua/plenary.nvim",
+            },
+        },
+        "nvim-neorg/neorg-telescope",
+        {
+            "jbyuki/nabla.nvim",
+            ft = "norg",
+            config = function()
+                require("nabla").enable_virt({
+                    autogen = true, -- auto-regenerate ASCII art when exiting insert mode
+                    silent = true, -- silents error messages
+                })
+            end,
+        },
+        { "pysan3/neorg-templates", dependencies = { "L3MON4D3/LuaSnip" } }, -- ADD THIS LINE
+        {
+            "Jarvismkennedy/git-auto-sync.nvim",
+            opts = {
+                {
+                    "~/Documents/PhD_Norg",
+                    "~/neorg",
+                    auto_commit = true,
+                    prompt = false,
+                },
+            },
+        },
+    },
+    build = ":Neorg sync-parsers",
     opts = require("modules.notes.neorg").opts,
+    config = require("modules.notes.neorg").config,
 })
 
 notes({
@@ -32,12 +74,6 @@ notes({
 
 notes({
     "3rd/image.nvim",
-    lazy = true,
-    ft = {
-        "org",
-        "norg",
-        -- "tex",
-    },
     init = function()
         package.path = package.path .. ";/home/viv/.luarocks/share/lua/5.1/?/init.lua;"
         package.path = package.path .. ";/home/viv/.luarocks/share/lua/5.1/?.lua;"

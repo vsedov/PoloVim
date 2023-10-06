@@ -54,45 +54,28 @@ completion({
 
 completion({
     "altermo/ultimate-autopair.nvim",
-    event = "VeryLazy",
+    event = { "InsertEnter", "CmdlineEnter" },
     opts = {
+        tabout = {
+            enable = true,
+            hopout = true,
+        },
         bs = {
-            multi = true,
-        },
-        cr = {
-            autoclose = true,
-            multi = true,
-        },
-        space = {
-            multi = true,
+            indent_ignore = true,
         },
         fastwarp = { -- *ultimate-autopair-map-fastwarp-config*
             enable = true,
             enable_normal = true,
             enable_reverse = true,
-            hopout = true,
+                hopout = false,
             --{(|)} > fastwarp > {(}|)
             map = "<c-e>", --string or table
-            rmap = "<c-E>", --string or table
+            rmap = "<c-e>", --string or table
             cmap = "<c-e>", --string or table
-            rcmap = "<c-E>", --string or table
-            multi = false,
+            rcmap = "<c-e>", --string or table
         },
-        tabout = { -- *ultimate-autopair-map-tabout-config*
-            enable = true,
-            map = "<c-tab>", --string or table
-            cmap = "<c-tab>", --string or table
-            conf = {},
-            --contains extension config
-            multi = true,
-            --use multiple configs (|ultimate-autopair-map-multi-config|)
-            hopout = true,
-            -- (|) > tabout > ()|
-            do_nothing_if_fail = true,
         },
-    },
 })
-
 completion({
     "ziontee113/SnippetGenie",
     lazy = true,
