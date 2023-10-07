@@ -3,9 +3,6 @@ local notes = require("core.pack").package
 
 notes({
     "nvim-neorg/neorg",
-    ft = "norg",
-    lazy = true,
-    cmd = "Neorg",
     init = function()
         require("modules.notes.norg.commands").setup({})
         require("modules.notes.norg.autocmd").setup({})
@@ -21,24 +18,18 @@ notes({
             },
         },
         "nvim-neorg/neorg-telescope",
-        {
-            "jbyuki/nabla.nvim",
-            ft = "norg",
-            config = function()
-                require("nabla").enable_virt({
-                    autogen = true, -- auto-regenerate ASCII art when exiting insert mode
-                    silent = true, -- silents error messages
-                })
-            end,
-        },
         { "pysan3/neorg-templates", dependencies = { "L3MON4D3/LuaSnip" } }, -- ADD THIS LINE
         {
             "Jarvismkennedy/git-auto-sync.nvim",
+            cond = false,
+            event = "BufReadPre ~/Documents/PhD_Norg/*.norg",
             opts = {
                 {
                     "~/Documents/PhD_Norg",
                     "~/neorg",
-                    auto_commit = true,
+                    auto_pull = true,
+                    auto_push = true,
+                    auto_commit = false,
                     prompt = false,
                 },
             },
@@ -103,4 +94,14 @@ notes({
     "aaron-p1/virt-notes.nvim",
     keys = { "<leader>va", "<leader>vc", "<leader>ve", "<leader>vp", "<leader>vx", "<leader>vdd", "<leader>vdl" },
     config = true,
+})
+notes({
+    "jbyuki/nabla.nvim",
+    ft = "norg",
+    config = function()
+        require("nabla").enable_virt({
+            autogen = true, -- auto-regenerate ASCII art when exiting insert mode
+            silent = true, -- silents error messages
+        })
+    end,
 })

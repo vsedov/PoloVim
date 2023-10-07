@@ -94,7 +94,7 @@ lambda.config.treesitter = {
 }
 
 lambda.config.abbrev = {
-    enable = false,
+    enable = true,
     coding_support = true, -- system wide
     globals = {
         -- dictionaries that ive defined to be global, you may not want this idk .

@@ -485,3 +485,24 @@ user({
         end, { noremap = false, expr = true })
     end,
 })
+
+user({
+    "jonatan-branting/nvim-better-n",
+    event = "VeryLazy",
+    config = function()
+        require("better-n").setup({
+            callbacks = {
+                mapping_executed = function(_mode, _key)
+                    -- Clear highlighting, indicating that `n` will not goto the next
+                    -- highlighted search-term
+                    vim.cmd([[ nohl ]])
+                end,
+            },
+            mappings = {},
+        })
+
+        -- You will have to rebind `n` yourself
+        vim.keymap.set("n", "n", require("better-n").n, { nowait = true })
+        vim.keymap.set("n", "<s-n>", require("better-n").shift_n, { nowait = true })
+    end,
+})

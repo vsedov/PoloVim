@@ -127,12 +127,11 @@ M.opts = {
                 keymaps = {
                     -- select_prompt is used to to create new note / capture from the prompt directly
                     -- instead of the telescope choice.
-                    select_prompt = "<C-Space>",
+                    select_prompt = "<C-n>",
                     insert_link = "<leader>ni",
                     find_note = "<leader>nf",
                     capture_note = "<leader>nc",
-                    capture_index = "<leader>ns",
-
+                    capture_index = "<leader>nC",
                     capture_cancel = "<C-q>",
                     capture_save = "<C-w>",
                 },

@@ -148,6 +148,7 @@ settings({
             cmp = function(cmp)
                 cmp.setup.filetype("norg", {
                     sources = {
+                        { name = "path", group_index = 1 },
                         { name = "luasnip", group_index = 1 },
                         { name = "neorg", group_index = 1 },
                         { name = "dictionary", group_index = 1 },
