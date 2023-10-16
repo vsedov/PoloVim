@@ -201,7 +201,6 @@ if vim.tbl_contains(lambda.config.lsp.python.lsp, "pylsp") then
 end
 
 lambda.config.ui = {
-    use_virtcol = true,
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_tint = true, -- Might not be great for certain colourschemes
@@ -243,7 +242,7 @@ lambda.config.colourscheme = {
         light = {
             -- "tokyonight.nvim",
             -- "sweetie.nvim",
-            -- "catppuccin",
+            "catppuccin",
             "kanagawa.nvim",
         },
         dark = {
@@ -284,19 +283,19 @@ lambda.config.movement = {
     movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap and flash,
     use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d
-    use_accelerated_jk = false,
+    use_accelerated_jk = true,
     harpoon = {
         goto_harpoon = false,
         use_tmux_or_normal = "nvim", -- nvim
     },
 }
 lambda.config.tools = {
-    use_bionic_reading = true,
+    use_bionic_reading = false, -- this can get annoying
     use_which_key_or_use_mini_clue = "which", -- "which or mini"
     session = {
         use_resession = true,
     },
-    use_tracker = true,
+    use_tracker = false,
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = true,
     use_live_command = false, -- Disabled due to large files, this might noe be nice to have

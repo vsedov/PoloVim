@@ -42,42 +42,6 @@ user({
     opts = { setup_widgets = true, timer = { throttle = 100 } },
 })
 
--- :NR  - Open the selected region in a new narrowed window
--- :NW  - Open the current visual window in a new narrowed window
--- :WR  - (In the narrowed window) write the changes back to the original buffer.
--- :NRV - Open the narrowed window for the region that was last visually selected.
--- :NUD - (In a unified diff) open the selected diff in 2 Narrowed windows
--- :NRP - Mark a region for a Multi narrowed window
--- :NRM - Create a new Multi narrowed window (after :NRP) - experimental!
--- :NRS - Enable Syncing the buffer content back (default on)
--- :NRN - Disable Syncing the buffer content back
--- :NRL - Reselect the last selected region and open it again in a narrowed window
-user({
-    "chrisbra/NrrwRgn",
-    lazy = true,
-    cmd = {
-        "NR",
-        "NW",
-        "WR",
-        "NRV",
-        "NUD",
-        "NRP",
-        "NRM",
-        "NRS",
-        "NRN",
-        "NRL",
-    },
-    init = function()
-        vim.g.nrrw_rgn_vert = 1
-        vim.g.nrrw_rgn_resize_window = "relative"
-        vim.g.nrrw_rgn_wdth = 20
-        vim.g.nrrw_rgn_rel_min = 50
-        vim.g.nrrw_rgn_rel_max = 50
-        vim.g.nrrw_rgn_nomap_nr = 1
-        vim.g.nrrw_rgn_nomap_Nr = 1
-    end,
-})
-
 user({
     "axieax/urlview.nvim",
     lazy = true,
@@ -277,35 +241,6 @@ user({
     },
 })
 
--- First of all, :Sayonara or :Sayonara!
--- will only delete the buffer, if it isn't shown in any other window.
--- Otherwise :bdelete would close these windows as well.
--- Therefore both commands always only affect the current window.
--- This is what the user expects and is easy reason about.
-user({
-    "akdevservices/vim-sayonara",
-    branch = "confirmations",
-    keys = {
-        {
-            "<leader>Q",
-            function()
-                vim.cmd([[Sayonara!]])
-            end,
-            desc = "Sayonara!",
-        },
-    },
-    cmd = { "Sayonara" },
-})
-
--- might be useful, im not sure.
-user({
-    "thinca/vim-partedit",
-    cmd = "Partedit",
-    init = function()
-        vim.g["partedit#opener"] = "vsplit"
-    end,
-})
-
 user({
     "Zeioth/markmap.nvim",
     lazy = true,
@@ -395,26 +330,6 @@ user({
 })
 --  ──────────────────────────────────────────────────────────────────────
 
-user({ -- https://github.com/fregante/GhostText
-    "subnut/nvim-ghost.nvim",
-    cond = false,
-    build = ":call nvim_ghost#installer#install()",
-    lazy = false,
-    config = function()
-        vim.g.nvim_ghost_super_quiet = 1
-        vim.cmd([[
-				augroup nvim_ghost_user_autocommands
-					au User *overleaf.com  setfiletype tex
-					au User *overleaf.com  setlocal spell
-
-					au User *github.com,*stackoverflow.com,*reddit.com setfiletype markdown
-					au User *github.com,*stackoverflow.com,*reddit.com let b:copilot_enabled=1
-					au User *github.com,*stackoverflow.com,*reddit.com setlocal spell
-				augroup END
-			]])
-    end,
-})
-
 user({
     "chaoren/vim-wordmotion",
     lazy = true,
@@ -445,44 +360,6 @@ user({
     enabled = true,
     config = function()
         require("kitty-scrollback").setup()
-    end,
-})
-user({
-    "epwalsh/obsidian.nvim",
-    lazy = true,
-    event = {
-        -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-        -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
-        "BufReadPre /home/viv/Documents/Obsidian/PhD/**.md",
-        "BufNewFile /home/viv/Documents/Obsidian/PhD/**.md",
-    },
-    dependencies = {
-        -- Required.
-        "nvim-lua/plenary.nvim",
-
-        -- see below for full list of optional dependencies 👇
-    },
-    opts = {
-        -- dir = "~/my-vault", -- no need to call 'vim.fn.expand' here
-        dir = "/home/viv/Documents/Obsidian/PhD",
-        -- see below for full list of options 👇
-        mappings = {
-            -- ["gf"] = ...
-        },
-        notes_subdir = "2_Literature Notes",
-        templates = {
-            subdir = "Templates",
-        },
-    },
-    config = function(_, opts)
-        require("obsidian").setup(opts)
-        vim.keymap.set("n", "gf", function()
-            if require("obsidian").util.cursor_on_markdown_link() then
-                return "<cmd>ObsidianFollowLink<CR>"
-            else
-                return "gf"
-            end
-        end, { noremap = false, expr = true })
     end,
 })
 

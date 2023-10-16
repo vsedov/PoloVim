@@ -14,26 +14,6 @@ ui({
 })
 
 ui({
-    "lukas-reineke/virt-column.nvim",
-    cond = lambda.config.ui.use_virtcol,
-    opts = { char = "▕" },
-    init = function()
-        lambda.augroup("VirtCol", {
-            {
-                event = { "BufEnter", "WinEnter" },
-                command = function(args)
-                    if vim.bo.filetype == "harpoon" then
-                        return
-                    end
-                    lambda.style.decorations.set_colorcolumn(args.buf, function(virtcolumn)
-                        require("virt-column").setup_buffer({ virtcolumn = virtcolumn })
-                    end)
-                end,
-            },
-        })
-    end,
-})
-ui({
     "rebelot/heirline.nvim",
 
     cond = lambda.config.ui.heirline.use_heirline,

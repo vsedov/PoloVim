@@ -3,6 +3,8 @@ local notes = require("core.pack").package
 
 notes({
     "nvim-neorg/neorg",
+    ft = { "norg" },
+    cmd = { "Neorg" },
     init = function()
         require("modules.notes.norg.commands").setup({})
         require("modules.notes.norg.autocmd").setup({})
@@ -69,6 +71,7 @@ notes({
         package.path = package.path .. ";/home/viv/.luarocks/share/lua/5.1/?/init.lua;"
         package.path = package.path .. ";/home/viv/.luarocks/share/lua/5.1/?.lua;"
     end,
+    ft = { "org", "norg", "md" },
     opts = {
         backend = "kitty",
         integrations = {
@@ -94,14 +97,4 @@ notes({
     "aaron-p1/virt-notes.nvim",
     keys = { "<leader>va", "<leader>vc", "<leader>ve", "<leader>vp", "<leader>vx", "<leader>vdd", "<leader>vdl" },
     config = true,
-})
-notes({
-    "jbyuki/nabla.nvim",
-    ft = "norg",
-    config = function()
-        require("nabla").enable_virt({
-            autogen = true, -- auto-regenerate ASCII art when exiting insert mode
-            silent = true, -- silents error messages
-        })
-    end,
 })
