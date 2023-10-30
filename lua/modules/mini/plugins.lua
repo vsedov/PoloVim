@@ -1,5 +1,6 @@
 local mini = require("core.pack").package
 local conf = require("modules.mini.config")
+local mini_opt = lambda.config.ui.mini_animate
 
 mini({
     "echasnovski/mini.ai",
@@ -109,7 +110,7 @@ mini({
 })
 mini({
     "echasnovski/mini.animate",
-    cond = lambda.config.ui.use_mini_animate,
+    cond = lambda.config.ui.mini_animate.use_animate,
     event = "VeryLazy",
     opts = function()
         -- don't use animate when scrolling with the mouse
@@ -125,33 +126,33 @@ mini({
         local animate = require("mini.animate")
         return {
             cursor = {
-                enable = true,
+                enable = mini_opt.use_cursor,
                 timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             },
             resize = {
-                enable = false,
+                enable = mini_opt.use_resize,
             },
             close = {
-                enable = false,
+                enable = mini_opt.use_close,
             },
             open = {
                 enable = false,
                 timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
             },
             scroll = {
-                enable = false,
+                enable = mini_opt.use_scroll,
 
-                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
-                subscroll = animate.gen_subscroll.equal({
-                    max_output_steps = 60,
-                    predicate = function(total_scroll)
-                        if mouse_scrolled then
-                            mouse_scrolled = false
-                            return false
-                        end
-                        return total_scroll > 1
-                    end,
-                }),
+                -- timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+                -- subscroll = animate.gen_subscroll.equal({
+                --     max_output_steps = 60,
+                --     predicate = function(total_scroll)
+                --         if mouse_scrolled then
+                --             mouse_scrolled = false
+                --             return false
+                --         end
+                --         return total_scroll > 1
+                --     end,
+                -- }),
             },
         }
     end,
