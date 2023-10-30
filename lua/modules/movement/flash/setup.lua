@@ -108,52 +108,52 @@ local function opts()
         continue = false,
         modes = {
             search = {
-          label = { min_pattern_length = 3 },
-                },
+                label = { min_pattern_length = 3 },
+            },
             char = {
-          enabled = false,
-          keys = { "f", "F", "t", "T" },
+                enabled = false,
+                keys = { "f", "F", "t", "T" },
             },
             treesitter = {
                 labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
-          -- O.hint_labels,
-          remote_op = {
-            restore = false,
-            motion = false,
+                -- O.hint_labels,
+                remote_op = {
+                    restore = false,
+                    motion = false,
                 },
-          search = { multi_window = false, wrap = true, incremental = false, max_length = 0 },
-          config = function(opts)
-            if false and vim.fn.mode() == "v" then
-              opts.labels:gsub("[cdyrx]", "") -- TODO: Remove all operations
-            end
-          end,
-          treesitter = { containing_end_pos = true },
+                search = { multi_window = false, wrap = true, incremental = false, max_length = 0 },
+                config = function(opts)
+                    if false and vim.fn.mode() == "v" then
+                        opts.labels:gsub("[cdyrx]", "") -- TODO: Remove all operations
+                    end
+                end,
+                treesitter = { containing_end_pos = true },
                 matcher = lib.custom_ts,
                 actions = lib.ts_actions,
             },
-        remote_ts = {
-          -- TODO: use `;,<cr><tab><spc` to extend the selection to sibling nodes
-          -- TODO: integrate i/a textobjects somehow. Maybe 'i<label><char>' = jump<label> i<char>
-          mode = "treesitter",
-          search = {
-            -- mode = "fuzzy",
-            -- mode =lib.remote_ts_search,
-            max_length = 2,
-            incremental = false,
-          },
-          jump = { pos = "range", register = false },
-          highlight = { matches = true },
-          treesitter = { containing_end_pos = true },
+            remote_ts = {
+                -- TODO: use `;,<cr><tab><spc` to extend the selection to sibling nodes
+                -- TODO: integrate i/a textobjects somehow. Maybe 'i<label><char>' = jump<label> i<char>
+                mode = "treesitter",
+                search = {
+                    -- mode = "fuzzy",
+                    -- mode =lib.remote_ts_search,
+                    max_length = 2,
+                    incremental = false,
+                },
+                jump = { pos = "range", register = false },
+                highlight = { matches = true },
+                treesitter = { containing_end_pos = true },
                 actions = lib.ts_actions,
-          remote_op = {
-            restore = true,
-            motion = true,
-          },
+                remote_op = {
+                    restore = true,
+                    motion = true,
+                },
                 matcher = lib.remote_ts,
             },
             fuzzy = {
-          search = { mode = "fuzzy", max_length = 9999 },
-          label = { min_pattern_length = 4 },
+                search = { mode = "fuzzy", max_length = 9999 },
+                label = { min_pattern_length = 4 },
                 -- label = { before = true, after = false },
             },
             leap = {
@@ -166,21 +166,21 @@ local function opts()
             },
             search_diagnostics = {
                 search = { mode = "fuzzy" },
-                action = lib.there_and_back(lsp_utils.lsp.diag_line),
+                action = lib.there_and_back(lsp_utils.diag_line),
             },
             hover = {
                 search = { mode = "fuzzy" },
                 action = function(match, state)
                     vim.api.nvim_win_call(match.win, function()
                         vim.api.nvim_win_set_cursor(match.win, match.pos)
-              lsp_utils.lsp.hover(function(err, result, ctx)
+                        lsp_utils.hover(function(err, result, ctx)
                             vim.cmd([[Lspsaga hover_doc]])
-        --
-        --                     -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
+                            --
+                            --                     -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
 
                             -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
 
-                -- vim.api.nvim_win_set_cursor(match.win, state.pos)
+                            -- vim.api.nvim_win_set_cursor(match.win, state.pos)
                         end)
                     end)
                 end,
@@ -188,8 +188,8 @@ local function opts()
             select = {
                 search = { mode = "fuzzy" },
                 jump = { pos = "range" },
-                    label = { before = true, after = true },
-                },
+                label = { before = true, after = true },
+            },
             references = {},
             diagnostics = {
                 search = { multi_window = true, wrap = true, incremental = true },
@@ -200,32 +200,32 @@ local function opts()
                 search = { mode = "fuzzy" },
                 jump = { autojump = true },
             },
-        -- options for the floating window that shows the prompt,
-        -- for regular jumps
-        prompt = {
-            enabled = true,
-            prefix = { { "⚡", "FlashPromptIcon" } },
-            win_config = {
-                relative = "editor",
-                width = 1, -- when <=1 it's a percentage of the editor width
-                height = 1,
-                row = -1, -- when negative it's an offset from the bottom
-                col = 0, -- when negative it's an offset from the right
-                zindex = 1000,
+            -- options for the floating window that shows the prompt,
+            -- for regular jumps
+            prompt = {
+                enabled = true,
+                prefix = { { "⚡", "FlashPromptIcon" } },
+                win_config = {
+                    relative = "editor",
+                    width = 1, -- when <=1 it's a percentage of the editor width
+                    height = 1,
+                    row = -1, -- when negative it's an offset from the bottom
+                    col = 0, -- when negative it's an offset from the right
+                    zindex = 1000,
+                },
             },
-        },
 
-        -- options for remote operator pending mode
-        remote_op = {
-            -- restore window views and cursor position
-            -- after doing a remote operation
-            restore = false,
-            -- For `jump.pos = "range"`, this setting is ignored.
-            -- `true`: always enter a new motion when doing a remote operation
-            -- `false`: use the window's cursor position and jump target
-            -- `nil`: act as `true` for remote windows, `false` for the current window
-            motion = true,
-        },
+            -- options for remote operator pending mode
+            remote_op = {
+                -- restore window views and cursor position
+                -- after doing a remote operation
+                restore = false,
+                -- For `jump.pos = "range"`, this setting is ignored.
+                -- `true`: always enter a new motion when doing a remote operation
+                -- `false`: use the window's cursor position and jump target
+                -- `nil`: act as `true` for remote windows, `false` for the current window
+                motion = true,
+            },
         },
     }
 end

@@ -1,10 +1,62 @@
 local Flash = lambda.reqidx("flash")
 
 return {
-    "f",
-    "t",
-    "F",
-    "T",
+    -- "f",
+    -- "t",
+    -- "F",
+    -- "T",
+    -- {
+    --     "x",
+    --     mode = { "o", "x" },
+    --     function()
+    --         -- Flash: exact mode, multi window, all directions, with a backdrop
+    --         Flash.jump({
+    --             search = { forward = true, wrap = false, multi_window = false },
+    --         })
+    --     end,
+    --     desc = "Operator Pending Flash Forward",
+    -- },
+    -- {
+    --     "X",
+    --     mode = { "o", "x" },
+    --     function()
+    --         require("flash").jump({
+    --             search = { forward = false, wrap = false, multi_window = false },
+    --         })
+    --     end,
+    --     desc = "Operator Pending Flash Backward",
+    -- },
+    --
+    -- {
+    --     "s",
+    --     mode = { "n" },
+    --     function()
+    --         -- default options: exact mode, multi window, all directions, with a backdrop
+    --         Flash.jump({
+    --             search = { forward = true, wrap = false, multi_window = false },
+    --         })
+    --     end,
+    --     desc = "Normal Mode Flash Forward",
+    -- },
+    -- {
+    --     "S",
+    --     mode = { "n" },
+    --     function()
+    --         Flash.jump({
+    --             search = { forward = false, wrap = false, multi_window = false },
+    --         })
+    --     end,
+    --     desc = "Normal Mode Flash Backward",
+    -- },
+    --
+    {
+        "S", -- trree hopper thing replacement in some sense
+        mode = { "o", "x" },
+        function()
+            Flash.treesitter()
+        end,
+        desc = "Operator Pending Flash Treesitter",
+    },
 
     --  ╭────────────────────────────────────────────────────────────────────╮
     --  │         Word Jumpers                                               │
@@ -34,58 +86,6 @@ return {
         desc = "Fuzzy Sel",
     },
     "/",
-    {
-        "x",
-        mode = { "o", "x" },
-        function()
-            -- Flash: exact mode, multi window, all directions, with a backdrop
-            Flash.jump({
-                search = { forward = true, wrap = false, multi_window = false },
-            })
-        end,
-        desc = "Operator Pending Flash Forward",
-    },
-    {
-        "X",
-        mode = { "o", "x" },
-        function()
-            require("flash").jump({
-                search = { forward = false, wrap = false, multi_window = false },
-            })
-        end,
-        desc = "Operator Pending Flash Backward",
-    },
-
-    {
-        "s",
-        mode = { "n" },
-        function()
-            -- default options: exact mode, multi window, all directions, with a backdrop
-            Flash.jump({
-                search = { forward = true, wrap = false, multi_window = false },
-            })
-        end,
-        desc = "Normal Mode Flash Forward",
-    },
-    {
-        "S",
-        mode = { "n" },
-        function()
-            Flash.jump({
-                search = { forward = false, wrap = false, multi_window = false },
-            })
-        end,
-        desc = "Normal Mode Flash Backward",
-    },
-
-    {
-        "S", -- trree hopper thing replacement in some sense
-        mode = { "o", "x" },
-        function()
-            Flash.treesitter()
-        end,
-        desc = "Operator Pending Flash Treesitter",
-    },
     {
         "<leader>W",
         mode = { "n", "o", "x" },
@@ -157,6 +157,7 @@ return {
             Flash.jump({
                 search = {
                     multi_window = false,
+                    mode = "textcase",
                 },
             })
         end,

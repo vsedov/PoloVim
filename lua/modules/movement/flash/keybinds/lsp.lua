@@ -99,7 +99,7 @@ return {
         desc = "Flash Lsp References",
     },
     {
-        "<leader>;",
+        "dD",
         function()
             lib.flash_diagnostics({
                 action = require("actions-preview").code_actions,

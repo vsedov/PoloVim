@@ -122,6 +122,7 @@ else
     })
     movement({
         "ggandor/flit.nvim",
+        event = "VeryLazy",
         keys = function()
             local mods = {
                 ["f"] = { "n", "x", "o" },
