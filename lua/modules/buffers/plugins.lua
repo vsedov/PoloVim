@@ -67,7 +67,7 @@ buffer({
     opts = {
         columns = {
             "icon",
-            -- "permissions",
+            "permissions",
             "mtime",
         },
         buf_options = {
