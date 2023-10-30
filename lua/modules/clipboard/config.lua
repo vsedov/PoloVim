@@ -127,7 +127,7 @@ function config.clipboardimage()
     })
     local function paste_url(url)
         -- check if url is in clipboard
-        url = url.args or  vim.fn.getreg("+")
+        url = url.args or vim.fn.getreg("+")
         -- check if imgure is in clip
         if url:find("imgur") then
         end
