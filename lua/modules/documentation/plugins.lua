@@ -1,7 +1,12 @@
 local conf = require("modules.documentation.config")
 local docs = require("core.pack").package
 
-docs({ "danymat/neogen", lazy = true, dependencies = { "L3MON4D3/LuaSnip" }, config = conf.neogen })
+docs({
+    "danymat/neogen",
+    lazy = true,
+    dependencies = { "L3MON4D3/LuaSnip" },
+    config = conf.neogen,
+})
 -- lua/modules/documentation/plugins.lua:5
 docs({
     "prichrd/refgo.nvim",
