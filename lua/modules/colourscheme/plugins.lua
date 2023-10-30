@@ -89,10 +89,3 @@ colourscheme({
     config = conf.text_to_colourscheme,
     cmd = { "T2CSelect", "T2CGenerate" },
 })
-colourscheme({
-    "oxfist/night-owl.nvim",
-    lazy = true, -- make sure we load this during startup if it is your main colorscheme
-    config = function()
-        vim.cmd.colorscheme("night-owl")
-    end,
-})
