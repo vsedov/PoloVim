@@ -294,17 +294,6 @@ user({
 })
 
 user({
-    "roobert/f-string-toggle.nvim",
-    ft = "python",
-    config = function()
-        require("f-string-toggle").setup({
-            key_binding = "\\f",
-            key_binding_desc = "Toggle f-string",
-        })
-    end,
-})
-
-user({
     "mikesmithgh/kitty-scrollback.nvim",
     enabled = true,
     config = function()
