@@ -977,12 +977,6 @@ M.git_diff = function()
         prompt_title = "~ Git Diff ~",
         preview_title = "~ Diff ~ ",
         results_title = "~ Changed Files ~",
-        layout_config = {
-            width = 0.99,
-            height = 0.69,
-            preview_width = 0.7,
-            prompt_position = "top",
-        },
         preview = {
             hide_on_startup = false,
         },
