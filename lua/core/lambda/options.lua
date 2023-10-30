@@ -193,7 +193,7 @@ lambda.config.lsp = {
             "black",
         },
         -- black -- Need to make it so it knows what formater to use :think:
-        lsp = { "pylsp", "sourcery"  }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = { "jedi_language_server", "sourcery" }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
     },
 }
 
