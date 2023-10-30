@@ -56,6 +56,7 @@ local function rename_file_with_spaces(_)
             end)
         end,
     })
+    vim.api.nvim_create_autocmd("FileType", { pattern = "norg", command = "set awa" })
 end
 
 M.setup = function(opts)

@@ -90,6 +90,7 @@ M.opts = {
                 index = "index.norg",
                 autodetect = true,
                 [[ -- autochdir = false, ]],
+                default_workspace = "~/Documents/PhD_Norg/",
             },
         },
 
@@ -121,14 +122,13 @@ M.opts = {
             -- default keymaps
             config = {
                 keymaps = {
-		   select_prompt = "<C-n>",
-		   insert_link = "<leader>ni",
-		   find_note = "<leader>nf",
+                    select_prompt = "<C-n>",
+                    insert_link = "<leader>ni",
+                    find_note = "<leader>nf",
                     capture_note = "<leader>nc",
-		   capture_index = "<leader>nl",
+                    capture_index = "<leader>nl",
                     capture_cancel = "<C-q>",
                     capture_save = "<C-w>",
-
                 },
                 -- telescope theme
 
