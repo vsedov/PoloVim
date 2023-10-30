@@ -214,7 +214,6 @@ ui({
             "NeoTree Focus Toggle",
         },
     },
-
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -244,11 +243,10 @@ ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
     cond = lambda.config.ui.indent_lines.use_indent_blankline,
-    branch = "v3",
     event = "VeryLazy",
     opts = {
         exclude = {
-        filetypes = {
+            filetypes = {
                 "glowpreview",
                 "dbout",
                 "neo-tree-popup",
@@ -264,7 +262,7 @@ ui({
                 "norg",
                 "org",
                 "orgagenda",
-        },
+            },
         },
         indent = {
             char = "│", -- ▏┆ ┊ 
@@ -273,13 +271,34 @@ ui({
         scope = {
             char = "▎",
         },
-        show_first_indent_level = true,
     },
     config = function(_, opts)
-        require("ibl").setup(opts)
+        local highlight = {
+            "RainbowRed",
+            "RainbowYellow",
+            "RainbowBlue",
+            "RainbowOrange",
+            "RainbowGreen",
+            "RainbowViolet",
+            "RainbowCyan",
+        }
         local hooks = require("ibl.hooks")
+        -- create the highlight groups in the highlight setup hook, so they are reset
+        -- every time the colorscheme changes
+        hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+            vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+            vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+            vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+            vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+            vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+            vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+            vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+        end)
+
+        vim.g.rainbow_delimiters = { highlight = highlight }
+        require("ibl").setup({ scope = { highlight = highlight } })
+
         hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
-        hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
     end,
 })
 -- dropbar_menu
@@ -296,6 +315,7 @@ ui({
             use_treesitter = true,
             notify = true, -- notify if some situation(like disable chunk mod double time)
             exclude_filetypes = {
+
                 glowpreview = true,
                 harpoon = true,
                 aerial = true,
