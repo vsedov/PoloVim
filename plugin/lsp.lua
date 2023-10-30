@@ -29,86 +29,87 @@ local provider = {
 local get_extra_binds = function()
     local binds = {}
 
-        binds = {
-            {
-                "gD",
-                function()
-                    require("definition-or-references").definition_or_references()
-                end,
-                desc = "Goto Def",
-            },
+    binds = {
+        {
+            "gD",
+            function()
+                require("definition-or-references").definition_or_references()
+            end,
+            desc = "Goto Def",
+        },
+        {
+            "gd",
+            "<cmd>Lspsaga peek_definition<CR>",
+            desc = "Toggle Lspsaga peek_definition",
+        },
+
         { "gf", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
-            { "cc", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
-            {
-                "gd",
-                "<cmd>Lspsaga peek_definition<CR>",
-                desc = "Toggle Lspsaga peek_definition",
-            },
-            {
-                "gt",
-                "<cmd>Lspsaga peek_type_definition<CR>",
-                desc = "Toggle Lspsaga peek_type_definition",
-            },
-            {
-                "gT",
-                "<cmd>Lspsaga goto_type_definition<CR>",
-                desc = "Toggle Lspsaga goto_type_definition",
-            },
-            {
-                "gR",
-                "<cmd>Lspsaga rename ++project<CR>",
-                desc = "Toggle Lspsaga rename ++project",
-            },
+        { "cc", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
+        {
+            "gt",
+            "<cmd>Lspsaga peek_type_definition<CR>",
+            desc = "Toggle Lspsaga peek_type_definition",
+        },
+        {
+            "gT",
+            "<cmd>Lspsaga goto_type_definition<CR>",
+            desc = "Toggle Lspsaga goto_type_definition",
+        },
+        {
+            "gR",
+            "<cmd>Lspsaga rename ++project<CR>",
+            desc = "Toggle Lspsaga rename ++project",
+        },
 
-            {
-                "]e",
-                "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-                desc = "Toggle Lspsaga diagnostic_jump_prev",
-            },
-            {
-                "[e",
-                "<cmd>Lspsaga diagnostic_jump_next<CR>",
-                desc = "Toggle Lspsaga diagnostic_jump_next",
-            },
-            {
-                "[E",
-                function()
-                    require("lspsaga.diagnostic").goto_prev({
-                        severity = vim.diagnostic.severity.ERROR,
-                    })
-                end,
-                desc = "Toggle Lspsaga diagnostic_prev ERROR",
-            },
-            {
-                "]E",
-                function()
-                    require("lspsaga.diagnostic").goto_next({
-                        severity = vim.diagnostic.severity.ERROR,
-                    })
-                end,
-                desc = "Toggle Lspsaga diagnostic_next ERROR",
-            },
-            { "<leader>O", "<cmd>Lspsaga outline<cr>", desc = "Toggle Lspsaga outline" },
-            {
-                "gL",
-                "<cmd>Lspsaga show_line_diagnostics<CR>",
-                desc = "Toggle Lspsaga show_line_diagnostics",
-            },
+        {
+            "]e",
+            "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+            desc = "Toggle Lspsaga diagnostic_jump_prev",
+        },
+        {
+            "[e",
+            "<cmd>Lspsaga diagnostic_jump_next<CR>",
+            desc = "Toggle Lspsaga diagnostic_jump_next",
+        },
+        {
+            "[E",
+            function()
+                require("lspsaga.diagnostic").goto_prev({
+                    severity = vim.diagnostic.severity.ERROR,
+                })
+            end,
+            desc = "Toggle Lspsaga diagnostic_prev ERROR",
+        },
+        {
+            "]E",
+            function()
+                require("lspsaga.diagnostic").goto_next({
+                    severity = vim.diagnostic.severity.ERROR,
+                })
+            end,
+            desc = "Toggle Lspsaga diagnostic_next ERROR",
+        },
+        { "<leader>O", "<cmd>Lspsaga outline<cr>", desc = "Toggle Lspsaga outline" },
+        {
+            "gL",
+            "<cmd>Lspsaga show_line_diagnostics<CR>",
+            desc = "Toggle Lspsaga show_line_diagnostics",
+        },
 
-            {
-                "gG",
-                "<cmd>Lspsaga show_buf_diagnostics<CR>",
-                desc = "Toggle Lspsaga show_buf_diagnostics",
-            },
-            { "<leader>ca", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
-            { "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>", desc = "Toggle Lspsaga outgoing_calls" },
-            { "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", desc = "Toggle Lspsaga incoming_calls" },
-            -- {
-            --     "gW",
-            --     "<cmd>Lspsaga show_workspace_diagnostics<CR>",
-            --     desc = "Toggle Lspsaga show_workspace_diagnostics",
-            -- },
-        }
+        {
+            "gG",
+            "<cmd>Lspsaga show_buf_diagnostics<CR>",
+            desc = "Toggle Lspsaga show_buf_diagnostics",
+        },
+        { "<leader>ca", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
+        { "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>", desc = "Toggle Lspsaga outgoing_calls" },
+        { "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", desc = "Toggle Lspsaga incoming_calls" },
+        -- {
+        --     "gW",
+        --     "<cmd>Lspsaga show_workspace_diagnostics<CR>",
+        --     desc = "Toggle Lspsaga show_workspace_diagnostics",
+        -- },
+    }
     return binds
 end
 local buffer_mappings = {

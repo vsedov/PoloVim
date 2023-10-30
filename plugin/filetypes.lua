@@ -144,10 +144,20 @@ settings({
         },
     },
     norg = {
+        opt = {
+            conceallevel = 3,
+            concealcursor = "n",
+            list = false,
+            wrap = false,
+            signcolumn = "no",
+            foldlevel = 9999,
+        },
+
         plugins = {
             cmp = function(cmp)
                 cmp.setup.filetype("norg", {
                     sources = {
+                        { name = "otter" },
                         { name = "path", group_index = 1 },
                         { name = "luasnip", group_index = 1 },
                         { name = "neorg", group_index = 1 },
