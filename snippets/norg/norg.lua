@@ -20,6 +20,45 @@ local types = require("luasnip.util.types")
 local conds = require("luasnip.extras.expand_conditions")
 
 local auto_snippets = {
+    s(
+        {
+            trig = "lk",
+            name = "link",
+            dscr = "link",
+            regTrig = true,
+            hidden = true,
+        },
+        fmt("{}", {
+            -- return option "plugin"
+            d(1, function()
+                local link = vim.fn.getreg("*")
+                -- check if its a link and then split the last so like bob/this get the link all of
+                -- it right and also get this
+                -- Surround this with {link}[name]
+                if link:find("http") then
+                    local link_name = vim.fn.input("Enter link name: ")
+                    if link_name == "" then
+                        link_name = link:match("([^/]+)$")
+                    end
+
+                    return sn(nil, {
+                        t({ "{" }),
+                        i(1, link),
+                        t({ "}[" }),
+                        i(2, link_name),
+                        t({ "]" }),
+                    })
+                else
+                    return sn(nil, {
+                        t({ "[" }),
+                        i(1, link),
+                        t({ "]" }),
+                    })
+                end
+            end),
+        })
+    ),
+
     s({
         trig = "*([2-6])",
         name = "Heading",
