@@ -4,12 +4,16 @@ local api = vim.api
 local cmd = vim.cmd
 local vfn = vim.fn
 local lsp = vim.lsp
+-- local diags = lsp.diagnostic
 local diags = vim.diagnostic
 -- TODO: reduce nested lookups for performance (\w+\.)?(\w+\.)?\w+\.\w+\(
 
 local getmark = api.nvim_buf_get_mark
 local feedkeys = api.nvim_feedkeys
 local termcodes = vim.api.nvim_replace_termcodes
+local function t(k)
+    return termcodes(k, true, true, true)
+end
 
 -- Format a range using LSP
 function M.format_range_operator()
@@ -34,6 +38,116 @@ function M.range_diagnostics(opts, buf_nr, start, finish)
 
     vim.notify("Unimplemented", vim.log.levels.ERROR)
 end
+
+-- Preview definitions and things
+-- TODO: most buf_request could probably just use vim.lsp.buf + on_list_handler
+local function preview_location_callback(_, result)
+    if result == nil or vim.tbl_isempty(result) then
+        return nil
+    end
+    lsp.util.preview_location(result[1], {
+        border = "rounded",
+    })
+end
+
+function M.preview_location_at(name)
+    return function()
+        local params = lsp.util.make_position_params()
+        return lsp.buf_request(0, "textDocument/" .. name, params, preview_location_callback)
+    end
+end
+
+function M.view_location_split_callback(split_cmd)
+    local util = vim.lsp.util
+    local log = require("vim.lsp.log")
+
+    -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
+    local function handler(_, result, ctx)
+        if result == nil or vim.tbl_isempty(result) then
+            local _ = log.info() and log.info(ctx.method, "No location found")
+            return nil
+        end
+        local oe = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
+
+        if split_cmd then
+            cmd(split_cmd)
+        end
+
+        if vim.tbl_islist(result) then
+            util.jump_to_location(result[1], oe)
+
+            if #result > 1 then
+                util.set_qflist(util.locations_to_items(result))
+                api.nvim_command("copen")
+                api.nvim_command("wincmd p")
+            end
+        else
+            util.jump_to_location(result, oe)
+        end
+    end
+
+    return handler
+end
+
+function M.view_location_split(name, split_cmd)
+    local cb = M.view_location_split_callback(split_cmd)
+    return function()
+        local params = lsp.util.make_position_params()
+        params.context = {
+            includeDeclaration = true,
+        }
+        return lsp.buf_request(0, "textDocument/" .. name, params, cb)
+    end
+end
+
+function M.view_location_pick_callback(title)
+    -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
+    local function handler(_, result, ctx)
+        if result == nil or vim.tbl_isempty(result) then
+            -- local _ = log.info and log.info(ctx.method, "No location found")
+            return nil
+        end
+        local oe = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
+
+        local res = result
+        if vim.tbl_islist(result) then
+            if #result > 1 then
+                local opts = {
+                    prompt_title = title,
+                    attach_mappings = function(bufnr, map)
+                        map({ "i", "n" }, "<cr>", utils.telescope.select_pick_window)
+                        return true
+                    end,
+                }
+                utils.telescope.from_qf_items(lsp.util.locations_to_items(result, oe), opts)
+                return
+            end
+            if title == "references" then
+                return
+            end
+            res = result[1]
+        end
+        require("ui.win_pick").pick_or_create(function(id)
+            vim.api.nvim_set_current_win(id)
+            vim.lsp.util.jump_to_location(res, oe, false)
+        end)
+    end
+
+    return handler
+end
+
+-- TODO: generalized view_location_in (existing windows, new tabs, etc)
+function M.view_location_pick(name)
+    local cb = M.view_location_pick_callback(name)
+    return function()
+        local params = lsp.util.make_position_params()
+        params.context = {
+            includeDeclaration = true,
+        }
+        return lsp.buf_request(0, "textDocument/" .. name, params, cb)
+    end
+end
+
 function M.toggle_diagnostics(b)
     if vim.diagnostic.is_disabled(b) then
         diags.enable(b or 0)
@@ -48,6 +162,70 @@ function M.enable_diagnostic(b)
     diags.enable(b or 0)
 end
 
+function M.toggle_diag_lines(enable)
+    if enable == nil then
+        enable = not vim.diagnostic.config().virtual_lines
+    end
+    if enable then
+        vim.diagnostic.config({
+            virtual_lines = require("langs").diagnostic_config_all.virtual_lines,
+            virtual_text = false,
+        })
+    else
+        vim.diagnostic.config({
+            virtual_lines = false,
+            virtual_text = require("langs").diagnostic_config_all.virtual_text,
+        })
+    end
+end
+
+-- TODO: Implement codeLens handlers
+function M.show_codelens()
+    -- cmd [[ autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh() ]]
+    -- cmd(
+    --   [[
+    --   augroup lsp_codelens_refresh
+    --     autocmd! * <buffer>
+    --     autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+    --   augroup END
+    --   ]],
+    --   false
+    -- )
+
+    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+    local codelens = lsp.codelens
+    for k, v in pairs(clients) do
+        codelens.display(nil, 0, k)
+    end
+end
+
+function M.run_any_codelens(select)
+    local codelens = lsp.codelens.get(0)
+    select = select or vim.ui.select
+    select(codelens, {
+        prompt = "CodeLens actions:",
+        format_item = function(item)
+            local title = item.command.title .. ": "
+            if item.command.arguments[1] then
+                title = title .. item.command.arguments[1].kind .. " " .. item.command.arguments[1].label
+            end
+
+            return title
+        end,
+    }, function(selected)
+        if not selected then
+            return
+        end
+
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        local start = selected.range.start
+        vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character })
+        vim.lsp.codelens.run()
+        vim.api.nvim_win_set_cursor(0, cursor)
+    end)
+end
+
+-- Jump between diagnostics
 -- TODO: clean up and remove the deprecate functions
 function M.diag_line(opts)
     diags.open_float(vim.tbl_deep_extend("keep", opts or {}, { scope = "line" }))
@@ -59,17 +237,42 @@ function M.diag_buffer(opts)
     diags.open_float(vim.tbl_deep_extend("keep", opts or {}, { scope = "buffer" }))
 end
 
+function M.hover(handler)
+    if type(handler) == "table" then
+        local config = handler
+        handler = function(err, result, ctx)
+            vim.lsp.handlers.hover(err, result, ctx, config)
+        end
+    end
+    local params = vim.lsp.util.make_position_params()
+    vim.lsp.buf_request(0, "textDocument/hover", params, handler)
+end
+function M.auto_hover()
+    local auto_hover = vim.api.nvim_create_augroup("auto_hover", {})
+    vim.api.nvim_create_autocmd({ "CursorHold" }, {
+        group = auto_hover,
+        callback = function()
+            if vim.b.cursor_hold_hover then
+                return
+            end
+            M.hover({
+                focusable = false,
+                border = "single",
+            })
+            vim.b.cursor_hold_hover = true
+        end,
+    })
+    vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+        group = auto_hover,
+        callback = function()
+            vim.b.cursor_hold_hover = false
+        end,
+    })
+end
 local hover_hydra
 -- Easily repeatable hover
 function M.repeatable_hover(hover, k)
-    local hover_type = function()
-        if not lambda.config.lsp.use_hover and not lambda.config.lsp.use_navigator then
-            vim.cmd([[Lspsaga hover_doc]])
-        else
-            require("hover").hover()
-        end
-    end
-    hover = hover or hover_type
+    hover = hover or vim.lsp.buf.hover
     if false then
         k = k or "h"
         if not hover_hydra then
@@ -129,15 +332,281 @@ end
 function M.error_prev()
     M.diag_prev({ severity = vim.diagnostic.severity.ERROR })
 end
-function M.hover(handler)
-    if type(handler) == "table" then
-        local config = handler
-        handler = function(err, result, ctx)
-            vim.lsp.handlers.hover(err, result, ctx, config)
-            -- require("hover").hover()
+
+function M.live_codelens()
+    local id = vim.api.nvim_create_augroup("lsp_codelens_refresh", { clear = false })
+    vim.api.nvim_create_autocmd(
+        { "CursorHold", "InsertLeave", "BufWritePost" },
+        { buffer = 0, callback = vim.lsp.codelens.refresh, group = id }
+    )
+end
+
+-- Helper for better renaming interface
+M.rename = (function()
+    local function handler(...)
+        local result
+        local method
+        local err = select(1, ...)
+        local is_new = not select(4, ...) or type(select(4, ...)) ~= "number"
+        if is_new then
+            method = select(3, ...).method
+            result = select(2, ...)
+        else
+            method = select(2, ...)
+            result = select(3, ...)
+        end
+
+        if O.lsp.rename_notification then
+            if err then
+                vim.notify(("Error running LSP query '%s': %s"):format(method, err), vim.log.levels.ERROR)
+                return
+            end
+
+            -- echo the resulting changes
+            local new_word = ""
+            if result and result.changes then
+                local msg = {}
+                for f, c in pairs(result.changes) do
+                    new_word = c[1].newText
+                    table.insert(msg, ("%d changes -> %s"):format(#c, utils.get_relative_path(f)))
+                end
+                local currName = vfn.expand("<cword>")
+                vim.notify(msg, vim.log.levels.INFO, { title = ("Rename: %s -> %s"):format(currName, new_word) })
+            end
+        end
+
+        vim.lsp.handlers[method](...)
+    end
+
+    local function do_rename()
+        local new_name = vim.trim(vfn.getline("."):sub(5, -1))
+        cmd([[q!]])
+        local params = lsp.util.make_position_params()
+        local curr_name = vfn.expand("<cword>")
+        if not (new_name and #new_name > 0) or new_name == curr_name then
+            return
+        end
+        params.newName = new_name
+        lsp.buf_request(0, "textDocument/rename", params, handler)
+    end
+
+    return function()
+        utils.ui.inline_text_input({
+            border = O.lsp.rename_border,
+            -- enter = do_rename,
+            enter = vim.lsp.buf.rename,
+            startup = function()
+                feedkeys(t("viw<C-G>"), "n", false)
+            end,
+            init_cword = true,
+            at_begin = true, -- FIXME: What happened to this?
+            minwidth = true,
+        })
+    end
+end)()
+
+-- Use select mode for renaming
+M.renamer = (function()
+    local function del_keymaps()
+        vim.keymap.del("i", "<CR>")
+        vim.keymap.del("i", "<ESC><ESC>")
+    end
+
+    local function enter_cb(old, oldpos)
+        -- local cword = vfn.expand "<cword>"
+        -- utils.dump(cword)
+        cmd("stopinsert")
+        vim.defer_fn(function()
+            -- vim.api.nvim_win_set_cursor(0, oldpos)
+            local cword = vfn.expand("<cword>")
+            -- utils.dump(cword)
+            feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
+
+            del_keymaps()
+
+            vim.lsp.buf.rename(cword)
+        end, 1)
+    end
+
+    local function cancel_cb(old)
+        cmd("stopinsert")
+        -- feedkeys(t "u", "n", false)
+        feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
+        del_keymaps()
+    end
+
+    local function mk_keymaps(old)
+        local enter = function()
+            enter_cb(old, vim.api.nvim_win_get_cursor(0))
+        end
+        local cancel = function()
+            cancel_cb(old)
+        end
+        vim.keymap.setl("i", "<CR>", enter, { silent = true })
+        vim.keymap.setl("i", "<M-CR>", enter, { silent = true })
+        vim.keymap.setl("i", "<ESC><ESC>", cancel, { silent = true })
+    end
+
+    return function()
+        local old = vfn.expand("<cword>")
+        feedkeys(t("viw<C-G>"), "n", false) -- Go select mode
+        mk_keymaps(old)
+    end
+end)()
+-- M.rename = M.renamer.keymap
+
+function M.format(opts)
+    opts = opts or { async = true }
+    local buf = vim.api.nvim_get_current_buf()
+    local ft = vim.bo[buf].filetype
+    local have_nls = #require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0
+
+    vim.lsp.buf.format(vim.tbl_extend("force", {
+        bufnr = buf,
+        filter = function(client)
+            if have_nls then
+                return client.name == "null-ls"
+            end
+            return client.name ~= "null-ls"
+        end,
+    }, opts))
+end
+
+M.format_on_save = function(m)
+    vim.g.Format_on_save_mode = m
+    -- TODO: only if client has formatting
+    local id = vim.api.nvim_create_augroup("format_on_save", { clear = true })
+    local cb = function()
+        local mode = vim.b.Format_on_save_mode
+        if mode == nil then
+            mode = vim.g.Format_on_save_mode
+        end
+        if type(mode) == "string" and mode:sub(1, 3) == "mod" then
+            cmd("FormatModifications")
+        elseif mode == true or mode == "all" then
+            local ok, _ = pcall(M.format, { timeout_ms = O.format_on_save_timeout })
+            if not ok then
+                vim.notify("Error running format on save", vim.log.levels.ERROR)
+                vim.b.Format_on_save_mode = false
+            end
         end
     end
-    local params = vim.lsp.util.make_position_params()
-    vim.lsp.buf_request(0, "textDocument/hover", params, handler)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        callback = cb,
+        group = id,
+    })
 end
+
+M.format_on_save_toggle = function(dict)
+    dict = dict or vim.b
+    return function()
+        if not dict.Format_on_save_mode then
+            dict.Format_on_save_mode = dict.Format_on_save_mode_last
+        else
+            dict.Format_on_save_mode_last = dict.Format_on_save_mode
+            dict.Format_on_save_mode = false
+        end
+    end
+end
+
+vim.lsp.buf.cancel_formatting = function(bufnr)
+    vim.schedule(function()
+        bufnr = (bufnr == nil or bufnr == 0) and vim.api.nvim_get_current_buf() or bufnr
+        for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
+            for id, request in pairs(client.requests or {}) do
+                if
+                    request.type == "pending"
+                    and request.bufnr == bufnr
+                    and request.method == "textDocument/formatting"
+                then
+                    client.cancel_request(id)
+                end
+            end
+        end
+    end)
+end
+
+M.on_attach = function(on_attach, group)
+    if type(group) == "string" then
+        group = vim.api.nvim_create_augroup(group, { clear = true })
+    end
+    vim.api.nvim_create_autocmd("LspAttach", {
+        group = group,
+        callback = function(args)
+            local buffer = args.buf
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            on_attach(client, buffer)
+        end,
+    })
+end
+
+M.document_highlight = function(client, bufnr)
+    if client.server_capabilities.documentHighlightProvider then
+        local id = vim.api.nvim_create_augroup("document_highlight", { clear = false })
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            buffer = bufnr,
+            group = id,
+            callback = function()
+                vim.lsp.buf.document_highlight()
+            end,
+        })
+        vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+            buffer = bufnr,
+            group = id,
+            callback = function()
+                vim.lsp.buf.clear_references()
+            end,
+        })
+    end
+end
+
+-- TODO: `:h lsp-on-list-handler`
+
+function M.rename_file(new_name)
+    ---@param data { old_name: string, new_name: string }
+    local function prepare_rename(data)
+        local bufnr = vfn.bufnr(data.old_name)
+        local done_rename = false
+        for _, client in pairs(lsp.get_active_clients({ bufnr = bufnr })) do
+            if vim.tbl_get(client, "server_capabilities", "workspace", "fileOperations", "willRename") then
+                local params = {
+                    files = { { newUri = "file://" .. data.new_name, oldUri = "file://" .. data.old_name } },
+                }
+                local resp = client.request_sync("workspace/willRenameFiles", params, 1000)
+                if resp then
+                    utils.dump(resp)
+                    vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
+                    done_rename = true
+                    break
+                end
+            end
+        end
+        if done_rename then
+            vim.notify("No clients support rename files", vim.log.levels.ERROR, { title = "LSP" })
+        end
+    end
+
+    local old_name = vim.api.nvim_buf_get_name(0)
+
+    local do_rename = function(name)
+        if name == nil then
+            return
+        end
+        local new_name = string.format("%s/%s", vim.fs.dirname(old_name), name)
+        prepare_rename({ old_name = old_name, new_name = new_name })
+        vim.lsp.util.rename(old_name, new_name, {})
+    end
+
+    if new_name then
+        do_rename(new_name)
+    else
+        vim.ui.input({
+            prompt = "Rename " .. old_name,
+            default = old_name,
+        }, do_rename)
+    end
+end
+
+M.inlay_hints = vim.lsp.inlay_hint or vim.lsp.buf.inlay_hint or function(...) end
+
 return M
