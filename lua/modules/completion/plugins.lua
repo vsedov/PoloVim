@@ -30,6 +30,19 @@ completion({
         { "hrsh7th/cmp-path" },
         { "hrsh7th/cmp-cmdline" },
         { "rcarriga/cmp-dap" },
+        { "hrsh7th/cmp-omni" },
+        {
+            "tzachar/cmp-fuzzy-buffer",
+            dependencies = { "tzachar/fuzzy.nvim" },
+        },
+        {
+            "doxnit/cmp-luasnip-choice",
+            config = function()
+                require("cmp_luasnip_choice").setup({
+                    auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
+                })
+            end,
+        },
         {
             "petertriho/cmp-git",
             lazy = true,

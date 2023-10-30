@@ -6,7 +6,7 @@ local M = {}
 M.get_abbr = function(vim_item, entry)
     local word = entry:get_insert_text()
     if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-        word = vim.lsp.util.parse_snippet(word)
+        -- word = vim.lsp.util.parse_snippet(word)
     end
     word = str.oneline(word)
 
