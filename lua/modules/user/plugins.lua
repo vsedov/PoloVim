@@ -1,46 +1,6 @@
 local user = require("core.pack").package
 local uv = vim.uv or vim.loop
 local api, fn = vim.api, vim.fn
-user({
-    "Dhanus3133/LeetBuddy.nvim",
-
-    lazy = true,
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim",
-    },
-    cmd = {
-
-        "LBQuestions",
-        "LBQuestion",
-        "LBReset",
-        "LBTest",
-        "LBSubmit",
-        "LeetActivate",
-    },
-    config = function()
-        require("leetbuddy").setup({ language = "py" })
-        lambda.command("LeetActivate", function()
-            local binds = {
-                ["<leader>lq"] = ":LBQuestions<cr>",
-                ["<leader>ll"] = ":LBQuestion<cr>",
-                ["<leader>lr"] = ":LBReset<cr>",
-                ["<leader>lt"] = ":LBTest<cr>",
-                ["<leader>ls"] = ":LBSubmit<cr>",
-            }
-            for x, v in pairs(binds) do
-                vim.keymap.set("n", x, v, { noremap = true, silent = true })
-            end
-        end, {})
-    end,
-})
-
-user({
-    "tamton-aquib/mpv.nvim",
-    lazy = true,
-    cmd = "MpvToggle",
-    opts = { setup_widgets = true, timer = { throttle = 100 } },
-})
 
 user({
     "axieax/urlview.nvim",
@@ -87,8 +47,7 @@ user({
 
 --  TODO: (vsedov) (22:29:48 - 23/07/23): Make a hydra for this to activate when the mode is !
 user({
-    "linty-org/readline.nvim",
-    lazy = true,
+    "assistcontrol/readline.nvim",
     keys = {
         {
             "<C-k>",
@@ -101,7 +60,8 @@ user({
         {
             "<C-u>",
             function()
-                require("readline").backward_kill_line()
+                require("readline").end_of_line()
+                require("readline").dwim_backward_kill_line()
             end,
             desc = "readline: backward kill line",
             mode = "!",
@@ -131,21 +91,9 @@ user({
             mode = "!",
         },
         {
-            "<C-d>",
-            "<Delete>",
-            desc = "delete-char",
-            mode = "!",
-        },
-        {
-            "<C-h>",
-            "<BS>",
-            desc = "backward-delete-char",
-            mode = "!",
-        },
-        {
             "<C-a>",
             function()
-                require("readline").beginning_of_line()
+                require("readline").dwim_beginning_of_line()
             end,
             desc = "readline: beginning of line",
             mode = "!",
@@ -213,7 +161,7 @@ user({
             desc = "winbar: pick",
         },
     },
-    config = {
+    opts = {
         general = {
             update_interval = 100,
             enable = function(buf, win)
@@ -320,6 +268,7 @@ user({
 })
 user({
     "lewis6991/whatthejump.nvim",
+    cond = false,
     keys = { "<c-i>", "<c-o>" },
 })
 --  ──────────────────────────────────────────────────────────────────────
@@ -359,27 +308,51 @@ user({
     "mikesmithgh/kitty-scrollback.nvim",
     enabled = true,
     config = function()
-        require("kitty-scrollback").setup()
+        require("kitty-scrollback").setup({
+            checkhealth = true,
+        })
     end,
 })
 
 user({
-    "jonatan-branting/nvim-better-n",
+    "Sam-programs/expand.nvim",
     event = "VeryLazy",
-    config = function()
-        require("better-n").setup({
-            callbacks = {
-                mapping_executed = function(_mode, _key)
-                    -- Clear highlighting, indicating that `n` will not goto the next
-                    -- highlighted search-term
-                    vim.cmd([[ nohl ]])
-                end,
-            },
-            mappings = {},
-        })
+    dependencies = { "Sam-Programs/indent.nvim" },
+    config = true,
+})
 
-        -- You will have to rebind `n` yourself
-        vim.keymap.set("n", "n", require("better-n").n, { nowait = true })
-        vim.keymap.set("n", "<s-n>", require("better-n").shift_n, { nowait = true })
+user({
+    "sychen52/smart-term-esc.nvim",
+    event = "TermEnter",
+    config = function()
+        require("smart-term-esc").setup({
+            key = "<Esc>",
+            except = { "nvim", "fzf" },
+        })
     end,
+})
+user({
+    "Aasim-A/scrollEOF.nvim",
+    event = "VeryLazy",
+    config = true,
+})
+
+user({
+    "vidocqh/data-viewer.nvim",
+    ft = {
+        "csv",
+        "tsv",
+    },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "kkharji/sqlite.lua", -- Optional, sqlite support
+    },
+    config = true,
+    cmd = {
+
+        "DataViewer",
+        "DataViewerNextTable",
+        "DataViewerPrevTable",
+        "DataViewerClose",
+    },
 })

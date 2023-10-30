@@ -554,7 +554,6 @@ local function ts_shift(state, fwdincr, bwdincr)
     -- state.pattern:set(state.remote_ts_fwd .. state.remote_ts_bwd)
     state:update({ dirty_cache = true })
 end
-
 M.ts_actions = {
     -- Extend right
     ["}"] = function(state)

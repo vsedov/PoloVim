@@ -28,6 +28,7 @@ O.goto_prev_end = O.goto_previous_end -- "(",
 O.goto_prev_outer_end = O.goto_previous_outer_end -- "((",
 O.select_prev = O.select_previous
 O.select_prev_outer = O.select_previous_outer
+
 return {
     --  ╭────────────────────────────────────────────────────────────────────╮
     --  │         Remote Jumps  and treesitter bindings                      │
@@ -144,6 +145,18 @@ return {
         desc = "Continue Flash",
     },
     {
+        O.goto_prefix .. "hr",
+        desc = "References",
+        lib.flash_references,
+    },
+    {
+        O.goto_prefix .. "hh",
+        desc = "Hover",
+        function()
+            require("flash").jump({ mode = "hover" })
+        end,
+    },
+    {
         "rix", -- TODO: better keymap?
         -- FIXME: its broken??
         mode = { "x", "n" },
@@ -152,28 +165,25 @@ return {
             lib.swap_with({ mode = "remote_ts" })
         end,
     },
-
-    {
-        "rx",
-        mode = { "n", "x" },
-        desc = "Exchange <motion1> with <motion2>",
-        -- TODO: use leap?
-        function()
-            lib.swap_with()
-        end,
-    },
-    {
-        "rxx",
-        mode = { "n", "x" },
-        desc = "Exchange V<motion1> with V<motion2>",
-        -- TODO: use leap?
-        function()
-            lib.swap_with({ exchange = {
-                visual_mode = "V",
-            } })
-        end,
-    },
-
+    -- TODO: y<motion><something><leap><motion>
+    -- {
+    --   "rx",
+    --   mode = { "n", "x" },
+    --   desc = "Exchange <motion1> with <motion2>",
+    --   -- TODO: use leap?
+    --   function()lib.swap_with() end,
+    -- },
+    -- {
+    --   "rxx",
+    --   mode = { "n", "x" },
+    --   desc = "Exchange V<motion1> with V<motion2>",
+    --   -- TODO: use leap?
+    --   function()
+    --lib.swap_with { exchange = {
+    --       visual_mode = "V",
+    --     } }
+    --   end,
+    -- },
     -- {
     --   "R",
     --   mode = { "n" },
@@ -185,7 +195,7 @@ return {
     -- },
     -- TODO: Copy there, Paste here
     { -- FIXME: this
-        O.goto_prefix .. "ry",
+        "ry",
         mode = { "x", "n" },
         desc = "Replace with <remote-motion>",
         function()
@@ -193,7 +203,7 @@ return {
         end,
     },
     { -- FIXME: this
-        O.goto_prefix .. "rd",
+        "rd",
         mode = { "x", "n" },
         desc = "Replace with d<remote-motion>",
         function()
@@ -201,7 +211,7 @@ return {
         end,
     },
     { -- FIXME: this
-        O.goto_prefix .. "rc",
+        "rc",
         mode = { "x", "n" },
         desc = "Replace with c<remote-motion>",
         function()
@@ -209,7 +219,7 @@ return {
         end,
     },
     { -- FIXME: this
-        O.goto_prefix .. "rY",
+        "rY",
         mode = { "n" },
         desc = "Replace with <node>",
         function()
@@ -217,7 +227,7 @@ return {
         end,
     },
     { -- FIXME: this
-        O.goto_prefix .. "rD",
+        "rD",
         mode = { "x", "n" },
         desc = "Replace with d<node>",
         function()
@@ -225,7 +235,7 @@ return {
         end,
     },
     { -- FIXME: this
-        O.goto_prefix .. "rC",
+        "rC",
         mode = { "x", "n" },
         desc = "Replace with c<node>",
         function()

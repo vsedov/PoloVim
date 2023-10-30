@@ -1,5 +1,5 @@
 -- local labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM,?/.;#",
--- local labels = "jklfdsahg;nm,.?/ervcxzbuioyptwq"
+-- local labels = "¬"
 local labels = "sfnjklhodwembuyvrgtcxzSZFNJKLHODWEMBUYVRGTCXZ/?.,;#"
 local lib = require("modules.movement.flash.nav.lib")
 local lsp_utils = require("modules.lsp.lsp.utils")
@@ -106,79 +106,55 @@ local function opts()
         pattern = "",
         -- When `true`, flash will try to continue the last search
         continue = false,
-        -- You can override the default options for a specific mode.
-        -- Use it with `require("flash").jump({mode = "forward"})`
-        ---@type table<string, Flash.Config>
         modes = {
-            -- options used when flash is activated through
-            -- a regular search with `/` or `?`
             search = {
-                -- when `true`, flash will be activated during regular search by default.
-                -- You can always toggle when searching with `require("flash").toggle()`
-                enabled = true,
-                highlight = { backdrop = false },
-                jump = { history = true, register = true, nohlsearch = true },
-                search = {
-                    -- `forward` will be automatically set to the search direction
-                    -- `mode` is always set to `search`
-                    -- `incremental` is set to `true` when `incsearch` is enabled
+          label = { min_pattern_length = 3 },
                 },
-            },
-            -- options used when flash is activated through
-            -- `f`, `F`, `t`, `T`, `;` and `,` motions
             char = {
-                enabled = true,
-
-                -- dynamic configuration for ftFT motions
-                config = function(opts)
-                    -- autohide flash when in operator-pending mode
-                    opts.autohide = vim.fn.mode(true):find("no") and vim.v.operator == "y"
-
-                    -- disable jump labels when enabled and when using a count
-                    opts.jump_labels = opts.jump_labels and vim.v.count == 0
-
-                    -- Show jump labels only in operator-pending mode
-                    -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
-                end,
-                -- hide after jump when not using jump labels
-                autohide = true,
-                -- show jump labels
-                jump_labels = true,
-                -- When using jump labels, don't use these keys
-                -- This allows using those keys directly after the motion
-                label = { exclude = "hjkliardc" },
-                -- by default all keymaps are enabled, but you can disable some of them,
-                -- by removing them from the list.
-                -- If you rather use another key, you can map them
-                -- to something else, e.g., { [";"] = "L", [","] = H }
-                keys = { "f", "F", "t", "T", [";"] = "[s", [","] = "]s" },
-                search = { wrap = false },
-                highlight = { backdrop = true },
-                jump = { register = true },
+          enabled = false,
+          keys = { "f", "F", "t", "T" },
             },
-            -- options used for treesitter selections
-            -- `require("flash").treesitter()`
             treesitter = {
-                labels = labels,
-                jump = { pos = "range" },
-                search = { incremental = false },
-                label = { before = true, after = true, style = "inline" },
-                highlight = {
-                    backdrop = true,
-                    matches = true,
+                labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
+          -- O.hint_labels,
+          remote_op = {
+            restore = false,
+            motion = false,
                 },
+          search = { multi_window = false, wrap = true, incremental = false, max_length = 0 },
+          config = function(opts)
+            if false and vim.fn.mode() == "v" then
+              opts.labels:gsub("[cdyrx]", "") -- TODO: Remove all operations
+            end
+          end,
+          treesitter = { containing_end_pos = true },
+                matcher = lib.custom_ts,
+                actions = lib.ts_actions,
             },
-            treesitter_search = {
-                jump = { pos = "range" },
-                search = { multi_window = true, wrap = true, incremental = false },
-                remote_op = { restore = true },
-                label = { before = true, after = true, style = "inline" },
+        remote_ts = {
+          -- TODO: use `;,<cr><tab><spc` to extend the selection to sibling nodes
+          -- TODO: integrate i/a textobjects somehow. Maybe 'i<label><char>' = jump<label> i<char>
+          mode = "treesitter",
+          search = {
+            -- mode = "fuzzy",
+            -- mode =lib.remote_ts_search,
+            max_length = 2,
+            incremental = false,
+          },
+          jump = { pos = "range", register = false },
+          highlight = { matches = true },
+          treesitter = { containing_end_pos = true },
+                actions = lib.ts_actions,
+          remote_op = {
+            restore = true,
+            motion = true,
+          },
+                matcher = lib.remote_ts,
             },
             fuzzy = {
-                search = { mode = "fuzzy" },
-                -- highlight = {
+          search = { mode = "fuzzy", max_length = 9999 },
+          label = { min_pattern_length = 4 },
                 -- label = { before = true, after = false },
-                -- },
             },
             leap = {
                 search = {
@@ -190,18 +166,21 @@ local function opts()
             },
             search_diagnostics = {
                 search = { mode = "fuzzy" },
-                action = lib.there_and_back(lsp_utils.diag_line),
+                action = lib.there_and_back(lsp_utils.lsp.diag_line),
             },
             hover = {
                 search = { mode = "fuzzy" },
                 action = function(match, state)
                     vim.api.nvim_win_call(match.win, function()
                         vim.api.nvim_win_set_cursor(match.win, match.pos)
-                        lsp_utils.hover(function(err, result, ctx)
+              lsp_utils.lsp.hover(function(err, result, ctx)
                             vim.cmd([[Lspsaga hover_doc]])
+        --
+        --                     -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
 
                             -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
-                            vim.api.nvim_win_set_cursor(match.win, state.pos)
+
+                -- vim.api.nvim_win_set_cursor(match.win, state.pos)
                         end)
                     end)
                 end,
@@ -209,10 +188,8 @@ local function opts()
             select = {
                 search = { mode = "fuzzy" },
                 jump = { pos = "range" },
-                highlight = {
                     label = { before = true, after = true },
                 },
-            },
             references = {},
             diagnostics = {
                 search = { multi_window = true, wrap = true, incremental = true },
@@ -223,7 +200,6 @@ local function opts()
                 search = { mode = "fuzzy" },
                 jump = { autojump = true },
             },
-        },
         -- options for the floating window that shows the prompt,
         -- for regular jumps
         prompt = {
@@ -238,6 +214,7 @@ local function opts()
                 zindex = 1000,
             },
         },
+
         -- options for remote operator pending mode
         remote_op = {
             -- restore window views and cursor position
@@ -249,21 +226,40 @@ local function opts()
             -- `nil`: act as `true` for remote windows, `false` for the current window
             motion = true,
         },
+        },
     }
 end
 
 local function highlight()
     vim.api.nvim_set_hl(0, "FlashBackdrop", { link = "Conceal" })
-    vim.api.nvim_set_hl(0, "FlashLabel", {
-        fg = "#ff2f87",
-        bold = true,
-        nocombine = true,
-    })
+    -- vim.api.nvim_set_hl(0, "FlashMatch", {
+    --     fg = "white", -- for light themes, set to 'black' or similar
+    --     bold = true,
+    --     nocombine = true,
+    -- })
+    -- vim.api.nvim_set_hl(0, "FlashBackdrop", { fg = "#4b579e" })
+    vim.api.nvim_set_hl(0, "FlashLabel", { bg = "#ff007c", bold = true, fg = "#bdc9ff" })
+
+    --    vim.api.nvim_set_hl(0, "FlashCurrent", {
+    --      fg = "#ff2f87",
+    --    bold = true,
+    --  nocombine = true,
+    -- })
+    --
+    -- vim.api.nvim_set_hl(0, "FlashCurrent", {
+    --     fg = "white", -- for light themes, set to 'black' or similar
+    --     bold = true,
+    --     nocombine = true,
+    -- })
+    -- vim.api.nvim_set_hl(0, "FlashMatch", {
+    --     fg = "#ff2f87",
+    --     bold = true,
+    --     nocombine = true,
+    -- })
 end
 
 function config(_, op)
     require("flash").setup(op)
-    highlight()
     lambda.augroup("Flash_Colourchange", {
         {
             event = { "ColorScheme" },
@@ -273,8 +269,12 @@ function config(_, op)
             end,
         },
     })
+    vim.defer_fn(function()
+        highlight()
+    end, 500)
 end
 
+highlight()
 return {
     opts = opts,
     config = config,

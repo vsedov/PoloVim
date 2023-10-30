@@ -70,11 +70,7 @@ M.opts = {
             },
         },
         ["core.qol.todo_items"] = {},
-        ["external.templates"] = {
-            config = {
-                templates_dir = { "~/Documents/PhD_Norg/Templates/" },
-            },
-        },
+
         ["core.keybinds"] = {
             config = {
                 default_keybinds = true,
@@ -125,17 +121,17 @@ M.opts = {
             -- default keymaps
             config = {
                 keymaps = {
-                    -- select_prompt is used to to create new note / capture from the prompt directly
-                    -- instead of the telescope choice.
-                    select_prompt = "<C-n>",
-                    insert_link = "<leader>ni",
-                    find_note = "<leader>nf",
+		   select_prompt = "<C-n>",
+		   insert_link = "<leader>ni",
+		   find_note = "<leader>nf",
                     capture_note = "<leader>nc",
-                    capture_index = "<leader>nC",
+		   capture_index = "<leader>nl",
                     capture_cancel = "<C-q>",
                     capture_save = "<C-w>",
+
                 },
                 -- telescope theme
+
                 theme = "ivy",
 
                 capture_templates = {
@@ -174,7 +170,7 @@ M.opts = {
                         file = "${title}_${date}",
                         lines = {
                             "",
-                            "* {Title}",
+                            "* Title",
                             "",
                             "** Notes",
                             "",
@@ -235,8 +231,8 @@ M.config = function(_, op)
     end
 
     -- Neorg
-    -- vim.keymap.set("n", "<leader>;", ":lua ToggleToc()<CR>", { noremap = true, silent = true })
-    -- vim.keymap.set("n", "<leader>nt", ":Neorg mode traverse-heading <cr>", {})
-    -- vim.keymap.set("n", "<leader>nT", ":Neorg mode norg <cr>", {})
+    vim.keymap.set("n", "<leader>;", ":lua ToggleToc()<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>nt", ":Neorg mode traverse-heading <cr>", {})
+    vim.keymap.set("n", "<leader>nT", ":Neorg mode norg <cr>", {})
 end
 return M

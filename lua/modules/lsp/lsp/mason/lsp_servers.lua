@@ -93,16 +93,7 @@ for _, server in ipairs(con) do
     if server == "pylance" then
         require("lspconfig").pylance.setup(require("modules.lsp.lsp.providers.python.pylance"))
     else
-        if
-            vim.fn.filereadable(
-                vim.fn.expand("~/.config/nvim/lua/modules/lsp/lsp/providers/python/" .. server .. ".lua")
-            ) == 0
-        then
-            vim.notify("here we are")
-            servers[server] = true
-        else
-            servers[server] = require("modules.lsp.lsp.providers.python." .. server)
-        end
+        servers[server] = require("modules.lsp.lsp.providers.python." .. server)
     end
 end
 if lambda.config.lsp.latex == "texlab" then

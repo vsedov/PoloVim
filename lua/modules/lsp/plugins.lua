@@ -11,7 +11,7 @@ lsp({
     "williamboman/mason.nvim",
     cmd = "Mason",
     build = ":MasonUpdate",
-    opts = { ui = { border = border, height = 0.8 } },
+    opts = { ui = { border = lambda.style.border.type_0, height = 0.8 } },
 })
 
 lsp({
@@ -45,6 +45,7 @@ lsp({
         handlers = {
             function(name)
                 local config = require("modules.lsp.lsp.mason.lsp_servers")(name)
+
                 if config then
                     require("lspconfig")[name].setup(config)
                 end
@@ -54,7 +55,7 @@ lsp({
 })
 
 lsp({
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     cond = lambda.config.lsp.lint_formatting.use_null_ls, -- need to find a replacement for this asap
     lazy = true,
     event = "VeryLazy",
@@ -170,7 +171,7 @@ lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
 
 lsp({
     "glepnir/lspsaga.nvim",
-    cond = not lambda.config.lsp.use_navigator,
+    cond = lambda.config.lsp.use_lsp_saga,
     event = "VeryLazy",
     cmd = { "Lspsaga" },
     lazy = true,
@@ -262,7 +263,7 @@ lsp({ "onsails/lspkind.nvim", lazy = true })
 
 lsp({
     "yorickpeterse/nvim-dd",
-    cond = false,
+    cond = true,
     event = { "LspAttach" },
     config = true,
 })

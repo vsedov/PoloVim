@@ -29,7 +29,6 @@ local provider = {
 local get_extra_binds = function()
     local binds = {}
 
-    if not lambda.config.lsp.use_navigator then
         binds = {
             {
                 "gD",
@@ -38,7 +37,7 @@ local get_extra_binds = function()
                 end,
                 desc = "Goto Def",
             },
-            { ";gr", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
+        { "gf", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
             { "cc", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
             {
                 "gd",
@@ -110,7 +109,6 @@ local get_extra_binds = function()
             --     desc = "Toggle Lspsaga show_workspace_diagnostics",
             -- },
         }
-    end
     return binds
 end
 local buffer_mappings = {

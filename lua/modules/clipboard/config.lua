@@ -126,7 +126,16 @@ function config.clipboardimage()
         },
     })
     local function paste_url(url)
-        url = url.args
+        -- check if url is in clipboard
+        url = url.args or  vim.fn.getreg("+")
+        -- check if imgure is in clip
+        if url:find("imgur") then
+        end
+        -- https://i.imgur.com/btkPKSa.png
+        -- validate if any clipboard contains imgur
+        -- if not, then use url.args
+        -- Check clipboard
+
         local utils = require("clipboard-image.utils")
         local conf_utils = require("clipboard-image.config")
 
@@ -136,7 +145,7 @@ function config.clipboardimage()
         utils.insert_txt(conf.affix, url)
     end
     -- Now let's create the command (works on neovim 0.7+)
-    lambda.command("PasteImgUrl", paste_url, { nargs = 1 })
+    lambda.command("PasteImgUrl", paste_url, { nargs = "*" })
 end
 
 function config.neoclip()

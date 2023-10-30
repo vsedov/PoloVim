@@ -9,7 +9,7 @@ local recursive_map = function(mode, lhs, rhs, opts)
     map(mode, lhs, rhs, opts)
 end
 local function open(path)
-    vim.fn.jobstart({ "waterfox-g6", path }, { detach = true })
+    vim.fn.jobstart({ "waterfox", path }, { detach = true })
     vim.notify(string.format("Opening %s", path))
 end
 
@@ -199,8 +199,6 @@ nnoremap(
     "<cmd>:lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow<cr>",
     { desc = "Diag show Prev", silent = true }
 )
-
-nnoremap(";R", "<cmd>:NeoRootSwitchMode<cr>", { desc = "root switch", silent = true })
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Telscope Mappings                                                  │

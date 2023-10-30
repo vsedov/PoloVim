@@ -72,7 +72,6 @@ if lambda.config.movement.movement_type == "leap" then
         "ggandor/flit.nvim",
         lazy = true,
         dependencies = { "ggandor/leap.nvim" },
-        config = leap.leap_flit,
         keys = function()
             local ret = {}
             for _, key in ipairs({ "f", "F", "t", "T" }) do
@@ -111,6 +110,35 @@ else
         opts = flash.opts,
         config = flash.config,
         keys = flash.binds,
+    })
+    local leap = require("modules.movement.leap")
+
+    movement({
+        "ggandor/leap.nvim",
+        lazy = true,
+        dependencies = { "tpope/vim-repeat" },
+        config = leap.leap_config,
+        keys = leap.keys,
+    })
+    movement({
+        "ggandor/flit.nvim",
+        keys = function()
+            local mods = {
+                ["f"] = { "n", "x", "o" },
+                ["F"] = { "n", "x", "o" },
+                ["t"] = { "n", "x" },
+                ["T"] = { "n", "x" },
+            }
+            local ret = {}
+            for key, modes in ipairs(mods) do
+                ret[#ret + 1] = { key, mode = modes, desc = key }
+            end
+            return ret
+        end,
+        opts = {
+            labeled_modes = "nx",
+            opts = { equivalence_classes = {} },
+        },
     })
 end
 

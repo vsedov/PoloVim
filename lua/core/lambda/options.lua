@@ -6,14 +6,13 @@
 
 local use_noice = true
 
-local use_codium = true -- Want to see what this would be like without codeium, ; but just the lsp support
+local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 
-local use_tabnine = false
-local use_tabnine_cmp = false
+local use_tabnine = true
+local use_tabnine_cmp = true
 
-local use_copilot = false -- We really do sell our souls for this thing eh
-local use_navigator = false
+local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within the list
 lambda.config = {
@@ -45,6 +44,7 @@ lambda.config.ai = {
         },
     },
     tabnine = {
+        use_sort = false,
         use_tabnine = use_tabnine,
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
@@ -61,8 +61,6 @@ lambda.config.ai = {
 lambda.config.extra_search = {
     enable = true,
     providers = {
-        use_azy = true,
-
         use_fzf_lua = true, -- This is nice, to have, when required.|| Activates Azy.nvim < which is very fast.
     },
 }
@@ -79,18 +77,18 @@ lambda.config.editor = {
 }
 
 lambda.config.treesitter = {
-    hipairs = false,
+    hipairs = true,
     indent = {
         use_indent_O_matic = false,
-        use_guess_indent = true,
-        use_yati = false,
+        use_guess_indent = false,
+        use_yati = true,
     },
     use_matchup = true,
-    use_extra_highlight = true,
+    use_extra_highlight = false,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
     use_context_vt = false,
-    use_rainbow = false,
+    use_rainbow = true,
 }
 
 lambda.config.abbrev = {
@@ -110,7 +108,6 @@ lambda.config.cmp = {
     buffer = true,
     use_ghost = true,
     luasnip = {
-        luasnip_choice = false,
         luasnip = {
             enable = true,
             priority = 6,
@@ -121,20 +118,24 @@ lambda.config.cmp = {
 
 lambda.config.lsp = {
     use_hover = false, -- Saga is better for this one
-    use_typos = true, -- this was getting annoying
+    use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
-    use_navigator = use_navigator,
-    use_lsp_dim = true, -- i forgot what this does
+    use_lsp_saga = true,
+    use_lsp_dim = false, -- i forgot what this does
+    ----------------------------------------------------------------------------------------------------
+    --  Lsp Signiture, but im suing lazy for this for the time
+    ----------------------------------------------------------------------------------------------------
+
     lsp_sig = {
-        use_lsp_signature = true,
+        use_lsp_signature = false,
         use_floating_window = false,
-        use_floating_window_above_cur_line = true,
-        fix_pos = true,
+        use_floating_window_above_cur_line = false,
+        fix_pos = false,
     },
     lint_formatting = {
         use_ale = false,
-        use_null_ls = false,
+        use_null_ls = false, -- Disable this for the time .  There could be something wrong with this
         use_conform = true,
     },
     diagnostics = {
@@ -176,7 +177,7 @@ lambda.config.lsp = {
             "stylua",
             "trim_newlines",
             "trim_whitespace",
-            "pyflyby",
+            -- "pyflyby",
         },
         code_action = { "eslint_d", "refactoring", "ts_node_action" },
     },
@@ -190,8 +191,9 @@ lambda.config.lsp = {
         format = {
             "isort",
             "black",
-        }, -- black -- Need to make it so it knows what formater to use :think:
-        lsp = { "pylsp", "sourcery" }, -- pylyzer, jedi pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        },
+        -- black -- Need to make it so it knows what formater to use :think:
+        lsp = { "pylsp", "sourcery"  }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
     },
 }
 
@@ -207,20 +209,27 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_dropbar = true,
     use_beacon = true,
-    use_mini_animate = false,
+    use_mini_animate = true,
+    mini_animate = {
+        use_animate = true,
+        use_cursor = true,
+        use_scroll = true,
+        use_resize = true,
+        use_close = true,
+    },
     use_hlslens = true,
-    use_statuscol = true,
+    use_statuscol = true, -- Does thi cause some lage sometimes im not sure ?
     heirline = {
         use_statuscol = false,
         use_heirline = true,
     },
     indent_lines = {
         use_hlchunk = false,
-        use_indent_blankline = true,
-        use_mini_indent_scope = false,
+        use_indent_blankline = false, -- we shall keep this for now, seems rather nice
+        use_mini_indent_scope = true,
     },
     scroll_bar = {
-        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
+        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
     },
 }
 lambda.config.fun = {
@@ -240,17 +249,18 @@ lambda.config.colourscheme = {
     tokyonight_flavour = "night",
     themes = {
         light = {
+
             -- "tokyonight.nvim",
             -- "sweetie.nvim",
-            "catppuccin",
-            "kanagawa.nvim",
+            -- "catppuccin",
+            -- "kanagawa.nvim",
         },
         dark = {
             "tokyonight.nvim",
             -- "catppuccin",
             -- "sweetie.nvim",
             -- "rose", -- TSMethod'
-            -- "kanagawa.nvim",
+            "kanagawa.nvim",
         },
         others = {
             "doom-one.nvim",
@@ -286,7 +296,7 @@ lambda.config.movement = {
     use_accelerated_jk = true,
     harpoon = {
         goto_harpoon = false,
-        use_tmux_or_normal = "nvim", -- nvim
+        use_tmux_or_normal = "tmux", -- nvim
     },
 }
 lambda.config.tools = {
@@ -295,7 +305,6 @@ lambda.config.tools = {
     session = {
         use_resession = true,
     },
-    use_tracker = false,
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = true,
     use_live_command = false, -- Disabled due to large files, this might noe be nice to have
@@ -317,13 +326,13 @@ lambda.config.folke = {
         enable = use_noice,
         lsp = {
             use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = not use_navigator, -- Navigator really does not like this
+            use_noice_hover = true,
             use_markdown = true,
             use_documentation = true,
         },
     },
     edge = {
         enable = true,
-        use_animate = false,
+        use_animate = true,
     },
 }

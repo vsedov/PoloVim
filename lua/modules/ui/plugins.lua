@@ -53,10 +53,6 @@ ui({
                 comp.Ruler
             ),
 
-            winbar = {
-                comp.FullFileName,
-            },
-
             opts = {
                 disable_winbar_cb = function(args)
                     local buf = args.buf
@@ -252,11 +248,22 @@ ui({
     event = "VeryLazy",
     opts = {
         exclude = {
-        -- stylua: ignore
         filetypes = {
-          'dbout', 'neo-tree-popup', 'log', 'gitcommit',
-          'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
-          'undotree', 'markdown', 'norg', 'org', 'orgagenda',
+                "glowpreview",
+                "dbout",
+                "neo-tree-popup",
+                "log",
+                "gitcommit",
+                "txt",
+                "help",
+                "NvimTree",
+                "git",
+                "flutterToolsOutline",
+                "undotree",
+                "markdown",
+                "norg",
+                "org",
+                "orgagenda",
         },
         },
         indent = {
@@ -289,7 +296,7 @@ ui({
             use_treesitter = true,
             notify = true, -- notify if some situation(like disable chunk mod double time)
             exclude_filetypes = {
-
+                glowpreview = true,
                 harpoon = true,
                 aerial = true,
                 dropbar_menu = true,

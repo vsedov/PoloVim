@@ -86,7 +86,7 @@ clipsub({
 
 clipsub({
     "postfen/clipboard-image.nvim",
-    cmd = { "PasteImg" },
+    cmd = { "PasteImg", "PasteImgUrl" },
     lazy = true,
     config = conf.clipboardimage,
 })

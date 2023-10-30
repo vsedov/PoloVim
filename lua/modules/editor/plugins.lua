@@ -53,7 +53,7 @@ editor({ "nvim-lua/plenary.nvim", lazy = true })
 editor({
     "numToStr/Comment.nvim",
     lazy = true,
-    keys = { { "g", mode = "n" }, { "g", mode = "v" } },
+    keys = { { "g", mode = "n" }, { "g", mode = "v" }, { "gcc", mode = "v" }, { "gc", mode = "v" } },
     config = conf.comment,
 })
 
@@ -61,11 +61,6 @@ editor({
     "LudoPinelli/comment-box.nvim",
     lazy = true,
     config = conf.comment_box,
-})
-
-editor({
-    "anuvyklack/vim-smartword",
-    lazy = true,
 })
 
 editor({ "andweeb/presence.nvim", lazy = true, config = conf.discord })

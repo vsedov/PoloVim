@@ -12,14 +12,7 @@ tmux({
     cond = vim.fn.getenv("TMUX") ~= vim.NIL,
     event = "BufWinEnter",
     config = function()
-        require("tmux").setup({
-            copy_sync = { enable = false },
-            navigation = {
-                cycle_navigation = false,
-                enable_default_keybindings = false,
-                persist_zoom = false,
-            },
-        })
+        require("tmux").setup({})
         local keymaps = {
             Up = function()
                 require("tmux").resize_top()
