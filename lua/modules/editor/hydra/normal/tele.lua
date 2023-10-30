@@ -77,7 +77,7 @@ Hydra({
             border = "single",
         },
     },
-    mode = { "n", "x" },
+    mode = { "n" },
     body = "<leader>f",
     heads = {
         -- git
