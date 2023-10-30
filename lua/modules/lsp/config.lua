@@ -1,21 +1,5 @@
 local config = {}
 
-function config.mason_setup()
-    vim.defer_fn(function()
-        local get_config = require("modules.lsp.lsp.mason.lsp_servers")
-
-        require("mason-lspconfig").setup_handlers({
-            function(name)
-                local conf = get_config(name)
-                if conf then
-                    require("lspconfig")[name].setup(conf)
-                end
-            end,
-        })
-        require("modules.lsp.lsp.mason")
-    end, 100)
-end
-
 function config.clangd()
     require("modules.lsp.lsp.providers.c")
 end
@@ -28,6 +12,21 @@ function config.saga()
         max_preview_lines = 10,
         code_action_icon = "",
         code_action_num_shortcut = false,
+        finder = {
+            keys = {
+                toggle_or_open = "<c-w>",
+                vsplit = "s", -- open in vsplit
+                split = "S", -- open ĸn split
+                tabe = "t", -- open in tabe
+                tabnew = "r", -- open in new tab
+                quit = "q", -- quit the finder, only works in layout left window
+                close = "<C-c>k", --   close finder
+            },
+            methods = {
+                ["tyd"] = "textDocument/typeDefinition",
+            },
+        },
+
         lightbulb = {
             enable = false,
             enable_in_insert = false,
@@ -60,6 +59,7 @@ function config.saga()
             folder_level = 2,
             respect_root = false,
         },
+
         ui = {
             -- currently only round theme
             theme = "round",
