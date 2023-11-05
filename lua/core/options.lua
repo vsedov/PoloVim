@@ -124,6 +124,7 @@ end
 o.wildcharm = ("\t"):byte()
 o.wildmode = "list:full" -- Shows a menu bar as opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
+
 opt.wildignore = {
     "*.o",
     "*.obj",
@@ -154,7 +155,7 @@ o.breakindentopt = "sbr"
 o.linebreak = true -- lines wrap at words rather than random characters
 o.signcolumn = "yes:4"
 o.ruler = false
-o.cmdheight = 1
+o.cmdheight = 0
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1

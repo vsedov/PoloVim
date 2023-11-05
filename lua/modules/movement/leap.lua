@@ -305,7 +305,7 @@ function M.keys()
             desc = "Leap v T",
         },
         {
-            "h", -- semi-inclusive
+            "f", -- semi-inclusive
             function()
                 require("leap").leap({ inclusive_op = true })
             end,
@@ -313,7 +313,7 @@ function M.keys()
             desc = "Leap f",
         },
         {
-            "H", -- semi-inclusive
+            "F", -- semi-inclusive
             function()
                 require("leap").leap({ backward = true, offset = 1, inclusive_op = true })
             end,
@@ -332,6 +332,7 @@ function M.keys()
         { ".", leap_bi_o(2), mode = "o", desc = "Leap Incl." },
         { "<leader>f", leap_bi_o(2), mode = "o", desc = "Leap Inc" },
         { "<leader>t", leap_bi_o(0), mode = "o", desc = "Leap Exc" },
+        { "r", leap_bi_o(0), mode = "o", desc = "Leap Exc" },
 
         {
             O.select_remote,
@@ -342,13 +343,13 @@ function M.keys()
             mode = "o",
         },
         {
-            "rp",
+            ";rp",
             mode = "n",
             desc = "Remote Paste",
             lib.remote_paste("h"),
         },
         {
-            "rP",
+            ";rP",
             mode = "n",
             desc = "Remote Paste line",
             lib.remote_paste("h", "<leader>p"),
@@ -356,7 +357,7 @@ function M.keys()
         -- TODO: y<motion><something><leap><motion>
         -- TODO: why is this not working??
         {
-            "rx",
+            ";rx",
             mode = "n",
             desc = "Exchange <motion1> with <motion2>",
             function()
@@ -369,7 +370,7 @@ function M.keys()
             end,
         },
         {
-            "rX",
+            ";rX",
             mode = "n",
             desc = "Exchange V<motion1> with V<motion2>",
             function()
@@ -382,17 +383,17 @@ function M.keys()
                 )
             end,
         },
+        -- {
+        --     "rx",
+        --     mode = "x",
+        --     -- TODO: figure this out
+        -- },
         {
-            "rx",
-            mode = "x",
-            -- TODO: figure this out
-        },
-        {
-            ";r",
+            ";_",
             mode = { "n" },
             desc = "Remote Replace",
             function()
-                vim.api.nvim_feedkeys("r", "m", false)
+                vim.api.nvim_feedkeys(";r", "m", false)
                 vim.schedule(lib.leap_remote)
             end,
         },

@@ -268,7 +268,7 @@ user({
 })
 user({
     "lewis6991/whatthejump.nvim",
-    cond = false,
+    cond = true,
     keys = { "<c-i>", "<c-o>" },
 })
 --  ──────────────────────────────────────────────────────────────────────
@@ -296,9 +296,21 @@ user({
 user({
     "mikesmithgh/kitty-scrollback.nvim",
     enabled = true,
+    lazy = true,
+    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+    event = { "User KittyScrollbackLaunch" },
+    -- version = '*', -- latest stable version, may have breaking changes if major version changed
+    -- version = '^2.0.0', -- pin major version, include fixes and features that do not have breaking changes
     config = function()
         require("kitty-scrollback").setup({
-            checkhealth = true,
+            ksb_builtin_last_cmd_output = function()
+                return {
+                    kitty_get_text = {
+                        extent = "last_visited_cmd_output",
+                        ansi = true,
+                    },
+                }
+            end,
         })
     end,
 })
@@ -344,4 +356,18 @@ user({
         "DataViewerPrevTable",
         "DataViewerClose",
     },
+})
+user({
+    "neph-iap/easycolor.nvim",
+    dependencies = { "stevearc/dressing.nvim" }, -- Optional, but provides better UI for editing the formatting template
+    opts = {},
+    cmd = {
+        "EasyColor",
+    },
+})
+user({
+    "chrishrb/gx.nvim",
+    event = { "BufEnter" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = true,
 })

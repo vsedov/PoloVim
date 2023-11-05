@@ -303,9 +303,11 @@ augroup("LspSetupCommands", {
             if not client then
                 return
             end
-            require("sg").setup({
-                on_attach = on_attach,
-            })
+            if lambda.config.lsp.use_sg then 
+              require("sg").setup({
+                  on_attach = on_attach,
+              })
+            end
 
             on_attach(client, args.buf)
             local overrides = client_overrides[client.name]

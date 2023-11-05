@@ -49,17 +49,6 @@ tools({
 })
 
 tools({
-    "xiyaowong/link-visitor.nvim",
-    lazy = true,
-    cmd = { "VisitLinkInBuffer", "VisitLinkUnderCursor", "VisitLinkNearCursor" },
-    config = function()
-        require("link-visitor").setup({
-            silent = true, -- disable all prints, `false` by default
-        })
-    end,
-})
-
-tools({
     "rhysd/vim-grammarous",
     lazy = true,
     cmd = { "GrammarousCheck" },

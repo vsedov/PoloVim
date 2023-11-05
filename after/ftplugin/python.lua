@@ -26,3 +26,8 @@ vim.cmd(switch_definitions:gsub("\n", ""))
 
 vim.g.magma_automatically_open_output = false
 vim.g.magma_image_provider = "kitty"
+vim.cmd([[
+filetype plugin on
+setlocal include=^\\s*\\(from\\\|import\\)
+setlocal includeexpr=substitute(v:fname,'\\.','/','g')
+]])

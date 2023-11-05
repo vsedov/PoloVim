@@ -7,8 +7,8 @@ M.opts = {
                 engine = "nvim-cmp",
             },
         },
-        -- ["core.latex.renderer"] = {},
-        -- ["core.integrations.image"] = {},
+        ["core.latex.renderer"] = {},
+        ["core.integrations.image"] = {},
         --     core.integrations.image
         --
         ["core.upgrade"] = {},

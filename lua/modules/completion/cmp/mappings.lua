@@ -1,6 +1,7 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local utils = require("modules.completion.cmp.utils")
+
 local function copilot()
     local suggestion = require("copilot.suggestion")
     if suggestion.is_visible() then

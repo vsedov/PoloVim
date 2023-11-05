@@ -53,7 +53,20 @@ editor({ "nvim-lua/plenary.nvim", lazy = true })
 editor({
     "numToStr/Comment.nvim",
     lazy = true,
-    keys = { { "g", mode = "n" }, { "g", mode = "v" }, { "gcc", mode = "v" }, { "gc", mode = "v" } },
+    keys = {
+        {
+            "g",
+            mode = { "v", "n" },
+        },
+        {
+            "gcc",
+            mode = "v",
+        },
+        {
+            "gc",
+            mode = "v",
+        },
+    },
     config = conf.comment,
 })
 

@@ -50,7 +50,10 @@ buffer({
 
 buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
 
-buffer({ "famiu/bufdelete.nvim", keys = { { "_q", "<Cmd>Bdelete<CR>", desc = "buffer delete" } } })
+buffer({
+    "famiu/bufdelete.nvim",
+    keys = { { "_q", "<Cmd>Bdelete<CR>", desc = "buffer delete" } },
+})
 
 buffer({
     "stevearc/stickybuf.nvim",
@@ -129,14 +132,42 @@ buffer({
     end,
 })
 
--- Unlist hidden buffers that are git ignored.
 buffer({
-    "sQVe/bufignore.nvim",
-    cond = lambda.config.buffer.use_bufignore,
-    event = "BufRead",
+    "mskelton/local-yokel.nvim",
+    lazy = true,
+    cmd = { "E" },
     config = true,
 })
 
+buffer({
+    "zakissimo/hook.nvim",
+    lazy = true,
+    keys = {
+        "<c-b>1",
+        "<c-b>2",
+        "<c-b>3",
+        "<c-b>4",
+        "<c-b>5",
+        "<c-b>6",
+        "<c-b>7",
+        "<c-b>8",
+        "<c-b>9",
+    },
+    config = function()
+        require("hook").setup({
+            prefix = "", -- default is ">"
+        })
+        for i = 1, 9 do
+            vim.api.nvim_set_keymap(
+                "n",
+                "<c-b>" .. i,
+                "<cmd>lua require('hook').pull(" .. i .. ")<CR>",
+                { noremap = true, silent = true }
+            )
+        end
+    end,
+})
+--  ──────────────────────────────────────────────────────────────────────
 buffer({
     "chrisgrieser/nvim-early-retirement",
     cond = lambda.config.buffer.use_early_retirement,
@@ -174,38 +205,11 @@ buffer({
     },
 })
 
+-- Unlist hidden buffers that are git ignored.
 buffer({
-    "mskelton/local-yokel.nvim",
-    lazy = true,
-    cmd = { "E" },
+    "sQVe/bufignore.nvim",
+    cond = lambda.config.buffer.use_bufignore,
+    event = "BufRead",
     config = true,
 })
-
-buffer({
-    "zakissimo/hook.nvim",
-    lazy = true,
-    keys = {
-        "<c-b>1",
-        "<c-b>2",
-        "<c-b>3",
-        "<c-b>4",
-        "<c-b>5",
-        "<c-b>6",
-        "<c-b>7",
-        "<c-b>8",
-        "<c-b>9",
-    },
-    config = function()
-        require("hook").setup({
-            prefix = "", -- default is ">"
-        })
-        for i = 1, 9 do
-            vim.api.nvim_set_keymap(
-                "n",
-                "<c-b>" .. i,
-                "<cmd>lua require('hook').pull(" .. i .. ")<CR>",
-                { noremap = true, silent = true }
-            )
-        end
-    end,
-})
+--

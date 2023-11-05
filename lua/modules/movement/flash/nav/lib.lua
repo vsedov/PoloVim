@@ -65,7 +65,6 @@ M.flash_diagnostics = function(opts)
         search = { max_length = 0 },
     }, opts or {}))
 end
-
 M.flash_references = function(opts)
     local params = vim.lsp.util.make_position_params()
     params.context = {

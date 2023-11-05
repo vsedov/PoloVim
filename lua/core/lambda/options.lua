@@ -117,6 +117,7 @@ lambda.config.cmp = {
 }
 
 lambda.config.lsp = {
+    use_sg = false, 
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
@@ -205,17 +206,16 @@ end
 lambda.config.ui = {
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_tint = true, -- Might not be great for certain colourschemes
+    use_tint = false, -- Might not be great for certain colourschemes
     use_hlsearch = true,
     use_dropbar = true,
     use_beacon = true,
-    use_mini_animate = true,
     mini_animate = {
         use_animate = true,
         use_cursor = true,
-        use_scroll = true,
-        use_resize = true,
-        use_close = true,
+        use_scroll = false,
+        use_resize = false,
+        use_close = false,
     },
     use_hlslens = true,
     use_statuscol = true, -- Does thi cause some lage sometimes im not sure ?
@@ -333,6 +333,6 @@ lambda.config.folke = {
     },
     edge = {
         enable = true,
-        use_animate = true,
+        use_animate = false,
     },
 }

@@ -57,6 +57,9 @@ ts({
     },
     opts = {
         useDefaultKeymaps = true,
+        disabledKeymaps = {
+            "gc",
+        },
     },
 })
 

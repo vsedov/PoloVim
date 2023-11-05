@@ -145,18 +145,6 @@ return {
         desc = "Continue Flash",
     },
     {
-        O.goto_prefix .. "hr",
-        desc = "References",
-        lib.flash_references,
-    },
-    {
-        O.goto_prefix .. "hh",
-        desc = "Hover",
-        function()
-            require("flash").jump({ mode = "hover" })
-        end,
-    },
-    {
         "rix", -- TODO: better keymap?
         -- FIXME: its broken??
         mode = { "x", "n" },
@@ -194,52 +182,52 @@ return {
     --   end,
     -- },
     -- TODO: Copy there, Paste here
-    { -- FIXME: this
-        "ry",
-        mode = { "x", "n" },
-        desc = "Replace with <remote-motion>",
-        function()
-            lib.swap_with({ exchange = { not_there = true } })
-        end,
-    },
-    { -- FIXME: this
-        "rd",
-        mode = { "x", "n" },
-        desc = "Replace with d<remote-motion>",
-        function()
-            lib.swap_with({ exchange = { not_there = true } })
-        end,
-    },
-    { -- FIXME: this
-        "rc",
-        mode = { "x", "n" },
-        desc = "Replace with c<remote-motion>",
-        function()
-            lib.swap_with({ exchange = { not_there = true } })
-        end,
-    },
-    { -- FIXME: this
-        "rY",
-        mode = { "n" },
-        desc = "Replace with <node>",
-        function()
-            lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
-        end,
-    },
-    { -- FIXME: this
-        "rD",
-        mode = { "x", "n" },
-        desc = "Replace with d<node>",
-        function()
-            lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
-        end,
-    },
-    { -- FIXME: this
-        "rC",
-        mode = { "x", "n" },
-        desc = "Replace with c<node>",
-        function()
-            lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
-        end,
-    },
+    -- { -- FIXME: this
+    --     "ry",
+    --     mode = { "x", "n" },
+    --     desc = "Replace with <remote-motion>",
+    --     function()
+    --         lib.swap_with({ exchange = { not_there = true } })
+    --     end,
+    -- },
+    -- { -- FIXME: this
+    --     "rd",
+    --     mode = { "x", "n" },
+    --     desc = "Replace with d<remote-motion>",
+    --     function()
+    --         lib.swap_with({ exchange = { not_there = true } })
+    --     end,
+    -- },
+    -- { -- FIXME: this
+    --     "rc",
+    --     mode = { "x", "n" },
+    --     desc = "Replace with c<remote-motion>",
+    --     function()
+    --         lib.swap_with({ exchange = { not_there = true } })
+    --     end,
+    -- },
+    -- { -- FIXME: this
+    --     "rY",
+    --     mode = { "n" },
+    --     desc = "Replace with <node>",
+    --     function()
+    --         lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
+    --     end,
+    -- },
+    -- { -- FIXME: this
+    --     "rD",
+    --     mode = { "x", "n" },
+    --     desc = "Replace with d<node>",
+    --     function()
+    --         lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
+    --     end,
+    -- },
+    -- { -- FIXME: this
+    --     "rC",
+    --     mode = { "x", "n" },
+    --     desc = "Replace with c<node>",
+    --     function()
+    --         lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
+    --     end,
+    -- },
 }

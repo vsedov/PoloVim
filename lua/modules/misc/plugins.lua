@@ -64,10 +64,11 @@ misc({
 
 misc({
     "ahmedkhalf/project.nvim",
+    event = "BufRead",
     config = function()
         require("project_nvim").setup({
             ignore_lsp = { "null-ls" },
-            silent_chdir = false,
+            silent_chdir = true,
             patterns = { ".git", ".hg", ".svn", "pyproject.toml" },
         })
     end,
@@ -116,7 +117,7 @@ misc({
     cmd = "Hypersonic",
     keys = {
         {
-            "<leader>r",
+            "<leader>R",
             function()
                 vim.cmd([[Hypersonic]])
             end,

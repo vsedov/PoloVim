@@ -1,7 +1,6 @@
 local bracket = { "w", "j", "k", "n", "N", "m", "C", "T", "L" }
 
 local leader_key = "<leader>b"
-local hbac = require("hbac")
 
 local function buffer_move()
     vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
@@ -274,31 +273,31 @@ local config = {
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
         ["<c-a>"] = {
             function()
-                hbac.toggle_pin()
+                require("hbac").toggle_pin()
             end,
             { desc = "Hbac-Toggle Buf", exit = false },
         },
         ["<c-x>"] = {
             function()
-                hbac.close_unpinned()
+                require("hbac").close_unpinned()
             end,
             { desc = "Hbac-Close Upin [C]", exit = false },
         },
         ["<c-p>"] = {
             function()
-                hbac.pin_all()
+                require("hbac").pin_all()
             end,
             { desc = "Hbac-Pin All", exit = false },
         },
         ["<c-u>"] = {
             function()
-                hbac.unpin_all()
+                require("hbac").unpin_all()
             end,
             { desc = "Hbac-Unpin All", exit = false },
         },
         ["<c-t>"] = {
             function()
-                hbac.toggle_autoclose()
+                require("hbac").toggle_autoclose()
             end,
             { desc = "Hbac AutoClose T", exit = false },
         },

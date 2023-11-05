@@ -21,8 +21,6 @@ completion({
 completion({
     "hrsh7th/nvim-cmp",
     cond = lambda.config.cmp.use_cmp,
-    event = "InsertEnter",
-    lazy = true,
     dependencies = {
         { "hrsh7th/cmp-nvim-lsp" },
         { "hrsh7th/cmp-nvim-lua" },
@@ -31,10 +29,6 @@ completion({
         { "hrsh7th/cmp-cmdline" },
         { "rcarriga/cmp-dap" },
         { "hrsh7th/cmp-omni" },
-        {
-            "tzachar/cmp-fuzzy-buffer",
-            dependencies = { "tzachar/fuzzy.nvim" },
-        },
         {
             "doxnit/cmp-luasnip-choice",
             config = function()

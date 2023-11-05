@@ -18,6 +18,10 @@ search({
             lazy = true,
         },
         {
+            "IllustratedMan-code/telescope-conda.nvim",
+            lazy = true,
+        },
+        {
             "Marskey/telescope-sg",
             lazy = true,
         },

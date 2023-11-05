@@ -48,6 +48,20 @@ windows({
                     on_leave = require("bufresize").register,
                 },
             },
+            extensions = {
+                -- default settings shown below:
+                smart_splits = {
+                    directions = { "h", "j", "k", "l" },
+                    mods = {
+                        -- for moving cursor between windows
+                        move = "<C>",
+                        -- for resizing windows
+                        resize = "<M>",
+                        -- for swapping window buffers
+                        swap = false, -- false disables creating a binding
+                    },
+                },
+            },
         })
         local keys = {
             {
@@ -201,7 +215,10 @@ windows({
         vim.o.winwidth = 10
         vim.o.winminwidth = 10
         vim.o.equalalways = false
-        require("windows").setup()
+        require("windows").setup({
+            create_commands = true,
+            create_keymaps = true,
+        })
     end,
 })
 

@@ -7,6 +7,7 @@ function config.telescope()
             "telescope-live-grep-args.nvim",
             "telescope-frecency.nvim",
             "telescope-file-browser.nvim",
+            "telescope-conda.nvim",
             "telescope-bookmarks.nvim",
             "telescope-sg",
             "telescope-egrepify.nvim",
@@ -16,8 +17,8 @@ function config.telescope()
         end
         require("telescope").setup({
             extensions = {
+                conda = { anaconda_path = "/home/viv/.conda/" },
                 bookmarks = {
-
                     selected_browser = "firefox",
                     url_open_command = "open",
                     profile_name = "default-nightly-1",

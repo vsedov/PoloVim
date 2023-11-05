@@ -57,7 +57,7 @@ function config.notify()
     local notify = require("notify")
     notify.setup({
         timeout = 5000,
-        stages = "fade_in_slide_out",
+        -- stages = "fade_in_slide_out",
         top_down = false,
         -- background_colour = "#000000",                                                                          ▕
 

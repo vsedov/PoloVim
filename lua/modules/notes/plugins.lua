@@ -2,7 +2,9 @@ local conf = require("modules.notes.config")
 local notes = require("core.pack").package
 
 notes({
-    "nvim-neorg/neorg",
+    -- "nvim-neorg/neorg",
+    "nolbap/neorg",
+
     ft = { "norg" },
     cmd = { "Neorg" },
     init = function()

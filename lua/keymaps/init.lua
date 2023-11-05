@@ -240,22 +240,22 @@ end, { desc = "Clever cd", silent = true })
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ Direct Keymap.set                                                  │
 --  ╰────────────────────────────────────────────────────────────────────╯
-vim.keymap.set({ "x", "n" }, "gx", function()
-    local file = vim.fn.expand("<cfile>")
-    if not file or vim.fn.isdirectory(file) > 0 then
-        return vim.cmd.edit(file)
-    end
-
-    if file:match("http[s]?://") then
-        return open(file)
-    end
-
-    -- consider anything that looks like string/string a github link
-    local link = file:match("[%a%d%-%.%_]*%/[%a%d%-%.%_]*")
-    if link then
-        return open(string.format("https://www.github.com/%s", link))
-    end
-end, { noremap = true, silent = true })
+-- vim.keymap.set({ "x", "n" }, "gx", function()
+--     local file = vim.fn.expand("<cfile>")
+--     if not file or vim.fn.isdirectory(file) > 0 then
+--         return vim.cmd.edit(file)
+--     end
+--
+--     if file:match("http[s]?://") then
+--         return open(file)
+--     end
+--
+--     -- consider anything that looks like string/string a github link
+--     local link = file:match("[%a%d%-%.%_]*%/[%a%d%-%.%_]*")
+--     if link then
+--         return open(string.format("https://www.github.com/%s", link))
+--     end
+-- end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "gw", "<cmd>cclose | Grep <cword><CR>", { desc = "Grep for word" })
 vim.keymap.set("n", "gbw", function()

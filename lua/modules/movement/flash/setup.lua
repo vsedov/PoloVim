@@ -112,14 +112,14 @@ local function opts()
             },
             char = {
                 enabled = false,
-                keys = { "f", "F", "t", "T" },
+                keys = { "f", "F", "t", "T" }, -- We do not need this as leap is using it . we shall make it togglable.
             },
             treesitter = {
                 labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
                 -- O.hint_labels,
                 remote_op = {
-                    restore = false,
-                    motion = false,
+                    restore = true, -- false
+                    motion = true, -- false
                 },
                 search = { multi_window = false, wrap = true, incremental = false, max_length = 0 },
                 config = function(opts)
@@ -175,12 +175,6 @@ local function opts()
                         vim.api.nvim_win_set_cursor(match.win, match.pos)
                         lsp_utils.hover(function(err, result, ctx)
                             vim.cmd([[Lspsaga hover_doc]])
-                            --
-                            --                     -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
-
-                            -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
-
-                            -- vim.api.nvim_win_set_cursor(match.win, state.pos)
                         end)
                     end)
                 end,
