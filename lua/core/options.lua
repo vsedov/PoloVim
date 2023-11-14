@@ -145,6 +145,7 @@ opt.wildignore = {
     ".DS_Store",
     "tags.lock",
 }
+
 opt.wildoptions = { "pum", "fuzzy" }
 o.pumblend = 0 -- Make popup window translucent
 -----------------------------------------------------------------------------//
@@ -180,6 +181,7 @@ o.textwidth = 80
 o.autoindent = true
 o.shiftround = true
 o.expandtab = true
+o.tabstop = 4
 o.shiftwidth = 2
 -----------------------------------------------------------------------------//
 o.pumheight = 15
@@ -249,7 +251,7 @@ o.swapfile = false
 o.ignorecase = true
 o.smartcase = true
 o.wrapscan = true -- Searches wrap around the end of the file
-o.scrolloff = 9
+o.scrolloff = 999
 o.sidescrolloff = 10
 o.sidescroll = 1
 -----------------------------------------------------------------------------//

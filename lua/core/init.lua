@@ -92,7 +92,7 @@ end
 local load_core = function()
     require("core.globals")
 
-    local pack = require("core.pack")
+    require("core.pack")
     createdir()
     disable_distribution_plugins()
     leader_map()

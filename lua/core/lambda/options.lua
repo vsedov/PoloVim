@@ -74,6 +74,7 @@ lambda.config.buffer = {
 }
 lambda.config.editor = {
     use_smart_q = true,
+    use_hydra = true,
 }
 
 lambda.config.treesitter = {
@@ -105,19 +106,20 @@ lambda.config.abbrev = {
 }
 
 lambda.config.cmp = {
+    use_tabout = true,
     buffer = true,
-    use_ghost = true,
+    use_ghost = false,
     luasnip = {
         luasnip = {
             enable = true,
             priority = 6,
         },
     },
-    cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
+    cmp_theme = "no-border", --- @usage "border" | "no-border" | "extra"
 }
 
 lambda.config.lsp = {
-    use_sg = false, 
+    use_sg = false,
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
@@ -207,26 +209,26 @@ lambda.config.ui = {
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_tint = false, -- Might not be great for certain colourschemes
-    use_hlsearch = true,
+    use_hlsearch = false,
     use_dropbar = true,
     use_beacon = true,
     mini_animate = {
         use_animate = true,
-        use_cursor = true,
+        use_cursor = false,
         use_scroll = false,
         use_resize = false,
         use_close = false,
     },
-    use_hlslens = true,
-    use_statuscol = true, -- Does thi cause some lage sometimes im not sure ?
+    use_hlslens = false,
+    use_statuscol = false, -- Does thi cause some lage sometimes im not sure ?
     heirline = {
         use_statuscol = false,
         use_heirline = true,
     },
     indent_lines = {
         use_hlchunk = false,
-        use_indent_blankline = false, -- we shall keep this for now, seems rather nice
-        use_mini_indent_scope = true,
+        use_indent_blankline = true, -- we shall keep this for now, seems rather nice
+        use_mini_indent_scope = false,
     },
     scroll_bar = {
         use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
@@ -299,14 +301,15 @@ lambda.config.movement = {
         use_tmux_or_normal = "tmux", -- nvim
     },
 }
+-- right i think its best we disables these
 lambda.config.tools = {
     use_bionic_reading = false, -- this can get annoying
     use_which_key_or_use_mini_clue = "which", -- "which or mini"
     session = {
-        use_resession = true,
+        use_resession = false,
     },
-    use_fundo = true, -- forgot the reason for why this was disabled
-    use_flatten = true,
+    use_fundo = false, -- forgot the reason for why this was disabled
+    use_flatten = false,
     use_live_command = false, -- Disabled due to large files, this might noe be nice to have
 }
 
@@ -315,7 +318,7 @@ lambda.config.tools = {
 lambda.config.windows = {
     use_wrapping = true,
     flirt = {
-        use_flirt = true,
+        use_flirt = false,
         use_flirt_override = false,
         move_mappings = false, -- if you  do not want to use  smart split
     },
