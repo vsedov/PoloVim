@@ -12,7 +12,12 @@ local config = {
         body = leader,
 
         ["<ESC>"] = { nil, { exit = true } },
-        a = { require("tabnine.chat").open, { desc = "TN: Chat", nowait = true, silent = true, exit = true } },
+        a = {
+            function()
+                require("tabnine.chat").open()
+            end,
+            { desc = "TN: Chat", nowait = true, silent = true, exit = true },
+        },
         s = { cmd("TabnineStatus"), { desc = "TN: Status", nowait = true, silent = true, exit = true } },
         w = { cmd("TabnineHubUrl"), { desc = "TN: Hub", nowait = true, silent = true, exit = true } },
         ["<leader>"] = { cmd("TabnineToggle"), { desc = "TN: Toggle", nowait = true, silent = true } },

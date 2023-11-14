@@ -133,3 +133,17 @@ misc({
     config = true,
     cmd = { "Maim", "MaimMarkdown" },
 })
+misc({
+    "chaoren/vim-wordmotion",
+    lazy = true,
+    event = "VeryLazy",
+    config = function()
+        vim.g.wordmotion_prefix = ","
+    end,
+})
+misc({
+    "chrishrb/gx.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = true,
+})

@@ -53,14 +53,13 @@ function config.notify()
         { NotifyDEBUGBody = { link = "NormalFloat" } },
         { NotifyTRACEBody = { link = "NormalFloat" } },
     })
-
     local notify = require("notify")
+
     notify.setup({
         timeout = 5000,
-        -- stages = "fade_in_slide_out",
+        stages = "fade_in_slide_out",
         top_down = false,
-        -- background_colour = "#000000",                                                                          ▕
-
+        background_colour = "NormalFloat",
         max_width = function()
             return math.floor(vim.o.columns * 0.6)
         end,
@@ -71,7 +70,7 @@ function config.notify()
             if not api.nvim_win_is_valid(win) then
                 return
             end
-            vim.api.nvim_win_set_config(win, { border = lambda.style.border.type_0 })
+            api.nvim_win_set_config(win, { border = border })
         end,
         render = function(...)
             local notification = select(2, ...)
@@ -79,7 +78,6 @@ function config.notify()
             require("notify.render")[style](...)
         end,
     })
-    vim.notify = notify
 
     vim.keymap.set("n", "<leader>nd", function()
         notify.dismiss({ silent = true, pending = true })

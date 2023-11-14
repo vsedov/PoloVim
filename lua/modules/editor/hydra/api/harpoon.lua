@@ -131,11 +131,7 @@ local config = {
 
         ["<CR>"] = {
             function()
-                -- lambda.clever_tcd()
-
-                vim.defer_fn(function()
-                    require("harpoon.ui").toggle_quick_menu()
-                end, 100)
+                vim.schedule_wrap(require("harpoon.ui").toggle_quick_menu)()
             end,
 
             { nowait = true, exit = true, desc = "Quick Menu" },

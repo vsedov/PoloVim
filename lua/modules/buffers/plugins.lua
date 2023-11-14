@@ -212,4 +212,3 @@ buffer({
     event = "BufRead",
     config = true,
 })
---

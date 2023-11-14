@@ -1,11 +1,21 @@
 local ui = require("core.pack").package
 local conf = require("modules.ui.config")
 local highlight, foo, falsy, augroup = lambda.highlight, lambda.style, lambda.falsy, lambda.augroup
+local icons, border, rect = foo.icons.lsp, foo.border.type_0, foo.border.type_0
 ui({
     "rcarriga/nvim-notify",
-    config = conf.notify,
+    dependencies = {
+        {
+            "j-hui/fidget.nvim",
+            event = "VeryLazy",
+            opts = {
+                notification = {
+                    override_vim_notify = true,
+                },
+            },
+        },
+    },
 })
-local icons, border, rect = foo.icons.lsp, foo.border.type_0, foo.border.type_0
 
 ui({
     "glepnir/nerdicons.nvim",

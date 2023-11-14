@@ -85,26 +85,6 @@ local vim = vim -- Assuming you're in the Neovim environment
 
 local max_hint_length = 30
 
---- Creates a hint for a mapping and description
----@param mapping string
----@param description string
----@return string
-local function get_hint(mapping, description)
-    if description == "" then
-        return ""
-    end
-
-    local hint = " _" .. mapping .. "_ : " .. description .. "^"
-    local length = string.len(hint) -- Using Lua's string.len
-    if length < max_hint_length then
-        hint = hint .. string.rep(" ", max_hint_length - length)
-    elseif length > max_hint_length then
-        hint = string.sub(hint, 0, max_hint_length - 5) .. "... "
-    end
-
-    return hint
-end
-
 function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
     column = column or 2 -- If not provided, default to 2
 
@@ -165,14 +145,14 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
         end
         self:addToCoreTable("\n")
     end
-    local string_val = "^ ^" .. self.name .. "^\n\n"
-    string_val = string_val .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n"
+    -- string_val = string_val .. "^ ^\n" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n"
 
     local columns = math.floor(vim.api.nvim_get_option_value("columns", {}) / max_hint_length)
 
     local hint_table = {}
     local string_val = "^ ^" .. self.name .. "^\n\n"
-    string_val = string_val .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n" -- Adjust the length of the horizontal line
+    -- string_val = string_val .. "^ ^"
+    -- .. string.rep("▔", (maxLen + cali)) .. "^ ^\n" -- Adjust the length of the horizontal line
 
     local line = "" -- to store current line being built
     local count = 0 -- to track how many items have been added in the current line
@@ -182,13 +162,18 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
             string_val = string_val .. line .. "\n"
 
             -- Add the divider and reset the line and count
-            table.insert(hint_table, "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n")
-            string_val = string_val .. "^ ^" .. string.rep("▔", (maxLen + cali) - cal_v2) .. "^ ^\n"
+            table.insert(hint_table, "^ ^\n")
             line = ""
             count = 0
         else
             if container[v] then
+                -- if
                 hint = "^ ^ _" .. v .. "_: " .. container[v] .. " ^ ^"
+                -- Check if this hint is larger than the max_hint_length then we have to cap v to
+                -- a limit of 5 or something
+                if string.len(hint) > max_hint_length then
+                    hint = "^ ^ _" .. v .. "_: " .. string.sub(container[v], 1, max_hint_length - 15) .. ". ^ ^"
+                end
                 count = count + 1
 
                 if count < column then
@@ -197,7 +182,6 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
                     line = line .. hint
                     table.insert(hint_table, line) -- insert the current line to hint_table
                     string_val = string_val .. line .. "\n"
-
                     line = "" -- reset the line
                     count = 0 -- reset the count
                 end

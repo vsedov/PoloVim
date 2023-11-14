@@ -50,11 +50,12 @@ function config.houdini()
                 end
                 if seq == "AA" then
                     -- jump to the end of the line in insert mode
-                    return "<BS><BS><End>"
+                    -- return "<BS><BS><End>"
+                    return "<BS><BS><c-o>$"
                 end
                 if seq == "II" then
-                    -- jump to the beginning of the line in insert mode
-                    return "<BS><BS><Home>"
+                    -- jump to the beginning of the line in insert modeA
+                    return "<BS><BS><c-o>^"
                 end
                 return "<BS><BS><ESC>"
             end,

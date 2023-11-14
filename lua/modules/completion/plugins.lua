@@ -7,6 +7,7 @@ local completion = require("core.pack").package
 
 completion({
     "abecodes/tabout.nvim",
+    cond = lambda.config.cmp.use_tabout,
     lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     event = "InsertEnter",
@@ -15,6 +16,21 @@ completion({
         -- backwards_tabkey = "",
         ignore_beginning = true,
     },
+})
+completion({
+    "boltlessengineer/smart-tab.nvim",
+    cond = not lambda.config.cmp.use_tabout,
+    lazy = true,
+    event = "InsertEnter",
+    config = function()
+        require("smart-tab").setup({
+            -- default options:
+            -- list of tree-sitter node types to filter
+            skips = { "string_content" },
+            -- default mapping, set `false` if you don't want automatic mapping
+            mapping = "<tab>",
+        })
+    end,
 })
 
 --  ──────────────────────────────────────────────────────────────────────

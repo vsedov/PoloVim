@@ -1,6 +1,5 @@
 --  TODO: (vsedov) (16:38:03 - 17/07/23): fix
 local leader = ";w"
-local tc = require("nvim-treeclimber")
 
 local bracket = { "h", "j", "k", "l", "w" }
 
@@ -12,57 +11,81 @@ local config = {
         ["<ESC>"] = { nil, { exit = true } },
 
         h = {
-            tc.select_backward,
-
+            function()
+                require("nvim-treeclimber").select_backward()
+            end,
             { nowait = false, desc = "TC B" },
         },
         j = {
-            tc.select_shrink,
+            function()
+                require("nvim-treeclimber").select_shrink()
+            end,
+
             { nowait = true, desc = "TC Shrink" },
         },
         k = {
-            tc.select_expand,
+            function()
+                require("nvim-treeclimber").select_expand()
+            end,
             { nowait = true, desc = "TC Expand" },
         },
         l = {
-            tc.select_forward,
+            function()
+                require("nvim-treeclimber").select_forward()
+            end,
             { nowait = true, desc = "TC F" },
         },
 
         w = {
-            tc.show_control_flow,
+            function()
+                require("nvim-treeclimber").show_control_flow()
+            end,
             { nowait = true, desc = "TC Flow " },
         },
         c = {
-            tc.select_current_node,
+            function()
+                require("nvim-treeclimber").select_current_node()
+            end,
             { nowait = true, desc = "TC C Node" },
         },
 
         e = {
-            tc.select_forward_end,
+            function()
+                require("nvim-treeclimber").select_forward_end()
+            end,
             { nowait = true, desc = "TC [E] F Node" },
         },
 
         --
         s = {
-            tc.select_siblings_backward,
+            function()
+                require("nvim-treeclimber").select_siblings_backward()
+            end,
             { nowait = true, desc = "Sib Node B" },
         },
         S = {
-            tc.select_siblings_forward,
+            function()
+                require("nvim-treeclimber").select_siblings_forward()
+            end,
             { nowait = true, desc = "Sib Node F" },
         },
 
         ["["] = {
-            tc.select_grow_forward,
+            function()
+                require("nvim-treeclimber").select_grow_forward()
+            end,
             { nowait = true, desc = "TC Grow F" },
         },
         ["]"] = {
-            tc.select_grow_backward,
+            function()
+                require("nvim-treeclimber").select_grow_backward()
+            end,
             { nowait = true, desc = "TC Grow B" },
         },
         W = {
-            tc.select_top_level,
+            function()
+                require("nvim-treeclimber").select_top_level()
+            end,
             { nowait = true, desc = "TC Top Level" },
         },
     },

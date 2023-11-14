@@ -103,3 +103,17 @@ vim.keymap.set("n", "_w", "<cmd>OverseerToggle<cr>")
 
 vim.keymap.set("n", "<leader>>", "<cmd>OverseerQuickAction open<cr>")
 vim.keymap.set("n", "<leader><", "<cmd>OverseerQuickAction open here<cr>")
+
+-- Open compiler
+vim.keymap.set( 'n', '<F6>', "<cmd>CompilerOpen<cr>", { noremap = true, silent = true })
+
+-- Redo last selected option
+vim.keymap.set( 'n', '<S-6>', function()
+  vim.cmd("CompilerStop") -- (Optional, to dispose all tasks before redo)
+  vim.cmd("CompilerRedo")
+end, { noremap = true, silent = true })
+
+
+-- Toggle compiler results
+vim.keymap.set( 'n', '<S-7>', "<cmd>CompilerToggleResults<cr>", { noremap = true, silent = true })
+

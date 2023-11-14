@@ -273,33 +273,27 @@ local config = {
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
         ["<c-a>"] = {
             function()
-                require("hbac").toggle_pin()
+                -- require("hbac").toggle_pin()
+                local options = {
+                    t = function()
+                        require("hbac").toggle_pin()
+                    end,
+                    c = function()
+                        require("hbac").close_unpinned()
+                    end,
+                    P = function()
+                        require("hbac").pin_all()
+                    end,
+                    U = function()
+                        require("hbac").unpin_all()
+                    end,
+                    T = function()
+                        require("hbac").toggle_autoclose()
+                    end,
+                }
+                vim.ui.select({ prompt = "Hbac", options = options })
             end,
-            { desc = "Hbac-Toggle Buf", exit = false },
-        },
-        ["<c-x>"] = {
-            function()
-                require("hbac").close_unpinned()
-            end,
-            { desc = "Hbac-Close Upin [C]", exit = false },
-        },
-        ["<c-p>"] = {
-            function()
-                require("hbac").pin_all()
-            end,
-            { desc = "Hbac-Pin All", exit = false },
-        },
-        ["<c-u>"] = {
-            function()
-                require("hbac").unpin_all()
-            end,
-            { desc = "Hbac-Unpin All", exit = false },
-        },
-        ["<c-t>"] = {
-            function()
-                require("hbac").toggle_autoclose()
-            end,
-            { desc = "Hbac AutoClose T", exit = false },
+            { desc = "Hbac binds ", exit = false },
         },
     },
 }
@@ -309,15 +303,13 @@ return {
     "Buffer",
     {
         { "l", "h", "J", "K", "=", "+", "b", "B", "<cr>" },
-
         { "P", "q", "Q", "M" },
-
         { "e", ">", "<", "p", "c" },
         { "D", "d" },
-        { "1", "2", "3" },
-        { "<c-a>", "<c-x>", "<c-p>", "<c-u>", "<c-t>" },
+        { "1", "2", "3", "<c-a>" },
     },
     bracket,
     6,
     4,
+    2,
 }

@@ -370,3 +370,24 @@ tools({
         require("terminal").setup()
     end,
 })
+tools({
+    "mikesmithgh/kitty-scrollback.nvim",
+    enabled = true,
+    lazy = true,
+    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+    event = { "User KittyScrollbackLaunch" },
+    -- version = '*', -- latest stable version, may have breaking changes if major version changed
+    -- version = '^2.0.0', -- pin major version, include fixes and features that do not have breaking changes
+    config = function()
+        require("kitty-scrollback").setup({
+            ksb_builtin_last_cmd_output = function()
+                return {
+                    kitty_get_text = {
+                        extent = "last_visited_cmd_output",
+                        ansi = true,
+                    },
+                }
+            end,
+        })
+    end,
+})

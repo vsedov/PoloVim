@@ -44,8 +44,8 @@ local yanky_hydra = Hydra({
 })
 -- choose/change the mappings if you want
 for key, putAction in pairs({
-    ["\\p"] = "<Plug>(YankyPutAfter)",
-    ["\\P"] = "<Plug>(YankyPutBefore)",
+    [";p"] = "<Plug>(YankyPutAfter)",
+    [";P"] = "<Plug>(YankyPutBefore)",
 
     ["gp"] = "<Plug>(YankyGPutAfter)",
     ["gP"] = "<Plug>(YankyGPutBefore)",
@@ -86,10 +86,10 @@ end
 
 require("telescope").load_extension("yank_history")
 
-vim.keymap.set("n", "<leader>YU", "<cmd>Telescope yank_history<cr>", { desc = "Yank History" })
+vim.keymap.set("n", "<leader>yu", "<cmd>Telescope yank_history<cr>", { desc = "Yank History" })
 vim.keymap.set(
     "n",
-    "<leader>YY",
+    "<leader>yy",
     "<cmd>:lua require'utils.telescope'.neoclip()<CR>",
     { desc = "NeoClip", silent = true }
 )

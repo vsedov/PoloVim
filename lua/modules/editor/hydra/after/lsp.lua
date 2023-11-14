@@ -1,4 +1,3 @@
-local utils = require("modules.lsp.lsp.utils")
 local function quick_toggle(prefix, suffix, callback, name)
     require("hydra")({
         name = name,
@@ -19,5 +18,7 @@ local function quick_toggle(prefix, suffix, callback, name)
         },
     })
 end
-quick_toggle("<leader>T", "d", utils.toggle_diagnostics)
+quick_toggle("<leader>T", "d", function()
+    require("modules.lsp.lsp.utils").toggle_diagnostics()
+end)
 quick_toggle("<leader>T", "i", loadstring("vim.lsp.buf.inlay_hint(0)"))

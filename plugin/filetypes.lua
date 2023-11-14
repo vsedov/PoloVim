@@ -145,12 +145,12 @@ settings({
     },
     norg = {
         opt = {
-            conceallevel = 3,
-            concealcursor = "n",
-            list = false,
-            wrap = false,
-            signcolumn = "no",
-            foldlevel = 9999,
+            -- conceallevel = 3,
+            -- concealcursor = "n",
+            -- list = false,
+            -- wrap = false,
+            -- signcolumn = "no",
+            -- foldlevel = 9999,
         },
 
         plugins = {
@@ -197,5 +197,5 @@ settings({
             { "n", "gd", "<Cmd>TypescriptGoToSourceDefinition<CR>", desc = "typescript: go to source definition" },
         },
     },
-    [{ "lua", "python", "rust" }] = { opt = { spell = true } },
+    -- [{ "lua", "python", "rust" }] = { opt = { spell = true } },
 })

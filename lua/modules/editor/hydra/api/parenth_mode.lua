@@ -48,25 +48,28 @@ config = {
 
         j = {
             function()
-                ts_move.goto_next_start({ "@function.outer", "@class.outer" })
+                require("nvim-treesitter.textobjects.move").goto_next_start({ "@function.outer", "@class.outer" })
             end,
-            { nowait = true, desc = "Move [N] ←" },
+            {
+                nowait = true,
+                desc = "Move [N] ←",
+            },
         },
         h = {
             function()
-                ts_move.goto_next_end({ "@function.outer", "@class.outer" })
+                require("nvim-treesitter.textobjects.move").goto_next_end({ "@function.outer", "@class.outer" })
             end,
             { nowait = true, desc = "Move [N] →" },
         },
         k = {
             function()
-                ts_move.goto_previous_start({ "@function.outer", "@class.outer" })
+                require("nvim-treesitter.textobjects.move").goto_previous_start({ "@function.outer", "@class.outer" })
             end,
             { nowait = true, desc = "Move [P] ←" },
         },
         l = {
             function()
-                ts_move.goto_previous_end({ "@function.outer", "@class.outer" })
+                require("nvim-treesitter.textobjects.move").goto_previous_end({ "@function.outer", "@class.outer" })
             end,
             { nowait = true, desc = "Move [P] →" },
         },

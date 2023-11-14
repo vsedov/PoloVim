@@ -2,27 +2,27 @@ local exit = { nil, { exit = true, desc = "EXIT" } }
 local bracket = { "<cr>", "lc", "cc", "rc", "aa" }
 local leader = "<leader>C"
 --  ──────────────────────────────────────────────────────────────────────
-local cb = require("comment-box")
+-- local cbii= require("comment-box")
 local options = {
-    ll = { label = "[L] Aligned Box With [L]", fn = cb.llbox },
-    lc = { label = "[L] Aligned Box With [C]", fn = cb.lcbox },
-    lr = { label = "[L] Aligned Box With [R]", fn = cb.lrbox },
+    ll = { label = "[L] Aligned Box With [L]", fn = require("comment-box").llbox },
+    lc = { label = "[L] Aligned Box With [C]", fn = require("comment-box").lcbox },
+    lr = { label = "[L] Aligned Box With [R]", fn = require("comment-box").lrbox },
 
-    cl = { label = "[C] Box With [L]", fn = cb.clbox },
-    cc = { label = "[C] Box With [C]", fn = cb.ccbox },
-    cr = { label = "[C] Box With [R]", fn = cb.crbox },
+    cl = { label = "[C] Box With [L]", fn = require("comment-box").clbox },
+    cc = { label = "[C] Box With [C]", fn = require("comment-box").ccbox },
+    cr = { label = "[C] Box With [R]", fn = require("comment-box").crbox },
 
-    rl = { label = "[R] Aligned Box With [L]", fn = cb.rlbox },
-    rc = { label = "[R] Aligned Box With [C]", fn = cb.rcbox },
-    rr = { label = "[R] Aligned Box With [R] ", fn = cb.rrbox },
+    rl = { label = "[R] Aligned Box With [L]", fn = require("comment-box").rlbox },
+    rc = { label = "[R] Aligned Box With [C]", fn = require("comment-box").rcbox },
+    rr = { label = "[R] Aligned Box With [R] ", fn = require("comment-box").rrbox },
 
-    aa = { label = "[L] Aligned adapted box", fn = cb.albox },
-    ac = { label = "[C] Adapted Box", fn = cb.acbox },
-    ar = { label = "[R] Aligned adapted box", fn = cb.arbox },
+    aa = { label = "[L] Aligned adapted box", fn = require("comment-box").albox },
+    ac = { label = "[C] Adapted Box", fn = require("comment-box").acbox },
+    ar = { label = "[R] Aligned adapted box", fn = require("comment-box").arbox },
 
-    L = { label = "[L] Line", fn = cb.line },
-    C = { label = "[C] Centered Line", fn = cb.cline },
-    R = { label = "[R] Right Aligned Line", fn = cb.rline },
+    L = { label = "[L] Line", fn = require("comment-box").line },
+    C = { label = "[C] Centered Line", fn = require("comment-box").cline },
+    R = { label = "[R] Right Aligned Line", fn = require("comment-box").rline },
 }
 
 local config = {

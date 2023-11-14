@@ -172,12 +172,12 @@ mini({
     config = true,
 })
 
-mini({
-    "echasnovski/mini.align",
-    main = "mini.align",
-    opts = {},
-    keys = { { "ga" } },
-})
+-- mini({
+--     "echasnovski/mini.align",
+--     main = "mini.align",
+--     opts = {},
+--     keys = { { "ga" } },
+-- })
 
 mini({
     "echasnovski/mini.clue",

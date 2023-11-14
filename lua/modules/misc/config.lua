@@ -93,8 +93,8 @@ function config.noneck()
         },
 
         autocmds = {
-            enableOnVimEnter = false,
-            enableOnTabEnter = false,
+            enableOnVimEnter = true,
+            enableOnTabEnter = true,
         },
     })
 

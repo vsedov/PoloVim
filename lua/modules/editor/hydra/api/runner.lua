@@ -9,7 +9,7 @@ local config = {
     Runner = {
         color = "red",
         body = leader,
-        mode = { "n", "v", "x", "o" },
+        mode = { "n" },
         on_enter = function() end,
         ["<ESC>"] = { nil, { exit = true } },
         w = { cmd("OverseerToggle"), { desc = "OS Toggle", exit = true } },

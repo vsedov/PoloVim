@@ -6,12 +6,37 @@ local config = {
         body = leader,
 
         ["<ESC>"] = { nil, { exit = true } },
-        n = { require("attempt").new_select, { desc = "New Attempt", nowait = true, silent = true, exit = true } },
-        N = { require("attempt").new_input_ext, { desc = "New Attempt", nowait = true, silent = true, exit = true } },
+        n = {
+            function()
+                require("attempt").new_select()
+            end,
+            { desc = "New Attempt", nowait = true, silent = true, exit = true },
+        },
+        N = {
+            function()
+                require("attempt").new_input_ext()
+            end,
+            { desc = "New Attempt", nowait = true, silent = true, exit = true },
+        },
 
-        r = { require("attempt").run, { desc = "Run Attempt", nowait = true, silent = true } },
-        d = { require("attempt").delete_buf, { desc = "Delete Attempt", nowait = true, silent = true } },
-        R = { require("attempt").rename_buf, { desc = "Rename Attempt", nowait = true, silent = true } },
+        r = {
+            function()
+                require("attempt").run()
+            end,
+            { desc = "Run Attempt", nowait = true, silent = true },
+        },
+        d = {
+            function()
+                require("attempt").delete_buf()
+            end,
+            { desc = "Delete Attempt", nowait = true, silent = true },
+        },
+        R = {
+            function()
+                require("attempt").rename_buf()
+            end,
+            { desc = "Rename Attempt", nowait = true, silent = true },
+        },
         T = {
             function()
                 vim.cmd([[Telescope attempt]])

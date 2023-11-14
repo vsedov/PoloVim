@@ -59,11 +59,7 @@ return {
         "D",
         mode = { "n" },
         function()
-            lib.flash_diagnostics({
-                action = function()
-                    vim.cmd.Lspsaga("show_cursor_diagnostics")
-                end,
-            })
+            vim.cmd.Lspsaga("show_cursor_diagnostics")
         end,
         desc = "Show diagnostics at target, without changing cursor position",
     },

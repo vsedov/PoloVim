@@ -23,12 +23,12 @@ user({
             desc = "fix right",
         },
         {
-            "<c-g>p",
+            "<c-g>N",
             desc = "fix left",
         },
     },
     init = function()
-        vim.o.dictionary = "/usr/share/dict/cracklib-small"
+        vim.o.dictionary = "/usr/share/dict/directory-list-2.3-medium.txt"
         -- default settings
         vim.g.spellbound_settings = {
             mappings = {
@@ -45,109 +45,6 @@ user({
     end,
 })
 
---  TODO: (vsedov) (22:29:48 - 23/07/23): Make a hydra for this to activate when the mode is !
-user({
-    "assistcontrol/readline.nvim",
-    keys = {
-        {
-            "<C-k>",
-            function()
-                require("readline").kill_line()
-            end,
-            desc = "readline: kill line",
-            mode = "!",
-        },
-        {
-            "<C-u>",
-            function()
-                require("readline").end_of_line()
-                require("readline").dwim_backward_kill_line()
-            end,
-            desc = "readline: backward kill line",
-            mode = "!",
-        },
-        {
-            "<M-d>",
-            function()
-                require("readline").kill_word()
-            end,
-            desc = "readline: kill word",
-            mode = "!",
-        },
-        {
-            "<M-BS>",
-            function()
-                require("readline").backward_kill_word()
-            end,
-            desc = "readline: backward kill word",
-            mode = "!",
-        },
-        {
-            "<C-r>", -- look in keymap folder
-            function()
-                require("readline").unix_word_rubout()
-            end,
-            desc = "readline: unix word rubout",
-            mode = "!",
-        },
-        {
-            "<C-a>",
-            function()
-                require("readline").dwim_beginning_of_line()
-            end,
-            desc = "readline: beginning of line",
-            mode = "!",
-        },
-        {
-            "<C-e>",
-            function()
-                require("readline").end_of_line()
-            end,
-            desc = "readline: end of line",
-            mode = "!",
-        },
-        {
-            "<M-f>",
-            function()
-                require("readline").forward_word()
-            end,
-            desc = "readline: forward word",
-            mode = "!",
-        },
-        {
-            "<M-b>",
-            function()
-                require("readline").backward_word()
-            end,
-            desc = "readline: backward word",
-            mode = "!",
-        },
-        {
-            "<C-f>",
-            "<Right>",
-            desc = "forward-char",
-            mode = "!",
-        },
-        {
-            "<C-b>",
-            "<Left>",
-            desc = "backward-char",
-            mode = "!",
-        },
-        {
-            "<C-n>",
-            "<Down>",
-            desc = "next-line",
-            mode = "!",
-        },
-        {
-            "<C-p>",
-            "<Up>",
-            desc = "previous-line",
-            mode = "!",
-        },
-    },
-})
 user({
     "Bekaboo/dropbar.nvim",
     event = "VeryLazy",
@@ -277,16 +174,6 @@ user({
     ft = "qf",
     lazy = true,
 })
---  ──────────────────────────────────────────────────────────────────────
-
-user({
-    "chaoren/vim-wordmotion",
-    lazy = true,
-    event = "VeryLazy",
-    config = function()
-        vim.g.wordmotion_prefix = ","
-    end,
-})
 
 user({
     "creativenull/dotfyle-metadata.nvim",
@@ -317,6 +204,7 @@ user({
 
 user({
     "Sam-programs/expand.nvim",
+    cond = false, -- disable this i guess ?
     event = "VeryLazy",
     dependencies = { "Sam-Programs/indent.nvim" },
     config = true,
@@ -332,11 +220,12 @@ user({
         })
     end,
 })
-user({
-    "Aasim-A/scrollEOF.nvim",
-    event = "VeryLazy",
-    config = true,
-})
+
+-- user({
+--     "Aasim-A/scrollEOF.nvim",
+--     event = "VeryLazy",
+--     config = true,
+-- })
 
 user({
     "vidocqh/data-viewer.nvim",
@@ -365,9 +254,125 @@ user({
         "EasyColor",
     },
 })
+
 user({
-    "chrishrb/gx.nvim",
-    event = { "BufEnter" },
-    dependencies = { "nvim-lua/plenary.nvim" },
+    "lvimuser/lsp-inlayhints.nvim",
+    event = "LspAttach",
+    init = function()
+        lambda.augroup("InlayHintsSetup", {
+            {
+                event = "LspAttach",
+                command = function(args)
+                    local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
+                    if not id then
+                        return
+                    end
+                    local client = vim.lsp.get_client_by_id(id)
+                    require("lsp-inlayhints").on_attach(client, args.buf)
+                end,
+            },
+        })
+    end,
+    opts = {
+        inlay_hints = {
+            highlight = "Comment",
+            labels_separator = " ⏐ ",
+            parameter_hints = { prefix = "󰊕" },
+            type_hints = { prefix = "=> ", remove_colon_start = true },
+        },
+    },
+})
+
+-- TRIAL: (vsedov) (10:51:37 - 13/11/23): I am not sure what to think about this.
+user({
+    "carbon-steel/detour.nvim",
+    keys = { "<c-w><cr>", ";;t", ";;g", ";;p" },
+    config = function()
+        vim.keymap.set("n", "<c-w><CR>", ":Detour<cr>")
+        -- A keymap for selecting a terminal buffer to open in a popup
+        vim.keymap.set("n", ";;t", function()
+            require("detour").Detour() -- Open a detour popup
+
+            -- Switch to a blank buffer to prevent any accidental changes.
+            vim.cmd.enew()
+            vim.bo.bufhidden = "delete"
+
+            require("telescope.builtin").buffers({}) -- Open telescope prompt
+            vim.api.nvim_feedkeys("term", "n", true) -- popuplate prompt with "term"
+        end)
+        vim.keymap.set("n", ";;g", function()
+            local current_path = vim.fn.expand("%:p:h")
+            local command = "a" -- go into terminal mode
+                .. "cd "
+                .. current_path
+                .. "<CR>"
+                .. "tig<CR>" -- run tig
+            command = vim.api.nvim_replace_termcodes(command, true, false, true)
+
+            require("detour").Detour() -- open a detour popup
+            vim.cmd.terminal() -- open a terminal buffer
+            vim.bo.bufhidden = "delete" -- close the terminal when window closes
+            vim.api.nvim_feedkeys(command, "n", false)
+        end)
+        -- Wrap any TUI inside a popup
+        vim.keymap.set("n", ";;p", function()
+            require("detour").Detour() -- open a detour popup
+            vim.cmd.terminal() -- open a terminal buffer
+            vim.bo.bufhidden = "delete" -- close the terminal when window closes
+            -- Run the `top` command
+            local text = vim.api.nvim_replace_termcodes("atop<CR>", true, false, true)
+            vim.api.nvim_feedkeys(text, "n", false)
+        end)
+    end,
+})
+user({
+    "mangelozzi/nvim-rgflow.lua",
+    config = function()
+        require("rgflow").setup({
+            default_trigger_mappings = false,
+            default_ui_mappings = true,
+            default_quickfix_mappings = true,
+            mappings = {
+                trigger = {
+                    -- Normal mode maps
+                    n = {
+                        [";rG"] = "open_blank", -- open UI - search pattern = blank
+                        [";rg"] = "open_cword", -- open UI - search pattern = <cword>
+                        [";ro"] = "open_paste", -- open UI - search pattern = First line of unnamed register as the search pattern
+                        [";ra"] = "open_again", -- open UI - search pattern = Previous search pattern
+                        [";rc"] = "abort", -- close UI / abort searching / abortadding results
+                        [";rO"] = "print_cmd", -- Print a version of last run rip grep that can be pasted into a shell
+                        [";r?"] = "print_status", -- Print info about the current state of rgflow (mostly useful for deving on rgflow)
+                    },
+                    -- Visual/select mode maps
+                    x = {
+                        [";;rg"] = "open_visual", -- open UI - search pattern = current visual selection
+                    },
+                },
+            },
+            cmd_flags = "--smart-case --fixed-strings --no-fixed-strings --no-ignore --ignore --max-columns 500",
+        })
+    end,
+})
+-- ah this is better than tint, i think
+-- lets disable this for now.
+user({
+    "miversen33/sunglasses.nvim",
+    event = "UIEnter",
+    cond = lambda.config.ui.use_tint == "sunglasses",
     config = true,
+})
+user({
+    "stevanmilic/nvim-lspimport",
+    event = "LspAttach",
+    config = function()
+        vim.keymap.set("n", "<leader>iw", require("lspimport").import, { noremap = true })
+    end,
+})
+user({
+    "chipsenkbeil/distant.nvim",
+    cmd = { "Distant" },
+    config = function()
+        require("distant"):setup()
+    end,
 })
