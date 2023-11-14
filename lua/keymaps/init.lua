@@ -152,6 +152,15 @@ nnoremap("<Leader><leader>so", [[<Cmd>source $MYVIMRC<cr> <bar> <cmd>:lua vim.no
 })
 --
 
+-- local map = vim.keymap.set
+-- -- Insert mode
+-- map("i", "<C-a>", "<C-o>^")
+-- map("i", "<C-e>", "<C-o>$")
+-- map("i", "<C-k>", "<C-o>C")
+inoremap("<c-a>", [[<c-o>^]], { desc = "Front of line" })
+inoremap("<c-e>", [[<c-o>$]], { desc = "Back of line" })
+inoremap("<c-k>", [[<c-k>]], { desc = "Cut to current" })
+
 inoremap("!", [[<c-g>u!]], { desc = "!" })
 inoremap(".", [[<c-g>u.]], { desc = "." })
 inoremap("?", [[<c-g>u?]], { desc = "?" })
