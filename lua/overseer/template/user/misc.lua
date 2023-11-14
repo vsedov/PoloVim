@@ -7,8 +7,8 @@ return {
                 builder = function()
                     OvTermNum = OvTermNum + 1
                     return {
-                        name = "zsh" .. OvTermNum,
-                        cmd = "zsh",
+                        name = "Zsh" .. OvTermNum,
+                        cmd = "fish",
                         components = { "default" },
                     }
                 end,
@@ -97,7 +97,7 @@ return {
                 end,
                 priority = 5,
                 condition = {
-                    dir = "/home/viv/GitHub/PhD/paper/",
+                    dir = "/home/viv/GitHub/PhD/thesis",
                 },
             },
             {
@@ -118,7 +118,7 @@ return {
                 end,
                 priority = 5,
                 condition = {
-                    dir = "/home/viv/GitHub/PhD/paper/",
+                    dir = "/home/viv/GitHub/PhD/thesis",
                 },
             },
             {
@@ -132,7 +132,7 @@ return {
                 end,
                 priority = 5,
                 condition = {
-                    dir = "/home/viv/GitHub/PhD/paper/",
+                    dir = "/home/viv/GitHub/PhD/thesis",
                 },
             },
             {
@@ -161,20 +161,6 @@ return {
                 end,
                 priority = 6,
                 params = {},
-            },
-            {
-                name = "View Animation",
-                builder = function()
-                    return {
-                        name = "Animation",
-                        cmd = "mpv --loop-file=inf /tmp/fig.gif",
-                        components = { "unique", { "on_complete_dispose", timeout = 1 } },
-                    }
-                end,
-                priority = 151,
-                condition = {
-                    dir = "/home/viv/Projects/PowderModel",
-                },
             },
         }
         cb(ret)
