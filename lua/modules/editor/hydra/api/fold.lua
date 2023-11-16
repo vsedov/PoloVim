@@ -99,7 +99,7 @@ local config = {
 return {
     config,
     "Fold",
-    { { "W", "w" }, { "R", "M", "r", "m" }, { "L", "K" } },
+    { { "W", "w", "R", "M", "r", "m", "L", "K" } },
     { "j", "k", "n", "N" },
     6,
     3,

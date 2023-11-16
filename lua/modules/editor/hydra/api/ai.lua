@@ -1,7 +1,6 @@
 ---@diagnostic disable: redefined-local
 local leader = "<leader>a"
-local utils = require("modules.editor.hydra.repl_utils")
-local run_cmd_with_count = utils.run_cmd_with_count
+local run_cmd_with_count = require("modules.editor.hydra.repl_utils").run_cmd_with_count
 
 local config = {
     AI = {

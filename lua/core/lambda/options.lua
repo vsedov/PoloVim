@@ -73,8 +73,14 @@ lambda.config.buffer = {
     use_hbac = true,
 }
 lambda.config.editor = {
+    hydra = {
+        load_hydra = "VeryLazy",
+        use_hydra = true,
+        load_normal = false,
+        load_api = true,
+        load_after = true,
+    },
     use_smart_q = true,
-    use_hydra = true,
 }
 
 lambda.config.treesitter = {
@@ -206,6 +212,7 @@ if vim.tbl_contains(lambda.config.lsp.python.lsp, "pylsp") then
 end
 
 lambda.config.ui = {
+    use_fidgit = false,
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_tint = false, -- Might not be great for certain colourschemes
@@ -220,7 +227,7 @@ lambda.config.ui = {
         use_close = false,
     },
     use_hlslens = false,
-    use_statuscol = false, -- Does thi cause some lage sometimes im not sure ?
+    use_statuscol = true, -- Does thi cause some lage sometimes im not sure ?
     heirline = {
         use_statuscol = false,
         use_heirline = true,

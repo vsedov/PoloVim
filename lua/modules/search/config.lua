@@ -1,7 +1,8 @@
 local config = {}
 
 function config.telescope()
-    require("utils.telescope").setup()
+    require("modules.search.telescope.telescope").setup()
+
     vim.defer_fn(function()
         local plugins = {
             "telescope-live-grep-args.nvim",

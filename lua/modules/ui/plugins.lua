@@ -7,6 +7,7 @@ ui({
     dependencies = {
         {
             "j-hui/fidget.nvim",
+            cond = lambda.config.ui.use_fidgit,
             event = "VeryLazy",
             opts = {
                 notification = {
@@ -253,27 +254,32 @@ ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
     cond = lambda.config.ui.indent_lines.use_indent_blankline,
-    event = "VeryLazy",
+    event = { "BufReadPost", "BufAdd", "BufNewFile" },
     opts = {
-        exclude = {
-            filetypes = {
-                "glowpreview",
-                "dbout",
-                "neo-tree-popup",
-                "log",
-                "gitcommit",
-                "txt",
-                "help",
-                "NvimTree",
-                "git",
-                "flutterToolsOutline",
-                "undotree",
-                "markdown",
-                "norg",
-                "org",
-                "orgagenda",
-            },
+        filetype_exclude = {
+            "glowpreview",
+            "dbout",
+            "neo-tree-popup",
+            "log",
+            "gitcommit",
+            "txt",
+            "help",
+            "NvimTree",
+            "git",
+            "flutterToolsOutline",
+            "undotree",
+            "markdown",
+            "norg",
+            "org",
+            "orgagenda",
+            "neo-tree",
+            "neo-tree-*",
+            "help",
+            "NvimTree",
+            "Neotree",
+            "vaffle",
         },
+        buftype_exclude = { "terminal", "nofile", "NvimTree", "Neotree" },
         indent = {
             char = "│", -- ▏┆ ┊ 
             tab_char = "│",
@@ -325,7 +331,6 @@ ui({
             use_treesitter = true,
             notify = true, -- notify if some situation(like disable chunk mod double time)
             exclude_filetypes = {
-
                 glowpreview = true,
                 harpoon = true,
                 aerial = true,
@@ -334,6 +339,7 @@ ui({
                 sagaoutline = true,
                 oil_preview = true,
                 oil = true,
+                ["neo-tree"] = true,
             },
         },
         blank = {

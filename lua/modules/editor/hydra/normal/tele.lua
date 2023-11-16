@@ -42,7 +42,6 @@ local hint_telescope = [[
 
 ]]
 
-local telescope = require("telescope")
 local function rectangular_border(opts)
     return vim.tbl_deep_extend("force", opts or {}, {
         borderchars = {
@@ -82,13 +81,38 @@ Hydra({
     heads = {
         -- git
         { "g", ":Telescope git_files<CR>", { exit = true } },
-        { "u", require("utils.telescope").git_diff, { exit = true } },
-        { "S", require("utils.telescope").git_status, { exit = true } },
-        { "h", require("utils.telescope").git_conflicts, { exit = true } },
+        {
+            "u",
+            function()
+                require("modules.search.telescope.telescope_commands").git_diff()
+            end,
+            { exit = true },
+        },
+        {
+
+            "S",
+            function()
+                require("modules.search.telescope.telescope_commands").git_status()
+            end,
+            { exit = true },
+        },
+        {
+            "h",
+            function()
+                require("modules.search.telescope.telescope_commands").git_conflicts()
+            end,
+            { exit = true },
+        },
 
         -- -- -- register and buffer
         { "r", ":Telescope registers<CR>", { exit = true } },
-        { "j", require("utils.telescope").jump, { exit = true } },
+        {
+            "j",
+            function()
+                require("modules.search.telescope.telescope_commands").jump()
+            end,
+            { exit = true },
+        },
 
         -- grep -- need to change this
 
@@ -99,9 +123,9 @@ Hydra({
                 vim.defer_fn(function()
                     vim.ui.input({ prompt = "Silver Surfer", default = "" }, function(item)
                         if item == "" then
-                            require("utils.telescope").ag()
+                            require("modules.search.telescope.telescope_commands").ag()
                         else
-                            require("utils.telescope").ag(tostring(item))
+                            require("modules.search.telescope.telescope_commands").ag(tostring(item))
                         end
                     end)
                 end, 100)
@@ -112,12 +136,18 @@ Hydra({
             "w",
 
             function()
-                require("utils.telescope").egrep()
+                require("modules.search.telescope.telescope_commands").egrep()
             end,
 
             { desc = "egrepify", exit = true },
         }, -- grep string
-        { "W", require("utils.telescope").curbuf, { exit = true } }, -- pass
+        {
+            "W",
+            function()
+                require("modules.search.telescope.telescope_commands").curbuf()
+            end,
+            { exit = true },
+        }, -- pass
         { "l", require("telescope.builtin").lsp_dynamic_workspace_symbols, { exit = true } }, -- pass
         { "e", ":Telescope ast_grep<cr>", { exit = true } }, -- pass
         { "E", require("telescope").extensions.live_grep_args.live_grep_args, { exit = true } }, -- pass
@@ -126,11 +156,17 @@ Hydra({
         { "p", ":Telescope workspaces<CR>", { exit = true } }, -- pass
         { "M", ":Telescope marks<CR>", { exit = true } }, -- pass
 
-        { "B", telescope.extensions.bookmarks.bookmarks, { exit = true } }, -- pass
+        { "B", ":Telescope bookmarks<cr>", { exit = true } }, -- pass
 
         -- -- -- commands
         { "/", ":Telescope search_history<CR>", { exit = true } },
-        { "c", require("utils.telescope").command_history, { exit = true } },
+        {
+            "c",
+            function()
+                require("modules.search.telescope.telescope_commands").command_history()
+            end,
+            { exit = true },
+        },
         { "m", ":Telescope commands<CR>", { exit = true } },
         { "o", ":Telescope oldfiles<CR>", { exit = true } },
         { "k", ":Telescope keymaps<CR>", { exit = true } },
@@ -149,13 +185,54 @@ Hydra({
         { "<Esc>", nil, { exit = true, nowait = true } },
 
         -- -- files
-        { "f", require("utils.telescope").find_files, { exit = true } },
-        { "F", require("utils.telescope").files, { exit = true } },
-        { "s", require("utils.telescope").find_string, { exit = true } },
-        { "t", require("utils.telescope").search_only_certain_files, { exit = true } },
-        { "b", require("utils.telescope").file_browser, { exit = true } },
-        { "d", require("utils.telescope").load_dotfiles, { exit = true } },
-        { "z", telescope.extensions.zoxide.list },
+        {
+            "f",
+            function()
+                require("modules.search.telescope.telescope_commands").find_files()
+            end,
+            { exit = true },
+        },
+        {
+            "F",
+            function()
+                require("modules.search.telescope.telescope_commands").files()
+            end,
+            { exit = true },
+        },
+        {
+            "s",
+            function()
+                require("modules.search.telescope.telescope_commands").find_string()
+            end,
+            { exit = true },
+        },
+        {
+            "t",
+            function()
+                require("modules.search.telescope.telescope_commands").search_only_certain_files()
+            end,
+            { exit = true },
+        },
+        {
+            "b",
+            function()
+                require("modules.search.telescope.telescope_commands").file_browser()
+            end,
+            { exit = true },
+        },
+        {
+            "d",
+            function()
+                require("modules.search.telescope.telescope_commands").load_dotfiles()
+            end,
+            { exit = true },
+        },
+        {
+            "z",
+            function()
+                require("telescope").extensions.zoxide.list()
+            end,
+        },
 
         { "L", MRU, { exit = true, desc = "Most recently used files" } },
         { "K", MFU, { exit = true, desc = "Most frequently used files" } },

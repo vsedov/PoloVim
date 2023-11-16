@@ -120,12 +120,12 @@ function config.edgy()
             },
         },
         left = {
-            {
-                title = "Neo-Tree",
-                ft = "neo-tree",
-                pinned = true,
-                size = { height = 0.5 },
-            },
+            -- {
+            --     title = "Neo-Tree",
+            --     ft = "neo-tree",
+            --     pinned = true,
+            --     size = { height = 0.5 },
+            -- },
             { ft = "undotree", title = "Undo Tree" },
             { ft = "dapui_scopes", title = "Scopes" },
             { ft = "dapui_breakpoints", title = "Breakpoints" },
@@ -301,8 +301,6 @@ function config.which_key()
         },
     }, { mode = { "o", "v", "x" } })
 end
-function zen()
-
-end
+function zen() end
 
 return config

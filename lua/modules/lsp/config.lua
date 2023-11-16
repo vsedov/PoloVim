@@ -92,6 +92,7 @@ function config.saga()
             kind = {},
         },
         outline = {
+            enable = false,
             win_position = "right",
             win_with = "",
             win_width = 30,

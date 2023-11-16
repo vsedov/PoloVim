@@ -47,7 +47,7 @@ git({
             mode = "n",
         },
     },
-    opts = conf.diffview_opts,
+    opts = conf.diffview_opts(),
     config = conf.diffview,
 })
 

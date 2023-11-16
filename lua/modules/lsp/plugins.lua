@@ -170,6 +170,20 @@ lsp({
 lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
 
 lsp({
+    "hedyhli/outline.nvim",
+    cmd = { "Outline" },
+    keys = { "<leader>O" },
+    config = function()
+        -- Example mapping to toggle outline
+        vim.keymap.set("n", "<leader>tt", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
+
+        require("outline").setup({
+            -- Your setup opts here (leave empty to use defaults)
+        })
+    end,
+})
+
+lsp({
     "glepnir/lspsaga.nvim",
     cond = lambda.config.lsp.use_lsp_saga,
     event = "VeryLazy",
@@ -363,4 +377,31 @@ lsp({
             require("sg.extensions.telescope").fuzzy_search_results()
         end, { desc = "Sg Extension tele" })
     end,
+})
+
+lsp({
+    "kmontocam/nvim-conda",
+    cmd = {
+        "CondaActivate",
+        "CondaDeactivate",
+    },
+})
+lsp({
+    "stevanmilic/nvim-lspimport",
+    event = "LspAttach",
+    config = function()
+        vim.keymap.set("n", "<leader>iw", require("lspimport").import, { noremap = true })
+    end,
+})
+lsp({
+    "lvimuser/lsp-inlayhints.nvim",
+    lazy = true,
+    opts = {
+        inlay_hints = {
+            highlight = "Comment",
+            labels_separator = " ⏐ ",
+            parameter_hints = { prefix = "󰊕" },
+            type_hints = { prefix = "=> ", remove_colon_start = true },
+        },
+    },
 })

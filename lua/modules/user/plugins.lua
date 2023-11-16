@@ -255,34 +255,6 @@ user({
     },
 })
 
-user({
-    "lvimuser/lsp-inlayhints.nvim",
-    event = "LspAttach",
-    init = function()
-        lambda.augroup("InlayHintsSetup", {
-            {
-                event = "LspAttach",
-                command = function(args)
-                    local id = vim.tbl_get(args, "data", "client_id") --[[@as lsp.Client]]
-                    if not id then
-                        return
-                    end
-                    local client = vim.lsp.get_client_by_id(id)
-                    require("lsp-inlayhints").on_attach(client, args.buf)
-                end,
-            },
-        })
-    end,
-    opts = {
-        inlay_hints = {
-            highlight = "Comment",
-            labels_separator = " ⏐ ",
-            parameter_hints = { prefix = "󰊕" },
-            type_hints = { prefix = "=> ", remove_colon_start = true },
-        },
-    },
-})
-
 -- TRIAL: (vsedov) (10:51:37 - 13/11/23): I am not sure what to think about this.
 user({
     "carbon-steel/detour.nvim",
@@ -327,6 +299,15 @@ user({
 })
 user({
     "mangelozzi/nvim-rgflow.lua",
+    keys = {
+        ";rG",
+        ";rg",
+        ";ro",
+        ";ra",
+        ";rc",
+        ";rO",
+        ";r?",
+    },
     config = function()
         require("rgflow").setup({
             default_trigger_mappings = false,
@@ -362,17 +343,21 @@ user({
     cond = lambda.config.ui.use_tint == "sunglasses",
     config = true,
 })
-user({
-    "stevanmilic/nvim-lspimport",
-    event = "LspAttach",
-    config = function()
-        vim.keymap.set("n", "<leader>iw", require("lspimport").import, { noremap = true })
-    end,
-})
+
 user({
     "chipsenkbeil/distant.nvim",
     cmd = { "Distant" },
     config = function()
         require("distant"):setup()
     end,
+})
+user({
+    "jpmcb/nvim-llama",
+    cmd = {
+        "Llama",
+        "LlamaInstall",
+        "LlamaRebuild",
+        "LlamaUpdate",
+    },
+    config = true,
 })

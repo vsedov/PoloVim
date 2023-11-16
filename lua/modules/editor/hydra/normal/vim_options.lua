@@ -1,13 +1,5 @@
 local Hydra = require("hydra")
 
-local function diagnostic()
-    if vim.diagnostic.config().virtual_lines then
-        return "[x]"
-    else
-        return "[ ]"
-    end
-end
-
 local hint = [[
   ^ ^        Options
   ^

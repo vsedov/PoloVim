@@ -174,6 +174,15 @@ else
             end)
         end,
     })
+    movement({
+        "atusy/leap-search.nvim",
+        dependencies = {
+            { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
+            { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
+            "leap.nvim",
+        },
+        lazy = true,
+    })
 end
 
 movement({

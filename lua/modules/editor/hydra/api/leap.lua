@@ -1,5 +1,5 @@
 local api = vim.api
-local leader = "<leader>s"
+local leader = "<leader>S"
 local function search(back)
     local pat = vim.fn.getreg("/")
     if vim.o.hlsearch then
@@ -74,8 +74,9 @@ local config = {
 return {
     config,
     "Leap",
-    { { "s", "S" } },
-    { "n", "N" },
+    { { "n", "N" } },
+    { "s", "S" },
     6,
     3,
+    1,
 }

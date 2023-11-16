@@ -37,6 +37,3 @@ vim.defer_fn(function()
     require("vscripts")
 end, 150)
 
-vim.defer_fn(function()
-    loader({ plugins = { "hydra.nvim" } })
-end, 500)

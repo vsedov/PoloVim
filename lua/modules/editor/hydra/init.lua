@@ -31,14 +31,13 @@ local function loadHydraAPI()
     local api_path = fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/api/"
     local api_list = vim.split(fn.glob(api_path .. "*.lua", true), "\n")
     local exclude_table = { "init" }
-    if lambda.config.movement.movement_type == "flash" then
-        table.insert(exclude_table, "leap")
-    end
+    -- if lambda.config.movement.movement_type == "flash" then
+    --     -- table.insert(exclude_table, "leap") -- we stilll use leap ?
+    -- end
     if not (lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_insert) then
         table.insert(exclude_table, "tabnine")
     end
 
-    local M = require(MODULE_PREFIX .. "utils_rewrite")
     for _, path in ipairs(api_list) do
         local name = fn.fnamemodify(path, ":t:r")
         local module_name = MODULE_PREFIX .. "api." .. name
@@ -50,8 +49,12 @@ local function loadHydraAPI()
     end
 end
 
-vim.schedule_wrap(function()
+if lambda.config.editor.hydra.load_normal then
     loadHydraModules(fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/normal/", MODULE_PREFIX .. "normal.")
+end
+if lambda.config.editor.hydra.load_api then
     loadHydraAPI()
+end
+if lambda.config.editor.hydra.load_after then
     require("modules.editor.hydra.after.lsp")
-end)()
+end
