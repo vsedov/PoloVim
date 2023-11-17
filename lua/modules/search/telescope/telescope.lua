@@ -1,22 +1,10 @@
-local telescope = require("telescope")
 local actions = require("telescope.actions")
-local conf = require("telescope.config").values
-local resolve = require("telescope.config.resolve")
-local make_entry = require("telescope.make_entry")
 local previewers = require("telescope.previewers")
-local sorters = require("telescope.sorters")
-local pickers = require("telescope.pickers")
-local finders = require("telescope.finders")
-local builtin = require("telescope.builtin")
 local state = require("telescope.state")
 local action_set = require("telescope.actions.set")
-local themes = require("telescope.themes")
 local action_layout = require("telescope.actions.layout")
 local actions_layout = require("telescope.actions.layout")
-local Path = require("plenary.path")
-local scan = require("plenary.scandir")
 local action_state = require("telescope.actions.state")
-local utils = require("telescope.utils")
 
 local function flash(prompt_bufnr)
     if lambda.config.movement.movement_type == "flash" then

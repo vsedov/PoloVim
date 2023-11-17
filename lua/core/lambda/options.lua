@@ -16,7 +16,6 @@ local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within the list
 lambda.config = {
-    use_hydra = true,
     -- innter treesitter, although this can be changed
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
 
@@ -74,17 +73,16 @@ lambda.config.buffer = {
 }
 lambda.config.editor = {
     hydra = {
-        load_hydra = "VeryLazy",
         use_hydra = true,
-        load_normal = false,
+        load_normal = true,
         load_api = true,
-        load_after = true,
+        load_after = false,
     },
     use_smart_q = true,
 }
 
 lambda.config.treesitter = {
-    hipairs = true,
+    hipairs = false,
     indent = {
         use_indent_O_matic = false,
         use_guess_indent = false,
@@ -220,8 +218,8 @@ lambda.config.ui = {
     use_dropbar = true,
     use_beacon = true,
     mini_animate = {
-        use_animate = true,
-        use_cursor = false,
+        use_animate = false,
+        use_cursor = true,
         use_scroll = false,
         use_resize = false,
         use_close = false,
@@ -238,7 +236,7 @@ lambda.config.ui = {
         use_mini_indent_scope = false,
     },
     scroll_bar = {
-        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
+        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
     },
 }
 lambda.config.fun = {
@@ -313,7 +311,7 @@ lambda.config.tools = {
     use_bionic_reading = false, -- this can get annoying
     use_which_key_or_use_mini_clue = "which", -- "which or mini"
     session = {
-        use_resession = false,
+        use_resession = true,
     },
     use_fundo = false, -- forgot the reason for why this was disabled
     use_flatten = false,

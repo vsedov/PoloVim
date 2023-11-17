@@ -173,7 +173,13 @@ Hydra({
         { "R", ":Telescope reloader<CR>", { exit = true } },
         { "<Enter>", "<cmd>Telescope<CR>", { exit = true } },
         { "T", "<cmd>Easypick command_palette<CR>", { exit = true } },
-        { "<Space>", require("telescope").extensions.frecency.frecency, { exit = true } },
+        {
+            "<Space>",
+            function()
+                require("telescope").extensions.frecency.frecency()
+            end,
+            { exit = true },
+        },
         { "\\", ":Telescope frecency workspace=CWD<CR>", { exit = true } },
         {
             "]",

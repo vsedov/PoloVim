@@ -1,5 +1,6 @@
 local fmt, api, fn, fs = string.format, vim.api, vim.fn, vim.fs
 local when = lambda.lib.when
+local binds = {}
 
 local MODULE_PREFIX = "modules.editor.hydra."
 local EXCLUDE_TABLE = {
@@ -19,10 +20,7 @@ local function loadHydraModules(path, prefix)
         local module_name = prefix .. name
         -- Load the module if it's not in the exclude_table
         when(not vim.tbl_contains(EXCLUDE_TABLE, name), function()
-            local ok, err = pcall(require, module_name)
-            if not ok then
-                print(fmt("Error while loading Hydra module '%s': %s", module_name, err))
-            end
+            require(module_name)
         end)
     end
 end
@@ -40,6 +38,14 @@ local function loadHydraAPI()
 
     for _, path in ipairs(api_list) do
         local name = fn.fnamemodify(path, ":t:r")
+        -- if name ~= "harpoon" then
+        --     table.insert(exclude_table, name)
+        -- end
+        -- if not vim.tbl_contains({"harpoon", "fold", "treeclimber"}, name) then
+        --     table.insert(exclude_table, name)
+        --
+        -- end
+
         local module_name = MODULE_PREFIX .. "api." .. name
 
         when(not vim.tbl_contains(exclude_table, name), function()
@@ -49,12 +55,10 @@ local function loadHydraAPI()
     end
 end
 
-if lambda.config.editor.hydra.load_normal then
-    loadHydraModules(fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/normal/", MODULE_PREFIX .. "normal.")
-end
 if lambda.config.editor.hydra.load_api then
     loadHydraAPI()
 end
-if lambda.config.editor.hydra.load_after then
-    require("modules.editor.hydra.after.lsp")
+
+if lambda.config.editor.hydra.load_normal then
+    loadHydraModules(fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/normal/", MODULE_PREFIX .. "normal.")
 end

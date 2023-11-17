@@ -70,7 +70,9 @@ function M:buildHeads()
             local action = mapping[lhs]
 
             if action == nil then
-                table.insert(self.new_hydra.heads, { lhs, unpack(rhs) })
+                -- table.insert(self.new_hydra.heads, { lhs, unpack(rhs) })
+                -- do not use unpack
+                table.insert(self.new_hydra.heads, { lhs, rhs[1], rhs[2] })
             else
                 action(self.new_hydra, rhs)
             end

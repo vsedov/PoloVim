@@ -207,7 +207,6 @@ end
 
 M.egrep = function()
     local dropdown = require("telescope.themes").get_ivy({})
-
     require("telescope").extensions.egrepify.egrepify(dropdown)
 end
 

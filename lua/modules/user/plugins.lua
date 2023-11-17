@@ -163,11 +163,11 @@ user({
         seperator = "▔",
     },
 })
-user({
-    "lewis6991/whatthejump.nvim",
-    cond = true,
-    keys = { "<c-i>", "<c-o>" },
-})
+-- user({
+--     "lewis6991/whatthejump.nvim",
+--     cond = false,
+--     keys = { "<c-i>", "<c-o>" },
+-- })
 --  ──────────────────────────────────────────────────────────────────────
 user({
     "thinca/vim-qfreplace",
