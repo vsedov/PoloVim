@@ -13,7 +13,13 @@ local config = {
         on_enter = function() end,
         ["<ESC>"] = { nil, { exit = true } },
         w = { cmd("OverseerToggle"), { desc = "OS Toggle", exit = true } },
-        s = { cmd("OverseerRun"), { desc = "OS Run", exit = true } },
+        s = {
+            function()
+                vim.cmd("OverseerRun")
+                vim.cmd("OverseerOpen")
+            end,
+            { desc = "OS Run", exit = true },
+        },
         d = { cmd("OverseerQuickAction open"), { desc = "OS Quick Action", exit = true } },
         D = { cmd("OverseerTaskAction"), { desc = "OS Action", exit = true } },
         b = { cmd("OverseerBuild"), { desc = "OS Build", exit = true } },

@@ -608,26 +608,6 @@ ui({
 })
 
 ui({
-    "rainbowhxch/beacon.nvim",
-    cond = lambda.config.ui.use_beacon,
-    event = "VeryLazy",
-    opts = {
-        minimal_jump = 20,
-        ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
-        ignore_filetypes = {
-            "qf",
-            "neo-tree",
-            "dap_watches",
-            "dap_scopes",
-            "neo-tree",
-            "NeogitCommitMessage",
-            "NeogitPopup",
-            "NeogitStatus",
-        },
-    },
-})
-
-ui({
     "mvllow/modes.nvim",
     cond = false,
     event = "VeryLazy",

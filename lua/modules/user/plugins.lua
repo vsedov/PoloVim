@@ -256,47 +256,7 @@ user({
 })
 
 -- TRIAL: (vsedov) (10:51:37 - 13/11/23): I am not sure what to think about this.
-user({
-    "carbon-steel/detour.nvim",
-    keys = { "<c-w><cr>", ";;t", ";;g", ";;p" },
-    config = function()
-        vim.keymap.set("n", "<c-w><CR>", ":Detour<cr>")
-        -- A keymap for selecting a terminal buffer to open in a popup
-        vim.keymap.set("n", ";;t", function()
-            require("detour").Detour() -- Open a detour popup
 
-            -- Switch to a blank buffer to prevent any accidental changes.
-            vim.cmd.enew()
-            vim.bo.bufhidden = "delete"
-
-            require("telescope.builtin").buffers({}) -- Open telescope prompt
-            vim.api.nvim_feedkeys("term", "n", true) -- popuplate prompt with "term"
-        end)
-        vim.keymap.set("n", ";;g", function()
-            local current_path = vim.fn.expand("%:p:h")
-            local command = "a" -- go into terminal mode
-                .. "cd "
-                .. current_path
-                .. "<CR>"
-                .. "tig<CR>" -- run tig
-            command = vim.api.nvim_replace_termcodes(command, true, false, true)
-
-            require("detour").Detour() -- open a detour popup
-            vim.cmd.terminal() -- open a terminal buffer
-            vim.bo.bufhidden = "delete" -- close the terminal when window closes
-            vim.api.nvim_feedkeys(command, "n", false)
-        end)
-        -- Wrap any TUI inside a popup
-        vim.keymap.set("n", ";;p", function()
-            require("detour").Detour() -- open a detour popup
-            vim.cmd.terminal() -- open a terminal buffer
-            vim.bo.bufhidden = "delete" -- close the terminal when window closes
-            -- Run the `top` command
-            local text = vim.api.nvim_replace_termcodes("atop<CR>", true, false, true)
-            vim.api.nvim_feedkeys(text, "n", false)
-        end)
-    end,
-})
 user({
     "mangelozzi/nvim-rgflow.lua",
     keys = {

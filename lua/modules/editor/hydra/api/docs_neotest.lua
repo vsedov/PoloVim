@@ -1,7 +1,7 @@
 local leader = "<leader>d"
-local docs = { "<cr>", "l", "W", "r", "S" }
 local bracket = { "d", "D", "E", "i", "p" }
-local jump = { "J", "K" }
+
+local docs = { "<cr>", "l", "W", "r", "S", "J", "K" }
 local analyse = { "s", "o", "O", "a" }
 local summary = { "M", "R", "C" }
 local python = { "q", "t", "e" }
@@ -71,6 +71,11 @@ local config = {
             end,
             { nowait = true, silent = true, desc = "refCopy ", exit = true },
         },
+        w = {
+            function() end,
+
+            { nowait = true, silent = true, desc = "Dap", exit = true },
+        },
         p = {
 
             function()
@@ -85,71 +90,88 @@ local config = {
             end,
             { nowait = true, silent = true, desc = "Live Docs ", exit = true },
         },
-
-        r = {
-            function()
-                require("neotest").run.run({ strategy = "dap" })
-            end,
-            { nowait = false, exit = false, desc = "Run Dap" },
-        },
-        ["<cr>"] = {
-            function()
-                require("neotest").run.run({ vim.fn.expand("%"), strategy = "dap" })
-            end,
-            { nowait = false, exit = false, desc = "Run File Dap" },
-        },
-        o = {
-            function()
-                require("neotest").output.open({ short = true })
-            end,
-            { nowait = false, exit = false, desc = "Test Output" },
-        },
-
-        --
-        a = {
-            function()
-                for _, adapter_id in ipairs(require("neotest").run.adapters()) do
-                    require("neotest").run.run({ suite = true, adapter = adapter_id })
-                end
-            end,
-            { nowait = false, exit = false, desc = "Test Rune Adapters" },
-        },
-
-        f = {
-            function()
-                vim.cmd([[TestFile]])
-            end,
-            { nowait = false, exit = true, desc = "TestFile" },
-        },
-        v = {
-            function()
-                vim.cmd([[TestVisit]])
-            end,
-            { nowait = false, exit = true, desc = "TestVisit" },
-        },
-
-        t = {
-            function()
-                test_method()
-            end,
-            { nowait = false, exit = true, desc = "Python TestMethod" },
-        },
-
-        q = {
-            function()
-                test_class()
-            end,
-            { nowait = false, exit = true, desc = "Python TestClass" },
-        },
-        e = {
-            function()
-                debug_selection()
-            end,
-            { nowait = false, exit = true, desc = "Python Selection" },
-        },
     },
 }
 --
+
+local internal_config = {
+    {
+        Dap = {
+            color = "pink",
+            body = leader,
+            position = "bottom-right",
+            ["<ESC>"] = { nil, { exit = true } },
+
+            r = {
+                function()
+                    require("neotest").run.run({ strategy = "dap" })
+                end,
+                { nowait = false, exit = false, desc = "Run Dap" },
+            },
+            ["<cr>"] = {
+                function()
+                    require("neotest").run.run({ vim.fn.expand("%"), strategy = "dap" })
+                end,
+                { nowait = false, exit = false, desc = "Run File Dap" },
+            },
+            o = {
+                function()
+                    require("neotest").output.open({ short = true })
+                end,
+                { nowait = false, exit = false, desc = "Test Output" },
+            },
+
+            --
+            a = {
+                function()
+                    for _, adapter_id in ipairs(require("neotest").run.adapters()) do
+                        require("neotest").run.run({ suite = true, adapter = adapter_id })
+                    end
+                end,
+                { nowait = false, exit = false, desc = "Test Rune Adapters" },
+            },
+
+            f = {
+                function()
+                    vim.cmd([[TestFile]])
+                end,
+                { nowait = false, exit = true, desc = "TestFile" },
+            },
+            v = {
+                function()
+                    vim.cmd([[TestVisit]])
+                end,
+                { nowait = false, exit = true, desc = "TestVisit" },
+            },
+
+            t = {
+                function()
+                    test_method()
+                end,
+                { nowait = false, exit = true, desc = "Python TestMethod" },
+            },
+
+            q = {
+                function()
+                    test_class()
+                end,
+                { nowait = false, exit = true, desc = "Python TestClass" },
+            },
+            e = {
+                function()
+                    debug_selection()
+                end,
+                { nowait = false, exit = true, desc = "Python Selection" },
+            },
+        },
+    },
+    "Dap",
+    { docs, analyse, summary, python },
+    another_test,
+    6,
+    4,
+    2,
+}
 
 for _, bind in ipairs(binds) do
     local cmd = bind[1]
@@ -158,9 +180,9 @@ for _, bind in ipairs(binds) do
     if options.exit == nil then
         options.exit = true
     end
-    config["Docs/Test"][key] = {
+    internal_config[1].Dap[key] = {
         function()
-            vim.cmd("Neotest " .. cmd)
+            require("neotest").run.run({ strategy = "dap", cmd = cmd })
         end,
         { nowait = false, exit = options.exit, desc = cmd },
     }
@@ -169,8 +191,10 @@ end
 return {
     config,
     "Docs/Test",
-    { docs, analyse, jump, summary, another_test, python },
+    { { "L", "w" } },
     bracket,
     6,
     4,
+    1,
+    { internal_config },
 }

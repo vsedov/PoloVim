@@ -70,7 +70,7 @@ function config.notify()
             if not api.nvim_win_is_valid(win) then
                 return
             end
-            api.nvim_win_set_config(win, { border = border })
+            api.nvim_win_set_config(win, { border = lambda.style.border.type_0 })
         end,
         render = function(...)
             local notification = select(2, ...)

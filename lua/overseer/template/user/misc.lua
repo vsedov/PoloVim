@@ -8,7 +8,7 @@ return {
                     OvTermNum = OvTermNum + 1
                     return {
                         name = "Zsh" .. OvTermNum,
-                        cmd = "fish",
+                        cmd = "zsh",
                         components = { "default" },
                     }
                 end,

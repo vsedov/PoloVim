@@ -9,17 +9,6 @@ local config = {
         mode = { "n", "v", "x" },
         ["<ESC>"] = { nil, { nowait = true, exit = true, desc = "exit" } },
 
-        g = {
-            function()
-                vim.cmd([[NeoAIShortcut gitcommit]])
-            end,
-            { nowait = true, exit = true, desc = "NeoAI Shortcut gitcommit" },
-        },
-        ["<leader>"] = {
-            "<C-v>:NeoAIShortcut textify<cr>",
-            { nowait = true, exit = true, desc = "NeoAI Shortcut textify" },
-        },
-
         --  ╭────────────────────────────────────────────────────────────────────╮
         --  │         CHATGPT Plugin                                             │
         --  ╰────────────────────────────────────────────────────────────────────╯
@@ -145,7 +134,7 @@ local brackets = { "j", "k", "l", "a", "r" }
 
 local inner = {
     { "<cr>", "s", "f", "h", "C", "c" },
-    { "g", "<leader>", "B", "b", "L" },
+    { "B", "b", "L" },
     { ";", "-" },
 }
 

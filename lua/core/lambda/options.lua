@@ -16,6 +16,7 @@ local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within the list
 lambda.config = {
+    use_lastplace = false,
     -- innter treesitter, although this can be changed
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
 
@@ -92,7 +93,7 @@ lambda.config.treesitter = {
     use_extra_highlight = false,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
-    use_context_vt = false,
+    use_context_vt = true,
     use_rainbow = true,
 }
 
@@ -213,13 +214,12 @@ lambda.config.ui = {
     use_fidgit = false,
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_tint = false, -- Might not be great for certain colourschemes
-    use_hlsearch = false,
+    use_tint = true, -- Might not be great for certain colourschemes
+    use_hlsearch = true,
     use_dropbar = true,
-    use_beacon = true,
     mini_animate = {
         use_animate = false,
-        use_cursor = true,
+        use_cursor = false,
         use_scroll = false,
         use_resize = false,
         use_close = false,
@@ -232,11 +232,11 @@ lambda.config.ui = {
     },
     indent_lines = {
         use_hlchunk = false,
-        use_indent_blankline = true, -- we shall keep this for now, seems rather nice
-        use_mini_indent_scope = false,
+        use_indent_blankline = false, -- we shall keep this for now, seems rather nice
+        use_mini_indent_scope = true,
     },
     scroll_bar = {
-        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
+        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
     },
 }
 lambda.config.fun = {
@@ -264,13 +264,13 @@ lambda.config.colourscheme = {
         },
         dark = {
             "tokyonight.nvim",
-            -- "catppuccin",
+            "catppuccin",
             -- "sweetie.nvim",
             -- "rose", -- TSMethod'
+            -- "doom-one.nvim",
             "kanagawa.nvim",
         },
         others = {
-            "doom-one.nvim",
             "vim-dogrun",
             "palenightfall.nvim", -- do not like this colourscheme
             "poimandres.nvim",
@@ -302,8 +302,8 @@ lambda.config.movement = {
     use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d
     use_accelerated_jk = true,
     harpoon = {
-        goto_harpoon = false,
-        use_tmux_or_normal = "tmux", -- nvim
+        goto_harpoon = true,
+        use_tmux_or_normal = "nvim", -- nvim
     },
 }
 -- right i think its best we disables these
@@ -313,9 +313,9 @@ lambda.config.tools = {
     session = {
         use_resession = true,
     },
-    use_fundo = false, -- forgot the reason for why this was disabled
-    use_flatten = false,
-    use_live_command = false, -- Disabled due to large files, this might noe be nice to have
+    use_fundo = true, -- forgot the reason for why this was disabled
+    use_flatten = true,
+    use_live_command = true, -- Disabled due to large files, this might noe be nice to have
 }
 
 -- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux
@@ -341,6 +341,6 @@ lambda.config.folke = {
     },
     edge = {
         enable = true,
-        use_animate = false,
+        use_animate = true,
     },
 }
