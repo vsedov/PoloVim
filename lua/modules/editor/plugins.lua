@@ -96,7 +96,7 @@ editor({
 
 editor({
     "anuvyklack/hydra.nvim",
-    cond = lambda.config.editor.hydra.use_hydra,
+    cond = lambda.config.editor.hydra.use_hydra and false,
     dependencies = { "anuvyklack/keymap-layer.nvim" },
     config = conf.hydra,
 })

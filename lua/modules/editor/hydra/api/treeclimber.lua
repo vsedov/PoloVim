@@ -14,46 +14,46 @@ local config = {
             function()
                 require("nvim-treeclimber").select_backward()
             end,
-            { nowait = false, desc = "TC B" },
+            { exit = true, nowait = false, desc = "TC B" },
         },
         j = {
             function()
                 require("nvim-treeclimber").select_shrink()
             end,
 
-            { nowait = true, desc = "TC Shrink" },
+            { exit = true, nowait = true, desc = "TC Shrink" },
         },
         k = {
             function()
                 require("nvim-treeclimber").select_expand()
             end,
-            { nowait = true, desc = "TC Expand" },
+            { exit = true, nowait = true, desc = "TC Expand" },
         },
         l = {
             function()
                 require("nvim-treeclimber").select_forward()
             end,
-            { nowait = true, desc = "TC F" },
+            { exit = true, nowait = true, desc = "TC F" },
         },
 
         w = {
             function()
                 require("nvim-treeclimber").show_control_flow()
             end,
-            { nowait = true, desc = "TC Flow " },
+            { exit = true, nowait = true, desc = "TC Flow " },
         },
         c = {
             function()
                 require("nvim-treeclimber").select_current_node()
             end,
-            { nowait = true, desc = "TC C Node" },
+            { exit = true, nowait = true, desc = "TC C Node" },
         },
 
         e = {
             function()
                 require("nvim-treeclimber").select_forward_end()
             end,
-            { nowait = true, desc = "TC [E] F Node" },
+            { exit = true, nowait = true, desc = "TC [E] F Node" },
         },
 
         --
@@ -61,32 +61,32 @@ local config = {
             function()
                 require("nvim-treeclimber").select_siblings_backward()
             end,
-            { nowait = true, desc = "Sib Node B" },
+            { exit = true, nowait = true, desc = "Sib Node B" },
         },
         S = {
             function()
                 require("nvim-treeclimber").select_siblings_forward()
             end,
-            { nowait = true, desc = "Sib Node F" },
+            { exit = true, nowait = true, desc = "Sib Node F" },
         },
 
         ["["] = {
             function()
                 require("nvim-treeclimber").select_grow_forward()
             end,
-            { nowait = true, desc = "TC Grow F" },
+            { exit = true, nowait = true, desc = "TC Grow F" },
         },
         ["]"] = {
             function()
                 require("nvim-treeclimber").select_grow_backward()
             end,
-            { nowait = true, desc = "TC Grow B" },
+            { exit = true, nowait = true, desc = "TC Grow B" },
         },
         W = {
             function()
                 require("nvim-treeclimber").select_top_level()
             end,
-            { nowait = true, desc = "TC Top Level" },
+            { exit = true, nowait = true, desc = "TC Top Level" },
         },
     },
 }

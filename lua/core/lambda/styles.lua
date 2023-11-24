@@ -34,26 +34,33 @@ lambda.style = {
     },
     icons = {
         separators = {
+            left_thin_block = "▏",
+            right_thin_block = "▕",
             vert_bottom_half_block = "▄",
             vert_top_half_block = "▀",
+            right_block = "🮉",
+            light_shade_block = "░",
         },
         lsp = {
             error = "", -- '✗'
-            warn = "",
-            warning = "",
-            info = "", -- 
-            hint = "", -- ⚑
+            warn = "", -- 
+            info = "󰋼", --  ℹ 󰙎 
+            hint = "󰌶", --  ⚑
         },
-
         git = {
             add = "", -- '',
             mod = "",
             remove = "", -- '',
             ignore = "",
             rename = "",
+            untracked = "",
+            ignored = "",
+            unstaged = "󰄱",
+            staged = "",
+            conflict = "",
             diff = "",
             repo = "",
-            logo = "",
+            logo = "󰊢",
             branch = "",
         },
         documents = {
@@ -62,43 +69,39 @@ lambda.style = {
             folder = "",
             open_folder = "",
         },
-        type = {
-            array = "",
-            number = "",
-            object = "",
-            null = "[]",
-            float = "",
-        },
         misc = {
+            -- 
+            plus = "",
             ellipsis = "…",
             up = "⇡",
             down = "⇣",
-            line = "ℓ", -- ''
+            line = "", -- 'ℓ'
             indent = "Ξ",
             tab = "⇥",
-            bug = "", -- 'ﴫ'
+            bug = "", --  '󰠭'
             question = "",
             clock = "",
-            lock = "",
+            lock = "",
+            shaded_lock = "",
             circle = "",
             project = "",
             dashboard = "",
-            history = "",
-            comment = "",
-            robot = "ﮧ",
-            lightbulb = "",
-            search = "",
+            history = "󰄉",
+            comment = "󰅺",
+            robot = "󰚩",
+            lightbulb = "󰌵",
+            search = "󰍉",
             code = "",
             telescope = "",
             gear = "",
             package = "",
             list = "",
             sign_in = "",
-            check = "",
+            check = "󰄬",
             fire = "",
-            note = "",
+            note = "󰎞",
             bookmark = "",
-            pencil = "",
+            pencil = "", -- '󰏫',
             tools = "",
             arrow_right = "",
             caret_right = "",
@@ -109,6 +112,7 @@ lambda.style = {
             block = "▌",
         },
     },
+
     -- LSP Kinds come via the LSP spec
     -- @see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
     lsp = {

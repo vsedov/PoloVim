@@ -16,12 +16,9 @@ local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within the list
 lambda.config = {
-    use_lastplace = false,
-    -- innter treesitter, although this can be changed
+    use_lastplace = true,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
-
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
-    --  ──────────────────────────────────────────────────────────────────────
     record_your_self = false, -- waka time track, also might not be needed
     neorg_auto_commit = false,
     loaded_confirm_quit = false, -- this is not needed
@@ -93,7 +90,7 @@ lambda.config.treesitter = {
     use_extra_highlight = false,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = true,
-    use_context_vt = true,
+    use_context_vt = false,
     use_rainbow = true,
 }
 
@@ -120,7 +117,7 @@ lambda.config.cmp = {
             priority = 6,
         },
     },
-    cmp_theme = "no-border", --- @usage "border" | "no-border" | "extra"
+    cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
 }
 
 lambda.config.lsp = {
@@ -214,13 +211,13 @@ lambda.config.ui = {
     use_fidgit = false,
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_tint = true, -- Might not be great for certain colourschemes
+    use_tint = "tint", -- sunglasses, tint -- Might not be great for certain colourschemes
     use_hlsearch = true,
     use_dropbar = true,
     mini_animate = {
-        use_animate = false,
-        use_cursor = false,
-        use_scroll = false,
+        use_animate = true,
+        use_cursor = true,
+        use_scroll = true,
         use_resize = false,
         use_close = false,
     },
@@ -341,6 +338,6 @@ lambda.config.folke = {
     },
     edge = {
         enable = true,
-        use_animate = true,
+        use_animate = false,
     },
 }
