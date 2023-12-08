@@ -103,7 +103,8 @@ tools({ "ilAYAli/scMRU.nvim", lazy = true, cmd = { "MruRepos", "Mru", "Mfu", "Mr
 
 tools({
     "ashfinal/qfview.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
+    ft = "qf",
     config = true,
 })
 

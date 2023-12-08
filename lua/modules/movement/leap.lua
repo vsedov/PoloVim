@@ -281,10 +281,10 @@ end
 function M.keys()
     return {
 
-        { "s", "<Plug>(leap-forward-to)", mode = "n", desc = "Leap Fwd" },
-        { "S", "<Plug>(leap-backward-to)", mode = "n", desc = "Leap Bwd" },
-        { "x", "<Plug>(leap-forward-till)", mode = { "o", "x" }, desc = "Leap Fwd" },
-        { "X", "<Plug>(leap-backward-till)", mode = { "o", "x" }, desc = "Leap Bwd" },
+        -- { "s", "<Plug>(leap-forward-to)", mode = "n", desc = "Leap Fwd" },
+        -- { "S", "<Plug>(leap-backward-to)", mode = "n", desc = "Leap Bwd" },
+        -- { "x", "<Plug>(leap-forward-till)", mode = { "o", "x" }, desc = "Leap Fwd" },
+        -- { "X", "<Plug>(leap-backward-till)", mode = { "o", "x" }, desc = "Leap Bwd" },
 
         {
             "t", -- semi-inclusive

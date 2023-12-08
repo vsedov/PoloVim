@@ -94,9 +94,10 @@ vim.defer_fn(function()
         local f = "utils.plugins." .. name
         local enable = true
         local config_options = {
-            ["save_clipboard_on_exit"] = lambda.config.save_clipboard_on_exit,
+            ["save_clipboard_on_exit"] = lambda.config.custom.custom_save_clipboard,
             ["abbreviations"] = lambda.config.abbrev.enable,
             ["exit"] = lambda.config.loaded_confirm_quit,
+            ["icecream"] = true,
         }
 
         if config_options[name] ~= nil then

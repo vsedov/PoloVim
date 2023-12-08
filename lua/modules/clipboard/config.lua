@@ -51,11 +51,11 @@ function config.config_yanky()
     end
 
     local hint = [[
-^ ^ _p_: After   ^ ^
-^ ^ _P_: Before  ^ ^
-^ ^ _n_: ↓       ^ ^
-^ ^ _N_: ↑       ^ ^
-]]
+    ^ ^ _p_: After   ^ ^
+    ^ ^ _P_: Before  ^ ^
+    ^ ^ _n_: ↓       ^ ^
+    ^ ^ _N_: ↑       ^ ^
+    ]]
 
     local yanky_hydra = Hydra({
         name = "Yank ring",
@@ -131,7 +131,7 @@ function config.config_yanky()
     end
 
     require("telescope").load_extension("yank_history")
-
+    --
     vim.keymap.set("n", "<leader>yu", "<cmd>Telescope yank_history<cr>", { desc = "Yank History" })
     vim.keymap.set(
         "n",

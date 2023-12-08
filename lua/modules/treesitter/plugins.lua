@@ -1,7 +1,6 @@
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
 
-
 -- Core
 ts({
     "nvim-treesitter/nvim-treesitter",

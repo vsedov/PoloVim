@@ -4,6 +4,13 @@ local cmd = function(cmd)
         vim.cmd(cmd)
     end
 end
+local bracket = { "<cr>", "W", "w", "r", "R", "q", "e", "s", "S", "d", "<leader>", "l" }
+
+-- Open compiler
+vim.keymap.set("n", "<F6>", "<cmd>CompilerOpen<cr>", { noremap = true, silent = true })
+
+-- Toggle compiler results
+vim.keymap.set("n", "<S-7>", "<cmd>CompilerToggleResults<cr>", { noremap = true, silent = true })
 
 local config = {
     Runner = {
@@ -12,7 +19,53 @@ local config = {
         mode = { "n" },
         on_enter = function() end,
         ["<ESC>"] = { nil, { exit = true } },
-        w = { cmd("OverseerToggle"), { desc = "OS Toggle", exit = true } },
+        r = { cmd("CompilerOpen"), { desc = "Compiler Open", exit = true } },
+        e = {
+            function()
+                local overseer = require("overseer")
+                local action_util = require("overseer.action_util")
+
+                local bufnr = vim.api.nvim_get_current_buf()
+                local task = vim.tbl_filter(function(t)
+                    return (t.strategy.bufnr == bufnr)
+                end, overseer.list_tasks())[1]
+                if task then
+                    action_util.run_task_action(task)
+                else
+                    vim.cmd("OverseerTaskAction")
+                end
+            end,
+            { desc = "OS Task Action", exit = true },
+        },
+        R = {
+            function()
+                vim.cmd("CompilerStop") -- (Optional, to dispose all tasks before redo)
+                vim.cmd("CompilerRedo")
+            end,
+            { desc = "Compiler Redo", exit = true },
+        },
+        q = {
+            function()
+                vim.cmd("CompilerToggleResults")
+            end,
+            { desc = "Compiler Toggle Results", exit = true },
+        },
+
+        w = {
+            function()
+                local overseer = require("overseer")
+                local tasks = overseer.list_tasks({ recent_first = true })
+                if vim.tbl_isempty(tasks) then
+                    vim.notify("No tasks found", vim.log.levels.WARN)
+                    vim.cmd([[CompilerOpen]])
+                else
+                    overseer.run_action(tasks[1], "restart")
+                end
+            end,
+            { desc = "Compiler Restart", exit = true },
+        },
+
+        W = { cmd("OverseerToggle"), { desc = "OS Toggle", exit = true } },
         s = {
             function()
                 vim.cmd("OverseerRun")
@@ -20,11 +73,10 @@ local config = {
             end,
             { desc = "OS Run", exit = true },
         },
-        d = { cmd("OverseerQuickAction open"), { desc = "OS Quick Action", exit = true } },
-        D = { cmd("OverseerTaskAction"), { desc = "OS Action", exit = true } },
+        S = { cmd("OverseerQuickAction open"), { desc = "OS Quick Action", exit = true } },
+        d = { cmd("OverseerTaskAction"), { desc = "OS Action", exit = true } },
         b = { cmd("OverseerBuild"), { desc = "OS Build", exit = true } },
         l = { cmd("OverseerLoadBundle"), { desc = "OS Load", exit = true } },
-        r = { cmd("CompilerOpen"), { desc = "OS Compiler", exit = true } },
         ["<leader>"] = { cmd("OverseerRunCmd"), { desc = "OS Run Cmd", exit = true } },
 
         ["<cr>"] = {
@@ -42,46 +94,15 @@ local config = {
         },
 
         [";"] = { cmd("RunCode"), { exit = true, desc = "RunCode" } },
-        W = {
-            function()
-                local mode = vim.fn.mode()
-
-                if mode == "n" then
-                    require("sniprun").run()
-                else
-                    require("sniprun").run("v")
-                end
-            end,
-            { exit = true, desc = "SnipRun", mode = { "n", "v" } },
-        },
-        C = {
-            function()
-                require("sniprun").clear_repl()
-            end,
-            { exit = true, desc = "SnipRun Clear Repl" },
-        },
-        c = {
-            function()
-                require("sniprun.display").close_all()
-            end,
-            { exit = true, desc = "SnipRun Close All" },
-        },
-
-        i = {
-            function()
-                require("sniprun").info()
-            end,
-            { exit = true, desc = "SnipRun Info" },
-        },
     },
 }
-local bracket = { "<cr>", "r", ";", "w", "s", "<leader>" }
 
 return {
     config,
     "Runner",
-    { { "d", "D", "b", "l" }, { "W", "c", "C", "i" } },
+    { { "b" } },
     bracket,
     6,
     3,
+    2,
 }

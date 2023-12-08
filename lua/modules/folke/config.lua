@@ -70,6 +70,7 @@ end
 function config.edgy()
     return {
         bottom = {
+
             -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
             { ft = "toggleterm", size = { height = 0.4 } },
             {
@@ -120,12 +121,10 @@ function config.edgy()
             },
         },
         left = {
-            -- {
-            --     title = "Neo-Tree",
-            --     ft = "neo-tree",
-            --     pinned = true,
-            --     size = { height = 0.5 },
-            -- },
+            {
+                ft = "neo-tree",
+                title = "NeoTree",
+            },
             { ft = "undotree", title = "Undo Tree" },
             { ft = "dapui_scopes", title = "Scopes" },
             { ft = "dapui_breakpoints", title = "Breakpoints" },
@@ -148,7 +147,7 @@ function config.edgy()
                 title = "  Tasks",
                 open = "OverseerOpen",
                 size = {
-                    width = 0.35,
+                    width = 0.2,
                 },
             },
             {
@@ -160,7 +159,7 @@ function config.edgy()
             },
         },
         right = {
-            -- "dapui_scopes",
+            "dapui_scopes",
             "sagaoutline",
             "neotest-output-panel",
             "neotest-summary",
@@ -180,8 +179,25 @@ function config.edgy()
             top = { size = 10 },
         },
         -- edgebar animations
+        -- edgebar animations
         animate = {
             enabled = lambda.config.folke.edge.use_animate,
+
+            fps = 100, -- frames per second
+            cps = 120, -- cells per second
+            on_begin = function()
+                vim.g.minianimate_disable = true
+            end,
+            on_end = function()
+                vim.g.minianimate_disable = false
+            end,
+            -- Spinner for pinned views that are loading.
+            -- if you have noice.nvim installed, you can use any spinner from it, like:
+            -- spinner = require("noice.util.spinners").spinners.circleFull,
+            spinner = {
+                frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+                interval = 80,
+            },
         },
         keys = {
             -- close window
@@ -301,6 +317,5 @@ function config.which_key()
         },
     }, { mode = { "o", "v", "x" } })
 end
-function zen() end
 
 return config

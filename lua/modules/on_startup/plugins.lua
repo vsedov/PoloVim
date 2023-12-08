@@ -4,7 +4,6 @@ local visible_buffers = {}
 startup({
     "stevearc/resession.nvim",
     cond = lambda.config.tools.session.use_resession,
-    event = "VimEnter",
     opts = {
         autosave = {
             enabled = true,

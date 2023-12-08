@@ -3,19 +3,6 @@ function config.overseer()
     require("modules.runner.overseer")
 end
 
-function config.executor()
-    require("executor").setup({
-        use_split = false,
-        preset_commands = {
-            ["*.py"] = {
-                "python -m unittest",
-                "pytest",
-                "python3 script.py",
-            },
-        },
-    })
-end
-
 function config.code_runner()
     require("code_runner").setup({
         startinsert = true,

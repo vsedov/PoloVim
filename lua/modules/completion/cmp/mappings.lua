@@ -51,6 +51,8 @@ local mappings = {
         elseif luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
         else
+            -- "<plug>(smart-tab)"
+
             fallback()
         end
     end,

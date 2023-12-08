@@ -18,10 +18,6 @@ local config = {
         body = leader,
         mode = { "n" },
         ["<ESC>"] = { nil, { exit = true } },
-        ["<cr>"] = {
-            function() end,
-            { silent = true, exit = true, desc = "Fold Current" },
-        },
         N = {
             function()
                 nN("N")

@@ -62,3 +62,56 @@ end
 if lambda.config.editor.hydra.load_normal then
     loadHydraModules(fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/normal/", MODULE_PREFIX .. "normal.")
 end
+local cmd = require("hydra.keymap-util").cmd
+local hydra = require("hydra")
+hydra({
+    name = "Test Commands",
+    mode = { "n" },
+    hint = [[
+                Test Commands
+                ^
+                _a_: Print Message
+                ^
+                ^ ^                              _q_/_<Esc>_: Exit Hydra
+                ]],
+    config = {
+        color = "teal",
+        invoke_on_body = true,
+        hint = {
+            type = "window",
+            position = "bottom",
+            border = "rounded",
+            show_name = true,
+        },
+    },
+    body = ">",
+    heads = {
+        { "a", cmd('lua print("Hello From Hydra Test Command")<CR>'), { desc = "Test Command", exit = true } },
+        {
+            "q",
+            nil,
+            {
+                desc = "quit",
+                exit = true,
+                nowait = true,
+            },
+        },
+        {
+            "<Esc>",
+            nil,
+            {
+                desc = "quit",
+                exit = true,
+                nowait = true,
+            },
+        },
+    },
+})
+
+
+
+
+
+
+
+

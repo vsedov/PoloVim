@@ -76,7 +76,6 @@ end, { nargs = "*", bang = true, bar = true, complete = "file" })
 --
 lambda.command("OverseerDebugParser", 'lua require("overseer.parser.debug").start_debug_session()', {})
 
-vim.keymap.set("n", "_r", "<cmd>CompilerOpen<cr>")
 vim.keymap.set("n", "_W", function()
     local overseer = require("overseer")
     local tasks = overseer.list_tasks({ recent_first = true })
@@ -87,6 +86,7 @@ vim.keymap.set("n", "_W", function()
         overseer.run_action(tasks[1], "restart")
     end
 end)
+
 vim.keymap.set("n", "_l", function()
     local bufnr = vim.api.nvim_get_current_buf()
     local task = vim.tbl_filter(function(t)
@@ -98,22 +98,9 @@ vim.keymap.set("n", "_l", function()
         vim.cmd("OverseerTaskAction")
     end
 end)
+
 vim.keymap.set("n", "_k", "<cmd>OverseerTaskAction<cr>")
 vim.keymap.set("n", "_w", "<cmd>OverseerToggle<cr>")
 
 vim.keymap.set("n", "<leader>>", "<cmd>OverseerQuickAction open<cr>")
 vim.keymap.set("n", "<leader><", "<cmd>OverseerQuickAction open here<cr>")
-
--- Open compiler
-vim.keymap.set( 'n', '<F6>', "<cmd>CompilerOpen<cr>", { noremap = true, silent = true })
-
--- Redo last selected option
-vim.keymap.set( 'n', '<S-6>', function()
-  vim.cmd("CompilerStop") -- (Optional, to dispose all tasks before redo)
-  vim.cmd("CompilerRedo")
-end, { noremap = true, silent = true })
-
-
--- Toggle compiler results
-vim.keymap.set( 'n', '<S-7>', "<cmd>CompilerToggleResults<cr>", { noremap = true, silent = true })
-

@@ -1,5 +1,6 @@
+-- breaks some things
 --  TODO: (vsedov) (16:38:03 - 17/07/23): fix
-local leader = ";w"
+local leader = ";W"
 
 local bracket = { "h", "j", "k", "l", "w" }
 
@@ -14,7 +15,7 @@ local config = {
             function()
                 require("nvim-treeclimber").select_backward()
             end,
-            { exit = true, nowait = false, desc = "TC B" },
+            { exit = false, nowait = false, desc = "TC B" },
         },
         j = {
             function()

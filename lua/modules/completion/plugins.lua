@@ -45,14 +45,14 @@ completion({
         { "hrsh7th/cmp-cmdline" },
         { "rcarriga/cmp-dap" },
         { "hrsh7th/cmp-omni" },
-        {
-            "doxnit/cmp-luasnip-choice",
-            config = function()
-                require("cmp_luasnip_choice").setup({
-                    auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
-                })
-            end,
-        },
+        -- {
+        --     "doxnit/cmp-luasnip-choice",
+        --     config = function()
+        --         require("cmp_luasnip_choice").setup({
+        --             auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
+        --         })
+        --     end,
+        -- },
         {
             "petertriho/cmp-git",
             lazy = true,
@@ -69,6 +69,7 @@ completion({
 completion({
     "L3MON4D3/LuaSnip", -- need to be the first to load
     build = "make install_jsregexp",
+    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
     event = "InsertEnter",
     dependencies = {
         {
@@ -101,6 +102,7 @@ completion({
 })
 completion({
     "ziontee113/SnippetGenie",
+    cond = false,
     lazy = true,
     keys = {
         {

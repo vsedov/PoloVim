@@ -12,6 +12,8 @@ print(logging.getLogger())
 
 def extracted_method():
     """[summary]"""
+    xl = range(1, 100)
+
     return xl
 
 

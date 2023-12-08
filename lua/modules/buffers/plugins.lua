@@ -124,11 +124,11 @@ buffer({
     config = function(_, opts)
         local oil = require("oil")
         oil.setup(opts)
-        vim.keymap.set("n", "__", function()
+        vim.keymap.set("n", "<leadeR>-", function()
             oil.open(vim.fn.getcwd())
         end, { desc = "Open cwd" })
-        vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
-        vim.keymap.set("n", "<leader>-", require("oil").open_float, { desc = "Open parent directory" })
+        vim.keymap.set("n", "<leader>-", require("oil").open, { desc = "Open parent directory" })
+        vim.keymap.set("n", "-", require("oil").open_float, { desc = "Open parent directory" })
     end,
 })
 

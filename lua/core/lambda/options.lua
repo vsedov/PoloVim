@@ -16,19 +16,22 @@ local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within the list
 lambda.config = {
-    use_lastplace = true,
+    use_lastplace = false,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     record_your_self = false, -- waka time track, also might not be needed
     neorg_auto_commit = false,
     loaded_confirm_quit = false, -- this is not needed
     --  ──────────────────────────────────────────────────────────────────────
-    save_clipboard_on_exit = true,
+    save_clipboard_on_exit = false,
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_gitsigns = true,
     use_wrapping = true, -- I am not sure if this is causing me to segfault.
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
+}
+lambda.config.custom = {
+    custom_save_clipboard = true,
 }
 lambda.config.ai = {
     model = "gpt-4",
@@ -41,7 +44,7 @@ lambda.config.ai = {
         },
     },
     tabnine = {
-        use_sort = false,
+        use_sort = true,
         use_tabnine = use_tabnine,
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
@@ -74,7 +77,6 @@ lambda.config.editor = {
         use_hydra = true,
         load_normal = true,
         load_api = true,
-        load_after = false,
     },
     use_smart_q = true,
 }
@@ -89,7 +91,7 @@ lambda.config.treesitter = {
     use_matchup = true,
     use_extra_highlight = false,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
-    use_highpairs = true,
+    use_highpairs = false,
     use_context_vt = false,
     use_rainbow = true,
 }
@@ -110,7 +112,7 @@ lambda.config.abbrev = {
 lambda.config.cmp = {
     use_tabout = true,
     buffer = true,
-    use_ghost = false,
+    use_ghost = true,
     luasnip = {
         luasnip = {
             enable = true,
@@ -121,13 +123,13 @@ lambda.config.cmp = {
 }
 
 lambda.config.lsp = {
-    use_sg = false,
+    use_sg = true,
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
-    only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
+    only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
     use_lsp_saga = true,
-    use_lsp_dim = false, -- i forgot what this does
+    use_lsp_dim = true, -- i forgot what this does
     ----------------------------------------------------------------------------------------------------
     --  Lsp Signiture, but im suing lazy for this for the time
     ----------------------------------------------------------------------------------------------------
@@ -215,13 +217,13 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_dropbar = true,
     mini_animate = {
-        use_animate = true,
-        use_cursor = true,
-        use_scroll = true,
+        use_animate = false,
+        use_cursor = false,
+        use_scroll = false,
         use_resize = false,
         use_close = false,
     },
-    use_hlslens = false,
+    use_hlslens = true,
     use_statuscol = true, -- Does thi cause some lage sometimes im not sure ?
     heirline = {
         use_statuscol = false,
@@ -260,12 +262,12 @@ lambda.config.colourscheme = {
             -- "kanagawa.nvim",
         },
         dark = {
-            "tokyonight.nvim",
+            -- "tokyonight.nvim",
             "catppuccin",
             -- "sweetie.nvim",
             -- "rose", -- TSMethod'
             -- "doom-one.nvim",
-            "kanagawa.nvim",
+            -- "kanagawa.nvim",
         },
         others = {
             "vim-dogrun",
@@ -311,8 +313,8 @@ lambda.config.tools = {
         use_resession = true,
     },
     use_fundo = true, -- forgot the reason for why this was disabled
-    use_flatten = true,
-    use_live_command = true, -- Disabled due to large files, this might noe be nice to have
+    use_flatten = false,
+    use_live_command = false, -- Disabled due to large files, this might noe be nice to have
 }
 
 -- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux
@@ -338,6 +340,6 @@ lambda.config.folke = {
     },
     edge = {
         enable = true,
-        use_animate = false,
+        use_animate = true,
     },
 }

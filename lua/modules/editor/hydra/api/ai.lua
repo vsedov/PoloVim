@@ -1,6 +1,5 @@
 ---@diagnostic disable: redefined-local
 local leader = "<leader>a"
-local run_cmd_with_count = require("modules.editor.hydra.repl_utils").run_cmd_with_count
 
 local config = {
     AI = {
@@ -100,28 +99,40 @@ local config = {
             { nowait = true, exit = true, desc = "AI: Ask - writes in buffer" },
         },
         ["<cr>"] = {
-            run_cmd_with_count("REPLStart aichat"),
+            function()
+                vim.cmd("REPLStart aichat")()
+            end,
             { nowait = true, desc = "Start an Aichat REPL", exit = true },
         },
         s = {
-            run_cmd_with_count("REPLSendMotion aichat"),
+            function()
+                vim.cmd("REPLSendMotion aichat")()
+            end,
             { nowait = true, desc = "Send current line to Aichat", exit = false },
         },
 
         f = {
-            run_cmd_with_count("REPLFocus aichat"),
+            function()
+                vim.cmd("REPLFocus aichat")()
+            end,
             { nowait = true, desc = "Focus on Aichat REPL", exit = true },
         },
         h = {
-            run_cmd_with_count("REPLHide aichat"),
+            function()
+                vim.cmd("REPLHide aichat")()
+            end,
             { nowait = true, desc = "Hide Aichat REPL", exit = true },
         },
         C = {
-            run_cmd_with_count("REPLClose aichat"),
+            function()
+                vim.cmd("REPLClose aichat")()
+            end,
             { nowait = true, desc = "Quit Aichat", exit = true },
         },
         c = {
-            run_cmd_with_count("REPLCleanup"),
+            function()
+                vim.cmd("REPLCleanup")()
+            end,
 
             { nowait = true, desc = "Clear aichat REPLs.", exit = true },
         },
