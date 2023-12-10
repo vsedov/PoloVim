@@ -11,10 +11,18 @@ windows({
     "mrjones2014/smart-splits.nvim",
     event = "VeryLazy",
     cond = lambda.config.windows.use_smart_splits,
-    build = "./kitty/install-kittens.bash",
+    build = function()
+        if vim.fn.getenv("TMUX") ~= vim.NIL then
+            -- return "./kitty/install-kittens.bash"
+            -- return ""
+        else
+            return "./kitty/install-kittens.bash"
+        end
+    end,
     dependencies = {
         {
             "kwkarlwang/bufresize.nvim",
+
             config = function()
                 local opts = { noremap = true, silent = true }
                 require("bufresize").setup({
@@ -47,6 +55,9 @@ windows({
                 hooks = {
                     on_leave = require("bufresize").register,
                 },
+            },
+            mux = {
+                type = "tmux",
             },
             extensions = {
                 -- default settings shown below:
