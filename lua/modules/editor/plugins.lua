@@ -95,9 +95,7 @@ editor({
 })
 
 editor({
-    -- "nvim-island/hydra.nvim",
-    "miversen33/hydra.nvim",
-    branch = "fixed-eventignore",
+    "nvim-island/hydra.nvim",
     event = "VeryLazy",
     cond = lambda.config.editor.hydra.use_hydra,
     config = conf.hydra,

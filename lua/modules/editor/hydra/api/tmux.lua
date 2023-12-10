@@ -1,5 +1,5 @@
 local fn = vim.fn
-local leader_key = "<leader><leader><leader>"
+local leader_key = ";<tab>"
 
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
