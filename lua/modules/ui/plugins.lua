@@ -259,7 +259,7 @@ ui({
             },
             filesystem = {
                 hijack_netrw_behavior = "open_current",
-                use_libuv_file_watcher = true,
+                use_libuv_file_watcher = false,
                 group_empty_dirs = false,
                 follow_current_file = {
                     enabled = true,
