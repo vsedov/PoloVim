@@ -15,6 +15,7 @@ buffer({
 buffer({
 
     "backdround/tabscope.nvim",
+    cond = false,
     lazy = true,
     event = "VeryLazy",
     config = true,

@@ -10,7 +10,13 @@ return {
     {
         "<c-p>",
         mode = { "n" },
-        lib.jump_windows,
+        function()
+            Flash.jump({
+                search = { mode = "search" },
+                highlight = { label = { after = { 0, 0 } } },
+                pattern = "^",
+            })
+        end,
         desc = "Jump Windows",
     },
     {

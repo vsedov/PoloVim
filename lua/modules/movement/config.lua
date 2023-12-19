@@ -33,7 +33,7 @@ end
 
 function config.houdini()
     require("houdini").setup({
-        mappings = { "jk", "AA", "II", "jj", "kk" },
+        mappings = { "jk", "aa", "ii", "jj", "kk" },
         escape_sequences = {
             t = false,
             i = function(first, second)
@@ -43,24 +43,24 @@ function config.houdini()
                     return "" -- disabled
                 end
                 if seq == "kk" then
-                    return "<BS><BS>()<esc>i"
+                    return "<bs><bs>()<esc>i"
                 end
                 if seq == "jj" then
-                    return "<BS><BS>[]<esc>i"
+                    return "<bs><bs>[]<esc>i"
                 end
-                if seq == "AA" then
+                if seq == "aa" then
                     -- jump to the end of the line in insert mode
-                    -- return "<BS><BS><End>"
-                    return "<BS><BS><c-o>$"
+                    -- return "<bs><bs><end>"
+                    return "<bs><bs><c-o>$"
                 end
-                if seq == "II" then
-                    -- jump to the beginning of the line in insert modeA
-                    return "<BS><BS><c-o>^"
+                if seq == "ii" then
+                    -- jump to the beginning of the line in insert modea
+                    return "<bs><bs><c-o>^"
                 end
-                return "<BS><BS><ESC>"
+                return "<bs><bs><esc>"
             end,
-            R = "<BS><BS><ESC>",
-            c = "<BS><BS><C-c>",
+            r = "<bs><bs><esc>",
+            c = "<bs><bs><c-c>",
         },
     })
 end

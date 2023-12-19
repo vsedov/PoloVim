@@ -141,9 +141,3 @@ startup({
         },
     },
 })
-
--- The goal of nvim-fundo is to make Neovim's undo file become stable and useful.
-
-startup({
-    "runiq/neovim-throttle-debounce",
-})

@@ -1,10 +1,10 @@
 local Flash = lambda.reqidx("flash")
 
 return {
-    -- "f",
-    -- "t",
-    -- "F",
-    -- "T",
+    "f",
+    "t",
+    "F",
+    "T",
     {
         "x",
         mode = { "o", "x" },
@@ -156,7 +156,7 @@ return {
         function()
             Flash.jump({
                 search = {
-                    multi_window = false,
+                    multi_window = true,
                     mode = "textcase",
                 },
             })

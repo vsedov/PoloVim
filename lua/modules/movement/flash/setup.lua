@@ -68,9 +68,9 @@ local function opts()
             -- Can be useful for visualizing Treesitter ranges.
             -- Pretty stupid ngl
             rainbow = {
-                enabled = false,
+                enabled = true,
                 -- number between 1 and 9
-                shade = 9,
+                shade = 1,
             },
             -- With `format`, you can change how the label is rendered.
             -- Should return a list of `[text, highlight]` tuples.
@@ -98,33 +98,26 @@ local function opts()
                 label = "FlashLabel",
             },
         },
-        -- action to perform when picking a label.
-        -- defaults to the jumping logic depending on the mode.
-        ---@type fun(match:Flash.Match, state:Flash.State)|nil
-        action = nil,
-        -- initial pattern to use when opening flash
-        pattern = "",
-        -- When `true`, flash will try to continue the last search
-        continue = false,
+
         modes = {
             search = {
                 label = { min_pattern_length = 3 },
             },
             char = {
                 enabled = false,
-                keys = { "f", "F", "t", "T" }, -- We do not need this as leap is using it . we shall make it togglable.
+                keys = { "f", "f", "t", "t" },
             },
             treesitter = {
-                labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM",
-                -- O.hint_labels,
+                labels = "sfnjklhodwembuyvrgtcxzszfnjklhodwembuyvrgtcxz/?.,;#",
+
                 remote_op = {
-                    restore = true, -- false
-                    motion = true, -- false
+                    restore = true,
+                    motion = false,
                 },
                 search = { multi_window = false, wrap = true, incremental = false, max_length = 0 },
                 config = function(opts)
                     if false and vim.fn.mode() == "v" then
-                        opts.labels:gsub("[cdyrx]", "") -- TODO: Remove all operations
+                        opts.labels:gsub("[cdyrx]", "") -- todo: remove all operations
                     end
                 end,
                 treesitter = { containing_end_pos = true },
@@ -132,12 +125,11 @@ local function opts()
                 actions = lib.ts_actions,
             },
             remote_ts = {
-                -- TODO: use `;,<cr><tab><spc` to extend the selection to sibling nodes
-                -- TODO: integrate i/a textobjects somehow. Maybe 'i<label><char>' = jump<label> i<char>
+                -- todo: use `;,<cr><tab><spc` to extend the selection to sibling nodes
+                -- todo: integrate i/a textobjects somehow. maybe 'i<label><char>' = jump<label> i<char>
                 mode = "treesitter",
                 search = {
-                    -- mode = "fuzzy",
-                    -- mode =lib.remote_ts_search,
+                    mode = lib.remote_ts_search,
                     max_length = 2,
                     incremental = false,
                 },
@@ -174,7 +166,9 @@ local function opts()
                     vim.api.nvim_win_call(match.win, function()
                         vim.api.nvim_win_set_cursor(match.win, match.pos)
                         lsp_utils.hover(function(err, result, ctx)
-                            vim.cmd([[Lspsaga hover_doc]])
+                            vim.cmd("lspsaga hover_doc")
+                            -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
+                            vim.api.nvim_win_set_cursor(match.win, state.pos)
                         end)
                     end)
                 end,
@@ -193,32 +187,6 @@ local function opts()
             remote = {
                 search = { mode = "fuzzy" },
                 jump = { autojump = true },
-            },
-            -- options for the floating window that shows the prompt,
-            -- for regular jumps
-            prompt = {
-                enabled = true,
-                prefix = { { "⚡", "FlashPromptIcon" } },
-                win_config = {
-                    relative = "editor",
-                    width = 1, -- when <=1 it's a percentage of the editor width
-                    height = 1,
-                    row = -1, -- when negative it's an offset from the bottom
-                    col = 0, -- when negative it's an offset from the right
-                    zindex = 1000,
-                },
-            },
-
-            -- options for remote operator pending mode
-            remote_op = {
-                -- restore window views and cursor position
-                -- after doing a remote operation
-                restore = false,
-                -- For `jump.pos = "range"`, this setting is ignored.
-                -- `true`: always enter a new motion when doing a remote operation
-                -- `false`: use the window's cursor position and jump target
-                -- `nil`: act as `true` for remote windows, `false` for the current window
-                motion = true,
             },
         },
     }

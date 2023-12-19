@@ -99,8 +99,6 @@ tools({
     lazy = true,
 })
 
-tools({ "ilAYAli/scMRU.nvim", lazy = true, cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" } })
-
 tools({
     "ashfinal/qfview.nvim",
     -- event = "VeryLazy",

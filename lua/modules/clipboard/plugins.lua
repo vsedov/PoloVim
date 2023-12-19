@@ -142,3 +142,78 @@ clipsub({
         }
     end,
 })
+clipsub({
+    "RomanoZumbe/yanki.nvim",
+    keys = {
+        {
+            "<leader>p",
+            vim.cmd.PutNextLine,
+            desc = "PutNextLine",
+        },
+        {
+            "<leader>yl",
+            vim.cmd.ShowYankHistory,
+            desc = "ShowYankHistory",
+        },
+        {
+            "<leader>yc",
+            vim.cmd.CleanYankHistory,
+            desc = "CleanYankHistory",
+        },
+        {
+            "<leader>yt",
+            vim.cmd.ShowTransformers,
+            desc = "ShowTransformers",
+        },
+    },
+
+    config = function()
+        require("yanki").setup({
+            transformer = {
+                {
+                    name = "Split by new line",
+                    action = function(text)
+                        return vim.fn.split(text, "\n")
+                    end,
+                    active = true,
+                },
+                {
+                    name = "Surround with register a",
+                    action = function(text)
+                        local closings = {
+                            ["("] = ")",
+                            ["["] = "]",
+                            ["{"] = "}",
+                            ["<"] = ">",
+                        }
+                        local surroundWith = vim.fn.getreg("a", 1)
+                        local surroundEnd = closings[surroundWith] or surroundWith
+
+                        text = surroundWith .. text .. surroundEnd
+                        return text
+                    end,
+                    active = false,
+                },
+                {
+                    name = "Add to table in register b",
+                    action = function(text)
+                        local tableName = vim.fn.getreg("b", 1)
+                        return "table.insert(" .. tableName .. "," .. text .. ")"
+                    end,
+                    active = false,
+                },
+                {
+                    name = "Replace placeholder(reg c) in template (reg d)",
+                    action = function(text)
+                        local placeholder = vim.fn.getreg("c", 1)
+                        local template = vim.fn.getreg("d", 1)
+                        return string.gsub(template, placeholder, text)
+                    end,
+                    active = false,
+                },
+            },
+        })
+        -- PutNextLine
+    end,
+    lazy = false,
+})

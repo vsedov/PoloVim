@@ -1,3 +1,4 @@
+local leader = ";w"
 local docs = { "<cr>", "l", "W", "r", "S", "J", "K" }
 local analyse = { "s", "o", "O", "a" }
 local summary = { "M", "R", "C" }
@@ -40,12 +41,12 @@ local config = {
         Dap = {
             color = "pink",
             position = "bottom-right",
-            body = ";w",
-            on_enter = function()
-                if require("dap").session() == nil then
-                    require("dapui").open()
-                end
-            end,
+            body = leader,
+            -- on_enter = function()
+            --     if require("dap").session() == nil then
+            --         require("dapui").open()
+            --     end
+            -- end,
 
             ["<ESC>"] = { nil, { exit = true } },
 
@@ -95,20 +96,20 @@ local config = {
                 function()
                     test_method()
                 end,
-                { nowait = false, exit = true, desc = "Python TestMethod" },
+                { nowait = false, exit = false, desc = "Python TestMethod" },
             },
 
             q = {
                 function()
                     test_class()
                 end,
-                { nowait = false, exit = true, desc = "Python TestClass" },
+                { nowait = false, exit = false, desc = "Python TestClass" },
             },
             e = {
                 function()
                     debug_selection()
                 end,
-                { nowait = false, exit = true, desc = "Python Selection" },
+                { nowait = false, exit = false, desc = "Python Selection" },
             },
         },
     },

@@ -8,7 +8,6 @@ opt.shortmess = {
     o = true, -- file-read message overwrites previous
     O = true, -- file-read message overwrites previous
     T = true, -- truncate non-file messages in middle
-    f = true, -- (file x of x) instead of just (x of x
     F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
     s = true,
     c = true,
@@ -102,7 +101,7 @@ opt.formatoptions = {
 -- recompute the fold which when using nvim-ufo means it will be closed again...
 o.foldlevelstart = 999
 -- o.foldlevelstart = 20
-o.foldcolumn = "1" -- '0' is not bad
+o.foldcolumn = "0" -- '0' is not bad
 o.foldenable = true
 
 o.cursorline = true

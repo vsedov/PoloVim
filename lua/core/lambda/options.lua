@@ -224,15 +224,14 @@ lambda.config.ui = {
         use_close = false,
     },
     use_hlslens = true,
-    use_statuscol = true, -- Does thi cause some lage sometimes im not sure ?
     heirline = {
-        use_statuscol = false,
+        use_statuscol = true,
         use_heirline = true,
     },
     indent_lines = {
         use_hlchunk = false,
-        use_indent_blankline = false, -- we shall keep this for now, seems rather nice
-        use_mini_indent_scope = true,
+        use_indent_blankline = true, -- we shall keep this for now, seems rather nice
+        use_mini_indent_scope = false,
     },
     scroll_bar = {
         use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work

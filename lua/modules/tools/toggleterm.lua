@@ -80,6 +80,29 @@ end
 toggleterm.setup({
     open_mapping = [[<c-t>]],
     shade_filetypes = { "none" },
+    -- on_open = function()
+    --     -- Check if conda is in an env and if so activate it before
+    --     -- opening the terminal
+    --     local python_env = os.getenv("PYTHONENV")
+    --     -- if python_env ~= nil then
+    --     --      "conda activate " .. python_env
+    --     -- end
+    -- end,
+    -- on_create = fun(t: Terminal), -- function to run when the terminal is first created
+    -- on_open = fun(t: Terminal), -- function to run when the terminal opens
+    -- on_close = fun(t: Terminal), -- function to run when the terminal closes
+    -- on_stdout = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stdout
+    -- on_stderr = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stderr
+    -- on_exit = fun(t: Terminal, job: number, exit_code: number, name: string) -- function to run when terminal process exits
+    on_create = function(term)
+        -- local python_env = os.getenv("PYTHONENV")
+        -- vim.defer_fn(function()
+        --     if python_env ~= nil then
+        --         term:send("conda deactivate")
+        --         term:send(string.format("conda activate %s", python_env))
+        --     end
+        -- end, 100)
+    end,
     direction = "horizontal",
     insert_mappings = false,
     start_in_insert = true,

@@ -37,7 +37,6 @@ local config = {
             { nowait = true, silent = true, desc = "Leap Current Word " },
         },
         s = {
-
             function()
                 require("leap-search").leap(nil, {
                     engines = {

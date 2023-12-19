@@ -1127,7 +1127,7 @@ local Stc = {
     --     self.signs = signs
     -- end,
     {
-        provider = "%s",
+        -- provider = "%s",
         -- provider = function(self)
         --     -- return vim.inspect({ self.signs, self.git_sign })
         --     local children = {}
@@ -1246,13 +1246,9 @@ if lambda.config.buffer.use_bufferline then
     config.tabline = nil
 end
 
-if lambda.config.ui.use_statuscol then
-    config.statuscolumn = nil
-end
-
 require("heirline").setup(config)
 
-if not lambda.config.ui.use_statuscol then
+if lambda.config.ui.heirline.use_statuscol then
     vim.o.statuscolumn = require("heirline").eval_statuscolumn()
 end
 

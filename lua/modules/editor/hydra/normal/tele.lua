@@ -21,8 +21,11 @@ local hint_telescope = [[
  ^^^^                       Files                         ^^^^
  ^^^^                                                     ^^^^
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-  _f_: Find Files                   _s_: find string
-  _F_: Files                        _t_: search file
+  _>_: TfmVsplit                    _F_: TfmTabedit
+  _<_: TfmSplit                     _f_: Tfmload
+ ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
+  _1_: Find Files                   _s_: find string
+  _2_: Files                        _t_: search file
   _b_: browse files                 _d_: DotFiles
 
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
@@ -31,12 +34,7 @@ local hint_telescope = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
   _<Space>_: Frec     _\\_: FrecCWD     _B_: BookMarks
                       _]_:  Smart Open
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
- ^^^^                     MRU/Misc                        ^^^^
- ^^^^                                                     ^^^^
- ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^
-      _L_: MRU                          _K_: MFU
-      _A_: MruAdd                       _D_: MruDel
+
                           _T_: EP
   _q_ exit _<Esc>_ exit
 
@@ -53,16 +51,6 @@ local function rectangular_border(opts)
 end
 local function dropdown(opts)
     return require("telescope.themes").get_dropdown(rectangular_border(opts))
-end
-
-local function MRU()
-    require("mru").display_cache(dropdown({
-        previewer = false,
-    }))
-end
-
-local function MFU()
-    require("mru").display_cache(vim.tbl_extend("keep", { algorithm = "mfu" }, dropdown({ previewer = false })))
 end
 
 Hydra({
@@ -133,6 +121,39 @@ Hydra({
             { exit = true },
         },
         {
+            -- "Tfm",
+            -- "TfmSplit",
+            -- "TfmVsplit",
+            -- "TfmTabedit",
+            ">",
+            function()
+                vim.cmd.TfmVsplit()
+            end,
+            { desc = "TfmVsplit", exit = true },
+        },
+        {
+            "<",
+            function()
+                vim.cmd.TfmSplit()
+            end,
+            { desc = "TfmSplit", exit = true },
+        },
+        {
+            "f",
+            function()
+                vim.cmd.Tfm()
+            end,
+            { desc = "Tfm", exit = true },
+        },
+        {
+            "F",
+            function()
+                vim.cmd.TfmTabedit()
+            end,
+            { desc = "TfmTabedit", exit = true },
+        },
+
+        {
             "w",
 
             function()
@@ -192,14 +213,14 @@ Hydra({
 
         -- -- files
         {
-            "f",
+            "1",
             function()
                 require("modules.search.telescope.telescope_commands").find_files()
             end,
             { exit = true },
         },
         {
-            "F",
+            "2",
             function()
                 require("modules.search.telescope.telescope_commands").files()
             end,
@@ -239,11 +260,5 @@ Hydra({
                 require("telescope").extensions.zoxide.list()
             end,
         },
-
-        { "L", MRU, { exit = true, desc = "Most recently used files" } },
-        { "K", MFU, { exit = true, desc = "Most frequently used files" } },
-
-        { "A", ":MruAdd<cr>", { exit = true, desc = "Most frequently Add" } },
-        { "D", ":MruDel<cr>", { exit = true, desc = "Most frequently Delete" } },
     },
 })

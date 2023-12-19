@@ -38,6 +38,7 @@ python({
 python({
     "luk400/vim-jukit",
     cond = false,
+
     ft = { "python", "julia" },
     lazy = true,
     config = function()
@@ -165,123 +166,10 @@ python({
         "REPLSendLine",
         "REPLSendMotion",
     },
-    init = function()
-        lambda.augroup("CoreRepl", {
-            {
-                event = "FileType",
-                pattern = { "quarto", "markdown", "markdown.pandoc", "rmd", "python", "sh", "REPL" },
-                command = function()
-                    local utils = require("modules.editor.hydra.repl_utils")
-                    local run_cmd_with_count = utils.run_cmd_with_count
-                    local ft_to_repl = utils.ft_to_repl
-
-                    vim.keymap.set("n", "<localleader>r", function()
-                        require("hydra")({
-                            name = "REPL",
-                            mode = "n",
-                            config = {
-                                color = "amaranth",
-                                invoke_on_body = true,
-                                hint = {
-                                    border = lambda.style.border.type_0,
-                                    position = "middle-right",
-                                },
-                            },
-                            -- body = main_leader,
-                            hint = [[
-REPL commands:
-^ ^ _S_: Start an REPL  ^ ^
-^ ^ _f_: Focus on REPL  ^ ^
-^ ^ _v_: View REPLs in telescope ^ ^
-^ ^ _h_: Hide REPL     ^ ^
-^ ^ _s_: Send current line to REPL ^ ^
-^ ^ _l_: Send line to REPL ^ ^
-^ ^ _q_: Quit REPL     ^ ^
-^ ^ _c_: Clear REPLs   ^ ^
-^ ^ _w_: Swap REPLs    ^ ^
-^ ^ _?_: Start an REPL from available REPL metas ^ ^
-^ ^ _a_: Attach current buffer to a REPL  ^ ^
-^ ^ _d_: Detach current buffer to any REPL ^ ^
-^ ^ _<esc>_: Quit     ^ ^
-]],
-
-                            heads = {
-                                {
-                                    "S",
-                                    function()
-                                        run_cmd_with_count("REPLStart " .. ft_to_repl[vim.bo.filetype])()
-                                    end,
-                                    { exit = true, desc = "Start an REPL" },
-                                },
-                                {
-                                    "f",
-                                    run_cmd_with_count("REPLFocus"),
-                                    { exit = true, desc = "Focus on REPL" },
-                                },
-                                {
-                                    "v",
-                                    "<CMD>Telescope REPLShow<CR>",
-                                    { exit = true, desc = "View REPLs in telescope" },
-                                },
-                                {
-                                    "h",
-                                    run_cmd_with_count("REPLHide"),
-                                    { exit = true, desc = "Hide REPL" },
-                                },
-                                {
-                                    "s",
-                                    run_cmd_with_count("REPLSendMotion"),
-                                    { exit = true, desc = "Send current line to REPL" },
-                                },
-                                {
-                                    "l",
-                                    run_cmd_with_count("REPLSendLine"),
-                                    { exit = true, desc = "Send line to REPL" },
-                                },
-                                {
-                                    "q",
-                                    run_cmd_with_count("REPLClose"),
-                                    { exit = true, desc = "Quit REPL" },
-                                },
-                                { "c", "<CMD>REPLCleanup<CR>", { exit = true, desc = "Clear REPLs" } },
-                                { "w", "<CMD>REPLSwap<CR>", { exit = true, desc = "Swap REPLs" } },
-                                {
-                                    "?",
-                                    run_cmd_with_count("REPLStart"),
-                                    { exit = true, desc = "Start an REPL from available REPL metas" },
-                                },
-                                {
-                                    "a",
-                                    "<CMD>REPLAttachBufferToREPL<CR>",
-                                    { exit = true, desc = "Attach current buffer to a REPL" },
-                                },
-                                {
-                                    "d",
-                                    "<CMD>REPLDetachBufferToREPL<CR>",
-                                    { exit = true, desc = "Detach current buffer to any REPL" },
-                                },
-                                {
-                                    "<esc>",
-                                    nil,
-                                    { exit = true, desc = "quit" },
-                                },
-                            },
-                        }):activate()
-                    end, { desc = "Start an REPL", buffer = 0 })
-                    vim.keymap.set("n", "<localleader>sc", utils.send_a_code_chunk, {
-                        desc = "send a code chunk",
-                        expr = true,
-                        buffer = 0,
-                    })
-                end,
-                nested = false,
-                once = false,
-            },
-        })
-    end,
     config = function()
+        local yarepl = require("yarepl")
         vim.g.REPL_use_floatwin = 0
-        require("yarepl").setup({
+        yarepl.setup({
             wincmd = function(bufnr, name)
                 if vim.g.REPL_use_floatwin == 1 then
                     vim.api.nvim_open_win(bufnr, true, {
@@ -300,6 +188,15 @@ REPL commands:
                     vim.api.nvim_set_current_buf(bufnr)
                 end
             end,
+            metas = {
+                aichat = { cmd = "aichat", formatter = yarepl.formatter.bracketed_pasting },
+                radian = { cmd = "radian", formatter = yarepl.formatter.bracketed_pasting },
+                ipython = { cmd = "ipython", formatter = yarepl.formatter.bracketed_pasting },
+                python = { cmd = "python", formatter = yarepl.formatter.trim_empty_lines },
+                R = { cmd = "R", formatter = yarepl.formatter.trim_empty_lines },
+                bash = { cmd = "bash", formatter = yarepl.formatter.trim_empty_lines },
+                zsh = { cmd = "zsh", formatter = yarepl.formatter.bracketed_pasting },
+            },
         })
     end,
 })

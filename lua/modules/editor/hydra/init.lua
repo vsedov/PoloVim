@@ -29,9 +29,11 @@ local function loadHydraAPI()
     local api_path = fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/api/"
     local api_list = vim.split(fn.glob(api_path .. "*.lua", true), "\n")
     local exclude_table = { "init" }
-    -- if lambda.config.movement.movement_type == "flash" then
-    --     -- table.insert(exclude_table, "leap") -- we stilll use leap ?
-    -- end
+
+    if lambda.config.movement.movement_type == "flash" then
+        table.insert(exclude_table, "leap") -- we stilll use leap ?
+    end
+
     if not (lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_insert) then
         table.insert(exclude_table, "tabnine")
     end
@@ -107,11 +109,3 @@ hydra({
         },
     },
 })
-
-
-
-
-
-
-
-
