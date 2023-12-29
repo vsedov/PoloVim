@@ -61,7 +61,6 @@ Hydra({
         invoke_on_body = true,
         hint = {
             position = "bottom-right",
-            border = "single",
         },
     },
     mode = { "n" },

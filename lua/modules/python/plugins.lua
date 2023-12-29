@@ -137,6 +137,8 @@ python({
             nnoremap ;<leader>rpd :call jukit#convert#save_nb_to_file(1,1,'pdf')<cr>
             "   - same as above, but will (re-)run all cells when converting to pdf. NOTE: If the function doesn't work there may be issues with your nbconvert or latex version - to debug, try converting to pdf using `jupyter nbconvert --to pdf --allow-errors --log-level='ERROR' --HTMLExporter.theme=dark </abs/path/to/ipynb> && xdg-open </abs/path/to/pdf>` in your terminal and check the output for possible issues.
         ]])
+        --  TODO: (vsedov) (05:13:17 - 20/12/23): Would be best to create a hydra instead of having all
+        --  these binds, but i cannot be asked, so il do this later once i have the time for it .
     end,
 })
 

@@ -390,3 +390,27 @@ user({
         },
     },
 })
+-- Well this is nice
+user({
+    "ragnarok22/whereami.nvim",
+    cmd = "Whereami",
+})
+
+user({
+    "ariel-frischer/bmessages.nvim",
+    event = "CmdlineEnter",
+    cmd = {
+        "Bmessages",
+        "BmessagesVS",
+        "Bmessagessp",
+    },
+    opts = {},
+})
+user({
+    "2kabhishek/nerdy.nvim",
+    dependencies = {
+        "stevearc/dressing.nvim",
+        "nvim-telescope/telescope.nvim",
+    },
+    cmd = "Nerdy",
+})

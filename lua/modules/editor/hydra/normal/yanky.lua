@@ -18,7 +18,6 @@ yanky_hydra = Hydra({
         color = "amaranth",
         invoke_on_body = false,
         hint = {
-            border = lambda.style.border.type_0,
             position = "middle-right",
         },
     },

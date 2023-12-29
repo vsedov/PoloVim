@@ -36,7 +36,6 @@ Hydra({
     config = {
         invoke_on_body = true,
         hint = {
-            border = "rounded",
             offset = -1,
         },
     },

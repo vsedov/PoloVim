@@ -95,7 +95,7 @@ editor({
 })
 
 editor({
-    "nvim-island/hydra.nvim",
+    "nvimtools/hydra.nvim",
     event = "VeryLazy",
     cond = lambda.config.editor.hydra.use_hydra,
     config = conf.hydra,
@@ -176,6 +176,14 @@ editor({
     keys = {
         -- Opens the command.
         { "<leader><leader>r", "<cmd>lua require('lazy-reload').feed()<cr>", desc = "Reload a plugin" },
+    },
+    config = true,
+})
+editor({
+    "tris203/hawtkeys.nvim",
+    cmd = {
+        "HawtkeysAll",
+        "HawtkeysDupes",
     },
     config = true,
 })

@@ -14,7 +14,12 @@ function M.new(config, module_name)
         config = {
             hint = {
                 position = "bottom-right",
-                border = lambda.style.border.type_0,
+                float_opts = {
+                    -- row, col, height, width, relative, and anchor should not be overridden
+                    style = "minimal",
+                    focusable = false,
+                    noautocmd = true,
+                },
             },
             timeout = false,
             invoke_on_body = true,
@@ -42,9 +47,9 @@ function M:buildHeads()
         position = function(t, rhs)
             t.config.hint.position = rhs
         end,
-        border = function(t, rhs)
-            t.config.hint.border = rhs
-        end,
+        -- border = function(t, rhs)
+        --     t.config.hint.border = rhs
+        -- end,
         mode = function(t, rhs)
             t.mode = rhs
         end,

@@ -75,7 +75,6 @@ hydra({
         invoke_on_body = true,
         hint = {
             position = "middle-right",
-            border = lambda.style.border.type_0,
         },
     },
     name = "Change case",
@@ -119,7 +118,6 @@ hydra({
         invoke_on_body = true,
         hint = {
             position = "middle-right",
-            border = lambda.style.border.type_0,
         },
     },
     name = "Change case",

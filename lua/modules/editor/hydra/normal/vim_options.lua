@@ -23,7 +23,6 @@ Hydra({
         color = "amaranth",
         invoke_on_body = true,
         hint = {
-            border = lambda.style.border.type_0,
             position = "middle-right",
         },
     },

@@ -78,7 +78,7 @@ overseer.setup({
     template_timeout = 5000,
     template_cache_threshold = 0,
     actions = {
-        ["set loclist diagnostics"] = false,
+        ["set loclist diagnostics"] = true,
         ["set as recive terminal"] = {
             desc = "set this task as the terminal to recive sent text and commands",
             run = function(task)
