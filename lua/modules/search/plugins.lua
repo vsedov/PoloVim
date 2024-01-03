@@ -173,7 +173,9 @@ search({
     "ibhagwan/fzf-lua",
     lazy = true,
     cond = lambda.config.extra_search.providers.use_fzf_lua,
-    event = "VeryLazy",
+    cmd = {
+        "FzfLua",
+    },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = conf.fzf,
 })

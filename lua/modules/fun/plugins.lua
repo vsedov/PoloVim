@@ -79,3 +79,12 @@ fun({
     "tjdevries/sPoNGe-BoB.NvIm",
     cmd = "SpOnGeBoBtOgGlE",
 })
+fun({
+    "0x5a4/oogway.nvim",
+    cmd = { "Oogway" }, -- for lazy loading
+})
+
+fun({
+    "ragnarok22/whereami.nvim",
+    cmd = "Whereami",
+})

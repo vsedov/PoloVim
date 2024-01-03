@@ -15,9 +15,9 @@ function M.new(config, module_name)
             hint = {
                 position = "bottom-right",
                 float_opts = {
-                    -- row, col, height, width, relative, and anchor should not be overridden
+                    border = lambda.style.border.type_0,
                     style = "minimal",
-                    focusable = false,
+                    focusable = true,
                     noautocmd = true,
                 },
             },
@@ -67,6 +67,18 @@ function M:buildHeads()
         end,
         on_exit = function(t, rhs)
             t.config.on_exit = rhs
+        end,
+        foreign_keys = function(t, rhs)
+            t.config.foreign_keys = rhs
+        end,
+        buffer = function(t, rhs)
+            t.config.buffer = rhs
+        end,
+        float_opts = function(t, rhs)
+            t.config.hint.float_opts = rhs
+        end,
+        desc = function(t, rhs)
+            t.config.desc = rhs
         end,
     }
 

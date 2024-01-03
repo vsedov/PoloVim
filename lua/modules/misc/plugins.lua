@@ -143,7 +143,10 @@ misc({
 })
 misc({
     "chrishrb/gx.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
+    keys = {
+        "gx",
+    },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = true,
 })

@@ -10,7 +10,6 @@ cmp.mapping(function()
     end
 end)
 
-require("modules.completion.cmp.extra")
 lambda.highlight.plugin("Cmp", {
     { CmpItemKindVariable = { link = "Variable" } },
     { CmpItemAbbrMatchFuzzy = { inherit = "CmpItemAbbrMatch", italic = true } },
@@ -18,33 +17,36 @@ lambda.highlight.plugin("Cmp", {
     { CmpItemMenu = { inherit = "Comment", italic = true } },
 })
 
-cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({
-        { name = "cmdline" },
-        { name = "cmdline_history" },
-        {
-            name = "buffer",
-            keyword_length = 3,
-            option = {
-                get_bufnrs = function()
-                    local bufs = {}
-                    for _, win in ipairs(vim.api.nvim_list_wins()) do
-                        bufs[vim.api.nvim_win_get_buf(win)] = true
-                    end
-                    return vim.tbl_keys(bufs)
-                end,
-            },
-        },
-    }),
-})
-vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
-    contents = vim.lsp.util._normalize_markdown(contents, {
-        width = vim.lsp.util._make_floating_popup_size(contents, opts),
-    })
+-- cmp.setup.cmdline(":", {
+--     sources = cmp.config.sources({
+--         { name = "cmdline" },
+--         { name = "cmdline_history" },
+--         {
+--             name = "buffer",
+--             keyword_length = 3,
+--             option = {
+--                 get_bufnrs = function()
+--                     local bufs = {}
+--                     for _, win in ipairs(vim.api.nvim_list_wins()) do
+--                         bufs[vim.api.nvim_win_get_buf(win)] = true
+--                     end
+--                     return vim.tbl_keys(bufs)
+--                 end,
+--             },
+--         },
+--     }),
+-- })
 
-    vim.bo[bufnr].filetype = "markdown"
-    vim.treesitter.start(bufnr)
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
-
-    return contents
-end
+-- vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
+--     contents = vim.lsp.util._normalize_markdown(contents, {
+--         width = vim.lsp.util._make_floating_popup_size(contents, opts),
+--     })
+--     print(vim.inspect(contents))
+--
+--     vim.bo[bufnr].filetype = "markdown"
+--     vim.treesitter.start(bufnr)
+--     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
+--
+--     return contents
+-- end
+require("modules.completion.cmp.extra")

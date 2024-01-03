@@ -59,6 +59,8 @@ local config = {
                     vim.notify("No tasks found", vim.log.levels.WARN)
                     vim.cmd([[CompilerOpen]])
                 else
+                    -- print("Restarting task: " .. tasks[1])
+                    vim.pretty_print(tasks)
                     overseer.run_action(tasks[1], "restart")
                 end
             end,
@@ -106,3 +108,4 @@ return {
     3,
     2,
 }
+

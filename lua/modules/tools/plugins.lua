@@ -287,7 +287,7 @@ tools({
 tools({
     "FluxxField/bionic-reading.nvim",
     cond = lambda.config.tools.use_bionic_reading,
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     dependencies = "nvim-treesitter/nvim-treesitter",
     cmd = {
         "BRToggle",

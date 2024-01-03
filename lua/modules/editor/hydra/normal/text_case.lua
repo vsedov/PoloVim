@@ -32,7 +32,7 @@ local operator = function(key, operator_name, desc)
 end
 
 local gaa_hint = [[
-^ ^                   current_word                   ^ ^
+^ ^                   Current_word                   ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^ _u_: to upper case        _f_: to path case      ^ ^
 ^ ^ _l_: to lower case        _w_: to snake case     ^ ^
@@ -42,7 +42,7 @@ local gaa_hint = [[
 ^ ^ _a_: to phrase case                              ^ ^
 ^ ^                                                  ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
-^ ^                   lsp_rename                     ^ ^
+^ ^                   Lsp_rename                     ^ ^
 ^ ^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^ ^
 ^ ^ _U_: to upper case        _F_: to path case      ^ ^
 ^ ^ _L_: to lower case        _W_: to snake case     ^ ^

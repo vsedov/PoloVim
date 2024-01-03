@@ -80,6 +80,9 @@ folke({
     event = "VeryLazy",
     config = conf.zen,
     opts = {
+        on_open = function()
+            require("oogway").sense_the_dragon_warrior()
+        end,
         window = {
             backdrop = 0.95, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
             -- height and width can be:
@@ -103,9 +106,6 @@ folke({
         },
     },
 })
-
-
-
 
 -- folke({
 --     "folke/twilight.nvim",

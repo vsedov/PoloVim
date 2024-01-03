@@ -11,7 +11,7 @@ local hint = [[
 ^ ^ _N_: ↑       ^ ^
 ]]
 
-yanky_hydra = Hydra({
+local yanky_hydra = Hydra({
     name = "Yank ring",
     mode = "n",
     config = {

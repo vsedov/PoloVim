@@ -4,6 +4,48 @@ local config = {
         body = "<leader>m",
         mode = { "n", "v" },
         position = "bottom-right",
+
+        -- "MCstart",
+        -- "MCvisual",
+        -- "MCpattern",
+        -- "MCvisualPattern",
+        -- "MCunderCursor",
+        -- "MCclear",
+
+        s = {
+            "<cmd>MCstart<cr>",
+            { desc = "Start" },
+        },
+        S = {
+            "<cmd>MCvisual<cr>",
+            { desc = "Start", mode = "v" },
+        },
+        ["<cr>"] = {
+            function()
+                local commands = {
+                    "MCpattern",
+                    "MCvisualPattern",
+                    "MCunderCursor",
+                    "MCclear",
+                }
+
+                -- vim.ui.select(commands, {
+                --     prompt = "MultiMC Util",
+                --     },
+                --     on_select = function(selected)
+                --         vim.cmd(selected)
+                --     end)
+
+                vim.ui.select(commands, {
+                    prompt = "MultiMc Util",
+                }, function(inner_item)
+                    -- vim.cmd([[ChatGPTRun ]] .. inner_item)
+                    vim.cmd(inner_item)
+                end)
+            end,
+            { desc = "MultiMC Util", mode = { "v", "n", "x" }, exit = true, nowait = true },
+        },
+
         H = {
             "<Plug>GoVSMLeft",
             { desc = "Move Left" },
@@ -46,6 +88,9 @@ local config = {
 return {
     config,
     "Multi",
-    { { "<c-h>", "<c-j>", "<c-k>", "<c-l>" } },
-    { "H", "J", "K", "L" },
+    {
+        { "H", "J", "K", "L" },
+        { "<c-h>", "<c-j>", "<c-k>", "<c-l>" },
+    },
+    { "s", "S", "<cr>" },
 }

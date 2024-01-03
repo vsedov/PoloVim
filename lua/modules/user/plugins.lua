@@ -204,10 +204,77 @@ user({
 
 user({
     "Sam-programs/expand.nvim",
-    cond = false, -- disable this i guess ?
     event = "VeryLazy",
     dependencies = { "Sam-Programs/indent.nvim" },
-    config = true,
+    config = function()
+        require("expand").setup({
+            filetypes = {
+                lua = {
+                    -- if we are expanding on an unnamed function might aswell add the pairs
+                    { "function\\s*$", { "()", "end" } },
+                    { "function", { "", "end" } },
+                    { "if", { " then", "end" } },
+                    -- regex for a lua variable
+                    { "^\\s*\\w\\+\\s*\\w*\\s*=\\s*$", { "{", "}" } },
+                    { "", { " do", "end" } },
+                },
+                sh = {
+                    { "elif", { " ;then", "" } },
+                    { "if", { " ;then", "if" } },
+                    { "case", { "", "esac" } },
+                    { "while", { " do", "done" } },
+                    { "for", { " do", "done" } },
+                    { "", { "{", "}" } },
+                },
+                bash = {
+                    { "elif", { " ;then", "" } },
+                    { "if", { " ;then", "if" } },
+                    { "case", { "", "esac" } },
+                    { "while", { " do", "done" } },
+                    { "for", { " do", "done" } },
+                    { "", { "{", "}" } },
+                },
+                zsh = {
+                    { "elif", { " then", "" } },
+                    { "if", { " then", "if" } },
+                    { "case", { "", "esac" } },
+                    { "while", { " do", "done" } },
+                    { "for", { " do", "done" } },
+                    { "", { "{", "}" } },
+                },
+                c = {
+                    { ".*(.*)", { "{", "}" } },
+                    { "", { "{", "};" } },
+                },
+                cpp = {
+                    { ".*(.*)", { "{", "}" } },
+                    { "", { "{", "};" } },
+                },
+                python = {
+                    {
+                        "print",
+                        {
+                            "(",
+                            ")",
+                        },
+                    },
+                    { ".*(.*)", { ":", "" } },
+                    { "", { ":", "" } },
+
+                    {
+
+                        "def",
+                        {
+                            "():",
+                            "",
+                        },
+                    },
+                },
+            },
+
+            hotkey = "<C-Space>",
+        })
+    end,
 })
 
 -- user({
@@ -215,6 +282,13 @@ user({
 --     event = "VeryLazy",
 --     config = true,
 -- })
+user({
+    "nkakouros-original/scrollofffraction.nvim",
+    event = "VeryLazy",
+    config = function()
+        require("scrollofffraction").setup()
+    end,
+})
 
 user({
     "vidocqh/data-viewer.nvim",
@@ -391,10 +465,6 @@ user({
     },
 })
 -- Well this is nice
-user({
-    "ragnarok22/whereami.nvim",
-    cmd = "Whereami",
-})
 
 user({
     "ariel-frischer/bmessages.nvim",
@@ -413,4 +483,25 @@ user({
         "nvim-telescope/telescope.nvim",
     },
     cmd = "Nerdy",
+})
+
+user({
+    "max397574/tmpfile.nvim",
+    cmd = {
+        "Tmp",
+    },
+    config = true,
+})
+user({
+    "mireq/luasnip-snippets",
+    cond = true,
+    event = "InsertEnter",
+    dependencies = { "L3MON4D3/LuaSnip" },
+    init = function()
+        vim.g.snips_author = "Vivian Sedov"
+        vim.g.snips_email = "vivian.sedov.2020@live.rhul.ac.uk"
+        vim.g.snips_github = "https://github.com/vsedov"
+        vim.g.snips_company = "company"
+        require("luasnip_snippets.common.snip_utils").setup()
+    end,
 })

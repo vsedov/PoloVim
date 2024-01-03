@@ -50,7 +50,6 @@ local function bufgrep(text)
     vim.cmd.vimgrep({ args = { string.format("/%s/gj", text), "##" }, mods = { silent = true } })
     vim.cmd("QFOpen!")
 end
-
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │                           Core Mappings                            │
 --  ╰────────────────────────────────────────────────────────────────────╯
@@ -276,3 +275,4 @@ end, { desc = "Grep open buffers for WORD" })
 lambda.command("Bufgrep", function(params)
     bufgrep(params.args)
 end, { nargs = "+" })
+

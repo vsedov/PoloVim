@@ -102,62 +102,6 @@ function config.text_case()
     require("telescope").load_extension("textcase")
 end
 
-function config.clipboardimage()
-    local img_func = function()
-        vim.fn.inputsave()
-        local name = vim.fn.input("Name: ")
-        vim.fn.inputrestore()
-
-        if name == nil or name == "" then
-            return os.date("%y-%m-%d-%H-%M-%S")
-        end
-        return name
-    end
-    require("clipboard-image").setup({
-        default = {
-            img_name = img_func,
-        },
-        norg = {
-            img_name = img_func,
-            img_dir = "img",
-            img_dir_txt = "img",
-            affix = ".image %s",
-        },
-        tex = {
-            img_dir = "img",
-            img_name = img_func,
-            img_dir_txt = "img",
-            affix = [[\begin{wrapfigure}{\textwidth}
-  \begin{center}
-  \includegraphics[width=0.7\textwidth]{%s}
-  \end{center}
-  \caption{Update me}
-\end{wrapfigure}]],
-        },
-    })
-    local function paste_url(url)
-        -- check if url is in clipboard
-        url = url.args or vim.fn.getreg("+")
-        -- check if imgure is in clip
-        if url:find("imgur") then
-        end
-        -- https://i.imgur.com/btkPKSa.png
-        -- validate if any clipboard contains imgur
-        -- if not, then use url.args
-        -- Check clipboard
-
-        local utils = require("clipboard-image.utils")
-        local conf_utils = require("clipboard-image.config")
-
-        local conf_toload = conf_utils.get_usable_config()
-        local conf = conf_utils.load_config(conf_toload)
-
-        utils.insert_txt(conf.affix, url)
-    end
-    -- Now let's create the command (works on neovim 0.7+)
-    lambda.command("PasteImgUrl", paste_url, { nargs = "*" })
-end
-
 function config.neoclip()
     require("neoclip").setup({
         history = 2000,

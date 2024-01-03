@@ -227,3 +227,10 @@ ls.add_snippets("tex", require("modules.completion.snippets.latex.tex_math"), { 
 
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 require("luasnip.loaders.from_vscode").lazy_load()
+
+ls.setup({
+    load_ft_func = require("luasnip_snippets.common.snip_utils").load_ft_func,
+    ft_func = require("luasnip_snippets.common.snip_utils").ft_func,
+    store_selection_keys = "<c-x>",
+    enable_autosnippets = true,
+})

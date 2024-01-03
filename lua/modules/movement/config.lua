@@ -34,6 +34,7 @@ end
 function config.houdini()
     require("houdini").setup({
         mappings = { "jk", "aa", "ii", "jj", "kk" },
+        check_modified = true,
         escape_sequences = {
             t = false,
             i = function(first, second)
@@ -61,6 +62,16 @@ function config.houdini()
             end,
             r = "<bs><bs><esc>",
             c = "<bs><bs><c-c>",
+            ["ic"] = "<BS><BS><ESC>",
+            ["ix"] = "<BS><BS><ESC>",
+            ["R"] = "<BS><BS><ESC>",
+            ["Rc"] = "<BS><BS><ESC>",
+            ["Rx"] = "<BS><BS><ESC>",
+            ["Rv"] = "<BS><BS><ESC>",
+            ["Rvc"] = "<BS><BS><ESC>",
+            ["Rvx"] = "<BS><BS><ESC>",
+            ["rm"] = "<ESC>",
+            ["cv"] = ("<BS>"):rep(100) .. "vi<CR>",
         },
     })
 end
