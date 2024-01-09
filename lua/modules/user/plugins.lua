@@ -11,6 +11,7 @@ user({
     config = true,
 })
 
+-- Potential Hydra
 user({
     "superDross/spellbound.nvim",
     keys = {
@@ -100,6 +101,8 @@ user({
         require("markmap").setup(opts)
     end,
 })
+
+-- Potential Hydra, save those mappings perhaps ?
 user({
     "azabiong/vim-highlighter",
     keys = {
@@ -128,6 +131,8 @@ user({
     end,
 })
 
+-- # Ngl
+-- ngl i do not get why this isnt  hydra actually
 user({
     "KaitlynEthylia/TreePin",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -202,6 +207,7 @@ user({
     end,
 })
 
+-- This is nice
 user({
     "Sam-programs/expand.nvim",
     event = "VeryLazy",
@@ -323,13 +329,42 @@ user({
 user({
     "mangelozzi/nvim-rgflow.lua",
     keys = {
-        ";rG",
-        ";rg",
-        ";ro",
-        ";ra",
-        ";rc",
-        ";rO",
-        ";r?",
+        -- ";rG",
+        -- ";rg",
+        -- ";ro",
+        -- ";ra",
+        -- ";rc",
+        -- ";rO",
+        -- ";r?",
+
+        {
+            ";rG",
+            desc = "rgflow: open blank",
+        },
+        {
+            ";rg",
+            desc = "rgflow: open cword",
+        },
+        {
+            ";ro",
+            desc = "rgflow: open paste",
+        },
+        {
+            ";ra",
+            desc = "rgflow: open again",
+        },
+        {
+            ";rc",
+            desc = "rgflow: abort",
+        },
+        {
+            ";rO",
+            desc = "rgflow: print cmd",
+        },
+        {
+            ";r?",
+            desc = "rgflow: print status",
+        },
     },
     config = function()
         require("rgflow").setup({
@@ -373,16 +408,6 @@ user({
     config = function()
         require("distant"):setup()
     end,
-})
-user({
-    "jpmcb/nvim-llama",
-    cmd = {
-        "Llama",
-        "LlamaInstall",
-        "LlamaRebuild",
-        "LlamaUpdate",
-    },
-    config = true,
 })
 user({
     "EtiamNullam/deferred-clipboard.nvim",
@@ -485,6 +510,7 @@ user({
     cmd = "Nerdy",
 })
 
+-- Not used
 user({
     "max397574/tmpfile.nvim",
     cmd = {
@@ -492,16 +518,17 @@ user({
     },
     config = true,
 })
+
+-- this is great although it needs some refinement, one of them being that hydra, and heirline would
+-- need to be completely reloaded for this to work . meaning an auto command is required so when
+-- ever a new colourscheme is loaded from pineapple, you need to reset hydra and heirline, else this
+-- is a rather nice plugin.
 user({
-    "mireq/luasnip-snippets",
-    cond = true,
-    event = "InsertEnter",
-    dependencies = { "L3MON4D3/LuaSnip" },
-    init = function()
-        vim.g.snips_author = "Vivian Sedov"
-        vim.g.snips_email = "vivian.sedov.2020@live.rhul.ac.uk"
-        vim.g.snips_github = "https://github.com/vsedov"
-        vim.g.snips_company = "company"
-        require("luasnip_snippets.common.snip_utils").setup()
-    end,
+    "CWood-sdf/pineapple",
+    dependencies = require("themes.pineapple"),
+    cmd = "Pineapple",
+    opts = {
+        installedRegistry = "themes.pineapple",
+        colorschemeFile = "after/plugin/theme.lua",
+    },
 })

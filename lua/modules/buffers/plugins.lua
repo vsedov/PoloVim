@@ -69,58 +69,29 @@ buffer({
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
-        columns = {
-            "icon",
-            "permissions",
-            "mtime",
-        },
-        buf_options = {
-            buflisted = true,
-        },
-        -- Window-local options to use for oil buffers
-        win_options = {
-            wrap = true,
-            signcolumn = "no",
-            cursorcolumn = false,
-            foldcolumn = "0",
-            spell = false,
-            list = false,
-            conceallevel = 3,
-            concealcursor = "n",
-        },
-        -- Restore window options to previous values when leaving an oil buffer
-        restore_win_options = true,
+        delete_to_trash = true,
         skip_confirm_for_simple_edits = true,
+        prompt_save_on_select_new_entry = false,
         keymaps = {
-            ["g?"] = "actions.show_help",
-            ["<CR>"] = "actions.select",
-            ["<C-s>"] = "actions.select_vsplit",
-            ["<C-h>"] = "actions.select_split",
-            ["<C-p>"] = "actions.preview",
-            ["<C-c>"] = "actions.close",
-            ["<C-l>"] = "actions.refresh",
-            ["-"] = "actions.parent",
-            ["w"] = "actions.open_cwd",
-            ["c"] = "actions.cd",
-            ["C"] = "actions.tcd",
-            ["g."] = "actions.toggle_hidden",
-        },
-        -- Set to false to disable all of the above keymaps
-        use_default_keymaps = false,
-        view_options = {
-            show_hidden = true,
-        },
-        -- Configuration for the floating window in oil.open_float
-        float = {
-            -- Padding around the floating window
-            padding = 2,
-            max_width = 0,
-            max_height = 0,
-            border = lambda.style.border.type_0,
-            win_options = {
-                winblend = 10,
+            ["w"] = "actions.tcd",
+            ["~"] = "<cmd>edit $HOME<CR>",
+            ["<leader>t"] = "actions.open_terminal",
+            ["gd"] = {
+                desc = "Toggle detail view",
+                callback = function()
+                    local oil = require("oil")
+                    local config = require("oil.config")
+                    if #config.columns == 1 then
+                        oil.set_columns({ "icon", "permissions", "size", "mtime" })
+                    else
+                        oil.set_columns({ "icon" })
+                    end
+                end,
             },
         },
+        is_always_hidden = function(name, bufnr)
+            return name == ".."
+        end,
     },
     config = function(_, opts)
         local oil = require("oil")

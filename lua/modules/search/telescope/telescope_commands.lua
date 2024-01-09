@@ -513,6 +513,7 @@ M.load_dotfiles = function()
 end
 
 M.git_conflicts = function(opts)
+    opts = opts or {}
     opts.entry_maker = opts.entry_maker or make_entry.gen_from_file({})
 
     pickers

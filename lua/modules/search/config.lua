@@ -31,7 +31,6 @@ function config.telescope()
     })
     require("telescope").load_extension("bookmarks")
     require("telescope").load_extension("fzf")
-    require("telescope").load_extension("ast_grep")
     require("telescope").load_extension("file_browser")
     require("telescope").load_extension("egrepify")
 end

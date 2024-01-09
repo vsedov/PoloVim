@@ -44,20 +44,6 @@ python({
     config = function()
         vim.g.jukit_terminal = "kitty"
         vim.cmd([[
-        fun! DFColumns()
-            let visual_selection = jukit#util#get_visual_selection()
-            let cmd = visual_selection . '.columns'
-            call jukit#send#send_to_split(cmd)
-        endfun
-
-        fun! PythonHelp()
-            let visual_selection = jukit#util#get_visual_selection()
-            let cmd = 'help(' . visual_selection . ')'
-            call jukit#send#send_to_split(cmd)
-        endfun
-        
-        vnoremap ;H :call PythonHelp()<cr>
-        vnoremap ;C :call DFColumns()<cr>
 
             nnoremap ;<leader>os :call jukit#splits#output()<cr>
             "   - Opens a new output window and executes the command specified in `g:jukit_shell_cmd`

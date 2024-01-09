@@ -217,6 +217,16 @@ local FileType = {
     hl = "Type",
 }
 
+local cava = {
+    provider = function()
+        -- script_path = vim.fn.expand("~/.config/cava/cava.sh")
+        script_path = vim.fn.expand("~/.config/nvim/lua/modules/ui/cava.sh")
+
+        return vim.fn.system(script_path)
+    end,
+    hl = { fg = "green" },
+}
+
 local FileEncoding = {
     provider = function()
         local enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc -- :h 'enc'
@@ -1253,10 +1263,6 @@ if lambda.config.ui.heirline.use_statuscol then
 end
 
 vim.api.nvim_create_augroup("Heirline", { clear = true })
-
-vim.cmd([[au Heirline FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
-
--- vim.cmd("au BufWinEnter * if &bt != '' | setl stc= | endif")
 
 vim.api.nvim_create_autocmd("ColorScheme", {
     callback = function()

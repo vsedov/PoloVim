@@ -1,5 +1,6 @@
 local conf = require("modules.latex.config")
 local latex = require("core.pack").package
+local typst = require("core.pack").package
 
 local filetype = { "latex", "tex" }
 
@@ -19,15 +20,6 @@ latex({
         "nvim-treesitter/nvim-treesitter",
     },
     config = conf.papis,
-})
-
-latex({
-    "iurimateus/luasnip-latex-snippets.nvim",
-    dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
-    ft = filetype,
-    config = function()
-        require("luasnip-latex-snippets").setup({ use_treesitter = true })
-    end,
 })
 
 latex({
@@ -55,4 +47,14 @@ latex({
             desc = "Knap",
         },
     },
+})
+
+typst({
+    "chomosuke/typst-preview.nvim",
+    -- lazy = false, -- or ft = 'typst'
+    ft = "typst",
+    version = "0.1.*",
+    build = function()
+        require("typst-preview").update()
+    end,
 })

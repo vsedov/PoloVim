@@ -10,7 +10,132 @@ local function copilot()
     vim.api.nvim_feedkeys(lambda.replace_termcodes("<Tab>"), "n", false)
 end
 
+local function t(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+local feedkeys = vim.api.nvim_feedkeys
+
+function M.supertab(when_cmp_visible)
+    local cmp = require("cmp")
+    local function check_back_space()
+        local col = vim.fn.col(".") - 1
+        return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
+    end
+
+    return function()
+        if cmp.visible() then
+            when_cmp_visible()
+        elseif require("luasnip").expand_or_jumpable() then
+            feedkeys(t("<Plug>luasnip-expand-or-jump"), "", false)
+        else
+            -- local ok, neogen = pcall(require, "neogen")
+            -- if ok and neogen.jumpable() then
+            -- require'neogen'.jump_next()
+            --   feedkeys(t "<cmd>lua require'neogen'.jump_next()<cr>", "", false)
+            -- else
+            if check_back_space() then
+                feedkeys(t("<tab>"), "n", false)
+            else
+                feedkeys(t("<Plug>(Tabout)"), "", false)
+                -- fallback()
+            end
+        end
+    end
+end
+
+local confirmopts = {
+    select = false,
+}
+local cmdline_confirm = {
+    behavior = cmp.ConfirmBehavior.Replace,
+    select = false,
+}
+
+local function double_mapping(invisible, visible)
+    return function()
+        if cmp.visible() then
+            visible()
+        else
+            invisible()
+        end
+    end, {
+        "i",
+        "s",
+        "c",
+    }
+end
+
+local function autocomplete()
+    cmp.complete({ reason = cmp.ContextReason.Auto })
+end
+
+local function complete_or(mapping)
+    return double_mapping(cmp.complete, mapping)
+end
+local function next_item()
+    if cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+    elseif require("luasnip").choice_active() then
+        feedkeys(t("<Plug>luasnip-next-choice"), "", false)
+    else
+        autocomplete()
+    end
+end
+
+local function prev_item()
+    if cmp.visible() then
+        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+    elseif require("luasnip").choice_active() then
+        feedkeys(t("<Plug>luasnip-prev-choice"), "", false)
+    else
+        autocomplete()
+    end
+end
 local mappings = {
+
+    ["<M-d>"] = cmp.mapping({
+        c = cmp.mapping.scroll_docs(-4),
+        i = function()
+            if not require("noice.lsp").scroll(-4) then
+                cmp.scroll_docs(-4)
+            end
+        end,
+        s = function()
+            if not require("noice.lsp").scroll(-4) then
+                cmp.scroll_docs(-4)
+            end
+        end,
+    }),
+    ["<M-u>"] = cmp.mapping({
+        c = cmp.mapping.scroll_docs(4),
+        i = function()
+            if not require("noice.lsp").scroll(4) then
+                cmp.scroll_docs(4)
+            end
+        end,
+        s = function()
+            if not require("noice.lsp").scroll(4) then
+                cmp.scroll_docs(4)
+            end
+        end,
+    }),
+    ["<M-k>"] = cmp.mapping({
+        i = prev_item,
+        c = complete_or(cmp.select_prev_item),
+    }),
+    ["<M-j>"] = cmp.mapping({
+        i = next_item,
+        c = complete_or(cmp.select_next_item),
+    }),
+    ["<Down>"] = cmp.mapping({
+        i = next_item,
+        -- c = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+    }),
+    ["<Up>"] = cmp.mapping({
+        i = prev_item,
+        -- c = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+    }),
+
     ["<C-e>"] = cmp.mapping({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
@@ -104,5 +229,4 @@ local mappings = {
         "s",
     }),
 }
-
 return mappings

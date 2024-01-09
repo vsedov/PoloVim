@@ -95,7 +95,10 @@ local config = {
         },
 
         e = {
-            require("telescope.builtin").ast_grep,
+            -- require("telescope.builtin").ast_grep,
+            function()
+                vim.cmd.Telescope("ast_grep")
+            end,
             { exit = true, desc = "Ast Grep" },
         },
 

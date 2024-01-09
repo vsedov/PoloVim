@@ -14,16 +14,17 @@ local use_tabnine_cmp = true
 
 local use_copilot = true -- We really do sell our souls for this thing eh
 
--- toggle core values within the list
+-- toggle core values within th list
 lambda.config = {
-    use_lastplace = false,
+    use_adv_snip = true,
+    use_lastplace = true,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
     record_your_self = false, -- waka time track, also might not be needed
     neorg_auto_commit = false,
     loaded_confirm_quit = false, -- this is not needed
     --  ──────────────────────────────────────────────────────────────────────
-    save_clipboard_on_exit = false,
+    save_clipboard_on_exit = true,
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_gitsigns = true,
@@ -52,7 +53,7 @@ lambda.config.ai = {
             tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
             tabnine_bottom_sort = true,
             tabnine_prefetch = true,
-            tabnine_priority = 6, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
+            tabnine_priority = 4, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
         },
     },
     sell_your_soul = use_copilot,
@@ -85,8 +86,8 @@ lambda.config.treesitter = {
     hipairs = false,
     indent = {
         use_indent_O_matic = false,
-        use_guess_indent = false,
-        use_yati = true,
+        use_guess_indent = true,
+        use_yati = false,
     },
     use_matchup = true,
     use_extra_highlight = false,
@@ -117,7 +118,7 @@ lambda.config.cmp = {
     luasnip = {
         luasnip = {
             enable = true,
-            priority = 6,
+            priority = 8,
         },
     },
     cmp_theme = "extra", --- @usage "border" | "no-border" | "extra"
@@ -126,7 +127,7 @@ lambda.config.cmp = {
 lambda.config.lsp = {
     use_sg = true,
     use_hover = false, -- Saga is better for this one
-    use_typos = false, -- this was getting annoying
+    use_typos = true, -- this was getting annoying
     only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
     use_lsp_saga = true,
@@ -137,14 +138,14 @@ lambda.config.lsp = {
 
     lsp_sig = {
         use_lsp_signature = false,
-        use_floating_window = false,
-        use_floating_window_above_cur_line = false,
-        fix_pos = false,
+        use_floating_window = true,
+        use_floating_window_above_cur_line = true,
+        fix_pos = true,
     },
     lint_formatting = {
         use_ale = false,
-        use_null_ls = false, -- Disable this for the time .  There could be something wrong with this
-        use_conform = true,
+        use_null_ls = true, -- Disable this for the time .  There could be something wrong with this
+        use_conform = false,
     },
     diagnostics = {
         use_lsp_lines = false,
@@ -219,8 +220,8 @@ lambda.config.ui = {
     use_dropbar = true,
     mini_animate = {
         use_animate = false,
-        use_cursor = false,
-        use_scroll = false,
+        use_cursor = true,
+        use_scroll = true,
         use_resize = false,
         use_close = false,
     },
@@ -313,7 +314,7 @@ lambda.config.tools = {
         use_resession = true,
     },
     use_fundo = false, -- forgot the reason for why this was disabled
-    use_flatten = false,
+    use_flatten = true,
     use_live_command = true, -- Disabled due to large files, this might noe be nice to have
 }
 
@@ -340,6 +341,6 @@ lambda.config.folke = {
     },
     edge = {
         enable = true,
-        use_animate = true,
+        use_animate = false,
     },
 }

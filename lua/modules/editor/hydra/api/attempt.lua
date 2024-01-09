@@ -52,4 +52,5 @@ return {
     bracket,
     6,
     3,
+    1,
 }

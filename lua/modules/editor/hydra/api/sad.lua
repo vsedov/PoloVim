@@ -173,10 +173,53 @@ local config = {
             end,
             { desc = "Open Unique UI", exit = true },
         },
+
+        -- "MCstart",
+        -- "MCvisual",
+        -- "MCpattern",
+        -- "MCvisualPattern",
+        -- "MCunderCursor",
+        -- "MCclear",
+
+        ["<leader>"] = {
+            "<cmd>MCstart<cr>",
+            { desc = "Start" },
+        },
+        V = {
+            "<cmd>MCvisual<cr>",
+            { desc = "Start", mode = "v" },
+        },
+        ["<cr>"] = {
+            function()
+                local commands = {
+                    "MCpattern",
+                    "MCvisualPattern",
+                    "MCunderCursor",
+                    "MCclear",
+                }
+
+                -- vim.ui.select(commands, {
+                --     prompt = "MultiMC Util",
+                --     },
+                --     on_select = function(selected)
+                --         vim.cmd(selected)
+                --     end)
+
+                vim.ui.select(commands, {
+                    prompt = "MultiMc Util",
+                }, function(inner_item)
+                    -- vim.cmd([[ChatGPTRun ]] .. inner_item)
+                    vim.defer_fn(function()
+                        vim.cmd(inner_item)
+                    end, 100)
+                end)
+            end,
+            { desc = "MultiMC Util", mode = { "v", "n", "x" }, exit = true, nowait = true },
+        },
     },
 }
 
-local bracket = { "s", "W", "w", "S", "E" }
+local bracket = { "<leader>", "<cr>", "V", "s", "W", "w", "S", "E" }
 local Muren = { "m", "M", "c", "F", "u" }
 local eol = { "L", "l", "K", "k" }
 local spectre = { "o", "O", "g", "<CR>", "q", "n", "r", "R", "I", "H", "U", "v", ";", "p" }

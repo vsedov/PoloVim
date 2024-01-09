@@ -13,13 +13,13 @@ local fmt = require("luasnip.extras.fmt").fmt
 --     history = true,
 --     updateevents = "TextChanged , TextChangedI",
 -- })
-
 require("luasnip.config").setup({
     history = true,
     -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
     region_check_events = "CursorMoved,CursorHold,InsertEnter",
     delete_check_events = "InsertLeave",
     enable_autosnippets = true,
+
     ext_opts = {
         [ls_types.choiceNode] = {
             active = {

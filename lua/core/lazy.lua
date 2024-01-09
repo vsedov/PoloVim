@@ -36,4 +36,3 @@ vim.defer_fn(function()
     end
     require("vscripts")
 end, 150)
-

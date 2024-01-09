@@ -116,7 +116,7 @@ ai({
 --  TODO: (vsedov) (16:03:47 - 10/12/23): Make this intoa hydra implementation
 ai({
     "David-Kunz/gen.nvim",
-    -- cmd = "Gen",
+    cmd = "Gen",
     opts = {
         model = "deepseek-coder",
         display_mode = "split", -- The display mode. Can be "float" or "split".

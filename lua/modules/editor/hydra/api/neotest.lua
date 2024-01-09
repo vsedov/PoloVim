@@ -38,7 +38,7 @@ local binds = {
 
 local config = {
     {
-        Dap = {
+        Neotest = {
             color = "pink",
             position = "bottom-right",
             body = leader,
@@ -113,7 +113,7 @@ local config = {
             },
         },
     },
-    "Dap",
+    "Neotest",
     { docs, analyse, summary, python },
     another_test,
     6,
@@ -128,7 +128,7 @@ for _, bind in ipairs(binds) do
     if options.exit == nil then
         options.exit = true
     end
-    config[1].Dap[key] = {
+    config[1].Neotest[key] = {
         function()
             require("neotest").run.run({ strategy = "dap", cmd = cmd })
         end,

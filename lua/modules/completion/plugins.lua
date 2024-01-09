@@ -76,9 +76,34 @@ completion({
         {
             "rafamadriz/friendly-snippets",
         },
+        {
+            "mireq/luasnip-snippets",
+            cond = true, -- Right now this is broken but i like the idea of having these snippets.
+            dependencies = { "L3MON4D3/LuaSnip" },
+        },
+        {
+            "iurimateus/luasnip-latex-snippets.nvim",
+            ft = "latex",
+            dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+            config = function()
+                require("luasnip-latex-snippets").setup({ use_treesitter = true })
+            end,
+        },
     }, -- , event = "InsertEnter"
     config = function()
-        require("modules.completion.snippets")
+        if lambda.config.use_adv_snip then
+            require("modules.completion.snippets")
+            require("luasnip_snippets.common.snip_utils").setup()
+            require("luasnip").setup({
+                -- Required to automatically include base snippets, like "c" snippets for "cpp"
+                load_ft_func = require("luasnip_snippets.common.snip_utils").load_ft_func,
+                ft_func = require("luasnip_snippets.common.snip_utils").ft_func,
+                -- To enable auto expansin
+                enable_autosnippets = true,
+                -- Uncomment to enable visual snippets triggered using <c-x>
+                -- store_selection_keys = '<c-x>',
+            })
+        end
     end,
 })
 
