@@ -46,9 +46,21 @@ return {
                 remote_op = { restore = true },
             })
         end,
-        mode = { "n", "x", "o" },
+        mode = { "n" },
         desc = "Treesitter Search | show labeled treesitter nodes around the search matches",
     },
+    {
+        "m",
+        function()
+            Flash.treesitter_search({
+                label = { before = true, after = true, style = "inline" },
+                remote_op = { restore = true },
+            })
+        end,
+        mode = { "x", "o" },
+        desc = "Treesitter Search | show labeled treesitter nodes around the search matches",
+    },
+
     {
         O.select_remote_dynamic,
         mode = { "o", "x" },
@@ -206,6 +218,7 @@ return {
             lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
         end,
     },
+
     {
         "u", -- unit textobject
         mode = { "o", "x" },

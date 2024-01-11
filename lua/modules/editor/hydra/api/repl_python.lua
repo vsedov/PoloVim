@@ -305,4 +305,7 @@ return {
         table_slice(map, 1, 13),
     },
     table_slice(map, 14, #map),
+    6,
+    3,
+    3,
 }

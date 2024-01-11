@@ -1,7 +1,10 @@
 local conf = require("modules.misc.config")
 local misc = require("core.pack").package
 
-misc({ "fladson/vim-kitty", ft = { "conf" } })
+misc({
+    "fladson/vim-kitty",
+    event = "BufReadPre *.conf",
+})
 
 misc({ "onsails/diaglist.nvim", keys = { "<leader>qw", "<leader>qf" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
 

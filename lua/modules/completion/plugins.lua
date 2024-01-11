@@ -127,33 +127,23 @@ completion({
     },
 })
 completion({
-    "ziontee113/SnippetGenie",
-    cond = false,
-    lazy = true,
-    keys = {
-        {
-            "<cr>",
+    "chrisgrieser/nvim-scissors",
+    event = "InsertEnter",
+    dependencies = "nvim-telescope/telescope.nvim", -- optional
+    config = function()
+        require("scissors").setup({
+            snippetDir = "~/.config/nvim/snippets/",
+        })
 
-            function()
-                require("SnippetGenie").create_new_snippet_or_add_placeholder()
-                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
-            end,
-            mode = "x",
-            desc = "Genie Snippet X mode",
-        },
-        {
-            ";<cr>",
-            function()
-                require("SnippetGenie").finalize_snippet()
-            end,
-            mode = "n",
-            desc = "Genie Snippet N Mode ",
-        },
-    },
-    cmd = {
-        "SnipCreate",
-    },
-    config = conf.snip_genie,
+        vim.keymap.set("n", "<leader>se", function()
+            require("scissors").editSnippet()
+        end)
+
+        -- When used in visual mode prefills the selection as body.
+        vim.keymap.set({ "n", "x" }, "<leader>sa", function()
+            require("scissors").addNewSnippet()
+        end)
+    end,
 })
 
 completion({

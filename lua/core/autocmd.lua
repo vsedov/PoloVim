@@ -451,6 +451,6 @@ REPL commands:
             })
         end,
         nested = false,
-        once = false,
+        once = true,
     },
 })

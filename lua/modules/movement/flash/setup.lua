@@ -112,7 +112,7 @@ local function opts()
 
                 remote_op = {
                     restore = true,
-                    motion = false,
+                    motion = true,
                 },
                 search = { multi_window = false, wrap = true, incremental = false, max_length = 0 },
                 config = function(opts)

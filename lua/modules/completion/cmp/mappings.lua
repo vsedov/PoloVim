@@ -127,14 +127,6 @@ local mappings = {
         i = next_item,
         c = complete_or(cmp.select_next_item),
     }),
-    ["<Down>"] = cmp.mapping({
-        i = next_item,
-        -- c = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-    }),
-    ["<Up>"] = cmp.mapping({
-        i = prev_item,
-        -- c = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-    }),
 
     ["<C-e>"] = cmp.mapping({
         i = cmp.mapping.abort(),

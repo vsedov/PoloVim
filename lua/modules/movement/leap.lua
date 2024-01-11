@@ -280,46 +280,6 @@ end
 
 function M.keys()
     return {
-
-        { "s", "<Plug>(leap-forward-to)", mode = "n", desc = "Leap Fwd" },
-        { "S", "<Plug>(leap-backward-to)", mode = "n", desc = "Leap Bwd" },
-        { "x", "<Plug>(leap-forward-till)", mode = { "o", "x" }, desc = "Leap Fwd" },
-        { "X", "<Plug>(leap-backward-till)", mode = { "o", "x" }, desc = "Leap Bwd" },
-
-        {
-            "t", -- semi-inclusive
-            function()
-                vim.cmd.normal({ "v", bang = true })
-                require("leap").leap({ inclusive_op = true })
-            end,
-            mode = "n",
-            desc = "Leap v t",
-        },
-        {
-            "T", -- semi-inclusive
-            function()
-                vim.cmd.normal({ "v", bang = true })
-                require("leap").leap({ backward = true, offset = 1, inclusive_op = true })
-            end,
-            mode = "n",
-            desc = "Leap v T",
-        },
-        {
-            "f", -- semi-inclusive
-            function()
-                require("leap").leap({ inclusive_op = true })
-            end,
-            mode = "x",
-            desc = "Leap f",
-        },
-        {
-            "F", -- semi-inclusive
-            function()
-                require("leap").leap({ backward = true, offset = 1, inclusive_op = true })
-            end,
-            mode = "x",
-            desc = "Leap F",
-        },
         { "<leader>f", "<Plug>(leap-forward-to)", mode = "x", desc = "Leap f" },
         { "<leader>t", "<Plug>(leap-forward-till)", mode = "x", desc = "Leap t" },
         { "<leader>F", "<Plug>(leap-backward-to)", mode = "x", desc = "Leap F" },

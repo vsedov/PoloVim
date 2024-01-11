@@ -7,4 +7,5 @@ return {
     "user.misc",
     "user.julia",
     "user.haskell",
+    "user.track_history",
 }

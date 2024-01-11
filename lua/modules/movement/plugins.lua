@@ -112,46 +112,46 @@ else
         config = flash.config,
         keys = flash.binds,
     })
-    -- local leap = require("modules.movement.leap")
-    --
-    -- movement({
-    --     "ggandor/leap.nvim",
-    --     event = "VeryLazy",
-    --     lazy = true,
-    --     dependencies = { "tpope/vim-repeat" },
-    --     config = leap.leap_config,
-    --     keys = leap.keys,
-    -- })
-    -- movement({
-    --     "atusy/leap-search.nvim",
-    --     dependencies = {
-    --         { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
-    --         { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
-    --         "leap.nvim",
-    --     },
-    --     lazy = true,
-    -- })
-    -- movement({
-    --     "ggandor/flit.nvim",
-    --     event = "VeryLazy",
-    --     keys = function()
-    --         local mods = {
-    --             ["f"] = { "n", "x", "o" },
-    --             ["F"] = { "n", "x", "o" },
-    --             ["t"] = { "n", "x" },
-    --             ["T"] = { "n", "x" },
-    --         }
-    --         local ret = {}
-    --         for key, modes in ipairs(mods) do
-    --             ret[#ret + 1] = { key, mode = modes, desc = key }
-    --         end
-    --         return ret
-    --     end,
-    --     opts = {
-    --         labeled_modes = "nx",
-    --         opts = { equivalence_classes = {} },
-    --     },
-    -- })
+    local leap = require("modules.movement.leap")
+
+    movement({
+        "ggandor/leap.nvim",
+        event = "VeryLazy",
+        lazy = true,
+        dependencies = { "tpope/vim-repeat" },
+        config = leap.leap_config,
+        keys = leap.keys,
+    })
+    movement({
+        "atusy/leap-search.nvim",
+        dependencies = {
+            { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
+            { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
+            "leap.nvim",
+        },
+        lazy = true,
+    })
+    movement({
+        "ggandor/flit.nvim",
+        event = "VeryLazy",
+        keys = function()
+            local mods = {
+                ["f"] = { "n", "x", "o" },
+                ["F"] = { "n", "x", "o" },
+                ["t"] = { "n", "x" },
+                ["T"] = { "n", "x" },
+            }
+            local ret = {}
+            for key, modes in ipairs(mods) do
+                ret[#ret + 1] = { key, mode = modes, desc = key }
+            end
+            return ret
+        end,
+        opts = {
+            labeled_modes = "nx",
+            opts = { equivalence_classes = {} },
+        },
+    })
     movement({
         "camilledejoye/nvim-lsp-selection-range",
         opts = function()

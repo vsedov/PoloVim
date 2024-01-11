@@ -68,3 +68,15 @@ runner({
     lazy = true,
     config = true,
 })
+runner({
+    "pianocomposer321/officer.nvim",
+    cmd = {
+        "Make",
+        "Run",
+    },
+    opts = {
+        components = { "user.track_history" },
+    },
+    dependencies = "stevearc/overseer.nvim",
+    config = true,
+})
