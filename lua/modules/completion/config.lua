@@ -3,6 +3,7 @@ local config = {}
 
 function config.cmp()
     require("modules.completion.cmp")
+    require("cmp_vimtex").setup()
 end
 
 function config.luasnip()

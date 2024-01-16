@@ -10,19 +10,23 @@ return {
     {
         "<c-p>",
         mode = { "n" },
-        function()
-            Flash.jump({
-                search = { mode = "search" },
-                highlight = { label = { after = { 0, 0 } } },
-                pattern = "^",
-            })
-        end,
+        lib.jump_windows,
         desc = "Jump Windows",
     },
     {
         "<c-e>",
         mode = { "n" },
-        lib.flash_lines,
+        -- lib.flash_lines,
+        function()
+            require("flash").jump({
+                search = { mode = "search", max_length = 0 },
+                highlight = {
+                    label = { after = { 0, 0 } },
+                    matches = false,
+                },
+                pattern = "^\\s*\\S\\?", -- match non-whitespace at start plus any character (ignores empty lines)
+            })
+        end,
         desc = "Jump Lines",
     },
 

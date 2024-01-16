@@ -308,14 +308,23 @@ user({
     },
     config = true,
     cmd = {
-
         "DataViewer",
         "DataViewerNextTable",
         "DataViewerPrevTable",
         "DataViewerClose",
     },
 })
+
 user({
+    "theKnightsOfRohan/csvlens.nvim",
+    dependencies = {
+        "akinsho/toggleterm.nvim",
+    },
+    cmd = "Csvlens",
+    config = true,
+})
+user({
+
     "neph-iap/easycolor.nvim",
     dependencies = { "stevearc/dressing.nvim" }, -- Optional, but provides better UI for editing the formatting template
     opts = {},
@@ -418,21 +427,6 @@ user({
     },
 })
 user({
-    "krady21/compiler-explorer.nvim",
-    cmd = {
-        "CECompile",
-        "CECompileLive",
-        "CEFormat",
-        "CEAddLibrary",
-        "CELoadExample",
-        "CEOpenWebsite",
-        "CEDeleteCache",
-        "CEShowTooltip",
-        "CEGotoLabel",
-    },
-    opts = {},
-})
-user({
     "mrshmllow/open-handlers.nvim",
     -- We modify builtin functions, so be careful lazy loading
     lazy = false,
@@ -530,5 +524,139 @@ user({
     opts = {
         installedRegistry = "themes.pineapple",
         colorschemeFile = "after/plugin/theme.lua",
+    },
+})
+
+user({
+    "stevearc/aerial.nvim",
+    event = "VeryLazy",
+    cmd = {
+        "AerialPrev",
+        "AerialNext",
+        "AerialToggle",
+        "AerialOpenAll",
+        "AerialClose",
+        "AerialCloseAll",
+        "AerialGo",
+        "AerialInfo",
+        "AerialNavToggle",
+        "AerialNavOpen",
+        "AerialNavClose",
+    },
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-tree/nvim-web-devicons",
+    },
+    config = true,
+    keys = {
+        {
+            ";a",
+            function()
+                vim.cmd("AerialToggle")
+            end,
+            desc = "Aerial Toggle",
+        },
+    },
+})
+user({
+    "Wansmer/symbol-usage.nvim",
+    event = "LspAttach",
+    opts = {
+        text_format = function(symbol)
+            local res = {}
+            local ins = table.insert
+
+            local round_start = { "", "SymbolUsageRounding" }
+            local round_end = { "", "SymbolUsageRounding" }
+
+            if symbol.references then
+                local usage = symbol.references <= 1 and "usage" or "usages"
+                local num = symbol.references == 0 and "no" or symbol.references
+                ins(res, round_start)
+                ins(res, { "󰌹 ", "SymbolUsageRef" })
+                ins(res, { ("%s %s"):format(num, usage), "SymbolUsageContent" })
+                ins(res, round_end)
+            end
+
+            if symbol.definition then
+                if #res > 0 then
+                    table.insert(res, { " ", "NonText" })
+                end
+                ins(res, round_start)
+                ins(res, { "󰳽 ", "SymbolUsageDef" })
+                ins(res, { symbol.definition .. " defs", "SymbolUsageContent" })
+                ins(res, round_end)
+            end
+
+            if symbol.implementation then
+                if #res > 0 then
+                    table.insert(res, { " ", "NonText" })
+                end
+                ins(res, round_start)
+                ins(res, { "󰡱 ", "SymbolUsageImpl" })
+                ins(res, { symbol.implementation .. " impls", "SymbolUsageContent" })
+                ins(res, round_end)
+            end
+
+            return res
+        end,
+    },
+    config = function(_, opts)
+        require("symbol-usage").setup(opts)
+        lambda.highlight.plugin("SymbolUsage", {
+            { SymbolUsageRounding = { fg = { from = "CursorLine", attr = "bg" }, italic = true } },
+            { SymbolUsageContent = { bg = { from = "CursorLine" }, fg = { from = "Comment" } } },
+            { SymbolUsageRef = { fg = { from = "Function" }, bg = { from = "CursorLine" }, italic = true } },
+            { SymbolUsageDef = { fg = { from = "Type" }, bg = { from = "CursorLine" }, italic = true } },
+            { SymbolUsageImpl = { fg = { from = "Keyword" }, bg = { from = "CursorLine" }, italic = true } },
+        })
+    end,
+})
+user({
+    "cbochs/portal.nvim",
+    -- TODO: folke/flash jumplist
+    dependencies = {
+        "ThePrimeagen/harpoon", -- Optional: provides the "harpoon" query item
+    },
+    opts = {
+        window_options = {
+            border = "rounded",
+            relative = "cursor",
+            height = 5,
+        },
+        select_first = true,
+    },
+    cmd = "Portal",
+    keys = {
+        {
+            "<C-i>",
+            function()
+                require("portal.builtin").jumplist.tunnel_forward()
+            end,
+            desc = "portal fwd",
+        },
+        {
+            "]o",
+            function()
+                require("portal.builtin").jumplist.tunnel_forward()
+            end,
+            desc = "portal fwd",
+        },
+
+        {
+            "[o",
+            function()
+                require("portal.builtin").jumplist.tunnel_backward()
+            end,
+            desc = "portal fwd",
+        },
+        {
+            "<C-o>",
+            function()
+                require("portal.builtin").jumplist.tunnel_backward()
+            end,
+            desc = "portal bwd",
+        },
+        -- TODO: use other queries?
     },
 })

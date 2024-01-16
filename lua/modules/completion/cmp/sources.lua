@@ -4,7 +4,7 @@ local condium_cond = (ai.codeium.use_codeium and ai.codeium.use_codeium_cmp)
 local tabnine_cond = (ai.tabnine.use_tabnine and ai.tabnine.use_tabnine_cmp)
 
 local plugins = {
-
+    { name = "vimtex", enable = true },
     {
         name = "luasnip",
         enable = lambda.config.cmp.luasnip.luasnip.enable,

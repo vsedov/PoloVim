@@ -74,9 +74,22 @@ runner({
         "Make",
         "Run",
     },
-    opts = {
-        components = { "user.track_history" },
-    },
     dependencies = "stevearc/overseer.nvim",
     config = true,
+})
+
+runner({
+    "krady21/compiler-explorer.nvim",
+    cmd = {
+        "CECompile",
+        "CECompileLive",
+        "CEFormat",
+        "CEAddLibrary",
+        "CELoadExample",
+        "CEOpenWebsite",
+        "CEDeleteCache",
+        "CEShowTooltip",
+        "CEGotoLabel",
+    },
+    opts = {},
 })

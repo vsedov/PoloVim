@@ -1,4 +1,12 @@
 local api, notify, fmt, augroup = vim.api, vim.notify, string.format, lambda.augroup
+---@generic T:table
+---@param callback fun(item: T, key: any)
+---@param list table<any, T>
+function lambda.foreach(callback, list)
+    for k, v in pairs(list) do
+        callback(v, k)
+    end
+end
 
 ---@alias HLAttrs {from: string, attr: "fg" | "bg", alter: integer}
 
@@ -185,9 +193,9 @@ end
 ---@param hls {[string]: HLArgs}[]
 ---@param namespace integer?
 local function all(hls, namespace)
-    vim.iter(hls):each(function(hl)
+    lambda.foreach(function(hl)
         set(namespace or 0, next(hl))
-    end)
+    end, hls)
 end
 
 --- Set window local highlights

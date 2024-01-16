@@ -362,16 +362,16 @@ lsp({
             { desc = "Cody Fuzzy results" }
         )
         -- Toggle cody chat
-        vim.keymap.set("n", "<space>cc", function()
+        vim.keymap.set("n", "<leader>cc", function()
             require("sg.cody.commands").toggle()
         end, { desc = "Cody Commands" })
 
-        vim.keymap.set("n", "<space>cn", function()
+        vim.keymap.set("n", "<leader>cn", function()
             local name = vim.fn.input("chat name: ")
             require("sg.cody.commands").chat(name)
         end, { desc = "Cody Commands" })
 
-        vim.keymap.set("v", "<space>a", ":CodyContext<CR>", { desc = "Cody Context" })
+        vim.keymap.set("v", "<leader>A", ":CodyContext<CR>", { desc = "Cody Context" })
         vim.keymap.set("v", "<space>w", ":CodyExplain<CR>", { desc = "Cody Explain" })
         vim.keymap.set("n", "<space>ss", function()
             require("sg.extensions.telescope").fuzzy_search_results()

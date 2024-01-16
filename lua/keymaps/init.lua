@@ -275,4 +275,3 @@ end, { desc = "Grep open buffers for WORD" })
 lambda.command("Bufgrep", function(params)
     bufgrep(params.args)
 end, { nargs = "+" })
-

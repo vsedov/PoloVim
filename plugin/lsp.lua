@@ -89,7 +89,6 @@ local get_extra_binds = function()
             end,
             desc = "Toggle Lspsaga diagnostic_next ERROR",
         },
-        { "<leader>O", "<cmd>Lspsaga outline<cr>", desc = "Toggle Lspsaga outline" },
         {
             "gL",
             "<cmd>Lspsaga show_line_diagnostics<CR>",

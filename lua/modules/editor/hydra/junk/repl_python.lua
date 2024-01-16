@@ -5,6 +5,28 @@ local config = {
         color = "blue",
         body = leader,
         mode = { "n", "v", "x" },
+        w = {
+            function()
+                vim.cmd("call jukit#send#section(0)")
+            end,
+            {
+                desc = "Send code within the current cell to output split (also saves the output if ipython is used and `g:jukit_save_output==1`). Argument: if 1, will move the cursor to the next cell below after sending the code to the split, otherwise cursor position stays the same.",
+                exit = true,
+                mode = { "v" },
+            },
+        },
+        W = {
+            function()
+                vim.cmd("call jukit#send#line()")
+            end,
+            { desc = "Send current line to output split", exit = true, mode = { "v" } },
+            ["<leader>"] = {
+                function()
+                    vim.cmd("call jukit#send#selection()")
+                end,
+                { desc = "Send visually selected code to output split", exit = true },
+            },
+        },
 
         os = {
             function()
@@ -24,7 +46,7 @@ local config = {
             end,
             { desc = "New output-history window, where saved ipython outputs are displayed", exit = true },
         },
-        ohs = {
+        oS = {
             function()
                 vim.cmd("call jukit#splits#output_and_history()")
             end,
@@ -36,13 +58,13 @@ local config = {
             end,
             { desc = "Close output-history window", exit = true },
         },
-        od = {
+        oC = {
             function()
                 vim.cmd("call jukit#splits#close_output_split()")
             end,
             { desc = "Close output window", exit = true },
         },
-        ohd = {
+        od = {
             function()
                 vim.cmd("call jukit#splits#close_output_and_history(1)")
             end,
@@ -96,29 +118,6 @@ local config = {
                 exit = true,
             },
         },
-        ["<leader>"] = {
-            function()
-                vim.cmd("call jukit#send#section(0)")
-            end,
-            {
-                desc = "Send code within the current cell to output split (also saves the output if ipython is used and `g:jukit_save_output==1`). Argument: if 1, will move the cursor to the next cell below after sending the code to the split, otherwise cursor position stays the same.",
-                exit = true,
-                mode = { "v" },
-            },
-        },
-        ["<cr>"] = {
-            function()
-                vim.cmd("call jukit#send#line()")
-            end,
-            { desc = "Send current line to output split", exit = true, mode = { "v" } },
-            ["<leader>"] = {
-                function()
-                    vim.cmd("call jukit#send#selection()")
-                end,
-                { desc = "Send visually selected code to output split", exit = true },
-            },
-        },
-
         co = {
             function()
                 vim.cmd("call jukit#cells#create_below(0)")
@@ -206,7 +205,7 @@ local config = {
             end,
             { desc = "Jump to the previous cell above", exit = true },
         },
-        ddo = {
+        dO = {
             function()
                 vim.cmd("call jukit#cells#delete_outputs(0)")
             end,
@@ -215,7 +214,7 @@ local config = {
                 exit = true,
             },
         },
-        dda = {
+        da = {
             function()
                 vim.cmd("call jukit#cells#delete_outputs(1)")
             end,
@@ -253,7 +252,7 @@ local config = {
                 exit = true,
             },
         },
-        rht = {
+        rh = {
             function()
                 vim.cmd("call jukit#convert#save_nb_to_file(1,1,'html')")
             end,
@@ -268,7 +267,7 @@ local config = {
                 exit = true,
             },
         },
-        rpd = {
+        rp = {
             function()
                 vim.cmd("call jukit#convert#save_nb_to_file(1,1,'pdf')")
             end,
@@ -281,11 +280,17 @@ local config = {
 }
 
 local map = {}
+
 for k, _ in pairs(config.Repl) do
     if k ~= "color" and k ~= "body" and k ~= "mode" then
         table.insert(map, k)
     end
 end
+-- sort map, in the order that config.repl is
+table.sort(map, function(a, b)
+    return config.Repl[a][2].desc < config.Repl[b][2].desc
+end)
+
 table_slice = function(tbl, first, last)
     local sliced = {}
     for i = first or 1, last or #tbl do
@@ -293,8 +298,6 @@ table_slice = function(tbl, first, last)
     end
     return sliced
 end
--- sort the table
-table.sort(map)
 
 return {
     config,
@@ -307,5 +310,5 @@ return {
     table_slice(map, 14, #map),
     6,
     3,
-    3,
+    2,
 }

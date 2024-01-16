@@ -186,7 +186,10 @@ lambda.config.lsp = {
             "stylua",
             "trim_newlines",
             "trim_whitespace",
-            -- "pyflyby",
+            --"bibtex_tidy",
+            "docformatter",
+            "latexindent",
+            -- "reorder_python_imports",
         },
         code_action = { "eslint_d", "refactoring", "ts_node_action" },
     },
@@ -198,8 +201,11 @@ lambda.config.lsp = {
     python = {
         lint = { "ruff" }, -- pylint, pyflake, and other linters
         format = {
-            "isort",
+            "usort",
             "black",
+            "pyflyby",
+            "ruff",
+            -- "vulture",
         },
         -- black -- Need to make it so it knows what formater to use :think:
         lsp = { "jedi_language_server", "sourcery" }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing

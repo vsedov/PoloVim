@@ -185,7 +185,7 @@ config.sorting = {
             return require("cmp_buffer"):compare_locality(...)
         end,
     },
-    priority_weight = 2,
+    -- priority_weight = 2,
     -- comparators = {
     --     require("cmp_fuzzy_buffer.compare"),
     --     compare.offset,

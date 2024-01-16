@@ -37,7 +37,7 @@ python({
 
 python({
     "luk400/vim-jukit",
-    cond = true,
+    cond = false,
     ft = { "python", "julia" },
     lazy = true,
     config = function()

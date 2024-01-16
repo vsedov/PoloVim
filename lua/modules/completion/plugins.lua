@@ -63,6 +63,7 @@ completion({
         },
         { "saadparwaiz1/cmp_luasnip", lazy = true },
         { "f3fora/cmp-spell", ft = { "gitcommit", "NeogitCommitMessage", "markdown", "norg", "org" } },
+        { "micangl/cmp-vimtex" },
     },
     config = conf.cmp,
 })
@@ -104,11 +105,37 @@ completion({
                 -- store_selection_keys = '<c-x>',
             })
         end
+        require("luasnip.loaders.from_vscode").lazy_load({
+            paths = { vim.fn.stdpath("config") .. "/snippets" },
+        })
+    end,
+})
+completion({
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    dependencies = { "hrsh7th/nvim-cmp" },
+    config = function()
+        local autopairs = require("nvim-autopairs")
+        local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+        require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+        autopairs.setup({
+            close_triple_quotes = true,
+            disable_filetype = { "neo-tree-popup" },
+            check_ts = true,
+            fast_wrap = { map = "<c-e>" },
+            ts_config = {
+                lua = { "string" },
+                dart = { "string" },
+                javascript = { "template_string" },
+            },
+        })
     end,
 })
 
 completion({
     "altermo/ultimate-autopair.nvim",
+    cond = false,
+
     event = { "InsertEnter", "CmdlineEnter" },
     opts = {
         tabout = {
@@ -128,11 +155,12 @@ completion({
 })
 completion({
     "chrisgrieser/nvim-scissors",
-    event = "InsertEnter",
+    event = "VeryLazy",
     dependencies = "nvim-telescope/telescope.nvim", -- optional
     config = function()
         require("scissors").setup({
-            snippetDir = "~/.config/nvim/snippets/",
+            snippetDir = vim.fn.stdpath("config") .. "/snippets",
+            jsonFormatter = "jq",
         })
 
         vim.keymap.set("n", "<leader>se", function()

@@ -6,13 +6,86 @@ misc({
     event = "BufReadPre *.conf",
 })
 
-misc({ "onsails/diaglist.nvim", keys = { "<leader>qw", "<leader>qf" }, cmd = { "Qfa", "Qfb" }, config = conf.diaglist })
+misc({
+    "onsails/diaglist.nvim",
+    keys = { "<leader>qw", "<leader>qf" },
+    cmd = { "Qfa", "Qfb" },
+    config = conf.diaglist,
+})
+
+--         ╭───────────────────────────────────────────────────────────────────╮
+--         │ surr*ound_words             ysiw)           (surround_words)      │
+--         │ *make strings               ys$"            "make strings"        │
+--         │ [delete ar*ound me!]        ds]             delete around me!     │
+--         │ remove <b>HTML t*ags</b>    dst             remove HTML tags      │
+--         │ 'change quot*es'            cs'"            "change quotes"       │
+--         │ <b>or tag* types</b>        csth1<CR>       <h1>or tag types</h1> │
+--         │ delete(functi*on calls)     dsf             function calls        │
+--         │                                                                   │
+--         ╰───────────────────────────────────────────────────────────────────╯
 
 misc({
     "kylechui/nvim-surround",
     lazy = true,
     event = "VeryLazy",
     opts = { move_cursor = true, keymaps = { visual = "s" } },
+    config = function(_, opts)
+        require("nvim-surround").setup(opts)
+        -- surr*ound_words             ysiw)           (surround_words)
+        -- *make strings               ys$"            "make strings"
+        -- [delete ar*ound me!]        ds]             delete around me!
+        -- remove <b>HTML t*ags</b>    dst             remove HTML tags
+        -- 'change quot*es'            cs'"            "change quotes"
+        -- <b>or tag* types</b>        csth1<CR>       <h1>or tag types</h1>
+        -- delete(functi*on calls)     dsf             function calls
+
+        local bind_list = {
+            ["surround_word"] = {
+                bind = "ysiw)",
+                text = "(surround_words)",
+            },
+
+            ["*make strings"] = {
+                bind = 'ys$"',
+                text = '"make strings"',
+            },
+
+            ["[delete around me!]"] = {
+                bind = "ds]",
+                text = "delete around me!",
+            },
+
+            ["remove <b>HTML tags</b>"] = {
+                bind = "dst",
+                text = "remove HTML tags",
+            },
+
+            ["'change quotes'"] = {
+                bind = "cs'\"",
+                text = '"change quotes"',
+            },
+
+            ["<b>or tag types</b>"] = {
+                bind = "csth1<CR>",
+                text = "<h1>or tag types</h1>",
+            },
+
+            ["delete(function calls)"] = {
+                bind = "dsf",
+                text = "function calls",
+            },
+        }
+
+        -- not make it like info, bind , text in one big text and print it using vim.notify
+        table_string = ""
+        for k, v in pairs(bind_list) do
+            table_string = table_string .. k .. " " .. v.bind .. " " .. v.text .. "\n"
+        end
+
+        lambda.command("SurroundBinds", function()
+            vim.notify(table_string)
+        end)
+    end,
 })
 misc({
     "XXiaoA/ns-textobject.nvim",
