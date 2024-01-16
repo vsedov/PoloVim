@@ -43,18 +43,20 @@ function config.houdini()
                 if vim.opt.filetype:get() == "terminal" or vim.bo.buftype == "terminal" then
                     return "" -- disabled
                 end
+
                 if seq == "kk" then
                     return "<bs><bs>()<esc>i"
                 end
                 if seq == "jj" then
                     return "<bs><bs>[]<esc>i"
                 end
-                if seq == "aa" then
+                if seq == "AA" then
                     -- jump to the end of the line in insert mode
                     -- return "<bs><bs><end>"
                     return "<bs><bs><c-o>$"
                 end
-                if seq == "ii" then
+
+                if seq == "II" then
                     -- jump to the beginning of the line in insert modea
                     return "<bs><bs><c-o>^"
                 end
@@ -118,9 +120,9 @@ function config.harpoon()
             save_on_toggle = true,
             save_on_change = true,
             enter_on_sendcmd = true,
-            tmux_autoclose_windows = false,
+            tmux_autoclose_windows = true,
             excluded_filetypes = { "harpoon" },
-            mark_branch = false,
+            mark_branch = true,
         },
     })
 

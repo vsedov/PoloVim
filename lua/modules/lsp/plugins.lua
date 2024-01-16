@@ -328,27 +328,6 @@ lsp({
 })
 
 lsp({
-    "VidocqH/lsp-lens.nvim",
-    lazy = true,
-    cmd = { "LspLensOn", "LspLensOff", "LspLensToggle" },
-    event = "LspAttach",
-    opts = {
-        enable = false, -- enable through lsp
-        include_declaration = true, -- Reference include declaration
-        sections = {
-            -- Enable / Disable specific request
-            definition = true,
-            references = true,
-            implementation = true,
-        },
-        ignore_filetype = {
-            "prisma",
-            "lua", -- It already has its own inlay ints
-        },
-    },
-})
-
-lsp({
     "sourcegraph/sg.nvim",
     cond = lambda.config.lsp.use_sg,
     event = "VeryLazy",

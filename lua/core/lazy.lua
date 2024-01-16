@@ -1,11 +1,5 @@
 local loader = require("lazy").load
 
-local function load_colourscheme()
-    require("utils.ui.highlights")
-end
-
-load_colourscheme() -- loads default colourscheme
-
 local lazy_timer = 30
 
 vim.defer_fn(function()

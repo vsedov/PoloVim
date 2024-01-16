@@ -46,14 +46,14 @@ completion({
         { "rcarriga/cmp-dap" },
         { "hrsh7th/cmp-omni" },
 
-        -- {
-        --     "doxnit/cmp-luasnip-choice",
-        --     config = function()
-        --         require("cmp_luasnip_choice").setup({
-        --             auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
-        --         })
-        --     end,
-        -- },
+        {
+            "doxnit/cmp-luasnip-choice",
+            config = function()
+                require("cmp_luasnip_choice").setup({
+                    auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
+                })
+            end,
+        },
         {
             "petertriho/cmp-git",
             lazy = true,
@@ -84,11 +84,9 @@ completion({
         },
         {
             "iurimateus/luasnip-latex-snippets.nvim",
-            ft = "latex",
+            event = "VeryLazy",
             dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
-            config = function()
-                require("luasnip-latex-snippets").setup({ use_treesitter = true })
-            end,
+            config = true,
         },
     }, -- , event = "InsertEnter"
     config = function()

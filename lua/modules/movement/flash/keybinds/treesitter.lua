@@ -284,8 +284,7 @@ return {
             lib.swap_with({ mode = "remote_ts", exchange = { not_there = true } })
         end,
     },
-
-
+    {
         "u", -- unit textobject
         mode = { "o", "x" },
         function()

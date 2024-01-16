@@ -238,8 +238,6 @@ movement({
 })
 movement({
     "chentoast/marks.nvim",
-    cond = not lambda.config.movement.use_trailblazer,
-    event = "VeryLazy",
     config = function()
         lambda.highlight.plugin("marks", {
             { MarkSignHL = { link = "Directory" } },
@@ -250,27 +248,81 @@ movement({
             force_write_shada = false, -- This can cause data loss
             excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
             bookmark_0 = { sign = "⚑", virt_text = "->" },
-            mappings = { annotate = "m?" },
+            mappings = {
+                set = ";m",
+                set_next = ";m,",
+                toggle = ";m;",
+                next = ";m]",
+                prev = ";m[",
+                preview = ";m:",
+                next_bookmark = ";m}",
+                prev_bookmark = ";m{",
+                delete = "dm",
+                delete_line = "dm-",
+                delete_bookmark = "dm=",
+                delete_buf = "dm<leader>",
+            },
         })
     end,
     keys = {
         {
-            "m?",
+            ";m",
+            desc = "Set mark",
         },
+
         {
-            "mb",
-            "<Cmd>MarksListBuf<CR>",
-            desc = "list buffer",
+            ";m,",
+            desc = "Set next mark",
         },
+
         {
-            "mg",
-            "<Cmd>MarksQFListGlobal<CR>",
-            desc = "list global",
+            ";m;",
+            desc = "Toggle mark",
         },
+
         {
-            "m0",
-            "<Cmd>BookmarksQFList 0<CR>",
-            desc = "list bookmark",
+            ";m]",
+            desc = "Next mark",
+        },
+
+        {
+            ";m[",
+            desc = "Prev mark",
+        },
+
+        {
+            ";m:",
+            desc = "Preview mark",
+        },
+
+        {
+            ";m}",
+            desc = "Next bookmark",
+        },
+
+        {
+            ";m{",
+            desc = "Prev bookmark",
+        },
+
+        {
+            "dm",
+            desc = "Delete mark",
+        },
+
+        {
+            "dm-",
+            desc = "Delete line mark",
+        },
+
+        {
+            "dm=",
+            desc = "Delete bookmark",
+        },
+
+        {
+            "dm<leader>",
+            desc = "Delete buffer marks",
         },
     },
 })

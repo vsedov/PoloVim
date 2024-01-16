@@ -250,9 +250,10 @@ lambda.config.fun = {
 }
 lambda.config.colourscheme = {
     use_light_theme = false,
-    enable_transparent = false,
-    dim_background = false,
-    change_kitty_bg = false,
+    enable_transparent = false, -- this can get annoying i guess, so theres not point for this -- this can get annoying i guess, so theres not point for this
+
+    dim_background = true,
+    change_kitty_bg = true,
     --- @usage "main"' | '"moon"
     rose = "main",
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
@@ -302,7 +303,7 @@ if lambda.config.colourscheme.use_light_theme then
 end
 
 lambda.config.movement = {
-    use_trailblazer = false,
+    use_trailblazer = true,
     movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap and flash,
     use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d
