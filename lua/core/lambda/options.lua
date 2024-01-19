@@ -10,7 +10,7 @@ local use_codium = false -- Want to see what this would be like without codeium,
 local use_codium_cmp = false
 
 local use_tabnine = true
-local use_tabnine_cmp = true
+local use_tabnine_cmp = false
 
 local use_copilot = true -- We really do sell our souls for this thing eh
 
@@ -43,6 +43,10 @@ lambda.config.ai = {
         cmp = {
             codium_priority = 10,
         },
+    },
+    copilot = {
+        autotrigger = true,
+        use_cmp_trigger = false, -- if this is false, then copilot is active,  but you are using something else
     },
     tabnine = {
         use_sort = true,
@@ -320,8 +324,8 @@ lambda.config.tools = {
     session = {
         use_resession = true,
     },
-    use_fundo = false, -- forgot the reason for why this was disabled
-    use_flatten = true,
+    use_fundo = true, -- forgot the reason for why this was disabled
+    use_flatten = false,
     use_live_command = true, -- Disabled due to large files, this might noe be nice to have
 }
 

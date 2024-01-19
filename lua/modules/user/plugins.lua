@@ -529,7 +529,6 @@ user({
 
 user({
     "stevearc/aerial.nvim",
-    event = "VeryLazy",
     cmd = {
         "AerialPrev",
         "AerialNext",

@@ -1,4 +1,4 @@
-local leader = ";a"
+local leader = ";q"
 local cmd = function(cmd)
     return function()
         vim.cmd(cmd)

@@ -3,7 +3,14 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
-if lambda.config.colourscheme.change_kitty_bg then
+kitty_env = function()
+    if string.find(os.getenv("TERM"), "kitty") ~= nil then
+        return true
+    else
+        return false
+    end
+end
+if lambda.config.colourscheme.change_kitty_bg and kitty_env() then
     vim.g.ORIGINAL_KITTY_BG_COLOR = nil
 
     local split = function(str)

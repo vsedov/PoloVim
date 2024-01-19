@@ -185,7 +185,7 @@ local mappings = {
     end,
 
     ["<C-l>"] = cmp.mapping(function(fallback)
-        if lambda.config.ai.sell_your_soul then
+        if lambda.config.ai.sell_your_soul and lambda.config.ai.copilot.use_cmp_trigger then
             copilot()
         else
             if luasnip.expand_or_jumpable() then

@@ -100,9 +100,10 @@ ai({
             layout = { position = "right", ratio = 0.4 },
         },
         suggestion = {
-            auto_trigger = true,
-            keymap = { accept = false, accept_word = "<M-w>", accept_line = "<M-l>" },
+            auto_trigger = lambda.config.ai.copilot.autotrigger,
+            keymap = { accept = false, accept_word = "<c-w>", accept_line = "<c-l>" },
         },
+
         filetypes = {
             gitcommit = false,
             NeogitCommitMessage = false,

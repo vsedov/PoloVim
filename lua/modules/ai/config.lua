@@ -135,10 +135,11 @@ function config.tabnine_cmp()
 end
 
 -- NOTE: (vsedov) (08:27:24 - 31/07/23): I do not think you can refactor this into cmp directly using <c-l>
+
 function config.tabnine()
     require("tabnine").setup({
         disable_auto_comment = true,
-        accept_keymap = "<C-l>",
+        accept_keymap = "<C-;>",
         dismiss_keymap = "<C-e>",
         suggestion_color = { gui = "#808080", cterm = 244 },
         execlude_filetypes = { "TelescopePrompt" },

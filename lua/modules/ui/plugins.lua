@@ -126,7 +126,7 @@ ui({
         end)
     end,
 })
-ui({ "MunifTanjim/nui.nvim", event = "VeryLazy", lazy = true })
+ui({ "MunifTanjim/nui.nvim", lazy = true })
 --
 -- --  ──────────────────────────────────────────────────────────────────────
 -- -- Force Lazy
@@ -610,7 +610,7 @@ ui({
 
 ui({
     "mvllow/modes.nvim",
-    cond = false,
+    cond = true,
     event = "VeryLazy",
     config = true,
 })
