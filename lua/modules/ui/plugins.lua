@@ -17,6 +17,7 @@ ui({
             },
         },
     },
+    config = conf.notify,
 })
 
 ui({

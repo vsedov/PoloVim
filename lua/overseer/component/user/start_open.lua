@@ -19,14 +19,11 @@ return {
         },
     },
     constructor = function(params)
+        print(params)
         return {
             on_start = function(_, task)
                 overseer.run_action(task, "open")
-                if not params.goto_prev and params.start_insert then
-                    vim.cmd.startinsert()
-                else
-                    require("edgy").goto_main()
-                end
+                require("edgy").goto_main()
             end,
         }
     end,

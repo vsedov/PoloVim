@@ -117,7 +117,7 @@ local function setup_cmdline_quit()
 end
 
 function M.setup()
-    setup_cmdline_quit()
+    -- setup_cmdline_quit()
 end
 
 return M

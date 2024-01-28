@@ -45,7 +45,7 @@ lambda.config.ai = {
         },
     },
     copilot = {
-        autotrigger = true,
+        autotrigger = false,
         use_cmp_trigger = false, -- if this is false, then copilot is active,  but you are using something else
     },
     tabnine = {

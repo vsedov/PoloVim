@@ -113,7 +113,12 @@ vim.defer_fn(function()
 
         lambda.lib.when(not vim.tbl_contains(exclude_table, name), function()
             if enable then
-                require(f).setup()
+                if name == "auto_normal" then
+                    vim.notify("Auto Normal is enabled")
+                    require(f).setup(5000)
+                else
+                    require(f).setup()
+                end
             end
         end)
     end

@@ -659,3 +659,21 @@ user({
         -- TODO: use other queries?
     },
 })
+
+user({
+    "ThePrimeagen/vim-apm",
+    keys = {
+        {
+            "<leader>M",
+            desc = "Toggle apm",
+        },
+    },
+    config = function()
+        local apm = require("vim-apm")
+
+        apm:setup({})
+        vim.keymap.set("n", "<leader>M", function()
+            apm:toggle_monitor()
+        end)
+    end,
+})
