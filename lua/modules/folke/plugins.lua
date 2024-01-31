@@ -13,17 +13,12 @@ folke({
             "General: [F]orce Close Edgy",
         },
     },
-    init = function()
-        vim.opt.laststatus = 3
-        vim.opt.splitkeep = "screen"
-    end,
-
     opts = conf.edgy,
 })
 
 folke({
     "folke/noice.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     cond = lambda.config.folke.noice.enable,
     dependencies = {
         "nui.nvim",
@@ -37,8 +32,8 @@ folke({
 folke({
     "folke/which-key.nvim",
     cond = lambda.config.tools.use_which_key_or_use_mini_clue == "which",
-    lazy = true,
-    event = "VeryLazy",
+    -- lazy = true,
+    -- event = "VeryLazy",
     config = conf.which_key,
 })
 

@@ -28,35 +28,6 @@ overseer.setup({
     dap = true,
     task_list = {
         separator = "────────────────────────────────────────────────────────────────────────────────",
-        bindings = {
-            ["?"] = "ShowHelp",
-            ["g?"] = "ShowHelp",
-            ["<CR>"] = "RunAction",
-            ["<C-e>"] = "Edit",
-            ["o"] = "Open",
-            ["<C-v>"] = "OpenVsplit",
-            ["<C-s>"] = "OpenSplit",
-            ["<C-f>"] = "OpenFloat",
-            ["<C-q>"] = "OpenQuickFix",
-            ["p"] = "TogglePreview",
-            ["<C-l>"] = "IncreaseDetail",
-            ["<C-h>"] = "DecreaseDetail",
-            ["L"] = "IncreaseAllDetail",
-            ["H"] = "DecreaseAllDetail",
-            ["["] = "DecreaseWidth",
-            ["]"] = "IncreaseWidth",
-            ["{"] = "PrevTask",
-            ["}"] = "NextTask",
-            ["<C-k>"] = "ScrollOutputUp",
-            ["<C-j>"] = "ScrollOutputDown",
-            ["q"] = "Close",
-        },
-        direction = "left",
-        min_height = 25,
-        max_height = 25,
-        default_detail = 1,
-        -- height = math.floor(vim.o.lines * 0.3),
-        -- max_height = 40,
     },
     component_aliases = {
         default_neotest = {
@@ -79,7 +50,9 @@ overseer.setup({
     template_timeout = 5000,
     template_cache_threshold = 0,
     actions = {
-        ["set loclist diagnostics"] = true,
+        ["open vsplit"] = false,
+        ["open hsplit"] = false,
+        ["set loclist diagnostics"] = false,
         ["set as recive terminal"] = {
             desc = "set this task as the terminal to recive sent text and commands",
             run = function(task)
@@ -136,7 +109,6 @@ overseer.setup({
                 return bufnr and vim.api.nvim_buf_is_valid(bufnr)
             end,
             run = function(task)
-                vim.notify("Runner: opening task")
                 vim.cmd([[normal! m']])
                 close_task(task.strategy.bufnr)
                 vim.bo[task.strategy.bufnr].filetype = "OverseerPanelTask"

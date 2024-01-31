@@ -22,8 +22,8 @@ return {
         print(params)
         return {
             on_start = function(_, task)
-                overseer.run_action(task, "open")
                 require("edgy").goto_main()
+                overseer.run_action(task, "open")
             end,
         }
     end,

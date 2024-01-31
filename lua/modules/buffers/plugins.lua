@@ -1,26 +1,24 @@
 local buffer = require("core.pack").package
 local conf = require("modules.buffers.config")
---  ╭────────────────────────────────────────────────────────────────────╮
---  │ very lazy                                                          │
---  ╰────────────────────────────────────────────────────────────────────╯
+-- --  ╭────────────────────────────────────────────────────────────────────╮
+-- --  │ very lazy                                                          │
+-- --  ╰────────────────────────────────────────────────────────────────────╯
 buffer({
     "akinsho/bufferline.nvim",
     lazy = true,
     cond = lambda.config.buffer.use_bufferline,
-    event = "VeryLazy",
+    event = "BufEnter",
     config = conf.nvim_bufferline,
     dependencies = { { "stevearc/three.nvim", config = conf.three, lazy = true }, { "tabscope.nvim" } },
 })
-
+--
 buffer({
-
     "backdround/tabscope.nvim",
-    cond = false,
     lazy = true,
     event = "VeryLazy",
     config = true,
 })
-
+--
 buffer({
     "toppair/reach.nvim",
     lazy = true,
@@ -39,7 +37,7 @@ buffer({
         "CybuLastusedNext",
     },
 })
-
+--
 buffer({
     "jlanzarotta/bufexplorer",
     lazy = true,
@@ -48,25 +46,24 @@ buffer({
     end,
     cmd = { "BufExplorer", "ToggleBufExplorer", "BufExplorerHorizontalSplit", "BufExplorerVerticalSplit" },
 })
-
+--
 buffer({ "numtostr/BufOnly.nvim", cmd = "BufOnly" })
 
 buffer({
     "famiu/bufdelete.nvim",
     keys = { { "_q", "<Cmd>Bdelete<CR>", desc = "buffer delete" } },
 })
-
-buffer({
-    "stevearc/stickybuf.nvim",
-    cond = lambda.config.buffer.use_sticky_buf,
-    lazy = true,
-    event = "VeryLazy",
-    config = conf.sticky_buf,
-})
-
+--
+-- buffer({
+--     "stevearc/stickybuf.nvim",
+--     cond = lambda.config.buffer.use_sticky_buf,
+--     lazy = true,
+--     event = "VeryLazy",
+--     config = conf.sticky_buf,
+-- })
+--
 buffer({
     "stevearc/oil.nvim",
-    event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
         delete_to_trash = true,
@@ -102,8 +99,12 @@ buffer({
         vim.keymap.set("n", "<leader>-", require("oil").open, { desc = "Open parent directory" })
         vim.keymap.set("n", "-", require("oil").open_float, { desc = "Open parent directory" })
     end,
+    keys = {
+        { "leader>-" },
+        { "-" },
+    },
 })
-
+--
 buffer({
     "mskelton/local-yokel.nvim",
     lazy = true,
@@ -139,7 +140,7 @@ buffer({
         end
     end,
 })
---  ──────────────────────────────────────────────────────────────────────
+-- --  ──────────────────────────────────────────────────────────────────────
 buffer({
     "chrisgrieser/nvim-early-retirement",
     cond = lambda.config.buffer.use_early_retirement,
@@ -177,10 +178,10 @@ buffer({
     },
 })
 
--- Unlist hidden buffers that are git ignored.
-buffer({
-    "sQVe/bufignore.nvim",
-    cond = lambda.config.buffer.use_bufignore,
-    event = "BufRead",
-    config = true,
-})
+-- -- Unlist hidden buffers that are git ignored.
+-- buffer({
+--     "sQVe/bufignore.nvim",
+--     cond = lambda.config.buffer.use_bufignore,
+--     event = "BufRead",
+--     config = true,
+-- })

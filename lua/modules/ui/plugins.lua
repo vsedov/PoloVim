@@ -17,7 +17,7 @@ ui({
             },
         },
     },
-    config = conf.notify,
+    -- config = conf.notify,
 })
 
 ui({
@@ -29,7 +29,7 @@ ui({
 ui({
     "rebelot/heirline.nvim",
     cond = lambda.config.ui.heirline.use_heirline,
-    event = "VeryLazy",
+    event = "BufEnter",
     config = conf.h_line,
 })
 

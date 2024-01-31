@@ -22,26 +22,6 @@ lambda.command("OverseerRestartLast", function()
         overseer.run_action(tasks[1], "restart")
     end
 end, {})
-lambda.command("Make", function(params)
-    local args = vim.fn.expandcmd(params.args)
-    -- Insert args at the '$*' in the makeprg
-    local cmd, num_subs = vim.o.makeprg:gsub("%$%*", args)
-    if num_subs == 0 then
-        cmd = cmd .. " " .. args
-    end
-    local task = require("overseer").new_task({
-        cmd = cmd,
-        components = {
-            { "on_output_quickfix", open = not params.bang, open_height = 8 },
-            "default",
-        },
-    })
-    task:start()
-end, {
-    desc = "Run your makeprg as an Overseer task",
-    nargs = "*",
-    bang = true,
-})
 lambda.command("Grep", function(params)
     local args = vim.fn.expandcmd(params.args)
     -- Insert args at the '$*' in the grepprg

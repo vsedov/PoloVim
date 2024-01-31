@@ -13,16 +13,6 @@ docs({
     lazy = true,
     cmd = { "RefCopy", "RefGo" },
 })
-docs({
-    "ranelpadon/python-copy-reference.vim",
-    lazy = true,
-    ft = "python",
-    cmd = {
-        "PythonCopyReferenceDotted",
-        "PythonCopyReferencePytest",
-        "PythonCopyReferenceImport",
-    },
-})
 
 docs({
     "amrbashir/nvim-docs-view",

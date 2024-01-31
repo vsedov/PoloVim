@@ -10,7 +10,7 @@ local use_codium = false -- Want to see what this would be like without codeium,
 local use_codium_cmp = false
 
 local use_tabnine = true
-local use_tabnine_cmp = false
+local use_tabnine_cmp = true
 
 local use_copilot = true -- We really do sell our souls for this thing eh
 
@@ -45,7 +45,7 @@ lambda.config.ai = {
         },
     },
     copilot = {
-        autotrigger = false,
+        autotrigger = true,
         use_cmp_trigger = false, -- if this is false, then copilot is active,  but you are using something else
     },
     tabnine = {

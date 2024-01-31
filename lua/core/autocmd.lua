@@ -269,76 +269,76 @@ function mkview()
     end
 end
 
-local valid = {
-    "python",
-    "lua",
-}
-lambda.augroup("SaveFoldsWhenWriting", {
-    {
-        event = "BufWritePost",
-        pattern = valid,
-        command = function()
-            if valid[vim.bo.filetype] then
-                mkview()
-            end
-        end,
-    },
-    {
-        event = "QuitPre",
-        pattern = valid,
-        command = function()
-            if valid[vim.bo.filetype] then
-                if vim.fn.exists("b:mkview") == 1 then
-                    mkview()
-                end
-            end
-        end,
-    },
-    {
-        event = "BufWinEnter",
-        pattern = valid,
-        command = function()
-            if valid[vim.bo.filetype] then
-                loadview()
-            end
-        end,
-    },
-})
-
--- ref: https://github.com/omega-nvim/omega-nvim/blob/main/lua/omega/core/autocommands.lua
-lambda.augroup("Omega", {
-
-    {
-
-        event = { "BufAdd", "BufEnter", "tabnew" },
-        command = function(args)
-            if vim.t.bufs == nil then
-                vim.t.bufs = vim.api.nvim_get_current_buf() == args.buf and {} or { args.buf }
-            else
-                local bufs = vim.t.bufs
-
-                -- check for duplicates
-                if
-                    vim.bo[args.buf].buflisted
-                    and (args.event == "BufEnter" or args.buf ~= vim.api.nvim_get_current_buf())
-                    and vim.api.nvim_buf_is_valid(args.buf)
-                    and (args.event == "BufEnter" or vim.bo[args.buf].buflisted)
-                    and not vim.tbl_contains(bufs, args.buf)
-                then
-                    table.insert(bufs, args.buf)
-                    vim.t.bufs = bufs
-                end
-            end
-        end,
-    },
-    {
-        event = { "BufNewFile", "BufRead", "TabEnter", "TermOpen" },
-        command = function()
-            if lambda.config.buffer.use_bufferline then
-                if #vim.fn.getbufinfo({ buflisted = 1 }) >= 2 or #vim.api.nvim_list_tabpages() >= 2 then
-                    vim.opt.showtabline = 2
-                end
-            end
-        end,
-    },
-})
+-- local valid = {
+--     "python",
+--     "lua",
+-- }
+-- lambda.augroup("SaveFoldsWhenWriting", {
+--     {
+--         event = "BufWritePost",
+--         pattern = valid,
+--         command = function()
+--             if valid[vim.bo.filetype] then
+--                 mkview()
+--             end
+--         end,
+--     },
+--     {
+--         event = "QuitPre",
+--         pattern = valid,
+--         command = function()
+--             if valid[vim.bo.filetype] then
+--                 if vim.fn.exists("b:mkview") == 1 then
+--                     mkview()
+--                 end
+--             end
+--         end,
+--     },
+--     {
+--         event = "BufWinEnter",
+--         pattern = valid,
+--         command = function()
+--             if valid[vim.bo.filetype] then
+--                 loadview()
+--             end
+--         end,
+--     },
+-- })
+--
+-- -- ref: https://github.com/omega-nvim/omega-nvim/blob/main/lua/omega/core/autocommands.lua
+-- lambda.augroup("Omega", {
+--
+--     {
+--
+--         event = { "BufAdd", "BufEnter", "tabnew" },
+--         command = function(args)
+--             if vim.t.bufs == nil then
+--                 vim.t.bufs = vim.api.nvim_get_current_buf() == args.buf and {} or { args.buf }
+--             else
+--                 local bufs = vim.t.bufs
+--
+--                 -- check for duplicates
+--                 if
+--                     vim.bo[args.buf].buflisted
+--                     and (args.event == "BufEnter" or args.buf ~= vim.api.nvim_get_current_buf())
+--                     and vim.api.nvim_buf_is_valid(args.buf)
+--                     and (args.event == "BufEnter" or vim.bo[args.buf].buflisted)
+--                     and not vim.tbl_contains(bufs, args.buf)
+--                 then
+--                     table.insert(bufs, args.buf)
+--                     vim.t.bufs = bufs
+--                 end
+--             end
+--         end,
+--     },
+--     {
+--         event = { "BufNewFile", "BufRead", "TabEnter", "TermOpen" },
+--         command = function()
+--             if lambda.config.buffer.use_bufferline then
+--                 if #vim.fn.getbufinfo({ buflisted = 1 }) >= 2 or #vim.api.nvim_list_tabpages() >= 2 then
+--                     vim.opt.showtabline = 2
+--                 end
+--             end
+--         end,
+--     },
+-- })

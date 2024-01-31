@@ -87,7 +87,7 @@ startup({
 -- enabled by default, will need to load on boot
 startup({
     "chrisbra/Recover.vim",
-    cond = false,
+    cond = true,
     lazy = false,
 })
 

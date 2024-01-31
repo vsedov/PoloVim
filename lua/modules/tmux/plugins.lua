@@ -8,7 +8,7 @@ tmux({
 
 tmux({
     "aserowy/tmux.nvim",
-    event = "BufWinEnter",
+    cond = vim.fn.getenv("TMUX") ~= vim.NIL and false,
     config = function()
         require("tmux").setup({
             copy_sync = {
