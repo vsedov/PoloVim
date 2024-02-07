@@ -97,7 +97,7 @@ return {
     --  ╰────────────────────────────────────────────────────────────────────╯
 
     {
-        "<c-w>",
+        "<cr>",
         mode = { "o", "x" },
         function()
             Flash.remote()
@@ -116,7 +116,7 @@ return {
         desc = "Treesitter Search | show labeled treesitter nodes around the search matches",
     },
     {
-        "m",
+        "M",
         function()
             Flash.treesitter_search({
                 label = { before = true, after = true, style = "inline" },

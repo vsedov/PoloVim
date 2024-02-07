@@ -93,3 +93,16 @@ runner({
     },
     opts = {},
 })
+runner({
+    "LunarVim/bigfile.nvim",
+    event = "VeryLazy",
+    config = true,
+})
+runner({
+    "itsfrank/overseer-quick-tasks",
+    lazy = true,
+    dependencies = {
+        "ThePrimeagen/harpoon",
+        "stevearc/overseer.nvim",
+    },
+})

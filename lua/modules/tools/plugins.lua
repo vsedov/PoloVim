@@ -81,15 +81,15 @@ tools({
         require("modules.tools.toggleterm")
     end,
     keys = {
-        "<leader>t0",
-        "<leader>t1",
-        "<leader>t2",
-        "<leader>t3",
-        "<leader>t4",
-        "<leader>t!",
+        ";t0",
+        ";t1",
+        ";t2",
+        ";t3",
+        ";t4",
+        ";t!",
         "<leader>gh",
-        "<leader>tf",
-        "<leader>th",
+        ";tf",
+        ";th",
         "<c-t>",
     },
 })
@@ -367,26 +367,5 @@ tools({
     event = "TermEnter",
     config = function()
         require("terminal").setup()
-    end,
-})
-tools({
-    "mikesmithgh/kitty-scrollback.nvim",
-    enabled = true,
-    lazy = true,
-    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
-    event = { "User KittyScrollbackLaunch" },
-    -- version = '*', -- latest stable version, may have breaking changes if major version changed
-    -- version = '^2.0.0', -- pin major version, include fixes and features that do not have breaking changes
-    config = function()
-        require("kitty-scrollback").setup({
-            ksb_builtin_last_cmd_output = function()
-                return {
-                    kitty_get_text = {
-                        extent = "last_visited_cmd_output",
-                        ansi = true,
-                    },
-                }
-            end,
-        })
     end,
 })

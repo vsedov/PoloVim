@@ -33,7 +33,7 @@ function config.catppuccin()
         integrations = {
             treesitter = true,
             dropbar = {
-                enabled = true,
+                enabled = lambda.config.ui.use_dropbar,
                 color_mode = true, -- enable color for kind's texts, not just kind's icons
             },
 
@@ -412,4 +412,15 @@ function config.text_to_colourscheme()
         },
     })
 end
+
+function config.noirbuddy()
+    require("noirbuddy").setup({
+        colors = {
+            primary = "#6EE2FF",
+            secondary = "#267FB5",
+        },
+        preset = "miami-nights",
+    })
+end
+
 return config

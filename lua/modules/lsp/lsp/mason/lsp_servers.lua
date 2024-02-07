@@ -57,6 +57,19 @@ local servers = {
     buf = true,
     grammarly = true,
     zls = true,
+    luau_lsp = function()
+        require("luau-lsp").setup({
+            sourcemap = {
+                enabled = true,
+                autogenerate = true, -- automatic generation when the server is attached
+                rojo_project_file = "default.project.json",
+            },
+            types = {
+                roblox = true,
+                roblox_security_level = "PluginSecurity",
+            },
+        })
+    end,
     lua_ls = {
         settings = {
             Lua = {

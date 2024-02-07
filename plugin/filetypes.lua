@@ -138,7 +138,6 @@ settings({
         bo = { bufhidden = "wipe" },
         mappings = {
             { "n", "q", "<Cmd>q<CR>" },
-            { "n", "l", "<CR>" },
             { "n", "h", "<CR>" },
             { "n", "o", "<CR>" },
         },

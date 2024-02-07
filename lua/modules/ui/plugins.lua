@@ -25,14 +25,14 @@ ui({
     cmd = "NerdIcons",
     config = true,
 })
-
-ui({
-    "rebelot/heirline.nvim",
-    cond = lambda.config.ui.heirline.use_heirline,
-    event = "BufEnter",
-    config = conf.h_line,
-})
-
+--
+-- ui({
+--     "rebelot/heirline.nvim",
+--     cond = lambda.config.ui.heirline.use_heirline,
+--     event = "BufEnter",
+--     config = conf.h_line,
+-- })
+--
 ui({
     "stevearc/dressing.nvim",
     init = function()
@@ -128,11 +128,11 @@ ui({
     end,
 })
 ui({ "MunifTanjim/nui.nvim", lazy = true })
---
--- --  ──────────────────────────────────────────────────────────────────────
--- -- Force Lazy
--- --  ──────────────────────────────────────────────────────────────────────
---
+-- --
+-- -- --  ──────────────────────────────────────────────────────────────────────
+-- -- -- Force Lazy
+-- -- --  ──────────────────────────────────────────────────────────────────────
+-- --
 ui({
     "RRethy/vim-illuminate",
     lazy = true,
@@ -140,9 +140,9 @@ ui({
     event = "VeryLazy",
     config = conf.illuminate,
 })
-
---  ──────────────────────────────────────────────────────────────────────
-
+--
+-- --  ──────────────────────────────────────────────────────────────────────
+--
 ui({
     "nvim-tree/nvim-web-devicons",
     config = function()
@@ -160,7 +160,7 @@ ui({
         })
     end,
 })
-
+--
 ui({
     "nvim-neo-tree/neo-tree.nvim",
     event = "VeryLazy", -- No clue why, but this is required for my hydra to work o_o
@@ -388,7 +388,7 @@ ui({
         hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
 })
--- dropbar_menu
+-- -- dropbar_menu
 ui({
     "shell-Raining/hlchunk.nvim",
     cond = lambda.config.ui.indent_lines.use_hlchunk,
@@ -418,7 +418,7 @@ ui({
         },
     },
 })
---
+-- --
 ui({
     "levouh/tint.nvim",
     cond = lambda.config.ui.use_tint == "tint",
@@ -452,7 +452,7 @@ ui({
         end,
     },
 })
---
+-- --
 ui({
     "kevinhwang91/promise-async",
     lazy = true,
@@ -566,15 +566,14 @@ ui({
         })
     end,
 })
---  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
---  i wonder if they are any better that what ive had before
+-- --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
+-- --  i wonder if they are any better that what ive had before
 ui({
     "glepnir/hlsearch.nvim",
     cond = lambda.config.ui.use_hlsearch,
     event = "CursorHold",
     config = true,
 })
---
 ui({
     "kevinhwang91/nvim-hlslens",
     cond = lambda.config.ui.use_hlslens,
@@ -582,15 +581,6 @@ ui({
     config = true,
     event = "VeryLazy",
 })
---
-
-ui({
-    "yaocccc/nvim-foldsign",
-    cond = true,
-    event = "CursorHold",
-    config = true,
-})
-
 ui({
     "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
     cond = lambda.config.ui.scroll_bar.use_scroll,

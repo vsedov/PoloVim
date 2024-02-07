@@ -37,7 +37,9 @@ local config = {
         color = "red",
         body = leader_key,
         mode = { "n" },
-        on_enter = function() end,
+        on_enter = function()
+            require("reach").buffers(reach_options)
+        end,
 
         m = {
             function()

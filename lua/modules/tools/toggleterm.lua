@@ -41,13 +41,13 @@ local terminals = {
 
 -- Set keymap bindings using a table
 local keymaps = {
-    { "<Leader>t0", "<cmd>ToggleTermToggleAll<CR>", desc = "Toggle display all terminals" },
-    { "<Leader>t1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal with id 1" },
-    { "<Leader>t2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal with id 2" },
-    { "<Leader>t3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal with id 3" },
-    { "<Leader>t4", "<cmd>4ToggleTerm<CR>", desc = "Toggle terminal with id 4" },
+    { ";0", "<cmd>ToggleTermToggleAll<CR>", desc = "Toggle display all terminals" },
+    { ";1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal with id 1" },
+    { ";2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal with id 2" },
+    { ";3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal with id 3" },
+    { ";4", "<cmd>4ToggleTerm<CR>", desc = "Toggle terminal with id 4" },
     {
-        "<Leader>t!",
+        ";!",
         [[<cmd>execute v:count . "TermExec cmd='exit;'"<CR>]],
         silent = true,
         desc = "Quit terminal",

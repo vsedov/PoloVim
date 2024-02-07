@@ -90,7 +90,7 @@ M.opts = {
                 index = "index.norg",
                 autodetect = true,
                 [[ -- autochdir = false, ]],
-                default_workspace = "~/Documents/PhD_Norg/",
+                default_workspace = "phd",
             },
         },
 

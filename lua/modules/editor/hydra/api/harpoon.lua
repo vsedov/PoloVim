@@ -1,106 +1,27 @@
-local leader = "<cr>"
-local bracket = { "<CR>", "<BS>", "W", "G", "t", "a", ";", "c", "<leader>" }
+-- I wonder if we can fix the loading issue when we deal with this
+local harpoon = require("harpoon")
+local api = vim.api
 
-local input_prompt = "enter the command: cmd >"
-local terminal_prompt = "Enter a terminal Number "
-local default_terminal = "1"
+local leader = "<cr>"
+local bracket = { "<CR>", "W", "G", "t", "a", "A", ";", "c", "<leader>" }
 
 local h_conf = lambda.config.movement.harpoon
+local function harpoon_ns()
+    return api.nvim_create_namespace("harpoon_sign")
+end
+api.nvim_set_hl(0, "HarpoonSign", { fg = "#8aadf4", bold = true })
 
-local cache = {
-    command = "ls -a",
-    tmux = {
-        selected_plane = "",
-    },
-}
-
-local function plane()
-    local data = vim.fn.system("tmux list-panes")
-    local lines = vim.split(data, "\n")
-    local container = {}
-
-    for _, line in ipairs(lines) do
-        local output, output_2 = line:match("^(%d+):.*(%%%d+)")
-        if output ~= nil and output_2 ~= nil and output ~= "1" then
-            table.insert(container, output .. " : " .. output_2)
-        end
-    end
-
-    local unicode = { "Σ", "Φ", "Ψ", "λ", "Ω" }
-    for i, symbol in ipairs(unicode) do
-        table.insert(container, symbol .. " : " .. i)
-    end
-
-    return container
+local function harpoon_sign(row)
+    api.nvim_buf_set_extmark(0, harpoon_ns(), row - 1, -1, {
+        sign_text = " ", -- check your `signcolumn` option
+        sign_hl_group = "HarpoonSign",
+    })
 end
 
-local function tmux_goto(term)
-    if vim.fn.getenv("TMUX") ~= vim.NIL and h_conf.use_tmux_or_normal then
-        require("harpoon-tmux").gotoTerminal(term)
-    else
-        require("harpoon.term").gotoTerminal(term)
-    end
-end
-
-local function terminal_send(term, cmd)
-    local module
-    local goto_func = "gotoTerminal"
-    if vim.fn.getenv("TMUX") ~= vim.NIL then
-        module = string.find(term, "%%") and "harpoon.tmux" or "harpoon-tmux"
-        if not string.find(term, "%%") then
-            term = tonumber(term)
-        end
-    else
-        module = "harpoon.term"
-    end
-
-    require(module).sendCommand(term, cmd)
-    if h_conf.goto_harpoon == true then
-        vim.defer_fn(function()
-            require(module)[goto_func](term)
-        end, string.find(module, "tmux") and 500 or 1000)
-    end
-end
-local function handle_tmux()
-    local data = plane()
-    local selected_plane = cache.tmux.selected_plane
-    if selected_plane == "" then
-        local filtered = vim.tbl_filter(function(item)
-            return string.find(item, "%%")
-        end, data)
-        selected_plane = #filtered > 0 and vim.split(filtered[1], " : ")[2] or vim.split(data[1], " : ")[2]
-    end
-    cache.tmux.selected_plane = selected_plane
-    table.insert(data, "0: cache : " .. selected_plane)
-    table.sort(data, function(a, b)
-        return a:lower() < b:lower()
-    end)
-    vim.ui.select(data, { prompt = "Select a Plane " }, function(selected_item)
-        local selected_plane = selected_item == "cache" and cache.tmux.selected_plane
-            or vim.split(selected_item, " : ")[2]
-        cache.tmux.selected_plane = string.find(selected_plane, "%%") and selected_plane or tonumber(selected_plane)
-        cache.command = string.find(cache.command, "%D") and cache.command or tonumber(cache.command)
-        terminal_send(cache.tmux.selected_plane, cache.command)
-    end)
-end
-
-local function handle_non_tmux()
-    vim.ui.input({ prompt = terminal_prompt, default = default_terminal }, function(terminal_number)
-        if not string.find(terminal_number, "%D") then
-            local term = tonumber(terminal_number)
-            terminal_send(term, cache.command)
-        end
-    end)
-end
-
-local function handle_command_input(command)
-    cache.command = command ~= "" and command or cache.command
-
-    if vim.fn.getenv("TMUX") ~= vim.NIL and h_conf.use_tmux_or_normal == "tmux" then
-        handle_tmux()
-    else
-        handle_non_tmux()
-    end
+local function harpoon_add()
+    api.nvim_buf_clear_namespace(0, harpoon_ns(), 0, -1)
+    harpoon_sign(vim.fn.line("."))
+    harpoon:list():append()
 end
 
 local exit = { nil, { exit = true, desc = "EXIT" } }
@@ -114,26 +35,29 @@ local config = {
         position = "bottom-right",
 
         ["<ESC>"] = { nil, { exit = true } },
-        s = {
+        A = {
             function()
-                vim.ui.input({ prompt = input_prompt }, handle_command_input)
+                harpoon_add()
             end,
-            { nowait = true, exit = true, desc = "Terminal GotoSend" },
+            { nowait = true, exit = true, desc = "Harpoon Add" },
         },
         S = {
             function()
-                vim.ui.input({ prompt = "enter the terminal: term >" }, function(value2)
-                    tmux_goto(tonumber(value2))
-                end)
+                require("oqt").prompt_new_task()
             end,
-            { nowait = true, exit = true, desc = "Terminal Goto" },
+            { nowait = true, exit = true, desc = "OS New Task" },
+        },
+        s = {
+            function()
+                harpoon.ui:toggle_quick_menu(harpoon:list("oqt"))
+            end,
+            { nowait = true, exit = true, desc = "OS List taks" },
         },
 
         ["<CR>"] = {
             function()
-                require("harpoon.ui").toggle_quick_menu()
+                harpoon.ui:toggle_quick_menu(harpoon:list())
             end,
-
             { nowait = true, exit = true, desc = "Quick Menu" },
         },
         G = {
@@ -144,20 +68,6 @@ local config = {
             { nowait = true, exit = true, desc = "Toggle Goto" },
         },
 
-        ["<BS>"] = {
-            function()
-                if h_conf.use_tmux_or_normal == "tmux" then
-                    h_conf.use_tmux_or_normal = "nvim"
-                else
-                    h_conf.use_tmux_or_normal = "tmux"
-                end
-                vim.defer_fn(function()
-                    vim.notify("Current Config Set to : " .. h_conf.use_tmux_or_normal)
-                end, 500)
-                P(h_conf.use_tmux_or_normal:gsub("^%l", string.upper))
-            end,
-            { nowait = true, exit = false, desc = "Nvim/Tmux" },
-        },
         t = {
             function()
                 require("harpoon.mark").toggle_file()
@@ -167,26 +77,26 @@ local config = {
 
         [";"] = {
             function()
-                vim.cmd("Telescope harpoon marks")
+                toggle_telescope(harpoon:list())
             end,
             { nowait = true, exit = true, desc = "Harpoon Tele" },
         },
 
         a = {
             function()
-                require("harpoon.mark").add_file()
+                harpoon:list():append()
             end,
             { nowait = true, exit = true, desc = "Add File" },
         },
         n = {
             function()
-                require("harpoon.ui").nav_next()
+                harpoon:list():next()
             end,
             { nowait = true, exit = false, desc = "Next File" },
         },
         N = {
             function()
-                require("harpoon.ui").nav_prev()
+                harpoon:list():prev()
             end,
             { nowait = true, exit = false, desc = "Prev File" },
         },
@@ -228,9 +138,11 @@ local config = {
         },
         w = {
             function()
-                require("hook").toggle()
+                vim.ui.input({ prompt = "Harpoon , command ", default = "." }, function(item)
+                    harpoon:list("oqt"):append(item)
+                end)
             end,
-            { nowait = true, desc = "Jump", exit = true },
+            { nowait = true, desc = "Overseer Tasks Add", exit = true },
         },
     },
 }

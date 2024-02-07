@@ -6,7 +6,7 @@
 
 local use_noice = true
 
-local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
+local use_codium = true -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 
 local use_tabnine = true
@@ -46,7 +46,7 @@ lambda.config.ai = {
     },
     copilot = {
         autotrigger = true,
-        use_cmp_trigger = false, -- if this is false, then copilot is active,  but you are using something else
+        use_cmp_trigger = true, -- if this is false, then copilot is active,  but you are using something else
     },
     tabnine = {
         use_sort = true,
@@ -227,7 +227,7 @@ lambda.config.ui = {
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_tint = "tint", -- sunglasses, tint -- Might not be great for certain colourschemes
     use_hlsearch = true,
-    use_dropbar = true,
+    use_dropbar = false,
     mini_animate = {
         use_animate = false,
         use_cursor = true,
@@ -238,7 +238,7 @@ lambda.config.ui = {
     use_hlslens = true,
     heirline = {
         use_statuscol = true,
-        use_heirline = true,
+        use_heirline = false,
     },
     indent_lines = {
         use_hlchunk = false,
@@ -279,7 +279,7 @@ lambda.config.colourscheme = {
             -- "sweetie.nvim",
             -- "rose", -- TSMethod'
             -- "doom-one.nvim",
-            -- "kanagawa.nvim",
+            "kanagawa.nvim",
         },
         others = {
             "vim-dogrun",

@@ -9,8 +9,7 @@ windows({
 
 windows({
     "mrjones2014/smart-splits.nvim",
-    cond = lambda.config.windows.use_smart_splits,
-    build = "./kitty/install-kittens.bash",
+    event = "VeryLazy",
     dependencies = {
         {
             "kwkarlwang/bufresize.nvim",
@@ -48,6 +47,7 @@ windows({
                     on_leave = require("bufresize").register,
                 },
             },
+            mux = "kitty",
             extensions = {
                 -- default settings shown below:
                 smart_splits = {
@@ -58,7 +58,7 @@ windows({
                         -- for resizing windows
                         resize = "<M>",
                         -- for swapping window buffers
-                        swap = false, -- false disables creating a binding
+                        swap = true, -- false disables creating a binding
                     },
                 },
             },

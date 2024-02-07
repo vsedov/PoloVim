@@ -210,8 +210,9 @@ movement({
 
 movement({
     "ThePrimeagen/harpoon",
+    branch = "harpoon2",
     lazy = true,
-    init = conf.harpoon_init,
+    -- init = conf.harpoon_init,
     config = conf.harpoon,
 })
 
@@ -219,7 +220,7 @@ movement({
 movement({
     "LeonHeidelbach/trailblazer.nvim",
     lazy = true,
-    cond = lambda.config.movement.use_trailblazer,
+    cond = lambda.config.movement.use_trailblazer and false,
     keys = {
         { "ma", desc = "New trail mark " },
         { "mb", desc = "Track Back" },
@@ -249,14 +250,14 @@ movement({
             excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
             bookmark_0 = { sign = "⚑", virt_text = "->" },
             mappings = {
-                set = ";m",
-                set_next = ";m,",
-                toggle = ";m;",
-                next = ";m]",
-                prev = ";m[",
-                preview = ";m:",
-                next_bookmark = ";m}",
-                prev_bookmark = ";m{",
+                set = "m",
+                set_next = "m,",
+                toggle = "m;",
+                next = "m]",
+                prev = "m[",
+                preview = "m:",
+                next_bookmark = "m}",
+                prev_bookmark = "m{",
                 delete = "dm",
                 delete_line = "dm-",
                 delete_bookmark = "dm=",
@@ -266,42 +267,42 @@ movement({
     end,
     keys = {
         {
-            ";m",
+            "m",
             desc = "Set mark",
         },
 
         {
-            ";m,",
+            "m,",
             desc = "Set next mark",
         },
 
         {
-            ";m;",
+            "m;",
             desc = "Toggle mark",
         },
 
         {
-            ";m]",
+            "m]",
             desc = "Next mark",
         },
 
         {
-            ";m[",
+            "m[",
             desc = "Prev mark",
         },
 
         {
-            ";m:",
+            "m:",
             desc = "Preview mark",
         },
 
         {
-            ";m}",
+            "m}",
             desc = "Next bookmark",
         },
 
         {
-            ";m{",
+            "m{",
             desc = "Prev bookmark",
         },
 

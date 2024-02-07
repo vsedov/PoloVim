@@ -256,6 +256,9 @@ local function setup_autocommands(client, buf)
     -- if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
     --     vim.lsp.inlay_hint(buf, true)
     -- end
+    if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
+        vim.lsp.inlay_hint.enable(buf, true)
+    end
 
     if client.supports_method(M.textDocument_documentHighlight) and not lambda.config.ui.use_illuminate then
         augroup(("LspReferences%d"):format(buf), {

@@ -14,6 +14,7 @@ notes({
         -- "3rd/image.nvim",
         {
             "jarvismkennedy/neorg-roam.nvim",
+            cond = true,
             branch = "dev",
             dependencies = {
                 "nvim-telescope/telescope.nvim",
