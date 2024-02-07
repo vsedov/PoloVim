@@ -265,4 +265,5 @@ opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
 o.mousefocus = true
 o.mousemoveevent = true
 opt.mousescroll = { "ver:1", "hor:6" }
+opt.foldtext = ""
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])

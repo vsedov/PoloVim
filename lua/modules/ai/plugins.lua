@@ -101,7 +101,14 @@ ai({
         },
         suggestion = {
             auto_trigger = lambda.config.ai.copilot.autotrigger,
-            keymap = { accept = false, accept_word = "<c-w>", accept_line = "<c-l>" },
+            -- keymap = { accept = "<c-l>", accept_word = "<c-l>", accept_line = "<c-l>" },
+            keymap = {
+                accept_word = false,
+                accept_line = false,
+                next = "<M-]>",
+                prev = "<M-[>",
+                dismiss = "<C-]>",
+            },
         },
 
         filetypes = {

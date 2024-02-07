@@ -123,7 +123,7 @@ vim.g.personal_module = {
 -- -- neovim specific options
 -- vim.opt.completeopt = "menuone,noselect"
 -- vim.opt.cmdheight = 0
--- vim.opt.exrc = true
+vim.opt.exrc = true
 -- vim.opt.signcolumn = "yes:1"
 -- vim.opt.spelloptions = "camel,noplainbuffer"
 --

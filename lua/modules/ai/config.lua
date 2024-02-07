@@ -148,7 +148,6 @@ end
 
 --  TODO: (vsedov) (08:27:17 - 31/07/23): refactor this into cmp
 function config.codium()
-    vim.keymap.set("i", "<C-l>", vim.fn["codeium#Accept"], { expr = true })
     vim.keymap.set("i", "<c-.>", function()
         return vim.fn["codeium#CycleCompletions"](1)
     end, { expr = true })

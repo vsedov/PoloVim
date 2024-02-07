@@ -21,9 +21,6 @@ vim.defer_fn(function()
 end, 120)
 
 vim.defer_fn(function()
-    if vim.fn.getenv("TMUX") ~= nil then
-        lambda.config.movement.harpoon.use_tmux_or_normal = "tmux"
-    end
     if lambda.config.movement.movement_type == "leap" then
         loader({ plugins = { "leap.nvim" } })
         require("modules.movement.leap").highlight()

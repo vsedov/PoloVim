@@ -187,6 +187,9 @@ local mappings = {
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul and lambda.config.ai.copilot.use_cmp_trigger then
             copilot()
+        -- elseif lambda.config.ai.codeium.use_codium_insert then
+        --     -- vim.keymap.set("i", "<C-l>", vim.fn["codeium#Accept"], { expr = true })
+        --     vim.fn["codeium#Accept"]()
         else
             if luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()

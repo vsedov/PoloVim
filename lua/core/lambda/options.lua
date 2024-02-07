@@ -257,7 +257,7 @@ lambda.config.colourscheme = {
     enable_transparent = false, -- this can get annoying i guess, so theres not point for this -- this can get annoying i guess, so theres not point for this
 
     dim_background = true,
-    change_kitty_bg = true,
+    change_kitty_bg = false,
     --- @usage "main"' | '"moon"
     rose = "main",
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
