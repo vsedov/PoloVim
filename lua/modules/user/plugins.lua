@@ -194,6 +194,9 @@ user({
     config = function()
         require("kitty-scrollback").setup({
             -- put your kitty-scrollback.nvim configurations here
+            paste_window = {
+                hide_footer = true,
+            },
         })
     end,
 })

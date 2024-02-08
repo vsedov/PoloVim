@@ -108,34 +108,6 @@ buffer({
     config = true,
 })
 
-buffer({
-    "zakissimo/hook.nvim",
-    lazy = true,
-    keys = {
-        "<c-b>1",
-        "<c-b>2",
-        "<c-b>3",
-        "<c-b>4",
-        "<c-b>5",
-        "<c-b>6",
-        "<c-b>7",
-        "<c-b>8",
-        "<c-b>9",
-    },
-    config = function()
-        require("hook").setup({
-            prefix = "", -- default is ">"
-        })
-        for i = 1, 9 do
-            vim.api.nvim_set_keymap(
-                "n",
-                "<c-b>" .. i,
-                "<cmd>lua require('hook').pull(" .. i .. ")<CR>",
-                { noremap = true, silent = true }
-            )
-        end
-    end,
-})
 -- --  ──────────────────────────────────────────────────────────────────────
 buffer({
     "chrisgrieser/nvim-early-retirement",

@@ -135,7 +135,7 @@ lambda.config.lsp = {
     only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
     use_lsp_saga = true,
-    use_lsp_dim = true, -- i forgot what this does
+    use_lsp_dim = false, -- i forgot what this does
     ----------------------------------------------------------------------------------------------------
     --  Lsp Signiture, but im suing lazy for this for the time
     ----------------------------------------------------------------------------------------------------
@@ -326,7 +326,7 @@ lambda.config.tools = {
     },
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = false,
-    use_live_command = true, -- Disabled due to large files, this might noe be nice to have
+    use_live_command = false, -- Disabled due to large files, this might noe be nice to have
 }
 
 -- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux

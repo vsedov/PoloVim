@@ -1,4 +1,5 @@
 local ai = require("core.pack").package
+
 local conf = require("modules.ai.config")
 
 local ai_conf = lambda.config.ai

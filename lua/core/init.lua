@@ -96,7 +96,6 @@ local load_core = function()
     createdir()
     disable_distribution_plugins()
     leader_map()
-
     require("core.options")
     require("core.autocmd")
     require("core.autocmd_optional")
