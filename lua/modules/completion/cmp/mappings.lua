@@ -2,12 +2,18 @@ local cmp = require("cmp")
 local luasnip = require("luasnip")
 local utils = require("modules.completion.cmp.utils")
 
-local function copilot()
-    local suggestion = require("copilot.suggestion")
-    if suggestion.is_visible() then
-        return suggestion.accept()
+local function copilot(fallback)
+    -- local suggestion = require("copilot.suggestion")
+    -- if suggestion.is_visible() then
+    --     return suggestion.accept()
+    -- end
+    -- vim.api.nvim_feedkeys(lambda.replace_termcodes("<Tab>"), "n", false)
+    local copilot_keys = vim.fn["copilot#Accept"]("")
+    if copilot_keys ~= "" then
+        vim.api.nvim_feedkeys(copilot_keys, "i", true)
+    else
+        return
     end
-    vim.api.nvim_feedkeys(lambda.replace_termcodes("<Tab>"), "n", false)
 end
 
 local function t(str)
@@ -15,7 +21,7 @@ local function t(str)
 end
 local feedkeys = vim.api.nvim_feedkeys
 
-function M.supertab(when_cmp_visible)
+function supertab(when_cmp_visible)
     local cmp = require("cmp")
     local function check_back_space()
         local col = vim.fn.col(".") - 1
@@ -43,14 +49,6 @@ function M.supertab(when_cmp_visible)
     end
 end
 
-local confirmopts = {
-    select = false,
-}
-local cmdline_confirm = {
-    behavior = cmp.ConfirmBehavior.Replace,
-    select = false,
-}
-
 local function double_mapping(invisible, visible)
     return function()
         if cmp.visible() then
@@ -71,6 +69,10 @@ end
 
 local function complete_or(mapping)
     return double_mapping(cmp.complete, mapping)
+end
+local check_backspace = function()
+    local col = vim.fn.col(".") - 1
+    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 local function next_item()
     if cmp.visible() then
@@ -127,6 +129,7 @@ local mappings = {
         i = next_item,
         c = complete_or(cmp.select_next_item),
     }),
+    -- ──────────────────────────────────────────────────────────────────────
 
     ["<C-e>"] = cmp.mapping({
         i = cmp.mapping.abort(),
@@ -166,10 +169,8 @@ local mappings = {
         if cmp.visible() then
             cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
+                luasnip.expand_or_jump()
         else
-            -- "<plug>(smart-tab)"
-
             fallback()
         end
     end,
@@ -186,10 +187,19 @@ local mappings = {
 
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul and lambda.config.ai.copilot.use_cmp_trigger then
-            copilot()
-        -- elseif lambda.config.ai.codeium.use_codium_insert then
-        --     -- vim.keymap.set("i", "<C-l>", vim.fn["codeium#Accept"], { expr = true })
-        --     vim.fn["codeium#Accept"]()
+            -- copilot()
+            local copilot_keys = vim.fn["copilot#Accept"]("")
+            if copilot_keys ~= "" then
+                vim.api.nvim_feedkeys(copilot_keys, "i", false)
+            -- elseif luasnip.expandable() then
+            --     luasnip.expand()
+            -- elseif luasnip.expand_or_jumpable() then
+            --     luasnip.expand_or_jump()
+            elseif check_backspace() then
+                fallback()
+            else
+                fallback()
+            end
         else
             if luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()

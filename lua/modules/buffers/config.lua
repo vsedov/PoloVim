@@ -156,22 +156,30 @@ end
 
 function config.three()
     local three = require("three")
+
     three.setup({
         bufferline = {
             enabled = true,
             icon = {
+                -- Tab left/right dividers
+                -- Set to this value for fancier, more "tab-looking" tabs
+                -- dividers = { " ", " " },
                 dividers = { "▍", "" },
+                -- Scroll indicator icons when buffers exceed screen width
                 scroll = { "«", "»" },
-                pin = "車",
+                -- Pinned buffer icon
+                pin = "󰐃",
             },
+            -- When true, only show buffers that are inside the current directory
+            -- This can be toggled on a per-tab basis with toggle_scope_by_dir()
             scope_by_directory = true,
         },
         windows = {
-            enabled = false,
+            enabled = true,
             -- Constant or function to calculate the minimum window width of the focused window
             winwidth = function(winid)
                 local bufnr = vim.api.nvim_win_get_buf(winid)
-                return math.max(vim.api.nvim_buf_get_option(bufnr, "textwidth"), 80)
+                return math.max(vim.bo[bufnr].textwidth, 80)
             end,
             -- Constant or function to calculate the minimum window height of the focused window
             winheight = 10,
@@ -193,6 +201,7 @@ function config.three()
             end,
         },
     })
+
     lambda.command("BufCloseAllButCurrent", function()
         three.close_all_buffers(function(info)
             return info.bufnr ~= vim.api.nvim_get_current_buf()

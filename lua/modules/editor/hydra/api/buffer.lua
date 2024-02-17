@@ -1,5 +1,3 @@
-local bracket = { "w", "j", "k", "n", "N", "m", "C", "T", "L" }
-
 local leader_key = "<leader>b"
 
 local function buffer_move()
@@ -37,9 +35,6 @@ local config = {
         color = "red",
         body = leader_key,
         mode = { "n" },
-        on_enter = function()
-            require("reach").buffers(reach_options)
-        end,
 
         m = {
             function()
@@ -47,7 +42,7 @@ local config = {
             end,
             { nowait = true, exit = true, desc = "Reach Marks" },
         },
-        T = {
+        W = {
             function()
                 cmd("ReachOpen tabpages")
             end,
@@ -267,13 +262,12 @@ local config = {
         ["<cr>"] = {
             function()
                 vim.cmd("BufOnly")
-                -- Bdelete -- you could use this too,
             end,
             { desc = "Buf Wipe", exit = true },
         },
 
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
-        ["<c-a>"] = {
+        a = {
             function()
                 -- require("hbac").toggle_pin()
                 local options = {
@@ -293,9 +287,30 @@ local config = {
                         require("hbac").toggle_autoclose()
                     end,
                 }
-                vim.ui.select({ prompt = "Hbac", options = options })
+
+                -- require("hbac").toggle_pin()
+                local list = {
+                    t = "Toggle Pin",
+                    c = "Close Unpinned",
+                    P = "Pin All",
+                    U = "Unpin All",
+                    T = "Toggle Autoclose",
+                }
+
+                vim.ui.select(vim.tbl_keys(list), {
+                    prompt = "Hbac",
+                    format_item = function(item)
+                        return "Bind: " .. item .. " - " .. list[item]
+                    end,
+                }, function(choice)
+                    -- options[choice]()
+
+                    if options[choice] then
+                        options[choice]()
+                    end
+                end)
             end,
-            { desc = "Hbac binds ", exit = false },
+            { desc = "Hbac binds ", exit = true },
         },
     },
 }
@@ -304,14 +319,15 @@ return {
     config,
     "Buffer",
     {
-        { "l", "h", "J", "K", "=", "+", "b", "B", "<cr>" },
-        { "P", "q", "Q", "M" },
-        { "e", ">", "<", "p", "c" },
-        { "D", "d" },
-        { "1", "2", "3", "<c-a>" },
+        { "w", "m", "C", "W", "L" },
+        { "l", "h", "J", "K", "=", "+", "b", "B", "<cr>" }, -- 9
+        { "P", "q", "Q", "M" }, -- 4
+        { "e", ">", "<" },
+        { "p", "c", "D", "d" }, -- 2
+        { "1", "2", "3", "a" }, -- 4
     },
-    bracket,
+    { "j", "k", "n", "N" },
     6,
     4,
-    2,
+    1,
 }

@@ -31,7 +31,7 @@ local config = {
             { exit = true, desc = "Git Conflicts" },
         },
 
-        r = {
+        F = {
             function()
                 require("telescope.builtin").registers()
             end,
@@ -61,14 +61,14 @@ local config = {
             { exit = true, desc = "Ag" },
         },
 
-        f = {
+        r = {
             function()
                 vim.cmd.Tfm()
             end,
             { exit = true, desc = "Tfm" },
         },
 
-        F = {
+        f = {
             function()
                 vim.cmd.TfmTabedit()
             end,
@@ -232,9 +232,9 @@ local config = {
     },
 }
 
-local buffer = { "w", "f", "F", "a", "W", "E", "z", "e", "l", "M", "<leader>", "<CR>" }
+local buffer = { "w", "f", "R", "a", "W", "E", "z", "e", "l", "M", "<leader>", "<CR>" }
 local git = { "g", "u", "S", "h" }
-local register = { "r", "R", "j" }
+local register = { "r", "F", "j" }
 local command = { "c", "m", "o", "k" }
 local misc = { "p", "B", "/", "T", "+" }
 local filebrowser = { "1", "2", "s", "t", "b", "d" }

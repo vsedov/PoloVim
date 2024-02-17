@@ -90,7 +90,7 @@ local config = {
                     .. vim.fn.expand("%:t")
                     .. ")"
 
-                print(command)
+                vim.notify(command)
                 overseer.run_template({ name = command })
             end,
             { exit = true, desc = "OS Fast Run" },

@@ -208,13 +208,14 @@ local config = {
                 vim.ui.select(commands, {
                     prompt = "MultiMc Util",
                 }, function(inner_item)
-                    -- vim.cmd([[ChatGPTRun ]] .. inner_item)
-                    vim.defer_fn(function()
-                        vim.cmd(inner_item)
-                    end, 100)
+                    if vim.tbl_contains(commands, inner_item) then
+                        vim.defer_fn(function()
+                            vim.cmd(inner_item)
+                        end, 100)
+                    end
                 end)
             end,
-            { desc = "MultiMC Util", mode = { "v", "n", "x" }, exit = true, nowait = true },
+            { desc = "MultiMC Util", mode = { "v", "n", "x" }, exit = true },
         },
     },
 }

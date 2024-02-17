@@ -534,7 +534,7 @@ user({
     config = true,
     keys = {
         {
-            ";a",
+            "<leader>sa",
             function()
                 vim.cmd("AerialToggle")
             end,

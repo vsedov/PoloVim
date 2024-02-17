@@ -341,7 +341,7 @@ lsp({
             { desc = "Cody Fuzzy results" }
         )
         -- Toggle cody chat
-        vim.keymap.set("n", "<leader>cc", function()
+        vim.keymap.set("n", "<leader>sw", function()
             require("sg.cody.commands").toggle()
         end, { desc = "Cody Commands" })
 

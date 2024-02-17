@@ -6,11 +6,11 @@
 
 local use_noice = true
 
-local use_codium = true -- Want to see what this would be like without codeium, ; but just the lsp support
+local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 
-local use_tabnine = true
-local use_tabnine_cmp = true
+local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ? 
+local use_tabnine_cmp = false
 
 local use_copilot = true -- We really do sell our souls for this thing eh
 
@@ -227,7 +227,7 @@ lambda.config.ui = {
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_tint = "tint", -- sunglasses, tint -- Might not be great for certain colourschemes
     use_hlsearch = true,
-    use_dropbar = false,
+    use_dropbar = true,
     mini_animate = {
         use_animate = false,
         use_cursor = true,
@@ -334,9 +334,9 @@ lambda.config.tools = {
 lambda.config.windows = {
     use_wrapping = true,
     flirt = {
-        use_flirt = false,
+        use_flirt = true,
         use_flirt_override = false,
-        move_mappings = false, -- if you  do not want to use  smart split
+        move_mappings = true, -- if you  do not want to use  smart split
     },
     use_smart_splits = true,
 }

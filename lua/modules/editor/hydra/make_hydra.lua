@@ -2,16 +2,28 @@ local M = require("modules.editor.hydra.utils_rewrite")
 local hydra = require("hydra")
 
 local function make_hydra(data)
-    --  TODO: (vsedov) (21:26:46 - 18/11/23): make inline hydra, more modular, need to convert this
-    --  section into a loop or something and insert its edge cases
     if data[8] then
-        local internal_hydra_function = make_hydra(data[8][1])
-        local binds = data[1][data[2]]
-        for k, v in pairs(binds) do
+        -- local internal_hydra_function = make_hydra(data[8][1])
+        -- local binds = data[1][data[2]]
+        -- for k, v in pairs(binds) do
+        --     if v[2] then
+        --         if v[2].desc == tostring(data[8][1][2]) then
+        --             v[1] = function()
+        --                 internal_hydra_function:activate()
+        --             end
+        --         end
+        --     end
+        -- end
+
+        for _, v in pairs(data[8]) do
+            local internal_hydra_function = make_hydra(v)
+            local binds = data[1][data[2]]
+            for k, v in pairs(binds) do
             if v[2] then
-                if v[2].desc == tostring(data[8][1][2]) then
+                    if v[2].desc == tostring(v[2]) then
                     v[1] = function()
-                        internal_hydra_function:activate()
+                            internal_hydra_function:activate()
+                        end
                     end
                 end
             end

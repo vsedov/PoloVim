@@ -1,5 +1,28 @@
 ---@diagnostic disable: redefined-local
 local leader = "<leader>a"
+-- config = function()
+--     -- nnoremap <space>ss <cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>
+--     vim.keymap.set(
+--         "n",
+--         "<leader>ss",
+--         "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<cr>",
+--         { desc = "Cody Fuzzy results" }
+--     )
+--     -- Toggle cody chat
+--     vim.keymap.set("n", "<leader>sw", function()
+--         require("sg.cody.commands").toggle()
+--     end, { desc = "Cody Commands" })
+--
+--     vim.keymap.set("n", "<leader>cn", function()
+--         local name = vim.fn.input("chat name: ")
+--         require("sg.cody.commands").chat(name)
+--     end, { desc = "Cody Commands" })
+--     vim.keymap.set("v", "<leader>A", ":CodyContext<CR>", { desc = "Cody Context" })
+--     vim.keymap.set("v", "<space>w", ":CodyExplain<CR>", { desc = "Cody Explain" })
+--     vim.keymap.set("n", "<space>ss", function()
+--         require("sg.extensions.telescope").fuzzy_search_results()
+--     end, { desc = "Sg Extension tele" })
+-- end,
 
 local config = {
     AI = {
@@ -135,6 +158,27 @@ local config = {
             end,
 
             { nowait = true, desc = "Clear aichat REPLs.", exit = true },
+        },
+        -- keys = {
+        --     { "<leader>ccc", ":CopilotChat ", desc = "CopilotChat - Prompt" },
+        --     { "<leader>cce", ":CopilotChatExplain ", desc = "CopilotChat - Explain code" },
+        --     { "<leader>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
+        --     { "<leader>ccr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
+        --     { "<leader>ccR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
+        -- },
+        K = {
+            function()
+                local mode = vim.api.nvim_get_mode().mode:sub(1, 1)
+                local modes = { "v", "V", "x" }
+                if vim.tbl_contains(modes, mode) then
+                    local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
+                    vim.api.nvim_feedkeys(esc, "x", false) -- exit visual mode
+                    vim.cmd("'<,'>CopilotChatVisual Explain this code")
+                else
+                    vim.cmd("CopilotChat")
+                end
+            end,
+            { nowait = true, exit = true, desc = "Cody Explain" },
         },
     },
 }

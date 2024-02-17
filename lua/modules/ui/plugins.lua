@@ -21,9 +21,6 @@ ui({
 })
 ui({
     "nvim-lualine/lualine.nvim",
-    dependencies = {
-        "AndreM222/copilot-lualine",
-    },
 
     config = function()
         require("lualine").setup({
@@ -36,7 +33,6 @@ ui({
                 lualine_a = {},
                 lualine_b = { "branch" },
                 lualine_c = { "diagnostics" },
-                lualine_x = { "copilot", "filetype" },
                 lualine_y = { "progress" },
                 lualine_z = {},
             },
@@ -60,18 +56,7 @@ ui({
 --
 ui({
     "stevearc/dressing.nvim",
-    init = function()
-        ---@diagnostic disable-next-line: duplicate-set-field
-        vim.ui.select = function(...)
-            require("lazy").load({ plugins = { "dressing.nvim" } })
-            return vim.ui.select(...)
-        end
-        ---@diagnostic disable-next-line: duplicate-set-field
-        vim.ui.input = function(...)
-            require("lazy").load({ plugins = { "dressing.nvim" } })
-            return vim.ui.input(...)
-        end
-    end,
+    event = "VeryLazy",
     opts = {
         input = {
             use_popups_for_input = false,
