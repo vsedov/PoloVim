@@ -187,18 +187,18 @@ local aiextra = {
 
 local copilot = {
     -- Code related commands
-    { "e", "CopilotChatExplain", desc = "Explain code" },
-    { "t", "CopilotChatTests", desc = "Generate tests" },
-    { "r", "CopilotChatReview", desc = "Review code" },
-    { "R", "CopilotChatRefactor", desc = "Refactor code" },
-    { "f", "CopilotChatFixCode", desc = "Fix code" },
-    { "b", "CopilotChatBetterNamings", desc = "Better Name" },
-    { "d", "CopilotChatDocumentation", desc = "Add documentation for code" },
+    { "e", "y:CopilotChatExplain<cr>", desc = "Explain code", inline = true },
+    { "t", "y:CopilotChatTests<cr>", desc = "Generate tests", inline = true },
+    { "r", "y:CopilotChatReview<cr>", desc = "Review code", inline = true },
+    { "R", "y:CopilotChatRefactor<cr>", desc = "Refactor code", inline = true },
+    { "f", "y:CopilotChatFixCode<cr>", desc = "Fix code", inline = true },
+    { "b", "y:CopilotChatBetterNamings<cr>", desc = "Better Name", inline = true },
+    { "d", "y:CopilotChatDocumentation<cr>", desc = "Add documentation for code", inline = true },
     -- Text related commands
-    { "s", "CopilotChatSummarize", desc = "Summarize text" },
-    { "S", "CopilotChatSpelling", desc = "Correct spelling" },
-    { "w", "CopilotChatWording", desc = "Improve wording" },
-    { "c", "CopilotChatConcise", desc = "Make text concise" },
+    { "s", "y:CopilotChatSummarize<cr>", desc = "Summarize text", inline = true },
+    { "S", "y:CopilotChatSpelling<cr>", desc = "Correct spelling", inline = true },
+    { "w", "y:CopilotChatWording<cr>", desc = "Improve wording", inline = true },
+    { "c", "y:CopilotChatConcise<cr>", desc = "Make text concise", inline = true },
 
     -- Chat with Copilot in visual mode
 
@@ -244,7 +244,7 @@ local copilot_vis = {
         "v",
         -- "CopilotChatVisual",
         function()
-            input = vim.fn.input("Ask Copilot: ")
+            local input = vim.fn.input("Ask Copilot: ")
             return "CopilotChatVisual " .. input
         end,
         mode = "x",
@@ -264,8 +264,9 @@ local cody_normal = {
     {
         "i",
         ":CodyChat<CR>",
-        mode = "n",
+        mode = { "n", "v" },
         desc = "AI Assistant",
+        inline = true,
     },
 
     {
@@ -278,21 +279,21 @@ local cody_normal = {
             vim.fn.setreg('"', text)
             vim.cmd([[CodyTask 'Write document for current context']])
         end,
-        mode = "n",
+        mode = { "n", "v" },
         desc = "Generate Document with AI",
     },
 
     {
         "c",
         ':CodyTask ""<Left>',
-        mode = "n",
+        mode = { "n", "v" },
         desc = "Let AI Write Code",
     },
 
     {
         "a",
         ":CodyTaskAccept<CR>",
-        mode = "n",
+        mode = { "n", "v" },
         desc = "Confirm AI work",
     },
 
@@ -301,7 +302,7 @@ local cody_normal = {
         function()
             require("sg.extensions.telescope").fuzzy_search_results()
         end,
-        mode = "n",
+        mode = { "n", "v" },
         desc = "AI Search",
     },
 }
@@ -407,9 +408,10 @@ local internal_copilot = {
     3,
 }
 
-local function assign_commands(name, config, commands, visual)
+local function assign_commands(name, conf, commands, visual)
     for _, v in ipairs(commands) do
         local cmd = v[2]
+
         local action = type(cmd) == "string" and function()
             vim.cmd(cmd)
         end or cmd
@@ -418,7 +420,10 @@ local function assign_commands(name, config, commands, visual)
                 visual_mode(cmd)
             end
         end
-        config[1][name][v[1]] = {
+        if v.inline then
+            action = cmd
+        end
+        conf[1][name][v[1]] = {
             action,
             {
                 mode = v.mode,
@@ -432,7 +437,7 @@ end
 
 assign_commands("Cody", internal_config, cody_normal)
 assign_commands("Cody", internal_config, cody_visual, true)
-assign_commands("Copilot", internal_copilot, copilot)
+assign_commands("Copilot", internal_copilot, copilot, false)
 assign_commands("Copilot", internal_copilot, copilot_vis, true)
 
 return {

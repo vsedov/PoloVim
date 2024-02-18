@@ -149,7 +149,6 @@ ai({
         vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
         vim.cmd("UpdateRemotePlugins")
     end,
-    event = "VeryLazy",
     opts = {
         show_help = "yes",
         prompts = prompts,
