@@ -21,19 +21,6 @@ cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
         { name = "cmdline" },
         { name = "cmdline_history" },
-        {
-            name = "buffer",
-            keyword_length = 3,
-            option = {
-                get_bufnrs = function()
-                    local bufs = {}
-                    for _, win in ipairs(vim.api.nvim_list_wins()) do
-                        bufs[vim.api.nvim_win_get_buf(win)] = true
-                    end
-                    return vim.tbl_keys(bufs)
-                end,
-            },
-        },
     }),
 })
 
@@ -49,12 +36,5 @@ vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
 
     return contents
 end
-require("modules.completion.cmp.extra")
 
--- `/` cmdline setup.
-cmp.setup.cmdline("/", {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = "buffer" },
-    },
-})
+require("modules.completion.cmp.extra")

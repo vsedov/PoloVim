@@ -328,37 +328,6 @@ lsp({
 })
 
 lsp({
-    "sourcegraph/sg.nvim",
-    cond = lambda.config.lsp.use_sg,
-    event = "VeryLazy",
-    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
-    config = function()
-        -- nnoremap <space>ss <cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>
-        vim.keymap.set(
-            "n",
-            "<leader>ss",
-            "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<cr>",
-            { desc = "Cody Fuzzy results" }
-        )
-        -- Toggle cody chat
-        vim.keymap.set("n", "<leader>sw", function()
-            require("sg.cody.commands").toggle()
-        end, { desc = "Cody Commands" })
-
-        vim.keymap.set("n", "<leader>cn", function()
-            local name = vim.fn.input("chat name: ")
-            require("sg.cody.commands").chat(name)
-        end, { desc = "Cody Commands" })
-
-        vim.keymap.set("v", "<leader>A", ":CodyContext<CR>", { desc = "Cody Context" })
-        vim.keymap.set("v", "<space>w", ":CodyExplain<CR>", { desc = "Cody Explain" })
-        vim.keymap.set("n", "<space>ss", function()
-            require("sg.extensions.telescope").fuzzy_search_results()
-        end, { desc = "Sg Extension tele" })
-    end,
-})
-
-lsp({
     "kmontocam/nvim-conda",
     cmd = {
         "CondaActivate",

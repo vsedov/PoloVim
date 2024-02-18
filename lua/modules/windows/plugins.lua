@@ -196,7 +196,7 @@ windows({
     },
     keys = {
         {
-            ";z",
+            ";Zw",
 
             function()
                 vim.cmd([[WindowsMaximize]])
@@ -204,17 +204,31 @@ windows({
             desc = "Window Maximize",
         },
         {
-            ";Z",
+            ";Zd",
             function()
                 vim.cmd([[WindowsDisableAutowidth]])
             end,
             desc = "Window Disable",
         },
+        {
+            ";Ze",
+            function()
+                vim.cmd([[WindowsEnableAutowidth]])
+            end,
+            desc = "Window Enable",
+        },
+        {
+            ";z",
+            function()
+                vim.cmd([[WindowsToggleAutowidth]])
+            end,
+            desc = "Window Toggle",
+        },
     },
     config = function()
-        vim.o.winwidth = 10
-        vim.o.winminwidth = 10
-        vim.o.equalalways = false
+        -- vim.o.winwidth = 10
+        -- vim.o.winminwidth = 10
+        -- vim.o.equalalways = false
         require("windows").setup({
             create_commands = true,
             create_keymaps = true,

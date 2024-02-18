@@ -22,3 +22,4 @@ if lambda.config.ai.tabnine.use_tabnine_cmp and tabnine_options.tabnine_prefetch
         end,
     })
 end
+vim.api.nvim_set_hl(0, "CmpItemKindCody", { fg = "Red" })

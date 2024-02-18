@@ -3,21 +3,6 @@ local ai = require("core.pack").package
 local conf = require("modules.ai.config")
 
 local ai_conf = lambda.config.ai
-local IS_DEV = false
---- Get all the changes in the git repository
----@param staged? boolean
----@return string
-local function get_git_diff(staged)
-    local cmd = staged and "git diff --staged" or "git diff"
-    local handle = io.popen(cmd)
-    if not handle then
-        return ""
-    end
-
-    local result = handle:read("*a")
-    handle:close()
-    return result
-end
 
 local prompts = {
     -- Code related prompts
@@ -71,6 +56,7 @@ ai({
     cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_cmp),
     event = "VeryLazy",
     build = "bash ./install.sh",
+
     dependencies = {
         "hrsh7th/nvim-cmp",
     },
@@ -85,7 +71,6 @@ ai({
     build = "bash ./dl_binaries.sh",
     config = conf.tabnine,
 })
--- another module
 
 ai({
     "Exafunction/codeium.vim",
@@ -162,84 +147,15 @@ ai({
     "CopilotC-Nvim/CopilotChat.nvim",
     build = function()
         vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
+        vim.cmd("UpdateRemotePlugins")
     end,
     event = "VeryLazy",
-                opts = {
-                    show_help = "yes",
-                    prompts = prompts,
-                    debug = false, -- Set to true to see response from Github Copilot API. The log file will be in ~/.local/state/nvim/CopilotChat.nvim.log.
-                    disable_extra_info = "no", -- Disable extra information (e.g: system prompt, token count) in the response.
-                },
-                keys = {
-                    -- Code related commands
-                    { "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-                    { "<leader>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
-                    { "<leader>ccr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
-                    { "<leader>ccR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
-                    { "<leader>ccf", "<cmd>CopilotChatFixCode<cr>", desc = "CopilotChat - Fix code" },
-                    { "<leader>ccb", "<cmd>CopilotChatBetterNamings<cr>", desc = "CopilotChat - Better Name" },
-        { "<leader>ccd", "<cmd>CopilotChatDocumentation<cr>", desc = "CopilotChat - Add documentation for code" },
-        { "<leader>cca", "<cmd>CopilotChatSwaggerApiDocs<cr>", desc = "CopilotChat - Add Swagger API documentation" },
-                    {
-                        "<leader>ccA",
-                        "<cmd>CopilotChatSwaggerJsDocs<cr>",
-                        desc = "CopilotChat - Add Swagger API with Js Documentation",
-                    },
-                    -- Text related commands
-                    { "<leader>ccs", "<cmd>CopilotChatSummarize<cr>", desc = "CopilotChat - Summarize text" },
-                    { "<leader>ccS", "<cmd>CopilotChatSpelling<cr>", desc = "CopilotChat - Correct spelling" },
-                    { "<leader>ccw", "<cmd>CopilotChatWording<cr>", desc = "CopilotChat - Improve wording" },
-                    { "<leader>ccc", "<cmd>CopilotChatConcise<cr>", desc = "CopilotChat - Make text concise" },
-                    -- Chat with Copilot in visual mode
-                    {
-                        "<leader>ccv",
-                        ":CopilotChatVisual",
-                        mode = "x",
-                        desc = "CopilotChat - Open in vertical split",
-                    },
-                    {
-                        "<leader>ccx",
-                        ":CopilotChatInPlace<cr>",
-                        mode = "x",
-                        desc = "CopilotChat - Run in-place code",
-                    },
-                    -- Custom input for CopilotChat
-                    {
-                        "<leader>cci",
-                        function()
-                            local input = vim.fn.input("Ask Copilot: ")
-                            if input ~= "" then
-                                vim.cmd("CopilotChat " .. input)
-                            end
-                        end,
-                        desc = "CopilotChat - Ask input",
-                    },
-                    -- Generate commit message base on the git diff
-                    {
-                        "<leader>ccm",
-                        function()
-                            local diff = get_git_diff()
-                            if diff ~= "" then
-                                vim.fn.setreg('"', diff)
-                                vim.cmd("CopilotChat Write commit message for the change with commitizen convention.")
-                            end
-                        end,
-                        desc = "CopilotChat - Generate commit message for all changes",
-                    },
-                    {
-                        "<leader>ccM",
-                        function()
-                            local diff = get_git_diff(true)
-                            if diff ~= "" then
-                                vim.fn.setreg('"', diff)
-                                vim.cmd("CopilotChat Write commit message for the change with commitizen convention.")
-                            end
-                        end,
-                        desc = "CopilotChat - Generate commit message for staged changes",
-                    },
-                    -- Debug
-                    { "<leader>ccD", "<cmd>CopilotChatDebugInfo<cr>", desc = "CopilotChat - Debug Info" },
-                },
+    opts = {
+        show_help = "yes",
+        prompts = prompts,
+        debug = false, -- Set to true to see response from Github Copilot API. The log file will be in ~/.local/state/nvim/CopilotChat.nvim.log.
+        disable_extra_info = "no", -- Disable extra information (e.g: system prompt, token count) in the response.
+    },
 })
 ai({
     "sourcegraph/sg.nvim",
@@ -266,25 +182,6 @@ ai({
         "CodyTaskAccept",
     },
     config = function()
-        -- nnoremap <space>ss <cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>
-        vim.keymap.set(
-            "n",
-            "<leader>ss",
-            "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<cr>",
-            { desc = "Cody Fuzzy results" }
-        )
-
-        -- Toggle cody chat
-        vim.keymap.set("n", "<leader>sc", function()
-            require("sg.cody.commands").toggle()
-        end, { desc = "Cody Commands" })
-
-        vim.keymap.set("n", "<leader>sn", function()
-            local name = vim.fn.input("chat name: ")
-            require("sg.cody.commands").chat(name)
-        end, { desc = "Cody Commands" })
-
-        --  TODO: (vsedov) (23:39:52 - 15/02/24): Create a hydra for this
 
         -- vim.keymap.set({ "v", "n" }, ";cd", "<cmd>CodyTask<CR>", { noremap = true, silent = true })
         -- vim.keymap.set("n", ";cc", "<cmd>CodyChat<CR>", { noremap = true, silent = true })
@@ -298,95 +195,6 @@ ai({
         -- vim.keymap.set("n", ";cp", "<cmd>CodyTaskPrev<CR>", { noremap = true, silent = true })
         -- vim.keymap.set("n", ";cy", "<cmd>CodyTaskAccept<CR>", { noremap = true, silent = true })
     end,
-    keys = {
-
-        {
-            ";ai",
-            ":CodyChat<CR>",
-            mode = "n",
-            desc = "AI Assistant",
-        },
-
-        {
-            ";ad",
-            function()
-                local line = vim.fn.getline(".")
-                local start = vim.fn.col(".")
-                local finish = vim.fn.col("$")
-                local text = line:sub(start, finish)
-                vim.fn.setreg('"', text)
-                vim.cmd([[CodyTask 'Write document for current context']])
-            end,
-            mode = "n",
-            desc = "Generate Document with AI",
-        },
-
-        {
-            ";ac",
-            ':CodyTask ""<Left>',
-            mode = "n",
-            desc = "Let AI Write Code",
-        },
-
-        {
-            ";aa",
-            ":CodyTaskAccept<CR>",
-            mode = "n",
-            desc = "Confirm AI work",
-        },
-
-        {
-            ";as",
-            "<cmd> lua require('sg.extensions.telescope').fuzzy_search_results()<CR>",
-            mode = "n",
-            desc = "AI Search",
-        },
-
-        {
-            ";ai",
-            "y:CodyChat<CR><ESC>pG$a<CR>",
-            mode = {"v","V"},
-            desc = "Chat Selected Code",
-        },
-
-        {
-          ";ad",
-          ":CodyTask 'Write document for current context<CR>'",
-          mode = {"v","V"},
-          desc = "Generate Document with AI",
-        },
-
-        {
-            ";ar",
-            -- "y:CodyChat<CR>refactor following code:<CR><ESC>p<CR>",
-            ":CodyAsk refactor following code<CR>",
-            mode = {"v","V"},
-            desc = "Request Refactoring",
-        },
-
-        {
-            ";ae",
-            -- "y:CodyChat<CR>explain following code:<CR><ESC>p<CR>",
-            ":CodyAsk explain following code<CR>",
-
-            mode = {"v","V"},
-            desc = "Request Explanation",
-        },
-
-        {
-            ";af",
-            ":CodyAsk find potential vulnerabilities from following code<CR>",
-            mode = {"v","V"},
-            desc = "Request Potential Vulnerabilities",
-        },
-
-        {
-            ";at",
-            ":CodyAsk rewrite following code more idiomatically<CR>",
-            mode = {"v","V"},
-            desc = "Request Idiomatic Rewrite",
-        },
-    },
 })
 
 ai({

@@ -103,6 +103,12 @@ local load_core = function()
     require("keymaps")
     file_type()
     require("core.pack"):boot_strap()
+    if vim.env.KITTY_SCROLLBACK_NVIM then
+        vim.cmd([[
+    set spl=en spell
+    set nospell
+        ]])
+    end
     require("core.lazy")
 end
 

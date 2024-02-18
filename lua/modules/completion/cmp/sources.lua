@@ -8,7 +8,7 @@ local plugins = {
     {
         name = "luasnip",
         enable = lambda.config.cmp.luasnip.luasnip.enable,
-        priority = lambda.config.cmp.luasnip.luasnip.priority,
+        -- priority = lambda.config.cmp.luasnip.luasnip.priority,
     },
     {
         name = "neorg",
@@ -21,13 +21,15 @@ local plugins = {
             disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
         },
     },
+    { name = "cody", enable = true, priority = 9 },
+
     { name = "otter" },
     { name = "cmp_zotcite", enable = true },
     { name = "luasnip_choice", enable = true },
     {
         name = "codeium",
         enable = condium_cond,
-        priority = ai.codeium.cmp.codium_priority,
+        -- priority = ai.codeium.cmp.codium_priority,
     },
     {
         name = "cmp_tabnine",
@@ -41,6 +43,7 @@ local plugins = {
                 return vim.api.nvim_list_bufs()
             end,
         },
+        enable = false,
         group_index = 2,
     },
     { name = "spell", group_index = 2 },

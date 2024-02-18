@@ -1,4 +1,4 @@
-local leader = "Z"
+local leader = "<leader><leader>z"
 local api = vim.api
 local function nN(char)
     local ok, winid = require("hlslens").nNPeekWithUFO(char)

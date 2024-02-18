@@ -34,9 +34,9 @@ local function loadHydraAPI()
         table.insert(exclude_table, "leap") -- we stilll use leap ?
     end
 
-    if not (lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_insert) then
-        table.insert(exclude_table, "tabnine")
-    end
+    -- if not (lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_insert) then
+    --     table.insert(exclude_table, "tabnine")
+    -- end
 
     for _, path in ipairs(api_list) do
         local name = fn.fnamemodify(path, ":t:r")

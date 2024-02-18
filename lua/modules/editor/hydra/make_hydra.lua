@@ -3,27 +3,14 @@ local hydra = require("hydra")
 
 local function make_hydra(data)
     if data[8] then
-        -- local internal_hydra_function = make_hydra(data[8][1])
-        -- local binds = data[1][data[2]]
-        -- for k, v in pairs(binds) do
-        --     if v[2] then
-        --         if v[2].desc == tostring(data[8][1][2]) then
-        --             v[1] = function()
-        --                 internal_hydra_function:activate()
-        --             end
-        --         end
-        --     end
-        -- end
-
-        for _, v in pairs(data[8]) do
-            local internal_hydra_function = make_hydra(v)
+        local length = #data[8]
+        for i = 1, length do
+            local internal_hydra_function = make_hydra(data[8][i])
             local binds = data[1][data[2]]
             for k, v in pairs(binds) do
-            if v[2] then
-                    if v[2].desc == tostring(v[2]) then
+                if v[2] and v[2].desc == tostring(data[8][i][2]) then
                     v[1] = function()
-                            internal_hydra_function:activate()
-                        end
+                        internal_hydra_function:activate()
                     end
                 end
             end

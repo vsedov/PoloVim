@@ -1,6 +1,10 @@
 local conf = require("modules.git.config")
 local git = require("core.pack").package
+local install = function(spec)
+    local installedDir = spec.dir
 
+    vim.system({ "gh", "extension", "install", "." }, { cwd = installedDir, text = true })
+end
 -- -- github GH ui
 git({
     "pwntester/octo.nvim",

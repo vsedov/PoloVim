@@ -31,85 +31,6 @@ function config.chatgpt()
     })
 end
 
-function config.neoai()
-    vim.treesitter.language.register("markdown", "neoai-output")
-    vim.o.conceallevel = 1
-
-    require("neoai").setup({
-        -- Below are the default options, feel free to override what you would like changed
-        ui = {
-            output_popup_text = "NeoAI",
-            input_popup_text = "Prompt",
-            width = 30, -- As percentage eg. 30%
-            output_popup_height = 80, -- As percentage eg. 80%
-            submit = "<Enter>", -- Key binding to submit the prompt
-        },
-        models = {
-            {
-                name = "openai",
-                model = "gpt-4",
-                params = nil,
-            },
-        },
-        register_output = {
-            ["g"] = function(output)
-                return output
-            end,
-            ["c"] = require("neoai.utils").extract_code_snippets,
-        },
-        inject = {
-            cutoff_width = 75,
-        },
-        prompts = {
-            context_prompt = function(context)
-                return "Hey, I'd like to provide some context for future "
-                    .. "messages. Here is the code/text that I want to refer "
-                    .. "to in our upcoming conversations:\n\n"
-                    .. context
-            end,
-        },
-        mappings = {
-            ["select_up"] = "<C-k>",
-            ["select_down"] = "<C-j>",
-        },
-        open_ai = {
-            api_key = {
-                env = "OPENAI_API_KEY",
-            },
-        },
-        shortcuts = {
-            {
-                name = "textify",
-                -- key = "<leader>as",
-                desc = "fix text with AI",
-                use_context = true,
-                prompt = [[
-                Please rewrite the text to make it more readable, clear,
-                concise, and fix any grammatical, punctuation, or spelling
-                errors
-            ]],
-                modes = { "v" },
-                strip_function = nil,
-            },
-            {
-                name = "gitcommit",
-                -- key = "<leader>ag",
-                desc = "generate git commit message",
-                use_context = false,
-                prompt = function()
-                    return [[
-                    Using the following git diff generate a consise and clear git commit message, it must use Conventional Commits standard. The title and topic should be informative.
-It should be in the following layout: <type>[optional scope]: <description> it should also be pythonic.
-
-                ]] .. vim.fn.system("git diff --cached")
-                end,
-                modes = { "n" },
-                strip_function = nil,
-            },
-        },
-    })
-end
-
 function config.backseat()
     require("backseat").setup({
         openai_api_key = os.getenv("OPENAI_API_KEY"),
@@ -155,6 +76,121 @@ function config.codium()
         return vim.fn["codeium#CycleCompletions"](-1)
     end, { expr = true })
     vim.keymap.set("i", "<c-e>", vim.fn["codeium#Clear"], { expr = true })
+end
+function config.gen(_, opts)
+    require("gen").setup(opts)
+    require("gen").prompts["Elaborate_Text"] = {
+        prompt = "Elaborate the following text:\n$text",
+        replace = true,
+    }
+    require("gen").prompts["Fix_Code"] = {
+        prompt = "Fix the following code. Only ouput the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```",
+        replace = true,
+        extract = "```$filetype\n(.-)```",
+    }
+    require("gen").prompts["DevOps me!"] = {
+        prompt = "You are a senior devops engineer, acting as an assistant. You offer help with cloud technologies like: Terraform, AWS, kubernetes, python. You answer with code examples when possible. $input:\n$text",
+        replace = true,
+    }
+
+    local icn = {
+        Chat = "", --     
+        Test = "", --    
+        Regex = "", --   
+        Comment = "", --  
+        Code = "", --   
+        Text = "", --   
+        Items = "", --    
+        Swap = "", -- 
+        Keep = "", --  
+        into = "", --  
+    }
+
+    require("gen").prompts = {
+        [icn.Chat .. " Ask about given context " .. icn.Keep] = {
+            prompt = "Regarding the following text, $input:\n$text",
+            model = "mistral",
+        },
+        [icn.Chat .. " Chat about anything " .. icn.Keep] = {
+            prompt = "$input",
+            model = "mistral",
+        },
+        [icn.Regex .. " Regex create " .. icn.Swap] = {
+            prompt = "Create a regular expression for $filetype language that matches the following pattern:\n```$filetype\n$text\n```",
+            replace = true,
+            no_auto_close = false,
+            extract = "```$filetype\n(.-)```",
+            model = "deepseek-coder",
+        },
+        [icn.Regex .. " Regex explain " .. icn.Keep] = {
+            prompt = "Explain the following regular expression:\n```$filetype\n$text\n```",
+            extract = "```$filetype\n(.-)```",
+            model = "deepseek-coder",
+        },
+        [icn.Comment .. " Code " .. icn.into .. " JSDoc " .. icn.Keep] = {
+            prompt = "Write JSDoc comments for the following $filetype code:\n```$filetype\n$text\n```",
+            model = "deepseek-coder",
+        },
+        [icn.Comment .. " JSDoc " .. icn.into .. " Code " .. icn.Keep] = {
+            prompt = "Read the following comment and create the $filetype code below it:\n```$filetype\n$text\n```",
+            extract = "```$filetype\n(.-)```",
+            model = "deepseek-coder",
+        },
+        [icn.Test .. " Unit Test add missing (React/Jest) " .. icn.Keep] = {
+            prompt = "Read the following $filetype code that includes some unit tests inside the 'describe' function. We are using Jest with React testing library, and the main component is reused by the tests via the customRender function. Detect if we have any missing unit tests and create them.\n```$filetype\n$text\n```",
+            extract = "```$filetype\n(.-)```",
+            model = "deepseek-coder",
+        },
+        [icn.Code .. " Code suggestions " .. icn.Keep] = {
+            prompt = "Review the following $filetype code and make concise suggestions:\n```$filetype\n$text\n```",
+            model = "deepseek-coder",
+        },
+        [icn.Code .. " Explain code " .. icn.Keep] = {
+            prompt = "Explain the following $filetype code in a very concise way:\n```$filetype\n$text\n```",
+            model = "deepseek-coder",
+        },
+        [icn.Code .. " Fix code " .. icn.Swap] = {
+            prompt = "Fix the following $filetype code:\n```$filetype\n$text\n```",
+            replace = true,
+            no_auto_close = false,
+            extract = "```$filetype\n(.-)```",
+            model = "deepseek-coder",
+        },
+        [icn.Items .. " Text " .. icn.into .. " List of items " .. icn.Swap] = {
+            prompt = "Convert the following text, except for the code blocks, into a markdown list of items without additional quotes around it:\n$text",
+            replace = true,
+            no_auto_close = false,
+            model = "mistral",
+        },
+        [icn.Items .. " List of items " .. icn.into .. " Text " .. icn.Swap] = {
+            prompt = "Convert the following list of items into a block of text, without additional quotes around it. Modify the resulting text if needed to use better wording.\n$text",
+            replace = true,
+            no_auto_close = false,
+            model = "mistral",
+        },
+        [icn.Text .. " Fix Grammar / Syntax in text " .. icn.Swap] = {
+            prompt = "Fix the grammar and syntax in the following text, except for the code blocks, and without additional quotes around it:\n$text",
+            replace = true,
+            no_auto_close = false,
+            model = "mistral",
+        },
+        [icn.Text .. " Reword text " .. icn.Swap] = {
+            prompt = "Modify the following text, except for the code blocks, to use better wording, and without additional quotes around it:\n$text",
+            replace = true,
+            no_auto_close = false,
+            model = "mistral",
+        },
+        [icn.Text .. " Simplify text " .. icn.Swap] = {
+            prompt = "Modify the following text, except for the code blocks, to make it as simple and concise as possible and without additional quotes around it:\n$text",
+            replace = true,
+            no_auto_close = false,
+            model = "mistral",
+        },
+        [icn.Text .. " Summarize text " .. icn.Keep] = {
+            prompt = "Summarize the following text, except for the code blocks, without additional quotes around it:\n$text",
+            model = "mistral",
+        },
+    }
 end
 
 return config

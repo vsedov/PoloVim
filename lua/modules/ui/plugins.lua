@@ -76,7 +76,7 @@ ui({
             end,
         },
         select = {
-            backend = { "fzf_lua", "builtin" },
+            backend = { "telescope", "fzf_lua", "builtin" },
             builtin = {
                 border = lambda.style.border.type_0,
                 min_height = 10,
@@ -105,6 +105,7 @@ ui({
                 end
                 return {
                     backend = "telescope",
+                    telescope = require("telescope.themes").get_dropdown(),
                 }
             end,
             nui = {

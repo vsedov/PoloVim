@@ -40,7 +40,23 @@ return {
                     return files.exists("main.py")
                 end,
             },
-            priority = pr(),
+            priority = 1,
+        })
+        table.insert(ret, {
+            name = "Run main.pyw",
+            builder = function()
+                return {
+                    name = "Running main.pyw",
+                    cmd = "python main.pyw",
+                    components = { "default", "unique" },
+                }
+            end,
+            condition = {
+                callback = function()
+                    return files.exists("main.pyw")
+                end,
+            },
+            priority = 1,
         })
         table.insert(ret, {
             name = "Profile main.py",
@@ -56,7 +72,7 @@ return {
                     return files.exists("main.py")
                 end,
             },
-            priority = pr(),
+            priority = 1,
         })
         table.insert(ret, {
             name = "Live profile main.py",
@@ -72,7 +88,7 @@ return {
                     return files.exists("main.py")
                 end,
             },
-            priority = pr(),
+            priority = 1,
         })
         table.insert(ret, {
             name = "Open profile data",
@@ -88,13 +104,13 @@ return {
                     return files.exists("main.py")
                 end,
             },
-            priority = pr(),
+            priority = 1,
         })
         table.insert(ret, {
             name = "Build Documentation (html)",
             builder = function()
                 return {
-                    name = "Building Docs",
+                    name = "Building HTML Docs",
                     cmd = "sphinx-build -b html docs/source docs/build/html",
                     components = { "default", "unique" },
                 }
@@ -110,7 +126,7 @@ return {
             name = "Build Documentation (pdf)",
             builder = function()
                 return {
-                    name = "Building Docs",
+                    name = "Building PDF Docs",
                     cmd = "make latexpdf",
                     cwd = "docs",
                     components = { "default", "unique" },
@@ -160,7 +176,7 @@ return {
             builder = function()
                 return {
                     name = "Format all files",
-                    cmd = "black scintilla_control/",
+                    cmd = "ruff format --preview scintilla_control/",
                     components = { "default", "unique" },
                 }
             end,
@@ -180,6 +196,18 @@ return {
             priority = pr(),
         })
         table.insert(ret, {
+            name = "Type check all",
+            builder = function()
+                return {
+                    name = "Type check all files",
+                    cmd = "pyright --watch scintilla_control/",
+                    components = { "default", "unique" },
+                }
+            end,
+            conditon = {},
+            priority = pr(),
+        })
+        table.insert(ret, {
             name = "Sourcery",
             builder = function()
                 return {
@@ -192,30 +220,11 @@ return {
             priority = pr(),
         })
         table.insert(ret, {
-            name = "PythonFormat",
-            builder = function(params)
-                local file = vim.fn.expand("%:p")
-                local cmd = { "yapf", "--recursive", "--parallel", "--verbose", "--in-place", file }
-                return {
-                    cmd = cmd,
-                    components = {
-                        { "on_output_quickfix", set_diagnostics = true },
-                        "on_result_diagnostics",
-                        "default",
-                    },
-                }
-            end,
-            condition = {
-                filetype = { "python" },
-            },
-        })
-
-        table.insert(ret, {
             name = "Make dependency graph",
             builder = function()
                 return {
                     name = "Make dependency graph",
-                    cmd = "pydeps scintilla_control/scintilla_control.py",
+                    cmd = "pydeps scintilla_control/__init__.py",
                     components = { "default", "unique" },
                 }
             end,
@@ -226,131 +235,6 @@ return {
             },
             priority = pr(),
         })
-        local commands = {
-
-            {
-                name = "poetry start",
-                tskname = "PoetryStart",
-                cmd = "poetry run task start",
-                condition = {
-                    callback = isInProject,
-                },
-
-                unique = true,
-            },
-            {
-                name = "Poetry run file (" .. vim.fn.expand("%:t:r") .. ")",
-                tskName = "Poetry run file",
-                cmd = "poetry run python " .. vim.fn.expand("%:p"),
-                condition = {
-                    callback = isInProject,
-                },
-                unique = true,
-            },
-
-            {
-                name = "Poetry run Project",
-                tskName = "Poetry run Project",
-                cmd = "poetry run task start",
-                condition = {
-                    callback = isInProject,
-                },
-
-                unique = true,
-            },
-
-            {
-                name = "Poetry run pre-commit",
-                tskName = "poetry run Project",
-                cmd = "poetry run task lint",
-                condition = {
-                    callback = isInProject,
-                },
-
-                unique = true,
-            },
-            {
-                name = "Python test server",
-                tskName = "Running Tests",
-                cmd = "python -m unittest discover",
-                condition = { callback = isInProject },
-                is_test_server = true,
-                hide = true,
-                unique = true,
-            },
-            {
-                name = "Create Python Venv",
-                tskName = "Python Venv",
-                cmd = {
-                    "python",
-                },
-
-                args = {
-                    "-m",
-                    "venv",
-                    vim.fs.find(".git", {
-                        file = true,
-                        directories = true,
-                        recursive = true,
-                        pattern = ".git",
-                    })[1],
-                },
-                unique = true,
-                condition = { filetype = "python" },
-            },
-            {
-                name = "Create WorkDir",
-                unique = true,
-                cmd = "mkdir -p /tmp/work",
-                condition = { filetype = "python" },
-            },
-
-            {
-                name = "Show python version",
-                cmd = "python",
-                args = " --version",
-
-                unique = true,
-                condition = { filetype = "python" },
-            },
-
-            {
-                name = "poetry freeze",
-                cmd = "poetry export -f requirements.txt > requirements.txt --without-hashes",
-                condition = {
-                    callback = isInProject,
-                },
-
-                unique = true,
-            },
-        }
-        for _, command in pairs(commands) do
-            local comps = {
-                "on_output_summarize",
-                "on_exit_set_status",
-                "on_complete_notify",
-                "on_complete_dispose",
-            }
-
-            table.insert(ret, {
-                name = command.name,
-                builder = function()
-                    return {
-                        name = command.tskName or command.name,
-                        cmd = command.cmd,
-                        components = comps,
-                        metadata = {
-                            is_test_server = command.is_test_server,
-                        },
-                    }
-                end,
-                tags = command.tags,
-                priority = priority,
-                params = {},
-                condition = command.condition,
-            })
-            priority = priority + 1
-        end
 
         cb(ret)
     end,

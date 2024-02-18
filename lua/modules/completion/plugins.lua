@@ -85,6 +85,7 @@ completion({
         {
             "iurimateus/luasnip-latex-snippets.nvim",
             event = "VeryLazy",
+            cond = false,
             dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
             config = true,
         },

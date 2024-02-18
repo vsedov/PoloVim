@@ -154,6 +154,7 @@ local function setFormattingConfiguration(theme)
                     return vim_item
                 end,
                 menu = {
+                    cody = "[cody]",
                     nvim_lsp = "[LSP]",
                     nvim_lua = "[LUA]",
                     emoji = "[EMOJI]",

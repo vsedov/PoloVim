@@ -21,34 +21,6 @@ local function t(str)
 end
 local feedkeys = vim.api.nvim_feedkeys
 
-function supertab(when_cmp_visible)
-    local cmp = require("cmp")
-    local function check_back_space()
-        local col = vim.fn.col(".") - 1
-        return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
-    end
-
-    return function()
-        if cmp.visible() then
-            when_cmp_visible()
-        elseif require("luasnip").expand_or_jumpable() then
-            feedkeys(t("<Plug>luasnip-expand-or-jump"), "", false)
-        else
-            -- local ok, neogen = pcall(require, "neogen")
-            -- if ok and neogen.jumpable() then
-            -- require'neogen'.jump_next()
-            --   feedkeys(t "<cmd>lua require'neogen'.jump_next()<cr>", "", false)
-            -- else
-            if check_back_space() then
-                feedkeys(t("<tab>"), "n", false)
-            else
-                feedkeys(t("<Plug>(Tabout)"), "", false)
-                -- fallback()
-            end
-        end
-    end
-end
-
 local function double_mapping(invisible, visible)
     return function()
         if cmp.visible() then
@@ -169,11 +141,18 @@ local mappings = {
         if cmp.visible() then
             cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
+            luasnip.expand_or_jump()
         else
             fallback()
         end
     end,
+    ["<c-a>"] = cmp.mapping.complete({
+        config = {
+            sources = {
+                { name = "cody" },
+            },
+        },
+    }),
 
     ["<S-Tab>"] = function(fallback)
         if cmp.visible() then

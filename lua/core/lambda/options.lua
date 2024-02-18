@@ -9,8 +9,8 @@ local use_noice = true
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 
-local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ? 
-local use_tabnine_cmp = false
+local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
+local use_tabnine_cmp = true
 
 local use_copilot = true -- We really do sell our souls for this thing eh
 
@@ -54,9 +54,9 @@ lambda.config.ai = {
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
         cmp = {
-            tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
-            tabnine_bottom_sort = true,
-            tabnine_prefetch = true,
+            tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+            tabnine_bottom_sort = false,
+            tabnine_prefetch = false,
             tabnine_priority = 4, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
         },
     },
@@ -334,9 +334,9 @@ lambda.config.tools = {
 lambda.config.windows = {
     use_wrapping = true,
     flirt = {
-        use_flirt = true,
+        use_flirt = false,
         use_flirt_override = false,
-        move_mappings = true, -- if you  do not want to use  smart split
+        move_mappings = false, -- if you  do not want to use  smart split
     },
     use_smart_splits = true,
 }
