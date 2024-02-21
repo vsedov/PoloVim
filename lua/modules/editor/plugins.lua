@@ -127,7 +127,7 @@ editor({
 })
 editor({
     "Wansmer/sibling-swap.nvim",
-    keys = { "]w", "[w" },
+    keys = { "[w", "]w" },
     dependencies = { "nvim-treesitter" },
     opts = {
         use_default_keymaps = true,

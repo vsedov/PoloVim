@@ -23,26 +23,6 @@ function config.workspace()
     require("telescope").load_extension("workspaces")
 end
 
-function config.vim_vista()
-    vim.g["vista#renderer#enable_icon"] = 1
-    vim.g.vista_disable_statusline = 1
-
-    vim.g.vista_default_executive = "nvim_lsp" -- ctag
-    vim.g.vista_echo_cursor_strategy = "floating_win"
-    vim.g.vista_vimwiki_executive = "markdown"
-    vim.g.vista_executive_for = {
-        vimwiki = "markdown",
-        pandoc = "markdown",
-        markdown = "toc",
-        typescript = "nvim_lsp",
-        typescriptreact = "nvim_lsp",
-        go = "nvim_lsp",
-        lua = "nvim_lsp",
-    }
-
-    -- vim.g['vista#renderer#icons'] = {['function'] = "", ['method'] = "ℱ", variable = "כֿ"}
-end
-
 function config.spellcheck()
     vim.cmd("highlight def link SpelunkerSpellBad SpellBad")
     vim.cmd("highlight def link SpelunkerComplexOrCompoundWord Rare")

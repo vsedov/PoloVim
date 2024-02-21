@@ -246,7 +246,7 @@ lambda.config.ui = {
         use_mini_indent_scope = false,
     },
     scroll_bar = {
-        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
+        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
     },
 }
 lambda.config.fun = {

@@ -190,15 +190,7 @@ user({
     enabled = true,
     cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
     event = { "User KittyScrollbackLaunch" },
-    -- config = true,
-    config = function()
-        require("kitty-scrollback").setup({
-            -- put your kitty-scrollback.nvim configurations here
-            paste_window = {
-                hide_footer = true,
-            },
-        })
-    end,
+    config = true,
 })
 
 -- This is nice
@@ -489,6 +481,7 @@ user({
     },
     opts = {},
 })
+
 user({
     "2kabhishek/nerdy.nvim",
     dependencies = {
@@ -702,66 +695,15 @@ user({
     end,
 })
 user({
-    "gelguy/wilder.nvim",
-    build = function()
-        vim.cmd([[silent UpdateRemotePlugins]])
-    end,
-    keys = { ":", "/", "?" },
-    config = function()
-        local status_ok, wilder = pcall(require, "wilder")
-        if not status_ok then
-            return
-        end
+    "klafyvel/nvim-smuggler",
+    ft = "julia",
+    opts = {
+        mappings = true, -- set to false to disable all mappings.
+        map_smuggle = "<leader>cs", -- Use `[count]<leader>cs` in normal mode to send count lines.
+        map_smuggle_range = "<leader>cs", -- Use `<leader>cs` in visual mode to send the current selection.
+        map_smuggle_config = "<leader>ce", -- Use `<leader>ce` in normal mode to reconfigure the plugin.
+        map_smuggle_operator = "gcs", -- Use `gcs[text object]` to send a text object in normal mode.
+    },
 
-        wilder.setup({ modes = { ":", "/", "?" } })
-
-
-        local accent = wilder.make_hl("WilderAccent", "Pmenu", { { a = 1 }, { a = 1 }, { foreground = "#00AAFF" } })
-
-        local popupmenu_renderer = wilder.popupmenu_renderer(wilder.popupmenu_palette_theme({
-            -- 'single', 'double', 'rounded' or 'solid'
-            -- can also be a list of 8 characters, see :h wilder#popupmenu_palette_theme() for more details
-            border = "rounded",
-            max_height = "75%", -- max height of the palette
-            min_height = 0, -- set to the same as 'max_height' for a fixed height window
-            prompt_position = "top", -- 'top' or 'bottom' to set the location of the prompt
-            reverse = 0, -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
-            empty_message = wilder.popupmenu_empty_message_with_spinner(),
-            highlighter = wilder.basic_highlighter(),
-            highlights = {
-                accent = accent,
-            },
-            left = {
-                " ",
-                wilder.popupmenu_devicons(),
-                wilder.popupmenu_buffer_flags({
-                    flags = " a + ",
-                }),
-            },
-            right = {
-                " ",
-                wilder.popupmenu_scrollbar(),
-            },
-        }))
-
-        local wildmenu_renderer = wilder.wildmenu_renderer({
-            highlighter = wilder.basic_highlighter(),
-            highlights = {
-                accent = accent,
-            },
-            separator = " | ",
-            left = { " ", wilder.wildmenu_spinner(), " " },
-            right = { " ", wilder.wildmenu_index() },
-        })
-
-        wilder.set_option(
-            "renderer",
-            wilder.renderer_mux({
-                [":"] = popupmenu_renderer,
-                ["/"] = popupmenu_renderer,
-                ["?"] = popupmenu_renderer,
-                substitute = wildmenu_renderer,
-            })
-        )
-    end,
+    dependencies = { "nvim-neotest/nvim-nio" },
 })

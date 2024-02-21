@@ -89,7 +89,6 @@ misc({
 })
 misc({
     "XXiaoA/ns-textobject.nvim",
-    lazy = true,
     dependencies = { "kylechui/nvim-surround" },
     opts = {
         auto_mapping = {
@@ -108,8 +107,9 @@ misc({
 -- programming spell
 misc({
     "psliwka/vim-dirtytalk",
-    build = "DirtytalkUpdate",
+    event = "BufEnter",
     config = function()
+        vim.cmd("silent!  DirtytalkUpdate")
         vim.opt.spelllang:append("programming")
     end,
 })

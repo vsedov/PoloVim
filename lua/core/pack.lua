@@ -19,6 +19,66 @@ function pack:load_modules_packages()
 
     local plugins_file = get_plugins_list()
     local disable_modules = {}
+    if vim.env.KITTY_SCROLLBACK_NVIM == "true" then
+        -- modules/ai/plugins
+        -- modules/buffers/plugins
+        -- modules/clipboard/plugins
+        -- modules/colourscheme/plugins
+        -- modules/completion/plugins
+        -- modules/documentation/plugins
+        -- modules/editor/plugins
+        -- modules/folke/plugins
+        -- modules/fun/plugins
+        -- modules/git/plugins
+        -- modules/lang/plugins
+        -- modules/latex/plugins
+        -- modules/lsp/plugins
+        -- modules/mini/plugins
+        -- modules/misc/plugins
+        -- modules/movement/plugins
+        -- modules/notes/plugins
+        -- modules/on_startup/plugins
+        -- modules/python/plugins
+        -- modules/runner/plugins
+        -- modules/search/plugins
+        -- modules/tmux/plugins
+        -- modules/tools/plugins
+        -- modules/treesitter/plugins
+        -- modules/ui/plugins
+        -- modules/user/plugins
+        -- modules/windows/plugins
+        disable_modules = {
+            -- "ai",
+            "buffers",
+            "clipboard",
+            "colourscheme",
+            "completion",
+            "documentation",
+            "editor",
+            "folke",
+            "fun",
+            "git",
+            "lang",
+            "latex",
+            -- "lsp",
+            "mini",
+            "misc",
+            "movement",
+            "notes",
+            -- "on_startup",
+            "python",
+            "runner",
+            "search",
+            "tmux",
+            -- "tools",
+            -- "user",
+            "windows",
+        }
+        new_name = "modules/?/plugins"
+        for i, v in ipairs(disable_modules) do
+            disable_modules[i] = new_name:gsub("?", v)
+        end
+    end
 
     if fn.exists("g:disable_modules") == 1 then
         disable_modules = vim.split(vim.g.disable_modules, ",")

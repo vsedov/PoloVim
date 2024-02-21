@@ -195,7 +195,7 @@ ui({
                 require("window-picker").setup({
                     hint = "floating-big-letter",
                     autoselect_one = true,
-                    include_current = false,
+                    include_current = true,
                     filter_rules = {
                         bo = {
                             filetype = { "neo-tree-popup", "quickfix", "edgy", "neo-tree" },
@@ -221,7 +221,7 @@ ui({
                     { source = "document_symbols" },
                 },
             },
-            use_popups_for_input = false,
+            use_popups_for_input = true,
             enable_git_status = true,
             enable_normal_mode_for_inputs = true,
             git_status_async = true,
@@ -271,7 +271,7 @@ ui({
             },
             filesystem = {
                 hijack_netrw_behavior = "open_current",
-                use_libuv_file_watcher = false,
+                use_libuv_file_watcher = true,
                 group_empty_dirs = false,
                 follow_current_file = {
                     enabled = true,
@@ -294,7 +294,7 @@ ui({
                 icon = { folder_empty = icons.documents.open_folder },
                 name = { highlight_opened_files = true },
                 document_symbols = {
-                    follow_cursor = true,
+                    follow_cursor = false,
                     kinds = vim.iter(symbols):fold({}, function(acc, k, v)
                         acc[k] = { icon = v, hl = lsp_kinds[k] }
                         return acc
