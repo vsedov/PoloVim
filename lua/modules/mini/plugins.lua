@@ -53,7 +53,6 @@ mini({
 mini({
     "echasnovski/mini.animate",
     cond = lambda.config.ui.mini_animate.use_animate,
-    event = "VeryLazy",
     opts = function()
         -- don't use animate when scrolling with the mouse
         local mouse_scrolled = false
@@ -67,34 +66,25 @@ mini({
 
         local animate = require("mini.animate")
         return {
-            cursor = {
-                enable = mini_opt.use_cursor,
-                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
-            },
+            open = { enable = false }, -- causes issues on spectre toggle.
             resize = {
-                enable = mini_opt.use_resize,
-            },
-            close = {
-                enable = mini_opt.use_close,
-            },
-            open = {
-                enable = false,
-                timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+                timing = animate.gen_timing.linear({ duration = 33, unit = "total" }),
             },
             scroll = {
-                enable = mini_opt.use_scroll,
-
-                -- timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
-                -- subscroll = animate.gen_subscroll.equal({
-                --     max_output_steps = 60,
-                --     predicate = function(total_scroll)
-                --         if mouse_scrolled then
-                --             mouse_scrolled = false
-                --             return false
-                --         end
-                --         return total_scroll > 1
-                --     end,
-                -- }),
+                timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
+                subscroll = animate.gen_subscroll.equal({
+                    predicate = function(total_scroll)
+                        if mouse_scrolled then
+                            mouse_scrolled = false
+                            return false
+                        end
+                        return total_scroll > 1
+                    end,
+                }),
+            },
+            cursor = {
+                enable = false, -- We don't want cursor ghosting
+                timing = animate.gen_timing.linear({ duration = 26, unit = "total" }),
             },
         }
     end,

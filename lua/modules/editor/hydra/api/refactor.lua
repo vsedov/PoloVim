@@ -4,7 +4,12 @@ local config = {
         body = leader,
         mode = { "n", "v" },
         ["<ESC>"] = { nil, { exit = true } },
-        r = { require("refactoring").select_refactor, { exit = true, desc = "Select refactor" } },
+        r = {
+            function()
+                require("refactoring").select_refactor()
+            end,
+            { exit = true, desc = "Select refactor" },
+        },
         i = {
             function()
                 require("refactoring").refactor("Inline Variable")

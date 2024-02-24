@@ -227,3 +227,8 @@ ls.add_snippets("tex", require("modules.completion.snippets.latex.tex_math"), { 
 
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 require("luasnip.loaders.from_vscode").lazy_load()
+ -- snipmate format
+require("luasnip.loaders.from_snipmate").load()
+
+-- lua format
+require("luasnip.loaders.from_lua").load()

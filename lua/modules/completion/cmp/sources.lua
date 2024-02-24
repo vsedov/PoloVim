@@ -21,7 +21,7 @@ local plugins = {
             disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
         },
     },
-    { name = "cody", enable = true, priority = 9 },
+    -- { name = "cody", enable = true, priority = 9 },
 
     { name = "otter" },
     { name = "cmp_zotcite", enable = true },

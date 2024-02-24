@@ -105,41 +105,34 @@ ai({
 -- <Tab> Cycle over windows.tr
 -- <C-i> [Edit Window] use response as input.
 
--- ai({
---     "zbirenbaum/copilot.lua",
---     -- init = conf.sell_your_soul,
---     cond = ai_conf.sell_your_soul,
---     event = "InsertEnter",
---     dependencies = { "nvim-cmp" },
---     opts = {
---         panel = {
---             enabled = true,
---             auto_refresh = true,
---             keymap = { open = "<M-CR>" },
---             layout = { position = "right", ratio = 0.4 },
---         },
---         suggestion = {
---             auto_trigger = lambda.config.ai.copilot.autotrigger,
---             -- keymap = { accept = "<c-l>", accept_word = "<c-l>", accept_line = "<c-l>" },
---             keymap = {
---                 accept_word = false,
---                 accept_line = false,
---                 next = "<M-]>",
---                 prev = "<M-[>",
---                 dismiss = "<C-]>",
---             },
---         },
---
---         filetypes = {
---             gitcommit = false,
---             NeogitCommitMessage = false,
---             DressingInput = false,
---             TelescopePrompt = false,
---             ["neo-tree-popup"] = false,
---             ["dap-repl"] = false,
---         },
---     },
--- })
+ai({
+    "zbirenbaum/copilot.lua",
+    -- init = conf.sell_your_soul,
+    cond = ai_conf.sell_your_soul,
+    event = "InsertEnter",
+    dependencies = { "nvim-cmp" },
+    opts = {
+        panel = {
+            enabled = true,
+            auto_refresh = true,
+            keymap = { open = "<M-CR>" },
+            layout = { position = "right", ratio = 0.4 },
+        },
+        suggestion = {
+            auto_trigger = lambda.config.ai.copilot.autotrigger,
+            keymap = { accept = "<c-l>" },
+        },
+
+        filetypes = {
+            gitcommit = false,
+            NeogitCommitMessage = false,
+            DressingInput = false,
+            TelescopePrompt = false,
+            ["neo-tree-popup"] = false,
+            ["dap-repl"] = false,
+        },
+    },
+})
 --  TODO: (vsedov) (14:41:51 - 12/02/24): Create a hydra for this
 --  Something like <leader>A -> C All binds ?
 --  or perhaps <leader>cc Hydra could also work
@@ -180,26 +173,13 @@ ai({
         "CodyTaskPrev",
         "CodyTaskAccept",
     },
-    config = function()
-
-        -- vim.keymap.set({ "v", "n" }, ";cd", "<cmd>CodyTask<CR>", { noremap = true, silent = true })
-        -- vim.keymap.set("n", ";cc", "<cmd>CodyChat<CR>", { noremap = true, silent = true })
-        -- vim.keymap.set("n", ";ct", "<cmd>CodyToggle<CR>", { noremap = true, silent = true })
-        --
-        -- vim.keymap.set("n", ";cn", "<cmd>CodyTaskNext<CR>", { noremap = true, silent = true })
-        -- vim.keymap.set("n", ";cv", "<cmd>CodyTaskView<CR>", { noremap = true, silent = true })
-        --
-        -- vim.keymap.set("n", ";ca", "<cmd>CodyAsk<CR>", { noremap = true, silent = true })
-        -- vim.keymap.set("n", ";cr", "<cmd>CodyRestart<CR>", { noremap = true, silent = true })
-        -- vim.keymap.set("n", ";cp", "<cmd>CodyTaskPrev<CR>", { noremap = true, silent = true })
-        -- vim.keymap.set("n", ";cy", "<cmd>CodyTaskAccept<CR>", { noremap = true, silent = true })
-    end,
 })
 
 ai({
     "github/copilot.vim",
+
     lazy = true,
-    cond = ai_conf.sell_your_soul,
+    cond = ai_conf.sell_your_soul and false,
     event = "InsertEnter",
     init = function()
         --[[ vim.opt.completeopt = "menuone,noselect" ]]

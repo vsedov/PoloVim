@@ -60,10 +60,13 @@ lsp({
     lazy = true,
     event = "VeryLazy",
     dependencies = {
-        "nvim-lua/plenary.nvim",
+        {"nvim-lua/plenary.nvim"},
         { "poljar/typos.nvim", cond = lambda.config.lsp.use_typos, config = true },
 
-        "jayp0521/mason-null-ls.nvim",
+        {"jayp0521/mason-null-ls.nvim"},
+        {
+            "gbprod/none-ls-php.nvim",
+        },
     },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()

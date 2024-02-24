@@ -159,43 +159,9 @@ lambda.config.lsp = {
     -- considering that this imght no longer be supported; mightbe best to get rid of this
     -- just in case
     null_ls = {
-        diagnostic = {
-            "cppcheck",
-            "djlint",
-            "eslint_d",
-            "golangci_lint",
-            "ktlint",
-            "markdownlint",
-            "misspell",
-            "phpcs",
-            "staticcheck",
-            "stylelint",
-            "write_good",
-            "luacheck",
-        },
-
-        formatter = {
-            "scalafmt",
-            "stylish_haskell",
-            "djlint",
-            "fish_indent",
-            "ktlint",
-            "markdownlint",
-            "phpcbf",
-            "pint",
-            "prettierd",
-            "shellharden",
-            "shfmt",
-            "stylelint",
-            "stylua",
-            "trim_newlines",
-            "trim_whitespace",
-            --"bibtex_tidy",
-            "docformatter",
-            "latexindent",
-            -- "reorder_python_imports",
-        },
-        code_action = { "eslint_d", "refactoring", "ts_node_action" },
+        diagnostic = {"selene"},
+        formatter = {"stylua"},
+        code_action = { "refactoring", "ts_node_action" },
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -203,16 +169,17 @@ lambda.config.lsp = {
     --    ╰────────────────────────────────────────────────────────────────────╯
     latex = "texlab", -- texlab | ltex
     python = {
-        lint = { "ruff" }, -- pylint, pyflake, and other linters
+        lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think 
         format = {
             "usort",
             "black",
-            "pyflyby",
-            "ruff",
-            -- "vulture",
         },
         -- black -- Need to make it so it knows what formater to use :think:
-        lsp = { "jedi_language_server", "sourcery" }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        lsp = {
+            "ruff_lsp",
+            "jedi_language_server",
+            "sourcery",
+        }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
     },
 }
 
@@ -229,16 +196,16 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_dropbar = true,
     mini_animate = {
-        use_animate = false,
-        use_cursor = true,
-        use_scroll = true,
-        use_resize = false,
+        use_animate = true,
+        use_cursor = false,
+        use_scroll = false,
+        use_resize = true,
         use_close = false,
     },
     use_hlslens = true,
     heirline = {
-        use_statuscol = true,
-        use_heirline = false,
+        use_statuscol = false,
+        use_heirline = true,
     },
     indent_lines = {
         use_hlchunk = false,
@@ -246,7 +213,7 @@ lambda.config.ui = {
         use_mini_indent_scope = false,
     },
     scroll_bar = {
-        use_scroll = true, -- for now im using mini animate - this might need a more advanced toglge for this to work
+        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
     },
 }
 lambda.config.fun = {

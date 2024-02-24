@@ -45,48 +45,6 @@ user({
         }
     end,
 })
-
-user({
-    "Bekaboo/dropbar.nvim",
-    event = "VeryLazy",
-    cond = lambda.config.ui.use_dropbar,
-    keys = {
-        {
-            "<leader>wp",
-            function()
-                require("dropbar.api").pick()
-            end,
-            desc = "winbar: pick",
-        },
-    },
-    opts = {
-        general = {
-            update_interval = 100,
-            enable = function(buf, win)
-                local b, w = vim.bo[buf], vim.wo[win]
-                local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
-                return decor.ft ~= false
-                    and decor.bt ~= false
-                    and b.bt == ""
-                    and not w.diff
-                    and not api.nvim_win_get_config(win).zindex
-                    and api.nvim_buf_get_name(buf) ~= ""
-            end,
-        },
-        icons = {
-            ui = { bar = { separator = " " .. lambda.style.icons.misc.arrow_right .. " " } },
-        },
-        menu = {
-            win_configs = {
-                border = "single",
-                col = function(menu)
-                    return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
-                end,
-            },
-        },
-    },
-})
-
 user({
     "Zeioth/markmap.nvim",
     lazy = true,

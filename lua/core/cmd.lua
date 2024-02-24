@@ -33,30 +33,6 @@ end
 -- Auto resize Vim splits to active split to 70% -
 -- https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
 
-local auto_resize = function()
-    local auto_resize_on = false
-    return function(args)
-        if not auto_resize_on then
-            local factor = args and tonumber(args) or 70
-            local fraction = factor / 10
-            -- NOTE: mutating &winheight/&winwidth are key to how
-            -- this functionality works, the API fn equivalents do
-            -- not work the same way
-            vim.cmd(fmt("let &winheight=&lines * %d / 10 ", fraction))
-            vim.cmd(fmt("let &winwidth=&columns * %d / 10 ", fraction))
-            auto_resize_on = true
-            vim.notify("Auto resize ON")
-        else
-            vim.cmd([[
-      let &winheight=30
-      let &winwidth=30
-      wincmd =
-      ]])
-            auto_resize_on = false
-            vim.notify("Auto resize OFF")
-        end
-    end
-end
 lambda.command("DebugOpen", function()
     require("modules.lang.dap").prepare()
 end, { force = true })
@@ -231,8 +207,6 @@ lambda.command("DotEnv", function()
     })
 end, {})
 
-lambda.command("AutoResize", auto_resize(), { nargs = "?" })
-
 lambda.command("LspSagaToggle", function()
     lambda.config.use_saga_diagnostic_jump = not lambda.config.use_saga_diagnostic_jump
 end, { force = true })
@@ -247,17 +221,6 @@ end, { force = true })
 
 lambda.command("StartCoffee", function()
     require("utils.plugins.coffee")
-end, { force = true })
-
--- vim.diagnostic.setqflist()
-lambda.command("CopilotUnload", function()
-    if lambda.config.sell_your_soul then
-        vim.cmd([[Copilot disable]])
-        lambda.dynamic_unload("_copilot", false)
-        lambda.config.sell_your_soul = false
-    else
-        vim.notify("Copilot is not loaded")
-    end
 end, { force = true })
 
 lambda.command("CopilotEnable", function()

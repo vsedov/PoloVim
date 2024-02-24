@@ -103,7 +103,9 @@ local config = {
         },
 
         E = {
-            require("telescope").extensions.live_grep_args.live_grep_args,
+            function()
+                require("telescope").extensions.live_grep_args.live_grep_args()
+            end,
             { exit = true, desc = "Live Grep Args" },
         },
 

@@ -3,17 +3,17 @@ local luasnip = require("luasnip")
 local utils = require("modules.completion.cmp.utils")
 
 local function copilot(fallback)
-    -- local suggestion = require("copilot.suggestion")
-    -- if suggestion.is_visible() then
-    --     return suggestion.accept()
-    -- end
-    -- vim.api.nvim_feedkeys(lambda.replace_termcodes("<Tab>"), "n", false)
-    local copilot_keys = vim.fn["copilot#Accept"]("")
-    if copilot_keys ~= "" then
-        vim.api.nvim_feedkeys(copilot_keys, "i", true)
-    else
-        return
+    local suggestion = require("copilot.suggestion")
+    if suggestion.is_visible() then
+        return suggestion.accept()
     end
+    vim.api.nvim_feedkeys(lambda.replace_termcodes("<Tab>"), "n", false)
+    -- local copilot_keys = vim.fn["copilot#Accept"]("")
+    -- if copilot_keys ~= "" then
+    --     vim.api.nvim_feedkeys(copilot_keys, "i", true)
+    -- else
+    --     return
+    -- end
 end
 
 local function t(str)
@@ -166,25 +166,16 @@ local mappings = {
 
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul and lambda.config.ai.copilot.use_cmp_trigger then
-            -- copilot()
-            local copilot_keys = vim.fn["copilot#Accept"]("")
-            if copilot_keys ~= "" then
-                vim.api.nvim_feedkeys(copilot_keys, "i", false)
-            -- elseif luasnip.expandable() then
-            --     luasnip.expand()
-            -- elseif luasnip.expand_or_jumpable() then
-            --     luasnip.expand_or_jump()
-            elseif check_backspace() then
-                fallback()
-            else
-                fallback()
-            end
-        else
-            if luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            else
-                fallback()
-            end
+            copilot()
+            -- local copilot_keys = vim.fn["copilot#Accept"]("")
+            -- if copilot_keys ~= "" then
+            --     vim.api.nvim_feedkeys(copilot_keys, "i", false)
+            --     -- elseif luasnip.expandable() then
+            --     --     luasnip.expand()
+            --     -- elseif luasnip.expand_or_jumpable() then
+            --     --     luasnip.expand_or_jump()
+            --     fallback()
+            -- end
         end
     end, {
         "i",
