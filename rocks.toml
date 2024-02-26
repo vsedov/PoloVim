@@ -1,0 +1,65 @@
+[plugins]
+"rocks.nvim" = "2.7.2"
+"rocks-config.nvim" = "1.2.0"
+"rocks-git.nvim" = "1.2.1"
+"telescope.nvim" = "scm"
+"plenary.nvim" = "scm"
+neorg = "7.0.0"
+rustaceanvim = "4.5.0"
+nvim-web-devicons = "0.99"
+"image.nvim" = "1.2.0"
+nvim-lspconfig = {version = "0.1.7"}
+# neotest = "4.2.0"
+nvim-dap = "0.7.0"
+luasnip = "2.2.0"
+
+[plugins."kanagawa.nvim"]
+git = "rebelot/kanagawa.nvim"
+
+[plugins.nvim-treesitter]
+git = "nvim-treesitter/nvim-treesitter"
+
+[plugins."oil.nvim"]
+git = "stevearc/oil.nvim"
+
+[plugins.lsp_lines]
+git = "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+
+[plugins.neogit]
+git = "NeogitOrg/neogit"
+
+[plugins.gitsigns]
+git = "lewis6991/gitsigns.nvim"
+
+[plugins.neogen]
+git = "danymat/neogen"
+
+[plugins.toggleterm]
+git = "akinsho/toggleterm.nvim"
+
+[plugins.parinfer]
+git = "gpanders/nvim-parinfer"
+
+[plugins.lexima]
+git = "cohama/lexima.vim"
+
+[plugins.zen-mode]
+git = "folke/zen-mode.nvim"
+
+[plugins.twilight]
+git = "folke/twilight.nvim"
+
+[plugins."neodev.nvim"]
+git = "folke/neodev.nvim"
+
+[plugins.nvim-cmp]
+git = "hrsh7th/nvim-cmp"
+
+[plugins.cmp_luasnip]
+git = "saadparwaiz1/cmp_luasnip"
+
+[plugins.cmp-nvim-lsp]
+git = "hrsh7th/cmp-nvim-lsp"
+
+[config]
+auto_setup = true

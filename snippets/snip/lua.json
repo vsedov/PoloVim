@@ -1,4 +1,0 @@
-{
-    "test_lua":{"body":["quire(\"scissors\").setup({","            snippetDir = \"~\/.config\/nvim\/snippets\/snip\",","        })"],"prefix":"test_lua"},
-    "completion_test":{"body":["completion({","    \"$1\",","    event = \"VeryLazy\",","    dependencies = \"nvim-telescope\/telescope.nvim\", -- optional","    config = function()","  end",")}"],"prefix":"completion_test"}
-}
