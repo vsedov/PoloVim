@@ -60,11 +60,6 @@ function M.setup()
         end
     end
 
-    if lambda.config.lsp.use_typos then
-        table.insert(registered_sources, require("typos").actions)
-        table.insert(registered_sources, require("typos").diagnostics)
-    end
-
     local cfg = {
         sources = registered_sources,
         debounce = 500,

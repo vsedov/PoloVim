@@ -60,20 +60,16 @@ lsp({
     lazy = true,
     event = "VeryLazy",
     dependencies = {
-        {"nvim-lua/plenary.nvim"},
+        { "nvim-lua/plenary.nvim" },
         { "poljar/typos.nvim", cond = lambda.config.lsp.use_typos, config = true },
-
-        {"jayp0521/mason-null-ls.nvim"},
-        {
-            "gbprod/none-ls-php.nvim",
-        },
+        { "jayp0521/mason-null-ls.nvim" },
     },
     config = function()
         require("modules.lsp.lsp.null-ls").setup()
         require("mason-null-ls").setup({
             automatic_installation = false,
         })
-        require("modules.lsp.lsp.config").setup()
+        -- require("modules.lsp.lsp.config").setup()
     end,
 })
 
@@ -341,7 +337,7 @@ lsp({
     "stevanmilic/nvim-lspimport",
     event = "LspAttach",
     config = function()
-        vim.keymap.set("n", "<leader>iw", require("lspimport").import, { noremap = true })
+        vim.keymap.set("n", "<leader>iw", require("lspimport").import, { noremap = true, desc = "Import word" })
     end,
 })
 lsp({

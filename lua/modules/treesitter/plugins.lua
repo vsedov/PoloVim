@@ -126,23 +126,6 @@ ts({
     cmd = "GuessIndent",
     config = conf.guess_indent,
 })
-ts({
-    "Darazaki/indent-o-matic",
-    lazy = true,
-    cond = lambda.config.treesitter.indent.use_indent_O_matic,
-    event = { "BufAdd", "BufReadPost", "BufNewFile" },
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    config = true,
-})
-
-ts({
-    "yioneko/nvim-yati",
-    cond = lambda.config.treesitter.indent.use_yati,
-    event = { "BufAdd", "BufReadPost", "BufNewFile" },
-    lazy = true,
-    dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
-    config = conf.indent,
-})
 
 ts({
     "Dkendal/nvim-treeclimber",

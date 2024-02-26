@@ -470,41 +470,7 @@ ui({
         },
     },
 })
--- --
-ui({
-    "levouh/tint.nvim",
-    cond = lambda.config.ui.use_tint == "tint",
-    event = "VeryLazy",
-    opts = {
-        tint = -15,
-        highlight_ignore_patterns = {
-            "WinSeparator",
-            "St.*",
-            "Comment",
-            "Panel.*",
-            "Telescope.*",
-            "IndentBlankline.*",
-            "Bqf.*",
-            "VirtColumn",
-            "Headline.*",
-            "NeoTree.*",
-            "LineNr",
-            "NeoTree.*",
-            "Telescope.*",
-            "VisibleTab",
-        },
-        window_ignore_function = function(win_id)
-            local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-            if win.diff or not lambda.falsy(vim.fn.win_gettype(win_id)) then
-                return true
-            end
-            local ignore_bt = lambda.p_table({ terminal = true, prompt = true, nofile = false })
-            local ignore_ft = lambda.p_table({ ["Neogit.*"] = true, ["flutterTools.*"] = true, ["qf"] = true })
-            return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
-        end,
-    },
-})
--- --
+
 ui({
     "kevinhwang91/promise-async",
     lazy = true,

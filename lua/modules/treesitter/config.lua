@@ -189,25 +189,6 @@ function config.hi_pairs()
     })
 end
 
-function config.indent()
-    local tm_fts = { "javascript", "python" } -- or any other langs
-
-    require("nvim-treesitter.configs").setup({
-        yati = {
-            default_fallback = function(lnum, computed, bufnr)
-                if vim.tbl_contains(tm_fts, vim.bo[bufnr].filetype) then
-                    return require("tmindent").get_indent(lnum, bufnr) + computed
-                end
-                -- or any other fallback methods
-                return require("nvim-yati.fallback").vim_auto(lnum, computed, bufnr)
-            end,
-            suppress_conflict_warning = true,
-            enable = true,
-            default_lazy = true,
-        },
-    })
-end
-
 function config.guess_indent()
     require("guess-indent").setup({
         auto_cmd = true, -- Set to false to disable automatic execution

@@ -1,6 +1,4 @@
 local user = require("core.pack").package
-local uv = vim.uv or vim.loop
-local api, fn = vim.api, vim.fn
 
 user({
     "axieax/urlview.nvim",
@@ -351,7 +349,7 @@ user({
 user({
     "miversen33/sunglasses.nvim",
     event = "UIEnter",
-    cond = lambda.config.ui.use_tint == "sunglasses",
+    cond = lambda.config.ui.use_tint,
     config = true,
 })
 

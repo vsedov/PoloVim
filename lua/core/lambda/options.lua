@@ -89,9 +89,7 @@ lambda.config.editor = {
 lambda.config.treesitter = {
     hipairs = false,
     indent = {
-        use_indent_O_matic = false,
         use_guess_indent = true,
-        use_yati = false,
     },
     use_matchup = true,
     use_extra_highlight = false,
@@ -152,7 +150,7 @@ lambda.config.lsp = {
         use_conform = false,
     },
     diagnostics = {
-        use_lsp_lines = false,
+        use_lsp_lines = true, -- Going to start using this as well
         use_rcd = true, -- the least intrusive of the bunch
         use_trouble_some = true,
     },
@@ -176,9 +174,11 @@ lambda.config.lsp = {
         },
         -- black -- Need to make it so it knows what formater to use :think:
         lsp = {
-            "ruff_lsp",
-            "jedi_language_server",
             "sourcery",
+            "ruff_lsp",
+            -- "jedi_language_server",
+            -- "python-language-server",
+            "pylsp",
         }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
     },
 }
@@ -192,7 +192,7 @@ lambda.config.ui = {
     use_fidgit = false,
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_tint = "tint", -- sunglasses, tint -- Might not be great for certain colourschemes
+    use_tint = true, -- sunglasses, tint -- Might not be great for certain colourschemes
     use_hlsearch = true,
     use_dropbar = true,
     mini_animate = {
@@ -242,7 +242,7 @@ lambda.config.colourscheme = {
         },
         dark = {
             -- "tokyonight.nvim",
-            "catppuccin",
+            -- "catppuccin",
             -- "sweetie.nvim",
             -- "rose", -- TSMethod'
             -- "doom-one.nvim",
