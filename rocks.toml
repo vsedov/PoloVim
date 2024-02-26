@@ -1,6 +1,6 @@
 [plugins]
 "rocks.nvim" = "2.7.2"
-"rocks-config.nvim" = "1.2.0"
+"rocks-config.nvim" = "1.2.1"
 "rocks-git.nvim" = "1.2.1"
 "telescope.nvim" = "scm"
 "plenary.nvim" = "scm"
@@ -9,9 +9,10 @@ rustaceanvim = "4.5.0"
 nvim-web-devicons = "0.99"
 "image.nvim" = "1.2.0"
 nvim-lspconfig = {version = "0.1.7"}
-# neotest = "4.2.0"
+neotest = "4.2.0"
 nvim-dap = "0.7.0"
 luasnip = "2.2.0"
+nvim-cmp= "0.0.1"
 
 [plugins."kanagawa.nvim"]
 git = "rebelot/kanagawa.nvim"
@@ -51,9 +52,6 @@ git = "folke/twilight.nvim"
 
 [plugins."neodev.nvim"]
 git = "folke/neodev.nvim"
-
-[plugins.nvim-cmp]
-git = "hrsh7th/nvim-cmp"
 
 [plugins.cmp_luasnip]
 git = "saadparwaiz1/cmp_luasnip"
