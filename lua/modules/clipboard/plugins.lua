@@ -172,7 +172,7 @@ clipsub({
     ]=],
         },
         norg = {
-            template = [=[ 
+            template = [=[
         .image $FILE_PATH $CURSOR
         ]=],
         },
@@ -235,6 +235,7 @@ clipsub({
         }
     end,
 })
+
 clipsub({
     "RomanoZumbe/yanki.nvim",
     keys = {

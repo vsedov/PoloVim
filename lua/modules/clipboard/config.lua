@@ -3,7 +3,7 @@ function config.config_yanky()
     local mapping = require("yanky.telescope.mapping")
     require("yanky").setup({
         ring = {
-            history_length = 100,
+            history_length = 100000,
             storage = "sqlite",
             sync_with_numbered_registers = true,
             cancel_event = "update",

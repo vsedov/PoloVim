@@ -104,19 +104,6 @@ lambda.augroup("TextYankHighlight", {
     },
 })
 
-lambda.augroup("UpdateVim", {
-    {
-        event = { "FocusLost" },
-        pattern = { "*" },
-        command = "silent! wall",
-    },
-    {
-        event = { "VimResized" },
-        pattern = { "*" },
-        command = "wincmd =", -- Make windows equal size when vim resizes
-    },
-})
-
 lambda.augroup("WindowBehaviours", {
     {
         event = { "CmdwinEnter" }, -- map q to close command window on quit

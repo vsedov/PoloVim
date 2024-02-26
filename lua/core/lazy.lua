@@ -26,6 +26,6 @@ else
             loader({ plugins = { "leap.nvim" } })
             require("modules.movement.leap").highlight()
         end
-        require("vscripts")
+        -- require("vscripts")
     end, 150)
 end

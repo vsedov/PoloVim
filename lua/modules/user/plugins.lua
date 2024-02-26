@@ -362,14 +362,7 @@ user({
         require("distant"):setup()
     end,
 })
-user({
-    "EtiamNullam/deferred-clipboard.nvim",
-    -- event = "LazyFile",
-    event = "VeryLazy",
-    opts = {
-        lazy = true,
-    },
-})
+
 user({
     "mrshmllow/open-handlers.nvim",
     -- We modify builtin functions, so be careful lazy loading
@@ -447,15 +440,6 @@ user({
         "nvim-telescope/telescope.nvim",
     },
     cmd = "Nerdy",
-})
-
--- Not used
-user({
-    "max397574/tmpfile.nvim",
-    cmd = {
-        "Tmp",
-    },
-    config = true,
 })
 
 -- this is great although it needs some refinement, one of them being that hydra, and heirline would

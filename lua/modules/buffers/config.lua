@@ -175,7 +175,7 @@ function config.three()
             scope_by_directory = true,
         },
         windows = {
-            enabled = true,
+            enabled = false,
             -- Constant or function to calculate the minimum window width of the focused window
             winwidth = function(winid)
                 local bufnr = vim.api.nvim_win_get_buf(winid)

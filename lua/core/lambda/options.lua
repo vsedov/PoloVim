@@ -159,8 +159,8 @@ lambda.config.lsp = {
     -- considering that this imght no longer be supported; mightbe best to get rid of this
     -- just in case
     null_ls = {
-        diagnostic = {"selene"},
-        formatter = {"stylua"},
+        diagnostic = { "selene" },
+        formatter = { "stylua" },
         code_action = { "refactoring", "ts_node_action" },
     },
 
@@ -169,7 +169,7 @@ lambda.config.lsp = {
     --    ╰────────────────────────────────────────────────────────────────────╯
     latex = "texlab", -- texlab | ltex
     python = {
-        lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think 
+        lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think
         format = {
             "usort",
             "black",
@@ -196,10 +196,10 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_dropbar = true,
     mini_animate = {
-        use_animate = true,
+        use_animate = false,
         use_cursor = false,
         use_scroll = false,
-        use_resize = true,
+        use_resize = false,
         use_close = false,
     },
     use_hlslens = true,

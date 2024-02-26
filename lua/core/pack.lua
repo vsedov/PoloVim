@@ -1,6 +1,6 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
 local helper = require("core.helper")
-
+local debug = false
 local pack = {}
 pack.__index = pack
 
@@ -47,6 +47,7 @@ function pack:load_modules_packages()
         -- modules/ui/plugins
         -- modules/user/plugins
         -- modules/windows/plugins
+
         disable_modules = {
             -- "ai",
             "buffers",
@@ -77,6 +78,45 @@ function pack:load_modules_packages()
         new_name = "modules/?/plugins"
         for i, v in ipairs(disable_modules) do
             disable_modules[i] = new_name:gsub("?", v)
+        end
+    end
+    if debug then
+        all_modules = {
+
+            -- "ai",
+            -- "buffers",
+            -- "clipboard",
+            -- "colourscheme",
+            -- "completion",
+            -- "documentation",
+            -- "editor",
+            -- "folke",
+            -- "fun",
+            -- "git",
+            -- "lang",
+            -- "latex",
+            -- "lsp",
+            --"mini",
+            -- "misc",
+            -- "movement",
+            -- "notes",
+            -- -- "on_startup",
+            -- "python",
+            -- "runner",
+            --"search",
+            -- "tmux",
+            -- "tools",
+            -- "treesitter",
+            -- "ui",
+            -- "user",
+            -- "windows",
+        }
+        disable_modules = {}
+
+        for _, m in ipairs(all_modules) do
+            if not vim.tbl_contains(disable_modules, m) then
+                disable_modules[#disable_modules + 1] = "modules/" .. m .. "/plugins"
+            end
         end
     end
 
