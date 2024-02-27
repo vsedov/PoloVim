@@ -6,31 +6,10 @@ local completion = require("core.pack").package
 --  ╰────────────────────────────────────────────────────────────────────╯
 
 completion({
-    "abecodes/tabout.nvim",
+    "kawre/neotab.nvim",
+    lazy = true,
     cond = lambda.config.cmp.use_tabout,
-    lazy = true,
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    event = "InsertEnter",
-    opts = {
-        -- tabkey = "",
-        -- backwards_tabkey = "",
-        ignore_beginning = true,
-    },
-})
-completion({
-    "boltlessengineer/smart-tab.nvim",
-    cond = not lambda.config.cmp.use_tabout,
-    lazy = true,
-    event = "InsertEnter",
-    config = function()
-        require("smart-tab").setup({
-            -- default options:
-            -- list of tree-sitter node types to filter
-            skips = { "string_content" },
-            -- default mapping, set `false` if you don't want automatic mapping
-            mapping = "<tab>",
-        })
-    end,
+    config = true,
 })
 
 --  ──────────────────────────────────────────────────────────────────────
@@ -40,16 +19,16 @@ completion({
     dependencies = {
         { "hrsh7th/cmp-nvim-lsp" },
         { "hrsh7th/cmp-nvim-lua" },
-        { "hrsh7th/cmp-nvim-lsp-signature-help" },
-        { "https://codeberg.org/FelipeLema/cmp-async-path" },
-        { "hrsh7th/cmp-buffer" },
-        { "hrsh7th/cmp-path" },
+        { "hrsh7th/cmp-nvim-lsp-signature-help", lazy = true },
+        { "https://codeberg.org/FelipeLema/cmp-async-path", lazy = true },
+        { "hrsh7th/cmp-buffer", lazy = true },
+        { "hrsh7th/cmp-path", lazy = true },
         -- { "hrsh7th/cmp-cmdline" },
-        { "rcarriga/cmp-dap" },
-        { "hrsh7th/cmp-omni" },
-
+        -- { "rcarriga/cmp-dap", lazy = true },
+        { "hrsh7th/cmp-omni", lazy = true },
         {
             "doxnit/cmp-luasnip-choice",
+            lazy = true,
             config = function()
                 require("cmp_luasnip_choice").setup({
                     auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
@@ -65,7 +44,7 @@ completion({
         },
         { "saadparwaiz1/cmp_luasnip", lazy = true },
         { "f3fora/cmp-spell", ft = { "gitcommit", "NeogitCommitMessage", "markdown", "norg", "org" } },
-        { "micangl/cmp-vimtex" },
+        { "micangl/cmp-vimtex", ft = { "tex", "bib" } },
     },
     config = conf.cmp,
 })
@@ -111,29 +90,6 @@ completion({
         })
     end,
 })
-completion({
-    "windwp/nvim-autopairs",
-    cond = false,
-    event = "InsertEnter",
-    dependencies = { "hrsh7th/nvim-cmp" },
-    config = function()
-        local autopairs = require("nvim-autopairs")
-        local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-        require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-        autopairs.setup({
-            close_triple_quotes = true,
-            disable_filetype = { "neo-tree-popup" },
-            check_ts = true,
-            fast_wrap = { map = "<c-s>" },
-            ts_config = {
-                lua = { "string" },
-                dart = { "string" },
-                javascript = { "template_string" },
-            },
-        })
-    end,
-})
-
 completion({
     "altermo/ultimate-autopair.nvim",
     cond = true,

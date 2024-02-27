@@ -1,7 +1,6 @@
 local cmp = require("cmp")
 cmp.setup(require("modules.completion.cmp.config"))
 
-cmp.setup.filetype({ "dap-repl", "dapui_watches" }, { sources = { { name = "dap" } } })
 cmp.mapping(function()
     if cmp.get_active_entry() then
         cmp.confirm()
