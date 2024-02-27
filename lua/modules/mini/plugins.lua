@@ -68,9 +68,11 @@ mini({
         return {
             open = { enable = false }, -- causes issues on spectre toggle.
             resize = {
+                enable = false,
                 timing = animate.gen_timing.linear({ duration = 33, unit = "total" }),
             },
             scroll = {
+                enable = false,
                 timing = animate.gen_timing.linear({ duration = 50, unit = "total" }),
                 subscroll = animate.gen_subscroll.equal({
                     predicate = function(total_scroll)
@@ -83,7 +85,7 @@ mini({
                 }),
             },
             cursor = {
-                enable = false, -- We don't want cursor ghosting
+                enable = true, -- We don't want cursor ghosting
                 timing = animate.gen_timing.linear({ duration = 26, unit = "total" }),
             },
         }

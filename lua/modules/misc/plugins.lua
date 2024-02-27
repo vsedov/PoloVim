@@ -179,13 +179,6 @@ misc({
     event = "CmdlineEnter",
 })
 
-misc({
-    "shortcuts/no-neck-pain.nvim",
-    lazy = true,
-    keys = { "<leader>Z" },
-    config = conf.noneck,
-})
-
 misc({ "tweekmonster/helpful.vim", cmd = "HelpfulVersion", ft = "help" })
 -- If there is regex, this seems very nice to work with .
 misc({
