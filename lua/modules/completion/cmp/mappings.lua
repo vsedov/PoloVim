@@ -143,7 +143,8 @@ local mappings = {
         elseif luasnip.jumpable(1) then
             luasnip.jump(1)
         else
-            require("neotab").tabout()
+            -- require("neotab").tabout()
+            fallback()
         end
     end,
     ["<c-a>"] = cmp.mapping.complete({
