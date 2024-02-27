@@ -190,6 +190,7 @@ windows({
 })
 windows({
     "nvim-focus/focus.nvim",
+    cond = false,
     event = "BufEnter",
     config = function()
         local ignore_filetypes = { "neo-tree" }

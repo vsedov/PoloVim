@@ -14,20 +14,6 @@ runner({ -- This plugin
     config = true,
 })
 
-runner({
-    "CRAG666/code_runner.nvim",
-    lazy = true,
-    cmd = {
-        "RunCode",
-        "RunFile",
-        "RunProject",
-        "RunClose",
-        "CRFiletype",
-        "CRProjects",
-    },
-    config = conf.code_runner,
-})
-
 --  ──────────────────────────────────────────────────────────────────────
 
 runner({ "dccsillag/magma-nvim", ft = "python", build = ":UpdateRemotePlugins" })
@@ -94,7 +80,7 @@ runner({
     opts = {},
 })
 runner({
-    "LunarVim/bigfile.nvim",
+    "pteroctopus/faster.nvim",
     event = "VeryLazy",
     config = true,
 })

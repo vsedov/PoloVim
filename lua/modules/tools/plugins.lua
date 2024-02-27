@@ -105,20 +105,6 @@ tools({
     ft = "qf",
     config = true,
 })
-
--- tools({
---     url = "https://gitlab.com/yorickpeterse/nvim-pqf",
---     ft = "qf",
---     config = function()
---         lambda.highlight.plugin("pqf", {
---             theme = {
---                 ["doom-one"] = { { qfPosition = { link = "Todo" } } },
---                 ["horizon"] = { { qfPosition = { link = "String" } } },
---             },
---         })
---         require("pqf").setup()
---     end,
--- })
 tools({
     "kevinhwang91/nvim-bqf",
     ft = "qf",

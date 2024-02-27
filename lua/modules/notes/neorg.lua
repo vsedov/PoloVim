@@ -9,9 +9,6 @@ M.opts = {
         },
         ["core.latex.renderer"] = {},
         ["core.integrations.image"] = {},
-        --     core.integrations.image
-        --
-        ["core.upgrade"] = {},
         ["core.looking-glass"] = {}, -- Enable the looking_glass module
         ["core.itero"] = {},
         ["core.export"] = {},
