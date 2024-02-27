@@ -93,12 +93,13 @@ buffer({
     config = function(_, opts)
         local oil = require("oil")
         oil.setup(opts)
-        vim.keymap.set("n", "<leadeR>-", function()
-            oil.open(vim.fn.getcwd())
-        end, { desc = "Open cwd" })
         vim.keymap.set("n", "<leader>-", require("oil").open, { desc = "Open parent directory" })
         vim.keymap.set("n", "-", require("oil").open_float, { desc = "Open parent directory" })
     end,
+    keys = {
+        "-",
+        "<leader>-",
+    },
 })
 --
 buffer({
@@ -145,11 +146,3 @@ buffer({
         },
     },
 })
-
--- -- Unlist hidden buffers that are git ignored.
--- buffer({
---     "sQVe/bufignore.nvim",
---     cond = lambda.config.buffer.use_bufignore,
---     event = "BufRead",
---     config = true,
--- })

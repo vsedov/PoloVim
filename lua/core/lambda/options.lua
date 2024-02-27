@@ -196,9 +196,9 @@ lambda.config.ui = {
     use_hlsearch = true,
     use_dropbar = true,
     mini_animate = {
-        use_animate = false,
+        use_animate = true,
         use_cursor = false,
-        use_scroll = false,
+        use_scroll = true,
         use_resize = false,
         use_close = false,
     },
@@ -209,8 +209,8 @@ lambda.config.ui = {
     },
     indent_lines = {
         use_hlchunk = false,
-        use_indent_blankline = true, -- we shall keep this for now, seems rather nice
-        use_mini_indent_scope = false,
+        use_indent_blankline = false, -- we shall keep this for now, seems rather nice
+        use_mini_indent_scope = true,
     },
     scroll_bar = {
         use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work

@@ -82,7 +82,6 @@ function pack:load_modules_packages()
     end
     if debug then
         all_modules = {
-
             -- "ai",
             -- "buffers",
             -- "clipboard",
@@ -96,11 +95,11 @@ function pack:load_modules_packages()
             -- "lang",
             -- "latex",
             -- "lsp",
-            --"mini",
+            -- "mini",
             -- "misc",
             -- "movement",
             -- "notes",
-            -- -- "on_startup",
+            -- "on_startup",
             -- "python",
             -- "runner",
             --"search",

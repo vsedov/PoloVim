@@ -26,6 +26,7 @@ folke({
         "hrsh7th/nvim-cmp",
     },
     opts = require("modules.folke.noice").noice,
+
     config = require("modules.folke.noice").noice_setup,
 })
 
@@ -144,3 +145,32 @@ folke({
     event = "VeryLazy",
     config = true,
 })
+
+folke({
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+        -- add any custom options here
+    },
+})
+folke({
+    "folke/drop.nvim",
+    event = "VimEnter",
+    config = function()
+        require("drop").setup()
+    end,
+})
+-- folke({
+--     "folke/styler.nvim",
+--     cond = false,
+--     config = function()
+--         require("styler").setup({
+--             themes = {
+--                 markdown = { colorscheme = "gruvbox" },
+--                 help = { colorscheme = "catppuccin-mocha", background = "dark" },
+--                 python = { colorscheme = "kanagawa" },
+--                 lua = { colorscheme = "catppuccin-mocha", background = "dark" },
+--             },
+--         })
+--     end,
+-- })
