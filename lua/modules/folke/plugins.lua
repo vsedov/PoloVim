@@ -73,11 +73,8 @@ folke({
 
 folke({
     "folke/zen-mode.nvim",
-    event = "VeryLazy",
+    lazy = true,
     opts = {
-        on_open = function()
-            require("oogway").sense_the_dragon_warrior()
-        end,
         window = {
             backdrop = 0.95, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
             -- height and width can be:
@@ -111,7 +108,7 @@ folke({
                 laststatus = 0, -- turn off the statusline in zen mode
             },
             twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
-            gitsigns = { enabled = false }, -- disables git signs
+            gitsigns = { enabled = true }, -- disables git signs
             tmux = { enabled = vim.fn.getenv("TMUX") }, -- disables the tmux statusline
 
             -- this will change the font size on kitty when in zen mode
@@ -138,11 +135,22 @@ folke({
             },
         },
     },
+    keys = {
+        {
+            "<Leader>z",
+            function()
+                require("zen-mode").toggle()
+            end,
+            "General: [Z]en Mode",
+        },
+    },
 })
-
 folke({
     "folke/twilight.nvim",
-    event = "VeryLazy",
+    lazy = true,
+    cmd = {
+        "Twilight",
+    },
     config = true,
 })
 

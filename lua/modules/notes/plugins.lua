@@ -1,15 +1,25 @@
 local conf = require("modules.notes.config")
 local notes = require("core.pack").package
+notes({
+    "vhyrro/luarocks.nvim",
+    branch = "more-fixes",
+    config = function()
+        require("luarocks").setup({})
+    end,
+})
 
 notes({
     "nvim-neorg/neorg",
     ft = { "norg" },
-    cmd = { "Neorg" },
+    -- cmd = { "Neorg" },
+    branch = "luarocks",
+
     init = function()
         require("modules.notes.norg.commands").setup({})
         require("modules.notes.norg.autocmd").setup({})
     end,
     dependencies = {
+        "luarocks.nvim",
         -- "3rd/image.nvim",
         {
             "jarvismkennedy/neorg-roam.nvim",

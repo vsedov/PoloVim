@@ -67,38 +67,4 @@ function config.carbon()
     })
 end
 
-function config.noneck()
-    NoNeckPain = {}
-    NoNeckPain.bufferOptions = {
-        enabled = true,
-        backgroundColor = nil,
-        bo = {
-            filetype = "no-neck-pain",
-            buftype = "nofile",
-            bufhidden = "hide",
-            modifiable = false,
-            buflisted = false,
-            swapfile = false,
-        },
-    }
-
-    require("no-neck-pain").setup({
-        width = 130,
-        debug = false,
-        disableOnLastBuffer = true,
-        killAllBuffersOnDisable = true,
-        buffers = {
-            setNames = true,
-            common = NoNeckPain.bufferOptions,
-        },
-
-        autocmds = {
-            enableOnVimEnter = true,
-            enableOnTabEnter = true,
-        },
-    })
-
-    vim.keymap.set("n", "<leader>Z", "<cmd>NoNeckPain<cr>", {})
-end
-
 return config

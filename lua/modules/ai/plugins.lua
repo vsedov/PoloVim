@@ -106,10 +106,10 @@ ai({
 -- <C-i> [Edit Window] use response as input.
 
 ai({
-    "zbirenbaum/copilot.lua",
-    cond = ai_conf.sell_your_soul,
+    -- "zbirenbaum/copilot.lua",
+    "mosheavni/copilot.lua",
+    --dependencies = { "nvim-cmp" },
     event = "InsertEnter",
-    dependencies = { "nvim-cmp" },
     opts = {
         panel = {
             enabled = true,
@@ -132,6 +132,7 @@ ai({
         },
     },
 })
+
 --  TODO: (vsedov) (14:41:51 - 12/02/24): Create a hydra for this
 --  Something like <leader>A -> C All binds ?
 --  or perhaps <leader>cc Hydra could also work

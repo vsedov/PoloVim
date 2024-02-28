@@ -7,13 +7,6 @@ local function copilot(fallback)
     if suggestion.is_visible() then
         return suggestion.accept()
     end
-    vim.api.nvim_feedkeys(lambda.replace_termcodes("<Tab>"), "n", false)
-    -- local copilot_keys = vim.fn["copilot#Accept"]("")
-    -- if copilot_keys ~= "" then
-    --     vim.api.nvim_feedkeys(copilot_keys, "i", true)
-    -- else
-    --     return
-    -- end
 end
 
 local function t(str)
@@ -143,8 +136,8 @@ local mappings = {
         elseif luasnip.jumpable(1) then
             luasnip.jump(1)
         else
-            -- require("neotab").tabout()
-            fallback()
+            require("neotab").tabout()
+            -- fallback()
         end
     end,
     ["<c-a>"] = cmp.mapping.complete({

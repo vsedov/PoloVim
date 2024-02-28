@@ -87,6 +87,7 @@ misc({
         end)
     end,
 })
+
 misc({
     "XXiaoA/ns-textobject.nvim",
     dependencies = { "kylechui/nvim-surround" },
