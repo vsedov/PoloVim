@@ -23,9 +23,6 @@ local cmd, fn = vim.cmd, vim.fn
 -- ftplugin.set("oil", {
 vim.treesitter.language.register("gitcommit", "NeogitCommitMessage")
 settings({
-    checkhealth = {
-        opt = { spell = false },
-    },
     ["oil"] = {
         opt = {
             conceallevel = 3,

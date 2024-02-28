@@ -53,15 +53,7 @@ buffer({
     "famiu/bufdelete.nvim",
     keys = { { "_q", "<Cmd>Bdelete<CR>", desc = "buffer delete" } },
 })
---
--- buffer({
---     "stevearc/stickybuf.nvim",
---     cond = lambda.config.buffer.use_sticky_buf,
---     lazy = true,
---     event = "VeryLazy",
---     config = conf.sticky_buf,
--- })
---
+
 buffer({
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },

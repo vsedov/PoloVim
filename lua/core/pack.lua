@@ -83,7 +83,7 @@ function pack:load_modules_packages()
     if debug then
         all_modules = {
             -- "ai",
-            -- "buffers",
+            "buffers",
             -- "clipboard",
             -- "colourscheme",
             -- "completion",
@@ -93,23 +93,24 @@ function pack:load_modules_packages()
             -- "fun",
             -- "git",
             -- "lang",
-            -- "latex",
+            "latex",
             -- "lsp",
-            -- "mini",
+            "mini",
             -- "misc",
             -- "movement",
             -- "notes",
-            -- "on_startup",
-            -- "python",
-            -- "runner",
-            --"search",
-            -- "tmux",
-            -- "tools",
+            "on_startup",
+            "python",
+            "runner",
+            -- "search",
+            "tmux",
+            "tools",
             -- "treesitter",
             -- "ui",
-            -- "user",
-            -- "windows",
+            "user",
+            "windows",
         }
+
         disable_modules = {}
 
         for _, m in ipairs(all_modules) do

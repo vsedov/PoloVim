@@ -17,14 +17,8 @@ user({
             "<c-g>w",
             desc = "toggle spellbound",
         },
-        {
-            "<c-g>n",
-            desc = "fix right",
-        },
-        {
-            "<c-g>N",
-            desc = "fix left",
-        },
+        { "<c-g>n", desc = "fix right" },
+        { "<c-g>N", desc = "fix left" },
     },
     init = function()
         vim.o.dictionary = "/usr/share/dict/directory-list-2.3-medium.txt"
@@ -348,9 +342,47 @@ user({
 -- lets disable this for now.
 user({
     "miversen33/sunglasses.nvim",
-    event = "UIEnter",
+    event = "VeryLazy",
     cond = lambda.config.ui.use_tint,
     config = true,
+    opts = {
+        excluded_filetypes = {
+
+            "harpoon",
+            "harpoon-menu",
+            "dashboard",
+            "lspsagafinder",
+            "packer",
+            "checkhealth",
+            "mason",
+            "NvimTree",
+            "neo-tree",
+            "plugin",
+            "lazy",
+            "TelescopePrompt",
+            "alpha",
+            "toggleterm",
+            "sagafinder",
+            "better_term",
+            "fugitiveblame",
+            "starter",
+            "NeogitPopup",
+            "NeogitStatus",
+            "DiffviewFiles",
+            "DiffviewFileHistory",
+            "DressingInput",
+            "spectre_panel",
+            "zsh",
+            "registers",
+            "startuptime",
+            "OverseerList",
+            "Navbuddy",
+            "noice",
+            "notify",
+            "saga_codeaction",
+            "sagarename",
+        },
+    },
 })
 
 user({

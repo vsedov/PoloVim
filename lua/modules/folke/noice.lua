@@ -77,7 +77,7 @@ function M.noice()
                 enabled = lambda.config.folke.noice.lsp.use_noice_hover,
             },
             progress = {
-                enabled = false, -- this is just annoying
+                enabled = true, -- this is just annoying
             },
             signature = {
                 enabled = lambda.config.folke.noice.lsp.use_noice_signature, -- this just does not work well .

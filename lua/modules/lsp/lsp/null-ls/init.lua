@@ -1,5 +1,4 @@
 -- vim.cmd[[ Lazy load lsp-format-modifications.nvim]]
-local lsp_format_modifications = require("lsp-format-modifications")
 local config = lambda.config.lsp.null_ls
 
 local M = {}
@@ -86,7 +85,7 @@ function M.setup()
             if lambda.config.lsp.use_format_modifcation then
                 if vim.fn.isdirectory(".git/index") then
                     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                    lsp_format_modifications.attach(client, bufnr, { format_on_save = true })
+                    require("lsp-format-modifications").attach(client, bufnr, { format_on_save = true })
                 else
                     vim.api.nvim_clear_autocmds({
                         group = "NvimFormatModificationsDocumentFormattingGroup",

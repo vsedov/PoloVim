@@ -18,7 +18,6 @@ folke({
 
 folke({
     "folke/noice.nvim",
-    -- event = "VeryLazy",
     cond = lambda.config.folke.noice.enable,
     dependencies = {
         "nui.nvim",
@@ -168,17 +167,3 @@ folke({
         require("drop").setup()
     end,
 })
--- folke({
---     "folke/styler.nvim",
---     cond = false,
---     config = function()
---         require("styler").setup({
---             themes = {
---                 markdown = { colorscheme = "gruvbox" },
---                 help = { colorscheme = "catppuccin-mocha", background = "dark" },
---                 python = { colorscheme = "kanagawa" },
---                 lua = { colorscheme = "catppuccin-mocha", background = "dark" },
---             },
---         })
---     end,
--- })

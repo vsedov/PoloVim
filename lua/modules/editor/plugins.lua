@@ -2,11 +2,6 @@ local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 
 editor({ "nvim-lua/plenary.nvim", lazy = true })
--- editor({ "rainbowhxch/accelerated-jk.nvim", lazy = true, keys = {
---     "j",
---     "k",
--- }, config = conf.acc_jk })
---
 
 -- -- -- -- NORMAL mode:
 -- -- -- -- `gcc` - Toggles the current line using linewise comment
@@ -179,9 +174,12 @@ editor({
     },
     config = true,
 })
+-- NOTE: (vsedov) (13:40:57 - 28/02/24): This is for keymaps u can use hawtkeys instead of map or
+-- imap
 editor({
     "tris203/hawtkeys.nvim",
     cmd = {
+        "Hawtkeys",
         "HawtkeysAll",
         "HawtkeysDupes",
     },

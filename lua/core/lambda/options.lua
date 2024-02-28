@@ -73,8 +73,7 @@ lambda.config.buffer = {
     use_bufferline = true,
     use_tabscope = true,
     use_sticky_buf = true,
-    use_bufignore = true,
-    use_early_retirement = true,
+    use_early_retirement = false, --
     use_hbac = true,
 }
 lambda.config.editor = {

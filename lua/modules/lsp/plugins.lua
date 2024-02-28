@@ -11,7 +11,15 @@ lsp({
     "williamboman/mason.nvim",
     cmd = "Mason",
     build = ":MasonUpdate",
-    opts = { ui = { border = lambda.style.border.type_0, height = 0.8 } },
+    config = function()
+        require("modules.lsp.lsp.mason.python")
+        require("mason").setup({
+            ui = {
+                border = lambda.style.border.type_0,
+                height = 0.8,
+            },
+        })
+    end,
 })
 
 lsp({
@@ -328,13 +336,20 @@ lsp({
 
 lsp({
     "kmontocam/nvim-conda",
-    cmd = {
-        "CondaActivate",
-        "CondaDeactivate",
-    },
+    -- cmd = {
+    --     "CondaActivate",
+    --     "CondaDeactivate",
+    -- },
+    ft = "python",
 })
+--     ┌                                                                   ┐
+--     │                                                                   │
+--     │    Packages that do not needed to be loaded or are not useful     │
+--     │                                                                   │
+--     └                                                                   ┘
 lsp({
     "stevanmilic/nvim-lspimport",
+    cond = false,
     event = "LspAttach",
     config = function()
         vim.keymap.set("n", "<leader>iw", require("lspimport").import, { noremap = true, desc = "Import word" })
@@ -342,6 +357,7 @@ lsp({
 })
 lsp({
     "lvimuser/lsp-inlayhints.nvim",
+    cond = false,
     lazy = true,
     opts = {
         inlay_hints = {

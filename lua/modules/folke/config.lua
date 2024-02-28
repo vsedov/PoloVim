@@ -151,6 +151,11 @@ function config.edgy()
                 },
             },
             {
+                ft = "nvim-docs-view",
+                title = "Live Docs",
+            },
+
+            {
                 ft = "neotest-summary",
                 title = "  Tests",
                 open = function()
@@ -206,53 +211,134 @@ function config.edgy()
         },
         keys = {
             -- close window
-            ["q"] = function(win)
-                win:close()
+            ["<c-->"] = function(win)
+                local Hydra = require("hydra")
+
+                local hint = [[
+                ^^ _<c-q>_: hide  ^^
+                ^^ _q_: quit  ^^
+                ^^ _Q_: close ^^
+                ^^ _]w_: next open window ^^
+                ^^ _[w_: prev open window ^^
+                ^^ _]W_: next loaded window ^^
+                ^^ _[W_: prev loaded window ^^
+                ^^ _>_: increase width ^^
+                ^^ _<_: decrease width ^^
+                ^^ _+_: increase height ^^
+                ^^ _-_: decrease height ^^
+                ^^ _=_: reset all custom sizing ^^
+                ^^ _<esc>_: quit Hydra ^^
+                ]]
+                local edgey_hydra = Hydra({
+                    name = "Edgy",
+                    mode = "n",
+                    hint = hint,
+                    config = {
+                        color = "amaranth",
+                        invoke_on_body = false,
+                        hint = {
+                            position = "middle-right",
+                        },
+                    },
+                    heads = {
+                        {
+                            "<c-q>",
+                            function()
+                                win:hide()
+                            end,
+                            { exit = true },
+                        },
+
+                        {
+                            "Q",
+                            function()
+                                win.view.edgebar:close()
+                            end,
+                            { exit = true },
+                        },
+                        {
+                            "<esc>",
+                            nil,
+                            { exit = true, desc = "quit" },
+                        },
+                        {
+                            "q",
+                            function()
+                                win:close()
+                            end,
+                            { exit = true },
+                        },
+
+                        -- next open window
+                        {
+                            "]w",
+                            function()
+                                win:next({ visible = true, focus = true })
+                            end,
+                        },
+                        -- previous open window
+                        {
+                            "[w",
+                            function()
+                                win:prev({ visible = true, focus = true })
+                            end,
+                        },
+                        -- next loaded window
+                        {
+                            "]W",
+                            function()
+                                win:next({ pinned = false, focus = true })
+                            end,
+                        },
+                        -- prev loaded window
+                        {
+                            "[W",
+                            function()
+                                win:prev({ pinned = false, focus = true })
+                            end,
+                        },
+                        -- increase width
+                        {
+                            ">",
+                            function()
+                                win:resize("width", 2)
+                            end,
+                        },
+                        -- decrease width
+                        {
+                            "<",
+                            function()
+                                win:resize("width", -2)
+                            end,
+                        },
+                        -- increase height
+                        {
+                            "+",
+                            function()
+                                win:resize("height", 2)
+                            end,
+                        },
+                        -- decrease height
+                        {
+                            "-",
+                            function()
+                                win:resize("height", -2)
+                            end,
+                        },
+                        -- reset all custom sizing
+                        {
+                            "=",
+                            function()
+                                win.view.edgebar:equalize()
+                            end,
+                            { exit = true, desc = "equalize" },
+                        },
+                    },
+                })
+                edgey_hydra:activate()
             end,
-            -- hide window
-            ["<c-q>"] = function(win)
-                win:hide()
-            end,
-            -- close sidebar
-            ["Q"] = function(win)
-                win.view.edgebar:close()
-            end,
-            -- next open window
-            ["]w"] = function(win)
-                win:next({ visible = true, focus = true })
-            end,
-            -- previous open window
-            ["[w"] = function(win)
-                win:prev({ visible = true, focus = true })
-            end,
-            -- next loaded window
-            ["]W"] = function(win)
-                win:next({ pinned = false, focus = true })
-            end,
-            -- prev loaded window
-            ["[W"] = function(win)
-                win:prev({ pinned = false, focus = true })
-            end,
-            -- increase width
-            ["<c-w>>"] = function(win)
-                win:resize("width", 2)
-            end,
-            -- decrease width
-            ["<c-w><lt>"] = function(win)
-                win:resize("width", -2)
-            end,
-            -- increase height
-            ["<c-w>+"] = function(win)
-                win:resize("height", 2)
-            end,
-            -- decrease height
-            ["<c-w>-"] = function(win)
-                win:resize("height", -2)
-            end,
-            -- reset all custom sizing
-            ["<c-w>="] = function(win)
-                win.view.edgebar:equalize()
-            end,
+
+            -- -- hide window
         },
         icons = {
             closed = " ",

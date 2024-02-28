@@ -52,6 +52,8 @@ local function loadHydraAPI()
 
         when(not vim.tbl_contains(exclude_table, name), function()
             local data = require(module_name)
+            binds[name] = data[1][data[2]].body
+
             require(MODULE_PREFIX .. "make_hydra").make_hydra(data)
         end)
     end
@@ -64,3 +66,11 @@ end
 if lambda.config.editor.hydra.load_normal then
     loadHydraModules(fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/normal/", MODULE_PREFIX .. "normal.")
 end
+
+lambda.command("HydraBinds", function()
+    local binds_list = {}
+    for k, v in pairs(binds) do
+        table.insert(binds_list, fmt("%s: %s", k, v))
+    end
+    print(table.concat(binds_list, "\n"))
+end)

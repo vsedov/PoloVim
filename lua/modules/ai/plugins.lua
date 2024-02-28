@@ -110,6 +110,7 @@ ai({
     "mosheavni/copilot.lua",
     --dependencies = { "nvim-cmp" },
     event = "InsertEnter",
+
     opts = {
         panel = {
             enabled = true,
@@ -117,6 +118,7 @@ ai({
             keymap = { open = "<M-CR>" },
             layout = { position = "right", ratio = 0.4 },
         },
+
         suggestion = {
             auto_trigger = lambda.config.ai.copilot.autotrigger,
             keymap = { accept = "<c-l>" },
