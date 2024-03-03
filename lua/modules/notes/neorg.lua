@@ -1,4 +1,30 @@
 local M = {}
+M.init = function()
+    local function subcmd_alias(_)
+        vim.api.nvim_create_user_command(
+            "Metadata",
+            "Neorg update-metadata",
+            { desc = "Neorg: update-metadata", bar = true }
+        )
+        local days = { "Yesterday", "Today", "Tomorrow" }
+        for _, cmd in ipairs(days) do
+            vim.api.nvim_create_user_command(cmd, function()
+                pcall(vim.cmd, [[Neorg journal ]] .. cmd:lower()) ---@diagnostic disable-line
+                vim.schedule(function()
+                    vim.cmd([[Metadata | w]])
+                    vim.cmd([[normal ]h]h]]) -- move down to {** Daily Review}
+                    pcall(vim.cmd, [[Neorg templates load journal]]) ---@diagnostic disable-line
+                end)
+            end, { desc = "Neorg: open " .. cmd .. "'s journal", force = true })
+        end
+    end
+    subcmd_alias(_)
+
+    -- vim.api.nvim_create_autocmd("BufWritePost", {
+    --     pattern = "*.norg",
+    --     command = "Neorg tangle current-file",
+    -- })
+end
 M.opts = {
     load = {
         ["core.defaults"] = {}, -- Load all the default modules
@@ -17,7 +43,8 @@ M.opts = {
                 extensions = "all",
             },
         },
-
+        ["external.exec"] = {},
+        ["external.hop-extras"] = {},
         ["core.concealer"] = {
             config = {
                 icon_preset = "varied",

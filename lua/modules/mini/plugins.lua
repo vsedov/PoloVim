@@ -30,6 +30,11 @@ mini({
                 "neoai-output",
                 "neo-tree",
                 "neo-*",
+                "neorg",
+                "norg",
+                "*.norg",
+                "*norg",
+                "*neorg",
             },
             callback = function()
                 vim.b.miniindentscope_disable = true

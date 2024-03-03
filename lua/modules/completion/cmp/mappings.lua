@@ -51,6 +51,17 @@ end
 
 local function prev_item()
     if cmp.visible() then
+        -- key mappings for Alt+number to select, have to press enter after to confirm though
+        for i = 0, 9, 1 do
+            local key = table.concat({ "<M-", i, ">" })
+            keys[key] = function(fallback)
+                if cmp.visible() and #cmp.get_entries() > i then
+                    return cmp.select_nth(i + 1)
+                end
+
+                return fallback()
+            end
+        end
         cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
     elseif require("luasnip").choice_active() then
         feedkeys(t("<Plug>luasnip-prev-choice"), "", false)
@@ -198,4 +209,5 @@ local mappings = {
         "s",
     }),
 }
+
 return mappings

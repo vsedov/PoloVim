@@ -149,9 +149,9 @@ lambda.config.lsp = {
         use_conform = false,
     },
     diagnostics = {
-        use_lsp_lines = true, -- Going to start using this as well
+        use_lsp_lines = false, -- Going to start using this as well
         use_rcd = true, -- the least intrusive of the bunch
-        use_trouble_some = true,
+        use_trouble_some = false,
     },
     -- considering that this imght no longer be supported; mightbe best to get rid of this
     -- just in case
@@ -169,15 +169,17 @@ lambda.config.lsp = {
         lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think
         format = {
             "usort",
-            "black",
+            -- "black",
+            "yapf",
         },
         -- black -- Need to make it so it knows what formater to use :think:
         lsp = {
             "sourcery",
             "ruff_lsp",
-            -- "jedi_language_server",
+            "jedi_language_server",
             -- "python-language-server",
-            "pylsp",
+            -- "pylsp",
+            -- "pylyzer"
         }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
     },
 }
@@ -191,19 +193,18 @@ lambda.config.ui = {
     use_fidgit = false,
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
-    use_tint = true, -- sunglasses, tint -- Might not be great for certain colourschemes
+    use_tint = false, -- sunglasses, tint -- Might not be great for certain colourschemes -- remove any distractions there we can use twilight instead.
     use_hlsearch = true,
     use_dropbar = true,
     mini_animate = {
-        use_animate = true,
+        use_animate = false,
         use_cursor = false,
-        use_scroll = true,
+        use_scroll = false,
         use_resize = false,
         use_close = false,
     },
     use_hlslens = true,
     heirline = {
-        use_statuscol = false,
         use_heirline = true,
     },
     indent_lines = {
@@ -234,18 +235,21 @@ lambda.config.colourscheme = {
     themes = {
         light = {
 
-            -- "tokyonight.nvim",
+            --"tokyonight.nvim",
             -- "sweetie.nvim",
             -- "catppuccin",
-            -- "kanagawa.nvim",
+            "kanagawa.nvim",
         },
         dark = {
             -- "tokyonight.nvim",
             -- "catppuccin",
             -- "sweetie.nvim",
             -- "rose", -- TSMethod'
-            -- "doom-one.nvim",
+            --"doom-one.nvim",
+            -- "vim-dogrun",
             "kanagawa.nvim",
+            -- "nvim-tundra", -- TSProperty'
+            -- "mellow.nvim",
         },
         others = {
             "vim-dogrun",
@@ -298,6 +302,7 @@ lambda.config.tools = {
 -- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux
 -- Tmux binding is not set properly for this yet.
 lambda.config.windows = {
+    use_focus = false,
     use_wrapping = true,
     flirt = {
         use_flirt = false,
@@ -318,6 +323,14 @@ lambda.config.folke = {
     },
     edge = {
         enable = true,
-        use_animate = false,
+        use_animate = true,
     },
 }
+
+if not use_noice then
+    lambda.config.folke.noice.enable = false
+    lambda.config.folke.noice.lsp.use_noice_signature = false
+    lambda.config.folke.noice.lsp.use_noice_hover = false
+    lambda.config.folke.noice.lsp.use_markdown = false
+    lambda.config.folke.noice.lsp.use_documentation = false
+end

@@ -365,11 +365,35 @@ function config.palenightfall()
     vim.cmd.colorscheme("palenightfall")
 end
 function config.sweetie()
-    require("sweetie").setup({
+    --- Default configuration
+    vim.g.sweetie = {
         -- Pop-up menu pseudo-transparency
+        -- It requires `pumblend` option to have a non-zero value
         pumblend = {
             enable = true,
             transparency_amount = 20,
+        },
+        -- Override default sweetie color palettes
+        -- Palette fields:
+        --  bg
+        --  fg
+        --  bg_hl
+        --  bg_alt
+        --  fg_alt
+        --  grey
+        --  dark_grey
+        --  red
+        --  orange
+        --  green
+        --  teal
+        --  yellow
+        --  blue
+        --  magenta
+        --  violet
+        --  cyan
+        palette = {
+            dark = {},
+            light = {},
         },
         -- Override default highlighting groups options
         overrides = {},
@@ -378,14 +402,14 @@ function config.sweetie()
             lazy = true,
             neorg = true,
             neogit = true,
+            neomake = true,
             telescope = true,
         },
         -- Enable custom cursor coloring even in terminal Neovim sessions
         cursor_color = true,
         -- Use sweetie's palette in `:terminal` instead of your default terminal colorscheme
         terminal_colors = true,
-    })
-
+    }
     vim.cmd.colorscheme("sweetie")
 end
 function config.text_to_colourscheme()

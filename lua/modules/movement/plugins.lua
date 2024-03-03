@@ -132,27 +132,6 @@ else
         lazy = true,
     })
     movement({
-        "ggandor/flit.nvim",
-        event = "VeryLazy",
-        keys = function()
-            local mods = {
-                ["f"] = { "n", "x", "o" },
-                ["F"] = { "n", "x", "o" },
-                ["t"] = { "n", "x" },
-                ["T"] = { "n", "x" },
-            }
-            local ret = {}
-            for key, modes in ipairs(mods) do
-                ret[#ret + 1] = { key, mode = modes, desc = key }
-            end
-            return ret
-        end,
-        opts = {
-            labeled_modes = "nx",
-            opts = { equivalence_classes = {} },
-        },
-    })
-    movement({
         "camilledejoye/nvim-lsp-selection-range",
         opts = function()
             local lsr_client = require("lsp-selection-range.client")

@@ -145,35 +145,6 @@ windows({
 })
 
 windows({
-    "tamton-aquib/flirt.nvim",
-    cond = lambda.config.windows.flirt.use_flirt,
-    lazy = true,
-    event = "BufEnter",
-    config = function()
-        require("flirt").setup({
-            override_open = lambda.config.windows.flirt.use_flirt_override, -- experimental
-            close_command = "Q",
-            default_move_mappings = lambda.config.windows.flirt.move_mappings, -- <C-arrows> to move floats
-            default_resize_mappings = true, -- <A-arrows> to resize floats
-            default_mouse_mappings = true, -- Drag floats with mouse
-            exclude_fts = {
-                "lspsagafinder",
-                "chatgpt",
-                "TelescopePrompt",
-                "prompt",
-                "notify",
-                "cmp_menu",
-                "harpoon",
-                "hydra_hint",
-            },
-            custom_filter = function(buffer, win_config)
-                return vim.tbl_contains({ "cmp_menu", "hydra_hint", "prompt" }, vim.bo[buffer].buftype)
-            end,
-        })
-    end,
-})
-
-windows({
     "sindrets/winshift.nvim",
     lazy = true,
     cmd = "WinShift",
@@ -190,11 +161,11 @@ windows({
 })
 windows({
     "nvim-focus/focus.nvim",
-    cond = true,
+    cond = lambda.config.windows.use_focus,
     event = "BufEnter",
     config = function()
         local ignore_filetypes = { "neo-tree" }
-        local ignore_buftypes = { "nofile", "prompt", "popup" }
+        local ignore_buftypes = { "nofile", "prompt", "popup", "neo-tree" }
 
         local augroup = vim.api.nvim_create_augroup("FocusDisable", { clear = true })
 

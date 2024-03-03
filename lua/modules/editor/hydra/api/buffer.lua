@@ -120,6 +120,7 @@ local config = {
 
         J = {
             function()
+                --  TODO: (vsedov) (09:58:27 - 03/03/24): remove
                 require("three").next()
             end,
 
@@ -127,37 +128,30 @@ local config = {
         },
         K = {
             function()
+                --  TODO: (vsedov) (09:58:31 - 03/03/24): Remove
                 require("three").prev()
             end,
 
             { desc = "[G]oto Prev [B]uffer", exit = false },
         },
 
-        B = {
-            function()
-                vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
-                    idx = idx and tonumber(idx)
-                    if idx then
-                        require("three").move_buffer(idx)
-                    end
-                end)
-            end,
-            { desc = "Jump to Buf", exit = true },
-        },
         q = {
             function()
+                --  TODO: (vsedov) (09:58:42 - 03/03/24): Remove
                 require("three").smart_close()
             end,
             { desc = "[C]lose Smart", exit = true },
         },
         Q = {
             function()
+                --  TODO: (vsedov) (09:58:49 - 03/03/24): Remove
                 require("three").close_buffer()
             end,
             { desc = "[B]uffer [C]lose", exit = true },
         },
         M = {
             function()
+                --  TODO: (vsedov) (09:58:52 - 03/03/24): Remove
                 require("three").hide_buffer()
             end,
             { desc = "[B]uffer [H]ide", exit = true },
@@ -165,6 +159,7 @@ local config = {
 
         P = {
             function()
+                --  TODO: (vsedov) (09:58:56 - 03/03/24): remove
                 require("three").open_project()
             end,
             { desc = "Three Project", exit = true },
@@ -320,7 +315,7 @@ return {
     "Buffer",
     {
         { "w", "m", "C", "W", "L" },
-        { "l", "h", "J", "K", "=", "+", "b", "B", "<cr>" }, -- 9
+        { "l", "h", "J", "K", "=", "+", "b", "<cr>" }, -- 9
         { "P", "q", "Q", "M" }, -- 4
         { "e", ">", "<" },
         { "p", "c", "D", "d" }, -- 2

@@ -193,8 +193,8 @@ function config.edgy()
         animate = {
             enabled = lambda.config.folke.edge.use_animate,
 
-            fps = 100, -- frames per second
-            cps = 120, -- cells per second
+            fps = 240, -- frames per second
+            cps = 200, -- cells per second
             on_begin = function()
                 vim.g.minianimate_disable = true
             end,
@@ -203,11 +203,7 @@ function config.edgy()
             end,
             -- Spinner for pinned views that are loading.
             -- if you have noice.nvim installed, you can use any spinner from it, like:
-            -- spinner = require("noice.util.spinners").spinners.circleFull,
-            spinner = {
-                frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
-                interval = 80,
-            },
+            spinner = require("noice.util.spinners").spinners.circleFull,
         },
         keys = {
             -- close window
@@ -215,20 +211,25 @@ function config.edgy()
                 local Hydra = require("hydra")
 
                 local hint = [[
-                ^^ _<c-q>_: hide  ^^
-                ^^ _q_: quit  ^^
-                ^^ _Q_: close ^^
-                ^^ _]w_: next open window ^^
-                ^^ _[w_: prev open window ^^
-                ^^ _]W_: next loaded window ^^
-                ^^ _[W_: prev loaded window ^^
-                ^^ _>_: increase width ^^
-                ^^ _<_: decrease width ^^
-                ^^ _+_: increase height ^^
-                ^^ _-_: decrease height ^^
-                ^^ _=_: reset all custom sizing ^^
-                ^^ _<esc>_: quit Hydra ^^
-                ]]
+^^ _l_: increase width ^^
+^^ _h_: decrease width ^^
+
+^^ _L_: next open window ^^
+^^ _H_: prev open window ^^
+
+^^ _j_: next loaded window ^^
+^^ _k_: prev loaded window ^^
+
+^^ _+_: increase height ^^
+^^ _-_: decrease height ^^
+^^ _=_: reset all custom sizing ^^
+
+^^ _<c-q>_: hide  ^^
+^^ _q_: quit  ^^
+^^ _Q_: close ^^
+
+^^ _<esc>_: quit Hydra ^^
+]]
                 local edgey_hydra = Hydra({
                     name = "Edgy",
                     mode = "n",
@@ -237,7 +238,7 @@ function config.edgy()
                         color = "amaranth",
                         invoke_on_body = false,
                         hint = {
-                            position = "middle-right",
+                            position = "bottom-right",
                         },
                     },
                     heads = {
@@ -271,42 +272,42 @@ function config.edgy()
 
                         -- next open window
                         {
-                            "]w",
+                            "L",
                             function()
                                 win:next({ visible = true, focus = true })
                             end,
                         },
                         -- previous open window
                         {
-                            "[w",
+                            "H",
                             function()
                                 win:prev({ visible = true, focus = true })
                             end,
                         },
                         -- next loaded window
                         {
-                            "]W",
+                            "j",
                             function()
                                 win:next({ pinned = false, focus = true })
                             end,
                         },
                         -- prev loaded window
                         {
-                            "[W",
+                            "k",
                             function()
                                 win:prev({ pinned = false, focus = true })
                             end,
                         },
                         -- increase width
                         {
-                            ">",
+                            "l",
                             function()
                                 win:resize("width", 2)
                             end,
                         },
                         -- decrease width
                         {
-                            "<",
+                            "h",
                             function()
                                 win:resize("width", -2)
                             end,

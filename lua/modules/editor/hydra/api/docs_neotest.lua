@@ -35,11 +35,6 @@ local config = {
             end,
             { nowait = true, silent = true, desc = "refCopy ", exit = true },
         },
-        w = {
-            function() end,
-
-            { nowait = true, silent = true, desc = "Dap", exit = true },
-        },
         p = {
 
             function()

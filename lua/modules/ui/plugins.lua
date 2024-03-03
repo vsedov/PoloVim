@@ -5,6 +5,7 @@ local border, rect = foo.border.type_0, foo.border.type_0
 local icons = lambda.style.icons
 ui({
     "rcarriga/nvim-notify",
+    event = "VeryLazy",
     dependencies = {
         {
             "j-hui/fidget.nvim",
@@ -17,7 +18,7 @@ ui({
             },
         },
     },
-    -- config = conf.notify,
+    config = conf.notify,
 })
 
 ui({

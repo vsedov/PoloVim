@@ -41,11 +41,11 @@ local terminals = {
 
 -- Set keymap bindings using a table
 local keymaps = {
-    { ";0", "<cmd>ToggleTermToggleAll<CR>", desc = "Toggle display all terminals" },
-    { ";1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal with id 1" },
-    { ";2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal with id 2" },
-    { ";3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal with id 3" },
-    { ";4", "<cmd>4ToggleTerm<CR>", desc = "Toggle terminal with id 4" },
+    { ";t0", "<cmd>ToggleTermToggleAll<CR>", desc = "Toggle display all terminals" },
+    { ";t1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal with id 1" },
+    { ";t2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal with id 2" },
+    { ";t3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal with id 3" },
+    { ";t4", "<cmd>4ToggleTerm<CR>", desc = "Toggle terminal with id 4" },
     {
         ";!",
         [[<cmd>execute v:count . "TermExec cmd='exit;'"<CR>]],
@@ -58,8 +58,8 @@ local keymaps = {
             Terminal:new({ cmd = "lazygit", hidden = true }):toggle()
         end,
     },
-    { "<leader>tf", "<cmd>ToggleTerm direction='vertical'<cr>" },
-    { "<leader>th", "<cmd>ToggleTerm direction='vertical'<cr>" },
+    { ";tf", "<cmd>ToggleTerm direction='vertical'<cr>" },
+    { ";th", "<cmd>ToggleTerm direction='vertical'<cr>" },
 }
 
 -- Create keymap bindings from the table

@@ -21,7 +21,7 @@ local config = {
     Dap = {
         color = "red",
         mode = { "n", "x" },
-        body = leader,
+        body = "<leader>D",
         ["<ESC>"] = { nil, { exit = true } },
         on_enter = function()
             if require("dap").session() == nil then

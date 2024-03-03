@@ -13,6 +13,9 @@ local function run_on_visual_selection(function_call)
     if is_visual_mode() then
         exit_visual_mode()
     end
+    if type(function_call) == "function" then
+        return function_call()
+    end
     vim.cmd("'<,'>" .. function_call)
 end
 
@@ -25,6 +28,9 @@ function utils.run_visual_or_normal(function_call)
     if is_visual_mode() then
         return run_on_visual_selection(function_call)
     else
+        if type(function_call) == "function" then
+            return function_call()
+        end
         return vim.cmd(function_call)
     end
 end

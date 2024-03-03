@@ -40,15 +40,14 @@ local config = {
     sources = require("modules.completion.cmp.sources"),
 
     enabled = function()
-        if vim.bo.ft == "TelescopePrompt" then
+        if
+            vim.bo.filetype == "neo-tree-popup"
+            or vim.bo.filetype == "TelescopePrompt"
+            or vim.bo.buftype == "Prompt"
+        then
             return false
         end
-        if vim.bo.ft == "dashboard" then
-            return false
-        end
-        if vim.bo.ft == "lua" then
-            return true
-        end
+
         local lnum, col = vim.fn.line("."), math.min(vim.fn.col("."), #vim.fn.getline("."))
         for _, syn_id in ipairs(vim.fn.synstack(lnum, col)) do
             syn_id = vim.fn.synIDtrans(syn_id) -- Resolve :highlight links

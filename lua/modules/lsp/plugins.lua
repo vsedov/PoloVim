@@ -2,6 +2,7 @@ local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
 local prettier = { "prettierd", "prettier" }
 local slow_format_filetypes = {}
+lsp({ "onsails/lspkind.nvim", lazy = true })
 
 lsp({
     "neovim/nvim-lspconfig",
@@ -177,20 +178,6 @@ lsp({
 lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
 
 lsp({
-    "hedyhli/outline.nvim",
-    cmd = { "Outline" },
-    keys = { "<leader>O" },
-    config = function()
-        -- Example mapping to toggle outline
-        vim.keymap.set("n", "<leader>tt", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
-
-        require("outline").setup({
-            -- Your setup opts here (leave empty to use defaults)
-        })
-    end,
-})
-
-lsp({
     "glepnir/lspsaga.nvim",
     cond = lambda.config.lsp.use_lsp_saga,
     event = "VeryLazy",
@@ -203,7 +190,9 @@ lsp({
 lsp({
     "ray-x/lsp_signature.nvim",
     lazy = true,
-    cond = lambda.config.lsp.lsp_sig.use_lsp_signature and not lambda.config.folke.noice.lsp.use_noice_signature,
+    cond = lambda.config.lsp.lsp_sig.use_lsp_signature
+        and not lambda.config.folke.noice.lsp.use_noice_signature
+        and false,
     event = "VeryLazy",
     config = conf.lsp_sig,
 })
@@ -280,8 +269,6 @@ lsp({
     config = conf.definition_or_reference,
 })
 
-lsp({ "onsails/lspkind.nvim", lazy = true })
-
 lsp({
     "yorickpeterse/nvim-dd",
     cond = true,
@@ -336,12 +323,9 @@ lsp({
 
 lsp({
     "kmontocam/nvim-conda",
-    -- cmd = {
-    --     "CondaActivate",
-    --     "CondaDeactivate",
-    -- },
     ft = "python",
 })
+
 --     ┌                                                                   ┐
 --     │                                                                   │
 --     │    Packages that do not needed to be loaded or are not useful     │
@@ -367,4 +351,30 @@ lsp({
             type_hints = { prefix = "=> ", remove_colon_start = true },
         },
     },
+})
+lsp({
+    "briangwaltney/paren-hint.nvim",
+    lazy = false,
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+        -- you can create a custom highlight group for the ghost text with the below command.
+        -- change the `highlight` option to `parenhint` if you use this method.
+        -- vim.api.nvim_exec([[ highlight parenhint guifg='#56633E' ]], false)
+        require("paren-hint").setup({
+            -- Include the opening paren in the ghost text
+            include_paren = true,
+
+            -- Show ghost text when cursor is anywhere on the line that includes the close paren rather just when the cursor is on the close paren
+            anywhere_on_line = true,
+
+            -- show the ghost text when the opening paren is on the same line as the close paren
+            show_same_line_opening = false,
+
+            -- style of the ghost text using highlight group
+            -- :Telescope highlights to see the available highlight groups if you have telescope installed
+            highlight = "Comment",
+        })
+    end,
 })

@@ -76,6 +76,15 @@ settings({
             vim.treesitter.language.register("markdown", "chatgpt")
         end,
     },
+    prompt = {
+        plugins = {
+            cmp = function(cmp)
+                cmp.setup.filetype("Prompt", {
+                    sources = {},
+                })
+            end,
+        },
+    },
     ["Neogit*"] = {
         wo = { winbar = "" },
     },

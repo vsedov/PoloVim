@@ -10,3 +10,9 @@ startup({
 startup({
     "lewis6991/fileline.nvim",
 })
+
+startup({ "folke/lsp-colors.nvim" })
+startup({
+    "pteroctopus/faster.nvim",
+    config = true,
+})

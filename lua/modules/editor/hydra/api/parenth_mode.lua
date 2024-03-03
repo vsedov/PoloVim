@@ -90,7 +90,7 @@ config = {
         ["i"] = { mx("aC", "v"), { nowait = true, desc = "Cond [aC]" } }, -- ts: all conditional
         ["I"] = { mx("iC", "v"), { nowait = true, desc = "Cond [iC]" } }, -- ts: inner conditional
 
-        ["<CR>"] = { mx(";f"), { nowait = true, desc = "Core f Key ", exit = true } }, -- ts: inner conditional
+        ["<CR>"] = { mx(";f"), { nowait = true, desc = "Core f Key ", exit = false } }, -- ts: inner conditional
 
         [")"] = { mx("ysi%)"), { nowait = true, desc = "ysi % )" } },
         ["("] = { mx("ysa%)"), { nowait = true, desc = "ysa % (" } },
@@ -127,11 +127,11 @@ local bracket = {
 }
 
 local tables = {
-    { "J", "K", "n", "N", "F", "f" },
-    { "A", "a", "i", "I", "W", "w", "e", "E" },
+    { "J", "K", "n", "N", "F", "f" }, -- 6
+    { "A", "a", "i", "I", "W", "w", "e", "E" }, -- 8
 
-    { "(", ")", "[", "]", "{", "}" },
-    { "cj", "ck", "dj", "dk", "yj", "yk" },
+    { "(", ")", "[", "]", "{", "}" }, -- 6
+    { "cj", "ck", "dj", "dk", "yj", "yk" }, -- 6
 }
 return {
     config,
@@ -140,4 +140,5 @@ return {
     bracket,
     6,
     3,
+    1,
 }

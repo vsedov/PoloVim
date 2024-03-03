@@ -323,11 +323,16 @@ local choice = {
     end,
 }
 
+-- This does not work in visual mode
+--  TODO: (vsedov) (13:35:16 - 02/03/24): need to fix this once i get the time.
 local function selectCommentStyle()
     local function executeCommand(style, alignment)
-        vim.cmd("normal! gv")
-
-        options[alignment].fn(style)
+        local data = function()
+            options[alignment].fn(style)
+        end
+        local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
+        vim.api.nvim_feedkeys(esc, "x", false)
+        data()
     end
 
     vim.ui.select({ "box", "line" }, { prompt = "Choose a type (box/line):" }, function(choiceType)

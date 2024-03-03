@@ -329,3 +329,14 @@ end
 --         end,
 --     },
 -- })
+vim.api.nvim_create_autocmd("BufWritePre", {
+  desc = "Auto Format Japanese Punctuation in Latex Files",
+  group = aug,
+  pattern = "*.tex",
+  command = [[
+  normal m`
+  silent! %s/、/，/g
+  silent! %s/。/．/g
+  normal ``
+  ]],
+})

@@ -21,7 +21,7 @@ function M.noice()
             enabled = false, -- enables the Noice messages UI
         },
         popupmenu = {
-            enabled = true, -- enables the Noice popupmenu UI
+            enabled = false, -- enables the Noice popupmenu UI
             backend = "cmp", -- backend to use to show regular cmdline completions
             kind_icons = {}, -- set to `false` to disable icons
         },
@@ -77,13 +77,13 @@ function M.noice()
                 enabled = lambda.config.folke.noice.lsp.use_noice_hover,
             },
             progress = {
-                enabled = true, -- this is just annoying
+                enabled = false, -- this is just annoying
             },
             signature = {
                 enabled = lambda.config.folke.noice.lsp.use_noice_signature, -- this just does not work well .
             },
             message = {
-                enabled = true,
+                enabled = false,
             },
             override = {
                 -- override the default lsp markdown formatter with Noice

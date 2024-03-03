@@ -66,7 +66,7 @@ user({
         },
         {
             "mD>",
-            desc = "Higlihgt clear",
+            desc = "Highlight clear",
         },
         {
             "m;",
@@ -509,6 +509,7 @@ user({
 })
 user({
     "Wansmer/symbol-usage.nvim",
+    cond = false,
     event = "LspAttach",
     opts = {
         text_format = function(symbol)
