@@ -1,6 +1,6 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
 local helper = require("core.helper")
-local debug = false
+local main_debug = true
 local pack = {}
 pack.__index = pack
 
@@ -80,35 +80,35 @@ function pack:load_modules_packages()
             disable_modules[i] = new_name:gsub("?", v)
         end
     end
-    if debug then
+    if main_debug then
         all_modules = {
             -- "ai",
-            "buffers",
-            -- "clipboard",
-            -- "colourscheme",
-            -- "completion",
-            -- "documentation",
-            -- "editor",
-            -- "folke",
-            -- "fun",
-            -- "git",
-            -- "lang",
-            "latex",
-            -- "lsp",
-            "mini",
-            -- "misc",
-            -- "movement",
-            -- "notes",
-            "on_startup",
-            "python",
-            "runner",
-            -- "search",
-            "tmux",
-            "tools",
-            -- "treesitter",
-            -- "ui",
-            "user",
-            "windows",
+            -- "buffers",
+            -- -- "clipboard",
+            -- -- "colourscheme",
+            -- -- "completion",
+            -- -- "documentation",
+            -- -- "editor",
+            -- -- "folke",
+            -- -- "fun",
+            -- -- "git",
+            -- -- "lang",
+            -- "latex",
+            -- -- "lsp",
+            -- "mini",
+            -- -- "misc",
+            -- -- "movement",
+            -- -- "notes",
+            -- "on_startup",
+            -- "python",
+            -- "runner",
+            -- -- "search",
+            -- "tmux",
+            -- "tools",
+            -- -- "treesitter",
+            -- -- "ui",
+            -- "user",
+            -- "windows",
         }
 
         disable_modules = {}
