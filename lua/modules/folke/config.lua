@@ -31,12 +31,6 @@ function config.paint()
                 pattern = "%s(@%w+)",
                 hl = "@parameter",
             },
-            {
-                filter = { filetype = "python" },
-                -- pattern = "%s*%/%/%/%s*(@%w+)",
-                pattern = "%s(@%w+)",
-                hl = "@parameter",
-            },
 
             {
                 filter = { filetype = "markdown" },
@@ -85,7 +79,6 @@ function config.edgy()
             { ft = "help", size = { height = 20 } },
             { ft = "spectre_panel", size = { height = 0.4 } },
             "terminal",
-            { ft = "dapui_watches", title = "Watches" },
             { ft = "dap-repl", title = "Debug REPL" },
             { ft = "dapui_console", title = "Debug Console" },
             {
@@ -129,6 +122,8 @@ function config.edgy()
             { ft = "dapui_scopes", title = "Scopes" },
             { ft = "dapui_breakpoints", title = "Breakpoints" },
             { ft = "dapui_stacks", title = "Stacks" },
+            { ft = "dapui_watches", title = "Watches" },
+
             {
                 ft = "diff",
                 title = " Diffs",
@@ -142,6 +137,7 @@ function config.edgy()
                 ft = "DiffviewFiles",
                 title = " Diffs",
             },
+
             {
                 ft = "OverseerList",
                 title = "  Tasks",
@@ -169,7 +165,6 @@ function config.edgy()
                 ft = "copilot-chat", -- This is custom file type from CopilotChat.nvim
                 size = { width = 0.4 }, -- Width of the window
             },
-            "dapui_scopes",
             "sagaoutline",
             "neotest-output-panel",
             "neotest-summary",
@@ -220,8 +215,8 @@ function config.edgy()
 ^^ _j_: next loaded window ^^
 ^^ _k_: prev loaded window ^^
 
-^^ _+_: increase height ^^
-^^ _-_: decrease height ^^
+^^ _J_: increase height ^^
+^^ _K_: decrease height ^^
 ^^ _=_: reset all custom sizing ^^
 
 ^^ _<c-q>_: hide  ^^
@@ -314,14 +309,14 @@ function config.edgy()
                         },
                         -- increase height
                         {
-                            "+",
+                            "J",
                             function()
                                 win:resize("height", 2)
                             end,
                         },
                         -- decrease height
                         {
-                            "-",
+                            "K",
                             function()
                                 win:resize("height", -2)
                             end,

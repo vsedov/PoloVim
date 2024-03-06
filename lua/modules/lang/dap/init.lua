@@ -51,42 +51,10 @@ end
 
 M.config = function()
     local dap = require("dap")
-    require("mason-nvim-dap").setup({
-        ensure_installed = { "stylua", "jq" },
-        handlers = {
-            function(config)
-                -- all sources with no handler get passed here
-
-                -- Keep original functionality
-                require("mason-nvim-dap").default_setup(config)
-            end,
-            python = function(config)
-                config.adapters = {
-                    type = "executable",
-                    -- command = "/usr/bin/python3",
-                    command = vim.fn.exepath("python"),
-                    args = {
-                        "-m",
-                        "debugpy.adapter",
-                    },
-                }
-                require("mason-nvim-dap").default_setup(config) -- don't forget this!
-            end,
-        },
-    })
     M.keymaps()
     M.commands()
     M.prepare()
     local dap_python = require("dap-python")
-    dap_python.setup("python", {
-        -- So if configured correctly, this will open up new terminal.
-        --    Could probably get this to target a particular terminal
-        --    and/or add a tab to kitty or something like that as well.
-        console = "externalTerminal",
-
-        include_configs = true,
-    })
-
     dap_python.test_runner = "pytest"
 end
 

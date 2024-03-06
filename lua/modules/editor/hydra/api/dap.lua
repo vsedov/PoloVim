@@ -39,14 +39,24 @@ local config = {
             function()
                 dap_uirun("float_element", "breakpoints")()
             end,
-            { exit = false, silent = true, desc = "Float Break " },
+            {
+                exit = false,
+                private = true,
+                silent = true,
+                desc = "Float Break ",
+            },
         },
 
         C = {
             function()
                 require("persistent-breakpoints.api").set_conditional_breakpoint()
             end,
-            { exit = false, silent = true, desc = "Set BP with Cond" },
+            {
+                exit = false,
+                private = true,
+                silent = true,
+                desc = "Set BP with Cond",
+            },
         },
         l = {
             function()
@@ -58,7 +68,12 @@ local config = {
             function()
                 run("continue")()
             end,
-            { exit = false, silent = true, desc = "Continue" },
+            {
+                exit = true,
+                private = true,
+                silent = true,
+                desc = "Continue",
+            },
         },
         c = {
             function()
@@ -77,13 +92,23 @@ local config = {
             function()
                 run("step_into")()
             end,
-            { exit = false, silent = true, desc = "Step into" },
+            {
+                exit = false,
+                private = true,
+                silent = true,
+                desc = "Step into",
+            },
         },
         O = {
             function()
                 run("step_out")()
             end,
-            { exit = false, silent = true, desc = "Step Out" },
+            {
+                exit = false,
+                private = true,
+                silent = true,
+                desc = "Step Out",
+            },
         },
         X = {
             function()
@@ -137,6 +162,29 @@ local config = {
             end,
             { exit = false, silent = true, desc = "Float repl" },
         },
+        L = {
+            function()
+                local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+                local dap = require("dap")
+                if filetype == "" then
+                    filetype = "nil"
+                end
+                if dap and dap.launch_server and dap.launch_server[filetype] then
+                    dap.launch_server[filetype]()
+                else
+                    vim.notify(
+                        string.format("No DAP Launch server configured for filetype %s", filetype),
+                        vim.log.levels.WARN
+                    )
+                end
+            end,
+            {
+                desc = "Launch DAP server",
+                exit = false,
+                private = true,
+                silent = true,
+            },
+        },
     },
 }
 
@@ -144,11 +192,11 @@ return {
     config,
     "Dap",
     {
-        { "k", "K", "x", "X" },
-        { "o", "i", "O" },
-        { "S", "s", "w", "r" },
+        { "k", "K", "x", "X" }, -- 4
+        { "o", "i", "O", "L" }, -- 3
+        { "S", "s", "w", "r" }, -- 4
     },
-    { "b", "B", "C", "l", "<cr>", "c" },
+    { "b", "B", "C", "l", "<cr>", "c" }, -- 8
     6,
     3,
 }

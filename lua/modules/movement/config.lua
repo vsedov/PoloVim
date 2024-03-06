@@ -398,7 +398,6 @@ function config.harpoon()
         end,
         LIST_CREATED = prepopulate,
     })
-    harpoon:extend(Extensions.builtins.navigate_with_number())
     oqt.setup_keymaps()
 end
 

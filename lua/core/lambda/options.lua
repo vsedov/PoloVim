@@ -49,7 +49,7 @@ lambda.config.ai = {
         use_cmp_trigger = true, -- if this is false, then copilot is active,  but you are using something else
     },
     tabnine = {
-        use_sort = true,
+        use_sort = false,
         use_tabnine = use_tabnine,
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
@@ -70,10 +70,9 @@ lambda.config.extra_search = {
     },
 }
 lambda.config.buffer = {
-    use_bufferline = true,
+    use_bufferline = false,
     use_tabscope = true,
     use_sticky_buf = true,
-    use_early_retirement = false, --
     use_hbac = true,
 }
 lambda.config.editor = {
@@ -82,7 +81,7 @@ lambda.config.editor = {
         load_normal = true,
         load_api = true,
     },
-    use_smart_q = true,
+    use_smart_q = false,
 }
 
 lambda.config.treesitter = {
@@ -151,7 +150,7 @@ lambda.config.lsp = {
     diagnostics = {
         use_lsp_lines = false, -- Going to start using this as well
         use_rcd = true, -- the least intrusive of the bunch
-        use_trouble_some = false,
+        use_trouble_some = true,
     },
     -- considering that this imght no longer be supported; mightbe best to get rid of this
     -- just in case
@@ -281,7 +280,7 @@ lambda.config.movement = {
     movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap and flash,
     use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d
-    use_accelerated_jk = true,
+    use_accelerated_jk = false, -- we will remove this for the time, i think buffer search might be better.
     harpoon = {
         goto_harpoon = true,
         use_tmux_or_normal = "nvim", -- nvim
@@ -289,14 +288,13 @@ lambda.config.movement = {
 }
 -- right i think its best we disables these
 lambda.config.tools = {
-    use_bionic_reading = false, -- this can get annoying
     use_which_key_or_use_mini_clue = "which", -- "which or mini"
     session = {
-        use_resession = true,
+        -- use_resession = true,  this does not exist anymore
     },
     use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = false,
-    use_live_command = false, -- Disabled due to large files, this might noe be nice to have
+    use_live_command = true, -- Disabled due to large files, this might noe be nice to have
 }
 
 -- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux
@@ -323,7 +321,7 @@ lambda.config.folke = {
     },
     edge = {
         enable = true,
-        use_animate = true,
+        use_animate = false,
     },
 }
 

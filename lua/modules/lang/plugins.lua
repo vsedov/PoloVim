@@ -47,27 +47,26 @@ lang({
 lang({
     "mfussenegger/nvim-dap",
     lazy = true,
-    config = conf.dap_config,
     dependencies = {
         {
             "rcarriga/nvim-dap-ui",
-            opts = {
-                windows = { indent = 2 },
-                floating = { border = lambda.style.border.type_0 },
-                layouts = {
-                    {
-                        elements = {
-                            { id = "scopes", size = 0.25 },
-                            { id = "breakpoints", size = 0.25 },
-                            { id = "stacks", size = 0.25 },
-                            { id = "watches", size = 0.25 },
-                        },
-                        position = "left",
-                        size = 20,
-                    },
-                    { elements = { { id = "repl", size = 0.9 } }, position = "bottom", size = 10 },
-                },
-            },
+            opts = {},
+            config = function(_, opts)
+                -- setup dap config by VsCode launch.json file
+                -- require("dap.ext.vscode").load_launchjs()
+                local dap = require("dap")
+                local dapui = require("dapui")
+                dapui.setup(opts)
+                dap.listeners.after.event_initialized["dapui_config"] = function()
+                    dapui.open({})
+                end
+                dap.listeners.before.event_terminated["dapui_config"] = function()
+                    dapui.close({})
+                end
+                dap.listeners.before.event_exited["dapui_config"] = function()
+                    dapui.close({})
+                end
+            end,
         },
         {
             "theHamsta/nvim-dap-virtual-text",
@@ -77,7 +76,52 @@ lang({
         },
         { "LiadOz/nvim-dap-repl-highlights", config = true },
         "ofirgall/goto-breakpoints.nvim",
-        "mfussenegger/nvim-dap-python",
-        "jay-babu/mason-nvim-dap.nvim",
+        {
+            "jay-babu/mason-nvim-dap.nvim",
+            dependencies = "mason.nvim",
+            cmd = { "DapInstall", "DapUninstall" },
+            opts = {
+                -- Makes a best effort to setup the various debuggers with
+                -- reasonable debug configurations
+                automatic_installation = true,
+
+                -- You can provide additional configuration to the handlers,
+                -- see mason-nvim-dap README for more information
+                handlers = {},
+
+                -- You'll need to check that you have the required things installed
+                -- online, please don't ask me how to install them :)
+                ensure_installed = {
+                    -- Update this to ensure that you have the debuggers for the langs you want
+                    "debugpy",
+                },
+            },
+        },
     },
+    config = conf.dap_config,
+})
+lang({
+    "mfussenegger/nvim-dap-python",
+    dependencies = {
+        "mfussenegger/nvim-dap",
+    },
+    ft = { "python" },
+    config = function()
+        local dap_python = require("dap-python")
+        local function find_debugpy_python_path()
+            -- Return the path to the debugpy python executable if it is
+            -- installed in $VIRTUAL_ENV, otherwise get it from Mason
+            if vim.env.VIRTUAL_ENV or require("modules.lsp.lsp.providers.python.utils.python_help").in_any_env() then
+                return vim.fn.exepath("python3")
+            end
+
+            local mason_registry = require("mason-registry")
+            local path = mason_registry.get_package("debugpy"):get_install_path() .. "/venv/bin/python"
+            return path
+        end
+
+        local dap_python_path = find_debugpy_python_path()
+        vim.api.nvim_echo({ { "Using path for dap-python: " .. dap_python_path, "None" } }, false, {})
+        dap_python.setup(dap_python_path)
+    end,
 })

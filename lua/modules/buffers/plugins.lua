@@ -3,21 +3,45 @@ local conf = require("modules.buffers.config")
 -- --  ╭────────────────────────────────────────────────────────────────────╮
 -- --  │ very lazy                                                          │
 -- --  ╰────────────────────────────────────────────────────────────────────╯
+-- buffer({
+--     "akinsho/bufferline.nvim",
+--     lazy = true,
+--     cond = lambda.config.buffer.use_bufferline,
+--     event = "BufEnter",
+--     config = conf.nvim_bufferline,
+--     dependencies = { { "tabscope.nvim" } },
+-- })
 buffer({
-    "akinsho/bufferline.nvim",
-    lazy = true,
-    cond = lambda.config.buffer.use_bufferline,
-    event = "BufEnter",
-    config = conf.nvim_bufferline,
-    dependencies = { { "tabscope.nvim" } },
+    "romgrk/barbar.nvim",
+    dependencies = {
+        "lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
+        "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+    },
+    init = function()
+        vim.g.barbar_auto_setup = false
+    end,
+    opts = {
+        -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+        -- animation = true,
+        -- insert_at_start = true,
+        -- …etc.
+    },
+    version = "^1.0.0", -- optional: only update when a new 1.x version is released
 })
-
---
 buffer({
     "backdround/tabscope.nvim",
     lazy = true,
     event = "VeryLazy",
     config = true,
+    keys = {
+        {
+            ";q",
+            function()
+                require("tabscope").remove_tab_buffer()
+            end,
+            desc = "close tab",
+        },
+    },
 })
 --
 buffer({

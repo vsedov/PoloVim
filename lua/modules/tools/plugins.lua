@@ -271,43 +271,6 @@ tools({
 })
 
 tools({
-    "FluxxField/bionic-reading.nvim",
-    cond = lambda.config.tools.use_bionic_reading,
-    -- event = "VeryLazy",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    cmd = {
-        "BRToggle",
-        "BRToggleUpdateInsertMode",
-        "BRToggleAutoHighlight",
-    },
-    opts = {
-        auto_highlight = true,
-        file_types = {
-            ["text"] = {
-                "any", -- highlight any node
-            },
-            ["lua"] = {
-                "any",
-            },
-            ["python"] = { "any" },
-        },
-        hl_group_value = {
-            link = "Bold", -- you could do italic
-        },
-
-        -- Flag used to control if the user is prompted
-        -- if BRToggle is called on a file type that is not
-        -- explicitly defined above
-        prompt_user = true,
-        -- Enable or disable the use of treesitter
-        treesitter = false, -- this tends to just cause issues so this is not viable right now
-        -- Flag used to control if highlighting is applied as
-        -- you type
-        update_in_insert_mode = true,
-    },
-})
-
-tools({
     "tpope/vim-eunuch",
     cmd = {
         "Delete",
@@ -351,7 +314,5 @@ tools({
 tools({
     "norcalli/nvim-terminal.lua",
     event = "TermEnter",
-    config = function()
-        require("terminal").setup()
-    end,
+    config = true,
 })

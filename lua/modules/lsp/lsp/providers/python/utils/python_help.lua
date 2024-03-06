@@ -14,7 +14,24 @@ local function get_pdm_package()
     return vim.fn.trim(vim.fn.system("pdm info --packages"))
 end
 
+local function in_conda_env()
+    if
+        vim.fn.trim(
+            vim.fn.system(
+                '[[ -n "$CONDA_PREFIX" ]] && echo "In a conda env: $CONDA_DEFAULT_ENV" || echo "Not in a conda env"'
+            )
+        )
+    then
+        return true
+    end
+end
+
 local function get_python_dir(workspace)
+    local conda_match = in_conda_env()
+    if conda_match then
+        return vim.fn.trim(vim.fn.system("which python"))
+    end
+
     local poetry_match = vim.fn.glob(path.join(workspace, "poetry.lock"))
     if poetry_match ~= "" then
         return get_poetry_dir()
@@ -41,6 +58,10 @@ local _package = ""
 
 local function py_bin_dir()
     return path.join(_virtual_env, "bin:")
+end
+
+M.in_any_env = function()
+    return in_conda_env() or vim.fn.glob("Pipfile.lock") ~= "" or vim.fn.glob("poetry.lock") ~= ""
 end
 
 M.env = function(root_dir)
@@ -73,6 +94,19 @@ M.pep582 = function(root_dir)
     end
 end
 
-M.conda = function(root_dir) end
+M.conda = function(root_dir)
+    local conda_match = in_conda_env()
+    -- In a conda env: main
+    -- or
+    -- Not in a conda env
+
+    if conda_match then
+        return vim.fn.trim(vim.fn.system("conda info --base"))
+            .. "/envs/"
+            .. vim.fn.trim(vim.fn.system("conda info --envs | grep '*' | awk '{print $1}'"))
+    end
+
+    return ""
+end
 
 return M

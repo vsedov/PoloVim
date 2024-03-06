@@ -191,31 +191,9 @@ movement({
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     lazy = true,
-    -- init = conf.harpoon_init,
     config = conf.harpoon,
 })
 
---------------------------------
-movement({
-    "LeonHeidelbach/trailblazer.nvim",
-    lazy = true,
-    cond = lambda.config.movement.use_trailblazer and false,
-    keys = {
-        { "ma", desc = "New trail mark " },
-        { "mb", desc = "Track Back" },
-        { "mj", desc = "Peek Move Next Down" },
-        { "mk", desc = "Peek Move Previous Up" },
-        { "md", desc = "Toggle Trail Mark List" },
-        { "mL", desc = "Delete All Trail Marks" },
-        { "mn", desc = "Paste At Last Trail Mark" },
-        { "mN", desc = "Paste At All Trail Marks" },
-        { "mt", desc = "Set Trail Mark Select Mode" },
-        { "m[", desc = "Switch To Next Trail Mark Stack" },
-        { "m]", desc = "Switch To Previous Trail Mark Stack" },
-        { "ms", desc = "Set Trail Mark Stack Sort Mode" },
-    },
-    config = conf.trailblazer,
-})
 movement({
     "chentoast/marks.nvim",
     config = function()

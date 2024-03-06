@@ -1,6 +1,6 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
 local helper = require("core.helper")
-local main_debug = true
+local main_debug = false
 local pack = {}
 pack.__index = pack
 

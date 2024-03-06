@@ -30,6 +30,241 @@ vim.api.nvim_create_user_command("ProjectDelete", function()
     require("three").remove_project()
 end, {})
 
+local bufferline_commands = {
+    l = {
+        function()
+            vim.cmd("BufferLineCycleNext")
+        end,
+
+        { desc = "Next Buffers", exit = false },
+    },
+    h = {
+        function()
+            vim.cmd("BufferLineCyclePrev")
+        end,
+
+        { desc = "Prev Buffers", exit = false },
+    },
+
+    J = {
+        function()
+            --  TODO: (vsedov) (09:58:27 - 03/03/24): remove
+            require("three").next()
+        end,
+
+        { desc = "[G]oto next [B]uffer", exit = false },
+    },
+    K = {
+        function()
+            --  TODO: (vsedov) (09:58:31 - 03/03/24): Remove
+            require("three").prev()
+        end,
+
+        { desc = "[G]oto Prev [B]uffer", exit = false },
+    },
+
+    q = {
+        function()
+            --  TODO: (vsedov) (09:58:42 - 03/03/24): Remove
+            require("three").smart_close()
+        end,
+        { desc = "[C]lose Smart", exit = true },
+    },
+    Q = {
+        function()
+            --  TODO: (vsedov) (09:58:49 - 03/03/24): Remove
+            require("three").close_buffer()
+        end,
+        { desc = "[B]uffer [C]lose", exit = true },
+    },
+    M = {
+        function()
+            --  TODO: (vsedov) (09:58:52 - 03/03/24): Remove
+            require("three").hide_buffer()
+        end,
+        { desc = "[B]uffer [H]ide", exit = true },
+    },
+
+    P = {
+        function()
+            --  TODO: (vsedov) (09:58:56 - 03/03/24): remove
+            require("three").open_project()
+        end,
+        { desc = "Three Project", exit = true },
+    },
+
+    c = {
+        function()
+            vim.cmd("BufferLinePick")
+        end,
+        { desc = "Pick buffer" },
+    },
+    ["+"] = {
+        function()
+            vim.cmd("BufferLineMoveNext")
+        end,
+        { desc = "Move Next", exit = false },
+    },
+    ["="] = {
+        function()
+            vim.cmd("BufferLineMovePrev")
+        end,
+        { desc = "Move Prev", exit = false },
+    },
+    D = {
+        function()
+            vim.cmd("BufferLinePickClose")
+        end,
+        { desc = "Close Buf", exit = false },
+    },
+    p = {
+        function()
+            vim.cmd("BufferLineTogglePin")
+        end,
+        { desc = "Pin Buf" },
+    },
+
+    ["1"] = {
+        function()
+            vim.cmd("BufferLineSortByTabs")
+        end,
+        { desc = "Sort Tabs" },
+    },
+    ["2"] = {
+        function()
+            vim.cmd("BufferLineSortByDirectory")
+        end,
+        { desc = "Sort Dir" },
+        -- { desc = "Sort dir", exit = true },
+    },
+    ["3"] = {
+        function()
+            vim.cmd("BufferLineSortByRelativeDirectory")
+        end,
+        { desc = "Sort RDir" },
+    },
+}
+
+local tabline_commands = {
+    h = {
+        function()
+            vim.cmd("BufferNext")
+        end,
+        { desc = "Move Next", exit = false },
+    },
+    l = {
+        function()
+            vim.cmd("BufferPrevious")
+        end,
+        { desc = "Move Prev", exit = false },
+    },
+
+    ["<leader>"] = {
+        function()
+            vim.cmd("BufferPick")
+        end,
+        { desc = "Pick buffer" },
+    },
+    c = {
+        function()
+            list = {
+                a = "All But Current",
+                v = "All But Visible",
+                p = "All But Pinned",
+                c = "All But Current Or Pinned",
+                l = "Buffers Left",
+                r = "Buffers Right",
+            }
+
+            vim.ui.select(vim.tbl_keys(list), {
+                prompt = "Close Buffers",
+                format_item = function(item)
+                    return "Bind: " .. item .. " - " .. list[item]
+                end,
+            }, function(choice)
+                if choice == "a" then
+                    vim.cmd("BufferCloseAllButCurrent")
+                elseif choice == "v" then
+                    vim.cmd("BufferCloseAllButVisible")
+                elseif choice == "p" then
+                    vim.cmd("BufferCloseAllButPinned")
+                elseif choice == "c" then
+                    vim.cmd("BufferCloseAllButCurrentOrPinned")
+                elseif choice == "l" then
+                    vim.cmd("BufferCloseBuffersLeft")
+                elseif choice == "r" then
+                    vim.cmd("BufferCloseBuffersRight")
+                end
+            end)
+        end,
+        { desc = "Close Buffers", exit = true },
+    },
+    r = {
+        function()
+            vim.cmd([[BufferRestore]])
+        end,
+        { desc = "Restore Buffer", exit = true },
+    },
+
+    K = {
+        function()
+            vim.cmd("BufferMoveNext")
+        end,
+        { desc = "Move Next", exit = false },
+    },
+    J = {
+        function()
+            vim.cmd("BufferMovePrevious")
+        end,
+        { desc = "Move Prev", exit = false },
+    },
+
+    D = {
+        function()
+            vim.cmd("BufferClose")
+        end,
+        { desc = "Close Buf", exit = false },
+    },
+    p = {
+        function()
+            vim.cmd("BufferPin")
+        end,
+        { desc = "Pin Buf" },
+    },
+
+    ["1"] = {
+        function()
+            vim.cmd("BufferOrderByBufferNumber")
+        end,
+        { desc = "Sort By Number" },
+    },
+    ["2"] = {
+        function()
+            vim.cmd("BufferOrderByDirectory")
+        end,
+        { desc = "Sort Dir" },
+        -- { desc = "Sort dir", exit = true },
+    },
+    ["3"] = {
+        function()
+            vim.cmd("BufferOrderByLanguage")
+        end,
+        { desc = "Sort Lang" },
+    },
+}
+
+local bufferline = {}
+if lambda.config.buffer.use_bufferline then
+    bufferline = { "l", "h", "J", "K", "q", "Q", "M", "P", "c", "+", "=", "D", "p", "1", "2", "3" }
+else
+    bufferline = {
+
+        { "h", "l", "J", "K" },
+        { "r", "p", "c", "D" },
+        { "1", "2", "3", "<leader>" },
+    }
+end
+
 local config = {
     Buffer = {
         color = "red",
@@ -98,122 +333,6 @@ local config = {
                 require("utils.telescope").buffers()
             end,
             { desc = "Buffers", exit = true },
-        },
-        l = {
-            function()
-                if lambda.config.buffer.use_bufferline then
-                    vim.cmd("BufferLineCycleNext")
-                end
-            end,
-
-            { desc = "Next Buffers", exit = false },
-        },
-        h = {
-            function()
-                if lambda.config.buffer.use_bufferline then
-                    vim.cmd("BufferLineCyclePrev")
-                end
-            end,
-
-            { desc = "Prev Buffers", exit = false },
-        },
-
-        J = {
-            function()
-                --  TODO: (vsedov) (09:58:27 - 03/03/24): remove
-                require("three").next()
-            end,
-
-            { desc = "[G]oto next [B]uffer", exit = false },
-        },
-        K = {
-            function()
-                --  TODO: (vsedov) (09:58:31 - 03/03/24): Remove
-                require("three").prev()
-            end,
-
-            { desc = "[G]oto Prev [B]uffer", exit = false },
-        },
-
-        q = {
-            function()
-                --  TODO: (vsedov) (09:58:42 - 03/03/24): Remove
-                require("three").smart_close()
-            end,
-            { desc = "[C]lose Smart", exit = true },
-        },
-        Q = {
-            function()
-                --  TODO: (vsedov) (09:58:49 - 03/03/24): Remove
-                require("three").close_buffer()
-            end,
-            { desc = "[B]uffer [C]lose", exit = true },
-        },
-        M = {
-            function()
-                --  TODO: (vsedov) (09:58:52 - 03/03/24): Remove
-                require("three").hide_buffer()
-            end,
-            { desc = "[B]uffer [H]ide", exit = true },
-        },
-
-        P = {
-            function()
-                --  TODO: (vsedov) (09:58:56 - 03/03/24): remove
-                require("three").open_project()
-            end,
-            { desc = "Three Project", exit = true },
-        },
-
-        c = {
-            function()
-                vim.cmd("BufferLinePick")
-            end,
-            { desc = "Pick buffer" },
-        },
-        ["+"] = {
-            function()
-                vim.cmd("BufferLineMoveNext")
-            end,
-            { desc = "Move Next", exit = false },
-        },
-        ["="] = {
-            function()
-                vim.cmd("BufferLineMovePrev")
-            end,
-            { desc = "Move Prev", exit = false },
-        },
-        D = {
-            function()
-                vim.cmd("BufferLinePickClose")
-            end,
-            { desc = "Close Buf", exit = false },
-        },
-        p = {
-            function()
-                vim.cmd("BufferLineTogglePin")
-            end,
-            { desc = "Pin Buf" },
-        },
-
-        ["1"] = {
-            function()
-                vim.cmd("BufferLineSortByTabs")
-            end,
-            { desc = "Sort Tabs" },
-        },
-        ["2"] = {
-            function()
-                vim.cmd("BufferLineSortByDirectory")
-            end,
-            { desc = "Sort Dir" },
-            -- { desc = "Sort dir", exit = true },
-        },
-        ["3"] = {
-            function()
-                vim.cmd("BufferLineSortByRelativeDirectory")
-            end,
-            { desc = "Sort RDir" },
         },
 
         e = {
@@ -307,22 +426,117 @@ local config = {
             end,
             { desc = "Hbac binds ", exit = true },
         },
+        ["<tab>"] = {
+            function() end,
+            { desc = "Tab", exit = true },
+        },
     },
+}
+
+if lambda.config.buffer.use_bufferline then
+    for k, v in pairs(bufferline_commands) do
+        config.Buffer[k] = v
+    end
+else
+    for k, v in pairs(tabline_commands) do
+        config.Buffer[k] = v
+    end
+end
+local tables = {
+    { "w", "m", "C", "W", "L", "d", "b", "<cr>" },
+    -- vim.tbl_flatten(bufferline),
+    -- add each table inside buffelirne here so {{x}, {y}} tables x and y are added we are not
+    -- adding the item x y but the table of x and y
+    bufferline[1],
+    bufferline[2],
+    bufferline[3],
+
+    { "q", "Q", "M" }, -- 4
+    { "e", ">", "<", "a" },
+}
+local Tab = {
+    {
+        Tab = {
+            color = "blue",
+            mode = { "n" },
+            n = {
+                function()
+                    vim.cmd("tabnew")
+                end,
+                { desc = "New tab", exit = true },
+            },
+            c = {
+                function()
+                    vim.cmd("tabclose")
+                end,
+                { desc = "Close tab", exit = true },
+            },
+            C = {
+                function()
+                    vim.ui.input({ prompt = "Close tab:", default = "1" }, function(idx)
+                        idx = idx and tonumber(idx)
+                        if idx then
+                            vim.cmd("tabclose " .. idx)
+                        end
+                    end)
+                end,
+                { desc = "Close tab", exit = true },
+            },
+            l = {
+                function()
+                    vim.cmd("tabnext")
+                end,
+                { desc = "Next tab", exit = false },
+            },
+            h = {
+                function()
+                    vim.cmd("tabprev")
+                end,
+                { desc = "Previous tab", exit = false },
+            },
+            f = {
+                function()
+                    vim.cmd("tabfirst")
+                end,
+                { desc = "First tab", exit = false },
+            },
+            L = {
+                function()
+                    vim.cmd("tablast")
+                end,
+                { desc = "Last tab", exit = false },
+            },
+            m = {
+                function()
+                    vim.ui.input({ prompt = "Move tab to:" }, function(idx)
+                        idx = idx and tonumber(idx)
+                        if idx then
+                            vim.cmd("tabmove " .. idx)
+                        end
+                    end)
+                end,
+                { desc = "Move tab", exit = true },
+            },
+            ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
+        },
+    },
+
+    "Tab",
+    {
+        { "f", "L", "m" },
+    },
+    { "n", "C", "c", "l", "h" },
+    6,
+    3,
 }
 
 return {
     config,
     "Buffer",
-    {
-        { "w", "m", "C", "W", "L" },
-        { "l", "h", "J", "K", "=", "+", "b", "<cr>" }, -- 9
-        { "P", "q", "Q", "M" }, -- 4
-        { "e", ">", "<" },
-        { "p", "c", "D", "d" }, -- 2
-        { "1", "2", "3", "a" }, -- 4
-    },
+    tables,
     { "j", "k", "n", "N" },
     6,
     4,
     1,
+    { Tab },
 }

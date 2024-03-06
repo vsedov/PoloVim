@@ -154,37 +154,6 @@ lambda.augroup("Utilities", {
             cmd.edit(vim.uri_to_fname(args.file))
         end,
     },
-    {
-        event = { "BufWritePre", "FileWritePre" },
-        pattern = { "*" },
-        command = function()
-            if vim.tbl_contains({ "oil" }, vim.bo.ft) then
-                return
-            end
-            local dir = vim.fn.expand("<afile>:p:h")
-            if vim.fn.isdirectory(dir) == 0 then
-                vim.fn.mkdir(dir, "p")
-            end
-        end,
-    },
-    {
-        event = { "BufWritePost" },
-        pattern = { "*" },
-        nested = true,
-        command = function()
-            if lambda.falsy(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
-                -- This was rather anonying, so this deals with that issue.
-                if not vim.tbl_contains({ "gitcommit", "NeogitCommitMessage" }, vim.bo.filetype) then
-                    return
-                end
-                cmd([[
-        unlet! b:ftdetect
-        filetype detect
-        call v:lua.vim.notify('Filetype set to ' . &ft, "info", {})
-      ]])
-            end
-        end,
-    },
 })
 
 lambda.augroup("TerminalAutocommands", {
@@ -330,10 +299,10 @@ end
 --     },
 -- })
 vim.api.nvim_create_autocmd("BufWritePre", {
-  desc = "Auto Format Japanese Punctuation in Latex Files",
-  group = aug,
-  pattern = "*.tex",
-  command = [[
+    desc = "Auto Format Japanese Punctuation in Latex Files",
+    group = aug,
+    pattern = "*.tex",
+    command = [[
   normal m`
   silent! %s/、/，/g
   silent! %s/。/．/g

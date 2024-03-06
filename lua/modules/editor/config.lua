@@ -1,15 +1,5 @@
 local config = {}
 
-function config.acc_jk()
-    require("accelerated-jk").setup({
-        mode = "time_driven",
-        enable_deceleration = false,
-        acceleration_limit = 150,
-        acceleration_table = { 7, 12, 17, 21, 24, 26, 28, 30 },
-        deceleration_table = { { 150, 9999 } },
-    })
-end
-
 function config.comment()
     require("Comment").setup({
         padding = true,
@@ -149,9 +139,7 @@ function config.hydra()
     require("modules.editor.hydra")
 end
 
-
 function config.smart_q()
-
     vim.g.smartq_goyo_integration = 0
     vim.g.smartq_zenmode_integration = 0
 end
