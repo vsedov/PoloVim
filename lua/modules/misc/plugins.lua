@@ -115,20 +115,6 @@ misc({
     end,
 })
 
-----
-misc({
-    "nyngwang/NeoWell.lua",
-    cmd = {
-        "NeoWellToggle",
-        "NeoWellAppend",
-        "NeoWellJump",
-        "NeoWellEdit",
-        "NeoWellOut",
-        "NeoWellWipeOut",
-    },
-    config = true,
-})
-
 misc({
     "nyngwang/NeoRoot.lua",
     cmd = { "NeoRootSwitchMode", "NeoRootChange", "NeoRoot" },

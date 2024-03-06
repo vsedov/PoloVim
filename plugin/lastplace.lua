@@ -10,7 +10,7 @@ local ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" }
 if lambda.config.use_lastplace then
     lambda.augroup("LastPlace", {
         {
-            event = { "BufWinEnter", "FileType" },
+            event = { "FileType" },
             command = function()
                 if vim.tbl_contains(ignore_buftype, vim.bo.buftype) then
                     return

@@ -6,18 +6,6 @@ local icons = lambda.style.icons
 ui({
     "rcarriga/nvim-notify",
     event = "VeryLazy",
-    dependencies = {
-        {
-            "j-hui/fidget.nvim",
-            cond = lambda.config.ui.use_fidgit,
-            event = "VeryLazy",
-            opts = {
-                notification = {
-                    override_vim_notify = true,
-                },
-            },
-        },
-    },
     config = conf.notify,
 })
 

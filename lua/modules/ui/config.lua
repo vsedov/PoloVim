@@ -54,6 +54,7 @@ function config.notify()
     end, {
         desc = "dismiss notifications",
     })
+    vim.notify = notify
     require("telescope").load_extension("notify")
 end
 
