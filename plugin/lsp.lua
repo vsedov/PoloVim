@@ -234,61 +234,12 @@ local function setup_semantic_tokens(client, bufnr)
     })
 end
 
------------------------------------------------------------------------------//
--- Autocommands
------------------------------------------------------------------------------//
-
----@param client lsp.Client
----@param buf integer
-local function setup_autocommands(client, buf)
-    if client.supports_method(M.textDocument_codeLens) then
-        augroup(("LspCodeLens%d"):format(buf), {
-            {
-                event = { "BufEnter", "InsertLeave", "BufWritePost" },
-                desc = "LSP: Code Lens",
-                buffer = buf,
-                -- call via vimscript so that errors are silenced
-                command = "silent! lua vim.lsp.codelens.refresh()",
-            },
-        })
-    end
-
-    -- if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-    --     vim.lsp.inlay_hint(buf, true)
-    -- end
-    if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-        vim.lsp.inlay_hint.enable(buf, true)
-    end
-
-    if client.supports_method(M.textDocument_documentHighlight) and not lambda.config.ui.use_illuminate then
-        augroup(("LspReferences%d"):format(buf), {
-            {
-                event = { "CursorHold", "CursorHoldI" },
-                buffer = buf,
-                desc = "LSP: References",
-                command = function()
-                    lsp.buf.document_highlight()
-                end,
-            },
-            {
-                event = "CursorMoved",
-                desc = "LSP: References Clear",
-                buffer = buf,
-                command = function()
-                    lsp.buf.clear_references()
-                end,
-            },
-        })
-    end
-end
-
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
 ---@param client lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
-    setup_autocommands(client, bufnr)
     setup_lsp_binds(client, bufnr)
     setup_semantic_tokens(client, bufnr)
 end

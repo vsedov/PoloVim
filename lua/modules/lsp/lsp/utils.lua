@@ -341,120 +341,6 @@ function M.live_codelens()
     )
 end
 
--- Helper for better renaming interface
-M.rename = (function()
-    local function handler(...)
-        local result
-        local method
-        local err = select(1, ...)
-        local is_new = not select(4, ...) or type(select(4, ...)) ~= "number"
-        if is_new then
-            method = select(3, ...).method
-            result = select(2, ...)
-        else
-            method = select(2, ...)
-            result = select(3, ...)
-        end
-
-        if O.lsp.rename_notification then
-            if err then
-                vim.notify(("Error running LSP query '%s': %s"):format(method, err), vim.log.levels.ERROR)
-                return
-            end
-
-            -- echo the resulting changes
-            local new_word = ""
-            if result and result.changes then
-                local msg = {}
-                for f, c in pairs(result.changes) do
-                    new_word = c[1].newText
-                    table.insert(msg, ("%d changes -> %s"):format(#c, utils.get_relative_path(f)))
-                end
-                local currName = vfn.expand("<cword>")
-                vim.notify(msg, vim.log.levels.INFO, { title = ("Rename: %s -> %s"):format(currName, new_word) })
-            end
-        end
-
-        vim.lsp.handlers[method](...)
-    end
-
-    local function do_rename()
-        local new_name = vim.trim(vfn.getline("."):sub(5, -1))
-        cmd([[q!]])
-        local params = lsp.util.make_position_params()
-        local curr_name = vfn.expand("<cword>")
-        if not (new_name and #new_name > 0) or new_name == curr_name then
-            return
-        end
-        params.newName = new_name
-        lsp.buf_request(0, "textDocument/rename", params, handler)
-    end
-
-    return function()
-        utils.ui.inline_text_input({
-            border = O.lsp.rename_border,
-            -- enter = do_rename,
-            enter = vim.lsp.buf.rename,
-            startup = function()
-                feedkeys(t("viw<C-G>"), "n", false)
-            end,
-            init_cword = true,
-            at_begin = true, -- FIXME: What happened to this?
-            minwidth = true,
-        })
-    end
-end)()
-
--- Use select mode for renaming
-M.renamer = (function()
-    local function del_keymaps()
-        vim.keymap.del("i", "<CR>")
-        vim.keymap.del("i", "<ESC><ESC>")
-    end
-
-    local function enter_cb(old, oldpos)
-        -- local cword = vfn.expand "<cword>"
-        -- utils.dump(cword)
-        cmd("stopinsert")
-        vim.defer_fn(function()
-            -- vim.api.nvim_win_set_cursor(0, oldpos)
-            local cword = vfn.expand("<cword>")
-            -- utils.dump(cword)
-            feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
-
-            del_keymaps()
-
-            vim.lsp.buf.rename(cword)
-        end, 1)
-    end
-
-    local function cancel_cb(old)
-        cmd("stopinsert")
-        -- feedkeys(t "u", "n", false)
-        feedkeys(t("ciw" .. old .. "<ESC>"), "n", false)
-        del_keymaps()
-    end
-
-    local function mk_keymaps(old)
-        local enter = function()
-            enter_cb(old, vim.api.nvim_win_get_cursor(0))
-        end
-        local cancel = function()
-            cancel_cb(old)
-        end
-        vim.keymap.setl("i", "<CR>", enter, { silent = true })
-        vim.keymap.setl("i", "<M-CR>", enter, { silent = true })
-        vim.keymap.setl("i", "<ESC><ESC>", cancel, { silent = true })
-    end
-
-    return function()
-        local old = vfn.expand("<cword>")
-        feedkeys(t("viw<C-G>"), "n", false) -- Go select mode
-        mk_keymaps(old)
-    end
-end)()
--- M.rename = M.renamer.keymap
-
 function M.format(opts)
     opts = opts or { async = true }
     local buf = vim.api.nvim_get_current_buf()
@@ -509,22 +395,22 @@ M.format_on_save_toggle = function(dict)
     end
 end
 
-vim.lsp.buf.cancel_formatting = function(bufnr)
-    vim.schedule(function()
-        bufnr = (bufnr == nil or bufnr == 0) and vim.api.nvim_get_current_buf() or bufnr
-        for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
-            for id, request in pairs(client.requests or {}) do
-                if
-                    request.type == "pending"
-                    and request.bufnr == bufnr
-                    and request.method == "textDocument/formatting"
-                then
-                    client.cancel_request(id)
-                end
-            end
-        end
-    end)
-end
+-- vim.lsp.buf.cancel_formatting = function(bufnr)
+--     vim.schedule(function()
+--         bufnr = (bufnr == nil or bufnr == 0) and vim.api.nvim_get_current_buf() or bufnr
+--         for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
+--             for id, request in pairs(client.requests or {}) do
+--                 if
+--                     request.type == "pending"
+--                     and request.bufnr == bufnr
+--                     and request.method == "textDocument/formatting"
+--                 then
+--                     client.cancel_request(id)
+--                 end
+--             end
+--         end
+--     end)
+-- end
 
 M.on_attach = function(on_attach, group)
     if type(group) == "string" then

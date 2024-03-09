@@ -8,6 +8,16 @@ ui({
     event = "VeryLazy",
     config = conf.notify,
 })
+ui({
+    "j-hui/fidget.nvim",
+    cond = lambda.config.ui.use_fidgit,
+    event = "VeryLazy",
+    opts = {
+        notification = {
+            override_vim_notify = false,
+        },
+    },
+})
 
 ui({
     "glepnir/nerdicons.nvim",

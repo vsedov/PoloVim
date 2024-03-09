@@ -32,25 +32,10 @@ python({
 
 python({
     "purpleP/python-syntax",
+    cond = false,
     event = "BufReadPre *.py",
 })
 
-python({
-    "luk400/vim-jukit",
-    cond = false,
-    ft = { "python", "julia" },
-    lazy = true,
-    config = function()
-        vim.g.jukit_terminal = "kitty"
-    end,
-})
-
-python({
-    "kiyoon/jupynium.nvim",
-    build = "pip3 install --user .",
-    cond = false,
-    config = true,
-})
 -- I forget this existed
 
 python({
@@ -107,4 +92,21 @@ python({
 python({
     "raimon49/requirements.txt.vim",
     event = "BufReadPre requirements*.txt",
+})
+
+python({
+    "luk400/vim-jukit",
+    cond = false,
+    ft = { "python", "julia" },
+    lazy = true,
+    config = function()
+        vim.g.jukit_terminal = "kitty"
+    end,
+})
+
+python({
+    "kiyoon/jupynium.nvim",
+    cond = false,
+    build = "pip3 install --user .",
+    config = true,
 })

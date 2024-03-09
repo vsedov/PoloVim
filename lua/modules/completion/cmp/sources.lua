@@ -14,18 +14,7 @@ local plugins = {
         name = "neorg",
         enable = true,
     },
-    {
-        name = "omni",
-        group_index = 2,
-        option = {
-            disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
-        },
-    },
-    -- { name = "cody", enable = true, priority = 9 },
-
-    { name = "otter" },
-    { name = "cmp_zotcite", enable = true },
-    { name = "luasnip_choice", enable = true },
+    -- { name = "otter" },
     {
         name = "codeium",
         enable = condium_cond,

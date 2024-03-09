@@ -37,10 +37,6 @@ lambda.command("DebugOpen", function()
     require("modules.lang.dap").prepare()
 end, { force = true })
 
-lambda.command("HarpoonClear", function()
-    require("harpoon.mark").clear_all()
-end, { force = true })
-
 lambda.command("Hashbang", function()
     local shells = {
         sh = { "#! /usr/bin/env bash" },

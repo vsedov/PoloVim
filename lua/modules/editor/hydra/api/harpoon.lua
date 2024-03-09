@@ -1,9 +1,9 @@
--- I wonder if we can fix the loading issue when we deal with this
 local harpoon = require("harpoon")
+local Path = require("plenary.path")
+
 local api = vim.api
 
 local leader = "<cr>"
-local bracket = { "<CR>", "W", "G", "t", "a", "A", ";", "c", "<leader>" }
 
 local h_conf = lambda.config.movement.harpoon
 local function harpoon_ns()
@@ -24,9 +24,54 @@ local function harpoon_add()
     harpoon:list():append()
 end
 
-local exit = { nil, { exit = true, desc = "EXIT" } }
+local Yeet = {
+    {
+        Yeet = {
+            color = "red",
+            mode = { "n", "v", "x" },
+            position = "bottom-right",
+            ["<ESC>"] = { nil, { exit = true } },
+            t = {
+                function()
+                    require("yeet").select_target()
+                end,
+                { nowait = true, exit = true, desc = "Yeet target" },
+            },
+            c = {
+                function()
+                    require("yeet").set_cmd()
+                end,
+                { nowait = true, exit = true, desc = "Yeet command" },
+            },
+            s = {
+                function()
+                    require("yeet").execute()
+                end,
+                { nowait = true, exit = true, desc = "Yeet Execute" },
+            },
+            o = {
+                function()
+                    require("yeet").toggle_post_write()
+                end,
+                { nowait = true, exit = true, desc = "Yeet Post Write" },
+            },
+            ["<cr>"] = {
+                function()
+                    require("yeet").execute(nil, { clear_before_yeet = false })
+                end,
+                { nowait = true, exit = true, desc = "Yeet Execute" },
+            },
+        },
+    },
+    "Yeet",
+    { { "t", "c", "o" } },
+    { "<cr>", "s" },
 
--- mode = { "n", "v", "x", "o" },
+    6,
+    4,
+    1,
+}
+
 local config = {
     Harpoon = {
         color = "red",
@@ -66,20 +111,6 @@ local config = {
                 vim.notify("Goto Harpoon " .. tostring(h_conf.goto_harpoon))
             end,
             { nowait = true, exit = true, desc = "Toggle Goto" },
-        },
-
-        t = {
-            function()
-                require("harpoon.mark").toggle_file()
-            end,
-            { nowait = true, exit = true, desc = "Toggle File" },
-        },
-
-        [";"] = {
-            function()
-                toggle_telescope(harpoon:list())
-            end,
-            { nowait = true, exit = true, desc = "Harpoon Tele" },
         },
 
         a = {
@@ -139,19 +170,69 @@ local config = {
         w = {
             function()
                 vim.ui.input({ prompt = "Harpoon , command ", default = "." }, function(item)
+                    if item == "." then
+                        return
+                    end
                     harpoon:list("oqt"):append(item)
                 end)
             end,
             { nowait = true, desc = "Overseer Tasks Add", exit = true },
         },
+
+        ["<bs>"] = {
+            function()
+                local list = require("harpoon"):list("tmux")
+                harpoon.ui:toggle_quick_menu(list)
+            end,
+            { desc = "Open tmux view", noremap = true, exit = true, silent = true },
+        },
+        t = {
+            function()
+                local list = require("harpoon"):list("terminals")
+                harpoon.ui:toggle_quick_menu(list)
+            end,
+            { desc = "Open Terminal", noremap = true, exit = true, silent = true },
+        },
+        d = {
+            function()
+                local list = require("harpoon"):list()
+                for i, displayed in ipairs(list:display()) do
+                    if Path:new(displayed):absolute() == vim.api.nvim_buf_get_name(0) then
+                        list:removeAt(i)
+                        return
+                    end
+                end
+            end,
+            { desc = "Remove current file from harpoon list", noremap = true, exit = true, silent = true },
+        },
+
+        o = { function() end, { exit = true, desc = "Yeet" } },
     },
 }
 
 return {
     config,
     "Harpoon",
-    { { "w", "s", "S" }, { "z", "n", "N" } },
-    bracket,
+    {
+        {
+            "w",
+            "s",
+            "S",
+        },
+        {
+            "z",
+            "n",
+            "N",
+        },
+        {
+            "<bs>",
+            "t",
+            "d",
+        },
+    }, -- 3
+    { "<CR>", "W", "G", "a", "A", "c", "<leader>" }, -- 9
     6,
     3,
+    1,
+    { Yeet },
 }

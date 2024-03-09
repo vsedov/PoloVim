@@ -150,13 +150,13 @@ local tabline_commands = {
         function()
             vim.cmd("BufferNext")
         end,
-        { desc = "Move Next", exit = false },
+        { desc = "Move Prev", exit = false },
     },
     l = {
         function()
             vim.cmd("BufferPrevious")
         end,
-        { desc = "Move Prev", exit = false },
+        { desc = "Move Next", exit = false },
     },
 
     ["<leader>"] = {
@@ -167,7 +167,7 @@ local tabline_commands = {
     },
     c = {
         function()
-            list = {
+            local list = {
                 a = "All But Current",
                 v = "All But Visible",
                 p = "All But Pinned",

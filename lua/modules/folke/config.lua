@@ -202,7 +202,7 @@ function config.edgy()
         },
         keys = {
             -- close window
-            ["<c-->"] = function(win)
+            ["W"] = function(win)
                 local Hydra = require("hydra")
 
                 local hint = [[
@@ -231,7 +231,7 @@ function config.edgy()
                     hint = hint,
                     config = {
                         color = "amaranth",
-                        invoke_on_body = false,
+                        invoke_on_body = true,
                         hint = {
                             position = "bottom-right",
                         },

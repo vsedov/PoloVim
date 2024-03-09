@@ -9,7 +9,7 @@ local use_noice = true
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 
-local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
+local use_tabnine = false -- i mean i pay for this so why in the blue green fuck am i not using this ?
 local use_tabnine_cmp = true
 
 local use_copilot = true -- We really do sell our souls for this thing eh
@@ -72,8 +72,8 @@ lambda.config.extra_search = {
 lambda.config.buffer = {
     use_bufferline = false,
     use_tabscope = true,
-    use_sticky_buf = true,
-    use_hbac = true,
+    use_sticky_buf = false,
+    use_hbac = false,
 }
 lambda.config.editor = {
     hydra = {
@@ -81,13 +81,13 @@ lambda.config.editor = {
         load_normal = true,
         load_api = true,
     },
-    use_smart_q = false,
+    use_smart_q = true,
 }
 
 lambda.config.treesitter = {
     hipairs = false,
     indent = {
-        use_guess_indent = true,
+        use_guess_indent = false,
     },
     use_matchup = true,
     use_extra_highlight = false,
@@ -149,7 +149,7 @@ lambda.config.lsp = {
     },
     diagnostics = {
         use_lsp_lines = false, -- Going to start using this as well
-        use_rcd = true, -- the least intrusive of the bunch
+        use_rcd = false, -- the least intrusive of the bunch
         use_trouble_some = true,
     },
     -- considering that this imght no longer be supported; mightbe best to get rid of this
@@ -167,7 +167,7 @@ lambda.config.lsp = {
     python = {
         lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think
         format = {
-            "usort",
+            "isort",
             -- "black",
             "yapf",
         },
@@ -189,11 +189,11 @@ if vim.tbl_contains(lambda.config.lsp.python.lsp, "pylsp") then
 end
 
 lambda.config.ui = {
-    use_fidgit = false,
+    use_fidgit = true,
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_tint = false, -- sunglasses, tint -- Might not be great for certain colourschemes -- remove any distractions there we can use twilight instead.
-    use_hlsearch = true,
+    use_hlsearch = false,
     use_dropbar = true,
     mini_animate = {
         use_animate = false,
@@ -292,9 +292,9 @@ lambda.config.tools = {
     session = {
         -- use_resession = true,  this does not exist anymore
     },
-    use_fundo = true, -- forgot the reason for why this was disabled
+    use_fundo = false, -- forgot the reason for why this was disabled
     use_flatten = false,
-    use_live_command = true, -- Disabled due to large files, this might noe be nice to have
+    use_live_command = false, -- Disabled due to large files, this might noe be nice to have
 }
 
 -- NOTE: (vsedov) (15:08:34 - 25/06/23): DO NOT CHANGE - Only change this if you are using tmux
