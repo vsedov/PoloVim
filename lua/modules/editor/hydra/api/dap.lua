@@ -28,6 +28,12 @@ local config = {
                 require("dapui").open()
             end
         end,
+        ["<tab>"] = {
+            function()
+                require("dapui").toggle()
+            end,
+            { exit = false, silent = true, desc = "Toggle DAPUI" },
+        },
 
         b = {
             function()
@@ -196,7 +202,8 @@ return {
         { "o", "i", "O", "L" }, -- 3
         { "S", "s", "w", "r" }, -- 4
     },
-    { "b", "B", "C", "l", "<cr>", "c" }, -- 8
+    { "<tab>", "b", "B", "C", "l", "<cr>", "c" }, -- 8
     6,
-    3,
+    6,
+    1,
 }

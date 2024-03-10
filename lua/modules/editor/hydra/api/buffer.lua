@@ -36,14 +36,14 @@ local bufferline_commands = {
             vim.cmd("BufferLineCycleNext")
         end,
 
-        { desc = "Next Buffers", exit = false },
+        { private = true, nowait = true, desc = "Next Buffers", exit = false },
     },
     h = {
         function()
             vim.cmd("BufferLineCyclePrev")
         end,
 
-        { desc = "Prev Buffers", exit = false },
+        { private = true, nowait = true, desc = "Prev Buffers", exit = false },
     },
 
     J = {
@@ -52,7 +52,7 @@ local bufferline_commands = {
             require("three").next()
         end,
 
-        { desc = "[G]oto next [B]uffer", exit = false },
+        { private = true, nowait = true, desc = "[G]oto next [B]uffer", exit = false },
     },
     K = {
         function()
@@ -60,7 +60,7 @@ local bufferline_commands = {
             require("three").prev()
         end,
 
-        { desc = "[G]oto Prev [B]uffer", exit = false },
+        { private = true, nowait = true, desc = "[G]oto Prev [B]uffer", exit = false },
     },
 
     q = {
@@ -68,21 +68,21 @@ local bufferline_commands = {
             --  TODO: (vsedov) (09:58:42 - 03/03/24): Remove
             require("three").smart_close()
         end,
-        { desc = "[C]lose Smart", exit = true },
+        { private = true, nowait = true, desc = "[C]lose Smart", exit = true },
     },
     Q = {
         function()
             --  TODO: (vsedov) (09:58:49 - 03/03/24): Remove
             require("three").close_buffer()
         end,
-        { desc = "[B]uffer [C]lose", exit = true },
+        { private = true, nowait = true, desc = "[B]uffer [C]lose", exit = true },
     },
     M = {
         function()
             --  TODO: (vsedov) (09:58:52 - 03/03/24): Remove
             require("three").hide_buffer()
         end,
-        { desc = "[B]uffer [H]ide", exit = true },
+        { private = true, nowait = true, desc = "[B]uffer [H]ide", exit = true },
     },
 
     P = {
@@ -90,58 +90,58 @@ local bufferline_commands = {
             --  TODO: (vsedov) (09:58:56 - 03/03/24): remove
             require("three").open_project()
         end,
-        { desc = "Three Project", exit = true },
+        { private = true, nowait = true, desc = "Three Project", exit = true },
     },
 
     c = {
         function()
             vim.cmd("BufferLinePick")
         end,
-        { desc = "Pick buffer" },
+        { private = true, nowait = true, desc = "Pick buffer" },
     },
     ["+"] = {
         function()
             vim.cmd("BufferLineMoveNext")
         end,
-        { desc = "Move Next", exit = false },
+        { private = true, nowait = true, desc = "Move Next", exit = false },
     },
     ["="] = {
         function()
             vim.cmd("BufferLineMovePrev")
         end,
-        { desc = "Move Prev", exit = false },
+        { private = true, nowait = true, desc = "Move Prev", exit = false },
     },
     D = {
         function()
             vim.cmd("BufferLinePickClose")
         end,
-        { desc = "Close Buf", exit = false },
+        { private = true, nowait = true, desc = "Close Buf", exit = false },
     },
     p = {
         function()
             vim.cmd("BufferLineTogglePin")
         end,
-        { desc = "Pin Buf" },
+        { private = true, nowait = true, desc = "Pin Buf" },
     },
 
     ["1"] = {
         function()
             vim.cmd("BufferLineSortByTabs")
         end,
-        { desc = "Sort Tabs" },
+        { private = true, nowait = true, desc = "Sort Tabs" },
     },
     ["2"] = {
         function()
             vim.cmd("BufferLineSortByDirectory")
         end,
-        { desc = "Sort Dir" },
-        -- { desc = "Sort dir", exit = true },
+        { private = true, nowait = true, desc = "Sort Dir" },
+        -- { private = true, nowait = true, desc = "Sort dir", exit = true },
     },
     ["3"] = {
         function()
             vim.cmd("BufferLineSortByRelativeDirectory")
         end,
-        { desc = "Sort RDir" },
+        { private = true, nowait = true, desc = "Sort RDir" },
     },
 }
 
@@ -150,20 +150,20 @@ local tabline_commands = {
         function()
             vim.cmd("BufferNext")
         end,
-        { desc = "Move Prev", exit = false },
+        { private = true, nowait = true, desc = "Move Prev", exit = false },
     },
     l = {
         function()
             vim.cmd("BufferPrevious")
         end,
-        { desc = "Move Next", exit = false },
+        { private = true, nowait = true, desc = "Move Next", exit = false },
     },
 
     ["<leader>"] = {
         function()
             vim.cmd("BufferPick")
         end,
-        { desc = "Pick buffer" },
+        { private = true, nowait = true, desc = "Pick buffer" },
     },
     c = {
         function()
@@ -197,59 +197,59 @@ local tabline_commands = {
                 end
             end)
         end,
-        { desc = "Close Buffers", exit = true },
+        { private = true, nowait = true, desc = "Close Buffers", exit = true },
     },
     r = {
         function()
             vim.cmd([[BufferRestore]])
         end,
-        { desc = "Restore Buffer", exit = true },
+        { private = true, nowait = true, desc = "Restore Buffer", exit = true },
     },
 
     K = {
         function()
             vim.cmd("BufferMoveNext")
         end,
-        { desc = "Move Next", exit = false },
+        { private = true, nowait = true, desc = "Move Next", exit = false },
     },
     J = {
         function()
             vim.cmd("BufferMovePrevious")
         end,
-        { desc = "Move Prev", exit = false },
+        { private = true, nowait = true, desc = "Move Prev", exit = false },
     },
 
     D = {
         function()
             vim.cmd("BufferClose")
         end,
-        { desc = "Close Buf", exit = false },
+        { private = true, nowait = true, desc = "Close Buf", exit = false },
     },
     p = {
         function()
             vim.cmd("BufferPin")
         end,
-        { desc = "Pin Buf" },
+        { private = true, nowait = true, desc = "Pin Buf" },
     },
 
     ["1"] = {
         function()
             vim.cmd("BufferOrderByBufferNumber")
         end,
-        { desc = "Sort By Number" },
+        { private = true, nowait = true, desc = "Sort By Number" },
     },
     ["2"] = {
         function()
             vim.cmd("BufferOrderByDirectory")
         end,
-        { desc = "Sort Dir" },
-        -- { desc = "Sort dir", exit = true },
+        { private = true, nowait = true, desc = "Sort Dir" },
+        -- { private = true, nowait = true, desc = "Sort dir", exit = true },
     },
     ["3"] = {
         function()
             vim.cmd("BufferOrderByLanguage")
         end,
-        { desc = "Sort Lang" },
+        { private = true, nowait = true, desc = "Sort Lang" },
     },
 }
 
@@ -275,64 +275,64 @@ local config = {
             function()
                 cmd("ReachOpen marks")
             end,
-            { nowait = true, exit = true, desc = "Reach Marks" },
+            { private = true, nowait = true, exit = true, private = true, nowait = true, desc = "Reach Marks" },
         },
         W = {
             function()
                 cmd("ReachOpen tabpages")
             end,
-            { nowait = true, exit = true, desc = "Reach TabPage" },
+            { private = true, nowait = true, exit = true, private = true, nowait = true, desc = "Reach TabPage" },
         },
         C = {
             function()
                 cmd("ReachOpen colorschemes")
             end,
-            { nowait = true, exit = true, desc = "Reach Colour" },
+            { private = true, nowait = true, exit = true, private = true, nowait = true, desc = "Reach Colour" },
         },
         L = {
             function()
                 swap_to_last_buffer()
             end,
-            { nowait = true, exit = true, desc = "Swap Last Buffer" },
+            { private = true, nowait = true, exit = true, private = true, nowait = true, desc = "Swap Last Buffer" },
         },
 
         n = {
             function()
                 cmd("CybuNext")
             end,
-            { nowait = true, exit = false, desc = "CybuNext" },
+            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "CybuNext" },
         },
         N = {
             function()
                 cmd("CybuPrev")
             end,
-            { nowait = true, exit = false, desc = "CybuPrev" },
+            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "CybuPrev" },
         },
 
         k = {
             function()
                 cmd("CybuLastusedPrev")
             end,
-            { nowait = true, exit = false, desc = "CybuLastusedPrev" },
+            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "CybuLastusedPrev" },
         },
         j = {
             function()
                 cmd("CybuLastusedNext")
             end,
-            { nowait = true, exit = false, desc = "CybuLastusedNext" },
+            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "CybuLastusedNext" },
         },
         w = {
             function()
                 require("reach").buffers(reach_options)
             end,
-            { nowait = true, exit = false, desc = "Reach" },
+            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "Reach" },
         },
 
         b = {
             function()
                 require("utils.telescope").buffers()
             end,
-            { desc = "Buffers", exit = true },
+            { private = true, nowait = true, desc = "Buffers", exit = true },
         },
 
         e = {
@@ -348,7 +348,7 @@ local config = {
                     end
                 end)
             end,
-            { desc = "BufExplorer", exit = true },
+            { private = true, nowait = true, desc = "BufExplorer", exit = true },
         },
 
         [">"] = {
@@ -356,7 +356,7 @@ local config = {
                 vim.cmd("BufExplorerVerticalSplit")
             end,
 
-            { desc = "Explore Vertical", exit = true },
+            { private = true, nowait = true, desc = "Explore Vertical", exit = true },
         },
 
         ["<"] = {
@@ -364,23 +364,23 @@ local config = {
                 vim.cmd("BufExplorerHorizontalSplit")
             end,
 
-            { desc = "Explore Horizontal", exit = true },
+            { private = true, nowait = true, desc = "Explore Horizontal", exit = true },
         },
 
         d = {
             function()
                 require("bufdelete").bufdelete(0, true)
             end,
-            { desc = "Killthis", exit = true },
+            { private = true, nowait = true, desc = "Killthis", exit = true },
         },
         ["<cr>"] = {
             function()
                 vim.cmd("BufOnly")
             end,
-            { desc = "Buf Wipe", exit = true },
+            { private = true, nowait = true, desc = "Buf Wipe", exit = true },
         },
 
-        ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
+        ["<ESC>"] = { nil, { private = true, nowait = true, desc = "Exit", exit = true } },
         a = {
             function()
                 -- require("hbac").toggle_pin()
@@ -424,11 +424,11 @@ local config = {
                     end
                 end)
             end,
-            { desc = "Hbac binds ", exit = true },
+            { private = true, nowait = true, desc = "Hbac binds ", exit = true },
         },
         ["<tab>"] = {
             function() end,
-            { desc = "Tab", exit = true },
+            { private = true, nowait = true, desc = "Tab", exit = true },
         },
     },
 }
@@ -463,13 +463,13 @@ local Tab = {
                 function()
                     vim.cmd("tabnew")
                 end,
-                { desc = "New tab", exit = true },
+                { private = true, nowait = true, desc = "New tab", exit = true },
             },
             c = {
                 function()
                     vim.cmd("tabclose")
                 end,
-                { desc = "Close tab", exit = true },
+                { private = true, nowait = true, desc = "Close tab", exit = true },
             },
             C = {
                 function()
@@ -480,31 +480,31 @@ local Tab = {
                         end
                     end)
                 end,
-                { desc = "Close tab", exit = true },
+                { private = true, nowait = true, desc = "Close tab", exit = true },
             },
             l = {
                 function()
                     vim.cmd("tabnext")
                 end,
-                { desc = "Next tab", exit = false },
+                { private = true, nowait = true, desc = "Next tab", exit = false },
             },
             h = {
                 function()
                     vim.cmd("tabprev")
                 end,
-                { desc = "Previous tab", exit = false },
+                { private = true, nowait = true, desc = "Previous tab", exit = false },
             },
             f = {
                 function()
                     vim.cmd("tabfirst")
                 end,
-                { desc = "First tab", exit = false },
+                { private = true, nowait = true, desc = "First tab", exit = false },
             },
             L = {
                 function()
                     vim.cmd("tablast")
                 end,
-                { desc = "Last tab", exit = false },
+                { private = true, nowait = true, desc = "Last tab", exit = false },
             },
             m = {
                 function()
@@ -515,9 +515,9 @@ local Tab = {
                         end
                     end)
                 end,
-                { desc = "Move tab", exit = true },
+                { private = true, nowait = true, desc = "Move tab", exit = true },
             },
-            ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
+            ["<ESC>"] = { nil, { private = true, nowait = true, desc = "Exit", exit = true } },
         },
     },
 

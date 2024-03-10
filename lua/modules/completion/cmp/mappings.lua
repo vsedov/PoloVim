@@ -171,7 +171,7 @@ local mappings = {
 
     ["<C-l>"] = cmp.mapping(function(fallback)
         if lambda.config.ai.sell_your_soul and lambda.config.ai.copilot.use_cmp_trigger then
-            copilot()
+            copilot(fallback)
             -- local copilot_keys = vim.fn["copilot#Accept"]("")
             -- if copilot_keys ~= "" then
             --     vim.api.nvim_feedkeys(copilot_keys, "i", false)

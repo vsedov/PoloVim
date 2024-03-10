@@ -153,7 +153,6 @@ ui({
 --
 ui({
     "nvim-neo-tree/neo-tree.nvim",
-    event = "VeryLazy", -- No clue why, but this is required for my hydra to work o_o
     keys = {
         {
             "<leader>e",
@@ -214,38 +213,6 @@ ui({
                     pattern = "^dockerfile$",
                     ignore_case = true,
                     files = { ".dockerignore", "docker-compose.*", "dockerfile*" },
-                },
-            },
-            event_handlers = {
-                {
-                    event = "neo_tree_buffer_enter",
-                    handler = function()
-                        highlight.set("Cursor", { blend = 100 })
-                    end,
-                },
-                {
-                    event = "neo_tree_popup_buffer_enter",
-                    handler = function()
-                        highlight.set("Cursor", { blend = 0 })
-                    end,
-                },
-                {
-                    event = "neo_tree_buffer_leave",
-                    handler = function()
-                        highlight.set("Cursor", { blend = 0 })
-                    end,
-                },
-                {
-                    event = "neo_tree_popup_buffer_leave",
-                    handler = function()
-                        highlight.set("Cursor", { blend = 100 })
-                    end,
-                },
-                {
-                    event = "neo_tree_window_after_close",
-                    handler = function()
-                        highlight.set("Cursor", { blend = 0 })
-                    end,
                 },
             },
             filesystem = {

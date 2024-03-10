@@ -106,11 +106,8 @@ ai({
 -- <C-i> [Edit Window] use response as input.
 
 ai({
-    -- "zbirenbaum/copilot.lua",
-    "mosheavni/copilot.lua",
-    --dependencies = { "nvim-cmp" },
-    event = "InsertEnter",
-
+    "zbirenbaum/copilot.lua",
+    event = "VeryLazy",
     opts = {
         panel = {
             enabled = true,
