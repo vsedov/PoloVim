@@ -63,16 +63,16 @@ local config = {
 
         r = {
             function()
-                vim.cmd.Tfm()
+                vim.cmd.Fzf()
             end,
-            { exit = true, desc = "Tfm" },
+            { exit = true, desc = "Fzf" },
         },
 
         f = {
             function()
-                vim.cmd.TfmTabedit()
+                vim.cmd.Ranger()
             end,
-            { exit = true, desc = "TfmTabedit" },
+            { exit = true, desc = "Ranger" },
         },
 
         w = {

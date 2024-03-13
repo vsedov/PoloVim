@@ -197,12 +197,3 @@ misc({
         vim.g.wordmotion_prefix = ","
     end,
 })
-misc({
-    "chrishrb/gx.nvim",
-    -- event = "VeryLazy",
-    keys = {
-        "gx",
-    },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = true,
-})

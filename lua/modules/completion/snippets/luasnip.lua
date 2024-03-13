@@ -15,9 +15,6 @@ local fmt = require("luasnip.extras.fmt").fmt
 -- })
 require("luasnip.config").setup({
     history = true,
-    -- region_check_events = "CursorMoved,CursorHold,InsertEnter",
-    region_check_events = "CursorMoved,CursorHold,InsertEnter",
-    delete_check_events = "InsertLeave",
     enable_autosnippets = true,
 
     ext_opts = {

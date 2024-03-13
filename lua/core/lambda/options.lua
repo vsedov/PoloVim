@@ -9,9 +9,8 @@ local use_noice = true
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 
-local use_tabnine = false -- i mean i pay for this so why in the blue green fuck am i not using this ?
+local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
 local use_tabnine_cmp = true
-
 local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within th list
@@ -85,16 +84,16 @@ lambda.config.editor = {
 }
 
 lambda.config.treesitter = {
-    hipairs = false,
+    hipairs = true,
     indent = {
         use_guess_indent = false,
     },
     use_matchup = true,
-    use_extra_highlight = false,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
-    use_highpairs = false,
-    use_context_vt = false,
     use_rainbow = true,
+    use_highpairs = false,
+    use_extra_highlight = false,
+    use_context_vt = false,
 }
 
 lambda.config.abbrev = {
@@ -131,7 +130,7 @@ lambda.config.lsp = {
     only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_format_modifcation = false,
     use_lsp_saga = true,
-    use_lsp_dim = false, -- i forgot what this does
+    use_lsp_dim = true, -- i forgot what this does
     ----------------------------------------------------------------------------------------------------
     --  Lsp Signiture, but im suing lazy for this for the time
     ----------------------------------------------------------------------------------------------------
@@ -280,7 +279,7 @@ lambda.config.movement = {
     movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap and flash,
     use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d
-    use_accelerated_jk = false, -- we will remove this for the time, i think buffer search might be better.
+    use_accelerated_jk = true, -- we will remove this for the time, i think buffer search might be better.
     harpoon = {
         goto_harpoon = true,
         use_tmux_or_normal = "nvim", -- nvim

@@ -107,6 +107,7 @@ ai({
 
 ai({
     "zbirenbaum/copilot.lua",
+    cond = ai_conf.sell_your_soul,
     event = "VeryLazy",
     opts = {
         panel = {

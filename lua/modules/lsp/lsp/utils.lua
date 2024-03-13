@@ -100,43 +100,6 @@ function M.view_location_split(name, split_cmd)
     end
 end
 
-function M.view_location_pick_callback(title)
-    -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
-    local function handler(_, result, ctx)
-        if result == nil or vim.tbl_isempty(result) then
-            -- local _ = log.info and log.info(ctx.method, "No location found")
-            return nil
-        end
-        local oe = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
-
-        local res = result
-        if vim.tbl_islist(result) then
-            if #result > 1 then
-                local opts = {
-                    prompt_title = title,
-                    attach_mappings = function(bufnr, map)
-                        map({ "i", "n" }, "<cr>", utils.telescope.select_pick_window)
-                        return true
-                    end,
-                }
-                utils.telescope.from_qf_items(lsp.util.locations_to_items(result, oe), opts)
-                return
-            end
-            if title == "references" then
-                return
-            end
-            res = result[1]
-        end
-        require("ui.win_pick").pick_or_create(function(id)
-            vim.api.nvim_set_current_win(id)
-            vim.lsp.util.jump_to_location(res, oe, false)
-        end)
-    end
-
-    return handler
-end
-
--- TODO: generalized view_location_in (existing windows, new tabs, etc)
 function M.view_location_pick(name)
     local cb = M.view_location_pick_callback(name)
     return function()
@@ -333,23 +296,30 @@ function M.error_prev()
     M.diag_prev({ severity = vim.diagnostic.severity.ERROR })
 end
 
-function M.live_codelens()
-    local id = vim.api.nvim_create_augroup("lsp_codelens_refresh", { clear = false })
-    vim.api.nvim_create_autocmd(
-        { "CursorHold", "InsertLeave", "BufWritePost" },
-        { buffer = 0, callback = vim.lsp.codelens.refresh, group = id }
-    )
-end
-
 function M.format(opts)
     opts = opts or { async = true }
     local buf = vim.api.nvim_get_current_buf()
     local ft = vim.bo[buf].filetype
     local have_nls = #require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0
 
+    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     vim.lsp.buf.format(vim.tbl_extend("force", {
+
         bufnr = buf,
+        group = augroup,
         filter = function(client)
+            if lambda.config.lsp.use_format_modifcation then
+                if vim.fn.isdirectory(".git/index") then
+                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                    require("lsp-format-modifications").attach(client, buf, { format_on_save = true })
+                else
+                    vim.api.nvim_clear_autocmds({
+                        buffer = buf,
+                        group = augroup,
+                    })
+                end
+            end
+
             if have_nls then
                 return client.name == "null-ls"
             end
@@ -362,6 +332,7 @@ M.format_on_save = function(m)
     vim.g.Format_on_save_mode = m
     -- TODO: only if client has formatting
     local id = vim.api.nvim_create_augroup("format_on_save", { clear = true })
+
     local cb = function()
         local mode = vim.b.Format_on_save_mode
         if mode == nil then
@@ -370,7 +341,7 @@ M.format_on_save = function(m)
         if type(mode) == "string" and mode:sub(1, 3) == "mod" then
             cmd("FormatModifications")
         elseif mode == true or mode == "all" then
-            local ok, _ = pcall(M.format, { timeout_ms = O.format_on_save_timeout })
+            local ok, _ = pcall(M.format, { timeout_ms = 1000 })
             if not ok then
                 vim.notify("Error running format on save", vim.log.levels.ERROR)
                 vim.b.Format_on_save_mode = false
@@ -443,53 +414,6 @@ M.document_highlight = function(client, bufnr)
                 vim.lsp.buf.clear_references()
             end,
         })
-    end
-end
-
--- TODO: `:h lsp-on-list-handler`
-
-function M.rename_file(new_name)
-    ---@param data { old_name: string, new_name: string }
-    local function prepare_rename(data)
-        local bufnr = vfn.bufnr(data.old_name)
-        local done_rename = false
-        for _, client in pairs(lsp.get_active_clients({ bufnr = bufnr })) do
-            if vim.tbl_get(client, "server_capabilities", "workspace", "fileOperations", "willRename") then
-                local params = {
-                    files = { { newUri = "file://" .. data.new_name, oldUri = "file://" .. data.old_name } },
-                }
-                local resp = client.request_sync("workspace/willRenameFiles", params, 1000)
-                if resp then
-                    utils.dump(resp)
-                    vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
-                    done_rename = true
-                    break
-                end
-            end
-        end
-        if done_rename then
-            vim.notify("No clients support rename files", vim.log.levels.ERROR, { title = "LSP" })
-        end
-    end
-
-    local old_name = vim.api.nvim_buf_get_name(0)
-
-    local do_rename = function(name)
-        if name == nil then
-            return
-        end
-        local new_name = string.format("%s/%s", vim.fs.dirname(old_name), name)
-        prepare_rename({ old_name = old_name, new_name = new_name })
-        vim.lsp.util.rename(old_name, new_name, {})
-    end
-
-    if new_name then
-        do_rename(new_name)
-    else
-        vim.ui.input({
-            prompt = "Rename " .. old_name,
-            default = old_name,
-        }, do_rename)
     end
 end
 

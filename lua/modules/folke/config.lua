@@ -78,7 +78,14 @@ function config.edgy()
             { ft = "qf", title = "QuickFix" },
             { ft = "help", size = { height = 20 } },
             { ft = "spectre_panel", size = { height = 0.4 } },
-            "terminal",
+            {
+                ft = "terminal",
+                title = "Terminal",
+                size = { height = vim.o.columns > 150 and vim.o.lines >= 40 and 20 or 0.2 },
+                filter = function(buf)
+                    return not vim.b[buf].lazyterm_cmd
+                end,
+            },
             { ft = "dap-repl", title = "Debug REPL" },
             { ft = "dapui_console", title = "Debug Console" },
             {

@@ -92,3 +92,24 @@ folke({
 --         require("drop").setup()
 --     end,
 -- })
+
+folke({
+    "folke/zen-mode.nvim",
+    lazy = true,
+    opts = {
+        -- - listen_on unix:/tmp/kitty
+        kitty = {
+            enabled = true,
+            font = "+4", -- font size increment
+        },
+    },
+    keys = {
+        {
+            "<Leader>z",
+            function()
+                vim.cmd("ZenMode")
+            end,
+            desc = "General: [Z]en Mode",
+        },
+    },
+})

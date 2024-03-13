@@ -212,13 +212,19 @@ lsp({
     },
     config = function()
         require("actions-preview").setup({
-            -- options for vim.diff(): https://neovim.io/doc/user/lua.html#vim.diff()
-            diff = {
-                ctxlen = 3,
+            telescope = {
+                sorting_strategy = "ascending",
+                layout_strategy = "vertical",
+                layout_config = {
+                    width = 0.8,
+                    height = 0.9,
+                    prompt_position = "top",
+                    preview_cutoff = 20,
+                    preview_height = function(_, _, max_lines)
+                        return max_lines - 15
+                    end,
+                },
             },
-            backend = { "telescope", "nui" },
-            -- options for telescope.nvim: https://github.com/nvim-telescope/telescope.nvim#themes
-            telescope = require("telescope.themes").get_dropdown(),
         })
     end,
 })

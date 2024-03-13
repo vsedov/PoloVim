@@ -90,6 +90,7 @@ ts({
 --  TODO: (vsedov) (04:52:49 - 19/01/24): return and lazy load this
 ts({
     "David-Kunz/markid",
+    event = "BufEnter",
     cond = lambda.config.treesitter.better_ts_highlights,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
 })
@@ -97,6 +98,7 @@ ts({
 --  TODO: (vsedov) (04:52:41 - 19/01/24): return and lazy load this
 ts({
     "m-demare/hlargs.nvim",
+    event = "BufEnter",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
 })
@@ -125,12 +127,6 @@ ts({
     event = { "BufAdd", "BufReadPost", "BufNewFile" },
     cmd = "GuessIndent",
     config = conf.guess_indent,
-})
-
-ts({
-    "Dkendal/nvim-treeclimber",
-    lazy = true,
-    dependencies = { "rktjmp/lush.nvim", "nvim-treesitter/nvim-treesitter" },
 })
 
 ts({
@@ -203,16 +199,6 @@ ts({
         vim.g.matchup_matchparen_deferred = 1
         vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
     end,
-})
-ts({ -- "haringsrob/nvim_context_vt",
-    "haringsrob/nvim_context_vt",
-    cond = lambda.config.treesitter.use_context_vt,
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-        prefix = "⤸",
-        -- "󱞿",
-        highlight = "Normal",
-    },
 })
 ts({
     "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",

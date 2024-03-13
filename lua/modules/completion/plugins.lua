@@ -23,9 +23,10 @@ completion({
         { "https://codeberg.org/FelipeLema/cmp-async-path", lazy = true },
         { "hrsh7th/cmp-buffer", lazy = true },
         { "hrsh7th/cmp-path", lazy = true },
-        -- { "hrsh7th/cmp-cmdline" },
-        -- { "rcarriga/cmp-dap", lazy = true },
         { "hrsh7th/cmp-omni", lazy = true },
+        { "rcarriga/cmp-dap", lazy = true, ft = "dap" },
+        { "hrsh7th/cmp-cmdline" },
+
         -- {
         --     "doxnit/cmp-luasnip-choice",
         --     lazy = true,
@@ -44,7 +45,7 @@ completion({
         },
         { "saadparwaiz1/cmp_luasnip", lazy = true },
         { "f3fora/cmp-spell", ft = { "gitcommit", "NeogitCommitMessage", "markdown", "norg", "org" } },
-        { "micangl/cmp-vimtex", ft = { "tex", "bib" } },
+        { "micangl/cmp-vimtex", ft = { "tex", "bib" }, config = true },
     },
     config = conf.cmp,
     -- config = function()
@@ -174,33 +175,21 @@ completion({
     --                 -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     --                 select = true,
     --             }),
-    --             -- ["<C-n>"] = cmp.mapping(function(fallback)
-    --             --     if cmp.visible() then
-    --             --         cmp.select_next_item()
-    --             --     else
-    --             --         fallback()
-    --             --     end
-    --             -- end, { "i", "s" }),
-    --             -- ["<C-p>"] = cmp.mapping(function(fallback)
-    --             --     if cmp.visible() then
-    --             --         cmp.select_prev_item()
-    --             --     else
-    --             --         fallback()
-    --             --     end
-    --             -- end, { "i", "s" }),
-    --             -- -- Expand or confirm
-    --             -- ["<C-Space>"] = cmp.mapping(function(fallback)
-    --             --     if luasnip.expand_or_jumpable() then
-    --             --         return luasnip.expand_or_jump()
-    --             --     elseif cmp.visible() then
-    --             --         return cmp.confirm({
-    --             --             behavior = cmp.ConfirmBehavior.Insert,
-    --             --             select = true,
-    --             --         })
-    --             --     else
-    --             --         fallback()
-    --             --     end
-    --             -- end, { "i", "s" }),
+    --             ["<C-n>"] = cmp.mapping(function(fallback)
+    --                 if cmp.visible() then
+    --                     cmp.select_next_item()
+    --                 else
+    --                     fallback()
+    --                 end
+    --             end, { "i", "s" }),
+    --             ["<C-p>"] = cmp.mapping(function(fallback)
+    --                 if cmp.visible() then
+    --                     cmp.select_prev_item()
+    --                 else
+    --                     fallback()
+    --                 end
+    --             end, { "i", "s" }),
+    --             -- Expand or confirm
     --             -- -- select next or jump snippet
     --             -- ["<Tab>"] = cmp.mapping(function(fallback)
     --             --     if cmp.visible() then
@@ -267,6 +256,7 @@ completion({
     --                     --     --     luasnip.expand_or_jump()
     --                     --     fallback()
     --                     -- end
+    --                 else
     --                 end
     --             end, {
     --                 "i",
@@ -316,7 +306,7 @@ completion({
     --
     --             {
     --                 name = "cmp_tabnine",
-    --                 enable = (lambda.config.ai.tabnine.use_tabnine and lambda.config.tabnine.use_tabnine_cmp),
+    --                 enable = (lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_cmp),
     --                 priority = lambda.config.ai.tabnine.cmp.tabnine_priority,
     --             },
     --
@@ -464,7 +454,6 @@ completion({
     --         },
     --     })
     -- end,
-    --
 })
 
 completion({

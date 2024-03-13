@@ -190,9 +190,6 @@ function config.gen(_, opts)
             prompt = "Summarize the following text, except for the code blocks, without additional quotes around it:\n$text",
             model = "mistral",
         },
-
-
-
     }
 end
 

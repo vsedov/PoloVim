@@ -26,12 +26,28 @@ ui({
 })
 
 --
--- ui({
---     "rebelot/heirline.nvim",
---     cond = lambda.config.ui.heirline.use_heirline,
---     event = "BufEnter",
---     dependencies = { "Zeioth/heirline-components.nvim" },
--- })
+ui({
+    "rebelot/heirline.nvim",
+    lazy = true,
+    event = "BufEnter",
+    config = function()
+        require("heirline").setup({
+            -- winbar = require("modules.ui.heirline.winbar"),
+            statusline = require("modules.ui.heirline.statusline"),
+            statuscolumn = require("modules.ui.heirline.statuscolumn"),
+            opts = {
+                disable_winbar_cb = function(args)
+                    local conditions = require("heirline.conditions")
+
+                    return conditions.buffer_matches({
+                        buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
+                        filetype = { "alpha", "codecompanion", "oil", "lspinfo", "toggleterm" },
+                    }, args.buf)
+                end,
+            },
+        })
+    end,
+})
 
 ui({
     "stevearc/dressing.nvim",
@@ -520,13 +536,6 @@ ui({
             -- cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
         })
     end,
-})
-
-ui({
-    "mvllow/modes.nvim",
-    cond = true,
-    event = "VeryLazy",
-    config = true,
 })
 
 ui({

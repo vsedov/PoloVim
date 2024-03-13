@@ -148,13 +148,13 @@ local bufferline_commands = {
 local tabline_commands = {
     h = {
         function()
-            vim.cmd("BufferNext")
+            vim.cmd("BufferPrevious")
         end,
         { private = true, nowait = true, desc = "Move Prev", exit = false },
     },
     l = {
         function()
-            vim.cmd("BufferPrevious")
+            vim.cmd("BufferNext")
         end,
         { private = true, nowait = true, desc = "Move Next", exit = false },
     },
@@ -306,14 +306,14 @@ local config = {
             function()
                 cmd("CybuPrev")
             end,
-            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "CybuPrev" },
+            { nowait = true, exit = false, private = true, nowait = true, desc = "CybuPrev" },
         },
 
         k = {
             function()
                 cmd("CybuLastusedPrev")
             end,
-            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "CybuLastusedPrev" },
+            { nowait = true, exit = false, private = true, nowait = true, desc = "CybuLastusedPrev" },
         },
         j = {
             function()

@@ -680,3 +680,19 @@ user({
 
     dependencies = { "nvim-neotest/nvim-nio" },
 })
+-- # better modes i think this was right
+-- print("there are other things here")
+user({
+    "mvllow/modes.nvim",
+    cond = true,
+    event = "VeryLazy",
+    config = true,
+})
+
+user({
+    "jinh0/eyeliner.nvim",
+    opts = {
+        dim = true,
+        highlight_on_key = true,
+    },
+})

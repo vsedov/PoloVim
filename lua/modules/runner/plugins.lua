@@ -14,10 +14,6 @@ runner({ -- This plugin
     config = true,
 })
 
---  ──────────────────────────────────────────────────────────────────────
-
-runner({ "dccsillag/magma-nvim", ft = "python", build = ":UpdateRemotePlugins" })
-
 runner({
     "michaelb/sniprun",
     lazy = true,

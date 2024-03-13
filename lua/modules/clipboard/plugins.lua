@@ -307,7 +307,5 @@ clipsub({
                 },
             },
         })
-        -- PutNextLine
     end,
-    lazy = false,
 })

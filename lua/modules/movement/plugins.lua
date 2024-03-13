@@ -194,7 +194,7 @@ movement({
         {
             {
                 "samharju/yeet.nvim",
-                keys = {},
+                lazy = true,
             },
         },
     },

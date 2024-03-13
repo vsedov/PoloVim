@@ -81,27 +81,28 @@ function M.setup()
             "tsconfig.json",
             ".git"
         ),
-        on_attach = function(client, bufnr)
-            if lambda.config.lsp.use_format_modifcation then
-                if vim.fn.isdirectory(".git/index") then
-                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                    require("lsp-format-modifications").attach(client, bufnr, { format_on_save = true })
-                else
-                    vim.api.nvim_clear_autocmds({
-                        group = "NvimFormatModificationsDocumentFormattingGroup",
-                        buffer = bufnr,
-                    })
-                end
-            else
-                augroup_setup(client, bufnr)
-            end
-            vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
-                lsp_formatting(bufnr)
-            end, {})
-        end,
+        -- on_attach = function(client, bufnr)
+        --     if lambda.config.lsp.use_format_modifcation then
+        --         if vim.fn.isdirectory(".git/index") then
+        --             vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+        --             require("lsp-format-modifications").attach(client, bufnr, { format_on_save = true })
+        --         else
+        --             vim.api.nvim_clear_autocmds({
+        --                 group = "NvimFormatModificationsDocumentFormattingGroup",
+        --                 buffer = bufnr,
+        --             })
+        --         end
+        --     else
+        --         augroup_setup(client, bufnr)
+        --     end
+        --     vim.api.nvim_buf_create_user_command(bufnr, "LspFormatting", function()
+        --         lsp_formatting(bufnr)
+        --     end, {})
+        -- end,
     }
 
     null_ls.setup(cfg)
+    require("modules.lsp.lsp.utils").format_on_save(true)
 end
 
 return M
