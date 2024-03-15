@@ -12,6 +12,12 @@
           "python"
         ],
         "path": "./python.json"
+      },
+      {
+        "language": [
+          "conf"
+        ],
+        "path": "./conf.json"
       }
     ]
   },

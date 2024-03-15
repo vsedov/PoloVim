@@ -10,6 +10,15 @@
       "filetype"
     ]
   },
+  "bob": {
+    "body": [
+      "user({",
+      "    \"$1\",",
+      "    config = true",
+      "})"
+    ],
+    "prefix": "bob"
+  },
   "keymaps": {
     "body": [
       "require(\"scissors\").setup({",

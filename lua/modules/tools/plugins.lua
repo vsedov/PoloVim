@@ -265,9 +265,33 @@ tools({
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-        require("attempt").setup()
+        local attempt = require("attempt")
+        attempt.setup()
         require("telescope").load_extension("attempt")
+
+        lambda.command("AttemptNew", function()
+            attempt.new_select()
+        end, {})
+        lambda.command("AttemptRun", function()
+            attempt.run()
+        end, {})
+        lambda.command("AttemptDelete", function()
+            attempt.delete_buf()
+        end, {})
+        lambda.command("AttemptRename", function()
+            attempt.rename_buf()
+        end, {})
+        lambda.command("AttemptNewExt", function()
+            attempt.new_input_ext()
+        end, {})
     end,
+    cmd = {
+        "AttemptNew",
+        "AttemptRun",
+        "AttemptDelete",
+        "AttemptRename",
+        "AttemptNewExt",
+    },
 })
 
 tools({

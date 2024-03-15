@@ -11,6 +11,7 @@ local use_codium_cmp = false
 
 local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
 local use_tabnine_cmp = true
+
 local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within th list
@@ -246,6 +247,7 @@ lambda.config.colourscheme = {
             --"doom-one.nvim",
             -- "vim-dogrun",
             "kanagawa.nvim",
+            "onedarkpro.nvim",
             -- "nvim-tundra", -- TSProperty'
             -- "mellow.nvim",
         },
@@ -275,7 +277,6 @@ if lambda.config.colourscheme.use_light_theme then
 end
 
 lambda.config.movement = {
-    use_trailblazer = true,
     movement_type = "flash", -- flash : leap
     use_lasterisk = true, -- for leap and flash,
     use_asterisk = false, -- if lasterisk is on, asterisk should be disable.d

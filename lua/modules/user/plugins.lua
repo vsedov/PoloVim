@@ -509,59 +509,35 @@ user({
 })
 user({
     "Wansmer/symbol-usage.nvim",
-    cond = false,
-    event = "LspAttach",
-    opts = {
-        text_format = function(symbol)
-            local res = {}
-            local ins = table.insert
-
-            local round_start = { "", "SymbolUsageRounding" }
-            local round_end = { "", "SymbolUsageRounding" }
+    event = "LspAttach", -- need run before LspAttach if you use nvim 0.9. On 0.10 use 'LspAttach'
+    cond = true,
+    config = function()
+        local function text_format(symbol)
+            local fragments = {}
 
             if symbol.references then
                 local usage = symbol.references <= 1 and "usage" or "usages"
                 local num = symbol.references == 0 and "no" or symbol.references
-                ins(res, round_start)
-                ins(res, { "󰌹 ", "SymbolUsageRef" })
-                ins(res, { ("%s %s"):format(num, usage), "SymbolUsageContent" })
-                ins(res, round_end)
+                table.insert(fragments, ("%s %s"):format(num, usage))
             end
 
             if symbol.definition then
-                if #res > 0 then
-                    table.insert(res, { " ", "NonText" })
-                end
-                ins(res, round_start)
-                ins(res, { "󰳽 ", "SymbolUsageDef" })
-                ins(res, { symbol.definition .. " defs", "SymbolUsageContent" })
-                ins(res, round_end)
+                table.insert(fragments, symbol.definition .. " defs")
             end
 
             if symbol.implementation then
-                if #res > 0 then
-                    table.insert(res, { " ", "NonText" })
-                end
-                ins(res, round_start)
-                ins(res, { "󰡱 ", "SymbolUsageImpl" })
-                ins(res, { symbol.implementation .. " impls", "SymbolUsageContent" })
-                ins(res, round_end)
+                table.insert(fragments, symbol.implementation .. " impls")
             end
 
-            return res
-        end,
-    },
-    config = function(_, opts)
-        require("symbol-usage").setup(opts)
-        lambda.highlight.plugin("SymbolUsage", {
-            { SymbolUsageRounding = { fg = { from = "CursorLine", attr = "bg" }, italic = true } },
-            { SymbolUsageContent = { bg = { from = "CursorLine" }, fg = { from = "Comment" } } },
-            { SymbolUsageRef = { fg = { from = "Function" }, bg = { from = "CursorLine" }, italic = true } },
-            { SymbolUsageDef = { fg = { from = "Type" }, bg = { from = "CursorLine" }, italic = true } },
-            { SymbolUsageImpl = { fg = { from = "Keyword" }, bg = { from = "CursorLine" }, italic = true } },
+            return table.concat(fragments, ", ")
+        end
+
+        require("symbol-usage").setup({
+            text_format = text_format,
         })
     end,
 })
+
 user({
     "cbochs/portal.nvim",
     -- TODO: folke/flash jumplist
@@ -677,7 +653,6 @@ user({
         map_smuggle_config = "<leader>ce", -- Use `<leader>ce` in normal mode to reconfigure the plugin.
         map_smuggle_operator = "gcs", -- Use `gcs[text object]` to send a text object in normal mode.
     },
-
     dependencies = { "nvim-neotest/nvim-nio" },
 })
 -- # better modes i think this was right
@@ -691,8 +666,42 @@ user({
 
 user({
     "jinh0/eyeliner.nvim",
+    event = "VeryLazy",
     opts = {
         dim = true,
         highlight_on_key = true,
+    },
+})
+user({
+    "olimorris/persisted.nvim", -- Session management
+    lazy = true,
+    opts = {
+        use_git_branch = true,
+        silent = true,
+        -- autoload = true,
+        should_autosave = function()
+            local excluded_filetypes = {
+                "alpha",
+                "oil",
+                "lazy",
+                "",
+            }
+
+            for _, filetype in ipairs(excluded_filetypes) do
+                if vim.bo.filetype == filetype then
+                    return false
+                end
+            end
+
+            return true
+        end,
+    },
+    cmd = {
+        "Sessions",
+        "SessionSave",
+        "SessionStart",
+        "SessionStop",
+        "SessionDelete",
+        "SessionToggle",
     },
 })

@@ -12,9 +12,6 @@ startup({
 })
 
 startup({
-    "folke/lsp-colors.nvim",
-})
-startup({
     "pteroctopus/faster.nvim",
     config = true,
 })

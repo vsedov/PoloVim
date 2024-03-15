@@ -28,11 +28,11 @@ ui({
 --
 ui({
     "rebelot/heirline.nvim",
-    lazy = true,
-    event = "BufEnter",
+    cond = lambda.config.ui.heirline.use_heirline,
+    event = "VeryLazy",
     config = function()
         require("heirline").setup({
-            -- winbar = require("modules.ui.heirline.winbar"),
+            --winbar = require("modules.ui.heirline.winbar"),
             statusline = require("modules.ui.heirline.statusline"),
             statuscolumn = require("modules.ui.heirline.statuscolumn"),
             opts = {
@@ -468,7 +468,7 @@ ui({
             silent = true,
         },
         {
-            "<C-BS>",
+            "<C-<BS>>",
             function()
                 require("fold-cycle").close()
             end,
@@ -566,7 +566,7 @@ ui({
             end,
         },
         icons = {
-            ui = { bar = { separator = " " .. lambda.style.icons.misc.arrow_right .. " " } },
+            ui = { bar = { separator = " " .. lambda.style.icons.misc.caret_right .. " " } },
         },
         menu = {
             win_configs = {

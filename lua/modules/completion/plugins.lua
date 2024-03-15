@@ -696,19 +696,25 @@ completion({
             snippetDir = vim.fn.stdpath("config") .. "/snippets",
             jsonFormatter = "jq",
         })
-
-        vim.keymap.set("n", "<leader>se", function()
-            require("scissors").editSnippet()
-        end, { desc = "Edit snippet" })
-
-        -- When used in visual mode prefills the selection as body.
-        vim.keymap.set({ "n", "x" }, "<leader>sa", function()
-            require("scissors").addNewSnippet()
-        end, { desc = "Add new snippet" })
     end,
     keys = {
-        { "<leader>se" },
-        { "<leader>sa" },
+        {
+            "<leader>se",
+            function()
+                require("scissors").editSnippet()
+            end,
+            desc = "Edit snippet",
+            mode = { "n", "x" },
+        },
+        {
+            "<leader>sa",
+            function()
+                require("scissors").addNewSnippet()
+            end,
+
+            desc = "Add new snippet",
+            mode = { "n", "x" },
+        },
     },
 })
 

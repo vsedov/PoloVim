@@ -13,6 +13,7 @@ local conf = require("modules.buffers.config")
 -- })
 buffer({
     "romgrk/barbar.nvim",
+    event = "VeryLazy",
     dependencies = {
         "lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
         "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
@@ -20,7 +21,9 @@ buffer({
     init = function()
         vim.g.barbar_auto_setup = true
     end,
-    config = true,
+    opts = {
+        animation = false,
+    },
 })
 buffer({
     "backdround/tabscope.nvim",

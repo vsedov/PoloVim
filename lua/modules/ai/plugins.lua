@@ -215,3 +215,26 @@ ai({
     },
     config = conf.gen,
 })
+ai({
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-lua/plenary.nvim",
+        {
+            "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
+        },
+    },
+    config = true,
+    keys = {
+        {
+            "<c-]>",
+            ":CodeCompanionActions<cr>",
+            mode = { "n", "v" },
+        },
+        {
+            ";a",
+            ":CodeCompanionToggle<cr>",
+            mode = { "n", "v" },
+        },
+    },
+})

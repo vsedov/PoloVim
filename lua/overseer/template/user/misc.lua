@@ -3,6 +3,20 @@ return {
     generator = function(_, cb)
         ret = {
             {
+                name = "Broot",
+                builder = function()
+                    OvTermNum = OvTermNum + 1
+                    return {
+                        name = "Broot",
+                        cmd = "broot",
+                        components = { "default" },
+                    }
+                end,
+                priority = 1,
+                params = {},
+            },
+
+            {
                 name = "Zsh",
                 builder = function()
                     OvTermNum = OvTermNum + 1

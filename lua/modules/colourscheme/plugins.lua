@@ -44,7 +44,7 @@ colourscheme({
 })
 colourscheme({
     "olimorris/onedarkpro.nvim",
-    event = "VeryLazy",
+    event = "BufEnter",
     opts = {
         colors = {
             dark = {
@@ -60,6 +60,24 @@ colourscheme({
                 breadcrumbs = "require('onedarkpro.helpers').darken('gray', 10, 'onedark')",
                 local_highlight = "require('onedarkpro.helpers').lighten('bg', 4, 'onedark')",
                 light_gray = "require('onedarkpro.helpers').darken('gray', 7, 'onedark')",
+            },
+            light = {
+                codeblock = "require('onedarkpro.helpers').darken('bg', 3, 'onelight')",
+                comment = "#bebebe", -- Revert back to original comment colors
+                statusline_bg = "#f0f0f0", -- gray
+                statuscolumn_border = "#e7e7e7", -- gray
+                ellipsis = "#808080", -- gray
+                git_add = "require('onedarkpro.helpers').get_preloaded_colors('onelight').green",
+                git_change = "require('onedarkpro.helpers').get_preloaded_colors('onelight').yellow",
+                git_delete = "require('onedarkpro.helpers').get_preloaded_colors('onelight').red",
+                telescope_prompt = "require('onedarkpro.helpers').darken('bg', 2, 'onelight')",
+                telescope_results = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
+                telescope_preview = "require('onedarkpro.helpers').darken('bg', 7, 'onelight')",
+                telescope_selection = "require('onedarkpro.helpers').darken('bg', 9, 'onelight')",
+                copilot = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
+                breadcrumbs = "require('onedarkpro.helpers').lighten('gray', 8, 'onelight')",
+                local_highlight = "require('onedarkpro.helpers').darken('bg', 5, 'onelight')",
+                light_gray = "require('onedarkpro.helpers').lighten('gray', 10, 'onelight')",
             },
         },
         highlights = {
@@ -194,15 +212,15 @@ colourscheme({
         cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
 
         plugins = {
-            barbar = false,
-            lsp_saga = false,
-            marks = false,
+            barbar = true,
+            lsp_saga = true,
+            marks = true,
             polygot = false,
             startify = false,
-            telescope = false,
-            trouble = false,
+            telescope = true,
+            trouble = true,
             vim_ultest = false,
-            which_key = false,
+            which_key = true,
         },
         styles = {
             tags = "italic",
@@ -214,19 +232,14 @@ colourscheme({
             conditionals = "italic",
             virtual_text = "italic",
         },
-        options = {
-            cursorline = true,
-            -- transparency = true,
-            -- highlight_inactive_windows = true,
-        },
+        -- options = {
+        --     cursorline = false,
+        --     -- transparency = true,
+        --     -- highlight_inactive_windows = true,
+        -- },
     },
     config = function(_, opts)
         require("onedarkpro").setup(opts)
-
-        if vim.o.background == "light" then
-            vim.cmd([[colorscheme onelight]])
-        else
-            vim.cmd([[colorscheme onedark]])
-        end
+        vim.cmd([[colorscheme onedark]])
     end,
 })

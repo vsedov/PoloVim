@@ -155,6 +155,9 @@ local mappings = {
         config = {
             sources = {
                 { name = "cody" },
+                {
+                    name = "cmp_tabnine",
+                },
             },
         },
     }),

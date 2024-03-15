@@ -106,6 +106,7 @@ lang({
         "mfussenegger/nvim-dap",
     },
     ft = { "python" },
+    lazy = true,
     config = function()
         local dap_python = require("dap-python")
         local function find_debugpy_python_path()
@@ -121,7 +122,6 @@ lang({
         end
 
         local dap_python_path = find_debugpy_python_path()
-        vim.api.nvim_echo({ { "Using path for dap-python: " .. dap_python_path, "None" } }, false, {})
         dap_python.setup(dap_python_path)
     end,
 })

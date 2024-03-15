@@ -107,7 +107,7 @@ else
     o.foldenable = true
 
     o.cursorline = true
-    o.cursorcolumn = true
+    o.cursorcolumn = false -- Highlight the screen column of the cursor with CursorColumn
     -----------------------------------------------------------------------------//
     -- Grepprg {{{1
     -----------------------------------------------------------------------------//

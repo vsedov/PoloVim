@@ -89,7 +89,7 @@ return {
     },
     --  ──────────────────────────────────────────────────────────────────────
     {
-        "<leader>s",
+        "gr",
         mode = { "n" },
         lib.flash_references,
         desc = "Flash Lsp References",

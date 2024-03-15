@@ -10,8 +10,7 @@ local mx = function(feedkeys, type)
         vim.api.nvim_feedkeys(vim.keycode(feedkeys, true, false, true), type, false)
     end
 end
-local lsp_lens_active = false
-local bracket = { "J", "j", "k", "w" }
+local bracket = { "J", "j", "k" }
 
 local config = {
     Lsp = {
@@ -67,14 +66,6 @@ local config = {
             { nowait = true, exit = true, desc = "TroubleToggle" },
         },
 
-        w = {
-            function()
-                vim.cmd([[LspLensToggle]])
-                lsp_lens_active = not lsp_lens_active
-                vim.notify("LspLense = " .. tostring(lsp_lens_active))
-            end,
-            { nowait = true, exit = true, desc = "LspLensToggle" },
-        },
         l = {
             utils.format_range_operator,
             { nowait = true, exit = true, desc = "Range Diagnostics", mode = { "v" } },

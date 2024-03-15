@@ -167,6 +167,7 @@ function config.edgy()
             },
         },
         right = {
+            { ft = "codecompanion", title = "Code Companion Chat", size = { width = 0.45 } },
             {
                 title = "CopilotChat.nvim", -- Title of the window
                 ft = "copilot-chat", -- This is custom file type from CopilotChat.nvim

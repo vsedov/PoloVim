@@ -18,7 +18,6 @@ local plugins = {
     {
         name = "codeium",
         enable = condium_cond,
-        -- priority = ai.codeium.cmp.codium_priority,
     },
     {
         name = "cmp_tabnine",

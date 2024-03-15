@@ -308,18 +308,6 @@ function M.format(opts)
         bufnr = buf,
         group = augroup,
         filter = function(client)
-            if lambda.config.lsp.use_format_modifcation then
-                if vim.fn.isdirectory(".git/index") then
-                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                    require("lsp-format-modifications").attach(client, buf, { format_on_save = true })
-                else
-                    vim.api.nvim_clear_autocmds({
-                        buffer = buf,
-                        group = augroup,
-                    })
-                end
-            end
-
             if have_nls then
                 return client.name == "null-ls"
             end
