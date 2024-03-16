@@ -1,6 +1,6 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
 local helper = require("core.helper")
-local main_debug = false
+local main_debug = true
 local pack = {}
 pack.__index = pack
 
@@ -83,7 +83,7 @@ function pack:load_modules_packages()
     if main_debug then
         all_modules = {
             -- "ai",
-            -- "buffers",
+             --"buffers",
             -- -- "clipboard",
             -- -- "colourscheme",
             -- -- "completion",
@@ -94,7 +94,7 @@ function pack:load_modules_packages()
             -- -- "git",
             -- -- "lang",
             -- "latex",
-            -- -- "lsp",
+            -- "lsp",
             -- "mini",
             -- -- "misc",
             -- -- "movement",
@@ -103,12 +103,12 @@ function pack:load_modules_packages()
             -- "python",
             -- "runner",
             -- -- "search",
-            -- "tmux",
+             -- "tmux",
             -- "tools",
-            -- -- "treesitter",
-            -- -- "ui",
-            -- "user",
-            -- "windows",
+            -- "treesitter",
+             --"ui",
+             -- "user",
+             -- "windows",
         }
 
         disable_modules = {}

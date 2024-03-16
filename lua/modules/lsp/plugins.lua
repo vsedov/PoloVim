@@ -331,30 +331,3 @@ lsp({
     "kmontocam/nvim-conda",
     ft = "python",
 })
-
---     ┌                                                                   ┐
---     │                                                                   │
---     │    Packages that do not needed to be loaded or are not useful     │
---     │                                                                   │
---     └                                                                   ┘
-lsp({
-    "stevanmilic/nvim-lspimport",
-    cond = false,
-    event = "LspAttach",
-    config = function()
-        vim.keymap.set("n", "<leader>iw", require("lspimport").import, { noremap = true, desc = "Import word" })
-    end,
-})
-lsp({
-    "lvimuser/lsp-inlayhints.nvim",
-    cond = false,
-    lazy = true,
-    opts = {
-        inlay_hints = {
-            highlight = "Comment",
-            labels_separator = " ⏐ ",
-            parameter_hints = { prefix = "󰊕" },
-            type_hints = { prefix = "=> ", remove_colon_start = true },
-        },
-    },
-})

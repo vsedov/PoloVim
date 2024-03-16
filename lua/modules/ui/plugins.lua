@@ -48,7 +48,7 @@ ui({
         })
     end,
 })
-
+--
 ui({
     "stevearc/dressing.nvim",
     event = "VeryLazy",
@@ -134,11 +134,11 @@ ui({
     end,
 })
 ui({ "MunifTanjim/nui.nvim", lazy = true })
--- --
--- -- --  ──────────────────────────────────────────────────────────────────────
--- -- -- Force Lazy
--- -- --  ──────────────────────────────────────────────────────────────────────
--- --
+-- -- --
+-- -- -- --  ──────────────────────────────────────────────────────────────────────
+-- -- -- -- Force Lazy
+-- -- -- --  ──────────────────────────────────────────────────────────────────────
+-- -- --
 ui({
     "RRethy/vim-illuminate",
     lazy = true,
@@ -166,7 +166,7 @@ ui({
         })
     end,
 })
---
+-- --
 ui({
     "nvim-neo-tree/neo-tree.nvim",
     keys = {
@@ -293,7 +293,7 @@ ui({
         })
     end,
 })
---
+-- --
 ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
@@ -361,7 +361,7 @@ ui({
         hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
 })
--- -- dropbar_menu
+-- -- -- dropbar_menu
 ui({
     "shell-Raining/hlchunk.nvim",
     cond = lambda.config.ui.indent_lines.use_hlchunk,
@@ -391,12 +391,12 @@ ui({
         },
     },
 })
-
+--
 ui({
     "kevinhwang91/promise-async",
     lazy = true,
 })
-
+--
 ui({
     "kevinhwang91/nvim-ufo",
     lazy = true,
@@ -443,9 +443,16 @@ ui({
             desc = "ufo: close folds with",
         },
     },
-    config = conf.ufo,
+    -- config = conf.ufo,
+    config = function()
+        require("ufo").setup({
+            provider_selector = function()
+                return { "treesitter" }
+            end,
+        })
+    end,
 })
-
+--
 ui({
     "Vonr/foldcus.nvim",
     lazy = true,
@@ -505,8 +512,8 @@ ui({
         })
     end,
 })
--- --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
--- --  i wonder if they are any better that what ive had before
+-- -- --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
+-- -- --  i wonder if they are any better that what ive had before
 ui({
     "glepnir/hlsearch.nvim",
     cond = lambda.config.ui.use_hlsearch,

@@ -10,8 +10,6 @@ local function format_on_save(_)
         pattern = "*.norg",
         desc = "Neorg: format current file on save",
         callback = function()
-            MiniTrailspace.trim()
-
             vim.cmd([[
       normal m`=gG``
       ]])

@@ -208,17 +208,17 @@ colourscheme({
             VirtColumn = { fg = "${indentline}" },
         },
 
-        caching = false,
+        caching = true,
         cache_path = vim.fn.expand(vim.fn.stdpath("cache") .. "/onedarkpro_dotfiles"),
 
         plugins = {
             barbar = true,
-            lsp_saga = true,
+            lsp_saga = false,
             marks = true,
             polygot = false,
             startify = false,
             telescope = true,
-            trouble = true,
+            trouble = false,
             vim_ultest = false,
             which_key = true,
         },
