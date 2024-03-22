@@ -2,12 +2,10 @@ local conf = require("modules.notes.config")
 local notes = require("core.pack").package
 notes({
     "vhyrro/luarocks.nvim",
-    branch = "more-fixes",
     config = function()
         require("luarocks").setup({})
     end,
 })
-
 notes({
     "nvim-neorg/neorg",
     ft = { "norg" },
@@ -19,7 +17,7 @@ notes({
         require("modules.notes.norg.autocmd").setup({})
     end,
     dependencies = {
-        "luarocks.nvim",
+        "vhyrro/luarocks.nvim",
         -- "3rd/image.nvim",
         {
             "jarvismkennedy/neorg-roam.nvim",
@@ -42,7 +40,6 @@ notes({
         { "pysan3/neorg-templates-draft", dependencies = { "L3MON4D3/LuaSnip" } },
         { "nvim-neorg/neorg-telescope", dependencies = { "nvim-telescope/telescope.nvim" } },
     },
-    build = ":Neorg sync-parsers",
     opts = require("modules.notes.neorg").opts,
     config = require("modules.notes.neorg").config,
 })

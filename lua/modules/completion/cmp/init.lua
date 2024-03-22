@@ -11,7 +11,7 @@ end)
 
 lambda.highlight.plugin("Cmp", {
     { CmpItemKindVariable = { link = "Variable" } },
-    { CmpItemAbbrMatchFuzzy = { inherit = "CmpItemAbbrMatch", italic = true } },
+    { CmpItemAbbrMatchFuzzy = { inherit = "comment", italic = true } },
     { CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" } },
     { CmpItemMenu = { inherit = "Comment", italic = true } },
 })

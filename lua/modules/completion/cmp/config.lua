@@ -30,6 +30,10 @@ local config = {
         throttle = 50,
         fetching_timeout = 80,
     },
+    completion = {
+        -- completeopt = 'menu,menuone,noinsert,noselect',
+        completeopt = "menu,menuone,noselect",
+    },
 
     preselect = cmp.PreselectMode.Item, -- None | Item
     confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
@@ -80,25 +84,18 @@ local function setWindowConfiguration(theme, border)
     local winhighlight = "Normal:Normal,FloatBorder:None,CursorLine:None,Search:None"
     if theme == "border" then
         config.window = {
-            completion = cmp.config.window.bordered({ border = border, winhighlight = winhighlight }),
-            documentation = cmp.config.window.bordered({ border = border, winhighlight = winhighlight }),
+            completion = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered(),
         }
     elseif theme == "borderv2" then
         config.window = {
-            completion = cmp.config.window.bordered(cmp_window),
-            documentation = cmp.config.window.bordered(cmp_window),
+            completion = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered(),
         }
     elseif theme == "extra" then
         config.window = {
-            completion = cmp.config.window.bordered({
-                scrollbar = false,
-                border = "shadow",
-                winhighlight = "NormalFloat:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder",
-            }),
-            documentation = cmp.config.window.bordered({
-                border = lambda.style.border.type_0,
-                winhighlight = "FloatBorder:FloatBorder",
-            }),
+            completion = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered(),
         }
     end
 end
@@ -135,14 +132,8 @@ local function setFormattingConfiguration(theme)
         }
     elseif theme == "extra" then
         config.window = {
-            completion = cmp.config.window.bordered({
-                border = lambda.style.border.type_0,
-                winhighlight = "FloatBorder:FloatBorder",
-            }),
-            documentation = cmp.config.window.bordered({
-                border = lambda.style.border.type_0,
-                winhighlight = "FloatBorder:FloatBorder",
-            }),
+            completion = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered(),
         }
 
         config.formatting = {
@@ -185,8 +176,7 @@ local function setFormattingConfiguration(theme)
 end
 
 local theme = lambda.config.cmp.cmp_theme
-local compare = require("cmp.config.compare")
-sorting = {
+local sorting = {
     comparators = {
         -- require("copilot_cmp.comparators").prioritize,
         cmp.config.compare.offset,

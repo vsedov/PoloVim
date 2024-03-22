@@ -174,30 +174,6 @@ ai({
         "CodyTaskAccept",
     },
 })
-
-ai({
-    "github/copilot.vim",
-
-    lazy = true,
-    cond = ai_conf.sell_your_soul and false,
-    event = "InsertEnter",
-    init = function()
-        --[[ vim.opt.completeopt = "menuone,noselect" ]]
-        vim.g.copilot_enabled = lambda.config.sell_your_soul
-        -- Have copilot play nice with nvim-cmp.
-        vim.g.copilot_no_tab_map = true
-        vim.g.copilot_assume_mapped = true
-        vim.g.copilot_tab_fallback = ""
-        local excluded_filetypes = { "norg", "nofile", "prompt" }
-        local copilot_filetypes = {}
-        for _, ft in pairs(excluded_filetypes) do
-            copilot_filetypes[ft] = false
-        end
-        vim.g["copilot_filetypes"] = copilot_filetypes
-    end,
-})
-
---  TODO: (vsedov) (16:03:47 - 10/12/23): Make this intoa hydra implementation
 ai({
     "David-Kunz/gen.nvim",
     cmd = "Gen",
@@ -215,6 +191,16 @@ ai({
     },
     config = conf.gen,
 })
+
+-- <C-s> - Save the buffer and trigger a response from the generative AI service
+-- <C-c> - Close the buffer
+-- q - Cancel the stream from the API
+-- gc - Clear the buffer's contents
+-- ga - Add a codeblock
+-- gs - Save the chat to disk
+-- [ - Move to the next header
+-- ] - Move to the previous header
+
 ai({
     "olimorris/codecompanion.nvim",
     dependencies = {

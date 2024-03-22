@@ -443,14 +443,7 @@ ui({
             desc = "ufo: close folds with",
         },
     },
-    -- config = conf.ufo,
-    config = function()
-        require("ufo").setup({
-            provider_selector = function()
-                return { "treesitter" }
-            end,
-        })
-    end,
+    config = conf.ufo,
 })
 --
 ui({

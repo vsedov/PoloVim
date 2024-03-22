@@ -100,9 +100,11 @@ function config.ufo()
         open_fold_hl_timeout = 0,
         preview = { win_config = { winhighlight = "Normal:Normal,FloatBorder:Normal" } },
         enable_get_fold_virt_text = true,
-        close_fold_kinds = { "imports", "comment" },
+        close_fold_kinds_for_ft = { "imports", "comment" },
         provider_selector = function(_, ft)
-            return ft_map[ft] or { "treesitter", "indent" }
+            return { "treesitter" }
+
+            -- return ft_map[ft] or { "treesitter", "indent" }
         end,
         fold_virt_text_handler = function(virt_text, _, end_lnum, width, truncate, ctx)
             local result, cur_width, padding = {}, 0, ""

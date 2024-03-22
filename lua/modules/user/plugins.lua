@@ -675,3 +675,33 @@ user({
         "SessionToggle",
     },
 })
+user({
+    "michaelrommel/nvim-silicon",
+    lazy = true,
+    cmd = "Silicon",
+    config = function()
+        require("silicon").setup({
+            -- Configuration here, or leave empty to use defaults
+            -- # use julia
+            output = {
+                -- (string) The full path of the file to save to.
+                file = "",
+                -- (boolean) Whether to copy the image to clipboard instead of saving to file.
+                clipboard = true,
+                -- (string) Where to save images, defaults to the current directory.
+                --  e.g. /home/user/Pictures
+                path = ".",
+                -- (string) The filename format to use. Can include placeholders for date and time.
+                -- https://time-rs.github.io/book/api/format-description.html#components
+                format = "silicon_[year][month][day]_[hour][minute][second].png",
+            },
+            font = "JuliaMono",
+            watermark = {
+                text = "  Viv",
+            },
+            window_title = function()
+                return vim.fn.fnamemodify(vim.fn.bufname(vim.fn.bufnr()), ":~:.")
+            end,
+        })
+    end,
+})

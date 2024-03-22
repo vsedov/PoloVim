@@ -10,7 +10,7 @@ return {
             add_bracket_after_function = true,
             dynamic_params = true,
             -- Allot of machine learning models that are set from default.
-            autoImportModules = { "torch" },
+            autoImportModules = { "torch", "numpy", "matplotlib", "random", "math" },
         },
     },
     on_new_config = function(new_config, new_root_dir)

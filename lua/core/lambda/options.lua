@@ -127,9 +127,8 @@ lambda.config.cmp = {
 lambda.config.lsp = {
     use_sg = true,
     use_hover = false, -- Saga is better for this one
-    use_typos = true, -- this was getting annoying
+    use_typos = false, -- this was getting annoying
     only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
-    use_format_modifcation = false,
     use_lsp_saga = true,
     use_lsp_dim = true, -- i forgot what this does
     ----------------------------------------------------------------------------------------------------
@@ -168,14 +167,15 @@ lambda.config.lsp = {
         lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think
         format = {
             "isort",
-            -- "black",
             "yapf",
         },
         -- black -- Need to make it so it knows what formater to use :think:
         lsp = {
             "sourcery",
             "ruff_lsp",
+            -- "pylance",
             "jedi_language_server",
+            -- "basedpyright",
             -- "python-language-server",
             -- "pylsp",
             -- "pylyzer"

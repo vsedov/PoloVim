@@ -1,7 +1,5 @@
 local conf = require("modules.lsp.config")
 local lsp = require("core.pack").package
-local prettier = { "prettierd", "prettier" }
-local slow_format_filetypes = {}
 lsp({ "onsails/lspkind.nvim", lazy = true })
 
 lsp({
@@ -80,88 +78,6 @@ lsp({
         })
         -- require("modules.lsp.lsp.config").setup()
     end,
-})
-
-lsp({
-    "dense-analysis/ale",
-    cond = lambda.config.lsp.lint_formatting.use_ale,
-    event = { "BufReadPre", "BufNewFile" },
-    config = require("modules.lsp.lint_format").ale,
-})
-lsp({
-    "mfussenegger/nvim-lint",
-    cond = lambda.config.lsp.lint_formatting.use_conform,
-    opts = {
-        linters_by_ft = {
-            javascript = { "eslint_d" },
-            ["javascript.jsx"] = { "eslint_d" },
-            javascriptreact = { "eslint_d" },
-            lua = { "luacheck" },
-            python = lambda.config.lsp.python.lint,
-            rst = { "rstlint" },
-            sh = { "shellcheck" },
-            typescript = { "eslint_d" },
-            ["typescript.tsx"] = { "eslint_d" },
-            typescriptreact = { "eslint_d" },
-            vim = { "vint" },
-            yaml = { "yamllint" },
-        },
-        linters = {},
-    },
-
-    config = require("modules.lsp.lint_format").nvim_lint,
-})
-
-lsp({
-    "stevearc/conform.nvim",
-    cond = lambda.config.lsp.lint_formatting.use_conform,
-    event = "VeryLazy",
-    cmd = { "ConformInfo" },
-    keys = {
-        {
-            ";;f",
-            function()
-                require("conform").format({
-                    async = true,
-                    lsp_fallback = require("modules.lsp.lint_format").get_lsp_fallback(0),
-                })
-            end,
-            mode = "",
-            desc = "Format buffer",
-        },
-    },
-    opts = {
-        formatters_by_ft = {
-            python = lambda.config.lsp.python.format,
-            lua = { "stylua" },
-            go = { "goimports", "gofmt" },
-            sh = { "shfmt" },
-            zig = { "zigfmt" },
-            ["_"] = { "trim_whitespace", "trim_newlines" },
-        },
-
-        format_on_save = function(bufnr)
-            if slow_format_filetypes[vim.bo[bufnr].filetype] then
-                return
-            end
-            local function on_format(err)
-                if err and err:match("timed out$") then
-                    slow_format_filetypes[vim.bo[bufnr].filetype] = true
-                end
-            end
-
-            return { timeout_ms = 1000, lsp_fallback = require("modules.lsp.lint_format").get_lsp_fallback(bufnr) },
-                on_format
-        end,
-        format_after_save = function(bufnr)
-            if not slow_format_filetypes[vim.bo[bufnr].filetype] then
-                return
-            end
-
-            return { lsp_fallback = require("modules.lsp.lint_format").get_lsp_fallback(bufnr) }
-        end,
-    },
-    config = require("modules.lsp.lint_format").conform,
 })
 
 lsp({ "ii14/lsp-command", lazy = true, cmd = { "Lsp" } })
@@ -255,11 +171,6 @@ lsp({
     "cseickel/diagnostic-window.nvim",
     cmd = "DiagWindowShow",
     dependencies = { "MunifTanjim/nui.nvim" },
-})
-lsp({
-    "liuchengxu/vista.vim",
-    cmd = { "Vista" },
-    config = conf.vista,
 })
 
 lsp({
