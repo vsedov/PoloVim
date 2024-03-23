@@ -20,9 +20,15 @@ python({
 
 python({
     "linux-cultist/venv-selector.nvim",
-    dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim" },
+    ft = "python",
+    dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim", "mfussenegger/nvim-dap-python" },
     cmd = { "VenvSelect", "VenvSelectCached" },
-    config = true,
+    config = function()
+        require("venv-selector").setup({
+            anaconda_base_path = "/opt/mambaforge",
+            anaconda_envs_path = "/home/viv/.conda/envs",
+        })
+    end,
 })
 
 python({

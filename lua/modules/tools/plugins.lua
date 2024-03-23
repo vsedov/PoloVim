@@ -335,8 +335,3 @@ tools({
         require("live-command").setup(opts)
     end,
 })
-tools({
-    "norcalli/nvim-terminal.lua",
-    event = "TermEnter",
-    config = true,
-})

@@ -2,9 +2,6 @@ local conf = require("modules.notes.config")
 local notes = require("core.pack").package
 notes({
     "vhyrro/luarocks.nvim",
-    config = function()
-        require("luarocks").setup({})
-    end,
 })
 notes({
     "nvim-neorg/neorg",

@@ -705,3 +705,13 @@ user({
         })
     end,
 })
+
+user({
+    "xiyaowong/transparent.nvim",
+    config = true,
+    cmd = {
+        "TransparentEnable",
+        "TransparentDisable",
+        "TransparentToggle",
+    },
+})
