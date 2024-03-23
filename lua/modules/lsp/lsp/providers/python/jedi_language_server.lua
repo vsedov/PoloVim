@@ -10,9 +10,10 @@ return {
             add_bracket_after_function = true,
             dynamic_params = true,
             -- Allot of machine learning models that are set from default.
-            autoImportModules = { "torch", "numpy", "matplotlib", "random", "math" },
+            autoImportModules = { "numpy", "matplotlib", "random", "math" },
         },
     },
+
     on_new_config = function(new_config, new_root_dir)
         new_config.settings.python.pythonPath = vim.fn.exepath("python") or vim.fn.exepath("python3") or "python"
         new_config.cmd_env.PATH = py.env(new_root_dir) .. new_config.cmd_env.PATH

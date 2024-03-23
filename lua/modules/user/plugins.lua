@@ -146,7 +146,7 @@ user({
 -- This is nice
 user({
     "Sam-programs/expand.nvim",
-    event = "VeryLazy",
+    keys = { "<c-Space>" },
     dependencies = { "Sam-Programs/indent.nvim" },
     config = function()
         require("expand").setup({
@@ -219,11 +219,6 @@ user({
     end,
 })
 
--- user({
---     "Aasim-A/scrollEOF.nvim",
---     event = "VeryLazy",
---     config = true,
--- })
 user({
     "nkakouros-original/scrollofffraction.nvim",
     event = "VeryLazy",
@@ -510,7 +505,6 @@ user({
 
 user({
     "cbochs/portal.nvim",
-    -- TODO: folke/flash jumplist
     dependencies = {
         "ThePrimeagen/harpoon", -- Optional: provides the "harpoon" query item
     },
@@ -568,6 +562,7 @@ user({
 
 user({
     "subnut/nvim-ghost.nvim",
+    cond = false,
     config = function()
         -- All autocommands should be in 'nvim_ghost_user_autocommands' group
         local augroup_nvim_ghost_user_autocommands = vim.api.nvim_create_augroup("nvim_ghost_user_autocommands", {})
@@ -636,7 +631,7 @@ user({
 
 user({
     "jinh0/eyeliner.nvim",
-    event = "VeryLazy",
+    keys = { "f", "F", "t", "T" },
     opts = {
         dim = true,
         highlight_on_key = true,
