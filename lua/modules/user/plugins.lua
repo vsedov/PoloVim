@@ -710,3 +710,15 @@ user({
         "TransparentToggle",
     },
 })
+user({
+    "zeioth/garbage-day.nvim",
+    dependencies = "neovim/nvim-lspconfig",
+    event = "VeryLazy",
+    opts = {
+        -- your options here
+    },
+})
+user({
+    "kmontocam/nvim-conda",
+    cmd = { "CondaActivate", "CondaDeactivate" },
+})

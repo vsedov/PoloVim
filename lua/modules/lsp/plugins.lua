@@ -237,8 +237,3 @@ lsp({
         toggle_event = { "InsertEnter" },
     },
 })
-
-lsp({
-    "kmontocam/nvim-conda",
-    ft = "python",
-})
