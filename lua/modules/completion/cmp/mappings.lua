@@ -1,6 +1,9 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local utils = require("modules.completion.cmp.utils")
+local ai = lambda.config.ai
+local condium_cond = (ai.codeium.use_codeium and ai.codeium.use_codeium_cmp)
+local tabnine_cond = (ai.tabnine.use_tabnine and ai.tabnine.use_tabnine_cmp)
 
 local function copilot(fallback)
     local suggestion = require("copilot.suggestion")
@@ -154,9 +157,10 @@ local mappings = {
     ["<c-a>"] = cmp.mapping.complete({
         config = {
             sources = {
-                { name = "cody" },
+                { name = "cody", enable = true },
                 {
                     name = "cmp_tabnine",
+                    enable = tabnine_cond,
                 },
             },
         },

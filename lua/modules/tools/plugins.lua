@@ -36,19 +36,6 @@ tools({
 })
 
 tools({
-    "natecraddock/workspaces.nvim",
-    lazy = true,
-    cmd = {
-        "WorkspacesAdd",
-        "WorkspacesRemove",
-        "WorkspacesRename",
-        "WorkspacesList",
-        "WorkspacesOpen",
-    },
-    config = conf.workspace,
-})
-
-tools({
     "rhysd/vim-grammarous",
     lazy = true,
     cmd = { "GrammarousCheck" },

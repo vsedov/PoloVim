@@ -10,6 +10,8 @@ local plugins = {
         enable = lambda.config.cmp.luasnip.luasnip.enable,
         -- priority = lambda.config.cmp.luasnip.luasnip.priority,
     },
+    { name = "cody", enable = true },
+
     {
         name = "neorg",
         enable = true,

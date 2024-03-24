@@ -142,7 +142,6 @@ colourscheme({
             DebugBreakpoint = { fg = "${red}", italic = true },
             DebugHighlightLine = { fg = "${purple}", italic = true },
             NvimDapVirtualText = { fg = "${cyan}", italic = true },
-            
 
             -- DAP UI
             DapUIBreakpointsCurrentLine = { fg = "${yellow}", bold = true },

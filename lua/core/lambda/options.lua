@@ -24,7 +24,7 @@ lambda.config = {
     neorg_auto_commit = false,
     loaded_confirm_quit = false, -- this is not needed
     --  ──────────────────────────────────────────────────────────────────────
-    save_clipboard_on_exit = true,
+    save_clipboard_on_exit = false,
     use_saga_diagnostic_jump = true, -- toggle between diagnostics, if u want to use saga or not, still think , my main diagnostics are better
     use_saga_maps = true, -- Like lspsaga definition or something, or code actions ...
     use_gitsigns = true,
@@ -32,7 +32,7 @@ lambda.config = {
     main_file_types = { "python", "norg", "tex", "lua", "c", "cpp", "rust" },
 }
 lambda.config.custom = {
-    custom_save_clipboard = true,
+    custom_save_clipboard = false,
 }
 lambda.config.ai = {
     model = "gpt-4",
@@ -54,9 +54,9 @@ lambda.config.ai = {
         use_tabnine_cmp = use_tabnine_cmp,
         use_tabnine_insert = not use_tabnine_cmp,
         cmp = {
-            tabnine_sort = false, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
+            tabnine_sort = true, -- I am not sure how i feel about if i want tabnine to actively sort stuff for me.
             tabnine_bottom_sort = false,
-            tabnine_prefetch = false,
+            tabnine_prefetch = true,
             tabnine_priority = 4, -- 10 if you want god mode, else reduce this down to what ever you think is right for you
         },
     },
@@ -128,7 +128,7 @@ lambda.config.lsp = {
     use_sg = true,
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
-    only_severe_diagnostics = true, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
+    only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_lsp_saga = true,
     use_lsp_dim = true, -- i forgot what this does
     ----------------------------------------------------------------------------------------------------

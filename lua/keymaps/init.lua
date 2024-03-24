@@ -268,3 +268,13 @@ end, { nargs = "+" })
 vim.keymap.set("n", ",v", function()
     vim.notify(vim.fn.system("curl -s -m 3 https://vtip.43z.one"))
 end)
+
+vim.keymap.set("n", "<Leader>qd", "<CMD>bd<CR>", { desc = "Buffer: delete buffer" })
+vim.keymap.set("n", "<Leader>qq", "<CMD>%bd<CR>", { silent = true, desc = "Buffer: delete all buffer" })
+vim.keymap.set("n", "<Leader>qa", "<CMD>%bd!<CR>", { silent = true, desc = "Buffer: force delete all buffer" })
+vim.keymap.set(
+    "n",
+    "<Leader>qo",
+    "<CMD>%bd|e#<CR>",
+    { silent = true, desc = "Buffer: delete all buffer except this one" }
+)
