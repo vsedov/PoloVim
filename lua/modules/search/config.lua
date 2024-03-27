@@ -8,7 +8,6 @@ function config.telescope()
         "telescope-frecency.nvim",
         "telescope-file-browser.nvim",
         "telescope-conda.nvim",
-        "telescope-bookmarks.nvim",
         "telescope-sg",
         "telescope-egrepify.nvim",
     }
@@ -18,18 +17,8 @@ function config.telescope()
     require("telescope").setup({
         extensions = {
             conda = { anaconda_path = "/home/viv/.conda/" },
-            bookmarks = {
-                selected_browser = "firefox",
-                url_open_command = "open",
-                profile_name = "default-nightly-1",
-                url_open_plugin = nil,
-                full_path = true,
-                buku_include_tags = false,
-                debug = false,
-            },
         },
     })
-    require("telescope").load_extension("bookmarks")
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("file_browser")
     require("telescope").load_extension("egrepify")

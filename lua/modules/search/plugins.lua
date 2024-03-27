@@ -92,14 +92,6 @@ search({
     dependencies = { "kkharji/sqlite.lua" },
 })
 
-search({
-    "dhruvmanila/telescope-bookmarks.nvim",
-    lazy = true,
-    dependencies = {
-        "kkharji/sqlite.lua",
-    },
-})
-
 -- :Z {query}: cd to the highest ranked directory matching your query. If {query} is omitted, cd to the home directory
 -- :Lz {query}: same as :Z, but local to the current window
 -- :Tz {query}: same as :Z, but local to the current tab

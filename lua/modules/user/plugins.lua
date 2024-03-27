@@ -715,6 +715,7 @@ user({
     dependencies = "neovim/nvim-lspconfig",
     event = "VeryLazy",
     opts = {
+        aggressive_mode = true,
         -- your options here
     },
 })
