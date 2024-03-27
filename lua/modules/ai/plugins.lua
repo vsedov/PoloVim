@@ -173,6 +173,14 @@ ai({
         "CodyTaskPrev",
         "CodyTaskAccept",
     },
+    config = function()
+        require("sg").setup({
+            enable_cody = true,
+            accept_tos = true,
+            download_binaries = true,
+            on_attach = true,
+        })
+    end,
 })
 ai({
     "David-Kunz/gen.nvim",
