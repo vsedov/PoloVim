@@ -58,7 +58,7 @@ REPL commands:
         },
         {
             "s",
-            run_cmd_with_count("REPLSendMotion"),
+            run_cmd_with_count(" REPLSendOperator"),
             { exit = true, desc = "Send current line to REPL" },
         },
         {

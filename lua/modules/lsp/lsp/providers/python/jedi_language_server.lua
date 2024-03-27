@@ -10,7 +10,7 @@ return {
             add_bracket_after_function = true,
             dynamic_params = true,
             -- Allot of machine learning models that are set from default.
-            autoImportModules = { "numpy", "matplotlib", "random", "math" },
+            autoImportModules = { "numpy", "matplotlib", "random", "math", "scipy" },
         },
     },
 

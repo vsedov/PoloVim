@@ -11,20 +11,9 @@ local plugins = {
         -- priority = lambda.config.cmp.luasnip.luasnip.priority,
     },
     { name = "cody", enable = true },
-
     {
         name = "neorg",
         enable = true,
-    },
-    -- { name = "otter" },
-    {
-        name = "codeium",
-        enable = condium_cond,
-    },
-    {
-        name = "cmp_tabnine",
-        enable = tabnine_cond,
-        priority = ai.tabnine.cmp.tabnine_priority,
     },
     {
         name = "buffer",

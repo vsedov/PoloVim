@@ -723,3 +723,121 @@ user({
     "kmontocam/nvim-conda",
     cmd = { "CondaActivate", "CondaDeactivate" },
 })
+-- TRIAL: (vsedov) (10:51:37 - 13/11/23): I am not sure what to think about this.
+user({
+    "carbon-steel/detour.nvim",
+    keys = { "<c-w><cr>", ";;t", ";;g", ";;p" },
+    config = function()
+        vim.keymap.set("n", "<c-w><CR>", ":Detour<cr>")
+        -- A keymap for selecting a terminal buffer to open in a popup
+        vim.keymap.set("n", ";;t", function()
+            require("detour").Detour() -- Open a detour popup
+
+            -- Switch to a blank buffer to prevent any accidental changes.
+            vim.cmd.enew()
+            vim.bo.bufhidden = "delete"
+
+            require("telescope.builtin").buffers({}) -- Open telescope prompt
+            vim.api.nvim_feedkeys("term", "n", true) -- popuplate prompt with "term"
+        end)
+        vim.keymap.set("n", ";;g", function()
+            local current_path = vim.fn.expand("%:p:h")
+            local command = "a" -- go into terminal mode
+                .. "cd "
+                .. current_path
+                .. "<CR>"
+                .. "tig<CR>" -- run tig
+            command = vim.api.nvim_replace_termcodes(command, true, false, true)
+
+            require("detour").Detour() -- open a detour popup
+            vim.cmd.terminal() -- open a terminal buffer
+            vim.bo.bufhidden = "delete" -- close the terminal when window closes
+            vim.api.nvim_feedkeys(command, "n", false)
+        end)
+        -- Wrap any TUI inside a popup
+        vim.keymap.set("n", ";;p", function()
+            require("detour").Detour() -- open a detour popup
+            vim.cmd.terminal() -- open a terminal buffer
+            vim.bo.bufhidden = "delete" -- close the terminal when window closes
+            -- Run the `top` command
+            local text = vim.api.nvim_replace_termcodes("atop<CR>", true, false, true)
+            vim.api.nvim_feedkeys(text, "n", false)
+        end)
+    end,
+})
+
+-- TODO:  Convert this to a hydra config, so that i can just run a hydra and should be fine, ;p,
+-- hydra should be good enough
+user({
+    "benlubas/molten-nvim",
+    dependencies = {
+        "3rd/image.nvim",
+        -- "quarto-dev/quarto-nvim",
+        -- "jmbuhr/otter.nvim",
+        "hrsh7th/nvim-cmp",
+        "neovim/nvim-lspconfig",
+        "nvim-treesitter/nvim-treesitter",
+    },
+    build = ":UpdateRemotePlugins",
+    ft = { "python", "julia" },
+    init = function()
+        -- these are examples, not defaults. Please see the readme
+        vim.g.molten_image_provider = "image.nvim"
+
+        vim.g.molten_tick_rate = 200
+
+        -- Output Windowquarto.runner
+        vim.g.molten_auto_open_output = false
+        vim.g.molten_output_win_max_height = 30
+
+        -- Virtual Text
+        vim.g.molten_virt_text_output = true
+    end,
+    config = function()
+        -- vim.cmd([[UpdateRemotePlugins]])
+        local keymap = vim.keymap.set
+        keymap("n", ";pe", "<CMD>MoltenEvaluateOperator<CR>", { desc = "Evaluate Operator" })
+        keymap("n", ";pl", "<CMD>MoltenEvaluateLine<CR>", { desc = "Evaluate Line" })
+        keymap("n", ";pr", "<CMD>MoltenReevaluateCell<CR>", { desc = "Re-evaluate cell" })
+        keymap("n", ";pd", "<CMD>MoltenDelete<CR>", { desc = "Delete cell" })
+        keymap("n", ";ps", "<CMD>MoltenEnterOutput<CR>", { desc = "Show/enter output window" })
+        keymap("n", ";ph", "<CMD>MoltenHideOutput<CR>", { desc = "Hide output window" })
+        keymap("n", "]q", "<CMD>MoltenNext<CR>", { desc = "Goto next cell" })
+        keymap("n", "[q", "<CMD>MoltenPrev<CR>", { desc = "Goto prev cell" })
+        keymap("v", ";pe", ":<C-u>MoltenEvaluateVisual<CR>", { desc = "Evaluate visual selection" })
+
+        -- local runner = require("quarto.runner")
+        -- vim.keymap.set("n", "<localleader>rc", runner.run_cell, { desc = "run cell", silent = true })
+        -- vim.keymap.set("n", "<localleader>ra", runner.run_above, { desc = "run cell and above", silent = true })
+        -- vim.keymap.set("n", "<localleader>rA", runner.run_all, { desc = "run all cells", silent = true })
+        -- vim.keymap.set("n", "<localleader>rl", runner.run_line, { desc = "run line", silent = true })
+        -- vim.keymap.set("v", "<localleader>r", runner.run_range, { desc = "run visual range", silent = true })
+        -- vim.keymap.set("n", "<localleader>RA", function()
+        --     runner.run_all(true)
+        -- end, { desc = "run all cells of all languages", silent = true })
+
+        vim.keymap.set("n", "<localleader>ip", function()
+            local venv = os.getenv("VIRTUAL_ENV")
+            if venv ~= nil then
+                venv = string.match(venv, "/.+/(.+)")
+                vim.cmd(("MoltenInit %s"):format(venv))
+            else
+                vim.cmd("MoltenInit python3")
+            end
+        end, { desc = "Initialize Molten for python3", silent = true, noremap = true })
+
+        -- vim.api.nvim_create_user_command(
+        --     "JupyterInit",
+        --     "! $HOME/.config/nvim/jupyter_init.sh <args>",
+        --     { desc = "Init Jupiter kernel with name", nargs = 1 }
+        -- )
+        -- vim.api.nvim_create_user_command("JupyterConvert", function()
+        --     if vim.bo.filetype ~= "quarto" then
+        --         return
+        --     end
+        --     local path = vim.fn.expand("%:p")
+        --     local notebook_path = string.sub(path, 1, -4) .. "ipynb"
+        --     vim.cmd("! quarto convert " .. path .. " -o " .. notebook_path)
+        -- end, { desc = "Convert from Quarto notebook to Jupyter notebook" })
+    end,
+})

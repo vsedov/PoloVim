@@ -87,18 +87,9 @@ ts({
     config = conf.treesitter_ref, -- let the last loaded config treesitter
 })
 
---  TODO: (vsedov) (04:52:49 - 19/01/24): return and lazy load this
-ts({
-    "David-Kunz/markid",
-    event = "BufEnter",
-    cond = lambda.config.treesitter.better_ts_highlights,
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-})
-
---  TODO: (vsedov) (04:52:41 - 19/01/24): return and lazy load this
 ts({
     "m-demare/hlargs.nvim",
-    event = "BufEnter",
+    event = "BufRead",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
 })

@@ -292,14 +292,6 @@ lambda.command("LeapJumpCommands", function()
     })
 end, {})
 
-lambda.command("ExtraHLToggle", function()
-    lambda.config.better_ts_highlights = not lambda.config.better_ts_highlights
-    require("nvim-treesitter.configs").setup({
-        markid = { enable = lambda.config.better_ts_highlights },
-    })
-    vim.cmd([[bufdo! %]])
-end, {})
-
 -- source https://superuser.com/a/540519
 -- write the visual selection to the filename passed in as a command argument then delete the
 -- selection placing into the black hole register

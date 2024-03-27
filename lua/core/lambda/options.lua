@@ -87,7 +87,7 @@ lambda.config.editor = {
 lambda.config.treesitter = {
     hipairs = true,
     indent = {
-        use_guess_indent = false,
+        use_guess_indent = true,
     },
     use_matchup = true,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid

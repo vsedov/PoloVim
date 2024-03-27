@@ -162,6 +162,10 @@ local mappings = {
                     name = "cmp_tabnine",
                     enable = tabnine_cond,
                 },
+                {
+                    name = "codeium",
+                    enable = condium_cond,
+                },
             },
         },
     }),

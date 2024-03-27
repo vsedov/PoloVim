@@ -116,13 +116,8 @@ for _, server in ipairs(con) do
             if server == "basedpyright" then
                 servers[server] = {
                     settings = {
-                        pyright = {
-                            disableOrganizeImports = true,
-                        },
-                        python = {
-                            analysis = {
-                                ignore = { "*" },
-                            },
+                        basedpyright = {
+                            typeCheckingMode = "standard",
                         },
                     },
                 }
