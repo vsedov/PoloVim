@@ -57,12 +57,6 @@ function config.refactor()
     end
 end
 
-function config.debugprint()
-    require("debugprint").setup({
-        create_keymaps = true,
-    })
-end
-
 function config.dev_comments()
     require("dev_comments").setup({
         -- Enables vim.notify messages

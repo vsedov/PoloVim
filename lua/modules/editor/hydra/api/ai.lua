@@ -1,6 +1,10 @@
 local leader = "<leader>a"
 local visual_mode = require("modules.editor.hydra.hydra_utils").run_visual_or_normal
-
+get_visual_selection_rows = function()
+    local start_row = math.min(vim.fn.getpos("v")[2], vim.fn.getpos(".")[2])
+    local end_row = math.max(vim.fn.getpos("v")[2], vim.fn.getpos(".")[2])
+    return start_row, end_row + 1
+end
 --- Get all the changes in the git repository
 ---@param staged? boolean
 ---@return string
@@ -272,12 +276,15 @@ local cody_normal = {
     {
         "d",
         function()
-            local line = vim.fn.getline(".")
-            local start = vim.fn.col(".")
-            local finish = vim.fn.col("$")
-            local text = line:sub(start, finish)
-            vim.fn.setreg('"', text)
-            vim.cmd([[CodyTask 'Write document for current context']])
+            local buf = vim.api.nvim_get_current_buf()
+            local start_row, end_row = get_visual_selection_rows()
+
+            vim.ui.input({ prompt = "Task/Ask: " }, function(input)
+                if input == nil or input == "" then
+                    return
+                end
+                require("sg.cody.commands").do_task(buf, start_row, end_row, input)
+            end)
         end,
         mode = { "n", "v" },
         desc = "Generate Document with AI",

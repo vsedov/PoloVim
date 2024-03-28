@@ -30,7 +30,7 @@ lang({
         { "g?O", mode = "x" },
     },
     cmd = "DeleteDebugPrints",
-    config = conf.debugprint,
+    config = true,
 })
 
 lang({ "yardnsm/vim-import-cost", cmd = "ImportCost", config = true })

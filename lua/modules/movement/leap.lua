@@ -34,30 +34,6 @@ local function leap_bi_o(inc)
         end
     end
 end
-local function leap_bi_n()
-    require("leap").leap({ target_windows = { vim.api.nvim_get_current_win() }, inclusive_op = true })
-end
-local function leap_bi_x(inc)
-    return function()
-        local behind = _leap_bi()
-
-        if inc == true or inc == 2 then
-            if not behind then
-                vim.cmd("normal! l")
-            end
-        elseif inc == false or inc == 0 then
-            if behind then
-                vim.cmd("normal! 2l")
-            else
-                vim.cmd("normal! h")
-            end
-        elseif inc == 1 then
-            if behind then
-                vim.cmd("normal! l")
-            end
-        end
-    end
-end
 local leap_select_state = { prev_input = nil }
 local function leap_select(kwargs)
     kwargs = kwargs or {}
@@ -289,7 +265,7 @@ function M.keys()
         -- { "<leader>f", leap_bi_x(2), mode = "x", desc = "Leap Inc" },
         -- { "<leader>t", leap_bi_x(0), mode = "x", desc = "Leap Exc" },
         { "h", leap_bi_o(1), mode = "o", desc = "Leap SemiInc" },
-        { ".", leap_bi_o(2), mode = "o", desc = "Leap Incl." },
+        { "H", leap_bi_o(2), mode = "o", desc = "Leap Incl." },
         { "<leader>f", leap_bi_o(2), mode = "o", desc = "Leap Inc" },
         { "<leader>t", leap_bi_o(0), mode = "o", desc = "Leap Exc" },
         { "r", leap_bi_o(0), mode = "o", desc = "Leap Exc" },

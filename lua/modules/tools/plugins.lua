@@ -282,22 +282,6 @@ tools({
 })
 
 tools({
-    "tpope/vim-eunuch",
-    cmd = {
-        "Delete",
-        "Unlink",
-        "Move",
-        "Rename",
-        "Chmod",
-        "Mkdir",
-        "Cfind",
-        "Clocate",
-        "Lfind",
-        "Wall",
-    },
-})
-
-tools({
     "smjonas/live-command.nvim",
     cond = lambda.config.tools.use_live_command,
     event = "VeryLazy",

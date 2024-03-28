@@ -1,5 +1,3 @@
-local visual_mode = require("modules.editor.hydra.hydra_utils").run_visual_or_normal
-local api = vim.api
 local leader = ";p"
 local config = {
     Python = {
@@ -7,6 +5,11 @@ local config = {
         body = leader,
         mode = { "n", "x", "v" },
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
+        ["<cr>"] = {
+            ":<C-u>MoltenEvaluateVisual<CR>",
+            { desc = "Evaluate visual selection", mode = "v" },
+        },
+
         e = {
             "<CMD>MoltenEvaluateOperator<CR>",
             { desc = "Evaluate Operator" },
@@ -32,17 +35,30 @@ local config = {
             "<CMD>MoltenHideOutput<CR>",
             { desc = "Hide output window" },
         },
-        ["n"] = {
+        n = {
             "<CMD>MoltenNext<CR>",
             { desc = "Goto next cell" },
         },
-        ["N"] = {
+        N = {
             "<CMD>MoltenPrev<CR>",
             { desc = "Goto prev cell" },
         },
-        ["<cr>"] = {
-            ":<C-u>MoltenEvaluateVisual<CR>",
-            { desc = "Evaluate visual selection", mode = "v" },
+        S = {
+
+            function()
+                -- Always Do this
+                vim.cmd([[UpdateRemotePlugins]])
+
+                local venv = os.getenv("VIRTUAL_ENV")
+                if venv ~= nil then
+                    venv = string.match(venv, "/.+/(.+)")
+                    vim.cmd(("MoltenInit %s"):format(venv))
+                else
+                    vim.cmd("MoltenInit python3")
+                end
+            end,
+
+            { desc = "Initialize Molten for python3", silent = true, noremap = true },
         },
     },
 }
@@ -51,7 +67,7 @@ return {
     config,
     "Python",
     { { "n", "N" } },
-    { "<cr>", "e", "l", "d", "r", "s", "h" },
+    { "S", "<cr>", "e", "l", "d", "r", "s", "h" },
     6,
     3,
     1,

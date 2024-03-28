@@ -27,12 +27,6 @@ movement({
     event = "CursorMoved",
 })
 
-movement({
-    "tpope/vim-repeat",
-    lazy = true,
-    event = "VeryLazy",
-})
-
 if lambda.config.movement.movement_type == "leap" then
     local leap = require("modules.movement.leap")
 
