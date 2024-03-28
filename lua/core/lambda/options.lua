@@ -85,7 +85,8 @@ lambda.config.editor = {
 }
 
 lambda.config.treesitter = {
-    hipairs = true,
+    hipairs = false, -- this could be interumpting something important and i dont wan thtis to get involved; this will be disabled
+
     indent = {
         use_guess_indent = true,
     },
@@ -98,7 +99,7 @@ lambda.config.treesitter = {
 }
 
 lambda.config.abbrev = {
-    enable = true,
+    enable = false, -- All abbrvs are disables for the time .
     coding_support = true, -- system wide
     globals = {
         -- dictionaries that ive defined to be global, you may not want this idk .

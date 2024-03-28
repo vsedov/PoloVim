@@ -795,16 +795,16 @@ user({
     end,
     config = function()
         -- vim.cmd([[UpdateRemotePlugins]])
-        local keymap = vim.keymap.set
-        keymap("n", ";pe", "<CMD>MoltenEvaluateOperator<CR>", { desc = "Evaluate Operator" })
-        keymap("n", ";pl", "<CMD>MoltenEvaluateLine<CR>", { desc = "Evaluate Line" })
-        keymap("n", ";pr", "<CMD>MoltenReevaluateCell<CR>", { desc = "Re-evaluate cell" })
-        keymap("n", ";pd", "<CMD>MoltenDelete<CR>", { desc = "Delete cell" })
-        keymap("n", ";ps", "<CMD>MoltenEnterOutput<CR>", { desc = "Show/enter output window" })
-        keymap("n", ";ph", "<CMD>MoltenHideOutput<CR>", { desc = "Hide output window" })
-        keymap("n", "]q", "<CMD>MoltenNext<CR>", { desc = "Goto next cell" })
-        keymap("n", "[q", "<CMD>MoltenPrev<CR>", { desc = "Goto prev cell" })
-        keymap("v", ";pe", ":<C-u>MoltenEvaluateVisual<CR>", { desc = "Evaluate visual selection" })
+        -- local keymap = vim.keymap.set
+        -- keymap("n", ";pe", "<CMD>MoltenEvaluateOperator<CR>", { desc = "Evaluate Operator" })
+        -- keymap("n", ";pl", "<CMD>MoltenEvaluateLine<CR>", { desc = "Evaluate Line" })
+        -- keymap("n", ";pr", "<CMD>MoltenReevaluateCell<CR>", { desc = "Re-evaluate cell" })
+        -- keymap("n", ";pd", "<CMD>MoltenDelete<CR>", { desc = "Delete cell" })
+        -- keymap("n", ";ps", "<CMD>MoltenEnterOutput<CR>", { desc = "Show/enter output window" })
+        -- keymap("n", ";ph", "<CMD>MoltenHideOutput<CR>", { desc = "Hide output window" })
+        -- keymap("n", "]q", "<CMD>MoltenNext<CR>", { desc = "Goto next cell" })
+        -- keymap("n", "[q", "<CMD>MoltenPrev<CR>", { desc = "Goto prev cell" })
+        -- keymap("v", ";pe", ":<C-u>MoltenEvaluateVisual<CR>", { desc = "Evaluate visual selection" })
 
         -- local runner = require("quarto.runner")
         -- vim.keymap.set("n", "<localleader>rc", runner.run_cell, { desc = "run cell", silent = true })
