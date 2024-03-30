@@ -505,6 +505,13 @@ ui({
         })
     end,
 })
+ui({
+    "itchyny/vim-highlighturl",
+    event = "ColorScheme",
+    config = function()
+        vim.g.highlighturl_guifg = highlight.get("@keyword", "fg")
+    end,
+})
 -- -- --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
 -- -- --  i wonder if they are any better that what ive had before
 ui({
@@ -519,23 +526,6 @@ ui({
     lazy = true,
     config = true,
     event = "VeryLazy",
-})
-ui({
-    "karb94/neoscroll.nvim", -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    cond = lambda.config.ui.scroll_bar.use_scroll,
-    event = "VeryLazy",
-    config = function()
-        require("neoscroll").setup({
-            -- All these keys will be mapped to their corresponding default scrolling animation
-            --mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-            mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>" },
-            hide_cursor = true, -- Hide cursor while scrolling
-            stop_eof = false, -- Stop at <EOF> when scrolling downwards
-            -- use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-            -- respect_scrolloff = true, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-            -- cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
-        })
-    end,
 })
 
 ui({

@@ -205,12 +205,6 @@ tools({
 })
 
 tools({
-    "tyru/capture.vim",
-    lazy = true,
-    cmd = "Capture",
-})
-
-tools({
     "kevinhwang91/nvim-fundo",
     event = "BufReadPre",
     cond = lambda.config.tools.use_fundo, -- messes with some buffers which is really not that amazing | will have to see if there is a better fix for this

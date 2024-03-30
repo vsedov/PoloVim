@@ -794,3 +794,19 @@ user({
         vim.g.molten_virt_text_output = true
     end,
 })
+user({
+    "tani/dmacro.nvim",
+    keys = {
+
+        {
+            "<C-cr>",
+            mode = { "n", "i" },
+        },
+    },
+    lazy = true,
+    config = function()
+        require("dmacro").setup({
+            dmacro_key = "<C-cr>", --  you need to set the dmacro_key
+        })
+    end,
+})

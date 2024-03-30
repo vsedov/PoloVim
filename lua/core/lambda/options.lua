@@ -174,13 +174,14 @@ lambda.config.lsp = {
         lsp = {
             "sourcery",
             "ruff_lsp",
-            -- "pylance",
             "jedi_language_server",
+            -- "pylance",
             -- "basedpyright",
             -- "python-language-server",
             -- "pylsp",
             -- "pylyzer"
-        }, -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+            -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
+        },
     },
 }
 
@@ -211,9 +212,6 @@ lambda.config.ui = {
         use_hlchunk = false,
         use_indent_blankline = false, -- we shall keep this for now, seems rather nice
         use_mini_indent_scope = true,
-    },
-    scroll_bar = {
-        use_scroll = false, -- for now im using mini animate - this might need a more advanced toglge for this to work
     },
 }
 lambda.config.fun = {
