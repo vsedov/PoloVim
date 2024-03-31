@@ -715,7 +715,7 @@ user({
     dependencies = "neovim/nvim-lspconfig",
     event = "VeryLazy",
     opts = {
-        aggressive_mode = true, -- I dont know why you would not have this enabled; i guess ima  bit confused for the case.
+        aggressive_mode = false, -- I dont know why you would not have this enabled; i guess ima  bit confused for the case.
         -- your options here
     },
 })
@@ -809,4 +809,11 @@ user({
             dmacro_key = "<C-cr>", --  you need to set the dmacro_key
         })
     end,
+})
+user({
+    "NStefan002/donut.nvim",
+    event = "VeryLazy",
+    opts = {
+        -- your config
+    },
 })
