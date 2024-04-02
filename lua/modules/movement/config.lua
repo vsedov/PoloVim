@@ -33,7 +33,7 @@ end
 
 function config.houdini()
     require("houdini").setup({
-        mappings = { "jk", "aa", "ii", "jj", "kk" },
+        mappings = { "jk", "AA", "II", "JJ", "KK" },
         check_modified = true,
         escape_sequences = {
             t = false,
@@ -44,10 +44,10 @@ function config.houdini()
                     return "" -- disabled
                 end
 
-                if seq == "kk" then
+                if seq == "KK" then
                     return "<bs><bs>()<esc>i"
                 end
-                if seq == "jj" then
+                if seq == "JJ" then
                     return "<bs><bs>[]<esc>i"
                 end
                 if seq == "AA" then

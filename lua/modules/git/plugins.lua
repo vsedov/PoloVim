@@ -1,11 +1,5 @@
 local conf = require("modules.git.config")
 local git = require("core.pack").package
-local install = function(spec)
-    local installedDir = spec.dir
-
-    vim.system({ "gh", "extension", "install", "." }, { cwd = installedDir, text = true })
-end
--- -- github GH ui
 git({
     "pwntester/octo.nvim",
     dependencies = {
@@ -144,30 +138,6 @@ git({
     },
     config = true,
 })
+
 -- -- Diff arbitrary blocks of text with each other
 git({ "AndrewRadev/linediff.vim", cmd = "Linediff" })
-
--- git({
---     "topaxi/gh-actions.nvim",
---     cmd = "GhActions",
---     keys = {
---         { "<leader>gh", "<cmd>GhActions<cr>", desc = "Open Github Actions" },
---     },
---     -- optional, you can also install and use `yq` instead.
---     build = "make",
---     dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
---     opts = {},
---     config = function(_, opts)
---         require("gh-actions").setup(opts)
---     end,
--- })
-
-git({
-    "FabijanZulj/blame.nvim",
-    cmd = {
-        "ToggleBlame",
-        "EnableBlame",
-        "DisableBlame",
-    },
-    config = true,
-})

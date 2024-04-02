@@ -24,7 +24,28 @@ local movement = require("core.pack").package
 --
 movement({
     "tommcdo/vim-exchange",
-    event = "CursorMoved",
+    keys = {
+        {
+            "cx",
+            "<Plug>(Exchange)",
+            mode = "n",
+        },
+        {
+            "cxx",
+            "<Plug>(ExchangeLine)",
+            mode = "n",
+        },
+        {
+            "X",
+            "<Plug>(VisualExchange)",
+            mode = "x",
+        },
+        {
+            "cxc",
+            "<Plug>(ClearExchange)",
+            mode = "n",
+        },
+    },
 })
 
 if lambda.config.movement.movement_type == "leap" then
@@ -199,6 +220,7 @@ movement({
 
 movement({
     "chentoast/marks.nvim",
+    lazy = true,
     config = function()
         lambda.highlight.plugin("marks", {
             { MarkSignHL = { link = "Directory" } },
@@ -306,7 +328,7 @@ movement({
 movement({
     "TheBlob42/houdini.nvim",
     lazy = true,
-    event = "ModeChanged",
+    event = "InsertEnter",
     config = conf.houdini,
 })
 

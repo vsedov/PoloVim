@@ -3,7 +3,6 @@ local python = require("core.pack").package
 
 python({
     "ranelpadon/python-copy-reference.vim",
-    event = "BufReadPre *.py",
     lazy = true,
     cmd = {
         "PythonCopyReferenceDotted",
@@ -33,13 +32,12 @@ python({
 
 python({
     "Vimjas/vim-python-pep8-indent",
-    event = "BufReadPre *.py",
+    ft = "python",
 })
 
 python({
     "purpleP/python-syntax",
-    cond = false,
-    event = "BufReadPre *.py",
+    ft = "python",
 })
 
 -- I forget this existed
@@ -98,21 +96,4 @@ python({
 python({
     "raimon49/requirements.txt.vim",
     event = "BufReadPre requirements*.txt",
-})
-
-python({
-    "luk400/vim-jukit",
-    cond = false,
-    ft = { "python", "julia" },
-    lazy = true,
-    config = function()
-        vim.g.jukit_terminal = "kitty"
-    end,
-})
-
-python({
-    "kiyoon/jupynium.nvim",
-    cond = false,
-    build = "pip3 install --user .",
-    config = true,
 })

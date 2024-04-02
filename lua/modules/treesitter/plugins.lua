@@ -174,10 +174,7 @@ ts({
 ts({
     "andymass/vim-matchup",
     cond = lambda.config.treesitter.use_matchup,
-    event = "BufReadPost",
-    init = function()
-        vim.o.matchpairs = "(:),{:},[:],<:>"
-    end,
+    event = "BufRead",
     keys = {
         {
             "<leader><leader>w",
@@ -187,13 +184,34 @@ ts({
         },
     },
     config = function()
+        vim.g.loaded_matchit = 1
+        vim.g.matchup_matchparen_offscreen = { method = "popup" }
+        -- vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+
+        -- defer to better performance
         vim.g.matchup_matchparen_deferred = 1
-        vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+        vim.g.matchup_matchparen_deferred_show_delay = 50
+        vim.g.matchup_matchparen_deferred_hide_delay = 500
+        vim.cmd([[nmap <silent> <F7> <plug>(matchup-hi-surround)]])
+        vim.cmd([[
+function! s:matchup_convenience_maps()
+  xnoremap <sid>(std-I) I
+  xnoremap <sid>(std-A) A
+  xmap <expr> I mode()=='<c-v>'?'<sid>(std-I)':(v:count?'':'1').'i'
+  xmap <expr> A mode()=='<c-v>'?'<sid>(std-A)':(v:count?'':'1').'a'
+  for l:v in ['', 'v', 'V', '<c-v>']
+    execute 'omap <expr>' l:v.'I%' "(v:count?'':'1').'".l:v."i%'"
+    execute 'omap <expr>' l:v.'A%' "(v:count?'':'1').'".l:v."a%'"
+  endfor
+endfunction
+call s:matchup_convenience_maps()
+            ]])
     end,
 })
+
 ts({
     "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
-    event = "BufReadPost",
+    event = "VeryLazy",
     config = function()
         local rainbow_delimiters = require("rainbow-delimiters")
 
