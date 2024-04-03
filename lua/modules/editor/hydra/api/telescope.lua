@@ -110,22 +110,30 @@ local config = {
         },
 
         p = {
-            require("telescope.builtin").workspaces,
+            function()
+                require("telescope.builtin").workspaces()
+            end,
             { exit = true, desc = "Workspaces" },
         },
 
         M = {
-            require("telescope.builtin").marks,
+            function()
+                require("telescope.builtin").marks()
+            end,
             { exit = true, desc = "Marks" },
         },
 
         B = {
-            require("telescope.builtin").bookmarks,
+            function()
+                require("telescope.builtin").bookmarks()
+            end,
             { exit = true, desc = "Bookmarks" },
         },
 
         ["/"] = {
-            require("telescope.builtin").search_history,
+            function()
+                require("telescope.builtin").search_history()
+            end,
             { exit = true, desc = "Search History" },
         },
 
@@ -137,27 +145,37 @@ local config = {
         },
 
         m = {
-            require("telescope.builtin").commands,
+            function()
+                require("telescope.builtin").commands()
+            end,
             { exit = true, desc = "Commands" },
         },
 
         o = {
-            require("telescope.builtin").oldfiles,
+            function()
+                require("telescope.builtin").oldfiles()
+            end,
             { exit = true, desc = "Oldfiles" },
         },
 
         k = {
-            require("telescope.builtin").keymaps,
+            function()
+                require("telescope.builtin").keymaps()
+            end,
             { exit = true, desc = "Keymaps" },
         },
 
         R = {
-            require("telescope.builtin").reloader,
+            function()
+                require("telescope.builtin").reloader()
+            end,
             { exit = true, desc = "Reloader" },
         },
 
         ["<CR>"] = {
-            require("telescope.builtin").builtin,
+            function()
+                require("telescope.builtin").builtin()
+            end,
             { exit = true, desc = "Builtin" },
         },
 
@@ -176,7 +194,9 @@ local config = {
         },
 
         ["+"] = {
-            require("telescope").extensions.smart_open.smart_open,
+            function()
+                require("telescope").extensions.smart_open.smart_open()
+            end,
             { exit = true, desc = "Smart Open" },
         },
 

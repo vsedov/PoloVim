@@ -575,13 +575,6 @@ user({
 })
 
 user({
-    "mvllow/modes.nvim",
-    cond = true,
-    event = "VeryLazy",
-    config = true,
-})
-
-user({
     "jinh0/eyeliner.nvim",
     keys = { "f", "F", "t", "T" },
     opts = {
@@ -663,69 +656,16 @@ user({
     },
 })
 user({
-    "zeioth/garbage-day.nvim",
-    dependencies = "neovim/nvim-lspconfig",
-    event = "VeryLazy",
-    opts = {
-        aggressive_mode = false, -- I dont know why you would not have this enabled; i guess ima  bit confused for the case.
-        -- your options here
-    },
-})
-user({
     "kmontocam/nvim-conda",
     cmd = { "CondaActivate", "CondaDeactivate" },
 })
--- TRIAL: (vsedov) (10:51:37 - 13/11/23): I am not sure what to think about this.
-user({
-    "carbon-steel/detour.nvim",
-    keys = { "<c-w><cr>", ";;t", ";;g", ";;p" },
-    config = function()
-        vim.keymap.set("n", "<c-w><CR>", ":Detour<cr>")
-        -- A keymap for selecting a terminal buffer to open in a popup
-        vim.keymap.set("n", ";;t", function()
-            require("detour").Detour() -- Open a detour popup
 
-            -- Switch to a blank buffer to prevent any accidental changes.
-            vim.cmd.enew()
-            vim.bo.bufhidden = "delete"
-
-            require("telescope.builtin").buffers({}) -- Open telescope prompt
-            vim.api.nvim_feedkeys("term", "n", true) -- popuplate prompt with "term"
-        end)
-        vim.keymap.set("n", ";;g", function()
-            local current_path = vim.fn.expand("%:p:h")
-            local command = "a" -- go into terminal mode
-                .. "cd "
-                .. current_path
-                .. "<CR>"
-                .. "tig<CR>" -- run tig
-            command = vim.api.nvim_replace_termcodes(command, true, false, true)
-
-            require("detour").Detour() -- open a detour popup
-            vim.cmd.terminal() -- open a terminal buffer
-            vim.bo.bufhidden = "delete" -- close the terminal when window closes
-            vim.api.nvim_feedkeys(command, "n", false)
-        end)
-        -- Wrap any TUI inside a popup
-        vim.keymap.set("n", ";;p", function()
-            require("detour").Detour() -- open a detour popup
-            vim.cmd.terminal() -- open a terminal buffer
-            vim.bo.bufhidden = "delete" -- close the terminal when window closes
-            -- Run the `top` command
-            local text = vim.api.nvim_replace_termcodes("atop<CR>", true, false, true)
-            vim.api.nvim_feedkeys(text, "n", false)
-        end)
-    end,
-})
-
--- TODO:  Convert this to a hydra config, so that i can just run a hydra and should be fine, ;p,
--- hydra should be good enough
 user({
     "benlubas/molten-nvim",
     dependencies = {
         "3rd/image.nvim",
-        -- "quarto-dev/quarto-nvim",
-        -- "jmbuhr/otter.nvim",
+        "quarto-dev/quarto-nvim",
+        "jmbuhr/otter.nvim",
         "hrsh7th/nvim-cmp",
         "neovim/nvim-lspconfig",
         "nvim-treesitter/nvim-treesitter",
@@ -751,19 +691,42 @@ user({
     keys = {
 
         {
-            "<C-cr>",
+            "<C-.>",
             mode = { "n", "i" },
         },
     },
     lazy = true,
     config = function()
         require("dmacro").setup({
-            dmacro_key = "<C-cr>", --  you need to set the dmacro_key
+            dmacro_key = "<C-.>", --  you need to set the dmacro_key
         })
     end,
 })
+-- ┌                                          ┐
+-- │                                          │
+-- │ Very Lazy Scripts that i need to replace │
+-- │                                          │
+-- └                                          ┘
+
 user({
     "NStefan002/donut.nvim",
-    event = "VeryLazy",
+    event = "User FilePost",
     opts = {},
+})
+
+user({
+    "zeioth/garbage-day.nvim",
+    dependencies = "neovim/nvim-lspconfig",
+    event = "User FilePost",
+    opts = {
+        aggressive_mode = false, -- I dont know why you would not have this enabled; i guess ima  bit confused for the case.
+        -- your options here
+    },
+})
+
+user({
+    "mvllow/modes.nvim",
+    cond = true,
+    event = "User FilePost",
+    config = true,
 })

@@ -9,7 +9,7 @@ runner({
 
 runner({ -- This plugin
     "Zeioth/compiler.nvim",
-    event = "VeryLazy",
+    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
     dependencies = { "stevearc/overseer.nvim" },
     config = true,
 })

@@ -128,7 +128,6 @@ local load_core = function()
      set nospell
          ]])
     end
-    require("core.lazy")
 end
 
 load_core()

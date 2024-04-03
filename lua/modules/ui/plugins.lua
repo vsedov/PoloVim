@@ -3,52 +3,14 @@ local conf = require("modules.ui.config")
 local highlight, foo, falsy, augroup = lambda.highlight, lambda.style, lambda.falsy, lambda.augroup
 local border, rect = foo.border.type_0, foo.border.type_0
 local icons = lambda.style.icons
-ui({
-    "rcarriga/nvim-notify",
-    event = "VeryLazy",
-    config = conf.notify,
-})
-ui({
-    "j-hui/fidget.nvim",
-    cond = lambda.config.ui.use_fidgit,
-    event = "VeryLazy",
-    opts = {
-        notification = {
-            override_vim_notify = false,
-        },
-    },
-})
 
+--
 ui({
     "glepnir/nerdicons.nvim",
     cmd = "NerdIcons",
     config = true,
 })
 
---
-ui({
-    "rebelot/heirline.nvim",
-    cond = lambda.config.ui.heirline.use_heirline,
-    event = "VeryLazy",
-    config = function()
-        require("heirline").setup({
-            --winbar = require("modules.ui.heirline.winbar"),
-            statusline = require("modules.ui.heirline.statusline"),
-            statuscolumn = require("modules.ui.heirline.statuscolumn"),
-            opts = {
-                disable_winbar_cb = function(args)
-                    local conditions = require("heirline.conditions")
-
-                    return conditions.buffer_matches({
-                        buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-                        filetype = { "alpha", "codecompanion", "oil", "lspinfo", "toggleterm" },
-                    }, args.buf)
-                end,
-            },
-        })
-    end,
-})
---
 ui({
     "stevearc/dressing.nvim",
     event = "BufWinEnter",
@@ -139,13 +101,6 @@ ui({ "MunifTanjim/nui.nvim", lazy = true })
 -- -- -- -- Force Lazy
 -- -- -- --  ──────────────────────────────────────────────────────────────────────
 -- -- --
-ui({
-    "RRethy/vim-illuminate",
-    lazy = true,
-    cond = lambda.config.ui.use_illuminate,
-    event = "VeryLazy",
-    config = conf.illuminate,
-})
 --
 -- --  ──────────────────────────────────────────────────────────────────────
 --
@@ -397,6 +352,159 @@ ui({
     "kevinhwang91/promise-async",
     lazy = true,
 })
+ui({
+    "jghauser/fold-cycle.nvim",
+    config = true,
+    keys = {
+        {
+            "<BS>",
+            function()
+                require("fold-cycle").open()
+            end,
+            desc = "fold-cycle: toggle",
+            silent = true,
+        },
+        {
+            "<C-<BS>>",
+            function()
+                require("fold-cycle").close()
+            end,
+            desc = "fold-cycle: toggle",
+            silent = true,
+        },
+        {
+            "zC",
+            function()
+                require("fold-cycle").close_all()
+            end,
+            desc = "fold-cycle: Close all ",
+            remap = true,
+        },
+    },
+})
+ui({
+    "uga-rosa/ccc.nvim",
+    cmd = { "CccHighlighterToggle" },
+    opts = function()
+        local ccc = require("ccc")
+        local p = ccc.picker
+        p.hex.pattern = {
+            [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
+            [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
+        }
+        ccc.setup({
+            win_opts = { border = lambda.style.border.type_0 },
+            pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+            highlighter = {
+                auto_enable = true,
+                excludes = { "dart", "lazy", "orgagenda", "org", "NeogitStatus", "toggleterm" },
+            },
+        })
+    end,
+})
+ui({
+    "itchyny/vim-highlighturl",
+    event = "ColorScheme",
+    config = function()
+        vim.g.highlighturl_guifg = highlight.get("@keyword", "fg")
+    end,
+})
+
+-- ┌                                          ┐
+-- │                                          │
+-- │ Very Lazy Scripts that i need to replace │
+-- │                                          │
+-- └                                          ┘
+
+ui({
+    "rcarriga/nvim-notify",
+    event = "VeryLazy",
+    config = conf.notify,
+})
+ui({
+    "j-hui/fidget.nvim",
+    cond = lambda.config.ui.use_fidgit,
+    event = "VeryLazy",
+    opts = {
+        notification = {
+            override_vim_notify = false,
+        },
+    },
+})
+
+--
+ui({
+    "rebelot/heirline.nvim",
+    cond = lambda.config.ui.heirline.use_heirline,
+    event = "VeryLazy",
+    config = function()
+        require("heirline").setup({
+            --winbar = require("modules.ui.heirline.winbar"),
+            statusline = require("modules.ui.heirline.statusline"),
+            statuscolumn = require("modules.ui.heirline.statuscolumn"),
+            opts = {
+                disable_winbar_cb = function(args)
+                    local conditions = require("heirline.conditions")
+
+                    return conditions.buffer_matches({
+                        buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
+                        filetype = { "alpha", "codecompanion", "oil", "lspinfo", "toggleterm" },
+                    }, args.buf)
+                end,
+            },
+        })
+    end,
+})
+
+ui({
+    "kevinhwang91/nvim-hlslens",
+    cond = lambda.config.ui.use_hlslens,
+    lazy = true,
+    config = true,
+    event = "VeryLazy",
+})
+
+ui({
+    "Bekaboo/dropbar.nvim",
+    event = "VeryLazy",
+    cond = lambda.config.ui.use_dropbar,
+    keys = {
+        {
+            "<leader>wp",
+            function()
+                require("dropbar.api").pick()
+            end,
+            desc = "winbar: pick",
+        },
+    },
+    opts = {
+        general = {
+            update_interval = 100,
+            enable = function(buf, win)
+                local b, w = vim.bo[buf], vim.wo[win]
+                local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
+                return decor.ft ~= false
+                    and decor.bt ~= false
+                    and b.bt == ""
+                    and not w.diff
+                    and not vim.api.nvim_win_get_config(win).zindex
+                    and vim.api.nvim_buf_get_name(buf) ~= ""
+            end,
+        },
+        icons = {
+            ui = { bar = { separator = " " .. lambda.style.icons.misc.caret_right .. " " } },
+        },
+        menu = {
+            win_configs = {
+                border = "single",
+                col = function(menu)
+                    return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+                end,
+            },
+        },
+    },
+})
+
 --
 ui({
     "kevinhwang91/nvim-ufo",
@@ -455,108 +563,11 @@ ui({
     cmd = { "Foldcus", "Unfoldcus" },
     config = conf.fold_focus,
 })
-ui({
-    "jghauser/fold-cycle.nvim",
-    config = true,
-    keys = {
-        {
-            "<BS>",
-            function()
-                require("fold-cycle").open()
-            end,
-            desc = "fold-cycle: toggle",
-            silent = true,
-        },
-        {
-            "<C-<BS>>",
-            function()
-                require("fold-cycle").close()
-            end,
-            desc = "fold-cycle: toggle",
-            silent = true,
-        },
-        {
-            "zC",
-            function()
-                require("fold-cycle").close_all()
-            end,
-            desc = "fold-cycle: Close all ",
-            remap = true,
-        },
-    },
-})
-ui({
-    "uga-rosa/ccc.nvim",
-    cmd = { "CccHighlighterToggle" },
-    opts = function()
-        local ccc = require("ccc")
-        local p = ccc.picker
-        p.hex.pattern = {
-            [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
-            [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
-        }
-        ccc.setup({
-            win_opts = { border = lambda.style.border.type_0 },
-            pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
-            highlighter = {
-                auto_enable = true,
-                excludes = { "dart", "lazy", "orgagenda", "org", "NeogitStatus", "toggleterm" },
-            },
-        })
-    end,
-})
-ui({
-    "itchyny/vim-highlighturl",
-    event = "ColorScheme",
-    config = function()
-        vim.g.highlighturl_guifg = highlight.get("@keyword", "fg")
-    end,
-})
-ui({
-    "kevinhwang91/nvim-hlslens",
-    cond = lambda.config.ui.use_hlslens,
-    lazy = true,
-    config = true,
-    event = "VeryLazy",
-})
 
 ui({
-    "Bekaboo/dropbar.nvim",
+    "RRethy/vim-illuminate",
+    lazy = true,
+    cond = lambda.config.ui.use_illuminate,
     event = "VeryLazy",
-    cond = lambda.config.ui.use_dropbar,
-    keys = {
-        {
-            "<leader>wp",
-            function()
-                require("dropbar.api").pick()
-            end,
-            desc = "winbar: pick",
-        },
-    },
-    opts = {
-        general = {
-            update_interval = 100,
-            enable = function(buf, win)
-                local b, w = vim.bo[buf], vim.wo[win]
-                local decor = lambda.style.decorations.get({ ft = b.ft, bt = b.bt, setting = "winbar" })
-                return decor.ft ~= false
-                    and decor.bt ~= false
-                    and b.bt == ""
-                    and not w.diff
-                    and not vim.api.nvim_win_get_config(win).zindex
-                    and vim.api.nvim_buf_get_name(buf) ~= ""
-            end,
-        },
-        icons = {
-            ui = { bar = { separator = " " .. lambda.style.icons.misc.caret_right .. " " } },
-        },
-        menu = {
-            win_configs = {
-                border = "single",
-                col = function(menu)
-                    return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
-                end,
-            },
-        },
-    },
+    config = conf.illuminate,
 })

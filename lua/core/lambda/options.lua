@@ -71,8 +71,8 @@ lambda.config.extra_search = {
 }
 lambda.config.buffer = {
     use_bufferline = false,
-    use_tabscope = true,
-    use_sticky_buf = false,
+    use_tabscope = false, -- we are going to use scope.nvim
+    use_sticky_buf = true,
     use_hbac = false,
 }
 lambda.config.editor = {

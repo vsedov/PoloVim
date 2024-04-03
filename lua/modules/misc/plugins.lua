@@ -27,8 +27,8 @@ misc({
 misc({
     "kylechui/nvim-surround",
     lazy = true,
-    event = "VeryLazy",
     opts = { move_cursor = true, keymaps = { visual = "s" } },
+    event = "InsertEnter",
     config = function(_, opts)
         require("nvim-surround").setup(opts)
         -- surr*ound_words             ysiw)           (surround_words)
@@ -90,6 +90,7 @@ misc({
 
 misc({
     "XXiaoA/ns-textobject.nvim",
+    event = "InsertEnter",
     dependencies = { "kylechui/nvim-surround" },
     opts = {
         auto_mapping = {
@@ -195,7 +196,7 @@ misc({
 misc({
     "chaoren/vim-wordmotion",
     lazy = true,
-    event = "VeryLazy",
+    event = "CursorMoved",
     config = function()
         vim.g.wordmotion_prefix = ","
     end,

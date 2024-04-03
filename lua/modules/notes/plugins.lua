@@ -2,14 +2,13 @@ local conf = require("modules.notes.config")
 local notes = require("core.pack").package
 notes({
     "vhyrro/luarocks.nvim",
+    priority = 1000,
     config = true,
 })
 notes({
     "nvim-neorg/neorg",
     ft = { "norg" },
-    -- cmd = { "Neorg" },
     branch = "luarocks",
-
     init = function()
         require("modules.notes.norg.commands").setup({})
         require("modules.notes.norg.autocmd").setup({})

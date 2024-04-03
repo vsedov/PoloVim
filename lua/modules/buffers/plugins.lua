@@ -13,7 +13,7 @@ local conf = require("modules.buffers.config")
 -- })
 buffer({
     "romgrk/barbar.nvim",
-    event = "VeryLazy",
+    event = "User FilePost",
     dependencies = {
         "lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
         "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
@@ -23,12 +23,42 @@ buffer({
     end,
     opts = {
         animation = false,
+        sidebar_filetypes = {
+            undotree = { text = "undotree" },
+            ["neo-tree"] = { event = "BufWipeout" },
+            Outline = { event = "BufWinLeave", text = "symbols-outline" },
+        },
     },
 })
 buffer({
+    "tiagovla/scope.nvim",
+    event = "User FilePost",
+    cond = not lambda.config.buffer.use_tabscope,
+    config = function()
+        require("scope").setup({
+            hooks = {
+                pre_tab_leave = function()
+                    vim.api.nvim_exec_autocmds("User", { pattern = "ScopeTabLeavePre" })
+                    -- [other statements]
+                end,
+
+                post_tab_enter = function()
+                    vim.api.nvim_exec_autocmds("User", { pattern = "ScopeTabEnterPost" })
+                    -- [other statements]
+                end,
+
+                -- [other hooks]
+            },
+
+            -- [other options]
+        })
+    end,
+})
+buffer({
     "backdround/tabscope.nvim",
+    cond = lambda.config.buffer.use_tabscope,
     lazy = true,
-    event = "VeryLazy",
+    event = "User FilePost",
     config = true,
     keys = {
         {
@@ -79,7 +109,7 @@ buffer({
 buffer({
     "stevearc/stickybuf.nvim",
     cond = lambda.config.buffer.use_sticky_buf,
-    event = { "BufReadPost", "BufNewFile" },
+    event = "User FilePost",
     config = function()
         require("stickybuf").setup()
 
@@ -179,12 +209,12 @@ buffer({
     opts = {
         retirementAgeMins = 10,
     },
-    event = "VeryLazy",
+    event = "User FilePost",
 })
 buffer({
     "axkirillov/hbac.nvim",
     cond = lambda.config.buffer.use_hbac,
-    event = "VeryLazy",
+    event = "User FilePost",
     opts = {
         autoclose = true, -- set autoclose to false if you want to close manually
         threshold = 60, -- hbac will start closing unedited buffers once that number is reached

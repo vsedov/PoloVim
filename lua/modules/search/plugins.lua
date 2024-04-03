@@ -114,7 +114,6 @@ search({
     "windwp/nvim-spectre",
     lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
-    -- event = "VeryLazy",
     cmd = {
         "Spectre",
         "SpectreToggleLine",

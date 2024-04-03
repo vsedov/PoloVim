@@ -54,7 +54,7 @@ ai({
     "codota/tabnine-nvim",
     lazy = true,
     cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_insert),
-    event = "VeryLazy",
+    event = "BufWinEnter",
     build = "bash ./dl_binaries.sh",
     config = conf.tabnine,
 })
@@ -63,7 +63,7 @@ ai({
     "Exafunction/codeium.vim",
     lazy = true,
     cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codium_insert),
-    event = "VeryLazy",
+    event = "BufWinEnter",
     init = function()
         vim.g.codeium_disable_bindings = 1
         vim.g.codeium_enabled = lambda.config.ai.use_codium_insert
@@ -75,7 +75,7 @@ ai({
     "jcdickinson/codeium.nvim",
     cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codeium_cmp),
     lazy = true,
-    event = "VeryLazy",
+    event = "BufWinEnter",
     dependencies = {
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
@@ -95,7 +95,7 @@ ai({
 ai({
     "zbirenbaum/copilot.lua",
     cond = ai_conf.sell_your_soul,
-    event = "VeryLazy",
+    event = "InsertEnter",
     opts = {
         panel = {
             enabled = true,
@@ -125,6 +125,25 @@ ai({
 --  or perhaps <leader>cc Hydra could also work
 ai({
     "CopilotC-Nvim/CopilotChat.nvim",
+    cmd = {
+        "CopilotChat",
+        "CopilotChatExplain",
+        "CopilotChatTests",
+        "CopilotChatReview",
+        "CopilotChatReview",
+        "CopilotChatRefactor",
+        "CopilotChatFixCode",
+        "CopilotChatBetterNamings",
+        "CopilotChatDocumentation",
+        "CopilotChatSummarize",
+        "CopilotChatSpelling",
+        "CopilotChatWording",
+        "CopilotChatConcise",
+        "CopilotChatDebugInfo",
+        "CopilotChatVisual",
+        "CopilotChatInPlace",
+    },
+
     build = function()
         vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
         vim.cmd("UpdateRemotePlugins")
