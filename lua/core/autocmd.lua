@@ -306,7 +306,7 @@ lambda.augroup("Utilities", {
         end,
     },
     {
-        event = { "DirChanged", "VimEnter" },
+        event = { "DirChanged" },
         command = function()
             if fn.getcwd() == env.DOTFILES then
                 vim.keymap.set("n", "gx", function()

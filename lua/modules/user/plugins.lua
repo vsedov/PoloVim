@@ -765,7 +765,5 @@ user({
 user({
     "NStefan002/donut.nvim",
     event = "VeryLazy",
-    opts = {
-        sync_donuts = true,
-    },
+    opts = {},
 })
