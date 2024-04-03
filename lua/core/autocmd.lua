@@ -267,24 +267,18 @@ lambda.augroup("Utilities", {
             cmd.edit(vim.uri_to_fname(args.file))
         end,
     },
-    -- {
-    --     --- disable formatting in directories in third party repositories
-    --     event = { "BufEnter" },
-    --     command = function(args)
-    --         local paths = vim.split(vim.o.runtimepath, ",")
-    --         local match = vim.iter(paths):find(function(dir)
-    --             local path = api.nvim_buf_get_name(args.buf)
-    --             if vim.startswith(path, env.PERSONAL_PROJECTS_DIR) then
-    --                 return false
-    --             end
-    --             if vim.startswith(path, env.VIMRUNTIME) then
-    --                 return true
-    --             end
-    --             return vim.startswith(path, dir)
-    --         end)
-    --         vim.b[args.buf].formatting_disabled = match ~= nil
-    --     end,
-    -- },
+    {
+        --- disable formatting in directories in third party repositories
+        event = { "BufEnter" },
+        command = function(args)
+            local paths = vim.split(vim.o.runtimepath, ",")
+            local match = vim.iter(paths):find(function(dir)
+                local path = api.nvim_buf_get_name(args.buf)
+                return vim.startswith(path, dir)
+            end)
+            vim.b[args.buf].formatting_disabled = match ~= nil
+        end,
+    },
     {
         event = { "BufLeave" },
         pattern = { "*" },

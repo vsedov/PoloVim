@@ -1,5 +1,6 @@
 local conf = require("modules.completion.config")
 local completion = require("core.pack").package
+local ai_conf = lambda.config.ai
 
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │ VeryLazy                                                           │
@@ -19,6 +20,14 @@ completion({
 
     cond = lambda.config.cmp.use_cmp,
     dependencies = {
+        {
+            "tzachar/cmp-tabnine",
+            lazy = true,
+            cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_cmp),
+            build = "bash ./install.sh",
+            config = conf.tabnine_cmp,
+        },
+
         { "hrsh7th/cmp-nvim-lsp" },
         { "hrsh7th/cmp-nvim-lua" },
         -- { "hrsh7th/cmp-nvim-lsp-signature-help", lazy = true },

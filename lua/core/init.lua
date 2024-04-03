@@ -90,6 +90,10 @@ local leader_map = function()
 end
 
 local load_core = function()
+    vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/lazy/kitty-scrollback.nvim") -- lazy.nvim
+
+    vim.loader.enable()
+
     require("core.globals")
 
     require("core.pack")
@@ -97,6 +101,21 @@ local load_core = function()
     disable_distribution_plugins()
     leader_map()
     require("core.options")
+    vim.cmd([[
+    let g:clipboard = {
+        \ 'name': 'xsel',
+        \ 'copy': {
+        \    '+': 'xsel --nodetach -i -b',
+        \    '*': 'xsel --nodetach -i -p',
+        \  },
+        \ 'paste': {
+        \    '+': 'xsel -o -b',
+        \    '*': 'xsel -o -p',
+        \ },
+        \ 'cache_enabled': 1,
+        \ }
+]])
+
     require("core.autocmd")
     require("core.autocmd_optional")
     require("core.cmd")

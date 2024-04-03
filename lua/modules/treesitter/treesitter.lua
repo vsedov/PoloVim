@@ -105,7 +105,6 @@ local treesitter_obj = function()
         },
         -- ensure_installed = "maintained"
         ensure_installed = {
-            "dap_repl",
             "norg",
             "vim",
             "go",

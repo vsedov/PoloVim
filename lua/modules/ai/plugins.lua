@@ -51,19 +51,6 @@ ai({
 })
 
 ai({
-    "tzachar/cmp-tabnine",
-    lazy = true,
-    cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_cmp),
-    event = "VeryLazy",
-    build = "bash ./install.sh",
-
-    dependencies = {
-        "hrsh7th/nvim-cmp",
-    },
-    config = conf.tabnine_cmp,
-})
-
-ai({
     "codota/tabnine-nvim",
     lazy = true,
     cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_insert),
@@ -152,7 +139,7 @@ ai({
 ai({
     "sourcegraph/sg.nvim",
     cond = lambda.config.lsp.use_sg,
-    event = { "VeryLazy" },
+    event = "InsertEnter",
     branch = "update-cody-agent-03-12",
     build = "nvim -l build/init.lua",
     dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
