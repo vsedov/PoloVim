@@ -709,6 +709,11 @@ local Overseer = {
 
 local Dap = {
     condition = function()
+        -- Ch
+        if package.loaded["dap"] == nil then
+            return false
+        end
+
         local session = require("dap").session()
         return session ~= nil
     end,

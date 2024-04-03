@@ -152,7 +152,7 @@ ai({
 ai({
     "sourcegraph/sg.nvim",
     cond = lambda.config.lsp.use_sg,
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    event = { "VeryLazy" },
     branch = "update-cody-agent-03-12",
     build = "nvim -l build/init.lua",
     dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },

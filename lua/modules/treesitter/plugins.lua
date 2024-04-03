@@ -124,15 +124,14 @@ ts({
     "ckolkey/ts-node-action",
     lazy = true,
     dependencies = { "nvim-treesitter" },
-    keys = "<leader>k",
-    init = function()
-        vim.keymap.set(
-            "n",
+    keys = {
+        {
             "<leader>k",
-            require("ts-node-action").node_action,
-            { noremap = true, silent = true, desc = "Trigger Node Action" }
-        )
-    end,
+            function()
+                require("ts-node-action").node_action()
+            end,
+        },
+    },
     config = true,
 })
 ts({

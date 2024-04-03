@@ -3,8 +3,9 @@ local startup = require("core.pack").package
 -- enabled by default, will need to load on boot
 startup({
     "chrisbra/Recover.vim",
-    cond = true,
-    lazy = false,
+    config = function()
+        vim.g.RecoverPlugin_Edit_Unmodified = 1
+    end,
 })
 
 startup({

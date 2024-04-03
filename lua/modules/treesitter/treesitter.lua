@@ -123,11 +123,6 @@ local treesitter_obj = function()
             "cpp",
             "python",
             "rust",
-            "dart",
-            "css",
-            "yaml",
-            "vue",
-            "julia",
         },
     })
 

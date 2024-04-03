@@ -108,10 +108,13 @@ misc({
 -- programming spell
 misc({
     "psliwka/vim-dirtytalk",
-    event = "BufEnter",
+    lazy = true,
+    cmd = { "DirtytalkUpdate" },
     config = function()
-        vim.cmd("silent!  DirtytalkUpdate")
-        vim.opt.spelllang:append("programming")
+        vim.defer_fn(function()
+            vim.cmd("silent!  DirtytalkUpdate")
+            vim.opt.spelllang:append("programming")
+        end, 1000)
     end,
 })
 

@@ -50,6 +50,7 @@ lang({
     dependencies = {
         {
             "rcarriga/nvim-dap-ui",
+            lazy = true,
             opts = {},
             config = function(_, opts)
                 -- setup dap config by VsCode launch.json file
@@ -70,15 +71,19 @@ lang({
         },
         {
             "theHamsta/nvim-dap-virtual-text",
+            lazy = true,
             opts = {
                 enabled = true, -- enable this plugin (the default)
             },
         },
-        { "LiadOz/nvim-dap-repl-highlights", config = true },
-        "ofirgall/goto-breakpoints.nvim",
+        { "LiadOz/nvim-dap-repl-highlights", config = true, lazy = true },
+        { "ofirgall/goto-breakpoints.nvim", lazy = true },
+        { "rcarriga/cmp-dap" },
         {
             "jay-babu/mason-nvim-dap.nvim",
+
             dependencies = "mason.nvim",
+            lazy = true,
             cmd = { "DapInstall", "DapUninstall" },
             opts = {
                 -- Makes a best effort to setup the various debuggers with

@@ -142,7 +142,20 @@ function config.luapad()
 end
 
 function config.dap_config()
+    require("dap.ext.vscode").json_decode = require("overseer.json").decode
     require("modules.lang.dap.init").config()
+    require("cmp").setup({
+        enabled = function()
+            return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+        end,
+    })
+
+    require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hsver" }, {
+        sources = {
+            { name = "dap" },
+        },
+    })
+    require("overseer").patch_dap(true)
 end
 
 return config

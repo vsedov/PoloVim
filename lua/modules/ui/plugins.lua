@@ -51,7 +51,7 @@ ui({
 --
 ui({
     "stevearc/dressing.nvim",
-    event = "VeryLazy",
+    event = "BufWinEnter",
     opts = {
         input = {
             use_popups_for_input = false,
@@ -151,6 +151,7 @@ ui({
 --
 ui({
     "nvim-tree/nvim-web-devicons",
+    lazy = true,
     config = function()
         require("nvim-web-devicons").setup({
             override = {
@@ -456,7 +457,6 @@ ui({
 })
 ui({
     "jghauser/fold-cycle.nvim",
-    event = "VeryLazy",
     config = true,
     keys = {
         {
@@ -511,14 +511,6 @@ ui({
     config = function()
         vim.g.highlighturl_guifg = highlight.get("@keyword", "fg")
     end,
-})
--- -- --  TODO: (vsedov) (13:12:54 - 30/05/23):@ Temp disable, want to test out akinshos autocmds,
--- -- --  i wonder if they are any better that what ive had before
-ui({
-    "glepnir/hlsearch.nvim",
-    cond = lambda.config.ui.use_hlsearch,
-    event = "CursorHold",
-    config = true,
 })
 ui({
     "kevinhwang91/nvim-hlslens",

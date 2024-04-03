@@ -7,7 +7,6 @@ local conf = require("modules.clipboard.config")
 clipsub({
     "gbprod/yanky.nvim",
     lazy = true,
-    event = "VeryLazy",
     config = conf.config_yanky,
     dependencies = {
 

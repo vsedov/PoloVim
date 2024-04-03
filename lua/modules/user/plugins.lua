@@ -221,7 +221,7 @@ user({
 
 user({
     "nkakouros-original/scrollofffraction.nvim",
-    event = "VeryLazy",
+    event = "BufWinEnter",
     config = function()
         require("scrollofffraction").setup()
     end,
@@ -333,52 +333,6 @@ user({
         })
     end,
 })
--- ah this is better than tint, i think
--- lets disable this for now.
-user({
-    "miversen33/sunglasses.nvim",
-    event = "VeryLazy",
-    cond = lambda.config.ui.use_tint,
-    config = true,
-    opts = {
-        excluded_filetypes = {
-
-            "harpoon",
-            "harpoon-menu",
-            "dashboard",
-            "lspsagafinder",
-            "packer",
-            "checkhealth",
-            "mason",
-            "NvimTree",
-            "neo-tree",
-            "plugin",
-            "lazy",
-            "TelescopePrompt",
-            "alpha",
-            "toggleterm",
-            "sagafinder",
-            "better_term",
-            "fugitiveblame",
-            "starter",
-            "NeogitPopup",
-            "NeogitStatus",
-            "DiffviewFiles",
-            "DiffviewFileHistory",
-            "DressingInput",
-            "spectre_panel",
-            "zsh",
-            "registers",
-            "startuptime",
-            "OverseerList",
-            "Navbuddy",
-            "noice",
-            "notify",
-            "saga_codeaction",
-            "sagarename",
-        },
-    },
-})
 
 user({
     "chipsenkbeil/distant.nvim",
@@ -449,7 +403,6 @@ user({
 
 user({
     "ariel-frischer/bmessages.nvim",
-    event = "CmdlineEnter",
     cmd = {
         "Bmessages",
         "BmessagesVS",
@@ -620,8 +573,7 @@ user({
     },
     dependencies = { "nvim-neotest/nvim-nio" },
 })
--- # better modes i think this was right
--- print("there are other things here")
+
 user({
     "mvllow/modes.nvim",
     cond = true,
@@ -814,6 +766,6 @@ user({
     "NStefan002/donut.nvim",
     event = "VeryLazy",
     opts = {
-        -- your config
+        sync_donuts = true,
     },
 })

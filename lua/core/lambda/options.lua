@@ -195,7 +195,6 @@ lambda.config.ui = {
     use_illuminate = true,
     use_ufo = true, --  REVISIT: (vsedov) (03:43:35 - 16/11/22): Come back to this
     use_tint = false, -- sunglasses, tint -- Might not be great for certain colourschemes -- remove any distractions there we can use twilight instead.
-    use_hlsearch = true,
     use_dropbar = true,
     mini_animate = {
         use_animate = false,
@@ -291,7 +290,7 @@ lambda.config.tools = {
     session = {
         -- use_resession = true,  this does not exist anymore
     },
-    use_fundo = false, -- forgot the reason for why this was disabled
+    use_fundo = true, -- forgot the reason for why this was disabled
     use_flatten = false,
     use_live_command = false, -- Disabled due to large files, this might noe be nice to have
 }

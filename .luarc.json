@@ -5,7 +5,8 @@
         "return-type-mismatch",
         "param-type-mismatch",
         "cast-local-type",
-        "need-check-nil"
+        "need-check-nil",
+        "missing-fields"
     ],
     "Lua.workspace.checkThirdParty": false,
     "diagnostics.globals": [

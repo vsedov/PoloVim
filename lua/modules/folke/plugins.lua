@@ -18,11 +18,11 @@ folke({
 
 folke({
     "folke/noice.nvim",
+    event = "VeryLazy",
     cond = lambda.config.folke.noice.enable,
     dependencies = {
         "nui.nvim",
         "nvim-notify",
-        "hrsh7th/nvim-cmp",
     },
     opts = require("modules.folke.noice").noice,
     config = require("modules.folke.noice").noice_setup,

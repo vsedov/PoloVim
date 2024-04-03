@@ -206,7 +206,11 @@ function config.edgy()
             end,
             -- Spinner for pinned views that are loading.
             -- if you have noice.nvim installed, you can use any spinner from it, like:
-            spinner = require("noice.util.spinners").spinners.circleFull,
+            spinner = function()
+                if package.loaded["noice"] then
+                    return require("noice.util.spinners").spinners.circleFull()
+                end
+            end,
         },
         keys = {
             -- close window

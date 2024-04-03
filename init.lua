@@ -2,8 +2,22 @@
 -- pick a runtimepath that corresponds with your package manager, if you are not sure leave them all it will not cause any issues
 
 vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/lazy/kitty-scrollback.nvim") -- lazy.nvim
+
 vim.loader.enable()
+vim.opt.clipboard = "unnamedplus"
+
+vim.cmd([[
+    let g:clipboard = {
+        \ 'name': 'xsel',
+        \ 'copy': {
+        \    '+': 'xsel --nodetach -i -b',
+        \    '*': 'xsel --nodetach -i -p',
+        \  },
+        \ 'paste': {
+        \    '+': 'xsel -o -b',
+        \    '*': 'xsel -o -p',
+        \ },
+        \ 'cache_enabled': 1,
+        \ }
+]])
 require("core")
-vim.defer_fn(function()
-    vim.cmd("silent! UpdateRemotePlugins")
-end, 5000)

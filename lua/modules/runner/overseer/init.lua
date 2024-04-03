@@ -25,7 +25,7 @@ overseer.setup({
     task_editor = { border = Border, win_opts = { winblend = 0 } },
     task_win = { border = Border, win_opts = { winblend = 0 } },
     confirm = { border = Border, win_opts = { winblend = 0 } },
-    dap = true,
+    dap = false,
     task_list = {
         separator = "────────────────────────────────────────────────────────────────────────────────",
     },
