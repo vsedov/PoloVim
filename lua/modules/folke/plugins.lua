@@ -3,7 +3,6 @@ local conf = require("modules.folke.config")
 
 folke({
     "folke/edgy.nvim",
-    event = "VeryLazy",
     keys = {
         {
             "<Leader>E",
@@ -31,7 +30,7 @@ folke({
 folke({
     "folke/which-key.nvim",
     cond = lambda.config.tools.use_which_key_or_use_mini_clue == "which",
-    event = "VeryLazy",
+    event = "CursorMoved",
     lazy = true,
     config = conf.which_key,
 })
@@ -45,12 +44,16 @@ folke({
 
 folke({
     "folke/todo-comments.nvim",
-    event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
         require("todo-comments").setup()
         lambda.command("TodoDots", ("TodoQuickFix cwd=%s keywords=TODO,FIXME"):format(vim.g.vim_dir))
     end,
+    cmd = {
+        "TodoComments",
+        "TodoQuickFix",
+        "TodoDots",
+    },
 })
 folke({
     "folke/neodev.nvim",
@@ -64,7 +67,7 @@ folke({
 })
 folke({
     "folke/paint.nvim",
-    event = "VeryLazy",
+    ft = "lua",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.paint,
 })
@@ -85,13 +88,6 @@ folke({
         -- add any custom options here
     },
 })
--- folke({
---     "folke/drop.nvim",
---     event = "VimEnter",
---     config = function()
---         require("drop").setup()
---     end,
--- })
 
 folke({
     "folke/zen-mode.nvim",

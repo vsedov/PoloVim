@@ -10,8 +10,10 @@ notes({
     ft = { "norg" },
     branch = "luarocks",
     init = function()
-        require("modules.notes.norg.commands").setup({})
-        require("modules.notes.norg.autocmd").setup({})
+        vim.defer_fn(function()
+            require("modules.notes.norg.commands").setup({})
+            require("modules.notes.norg.autocmd").setup({})
+        end, 500)
     end,
     dependencies = {
         "vhyrro/luarocks.nvim",

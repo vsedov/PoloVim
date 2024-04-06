@@ -125,8 +125,6 @@ function pack:load_modules_packages()
     end
 
     for _, m in ipairs(plugins_file) do
-        -- There needs to be a better load order than this, because this can cause issues in teh
-        -- long run More so when the plugins are not loaded in the correct order
         if not vim.tbl_contains(disable_modules, m) then
             require(m)
         end

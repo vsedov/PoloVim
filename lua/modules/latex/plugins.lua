@@ -7,7 +7,7 @@ local filetype = { "latex", "tex" }
 latex({
     "lervag/vimtex",
     ft = filetype,
-    init = conf.vimtex,
+    config = conf.vimtex,
 })
 
 latex({

@@ -23,11 +23,6 @@ buffer({
     end,
     opts = {
         animation = false,
-        sidebar_filetypes = {
-            undotree = { text = "undotree" },
-            ["neo-tree"] = { event = "BufWipeout" },
-            Outline = { event = "BufWinLeave", text = "symbols-outline" },
-        },
     },
 })
 buffer({

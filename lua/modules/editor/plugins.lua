@@ -91,9 +91,10 @@ editor({
 
 editor({
     "nvimtools/hydra.nvim",
-    event = "VeryLazy",
     cond = lambda.config.editor.hydra.use_hydra,
+    lazy = true,
     config = conf.hydra,
+    event = "ModeChanged",
 })
 
 editor({
@@ -163,7 +164,7 @@ editor({
         }
         vim.g.smartq_q_filetypes = smart_close_filetypes
     end,
-    event = "VeryLazy",
+    keys = { "q", "Q" },
 })
 
 editor({

@@ -17,7 +17,6 @@ completion({
 completion({
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
-
     cond = lambda.config.cmp.use_cmp,
     dependencies = {
         {
@@ -292,7 +291,6 @@ completion({
 
 completion({
     "chrisgrieser/nvim-scissors",
-    -- event = "VeryLazy",
     lazy = true,
     dependencies = "nvim-telescope/telescope.nvim", -- optional
     config = function()
