@@ -3,29 +3,102 @@ local bracket = { "<cr>", "lc", "cc", "rc", "aa" }
 local leader = "<leader>C"
 --  ──────────────────────────────────────────────────────────────────────
 -- local cbii= require("comment-box")
-function data()
-    return {
-        ll = { label = "[L] Aligned Box With [L]", fn = require("comment-box").llbox },
-        lc = { label = "[L] Aligned Box With [C]", fn = require("comment-box").lcbox },
-        lr = { label = "[L] Aligned Box With [R]", fn = require("comment-box").lrbox },
+local options = {
+    ll = {
+        label = "[L] Aligned Box With [L]",
+        fn = function(x)
+            require("comment-box").llbox(x)
+        end,
+    },
+    lc = {
+        label = "[L] Aligned Box With [C]",
+        fn = function(x)
+            require("comment-box").lcbox(x)
+        end,
+    },
+    lr = {
+        label = "[L] Aligned Box With [R]",
+        fn = function(x)
+            require("comment-box").lrbox(x)
+        end,
+    },
 
-        cl = { label = "[C] Box With [L]", fn = require("comment-box").clbox },
-        cc = { label = "[C] Box With [C]", fn = require("comment-box").ccbox },
-        cr = { label = "[C] Box With [R]", fn = require("comment-box").crbox },
+    cl = {
+        label = "[C] Box With [L]",
+        fn = function(x)
+            require("comment-box").clbox(x)
+        end,
+    },
+    cc = {
+        label = "[C] Box With [C]",
+        fn = function(x)
+            require("comment-box").ccbox(x)
+        end,
+    },
+    cr = {
+        label = "[C] Box With [R]",
+        fn = function(x)
+            require("comment-box").crbox(x)
+        end,
+    },
 
-        rl = { label = "[R] Aligned Box With [L]", fn = require("comment-box").rlbox },
-        rc = { label = "[R] Aligned Box With [C]", fn = require("comment-box").rcbox },
-        rr = { label = "[R] Aligned Box With [R] ", fn = require("comment-box").rrbox },
+    rl = {
+        label = "[R] Aligned Box With [L]",
+        fn = function(x)
+            require("comment-box").rlbox(x)
+        end,
+    },
+    rc = {
+        label = "[R] Aligned Box With [C]",
+        fn = function(x)
+            require("comment-box").rcbox(x)
+        end,
+    },
+    rr = {
+        label = "[R] Aligned Box With [R] ",
+        fn = function(x)
+            require("comment-box").rrbox(x)
+        end,
+    },
 
-        aa = { label = "[L] Aligned adapted box", fn = require("comment-box").albox },
-        ac = { label = "[C] Adapted Box", fn = require("comment-box").acbox },
-        ar = { label = "[R] Aligned adapted box", fn = require("comment-box").arbox },
+    aa = {
+        label = "[L] Aligned adapted box",
+        fn = function(x)
+            require("comment-box").albox(x)
+        end,
+    },
+    ac = {
+        label = "[C] Adapted Box",
+        fn = function(x)
+            require("comment-box").acbox(x)
+        end,
+    },
+    ar = {
+        label = "[R] Aligned adapted box",
+        fn = function(x)
+            require("comment-box").arbox(x)
+        end,
+    },
 
-        L = { label = "[L] Line", fn = require("comment-box").line },
-        C = { label = "[C] Centered Line", fn = require("comment-box").cline },
-        R = { label = "[R] Right Aligned Line", fn = require("comment-box").rline },
-    }
-end
+    L = {
+        label = "[L] Line",
+        fn = function(x)
+            require("comment-box").line(x)
+        end,
+    },
+    C = {
+        label = "[C] Centered Line",
+        fn = function(x)
+            require("comment-box").cline(x)
+        end,
+    },
+    R = {
+        label = "[R] Right Aligned Line",
+        fn = function(x)
+            require("comment-box").rline(x)
+        end,
+    },
+}
 --
 --  ╔══════════════════════════════════════╗
 --  ║             BOXES & LINES            ║
@@ -330,7 +403,7 @@ local choice = {
 local function selectCommentStyle()
     local function executeCommand(style, alignment)
         local data = function()
-            data()[alignment].fn(style)
+            options[alignment].fn(style)
         end
         local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
         vim.api.nvim_feedkeys(esc, "x", false)
@@ -364,8 +437,8 @@ end
 
 -- Function to apply the selected style and alignment to the text
 local function executeCommand(style, alignment, selectedText)
-    -- Here we assume the 'fn' in data()takes style and selected text as parameters
-    data()[alignment].fn(style, selectedText)
+    -- Here we assume the 'fn' in options takes style and selected text as parameters
+    options[alignment].fn(style, selectedText)
 end
 
 local config = {
@@ -382,97 +455,97 @@ local config = {
         },
         ["L"] = {
             function()
-                data()["L"].fn()
+                options["L"].fn()
             end,
-            { desc = data()["L"].label, nowait = true, silent = true },
+            { desc = options["L"].label, nowait = true, silent = true },
         },
         ["C"] = {
             function()
-                data()["C"].fn()
+                options["C"].fn()
             end,
-            { desc = data()["C"].label, nowait = true, silent = true },
+            { desc = options["C"].label, nowait = true, silent = true },
         },
         ["R"] = {
             function()
-                data()["R"].fn()
+                options["R"].fn()
             end,
-            { desc = data()["R"].label, nowait = true, silent = true },
+            { desc = options["R"].label, nowait = true, silent = true },
         },
 
         ["ll"] = {
             function()
-                data()["ll"].fn(18)
+                options["ll"].fn(18)
             end,
-            { desc = data()["ll"].label, nowait = true, silent = true },
+            { desc = options["ll"].label, nowait = true, silent = true },
         },
         ["lc"] = {
             function()
-                data()["lc"].fn(18)
+                options["lc"].fn(18)
             end,
-            { desc = data()["lc"].label, nowait = true, silent = true },
+            { desc = options["lc"].label, nowait = true, silent = true },
         },
         ["lr"] = {
             function()
-                data()["lr"].fn(18)
+                options["lr"].fn(18)
             end,
-            { desc = data()["lr"].label, nowait = true, silent = true },
+            { desc = options["lr"].label, nowait = true, silent = true },
         },
 
         ["cl"] = {
             function()
-                data()["cl"].fn(18)
+                options["cl"].fn(18)
             end,
-            { desc = data()["cl"].label, nowait = true, silent = true },
+            { desc = options["cl"].label, nowait = true, silent = true },
         },
         ["cc"] = {
             function()
-                data()["cc"].fn(18)
+                options["cc"].fn(18)
             end,
-            { desc = data()["cc"].label, nowait = true, silent = true },
+            { desc = options["cc"].label, nowait = true, silent = true },
         },
         ["cr"] = {
             function()
-                data()["cr"].fn(18)
+                options["cr"].fn(18)
             end,
-            { desc = data()["cr"].label, nowait = true, silent = true },
+            { desc = options["cr"].label, nowait = true, silent = true },
         },
 
         ["rl"] = {
             function()
-                data()["rl"].fn(18)
+                options["rl"].fn(18)
             end,
-            { desc = data()["rl"].label, nowait = true, silent = true },
+            { desc = options["rl"].label, nowait = true, silent = true },
         },
         ["rc"] = {
             function()
-                data()["rc"].fn(18)
+                options["rc"].fn(18)
             end,
-            { desc = data()["rc"].label, nowait = true, silent = true },
+            { desc = options["rc"].label, nowait = true, silent = true },
         },
         ["rr"] = {
             function()
-                data()["rr"].fn(18)
+                options["rr"].fn(18)
             end,
-            { desc = data()["rr"].label, nowait = true, silent = true },
+            { desc = options["rr"].label, nowait = true, silent = true },
         },
 
         ["aa"] = {
             function()
-                data()["aa"].fn(18)
+                options["aa"].fn(18)
             end,
-            { desc = data()["aa"].label, nowait = true, silent = true },
+            { desc = options["aa"].label, nowait = true, silent = true },
         },
         ["ac"] = {
             function()
-                data()["ac"].fn(18)
+                options["ac"].fn(18)
             end,
-            { desc = data()["ac"].label, nowait = true, silent = true },
+            { desc = options["ac"].label, nowait = true, silent = true },
         },
         ["ar"] = {
             function()
-                data()["ar"].fn(18)
+                options["ar"].fn(18)
             end,
-            { desc = data()["ar"].label, nowait = true, silent = true },
+            { desc = options["ar"].label, nowait = true, silent = true },
         },
     },
 }

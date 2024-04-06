@@ -1,7 +1,5 @@
 local leader = "<leader>h"
 local gitrepo = vim.fn.isdirectory(".git/index")
-local gitsigns = lambda.reqidx("gitsigns")
-
 local function wrap(fn, ...)
     local args = { ... }
     local nargs = select("#", ...)
@@ -54,9 +52,9 @@ local config = {
                 vim.cmd("silent! %foldopen!")
                 -- vim.bo.modifiable = false
                 -- if vim.
-                gitsigns.toggle_signs(true)
-                gitsigns.toggle_linehl(true)
-                gitsigns.toggle_deleted(true)
+                require("gitsigns").toggle_signs(true)
+                require("gitsigns").toggle_linehl(true)
+                require("gitsigns").toggle_deleted(true)
             end
         end,
         on_exit = function()
@@ -65,9 +63,9 @@ local config = {
                 vim.cmd("loadview")
                 vim.api.nvim_win_set_cursor(0, cursor_pos)
                 vim.cmd("normal zv")
-                gitsigns.toggle_signs(true)
-                gitsigns.toggle_linehl(false)
-                gitsigns.toggle_deleted(false)
+                require("gitsigns").toggle_signs(true)
+                require("gitsigns").toggle_linehl(false)
+                require("gitsigns").toggle_deleted(false)
             end
         end,
         mode = { "n", "v", "x", "o" },
@@ -84,7 +82,7 @@ local config = {
                     return "]c"
                 end
                 vim.schedule(function()
-                    gitsigns.next_hunk()
+                    require("gitsigns").next_hunk()
                 end)
                 return "<Ignore>"
             end,
@@ -96,32 +94,87 @@ local config = {
                     return "[c"
                 end
                 vim.schedule(function()
-                    gitsigns.prev_hunk()
+                    require("gitsigns").prev_hunk()
                 end)
                 return "<Ignore>"
             end,
             { expr = true, desc = "prev hunk" },
         },
-        s = { gitsigns.stage_hunk, { exit = false, desc = "Stage Hunk" } },
-        S = { gitsigns.stage_buffer, { exit = false, desc = "Stage Buffer" } },
+        s = {
+            function()
+                require("gitsigns").stage_hunk()
+            end,
+            { exit = false, desc = "Stage Hunk" },
+        },
+        S = {
+            function()
+                require("gitsigns").stage_buffer()
+            end,
+            { exit = false, desc = "Stage Buffer" },
+        },
 
-        p = { gitsigns.preview_hunk, { desc = "Preview Hunk" } },
-        u = { gitsigns.undo_stage_hunk, { desc = "Undo Stage Hunk" } },
-        x = { gitsigns.toggle_deleted, { nowait = true, desc = "Toggle Deleted" } },
-        D = { gitsigns.diffthis, { desc = "Diff This" } },
+        p = {
+            function()
+                require("gitsigns").preview_hunk()
+            end,
+            { desc = "Preview Hunk" },
+        },
+        u = {
+            function()
+                require("gitsigns").undo_stage_hunk()
+            end,
+            { desc = "Undo Stage Hunk" },
+        },
+        x = {
+            function()
+                require("gitsigns").toggle_deleted()
+            end,
+            { nowait = true, desc = "Toggle Deleted" },
+        },
+        D = {
+            function()
+                require("gitsigns").diffthis()
+            end,
+            { desc = "Diff This" },
+        },
 
-        r = { gitsigns.reset_hunk, { desc = "Reset Hunk" } },
-        R = { gitsigns.reset_buffer, { desc = "Reset Buffer" } },
+        r = {
+            function()
+                require("gitsigns").reset_hunk()
+            end,
+            { desc = "Reset Hunk" },
+        },
+        R = {
+            function()
+                require("gitsigns").reset_buffer()
+            end,
+            { desc = "Reset Buffer" },
+        },
 
-        q = { wrap(gitsigns.setqflist, "all"), { desc = "Quickfix List All" } },
-        Q = { wrap(gitsigns.setqflist), { desc = "Quickfix List" } },
+        q = {
+            function()
+                wrap(require("gitsigns").setqflist, "all")()
+            end,
+            { desc = "Quickfix List All" },
+        },
+        Q = {
+            function()
+                wrap(require("gitsigns").setqflist)()
+            end,
+            { desc = "Quickfix List" },
+        },
         B = {
             function()
-                gitsigns.blame_line({ full = true })
+                require("gitsigns").blame_line({ full = true })
             end,
             { exit = true, desc = "blame_line" },
         },
-        b = { gitsigns.blame_line, { desc = "Blame Line" } },
+        b = {
+            function()
+                require("gitsigns").blame_line()
+            end,
+            { desc = "Blame Line" },
+        },
         M = { diffmaster, { silent = true, exit = true, desc = "DiffMaster" } },
         d = { ":DiffviewOpen<CR>", { silent = true, exit = true, desc = "DiffView" } },
         C = { ":GitConflictListQf<CR>", { exit = true, nowait = true, desc = "Conflict" } },

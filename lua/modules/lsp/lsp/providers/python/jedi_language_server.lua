@@ -17,7 +17,6 @@ return {
     on_new_config = function(new_config, new_root_dir)
         new_config.settings.python.pythonPath = vim.fn.exepath("python")
         print(new_config.settings.python.pythonPath)
-        vim.g.python3_host_prog = vim.fn.exepath("python")
         new_config.cmd_env.PATH = py.env(new_root_dir) .. new_config.cmd_env.PATH
 
         local pep582 = py.pep582(new_root_dir)

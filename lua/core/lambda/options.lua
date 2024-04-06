@@ -174,11 +174,11 @@ lambda.config.lsp = {
         lsp = {
             "sourcery",
             "ruff_lsp",
-            "jedi_language_server",
+            "pylsp",
+            -- "jedi_language_server",
             -- "pylance",
             -- "basedpyright",
             -- "python-language-server",
-            -- "pylsp",
             -- "pylyzer"
             -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         },
