@@ -710,14 +710,14 @@ user({
 
 user({
     "NStefan002/donut.nvim",
-    event = "User FilePost",
+    event = "VeryLazy",
     opts = {},
 })
 
 user({
     "zeioth/garbage-day.nvim",
     dependencies = "neovim/nvim-lspconfig",
-    event = "User FilePost",
+    event = "VeryLazy",
     opts = {
         aggressive_mode = false, -- I dont know why you would not have this enabled; i guess ima  bit confused for the case.
         -- your options here
@@ -727,6 +727,6 @@ user({
 user({
     "mvllow/modes.nvim",
     cond = true,
-    event = "User FilePost",
+    event = "VeryLazy",
     config = true,
 })

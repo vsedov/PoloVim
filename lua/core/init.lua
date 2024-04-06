@@ -93,23 +93,6 @@ local load_core = function()
     vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/lazy/kitty-scrollback.nvim") -- lazy.nvim
 
     vim.loader.enable()
-    -- user event that loads after UIEnter + only if file buf is there and is a filetype
-    vim.api.nvim_create_autocmd({ "UIEnter", "BufReadPost", "BufNewFile", "FileType" }, {
-        group = vim.api.nvim_create_augroup("FilePost", { clear = true }),
-        callback = function(args)
-            local file = vim.api.nvim_buf_get_name(args.buf)
-            local buftype = vim.api.nvim_buf_get_option(args.buf, "buftype")
-
-            if not vim.g.ui_entered and args.event == "UIEnter" then
-                vim.g.ui_entered = true
-            end
-
-            if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
-                vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
-                vim.api.nvim_del_augroup_by_name("FilePost")
-            end
-        end,
-    })
 
     require("core.globals")
 

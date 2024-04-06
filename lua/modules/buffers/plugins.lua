@@ -13,7 +13,7 @@ local conf = require("modules.buffers.config")
 -- })
 buffer({
     "romgrk/barbar.nvim",
-    event = "User FilePost",
+    event = "VeryLazy",
     dependencies = {
         "lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
         "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
@@ -27,7 +27,7 @@ buffer({
 })
 buffer({
     "tiagovla/scope.nvim",
-    event = "User FilePost",
+    event = "VeryLazy",
     cond = not lambda.config.buffer.use_tabscope,
     config = function()
         require("scope").setup({
@@ -53,7 +53,7 @@ buffer({
     "backdround/tabscope.nvim",
     cond = lambda.config.buffer.use_tabscope,
     lazy = true,
-    event = "User FilePost",
+    event = "VeryLazy",
     config = true,
     keys = {
         {
@@ -104,7 +104,7 @@ buffer({
 buffer({
     "stevearc/stickybuf.nvim",
     cond = lambda.config.buffer.use_sticky_buf,
-    event = "User FilePost",
+    event = "VeryLazy",
     config = function()
         require("stickybuf").setup()
 
@@ -204,12 +204,12 @@ buffer({
     opts = {
         retirementAgeMins = 10,
     },
-    event = "User FilePost",
+    event = "VeryLazy",
 })
 buffer({
     "axkirillov/hbac.nvim",
     cond = lambda.config.buffer.use_hbac,
-    event = "User FilePost",
+    event = "VeryLazy",
     opts = {
         autoclose = true, -- set autoclose to false if you want to close manually
         threshold = 60, -- hbac will start closing unedited buffers once that number is reached

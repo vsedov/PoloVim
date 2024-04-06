@@ -3,27 +3,29 @@ local bracket = { "<cr>", "lc", "cc", "rc", "aa" }
 local leader = "<leader>C"
 --  ──────────────────────────────────────────────────────────────────────
 -- local cbii= require("comment-box")
-local options = {
-    ll = { label = "[L] Aligned Box With [L]", fn = require("comment-box").llbox },
-    lc = { label = "[L] Aligned Box With [C]", fn = require("comment-box").lcbox },
-    lr = { label = "[L] Aligned Box With [R]", fn = require("comment-box").lrbox },
+function data()
+    return {
+        ll = { label = "[L] Aligned Box With [L]", fn = require("comment-box").llbox },
+        lc = { label = "[L] Aligned Box With [C]", fn = require("comment-box").lcbox },
+        lr = { label = "[L] Aligned Box With [R]", fn = require("comment-box").lrbox },
 
-    cl = { label = "[C] Box With [L]", fn = require("comment-box").clbox },
-    cc = { label = "[C] Box With [C]", fn = require("comment-box").ccbox },
-    cr = { label = "[C] Box With [R]", fn = require("comment-box").crbox },
+        cl = { label = "[C] Box With [L]", fn = require("comment-box").clbox },
+        cc = { label = "[C] Box With [C]", fn = require("comment-box").ccbox },
+        cr = { label = "[C] Box With [R]", fn = require("comment-box").crbox },
 
-    rl = { label = "[R] Aligned Box With [L]", fn = require("comment-box").rlbox },
-    rc = { label = "[R] Aligned Box With [C]", fn = require("comment-box").rcbox },
-    rr = { label = "[R] Aligned Box With [R] ", fn = require("comment-box").rrbox },
+        rl = { label = "[R] Aligned Box With [L]", fn = require("comment-box").rlbox },
+        rc = { label = "[R] Aligned Box With [C]", fn = require("comment-box").rcbox },
+        rr = { label = "[R] Aligned Box With [R] ", fn = require("comment-box").rrbox },
 
-    aa = { label = "[L] Aligned adapted box", fn = require("comment-box").albox },
-    ac = { label = "[C] Adapted Box", fn = require("comment-box").acbox },
-    ar = { label = "[R] Aligned adapted box", fn = require("comment-box").arbox },
+        aa = { label = "[L] Aligned adapted box", fn = require("comment-box").albox },
+        ac = { label = "[C] Adapted Box", fn = require("comment-box").acbox },
+        ar = { label = "[R] Aligned adapted box", fn = require("comment-box").arbox },
 
-    L = { label = "[L] Line", fn = require("comment-box").line },
-    C = { label = "[C] Centered Line", fn = require("comment-box").cline },
-    R = { label = "[R] Right Aligned Line", fn = require("comment-box").rline },
-}
+        L = { label = "[L] Line", fn = require("comment-box").line },
+        C = { label = "[C] Centered Line", fn = require("comment-box").cline },
+        R = { label = "[R] Right Aligned Line", fn = require("comment-box").rline },
+    }
+end
 --
 --  ╔══════════════════════════════════════╗
 --  ║             BOXES & LINES            ║
@@ -328,7 +330,7 @@ local choice = {
 local function selectCommentStyle()
     local function executeCommand(style, alignment)
         local data = function()
-            options[alignment].fn(style)
+            data()[alignment].fn(style)
         end
         local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
         vim.api.nvim_feedkeys(esc, "x", false)
@@ -362,8 +364,8 @@ end
 
 -- Function to apply the selected style and alignment to the text
 local function executeCommand(style, alignment, selectedText)
-    -- Here we assume the 'fn' in options takes style and selected text as parameters
-    options[alignment].fn(style, selectedText)
+    -- Here we assume the 'fn' in data()takes style and selected text as parameters
+    data()[alignment].fn(style, selectedText)
 end
 
 local config = {
@@ -380,97 +382,97 @@ local config = {
         },
         ["L"] = {
             function()
-                options["L"].fn()
+                data()["L"].fn()
             end,
-            { desc = options["L"].label, nowait = true, silent = true },
+            { desc = data()["L"].label, nowait = true, silent = true },
         },
         ["C"] = {
             function()
-                options["C"].fn()
+                data()["C"].fn()
             end,
-            { desc = options["C"].label, nowait = true, silent = true },
+            { desc = data()["C"].label, nowait = true, silent = true },
         },
         ["R"] = {
             function()
-                options["R"].fn()
+                data()["R"].fn()
             end,
-            { desc = options["R"].label, nowait = true, silent = true },
+            { desc = data()["R"].label, nowait = true, silent = true },
         },
 
         ["ll"] = {
             function()
-                options["ll"].fn(18)
+                data()["ll"].fn(18)
             end,
-            { desc = options["ll"].label, nowait = true, silent = true },
+            { desc = data()["ll"].label, nowait = true, silent = true },
         },
         ["lc"] = {
             function()
-                options["lc"].fn(18)
+                data()["lc"].fn(18)
             end,
-            { desc = options["lc"].label, nowait = true, silent = true },
+            { desc = data()["lc"].label, nowait = true, silent = true },
         },
         ["lr"] = {
             function()
-                options["lr"].fn(18)
+                data()["lr"].fn(18)
             end,
-            { desc = options["lr"].label, nowait = true, silent = true },
+            { desc = data()["lr"].label, nowait = true, silent = true },
         },
 
         ["cl"] = {
             function()
-                options["cl"].fn(18)
+                data()["cl"].fn(18)
             end,
-            { desc = options["cl"].label, nowait = true, silent = true },
+            { desc = data()["cl"].label, nowait = true, silent = true },
         },
         ["cc"] = {
             function()
-                options["cc"].fn(18)
+                data()["cc"].fn(18)
             end,
-            { desc = options["cc"].label, nowait = true, silent = true },
+            { desc = data()["cc"].label, nowait = true, silent = true },
         },
         ["cr"] = {
             function()
-                options["cr"].fn(18)
+                data()["cr"].fn(18)
             end,
-            { desc = options["cr"].label, nowait = true, silent = true },
+            { desc = data()["cr"].label, nowait = true, silent = true },
         },
 
         ["rl"] = {
             function()
-                options["rl"].fn(18)
+                data()["rl"].fn(18)
             end,
-            { desc = options["rl"].label, nowait = true, silent = true },
+            { desc = data()["rl"].label, nowait = true, silent = true },
         },
         ["rc"] = {
             function()
-                options["rc"].fn(18)
+                data()["rc"].fn(18)
             end,
-            { desc = options["rc"].label, nowait = true, silent = true },
+            { desc = data()["rc"].label, nowait = true, silent = true },
         },
         ["rr"] = {
             function()
-                options["rr"].fn(18)
+                data()["rr"].fn(18)
             end,
-            { desc = options["rr"].label, nowait = true, silent = true },
+            { desc = data()["rr"].label, nowait = true, silent = true },
         },
 
         ["aa"] = {
             function()
-                options["aa"].fn(18)
+                data()["aa"].fn(18)
             end,
-            { desc = options["aa"].label, nowait = true, silent = true },
+            { desc = data()["aa"].label, nowait = true, silent = true },
         },
         ["ac"] = {
             function()
-                options["ac"].fn(18)
+                data()["ac"].fn(18)
             end,
-            { desc = options["ac"].label, nowait = true, silent = true },
+            { desc = data()["ac"].label, nowait = true, silent = true },
         },
         ["ar"] = {
             function()
-                options["ar"].fn(18)
+                data()["ar"].fn(18)
             end,
-            { desc = options["ar"].label, nowait = true, silent = true },
+            { desc = data()["ar"].label, nowait = true, silent = true },
         },
     },
 }

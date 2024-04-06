@@ -1,5 +1,4 @@
 local leader = ";l"
-local ts_move = require("nvim-treesitter.textobjects.move")
 
 local mx = function(feedkeys, type)
     local type = type or "m"

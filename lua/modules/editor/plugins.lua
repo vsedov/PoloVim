@@ -94,7 +94,7 @@ editor({
     cond = lambda.config.editor.hydra.use_hydra,
     lazy = true,
     config = conf.hydra,
-    event = "ModeChanged",
+    event = "VeryLazy",
 })
 
 editor({
