@@ -51,11 +51,4 @@ return {
             return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
         end)(client.config.root_dir)
     end,
-    before_init = function(_, config)
-        config.settings.python.analysis.stubPath = path.concat({
-            vim.fn.stdpath("data"),
-            "lazy",
-            "python-type-stubs",
-        })
-    end,
 }

@@ -55,4 +55,5 @@ function config.hologram()
         auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
     })
 end
+
 return config

@@ -656,77 +656,7 @@ user({
         "TransparentToggle",
     },
 })
-user({
-    "kmontocam/nvim-conda",
-    cmd = { "CondaActivate", "CondaDeactivate" },
-})
 
-user({
-    "benlubas/molten-nvim",
-    dependencies = {
-        "3rd/image.nvim",
-        "quarto-dev/quarto-nvim",
-        "jmbuhr/otter.nvim",
-        "hrsh7th/nvim-cmp",
-        "neovim/nvim-lspconfig",
-        "nvim-treesitter/nvim-treesitter",
-    },
-    build = ":UpdateRemotePlugins",
-    ft = { "python", "julia" },
-    init = function()
-        -- these are examples, not defaults. Please see the readme
-        vim.g.molten_image_provider = "image.nvim"
-        -- Output Windowquarto.runner
-        vim.g.molten_auto_open_output = false
-        vim.g.molten_output_win_max_height = 30
-
-        -- Virtual Text
-        vim.g.molten_virt_text_output = true
-        -- vim.g.molten_cover_empty_lines = true
-        -- vim.g.molten_comment_string = "# %%"
-
-        vim.g.molten_virt_text_output = true
-        vim.g.molten_use_border_highlights = true
-        vim.g.molten_virt_lines_off_by_1 = true
-        vim.g.molten_wrap_output = true
-        vim.g.molten_tick_rate = 142
-    end,
-
-    config = function()
-        local function keys(str)
-            return function()
-                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(str, true, false, true), "m", true)
-            end
-        end
-
-        local Hydra = require("hydra")
-        Hydra({
-            name = "Notebook",
-            hint = "_j_/_k_: ↑/↓ | _o_/_O_: new cell ↓/↑ | _l_: run | _s_how/_h_ide | run _a_bove",
-            config = {
-                color = "pink",
-                invoke_on_body = true,
-                hint = {
-                    type = "statuslinemanual",
-                },
-            },
-            mode = { "n" },
-            body = "<localleader>j",
-            heads = {
-                { "j", keys("]b"), { desc = "↓" } },
-                { "k", keys("[b"), { desc = "↑" } },
-                { "o", keys("/```<CR>:nohl<CR>o<CR>`<c-j>"), { desc = "new cell ↓", exit = true } },
-                { "O", keys("?```.<CR>:nohl<CR><leader>kO<CR>`<c-j>"), { desc = "new cell ↑", exit = true } },
-                { "l", ":QuartoSend<CR>", { desc = "run" } },
-                { "s", ":noautocmd MoltenEnterOutput<CR>", { desc = "show" } },
-                { "h", ":MoltenHideOutput<CR>", { desc = "hide" } },
-                { "a", ":QuartoSendAbove<CR>", { desc = "run above" } },
-                { "<esc>", nil, { exit = true, desc = false } },
-                { "q", nil, { exit = true, desc = false } },
-            },
-        })
-    end,
-})
 user({
     "tani/dmacro.nvim",
     keys = {
@@ -750,12 +680,6 @@ user({
 -- └                                          ┘
 
 user({
-    "NStefan002/donut.nvim",
-    event = "VeryLazy",
-    opts = {},
-})
-
-user({
     "zeioth/garbage-day.nvim",
     dependencies = "neovim/nvim-lspconfig",
     event = "VeryLazy",
@@ -768,6 +692,118 @@ user({
 user({
     "mvllow/modes.nvim",
     cond = true,
-    event = "VeryLazy",
+    event = "ModeChanged",
     config = true,
+})
+
+user({
+    "wallpants/github-preview.nvim",
+    cmd = { "GithubPreviewToggle" },
+    keys = { "<leader>mpt", "<leader>mps", "<leader>mpd" },
+    opts = {},
+    config = function(_, opts)
+        local gpreview = require("github-preview")
+        gpreview.setup(opts)
+
+        local fns = gpreview.fns
+        vim.keymap.set("n", "<leader>mpt", fns.toggle)
+        vim.keymap.set("n", "<leader>mps", fns.single_file_toggle)
+        vim.keymap.set("n", "<leader>mpd", fns.details_tags_toggle)
+    end,
+})
+
+user({
+    "IndianBoy42/kitty.lua",
+    event = "VeryLazy",
+    cond = not not vim.env.KITTY_PID,
+    config = function()
+        require("kitty.terms").setup({
+            dont_attach = not not vim.g.kitty_scrollback,
+            attach = {
+                target_providers = {
+                    function(T)
+                        T.helloworld = { desc = "Hello world", cmd = "echo hello world" }
+                    end,
+                    "just",
+                    "cargo",
+                },
+                current_win_setup = {},
+                on_attach = function(_, K, _)
+                    K.setup_make()
+                end,
+                bracketed_paste = true,
+            },
+        })
+        local Terms = require("kitty.terms")
+        local map = vim.keymap.set
+        map("n", ";KK", function()
+            Terms.get_terminal(0):run()
+        end, { desc = "Kitty Run" })
+        map("n", ";Kk", function()
+            Terms.get_terminal(0):make()
+        end, { desc = "Kitty Make" })
+        map("n", ";Kkk", function()
+            Terms.get_terminal(0):make("last")
+        end, { desc = "Kitty ReMake" })
+        map("n", ";KrR", function()
+            return Terms.get_terminal(0):send_operator()
+        end, { expr = true, desc = "Kitty Send" })
+        map("x", ";KR", function()
+            return Terms.get_terminal(0):send_operator()
+        end, { expr = true, desc = "Kitty Send" })
+        map("n", ";Krr", function()
+            return Terms.get_terminal(0):send_operator({ type = "line", range = "$" })
+        end, { expr = true, desc = "Kitty Send Line" })
+        map("n", ";Ky", function()
+            Terms.get_terminal(0):get_selection()
+        end, { desc = "Yank From Kitty" })
+    end,
+    keys = {
+        {
+            ";Kok",
+            "<cmd>Kitty<cr>",
+            desc = "Kitty Open",
+        },
+        {
+            ";KoK",
+            "<cmd>KittyOverlay<cr>",
+            desc = "Kitty Open",
+        },
+    },
+})
+user({
+    "t-troebst/perfanno.nvim",
+    cmd = {
+
+        "PerfAnnotate",
+        "PerfAnnotateFunction",
+        "PerfAnnotateSelection",
+        "PerfCacheDelete",
+        "PerfCacheLoad",
+        "PerfCacheSave",
+        "PerfCycleFormat",
+        "PerfHottestLines",
+        "PerfHottestLinesFunction",
+        "PerfHottestLinesSelection",
+        "PerfHottestSymbols",
+        "PerfLoadCallGraph",
+        "PerfLoadFlameGraph",
+        "PerfLoadFlat",
+        "PerfLuaProfileStart",
+        "PerfLuaProfileStop",
+        "PerfPickEvent",
+        "PerfToggleAnnotations",
+    },
+    config = function()
+        local perfanno = require("perfanno")
+        local util = require("perfanno.util")
+
+        local bgcolor = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg", "gui")
+
+        perfanno.setup({
+            -- Creates a 10-step RGB color gradient beween bgcolor and "#CC3300"
+            line_highlights = util.make_bg_highlights(bgcolor, "#CC3300", 10),
+            vt_highlight = util.make_fg_highlight("#CC3300"),
+        })
+    end,
 })

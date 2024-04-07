@@ -53,7 +53,6 @@ end
 --  ╭────────────────────────────────────────────────────────────────────╮
 --  │                           Core Mappings                            │
 --  ╰────────────────────────────────────────────────────────────────────╯
-nnoremap("<C-x>k", [[<cmd>bd<CR>]], { desc = "Buffer Delete", silent = true })
 nnoremap("Y", "y$", { desc = "Yank to end of line" })
 nnoremap("<leader>w", [[<cmd>:w<cr>]], { desc = "save" })
 nnoremap("<c-q>", [[<cmd>:wq<cr>]], { desc = "save and exit" })
@@ -197,24 +196,6 @@ nnoremap(
     "<cmd>:lua vim.diagnostic.goto_prev({ float = false })<cr>:DiagWindowShow<cr>",
     { desc = "Diag show Prev", silent = true }
 )
-
---  ╭────────────────────────────────────────────────────────────────────╮
---  │ Telscope Mappings                                                  │
---  ╰────────────────────────────────────────────────────────────────────╯
-
-nnoremap("<Leader>U", "<cmd>:lua require'utils.telescope'.find_updir()<CR>", { desc = "Up dir", silent = true })
-nnoremap("<leader>xW", "<cmd>:lua require'utils.telescope'.help_tags()<CR>", { desc = "Help tag", silent = true })
-nnoremap(
-    "<Leader>gw",
-    "<cmd>:lua require'utils.telescope'.grep_last_search()<CR>",
-    { desc = "Grep last word", silent = true }
-)
-vnoremap(
-    "<Leader>gw",
-    "<cmd>:lua require'utils.telescope'.grep_string_visual()<CR>",
-    { desc = "Grep last word", silent = true }
-)
---
 
 vnoremap("D", function()
     local l, c = unpack(vim.api.nvim_win_get_cursor(0))

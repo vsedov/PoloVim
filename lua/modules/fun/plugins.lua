@@ -88,3 +88,9 @@ fun({
     "ragnarok22/whereami.nvim",
     cmd = "Whereami",
 })
+fun({
+    "NStefan002/donut.nvim",
+    lazy = true,
+    cond = false,
+    opts = {},
+})

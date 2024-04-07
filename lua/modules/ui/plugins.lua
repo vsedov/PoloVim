@@ -554,13 +554,18 @@ ui({
     },
     config = conf.ufo,
 })
---
+-- Delete folds of multiline comments longer than or equal to the number of lines specified by args
+-- e.g. Unfoldcus 4
+-- vim.api.nvim_create_user_command('Unfoldcus', function(args) foldcus.unfold(tonumber(args.args)) end, { nargs = '*' })
+-- vim.api.nvim_create_user_command('Unfoldcus', function(args) foldcus.unfold(tonumber(args.args)) end, { nargs = '*' })
+-- vim.api.nvim_create_user_command('Unfoldcus', function(args) foldcus.unfold(tonumber(args.args)) end, { nargs = '*' })
+-- vim.api.nvim_create_user_command('Unfoldcus', function(args) foldcus.unfold(tonumber(args.args)) end, { nargs = '*' })
 ui({
     "Vonr/foldcus.nvim",
     lazy = true,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    event = "VeryLazy",
     cmd = { "Foldcus", "Unfoldcus" },
+    keys = { "z;", "z\\" },
     config = conf.fold_focus,
 })
 

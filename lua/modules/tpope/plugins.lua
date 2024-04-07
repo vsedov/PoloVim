@@ -18,5 +18,5 @@ tpope({
 tpope({
     "tpope/vim-repeat",
     lazy = true,
-    event = "VeryLazy",
+    event = lambda.event.default,
 })

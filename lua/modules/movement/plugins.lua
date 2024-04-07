@@ -117,7 +117,7 @@ else
     local flash = require("modules.movement.flash.setup")
     movement({
         "folke/flash.nvim",
-        event = "VeryLazy",
+        event = "CursorMoved",
         dependencies = {
             { "rapan931/lasterisk.nvim", cond = lambda.config.movement.use_lasterisk },
             { "RRethy/vim-illuminate", cond = lambda.config.ui.use_illuminate },
@@ -131,7 +131,7 @@ else
 
     movement({
         "ggandor/leap.nvim",
-        event = "VeryLazy",
+        event = "CursorMoved",
         lazy = true,
         dependencies = { "tpope/vim-repeat" },
         config = leap.leap_config,
