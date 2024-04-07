@@ -8,15 +8,6 @@ function config.femaco()
     require("femaco").setup()
 end
 
-function config.jot()
-    require("jot").setup({
-        search_dir = "~/neorg/",
-        search_depth = 10,
-        hide_search_dir = false,
-        post_open_hook = function() end,
-    })
-end
-
 function config.mdeval()
     require("mdeval").setup({
         -- Don't ask before executing code blocks
