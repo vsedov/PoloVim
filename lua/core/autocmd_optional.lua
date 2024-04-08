@@ -104,7 +104,7 @@ vim.defer_fn(function()
             ["save_clipboard_on_exit"] = lambda.config.custom.custom_save_clipboard,
             ["abbreviations"] = lambda.config.abbrev.enable,
             ["exit"] = lambda.config.loaded_confirm_quit,
-            ["icecream"] = true,
+            ["icecream"] = false,
         }
 
         if config_options[name] ~= nil then

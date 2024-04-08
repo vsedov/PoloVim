@@ -1,3 +1,20 @@
+local function focus_me()
+    if vim.g.neovide then
+        lambda.pcall(vim.cmd.NeovideFocus)
+    else
+        require("kitty.current_win").focus()
+    end
+end
+local function FNV_hash(s)
+    local prime = 1099511628211
+    local hash = 14695981039346656037
+    for i = 1, #s do
+        hash = require("bit").bxor(hash, s:byte(i))
+        hash = hash * prime
+    end
+    return hash
+end
+
 local startup = require("core.pack").package
 -- When you open a file in Vim but it was already open in another instance or not closed properly in a past edit, Vim will warn you, but it won't show you what the difference is between the hidden swap file and the regular saved file. Of all the actions you might want to do, the most obvious one is missing: compare, that is, see a diff.
 -- enabled by default, will need to load on boot
@@ -16,23 +33,6 @@ startup({
     "pteroctopus/faster.nvim",
     config = true,
 })
-local function focus_me()
-    if vim.g.neovide then
-        pcall(vim.cmd.NeovideFocus)
-    else
-        require("kitty.current_win").focus()
-    end
-end
-local function FNV_hash(s)
-    local prime = 1099511628211
-    local hash = 14695981039346656037
-    for i = 1, #s do
-        hash = require("bit").bxor(hash, s:byte(i))
-        hash = hash * prime
-    end
-    return hash
-end
-
 startup({
 
     "willothy/flatten.nvim",

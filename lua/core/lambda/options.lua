@@ -19,7 +19,7 @@ lambda.config = {
     use_adv_snip = true,
     use_lastplace = true,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
-    telescope_theme = "float_all_borders", -- custom_bottom_no_borders float_all_borders
+    telescope_theme = "custom_no_borders", -- custom_bottom_no_borders float_all_borders
     record_your_self = false, -- waka time track, also might not be needed
     neorg_auto_commit = false,
     loaded_confirm_quit = false, -- this is not needed
@@ -99,7 +99,7 @@ lambda.config.treesitter = {
 }
 
 lambda.config.abbrev = {
-    enable = false, -- All abbrvs are disables for the time .
+    enable = true, -- All abbrvs are disables for the time .
     coding_support = true, -- system wide
     globals = {
         -- dictionaries that ive defined to be global, you may not want this idk .

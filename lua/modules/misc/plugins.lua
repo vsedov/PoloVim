@@ -109,7 +109,7 @@ misc({
 -- programming spell
 misc({
     "psliwka/vim-dirtytalk",
-    lazy = true,
+    event = "BufWrite",
     cmd = { "DirtytalkUpdate" },
     config = function()
         vim.defer_fn(function()
