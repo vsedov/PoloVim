@@ -1,5 +1,17 @@
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
+local function openURL()
+    local opener
+    if vim.fn.has("macunix") == 1 then
+        opener = "open"
+    elseif vim.fn.has("linux") == 1 then
+        opener = "xdg-open"
+    elseif vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
+        opener = "start"
+    end
+    local openCommand = string.format("%s '%s' >/dev/null 2>&1", opener, url)
+    vim.fn.system(openCommand)
+end
 
 -- Core
 ts({
@@ -13,6 +25,7 @@ ts({
 ts({
     "nvim-treesitter/nvim-treesitter-textobjects",
     lazy = true,
+    event = "VeryLazy",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.treesitter_obj,
 })
@@ -49,10 +62,71 @@ ts({
         {
             "ii",
             function()
-                require("various-textobjs").indentation(true, true)
+                if vim.fn.indent(".") == 0 then
+                    require("various-textobjs").entireBuffer()
+                else
+                    require("various-textobjs").indentation("inner", "inner")
+                end
             end,
             mode = { "o", "x" },
             desc = "inner indentation",
+        },
+        {
+            "gx",
+
+            function()
+                require("various-textobjs").url()
+                local foundURL = vim.fn.mode():find("v")
+                if foundURL then
+                    vim.cmd.normal('"zy')
+                    local url = vim.fn.getreg("z")
+                    openURL(url)
+                else
+                    -- find all URLs in buffer
+                    local urlPattern = require("various-textobjs.charwise-textobjs").urlPattern
+                    local bufText = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+                    local urls = {}
+                    for url in bufText:gmatch(urlPattern) do
+                        table.insert(urls, url)
+                    end
+                    if #urls == 0 then
+                        return
+                    end
+
+                    -- select one, use a plugin like dressing.nvim for nicer UI for
+                    -- `vim.ui.select`
+                    vim.ui.select(urls, { prompt = "Select URL:" }, function(choice)
+                        if choice then
+                            openURL(choice)
+                        end
+                    end)
+                end
+            end,
+            mode = { "n" },
+        },
+        {
+            "dsi",
+            function()
+                -- select outer indentation
+                require("various-textobjs").indentation("outer", "outer")
+
+                -- plugin only switches to visual mode when a textobj has been found
+                local indentationFound = vim.fn.mode():find("V")
+                if not indentationFound then
+                    return
+                end
+
+                -- dedent indentation
+                vim.cmd.normal({ "<", bang = true })
+
+                -- delete surrounding lines
+                local endBorderLn = vim.api.nvim_buf_get_mark(0, ">")[1]
+                local startBorderLn = vim.api.nvim_buf_get_mark(0, "<")[1]
+                vim.cmd(tostring(endBorderLn) .. " delete") -- delete end first so line index is not shifted
+                vim.cmd(tostring(startBorderLn) .. " delete")
+            end,
+            mode = "n",
+            { desc = "Delete Surrounding Indentation" },
         },
     },
     opts = {
@@ -68,7 +142,7 @@ ts({
     "RRethy/nvim-treesitter-textsubjects",
     lazy = true,
     ft = { "lua", "rust", "go", "python", "javascript" },
-    config = conf.tsubject,
+    config = conf.treesitter_subj,
 })
 
 -- Core
@@ -92,14 +166,6 @@ ts({
     event = "BufRead",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.hlargs,
-})
-
-ts({
-    "andrewferrier/textobj-diagnostic.nvim",
-    lazy = true,
-    ft = { "python", "lua" },
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = true,
 })
 
 ts({

@@ -1,4 +1,4 @@
-local leader = ";w"
+local leader = ";q"
 local docs = { "<cr>", "l", "W", "r", "S", "J", "K" }
 local analyse = { "s", "o", "O", "a" }
 local summary = { "M", "R", "C" }

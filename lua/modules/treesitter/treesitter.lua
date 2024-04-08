@@ -105,6 +105,7 @@ local treesitter_obj = function()
         },
         -- ensure_installed = "maintained"
         ensure_installed = {
+            "dap_repl",
             "norg",
             "vim",
             "go",
@@ -171,10 +172,18 @@ local function textsubjects()
     require("nvim-treesitter.configs").setup({
         textsubjects = {
             enable = true,
+            prev_selection = "\\\\", -- (Optional) keymap to select the previous selection
             keymaps = {
-                ["<leader><leader><leader>"] = "textsubjects-smart",
-                ["<leader><leader><cr>"] = "textsubjects-container-outer",
-                ['<leader><leader>;"'] = "textsubjects-container-inner",
+                [";w"] = "textsubjects-smart",
+                [";W"] = "textsubjects-container-outer",
+                ["i;"] = {
+                    "textsubjects-container-inner",
+                    desc = "Select inside containers (classes, functions, etc.)",
+                },
+                [";i"] = { -- Select inside the current container
+                    "textsubjects-container-outer",
+                    desc = "Select inside the current container",
+                },
             },
         },
     })

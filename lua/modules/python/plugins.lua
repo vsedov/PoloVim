@@ -147,9 +147,6 @@ python({
             config = {
                 color = "pink",
                 invoke_on_body = true,
-                hint = [[ 
-                _j_/_k_: ↑/↓ | _o_/_O_: new cell ↓/↑ | _l_: run | _s_how/_h_ide | run _a_bove
-                ]],
             },
             mode = { "n" },
             body = "<localleader>j",

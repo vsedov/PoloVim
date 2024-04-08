@@ -82,19 +82,12 @@ end
 function config.treesitter_obj()
     require("modules.treesitter.treesitter").treesitter_obj()
 end
+function config.treesitter_textsubjects()
+    require("modules.treesitter.treesitter").textsubjects()
+end
 
 function config.treesitter_ref()
     require("modules.treesitter.treesitter").treesitter_ref()
-end
-
-function config.tsubject()
-    require("nvim-treesitter.configs").setup({
-        textsubjects = {
-            enable = true,
-            --  TODO: (vsedov) (23:57:55 - 07/06/23): redo this
-            keymaps = { ["\\l"] = "textsubjects-smart", ["\\k"] = "textsubjects-container-outer" },
-        },
-    })
 end
 
 function config.playground()

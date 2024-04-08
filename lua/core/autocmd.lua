@@ -305,21 +305,21 @@ lambda.augroup("Utilities", {
             end
         end,
     },
-    {
-        event = { "DirChanged" },
-        command = function()
-            if fn.getcwd() == env.DOTFILES then
-                vim.keymap.set("n", "gx", function()
-                    local file = fn.expand("<cfile>")
-                    local link = file:match("[%a%d%-%.%_]*%/[%a%d%-%.%_]*")
-                    if link then
-                        return vim.ui.open(string.format("https://www.github.com/%s", link))
-                    end
-                    return vim.ui.open(file)
-                end)
-            end
-        end,
-    },
+    -- {
+    --     event = { "DirChanged" },
+    --     command = function()
+    --         if fn.getcwd() == env.DOTFILES then
+    --             vim.keymap.set("n", "gx", function()
+    --                 local file = fn.expand("<cfile>")
+    --                 local link = file:match("[%a%d%-%.%_]*%/[%a%d%-%.%_]*")
+    --                 if link then
+    --                     return vim.ui.open(string.format("https://www.github.com/%s", link))
+    --                 end
+    --                 return vim.ui.open(file)
+    --             end)
+    --         end
+    --     end,
+    -- },
 })
 
 lambda.augroup("TerminalAutocommands", {
