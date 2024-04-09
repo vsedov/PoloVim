@@ -146,17 +146,6 @@ lambda.augroup("SmartClose", {
     },
 })
 
-lambda.augroup("ExternalCommands", {
-    {
-        -- Open images in an image viewer (probably Preview)
-        event = { "BufEnter" },
-        pattern = { "*.png", "*.jpg", "*.gif" },
-        command = function()
-            cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. " " .. fn.expand("%")))
-        end,
-    },
-})
-
 lambda.augroup("CheckOutsideTime", {
     -- automatically check for changed files outside vim
     {

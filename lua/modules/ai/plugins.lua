@@ -51,13 +51,20 @@ ai({
 })
 
 ai({
+    "folke/which-key.nvim",
+    lazy = true,
+    cmd = { "WhichKey" },
+})
+
+ai({
     "codota/tabnine-nvim",
+    event = "VeryLazy",
     lazy = true,
     cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_insert),
-    event = "BufWinEnter",
-    build = "bash ./dl_binaries.sh",
+    build = "./dl_binaries.sh",
     config = conf.tabnine,
 })
+
 
 ai({
     "Exafunction/codeium.vim",

@@ -113,7 +113,8 @@ python({
         "nvim-treesitter/nvim-treesitter",
     },
     build = ":UpdateRemotePlugins",
-    ft = { "python", "julia" },
+    -- ft = { "python", "julia" },
+    cmd = { "MoltenInit" },
     init = function()
         -- these are examples, not defaults. Please see the readme
         vim.g.molten_image_provider = "image.nvim"

@@ -12,7 +12,7 @@ local use_codium_cmp = false
 local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
 local use_tabnine_cmp = true
 
-local use_copilot = true -- We really do sell our souls for this thing eh
+local use_copilot = false -- We really do sell our souls for this thing eh
 
 -- toggle core values within th list
 lambda.config = {

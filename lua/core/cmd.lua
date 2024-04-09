@@ -389,3 +389,9 @@ lambda.command("NorgSpec", function()
         end
     end, { buffer = true })
 end, { desc = "View Norg Specification" })
+lambda.command("CreateEnv", function()
+    vim.notify([[
+layout_mamba
+export PYTHONPATH=$(pwd)
+    ]])
+end, { desc = "python env , creates, layout env version and python path export" })

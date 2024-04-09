@@ -657,37 +657,11 @@ user({
     },
 })
 
-user({
-    "tani/dmacro.nvim",
-    keys = {
-
-        {
-            "<C-.>",
-            mode = { "n", "i" },
-        },
-    },
-    lazy = true,
-    config = function()
-        require("dmacro").setup({
-            dmacro_key = "<C-.>", --  you need to set the dmacro_key
-        })
-    end,
-})
 -- ┌                                          ┐
 -- │                                          │
 -- │ Very Lazy Scripts that i need to replace │
 -- │                                          │
 -- └                                          ┘
-
-user({
-    "zeioth/garbage-day.nvim",
-    dependencies = "neovim/nvim-lspconfig",
-    event = "VeryLazy",
-    opts = {
-        aggressive_mode = false, -- I dont know why you would not have this enabled; i guess ima  bit confused for the case.
-        -- your options here
-    },
-})
 
 user({
     "mvllow/modes.nvim",
@@ -772,38 +746,12 @@ user({
     },
 })
 user({
-    "t-troebst/perfanno.nvim",
-    cmd = {
+    "NStefan002/screenkey.nvim",
+    cmd = "Screenkey",
+    config = true,
+})
+user({
 
-        "PerfAnnotate",
-        "PerfAnnotateFunction",
-        "PerfAnnotateSelection",
-        "PerfCacheDelete",
-        "PerfCacheLoad",
-        "PerfCacheSave",
-        "PerfCycleFormat",
-        "PerfHottestLines",
-        "PerfHottestLinesFunction",
-        "PerfHottestLinesSelection",
-        "PerfHottestSymbols",
-        "PerfLoadCallGraph",
-        "PerfLoadFlameGraph",
-        "PerfLoadFlat",
-        "PerfLuaProfileStart",
-        "PerfLuaProfileStop",
-        "PerfPickEvent",
-        "PerfToggleAnnotations",
-    },
-    config = function()
-        local perfanno = require("perfanno")
-        local util = require("perfanno.util")
-
-        local bgcolor = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg", "gui")
-
-        perfanno.setup({
-            -- Creates a 10-step RGB color gradient beween bgcolor and "#CC3300"
-            line_highlights = util.make_bg_highlights(bgcolor, "#CC3300", 10),
-            vt_highlight = util.make_fg_highlight("#CC3300"),
-        })
-    end,
+    "Makaze/watch.nvim",
+    cmd = { "WatchStart", "WatchStop", "WatchFile" },
 })

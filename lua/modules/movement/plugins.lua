@@ -36,7 +36,7 @@ movement({
             mode = "n",
         },
         {
-            "X",
+            ";x",
             "<Plug>(VisualExchange)",
             mode = "x",
         },

@@ -201,3 +201,19 @@ misc({
         vim.g.wordmotion_prefix = ","
     end,
 })
+misc({
+    "tani/dmacro.nvim",
+    keys = {
+
+        {
+            "<C-.>",
+            mode = { "n", "i" },
+        },
+    },
+    lazy = true,
+    config = function()
+        require("dmacro").setup({
+            dmacro_key = "<C-.>", --  you need to set the dmacro_key
+        })
+    end,
+})

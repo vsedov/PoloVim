@@ -237,3 +237,13 @@ lsp({
         toggle_event = { "InsertEnter" },
     },
 })
+
+lsp({
+    "zeioth/garbage-day.nvim",
+    dependencies = "neovim/nvim-lspconfig",
+    event = "VeryLazy",
+    opts = {
+        aggressive_mode = false, -- I dont know why you would not have this enabled; i guess ima  bit confused for the case.
+        -- your options here
+    },
+})

@@ -39,21 +39,21 @@ local get_extra_binds = function()
         },
         {
             "gd",
-            "<cmd>Lspsaga peek_definition<CR>",
-            desc = "Toggle Lspsaga peek_definition",
+            "<cmd>Glance definitions<CR>",
+            desc = "Glances peek_definition",
         },
 
         { "gf", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
         { "cc", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
         {
             "gt",
-            "<cmd>Lspsaga peek_type_definition<CR>",
-            desc = "Toggle Lspsaga peek_type_definition",
+            "<cmd>Glance type_definitions<CR>",
+            desc = "Glance type def",
         },
         {
             "gT",
-            "<cmd>Lspsaga goto_type_definition<CR>",
-            desc = "Toggle Lspsaga goto_type_definition",
+            "<cmd>Glance implementations<CR>",
+            desc = "Glacne implementations",
         },
         {
             "gR",
@@ -100,9 +100,6 @@ local get_extra_binds = function()
             "<cmd>Lspsaga show_buf_diagnostics<CR>",
             desc = "Toggle Lspsaga show_buf_diagnostics",
         },
-        { "<leader>ca", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
-        { "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>", desc = "Toggle Lspsaga outgoing_calls" },
-        { "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", desc = "Toggle Lspsaga incoming_calls" },
         -- {
         --     "gW",
         --     "<cmd>Lspsaga show_workspace_diagnostics<CR>",
@@ -112,13 +109,7 @@ local get_extra_binds = function()
     return binds
 end
 local buffer_mappings = {
-    normal_mode = {
-        {
-            "K",
-            utils.repeatable_hover,
-            desc = "hover",
-        },
-    },
+    normal_mode = {},
     visual_mode = {},
     insert_mode = {},
     extra_binds = get_extra_binds(),
@@ -264,6 +255,22 @@ augroup("LspSetupCommands", {
             end
             overrides.on_attach(client, args.buf)
         end,
+    },
+    {
+        event = "LspAttach",
+        command = function(args)
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if client.name == "sourcery" or client.name == "null_ls" or client.name == "ruff_lsp" then
+                -- Disable hover in favor of Pyright
+                client.server_capabilities.hoverProvider = false
+            end
+            if client.server_capabilities.hoverProvider then
+                vim.keymap.set("n", "K", function()
+                    utils.repeatable_hover()
+                end, { buffer = args.buf })
+            end
+        end,
+        desc = "hover",
     },
     {
         event = "DiagnosticChanged",
