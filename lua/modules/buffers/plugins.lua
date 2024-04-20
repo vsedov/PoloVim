@@ -112,6 +112,26 @@ buffer({
 buffer({
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    init = function()
+        if vim.fn.argc() == 1 then
+            local arg = vim.fn.argv(0)
+            local stat = vim.loop.fs_stat(arg)
+            if stat and stat.type == "directory" then
+                require("lazy").load({ plugins = { "oil.nvim" } })
+            end
+        end
+        if not require("lazy.core.config").plugins["oil.nvim"]._.loaded then
+            vim.api.nvim_create_autocmd("BufNew", {
+                callback = function(args)
+                    if vim.fn.isdirectory(args.file) == 1 then
+                        require("lazy").load({ plugins = { "oil.nvim" } })
+                        -- Once oil is loaded, we can delete this autocmd
+                        return true
+                    end
+                end,
+            })
+        end
+    end,
     opts = {
         delete_to_trash = true,
         skip_confirm_for_simple_edits = true,
@@ -147,6 +167,7 @@ buffer({
         "-",
         "<leader>-",
     },
+    cmd = "Oil",
 })
 --
 buffer({
