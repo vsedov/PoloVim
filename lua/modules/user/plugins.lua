@@ -710,36 +710,36 @@ user({
         })
         local Terms = require("kitty.terms")
         local map = vim.keymap.set
-        map("n", ";KK", function()
+        map("n", ";kk", function()
             Terms.get_terminal(0):run()
         end, { desc = "Kitty Run" })
-        map("n", ";Kk", function()
+        map("n", ";kK", function()
             Terms.get_terminal(0):make()
         end, { desc = "Kitty Make" })
-        map("n", ";Kkk", function()
+        map("n", ";kkk", function()
             Terms.get_terminal(0):make("last")
         end, { desc = "Kitty ReMake" })
-        map("n", ";KrR", function()
+        map("n", ";krR", function()
             return Terms.get_terminal(0):send_operator()
         end, { expr = true, desc = "Kitty Send" })
-        map("x", ";KR", function()
+        map("x", ";kR", function()
             return Terms.get_terminal(0):send_operator()
         end, { expr = true, desc = "Kitty Send" })
-        map("n", ";Krr", function()
+        map("n", ";krr", function()
             return Terms.get_terminal(0):send_operator({ type = "line", range = "$" })
         end, { expr = true, desc = "Kitty Send Line" })
-        map("n", ";Ky", function()
+        map("n", ";ky", function()
             Terms.get_terminal(0):get_selection()
         end, { desc = "Yank From Kitty" })
     end,
     keys = {
         {
-            ";Kok",
+            ";kok",
             "<cmd>Kitty<cr>",
             desc = "Kitty Open",
         },
         {
-            ";KoK",
+            ";koK",
             "<cmd>KittyOverlay<cr>",
             desc = "Kitty Open",
         },

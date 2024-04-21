@@ -343,3 +343,12 @@ lambda.augroup("TerminalAutocommands", {
         end,
     },
 })
+vim.cmd([[
+au ModeChanged *:[] do User VisualBlockEnter
+au ModeChanged []:* do User VisualBlockLeave 
+
+augroup VisualBlock
+  au User VisualBlockEnter execute "set rnu"
+  au User VisualBlockLeave execute "set nornu"
+augroup END
+]])
