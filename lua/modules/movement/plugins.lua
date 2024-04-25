@@ -175,12 +175,12 @@ movement({
     "ThePrimeagen/harpoon",
     dependencies = {
         "nvim-lua/plenary.nvim",
+        "samharju/yeet.nvim",
         {
-            {
-                "samharju/yeet.nvim",
-                lazy = true,
-            },
+            "echasnovski/mini.visits",
+            config = true,
         },
+ 
     },
     branch = "harpoon2",
     lazy = true,

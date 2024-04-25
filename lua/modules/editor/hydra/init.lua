@@ -31,7 +31,6 @@ local function loadHydraAPI()
     local exclude_table = { "init" }
 
     if lambda.config.movement.movement_type == "flash" then
-        table.insert(exclude_table, "leap") -- we stilll use leap ?
     end
 
     -- if not (lambda.config.ai.tabnine.use_tabnine and lambda.config.ai.tabnine.use_tabnine_insert) then

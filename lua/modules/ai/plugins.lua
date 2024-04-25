@@ -65,7 +65,6 @@ ai({
     config = conf.tabnine,
 })
 
-
 ai({
     "Exafunction/codeium.vim",
     lazy = true,

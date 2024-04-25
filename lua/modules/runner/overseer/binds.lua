@@ -53,7 +53,6 @@ lambda.command("Grep", function(params)
     })
     task:start()
 end, { nargs = "*", bang = true, bar = true, complete = "file" })
---
 lambda.command("OverseerDebugParser", 'lua require("overseer.parser.debug").start_debug_session()', {})
 
 vim.keymap.set("n", "_W", function()
@@ -82,5 +81,89 @@ end)
 vim.keymap.set("n", "_k", "<cmd>OverseerTaskAction<cr>")
 vim.keymap.set("n", "_w", "<cmd>OverseerToggle<cr>")
 
+-- ["open vsplit"] = true,
+-- ["open hsplit"] = true,
+-- ["set loclist diagnostics"] = true,
+-- ["set as recive terminal"] = {
+--     desc = "set this task as the terminal to recive sent text and commands",
+--     run = function(task)
+--         SendID = task.strategy.chan_id
+--     end,
+-- },
+-- ["keep runnning"] = {
+--     desc = "restart the task even if it succeeds",
+--     run = function(task)
+--         task:add_components({ { "on_complete_restart", statuses = { STATUS.FAILURE, STATUS.SUCCESS } } })
+--         if task.status == STATUS.FAILURE or task.status == STATUS.SUCCESS then
+--             task:restart()
+--         end
+--     end,
+-- },
+-- ["unwatch"] = {
+--     desc = "stop from running on finish or file watch",
+--     run = function(task)
+--         for _, component in pairs({ "on_complete_restart", "on_complete_restart" }) do
+--             if task:has_component(component) then
+--                 task:remove_components({ component })
+--             end
+--         end
+--     end,
+--     condition = function(task)
+--         return task:has_component("on_complete_restart") or task:has_component("restart_on_save")
+--     end,
+-- },
+-- ["dump task"] = {
+--     desc = "save task table to DumpTask (for debugging)",
+--     run = function(task)
+--         DumpTask = task
+--     end,
+-- },
+-- ["open here"] = {
+--     desc = "open as bottom pannel",
+--     condition = function(task)
+--         local bufnr = task:get_bufnr()
+--         return bufnr and vim.api.nvim_buf_is_valid(bufnr)
+--     end,
+--     run = function(task)
+--         vim.cmd([[normal! m']])
+--         close_task(task.strategy.bufnr)
+--         vim.bo[task.strategy.bufnr].filetype = "OverseerTask"
+--         vim.api.nvim_win_set_buf(0, task:get_bufnr())
+--         vim.wo.statuscolumn = "%s"
+--         util.scroll_to_end(0)
+--     end,
+-- },
+-- ["open"] = {
+--     desc = "open as bottom pannel",
+--     condition = function(task)
+--         local bufnr = task:get_bufnr()
+--         return bufnr and vim.api.nvim_buf_is_valid(bufnr)
+--     end,
+--     run = function(task)
+--         vim.cmd([[normal! m']])
+--         close_task(task.strategy.bufnr)
+--         vim.bo[task.strategy.bufnr].filetype = "OverseerPanelTask"
+--         vim.cmd.vsplit()
+--         vim.api.nvim_win_set_buf(0, task:get_bufnr())
+--         util.scroll_to_end(0)
+--     end,
+-- },
 vim.keymap.set("n", "<leader>>", "<cmd>OverseerQuickAction open<cr>")
 vim.keymap.set("n", "<leader><", "<cmd>OverseerQuickAction open here<cr>")
+
+local binds = {
+    ["open vsplit"] = ";wv",
+    ["open hsplit"] = ";wh",
+    ["set loclist diagnostics"] = ";wl",
+    ["set as recive terminal"] = ";wt",
+    ["keep runnning"] = ";ww",
+    ["unwatch"] = ";wu",
+    ["dump task"] = ";wD",
+    ["open here"] = ";wo",
+    ["open"] = ";wO",
+    ["restart"] = ";wr",
+    ["dispose"] = ";wd",
+}
+for action, key in pairs(binds) do
+    vim.keymap.set("n", key, string.format("<cmd>OverseerQuickAction %s<cr>", action))
+end

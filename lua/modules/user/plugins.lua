@@ -751,7 +751,6 @@ user({
     config = true,
 })
 user({
-
     "Makaze/watch.nvim",
     cmd = { "WatchStart", "WatchStop", "WatchFile" },
 })

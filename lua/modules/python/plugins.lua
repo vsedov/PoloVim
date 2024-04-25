@@ -19,7 +19,6 @@ python({
 
 python({
     "linux-cultist/venv-selector.nvim",
-    ft = "python",
     dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim", "mfussenegger/nvim-dap-python" },
     cmd = { "VenvSelect", "VenvSelectCached" },
     config = function()
@@ -28,16 +27,6 @@ python({
             anaconda_envs_path = "/home/viv/.conda/envs",
         })
     end,
-})
-
-python({
-    "Vimjas/vim-python-pep8-indent",
-    ft = "python",
-})
-
-python({
-    "purpleP/python-syntax",
-    ft = "python",
 })
 
 -- I forget this existed

@@ -105,28 +105,3 @@ lang({
     },
     config = conf.dap_config,
 })
-lang({
-    "mfussenegger/nvim-dap-python",
-    dependencies = {
-        "mfussenegger/nvim-dap",
-    },
-    ft = { "python" },
-    lazy = true,
-    config = function()
-        local dap_python = require("dap-python")
-        local function find_debugpy_python_path()
-            -- Return the path to the debugpy python executable if it is
-            -- installed in $VIRTUAL_ENV, otherwise get it from Mason
-            if vim.env.VIRTUAL_ENV or require("modules.lsp.lsp.providers.python.utils.python_help").in_any_env() then
-                return vim.fn.exepath("python3")
-            end
-
-            local mason_registry = require("mason-registry")
-            local path = mason_registry.get_package("debugpy"):get_install_path() .. "/venv/bin/python"
-            return path
-        end
-
-        local dap_python_path = find_debugpy_python_path()
-        dap_python.setup(dap_python_path)
-    end,
-})

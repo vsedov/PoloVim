@@ -132,23 +132,9 @@ local config = {
             { nowait = true, exit = false, desc = "Prev File" },
         },
 
-        ["<leader>"] = {
-            function()
-                lambda.clever_tcd()
-                require("harpoon.cmd-ui").toggle_quick_menu()
-            end,
-            { nowait = true, exit = true, desc = "UI QMenu" },
-        },
-
         W = {
             function()
-                vim.ui.input({ prompt = "Harpoon > ", default = "1" }, function(index)
-                    if index == nil or index == "" then
-                        return
-                    end
-
-                    require("harpoon.ui").nav_file(tonumber(index))
-                end)
+                --  TODO: (vsedov) (07:17:59 - 27/04/24): Not working
             end,
             { nowait = true, desc = "Jump File", exit = true },
         },
@@ -193,17 +179,17 @@ local config = {
             end,
             { desc = "Open Terminal", noremap = true, exit = true, silent = true },
         },
-        d = {
+        f = {
             function()
-                local list = require("harpoon"):list()
-                for i, displayed in ipairs(list:display()) do
-                    if Path:new(displayed):absolute() == vim.api.nvim_buf_get_name(0) then
-                        list:removeAt(i)
-                        return
-                    end
-                end
+                harpoon.ui:toggle_quick_menu(harpoon:list("files"))
             end,
-            { desc = "Remove current file from harpoon list", noremap = true, exit = true, silent = true },
+            { desc = "Open Files", noremap = true, exit = true, silent = true },
+        },
+        ["<leader>"] = {
+            function()
+                harpoon:list("files"):append()
+            end,
+            { nowait = true, exit = true, desc = "FileAppend" },
         },
 
         o = { function() end, { exit = true, desc = "Yeet" } },
@@ -230,7 +216,7 @@ return {
             "d",
         },
     }, -- 3
-    { "<CR>", "W", "G", "a", "A", "c", "<leader>" }, -- 9
+    { "<CR>", "W", "G", "a", "A", "c", "<leader>", "f" }, -- 9
     6,
     3,
     1,

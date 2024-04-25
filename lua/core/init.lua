@@ -129,8 +129,6 @@ local load_core = function()
      set nospell
          ]])
     end
-
-    require("core.after_init")
 end
 
 load_core()

@@ -9,8 +9,8 @@ local use_noice = true
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 
-local use_tabnine = false -- i mean i pay for this so why in the blue green fuck am i not using this ?
-local use_tabnine_cmp = false
+local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
+local use_tabnine_cmp = true
 
 local use_copilot = true -- We really do sell our souls for this thing eh
 
@@ -174,8 +174,8 @@ lambda.config.lsp = {
         lsp = {
             "sourcery",
             "ruff_lsp",
-            "pylsp",
-            -- "jedi_language_server",
+            -- "pylsp",
+            "jedi_language_server",
             -- "pylance",
             -- "basedpyright",
             -- "python-language-server",

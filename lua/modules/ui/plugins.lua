@@ -436,6 +436,7 @@ ui({
 ui({
     "rebelot/heirline.nvim",
     cond = lambda.config.ui.heirline.use_heirline,
+
     event = "VeryLazy",
     config = function()
         require("heirline").setup({
