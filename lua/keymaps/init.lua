@@ -259,3 +259,6 @@ vim.keymap.set(
     "<CMD>%bd|e#<CR>",
     { silent = true, desc = "Buffer: delete all buffer except this one" }
 )
+
+vim.keymap.set({ "n" }, "vv", "V", { noremap = true })
+vim.keymap.set({ "n" }, "vvv", "<C-V>", { noremap = true })

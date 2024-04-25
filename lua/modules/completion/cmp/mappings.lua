@@ -9,6 +9,10 @@ local function copilot(fallback)
     local suggestion = require("copilot.suggestion")
     if suggestion.is_visible() then
         return suggestion.accept()
+    elseif require("luasnip").jumpable(1) then
+        return require("luasnip").jump(1)
+    else
+        fallback()
     end
 end
 
