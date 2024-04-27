@@ -1,3 +1,4 @@
+local startup = require("core.pack").package
 local function focus_me()
     if vim.g.neovide then
         lambda.pcall(vim.cmd.NeovideFocus)
@@ -15,9 +16,45 @@ local function FNV_hash(s)
     return hash
 end
 
-local startup = require("core.pack").package
 -- When you open a file in Vim but it was already open in another instance or not closed properly in a past edit, Vim will warn you, but it won't show you what the difference is between the hidden swap file and the regular saved file. Of all the actions you might want to do, the most obvious one is missing: compare, that is, see a diff.
 -- enabled by default, will need to load on boot
+startup({
+    "Abstract-IDE/abstract-autocmds",
+    lazy = false,
+    config = function()
+        require("abstract-autocmds").setup({
+            auto_resize_splited_window = true,
+            remove_whitespace_on_save = true,
+            no_autocomment_newline = true,
+            clear_last_used_search = true,
+            highlight_on_yank = {
+                enable = true,
+                opts = {
+                    timeout = 150,
+                },
+            },
+            give_border = {
+                enable = true,
+                opts = {
+                    pattern = { "null-ls-info", "lspinfo" },
+                },
+            },
+            smart_dd = true,
+            visually_codeblock_shift = true,
+            move_selected_upndown = true,
+            dont_suspend_with_cz = true,
+            scroll_from_center = true,
+            ctrl_backspace_delete = true,
+
+            -- Binds that i already have that are better than this
+            go_back_normal_in_terminal = false,
+            smart_visual_paste = false,
+            smart_save_in_insert_mode = false,
+            open_file_last_position = false,
+        })
+    end,
+})
+
 startup({
     "chrisbra/Recover.vim",
     config = function()
@@ -107,6 +144,9 @@ startup({
 
                 -- If the file is a git commit, create one-shot autocmd to delete its buffer on write
                 -- If you just want the toggleable terminal integration, ignore this bit
+                -- ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+                ft = vim.bo[bufnr].filetype
+
                 if ft == "gitcommit" or ft == "gitrebase" then
                     vim.api.nvim_create_autocmd("BufWritePost", {
                         buffer = bufnr,
@@ -116,11 +156,6 @@ startup({
                         end),
                     })
                 end
-            end,
-            block_end = function()
-                -- Called when a file is open in blocking mode, after it's done blocking
-                -- (after bufdelete, bufunload, or quitpre for the blocking buffer)
-                -- TODO: refocus the preview window
             end,
         },
     },

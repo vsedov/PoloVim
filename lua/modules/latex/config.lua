@@ -1,6 +1,6 @@
 local config = {}
 function config.vimtex()
-    vim.g.vimtex_view_method = "sioyek" -- sioyek
+    vim.g.vimtex_view_method = "zathura" -- sioyek
     vim.g.vimtex_view_general_options = "@pdf"
     vim.g.vimtex_compiler_method = "latexmk"
     vim.g.vimtex_compiler_latexmk = {

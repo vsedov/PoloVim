@@ -104,7 +104,7 @@ local function opts()
                 label = { min_pattern_length = 3 },
             },
             char = {
-                enabled = false,
+                enabled = true,
                 keys = { "f", "f", "t", "t" },
             },
             treesitter = {

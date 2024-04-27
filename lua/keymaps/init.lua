@@ -75,14 +75,7 @@ cnoremap("<C-k>", [[<C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2
 --  │ Bracket Mapping                                                    │
 --  ╰────────────────────────────────────────────────────────────────────╯
 
-nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]], { desc = "surround with double quotes" })
-nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], { desc = "surround with backticks" })
-nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { desc = "surround with single quotes" })
-nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], { desc = "surround with parentheses" })
-nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { desc = "surround with curly braces" })
-
 inoremap("<c-q>", [[<esc>:call search("[)\\]}>,`'\"]", 'eW')<CR>]], { desc = "Jump Brackets" })
-inoremap("<c-BS>", [[<esc>cvb]], { desc = "Jump Brackets" })
 
 if lambda.falsy(fn.mapcheck("<ScrollWheelDown>")) then
     nmap("<ScrollWheelDown>", "<c-d>")
@@ -251,8 +244,8 @@ vim.keymap.set("n", ",v", function()
 end)
 
 vim.keymap.set("n", "<Leader>qd", "<CMD>bd<CR>", { desc = "Buffer: delete buffer" })
-vim.keymap.set("n", "<Leader>qq", "<CMD>%bd<CR>", { silent = true, desc = "Buffer: delete all buffer" })
 vim.keymap.set("n", "<Leader>qa", "<CMD>%bd!<CR>", { silent = true, desc = "Buffer: force delete all buffer" })
+vim.keymap.set("n", "<Leader>qq", "<CMD>%bd<CR>", { silent = true, desc = "Buffer: delete all buffer" })
 vim.keymap.set(
     "n",
     "<Leader>qo",

@@ -381,55 +381,6 @@ local config = {
         },
 
         ["<ESC>"] = { nil, { private = true, nowait = true, desc = "Exit", exit = true } },
-        a = {
-            function()
-                -- require("hbac").toggle_pin()
-                local options = {
-                    t = function()
-                        require("hbac").toggle_pin()
-                    end,
-                    c = function()
-                        require("hbac").close_unpinned()
-                    end,
-                    P = function()
-                        require("hbac").pin_all()
-                    end,
-                    U = function()
-                        require("hbac").unpin_all()
-                    end,
-                    T = function()
-                        require("hbac").toggle_autoclose()
-                    end,
-                }
-
-                -- require("hbac").toggle_pin()
-                local list = {
-                    t = "Toggle Pin",
-                    c = "Close Unpinned",
-                    P = "Pin All",
-                    U = "Unpin All",
-                    T = "Toggle Autoclose",
-                }
-
-                vim.ui.select(vim.tbl_keys(list), {
-                    prompt = "Hbac",
-                    format_item = function(item)
-                        return "Bind: " .. item .. " - " .. list[item]
-                    end,
-                }, function(choice)
-                    -- options[choice]()
-
-                    if options[choice] then
-                        options[choice]()
-                    end
-                end)
-            end,
-            { private = true, nowait = true, desc = "Hbac binds ", exit = true },
-        },
-        ["<tab>"] = {
-            function() end,
-            { private = true, nowait = true, desc = "Tab", exit = true },
-        },
     },
 }
 
@@ -452,82 +403,7 @@ local tables = {
     bufferline[3],
 
     { "q", "Q", "M" }, -- 4
-    { "e", ">", "<", "a" },
-}
-local Tab = {
-    {
-        Tab = {
-            color = "blue",
-            mode = { "n" },
-            n = {
-                function()
-                    vim.cmd("tabnew")
-                end,
-                { private = true, nowait = true, desc = "New tab", exit = true },
-            },
-            c = {
-                function()
-                    vim.cmd("tabclose")
-                end,
-                { private = true, nowait = true, desc = "Close tab", exit = true },
-            },
-            C = {
-                function()
-                    vim.ui.input({ prompt = "Close tab:", default = "1" }, function(idx)
-                        idx = idx and tonumber(idx)
-                        if idx then
-                            vim.cmd("tabclose " .. idx)
-                        end
-                    end)
-                end,
-                { private = true, nowait = true, desc = "Close tab", exit = true },
-            },
-            l = {
-                function()
-                    vim.cmd("tabnext")
-                end,
-                { private = true, nowait = true, desc = "Next tab", exit = false },
-            },
-            h = {
-                function()
-                    vim.cmd("tabprev")
-                end,
-                { private = true, nowait = true, desc = "Previous tab", exit = false },
-            },
-            f = {
-                function()
-                    vim.cmd("tabfirst")
-                end,
-                { private = true, nowait = true, desc = "First tab", exit = false },
-            },
-            L = {
-                function()
-                    vim.cmd("tablast")
-                end,
-                { private = true, nowait = true, desc = "Last tab", exit = false },
-            },
-            m = {
-                function()
-                    vim.ui.input({ prompt = "Move tab to:" }, function(idx)
-                        idx = idx and tonumber(idx)
-                        if idx then
-                            vim.cmd("tabmove " .. idx)
-                        end
-                    end)
-                end,
-                { private = true, nowait = true, desc = "Move tab", exit = true },
-            },
-            ["<ESC>"] = { nil, { private = true, nowait = true, desc = "Exit", exit = true } },
-        },
-    },
-
-    "Tab",
-    {
-        { "f", "L", "m" },
-    },
-    { "n", "C", "c", "l", "h" },
-    6,
-    3,
+    { "e", ">", "<" },
 }
 
 return {
@@ -538,5 +414,4 @@ return {
     6,
     4,
     2,
-    { Tab },
 }

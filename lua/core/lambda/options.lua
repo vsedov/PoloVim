@@ -175,11 +175,11 @@ lambda.config.lsp = {
             "sourcery",
             "ruff_lsp",
             -- "pylsp",
+            -- "pylyzer",
             "jedi_language_server",
             -- "pylance",
             -- "basedpyright",
             -- "python-language-server",
-            -- "pylyzer"
             -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         },
     },
@@ -324,9 +324,9 @@ lambda.config.folke = {
 }
 
 if not use_noice then
-    lambda.config.folke.noice.enable = false
-    lambda.config.folke.noice.lsp.use_noice_signature = false
-    lambda.config.folke.noice.lsp.use_noice_hover = false
-    lambda.config.folke.noice.lsp.use_markdown = false
-    lambda.config.folke.noice.lsp.use_documentation = false
+    lambda.config.folke.noice.enable = true
+    lambda.config.folke.noice.lsp.use_noice_signature = true
+    lambda.config.folke.noice.lsp.use_noice_hover = true
+    lambda.config.folke.noice.lsp.use_markdown = true
+    lambda.config.folke.noice.lsp.use_documentation = true
 end

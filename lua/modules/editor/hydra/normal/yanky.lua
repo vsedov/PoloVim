@@ -39,6 +39,17 @@ local yanky_hydra = Hydra({
             nil,
             { exit = true, desc = "quit" },
         },
+        {
+
+            "<c-p>",
+            [[<Cmd>silent! normal! "_dP<CR>]],
+            { desc = "paste from clipboard" },
+        },
+        {
+            "<c-n>",
+            [[<Cmd>silent! normal! "_dp<CR>]],
+            { desc = "paste from clipboard" },
+        },
     },
 })
 -- choose/change the mappings if you want
@@ -55,10 +66,8 @@ for key, putAction in pairs({
 end
 
 for key, putAction in pairs({
-    ["]p"] = "<Plug>(YankyPutIndentAfterLinewise)",
     ["[p"] = "<Plug>(YankyPutIndentBeforeLinewise)",
     ["]P"] = "<Plug>(YankyPutIndentAfterLinewise)",
-    ["[P"] = "<Plug>(YankyPutIndentBeforeLinewise)",
 
     [">p"] = "<Plug>(YankyPutIndentAfterShiftRight)",
     ["<p"] = "<Plug>(YankyPutIndentAfterShiftLeft)",

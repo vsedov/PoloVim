@@ -154,15 +154,15 @@ lambda.augroup("CheckOutsideTime", {
     },
 })
 
-lambda.augroup("TextYankHighlight", {
-    {
-        -- don't execute silently in case of errors
-        event = { "TextYankPost" },
-        command = function()
-            vim.highlight.on_yank({ timeout = 500, on_visual = false, higroup = "Visual" })
-        end,
-    },
-})
+-- lambda.augroup("TextYankHighlight", {
+--     {
+--         -- don't execute silently in case of errors
+--         event = { "TextYankPost" },
+--         command = function()
+--             vim.highlight.on_yank({ timeout = 500, on_visual = false, higroup = "Visual" })
+--         end,
+--     },
+-- })
 
 lambda.augroup("UpdateVim", {
     {
@@ -345,10 +345,21 @@ lambda.augroup("TerminalAutocommands", {
 })
 vim.cmd([[
 au ModeChanged *:[] do User VisualBlockEnter
-au ModeChanged []:* do User VisualBlockLeave 
+au ModeChanged []:* do User VisualBlockLeave
 
 augroup VisualBlock
   au User VisualBlockEnter execute "set rnu"
   au User VisualBlockLeave execute "set nornu"
 augroup END
 ]])
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "copilot-*",
+    callback = function()
+        vim.opt_local.relativenumber = true
+
+        -- C-p to print last response
+        vim.keymap.set("n", "<C-p>", function()
+            print(require("CopilotChat").response())
+        end, { buffer = true, remap = true })
+    end,
+})

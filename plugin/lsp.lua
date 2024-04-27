@@ -44,7 +44,6 @@ local get_extra_binds = function()
         },
 
         { "gf", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
-        { "cc", "<cmd>Lspsaga code_action<CR>", desc = "Toggle Lspsaga code_action" },
         {
             "gt",
             "<cmd>Glance type_definitions<CR>",

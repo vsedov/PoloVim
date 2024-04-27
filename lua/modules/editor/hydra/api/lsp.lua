@@ -16,7 +16,7 @@ local config = {
     Lsp = {
         color = "pink",
         body = leader,
-        mode = { "n", "v" },
+        mode = { "n" },
 
         ["<ESC>"] = { nil, { exit = true } },
         ["J"] = { mx("g;"), { nowait = true, desc = "Core g Key ", exit = true } }, -- ts: inner conditional
@@ -67,7 +67,9 @@ local config = {
         },
 
         l = {
-            utils.format_range_operator,
+            function()
+                utils.format_range_operator()
+            end,
             { nowait = true, exit = true, desc = "Range Diagnostics", mode = { "v" } },
         },
     },

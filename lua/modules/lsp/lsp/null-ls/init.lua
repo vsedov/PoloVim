@@ -11,8 +11,8 @@ local lsp_formatting = function(bufnr, client)
         bufnr = bufnr,
         async = #client == 1,
     })
-    MiniTrailspace.trim()
-    MiniTrailspace.trim_last_lines()
+    -- MiniTrailspace.trim()
+    -- MiniTrailspace.trim_last_lines()
 end
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})

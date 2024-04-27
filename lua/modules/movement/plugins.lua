@@ -156,7 +156,6 @@ movement({
 movement({
     "ziontee113/syntax-tree-surfer",
     lazy = true,
-    keys = { ";f" },
     cmd = {
         "STSSwapPrevVisual",
         "STSSelectChildNode",
@@ -180,7 +179,6 @@ movement({
             "echasnovski/mini.visits",
             config = true,
         },
- 
     },
     branch = "harpoon2",
     lazy = true,

@@ -265,15 +265,6 @@ harpoon:extend({
         vim.wo[win].cursorline = true
         vim.wo[win].signcolumn = "no"
 
-        update_config(win, function(config)
-            config.footer = harpoon.ui.active_list.name
-            config.footer_pos = "center"
-            config.width = math.floor(math.max(math.min(120, vim.o.columns / 2), 40))
-            config.col = math.floor(vim.o.columns / 2 - config.width / 2)
-            config.row = math.floor(vim.o.lines / 2 - config.height / 2)
-            return config
-        end)
-
         vim.keymap.set("n", "<C-v>", function()
             harpoon.ui:select_menu_item({ vsplit = true })
         end, { buffer = cx.bufnr })

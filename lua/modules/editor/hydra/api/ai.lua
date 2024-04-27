@@ -188,6 +188,23 @@ local aiextra = {
     6,
     3,
 }
+-- "CopilotChat",
+-- "CopilotChatOpen",
+-- "CopilotChatClose",
+-- "CopilotChatToggle",
+-- "CopilotChatReset",
+-- "CopilotChatSave",
+-- "CopilotChatLoad",
+-- "CopilotChatDebugInfo",
+-- "CopilotChatExplain",
+-- "CopilotChatReview",
+-- "CopilotChatFix",
+-- "CopilotChatOptimize",
+-- "CopilotChatDocs",
+-- "CopilotChatTests",
+-- "CopilotChatFixDiagnostic",
+-- "CopilotChatCommit",
+-- "CopilotChatCommitStaged",
 
 local copilot = {
     -- Code related commands
@@ -198,6 +215,7 @@ local copilot = {
     { "f", "y:CopilotChatFixCode<cr>", desc = "Fix code", inline = true },
     { "b", "y:CopilotChatBetterNamings<cr>", desc = "Better Name", inline = true },
     { "d", "y:CopilotChatDocumentation<cr>", desc = "Add documentation for code", inline = true },
+
     -- Text related commands
     { "s", "y:CopilotChatSummarize<cr>", desc = "Summarize text", inline = true },
     { "S", "y:CopilotChatSpelling<cr>", desc = "Correct spelling", inline = true },
@@ -254,15 +272,64 @@ local copilot_vis = {
         mode = "x",
         desc = "Open in vertical split",
     },
+
     {
-        "x",
-        "CopilotChatInPlace",
-        mode = "x",
-        desc = "Run in-place code",
+        "<C-c>",
+        "CopilotChatCommit",
+        mode = "v",
+        desc = "Commit Message",
+    },
+    {
+        "<C-s>",
+        "CopilotChatCommitStaged",
+        mode = "v",
+        desc = "Commit Message Staged",
+    },
+    {
+        "<C-e>",
+        "CopilotChatExplain",
+        mode = "v",
+        desc = "Explain",
+    },
+    {
+        "<C-f>",
+        "CopilotChatFix",
+        mode = "v",
+        desc = "Fix",
+    },
+    {
+        "<C-x>",
+        "CopilotChatFixDiagnostic",
+        mode = "v",
+        desc = "Fix Diagnostic",
+    },
+    {
+        "<C-d>",
+        "CopilotChatDocs",
+        mode = "v",
+        desc = "Docs",
+    },
+    {
+        "<C-r>",
+        "CopilotChatReview",
+        mode = "v",
+        desc = "Review",
+    },
+    {
+        "<C-o>",
+        "CopilotChatOptimize",
+        mode = "v",
+        desc = "Optimize",
+    },
+    {
+        "<C-t>",
+        "CopilotChatTests",
+        mode = "v",
+        desc = "Tests",
     },
 }
 local copilot_normal_binds = { "e", "t", "r", "R", "f", "b", "d", "s", "S", "w", "c", "i", "m", "M", "D" }
-local copilot_visual_binds = { "v", "x" }
+local copilot_visual_binds = { "v", "<C-c>", "<C-s>", "<C-e>", "<C-f>", "<C-x>", "<C-d>", "<C-r>", "<C-o>", "<C-t>" }
 
 local cody_normal = {
     {

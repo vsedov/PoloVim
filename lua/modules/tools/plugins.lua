@@ -8,21 +8,20 @@ tools({
 })
 
 tools({
-    "is0n/fm-nvim",
-    lazy = true,
-    cmd = {
-        "Lazygit", -- 3 [ neogit + fugative + lazygit depends how i feel.]
-        "Joshuto", -- 2
-        "Ranger",
-        "Xplr", -- Nice but, i think ranger tops this one for the.time
-        "Skim",
-        "Nnn",
-        "Fff",
-        "Fzf",
-        "Fzy",
-    },
-    config = conf.fm,
+    "Makaze/watch.nvim",
+    cmd = { "WatchStart", "WatchStop", "WatchFile" },
 })
+tools({
+    "mikavilpas/yazi.nvim",
+    lazy = true,
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+    opts = {
+        open_for_directories = false,
+    },
+})
+
 tools({
     "rktjmp/paperplanes.nvim",
     lazy = true,

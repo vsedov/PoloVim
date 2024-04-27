@@ -70,7 +70,8 @@ local config = {
 
         f = {
             function()
-                vim.cmd.Ranger()
+                require("yazi").yazi()
+
             end,
             { exit = true, desc = "Ranger" },
         },
