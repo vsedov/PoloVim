@@ -112,7 +112,12 @@ editor({
     -- nnoremap("<Leader>J", ":TSJJoin<Cr>", { desc = "TSJJoin", silent = true })
     -- nnoremap("<Leader>j", ":TSJToggle<cr>", { desc = "TSJToggle", silent = true })
     keys = {
-        { "<leader>j", ":TSJToggle<cr>", desc = "TSJToggle", silent = true },
+        {
+            "<leader>j",
+            ":TSJToggle<cr>",
+            desc = "TSJToggle",
+            silent = true,
+        },
     },
 
     opts = {

@@ -265,7 +265,7 @@ augroup("LspSetupCommands", {
             end
             if client.server_capabilities.hoverProvider then
                 vim.keymap.set("n", "K", function()
-                    utils.repeatable_hover()
+                    utils.repeatable_hover(true)
                 end, { buffer = args.buf })
             end
         end,

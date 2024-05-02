@@ -1,2 +1,0 @@
-# GeneratorExit
-GeneratorExit()

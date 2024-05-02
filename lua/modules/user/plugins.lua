@@ -361,45 +361,6 @@ user({
         })
     end,
 })
-user({
-    "rolv-apneseth/tfm.nvim",
-    cmd = {
-        "Tfm",
-        "TfmSplit",
-        "TfmVsplit",
-        "TfmTabedit",
-    },
-    opts = {
-        -- TFM to use
-        -- Possible choices: "ranger" | "nnn" | "lf" | "yazi" (default)
-        file_manager = "ranger",
-        -- Replace netrw entirely
-        -- Default: false
-        replace_netrw = true,
-        -- Enable creation of commands
-        -- Default: false
-        -- Commands:
-        --   Tfm: selected file(s) will be opened in the current window
-        --   TfmSplit: selected file(s) will be opened in a horizontal split
-        --   TfmVsplit: selected file(s) will be opened in a vertical split
-        --   TfmTabedit: selected file(s) will be opened in a new tab page
-        enable_cmds = true,
-        -- Custom keybindings only applied within the TFM buffer
-        -- Default: {}
-        keybindings = {
-            ["<ESC>"] = "q",
-        },
-        -- Customise UI. The below options are the default
-        ui = {
-            border = lambda.style.border.type_0,
-            height = 1,
-            width = 1,
-            x = 0.5,
-            y = 0.5,
-        },
-    },
-})
--- Well this is nice
 
 user({
     "ariel-frischer/bmessages.nvim",
@@ -777,9 +738,30 @@ user({
 
             -- Binds that i already have that are better than this
             go_back_normal_in_terminal = false,
-            smart_visual_paste = false,
+            smart_visual_paste = false, -- Enable this eventually
             smart_save_in_insert_mode = false,
             open_file_last_position = false,
         })
     end,
+})
+user({
+    "tris203/precognition.nvim",
+    cond = lambda.config.if_your_retarded,
+    config = {
+        startVisible = true,
+        hints = {
+            ["^"] = { text = "^", prio = 1 },
+            ["$"] = { text = "$", prio = 1 },
+            ["w"] = { text = "w", prio = 10 },
+            ["b"] = { text = "b", prio = 10 },
+            ["e"] = { text = "e", prio = 10 },
+        },
+        gutterHints = {
+            --prio is not currentlt used for gutter hints
+            ["G"] = { text = "G", prio = 1 },
+            ["gg"] = { text = "gg", prio = 1 },
+            ["{"] = { text = "{", prio = 1 },
+            ["}"] = { text = "}", prio = 1 },
+        },
+    },
 })

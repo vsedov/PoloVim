@@ -236,30 +236,134 @@ local hover_hydra
 -- Easily repeatable hover
 function M.repeatable_hover(hover, k)
     hover = hover or vim.lsp.buf.hover
-    if false then
-        k = k or "h"
-        if not hover_hydra then
-            hover_hydra = require("hydra")({
-                mode = { "n", "x" },
-                hint = false,
-                body = nil,
-                heads = {
-                    { "h", hover, { desc = "LSP Hover" } },
-                    {
-                        "<esc>",
-                        function()
-                            hover() -- TODO: how to do this better?
-                            vim.api.nvim_win_close(0, true)
-                        end,
-                        { desc = "Close", exit = true, private = true },
-                    },
+    use_hydra = use_hydra or false
+    if true then
+        local leader = "K"
+        local utils = require("modules.lsp.lsp.utils")
+        local mx = function(feedkeys, type)
+            local type = type or "m"
+            return function()
+                if type == "v" then
+                    vim.api.nvim_feedkeys(vim.keycode("v", true, true, true), "n", true)
+                end
+
+                vim.api.nvim_feedkeys(vim.keycode(feedkeys, true, false, true), type, false)
+            end
+        end
+
+        local config = {
+            Lsp = {
+                color = "pink",
+                body = leader,
+                mode = { "n", "v" },
+
+                ["<ESC>"] = {
+                    function()
+                        vim.cmd.Lspsaga("hover_doc")
+                    end,
+                    { exit = true },
                 },
-            })
-        end
-        return function()
-            hover()
-            hover_hydra:activate()
-        end
+                K = {
+                    function()
+                        -- hover()
+                        vim.cmd.Lspsaga("hover_doc")
+                    end,
+                    { exit = true, desc = "Hover" },
+                },
+                k = {
+                    function()
+                        vim.cmd.Lspsaga("hover_doc")
+                    end,
+                    { exit = true, desc = "Hover" },
+                },
+
+                R = {
+                    function()
+                        vim.cmd.Lspsaga("rename ++project")
+                    end,
+                    { nowait = true, exit = true, desc = "Rename" },
+                },
+
+                f = {
+                    function()
+                        vim.cmd.Lspsaga("finder")
+                    end,
+                    { nowait = true, exit = true, desc = "Finder" },
+                },
+
+                ["J"] = { mx("g;"), { nowait = true, desc = "Core g Key ", exit = true } }, -- ts: inner conditional
+
+                d = {
+                    function()
+                        vim.cmd([[Glance definitions]])
+                    end,
+                    { nowait = true, exit = true, desc = "Glance Def" },
+                },
+                t = {
+                    function()
+                        vim.cmd([[Glance type_definitions]])
+                    end,
+                    { nowait = true, exit = true, desc = "Glance TDef" },
+                },
+                D = {
+                    function()
+                        require("definition-or-references").definition_or_references()
+                    end,
+                    { exit = true, desc = "Goto Def" },
+                },
+                r = {
+                    function()
+                        vim.cmd([[Glance references]])
+                    end,
+                    { nowait = true, exit = true, desc = "Glance Ref" },
+                },
+
+                i = {
+                    function()
+                        vim.cmd([[Glance implementations]])
+                    end,
+                    { nowait = true, exit = true, desc = "Glance Imp" },
+                },
+                T = {
+                    function()
+                        vim.cmd([[TroubleToggle]])
+                    end,
+                    { nowait = true, exit = true, desc = "TroubleToggle" },
+                },
+
+                l = {
+                    function()
+                        utils.format_range_operator()
+                    end,
+                    { nowait = true, exit = true, desc = "Range Diagnostics", mode = { "v" } },
+                },
+                ["["] = {
+                    function()
+                        vim.diagnostic.goto_prev()
+                    end,
+                    { nowait = true, exit = false, desc = "Diag [G] Prev" },
+                },
+                ["]"] = {
+                    function()
+                        vim.diagnostic.goto_next()
+                    end,
+                    { nowait = true, exit = false, desc = "Diag [G] Next" },
+                },
+            },
+        }
+        main_config = {
+            config,
+            "Lsp",
+            { { "R", "T" }, { "d", "r", "f", "i", "t", "l" }, { "[", "]" } },
+            { "K", "k", "J", "D" },
+
+            6,
+            3,
+            1,
+        }
+        hover_hydra = require("modules.editor.hydra.make_hydra").make_hydra(main_config)
+
+        hover_hydra:activate()
     else
         hover()
     end

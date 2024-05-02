@@ -16,6 +16,7 @@ local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within th list
 lambda.config = {
+    if_your_retarded = false,
     use_adv_snip = true,
     use_lastplace = true,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
