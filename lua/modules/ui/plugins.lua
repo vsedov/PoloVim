@@ -136,6 +136,7 @@ ui({
     },
     dependencies = {
         "nvim-lua/plenary.nvim",
+        "Cretezy/neo-tree-jj.nvim",
         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
         "MunifTanjim/nui.nvim",
         {
@@ -160,7 +161,7 @@ ui({
         local symbols = require("lspkind").symbol_map
         local lsp_kinds = lambda.style.lsp.highlights
 
-        require("neo-tree").setup({
+        local opts = {
             sources = { "filesystem", "git_status", "document_symbols" },
             source_selector = {
                 winbar = true,
@@ -246,7 +247,26 @@ ui({
                     ["P"] = { "toggle_preview", config = { use_float = false } },
                 },
             },
-        })
+        }
+
+        -- Optional: Replace git tab in neo-tree when in jj repo
+        if require("neo-tree.sources.jj.utils").get_repository_root() then
+            -- Remove git tab
+            for i, source in ipairs(opts.source_selector.sources) do
+                if source.source == "git_status" then
+                    table.remove(opts.source_selector.sources, i)
+                    break
+                end
+            end
+
+            -- Add jj tab
+            table.insert(opts.source_selector.sources, {
+                display_name = "󰊢 JJ",
+                source = "jj",
+            })
+        end
+
+        require("neo-tree").setup(opts)
     end,
 })
 -- --

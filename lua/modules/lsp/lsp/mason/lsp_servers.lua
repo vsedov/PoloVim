@@ -104,31 +104,47 @@ local servers = {
 }
 
 local con = lambda.config.lsp.python.lsp
-for _, server in ipairs(con) do
-    if server == "pylance" then
-        print("NEed to add this")
-    else
-        if
-            vim.fn.filereadable(
-                vim.fn.expand("~/.config/nvim/lua/modules/lsp/lsp/providers/python/" .. server .. ".lua")
-            ) == 0
-        then
-            if server == "basedpyright" then
-                servers[server] = {
-                    settings = {
-                        basedpyright = {
-                            typeCheckingMode = "standard",
-                        },
-                    },
-                }
-            else
-                servers[server] = require("modules.lsp.lsp.providers.python." .. server)
-            end
-        else
-            servers[server] = require("modules.lsp.lsp.providers.python." .. server)
-        end
-    end
+local function isPythonServerFileReadable(server)
+    local serverFilePath = "~/.config/nvim/lua/modules/lsp/lsp/providers/python/" .. server .. ".lua"
+    return vim.fn.filereadable(vim.fn.expand(serverFilePath)) ~= 0
 end
+
+local function addServerWithSettings(server, settings)
+    servers[server] = { settings = settings }
+end
+
+local function addServerByRequire(server)
+    servers[server] = require("modules.lsp.lsp.providers.python." .. server)
+end
+
+local function addPythonServer(server)
+    if server == "pylance" then
+        -- It looks like you want to print a message for "pylance",
+        -- but it's not clear what should happen here.
+        print("NEed to add this")
+        return
+    end
+
+    -- If the server file is not readable, handle special server cases
+    if not isPythonServerFileReadable(server) then
+        if server == "basedpyright" then
+            addServerWithSettings(server, { basedpyright = { typeCheckingMode = "standard" } })
+            return
+        elseif server == "sourcery" and lambda.config.lsp.python.use_sourcery then
+            addServerByRequire(server)
+            return
+        end
+        return
+    end
+
+    -- Default case for adding a server
+    addServerByRequire(server)
+end
+
+for _, server in ipairs(con) do
+    addPythonServer(server)
+end
+
 if lambda.config.lsp.latex == "texlab" then
     servers["texlab"] = require("modules.lsp.lsp.providers.latex.texlab")
 else

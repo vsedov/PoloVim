@@ -1,6 +1,0 @@
-require("core.lambda.options")
-require("core.lambda.helper")
-require("core.lambda.styles")
-require("core.lambda.highlights")
-require("core.lambda.fzf")
-require("core.lambda.event")

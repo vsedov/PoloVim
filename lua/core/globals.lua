@@ -1,6 +1,6 @@
 _G = _G or {}
 _G.lambda = {}
-require("core.lambda")
+require("lambda")
 
 _G.map = vim.keymap.set
 _G.P = vim.print

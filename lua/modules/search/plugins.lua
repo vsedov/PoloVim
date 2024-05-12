@@ -132,7 +132,17 @@ search({
 
     config = conf.spectre,
 })
-
+-- true replacement of nvim-spectre long live nvim-spectre
+search({
+    "MagicDuck/grug-far.nvim",
+    lazy = true,
+    config = function()
+        require("grug-far").setup({})
+    end,
+    cmd = {
+        "GrugFar",
+    },
+})
 search({
     "ray-x/sad.nvim",
     lazy = true,

@@ -256,6 +256,10 @@ function M.repeatable_hover(hover, k)
                 color = "pink",
                 body = leader,
                 mode = { "n", "v" },
+                on_enter = function()
+                    vim.bo.modifiable = false -- temporarily set `nomodifiable` while Hydra is active
+                    vim.cmd.Lspsaga("hover_doc")
+                end,
 
                 ["<ESC>"] = {
                     function()

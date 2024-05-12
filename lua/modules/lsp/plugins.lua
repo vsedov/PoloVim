@@ -56,6 +56,7 @@ lsp({
                 if config then
                     require("lspconfig")[name].setup(config)
                 end
+
             end,
         },
     },

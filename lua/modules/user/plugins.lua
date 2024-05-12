@@ -258,7 +258,7 @@ user({
 
     "neph-iap/easycolor.nvim",
     dependencies = { "stevearc/dressing.nvim" }, -- Optional, but provides better UI for editing the formatting template
-    opts = {},
+    config = true,
     cmd = {
         "EasyColor",
     },
@@ -537,39 +537,6 @@ user({
 })
 
 user({
-    "olimorris/persisted.nvim", -- Session management
-    lazy = true,
-    opts = {
-        use_git_branch = true,
-        silent = true,
-        -- autoload = true,
-        should_autosave = function()
-            local excluded_filetypes = {
-                "alpha",
-                "oil",
-                "lazy",
-                "",
-            }
-
-            for _, filetype in ipairs(excluded_filetypes) do
-                if vim.bo.filetype == filetype then
-                    return false
-                end
-            end
-
-            return true
-        end,
-    },
-    cmd = {
-        "Sessions",
-        "SessionSave",
-        "SessionStart",
-        "SessionStop",
-        "SessionDelete",
-        "SessionToggle",
-    },
-})
-user({
     "michaelrommel/nvim-silicon",
     lazy = true,
     cmd = "Silicon",
@@ -707,42 +674,6 @@ user({
     "jsongerber/thanks.nvim",
     event = "VeryLazy",
     config = true,
-})
-user({
-    "Abstract-IDE/abstract-autocmds",
-    lazy = false,
-    config = function()
-        require("abstract-autocmds").setup({
-            auto_resize_splited_window = true,
-            remove_whitespace_on_save = true,
-            no_autocomment_newline = true,
-            clear_last_used_search = true,
-            highlight_on_yank = {
-                enable = true,
-                opts = {
-                    timeout = 150,
-                },
-            },
-            give_border = {
-                enable = true,
-                opts = {
-                    pattern = { "null-ls-info", "lspinfo" },
-                },
-            },
-            smart_dd = true,
-            visually_codeblock_shift = true,
-            move_selected_upndown = true,
-            dont_suspend_with_cz = true,
-            scroll_from_center = true,
-            ctrl_backspace_delete = true,
-
-            -- Binds that i already have that are better than this
-            go_back_normal_in_terminal = false,
-            smart_visual_paste = false, -- Enable this eventually
-            smart_save_in_insert_mode = false,
-            open_file_last_position = false,
-        })
-    end,
 })
 user({
     "tris203/precognition.nvim",

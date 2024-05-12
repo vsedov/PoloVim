@@ -5,13 +5,10 @@
 --    ╰────────────────────────────────────────────────────────────────────╯
 
 local use_noice = true
-
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
-
 local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
 local use_tabnine_cmp = true
-
 local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within th list
@@ -71,9 +68,9 @@ lambda.config.extra_search = {
     },
 }
 lambda.config.buffer = {
-    use_bufferline = false,
-    use_tabscope = false, -- we are going to use scope.nvim
     use_sticky_buf = true,
+    use_bufferline = false, -- we use barbar
+    use_tabscope = false, -- we are going to use scope.nvim
     use_hbac = false,
 }
 lambda.config.editor = {
@@ -166,6 +163,7 @@ lambda.config.lsp = {
     --    ╰────────────────────────────────────────────────────────────────────╯
     latex = "texlab", -- texlab | ltex
     python = {
+        use_sourcery = true,
         lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think
         format = {
             "isort",
@@ -175,9 +173,9 @@ lambda.config.lsp = {
         lsp = {
             "sourcery",
             "ruff_lsp",
+            "jedi_language_server",
             -- "pylsp",
             -- "pylyzer",
-            "jedi_language_server",
             -- "pylance",
             -- "basedpyright",
             -- "python-language-server",
