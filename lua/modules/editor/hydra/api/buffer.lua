@@ -275,57 +275,57 @@ local config = {
             function()
                 cmd("ReachOpen marks")
             end,
-            { private = true, nowait = true, exit = true, private = true, nowait = true, desc = "Reach Marks" },
+            { exit = true, private = true, nowait = true, desc = "Reach Marks" },
         },
         W = {
             function()
                 cmd("ReachOpen tabpages")
             end,
-            { private = true, nowait = true, exit = true, private = true, nowait = true, desc = "Reach TabPage" },
+            { exit = true, private = true, nowait = true, desc = "Reach TabPage" },
         },
         C = {
             function()
                 cmd("ReachOpen colorschemes")
             end,
-            { private = true, nowait = true, exit = true, private = true, nowait = true, desc = "Reach Colour" },
+            { exit = true, private = true, nowait = true, desc = "Reach Colour" },
         },
         L = {
             function()
                 swap_to_last_buffer()
             end,
-            { private = true, nowait = true, exit = true, private = true, nowait = true, desc = "Swap Last Buffer" },
+            { exit = true, private = true, nowait = true, desc = "Swap Last Buffer" },
         },
 
         n = {
             function()
                 cmd("CybuNext")
             end,
-            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "CybuNext" },
+            { exit = false, private = true, nowait = true, desc = "CybuNext" },
         },
         N = {
             function()
                 cmd("CybuPrev")
             end,
-            { nowait = true, exit = false, private = true, nowait = true, desc = "CybuPrev" },
+            { exit = false, private = true, nowait = true, desc = "CybuPrev" },
         },
 
         k = {
             function()
                 cmd("CybuLastusedPrev")
             end,
-            { nowait = true, exit = false, private = true, nowait = true, desc = "CybuLastusedPrev" },
+            { exit = false, private = true, nowait = true, desc = "CybuLastusedPrev" },
         },
         j = {
             function()
                 cmd("CybuLastusedNext")
             end,
-            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "CybuLastusedNext" },
+            { exit = false, private = true, nowait = true, desc = "CybuLastusedNext" },
         },
         w = {
             function()
                 require("reach").buffers(reach_options)
             end,
-            { private = true, nowait = true, exit = false, private = true, nowait = true, desc = "Reach" },
+            { exit = false, private = true, nowait = true, desc = "Reach" },
         },
 
         b = {
@@ -413,5 +413,5 @@ return {
     { "j", "k", "n", "N" },
     6,
     4,
-    2,
+    1,
 }

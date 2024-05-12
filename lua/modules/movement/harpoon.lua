@@ -2,6 +2,7 @@ local Path = require("plenary.path")
 local fidget = require("fidget")
 local harpoon = require("harpoon")
 local oqt = require("oqt")
+local extensions = require("harpoon.extensions")
 function update_config(win, fn)
     local config = vim.api.nvim_win_get_config(win)
     local res = fn(config)
@@ -281,3 +282,4 @@ harpoon:extend({
     end,
     LIST_CREATED = prepopulate,
 })
+harpoon:extend(extensions.builtins.command_on_nav("UfoEnableFold"))

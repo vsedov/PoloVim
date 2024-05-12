@@ -230,28 +230,29 @@ end, { desc = "Clever cd", silent = true })
 -- end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "gw", "<cmd>cclose | Grep <cword><CR>", { desc = "Grep for word" })
+
 vim.keymap.set("n", "gbw", function()
     bufgrep(vim.fn.expand("<cword>"))
 end, { desc = "grep open buffers for word" })
+
 vim.keymap.set("n", "gbW", function()
     bufgrep(vim.fn.expand("<cWORD>"))
 end, { desc = "Grep open buffers for WORD" })
+
 lambda.command("Bufgrep", function(params)
     bufgrep(params.args)
 end, { nargs = "+" })
+
 vim.keymap.set("n", ",v", function()
     vim.notify(vim.fn.system("curl -s -m 3 https://vtip.43z.one"))
 end)
 
-vim.keymap.set("n", "<Leader>qd", "<CMD>bd<CR>", { desc = "Buffer: delete buffer" })
-vim.keymap.set("n", "<Leader>qa", "<CMD>%bd!<CR>", { silent = true, desc = "Buffer: force delete all buffer" })
-vim.keymap.set("n", "<Leader>qq", "<CMD>%bd<CR>", { silent = true, desc = "Buffer: delete all buffer" })
-vim.keymap.set(
-    "n",
-    "<Leader>qo",
-    "<CMD>%bd|e#<CR>",
-    { silent = true, desc = "Buffer: delete all buffer except this one" }
-)
-
 vim.keymap.set({ "n" }, "vv", "V", { noremap = true })
 vim.keymap.set({ "n" }, "vvv", "<C-V>", { noremap = true })
+
+-- TAB window management
+vim.keymap.set("n", "\\bo", "<cmd>tabnew<CR>", { desc = "Tab - [t]ab [o]pen" })
+vim.keymap.set("n", "\\bc", "<cmd>tabclose<CR>", { desc = "Tab - [t]ab [c]lose" })
+vim.keymap.set("n", "\\bn", "<cmd>tabn<CR>", { desc = "Tab - [t]ab [n]ext" })
+vim.keymap.set("n", "\\bN", "<cmd>tabp<CR>", { desc = "Tab - [t]ab [p]revious" })
+vim.keymap.set("n", "\\bb", "<cmd>tabnew %<CR>", { desc = "Tab - [t]ab open current [b]uffer" })
