@@ -91,13 +91,7 @@ tools({
     ft = "qf",
     config = true,
 })
-tools({
-    "kevinhwang91/nvim-bqf",
-    ft = "qf",
-    config = function()
-        lambda.highlight.plugin("bqf", { { BqfPreviewBorder = { fg = { from = "Comment" } } } })
-    end,
-})
+
 tools({
     "stevearc/qf_helper.nvim",
     ft = "qf",

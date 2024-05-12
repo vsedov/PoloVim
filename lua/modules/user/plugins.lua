@@ -608,8 +608,7 @@ user({
 
 user({
     "IndianBoy42/kitty.lua",
-    event = "VeryLazy",
-    cond = not not vim.env.KITTY_PID,
+    cond = lambda.config.use_kitty,
     config = function()
         require("kitty.terms").setup({
             dont_attach = not not vim.g.kitty_scrollback,

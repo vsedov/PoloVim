@@ -13,6 +13,7 @@ local use_copilot = true -- We really do sell our souls for this thing eh
 
 -- toggle core values within th list
 lambda.config = {
+    use_kitty = false, -- this seems to slow things down i think
     if_your_retarded = false,
     use_adv_snip = true,
     use_lastplace = true,
