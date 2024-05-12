@@ -8,6 +8,7 @@ local function opts()
     return {
         labels = labels,
         search = {
+            enabled = true,
             -- search/jump in all windows
             multi_window = true,
             -- search direction

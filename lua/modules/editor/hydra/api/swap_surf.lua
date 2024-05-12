@@ -1,17 +1,5 @@
 local leader = ";s"
 
-local mx = function(feedkeys, type)
-    local type = type or "m"
-    return function()
-        if type == "v" then
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("v", true, true, true), "n", true)
-        end
-
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(feedkeys, true, false, true), type, false)
-    end
-end
-
-local bracket = { "s", "S", "k", "j" }
 local config = {
     Swap = {
         color = "pink",
@@ -120,7 +108,8 @@ return {
         { "N", "n", "v", "V" },
         { "w", "H", "J", "K", "L" },
     },
-    bracket,
+    { "s", "S", "k", "j" },
     6,
     3,
+    1,
 }

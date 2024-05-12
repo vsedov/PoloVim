@@ -58,69 +58,15 @@ local config = {
         },
 
         -----------------------------------------------------------
-        o = {
-            cmd("Spectre"),
-            { nowait = true, silent = true, desc = "Open" },
+        j = {
+            cmd("GrugFar"),
+            { nowait = true, silent = true, desc = "GrugFar Open" },
         },
-        O = {
+        J = {
             function()
-                if vim.fn.mode() == "n" then
-                    require("spectre").open_visual({ select_word = true })
-                else
-                    require("spectre").open_visual()
-                end
+                require("grug-far").grug_far({ prefills = { search = vim.fn.expand("<cword>") } })
             end,
-            { nowait = true, silent = true, desc = "Open", mode = { "v", "n" } },
-        },
-
-        g = {
-            cmd("SpectreToggleLine"),
-            { nowait = true, silent = true, desc = "Toggle line" },
-        },
-        ["<CR>"] = {
-            cmd("SpectreSelectEntry"),
-            { nowait = true, silent = true, desc = "Select entry" },
-        },
-        q = {
-            cmd("SpectreSendToQF"),
-            { nowait = true, silent = true, desc = "Send to quickfix" },
-        },
-        n = {
-            cmd("SpectreReplaceCommand"),
-            { nowait = true, silent = true, desc = "Replace command" },
-        },
-        r = {
-            cmd("SpectreRunCurrentReplace"),
-            { nowait = true, silent = true, desc = "Run current replace" },
-        },
-        R = {
-            cmd("SpectreRunReplace"),
-            { nowait = true, silent = true, desc = "Run replace" },
-        },
-        I = {
-            cmd("SpectreIgnoreCase"),
-            { nowait = true, silent = true, desc = "Toggle ignore case" },
-        },
-
-        H = {
-            cmd("SpectreHidden"),
-            { nowait = true, silent = true, desc = "Toggle hidden" },
-        },
-        U = {
-            cmd("SpectreToggleLiveUpdate"),
-            { nowait = true, silent = true, desc = "Toggle live update" },
-        },
-        v = {
-            cmd("SpectreChangeView"),
-            { nowait = true, silent = true, desc = "Change view" },
-        },
-        [";"] = {
-            cmd("SpectreResumeLastSearch"),
-            { nowait = true, silent = true, desc = "Resume last search" },
-        },
-        p = {
-            cmd("SpectreShowOptions"),
-            { nowait = true, silent = true, desc = "Show option" },
+            { nowait = true, silent = true, desc = "Grugfar Current", mode = { "v", "n" } },
         },
 
         --
@@ -223,13 +169,15 @@ local config = {
 local bracket = { "<leader>", "<cr>", "V", "s", "W", "w", "S", "E" }
 local Muren = { "m", "M", "c", "F", "u" }
 local eol = { "L", "l", "K", "k" }
-local spectre = { "o", "O", "g", "<CR>", "q", "n", "r", "R", "I", "H", "U", "v", ";", "p" }
+local spectre = { "j", "J" }
+local other = { "q", "n", "r", "R", "I", "H", "U", "v", ";", "p" }
 
 return {
     config,
     "Sad",
-    { Muren, spectre, eol },
+    { spectre, Muren, eol, other },
     bracket,
     6,
     3,
+    1,
 }

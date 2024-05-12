@@ -111,29 +111,6 @@ search({ "nanotee/zoxide.vim", lazy = true, cmd = { "Z", "Lz", "Zi", "Tz", "Tzi"
 
 -- ze black magic
 search({
-    "windwp/nvim-spectre",
-    lazy = true,
-    dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = {
-        "Spectre",
-        "SpectreToggleLine",
-        "SpectreSelectEntry",
-        "SpectreRunCurrentReplace",
-        "SpectreRunReplace",
-        "SpectreSendToQF",
-        "SpectreReplaceCommand",
-        "SpectreToggleLiveUpdate",
-        "SpectreChangeView",
-        "SpectreResumeLastSearch",
-        "SpectreIgnoreCase",
-        "SpectreHidden",
-        "SpectreShowOptions",
-    },
-
-    config = conf.spectre,
-})
--- true replacement of nvim-spectre long live nvim-spectre
-search({
     "MagicDuck/grug-far.nvim",
     lazy = true,
     config = function()

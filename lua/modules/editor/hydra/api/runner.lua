@@ -4,7 +4,6 @@ local cmd = function(cmd)
         vim.cmd(cmd)
     end
 end
-local bracket = { "<cr>", "W", "w", "r", "R", "q", "e", "s", "S", "d", "<leader>", "l" }
 
 -- Open compiler
 vim.keymap.set("n", "<F6>", "<cmd>CompilerOpen<cr>", { noremap = true, silent = true })
@@ -103,9 +102,9 @@ local config = {
 return {
     config,
     "Runner",
-    { { "b" } },
-    bracket,
+    { { "e", "S", "d" }, { "<leader>", "b", "l" } },
+    { "<cr>", "W", "w", "r", "R", "q", "s" },
     6,
     3,
-    2,
+    1,
 }
