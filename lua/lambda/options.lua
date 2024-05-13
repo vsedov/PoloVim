@@ -147,7 +147,7 @@ lambda.config.lsp = {
         use_conform = false,
     },
     diagnostics = {
-        use_lsp_lines = false, -- Going to start using this as well
+        use_lsp_lines = true, -- Going to start using this as well
         use_rcd = false, -- the least intrusive of the bunch
         use_trouble_some = true,
     },

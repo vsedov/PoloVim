@@ -187,7 +187,7 @@ local function add_items(list, items)
             end
         end
         if not exists then
-            list:append(item)
+            list:add(item)
         end
     end
 end
@@ -233,7 +233,7 @@ local function prepopulate(list)
                     return
                 end
                 for _, item in ipairs(items) do
-                    list:append(item)
+                    list:add(item)
                 end
                 -- if ui is open, buffer needs to be updated
                 -- so that items aren't removed immediately after being added
@@ -247,7 +247,7 @@ local function prepopulate(list)
             end)
         if sync_items and type(sync_items) == "table" then
             for _, item in ipairs(sync_items) do
-                list:append(item)
+                list:add(item)
             end
         end
     end

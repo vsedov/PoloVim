@@ -669,11 +669,7 @@ user({
     cmd = "Screenkey",
     config = true,
 })
-user({
-    "jsongerber/thanks.nvim",
-    event = "VeryLazy",
-    config = true,
-})
+
 user({
     "tris203/precognition.nvim",
     cond = lambda.config.if_your_retarded,
@@ -694,4 +690,15 @@ user({
             ["}"] = { text = "}", prio = 1 },
         },
     },
+})
+user({
+    "Pheon-Dev/buffalo-nvim",
+    config = function()
+        -- Keymaps
+        local opts = { noremap = true }
+        local map = vim.keymap.set
+        local buffalo = require("buffalo.ui")
+        map({ "t", "n" }, ";ww", buffalo.toggle_tab_menu, opts)
+        require("buffalo").setup()
+    end,
 })

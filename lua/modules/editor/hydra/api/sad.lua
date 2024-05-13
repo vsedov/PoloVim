@@ -60,13 +60,19 @@ local config = {
         -----------------------------------------------------------
         j = {
             cmd("GrugFar"),
-            { nowait = true, silent = true, desc = "GrugFar Open" },
+            { exit = true, nowait = true, silent = true, desc = "GrugFar Open" },
         },
         J = {
             function()
                 require("grug-far").grug_far({ prefills = { search = vim.fn.expand("<cword>") } })
             end,
-            { nowait = true, silent = true, desc = "Grugfar Current", mode = { "v", "n" } },
+            { exit = true, nowait = true, silent = true, desc = "Grugfar Current", mode = { "v", "n" } },
+        },
+        o = {
+            function()
+                require("grug-far").grug_far({ prefills = { flags = vim.fn.expand("%") } })
+            end,
+            { exit = true, nowait = true, silent = true, desc = "Grugfar Limit to file", mode = { "v", "n" } },
         },
 
         --
@@ -169,7 +175,7 @@ local config = {
 local bracket = { "<leader>", "<cr>", "V", "s", "W", "w", "S", "E" }
 local Muren = { "m", "M", "c", "F", "u" }
 local eol = { "L", "l", "K", "k" }
-local spectre = { "j", "J" }
+local spectre = { "j", "J", "o" }
 local other = { "q", "n", "r", "R", "I", "H", "U", "v", ";", "p" }
 
 return {

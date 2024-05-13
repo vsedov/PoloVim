@@ -135,6 +135,7 @@ ui({
         },
     },
     dependencies = {
+
         "nvim-lua/plenary.nvim",
         "Cretezy/neo-tree-jj.nvim",
         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -491,7 +492,7 @@ ui({
     cond = lambda.config.ui.use_dropbar,
     keys = {
         {
-            "<leader>wp",
+            ";wp",
             function()
                 require("dropbar.api").pick()
             end,
