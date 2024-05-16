@@ -209,35 +209,6 @@ nnoremap("<leader>cd", function()
     lambda.clever_tcd()
 end, { desc = "Clever cd", silent = true })
 
---  ╭────────────────────────────────────────────────────────────────────╮
---  │ Direct Keymap.set                                                  │
---  ╰────────────────────────────────────────────────────────────────────╯
--- vim.keymap.set({ "x", "n" }, "gx", function()
---     local file = vim.fn.expand("<cfile>")
---     if not file or vim.fn.isdirectory(file) > 0 then
---         return vim.cmd.edit(file)
---     end
---
---     if file:match("http[s]?://") then
---         return open(file)
---     end
---
---     -- consider anything that looks like string/string a github link
---     local link = file:match("[%a%d%-%.%_]*%/[%a%d%-%.%_]*")
---     if link then
---         return open(string.format("https://www.github.com/%s", link))
---     end
--- end, { noremap = true, silent = true })
-
-vim.keymap.set("n", "gw", "<cmd>cclose | Grep <cword><CR>", { desc = "Grep for word" })
-
-vim.keymap.set("n", "gbw", function()
-    bufgrep(vim.fn.expand("<cword>"))
-end, { desc = "grep open buffers for word" })
-
-vim.keymap.set("n", "gbW", function()
-    bufgrep(vim.fn.expand("<cWORD>"))
-end, { desc = "Grep open buffers for WORD" })
 
 lambda.command("Bufgrep", function(params)
     bufgrep(params.args)
@@ -251,8 +222,10 @@ vim.keymap.set({ "n" }, "vv", "V", { noremap = true })
 vim.keymap.set({ "n" }, "vvv", "<C-V>", { noremap = true })
 
 -- TAB window management
-vim.keymap.set("n", "\\bo", "<cmd>tabnew<CR>", { desc = "Tab - [t]ab [o]pen" })
+vim.keymap.set("n", "\\bn", "<cmd>tabnew<CR>", { desc = "Tab - [t]ab [o]pen" })
 vim.keymap.set("n", "\\bc", "<cmd>tabclose<CR>", { desc = "Tab - [t]ab [c]lose" })
-vim.keymap.set("n", "\\bn", "<cmd>tabn<CR>", { desc = "Tab - [t]ab [n]ext" })
-vim.keymap.set("n", "\\bN", "<cmd>tabp<CR>", { desc = "Tab - [t]ab [p]revious" })
+vim.keymap.set("n", "\\bN", "<cmd>tabn<CR>", { desc = "Tab - [t]ab [n]ext" })
+vim.keymap.set("n", "\\bp", "<cmd>tabp<CR>", { desc = "Tab - [t]ab [p]revious" })
 vim.keymap.set("n", "\\bb", "<cmd>tabnew %<CR>", { desc = "Tab - [t]ab open current [b]uffer" })
+
+

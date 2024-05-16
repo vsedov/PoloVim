@@ -23,3 +23,6 @@ if lambda.config.ai.tabnine.use_tabnine_cmp and tabnine_options.tabnine_prefetch
     })
 end
 vim.api.nvim_set_hl(0, "CmpItemKindCody", { fg = "Red" })
+
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

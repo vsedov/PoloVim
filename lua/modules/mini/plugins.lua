@@ -1,6 +1,4 @@
 local mini = require("core.pack").package
-local conf = require("modules.mini.config")
-local mini_opt = lambda.config.ui.mini_animate
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {
         "alpha",

@@ -270,13 +270,8 @@ function M.repeatable_hover(hover, k)
                 K = {
                     function()
                         -- hover()
-                        vim.cmd.Lspsaga("hover_doc")
-                    end,
-                    { exit = true, desc = "Hover" },
-                },
-                k = {
-                    function()
-                        vim.cmd.Lspsaga("hover_doc")
+                        -- vim.cmd.Lspsaga("hover_doc")
+                        require("hover").hover()
                     end,
                     { exit = true, desc = "Hover" },
                 },
@@ -359,7 +354,7 @@ function M.repeatable_hover(hover, k)
             config,
             "Lsp",
             { { "R", "T" }, { "d", "r", "f", "i", "t", "l" }, { "[", "]" } },
-            { "K", "k", "J", "D" },
+            { "K", "J", "D" },
 
             6,
             3,

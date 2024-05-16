@@ -92,7 +92,11 @@ lsp({
 })
 
 -- NOTE: (vsedov) (20:56:48 - 27/07/23): Does not work if you have multiple language clients
-lsp({ "lewis6991/hover.nvim", lazy = true, config = conf.hover })
+lsp({
+    "lewis6991/hover.nvim",
+    lazy = true,
+    config = conf.hover,
+})
 
 lsp({
     "glepnir/lspsaga.nvim",

@@ -70,35 +70,6 @@ local get_extra_binds = function()
             "<cmd>Lspsaga diagnostic_jump_next<CR>",
             desc = "Toggle Lspsaga diagnostic_jump_next",
         },
-        {
-            "[E",
-            function()
-                require("lspsaga.diagnostic").goto_prev({
-                    severity = vim.diagnostic.severity.ERROR,
-                })
-            end,
-            desc = "Toggle Lspsaga diagnostic_prev ERROR",
-        },
-        {
-            "]E",
-            function()
-                require("lspsaga.diagnostic").goto_next({
-                    severity = vim.diagnostic.severity.ERROR,
-                })
-            end,
-            desc = "Toggle Lspsaga diagnostic_next ERROR",
-        },
-        {
-            "gL",
-            "<cmd>Lspsaga show_line_diagnostics<CR>",
-            desc = "Toggle Lspsaga show_line_diagnostics",
-        },
-
-        {
-            "gG",
-            "<cmd>Lspsaga show_buf_diagnostics<CR>",
-            desc = "Toggle Lspsaga show_buf_diagnostics",
-        },
         -- {
         --     "gW",
         --     "<cmd>Lspsaga show_workspace_diagnostics<CR>",
