@@ -273,7 +273,7 @@ function M.repeatable_hover(hover, k)
                         -- vim.cmd.Lspsaga("hover_doc")
                         require("hover").hover()
                     end,
-                    { exit = true, desc = "Hover" },
+                    { exit = false, desc = "Hover" },
                 },
 
                 R = {

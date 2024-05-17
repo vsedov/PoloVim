@@ -181,7 +181,7 @@ local config = {
         },
         f = {
             function()
-                harpoon.ui:toggle_quick_menu(harpoon:list("files"))
+                require("harpoon").ui:toggle_quick_menu(require("harpoon"):list("files"))
             end,
             { desc = "Open Files", noremap = true, exit = true, silent = true },
         },

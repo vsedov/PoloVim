@@ -61,12 +61,12 @@ local get_extra_binds = function()
         },
 
         {
-            "]e",
+            "g]",
             "<cmd>Lspsaga diagnostic_jump_prev<CR>",
             desc = "Toggle Lspsaga diagnostic_jump_prev",
         },
         {
-            "[e",
+            "g[",
             "<cmd>Lspsaga diagnostic_jump_next<CR>",
             desc = "Toggle Lspsaga diagnostic_jump_next",
         },
@@ -236,6 +236,10 @@ augroup("LspSetupCommands", {
             end
             if client.server_capabilities.hoverProvider then
                 vim.keymap.set("n", "K", function()
+                    utils.repeatable_hover(true)
+                end, { buffer = args.buf })
+
+                vim.keymap.set("n", "gk", function()
                     utils.repeatable_hover(true)
                 end, { buffer = args.buf })
             end
