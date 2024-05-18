@@ -197,7 +197,7 @@ ai({
     "sourcegraph/sg.nvim",
     cond = lambda.config.lsp.use_sg,
     event = "InsertEnter",
-    branch = "update-cody-agent-03-12",
+    -- branch = "update-cody-agent-03-12",
     build = "nvim -l build/init.lua",
     dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
     cmd = {

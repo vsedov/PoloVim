@@ -30,23 +30,6 @@ function config.notify()
         stages = "fade_in_slide_out",
         top_down = false,
         background_colour = "NormalFloat",
-        max_width = function()
-            return math.floor(vim.o.columns * 0.6)
-        end,
-        max_height = function()
-            return math.floor(vim.o.lines * 0.8)
-        end,
-        on_open = function(win)
-            if not api.nvim_win_is_valid(win) then
-                return
-            end
-            api.nvim_win_set_config(win, { border = lambda.style.border.type_0 })
-        end,
-        render = function(...)
-            local notification = select(2, ...)
-            local style = lambda.falsy(notification.title[1]) and "minimal" or "default"
-            require("notify.render")[style](...)
-        end,
     })
 
     vim.keymap.set("n", "<leader>nd", function()

@@ -17,15 +17,6 @@ end
 local utils = require("modules.lsp.lsp.utils")
 
 ---@enum
-local provider = {
-    HOVER = "hoverProvider",
-    RENAME = "renameProvider",
-    CODELENS = "codeLensProvider",
-    CODEACTIONS = "codeActionProvider",
-    FORMATTING = "documentFormattingProvider",
-    REFERENCES = "documentHighlightProvider",
-    DEFINITION = "definitionProvider",
-}
 local get_extra_binds = function()
     local binds = {}
 

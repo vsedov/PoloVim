@@ -1,9 +1,9 @@
-codeblock = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')"
-statusline_bg = "#2e323b" -- gray
-statuscolumn_border = "#4b5160" -- gray
-ellipsis = "#808080" -- gray
-telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'onedark')"
-telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')"
+local codeblock = "require('onedarkpro.helpers').lighten('bg', 2, 'onedark')"
+local statusline_bg = "#2e323b" -- gray
+local statuscolumn_border = "#4b5160" -- gray
+local ellipsis = "#808080" -- gray
+local telescope_prompt = "require('onedarkpro.helpers').darken('bg', 1, 'onedark')"
+local telescope_results = "require('onedarkpro.helpers').darken('bg', 4, 'onedark')"
 telescope_preview = "require('onedarkpro.helpers').darken('bg', 6, 'onedark')"
 telescope_selection = "require('onedarkpro.helpers').darken('bg', 8, 'onedark')"
 copilot = "require('onedarkpro.helpers').darken('gray', 8, 'onedark')"

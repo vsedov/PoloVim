@@ -62,17 +62,9 @@ function config.houdini()
                 end
                 return "<bs><bs><esc>"
             end,
-            r = "<bs><bs><esc>",
             c = "<bs><bs><c-c>",
             ["ic"] = "<BS><BS><ESC>",
             ["ix"] = "<BS><BS><ESC>",
-            ["R"] = "<BS><BS><ESC>",
-            ["Rc"] = "<BS><BS><ESC>",
-            ["Rx"] = "<BS><BS><ESC>",
-            ["Rv"] = "<BS><BS><ESC>",
-            ["Rvc"] = "<BS><BS><ESC>",
-            ["Rvx"] = "<BS><BS><ESC>",
-            ["rm"] = "<ESC>",
             ["cv"] = ("<BS>"):rep(100) .. "vi<CR>",
         },
     })

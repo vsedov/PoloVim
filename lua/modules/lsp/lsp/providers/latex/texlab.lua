@@ -1,19 +1,5 @@
 local util = require("lspconfig.util")
 
-local texlab_build_status = vim.tbl_add_reverse_lookup({
-    Success = 0,
-    Error = 1,
-    Failure = 2,
-    Cancelled = 3,
-})
-
-local texlab_forward_status = vim.tbl_add_reverse_lookup({
-    Success = 0,
-    Error = 1,
-    Failure = 2,
-    Unconfigured = 3,
-})
-
 local function buf_build(bufnr)
     bufnr = util.validate_bufnr(bufnr)
     local texlab_client = util.get_active_client_by_name(bufnr, "texlab")

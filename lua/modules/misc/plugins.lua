@@ -131,6 +131,7 @@ misc({
 
 misc({
     "ahmedkhalf/project.nvim",
+    cond = false,
     event = "BufRead",
     config = function()
         require("project_nvim").setup({
@@ -170,8 +171,13 @@ misc({
     event = "CmdlineEnter",
 })
 
-misc({ "tweekmonster/helpful.vim", cmd = "HelpfulVersion", ft = "help" })
+misc({
+    "tweekmonster/helpful.vim",
+    cmd = "HelpfulVersion",
+    ft = "help",
+})
 -- If there is regex, this seems very nice to work with .
+
 misc({
     "tomiis4/Hypersonic.nvim",
     cmd = "Hypersonic",
@@ -203,14 +209,7 @@ misc({
 })
 misc({
     "tani/dmacro.nvim",
-    keys = {
-
-        {
-            "<C-.>",
-            mode = { "n", "i" },
-        },
-    },
-    lazy = true,
+    event = "InsertEnter",
     config = function()
         require("dmacro").setup({
             dmacro_key = "<C-.>", --  you need to set the dmacro_key

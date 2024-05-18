@@ -125,12 +125,12 @@ lambda.config.cmp = {
 }
 
 lambda.config.lsp = {
-    use_sg = true,
+    use_sg = false,
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
     use_lsp_saga = true,
-    use_lsp_dim = true, -- i forgot what this does
+    use_lsp_dim = false, -- i forgot what this does
     ----------------------------------------------------------------------------------------------------
     --  Lsp Signiture, but im suing lazy for this for the time
     ----------------------------------------------------------------------------------------------------
