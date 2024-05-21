@@ -3,12 +3,16 @@ local colourscheme = require("core.pack").package
 
 colourscheme({
     "rebelot/kanagawa.nvim",
+    cond = lambda.config.colourscheme.colourscheme == "kanagawa",
+    event = "BufEnter",
     lazy = true,
     config = conf.kanagawa,
 })
 
 colourscheme({
     "catppuccin/nvim",
+    cond = lambda.config.colourscheme.colourscheme == "cat",
+    event = "BufEnter",
     lazy = true,
     name = "catppuccin",
     cmd = "CatppuccinCompile",
@@ -21,6 +25,7 @@ colourscheme({
 -- temp::
 colourscheme({
     "rose-pine/neovim", -- rose-pine/neovim
+    cond = lambda.config.colourscheme.colourscheme == "rose-pine",
     lazy = true,
     name = "rose",
     config = conf.rose,
@@ -28,23 +33,26 @@ colourscheme({
 
 colourscheme({
     "lunarvim/horizon.nvim",
+    cond = lambda.config.colourscheme.colourscheme == "horizon",
     lazy = true,
     config = conf.horizon,
 })
 colourscheme({
     "wadackel/vim-dogrun",
+    cond = lambda.config.colourscheme.colourscheme == "dogrun",
     lazy = true,
     config = conf.dogrun,
 })
 
 colourscheme({
     "folke/tokyonight.nvim",
+    cond = lambda.config.colourscheme.colourscheme == "tokyonight",
     lazy = true,
     config = conf.tokyonight,
 })
 colourscheme({
     "olimorris/onedarkpro.nvim",
-    cond = true,
+    cond = lambda.config.colourscheme.colourscheme == "onedark",
     event = "BufEnter",
     opts = {
         colors = {
@@ -273,8 +281,8 @@ colourscheme({
 })
 colourscheme({
     "eldritch-theme/eldritch.nvim",
-    lazy = true,
-    priority = 1000,
+    event = "BufEnter",
+    cond = lambda.config.colourscheme.colourscheme == "eldritch",
     config = function()
         require("eldritch").setup({
             -- your configuration comes here
@@ -296,18 +304,40 @@ colourscheme({
             hide_inactive_statusline = true, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
             dim_inactive = false,
             lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
-
-            --- You can override specific color groups to use other groups or a hex color
-            --- function will be called with a ColorScheme table
-            ---@param colors ColorScheme
-            on_colors = function(colors) end,
-
-            --- You can override specific highlights to use other groups or a hex color
-            --- function will be called with a Highlights and ColorScheme table
-            ---@param highlights Highlights
-            ---@param colors ColorScheme
-            on_highlights = function(highlights, colors) end,
         })
         vim.cmd([[colorscheme eldritch]])
+    end,
+})
+colourscheme({
+    "diegoulloao/neofusion.nvim",
+    cond = lambda.config.colourscheme.colourscheme == "neofusion",
+    event = "BufEnter",
+    config = function()
+        -- Default options:
+        require("neofusion").setup({
+            terminal_colors = true, -- add neovim terminal colors
+            undercurl = true,
+            underline = true,
+            bold = true,
+            italic = {
+                strings = true,
+                emphasis = true,
+                comments = true,
+                operators = false,
+                folds = true,
+            },
+            strikethrough = true,
+            invert_selection = false,
+            invert_signs = false,
+            invert_tabline = true,
+            invert_intend_guides = false,
+            inverse = true, -- invert background for search, diffs, statuslines and errors
+            palette_overrides = {},
+            overrides = {},
+            dim_inactive = lambda.config.colourscheme.dim_background,
+            transparent_mode = false,
+        })
+
+        vim.cmd([[ colorscheme neofusion ]])
     end,
 })

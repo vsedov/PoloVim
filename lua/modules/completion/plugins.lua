@@ -35,16 +35,6 @@ completion({
         { "hrsh7th/cmp-path", lazy = true },
         { "hrsh7th/cmp-omni", lazy = true },
         { "hrsh7th/cmp-cmdline" },
-
-        -- {
-        --     "doxnit/cmp-luasnip-choice",
-        --     lazy = true,
-        --     config = function()
-        --         require("cmp_luasnip_choice").setup({
-        --             auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
-        --         })
-        --     end,
-        -- },
         {
             "petertriho/cmp-git",
             lazy = true,

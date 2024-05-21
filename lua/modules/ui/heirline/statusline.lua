@@ -846,7 +846,7 @@ return {
         GitBranch,
         FileNameBlock,
         LspAttached,
-        LspDiagnostics,
+        -- LspDiagnostics,
         { provider = "%=" },
         CodeCompanion,
         Overseer,

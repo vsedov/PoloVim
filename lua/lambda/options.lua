@@ -60,6 +60,7 @@ lambda.config.ai = {
         },
     },
     sell_your_soul = use_copilot,
+    use_lua_copilot = true,
 }
 
 lambda.config.extra_search = {
@@ -125,7 +126,7 @@ lambda.config.cmp = {
 }
 
 lambda.config.lsp = {
-    use_sg = false,
+    use_sg = true, -- needs to be updated to nightly
     use_hover = false, -- Saga is better for this one
     use_typos = false, -- this was getting annoying
     only_severe_diagnostics = false, -- NOTE: (vsedov) (18:08:54 - 24/07/23): Revert here
@@ -167,7 +168,7 @@ lambda.config.lsp = {
         use_sourcery = true,
         lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think
         format = {
-            "isort",
+            "usort",
             "yapf",
         },
         -- black -- Need to make it so it knows what formater to use :think:
@@ -217,15 +218,17 @@ lambda.config.fun = {
     use_pet = false,
 }
 lambda.config.colourscheme = {
+    colourscheme = "cat",
+
     use_light_theme = false,
     enable_transparent = false, -- this can get annoying i guess, so theres not point for this -- this can get annoying i guess, so theres not point for this
 
-    dim_background = true,
+    dim_background = false,
     change_kitty_bg = false,
     --- @usage "main"' | '"moon"
     rose = "main",
     --- @usage  "latte" | "frappe" | "macchiato" | "mocha"
-    catppuccin_flavour = "mocha",
+    catppuccin_flavour = "macchiato",
     -- @usage theme_name : percentage chance
     kanagawa_flavour = "dragon", -- {dragon, waave}, lotus-> white
     tokyonight_flavour = "night",

@@ -298,23 +298,6 @@ command("LspClients", function(opts)
 end, { nargs = "*" })
 
 -----------------------------------------------------------------------------//
--- Signs
------------------------------------------------------------------------------//
-
----@param opts {highlight: string, icon: string}
-local function sign(opts)
-    fn.sign_define(opts.highlight, {
-        text = opts.icon,
-        texthl = opts.highlight,
-        linehl = opts.highlight .. "Line",
-    })
-end
-
-sign({ highlight = "DiagnosticSignError", icon = icons.error })
-sign({ highlight = "DiagnosticSignWarn", icon = icons.warn })
-sign({ highlight = "DiagnosticSignInfo", icon = icons.info })
-sign({ highlight = "DiagnosticSignHint", icon = icons.hint })
------------------------------------------------------------------------------//
 -- Handler Overrides
 -----------------------------------------------------------------------------//
 -- This section overrides the default diagnostic handlers for signs and virtual text so that only
@@ -360,8 +343,23 @@ diagnostic.config({
     underline = true,
     update_in_insert = false,
     severity_sort = true,
+    signs = {
+        severity = { min = S.WARN },
+        text = {
+            [S.WARN] = icons.warn,
+            [S.INFO] = icons.info,
+            [S.HINT] = icons.hint,
+            [S.ERROR] = icons.error,
+        },
+        linehl = {
+            [S.WARN] = "DiagnosticSignWarnLine",
+            [S.INFO] = "DiagnosticSignInfoLine",
+            [S.HINT] = "DiagnosticSignHintLine",
+            [S.ERROR] = "DiagnosticSignErrorLine",
+        },
+    },
     virtual_text = false and {
-        -- severity = { min = S.WARN },
+        severity = { min = S.WARN },
         spacing = 1,
         prefix = function(d)
             local level = diagnostic.severity[d.severity]

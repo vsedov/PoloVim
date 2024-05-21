@@ -93,8 +93,18 @@ ai({
 -- <C-i> [Edit Window] use response as input.
 
 ai({
+    "github/copilot.vim",
+    cond = ai_conf.sell_your_soul and not ai_conf.use_lua_copilot,
+    event = "InsertEnter",
+    config = function()
+        vim.g.copilot_no_tab_map = true
+
+    end,
+})
+
+ai({
     "zbirenbaum/copilot.lua",
-    cond = ai_conf.sell_your_soul,
+    cond = ai_conf.sell_your_soul and ai_conf.use_lua_copilot,
     event = "InsertEnter",
     opts = {
         panel = {
@@ -128,7 +138,8 @@ ai({
     build = ":UpdateRemotePlugins",
     branch = "canary",
     dependencies = {
-        { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+        -- { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+        { "github/copilot.vim" },
         { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
     },
     opts = {

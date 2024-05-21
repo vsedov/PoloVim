@@ -214,7 +214,10 @@ if lambda.config.ai.sell_your_soul then
 
         ["<C-l>"] = cmp.mapping(function(fallback)
             if lambda.config.ai.sell_your_soul and lambda.config.ai.copilot.use_cmp_trigger then
-                copilot(fallback)
+                if lambda.config.ai.use_lua_copilot then
+                    return copilot(fallback)
+                else
+                end
             elseif lambda.config.ai.tabnine.enable and not lambda.config.ai.tabnine.use_tabnine_cmp then
                 if require("tabnine.keymaps").has_suggestion() then
                     return require("tabnine.keymaps").accept_suggestion()
@@ -223,15 +226,6 @@ if lambda.config.ai.sell_your_soul then
                 else
                     return "<tab>"
                 end
-                -- local copilot_keys = vim.fn["copilot#Accept"]("")
-                -- if copilot_keys ~= "" then
-                --     vim.api.nvim_feedkeys(copilot_keys, "i", false)
-                --     -- elseif luasnip.expandable() then
-                --     --     luasnip.expand()
-                --     -- elseif luasnip.expand_or_jumpable() then
-                --     --     luasnip.expand_or_jump()
-                --     fallback()
-                -- end
             end
         end, {
             "i",

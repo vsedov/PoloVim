@@ -16,27 +16,13 @@ function config.catppuccin()
             path = vim.fn.stdpath("cache") .. "/catppuccin",
             suffix = "_compiled",
         },
-        styles = {
-            comments = { "italic" },
-            conditionals = { "italic" },
-            loops = {},
-            functions = {},
-            keywords = { "italic" },
-            strings = {},
-            variables = {},
-            numbers = {},
-            booleans = { "italic" },
-            properties = {},
-            types = {},
-            operators = {},
-        },
+
         integrations = {
             treesitter = true,
             dropbar = {
                 enabled = lambda.config.ui.use_dropbar,
                 color_mode = true, -- enable color for kind's texts, not just kind's icons
             },
-
             native_lsp = {
                 enabled = true,
                 virtual_text = {
@@ -44,14 +30,20 @@ function config.catppuccin()
                     hints = { "italic" },
                     warnings = { "italic" },
                     information = { "italic" },
+                    ok = { "italic" },
                 },
                 underlines = {
                     errors = { "underline" },
                     hints = { "underline" },
                     warnings = { "underline" },
                     information = { "underline" },
+                    ok = { "underline" },
+                },
+                inlay_hints = {
+                    background = true,
                 },
             },
+            harpoon = true,
             coc_nvim = false,
             lsp_trouble = true,
             cmp = true,
@@ -82,7 +74,7 @@ function config.catppuccin()
             bufferline = true,
             markdown = true,
             lightspeed = false,
-            leap = false,
+            leap = true,
             ts_rainbow = true,
             hop = false,
             notify = true,
