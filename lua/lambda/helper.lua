@@ -689,3 +689,36 @@ function lambda.better_cd_tcd_lcd(option, root_or_current)
     vim.cmd(option .. " " .. get_dir())
     vim.cmd("pwd")
 end
+-- Function to read the contents of a file
+local function read_file(file_path)
+    local file = io.open(file_path, "r")
+    if not file then
+        return nil, "File not found: " .. file_path
+    end
+
+    local content = file:read("*all")
+    file:close()
+    return content
+end
+
+-- Function to check the distribution name
+function lambda.get_distro_name()
+    local content, err = read_file("/etc/os-release")
+    if not content then
+        return nil, err
+    end
+
+    -- Check for Ubuntu
+    if content:find("Ubuntu") then
+        return "Ubuntu"
+    end
+
+    -- Check for Arch Linux
+    if content:find("Arch") or content:find("Manjaro") then
+        return "Arch Linux"
+    end
+
+    return "Unknown distribution"
+end
+
+-- Main logic

@@ -1,0 +1,41 @@
+// Detailed Algorithm Flowchart with Conditionals
+digraph {
+	A [label=Start]
+	B [label="Initialize Parameters"]
+	C [label="Identify alpha, beta, delta wolves"]
+	D1 [label="Perform Position Updates
+Eqs. 1, 2, 3"]
+	D2 [label="Update Position
+X_new = (X_alpha * alpha_weight) + (X_beta * beta_weight) + (X_delta * delta_weight)"]
+	E [label="Apply Boundary Correction to X_new"]
+	F [label="Evaluate New Position X_new"]
+	G [label="Is X_new Better Than Current Best?"]
+	H1 [label="Yes: Update Best Solution"]
+	H2 [label="No: Keep Current Best Solution"]
+	I [label="Add X_new to New Population"]
+	J [label="Update alpha, beta, delta wolves"]
+	K [label="Compare and Update Best Solution"]
+	L [label="Update Best Solution
+via Mini Search with 4 Hawks"]
+	M [label="Update Q-table
+based on Performance"]
+	N [label="Return Best Solution"]
+	O [label=End]
+	A -> B
+	B -> C
+	C -> D1
+	D1 -> D2
+	D2 -> E
+	E -> F
+	F -> G
+	G -> H1 [label=Better]
+	G -> H2 [label="Not Better"]
+	H1 -> I
+	H2 -> I
+	I -> J
+	J -> K
+	K -> L
+	L -> M
+	M -> N
+	N -> O
+}

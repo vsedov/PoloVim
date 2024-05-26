@@ -1,0 +1,98 @@
+// Improved Algorithm Flowchart with Conditionals
+digraph {
+	rankdir=TB size="8,10"
+	subgraph cluster_init {
+		label=Initialization
+		A [label=Start]
+		B [label="Initialize Population using GA"]
+		C [label="Initialize Q-table for Q-learning"]
+		D [label="Evaluate Initial Population"]
+		E [label="Identify Alpha, Beta, Delta Wolves"]
+	}
+	subgraph cluster_main_loop {
+		label="Main Loop"
+		F [label="For Each Individual Xi"]
+		G [label="Update Coefficients a, A, C"]
+	}
+	subgraph cluster_exploration {
+		label="Exploration Phase" style=dashed
+		I1 [label="Perform Exploration Phase
+(Eqs. 1, 2, 3)"]
+		I2 [label="Xi(t+1) = (X1 + X2 + X3) / 3"]
+	}
+	subgraph cluster_exploitation {
+		label="Exploitation Phase" style=dashed
+		J1 [label="Perform Exploitation Phase"]
+		J2 [label="Is Energy E Based on Stochastic Randomness?"]
+		K1 [label="|E| >= 1"]
+		K2 [label="|E| < 1"]
+		L1 [label="Random < 0.7"]
+		L2 [label="Random >= 0.7"]
+		subgraph cluster_hho {
+			label="HHO-Style Exploration" style=dotted
+			M1 [label="HHO-Style Exploration"]
+			M2 [label="Random() >= 0.7"]
+			M3 [label="Random() < 0.7"]
+			N1 [label="Perch Based on Other Family Members"]
+			N2 [label="X_rand = Random Individual from Population"]
+			N3 [label="X_new = X_rand - Random * |X_rand - 2 * Random * Xi|"]
+			O1 [label="Perch on a Random Tall Tree"]
+			O2 [label="X_mean = Mean of All Solutions"]
+			O3 [label="X_new = (X_best - X_mean) - Random * (X_lb + Random * (X_ub - X_lb))"]
+		}
+	}
+	subgraph cluster_evaluation {
+		label="Evaluation and Update"
+		P [label="Apply Boundary Correction to X_new"]
+		Q [label="Evaluate New Position X_new"]
+		R [label="Is X_new Better Than Current Best?"]
+		S1 [label="Yes: Update Best Solution"]
+		S2 [label="No: Keep Current Best Solution"]
+		T [label="Add X_new to New Population"]
+		U [label="Update Alpha, Beta, Delta Wolves"]
+		V [label="Compare and Update Best Solution"]
+		W [label="Update Best Solution via Mini Search with 4 Hawks"]
+		X [label="Update Q-table Based on Performance"]
+	}
+	Y [label="Return Best Solution"]
+	Z [label=End]
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F
+	F -> G
+	G -> H
+	H -> I1 [label=Yes]
+	H -> J1 [label=No]
+	I1 -> I2
+	I2 -> P
+	J1 -> J2
+	J2 -> K1 [label=Yes]
+	J2 -> K2 [label=No]
+	K1 -> L1
+	K2 -> P
+	L1 -> M1
+	L2 -> P
+	M1 -> M2
+	M2 -> N1 [label=Yes]
+	M2 -> O1 [label=No]
+	N1 -> N2
+	N2 -> N3
+	O1 -> O2
+	O2 -> O3
+	N3 -> P
+	O3 -> P
+	P -> Q
+	Q -> R
+	R -> S1 [label=Yes]
+	R -> S2 [label=No]
+	S1 -> T
+	S2 -> T
+	T -> U
+	U -> V
+	V -> W
+	W -> X
+	X -> Y
+	Y -> Z
+}

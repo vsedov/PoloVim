@@ -440,21 +440,6 @@ user({
             desc = "portal fwd",
         },
         {
-            "]o",
-            function()
-                require("portal.builtin").jumplist.tunnel_forward()
-            end,
-            desc = "portal fwd",
-        },
-
-        {
-            "[o",
-            function()
-                require("portal.builtin").jumplist.tunnel_backward()
-            end,
-            desc = "portal fwd",
-        },
-        {
             "<C-o>",
             function()
                 require("portal.builtin").jumplist.tunnel_backward()
@@ -568,22 +553,6 @@ user({
 })
 
 user({
-    "xiyaowong/transparent.nvim",
-    config = true,
-    cmd = {
-        "TransparentEnable",
-        "TransparentDisable",
-        "TransparentToggle",
-    },
-})
-
--- ┌                                          ┐
--- │                                          │
--- │ Very Lazy Scripts that i need to replace │
--- │                                          │
--- └                                          ┘
-
-user({
     "mvllow/modes.nvim",
     cond = true,
     event = "ModeChanged",
@@ -607,91 +576,6 @@ user({
 })
 
 user({
-    "IndianBoy42/kitty.lua",
-    cond = lambda.config.use_kitty,
-    config = function()
-        require("kitty.terms").setup({
-            dont_attach = not not vim.g.kitty_scrollback,
-            attach = {
-                target_providers = {
-                    function(T)
-                        T.helloworld = { desc = "Hello world", cmd = "echo hello world" }
-                    end,
-                    "just",
-                    "cargo",
-                },
-                current_win_setup = {},
-                on_attach = function(_, K, _)
-                    K.setup_make()
-                end,
-                bracketed_paste = true,
-            },
-        })
-        local Terms = require("kitty.terms")
-        local map = vim.keymap.set
-        map("n", ";kk", function()
-            Terms.get_terminal(0):run()
-        end, { desc = "Kitty Run" })
-        map("n", ";kK", function()
-            Terms.get_terminal(0):make()
-        end, { desc = "Kitty Make" })
-        map("n", ";kkk", function()
-            Terms.get_terminal(0):make("last")
-        end, { desc = "Kitty ReMake" })
-        map("n", ";krR", function()
-            return Terms.get_terminal(0):send_operator()
-        end, { expr = true, desc = "Kitty Send" })
-        map("x", ";kR", function()
-            return Terms.get_terminal(0):send_operator()
-        end, { expr = true, desc = "Kitty Send" })
-        map("n", ";krr", function()
-            return Terms.get_terminal(0):send_operator({ type = "line", range = "$" })
-        end, { expr = true, desc = "Kitty Send Line" })
-        map("n", ";ky", function()
-            Terms.get_terminal(0):get_selection()
-        end, { desc = "Yank From Kitty" })
-    end,
-    keys = {
-        {
-            ";kok",
-            "<cmd>Kitty<cr>",
-            desc = "Kitty Open",
-        },
-        {
-            ";koK",
-            "<cmd>KittyOverlay<cr>",
-            desc = "Kitty Open",
-        },
-    },
-})
-user({
-    "NStefan002/screenkey.nvim",
-    cmd = "Screenkey",
-    config = true,
-})
-
-user({
-    "tris203/precognition.nvim",
-    cond = lambda.config.if_your_retarded,
-    config = {
-        startVisible = true,
-        hints = {
-            ["^"] = { text = "^", prio = 1 },
-            ["$"] = { text = "$", prio = 1 },
-            ["w"] = { text = "w", prio = 10 },
-            ["b"] = { text = "b", prio = 10 },
-            ["e"] = { text = "e", prio = 10 },
-        },
-        gutterHints = {
-            --prio is not currentlt used for gutter hints
-            ["G"] = { text = "G", prio = 1 },
-            ["gg"] = { text = "gg", prio = 1 },
-            ["{"] = { text = "{", prio = 1 },
-            ["}"] = { text = "}", prio = 1 },
-        },
-    },
-})
-user({
     "Pheon-Dev/buffalo-nvim",
     config = function()
         -- Keymaps
@@ -701,56 +585,5 @@ user({
         map({ "t", "n" }, ";wW", buffalo.toggle_buf_menu, opts)
         map({ "t", "n" }, ";ww", buffalo.toggle_tab_menu, opts)
         require("buffalo").setup()
-    end,
-})
-user({
-    "nosduco/remote-sshfs.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim" },
-
-    config = function()
-        require("remote-sshfs").setup()
-        require("remote-sshfs").setup({
-            connections = {
-                ssh_configs = { -- which ssh configs to parse for hosts list
-                    vim.fn.expand("$HOME") .. "/.ssh/config",
-                    "/etc/ssh/ssh_config",
-                    -- "/path/to/custom/ssh_config"
-                },
-                sshfs_args = { -- arguments to pass to the sshfs command
-                    "-o reconnect",
-                    "-o ConnectTimeout=5",
-                },
-            },
-            mounts = {
-                base_dir = vim.fn.expand("$HOME") .. "/.sshfs/", -- base directory for mount points
-                unmount_on_exit = true, -- run sshfs as foreground, will unmount on vim exit
-            },
-            handlers = {
-                on_connect = {
-                    change_dir = true, -- when connected change vim working directory to mount point
-                },
-                on_disconnect = {
-                    clean_mount_folders = false, -- remove mount point folder on disconnect/unmount
-                },
-                on_edit = {}, -- not yet implemented
-            },
-            ui = {
-                select_prompts = false, -- not yet implemented
-                confirm = {
-                    connect = true, -- prompt y/n when host is selected to connect to
-                    change_dir = false, -- prompt y/n to change working directory on connection (only applicable if handlers.on_connect.change_dir is enabled)
-                },
-            },
-            log = {
-                enable = true, -- enable logging
-                truncate = false, -- truncate logs
-                types = { -- enabled log types
-                    all = false,
-                    util = false,
-                    handler = false,
-                    sshfs = false,
-                },
-            },
-        })
     end,
 })

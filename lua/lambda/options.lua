@@ -11,7 +11,7 @@ local use_tabnine = true -- i mean i pay for this so why in the blue green fuck 
 local use_tabnine_cmp = true
 local use_copilot = true -- We really do sell our souls for this thing eh
 
--- toggle core values within th list
+-- toggle core vlues within th list
 lambda.config = {
     use_kitty = false, -- this seems to slow things down i think
     if_your_retarded = false,
@@ -173,7 +173,7 @@ lambda.config.lsp = {
         },
         -- black -- Need to make it so it knows what formater to use :think:
         lsp = {
-            "sourcery",
+            -- "sourcery",
             "ruff_lsp",
             "jedi_language_server",
             -- "pylsp",
@@ -332,4 +332,11 @@ if not use_noice then
     lambda.config.folke.noice.lsp.use_noice_hover = true
     lambda.config.folke.noice.lsp.use_markdown = true
     lambda.config.folke.noice.lsp.use_documentation = true
+end
+local distro, error = lambda.get_distro_name()
+if distro then
+    if distro:find("Ubuntu") then
+        lambda.config.use_kitty = false
+        lambda.config.lsp.use_sg = false
+    end
 end
