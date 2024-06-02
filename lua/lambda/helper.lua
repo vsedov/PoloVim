@@ -702,7 +702,7 @@ local function read_file(file_path)
 end
 
 -- Function to check the distribution name
-function lambda.get_distro_name()
+function lambda.distro()
     local content, err = read_file("/etc/os-release")
     if not content then
         return nil, err

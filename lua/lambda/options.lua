@@ -333,10 +333,3 @@ if not use_noice then
     lambda.config.folke.noice.lsp.use_markdown = true
     lambda.config.folke.noice.lsp.use_documentation = true
 end
-local distro, error = lambda.get_distro_name()
-if distro then
-    if distro:find("Ubuntu") then
-        lambda.config.use_kitty = false
-        lambda.config.lsp.use_sg = false
-    end
-end
