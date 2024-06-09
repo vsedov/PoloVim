@@ -101,7 +101,8 @@ local load_core = function()
     disable_distribution_plugins()
     leader_map()
     require("core.options")
-    vim.cmd([[
+    if lambda.distro() then
+        vim.cmd([[
     let g:clipboard = {
         \ 'name': 'xsel',
         \ 'copy': {
@@ -115,6 +116,7 @@ local load_core = function()
         \ 'cache_enabled': 1,
         \ }
 ]])
+    end
 
     require("core.autocmd")
     require("core.autocmd_optional")

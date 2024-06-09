@@ -236,4 +236,23 @@ if lambda.config.ai.sell_your_soul then
     vim.tbl_extend("force", mappings, new_table)
 end
 
+if lambda.config.ai.supermaven.enable then
+    local suggestion = require("supermaven-nvim.completion_preview")
+    local new_table = {
+        ["<C-l>"] = cmp.mapping(function(fallback)
+            if luasnip.expandable() then
+                luasnip.expand()
+            elseif suggestion.has_suggestion() then
+                suggestion.on_accept_suggestion()
+            else
+                fallback()
+            end
+        end, {
+            "i",
+            "s",
+        }),
+    }
+    vim.tbl_extend("force", mappings, new_table)
+end
+
 return mappings

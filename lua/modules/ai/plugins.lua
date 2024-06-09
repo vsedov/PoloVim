@@ -70,6 +70,16 @@ ai({
     end,
     config = conf.codium,
 })
+ai({
+    "monkoose/neocodeium",
+    cond = (ai_conf.codeium.use_codeium and ai_conf.codeium.use_codium_insert),
+    event = "",
+    config = function()
+        local neocodeium = require("neocodeium")
+        neocodeium.setup()
+        vim.keymap.set("i", "<A-f>", neocodeium.accept)
+    end,
+})
 
 ai({
     "jcdickinson/codeium.nvim",
@@ -98,7 +108,6 @@ ai({
     event = "InsertEnter",
     config = function()
         vim.g.copilot_no_tab_map = true
-
     end,
 })
 
@@ -287,4 +296,68 @@ ai({
             mode = { "n", "v" },
         },
     },
+})
+-- :SupermavenStart   start supermaven-nvim
+-- :SupermavenStop    stop supermaven-nvim
+-- :SupermavenRestart restart supermaven-nvim
+-- :SupermavenToggle  toggle supermaven-nvim
+-- :SupermavenStatus  show status of supermaven-nvim
+-- :SupermavenUseFree switch to the free version
+-- :SupermavenUsePro  switch to the pro version
+-- :SupermavenLogout  log out of supermaven
+ai({
+    "supermaven-inc/supermaven-nvim",
+    cond = lambda.config.ai.supermaven.enabled,
+    build = ":SupermavenUseFree", -- needs to be run once to set the API key
+    event = "InsertEnter",
+    cmd = {
+        "SupermavenStart",
+        "SupermavenStop",
+        "SupermavenRestart",
+        "SupermavenToggle",
+        "SupermavenStatus",
+        "SupermavenUseFree",
+        "SupermavenUsePro",
+        "SupermavenLogout",
+    },
+    keys = {
+        {
+            "<leader>s;",
+            function()
+                vim.cmd.SupermavenToggle()
+                vim.cmd.SupermavenStatus()
+            end,
+            desc = "󰚩 Supermaven Suggestions",
+        },
+    },
+    opts = {
+        keymaps = {
+            -- accept_suggestion = "<D-s>",
+            -- accept_word = "<D-S>",
+            accept_suggestion = "<c-l>",
+            clear_suggestion = "<C-e>",
+            accept_word = "<C-j>",
+        },
+        ignore_filetypes = {
+            gitcommit = true,
+            DressingInput = true,
+            text = true, -- `pass`' filetype when editing passwords
+            regex = true, -- rg-substitute buffer
+        },
+        color = { suggestion_group = "NonText" },
+        -- color = {
+        --     suggestion_color = "#ffffff",
+        --     cterm = 244,
+        -- },
+    },
+    config = function(_, opts)
+        require("supermaven-nvim").setup(opts)
+
+        -- PENDING https://github.com/supermaven-inc/supermaven-nvim/issues/49
+        require("supermaven-nvim.completion_preview").suggestion_group = "NonText"
+
+        -- disable while recording
+        vim.api.nvim_create_autocmd("RecordingEnter", { command = "SupermavenStop" })
+        vim.api.nvim_create_autocmd("RecordingLeave", { command = "SupermavenStart" })
+    end,
 })

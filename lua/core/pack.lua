@@ -66,13 +66,13 @@ function pack:load_modules_packages()
             "misc",
             -- "movement",
             "notes",
-            -- "on_startup",
+            "on_startup",
             "python",
             -- "runner",
             -- "search",
-            -- "tmux",
+            "tmux",
             -- "tools",
-            -- "user",
+            "user",
             -- "windows",
         }
         new_name = "modules/?/plugins"

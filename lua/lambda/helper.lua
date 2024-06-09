@@ -710,15 +710,15 @@ function lambda.distro()
 
     -- Check for Ubuntu
     if content:find("Ubuntu") then
-        return "Ubuntu"
+        return false
     end
 
     -- Check for Arch Linux
     if content:find("Arch") or content:find("Manjaro") then
-        return "Arch Linux"
+        return true
     end
 
-    return "Unknown distribution"
+    return nil
 end
 
 -- Main logic

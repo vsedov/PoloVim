@@ -7,13 +7,14 @@
 local use_noice = true
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
+-- ──────────────────────────────────────────────────────────────────────
 local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
 local use_tabnine_cmp = true
-local use_copilot = true -- We really do sell our souls for this thing eh
-
+local use_copilot = false -- We really do sell our souls for this thing eh
+local use_supermaven = true
+-- ──────────────────────────────────────────────────────────────────────
 -- toggle core vlues within th list
 lambda.config = {
-    use_kitty = false, -- this seems to slow things down i think
     if_your_retarded = false,
     use_adv_snip = true,
     use_lastplace = true,
@@ -46,6 +47,9 @@ lambda.config.ai = {
     copilot = {
         autotrigger = true,
         use_cmp_trigger = true, -- if this is false, then copilot is active,  but you are using something else
+    },
+    supermaven = {
+        enabled = use_supermaven,
     },
     tabnine = {
         use_sort = false,

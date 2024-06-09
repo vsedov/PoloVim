@@ -7,8 +7,7 @@ require("lambda.event")
 
 local distro, v = lambda.distro()
 if distro then
-    if distro:find("Ubuntu") then
-        lambda.config.use_kitty = false
+    if distro == false then
         lambda.config.lsp.use_sg = false
     end
 end
