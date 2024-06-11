@@ -5,13 +5,16 @@
 --    ╰────────────────────────────────────────────────────────────────────╯
 
 local use_noice = true
+
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 -- ──────────────────────────────────────────────────────────────────────
 local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
 local use_tabnine_cmp = true
-local use_copilot = false -- We really do sell our souls for this thing eh
-local use_supermaven = true
+-- ──────────────────────────────────────────────────────────────────────
+local use_copilot = true -- We really do sell our souls for this thing eh
+-- ──────────────────────────────────────────────────────────────────────
+local use_supermaven = false
 -- ──────────────────────────────────────────────────────────────────────
 -- toggle core vlues within th list
 lambda.config = {
@@ -152,7 +155,7 @@ lambda.config.lsp = {
         use_conform = false,
     },
     diagnostics = {
-        use_lsp_lines = true, -- Going to start using this as well
+        use_lsp_lines = false, -- Going to start using this as well
         use_rcd = false, -- the least intrusive of the bunch
         use_trouble_some = true,
     },

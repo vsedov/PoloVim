@@ -49,6 +49,13 @@ ai({
     cmd = { "Backseat", "BackseatAsk", "BackseatClear", "BackseatClearLine" },
     config = conf.backseat,
 })
+ai({
+    "tzachar/cmp-tabnine",
+    lazy = true,
+    cond = (ai_conf.tabnine.use_tabnine and ai_conf.tabnine.use_tabnine_cmp),
+    build = "bash ./install.sh",
+    config = conf.tabnine_cmp,
+})
 
 ai({
     "codota/tabnine-nvim",
@@ -309,7 +316,6 @@ ai({
     "supermaven-inc/supermaven-nvim",
     cond = lambda.config.ai.supermaven.enabled,
     build = ":SupermavenUseFree", -- needs to be run once to set the API key
-    event = "InsertEnter",
     cmd = {
         "SupermavenStart",
         "SupermavenStop",
@@ -320,6 +326,7 @@ ai({
         "SupermavenUsePro",
         "SupermavenLogout",
     },
+    event = "InsertEnter",
     keys = {
         {
             "<leader>s;",
@@ -332,32 +339,12 @@ ai({
     },
     opts = {
         keymaps = {
-            -- accept_suggestion = "<D-s>",
-            -- accept_word = "<D-S>",
             accept_suggestion = "<c-l>",
             clear_suggestion = "<C-e>",
             accept_word = "<C-j>",
         },
-        ignore_filetypes = {
-            gitcommit = true,
-            DressingInput = true,
-            text = true, -- `pass`' filetype when editing passwords
-            regex = true, -- rg-substitute buffer
-        },
-        color = { suggestion_group = "NonText" },
-        -- color = {
-        --     suggestion_color = "#ffffff",
-        --     cterm = 244,
-        -- },
     },
     config = function(_, opts)
         require("supermaven-nvim").setup(opts)
-
-        -- PENDING https://github.com/supermaven-inc/supermaven-nvim/issues/49
-        require("supermaven-nvim.completion_preview").suggestion_group = "NonText"
-
-        -- disable while recording
-        vim.api.nvim_create_autocmd("RecordingEnter", { command = "SupermavenStop" })
-        vim.api.nvim_create_autocmd("RecordingLeave", { command = "SupermavenStart" })
     end,
 })

@@ -577,6 +577,10 @@ user({
 
 user({
     "Pheon-Dev/buffalo-nvim",
+    keys = {
+        ";wW",
+        ";ww",
+    },
     config = function()
         -- Keymaps
         local opts = { noremap = true }

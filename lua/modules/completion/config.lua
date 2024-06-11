@@ -36,5 +36,19 @@ function config.vim_sonictemplate()
     vim.g.sonictemplate_postfix_key = "<C-,>"
     vim.g.sonictemplate_vim_template_dir = os.getenv("HOME") .. "/.config/nvim/template"
 end
+function config.tabnine_cmp()
+    local tabnine = require("cmp_tabnine.config")
+    tabnine:setup({
+        max_lines = 1000,
+        max_num_results = 10,
+        sort = true,
+        run_on_every_keystroke = true,
+        snippet_placeholder = lambda.style.icons.misc.ellipsis,
+        ignored_file_types = {
+            norg = true,
+        },
+        show_prediction_strength = true,
+    })
+end
 
 return config

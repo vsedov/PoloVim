@@ -11,6 +11,11 @@ local plugins = {
         -- priority = lambda.config.cmp.luasnip.luasnip.priority,
     },
     {
+        name = "cmp_tabnine",
+        enable = tabnine_cond,
+    },
+
+    {
         name = "neorg",
         enable = true,
     },

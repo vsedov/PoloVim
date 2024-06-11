@@ -209,10 +209,63 @@ nnoremap("<leader>cd", function()
     lambda.clever_tcd()
 end, { desc = "Clever cd", silent = true })
 
-
 lambda.command("Bufgrep", function(params)
     bufgrep(params.args)
 end, { nargs = "+" })
+
+-- Delete comments in line [normal and visual]
+-- Define a table of comment patterns for different file types
+local comment_patterns = {
+    lua = { whole_line = "^%s*%-%-(.*)$", inline = "(.-)%s*%-%-(.*)$" },
+    python = { whole_line = "^%s*#(.*)$", inline = "(.-)%s*#(.*)$" },
+    hyprlang = { whole_line = "^%s*#(.*)$", inline = "(.-)%s*#(.*)$" },
+    fish = { whole_line = "^%s*#(.*)$", inline = "(.-)%s*#(.*)$" },
+    cpp = { whole_line = "^%s*//(.*)$", inline = "(.-)%s*//(.*)$" },
+    c = { whole_line = "^%s*//(.*)$", inline = "(.-)%s*//(.*)$" },
+    lua_multiline = { block_start = "%-%-%[%[", block_end = "%]%]" },
+}
+
+-- Helper function to detect file type and get the appropriate patterns
+local function get_comment_patterns()
+    local ft = vim.bo.filetype
+    return comment_patterns[ft] or comment_patterns.lua -- Default to Lua if the file type is not listed
+end
+
+-- Normal mode mapping
+vim.keymap.set("n", ";c", function()
+    local patterns = get_comment_patterns()
+    local start_line = vim.fn.line(".")
+    local end_line = start_line
+    local comment_pattern = patterns.inline
+    local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+    for i, line_content in ipairs(lines) do
+        local uncommented_line = line_content:gsub(comment_pattern, "%1")
+        lines[i] = uncommented_line
+    end
+    vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, lines)
+end, { desc = "Remove comments from line", silent = true, noremap = true })
+
+-- Visual mode mapping
+vim.keymap.set("v", ";c", function()
+    local patterns = get_comment_patterns()
+    local start_line = vim.fn.line(".")
+    local end_line = vim.fn.line("v")
+    if start_line > end_line then
+        start_line, end_line = end_line, start_line
+    end
+    local whole_line_comment_pattern = patterns.whole_line
+    local inline_comment_pattern = patterns.inline
+    local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+    for i, line_content in ipairs(lines) do
+        if line_content:match(whole_line_comment_pattern) then
+            lines[i] = ""
+        else
+            local uncommented_line = line_content:gsub(inline_comment_pattern, "%1")
+            lines[i] = uncommented_line
+        end
+    end
+    vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, lines)
+end, { desc = "Remove comments from selected lines", silent = true, noremap = true })
 
 vim.keymap.set("n", ",v", function()
     vim.notify(vim.fn.system("curl -s -m 3 https://vtip.43z.one"))
@@ -228,4 +281,22 @@ vim.keymap.set("n", "\\bN", "<cmd>tabn<CR>", { desc = "Tab - [t]ab [n]ext" })
 vim.keymap.set("n", "\\bp", "<cmd>tabp<CR>", { desc = "Tab - [t]ab [p]revious" })
 vim.keymap.set("n", "\\bb", "<cmd>tabnew %<CR>", { desc = "Tab - [t]ab open current [b]uffer" })
 
+-- Goto insert with/without copying to register from visual selection
+vim.keymap.set("v", "i", function()
+    if vim.fn.mode() == "v" or vim.fn.mode() == "V" then
+        vim.api.nvim_feedkeys('"_d', "n", true)
+        vim.api.nvim_feedkeys("i", "n", true)
+    else
+        vim.api.nvim_feedkeys("i", "n", true)
+    end
+end, { desc = "Goto insert without copying to register", silent = true, expr = true, noremap = true })
 
+vim.keymap.set("v", "I", function()
+    if vim.fn.mode() == "v" or vim.fn.mode() == "V" then
+        vim.fn.setreg('"', vim.fn.getreg(""))
+        vim.api.nvim_feedkeys("d", "n", true)
+        vim.api.nvim_feedkeys("i", "n", true)
+    else
+        vim.api.nvim_feedkeys("i", "n", true)
+    end
+end, { desc = "Goto insert with copying to register", silent = true, expr = true, noremap = true })
