@@ -603,3 +603,12 @@ user({
     end,
     cmd = { "Calculate" },
 })
+user({
+    "zeioth/none-ls-autoload.nvim",
+    event = "BufEnter",
+    dependencies = {
+        "williamboman/mason.nvim",
+        "zeioth/none-ls-external-sources.nvim", -- To install a external sources library.
+    },
+    opts = {},
+})

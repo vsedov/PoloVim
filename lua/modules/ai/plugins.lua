@@ -290,20 +290,53 @@ ai({
             "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
         },
     },
-    config = true,
+    config = function()
+        require("codecompanion").setup({
+            adapters = {
+                anthropic = require("codecompanion.adapters").use("anthropic", {
+                    env = {
+                        -- api_key = "ANTHROPIC_API_KEY_1",
+                        api_key = os.getenv("CLAUDE"),
+                    },
+                }),
+            },
+            strategies = {
+                chat = "anthropic",
+                inline = "anthropic",
+                tool = "anthropic",
+            },
+        })
+    end,
     keys = {
         {
-            "<c-]>",
+            ";aa",
             ":CodeCompanionActions<cr>",
             mode = { "n", "v" },
         },
         {
-            ";a",
+            ";at",
             ":CodeCompanionToggle<cr>",
             mode = { "n", "v" },
         },
+        {
+            "ga",
+            ":CodeCompanionAdd<cr>",
+            mode = "v",
+        },
+
+        {
+            ";ac",
+            ":CodeCompanion",
+            mode = "c",
+        },
+        {
+            ";acb",
+            ":CodeCompanionWithBuffers",
+            mode = "c",
+        },
     },
 })
+
 -- :SupermavenStart   start supermaven-nvim
 -- :SupermavenStop    stop supermaven-nvim
 -- :SupermavenRestart restart supermaven-nvim

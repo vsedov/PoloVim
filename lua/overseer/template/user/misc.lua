@@ -30,11 +30,11 @@ return {
                 params = {},
             },
             {
-                name = "Lazygit",
+                name = "Lazyjj",
                 builder = function()
                     return {
-                        name = "lazygit",
-                        cmd = "lazygit",
+                        name = "lazyjj",
+                        cmd = "lazyjj",
                         components = { "default", "unique" },
                     }
                 end,
