@@ -313,16 +313,6 @@ lambda.augroup("Utilities", {
 
 lambda.augroup("TerminalAutocommands", {
     {
-        event = { "TermClose" },
-        command = function(args)
-            --- automatically close a terminal if the job wlambda successful
-            if lambda.falsy(v.event.status) and lambda.falsy(vim.bo[args.buf].ft) then
-                cmd.bdelete({ args.buf, bang = true })
-            end
-        end,
-    },
-
-    {
         event = { "TermOpen" },
         command = function()
             if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" or vim.bo.buftype == "terminal" then

@@ -35,6 +35,7 @@ function config.houdini()
     require("houdini").setup({
         mappings = { "jk", "AA", "II", "JJ", "KK" },
         check_modified = true,
+
         escape_sequences = {
             t = false,
             i = function(first, second)
@@ -66,6 +67,53 @@ function config.houdini()
             ["ic"] = "<BS><BS><ESC>",
             ["ix"] = "<BS><BS><ESC>",
             ["cv"] = ("<BS>"):rep(100) .. "vi<CR>",
+        },
+    })
+end
+
+function config.better_escape()
+    -- lua, default settings
+    require("better_escape").setup({
+        timeout = vim.o.timeoutlen,
+        mappings = {
+            i = {
+                ["A"] = {
+                    A = "<c-o>$",
+                },
+                ["I"] = {
+                    I = "<c-o>^",
+                },
+                j = {
+                    -- These can all also be functions
+                    k = "<Esc>",
+                    j = "[]<esc>i",
+                },
+                ["K"] = {
+                    K = "()<esc>i",
+                },
+            },
+            c = {
+                j = {
+                    k = "<Esc>",
+                    j = "<Esc>",
+                },
+            },
+            t = {
+                j = {
+                    k = "<Esc>",
+                    j = "<Esc>",
+                },
+            },
+            v = {
+                j = {
+                    k = "<Esc>",
+                },
+            },
+            s = {
+                j = {
+                    k = "<Esc>",
+                },
+            },
         },
     })
 end

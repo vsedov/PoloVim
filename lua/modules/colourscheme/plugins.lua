@@ -47,6 +47,7 @@ colourscheme({
 colourscheme({
     "folke/tokyonight.nvim",
     cond = lambda.config.colourscheme.colourscheme == "tokyonight",
+    event = "BufEnter",
     lazy = true,
     config = conf.tokyonight,
 })

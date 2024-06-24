@@ -3,6 +3,7 @@ local conf = require("modules.folke.config")
 
 folke({
     "folke/edgy.nvim",
+    event = "VeryLazy",
     keys = {
         {
             "<Leader>E",

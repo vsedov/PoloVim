@@ -36,6 +36,7 @@ notes({
         "image.nvim",
         "laher/neorg-exec",
         "phenax/neorg-hop-extras",
+        "benlubas/neorg-interim-ls",
         { "pysan3/neorg-templates-draft", dependencies = { "L3MON4D3/LuaSnip" } },
         { "nvim-neorg/neorg-telescope", dependencies = { "nvim-telescope/telescope.nvim" } },
     },

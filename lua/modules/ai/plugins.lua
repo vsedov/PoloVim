@@ -298,6 +298,11 @@ ai({
                         -- api_key = "ANTHROPIC_API_KEY_1",
                         api_key = os.getenv("CLAUDE"),
                     },
+                    schema = {
+                        model = {
+                            default = "claude-3-sonnet-20240229",
+                        },
+                    },
                 }),
             },
             strategies = {

@@ -36,6 +36,7 @@ M.opts = {
         ["core.latex.renderer"] = {},
         ["core.integrations.image"] = {},
         ["core.looking-glass"] = {}, -- Enable the looking_glass module
+        ["external.interim-ls"] = {},
         ["core.itero"] = {},
         ["core.export"] = {},
         ["core.export.markdown"] = {

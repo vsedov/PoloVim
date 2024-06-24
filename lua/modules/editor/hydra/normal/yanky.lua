@@ -9,8 +9,11 @@ local hint = [[
 ^ ^ _P_: Before  ^ ^
 ^ ^ _n_: ↓       ^ ^
 ^ ^ _N_: ↑       ^ ^
+^ ^ _<c-p>_: paste from clipboard^ ^
+^ ^ _<c-n>_: paste from clipboard^ ^
+^ ^ _q_: quit    ^ ^
+^ ^ _<esc>_: quit^ ^
 ]]
-
 local yanky_hydra = Hydra({
     name = "Yank ring",
     mode = "n",
@@ -82,6 +85,3 @@ for key, putAction in pairs({
         vim.schedule_wrap(yanky_hydra:activate())
     end, { noremap = true, silent = true })
 end
-
-require("telescope").load_extension("yank_history")
-vim.keymap.set("n", "<leader>yu", "<cmd>Telescope yank_history<cr>", {})

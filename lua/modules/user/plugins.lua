@@ -578,16 +578,16 @@ user({
 user({
     "Pheon-Dev/buffalo-nvim",
     keys = {
-        ";wW",
-        ";ww",
+        ";;;",
+        ";;<leader>",
     },
     config = function()
         -- Keymaps
         local opts = { noremap = true }
         local map = vim.keymap.set
         local buffalo = require("buffalo.ui")
-        map({ "t", "n" }, ";wW", buffalo.toggle_buf_menu, opts)
-        map({ "t", "n" }, ";ww", buffalo.toggle_tab_menu, opts)
+        map({ "t", "n" }, ";;;", buffalo.toggle_buf_menu, opts)
+        map({ "t", "n" }, ";;<leader>", buffalo.toggle_tab_menu, opts)
         require("buffalo").setup()
     end,
 })
@@ -605,10 +605,25 @@ user({
 })
 user({
     "zeioth/none-ls-autoload.nvim",
-    event = "BufEnter",
+    event = "VeryLazy",
     dependencies = {
         "williamboman/mason.nvim",
         "zeioth/none-ls-external-sources.nvim", -- To install a external sources library.
     },
     opts = {},
 })
+
+user({
+    "joshuadanpeterson/typewriter",
+    cmd = {
+        "TWCenter",
+        "TWTop",
+        "TWBottom",
+    },
+    requires = "nvim-treesitter/nvim-treesitter",
+    config = function()
+        require("typewriter").setup()
+    end,
+})
+
+-- https://github.com/shmerl/session-keys Need to come back to this

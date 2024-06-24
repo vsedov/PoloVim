@@ -459,7 +459,7 @@ local internal_config = {
     cody_normal_binds,
     6,
     4,
-    3,
+    1,
 }
 
 local internal_copilot = {
@@ -479,7 +479,7 @@ local internal_copilot = {
     copilot_normal_binds,
     6,
     4,
-    3,
+    1,
 }
 
 local function assign_commands(name, conf, commands, visual)

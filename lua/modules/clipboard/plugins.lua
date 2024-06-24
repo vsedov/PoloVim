@@ -6,8 +6,9 @@ local conf = require("modules.clipboard.config")
 
 clipsub({
     "gbprod/yanky.nvim",
+    keys = { "p", "y" },
+
     lazy = true,
-    config = conf.config_yanky,
     dependencies = {
 
         "nvim-telescope/telescope.nvim",
@@ -17,6 +18,7 @@ clipsub({
             config = conf.smart_yank,
         },
     },
+    config = conf.config_yanky,
 })
 
 clipsub({

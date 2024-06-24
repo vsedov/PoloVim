@@ -225,7 +225,7 @@ lambda.config.fun = {
     use_pet = false,
 }
 lambda.config.colourscheme = {
-    colourscheme = "cat",
+    colourscheme = "tokyonight",
 
     use_light_theme = false,
     enable_transparent = false, -- this can get annoying i guess, so theres not point for this -- this can get annoying i guess, so theres not point for this
@@ -242,13 +242,13 @@ lambda.config.colourscheme = {
     themes = {
         light = {
 
-            --"tokyonight.nvim",
+            "tokyonight.nvim",
             -- "sweetie.nvim",
             -- "catppuccin",
             "kanagawa.nvim",
         },
         dark = {
-            -- "tokyonight.nvim",
+            "tokyonight.nvim",
             -- "catppuccin",
             -- "sweetie.nvim",
             -- "rose", -- TSMethod'

@@ -95,11 +95,11 @@ function config.edgy()
                     require("trouble").toggle({ mode = "quickfix" })
                 end,
             },
-            {
-                ft = "OverseerPanelTask",
-                title = " Task",
-                open = "OverseerQuickAction open",
-            },
+            -- {
+            --     ft = "OverseerPanelTask",
+            --     title = " Task",
+            --     open = "OverseerQuickAction open",
+            -- },
             {
                 ft = "NoiceHistory",
                 title = " Log",
