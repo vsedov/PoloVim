@@ -246,8 +246,6 @@ lsp({
     "sontungexpt/better-diagnostic-virtual-text",
     event = "LspAttach",
     config = function(_)
-        -- Can be applied to each buffer separately
-
         local default_options = {
             ui = {
                 wrap_line_after = true, -- Wrap the line after this length to avoid the virtual text is too long

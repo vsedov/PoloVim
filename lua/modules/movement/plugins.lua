@@ -294,15 +294,15 @@ movement({
 --  JK  AA II
 movement({
     "TheBlob42/houdini.nvim",
-    cond = false,
+    cond = true,
     lazy = true,
     event = "InsertEnter",
     config = conf.houdini,
 })
 movement({
     "max397574/better-escape.nvim",
-    lazy = true,
-    event = "InsertEnter",
+    cond = false,
+    event = "VeryLazy",
     config = conf.better_escape,
 })
 

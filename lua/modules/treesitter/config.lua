@@ -49,26 +49,26 @@ function config.treesitter_init()
         return { r2, c2 - 1, r1, c1 }
     end
 
-    vim.keymap.set("x", "v", function()
-        local ts_utils = require("nvim-treesitter.ts_utils")
-        local vrange = get_vrange()
-        local node = ts_utils.get_node_at_cursor()
-        local nrange = get_node_range(node)
-
-        local parent
-        while true do
-            if is_inner(vrange, nrange) and not is_same(vrange, nrange) then
-                break
-            end
-            parent = node:parent()
-            if parent == nil then
-                break
-            end
-            node = parent
-            nrange = get_node_range(node)
-        end
-        ts_utils.update_selection(0, node)
-    end, { desc = "node incremental selection" })
+    -- vim.keymap.set("x", "v", function()
+    --     local ts_utils = require("nvim-treesitter.ts_utils")
+    --     local vrange = get_vrange()
+    --     local node = ts_utils.get_node_at_cursor()
+    --     local nrange = get_node_range(node)
+    --
+    --     local parent
+    --     while true do
+    --         if is_inner(vrange, nrange) and not is_same(vrange, nrange) then
+    --             break
+    --         end
+    --         parent = node:parent()
+    --         if parent == nil then
+    --             break
+    --         end
+    --         node = parent
+    --         nrange = get_node_range(node)
+    --     end
+    --     ts_utils.update_selection(0, node)
+    -- end, { desc = "node incremental selection" })
 end
 
 function config.nvim_treesitter()

@@ -373,48 +373,50 @@ function config.which_key()
         layout = { align = "center" },
     })
 
-    wk.register({
-        ["i"] = {
-            name = "inner textobject",
-            rw = "inner word",
-            rW = "inner WORD",
-            rp = "inner paragraph",
-            ["r["] = 'inner [] from "[" to the matching "]"',
-            ["r]"] = "same as i[",
-            ["r("] = "same as ib",
-            ["r)"] = "same as ib",
-            ["rb"] = "inner block from [( to )]",
-            ["r>"] = "same as i<",
-            ["r<"] = 'inner <> from "<" to the matching ">"',
-            ["rt"] = "inner tag block",
-            ["r{"] = "same as iB",
-            ["r}"] = "same as iB",
-            ["rB"] = "inner Block from [{ to }]",
-            ['r"'] = "double quoted string without the quotes",
-            ["r'"] = "single quoted string without the quotes",
-            ["r`"] = "string in backticks without the backticks",
+    wk.add({
+        -- Inner textobject mappings
+        {
+            mode = { "o", "v", "x" }, -- Modes for the mappings
+            { "irw", desc = "inner word" },
+            { "irW", desc = "inner WORD" },
+            { "irp", desc = "inner paragraph" },
+            { "ir[", desc = 'inner [] from "[" to the matching "]"' },
+            { "ir]", desc = "same as i[" },
+            { "ir(", desc = "same as ib" },
+            { "ir)", desc = "same as ib" },
+            { "irb", desc = "inner block from [( to )]" },
+            { "ir>", desc = "same as i<" },
+            { "ir<", desc = 'inner <> from "<" to the matching ">"' },
+            { "irt", desc = "inner tag block" },
+            { "ir{", desc = "same as iB" },
+            { "ir}", desc = "same as iB" },
+            { "irB", desc = "inner Block from [{ to }]" },
+            { 'ir"', desc = "double quoted string without the quotes" },
+            { "ir'", desc = "single quoted string without the quotes" },
+            { "ir`", desc = "string in backticks without the backticks" },
         },
-        ["a"] = {
-            name = "Around... textobject",
-            rw = "inner word",
-            rW = "inner WORD",
-            rp = "inner paragraph",
-            ["r["] = 'inner [] from "[" to the matching "]"',
-            ["r]"] = "same as i[",
-            ["r("] = "same as ib",
-            ["r)"] = "same as ib",
-            ["rb"] = "inner block from [( to )]",
-            ["r>"] = "same as i<",
-            ["r<"] = 'inner <> from "<" to the matching ">"',
-            ["rt"] = "inner tag block",
-            ["r{"] = "same as iB",
-            ["r}"] = "same as iB",
-            ["rB"] = "inner Block from [{ to }]",
-            ['r"'] = "double quoted string without the quotes",
-            ["r'"] = "single quoted string without the quotes",
-            ["r`"] = "string in backticks without the backticks",
+        -- Around textobject mappings
+        {
+            mode = { "o", "v", "x" }, -- Modes for the mappings
+            { "arw", desc = "inner word" },
+            { "arW", desc = "inner WORD" },
+            { "arp", desc = "inner paragraph" },
+            { "ar[", desc = 'inner [] from "[" to the matching "]"' },
+            { "ar]", desc = "same as i[" },
+            { "ar(", desc = "same as ib" },
+            { "ar)", desc = "same as ib" },
+            { "arb", desc = "inner block from [( to )]" },
+            { "ar>", desc = "same as i<" },
+            { "ar<", desc = 'inner <> from "<" to the matching ">"' },
+            { "art", desc = "inner tag block" },
+            { "ar{", desc = "same as iB" },
+            { "ar}", desc = "same as iB" },
+            { "arB", desc = "inner Block from [{ to }]" },
+            { 'ar"', desc = "double quoted string without the quotes" },
+            { "ar'", desc = "single quoted string without the quotes" },
+            { "ar`", desc = "string in backticks without the backticks" },
         },
-    }, { mode = { "o", "v", "x" } })
+    })
 end
 
 return config

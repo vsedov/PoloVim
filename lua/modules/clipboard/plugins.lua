@@ -6,8 +6,7 @@ local conf = require("modules.clipboard.config")
 
 clipsub({
     "gbprod/yanky.nvim",
-    keys = { "p", "y" },
-
+    event = "CursorMoved",
     lazy = true,
     dependencies = {
 

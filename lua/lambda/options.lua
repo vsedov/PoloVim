@@ -93,13 +93,12 @@ lambda.config.editor = {
 
 lambda.config.treesitter = {
     hipairs = false, -- this could be interumpting something important and i dont wan thtis to get involved; this will be disabled
-
     indent = {
         use_guess_indent = true,
     },
     use_matchup = true,
-    better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_rainbow = true,
+    better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
     use_highpairs = false,
     use_extra_highlight = false,
     use_context_vt = false,

@@ -85,6 +85,7 @@ local treesitter_obj = function()
             select = {
                 enable = true,
                 include_surrounding_whitespace = true,
+
                 keymaps = {
                     ["af"] = { query = "@function.outer", desc = "ts: all function" },
                     ["if"] = { query = "@function.inner", desc = "ts: inner function" },
