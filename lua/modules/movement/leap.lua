@@ -256,6 +256,55 @@ end
 
 function M.keys()
     return {
+        { "}" }, -- Repeat mappings
+        { "{" },
+        -- { "<leader>hw", navutils.leap_anywhere, mode = "n", desc = "Leap all windows" },
+        { "s", "<Plug>(leap)", mode = "n", desc = "Leap" },
+        {
+            "S",
+            function()
+                require("leap.remote").action()
+            end,
+            mode = "n",
+            desc = "Leap Remote",
+        },
+        { O.goto_prefix .. O.goto_prefix, lib.leap_anywhere, mode = { "n", "x" }, desc = "Leap anywhere" },
+        { "S", lib.leap_anywhere, mode = { "o" }, desc = "Leap anywhere" },
+        { "<Plug>(leap-anywhere)", lib.leap_anywhere, mode = { "n", "x", "o", "i" }, desc = "Leap anywhere" },
+        {
+            "t", -- semi-inclusive
+            function()
+                vim.cmd.normal({ "v", bang = true })
+                require("leap").leap({ inclusive_op = true })
+            end,
+            mode = "n",
+            desc = "Leap v t",
+        },
+        {
+            "T", -- semi-inclusive
+            function()
+                vim.cmd.normal({ "v", bang = true })
+                require("leap").leap({ backward = true, offset = 1, inclusive_op = true })
+            end,
+            mode = "n",
+            desc = "Leap v T",
+        },
+        {
+            "q", -- semi-inclusive
+            function()
+                require("leap").leap({ inclusive_op = true })
+            end,
+            mode = { "x", "o" },
+            desc = "Leap f",
+        },
+        {
+            "Q", -- semi-inclusive
+            function()
+                require("leap").leap({ backward = true, offset = 1, inclusive_op = true })
+            end,
+            mode = { "x", "o" },
+            desc = "Leap F",
+        },
         { "<leader>f", "<Plug>(leap-forward-to)", mode = "x", desc = "Leap f" },
         { "<leader>t", "<Plug>(leap-forward-till)", mode = "x", desc = "Leap t" },
         { "<leader>F", "<Plug>(leap-backward-to)", mode = "x", desc = "Leap F" },
@@ -264,74 +313,114 @@ function M.keys()
         -- { "f", leap_bi_x(1), mode = "x", desc = "Leap" },
         -- { "<leader>f", leap_bi_x(2), mode = "x", desc = "Leap Inc" },
         -- { "<leader>t", leap_bi_x(0), mode = "x", desc = "Leap Exc" },
-        { "h", leap_bi_o(1), mode = "o", desc = "Leap SemiInc" },
-        { "H", leap_bi_o(2), mode = "o", desc = "Leap Incl." },
+        { ";", leap_bi_o(1), mode = "o", desc = "Leap SemiInc" },
+        { ".", leap_bi_o(2), mode = "o", desc = "Leap Incl." },
         { "<leader>f", leap_bi_o(2), mode = "o", desc = "Leap Inc" },
         { "<leader>t", leap_bi_o(0), mode = "o", desc = "Leap Exc" },
-        { "r", leap_bi_o(0), mode = "o", desc = "Leap Exc" },
-
         {
             O.select_remote,
-            function()
-                lib.leap_remote()
-            end,
+            "<Plug>(leap-remote)",
             desc = "Leap Remote",
             mode = "o",
         },
         {
-            ";rp",
+            "<Plug>(leap-remote)",
+            -- function()lib.leap_remote() end,
+            function()
+                require("leap.remote").action()
+            end,
+            desc = "Leap Remote",
+            mode = { "o", "x" },
+        },
+        {
+            "ar",
+            function()
+                local ok, char = pcall(vim.fn.getcharstr)
+                if not ok or char == "\27" or not char then
+                    return
+                end
+
+                require("leap.remote").action({ input = "a" .. char })
+            end,
+            mode = { "o", "x" },
+            desc = "Leap Remote (inside)",
+        },
+        {
+            "ir",
+            function()
+                local ok, char = pcall(vim.fn.getcharstr)
+                if not ok or char == "\27" or not char then
+                    return
+                end
+
+                require("leap.remote").action({ input = "i" .. char })
+            end,
+            mode = { "o", "x" },
+            desc = "Leap Remote (around)",
+        },
+        {
+            "rp",
             mode = "n",
             desc = "Remote Paste",
-            lib.remote_paste("h"),
+            lib.remote_paste(vim.keycode("<leader>t")),
         },
         {
-            ";rP",
+            "rP",
             mode = "n",
             desc = "Remote Paste line",
-            lib.remote_paste("h", "<leader>p"),
+            lib.remote_paste(vim.keycode("<leader>t"), "<Plug>(YankyPutIndentAfterLinewise)"),
         },
+        -- [cdy]<>rp<>
+        -- [cdy]<>R<>
+        -- [cdy]r<>[pP]
+        -- [cdy]r<>r<>
         -- TODO: y<motion><something><leap><motion>
-        -- TODO: why is this not working??
         {
-            ";rx",
-            mode = "n",
+            "rx",
+            mode = { "n", "x" },
             desc = "Exchange <motion1> with <motion2>",
             function()
-                lib.swap_with(
-                    {},
-                    nil,
-                    -- "r"
-                    vim.schedule_wrap(lib.leap_remote)
-                )
+                lib.exch_with({})
             end,
         },
         {
-            ";rX",
-            mode = "n",
+            "rX",
+            mode = { "n", "x" },
             desc = "Exchange V<motion1> with V<motion2>",
             function()
-                lib.swap_with(
-                    { exchange = {
-                        visual_mode = "V",
-                    } },
-                    nil,
-                    vim.schedule_wrap(lib.leap_remote)
-                )
+                lib.exch_with({ exchange = { visual_mode = "V" } })
             end,
         },
-        -- {
-        --     "rx",
-        --     mode = "x",
-        --     -- TODO: figure this out
-        -- },
+        { -- FIXME: swap the order of this
+            "ry",
+            mode = { "x", "n" },
+            desc = "Replace with <remote-motion>",
+            function()
+                lib.swap_with({ exchange = { not_there = true } })
+            end,
+        },
+        { -- FIXME: swap the order of this
+            "rd",
+            mode = { "x", "n" },
+            desc = "Replace with d<remote-motion>",
+            function()
+                lib.swap_with({ exchange = { not_there = true } })
+            end,
+        },
+        { -- FIXME: swap the order of this
+            "rc",
+            mode = { "x", "n" },
+            desc = "Replace with c<remote-motion>",
+            function()
+                lib.swap_with({ exchange = { not_there = true } })
+            end,
+        },
         {
-            ";_",
+            ";R",
             mode = { "n" },
             desc = "Remote Replace",
-            function()
-                vim.api.nvim_feedkeys(";r", "m", false)
-                vim.schedule(lib.leap_remote)
-            end,
+            "r<Plug>(leap-remote)",
+            remap = true,
         },
     }
 end

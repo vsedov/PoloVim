@@ -47,10 +47,11 @@ startup({
             ctrl_backspace_delete = true,
 
             -- Binds that i already have that are better than this
-            go_back_normal_in_terminal = false,
-            smart_visual_paste = false,
-            smart_save_in_insert_mode = false,
+            go_back_normal_in_terminal = true,
+            smart_visual_paste = true,
+            smart_save_in_insert_mode = true,
             open_file_last_position = false,
+            -- ──────────────────────────────────────────────────────────────────────
         })
     end,
 })
