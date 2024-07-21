@@ -92,14 +92,13 @@ lambda.config.editor = {
 }
 
 lambda.config.treesitter = {
-    hipairs = false, -- this could be interumpting something important and i dont wan thtis to get involved; this will be disabled
+    hipairs = true, -- this could be interumpting something important and i dont wan thtis to get involved; this will be disabled
     indent = {
         use_guess_indent = true,
     },
     use_matchup = true,
     use_rainbow = true,
     better_ts_highlights = false, -- This needs a direct toggle i think markid -- Markid
-    use_highpairs = false,
     use_extra_highlight = false,
     use_context_vt = false,
 }
@@ -163,7 +162,7 @@ lambda.config.lsp = {
     null_ls = {
         diagnostic = { "selene" },
         formatter = { "stylua" },
-        code_action = { "refactoring", "ts_node_action" },
+        code_action = { "refactoring" },
     },
 
     --    ╭────────────────────────────────────────────────────────────────────╮
@@ -174,18 +173,17 @@ lambda.config.lsp = {
         use_sourcery = true,
         lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think
         format = {
-            "usort",
-            "yapf",
+            "black",
+            "isort",
         },
-        -- black -- Need to make it so it knows what formater to use :think:
         lsp = {
-            -- "sourcery",
-            "ruff_lsp",
-            "jedi_language_server",
+            "sourcery",
+            "ruff",
+            "basedpyright",
+            -- "jedi_language_server",
             -- "pylsp",
             -- "pylyzer",
             -- "pylance",
-            -- "basedpyright",
             -- "python-language-server",
             -- pylyzer, jedi_language_server pylsp and pyright pylance , Jedi does not work well with 3.10 and will require pylance for that : kinda annyoing
         },
@@ -224,7 +222,7 @@ lambda.config.fun = {
     use_pet = false,
 }
 lambda.config.colourscheme = {
-    colourscheme = "tokyonight",
+    colourscheme = "kanagawa_paper",
 
     use_light_theme = false,
     enable_transparent = false, -- this can get annoying i guess, so theres not point for this -- this can get annoying i guess, so theres not point for this

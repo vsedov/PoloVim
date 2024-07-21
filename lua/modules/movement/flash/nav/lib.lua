@@ -1,31 +1,4 @@
 -- https://github.com/IndianBoy42/dot.nvim/blob/89d6d6e70fd9869c36fe4633f69345bd9dbcbe94/lua/editor/nav/lib.lua#L11
-local ai_objs = {
-    "a(",
-    "i(",
-    "a'",
-    "i'",
-    'a"',
-    'i"',
-    "a[",
-    "i[",
-    "a{",
-    "i{",
-    "a<",
-    "i<",
-    "a`",
-    "i`",
-}
-
-local function get_windows()
-    local wins = vim.api.nvim_tabpage_list_wins(0)
-    local curr_win = vim.api.nvim_get_current_win()
-    local function check(win)
-        local config = vim.api.nvim_win_get_config(win)
-        return (config.focusable and (config.relative == "") and (win ~= curr_win))
-    end
-    return vim.tbl_filter(check, wins)
-end
-
 local M = {}
 
 M.there_and_back = function(action, jump_back)
@@ -65,6 +38,7 @@ M.flash_diagnostics = function(opts)
         search = { max_length = 0 },
     }, opts or {}))
 end
+
 M.flash_references = function(opts)
     local params = vim.lsp.util.make_position_params()
     params.context = {
@@ -73,7 +47,7 @@ M.flash_references = function(opts)
     local first = true
     local bufnr = vim.api.nvim_get_current_buf()
     vim.lsp.buf_request(bufnr, "textDocument/references", params, function(_, result, ctx)
-        if not vim.tbl_islist(result) then
+        if not vim.islist(result) then
             result = { result }
         end
         if first and result ~= nil and not vim.tbl_isempty(result) then
@@ -160,6 +134,7 @@ local do_op = function(state, win, pos, end_pos)
     end
     local function restore()
         vim.schedule(function()
+            -- TODO: wait if visual mode
             require("flash.jump").restore_remote({
                 restore = _restore,
             })
@@ -263,8 +238,9 @@ end
 
 local swap_with = function(opts, ma, mb, jumper)
     local reg = vim.fn.getreg('"')
+    -- TODO: can use extmarks instead
     local start, finish = vim.api.nvim_buf_get_mark(0, ma), vim.api.nvim_buf_get_mark(0, mb)
-    local a, b = vim.api.nvim_buf_get_mark(0, "a"), vim.api.nvim_buf_get_mark(0, "b")
+    local ra, rb = vim.api.nvim_buf_get_mark(0, "a"), vim.api.nvim_buf_get_mark(0, "b")
     vim.api.nvim_buf_set_mark(0, "a", start[1], start[2], {})
     vim.api.nvim_buf_set_mark(0, "b", finish[1], finish[2], {})
     local vis_mode = opts and opts.exchange and opts.exchange.visual_mode or "v"
@@ -272,48 +248,67 @@ local swap_with = function(opts, ma, mb, jumper)
 
     -- vim.schedule(function()
     _G.__remote_op_opfunc = function()
-        local action = "`[" .. vis_mode .. "`]"
+        local a, b, c, d = "`a", "`b", "`[", "`]"
+        if opts.reversed then
+            a, b, c, d = c, d, b, a
+        end
+        local action = c .. vis_mode .. d
         if opts and opts.exchange and opts.exchange.not_there then
             action = action .. "y"
         else
             action = action .. "p"
         end
         if not (opts and opts.exchange and opts.exchange.not_here) then
-            action = action .. "`a" .. vis_mode .. "`bp"
+            action = action .. a .. vis_mode .. b .. "p"
         end
         vim.cmd("normal! " .. action)
 
         vim.fn.setreg('"', reg)
-        vim.api.nvim_buf_set_mark(0, "a", a[1], a[2], {})
-        vim.api.nvim_buf_set_mark(0, "b", b[1], b[2], {})
+        vim.api.nvim_buf_set_mark(0, "a", ra[1], ra[2], {})
+        vim.api.nvim_buf_set_mark(0, "b", rb[1], rb[2], {})
     end
     vim.go.operatorfunc = "v:lua.__remote_op_opfunc"
-    vim.api.nvim_feedkeys("g@" .. (type(jumper) == "string" and jumper or ""), "m", false)
+    vim.api.nvim_feedkeys("g@" .. (jumper or vim.keycode("<Plug>(leap-remote)")), "mi", false)
     -- end)
-    if jumper and type(jumper) == "function" then
-        jumper(opts)
-    elseif jumper == nil then
-        vim.schedule(function()
-            require("flash").jump(vim.tbl_deep_extend("force", {
-                remote = {
-                    restore = true,
-                    motion = true,
-                },
-            }, opts or {}))
-        end)
-    end
 end
 
 M.swap_with = function(opts, textobj, textobj2)
+    -- FIXME:
+    if opts and opts.reversed then
+        textobj, textobj2 = textobj2, textobj
+        textobj = textobj or vim.keycode("<Plug>(leap-remote)")
+        textobj2 = textobj2 or ""
+    end
     _G.__remote_op_opfunc = function()
         swap_with(opts, "[", "]", textobj2)
     end
     vim.go.operatorfunc = "v:lua.__remote_op_opfunc"
-    vim.api.nvim_feedkeys("g@" .. (type(textobj) == "string" and textobj or ""), "m", false)
-    if type(textobj) == "function" then
-        textobj()
-    end
+    vim.api.nvim_feedkeys("g@" .. (textobj or ""), "mi", false)
 end
+M.exch_with = function(opts, textobj, textobj2)
+    local v = opts and opts.exchange and opts.exchange.visual_mode or "v"
+    _G.__remote_op_opfunc = function()
+        require("substitute.exchange").operator({ motion = vim.keycode("<cmd>normal! " .. v .. "`[o`]\r") })
+        vim.api.nvim_feedkeys("cx" .. (textobj2 or vim.keycode("<Plug>(leap-remote)")), "m", false)
+    end
+    vim.go.operatorfunc = "v:lua.__remote_op_opfunc"
+    vim.api.nvim_feedkeys("g@" .. (textobj or ""), "mi", false)
+end
+M.two_part = function(opts, op, textobj, op2, textobj2)
+    local v = opts and opts.exchange and opts.exchange.visual_mode or "v"
+    _G.__remote_op_opfunc = function()
+        vim.api.nvim_feedkeys(
+            vim.keycode(
+                op .. "<cmd>normal! " .. v .. "`[o`]" .. op2 .. (textobj2 or vim.keycode("<Plug>(leap-remote)"))
+            ),
+            "m",
+            false
+        )
+    end
+    vim.go.operatorfunc = "v:lua.__remote_op_opfunc"
+    vim.api.nvim_feedkeys("g@" .. (textobj or ""), "mi", false)
+end
+
 function M.leap_anywhere(action)
     local focusable_windows_on_tabpage = vim.tbl_filter(function(win)
         return vim.api.nvim_win_get_config(win).focusable
@@ -333,27 +328,32 @@ M.leap_remote = function()
 end
 
 M.remote_paste = function(key, paste_key)
-    local view = vim.fn.winsaveview()
-    local pos = vim.api.nvim_win_get_cursor(0)
-    paste_key = paste_key or "P"
+    paste_key = paste_key or "p"
     return function()
-        local cur = vim.api.nvim_win_get_cursor(0)
+        local view = vim.fn.winsaveview()
+        local winnr = vim.api.nvim_get_current_win()
+        local pos = vim.api.nvim_win_get_cursor(winnr)
         _G.__remote_op_opfunc = function()
+            local win2 = vim.api.nvim_get_current_win()
+            local cur = vim.api.nvim_win_get_cursor(win2)
             -- Get the other side of the selection
             local a, b = vim.api.nvim_buf_get_mark(0, "["), vim.api.nvim_buf_get_mark(0, "]")
             if cur[1] == a[1] and cur[2] == a[2] then
-                vim.api.nvim_win_set_cursor(0, b)
+                vim.api.nvim_win_set_cursor(win2, b)
             elseif cur[1] == b[1] and cur[2] == b[2] then
                 a[2] = a[2] - 1
-                vim.api.nvim_win_set_cursor(0, a)
+                vim.api.nvim_win_set_cursor(win2, a)
             end
             -- vim.api.nvim_input(vim.keycode "<esc>" .. paste_key)
             vim.api.nvim_feedkeys(vim.keycode(paste_key), "m", false)
             vim.schedule(function()
+                vim.api.nvim_set_current_win(winnr)
                 vim.fn.winrestview(view)
-                vim.api.nvim_win_set_cursor(0, pos)
+                vim.api.nvim_win_set_cursor(winnr, pos)
             end)
         end
+        -- FIXME: this doesnt work across windows
+        -- can use Leap directly but it is less flexible
         vim.go.operatorfunc = "v:lua.__remote_op_opfunc"
         vim.api.nvim_feedkeys("g@" .. key, "m", false)
     end
@@ -430,7 +430,7 @@ local function node_proc(bwd, fwd, m, matches, n, opts, state)
     if tsopts.ending_at_pos then
         ok = ok and (m.end_pos == n.end_pos)
     end
-    if tsopts.containing_end_pos then
+    if tsopts.containing_end_pos or tsopts.containing_end_pos == nil then
         ok = ok and (m.end_pos <= n.end_pos)
     end
     if fwd ~= 0 or bwd ~= 0 then
@@ -498,6 +498,7 @@ local function node_proc(bwd, fwd, m, matches, n, opts, state)
 end
 
 -- TODO: Full on almost arbitrary node selection (iswap.nvim style)
+-- TODO: "outer" variation by extending to sibling nodes
 M.custom_ts = function(win, state, opts)
     local fwd = state.remote_ts_fwd or 0
     local bwd = state.remote_ts_bwd or 0
@@ -513,14 +514,8 @@ M.custom_ts = function(win, state, opts)
 end
 M.remote_ts = function(win, state, opts)
     if state.pattern.pattern == " " then
-        -- TODO: completely switch to `custom_ts`
-        -- state.pattern.pattern = (" "):rep(state.opts.search.max_length)
         state.opts.search.max_length = 1
-        local matches = require("flash.plugins.treesitter").matcher(win, state)
-        for _, m in ipairs(matches) do
-            m.highlight = false
-        end
-        return matches
+        return M.custom_ts(win, state, opts)
     end
 
     local Search = require("flash.search")
@@ -551,7 +546,9 @@ local function ts_shift(state, fwdincr, bwdincr)
 
     -- Force update
     -- state.pattern:set(state.remote_ts_fwd .. state.remote_ts_bwd)
-    state:update({ dirty_cache = true })
+    -- state:update { force = true }
+    require("flash.cache").cache = {}
+    state:_update()
 end
 M.ts_actions = {
     -- Extend right
@@ -575,22 +572,44 @@ M.ts_actions = {
     ["("] = function(state)
         ts_shift(state, -1, 1)
     end,
+    -- TODO: Expand/Shrink
+    ["<tab>"] = function(state)
+        state:jump({ match = current, forward = false })
+    end,
+    ["<S-tab>"] = function(state)
+        state:jump({ forward = true, match = current })
+    end,
 }
+-- TODO: this needs a lot of work
 M.remote_sel = function(win, state, opts)
-    local pat = state.pattern
-    state.pattern = pat:sub(1, 1)
+    local pat = state.pattern.pattern
+    state.pattern:set(#pat == 1 and pat or pat:sub(1, -2))
     local search = require("flash.search").new(win, state)
     local matches = {}
-    for _, m in ipairs(search:get(opts)) do
-        state.pattern = pat:sub(2)
-        for _, n in ipairs(search:get({ from = m.pos, to = m.end_pos })) do
+    vim.print(state.pattern)
+    local starts = search:get(opts)
+    for i, m in ipairs(starts) do
+        if #pat <= 1 then
+            matches[#matches + 1] = m
+        else
+            state.pattern:set(pat:sub(-1))
+            vim.print(state.pattern)
+            for _, n in
+                ipairs(search:get({
+                    from = m.pos,
+                    to = starts[i + 1] and starts[i + 1].pos,
+                }))
+            do
+                -- n.end_pos = n.pos
+                n.pos = m.pos
+                n.highlight = false
+                matches[#matches + 1] = n
+            end
         end
     end
+    state.pattern:set(pat)
     return matches
 end
-
--- TODO: iswap
-M.iswap = function(opts) end
 
 M.move_by_ts = function()
     local iter = {
@@ -613,6 +632,16 @@ end
 M.select_mapping = function()
     vim.go.operatorfunc = "v:lua.require'editor.nav.lib'.select_operatorfunc"
     return "g@"
+end
+
+local function get_windows()
+    local wins = vim.api.nvim_tabpage_list_wins(0)
+    local curr_win = vim.api.nvim_get_current_win()
+    local function check(win)
+        local config = vim.api.nvim_win_get_config(win)
+        return (config.focusable and (config.relative == "") and (win ~= curr_win))
+    end
+    return vim.tbl_filter(check, wins)
 end
 
 M.jump_windows = function()

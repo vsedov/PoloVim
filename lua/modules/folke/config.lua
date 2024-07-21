@@ -369,7 +369,6 @@ function config.which_key()
     local wk = require("which-key")
     wk.setup({
         plugins = { spelling = { enabled = true } },
-        window = { border = lambda.style.border.type_0 },
         layout = { align = "center" },
     })
 

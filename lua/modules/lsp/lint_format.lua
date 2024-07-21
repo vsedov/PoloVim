@@ -9,7 +9,6 @@ function config.get_lsp_fallback(bufnr)
         return "always"
     else
         return true
-        
     end
 end
 

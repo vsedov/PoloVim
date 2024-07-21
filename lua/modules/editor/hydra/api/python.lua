@@ -1,8 +1,7 @@
-local leader = ";p"
-local config = {
-    Python = {
+local leader = "\\w"
+local Molten = {
+    Molten = {
         color = "pink",
-        body = leader,
         mode = { "n", "x", "v" },
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
         ["<cr>"] = {
@@ -63,12 +62,73 @@ local config = {
     },
 }
 
-return {
-    config,
-    "Python",
+local core = {
+    Molten,
+    "Molten",
     { { "n", "N" } },
     { "S", "<cr>", "e", "l", "d", "r", "s", "h" },
     6,
     3,
     1,
+}
+local config = {
+    Python = {
+        color = "red",
+        body = leader,
+        ["<ESC>"] = { nil, { exit = true } },
+        mode = { "n", "v", "x" },
+        -- "PythonCopyReferenceDotted",
+        -- "PythonCopyReferencePytest",
+        -- "PythonCopyReferenceImport",
+
+        -- ["<cr>"] = {
+        --     function()
+        --
+        --     end,
+        --     { nowait = true, silent = true, desc = "Cody", exit = true },
+        -- },
+
+        D = {
+            function()
+                vim.cmd("PythonCopyReferenceDotted")
+            end,
+            { nowait = true, silent = true, desc = "Reference Dot" },
+        },
+        p = {
+            function()
+                vim.cmd("PythonCopyReferencePytest")
+            end,
+            { nowait = true, silent = true, desc = "Reference Pytest" },
+        },
+        P = {
+            function()
+                vim.cmd("PythonCopyReferenceImport")
+            end,
+            { nowait = true, silent = true, desc = "Reference Import" },
+        },
+
+        w = {
+            function()
+                if vim.fn.expand("%:e") == "py" then
+                    os.execute("auto-walrus" .. vim.fn.expand("%:p"))
+                end
+            end,
+            { nowait = true, silent = true, desc = "Auto Walrus" },
+        },
+        m = {
+            function() end,
+            { nowait = true, silent = true, desc = "Molten", exit = true },
+        },
+    },
+}
+
+return {
+    config, --1
+    "Python", --2
+    { { "m", "<ESC>" } }, -- keymaps, for keymap plugin --3
+    { "w", "D", "P", "p" }, --4
+    6, --5
+    3, --6
+    1, --7
+    { core }, --8
 }

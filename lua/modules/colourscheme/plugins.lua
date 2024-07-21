@@ -1,6 +1,12 @@
 local conf = require("modules.colourscheme.config")
 local colourscheme = require("core.pack").package
-
+colourscheme({
+    "sho-87/kanagawa-paper.nvim",
+    cond = lambda.config.colourscheme.colourscheme == "kanagawa_paper",
+    event = "BufEnter",
+    lazy = true,
+    config = conf.kanagawa_paper,
+})
 colourscheme({
     "rebelot/kanagawa.nvim",
     cond = lambda.config.colourscheme.colourscheme == "kanagawa",
@@ -340,5 +346,50 @@ colourscheme({
         })
 
         vim.cmd([[ colorscheme neofusion ]])
+    end,
+})
+colourscheme({
+    "neanias/everforest-nvim",
+    cond = lambda.config.colourscheme.colourscheme == "everforest",
+    event = "BufEnter",
+    config = function()
+        require("everforest").setup({
+            ---Controls the "hardness" of the background. Options are "soft", "medium" or "hard".
+            ---Default is "medium".
+            background = "hard",
+            transparent_background_level = 0,
+            ---Whether italics should be used for keywords and more.
+            italics = true,
+            disable_italic_comments = false,
+            sign_column_background = "none",
+            ---The contrast of line numbers, indent lines, etc. Options are `"high"` or
+            ---`"low"` (default).
+            ui_contrast = "low",
+            ---Dim inactive windows. Only works in Neovim. Can look a bit weird with Telescope.
+            ---
+            ---When this option is used in conjunction with show_eob set to `false`, the
+            ---end of the buffer will only be hidden inside the active window. Inside
+            ---inactive windows, the end of buffer filler characters will be visible in
+            ---dimmed symbols. This is due to the way Vim and Neovim handle `EndOfBuffer`.
+            dim_inactive_windows = false,
+            ---Some plugins support highlighting error/warning/info/hint texts, by
+            ---default these texts are only underlined, but you can use this option to
+            ---also highlight the background of them.
+            diagnostic_text_highlight = false,
+            ---Which colour the diagnostic text should be. Options are `"grey"` or `"coloured"` (default)
+            diagnostic_virtual_text = "coloured",
+            ---Some plugins support highlighting error/warning/info/hint lines, but this
+            ---feature is disabled by default in this colour scheme.
+            diagnostic_line_highlight = false,
+            ---By default, this color scheme won't colour the foreground of |spell|, instead
+            ---colored under curls will be used. If you also want to colour the foreground,
+            ---set this option to `true`.
+            spell_foreground = false,
+            ---Whether to show the EndOfBuffer highlight.
+            show_eob = true,
+        })
+
+        -- Alternatively
+        require("everforest").load()
     end,
 })

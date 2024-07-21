@@ -221,7 +221,7 @@ augroup("LspSetupCommands", {
         event = "LspAttach",
         command = function(args)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            if client.name == "sourcery" or client.name == "null_ls" or client.name == "ruff_lsp" then
+            if client.name == "sourcery" or client.name == "null_ls" or client.name == "ruff" then
                 -- Disable hover in favor of Pyright
                 client.server_capabilities.hoverProvider = false
             end

@@ -36,39 +36,39 @@ overseer.setup({
     task_list = {
         separator = "────────────────────────────────────────────────────────────────────────────────",
     },
+    -- component_aliases = {
+    --     default_neotest = {
+    --         { "display_duration", detail_level = 2 },
+    --         "on_output_summarize",
+    --         "on_exit_set_status",
+    --         { "on_complete_notify", system = "unfocused" },
+    --         "on_complete_dispose",
+    --         "unique",
+    --     },
+    --     default = {
+    --         "display_duration",
+    --         "on_output_summarize",
+    --         "on_exit_set_status",
+    --         { "on_complete_notify", system = "unfocused" },
+    --         "on_complete_dispose",
+    --     },
+    --     always_restart = { "on_complete_restart", statuses = { STATUS.FAILURE, STATUS.SUCCESS } },
+    -- },
     component_aliases = {
-        default_neotest = {
+        -- Most tasks are initialized with the default components
+        default = {
             { "display_duration", detail_level = 2 },
             "on_output_summarize",
             "on_exit_set_status",
-            { "on_complete_notify", system = "unfocused" },
-            "on_complete_dispose",
-            "unique",
+            "on_complete_notify",
+            { "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
         },
-        default = {
-            "display_duration",
-            "on_output_summarize",
-            "on_exit_set_status",
-            { "on_complete_notify", system = "unfocused" },
-            "on_complete_dispose",
+        -- Tasks from tasks.json use these components
+        default_vscode = {
+            "default",
+            "on_result_diagnostics",
         },
-        always_restart = { "on_complete_restart", statuses = { STATUS.FAILURE, STATUS.SUCCESS } },
     },
-    -- component_aliases = {
-    --     -- Most tasks are initialized with the default components
-    --     default = {
-    --       { "display_duration", detail_level = 2 },
-    --       "on_output_summarize",
-    --       "on_exit_set_status",
-    --       "on_complete_notify",
-    --       { "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
-    --     },
-    --     -- Tasks from tasks.json use these components
-    --     default_vscode = {
-    --       "default",
-    --       "on_result_diagnostics",
-    --     },
-    --   },
     template_timeout = 5000,
     template_cache_threshold = 0,
     actions = {

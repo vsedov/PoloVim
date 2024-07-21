@@ -1,5 +1,6 @@
 local M = {}
 local lib = require("modules.movement.flash.nav.lib")
+local api = vim.api
 
 local function _leap_bi()
     local winnr = vim.api.nvim_get_current_win()
@@ -149,18 +150,36 @@ local function leap_select(kwargs)
 end
 
 function highlight()
-    vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
+    -- vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Conceal" })
+    --
+    -- vim.api.nvim_set_hl(0, "LeapMatch", {
+    --     fg = "white", -- for light themes, set to 'black' or similar
+    --     bold = true,
+    --     nocombine = true,
+    -- })
+    -- vim.api.nvim_set_hl(0, "LeapLabelPrimary", {
+    --     fg = "#ff2f87",
+    --     bold = true,
+    --     nocombine = true,
+    -- })
+    local leap_backgrounds = {
+        LeapBackdrop = {
+            fg = "#545c7e",
+        },
+        LeapLabel = {
+            bold = true,
+            fg = "#ff007c",
+        },
+        LeapMatch = {
+            bg = "#ff007c",
+            bold = true,
+            fg = "#c0caf5",
+        },
+    }
 
-    vim.api.nvim_set_hl(0, "LeapMatch", {
-        fg = "white", -- for light themes, set to 'black' or similar
-        bold = true,
-        nocombine = true,
-    })
-    vim.api.nvim_set_hl(0, "LeapLabelPrimary", {
-        fg = "#ff2f87",
-        bold = true,
-        nocombine = true,
-    })
+    for hl_group, hl in pairs(leap_backgrounds) do
+        vim.api.nvim_set_hl(0, hl_group, hl)
+    end
 end
 
 local O = {
@@ -191,19 +210,16 @@ O.goto_prev_outer_end = O.goto_previous_outer_end -- "((",
 O.select_prev = O.select_previous
 O.select_prev_outer = O.select_previous_outer
 
-local api = vim.api
-
 function M.leap_config()
     require("leap").setup({
         max_phase_one_targets = nil,
         highlight_unlabeled_phase_one_targets = true,
         max_highlighted_traversal_targets = 10000,
         case_sensitive = false,
-        -- equivalence_classes = { " \t", "\r\n" },
-        equivalence_classes = { " \t\r\n" },
+        equivalence_classes = { " \t", "\r\n" },
         substitute_chars = { ["\r"] = "¬", ["\n"] = "¬" },
 
-        -- safe_labels = { "s", "f", "n", "u", "t", "/", "S", "F", "N", "L", "H", "M", "U", "G", "T", "?", "Z" },
+        safe_labels = { "s", "f", "n", "u", "t", "/", "S", "F", "N", "L", "H", "M", "U", "G", "T", "?", "Z" },
         labels = {
             "s",
             "f",
@@ -226,6 +242,31 @@ function M.leap_config()
             "t",
             "c",
             "x",
+            "/",
+            "z",
+            "S",
+            "F",
+            "N",
+            "J",
+            "K",
+            "L",
+            "H",
+            "O",
+            "D",
+            "W",
+            "E",
+            "M",
+            "B",
+            "U",
+            "Y",
+            "V",
+            "R",
+            "G",
+            "T",
+            "C",
+            "X",
+            "?",
+            "Z",
         },
 
         special_keys = {
@@ -239,6 +280,7 @@ function M.leap_config()
             multi_revert = "<backspace>",
         },
     })
+
     lambda.augroup("leap", {
         {
             event = { "ColorScheme" },
@@ -256,39 +298,38 @@ end
 
 function M.keys()
     return {
-        { "}" }, -- Repeat mappings
-        { "{" },
-        -- { "<leader>hw", navutils.leap_anywhere, mode = "n", desc = "Leap all windows" },
-        { "s", "<Plug>(leap)", mode = "n", desc = "Leap" },
-        {
-            "S",
-            function()
-                require("leap.remote").action()
-            end,
-            mode = "n",
-            desc = "Leap Remote",
-        },
-        { O.goto_prefix .. O.goto_prefix, lib.leap_anywhere, mode = { "n", "x" }, desc = "Leap anywhere" },
-        { "S", lib.leap_anywhere, mode = { "o" }, desc = "Leap anywhere" },
-        { "<Plug>(leap-anywhere)", lib.leap_anywhere, mode = { "n", "x", "o", "i" }, desc = "Leap anywhere" },
-        {
-            "t", -- semi-inclusive
-            function()
-                vim.cmd.normal({ "v", bang = true })
-                require("leap").leap({ inclusive_op = true })
-            end,
-            mode = "n",
-            desc = "Leap v t",
-        },
-        {
-            "T", -- semi-inclusive
-            function()
-                vim.cmd.normal({ "v", bang = true })
-                require("leap").leap({ backward = true, offset = 1, inclusive_op = true })
-            end,
-            mode = "n",
-            desc = "Leap v T",
-        },
+        -- { "}" }, -- Repeat mappings
+        -- { "{" },
+        -- -- { "<leader>hw", navutils.leap_anywhere, mode = "n", desc = "Leap all windows" },
+        -- { "s", "<Plug>(leap)", mode = "n", desc = "Leap" },
+        -- {
+        --     "S",
+        --     function()
+        --         require("leap.remote").action()
+        --     end,
+        --     mode = "n",
+        --     desc = "Leap Remote",
+        -- },
+        -- { "S", lib.leap_anywhere, mode = { "o" }, desc = "Leap anywhere" },
+        -- { "<Plug>(leap-anywhere)", lib.leap_anywhere, mode = { "n", "x", "o", "i" }, desc = "Leap anywhere" },
+        -- {
+        --     "t", -- semi-inclusive
+        --     function()
+        --         vim.cmd.normal({ "v", bang = true })
+        --         require("leap").leap({ inclusive_op = true })
+        --     end,
+        --     mode = "n",
+        --     desc = "Leap v t",
+        -- },
+        -- {
+        --     "T", -- semi-inclusive
+        --     function()
+        --         vim.cmd.normal({ "v", bang = true })
+        --         require("leap").leap({ backward = true, offset = 1, inclusive_op = true })
+        --     end,
+        --     mode = "n",
+        --     desc = "Leap v T",
+        -- },
         {
             "q", -- semi-inclusive
             function()
@@ -357,63 +398,6 @@ function M.keys()
             end,
             mode = { "o", "x" },
             desc = "Leap Remote (around)",
-        },
-        {
-            "rp",
-            mode = "n",
-            desc = "Remote Paste",
-            lib.remote_paste(vim.keycode("<leader>t")),
-        },
-        {
-            "rP",
-            mode = "n",
-            desc = "Remote Paste line",
-            lib.remote_paste(vim.keycode("<leader>t"), "<Plug>(YankyPutIndentAfterLinewise)"),
-        },
-        -- [cdy]<>rp<>
-        -- [cdy]<>R<>
-        -- [cdy]r<>[pP]
-        -- [cdy]r<>r<>
-        -- TODO: y<motion><something><leap><motion>
-        {
-            "rx",
-            mode = { "n", "x" },
-            desc = "Exchange <motion1> with <motion2>",
-            function()
-                lib.exch_with({})
-            end,
-        },
-        {
-            "rX",
-            mode = { "n", "x" },
-            desc = "Exchange V<motion1> with V<motion2>",
-            function()
-                lib.exch_with({ exchange = { visual_mode = "V" } })
-            end,
-        },
-        { -- FIXME: swap the order of this
-            "ry",
-            mode = { "x", "n" },
-            desc = "Replace with <remote-motion>",
-            function()
-                lib.swap_with({ exchange = { not_there = true } })
-            end,
-        },
-        { -- FIXME: swap the order of this
-            "rd",
-            mode = { "x", "n" },
-            desc = "Replace with d<remote-motion>",
-            function()
-                lib.swap_with({ exchange = { not_there = true } })
-            end,
-        },
-        { -- FIXME: swap the order of this
-            "rc",
-            mode = { "x", "n" },
-            desc = "Replace with c<remote-motion>",
-            function()
-                lib.swap_with({ exchange = { not_there = true } })
-            end,
         },
         {
             ";R",

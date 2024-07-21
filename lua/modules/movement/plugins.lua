@@ -132,7 +132,6 @@ else
     movement({
         "ggandor/leap.nvim",
         event = "CursorMoved",
-        lazy = true,
         dependencies = { "tpope/vim-repeat" },
         config = leap.leap_config,
         keys = leap.keys,

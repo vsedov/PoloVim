@@ -269,14 +269,6 @@ user({
 user({
     "mangelozzi/nvim-rgflow.lua",
     keys = {
-        -- ";rG",
-        -- ";rg",
-        -- ";ro",
-        -- ";ra",
-        -- ";rc",
-        -- ";rO",
-        -- ";r?",
-
         {
             ";rG",
             desc = "rgflow: open blank",
@@ -553,13 +545,6 @@ user({
 })
 
 user({
-    "mvllow/modes.nvim",
-    cond = true,
-    event = "ModeChanged",
-    config = true,
-})
-
-user({
     "wallpants/github-preview.nvim",
     cmd = { "GithubPreviewToggle" },
     keys = { "<leader>mpt", "<leader>mps", "<leader>mpd" },
@@ -666,5 +651,61 @@ user({
             -- Accepts all usual border style options (e.g., "single", "double")
             window_border = "single",
         }
+    end,
+})
+user({
+    "svampkorg/moody.nvim",
+    cond = false,
+    event = { "ModeChanged", "BufWinEnter", "WinEnter" },
+    opts = {
+        -- you can set different blend values for your different modes.
+        -- Some colours might look better more dark, so set a higher value
+        -- will result in a darker shade.
+        blends = {
+            normal = 0.2,
+            insert = 0.2,
+            visual = 0.25,
+            command = 0.2,
+            operator = 0.2,
+            replace = 0.2,
+            select = 0.2,
+            terminal = 0.2,
+            terminal_n = 0.2,
+        },
+        disabled_filetypes = { "TelescopePrompt" },
+        bold_nr = true,
+    },
+})
+user({
+    "mvllow/modes.nvim",
+    cond = true,
+    event = "ModeChanged",
+    config = true,
+})
+user({
+    "tristone13th/lspmark.nvim",
+    event = "VeryLazy",
+    config = function()
+        require("lspmark").setup()
+        require("telescope").load_extension("lspmark")
+        --  TODO: (vsedov) (17:47:03 - 17/07/24): Add these keybinds
+        -- require('lspmark.bookmarks').paste_text()
+        --
+        -- This function is used for pasting texts deleted with bookmarks, you can bind the key to paste text (p) to it.
+        -- require('lspmark.bookmarks').toggle_bookmark({with_comment=false})
+        --
+        -- This function is used for toggling the bookmark at current line, you can bind the key to toggle the mark.
+        --
+        -- You can change with_comment to true to give you a prompt asking for comment each time when you creating a bookmark.
+        -- require('lspmark.bookmarks').delete_visual_selection()
+        --
+        -- This function is used for deleting the selection with bookmarks in visual mode, you can bind the key to delete text in visual mode (d) to it.
+        -- require('lspmark.bookmarks').delete_line()
+        --
+        -- This function is used for deleting one line with a bookmark in normal mode, you can bind the key to delete line in normal mode (dd) to it.
+        -- require('lspmark.bookmarks').modify_comment()
+        --
+        -- This function is used for modifying the comment for the bookmark under the cursor.
+        -- require('lspmark.bookmarks').show_comment()
     end,
 })

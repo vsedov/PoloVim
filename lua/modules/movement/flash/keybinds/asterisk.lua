@@ -57,7 +57,6 @@ return {
             require("lasterisk").search({ is_whole = false })
             lib.search_win()
         end,
-
         desc = "Search g#",
     },
 }

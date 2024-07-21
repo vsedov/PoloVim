@@ -253,7 +253,7 @@ return {
         end,
     },
     { -- FIXME: this
-        ";rc",
+        ";rC",
         mode = { "x", "n" },
         desc = "Replace with c<remote-motion>",
         function()

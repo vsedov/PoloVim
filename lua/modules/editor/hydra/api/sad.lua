@@ -68,7 +68,7 @@ local config = {
             end,
             { exit = true, nowait = true, silent = true, desc = "Grugfar Current", mode = { "v", "n" } },
         },
-        o = {
+        c = {
             function()
                 require("grug-far").grug_far({ prefills = { flags = vim.fn.expand("%") } })
             end,
@@ -106,7 +106,7 @@ local config = {
             end,
             { desc = "Open UI", exit = true },
         },
-        c = {
+        C = {
             function()
                 vim.cmd("MurenClose")
             end,
@@ -173,9 +173,9 @@ local config = {
 }
 
 local bracket = { "<leader>", "<cr>", "V", "s", "W", "w", "S", "E" }
-local Muren = { "m", "M", "c", "F", "u" }
+local Muren = { "m", "M", "C", "F", "u" }
 local eol = { "L", "l", "K", "k" }
-local spectre = { "j", "J", "o" }
+local spectre = { "j", "J", "c" }
 local other = { "q", "n", "r", "R", "I", "H", "U", "v", ";", "p" }
 
 return {
