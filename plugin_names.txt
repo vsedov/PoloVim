@@ -1,0 +1,17 @@
+hrsh7th/cmp-path
+hrsh7th/cmp-omni
+hrsh7th/cmp-cmdline
+petertriho/cmp-git
+saadparwaiz1/cmp_luasnip
+f3fora/cmp-spell
+micangl/cmp-vimtex
+L3MON4D3/LuaSnip
+rafamadriz/friendly-snippets
+mireq/luasnip-snippets
+iurimateus/luasnip-latex-snippets.nvim
+altermo/ultimate-autopair.nvim
+windwp/nvim-autopairs
+chrisgrieser/nvim-scissors
+kristijanhusak/vim-dadbod-completion
+vsedov/vim-sonictemplate
+huggingface/hfcc.nvim

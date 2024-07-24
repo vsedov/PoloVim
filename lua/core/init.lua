@@ -96,7 +96,9 @@ local load_core = function()
 
     require("core.globals")
 
-    require("core.pack")
+    if not lambda.use_rocks then
+        require("core.pack")
+    end
     createdir()
     disable_distribution_plugins()
     leader_map()
@@ -123,7 +125,9 @@ local load_core = function()
     require("core.cmd")
     require("keymaps")
     file_type()
-    require("core.pack"):boot_strap()
+    if not lambda.use_rocks then
+        require("core.pack"):boot_strap()
+    end
 
     if vim.env.KITTY_SCROLLBACK_NVIM then
         vim.cmd([[

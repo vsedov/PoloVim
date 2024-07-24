@@ -11,41 +11,160 @@
 # List of Neovim plugins to install alongside their versions.
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
-"rocks.nvim" = "2.27.1" # rocks.nvim can also manage itself :D
-"rocks-config.nvim" = "1.6.0"
-# "neodev.nvim"= "scm"
-# nvim-lspconfig = { version = "0.1.7" } 
-cmp-tabnine = "scm"
-cmp-buffer = "scm"
-cmp-path = "scm"
-cmp-nvim-lsp = "scm"
-cmp-git = "scm"
+"rocks.nvim" = "scm"
+"rocks-config.nvim" = "scm"
+"rocks-git.nvim" = "scm"
+"rocks-lazy.nvim" = "scm"
 "lspkind.nvim" = "scm"
 
+# tree-sitter parsers
+tree-sitter-zig = "scm"
+tree-sitter-lua = "scm"
+tree-sitter-luadoc = "scm"
+tree-sitter-json = "scm"
+tree-sitter-toml = "scm"
+tree-sitter-fish = "scm"
+tree-sitter-html = "scm"
+tree-sitter-css = "scm"
+tree-sitter-jsdoc = "scm"
+tree-sitter-javascript = "scm"
+tree-sitter-typescript = "scm"
+tree-sitter-vim = "scm"
+tree-sitter-elixir = "scm"
+tree-sitter-rust = "scm"
+tree-sitter-comment = "scm"
+tree-sitter-python = "scm"
+
+
+[plugins.luasnip]
+git = "l3mon4d3/luasnip"
+rev = "v2.3.0"
+
 [plugins.nvim-cmp]
-git = "hrsh7th/nvim-cmp" # Use the git version of nvim-cmp for the best experience.
+event = "InsertEnter"
+version = "0.0.1"
 
-[bundles.cmp] # Create a bundle called `lsp`
+[plugins.cmp-async-path]
+git = "felipelema/cmp-async-path"
+rev = "main"
+
+[plugins.cmp-path]
+git = "hrsh7th/cmp-path"
+rev = "main"
+
+[plugins.cmp-omni]
+git = "hrsh7th/cmp-omni"
+rev = "main"
+
+[plugins.cmp-cmdline]
+git = "hrsh7th/cmp-cmdline"
+rev = "main"
+
+[plugins.cmp-git]
+git = "petertriho/cmp-git"
+rev = "main"
+
+[plugins.cmp-luasnip]
+git = "saadparwaiz1/cmp_luasnip"
+rev = "main"
+
+[plugins.cmp-spell]
+git = "f3fora/cmp-spell"
+rev = "main"
+
+[plugins.cmp-vimtex]
+git = "micangl/cmp-vimtex"
+rev = "main"
+
+[plugins.cmp-buffer]
+git = "hrsh7th/cmp-buffer"
+rev = "main"
+
+[plugins.friendly-snippets]
+git = "rafamadriz/friendly-snippets"
+rev = "main"
+
+[plugins.luasnip-snippets]
+git = "mireq/luasnip-snippets"
+rev = "main"
+
+[plugins.luasnip-latex-snippets]
+git = "iurimateus/luasnip-latex-snippets.nvim"
+rev = "main"
+
+[plugins.ultimate-autopair]
+git = "altermo/ultimate-autopair.nvim"
+rev = "main"
+
+[plugins.nvim-autopairs]
+git = "windwp/nvim-autopairs"
+rev = "main"
+
+[plugins.nvim-scissors]
+git = "chrisgrieser/nvim-scissors"
+rev = "main"
+
+[plugins.vim-dadbod-completion]
+git = "kristijanhusak/vim-dadbod-completion"
+rev = "main"
+
+[plugins.vim-sonictemplate]
+git = "vsedov/vim-sonictemplate"
+rev = "main"
+
+[plugins."kanagawa.nvim"]
+rev = "master"
+colorscheme = [
+  "kanagawa",
+  "kanagawa-dragon",
+  "kanagawa-lotus",
+  "kanagawa-wave"
+]
+
+[plugins.snippetgenie]
+git = "ziontee113/snippetgenie"
+
+[plugins."neotab.nvim"]
+git = "kawre/neotab.nvim"
+
+
+[bundles.completion] # Create a bundle called `lsp`
 items = [
     "nvim-cmp",
-    "cmp-buffer", 
-    "cmp-path", 
-    "cmp-nvim-lsp", 
+    "luasnip",
+    "cmp-async-path",
+    "cmp-path",
+    "cmp-omni",
+    "cmp-cmdline",
     "cmp-git",
-    "cmp-tabnine"
+    "cmp-luasnip",
+    "cmp-spell",
+    "cmp-vimtex",
+    "cmp-buffer",
+    "friendly-snippets",
+    "luasnip-snippets",
+    "luasnip-latex-snippets",
+    "ultimate-autopair",
+    "nvim-autopairs",
+    "nvim-scissors",
+    "vim-dadbod-completion",
+    "vim-sonictemplate",
 ]
-config = "completion.cmp"
-
-[bundles.lsp] # Create a bundle called `lsp`
-items = [
-    "nvim-cmp",
-    "cmp-buffer", 
-    "cmp-path", 
-    "cmp-nvim-lsp", 
-    "cmp-git",
-    "cmp-tabnine"
-]
-config = "completion.cmp"
+# [bundles.lsp]
+# items = []
+#
+# [bundles.ui]
+# items = [] 
+# [bundles.user] 
+# items = [] 
 
 [config]
 auto_setup = true
+colorscheme = "kanagawa"
+
+# rocks-treesitter
+[treesitter]
+auto_highlight = "all"
+auto_install = "prompt"
+
+

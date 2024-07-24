@@ -1,0 +1,84 @@
+-- for _, v in ipairs(cody_normal) do
+--     if type(v[2]) == "string" then
+--         internal_config[1].Cody[v[1]] = {
+--             function()
+--                 vim.cmd(v[2])
+--             end,
+--
+--             {
+--                 mode = v.mode,
+--                 desc = v.desc,
+--                 exit = true,
+--             },
+--         }
+--     else
+--         internal_config[1].Cody[v[1]] = {
+--             function()
+--                 v[2]()
+--             end,
+--             {
+--                 mode = v.mode,
+--                 desc = v.desc,
+--                 exit = true,
+--             },
+--         }
+--     end
+-- end
+-- -- Visual mode
+-- for _, v in ipairs(cody_visual) do
+--     internal_config[1].Cody[v[1]] = {
+--         function()
+--             visual_mode(v[2])
+--         end,
+--         {
+--             mode = v.mode,
+--             desc = v.desc,
+--             nowait = true,
+--             exit = true,
+--         },
+--     }
+-- end
+--
+-- for _, v in ipairs(copilot) do
+--     if type(v[2]) == "string" then
+--         internal_copilot[1].Copilot[v[1]] = {
+--             function()
+--                 vim.cmd(v[2])
+--             end,
+--
+--             {
+--                 mode = v.mode,
+--                 desc = v.desc,
+--                 exit = true,
+--             },
+--         }
+--     else
+--         internal_copilot[1].Copilot[v[1]] = {
+--             function()
+--                 visual_mode(v[2])
+--             end,
+--             {
+--                 mode = v.mode,
+--                 desc = v.desc,
+--                 exit = true,
+--             },
+--         }
+--     end
+-- end
+--
+-- for _, v in ipairs(copilot_vis) do
+--     internal_copilot[1].Copilot[v[1]] = {
+--         function()
+--             if type(v[2]) == "string" then
+--                 visual_mode(v[2])
+--             else
+--                 visual_mode(v[2]())
+--             end
+--         end,
+--         {
+--             mode = v.mode,
+--             desc = v.desc,
+--             exit = true,
+--         },
+--     }
+-- end
