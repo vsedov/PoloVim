@@ -547,16 +547,16 @@ user({
 user({
     "wallpants/github-preview.nvim",
     cmd = { "GithubPreviewToggle" },
-    keys = { "<leader>mpt", "<leader>mps", "<leader>mpd" },
+    keys = { "<leader>Mpt", "<leader>Mps", "<leader>Mpd" },
     opts = {},
     config = function(_, opts)
         local gpreview = require("github-preview")
         gpreview.setup(opts)
 
         local fns = gpreview.fns
-        vim.keymap.set("n", "<leader>mpt", fns.toggle)
-        vim.keymap.set("n", "<leader>mps", fns.single_file_toggle)
-        vim.keymap.set("n", "<leader>mpd", fns.details_tags_toggle)
+        vim.keymap.set("n", "<leader>Mpt", fns.toggle)
+        vim.keymap.set("n", "<leader>Mps", fns.single_file_toggle)
+        vim.keymap.set("n", "<leader>Mpd", fns.details_tags_toggle)
     end,
 })
 
@@ -682,30 +682,63 @@ user({
 })
 user({
     "tristone13th/lspmark.nvim",
-    event = "VeryLazy",
     config = function()
         require("lspmark").setup()
         require("telescope").load_extension("lspmark")
-        --  TODO: (vsedov) (17:47:03 - 17/07/24): Add these keybinds
-        -- require('lspmark.bookmarks').paste_text()
-        --
-        -- This function is used for pasting texts deleted with bookmarks, you can bind the key to paste text (p) to it.
-        -- require('lspmark.bookmarks').toggle_bookmark({with_comment=false})
-        --
-        -- This function is used for toggling the bookmark at current line, you can bind the key to toggle the mark.
-        --
-        -- You can change with_comment to true to give you a prompt asking for comment each time when you creating a bookmark.
-        -- require('lspmark.bookmarks').delete_visual_selection()
-        --
-        -- This function is used for deleting the selection with bookmarks in visual mode, you can bind the key to delete text in visual mode (d) to it.
-        -- require('lspmark.bookmarks').delete_line()
-        --
-        -- This function is used for deleting one line with a bookmark in normal mode, you can bind the key to delete line in normal mode (dd) to it.
-        -- require('lspmark.bookmarks').modify_comment()
-        --
-        -- This function is used for modifying the comment for the bookmark under the cursor.
-        -- require('lspmark.bookmarks').show_comment()
     end,
+    keys = {
+        { "<leader>m", "", desc = "Bookmark" },
+        { "<leader>mb", "<cmd>Telescope lspmark<cr>", desc = "Bookmark" },
+        {
+            "<leader>mn",
+            function()
+                require("lspmark.bookmarks").toggle_bookmark({ with_comment = false })
+            end,
+            desc = "Bookmark",
+        },
+        {
+            "<leader>mc",
+            function()
+                require("lspmark.bookmarks").toggle_bookmark({ with_comment = true })
+            end,
+            desc = "Bookmark With Comment",
+        },
+        {
+            "<leader>ms",
+            function()
+                vim.cmd([[lua require("lspmark.bookmarks").show_comment()]])
+            end,
+            desc = "Show Comment",
+        },
+        {
+            "<leader>me",
+            function()
+                require("lspmark.bookmarks").modify_comment()
+            end,
+            desc = "Modify Comment",
+        },
+        {
+            "<leader>md",
+            function()
+                require("lspmark.bookmarks").delete_line()
+            end,
+            desc = "Delete Line",
+        },
+        {
+            "<leader>mv",
+            function()
+                require("lspmark.bookmarks").delete_visual_selection()
+            end,
+            desc = "Delete Selection",
+        },
+        {
+            "<leader>mp",
+            function()
+                require("lspmark.bookmarks").paste_text()
+            end,
+            desc = "Paste Text",
+        },
+    },
 })
 user({
     "julienvincent/hunk.nvim",
@@ -719,5 +752,58 @@ user({
     cmd = "ToggleHiOverLength",
     config = function()
         require("toggle-overlength").setup({})
+    end,
+})
+
+user({
+    "chrishrb/gx.nvim",
+    keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
+    cmd = { "Browse" },
+    init = function()
+        vim.g.netrw_nogx = 1 -- disable netrw gx
+    end,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+        require("gx").setup({
+            open_browser_app = "waterfox", -- specify your browser app; default for macOS is "open", Linux "xdg-open" and Windows "powershell.exe"
+            -- open_browser_args = { "--background" }, -- specify any arguments, such as --background for macOS' "open".
+            handlers = {
+                plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
+                github = true, -- open github issues
+                brewfile = true, -- open Homebrew formulaes and casks
+                package_json = true, -- open dependencies from package.json
+                search = true, -- search the web/selection on the web if nothing else is found
+                go = true, -- open pkg.go.dev from an import statement (uses treesitter)
+                jira = { -- custom handler to open Jira tickets (these have higher precedence than builtin handlers)
+                    name = "jira", -- set name of handler
+                    handle = function(mode, line, _)
+                        local ticket = require("gx.helper").find(line, mode, "(%u+-%d+)")
+                        if ticket and #ticket < 20 then
+                            return "http://jira.company.com/browse/" .. ticket
+                        end
+                    end,
+                },
+                rust = { -- custom handler to open rust's cargo packages
+                    name = "rust", -- set name of handler
+                    filetype = { "toml" }, -- you can also set the required filetype for this handler
+                    filename = "Cargo.toml", -- or the necessary filename
+                    handle = function(mode, line, _)
+                        local crate = require("gx.helper").find(line, mode, "(%w+)%s-=%s")
+
+                        if crate then
+                            return "https://crates.io/crates/" .. crate
+                        end
+                    end,
+                },
+            },
+            handler_options = {
+                search_engine = "google", -- you can select between google, bing, duckduckgo, ecosia and yandex
+                select_for_search = false, -- if your cursor is e.g. on a link, the pattern for the link AND for the word will always match. This disables this behaviour for default so that the link is opened without the select option for the word AND link
+                git_remotes = { "upstream", "origin" }, -- list of git remotes to search for git issue linking, in priority
+                git_remote_push = function(fname) -- you can also pass in a function
+                    return fname:match("myproject")
+                end,
+            },
+        })
     end,
 })

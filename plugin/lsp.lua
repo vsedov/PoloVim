@@ -122,13 +122,26 @@ local function show_related_locations(diag)
     end
     return diag
 end
-
-local handler = lsp.handlers[M.textDocument_publishDiagnostics]
----@diagnostic disable-next-line: duplicate-set-field
-lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
-    result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
-    handler(err, result, ctx, config)
+local function custom_on_publish_diagnostics(a, params, client_id, c)
+    params.diagnostics = vim.iter(params.diagnostics)
+        :filter(function(diag)
+            --                 lua                    pyright
+            local patterns = { "Unused local `_.+`.", '"_.+" is not accessed' }
+            return not vim.iter(patterns):any(function(pat)
+                return string.match(diag.message, pat)
+            end)
+        end)
+        :totable()
+    vim.lsp.diagnostic.on_publish_diagnostics(a, params, client_id, c)
 end
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(custom_on_publish_diagnostics, {})
+-- local handler = lsp.handlers[M.textDocument_publishDiagnostics]
+-- ---@diagnostic disable-next-line: duplicate-set-field
+-- lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
+--     result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
+--     handler(err, result, ctx, config)
+-- end
 
 -----------------------------------------------------------------------------//
 -- Mappings
@@ -333,6 +346,7 @@ if lambda.config.lsp.only_severe_diagnostics then
         end,
     })
 end
+
 -----------------------------------------------------------------------------//
 -- Diagnostic Configuration
 -----------------------------------------------------------------------------//
