@@ -1,5 +1,4 @@
 local leader = ";s"
-
 local config = {
     Swap = {
         color = "pink",

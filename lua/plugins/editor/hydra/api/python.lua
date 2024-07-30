@@ -110,7 +110,7 @@ local config = {
         w = {
             function()
                 if vim.fn.expand("%:e") == "py" then
-                    os.execute("auto-walrus" .. vim.fn.expand("%:p"))
+                    os.execute("auto-walrus " .. vim.fn.expand("%:p"))
                 end
             end,
             { nowait = true, silent = true, desc = "Auto Walrus" },

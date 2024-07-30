@@ -65,11 +65,25 @@ end
 if lambda.config.editor.hydra.load_normal then
     loadHydraModules(fn.expand("$HOME") .. "/.config/nvim/lua/modules/editor/hydra/normal/", MODULE_PREFIX .. "normal.")
 end
-
 lambda.command("HydraBinds", function()
     local binds_list = {}
     for k, v in pairs(binds) do
-        table.insert(binds_list, fmt("%s: %s", k, v))
+        table.insert(binds_list, fmt("%s", k))
     end
-    print(table.concat(binds_list, "\n"))
+    -- print(table.concat(binds_list, "\n"))
+    -- Vim.ui.select this and then run that key stroke
+    vim.ui.select(binds_list, {
+        prompt = "Select a choice",
+        -- format_item = function(item)
+        --     return binds[item]
+        -- end,
+    }, function(choice)
+        if choice == nil then
+            return
+        end
+        choice = binds[choice]
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(choice, true, false, true), "m", true)
+    end)
 end)
+
+vim.keymap.set("n", "<leader>H", "<cmd>HydraBinds<CR>", { noremap = true, silent = true })

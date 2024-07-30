@@ -15,7 +15,6 @@
 "rocks-config.nvim" = "scm"
 "rocks-git.nvim" = "scm"
 "rocks-lazy.nvim" = "scm"
-"lspkind.nvim" = "scm"
 
 # tree-sitter parsers
 tree-sitter-zig = "scm"
@@ -34,6 +33,10 @@ tree-sitter-elixir = "scm"
 tree-sitter-rust = "scm"
 tree-sitter-comment = "scm"
 tree-sitter-python = "scm"
+nvim-notify = "3.13.5"
+
+[plugins."lspkind.nvim" ]
+git = "onsails/lspkind.nvim"
 
 
 [plugins.luasnip]
@@ -127,6 +130,103 @@ git = "ziontee113/snippetgenie"
 [plugins."neotab.nvim"]
 git = "kawre/neotab.nvim"
 
+[plugins."garbage-day.nvim"]
+git = "zeioth/garbage-day.nvim"
+rev = "v1.3.0"
+opts = true
+
+[plugins.better-diagnostic-virtual-text]
+git = "sontungexpt/better-diagnostic-virtual-text"
+
+[plugins."diagflow.nvim"]
+git = "dgagn/diagflow.nvim"
+
+[plugins."lsp_lines.nvim"]
+git = "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
+rev = "v3.0.0^{}"
+
+[plugins."troublesum.nvim"]
+git = "ivanjermakov/troublesum.nvim"
+
+[plugins.lsp_extra_dim]
+git = "askfiy/lsp_extra_dim"
+
+[plugins.nvim-dd]
+git = "yorickpeterse/nvim-dd"
+
+[plugins."definition-or-references.nvim"]
+git = "kostkabrukowa/definition-or-references.nvim"
+
+[plugins."glance.nvim"]
+git = "dnlhc/glance.nvim"
+
+[plugins."nui.nvim"]
+git = "muniftanjim/nui.nvim"
+rev = "0.3.0"
+
+[plugins."diagnostic-window.nvim"]
+git = "cseickel/diagnostic-window.nvim"
+
+[plugins."inc-rename.nvim"]
+git = "smjonas/inc-rename.nvim"
+
+[plugins."lsp-format-modifications.nvim"]
+git = "joechrisellis/lsp-format-modifications.nvim"
+
+[plugins."actions-preview.nvim"]
+git = "aznhe21/actions-preview.nvim"
+
+[plugins."lsp_signature.nvim"]
+git = "ray-x/lsp_signature.nvim"
+rev = "v0.3.1"
+
+[plugins."lspsaga.nvim"]
+git = "glepnir/lspsaga.nvim"
+
+[plugins."hover.nvim"]
+git = "lewis6991/hover.nvim"
+opt = true
+
+[plugins."clangd_extensions.nvim"]
+git = "p00f/clangd_extensions.nvim"
+
+[plugins.lsp-command]
+git = "ii14/lsp-command"
+
+[plugins."mason-null-ls.nvim"]
+git = "jayp0521/mason-null-ls.nvim"
+rev = "v2.6.0"
+
+[plugins."typos.nvim"]
+git = "poljar/typos.nvim"
+
+[plugins."plenary.nvim"]
+git = "nvim-lua/plenary.nvim"
+rev = "v0.1.4"
+
+[plugins."none-ls.nvim"]
+git = "nvimtools/none-ls.nvim"
+
+[plugins."neoconf.nvim"]
+git = "folke/neoconf.nvim"
+rev = "v1.3.2"
+
+[plugins."neodev.nvim"]
+git = "folke/neodev.nvim"
+rev = "v3.0.0"
+
+[plugins."mason-lspconfig.nvim"]
+git = "williamboman/mason-lspconfig.nvim"
+rev = "v1.9.0"
+
+[plugins."mason.nvim"]
+git = "williamboman/mason.nvim"
+rev = "v1.9.0"
+
+[plugins.nvim-lspconfig]
+git = "neovim/nvim-lspconfig"
+rev = "v0.1.8"
+
 
 [bundles.completion] # Create a bundle called `lsp`
 items = [
@@ -150,13 +250,10 @@ items = [
     "vim-dadbod-completion",
     "vim-sonictemplate",
 ]
-# [bundles.lsp]
-# items = []
-#
-# [bundles.ui]
-# items = [] 
-# [bundles.user] 
-# items = [] 
+[bundles.lsp]
+items = [ 
+
+]
 
 [config]
 auto_setup = true

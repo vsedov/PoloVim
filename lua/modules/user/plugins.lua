@@ -81,43 +81,6 @@ user({
     end,
 })
 
--- # Ngl
--- ngl i do not get why this isnt  hydra actually
-user({
-    "KaitlynEthylia/TreePin",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    cmd = {
-        "TPPin",
-        "TPRoot",
-        "TPGrow",
-        "TPShrink",
-        "TPClear",
-        "TPGo",
-        "TpHide",
-        "TPToggle",
-    },
-    keys = {
-        { ",tp", "<cmd>TPPin<CR>", desc = "TreePin Pin" },
-        { ",tc", "<cmd>TPClear<CR>", desc = "TreePin Clear" },
-        { ",tt", "<cmd>TPToggle<CR>", desc = "TreePin Toggle" },
-        { ",tr", "<cmd>TPRoot<CR>", desc = "TreePin Root" },
-        { ",tj", "<cmd>TPGrow<CR>", desc = "TreePin Grow" },
-        { ",tk", "<cmd>TPShrink<CR>", desc = "TreePin Shrink" },
-        {
-            ",tg",
-            function()
-                vim.cmd("normal! m'")
-                vim.cmd("TPGo")
-            end,
-            desc = "TreePin Go",
-        },
-        { ",ts", "<cmd>TPShow<CR>", desc = "TreePin Show" },
-        { ",th", "<cmd>TPHide<CR>", desc = "TreePin Hide" },
-    },
-    opts = {
-        seperator = "▔",
-    },
-})
 -- user({
 --     "lewis6991/whatthejump.nvim",
 --     cond = false,
@@ -601,6 +564,7 @@ user({
 
 user({
     "Isrothy/neominimap.nvim",
+    cmd = "Neominimap",
     init = function()
         vim.opt.wrap = false -- Recommended
         vim.opt.sidescrolloff = 36 -- It's recommended to set a large value
@@ -680,6 +644,7 @@ user({
     event = "ModeChanged",
     config = true,
 })
+
 user({
     "tristone13th/lspmark.nvim",
     config = function()
@@ -754,6 +719,16 @@ user({
         require("toggle-overlength").setup({})
     end,
 })
+user({
+    "m4xshen/smartcolumn.nvim",
+    event = "InsertEnter",
+    opts = {
+        colorcolumn = "120",
+        disabled_filetypes = { "help", "text", "markdown" },
+        custom_colorcolumn = {},
+        scope = "file",
+    },
+})
 
 user({
     "chrishrb/gx.nvim",
@@ -798,7 +773,7 @@ user({
             },
             handler_options = {
                 search_engine = "google", -- you can select between google, bing, duckduckgo, ecosia and yandex
-                select_for_search = false, -- if your cursor is e.g. on a link, the pattern for the link AND for the word will always match. This disables this behaviour for default so that the link is opened without the select option for the word AND link
+                select_for_search = true, -- if your cursor is e.g. on a link, the pattern for the link AND for the word will always match. This disables this behaviour for default so that the link is opened without the select option for the word AND link
                 git_remotes = { "upstream", "origin" }, -- list of git remotes to search for git issue linking, in priority
                 git_remote_push = function(fname) -- you can also pass in a function
                     return fname:match("myproject")
