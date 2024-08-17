@@ -1,4 +1,4 @@
-local lib = require("modules.movement.flash.nav.lib")
+local lib = require("lazy_specs.movement.flash.nav.lib")
 local Flash = lambda.reqidx("flash")
 
 return {

@@ -1,5 +1,5 @@
 local Flash = lambda.reqidx("flash")
-local lib = require("modules.movement.flash.nav.lib")
+local lib = require("lazy_specs.movement.flash.nav.lib")
 local gen_dyn_matcher = function(gen_query, check)
     if type(gen_query) ~= "function" then
         vim.notify(

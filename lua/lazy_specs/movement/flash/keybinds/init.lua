@@ -1,4 +1,4 @@
-local current_dir = vim.fn.expand(vim.fn.stdpath("config") .. "/lua/modules/movement/flash/keybinds")
+local current_dir = vim.fn.expand(vim.fn.stdpath("config") .. "/lua/lazy_specs/movement/flash/keybinds")
 local keybinds = {}
 
 local function add_keybinds(keybinds_list)
@@ -15,7 +15,7 @@ local function walk_dir(dir)
             if stat.type == "directory" then
                 walk_dir(path)
             else
-                local keybinds_list = require("modules.movement.flash.keybinds." .. file:gsub(".lua", ""))
+                local keybinds_list = require("lazy_specs.movement.flash.keybinds." .. file:gsub(".lua", ""))
                 add_keybinds(keybinds_list)
             end
         end

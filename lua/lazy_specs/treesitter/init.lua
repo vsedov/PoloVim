@@ -1,8 +1,7 @@
 return {
     {
         "chrisgrieser/nvim-various-textobjs",
-        lazy = true,
-        event = "BufEnter",
+        event = "DeferredUIEnter",
         keys = {
             {
                 "aS",
@@ -109,7 +108,7 @@ return {
     },
     {
         "vim-matchup",
-        event = "BufRead",
+        event = "DeferredUIEnter",
         keys = {
             {
                 "<leader><leader>w",
@@ -177,7 +176,7 @@ return {
     },
     {
         "hlargs.nvim",
-        event = "BufRead",
+        event = "DeferredUIEnter",
         after = function()
             require("hlargs").setup({
                 color = "#ef9062",
@@ -236,7 +235,7 @@ return {
     },
     {
         "hiPairs",
-        event = "BufRead",
+        event = "DeferredUIEnter",
         after = function()
             function setkey(k)
                 local function out(kk, v)
@@ -260,7 +259,7 @@ return {
     },
     {
         "guess-indent.nvim",
-        event = { "BufAdd", "BufReadPost", "BufNewFile" },
+        event = "DeferredUIEnter", -- "BufReadPost",
         cmd = "GuessIndent",
         after = function()
             require("guess-indent").setup({
@@ -275,6 +274,25 @@ return {
                     "nofile",
                     "terminal",
                     "prompt",
+                },
+            })
+        end,
+    },
+    {
+        "ns-textobject.nvim",
+        event = "DeferredUIEnter",
+        after = function()
+            require("ns-textobject").setup({
+                auto_mapping = {
+                    -- automatically mapping for nvim-surround's aliases
+                    aliases = true,
+                    -- for nvim-surround's surrounds
+                    surrounds = true,
+                },
+                disable_builtin_mapping = {
+                    enabled = true,
+                    -- list of char which shouldn't mapping by auto_mapping
+                    chars = { "b", "B", "t", "`", "'", '"', "{", "}", "(", ")", "[", "]", "<", ">" },
                 },
             })
         end,

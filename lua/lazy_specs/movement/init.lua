@@ -58,13 +58,13 @@ return {
         end,
         keys = require("lazy_specs.movement.flash.setup").binds,
     },
-    {
-        "nvim-gomove",
-        lazy = true,
-        after = function()
-            conf.gomove()
-        end,
-    },
+    -- {
+    --     "nvim-gomove",
+    --     event = "Insert"
+    --     after = function()
+    --         conf.gomove()
+    --     end,
+    -- },
 
     {
         "iswap.nvim",
@@ -100,6 +100,7 @@ return {
     },
     {
         "harpoon",
+        opt = true,
         load = function(name)
             rocks.safe_packadd({
                 name,

@@ -33,7 +33,6 @@ tree-sitter-python = "scm"
 "lspkind.nvim" = "scm"
 "kanagawa.nvim"= {rev ="scm", opt =true}
 nvim-notify = {rev = "3.13.5", opt = true}
-luasnip= "2.3.0"
 cmp-git= "scm"
 friendly-snippets= "scm"
 "lspsaga.nvim" = "scm"
@@ -70,6 +69,11 @@ nvim-web-devicons= "0.100"
 nvim-fzf = "scm"
 "papis.nvim" = "0.6.1"
 tree-sitter-yaml = "0.0.2"
+nvim-spider = "scm"
+
+[plugins.luasnip]
+version = "2.3.0"
+opt = true
 
 [plugins."dressing.nvim" ]
 version = "2.2.2"
@@ -253,8 +257,8 @@ git = "nanotee/zoxide.vim"
 opt = true
 
 [plugins."telescope.nvim" ]
-git = "nvim-telescope/telescope.nvim"
-rev = "0.1.8"
+version = "scm"
+opt = true
 
 [plugins."telescope-bookmarks.nvim"]
 git = "dhruvmanila/telescope-bookmarks.nvim"
@@ -319,11 +323,11 @@ git = "dimeji-go/which-key.nvim"
 [plugins.nvim-hlslens]
 git = "kevinhwang91/nvim-hlslens"
 rev = "v1.0.0"
+
 # ──────────────────────────────────────────────────────────────────────
 [plugins."barbar.nvim"]
 git = "romgrk/barbar.nvim"
 rev = "v1.9.1^{}"
-opt = true
 
 [plugins."local-yokel.nvim"]
 git = "mskelton/local-yokel.nvim"
@@ -358,9 +362,6 @@ git = "jghauser/fold-cycle.nvim"
 git = "tani/dmacro.nvim"
 opt = true
 
-[plugins.vim-wordmotion]
-git = "chaoren/vim-wordmotion"
-opt = true
 
 [plugins."maim.nvim"]
 git = "kiran94/maim.nvim"
@@ -393,10 +394,6 @@ opt = true
 git = "gbprod/stay-in-place.nvim"
 event = "InsertEnter"
 rev = "v1.0.0"
-
-[plugins."neoroot.lua"]
-git = "nyngwang/neoroot.lua"
-opt = true
 
 [plugins.vim-dirtytalk]
 git = "psliwka/vim-dirtytalk"
@@ -686,6 +683,7 @@ opt = true
 
 [plugins."octo.nvim"]
 git = "pwntester/octo.nvim"
+opt = true
 
 
 [plugins."linediff.vim"]
@@ -881,6 +879,44 @@ git = "andythigpen/nvim-coverage"
 [plugins."compiler-explorer.nvim"]
 git = "krady21/compiler-explorer.nvim"
 
+[plugins.neogen]
+git = "danymat/neogen"
+rev = "2.9.2"
+opt = true
+
+[plugins."codegpt.nvim"]
+version = "scm"
+opt = true
+
+[plugins."wtf.nvim"]
+git = "piersolenski/wtf.nvim"
+opt = true
+
+[plugins."browse.nvim"]
+git = "lalitmee/browse.nvim"
+opt = true
+
+[plugins."updoc.nvim"]
+git = "loganswartz/updoc.nvim"
+opt = true
+
+[plugins.vim-devdocs]
+git = "romainl/vim-devdocs"
+opt = true
+
+[plugins."zeavim.vim"]
+git = "kabbamine/zeavim.vim"
+rev = "v1.4"
+opt = true
+
+[plugins.nvim-docs-view]
+git = "amrbashir/nvim-docs-view"
+opt = true
+
+[plugins."refgo.nvim"]
+git = "prichrd/refgo.nvim"
+opt = true
+
 #    ──────────────────────────────────────────────────────────────────────
 # ╭────────────────────────────────────────────────────────────────────╮
 # │ Bundles are for main items that need to be loaded on startup .     │
@@ -894,7 +930,7 @@ items = [
     "faster.nvim",
     "flatten.nvim",
     "resession.nvim",
-    "nvim-rooter.lua"
+    "nvim-rooter.lua",
 ]
 
 [bundles.completion] # Create a bundle called `lsp`
@@ -929,12 +965,6 @@ items = [
     "none-ls.nvim",
     "definition-or-references.nvim",
 ]
-[bundles.buffer]
-items = [
-"barbar.nvim",
-"scope.nvim",
-"stickybuf.nvim"
-]
 
 [bundles.ui]
 items = [
@@ -946,8 +976,7 @@ items = [
 [bundles.misc]
 items = [
 "nvim-surround",
-"ns-textobject.nvim",
-"vim-wordmotion",
+"nvim-spider",
 "dmacro.nvim"
 ]
 

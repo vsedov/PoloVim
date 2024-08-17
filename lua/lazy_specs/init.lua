@@ -72,6 +72,7 @@ return {
     -- SEARCH
     {
         "ssr.nvim",
+        opt = true,
         after = function()
             require("ssr").setup({
                 min_width = 50,

@@ -1,9 +1,6 @@
 local ai = require("core.pack").package
-
 local conf = require("modules.ai.config")
-
 local ai_conf = lambda.config.ai
-
 local prompts = {
     -- Code related prompts
     Explain = "Please explain how the following code works.",
@@ -93,6 +90,7 @@ return {
     --  or perhaps <leader>cc Hydra could also work
     {
         "CopilotChat.nvim",
+        opt = true,
         after = function()
             opts = {
                 show_help = "yes",

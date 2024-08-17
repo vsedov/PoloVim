@@ -1,7 +1,7 @@
 -- local labels = "asdfghjklqwertyuiopzxcvbnmASDFGHJKLQWERTYUIOPZXCVBNM,?/.;#",
 -- local labels = "¬"
 local labels = "sfnjklhodwembuyvrgtcxzSZFNJKLHODWEMBUYVRGTCXZ/?.,;#"
-local lib = require("modules.movement.flash.nav.lib")
+local lib = require("lazy_specs.movement.flash.nav.lib")
 local lsp_utils = require("modules.lsp.lsp.utils")
 
 local function opts()
@@ -240,5 +240,5 @@ end
 highlight()
 return {
     config = config,
-    binds = require("modules.movement.flash.keybinds"),
+    binds = require("lazy_specs.movement.flash.keybinds"),
 }

@@ -56,18 +56,23 @@ lambda.command("SurroundBinds", function()
     vim.notify(table_string)
 end)
 
-require("ns-textobject").setup({
-    auto_mapping = {
-        -- automatically mapping for nvim-surround's aliases
-        aliases = true,
-        -- for nvim-surround's surrounds
-        surrounds = true,
-    },
-    disable_builtin_mapping = {
-        enabled = true,
-        -- list of char which shouldn't mapping by auto_mapping
-        chars = { "b", "B", "t", "`", "'", '"', "{", "}", "(", ")", "[", "]", "<", ">" },
-    },
-})
-vim.g.wordmotion_prefix = ","
 vim.keymap.set({ "i", "n" }, "<C-y>", "<Plug>(dmacro-play-macro)")
+
+vim.g.wordmotion_prefix = ","
+vim.g.wordmotion_nomap = 1
+require("spider").setup({
+    skipInsignificantPunctuation = true,
+    consistentOperatorPending = false, -- see "Consistent Operator-pending Mode" in the README
+    subwordMovement = true,
+    customPatterns = {}, -- check "Custom Movement Patterns" in the README for details
+})
+
+vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
+vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
+vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
+vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
+vim.keymap.set("o", "w", "<cmd>lua require('spider').motion('w')<CR>")
+vim.keymap.set("n", "cw", "ce", { remap = true })
+
+-- or the same in one mapping without `remap = true`
+vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")

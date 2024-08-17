@@ -33,7 +33,7 @@ return {
     },
     {
         "vim-markdown",
-        lazy = true,
+        opt = true,
         ft = { "markdown", "pandoc.markdown", "rmd" },
         dependencies = { "godlygeek/tabular" },
         cmd = { "Toc" },
@@ -42,7 +42,7 @@ return {
 
     {
         "markdown-preview.nvim",
-        lazy = true,
+        opt = true,
         ft = { "markdown", "pandoc.markdown", "rmd", "norg" },
         build = [[sh -c "cd app && yarn install"]],
     },
@@ -149,14 +149,14 @@ return {
         end,
     },
 
-    {
-        "nvim-fundo",
-        event = "BufReadPre",
-        cmd = { "FundoDisable", "FundoEnable" },
-        build = function()
-            require("fundo").install()
-        end,
-    },
+    -- {
+    --     "nvim-fundo",
+    --     event = "BufReadPre",
+    --     cmd = { "FundoDisable", "FundoEnable" },
+    --     build = function()
+    --         require("fundo").install()
+    --     end,
+    -- },
 
     {
         "date-time-inserter.nvim",

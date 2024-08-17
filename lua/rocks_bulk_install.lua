@@ -1,11 +1,15 @@
 local test = {
-    "jackMort/ChatGPT.nvim",
-    "mikesoylu/ai.vim",
-    "github/copilot.vim",
-    "zbirenbaum/copilot.lua",
-    "CopilotC-Nvim/CopilotChat.nvim branch=canary",
-    -- "sourcegraph/sg.nvim",
-    "olimorris/codecompanion.nvim",
+    "danymat/neogen",
+    "L3MON4D3/LuaSnip",
+    "prichrd/refgo.nvim",
+    "amrbashir/nvim-docs-view",
+    "KabbAmine/zeavim.vim",
+    "romainl/vim-devdocs",
+    "loganswartz/updoc.nvim",
+    "lalitmee/browse.nvim",
+    "nvim-telescope/telescope.nvim",
+    "piersolenski/wtf.nvim",
+    "dpayne/CodeGPT.nvim",
 }
 local function is_installed(plugin_name)
     local rocks_file = "/home/viv/.config/nvim/rocks.toml"

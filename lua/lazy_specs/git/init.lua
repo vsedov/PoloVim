@@ -1,6 +1,13 @@
 local conf = require("modules.git.config")
 return {
     {
+        "octo.nvim",
+        opt = true,
+        after = function()
+            require("octo").setup({})
+        end,
+    },
+    {
         "gist.nvim",
         cmd = { "CreateGist" },
     },
