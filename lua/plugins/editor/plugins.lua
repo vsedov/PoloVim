@@ -1,7 +1,7 @@
 local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 
-editor({ "nvim-lua/plenary.nvim", lazy = true })
+-- editor({ "nvim-lua/plenary.nvim", lazy = true })
 
 -- -- -- -- NORMAL mode:
 -- -- -- -- `gcc` - Toggles the current line using linewise comment
@@ -172,14 +172,6 @@ editor({
     keys = { "q", "Q" },
 })
 
-editor({
-    "MaximilianLloyd/lazy-reload.nvim",
-    keys = {
-        -- Opens the command.
-        { "<leader><leader>r", "<cmd>lua require('lazy-reload').feed()<cr>", desc = "Reload a plugin" },
-    },
-    config = true,
-})
 -- NOTE: (vsedov) (13:40:57 - 28/02/24): This is for keymaps u can use hawtkeys instead of map or
 -- imap
 editor({

@@ -27,7 +27,7 @@ end
 local Yeet = {
     {
         Yeet = {
-            color = "red",
+            color = "pink",
             mode = { "n", "v", "x" },
             position = "bottom-right",
             ["<ESC>"] = { nil, { exit = true } },
@@ -74,7 +74,7 @@ local Yeet = {
 
 local config = {
     Harpoon = {
-        color = "red",
+        color = "pink",
         body = leader,
         mode = { "n" },
         position = "bottom-right",

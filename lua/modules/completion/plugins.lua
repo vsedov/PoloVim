@@ -7,6 +7,14 @@ local ai_conf = lambda.config.ai
 --  ╰────────────────────────────────────────────────────────────────────╯
 
 completion({
+    "max397574/care.nvim",
+    cond = false,
+    config = function()
+        require("care.config").setup()
+    end,
+})
+
+completion({
     "kawre/neotab.nvim",
     lazy = true,
     cond = lambda.config.cmp.use_tabout,

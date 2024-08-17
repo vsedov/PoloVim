@@ -3,7 +3,6 @@ function M.noice()
     return {
         cmdline = {
             enabled = false, -- enables the Noice cmdline UI
-            -- view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
             opts = {}, -- global options for the cmdline. See section on views
             ---@type table<string, CmdlineFormat>
             format = {
@@ -151,7 +150,7 @@ function M.noice()
     }
 end
 
-function M.noice_setup(_, opts)
+function M.noice_setup(opts)
     require("noice").setup(opts)
 
     lambda.highlight.plugin("noice", {

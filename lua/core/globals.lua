@@ -1,6 +1,8 @@
 _G = _G or {}
 _G.lambda = {}
+_G.rocks = {}
 require("lambda")
+require("rocks_utils")
 
 _G.map = vim.keymap.set
 _G.P = vim.print

@@ -222,10 +222,10 @@ lambda.config.fun = {
     use_pet = false,
 }
 lambda.config.colourscheme = {
-    colourscheme = "kanagawa_paper",
-
+    colourscheme = "kanagawa",
     use_light_theme = false,
-    enable_transparent = false, -- this can get annoying i guess, so theres not point for this -- this can get annoying i guess, so theres not point for this
+    enable_transparent = false, -- this can get annoying i guess, so theres
+    -- not point for this -- this can get annoying i guess, so theres not point for this
 
     dim_background = false,
     change_kitty_bg = false,

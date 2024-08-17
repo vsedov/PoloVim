@@ -851,7 +851,6 @@ return {
         CodeCompanion,
         Overseer,
         Dap,
-        Lazy,
         FileType,
         FileEncoding,
         Session,

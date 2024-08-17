@@ -98,7 +98,6 @@ function config.cool_sub()
 end
 
 function config.text_case()
-    vim.cmd([[Lazy load telescope.nvim]])
     require("telescope").load_extension("textcase")
 end
 

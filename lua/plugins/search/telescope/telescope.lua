@@ -137,7 +137,6 @@ M.setup = function()
                 hide_on_startup = true,
             },
             buffer_previewer_maker = new_maker,
-            dynamic_preview_title = fa,
             prompt_prefix = icons.misc.telescope .. " ",
             selection_caret = icons.misc.chevron_right .. " ",
             cycle_layout_list = { "flex", "horizontal", "vertical", "bottom_pane", "center" },

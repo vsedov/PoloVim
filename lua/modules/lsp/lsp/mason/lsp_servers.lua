@@ -101,6 +101,7 @@ local servers = {
     },
     ruff_ls = true,
     semgrep = true,
+    harper_ls = true,
 }
 
 local con = lambda.config.lsp.python.lsp
@@ -138,7 +139,6 @@ if lambda.config.lsp.latex == "texlab" then
 else
     require("lspconfig").ltex.setup({})
 end
-
 return function(name)
     local config = servers[name]
     if not config then

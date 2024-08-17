@@ -564,7 +564,6 @@ user({
 
 user({
     "Isrothy/neominimap.nvim",
-    cmd = "Neominimap",
     init = function()
         vim.opt.wrap = false -- Recommended
         vim.opt.sidescrolloff = 36 -- It's recommended to set a large value
@@ -638,6 +637,7 @@ user({
         bold_nr = true,
     },
 })
+
 user({
     "mvllow/modes.nvim",
     cond = false,

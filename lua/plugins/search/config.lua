@@ -1,37 +1,22 @@
 local config = {}
 
 function config.telescope()
-    require("modules.search.telescope.telescope").setup()
+    require("plugins.search.telescope.telescope").setup()
 
     local plugins = {
         "telescope-live-grep-args.nvim",
         "telescope-frecency.nvim",
         "telescope-file-browser.nvim",
-        "telescope-conda.nvim",
         "telescope-bookmarks.nvim",
         "telescope-sg",
         "telescope-egrepify.nvim",
     }
     for _, v in ipairs(plugins) do
-        require("lazy").load({ plugins = { v } })
+        -- require("lazy").load({ plugins = { v } })
+        vim.cmd("packadd " .. v)
     end
-    require("telescope").setup({
-        extensions = {
-            conda = { anaconda_path = "/home/viv/.conda/" },
-            bookmarks = {
-                selected_browser = "firefox",
-                url_open_command = "open",
-                profile_name = "default-nightly-1",
-                url_open_plugin = nil,
-                full_path = true,
-                buku_include_tags = false,
-                debug = false,
-            },
-        },
-    })
-    require("telescope").load_extension("fzf")
-    require("telescope").load_extension("file_browser")
-    require("telescope").load_extension("egrepify")
+    -- require("telescope").load_extension("file_browser")
+    -- require("telescope").load_extension("egrepify")
 end
 
 function config.fzf()
