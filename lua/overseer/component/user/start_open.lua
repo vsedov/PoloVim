@@ -19,10 +19,8 @@ return {
         },
     },
     constructor = function(params)
-        print(params)
         return {
             on_start = function(_, task)
-                require("edgy").goto_main()
                 overseer.run_action(task, "open")
             end,
         }

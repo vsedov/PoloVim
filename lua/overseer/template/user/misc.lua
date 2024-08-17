@@ -123,10 +123,6 @@ return {
                         components = {
                             "default",
                             "unique",
-                            {
-                                "user.start_open",
-                                goto_prev = true,
-                            },
                         },
                     }
                 end,

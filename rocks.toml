@@ -52,7 +52,6 @@ treesj = {rev = "scm", opt = true}
 "comment.nvim" = {rev = "0.8.0", opt = true}
 "flash.nvim" = {rev = "2.1.0", opt = true}
 "leap.nvim" = {rev ="scm", opt = true}
-"overseer.nvim" = "1.4.0"
 "noice.nvim" = {rev = "4.5.0", opt = true}
 "edgy.nvim" = "1.10.2"
 "mini.visits" = {rev ="0.13.0", opt = true}
@@ -917,6 +916,10 @@ opt = true
 git = "prichrd/refgo.nvim"
 opt = true
 
+[plugins."overseer.nvim"]
+git = "stevearc/overseer.nvim"
+rev = "v1.3.1"
+
 #    ──────────────────────────────────────────────────────────────────────
 # ╭────────────────────────────────────────────────────────────────────╮
 # │ Bundles are for main items that need to be loaded on startup .     │
@@ -1001,5 +1004,5 @@ auto_highlight = "all"
 auto_install = "prompt"
 
 [rocks_lazy]
-import = "lazy_specs/"
+import = "lazy_specs"
 

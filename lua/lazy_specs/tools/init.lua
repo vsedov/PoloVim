@@ -49,6 +49,7 @@ return {
 
     {
         "toggleterm.nvim",
+        event = "BufWinEnter",
         cmd = { "FocusTerm", "TermExec", "ToggleTerm", "Htop", "GDash" },
         after = function()
             require("modules.tools.toggleterm")

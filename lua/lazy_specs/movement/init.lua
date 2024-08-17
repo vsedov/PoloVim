@@ -107,6 +107,7 @@ return {
                 "plenary.nvim",
                 "yeet.nvim",
                 "mini.visits",
+                "overseer-quick-tasks",
             })
         end,
         after = function()

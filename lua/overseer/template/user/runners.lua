@@ -191,7 +191,7 @@ return {
                     return {
                         cmd = ft.filerunner(),
                         name = "Running " .. vim.fn.expand("%:t:r"),
-                        components = { "default", "unique", "user.start_open" },
+                        components = { "default", "unique" },
                     }
                 end,
                 priority = 4,

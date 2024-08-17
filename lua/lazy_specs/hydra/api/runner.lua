@@ -13,7 +13,7 @@ vim.keymap.set("n", "<S-7>", "<cmd>CompilerToggleResults<cr>", { noremap = true,
 
 local config = {
     Runner = {
-        color = "pink",
+        color = "amaranth",
         body = leader,
         mode = { "n" },
         on_enter = function() end,
