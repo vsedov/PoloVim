@@ -119,7 +119,7 @@ function config.better_escape()
 end
 
 function config.harpoon()
-    require("modules.movement.harpoon")
+    require("lazy_specs.movement.harpoon")
 end
 
 function config.treehopper()

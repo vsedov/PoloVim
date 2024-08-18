@@ -99,8 +99,18 @@ return {
         },
     },
     {
+        "hydra.nvim",
+        -- event = "DeferredUIEnter",
+        priority = 400,
+        after = function()
+            require("lazy_specs.hydra.setup")
+        end,
+    },
+
+    {
         "harpoon",
         opt = true,
+        priority = 10,
         load = function(name)
             rocks.safe_packadd({
                 name,

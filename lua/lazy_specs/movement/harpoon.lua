@@ -125,8 +125,13 @@ local terminals = {
 harpoon:setup({
     oqt = oqt.harppon_list_config,
     settings = {
-        save_on_toggle = false,
+        save_on_toggle = true,
         sync_on_ui_close = true,
+        save_on_change = true,
+        enter_on_sendcmd = false,
+        tmux_autoclose_windows = false,
+        excluded_filetypes = { "harpoon", "alpha", "dashboard", "gitcommit" },
+        mark_branch = false,
         key = function()
             return vim.loop.cwd()
         end,

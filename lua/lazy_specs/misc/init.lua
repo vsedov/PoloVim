@@ -44,15 +44,6 @@ return {
         end,
     },
     {
-        "NeoRoot.lua",
-        cmd = { "NeoRootSwitchMode", "NeoRootChange", "NeoRoot" },
-        after = function()
-            require("neo-root").setup({
-                CUR_MODE = 2, -- 1 for file/buffer mode, 2 for proj-mode
-            })
-        end,
-    },
-    {
         "carbon-now.nvim",
         cmd = "CarbonNow",
         after = function()

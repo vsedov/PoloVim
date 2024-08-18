@@ -90,16 +90,15 @@ return {
     --  or perhaps <leader>cc Hydra could also work
     {
         "CopilotChat.nvim",
-        opt = true,
         after = function()
-            opts = {
+            local opts = {
                 show_help = "yes",
                 debug = false, -- Set to true to see response from Github Copilot API. The log file will be in ~/.local/state/nvim/CopilotChat.nvim.log.
                 disable_extra_info = "no", -- Disable extra information (e.g: system prompt, token count) in the response.
                 allow_insecure = false,
                 prompts = prompts,
             }
-            require("copilotchat").setup(opts)
+            require("CopilotChat").setup(opts)
         end,
         cmd = {
             "CopilotChat",
@@ -116,7 +115,6 @@ return {
             "CopilotChatOptimize",
             "CopilotChatDocs",
             "CopilotChatTests",
-
             "CopilotChatFixDiagnostic",
             "CopilotChatCommit",
             "CopilotChatCommitStaged",
@@ -188,67 +186,70 @@ return {
             })
         end,
     },
-
-    -- <C-s> - Save the buffer and trigger a response from the generative AI service
-    -- <C-c> - Close the buffer
-    -- q - Cancel the stream from the API
-    -- gc - Clear the buffer's contents
-    -- ga - Add a codeblock
-    -- gs - Save the chat to disk
-    -- [ - Move to the next header
-    -- ] - Move to the previous header
-
     {
-        "codecompanion.nvim",
+        "avante.nvim",
+        event = "DeferredUIEnter",
         after = function()
-            require("codecompanion").setup({
-                adapters = {
-                    anthropic = require("codecompanion.adapters").use("anthropic", {
-                        env = {
-                            -- api_key = "ANTHROPIC_API_KEY_1",
-                            api_key = os.getenv("CLAUDE"),
-                        },
-                        schema = {
-                            model = {
-                                default = "claude-3-sonnet-20240229",
-                            },
-                        },
-                    }),
+            local opts = {
+                ---@alias Provider "openai" | "claude" | "azure"
+                provider = "openai", -- "claude" or "openai" or "azure"
+                openai = {
+                    endpoint = "https://api.openai.com",
+                    model = "gpt-4o",
+                    temperature = 0,
+                    max_tokens = 4096,
                 },
-                strategies = {
-                    chat = "anthropic",
-                    inline = "anthropic",
-                    tool = "anthropic",
+                azure = {
+                    endpoint = "", -- example: "https://<your-resource-name>.openai.azure.com"
+                    deployment = "", -- Azure deployment name (e.g., "gpt-4o", "my-gpt-4o-deployment")
+                    api_version = "2024-06-01",
+                    temperature = 0,
+                    max_tokens = 4096,
                 },
-            })
+                claude = {
+                    endpoint = "https://api.anthropic.com",
+                    model = "claude-3-5-sonnet-20240620",
+                    temperature = 0,
+                    max_tokens = 4096,
+                },
+                highlights = {
+                    ---@type AvanteConflictHighlights
+                    diff = {
+                        current = "DiffText",
+                        incoming = "DiffAdd",
+                    },
+                },
+                mappings = {
+                    ask = ";aa",
+                    edit = ";ae",
+                    refresh = ";ar",
+                    --- @class AvanteConflictMappings
+                    diff = {
+                        ours = "co",
+                        theirs = "ct",
+                        none = "c0",
+                        both = "cb",
+                        next = "]x",
+                        prev = "[x",
+                    },
+                    jump = {
+                        next = "]]",
+                        prev = "[[",
+                    },
+                },
+                windows = {
+                    wrap_line = true,
+                    width = 30, -- default % based on available width
+                },
+                --- @class AvanteConflictUserConfig
+                diff = {
+                    debug = false,
+                    autojump = true,
+                    ---@type string | fun(): any
+                    list_opener = "copen",
+                },
+            }
+            require("avante").setup(opts)
         end,
-        keys = {
-            {
-                ";aa",
-                ":CodeCompanionActions<cr>",
-                mode = { "n", "v" },
-            },
-            {
-                ";at",
-                ":CodeCompanionToggle<cr>",
-                mode = { "n", "v" },
-            },
-            {
-                "ga",
-                ":CodeCompanionAdd<cr>",
-                mode = "v",
-            },
-
-            {
-                ";ac",
-                ":CodeCompanion",
-                mode = "c",
-            },
-            {
-                ";acb",
-                ":CodeCompanionWithBuffers",
-                mode = "c",
-            },
-        },
     },
 }

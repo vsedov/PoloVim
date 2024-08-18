@@ -57,7 +57,6 @@ treesj = {rev = "scm", opt = true}
 "mini.visits" = {rev ="0.13.0", opt = true}
 nvim-ufo = {rev = "1.4.0", opt = true}
 "dropbar.nvim" = "8.6.0"
-"heirline.nvim" = "1.0.6"
 "fidget.nvim" = "1.4.1"
 "hlchunk.nvim" = {rev ="1.1.0", opt = true}
 "indent-blankline.nvim" = {rev ="3.7.2", opt = true}
@@ -69,6 +68,7 @@ nvim-fzf = "scm"
 "papis.nvim" = "0.6.1"
 tree-sitter-yaml = "0.0.2"
 nvim-spider = "scm"
+"heirline.nvim" = "1.0.6"
 
 [plugins.luasnip]
 version = "2.3.0"
@@ -93,7 +93,6 @@ opt = true
 
 [plugins."neo-tree.nvim" ]
 git = "nvim-neo-tree/neo-tree.nvim"
-opt = true
 branch = "v3.x"
 
 [plugins."hydra.nvim" ]
@@ -101,8 +100,8 @@ git = "nvimtools/hydra.nvim"
 rev = "v1.0.2"
 
 [plugins."plenary.nvim" ]
-version = "scm"
-opt = true
+git = "nvim-lua/plenary.nvim"
+rev = "v0.1.4"
 
 
 [plugins.cmp-buffer]
@@ -163,8 +162,6 @@ git = "horriblename/lzn-auto-require"
 git = "mireq/luasnip-snippets"
 rev = "0.1.2"
 
-[plugins.abstract-autocmds]
-git = "abstract-ide/abstract-autocmds"
 
 [plugins."nvim-rooter.lua"]
 git = "notjedi/nvim-rooter.lua"
@@ -173,19 +170,14 @@ git = "notjedi/nvim-rooter.lua"
 git = "stevearc/resession.nvim"
 rev = "v1.2.1"
 
-[plugins."flatten.nvim"]
-git = "willothy/flatten.nvim"
-rev = "v0.5.1"
-
-[plugins."faster.nvim"]
-git = "pteroctopus/faster.nvim"
-rev = "v0.1.0"
+[plugins.abstract-autocmds]
+git = "abstract-ide/abstract-autocmds"
 
 [plugins."fileline.nvim"]
 git = "lewis6991/fileline.nvim"
-
-[plugins."recover.vim"]
-git = "chrisbra/recover.vim"
+#
+# [plugins."recover.vim"]
+# git = "chrisbra/recover.vim"
 
 [plugins."garbage-day.nvim"]
 git = "zeioth/garbage-day.nvim"
@@ -271,7 +263,6 @@ opt = true
 [plugins.vim-smartq]
 git = "marklcrns/vim-smartq"
 rev = "v1.4.1"
-opt = true
 
 [plugins."sibling-swap.nvim"]
 git = "wansmer/sibling-swap.nvim"
@@ -298,7 +289,6 @@ git = "rrethy/vim-illuminate"
 [plugins.vim-repeat]
 git = "tpope/vim-repeat"
 rev = "v1.2^{}"
-opt =true
 
 [plugins."yeet.nvim"]
 git = "samharju/yeet.nvim"
@@ -330,7 +320,7 @@ rev = "v1.9.1^{}"
 
 [plugins."local-yokel.nvim"]
 git = "mskelton/local-yokel.nvim"
-opt =true
+opt = true
 
 [plugins."stickybuf.nvim"]
 git = "stevearc/stickybuf.nvim"
@@ -542,7 +532,6 @@ opt = true
 [plugins."neominimap.nvim"]
 git = "isrothy/neominimap.nvim"
 rev = "v2.8.2"
-opt = true
 
 [plugins."none-ls-autoload.nvim"]
 git = "zeioth/none-ls-autoload.nvim"
@@ -551,7 +540,6 @@ opt = true
 
 [plugins."calculator.nvim"]
 git = "vzze/calculator.nvim"
-opt = true
 
 [plugins.buffalo-nvim]
 git = "pheon-dev/buffalo-nvim"
@@ -580,7 +568,6 @@ opt = true
 
 [plugins."bmessages.nvim"]
 git = "ariel-frischer/bmessages.nvim"
-opt = true
 
 [plugins."open-handlers.nvim"]
 git = "mrshmllow/open-handlers.nvim"
@@ -601,7 +588,6 @@ opt = true
 [plugins."kitty-scrollback.nvim"]
 git = "mikesmithgh/kitty-scrollback.nvim"
 rev = "v5.0.0"
-opt = true
 
 [plugins."urlview.nvim"]
 git = "axieax/urlview.nvim"
@@ -920,6 +906,23 @@ opt = true
 git = "stevearc/overseer.nvim"
 rev = "v1.3.1"
 
+[plugins."avante.nvim"]
+git = "yetone/avante.nvim"
+build = "make"
+opt = true
+
+[plugins."nui-components.nvim"]
+git = "grapp-dev/nui-components.nvim"
+rev = "v1.5.2"
+
+[plugins."render-markdown.nvim"]
+git = "meanderingprogrammer/render-markdown.nvim"
+rev = "v6.1.0^{}"
+
+[plugins."onedarkpro.nvim"]
+git = "olimorris/onedarkpro.nvim"
+rev = "treesitter-0.9.2"
+
 #    ──────────────────────────────────────────────────────────────────────
 # ╭────────────────────────────────────────────────────────────────────╮
 # │ Bundles are for main items that need to be loaded on startup .     │
@@ -928,12 +931,7 @@ rev = "v1.3.1"
 [bundles.startup]
 items = [
     "abstract-autocmds",
-    "recover.vim",
-    "fileline.nvim",
-    "faster.nvim",
-    "flatten.nvim",
     "resession.nvim",
-    "nvim-rooter.lua",
 ]
 
 [bundles.completion] # Create a bundle called `lsp`
@@ -973,6 +971,7 @@ items = [
 items = [
   "dropbar.nvim",
   "heirline.nvim",
+  "neominimap.nvim",
   "neo-tree.nvim",
 ]
 
@@ -997,7 +996,6 @@ items = [
 
 [config]
 auto_setup = true
-colorscheme = "kanagawa"
 
 [treesitter]
 auto_highlight = "all"
@@ -1005,4 +1003,3 @@ auto_install = "prompt"
 
 [rocks_lazy]
 import = "lazy_specs"
-

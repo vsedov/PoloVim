@@ -13,10 +13,7 @@ end
 
 function helper.get_data_path()
     local data = os.getenv("XDG_DATA_DIR")
-    if not data then
-        return home .. "/.local/share/nvim"
-    end
-    return data
+    return home .. "/.local/share/nvim"
 end
 
 return helper

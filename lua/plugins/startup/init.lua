@@ -1,21 +1,3 @@
-local startup = require("core.pack").package
-local function focus_me()
-    if vim.g.neovide then
-        lambda.pcall(vim.cmd.NeovideFocus)
-    else
-        require("kitty.current_win").focus()
-    end
-end
-local function FNV_hash(s)
-    local prime = 1099511628211
-    local hash = 14695981039346656037
-    for i = 1, #s do
-        hash = require("bit").bxor(hash, s:byte(i))
-        hash = hash * prime
-    end
-    return hash
-end
-
 require("abstract-autocmds").setup({
     auto_resize_splited_window = true,
     remove_whitespace_on_save = true,
@@ -33,7 +15,7 @@ require("abstract-autocmds").setup({
             pattern = { "null-ls-info", "lspinfo" },
         },
     },
-    smart_dd = true,
+    smart_dd = false,
     visually_codeblock_shift = true,
     move_selected_upndown = true,
     dont_suspend_with_cz = true,
@@ -48,94 +30,6 @@ require("abstract-autocmds").setup({
     -- ──────────────────────────────────────────────────────────────────────
 })
 vim.g.RecoverPlugin_Edit_Unmodified = 1
-
---     "pteroctopus/faster.nvim",
---     config = true,
--- })
-require("flatten").setup({
-    pipe_path = function()
-        -- If running in a Kitty terminal, all tabs/windows/os-windows in the same instance of kitty will open in the first neovim instance
-        if vim.env.NVIM then
-            return vim.env.NVIM
-        end
-
-        local addr
-
-        -- If running in a Kitty terminal, all tabs/windows/os-windows in the same instance of kitty will open in the first neovim instance
-        if vim.env.KITTY_PID then
-            addr = ("%s/kitty.nvim-%s"):format(vim.fn.stdpath("run"), vim.env.KITTY_PID)
-        end
-
-        if not addr then
-            addr = ("%s/nvim-%s"):format(vim.fn.stdpath("run"), FNV_hash(vim.loop.cwd()))
-        end
-
-        if addr then
-            local ok = pcall(vim.fn.serverstart, addr)
-            return addr
-        end
-    end,
-    -- <String, Bool> dictionary of filetypes that should be blocking
-    block_for = {
-        gitcommit = true,
-    },
-    -- Window options
-    window = {
-        open = "current",
-        -- open = function(bufs, argv)
-        --   if vim.tbl_contains(argv, "-s") then
-        --   end
-        --   vim.api.nvim_win_set_buf(0, bufs[1])
-        -- end,
-        focus = "first",
-    },
-    callbacks = {
-        ---@param argv table a list of all the arguments in the nested session
-        should_block = function(argv)
-            -- Note that argv contains all the parts of the CLI command, including
-            -- Neovim's path, commands, options and files.
-            -- See: :help v:argv
-
-            -- In this case, we would block if we find the `-b` flag
-            -- This allows you to use `nvim -b file1` instead of `nvim --cmd 'let g:flatten_wait=1' file1`
-            return vim.tbl_contains(argv, "-b")
-
-            -- Alternatively, we can block if we find the diff-mode option
-            -- return vim.tbl_contains(argv, "-d")
-        end,
-
-        no_files = function()
-            -- TODO: this seems to open minifiles?
-            pcall(function()
-                focus_me()
-            end)
-        end,
-        -- Called when a request to edit file(s) is received
-        pre_open = function() end,
-        post_open = function(bufnr, winnr, filetype)
-            -- Called after a file is opened
-            -- Passed the buf id, win id, and filetype of the new window
-
-            -- Switch kitty window
-            focus_me()
-
-            -- If the file is a git commit, create one-shot autocmd to delete its buffer on write
-            -- If you just want the toggleable terminal integration, ignore this bit
-            -- ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-            ft = vim.bo[bufnr].filetype
-
-            if ft == "gitcommit" or ft == "gitrebase" then
-                vim.api.nvim_create_autocmd("BufWritePost", {
-                    buffer = bufnr,
-                    once = true,
-                    callback = vim.schedule_wrap(function()
-                        vim.api.nvim_buf_delete(bufnr, {})
-                    end),
-                })
-            end
-        end,
-    },
-})
 
 local visible_buffers = {}
 local resession = require("resession")
@@ -224,10 +118,4 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
     callback = function()
         resession.save("last")
     end,
-})
-require("nvim-rooter").setup({
-    rooter_patterns = { ".git", ".hg", ".svn" },
-    trigger_patterns = { "*" },
-    manual = false,
-    fallback_to_parent = false,
 })

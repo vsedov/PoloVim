@@ -160,13 +160,6 @@ return {
     -- "smart-open.nvim",
     -- "easypick.nvim",
     {
-        "hydra.nvim",
-        event = "DeferredUIEnter",
-        after = function()
-            require("lazy_specs.hydra.setup")
-        end,
-    },
-    {
         "easypic.nvim",
         cmd = "Easypick",
 

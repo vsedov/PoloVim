@@ -115,7 +115,7 @@ local config = {
 
         a = {
             function()
-                harpoon:list():append()
+                harpoon:list():add()
             end,
             { nowait = true, exit = true, desc = "Add File" },
         },

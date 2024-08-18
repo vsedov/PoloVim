@@ -1,3 +1,9 @@
+vim.opt.wrap = false -- Recommended
+vim.opt.sidescrolloff = 36 -- It's recommended to set a large value
+vim.g.neominimap = {
+    auto_enable = true,
+}
+
 -- local conf = require("plugins.ui.config")
 -- local highlight, foo, falsy, augroup = lambda.highlight, lambda.style, lambda.falsy, lambda.augroup
 -- local border, rect = foo.border.type_0, foo.border.type_0
