@@ -114,6 +114,9 @@ return {
                 mode = { "v", "n" },
             },
         },
+        after = function()
+            require("gitlinker").setup()
+        end,
     },
 
     -- -- Diff arbitrary blocks of text with each other

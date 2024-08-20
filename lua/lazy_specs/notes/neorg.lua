@@ -36,17 +36,17 @@ M.opts = {
         ["core.latex.renderer"] = {},
         ["core.integrations.image"] = {},
         ["core.looking-glass"] = {}, -- Enable the looking_glass module
-        -- ["external.interim-ls"] = {
-        --     config = {
-        --         completion_provider = {
-        --             -- enable/disable the completion provider. On by default.
-        --             enable = true,
-        --
-        --             -- Try to complete categories. Requires benlubas/neorg-se
-        --             categories = false,
-        --         },
-        --     },
-        -- },
+        ["external.interim-ls"] = {
+            config = {
+                completion_provider = {
+                    -- enable/disable the completion provider. On by default.
+                    enable = true,
+
+                    -- Try to complete categories. Requires benlubas/neorg-se
+                    categories = false,
+                },
+            },
+        },
         ["core.itero"] = {},
         ["core.export"] = {},
         ["core.export.markdown"] = {
@@ -110,7 +110,6 @@ M.opts = {
             config = {
                 default_keybinds = true,
                 neorg_leader = "\\",
-                hook = require("modules.notes.norg.keybinds").hook,
             },
         },
         ["core.dirman"] = { -- Manage your directories with Neorg
@@ -152,7 +151,6 @@ M.opts = {
             },
         },
 
-        ["core.integrations.telescope"] = {},
         ["core.integrations.roam"] = {
             -- default keymaps
             config = {
@@ -254,7 +252,7 @@ M.opts = {
     },
 }
 
-M.config = function(_, op)
+M.config = function(op)
     require("neorg").setup(op)
     function ToggleToc()
         if vim.bo.filetype == "norg" then
@@ -283,8 +281,6 @@ M.config = function(_, op)
 
             local opts = { noremap = true, silent = true, buffer = bufnr }
             vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
-            -- ... other lsp mappings
         end,
     })
 end

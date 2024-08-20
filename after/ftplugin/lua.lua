@@ -1,3 +1,4 @@
+vim.treesitter.start()
 local fn = vim.fn
 local fmt = string.format
 

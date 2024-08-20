@@ -1,13 +1,5 @@
 local cmp = require("cmp")
-cmp.setup(require("modules.completion.cmp.config"))
-
-cmp.mapping(function()
-    if cmp.get_active_entry() then
-        cmp.confirm()
-    else
-        require("ultimate-autopair.maps.cr").cmpnewline()
-    end
-end)
+cmp.setup(require("plugins.completion.cmp.config"))
 
 lambda.highlight.plugin("Cmp", {
     { CmpItemKindVariable = { link = "Variable" } },
@@ -16,30 +8,7 @@ lambda.highlight.plugin("Cmp", {
     { CmpItemMenu = { inherit = "Comment", italic = true } },
 })
 
-cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({
-        { name = "cmdline" },
-        { name = "cmdline_history" },
-    }),
-})
-
-require("modules.completion.cmp.extra")
-cmp.setup.cmdline(":", {
-    -- mapping = cmp.mapping.preset.cmdline(),
-    completion = { completeopt = "menu,menuone,noselect" },
-    sources = cmp.config.sources({
-        { { name = "path" } },
-        { { name = "cmdline" } },
-    }),
-})
-
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ "/", "?" }, {
-    completion = { completeopt = "menu,menuone,noselect" },
-    sources = {
-        { name = "buffer" },
-    },
-})
+require("plugins.completion.cmp.extra")
 
 vim.api.nvim_create_autocmd("CmdWinEnter", {
     callback = function()
@@ -60,5 +29,29 @@ cmp.setup.filetype({ "markdown", "pandoc", "text", "latex" }, {
         { name = "buffer" },
         { name = "dictionary", keyword_length = 2 },
         { name = "latex_symbols" },
+    },
+})
+require("cmdline")({
+    window = {
+        matchFuzzy = true,
+        offset = 1, -- depending on 'cmdheight' you might need to offset
+        debounceMs = 10,
+    },
+
+    hl = {
+        default = "Pmenu",
+        selection = "PmenuSel",
+        directory = "Directory",
+        substr = "LineNr",
+    },
+
+    column = {
+        maxNumber = 6,
+        minWidth = 20,
+    },
+
+    binds = {
+        next = "<Tab>",
+        back = "<S-Tab>",
     },
 })

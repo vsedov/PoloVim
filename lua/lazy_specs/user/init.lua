@@ -17,20 +17,13 @@ return {
         end,
     },
     {
-        "buffalo-nvim",
-        keys = {
-            {
-                ";;;",
-                ";;<leader>",
-            },
-        },
+        "arrow.nvim",
         after = function()
-            local opts = { noremap = true }
-            local map = vim.keymap.set
-            local buffalo = require("buffalo.ui")
-            map({ "t", "n" }, ";;;", buffalo.toggle_buf_menu, opts)
-            map({ "t", "n" }, ";;<leader>", buffalo.toggle_tab_menu, opts)
-            require("buffalo").setup()
+            require("arrow").setup({
+                show_icons = true,
+                leader_key = ";;;", -- Recommended to be a single key
+                buffer_leader_key = "m", -- Per Buffer Mappings
+            })
         end,
     },
     {

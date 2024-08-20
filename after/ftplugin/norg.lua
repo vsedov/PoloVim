@@ -1,4 +1,5 @@
 -- vim.opt.number = true
+vim.treesitter.start()
 -- Local
 
 vim.o.wrap = true

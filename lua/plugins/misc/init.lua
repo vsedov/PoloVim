@@ -47,7 +47,7 @@ local bind_list = {
 }
 
 -- not make it like info, bind , text in one big text and print it using vim.notify
-table_string = ""
+local table_string = ""
 for k, v in pairs(bind_list) do
     table_string = table_string .. k .. " " .. v.bind .. " " .. v.text .. "\n"
 end
@@ -76,3 +76,74 @@ vim.keymap.set("n", "cw", "ce", { remap = true })
 
 -- or the same in one mapping without `remap = true`
 vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
+local oil = require("oil")
+
+oil.setup({
+    skip_confirm_for_simple_edits = true,
+    view_options = {
+        show_hidden = true,
+        natural_order = true,
+        is_always_hidden = function(name, _)
+            return name == ".." or name == ".git"
+        end,
+        win_options = {
+            wrap = true,
+        },
+    },
+})
+vim.keymap.set("n", "-", ":Oil<CR>", { desc = "Open parent directory" })
+
+-- Might as well configure vimtex if it ever gets loaded
+-- ──────────────────────────────────────────────────────────────────────
+vim.g.vimtex_view_method = "zathura" -- sioyek
+vim.g.vimtex_view_general_options = "@pdf"
+vim.g.vimtex_compiler_method = "latexmk"
+vim.g.vimtex_compiler_latexmk = {
+    executable = "latexmk",
+    out_dir = "output",
+    options = {
+        "--pdflatex",
+        "--shell-escape",
+        "--file-line-error",
+        "--synctex=1",
+        "--interaction=nonstopmode",
+    },
+}
+
+vim.cmd([[
+        let g:Tex_FormatDependency_dvi='dvi,ps,pdf'
+        let g:Tex_DefaultTargetFormat='pdf'
+    ]])
+vim.g.vimtex_quickfix_mode = 0
+vim.g.vimtex_view_automatic = 1
+
+vim.cmd([[ " backwards search
+            function! s:write_server_name() abort
+            let nvim_server_file = "/tmp/vimtexserver.txt"
+            call writefile([v:servername], nvim_server_file)
+            endfunction
+
+            augroup vimtex_common
+            autocmd!
+            autocmd FileType tex call s:write_server_name()
+            augroup END
+        ]])
+
+vim.g.vimtex_syntax_enable = 1
+-- vim.g.vimtex_syntax_conceal_disable = 0
+vim.opt.conceallevel = 2
+vim.g.vimtex_quickfix_ignore_filters = {
+    "Command terminated with space",
+    "LaTeX Font Warning: Font shape",
+    "Package caption Warning: The option",
+    [[Underfull \\hbox (badness [0-9]*) in]],
+    "Package enumitem Warning: Negative labelwidth",
+    [[Overfull \\hbox ([0-9]*.[0-9]*pt too wide) in]],
+    [[Package caption Warning: Unused \\captionsetup]],
+    "Package typearea Warning: Bad type area settings!",
+    [[Package fancyhdr Warning: \\headheight is too small]],
+    [[Underfull \\hbox (badness [0-9]*) in paragraph at lines]],
+    "Package hyperref Warning: Token not allowed in a PDF string",
+    [[Overfull \\hbox ([0-9]*.[0-9]*pt too wide) in paragraph at lines]],
+}
+vim.g.matchup_override_vimtex = 1

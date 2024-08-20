@@ -24,7 +24,9 @@ return {
     {
         "ChatGPT.nvim",
         cmd = { "ChatGPT", "ChatGPTRun", "ChatGPTActAs", "ChatGPTCompleteCode", "ChatGPTEditWithInstructions" },
-        after = conf.chatgpt,
+        after = function()
+            conf.chatgpt()
+        end,
     },
 
     {
@@ -84,76 +86,6 @@ return {
             require("copilot").setup(opts)
         end,
     },
-
-    --  TODO: (vsedov) (14:41:51 - 12/02/24): Create a hydra for this
-    --  Something like <leader>A -> C All binds ?
-    --  or perhaps <leader>cc Hydra could also work
-    {
-        "CopilotChat.nvim",
-        after = function()
-            local opts = {
-                show_help = "yes",
-                debug = false, -- Set to true to see response from Github Copilot API. The log file will be in ~/.local/state/nvim/CopilotChat.nvim.log.
-                disable_extra_info = "no", -- Disable extra information (e.g: system prompt, token count) in the response.
-                allow_insecure = false,
-                prompts = prompts,
-            }
-            require("CopilotChat").setup(opts)
-        end,
-        cmd = {
-            "CopilotChat",
-            "CopilotChatOpen",
-            "CopilotChatClose",
-            "CopilotChatToggle",
-            "CopilotChatReset",
-            "CopilotChatSave",
-            "CopilotChatLoad",
-            "CopilotChatDebugInfo",
-            "CopilotChatExplain",
-            "CopilotChatReview",
-            "CopilotChatFix",
-            "CopilotChatOptimize",
-            "CopilotChatDocs",
-            "CopilotChatTests",
-            "CopilotChatFixDiagnostic",
-            "CopilotChatCommit",
-            "CopilotChatCommitStaged",
-        },
-        keys = {
-
-            -- Quick chat with Copilot
-            {
-                "<leader>ccq",
-                function()
-                    local input = vim.fn.input("Quick Chat: ")
-                    if input ~= "" then
-                        require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
-                    end
-                end,
-                desc = "CopilotChat - Quick chat",
-            },
-            -- lazy.nvim keys
-
-            -- Show help actions with telescope
-            {
-                "<leader>cch",
-                function()
-                    local actions = require("CopilotChat.actions")
-                    require("CopilotChat.integrations.telescope").pick(actions.help_actions())
-                end,
-                desc = "CopilotChat - Help actions",
-            },
-            -- Show prompts actions with telescope
-            {
-                "<leader>ccp",
-                function()
-                    local actions = require("CopilotChat.actions")
-                    require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-                end,
-                desc = "CopilotChat - Prompt actions",
-            },
-        },
-    },
     {
         "sg.nvim",
         enabled = lambda.config.lsp.use_sg,
@@ -188,6 +120,10 @@ return {
     },
     {
         "avante.nvim",
+        load = function(name)
+            -- render-markdown.nvim
+            rocks.safe_force_packadd({ "render-markdown.nvim" })
+        end,
         event = "DeferredUIEnter",
         after = function()
             local opts = {
@@ -197,7 +133,7 @@ return {
                     endpoint = "https://api.openai.com",
                     model = "gpt-4o",
                     temperature = 0,
-                    max_tokens = 4096,
+                    max_tokens = 10096,
                 },
                 azure = {
                     endpoint = "", -- example: "https://<your-resource-name>.openai.azure.com"

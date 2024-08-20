@@ -1,4 +1,3 @@
-local conf = require("modules.runner.config")
 return {
     {
         "overseer.nvim",
@@ -11,25 +10,8 @@ return {
             local task_bundle = require("overseer.task_bundle")
             local task_editor = require("overseer.task_editor")
             local task_list = require("overseer.task_list")
-            local util = require("overseer.util")
             local STATUS = constants.STATUS
             local Border = lambda.style.border.type_0
-
-            local function close_task(bufnr)
-                for _, winnr in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-                    if vim.api.nvim_win_is_valid(winnr) then
-                        local winbufnr = vim.api.nvim_win_get_buf(winnr)
-                        if vim.bo[winbufnr].filetype == "OverseerPanelTask" then
-                            local oldwin = vim.tbl_filter(function(t)
-                                return (t.strategy.bufnr == bufnr)
-                            end, overseer.list_tasks())[1]
-                            if oldwin then
-                                vim.api.nvim_win_close(winnr, true)
-                            end
-                        end
-                    end
-                end
-            end
 
             overseer.setup({
                 -- strategy = "terminal",

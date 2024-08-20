@@ -117,6 +117,7 @@ lambda.config.abbrev = {
 }
 
 lambda.config.cmp = {
+    use_care = false,
     use_cmp = true,
     use_tabout = true,
     buffer = true,
