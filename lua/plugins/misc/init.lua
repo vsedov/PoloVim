@@ -77,7 +77,7 @@ vim.keymap.set("n", "cw", "ce", { remap = true })
 -- or the same in one mapping without `remap = true`
 vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
 local oil = require("oil")
-
+local oip = require("oil-image-preview")
 oil.setup({
     skip_confirm_for_simple_edits = true,
     view_options = {
@@ -89,6 +89,10 @@ oil.setup({
         win_options = {
             wrap = true,
         },
+    },
+    keymaps = {
+        ["g<leader>"] = oip.openWithQuickLook,
+        ["gp"] = oip.weztermPreview,
     },
 })
 vim.keymap.set("n", "-", ":Oil<CR>", { desc = "Open parent directory" })

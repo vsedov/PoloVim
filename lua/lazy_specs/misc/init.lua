@@ -67,7 +67,7 @@ return {
     },
     {
         "neominimap.nvim",
-        enabled = true,
+        event = "DeferredUIEnter",
         keys = {
             { "<leader>nt", "<cmd>Neominimap toggle<cr>", desc = "Toggle minimap" },
             { "<leader>no", "<cmd>Neominimap on<cr>", desc = "Enable minimap" },

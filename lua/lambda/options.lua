@@ -180,8 +180,8 @@ lambda.config.lsp = {
         lsp = {
             "sourcery",
             "ruff",
-            "basedpyright",
-            -- "jedi_language_server",
+            "jedi_language_server",
+            -- "basedpyright",
             -- "pylsp",
             -- "pylyzer",
             -- "pylance",

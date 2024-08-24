@@ -6,25 +6,33 @@ conf.luasnip()
 conf.snippet()
 conf.neotab()
 conf.autopair()
-require("cmdline")({
-    window = {
-        matchFuzzy = true,
-    },
+local fineline = require("fine-cmdline")
+local fn = fineline.fn
 
-    hl = {
-        default = "Pmenu",
-        selection = "PmenuSel",
-        directory = "Directory",
-        substr = "LineNr",
-    },
+fineline.setup({
+    cmdline = {
+        -- Prompt can influence the completion engine.
+        -- Change it to something that works for you
+        prompt = ": ",
 
-    column = {
-        maxNumber = 6,
-        minWidth = 20,
+        -- Let the user handle the keybindings
+        enable_keymaps = false,
     },
+    popup = {
+        buf_options = {
+            -- Setup a special file type if you need to
+            filetype = "FineCmdlinePrompt",
+        },
+    },
+    hooks = {
+        set_keymaps = function(imap, feedkeys)
+            -- Restore default keybindings...
+            -- Except for `<Tab>`, that's what everyone uses to autocomplete
+            imap("<Esc>", fn.close)
+            imap("<C-c>", fn.close)
 
-    binds = {
-        next = "<Tab>",
-        back = "<S-Tab>",
+            imap("<Up>", fn.up_search_history)
+            imap("<Down>", fn.down_search_history)
+        end,
     },
 })
