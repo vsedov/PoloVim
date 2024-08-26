@@ -287,8 +287,3 @@ harpoon:extend({
     LIST_CREATED = prepopulate,
 })
 harpoon:extend(extensions.builtins.command_on_nav("UfoEnableFold"))
-local harpoonEx = require("harpoonEx")
-harpoon:extend(harpoonEx.extend())
-vim.keymap.set("n", "<leader>sh", function()
-    harpoonEx.telescope_live_grep(harpoon:list())
-end, { desc = "Live grep harpoon files" })

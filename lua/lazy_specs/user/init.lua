@@ -18,6 +18,7 @@ return {
     },
     {
         "arrow.nvim",
+        keys = ";;;",
         after = function()
             require("arrow").setup({
                 show_icons = true,

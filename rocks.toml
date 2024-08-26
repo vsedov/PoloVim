@@ -4,7 +4,7 @@
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
 "rocks.nvim" = "2.38.2"
-"rocks-config.nvim" = "scm"
+"rocks-config.nvim" = "2.2.0"
 "rocks-git.nvim" = "2.0.1"
 "rocks-lazy.nvim" = "scm"
 "lspkind.nvim" = "scm"
@@ -14,7 +14,7 @@ cmp-git= "scm"
 friendly-snippets= "scm"
 "lspsaga.nvim" = "scm"
 "none-ls.nvim" = "scm"
-"lsp_signature.nvim" = {rev = "0.3.1", opt = true}
+"lsp_signature.nvim" = "0.3.1"
 nvim-lspconfig = "0.1.8"
 "mason-lspconfig.nvim" = "1.30.0"
 "mason.nvim" = "1.10.0"
@@ -47,20 +47,20 @@ nvim-spider = "scm"
 tiktoken_core = "0.2.2"
 "render-markdown.nvim"= "6.1.0"
 "rocks-edit.nvim" = "scm"
-"fine-cmdline.nvim" = "scm"
-"hover.nvim" = {rev = "scm", config = false}  
+"hover.nvim" = {rev = "scm", config = false}
 "deadcolumn.nvim" = "1.0.0"
 "freeze-code.nvim" = "0.2.0"
 "fugit2.nvim" = "0.2.1"
 luarocks-build-rust-mlua = "0.2.2"
 neorg = {rev = "9.1.1", opt = true}
-neorg-interim-ls = {rev = "1.2.0", opt = true} 
+neorg-interim-ls = {rev = "1.2.0", opt = true}
 neorg-se = {rev = "1.1.10", opt = true}
 nvim-nio = "1.10.0"
 "image.nvim" = "1.3.0"
 "rocks-dev.nvim" = "1.5.0"
 "glow.nvim" = "0.2.0"
-"noice.nvim" = {rev="4.5.0", opt = true}
+toml = "0.4.0"
+luv = "1.48.0"
 
 [plugins.luasnip]
 version = "2.3.0"
@@ -151,7 +151,6 @@ git = "horriblename/lzn-auto-require"
 [plugins.luasnip-snippets]
 git = "mireq/luasnip-snippets"
 rev = "0.1.2"
-
 
 [plugins.abstract-autocmds]
 git = "abstract-ide/abstract-autocmds"
@@ -588,7 +587,6 @@ opt = true
 [plugins."multicursors.nvim"]
 version = "2.0.0"
 cmd = ["MCstart", "MCvisual", "MCpattern", "MCvisualPattern", "MCunderCursor", "MCclear"]
-opt = true
 
 [plugins."nvim-neoclip.lua"]
 git = "acksld/nvim-neoclip.lua"
@@ -886,6 +884,7 @@ ft = ["tex", "plaintex", "bib"]
 
 [plugins."arrow.nvim"]
 git = "otavioschwanck/arrow.nvim"
+opt = true
 
 [plugins.nvim-treesitter]
 git = "nvim-treesitter/nvim-treesitter"
@@ -932,18 +931,14 @@ git = "mimikun/oil-image-preview.nvim"
 [plugins."bufex.nvim"]
 git = "tomiis4/bufex.nvim"
 
-[plugins.pendulum-nvim]
-git = "ptdewey/pendulum-nvim"
-rev = "v1.0.0"
-
-[plugins.harpoonex]
-git = "mike-jl/harpoonex"
+[plugins."cmdline.nvim"]
+git = "vzze/cmdline.nvim"
 
 
-# [bundles.startup]
-# items = [
-#     # "abstract-autocmds",
-# ]
+[bundles.startup]
+items = [
+    "abstract-autocmds",
+]
 
 [bundles.completion] # Create a bundle called `lsp`
 items = [
@@ -958,7 +953,6 @@ items = [
     "cmp-buffer",
     "friendly-snippets",
     "luasnip-snippets",
-    "fine-cmdline.nvim",
     "luasnip-latex-snippets",
     "nvim-autopairs",
     "nvim-scissors",

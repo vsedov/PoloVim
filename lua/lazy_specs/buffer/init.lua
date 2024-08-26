@@ -1,7 +1,7 @@
 return {
     {
         "reach.nvim",
-        cmd = "ReachOpen",
+        event = "DeferredUIEnter",
         after = function()
             require("reach").setup({
                 notifications = true,

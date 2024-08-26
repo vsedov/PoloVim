@@ -1,11 +1,11 @@
 return {
-    {
-        "noice.nvim",
-        event = "DeferredUIEnter",
-        after = function()
-            require("lazy_specs.folke.noice").noice_setup()
-        end,
-    },
+    -- {
+    --     "noice.nvim",
+    --     event = "DeferredUIEnter",
+    --     after = function()
+    --         require("lazy_specs.folke.noice").noice_setup()
+    --     end,
+    -- },
     {
         "which-key.nvim",
         event = "DeferredUIEnter",

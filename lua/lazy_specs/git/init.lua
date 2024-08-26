@@ -2,7 +2,7 @@ local conf = require("modules.git.config")
 return {
     {
         "octo.nvim",
-        opt = true,
+        cmd = "Octo",
         after = function()
             require("octo").setup({})
         end,

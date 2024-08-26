@@ -485,7 +485,7 @@ M.load_dotfiles = function()
         local themes = require("telescope.themes")
 
         local results = {}
-        local dotfiles = require("core.global").home .. "/.dotfiles"
+        local dotfiles = require("core.globals").home .. "/.dotfiles"
         for file in io.popen('find "' .. dotfiles .. '" -type f'):lines() do
             if not file:find("fonts") then
                 table.insert(results, file)

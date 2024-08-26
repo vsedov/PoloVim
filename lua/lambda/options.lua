@@ -4,7 +4,7 @@
 --    │                                                                    │
 --    ╰────────────────────────────────────────────────────────────────────╯
 
-local use_noice = true
+local use_noice = false -- completely disabled this
 
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
@@ -23,7 +23,6 @@ lambda.config = {
     use_lastplace = true,
     do_you_want_lag = false, -- Enable Extra regex, -- Fuck it
     telescope_theme = "custom_no_borders", -- custom_bottom_no_borders float_all_borders
-    record_your_self = false, -- waka time track, also might not be needed
     neorg_auto_commit = false,
     loaded_confirm_quit = false, -- this is not needed
     --  ──────────────────────────────────────────────────────────────────────
@@ -38,7 +37,7 @@ lambda.config.custom = {
     custom_save_clipboard = false,
 }
 lambda.config.ai = {
-    model = "gpt-4",
+    model = "gpt-4o",
     codeium = {
         use_codeium = use_codium,
         use_codeium_cmp = use_codium_cmp,
@@ -79,8 +78,6 @@ lambda.config.extra_search = {
 lambda.config.buffer = {
     use_sticky_buf = true,
     use_bufferline = false, -- we use barbar
-    use_tabscope = false, -- we are going to use scope.nvim
-    use_hbac = false,
 }
 lambda.config.editor = {
     hydra = {
@@ -319,10 +316,10 @@ lambda.config.folke = {
     noice = {
         enable = use_noice,
         lsp = {
-            use_noice_signature = true, -- I would very much like to use this,l but for now this is broken
-            use_noice_hover = true,
-            use_markdown = true,
-            use_documentation = true,
+            use_noice_signature = false, -- I would very much like to use this,l but for now this is broken
+            use_noice_hover = false,
+            use_markdown = false,
+            use_documentation = false,
         },
     },
     edge = {
