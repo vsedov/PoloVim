@@ -8,8 +8,8 @@
 "rocks-git.nvim" = "2.0.1"
 "rocks-lazy.nvim" = "scm"
 "lspkind.nvim" = "scm"
-"kanagawa.nvim"= {rev ="scm", opt =true}
-nvim-notify = {rev = "3.13.5", opt = true}
+"kanagawa.nvim"= "scm"
+nvim-notify = "3.13.5"
 cmp-git= "scm"
 friendly-snippets= "scm"
 "lspsaga.nvim" = "scm"
@@ -18,62 +18,70 @@ friendly-snippets= "scm"
 nvim-lspconfig = "0.1.8"
 "mason-lspconfig.nvim" = "1.30.0"
 "mason.nvim" = "1.10.0"
-"glance.nvim" = {rev = "scm", cmd = "Glance"}
+"glance.nvim" = "scm"
 "better-escape.nvim" = "2.3.2"
-nvim-cmp = {rev = "scm", opt = true}
-"actions-preview.nvim" = {rev = "scm", opt = true}
-"inc-rename.nvim" = {rev = "scm", opt = true}
-treesj = {rev = "scm", opt = true}
-"dial.nvim" = {rev = "0.4.0", opt =true}
-"comment-box.nvim" = {rev = "1.0.2", opt = true}
-"comment.nvim" = {rev = "0.8.0", opt = true}
-"flash.nvim" = {rev = "2.1.0", opt = true}
-"leap.nvim" = {rev ="scm", opt = true}
+nvim-cmp = "scm"
+"actions-preview.nvim" = "scm"
+"inc-rename.nvim" = "scm"
+treesj = "scm"
+"dial.nvim" = "0.4.0"
+"comment-box.nvim" = "1.0.2"
+"comment.nvim" = "0.8.0"
+"flash.nvim" = "2.1.0"
 "edgy.nvim" = "1.10.2"
-"mini.visits" = {rev ="0.13.0", opt = true}
-nvim-ufo = {rev = "1.4.0", opt = true}
-"dropbar.nvim" = "8.6.0"
+"mini.visits" = "0.13.0"
+"dropbar.nvim" = "8.6.1"
 "fidget.nvim" = "1.4.1"
-"hlchunk.nvim" = {rev ="1.1.0", opt = true}
-"indent-blankline.nvim" = {rev ="3.7.2", opt = true}
+"indent-blankline.nvim" = "3.7.2"
 nvim-web-devicons= "0.100"
 "nui.nvim" = "0.3.0"
-"oil.nvim" = "2.12.0"
-"bufdelete.nvim" = {rev = "scm", opt = true}
+"oil.nvim" = "2.12.1"
+"bufdelete.nvim" = "scm"
 nvim-fzf = "scm"
 "papis.nvim" = "0.6.1"
 nvim-spider = "scm"
 "heirline.nvim" = "1.0.6"
 tiktoken_core = "0.2.2"
-"render-markdown.nvim"= "6.1.0"
+"render-markdown.nvim"= "6.2.0"
 "rocks-edit.nvim" = "scm"
-"hover.nvim" = {rev = "scm", config = false}
 "deadcolumn.nvim" = "1.0.0"
 "freeze-code.nvim" = "0.2.0"
 "fugit2.nvim" = "0.2.1"
 luarocks-build-rust-mlua = "0.2.2"
-neorg = {rev = "9.1.1", opt = true}
-neorg-interim-ls = {rev = "1.2.0", opt = true}
-neorg-se = {rev = "1.1.10", opt = true}
+neorg = "9.1.1"
+neorg-interim-ls = "1.2.0"
+neorg-se = "1.1.10"
 nvim-nio = "1.10.0"
 "image.nvim" = "1.3.0"
 "rocks-dev.nvim" = "1.5.0"
 "glow.nvim" = "0.2.0"
 toml = "0.4.0"
 luv = "1.48.0"
+luasnip = "2.3.0"
+dressing.nvim = "2.2.2"
+"hydra.nvim" = "1.0.2"
+"plenary.nvim" = "scm"
+lzn-auto-require= "0.1.0"
+nvim-autopairs= "scm"
+cmp_luasnip = "scm"
 
-[plugins.luasnip]
-version = "2.3.0"
-opt = true
 
-[plugins."dressing.nvim" ]
-version = "2.2.2"
-opt = true
+# [plugins.cmp-nvim-lua]
+# git = "hrsh7th/cmp-nvim-lua"
+# [plugins.cmp-spell]
+# git = "f3fora/cmp-spell"
+# [plugins.cmp_luasnip]
+# git = "saadparwaiz1/cmp_luasnip"
+# [plugins.cmp]
+# git = "petertriho/cmp-git"
+# [plugins."diagnostic-window.nvim"]
+# git = "cseickel/diagnostic-window.nvim"
+# [plugins."definition-or-references.nvim"]
+# git = "kostkabrukowa/definition-or-references.nvim"
 
 [plugins.promise-async ]
 version = "scm"
 opt = true
-
 
 [plugins."cybu.nvim" ]
 git = "ghillb/cybu.nvim"
@@ -88,142 +96,82 @@ git = "nvim-neo-tree/neo-tree.nvim"
 rev = "3.26"
 branch = "main"
 
-[plugins."hydra.nvim" ]
-git = "nvimtools/hydra.nvim"
-rev = "v1.0.2"
-
-[plugins."plenary.nvim" ]
-git = "nvim-lua/plenary.nvim"
-rev = "v0.1.4"
-
-
 [plugins.cmp-buffer]
 git = "hrsh7th/cmp-buffer"
+rev = "3022dbc9166796b644a841a02de8dd1cc1d311fa"
 
 [plugins.cmp-path]
 git = "hrsh7th/cmp-path"
+rev = "91ff86cd9c29299a64f968ebb45846c485725f23"
 
 [plugins.cmp-nvim-lsp ]
 git = "hrsh7th/cmp-nvim-lsp"
-
-[plugins.cmp-async-path]
-git = "felipelema/cmp-async-path"
-rev = "main"
-opt = true
+rev = "39e2eda76828d88b773cc27a3f61d2ad782c922d"
 
 [plugins.cmp-omni]
 git = "hrsh7th/cmp-omni"
-
-[plugins.cmp-luasnip]
-git = "saadparwaiz1/cmp_luasnip"
-rev = "main"
-opt = true
+rev = "4ef610bbd85a5ee4e97e09450c0daecbdc60de86"
 
 [plugins.cmp-vimtex]
 git = "micangl/cmp-vimtex"
-
-
-[plugins.luasnip-latex-snippets]
-git = "iurimateus/luasnip-latex-snippets.nvim"
-rev = "main"
-
-[plugins.nvim-autopairs]
-git = "windwp/nvim-autopairs"
-version = "scm"
-rev = "main"
-event = "InsertEnter"
-
-[plugins.nvim-scissors]
-git = "chrisgrieser/nvim-scissors"
-rev = "main"
-
-[plugins.vim-dadbod-completion]
-git = "kristijanhusak/vim-dadbod-completion"
-rev = "main"
-ft  = "sql"
+rev = "5283bf9108ef33d41e704027b9ef22437ce7a15b"
 
 [plugins."neotab.nvim"]
 git = "kawre/neotab.nvim"
+rev = "6c6107dddaa051504e433608f59eca606138269b"
 
-[plugins.lzn-auto-require]
-git = "horriblename/lzn-auto-require"
-
-[plugins.luasnip-snippets]
-git = "mireq/luasnip-snippets"
-rev = "0.1.2"
-
-[plugins.abstract-autocmds]
-git = "abstract-ide/abstract-autocmds"
-
-[plugins."fileline.nvim"]
-git = "lewis6991/fileline.nvim"
+[plugins.cmp-async-path]
+git = "felipelema/cmp-async-path"
+rev = "9d581eec5acf812316913565c135b0d1ee2c9a71"
+opt = true
 
 [plugins."garbage-day.nvim"]
 git = "zeioth/garbage-day.nvim"
 rev = "v1.3.0"
-opt = true
-
-[plugins."diagflow.nvim"]
-git = "dgagn/diagflow.nvim"
-opt = true
 
 [plugins.lsp-command]
 git = "ii14/lsp-command"
-cmd = "Lsp"
-
-[plugins."mason-null-ls.nvim"]
-git = "jay-babu/mason-null-ls.nvim"
-rev = "v2.6.0"
-
-[plugins.cmp-nvim-lua]
-git = "hrsh7th/cmp-nvim-lua"
-
-[plugins.cmp-spell]
-git = "f3fora/cmp-spell"
-
-[plugins.cmp_luasnip]
-git = "saadparwaiz1/cmp_luasnip"
-
-[plugins.cmp]
-git = "petertriho/cmp-git"
-
-[plugins.better-diagnostic-virtual-text]
-git = "sontungexpt/better-diagnostic-virtual-text"
-opt = true
-
-[plugins."diagnostic-window.nvim"]
-git = "cseickel/diagnostic-window.nvim"
+rev = "b2d130d0358f7d64cd967c918182bce25944737b"
 
 [plugins."troublesum.nvim"]
 git = "ivanjermakov/troublesum.nvim"
-event = "LspAttach"
+rev = "b00301bb565bfcb6fcfa41f2012e43a0528da65b"
 
-[plugins."definition-or-references.nvim"]
-git = "kostkabrukowa/definition-or-references.nvim"
-
+[plugins.better-diagnostic-virtual-text]
+git = "sontungexpt/better-diagnostic-virtual-text"
+rev = "eb3a77e714aa6c295bdb4f074fccbda637090f6e"
 
 [plugins.nvim-dd]
 git = "yorickpeterse/nvim-dd"
-event = "LspAttach"
+rev = "9c21ffeffbf0a99e5614f193455700f355d0951f"
+
+# [plugins.luasnip-snippets]
+# git = "mireq/luasnip-snippets"
+# [plugins."luasnip-latex-snippets.nvim"]
+# git = "iurimateus/luasnip-latex-snippets.nvim"
+
+[plugins."mason-null-ls.nvim"]
+git = "jay-babu/mason-null-ls.nvim"
+rev = "de19726de7260c68d94691afb057fa73d3cc53e7"
 
 [plugins."muren.nvim"]
 git = "acksld/muren.nvim"
-cmd = [ "MurenToggle", "MurenOpen", "MurenClose", "MurenFresh", ""]
-
-
-# TODO: LAZYLOAD THIS
-[plugins."ssr.nvim"]
-git = "cshuaimin/ssr.nvim"
+rev = "818c09097dba1322b2ca099e35f7471feccfef93"
 opt = true
 
+[plugins."ssr.nvim"]
+git = "cshuaimin/ssr.nvim"
+rev = "bb323ba621ac647b4ac5638b47666e3ef3c279e1"
+opt = true
 
 [plugins."grug-far.nvim"]
 git = "magicduck/grug-far.nvim"
-cmd = "GrugFar"
+rev = "12705b8c6bb5abd8c7a873126087fae9b6342421"
 opt = true
 
 [plugins."zoxide.vim"]
 git = "nanotee/zoxide.vim"
+rev = "b1e70b6fc1682a83929aee63680d2b43456fe9a5"
 opt = true
 
 [plugins."telescope.nvim" ]
@@ -414,10 +362,6 @@ opt = true
 git = "m-demare/hlargs.nvim"
 opt = true
 
-# [plugins.nvim-treesitter-refactor]
-# git = "nvim-treesitter/nvim-treesitter-refactor"
-# opt = true
-
 [plugins.nvim-treesitter-endwise]
 git = "rrethy/nvim-treesitter-endwise"
 opt = true
@@ -447,558 +391,527 @@ rev = "v2.1"
 git = "nvim-telescope/telescope-live-grep-args.nvim"
 rev = "v1.1.0^{}"
 
-[plugins.telescope-sg]
-git = "marskey/telescope-sg"
-
-[plugins."telescope-frecency.nvim"]
-git = "nvim-telescope/telescope-frecency.nvim"
-
-[plugins."telescope-file-browser.nvim"]
-git = "nvim-telescope/telescope-file-browser.nvim"
-
-[plugins."telescope-fzf-native.nvim"]
-git = "nvim-telescope/telescope-fzf-native.nvim"
-build = "make"
-
-[plugins."easypick.nvim"]
-git = "axkirillov/easypick.nvim"
-rev = "v0.6.0"
-opt = true
-
-[plugins."telescope-egrepify.nvim"]
-git = "jsongerber/telescope-egrepify.nvim"
-# ──────────────────────────────────────────────────────────────────────
-[plugins."gx.nvim"]
-git = "chrishrb/gx.nvim"
-rev = "v0.7.0"
-opt = true
-
-[plugins."toggle-overlength.nvim"]
-git = "fouladi/toggle-overlength.nvim"
-opt = true
-
-[plugins."hunk.nvim"]
-git = "julienvincent/hunk.nvim"
-rev = "v1.4.0"
-opt = true
-
-[plugins."lspmark.nvim"]
-git = "tristone13th/lspmark.nvim"
-opt = true
-
-[plugins."modes.nvim"]
-git = "mvllow/modes.nvim"
-rev = "v0.2.1"
-opt = true
-
-[plugins."moody.nvim"]
-git = "svampkorg/moody.nvim"
-opt = true
-
-[plugins."neominimap.nvim"]
-git = "isrothy/neominimap.nvim"
-rev = "v3.3.2"
-branch = "main"
-
-[plugins."none-ls-autoload.nvim"]
-git = "zeioth/none-ls-autoload.nvim"
-rev = "v1.0.0"
-opt = true
-
-[plugins."calculator.nvim"]
-git = "vzze/calculator.nvim"
-
-[plugins."github-preview.nvim"]
-git = "wallpants/github-preview.nvim"
-rev = "v1.9.0"
-opt = true
-
-[plugins."luau-lsp.nvim"]
-git = "lopi-py/luau-lsp.nvim"
-rev = "v1.5.0"
-opt = true
-
-[plugins."portal.nvim"]
-git = "cbochs/portal.nvim"
-rev = "v0.9.0"
-opt = true
-
-[plugins."nerdy.nvim"]
-git = "2kabhishek/nerdy.nvim"
-rev = "1.2"
-opt = true
-
-[plugins."bmessages.nvim"]
-git = "ariel-frischer/bmessages.nvim"
-
-[plugins."open-handlers.nvim"]
-git = "mrshmllow/open-handlers.nvim"
-opt = true
-
-[plugins."nvim-rgflow.lua"]
-git = "mangelozzi/nvim-rgflow.lua"
-opt = true
-
-[plugins."scrollofffraction.nvim"]
-git = "nkakouros-original/scrollofffraction.nvim"
-opt = true
-
-[plugins."expand.nvim"]
-git = "sam-programs/expand.nvim"
-opt = true
-
-[plugins."kitty-scrollback.nvim"]
-git = "mikesmithgh/kitty-scrollback.nvim"
-rev = "v5.0.0"
-
-[plugins."urlview.nvim"]
-git = "axieax/urlview.nvim"
-rev = "v0.6-compat"
-opt = true
-
-[plugins."indent.nvim"]
-git = "sam-programs/indent.nvim"
-opt = true
-
-[plugins."smart-splits.nvim"]
-version = "1.6.0"
-opt = true
-
-[plugins."bufresize.nvim"]
-git = "kwkarlwang/bufresize.nvim"
-opt = true
-
-[plugins."winshift.nvim"]
-git = "sindrets/winshift.nvim"
-opt = true
-
-[plugins.vim-maximizer]
-git = "szw/vim-maximizer"
-opt = true
-
-[plugins."yanky.nvim"]
-version = "2.0.0"
-opt = true
-
-[plugins."yanki.nvim"]
-git = "romanozumbe/yanki.nvim"
-opt = true
-
-[plugins."multicursors.nvim"]
-version = "2.0.0"
-cmd = ["MCstart", "MCvisual", "MCpattern", "MCvisualPattern", "MCunderCursor", "MCclear"]
-
-[plugins."nvim-neoclip.lua"]
-git = "acksld/nvim-neoclip.lua"
-opt = true
-
-[plugins."img-clip.nvim"]
-git = "hakonharnes/img-clip.nvim"
-rev = "v0.4.1"
-opt = true
-
-[plugins.undotree]
-git = "mbbill/undotree"
-rev = "rel_6.1"
-opt = true
-
-[plugins.vim-camelsnek]
-git = "nicwest/vim-camelsnek"
-opt = true
-
-[plugins."text-case.nvim"]
-git = "johmsalas/text-case.nvim"
-rev = "v1.2.0"
-opt = true
-
-[plugins."cool-substitute.nvim"]
-git = "otavioschwanck/cool-substitute.nvim"
-opt = true
-
-[plugins.nvim-alt-substitute]
-git = "chrisgrieser/nvim-alt-substitute"
-opt = true
-
-[plugins."substitute.nvim"]
-version = "2.0.0"
-opt = true
-
-[plugins."smartyank.nvim"]
-git = "ibhagwan/smartyank.nvim"
-opt = true
-
-[plugins."octo.nvim"]
-git = "pwntester/octo.nvim"
-opt = true
-
-
-[plugins."linediff.vim"]
-git = "andrewradev/linediff.vim"
-rev = "v0.3.0"
-opt = true
-
-[plugins."gitlinker.nvim"]
-version = "4.13.1"
-opt = true
-
-[plugins."co-author.nvim"]
-git = "2kabhishek/co-author.nvim"
-opt = true
-
-[plugins.tmpclone-nvim]
-git = "danielhp95/tmpclone-nvim"
-opt = true
-
-[plugins."git-conflict.nvim"]
-git = "akinsho/git-conflict.nvim"
-rev = "v2.0.0"
-opt = true
-
-[plugins.ne]
-git = "neogitorg/neogit"
-rev = "v1.0.0"
-opt = true
-
-[plugins.neogit]
-version = "1.0.0"
-opt = true
-
-[plugins."gitsigns.nvim"]
-git = "lewis6991/gitsigns.nvim"
-rev = "v0.9.0"
-opt = true
-
-[plugins."diffview.nvim"]
-version = "scm"
-opt = true
-
-[plugins."gitignore.nvim"]
-git = "wintermute-cell/gitignore.nvim"
-opt = true
-
-[plugins."gist.nvim"]
-git = "rawnly/gist.nvim"
-rev = "0.0.6"
-opt = true
-
-[plugins.nvim-jqx]
-git = "gennaro-tedesco/nvim-jqx"
-rev = "v0.1.4^{}"
-opt = true
-
-
-[plugins."term-edit.nvim"]
-git = "chomosuke/term-edit.nvim"
-rev = "v1.3.1"
-opt = true
-
-[plugins."date-time-inserter.nvim"]
-git = "antonvanassche/date-time-inserter.nvim"
-opt = true
-
-[plugins.nvim-fundo]
-git = "kevinhwang91/nvim-fundo"
-opt = true
-
-[plugins.nvim-genghis]
-git = "chrisgrieser/nvim-genghis"
-opt = true
-
-[plugins.vim-startuptime]
-git = "dstein64/vim-startuptime"
-rev = "v4.5.0"
-opt = true
-
-[plugins."capslock.nvim"]
-git = "barklan/capslock.nvim"
-rev = "v1.4.1^{}"
-opt = true
-
-[plugins."suda.vim"]
-git = "lambdalisue/suda.vim"
-rev = "v1.2.2"
-opt = true
-
-[plugins."pre-commit.nvim"]
-git = "ttibsi/pre-commit.nvim"
-rev = "v1.0.0^{}"
-opt = true
-
-[plugins.vim-translator]
-git = "voldikss/vim-translator"
-opt = true
-
-[plugins."qf_helper.nvim"]
-git = "stevearc/qf_helper.nvim"
-opt = true
-
-[plugins."qfview.nvim"]
-git = "ashfinal/qfview.nvim"
-opt = true
-
-
-[plugins."toggleterm.nvim"]
-version = "2.12.0"
-opt = true
-
-[plugins."markdown-preview.nvim"]
-git = "iamcco/markdown-preview.nvim"
-rev = "v0.0.9^{}"
-opt = true
-
-[plugins.tabular]
-version = "0.4"
-opt = true
-
-[plugins.vim-markdown]
-git = "plasticboy/vim-markdown"
-rev = "2.0.0"
-opt = true
-
-[plugins.vim-grammarous]
-git = "rhysd/vim-grammarous"
-opt = true
-
-[plugins."paperplanes.nvim"]
-version = "0.1.6"
-opt = true
-
-[plugins."yazi.nvim"]
-version = "5.7.1"
-opt = true
-
-[plugins."watch.nvim"]
-git = "makaze/watch.nvim"
-rev = "v0.4.1"
-opt = true
-
-[plugins."quicker.nvim"]
-git = "stevearc/quicker.nvim"
-rev = "v1.0.0"
-
-[plugins."chatgpt.nvim"]
-git = "jackmort/chatgpt.nvim"
-rev = "v0.1.1-alpha"
-opt = true
-
-[plugins."codecompanion.nvim"]
-git = "olimorris/codecompanion.nvim"
-opt = true
-
-
-[plugins."copilot.lua"]
-version = "scm"
-opt = true
-
-[plugins."copilot.vim"]
-git = "github/copilot.vim"
-rev = "v1.9.4"
-opt = true
-
-[plugins."ai.vim"]
-git = "mikesoylu/ai.vim"
-opt = true
-
-[plugins."sg.nvim"]
-git = "sourcegraph/sg.nvim"
-rev = "v1.1.0"
-
-[plugins."compiler.nvim"]
-git = "zeioth/compiler.nvim"
-rev = "v3.3.8"
-opt = true
-
-[plugins."officer.nvim"]
-git = "pianocomposer321/officer.nvim"
-opt = true
-
-[plugins.nvim-coverage]
-git = "andythigpen/nvim-coverage"
-
-
-[plugins."compiler-explorer.nvim"]
-git = "krady21/compiler-explorer.nvim"
-
-[plugins.neogen]
-git = "danymat/neogen"
-rev = "2.9.2"
-opt = true
-
-[plugins."codegpt.nvim"]
-version = "scm"
-opt = true
-
-[plugins."wtf.nvim"]
-git = "piersolenski/wtf.nvim"
-opt = true
-
-[plugins."browse.nvim"]
-git = "lalitmee/browse.nvim"
-opt = true
-
-[plugins."updoc.nvim"]
-git = "loganswartz/updoc.nvim"
-opt = true
-
-[plugins.vim-devdocs]
-git = "romainl/vim-devdocs"
-opt = true
-
-[plugins."zeavim.vim"]
-git = "kabbamine/zeavim.vim"
-rev = "v1.4"
-opt = true
-
-[plugins.nvim-docs-view]
-git = "amrbashir/nvim-docs-view"
-opt = true
-
-[plugins."refgo.nvim"]
-git = "prichrd/refgo.nvim"
-opt = true
-
-[plugins."overseer.nvim"]
-git = "stevearc/overseer.nvim"
-rev = "v1.3.1"
-
-[plugins."avante.nvim"]
-git = "yetone/avante.nvim"
-build = "make"
-
-[plugins."nui-components.nvim"]
-git = "grapp-dev/nui-components.nvim"
-rev = "v1.5.2"
-
-[plugins."onedarkpro.nvim"]
-git = "olimorris/onedarkpro.nvim"
-rev = "treesitter-0.9.2"
-
-[plugins.vim-rooter]
-git = "airblade/vim-rooter"
-event = "DeferredUIEnter"
-
-[plugins.vimtex]
-git = "lervag/vimtex"
-rev = "v2.9"
-ft = ["tex", "plaintex", "bib"]
-
-[plugins."arrow.nvim"]
-git = "otavioschwanck/arrow.nvim"
-opt = true
-
-[plugins.nvim-treesitter]
-git = "nvim-treesitter/nvim-treesitter"
-rev = "v0.9.2^{}"
-
-[plugins.neorg-telescope]
-git = "nvim-neorg/neorg-telescope"
-rev = "v1.2.3"
-opt = true
-
-[plugins.neorg-hop-extras]
-git = "phenax/neorg-hop-extras"
-
-[plugins."neorg-roam.nvim"]
-git = "jarvismkennedy/neorg-roam.nvim"
-
-[plugins.neorg-exec]
-git = "laher/neorg-exec"
-
-[plugins.neorg-templates-draft]
-git = "pysan3/neorg-templates-draft"
-rev = "v2.0.3"
-
-[plugins."refactoring.nvim"]
-git = "theprimeagen/refactoring.nvim"
-
-[plugins."python-copy-reference.vim"]
-git = "ranelpadon/python-copy-reference.vim"
-
-[plugins."direnv.vim"]
-git = "direnv/direnv.vim"
-
-[plugins."requirements.txt.vim"]
-git = "raimon49/requirements.txt.vim"
-rev = "v-1.9.0^{}"
-
-[plugins.nvim-conda]
-git = "kmontocam/nvim-conda"
-rev = "v0.2.1"
-
-[plugins."oil-image-preview.nvim"]
-git = "mimikun/oil-image-preview.nvim"
-
-[plugins."bufex.nvim"]
-git = "tomiis4/bufex.nvim"
-
-[plugins."cmdline.nvim"]
-git = "vzze/cmdline.nvim"
-
-
-[bundles.startup]
-items = [
-    "abstract-autocmds",
-]
-
-[bundles.completion] # Create a bundle called `lsp`
-items = [
-    "nvim-cmp",
-    "luasnip",
-    "cmp-async-path",
-    "cmp-path",
-    "cmp-omni",
-    "cmp-git",
-    "cmp-luasnip",
-    "cmp-vimtex",
-    "cmp-buffer",
-    "friendly-snippets",
-    "luasnip-snippets",
-    "luasnip-latex-snippets",
-    "nvim-autopairs",
-    "nvim-scissors",
-    "neotab.nvim"
-]
-
-[bundles.lsp]
-items = [
-    "nvim-lspconfig",
-    "mason-lspconfig.nvim",
-    "mason.nvim",
-    "lsp-command",
-    "mason-null-ls.nvim",
-    "glance.nvim",
-    "lspsaga.nvim",
-    "none-ls.nvim",
-    "definition-or-references.nvim",
-]
-
-[bundles.ui]
-items = [
-  "dropbar.nvim",
-  "heirline.nvim",
-  "neominimap.nvim",
-  "neo-tree.nvim",
-]
-
-[bundles.misc]
-items = [
-"nvim-surround",
-"nvim-spider",
-"dmacro.nvim",
-"oil.nvim"
-]
-
-[bundles.treesitter]
-items = [
-"nvim-treesitter",
-"nvim-treesitter-textobjects",
-"rainbow-delimiters.nvim"
-]
-
-[bundles.search]
-items = [
-"telescope.nvim"
-]
+# [plugins.telescope-sg]
+# git = "marskey/telescope-sg"
+
+# [plugins."telescope-frecency.nvim"]
+# git = "nvim-telescope/telescope-frecency.nvim"
+#
+# [plugins."telescope-file-browser.nvim"]
+# git = "nvim-telescope/telescope-file-browser.nvim"
+#
+# [plugins."telescope-fzf-native.nvim"]
+# git = "nvim-telescope/telescope-fzf-native.nvim"
+# build = "make"
+#
+# [plugins."easypick.nvim"]
+# git = "axkirillov/easypick.nvim"
+# rev = "v0.6.0"
+# opt = true
+#
+# [plugins."telescope-egrepify.nvim"]
+# git = "jsongerber/telescope-egrepify.nvim"
+# # ──────────────────────────────────────────────────────────────────────
+# [plugins."gx.nvim"]
+# git = "chrishrb/gx.nvim"
+# rev = "v0.7.0"
+# opt = true
+#
+# [plugins."toggle-overlength.nvim"]
+# git = "fouladi/toggle-overlength.nvim"
+# opt = true
+#
+# [plugins."hunk.nvim"]
+# git = "julienvincent/hunk.nvim"
+# rev = "v1.4.0"
+# opt = true
+#
+# [plugins."lspmark.nvim"]
+# git = "tristone13th/lspmark.nvim"
+# opt = true
+#
+# [plugins."modes.nvim"]
+# git = "mvllow/modes.nvim"
+# rev = "v0.2.1"
+# opt = true
+#
+# [plugins."moody.nvim"]
+# git = "svampkorg/moody.nvim"
+# opt = true
+#
+# [plugins."neominimap.nvim"]
+# git = "isrothy/neominimap.nvim"
+# rev = "v3.3.2"
+# branch = "main"
+#
+# [plugins."none-ls-autoload.nvim"]
+# git = "zeioth/none-ls-autoload.nvim"
+# rev = "v1.0.0"
+# opt = true
+#
+# [plugins."calculator.nvim"]
+# git = "vzze/calculator.nvim"
+#
+# [plugins."github-preview.nvim"]
+# git = "wallpants/github-preview.nvim"
+# rev = "v1.9.0"
+# opt = true
+#
+# [plugins."luau-lsp.nvim"]
+# git = "lopi-py/luau-lsp.nvim"
+# rev = "v1.5.0"
+# opt = true
+#
+# [plugins."portal.nvim"]
+# git = "cbochs/portal.nvim"
+# rev = "v0.9.0"
+# opt = true
+#
+# [plugins."nerdy.nvim"]
+# git = "2kabhishek/nerdy.nvim"
+# rev = "1.2"
+# opt = true
+#
+# [plugins."bmessages.nvim"]
+# git = "ariel-frischer/bmessages.nvim"
+#
+# [plugins."open-handlers.nvim"]
+# git = "mrshmllow/open-handlers.nvim"
+# opt = true
+#
+# [plugins."nvim-rgflow.lua"]
+# git = "mangelozzi/nvim-rgflow.lua"
+# opt = true
+#
+# [plugins."scrollofffraction.nvim"]
+# git = "nkakouros-original/scrollofffraction.nvim"
+# opt = true
+#
+# [plugins."expand.nvim"]
+# git = "sam-programs/expand.nvim"
+# opt = true
+#
+# [plugins."kitty-scrollback.nvim"]
+# git = "mikesmithgh/kitty-scrollback.nvim"
+# rev = "v5.0.0"
+#
+# [plugins."urlview.nvim"]
+# git = "axieax/urlview.nvim"
+# rev = "v0.6-compat"
+# opt = true
+#
+# [plugins."indent.nvim"]
+# git = "sam-programs/indent.nvim"
+# opt = true
+#
+# [plugins."smart-splits.nvim"]
+# version = "1.6.0"
+# opt = true
+#
+# [plugins."bufresize.nvim"]
+# git = "kwkarlwang/bufresize.nvim"
+# opt = true
+#
+# [plugins."winshift.nvim"]
+# git = "sindrets/winshift.nvim"
+# opt = true
+#
+# [plugins.vim-maximizer]
+# git = "szw/vim-maximizer"
+# opt = true
+#
+# [plugins."yanky.nvim"]
+# version = "2.0.0"
+# opt = true
+#
+# [plugins."yanki.nvim"]
+# git = "romanozumbe/yanki.nvim"
+# opt = true
+#
+# [plugins."multicursors.nvim"]
+# version = "2.0.0"
+# cmd = ["MCstart", "MCvisual", "MCpattern", "MCvisualPattern", "MCunderCursor", "MCclear"]
+#
+# [plugins."nvim-neoclip.lua"]
+# git = "acksld/nvim-neoclip.lua"
+# opt = true
+#
+# [plugins."img-clip.nvim"]
+# git = "hakonharnes/img-clip.nvim"
+# rev = "v0.4.1"
+# opt = true
+#
+# [plugins.undotree]
+# git = "mbbill/undotree"
+# rev = "rel_6.1"
+# opt = true
+#
+# [plugins.vim-camelsnek]
+# git = "nicwest/vim-camelsnek"
+# opt = true
+#
+# [plugins."text-case.nvim"]
+# git = "johmsalas/text-case.nvim"
+# rev = "v1.2.0"
+# opt = true
+#
+# [plugins."cool-substitute.nvim"]
+# git = "otavioschwanck/cool-substitute.nvim"
+# opt = true
+#
+# [plugins.nvim-alt-substitute]
+# git = "chrisgrieser/nvim-alt-substitute"
+# opt = true
+#
+# [plugins."substitute.nvim"]
+# version = "2.0.0"
+# opt = true
+#
+# [plugins."smartyank.nvim"]
+# git = "ibhagwan/smartyank.nvim"
+# opt = true
+#
+# [plugins."octo.nvim"]
+# git = "pwntester/octo.nvim"
+# opt = true
+#
+#
+# [plugins."linediff.vim"]
+# git = "andrewradev/linediff.vim"
+# rev = "v0.3.0"
+# opt = true
+#
+# [plugins."gitlinker.nvim"]
+# version = "4.13.1"
+# opt = true
+#
+# [plugins."co-author.nvim"]
+# git = "2kabhishek/co-author.nvim"
+# opt = true
+#
+# [plugins.tmpclone-nvim]
+# git = "danielhp95/tmpclone-nvim"
+# opt = true
+#
+# [plugins."git-conflict.nvim"]
+# git = "akinsho/git-conflict.nvim"
+# rev = "v2.0.0"
+# opt = true
+#
+# [plugins.ne]
+# git = "neogitorg/neogit"
+# rev = "v1.0.0"
+# opt = true
+#
+# [plugins.neogit]
+# version = "1.0.0"
+# opt = true
+#
+# [plugins."gitsigns.nvim"]
+# git = "lewis6991/gitsigns.nvim"
+# rev = "v0.9.0"
+#
+# [plugins."diffview.nvim"]
+# version = "scm"
+# opt = true
+#
+# [plugins."gitignore.nvim"]
+# git = "wintermute-cell/gitignore.nvim"
+# opt = true
+#
+# [plugins."gist.nvim"]
+# git = "rawnly/gist.nvim"
+# rev = "0.0.6"
+# opt = true
+#
+# [plugins.nvim-jqx]
+# git = "gennaro-tedesco/nvim-jqx"
+# rev = "v0.1.4^{}"
+# opt = true
+#
+#
+# [plugins."term-edit.nvim"]
+# git = "chomosuke/term-edit.nvim"
+# rev = "v1.3.1"
+# opt = true
+#
+# [plugins."date-time-inserter.nvim"]
+# git = "antonvanassche/date-time-inserter.nvim"
+# opt = true
+#
+# [plugins.nvim-fundo]
+# git = "kevinhwang91/nvim-fundo"
+# opt = true
+#
+# [plugins.nvim-genghis]
+# git = "chrisgrieser/nvim-genghis"
+# opt = true
+#
+# [plugins.vim-startuptime]
+# git = "dstein64/vim-startuptime"
+# rev = "v4.5.0"
+# opt = true
+#
+# [plugins."capslock.nvim"]
+# git = "barklan/capslock.nvim"
+# rev = "v1.4.1^{}"
+# opt = true
+#
+# [plugins."suda.vim"]
+# git = "lambdalisue/suda.vim"
+# rev = "v1.2.2"
+# opt = true
+#
+# [plugins."pre-commit.nvim"]
+# git = "ttibsi/pre-commit.nvim"
+# rev = "v1.0.0^{}"
+# opt = true
+#
+# [plugins.vim-translator]
+# git = "voldikss/vim-translator"
+# opt = true
+#
+# [plugins."qf_helper.nvim"]
+# git = "stevearc/qf_helper.nvim"
+# opt = true
+#
+# [plugins."qfview.nvim"]
+# git = "ashfinal/qfview.nvim"
+# opt = true
+#
+#
+# [plugins."toggleterm.nvim"]
+# version = "2.12.0"
+# opt = true
+#
+# [plugins."markdown-preview.nvim"]
+# git = "iamcco/markdown-preview.nvim"
+# rev = "v0.0.9^{}"
+# opt = true
+#
+# [plugins.tabular]
+# version = "0.4"
+# opt = true
+#
+# [plugins.vim-markdown]
+# git = "plasticboy/vim-markdown"
+# rev = "2.0.0"
+# opt = true
+#
+# [plugins.vim-grammarous]
+# git = "rhysd/vim-grammarous"
+# opt = true
+#
+# [plugins."paperplanes.nvim"]
+# version = "0.1.6"
+# opt = true
+#
+# [plugins."yazi.nvim"]
+# version = "5.7.1"
+# opt = true
+#
+
+#
+# [plugins."quicker.nvim"]
+# git = "stevearc/quicker.nvim"
+# rev = "v1.0.0"
+#
+# [plugins."chatgpt.nvim"]
+# git = "jackmort/chatgpt.nvim"
+# rev = "v0.1.1-alpha"
+# opt = true
+#
+# [plugins."codecompanion.nvim"]
+# git = "olimorris/codecompanion.nvim"
+# opt = true
+# [plugins."ai.vim"]
+# git = "mikesoylu/ai.vim"
+# opt = true
+#
+# [plugins."sg.nvim"]
+# git = "sourcegraph/sg.nvim"
+# rev = "v1.1.0"
+#
+# [plugins."compiler.nvim"]
+# git = "zeioth/compiler.nvim"
+# rev = "v3.3.8"
+# opt = true
+#
+# [plugins."officer.nvim"]
+# git = "pianocomposer321/officer.nvim"
+# opt = true
+#
+# [plugins.nvim-coverage]
+# git = "andythigpen/nvim-coverage"
+#
+#
+# [plugins."compiler-explorer.nvim"]
+# git = "krady21/compiler-explorer.nvim"
+#
+# [plugins.neogen]
+# git = "danymat/neogen"
+# rev = "2.9.2"
+# opt = true
+#
+# [plugins."codegpt.nvim"]
+# version = "scm"
+# opt = true
+#
+# [plugins."wtf.nvim"]
+# git = "piersolenski/wtf.nvim"
+# opt = true
+#
+# [plugins."browse.nvim"]
+# git = "lalitmee/browse.nvim"
+# opt = true
+#
+# [plugins."updoc.nvim"]
+# git = "loganswartz/updoc.nvim"
+# opt = true
+#
+# [plugins.vim-devdocs]
+# git = "romainl/vim-devdocs"
+# opt = true
+# rev = "scm"
+#
+# [plugins."zeavim.vim"]
+# git = "kabbamine/zeavim.vim"
+# rev = "v1.4"
+# opt = true
+#
+# [plugins.nvim-docs-view]
+# git = "amrbashir/nvim-docs-view"
+# opt = true
+# rev = "scm"
+#
+# [plugins."refgo.nvim"]
+# git = "prichrd/refgo.nvim"
+# opt = true
+# rev = "scm"
+#
+# [plugins."overseer.nvim"]
+# git = "stevearc/overseer.nvim"
+# rev = "v1.3.1"
+#
+# [plugins."avante.nvim"]
+# git = "yetone/avante.nvim"
+# build = "make"
+# rev = "scm"
+#
+# [plugins."nui-components.nvim"]
+# git = "grapp-dev/nui-components.nvim"
+# rev = "v1.5.2"
+#
+# [plugins."onedarkpro.nvim"]
+# git = "olimorris/onedarkpro.nvim"
+# rev = "treesitter-0.9.2"
+#
+# [plugins.vim-rooter]
+# git = "airblade/vim-rooter"
+# event = "DeferredUIEnter"
+#
+# [plugins.vimtex]
+# git = "lervag/vimtex"
+# rev = "v2.9"
+# ft = ["tex", "plaintex", "bib"]
+#
+# [plugins."arrow.nvim"]
+# git = "otavioschwanck/arrow.nvim"
+# opt = true
+#
+# [plugins.nvim-treesitter]
+# git = "nvim-treesitter/nvim-treesitter"
+# rev = "v0.9.2^{}"
+#
+# [plugins.neorg-telescope]
+# git = "nvim-neorg/neorg-telescope"
+# rev = "v1.2.3"
+# opt = true
+# [plugins.neorg-templates-draft]
+# git = "pysan3/neorg-templates-draft"
+# rev = "v2.0.3"
+#
+#
+# [plugins."requirements.txt.vim"]
+# git = "raimon49/requirements.txt.vim"
+# rev = "v-1.9.0^{}"
+#
+# [plugins.nvim-conda]
+# git = "kmontocam/nvim-conda"
+# rev = "v0.2.1"
+#
+#
+# [plugins."bufex.nvim"]
+# git = "tomiis4/bufex.nvim"
+#
+# [plugins."cmdline.nvim"]
+# git = "vzze/cmdline.nvim"
+#
+#
+# # [bundles.lsp]
+# # [bundles.startup]
+# # items = [
+# #   "abstract-autocmds",
+# # ]
+# #
+# # [bundles.completion] # Create a bundle called `lsp`
+# # items = [
+# #   "nvim-cmp",
+# #   "luasnip",
+# #   "cmp-async-path",
+# #   "cmp-path",
+# #   "cmp-omni",
+# #   "cmp-git",
+# #   "cmp-luasnip",
+# #   "cmp-vimtex",
+# #   "cmp-buffer",
+# #   "friendly-snippets",
+# #   "luasnip-snippets",
+# #   "luasnip-latex-snippets",
+# #   "nvim-autopairs",
+# #   "nvim-scissors",
+# #   "neotab.nvim"
+# # ]
+# #
+# # items = [
+# #     "nvim-lspconfig",
+# #     "mason-lspconfig.nvim",
+# #     "mason.nvim",
+# #     "lsp-command",
+# #     "mason-null-ls.nvim",
+# #     "glance.nvim",
+# #     "lspsaga.nvim",
+# #     "none-ls.nvim",
+# #     "definition-or-references.nvim",
+# # ]
+# #
+# # [bundles.ui]
+# # items = [
+# #   "dropbar.nvim",
+# #   "heirline.nvim",
+# #   "neominimap.nvim",
+# #   "neo-tree.nvim",
+# # ]
+# #
+# # [bundles.misc]
+# # items = [
+# # "nvim-surround",
+# # "nvim-spider",
+# # "dmacro.nvim",
+# # "oil.nvim"
+# # ]
+# #
+# # [bundles.treesitter]
+# # items = [
+# # "nvim-treesitter",
+# # "nvim-treesitter-textobjects",
+# # "rainbow-delimiters.nvim"
+# # ]
+# #
+# # [bundles.search]
+# # items = [
+# # "telescope.nvim"
+# # ]
 
 [config]
 auto_setup = true
@@ -1010,4 +923,27 @@ auto_install = "prompt"
 
 [rocks_lazy]
 import = "lazy_specs"
+
+# nvim-ufo = {git = "kevinhwang91/nvim-ufo", rev = "1.4.0", opt = true}
+# "hlchunk.nvim" = {git = "shellRaining/hlchunk.nvim", rev ="1.1.0", opt=true}
+#
+# [plugins.neorg-hop-extras]
+# git = "phenax/neorg-hop-extras"
+# [plugins."neorg-roam.nvim"]
+# git = "jarvismkennedy/neorg-roam.nvim"
+# [plugins.neorg-exec]
+# git = "laher/neorg-exec"
+# [plugins."refactoring.nvim"]
+# git = "theprimeagen/refactoring.nvim"
+# [plugins."python-copy-reference.vim"]
+# git = "ranelpadon/python-copy-reference.vim"
+# [plugins."direnv.vim"]
+# git = "direnv/direnv.vim"
+# [plugins."oil-image-preview.nvim"]
+# git = "mimikun/oil-image-preview.nvim"
+# [plugins.abstract-autocmds]
+# git = "abstract-ide/abstract-autocmds"
+# [plugins."fileline.nvim"]
+# git = "lewis6991/fileline.nvim"
+
 
