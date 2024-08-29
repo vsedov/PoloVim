@@ -21,16 +21,6 @@ return {
     },
 
     {
-        "zeavim.vim",
-        opt = true,
-        cmd = {
-            "Zeavim",
-            "ZeavimV",
-            "Docset",
-        },
-    },
-
-    {
         "vim-devdocs",
         cmd = { "DD" },
         opt = true,

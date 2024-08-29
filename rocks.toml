@@ -58,26 +58,29 @@ nvim-nio = "1.10.0"
 toml = "0.4.0"
 luv = "1.48.0"
 luasnip = "2.3.0"
-dressing.nvim = "2.2.2"
 "hydra.nvim" = "1.0.2"
 "plenary.nvim" = "scm"
 lzn-auto-require= "0.1.0"
 nvim-autopairs= "scm"
+"onedarkpro.nvim"= "1.0.0"
+telescope = "0.6.0"
+nvim-treesitter-textobjects = "scm"
+"telescope.nvim"= "scm"
+nvim-surround = "2.1.5"
+"rainbow-delimiters.nvim" = "0.6.1"
+"toggleterm.nvim" = "2.12.0"
+"yanky.nvim" = "2.0.0"
+"telescope-zf-native.nvim" = "1.0.0"
 cmp_luasnip = "scm"
+"substitute.nvim" = "2.0.0"
+nvim-various-textobjs = "scm"
+"guess-indent.nvim" = "scm"
+"smart-splits.nvim" = "1.6.0"
+"dressing.nvim" = "2.2.2"
 
-
-# [plugins.cmp-nvim-lua]
-# git = "hrsh7th/cmp-nvim-lua"
-# [plugins.cmp-spell]
-# git = "f3fora/cmp-spell"
-# [plugins.cmp_luasnip]
-# git = "saadparwaiz1/cmp_luasnip"
-# [plugins.cmp]
-# git = "petertriho/cmp-git"
-# [plugins."diagnostic-window.nvim"]
-# git = "cseickel/diagnostic-window.nvim"
-# [plugins."definition-or-references.nvim"]
-# git = "kostkabrukowa/definition-or-references.nvim"
+[plugins.nvim-ufo ]
+version = "1.4.0"
+opt = true
 
 [plugins.promise-async ]
 version = "scm"
@@ -128,10 +131,578 @@ opt = true
 [plugins."garbage-day.nvim"]
 git = "zeioth/garbage-day.nvim"
 rev = "v1.3.0"
+event = "LspAttach"
 
 [plugins.lsp-command]
 git = "ii14/lsp-command"
 rev = "b2d130d0358f7d64cd967c918182bce25944737b"
+
+[plugins.luasnip-snippets]
+git = "mireq/luasnip-snippets"
+rev = "0.1.2"
+
+[plugins."cmdline.nvim"]
+git = "vzze/cmdline.nvim"
+rev = "b7af6a91c0762f2a823d6e79912d8b99e014b6fd"
+
+[plugins."bufex.nvim"]
+git = "tomiis4/bufex.nvim"
+rev = "b7a3f8d610f383f3b28ffb6e7ebdb6bd1deb56e3"
+
+[plugins.nvim-conda]
+git = "kmontocam/nvim-conda"
+rev = "v0.2.1"
+
+[plugins."requirements.txt.vim"]
+git = "raimon49/requirements.txt.vim"
+rev = "v-1.9.0^{}"
+
+[plugins.neorg-templates-draft]
+git = "pysan3/neorg-templates-draft"
+rev = "v2.0.3"
+
+[plugins.neorg-telescope]
+git = "nvim-neorg/neorg-telescope"
+rev = "v1.2.3"
+
+[plugins.nvim-treesitter]
+git = "nvim-treesitter/nvim-treesitter"
+rev = "v0.9.2^{}"
+
+[plugins."arrow.nvim"]
+git = "otavioschwanck/arrow.nvim"
+rev = "fb8e2cf548f625f6e36cb44d3e65600656924234"
+
+[plugins.vimtex]
+git = "lervag/vimtex"
+rev = "v2.9"
+
+[plugins.vim-rooter]
+git = "airblade/vim-rooter"
+rev = "4a0df2f1b0f3d69e8f7e19afe464a7c3a7af89a2"
+
+[plugins."nui-components.nvim"]
+git = "grapp-dev/nui-components.nvim"
+rev = "v1.5.2"
+
+[plugins."avante.nvim"]
+git = "yetone/avante.nvim"
+opt = true
+
+[plugins."overseer.nvim"]
+git = "stevearc/overseer.nvim"
+rev = "v1.4.0"
+
+[plugins."refgo.nvim"]
+git = "prichrd/refgo.nvim"
+rev = "5e8b4ef4536998d7611010e6dc7fbab131bc22ad"
+
+[plugins.nvim-docs-view]
+git = "amrbashir/nvim-docs-view"
+rev = "365593534e0acd762bfddce6e8313315ffa4fa36"
+opt = true
+
+[plugins.vim-devdocs]
+git = "romainl/vim-devdocs"
+rev = "85a98b86043ac6b4484663d75729e1b5bcebedbe"
+
+[plugins."updoc.nvim"]
+git = "loganswartz/updoc.nvim"
+rev = "1e6cb0c3b4a145e75374bd2b121389212c9ddbd2"
+
+[plugins."browse.nvim"]
+git = "lalitmee/browse.nvim"
+rev = "8292baa12ef4611532526e8a6f7a315848eceb74"
+
+[plugins."wtf.nvim"]
+git = "piersolenski/wtf.nvim"
+rev = "d75acc087b5183b0b3e000189518c5d799978e95"
+
+[plugins.neogen]
+git = "danymat/neogen"
+rev = "2.9.2"
+
+[plugins."compiler-explorer.nvim"]
+git = "krady21/compiler-explorer.nvim"
+rev = "ee8e7a2808bdad67cd2acb61b5c9ffa7735c7ec9"
+
+[plugins.nvim-coverage]
+git = "andythigpen/nvim-coverage"
+rev = "aa4b4400588e2259e87e372b1e4e90ae13cf5a39"
+
+[plugins."officer.nvim"]
+git = "pianocomposer321/officer.nvim"
+rev = "60b046e1068081d965f36fa8d728d6f2bc41ab77"
+
+[plugins."compiler.nvim"]
+git = "zeioth/compiler.nvim"
+rev = "v3.3.8"
+opt = true
+
+[plugins."sg.nvim"]
+git = "sourcegraph/sg.nvim"
+rev = "v1.1.0"
+
+[plugins."ai.vim"]
+git = "mikesoylu/ai.vim"
+rev = "26de0db6970762fe3db1cf3328b64b37dce8fa1b"
+
+[plugins."codecompanion.nvim"]
+git = "olimorris/codecompanion.nvim"
+rev = "v1.7.2"
+
+[plugins."chatgpt.nvim"]
+git = "jackmort/chatgpt.nvim"
+rev = "v0.1.1-alpha"
+
+[plugins."quicker.nvim"]
+git = "stevearc/quicker.nvim"
+rev = "v1.1.1"
+
+[plugins."watch.nvim"]
+git = "makaze/watch.nvim"
+rev = "v0.4.1"
+
+[plugins.vim-grammarous]
+git = "rhysd/vim-grammarous"
+rev = "db46357465ce587d5325e816235b5e92415f8c05"
+
+[plugins.vim-markdown]
+git = "plasticboy/vim-markdown"
+rev = "2.0.0"
+
+[plugins."markdown-preview.nvim"]
+git = "iamcco/markdown-preview.nvim"
+rev = "v0.0.9^{}"
+
+[plugins."qfview.nvim"]
+git = "ashfinal/qfview.nvim"
+rev = "f7a4fd8d700d02f6c1274f02115fa4e68e63aa54"
+
+[plugins."qf_helper.nvim"]
+git = "stevearc/qf_helper.nvim"
+rev = "fa3c2f3f2706e2c9984409c9c14b5993302ddfa7"
+
+[plugins.vim-translator]
+git = "voldikss/vim-translator"
+rev = "6f0639c6d471a3a90ac19db96e1e379c030f74e3"
+
+[plugins."pre-commit.nvim"]
+git = "ttibsi/pre-commit.nvim"
+rev = "v1.0.0^{}"
+
+[plugins."suda.vim"]
+git = "lambdalisue/suda.vim"
+rev = "v1.2.2"
+
+[plugins."capslock.nvim"]
+git = "barklan/capslock.nvim"
+rev = "v1.4.1^{}"
+
+[plugins.vim-startuptime]
+git = "dstein64/vim-startuptime"
+rev = "v4.5.0"
+
+[plugins.nvim-genghis]
+git = "chrisgrieser/nvim-genghis"
+rev = "382ddb90a31313f0b2e059db50df0ca4dd2859d2"
+
+[plugins.nvim-fundo]
+git = "kevinhwang91/nvim-fundo"
+rev = "ac9c9372c4bf677721e24f144ef29d3a05c2b589"
+
+
+[plugins."term-edit.nvim"]
+git = "chomosuke/term-edit.nvim"
+event = "TermEnter"
+rev = "v1.3.1"
+
+[plugins.nvim-jqx]
+git = "gennaro-tedesco/nvim-jqx"
+rev = "v0.1.4^{}"
+
+[plugins."gist.nvim"]
+git = "rawnly/gist.nvim"
+rev = "0.0.6"
+
+[plugins."gitignore.nvim"]
+git = "wintermute-cell/gitignore.nvim"
+rev = "2455191ec94da8ed222806a4fe3aa358eac1e558"
+
+[plugins."gitsigns.nvim"]
+git = "lewis6991/gitsigns.nvim"
+rev = "v0.9.0"
+
+[plugins.ne]
+git = "neogitorg/neogit"
+rev = "v1.0.0"
+
+[plugins."git-conflict.nvim"]
+git = "akinsho/git-conflict.nvim"
+rev = "v2.0.0"
+
+[plugins.tmpclone-nvim]
+git = "danielhp95/tmpclone-nvim"
+rev = "51469fa82efd000d4ff8566739b7e6eb34d815be"
+
+[plugins."co-author.nvim"]
+git = "2kabhishek/co-author.nvim"
+rev = "db0debbde453c0ce10d1b925cd9f3139e4291c42"
+
+[plugins."linediff.vim"]
+git = "andrewradev/linediff.vim"
+rev = "v0.3.0"
+
+[plugins."octo.nvim"]
+git = "pwntester/octo.nvim"
+rev = "0134169886958f3874f16eed7fe73d906a3e7e17"
+
+[plugins."smartyank.nvim"]
+git = "ibhagwan/smartyank.nvim"
+rev = "d9e078fe08d6466e37ea45ac446a9f60e6866789"
+
+[plugins.nvim-alt-substitute]
+git = "chrisgrieser/nvim-alt-substitute"
+rev = "f0e6ef3a656187108d695a0115c09eda62474971"
+
+[plugins."cool-substitute.nvim"]
+git = "otavioschwanck/cool-substitute.nvim"
+rev = "2095e2304aecfea4b6c2a8b1a9e1794b5920472c"
+
+[plugins."text-case.nvim"]
+git = "johmsalas/text-case.nvim"
+rev = "v1.2.0"
+
+[plugins.vim-camelsnek]
+git = "nicwest/vim-camelsnek"
+rev = "84b363aa42b5bc3a2314a56d242df20e7bbfcbf3"
+
+[plugins.undotree]
+git = "mbbill/undotree"
+rev = "rel_6.1"
+
+[plugins."img-clip.nvim"]
+git = "hakonharnes/img-clip.nvim"
+rev = "v0.5.0"
+
+[plugins."nvim-neoclip.lua"]
+git = "acksld/nvim-neoclip.lua"
+rev = "709c97fabec9da7d04f7d2f5e207423af8c02871"
+
+[plugins."yanki.nvim"]
+git = "romanozumbe/yanki.nvim"
+rev = "ebccf6ec45c30a70a9a80bb93d2619584f2c6b8d"
+
+[plugins.vim-maximizer]
+git = "szw/vim-maximizer"
+rev = "2e54952fe91e140a2e69f35f22131219fcd9c5f1"
+
+[plugins."winshift.nvim"]
+git = "sindrets/winshift.nvim"
+rev = "37468ed6f385dfb50402368669766504c0e15583"
+
+[plugins."bufresize.nvim"]
+git = "kwkarlwang/bufresize.nvim"
+rev = "3b19527ab936d6910484dcc20fb59bdb12322d8b"
+
+[plugins."indent.nvim"]
+git = "sam-programs/indent.nvim"
+rev = "883c7f32f349c1ff1a47167c553c237a914ea6f4"
+
+[plugins."urlview.nvim"]
+git = "axieax/urlview.nvim"
+rev = "v0.6-compat"
+
+[plugins."kitty-scrollback.nvim"]
+git = "mikesmithgh/kitty-scrollback.nvim"
+rev = "v5.0.1"
+
+[plugins."expand.nvim"]
+git = "sam-programs/expand.nvim"
+rev = "c8fb5726e8ca747e709966737566fb628cb95894"
+opt = true
+
+[plugins."scrollofffraction.nvim"]
+git = "nkakouros-original/scrollofffraction.nvim"
+rev = "0618a3e3e1a4e13a04edf6fd35bfcee4bd5afe38"
+
+[plugins."nvim-rgflow.lua"]
+git = "mangelozzi/nvim-rgflow.lua"
+rev = "8a2d80b8594591163d06b430be18c7376d5ae1b8"
+
+[plugins."open-handlers.nvim"]
+git = "mrshmllow/open-handlers.nvim"
+rev = "62e8a7abeb8b5eb374dfa4be396c97f5f44e7323"
+
+[plugins."bmessages.nvim"]
+git = "ariel-frischer/bmessages.nvim"
+rev = "cad159ee584932d1a631ca7c5a2e6e58d3e9981e"
+
+[plugins."nerdy.nvim"]
+git = "2kabhishek/nerdy.nvim"
+rev = "1.2"
+
+[plugins."portal.nvim"]
+git = "cbochs/portal.nvim"
+rev = "v0.9.0"
+
+[plugins."calculator.nvim"]
+git = "vzze/calculator.nvim"
+rev = "1e417c69606318575082ffc283b501523c2ba4ab"
+
+[plugins."none-ls-autoload.nvim"]
+git = "zeioth/none-ls-autoload.nvim"
+rev = "v1.0.0"
+opt = true
+
+[plugins."neominimap.nvim"]
+git = "isrothy/neominimap.nvim"
+rev = "v3.5.1"
+
+[plugins."moody.nvim"]
+git = "svampkorg/moody.nvim"
+rev = "189bd6e9bc858e1608d7b29839f6f4134d772bf3"
+
+[plugins."modes.nvim"]
+git = "mvllow/modes.nvim"
+rev = "v0.2.1"
+
+[plugins."lspmark.nvim"]
+git = "tristone13th/lspmark.nvim"
+rev = "1cd6c8f933c2b3349edd9c3a876ddbf683a5cc2a"
+
+[plugins."hunk.nvim"]
+git = "julienvincent/hunk.nvim"
+rev = "v1.4.0"
+
+[plugins."toggle-overlength.nvim"]
+git = "fouladi/toggle-overlength.nvim"
+rev = "00a8b5c17b8dcbafd13fcef39c2120c923c069b7"
+
+[plugins."gx.nvim"]
+git = "chrishrb/gx.nvim"
+rev = "v0.7.0"
+
+[plugins."telescope-egrepify.nvim"]
+git = "jsongerber/telescope-egrepify.nvim"
+rev = "0e67f5e2e49b312624133030dede7228c09cde82"
+
+[plugins."easypick.nvim"]
+git = "axkirillov/easypick.nvim"
+rev = "v0.6.0"
+opt = true
+
+[plugins."telescope-file-browser.nvim"]
+git = "nvim-telescope/telescope-file-browser.nvim"
+rev = "a46780830b576049c675680650f773bedfa8677a"
+
+[plugins."telescope-frecency.nvim"]
+git = "nvim-telescope/telescope-frecency.nvim"
+rev = "38f2a2207e475916a7532bfd9f9c5d7353a1ce7b"
+
+[plugins.telescope-sg]
+git = "marskey/telescope-sg"
+rev = "caceaa670f26a581fb20ce99576ed8155c3ae96d"
+
+[plugins."telescope-live-grep-args.nvim"]
+git = "nvim-telescope/telescope-live-grep-args.nvim"
+rev = "v1.1.0^{}"
+
+[plugins.telescope-zoxide]
+git = "jvgrootveld/telescope-zoxide"
+rev = "v2.1"
+
+[plugins."smart-open.nvim"]
+git = "danielfalk/smart-open.nvim"
+rev = "f4e39e9a1b05a6b82b1182a013677acc44b27abb"
+opt = true
+
+[plugins.nvim-treesitter-textsubjects]
+git = "rrethy/nvim-treesitter-textsubjects"
+rev = "a8d2844bba925d9450ef7ab215f3b054028288ca"
+
+[plugins.nvim-treesitter-endwise]
+git = "rrethy/nvim-treesitter-endwise"
+rev = "8b34305ffc28bd75a22f5a0a9928ee726a85c9a6"
+
+[plugins."hlargs.nvim"]
+git = "m-demare/hlargs.nvim"
+rev = "cc0d9ee75e5ffba730393049119361b9e3a5b1b6"
+
+[plugins.hipairs]
+git = "yggdroot/hipairs"
+rev = "8272bf6979d0ee65a3fdbbb97eff3dda79b661b2"
+
+[plugins.ts-node-action]
+git = "ckolkey/ts-node-action"
+rev = "6d3b60754fd87963d70eadaa2f77873b447eac26"
+
+[plugins."equal.operator"]
+git = "romgrk/equal.operator"
+rev = "5c4cb737db8ded6bf56bbf090fda2b81efa7028c"
+
+[plugins.vim-matchup]
+git = "andymass/vim-matchup"
+rev = "v0.7.3"
+
+[plugins.vim-kitty]
+git = "fladson/vim-kitty"
+rev = "9cc594a634308aa3bfaf3da5b5e741da1c0144c1"
+
+[plugins."diaglist.nvim"]
+git = "onsails/diaglist.nvim"
+rev = "afc124a0976d56db43cc840e62757193ccab7856"
+
+[plugins."ns-textobject.nvim"]
+git = "xxiaoa/ns-textobject.nvim"
+rev = "6341bc16df9d07d5f9520b7ac0a84a55720c2302"
+
+[plugins.vim-dirtytalk]
+git = "psliwka/vim-dirtytalk"
+rev = "aa57ba902b04341a04ff97214360f56856493583"
+
+[plugins."stay-in-place.nvim"]
+git = "gbprod/stay-in-place.nvim"
+rev = "v1.0.0"
+
+[plugins."carbon-now.nvim"]
+git = "ellisonleao/carbon-now.nvim"
+rev = "0.2.0^{}"
+
+[plugins."helpful.vim"]
+git = "tweekmonster/helpful.vim"
+rev = "7e73c3a3d42dc85740ff1c444b62ef74663de688"
+
+[plugins."hypersonic.nvim"]
+git = "tomiis4/hypersonic.nvim"
+rev = "734dfbfbe51952f102a9b439d53d4267bb0024cd"
+
+[plugins."maim.nvim"]
+git = "kiran94/maim.nvim"
+rev = "v1.0.1"
+
+[plugins."dmacro.nvim"]
+git = "tani/dmacro.nvim"
+rev = "95eaf53bc7a4b3dead220fe1f28870b60524a215"
+opt = true
+
+[plugins."fold-cycle.nvim"]
+git = "jghauser/fold-cycle.nvim"
+rev = "20e9b468b771ebf33b6806a0e872eee53c5a20c9"
+
+[plugins."scope.nvim"]
+git = "tiagovla/scope.nvim"
+rev = "5e3f5ead970317b2f276d38dc031cb4bc5742cd4"
+
+[plugins."reach.nvim"]
+git = "toppair/reach.nvim"
+rev = "f86830357941cca8a31f19601153087ea9524d22"
+
+[plugins.bufexplorer]
+git = "jlanzarotta/bufexplorer"
+rev = "v7.4.9"
+
+[plugins."bufonly.nvim"]
+git = "numtostr/bufonly.nvim"
+rev = "30579c2851743b00c4547c324a16f2c1cfa5a41c"
+
+[plugins."stickybuf.nvim"]
+git = "stevearc/stickybuf.nvim"
+rev = "v2.0.0"
+
+[plugins."local-yokel.nvim"]
+git = "mskelton/local-yokel.nvim"
+rev = "d522a14952ac959f6b948fbf156c4ded34f90f12"
+opt = true
+
+[plugins."barbar.nvim"]
+git = "romgrk/barbar.nvim"
+rev = "v1.9.1^{}"
+
+[plugins.nvim-hlslens]
+git = "kevinhwang91/nvim-hlslens"
+rev = "v1.0.0"
+
+[plugins."which-key.nvim"]
+git = "dimeji-go/which-key.nvim"
+rev = "500806761020be505228c1d010f4c29c6c0824ac"
+
+[plugins."neo-tree-jj.nvim"]
+git = "cretezy/neo-tree-jj.nvim"
+rev = "c6534930c6f79893e12eafbb722ee23e6a83e80e"
+
+[plugins.vim-eunuch]
+git = "tpope/vim-eunuch"
+rev = "v1.3^{}"
+
+[plugins.harpoon]
+git = "theprimeagen/harpoon"
+rev = "0378a6c428a0bed6a2781d459d7943843f374bce"
+branch = "harpoon2"
+
+[plugins."yeet.nvim"]
+git = "samharju/yeet.nvim"
+rev = "v1.2.0"
+
+[plugins.vim-repeat]
+git = "tpope/vim-repeat"
+rev = "v1.2^{}"
+
+[plugins.vim-illuminate]
+git = "rrethy/vim-illuminate"
+rev = "5eeb7951fc630682c322e88a9bbdae5c224ff0aa"
+
+[plugins."lasterisk.nvim"]
+git = "rapan931/lasterisk.nvim"
+rev = "bbcfcaeca50f686e338a03386e41645fc3305f44"
+
+[plugins.vim-edgemotion]
+git = "haya14busa/vim-edgemotion"
+rev = "8d16bd92f6203dfe44157d43be7880f34fd5c060"
+
+[plugins."accelerated-jk.nvim"]
+git = "rainbowhxch/accelerated-jk.nvim"
+rev = "8fb5dad4ccc1811766cebf16b544038aeeb7806f"
+
+[plugins.vim-exchange]
+git = "tommcdo/vim-exchange"
+rev = "d6c1e9790bcb8df27c483a37167459bbebe0112e"
+
+[plugins.overseer-quick-tasks]
+git = "itsfrank/overseer-quick-tasks"
+rev = "f3d0c1d29a04082feda51419d2466a3a7f3a7c3f"
+
+[plugins."sibling-swap.nvim"]
+git = "wansmer/sibling-swap.nvim"
+rev = "269770df52114ed6f22321310538b4daf8973384"
+
+[plugins.vim-smartq]
+git = "marklcrns/vim-smartq"
+rev = "v1.4.1"
+
+[plugins."telescope-bookmarks.nvim"]
+git = "dhruvmanila/telescope-bookmarks.nvim"
+rev = "v4.0.0"
+
+[plugins."zoxide.vim"]
+git = "nanotee/zoxide.vim"
+rev = "b1e70b6fc1682a83929aee63680d2b43456fe9a5"
+
+[plugins."grug-far.nvim"]
+git = "magicduck/grug-far.nvim"
+rev = "e12bedbc0f216aebab8ca4b520760b96ba524022"
+
+[plugins."ssr.nvim"]
+git = "cshuaimin/ssr.nvim"
+rev = "bb323ba621ac647b4ac5638b47666e3ef3c279e1"
+
+[plugins."muren.nvim"]
+git = "acksld/muren.nvim"
+rev = "818c09097dba1322b2ca099e35f7471feccfef93"
+
+[plugins.nvim-dd]
+git = "yorickpeterse/nvim-dd"
+rev = "9c21ffeffbf0a99e5614f193455700f355d0951f"
 
 [plugins."troublesum.nvim"]
 git = "ivanjermakov/troublesum.nvim"
@@ -141,777 +712,137 @@ rev = "b00301bb565bfcb6fcfa41f2012e43a0528da65b"
 git = "sontungexpt/better-diagnostic-virtual-text"
 rev = "eb3a77e714aa6c295bdb4f074fccbda637090f6e"
 
-[plugins.nvim-dd]
-git = "yorickpeterse/nvim-dd"
-rev = "9c21ffeffbf0a99e5614f193455700f355d0951f"
-
-# [plugins.luasnip-snippets]
-# git = "mireq/luasnip-snippets"
-# [plugins."luasnip-latex-snippets.nvim"]
-# git = "iurimateus/luasnip-latex-snippets.nvim"
-
 [plugins."mason-null-ls.nvim"]
 git = "jay-babu/mason-null-ls.nvim"
-rev = "de19726de7260c68d94691afb057fa73d3cc53e7"
+rev = "v2.6.0"
 
-[plugins."muren.nvim"]
-git = "acksld/muren.nvim"
-rev = "818c09097dba1322b2ca099e35f7471feccfef93"
+[plugins."luasnip-latex-snippets.nvim"]
+git = "iurimateus/luasnip-latex-snippets.nvim"
+rev = "4b91f28d91979f61a3e8aef1cee5b7c7f2c7beb8"
+
+[plugins.neorg-hop-extras]
+git = "phenax/neorg-hop-extras"
+rev = "f349ab3e9a52d214f1af6122cd087218b2722c81"
+
+[plugins."neorg-roam.nvim"]
+git = "jarvismkennedy/neorg-roam.nvim"
+rev = "a81e6f1d914e62d0e4944b50448e3d74280d5140"
+
+[plugins.neorg-exec]
+git = "laher/neorg-exec"
+rev = "90064eaeee596eb6ec1c476cf26ea0087861faed"
+
+[plugins."refactoring.nvim"]
+git = "theprimeagen/refactoring.nvim"
+rev = "c406fc5fb4d7ba5fce7b668637075fad6e75e9f8"
+
+[plugins."python-copy-reference.vim"]
+git = "ranelpadon/python-copy-reference.vim"
+rev = "8172d0ce83d730820d9497fd2e988046022d0b99"
+
+[plugins."direnv.vim"]
+git = "direnv/direnv.vim"
+rev = "ab2a7e08dd630060cd81d7946739ac7442a4f269"
+
+[plugins."oil-image-preview.nvim"]
+git = "mimikun/oil-image-preview.nvim"
+rev = "b66731111c206f085c2b65a895637d30d676cc05"
+
+[plugins.abstract-autocmds]
+git = "abstract-ide/abstract-autocmds"
+rev = "d2e4cfd67cf59166f9ffa0bd3bc90899ffc653e7"
+
+[plugins."fileline.nvim"]
+git = "lewis6991/fileline.nvim"
+rev = "c116aa8dd7aa7e1db6938f872285e598dc9ee00b"
+
+[plugins."hlchunk.nvim"]
+version = "1.1.0"
 opt = true
 
-[plugins."ssr.nvim"]
-git = "cshuaimin/ssr.nvim"
-rev = "bb323ba621ac647b4ac5638b47666e3ef3c279e1"
+[plugins."definition-or-references.nvim"]
+git = "kostkabrukowa/definition-or-references.nvim"
+rev = "13570f995be8993f4c55e988f89e5a7b8df37a17"
+
+[plugins."diagnostic-window.nvim"]
+git = "cseickel/diagnostic-window.nvim"
+rev = "2b4d9618382502740c7945c4023853ee524adc4c"
+
+[plugins.cmp]
+git = "petertriho/cmp-git"
+rev = "50d526dff0f6bc441b51fc269d9fdc99a50c76af"
+
+[plugins.cmp-nvim-lua]
+git = "hrsh7th/cmp-nvim-lua"
+rev = "f12408bdb54c39c23e67cab726264c10db33ada8"
+
+[plugins."copilot.lua"]
+git = "zbirenbaum/copilot.lua"
 opt = true
 
-[plugins."grug-far.nvim"]
-git = "magicduck/grug-far.nvim"
-rev = "12705b8c6bb5abd8c7a873126087fae9b6342421"
-opt = true
+[bundles.startup]
+items = [
+  "abstract-autocmds",
+]
 
-[plugins."zoxide.vim"]
-git = "nanotee/zoxide.vim"
-rev = "b1e70b6fc1682a83929aee63680d2b43456fe9a5"
-opt = true
+[bundles.completion] # Create a bundle called `lsp`
+items = [
+  "nvim-cmp",
+  "luasnip",
+  "cmp-async-path",
+  "cmp-path",
+  "cmp-omni",
+  "cmp-git",
+  "cmp_luasnip",
+  "cmp-vimtex",
+  "cmp-buffer",
+  "friendly-snippets",
+  "luasnip-snippets",
+  "luasnip-latex-snippets.nvim",
+  "nvim-autopairs",
+  "neotab.nvim"
+]
 
-[plugins."telescope.nvim" ]
-version = "scm"
-opt = true
+[bundles.lsp]
+items = [
+    "nvim-lspconfig",
+    "mason-lspconfig.nvim",
+    "mason.nvim",
+    "lsp-command",
+    "mason-null-ls.nvim",
+    "glance.nvim",
+    "lspsaga.nvim",
+    "none-ls.nvim",
+    "definition-or-references.nvim",
+]
 
-[plugins."telescope-bookmarks.nvim"]
-git = "dhruvmanila/telescope-bookmarks.nvim"
-rev = "v4.0.0"
+[bundles.ui]
+items = [
+  "dropbar.nvim",
+  "heirline.nvim",
+  "neominimap.nvim",
+  "neo-tree.nvim",
+]
 
-[plugins."sqlite.lua"]
-version = "1.2.2"
-opt = true
+[bundles.misc]
+items = [
+"nvim-surround",
+"nvim-spider",
+"dmacro.nvim",
+"oil.nvim"
+]
 
+[bundles.treesitter]
+items = [
+"nvim-treesitter",
+"nvim-treesitter-textobjects",
+"rainbow-delimiters.nvim"
+]
 
-[plugins.vim-smartq]
-git = "marklcrns/vim-smartq"
-rev = "v1.4.1"
-
-[plugins."sibling-swap.nvim"]
-git = "wansmer/sibling-swap.nvim"
-opt = true
-
-[plugins.overseer-quick-tasks]
-git = "itsfrank/overseer-quick-tasks"
-
-[plugins.vim-exchange]
-git = "tommcdo/vim-exchange"
-
-[plugins."accelerated-jk.nvim"]
-git = "rainbowhxch/accelerated-jk.nvim"
-
-[plugins.vim-edgemotion]
-git = "haya14busa/vim-edgemotion"
-
-[plugins."lasterisk.nvim"]
-git = "rapan931/lasterisk.nvim"
-
-[plugins.vim-illuminate]
-git = "rrethy/vim-illuminate"
-
-[plugins.vim-repeat]
-git = "tpope/vim-repeat"
-rev = "v1.2^{}"
-
-[plugins."yeet.nvim"]
-git = "samharju/yeet.nvim"
-rev = "v1.0.1"
-
-[plugins.harpoon]
-git = "theprimeagen/harpoon"
-branch = "harpoon2"
-
-[plugins.vim-eunuch]
-git = "tpope/vim-eunuch"
-rev = "v1.3^{}"
-
-[plugins."neo-tree-jj.nvim"]
-git = "cretezy/neo-tree-jj.nvim"
-opt = true
-
-[plugins."which-key.nvim"]
-git = "dimeji-go/which-key.nvim"
-
-[plugins.nvim-hlslens]
-git = "kevinhwang91/nvim-hlslens"
-rev = "v1.0.0"
-
-# ──────────────────────────────────────────────────────────────────────
-[plugins."barbar.nvim"]
-git = "romgrk/barbar.nvim"
-rev = "v1.9.1^{}"
-
-[plugins."local-yokel.nvim"]
-git = "mskelton/local-yokel.nvim"
-opt = true
-
-[plugins."stickybuf.nvim"]
-git = "stevearc/stickybuf.nvim"
-rev = "v2.0.0"
-opt = true
-
-[plugins."bufonly.nvim"]
-git = "numtostr/bufonly.nvim"
-opt = true
-
-[plugins.bufexplorer]
-git = "jlanzarotta/bufexplorer"
-rev = "v7.4.9"
-opt = true
-
-[plugins."reach.nvim"]
-git = "toppair/reach.nvim"
-opt = true
-
-[plugins."scope.nvim"]
-git = "tiagovla/scope.nvim"
-opt = true
-
-[plugins."fold-cycle.nvim"]
-git = "jghauser/fold-cycle.nvim"
-
-[plugins."dmacro.nvim"]
-git = "tani/dmacro.nvim"
-opt = true
-
-[plugins."maim.nvim"]
-git = "kiran94/maim.nvim"
-rev = "v1.0.1"
-cmd =  "Maim"
-opt = true
-
-[plugins."hypersonic.nvim"]
-git = "tomiis4/hypersonic.nvim"
-
-[plugins."helpful.vim"]
-git = "tweekmonster/helpful.vim"
-cmd = "HelpfulVersion"
-ft = "help"
-opt = true
-
-[plugins."numb.nvim"]
-version = "scm"
-event = "CmdlineEnter"
-opt = true
-
-[plugins."carbon-now.nvim"]
-git = "ellisonleao/carbon-now.nvim"
-rev = "0.2.0^{}"
-opt = true
-
-[plugins."stay-in-place.nvim"]
-git = "gbprod/stay-in-place.nvim"
-event = "InsertEnter"
-rev = "v1.0.0"
-
-[plugins.vim-dirtytalk]
-git = "psliwka/vim-dirtytalk"
-opt = true
-
-[plugins."ns-textobject.nvim"]
-git = "xxiaoa/ns-textobject.nvim"
-opt = true
-
-[plugins.nvim-surround]
-version = "2.1.5"
-opt = true
-
-[plugins."diaglist.nvim"]
-git = "onsails/diaglist.nvim"
-opt = true
-
-[plugins.vim-kitty]
-git = "fladson/vim-kitty"
-event = "BufReadPre *.conf"
-opt = true
-
-[plugins."rainbow-delimiters.nvim"]
-git = "hiphish/rainbow-delimiters.nvim"
-rev = "v0.6.1"
-
-[plugins.vim-matchup]
-git = "andymass/vim-matchup"
-rev = "v0.7.3"
-opt = true
-
-[plugins.nvim-ts-context-commentstring]
-version = "scm"
-opt = true
-
-[plugins."equal.operator"]
-git = "romgrk/equal.operator"
-opt = true
-
-[plugins.ts-node-action]
-git = "ckolkey/ts-node-action"
-opt = true
-
-[plugins."guess-indent.nvim"]
-version = "scm"
-opt = true
-
-[plugins.hipairs]
-git = "yggdroot/hipairs"
-opt = true
-
-[plugins."hlargs.nvim"]
-git = "m-demare/hlargs.nvim"
-opt = true
-
-[plugins.nvim-treesitter-endwise]
-git = "rrethy/nvim-treesitter-endwise"
-opt = true
-
-[plugins.nvim-treesitter-textsubjects]
-git = "rrethy/nvim-treesitter-textsubjects"
-opt = true
-
-[plugins.nvim-various-textobjs]
-version = "scm"
-opt = true
-
-[plugins.nvim-treesitter-textobjects]
-version = "scm"
-opt = true
-
-
-[plugins."smart-open.nvim"]
-git = "danielfalk/smart-open.nvim"
-opt = true
-
-[plugins.telescope-zoxide]
-git = "jvgrootveld/telescope-zoxide"
-rev = "v2.1"
-
-[plugins."telescope-live-grep-args.nvim"]
-git = "nvim-telescope/telescope-live-grep-args.nvim"
-rev = "v1.1.0^{}"
-
-# [plugins.telescope-sg]
-# git = "marskey/telescope-sg"
-
-# [plugins."telescope-frecency.nvim"]
-# git = "nvim-telescope/telescope-frecency.nvim"
-#
-# [plugins."telescope-file-browser.nvim"]
-# git = "nvim-telescope/telescope-file-browser.nvim"
-#
-# [plugins."telescope-fzf-native.nvim"]
-# git = "nvim-telescope/telescope-fzf-native.nvim"
-# build = "make"
-#
-# [plugins."easypick.nvim"]
-# git = "axkirillov/easypick.nvim"
-# rev = "v0.6.0"
-# opt = true
-#
-# [plugins."telescope-egrepify.nvim"]
-# git = "jsongerber/telescope-egrepify.nvim"
-# # ──────────────────────────────────────────────────────────────────────
-# [plugins."gx.nvim"]
-# git = "chrishrb/gx.nvim"
-# rev = "v0.7.0"
-# opt = true
-#
-# [plugins."toggle-overlength.nvim"]
-# git = "fouladi/toggle-overlength.nvim"
-# opt = true
-#
-# [plugins."hunk.nvim"]
-# git = "julienvincent/hunk.nvim"
-# rev = "v1.4.0"
-# opt = true
-#
-# [plugins."lspmark.nvim"]
-# git = "tristone13th/lspmark.nvim"
-# opt = true
-#
-# [plugins."modes.nvim"]
-# git = "mvllow/modes.nvim"
-# rev = "v0.2.1"
-# opt = true
-#
-# [plugins."moody.nvim"]
-# git = "svampkorg/moody.nvim"
-# opt = true
-#
-# [plugins."neominimap.nvim"]
-# git = "isrothy/neominimap.nvim"
-# rev = "v3.3.2"
-# branch = "main"
-#
-# [plugins."none-ls-autoload.nvim"]
-# git = "zeioth/none-ls-autoload.nvim"
-# rev = "v1.0.0"
-# opt = true
-#
-# [plugins."calculator.nvim"]
-# git = "vzze/calculator.nvim"
-#
-# [plugins."github-preview.nvim"]
-# git = "wallpants/github-preview.nvim"
-# rev = "v1.9.0"
-# opt = true
-#
-# [plugins."luau-lsp.nvim"]
-# git = "lopi-py/luau-lsp.nvim"
-# rev = "v1.5.0"
-# opt = true
-#
-# [plugins."portal.nvim"]
-# git = "cbochs/portal.nvim"
-# rev = "v0.9.0"
-# opt = true
-#
-# [plugins."nerdy.nvim"]
-# git = "2kabhishek/nerdy.nvim"
-# rev = "1.2"
-# opt = true
-#
-# [plugins."bmessages.nvim"]
-# git = "ariel-frischer/bmessages.nvim"
-#
-# [plugins."open-handlers.nvim"]
-# git = "mrshmllow/open-handlers.nvim"
-# opt = true
-#
-# [plugins."nvim-rgflow.lua"]
-# git = "mangelozzi/nvim-rgflow.lua"
-# opt = true
-#
-# [plugins."scrollofffraction.nvim"]
-# git = "nkakouros-original/scrollofffraction.nvim"
-# opt = true
-#
-# [plugins."expand.nvim"]
-# git = "sam-programs/expand.nvim"
-# opt = true
-#
-# [plugins."kitty-scrollback.nvim"]
-# git = "mikesmithgh/kitty-scrollback.nvim"
-# rev = "v5.0.0"
-#
-# [plugins."urlview.nvim"]
-# git = "axieax/urlview.nvim"
-# rev = "v0.6-compat"
-# opt = true
-#
-# [plugins."indent.nvim"]
-# git = "sam-programs/indent.nvim"
-# opt = true
-#
-# [plugins."smart-splits.nvim"]
-# version = "1.6.0"
-# opt = true
-#
-# [plugins."bufresize.nvim"]
-# git = "kwkarlwang/bufresize.nvim"
-# opt = true
-#
-# [plugins."winshift.nvim"]
-# git = "sindrets/winshift.nvim"
-# opt = true
-#
-# [plugins.vim-maximizer]
-# git = "szw/vim-maximizer"
-# opt = true
-#
-# [plugins."yanky.nvim"]
-# version = "2.0.0"
-# opt = true
-#
-# [plugins."yanki.nvim"]
-# git = "romanozumbe/yanki.nvim"
-# opt = true
-#
-# [plugins."multicursors.nvim"]
-# version = "2.0.0"
-# cmd = ["MCstart", "MCvisual", "MCpattern", "MCvisualPattern", "MCunderCursor", "MCclear"]
-#
-# [plugins."nvim-neoclip.lua"]
-# git = "acksld/nvim-neoclip.lua"
-# opt = true
-#
-# [plugins."img-clip.nvim"]
-# git = "hakonharnes/img-clip.nvim"
-# rev = "v0.4.1"
-# opt = true
-#
-# [plugins.undotree]
-# git = "mbbill/undotree"
-# rev = "rel_6.1"
-# opt = true
-#
-# [plugins.vim-camelsnek]
-# git = "nicwest/vim-camelsnek"
-# opt = true
-#
-# [plugins."text-case.nvim"]
-# git = "johmsalas/text-case.nvim"
-# rev = "v1.2.0"
-# opt = true
-#
-# [plugins."cool-substitute.nvim"]
-# git = "otavioschwanck/cool-substitute.nvim"
-# opt = true
-#
-# [plugins.nvim-alt-substitute]
-# git = "chrisgrieser/nvim-alt-substitute"
-# opt = true
-#
-# [plugins."substitute.nvim"]
-# version = "2.0.0"
-# opt = true
-#
-# [plugins."smartyank.nvim"]
-# git = "ibhagwan/smartyank.nvim"
-# opt = true
-#
-# [plugins."octo.nvim"]
-# git = "pwntester/octo.nvim"
-# opt = true
-#
-#
-# [plugins."linediff.vim"]
-# git = "andrewradev/linediff.vim"
-# rev = "v0.3.0"
-# opt = true
-#
-# [plugins."gitlinker.nvim"]
-# version = "4.13.1"
-# opt = true
-#
-# [plugins."co-author.nvim"]
-# git = "2kabhishek/co-author.nvim"
-# opt = true
-#
-# [plugins.tmpclone-nvim]
-# git = "danielhp95/tmpclone-nvim"
-# opt = true
-#
-# [plugins."git-conflict.nvim"]
-# git = "akinsho/git-conflict.nvim"
-# rev = "v2.0.0"
-# opt = true
-#
-# [plugins.ne]
-# git = "neogitorg/neogit"
-# rev = "v1.0.0"
-# opt = true
-#
-# [plugins.neogit]
-# version = "1.0.0"
-# opt = true
-#
-# [plugins."gitsigns.nvim"]
-# git = "lewis6991/gitsigns.nvim"
-# rev = "v0.9.0"
-#
-# [plugins."diffview.nvim"]
-# version = "scm"
-# opt = true
-#
-# [plugins."gitignore.nvim"]
-# git = "wintermute-cell/gitignore.nvim"
-# opt = true
-#
-# [plugins."gist.nvim"]
-# git = "rawnly/gist.nvim"
-# rev = "0.0.6"
-# opt = true
-#
-# [plugins.nvim-jqx]
-# git = "gennaro-tedesco/nvim-jqx"
-# rev = "v0.1.4^{}"
-# opt = true
-#
-#
-# [plugins."term-edit.nvim"]
-# git = "chomosuke/term-edit.nvim"
-# rev = "v1.3.1"
-# opt = true
-#
-# [plugins."date-time-inserter.nvim"]
-# git = "antonvanassche/date-time-inserter.nvim"
-# opt = true
-#
-# [plugins.nvim-fundo]
-# git = "kevinhwang91/nvim-fundo"
-# opt = true
-#
-# [plugins.nvim-genghis]
-# git = "chrisgrieser/nvim-genghis"
-# opt = true
-#
-# [plugins.vim-startuptime]
-# git = "dstein64/vim-startuptime"
-# rev = "v4.5.0"
-# opt = true
-#
-# [plugins."capslock.nvim"]
-# git = "barklan/capslock.nvim"
-# rev = "v1.4.1^{}"
-# opt = true
-#
-# [plugins."suda.vim"]
-# git = "lambdalisue/suda.vim"
-# rev = "v1.2.2"
-# opt = true
-#
-# [plugins."pre-commit.nvim"]
-# git = "ttibsi/pre-commit.nvim"
-# rev = "v1.0.0^{}"
-# opt = true
-#
-# [plugins.vim-translator]
-# git = "voldikss/vim-translator"
-# opt = true
-#
-# [plugins."qf_helper.nvim"]
-# git = "stevearc/qf_helper.nvim"
-# opt = true
-#
-# [plugins."qfview.nvim"]
-# git = "ashfinal/qfview.nvim"
-# opt = true
-#
-#
-# [plugins."toggleterm.nvim"]
-# version = "2.12.0"
-# opt = true
-#
-# [plugins."markdown-preview.nvim"]
-# git = "iamcco/markdown-preview.nvim"
-# rev = "v0.0.9^{}"
-# opt = true
-#
-# [plugins.tabular]
-# version = "0.4"
-# opt = true
-#
-# [plugins.vim-markdown]
-# git = "plasticboy/vim-markdown"
-# rev = "2.0.0"
-# opt = true
-#
-# [plugins.vim-grammarous]
-# git = "rhysd/vim-grammarous"
-# opt = true
-#
-# [plugins."paperplanes.nvim"]
-# version = "0.1.6"
-# opt = true
-#
-# [plugins."yazi.nvim"]
-# version = "5.7.1"
-# opt = true
-#
-
-#
-# [plugins."quicker.nvim"]
-# git = "stevearc/quicker.nvim"
-# rev = "v1.0.0"
-#
-# [plugins."chatgpt.nvim"]
-# git = "jackmort/chatgpt.nvim"
-# rev = "v0.1.1-alpha"
-# opt = true
-#
-# [plugins."codecompanion.nvim"]
-# git = "olimorris/codecompanion.nvim"
-# opt = true
-# [plugins."ai.vim"]
-# git = "mikesoylu/ai.vim"
-# opt = true
-#
-# [plugins."sg.nvim"]
-# git = "sourcegraph/sg.nvim"
-# rev = "v1.1.0"
-#
-# [plugins."compiler.nvim"]
-# git = "zeioth/compiler.nvim"
-# rev = "v3.3.8"
-# opt = true
-#
-# [plugins."officer.nvim"]
-# git = "pianocomposer321/officer.nvim"
-# opt = true
-#
-# [plugins.nvim-coverage]
-# git = "andythigpen/nvim-coverage"
-#
-#
-# [plugins."compiler-explorer.nvim"]
-# git = "krady21/compiler-explorer.nvim"
-#
-# [plugins.neogen]
-# git = "danymat/neogen"
-# rev = "2.9.2"
-# opt = true
-#
-# [plugins."codegpt.nvim"]
-# version = "scm"
-# opt = true
-#
-# [plugins."wtf.nvim"]
-# git = "piersolenski/wtf.nvim"
-# opt = true
-#
-# [plugins."browse.nvim"]
-# git = "lalitmee/browse.nvim"
-# opt = true
-#
-# [plugins."updoc.nvim"]
-# git = "loganswartz/updoc.nvim"
-# opt = true
-#
-# [plugins.vim-devdocs]
-# git = "romainl/vim-devdocs"
-# opt = true
-# rev = "scm"
-#
-# [plugins."zeavim.vim"]
-# git = "kabbamine/zeavim.vim"
-# rev = "v1.4"
-# opt = true
-#
-# [plugins.nvim-docs-view]
-# git = "amrbashir/nvim-docs-view"
-# opt = true
-# rev = "scm"
-#
-# [plugins."refgo.nvim"]
-# git = "prichrd/refgo.nvim"
-# opt = true
-# rev = "scm"
-#
-# [plugins."overseer.nvim"]
-# git = "stevearc/overseer.nvim"
-# rev = "v1.3.1"
-#
-# [plugins."avante.nvim"]
-# git = "yetone/avante.nvim"
-# build = "make"
-# rev = "scm"
-#
-# [plugins."nui-components.nvim"]
-# git = "grapp-dev/nui-components.nvim"
-# rev = "v1.5.2"
-#
-# [plugins."onedarkpro.nvim"]
-# git = "olimorris/onedarkpro.nvim"
-# rev = "treesitter-0.9.2"
-#
-# [plugins.vim-rooter]
-# git = "airblade/vim-rooter"
-# event = "DeferredUIEnter"
-#
-# [plugins.vimtex]
-# git = "lervag/vimtex"
-# rev = "v2.9"
-# ft = ["tex", "plaintex", "bib"]
-#
-# [plugins."arrow.nvim"]
-# git = "otavioschwanck/arrow.nvim"
-# opt = true
-#
-# [plugins.nvim-treesitter]
-# git = "nvim-treesitter/nvim-treesitter"
-# rev = "v0.9.2^{}"
-#
-# [plugins.neorg-telescope]
-# git = "nvim-neorg/neorg-telescope"
-# rev = "v1.2.3"
-# opt = true
-# [plugins.neorg-templates-draft]
-# git = "pysan3/neorg-templates-draft"
-# rev = "v2.0.3"
-#
-#
-# [plugins."requirements.txt.vim"]
-# git = "raimon49/requirements.txt.vim"
-# rev = "v-1.9.0^{}"
-#
-# [plugins.nvim-conda]
-# git = "kmontocam/nvim-conda"
-# rev = "v0.2.1"
-#
-#
-# [plugins."bufex.nvim"]
-# git = "tomiis4/bufex.nvim"
-#
-# [plugins."cmdline.nvim"]
-# git = "vzze/cmdline.nvim"
-#
-#
-# # [bundles.lsp]
-# # [bundles.startup]
-# # items = [
-# #   "abstract-autocmds",
-# # ]
-# #
-# # [bundles.completion] # Create a bundle called `lsp`
-# # items = [
-# #   "nvim-cmp",
-# #   "luasnip",
-# #   "cmp-async-path",
-# #   "cmp-path",
-# #   "cmp-omni",
-# #   "cmp-git",
-# #   "cmp-luasnip",
-# #   "cmp-vimtex",
-# #   "cmp-buffer",
-# #   "friendly-snippets",
-# #   "luasnip-snippets",
-# #   "luasnip-latex-snippets",
-# #   "nvim-autopairs",
-# #   "nvim-scissors",
-# #   "neotab.nvim"
-# # ]
-# #
-# # items = [
-# #     "nvim-lspconfig",
-# #     "mason-lspconfig.nvim",
-# #     "mason.nvim",
-# #     "lsp-command",
-# #     "mason-null-ls.nvim",
-# #     "glance.nvim",
-# #     "lspsaga.nvim",
-# #     "none-ls.nvim",
-# #     "definition-or-references.nvim",
-# # ]
-# #
-# # [bundles.ui]
-# # items = [
-# #   "dropbar.nvim",
-# #   "heirline.nvim",
-# #   "neominimap.nvim",
-# #   "neo-tree.nvim",
-# # ]
-# #
-# # [bundles.misc]
-# # items = [
-# # "nvim-surround",
-# # "nvim-spider",
-# # "dmacro.nvim",
-# # "oil.nvim"
-# # ]
-# #
-# # [bundles.treesitter]
-# # items = [
-# # "nvim-treesitter",
-# # "nvim-treesitter-textobjects",
-# # "rainbow-delimiters.nvim"
-# # ]
-# #
-# # [bundles.search]
-# # items = [
-# # "telescope.nvim"
-# # ]
+[bundles.search]
+items = [
+"telescope.nvim"
+]
 
 [config]
 auto_setup = true
@@ -923,27 +854,3 @@ auto_install = "prompt"
 
 [rocks_lazy]
 import = "lazy_specs"
-
-# nvim-ufo = {git = "kevinhwang91/nvim-ufo", rev = "1.4.0", opt = true}
-# "hlchunk.nvim" = {git = "shellRaining/hlchunk.nvim", rev ="1.1.0", opt=true}
-#
-# [plugins.neorg-hop-extras]
-# git = "phenax/neorg-hop-extras"
-# [plugins."neorg-roam.nvim"]
-# git = "jarvismkennedy/neorg-roam.nvim"
-# [plugins.neorg-exec]
-# git = "laher/neorg-exec"
-# [plugins."refactoring.nvim"]
-# git = "theprimeagen/refactoring.nvim"
-# [plugins."python-copy-reference.vim"]
-# git = "ranelpadon/python-copy-reference.vim"
-# [plugins."direnv.vim"]
-# git = "direnv/direnv.vim"
-# [plugins."oil-image-preview.nvim"]
-# git = "mimikun/oil-image-preview.nvim"
-# [plugins.abstract-autocmds]
-# git = "abstract-ide/abstract-autocmds"
-# [plugins."fileline.nvim"]
-# git = "lewis6991/fileline.nvim"
-
-

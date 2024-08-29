@@ -120,10 +120,6 @@ return {
     },
     {
         "avante.nvim",
-        load = function(name)
-            -- render-markdown.nvim
-            rocks.safe_force_packadd({ "render-markdown.nvim" })
-        end,
         event = "DeferredUIEnter",
         after = function()
             local opts = {

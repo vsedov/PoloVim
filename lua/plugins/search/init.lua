@@ -9,7 +9,6 @@ local plugins = {
     "telescope-bookmarks.nvim",
     "telescope-sg",
     "telescope-egrepify.nvim",
-    "telescope-fzf-native.nvim",
 }
 for _, v in ipairs(plugins) do
     vim.cmd("packadd " .. v)
@@ -28,7 +27,7 @@ end
 --         },
 --     },
 -- })
-telescope.load_extension("fzf")
+telescope.load_extension("zf-native")
 telescope.load_extension("file_browser")
 
 telescope.setup({
