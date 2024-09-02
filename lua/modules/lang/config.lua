@@ -69,7 +69,6 @@ function config.dev_comments()
         -- Play around with the reset autocommands for more aggressive caching
         cache = {
             enabled = true,
-            reset_autocommands = { "BufWritePost", "BufWinEnter" },
         },
         -- Improves performance when searching in a large directory
         -- Requires ripgrep or grep

@@ -122,26 +122,13 @@ local function show_related_locations(diag)
     end
     return diag
 end
-local function custom_on_publish_diagnostics(a, params, client_id, c)
-    params.diagnostics = vim.iter(params.diagnostics)
-        :filter(function(diag)
-            --                 lua                    pyright
-            local patterns = { "Unused local `_.+`.", '"_.+" is not accessed' }
-            return not vim.iter(patterns):any(function(pat)
-                return string.match(diag.message, pat)
-            end)
-        end)
-        :totable()
-    vim.lsp.diagnostic.on_publish_diagnostics(a, params, client_id, c)
-end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(custom_on_publish_diagnostics, {})
--- local handler = lsp.handlers[M.textDocument_publishDiagnostics]
--- ---@diagnostic disable-next-line: duplicate-set-field
--- lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
---     result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
---     handler(err, result, ctx, config)
--- end
+local handler = lsp.handlers[M.textDocument_publishDiagnostics]
+---@diagnostic disable-next-line: duplicate-set-field
+lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
+    result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
+    handler(err, result, ctx, config)
+end
 
 -----------------------------------------------------------------------------//
 -- Mappings
@@ -206,7 +193,6 @@ end
 ---@param bufnr number
 local function on_attach(client, bufnr)
     setup_lsp_binds(client, bufnr)
-    setup_semantic_tokens(client, bufnr)
 end
 
 augroup("LspSetupCommands", {
@@ -234,8 +220,12 @@ augroup("LspSetupCommands", {
         event = "LspAttach",
         command = function(args)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            if client.name == "sourcery" or client.name == "null_ls" or client.name == "ruff" then
-                -- Disable hover in favor of Pyright
+            if
+                client.name == "sourcery"
+                or client.name == "null_ls"
+                or client.name == "ruff"
+                or client.name == "none_ls"
+            then
                 client.server_capabilities.hoverProvider = false
             end
             if client.server_capabilities.hoverProvider then

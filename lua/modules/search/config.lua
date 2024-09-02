@@ -10,7 +10,6 @@ function config.telescope()
         "telescope-conda.nvim",
         "telescope-bookmarks.nvim",
         "telescope-sg",
-        "telescope-egrepify.nvim",
     }
     for _, v in ipairs(plugins) do
         require("lazy").load({ plugins = { v } })
@@ -31,7 +30,6 @@ function config.telescope()
     })
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("file_browser")
-    require("telescope").load_extension("egrepify")
 end
 
 function config.fzf()

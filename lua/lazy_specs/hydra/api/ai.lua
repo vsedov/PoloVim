@@ -1,4 +1,4 @@
-local leader = "<leader>a"
+local leader = ";a"
 local visual_mode = require("modules.editor.hydra.hydra_utils").run_visual_or_normal
 get_visual_selection_rows = function()
     local start_row = math.min(vim.fn.getpos("v")[2], vim.fn.getpos(".")[2])

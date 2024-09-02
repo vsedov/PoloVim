@@ -9,10 +9,11 @@ local use_noice = false -- completely disabled this
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 -- ──────────────────────────────────────────────────────────────────────
-local use_tabnine = true -- i mean i pay for this so why in the blue green fuck am i not using this ?
-local use_tabnine_cmp = true
+local use_tabnine = false
+-- i mean i pay for this so why in the blue green fuck am i not using this ?
+local use_tabnine_cmp = false
 -- ──────────────────────────────────────────────────────────────────────
-local use_copilot = true -- We really do sell our souls for this thing eh
+local use_copilot = false -- We really do sell our souls for this thing eh going to use claude now fuck copilot
 -- ──────────────────────────────────────────────────────────────────────
 local use_supermaven = false
 -- ──────────────────────────────────────────────────────────────────────

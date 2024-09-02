@@ -3,22 +3,16 @@
 # List of Neovim plugins to install alongside their versions.
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
-"rocks.nvim" = "2.38.2"
+"rocks.nvim" = "2.38.3"
 "rocks-config.nvim" = "2.2.0"
-"rocks-git.nvim" = "2.0.1"
 "rocks-lazy.nvim" = "scm"
 "lspkind.nvim" = "scm"
-"kanagawa.nvim"= "scm"
 nvim-notify = "3.13.5"
 cmp-git= "scm"
 friendly-snippets= "scm"
-"lspsaga.nvim" = "scm"
-"none-ls.nvim" = "scm"
-"lsp_signature.nvim" = "0.3.1"
 nvim-lspconfig = "0.1.8"
 "mason-lspconfig.nvim" = "1.30.0"
 "mason.nvim" = "1.10.0"
-"glance.nvim" = "scm"
 "better-escape.nvim" = "2.3.2"
 nvim-cmp = "scm"
 "actions-preview.nvim" = "scm"
@@ -42,7 +36,6 @@ nvim-fzf = "scm"
 nvim-spider = "scm"
 "heirline.nvim" = "1.0.6"
 tiktoken_core = "0.2.2"
-"render-markdown.nvim"= "6.2.0"
 "rocks-edit.nvim" = "scm"
 "deadcolumn.nvim" = "1.0.0"
 "freeze-code.nvim" = "0.2.0"
@@ -62,7 +55,6 @@ luasnip = "2.3.0"
 "plenary.nvim" = "scm"
 lzn-auto-require= "0.1.0"
 nvim-autopairs= "scm"
-"onedarkpro.nvim"= "1.0.0"
 telescope = "0.6.0"
 nvim-treesitter-textobjects = "scm"
 "telescope.nvim"= "scm"
@@ -77,6 +69,16 @@ nvim-various-textobjs = "scm"
 "guess-indent.nvim" = "scm"
 "smart-splits.nvim" = "1.6.0"
 "dressing.nvim" = "2.2.2"
+"rocks-git.nvim" = "2.0.1"
+"none-ls-extras.nvim" = "scm"
+
+[plugins."lsp_signature.nvim" ]
+version = "0.3.1"
+opt = true
+
+[plugins."render-markdown.nvim"]
+version = "6.3.0"
+opt = true
 
 [plugins.nvim-ufo ]
 version = "1.4.0"
@@ -98,6 +100,7 @@ opt = true
 git = "nvim-neo-tree/neo-tree.nvim"
 rev = "3.26"
 branch = "main"
+opt = true
 
 [plugins.cmp-buffer]
 git = "hrsh7th/cmp-buffer"
@@ -131,7 +134,7 @@ opt = true
 [plugins."garbage-day.nvim"]
 git = "zeioth/garbage-day.nvim"
 rev = "v1.3.0"
-event = "LspAttach"
+opt = true
 
 [plugins.lsp-command]
 git = "ii14/lsp-command"
@@ -172,6 +175,7 @@ rev = "v0.9.2^{}"
 [plugins."arrow.nvim"]
 git = "otavioschwanck/arrow.nvim"
 rev = "fb8e2cf548f625f6e36cb44d3e65600656924234"
+opt = true
 
 [plugins.vimtex]
 git = "lervag/vimtex"
@@ -187,6 +191,7 @@ rev = "v1.5.2"
 
 [plugins."avante.nvim"]
 git = "yetone/avante.nvim"
+rev = "fc1bcda8220cb4b81648db86670e5428c7d477b0"
 opt = true
 
 [plugins."overseer.nvim"]
@@ -239,17 +244,13 @@ git = "zeioth/compiler.nvim"
 rev = "v3.3.8"
 opt = true
 
-[plugins."sg.nvim"]
-git = "sourcegraph/sg.nvim"
-rev = "v1.1.0"
-
 [plugins."ai.vim"]
 git = "mikesoylu/ai.vim"
 rev = "26de0db6970762fe3db1cf3328b64b37dce8fa1b"
 
 [plugins."codecompanion.nvim"]
 git = "olimorris/codecompanion.nvim"
-rev = "v1.7.2"
+rev = "v1.8.1"
 
 [plugins."chatgpt.nvim"]
 git = "jackmort/chatgpt.nvim"
@@ -384,6 +385,7 @@ rev = "rel_6.1"
 [plugins."img-clip.nvim"]
 git = "hakonharnes/img-clip.nvim"
 rev = "v0.5.0"
+opt = true
 
 [plugins."nvim-neoclip.lua"]
 git = "acksld/nvim-neoclip.lua"
@@ -450,14 +452,10 @@ rev = "v0.9.0"
 git = "vzze/calculator.nvim"
 rev = "1e417c69606318575082ffc283b501523c2ba4ab"
 
-[plugins."none-ls-autoload.nvim"]
-git = "zeioth/none-ls-autoload.nvim"
-rev = "v1.0.0"
-opt = true
 
 [plugins."neominimap.nvim"]
 git = "isrothy/neominimap.nvim"
-rev = "v3.5.1"
+rev = "v3.5.5"
 
 [plugins."moody.nvim"]
 git = "svampkorg/moody.nvim"
@@ -469,7 +467,7 @@ rev = "v0.2.1"
 
 [plugins."lspmark.nvim"]
 git = "tristone13th/lspmark.nvim"
-rev = "1cd6c8f933c2b3349edd9c3a876ddbf683a5cc2a"
+opt = true
 
 [plugins."hunk.nvim"]
 git = "julienvincent/hunk.nvim"
@@ -482,10 +480,6 @@ rev = "00a8b5c17b8dcbafd13fcef39c2120c923c069b7"
 [plugins."gx.nvim"]
 git = "chrishrb/gx.nvim"
 rev = "v0.7.0"
-
-[plugins."telescope-egrepify.nvim"]
-git = "jsongerber/telescope-egrepify.nvim"
-rev = "0e67f5e2e49b312624133030dede7228c09cde82"
 
 [plugins."easypick.nvim"]
 git = "axkirillov/easypick.nvim"
@@ -601,6 +595,7 @@ rev = "f86830357941cca8a31f19601153087ea9524d22"
 [plugins.bufexplorer]
 git = "jlanzarotta/bufexplorer"
 rev = "v7.4.9"
+opt = true
 
 [plugins."bufonly.nvim"]
 git = "numtostr/bufonly.nvim"
@@ -715,6 +710,12 @@ rev = "eb3a77e714aa6c295bdb4f074fccbda637090f6e"
 [plugins."mason-null-ls.nvim"]
 git = "jay-babu/mason-null-ls.nvim"
 rev = "v2.6.0"
+opt = true
+
+[plugins."none-ls-autoload.nvim"]
+git = "zeioth/none-ls-autoload.nvim"
+rev = "v1.0.0"
+opt = true
 
 [plugins."luasnip-latex-snippets.nvim"]
 git = "iurimateus/luasnip-latex-snippets.nvim"
@@ -778,6 +779,28 @@ rev = "f12408bdb54c39c23e67cab726264c10db33ada8"
 
 [plugins."copilot.lua"]
 git = "zbirenbaum/copilot.lua"
+rev = "86537b286f18783f8b67bccd78a4ef4345679625"
+opt = true
+
+[plugins."sg.nvim"]
+git = "sourcegraph/sg.nvim"
+rev = "v1.1.0"
+opt = true
+
+[plugins."kanagawa-paper.nvim"]
+git = "sho-87/kanagawa-paper.nvim"
+rev = "v1.5.0"
+
+[plugins."lspsaga.nvim"]
+version = "scm"
+opt = true
+
+[plugins."none-ls.nvim"]
+version = "scm"
+opt = true
+
+[plugins."glance.nvim"]
+version = "scm"
 opt = true
 
 [bundles.startup]
@@ -808,12 +831,10 @@ items = [
     "nvim-lspconfig",
     "mason-lspconfig.nvim",
     "mason.nvim",
-    "lsp-command",
-    "mason-null-ls.nvim",
-    "glance.nvim",
-    "lspsaga.nvim",
-    "none-ls.nvim",
     "definition-or-references.nvim",
+    "lsp-command",
+    # "lspsaga.nvim",
+    # "glance.nvim",
 ]
 
 [bundles.ui]
@@ -821,7 +842,7 @@ items = [
   "dropbar.nvim",
   "heirline.nvim",
   "neominimap.nvim",
-  "neo-tree.nvim",
+  # "neo-tree.nvim",
 ]
 
 [bundles.misc]
@@ -846,6 +867,7 @@ items = [
 
 [config]
 auto_setup = true
+colorscheme = "kanagawa-paper"
 
 [treesitter]
 auto_highlight = "all"
@@ -854,3 +876,4 @@ auto_install = "prompt"
 
 [rocks_lazy]
 import = "lazy_specs"
+

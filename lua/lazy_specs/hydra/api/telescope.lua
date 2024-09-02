@@ -77,7 +77,7 @@ local config = {
 
         w = {
             function()
-                require("modules.search.telescope.telescope_commands").egrep()
+                vim.cmd("Telescope live_grep")
             end,
             { exit = true, desc = "egrepify" },
         },

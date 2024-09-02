@@ -1,6 +1,4 @@
-local ai = require("core.pack").package
-local conf = require("modules.ai.config")
-local ai_conf = lambda.config.ai
+ai_conf = lambda.config.ai
 local prompts = {
     -- Code related prompts
     Explain = "Please explain how the following code works.",
@@ -90,25 +88,6 @@ return {
         "sg.nvim",
         enabled = lambda.config.lsp.use_sg,
         event = "DeferredUIEnter",
-        build = "nvim -l build/init.lua",
-        cmd = {
-            "SourcegraphBuild",
-            "SourcegraphDownloadBinaries",
-            "SourcegraphInfo",
-            "SourcegraphLink",
-            "SourcegraphLogin",
-            "SourcegraphSearch",
-            "CodyDo",
-            "CodyChat",
-            "CodyToggle",
-            "CodyTaskNext",
-            "CodyTaskView",
-            "CodyAsk",
-            "CodyTask",
-            "CodyRestart",
-            "CodyTaskPrev",
-            "CodyTaskAccept",
-        },
         after = function()
             require("sg").setup({
                 enable_cody = true,
@@ -121,46 +100,35 @@ return {
     {
         "avante.nvim",
         event = "DeferredUIEnter",
+        keys = {
+            {
+                "<leader>ip",
+                function()
+                    return vim.bo.filetype == "AvanteInput" and require("avante.clipboard").paste_image()
+                        or require("img-clip").paste_image()
+                end,
+                desc = "clip: paste image",
+            },
+        },
         after = function()
+            rocks.safe_force_packadd({ "nvim-web-devicons", "plenary.nvim", "render-markdown.nvim" })
+
             local opts = {
-                ---@alias Provider "openai" | "claude" | "azure"
-                provider = "openai", -- "claude" or "openai" or "azure"
-                openai = {
-                    endpoint = "https://api.openai.com",
-                    model = "gpt-4o",
-                    temperature = 0,
-                    max_tokens = 10096,
-                },
-                azure = {
-                    endpoint = "", -- example: "https://<your-resource-name>.openai.azure.com"
-                    deployment = "", -- Azure deployment name (e.g., "gpt-4o", "my-gpt-4o-deployment")
-                    api_version = "2024-06-01",
-                    temperature = 0,
-                    max_tokens = 4096,
-                },
+                ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
+                provider = "claude", -- Recommend using Claude
                 claude = {
                     endpoint = "https://api.anthropic.com",
                     model = "claude-3-5-sonnet-20240620",
                     temperature = 0,
-                    max_tokens = 4096,
-                },
-                highlights = {
-                    ---@type AvanteConflictHighlights
-                    diff = {
-                        current = "DiffText",
-                        incoming = "DiffAdd",
-                    },
+                    max_tokens = 10096,
                 },
                 mappings = {
-                    ask = ";aa",
-                    edit = ";ae",
-                    refresh = ";ar",
-                    --- @class AvanteConflictMappings
                     diff = {
                         ours = "co",
                         theirs = "ct",
-                        none = "c0",
+                        all_theirs = "ca",
                         both = "cb",
+                        cursor = "cc",
                         next = "]x",
                         prev = "[x",
                     },
@@ -168,20 +136,46 @@ return {
                         next = "]]",
                         prev = "[[",
                     },
+                    submit = {
+                        normal = "<CR>",
+                        insert = "<C-s>",
+                    },
                 },
+                hints = { enabled = true },
                 windows = {
-                    wrap_line = true,
-                    width = 30, -- default % based on available width
+                    wrap = true, -- similar to vim.o.wrap
+                    width = 40, -- default % based on available width
+                    sidebar_header = {
+                        align = "center", -- left, center, right for title
+                        rounded = true,
+                    },
                 },
-                --- @class AvanteConflictUserConfig
+                highlights = {
+                    diff = {
+                        current = "DiffText",
+                        incoming = "DiffAdd",
+                    },
+                },
                 diff = {
-                    debug = false,
                     autojump = true,
-                    ---@type string | fun(): any
                     list_opener = "copen",
                 },
             }
+            opts = {
+                file_types = { "markdown", "Avante" },
+            }
+            require("render-markdown").setup(opts)
             require("avante").setup(opts)
+
+            lambda.augroup("Avante", {
+                {
+                    event = { "FileType" },
+                    pattern = "*Avante",
+                    command = function()
+                        vim.cmd([[Neominimap off]])
+                    end,
+                },
+            })
         end,
     },
 }

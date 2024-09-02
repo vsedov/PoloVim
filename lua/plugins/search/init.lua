@@ -8,7 +8,6 @@ local plugins = {
     "telescope-file-browser.nvim",
     "telescope-bookmarks.nvim",
     "telescope-sg",
-    "telescope-egrepify.nvim",
 }
 for _, v in ipairs(plugins) do
     vim.cmd("packadd " .. v)
