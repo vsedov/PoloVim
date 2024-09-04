@@ -286,4 +286,3 @@ harpoon:extend({
     end,
     LIST_CREATED = prepopulate,
 })
-harpoon:extend(extensions.builtins.command_on_nav("UfoEnableFold"))

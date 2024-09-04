@@ -18,7 +18,7 @@ return {
     {
 
         "nvim-ufo",
-        event = "DeferredUIEnter",
+        event = "BufWinEnter",
         cmd = {
             "UfoAttach",
             "UfoDetach",
@@ -70,7 +70,7 @@ return {
     },
     {
         "vim-illuminate",
-        event = "DeferredUIEnter",
+        event = "BufEnter",
         after = conf.illuminate,
     },
     {

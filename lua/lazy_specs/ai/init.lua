@@ -27,15 +27,6 @@ return {
         end,
     },
 
-    {
-        "ai.vim",
-        cmd = { "AI" },
-        beforeAll = function()
-            vim.g.ai_completions_model = "gpt-4"
-            vim.g.ai_no_mappings = 1 -- disbale default mappings
-        end,
-    },
-
     -- <C-c> to close chat window.
     -- <C-u> scroll up chat window.
     -- <C-d> scroll down chat window.
@@ -99,7 +90,7 @@ return {
     },
     {
         "avante.nvim",
-        event = "DeferredUIEnter",
+        event = "BufEnter",
         keys = {
             {
                 "<leader>ip",
@@ -109,6 +100,27 @@ return {
                 end,
                 desc = "clip: paste image",
             },
+            {
+                "<leader>as",
+                function()
+                    local function AvanteSwitchProvider()
+                        local providers = { "Claude", "OpenAI", "Azure", "Gemini", "Cohere", "Copilot", "Perplexity" }
+                        vim.ui.select(providers, {
+                            prompt = "Select Avante Provider:",
+                            format_item = function(item)
+                                return item
+                            end,
+                        }, function(choice)
+                            if choice then
+                                vim.cmd("AvanteSwitchProvider " .. choice)
+                                vim.notify("Avante provider switched to " .. choice, vim.log.levels.INFO)
+                            end
+                        end)
+                    end
+                    AvanteSwitchProvider()
+                end,
+                desc = "Switch Avante Provider",
+            },
         },
         after = function()
             rocks.safe_force_packadd({ "nvim-web-devicons", "plenary.nvim", "render-markdown.nvim" })
@@ -116,11 +128,46 @@ return {
             local opts = {
                 ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
                 provider = "claude", -- Recommend using Claude
-                claude = {
-                    endpoint = "https://api.anthropic.com",
-                    model = "claude-3-5-sonnet-20240620",
-                    temperature = 0,
-                    max_tokens = 10096,
+                vendors = {
+                    perplexity = {
+                        endpoint = "https://api.perplexity.ai/chat/completions",
+                        model = "llama-3.1-sonar-large-128k-online",
+                        api_key_name = "PERPLEXITY_API_KEY",
+                        parse_curl_args = function(opts, code_opts)
+                            return {
+                                url = opts.endpoint,
+                                headers = {
+                                    ["Accept"] = "application/json",
+                                    ["Content-Type"] = "application/json",
+                                    ["Authorization"] = "Bearer " .. opts.api_key,
+                                },
+                                body = {
+                                    model = opts.model,
+                                    messages = { -- you can make your own message, but this is very advanced
+                                        { role = "system", content = code_opts.system_prompt },
+                                        {
+                                            role = "user",
+                                            content = require("avante.providers.openai").get_user_message(code_opts),
+                                        },
+                                    },
+                                    temperature = 0,
+                                    max_tokens = 8192,
+                                    stream = true, -- this will be set by default.
+                                },
+                            }
+                        end,
+                        -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
+                        parse_response_data = function(data_stream, event_state, opts)
+                            require("avante.providers").openai.parse_response(data_stream, event_state, opts)
+                        end,
+                    },
+                },
+                behaviour = {
+                    auto_suggestions = true, -- Experimental stage
+                    auto_set_highlight_group = true,
+                    auto_set_keymaps = true,
+                    auto_apply_diff_after_generation = true,
+                    support_paste_from_clipboard = true,
                 },
                 mappings = {
                     diff = {
@@ -144,7 +191,7 @@ return {
                 hints = { enabled = true },
                 windows = {
                     wrap = true, -- similar to vim.o.wrap
-                    width = 40, -- default % based on available width
+                    width = 45, -- default % based on available width
                     sidebar_header = {
                         align = "center", -- left, center, right for title
                         rounded = true,
@@ -161,21 +208,21 @@ return {
                     list_opener = "copen",
                 },
             }
-            opts = {
+            local opt2 = {
                 file_types = { "markdown", "Avante" },
             }
-            require("render-markdown").setup(opts)
+            require("render-markdown").setup(opt2)
             require("avante").setup(opts)
 
-            lambda.augroup("Avante", {
-                {
-                    event = { "FileType" },
-                    pattern = "*Avante",
-                    command = function()
-                        vim.cmd([[Neominimap off]])
-                    end,
-                },
-            })
+            -- lambda.augroup("Avante", {
+            --     {
+            --         event = { "FileType" },
+            --         pattern = "*Avante",
+            --         command = function()
+            --             vim.cmd([[Neominimap off]])
+            --         end,
+            --     },
+            -- })
         end,
     },
 }

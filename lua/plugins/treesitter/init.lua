@@ -1,8 +1,7 @@
 local conf = require("modules.treesitter.config")
-conf.treesitter_init()
-conf.nvim_treesitter()
+-- conf.nvim_treesitter()
+-- conf.treesitter_init()
 local rainbow_delimiters = require("rainbow-delimiters")
-
 vim.g.rainbow_delimiters = {
 
     strategy = {

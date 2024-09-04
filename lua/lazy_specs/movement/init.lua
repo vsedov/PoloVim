@@ -109,8 +109,7 @@ return {
 
     {
         "harpoon",
-        opt = true,
-        priority = 10,
+        priority = 450,
         load = function(name)
             rocks.safe_packadd({
                 name,

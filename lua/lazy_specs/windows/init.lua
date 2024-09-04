@@ -46,7 +46,7 @@ return {
 
     {
         "smart-splits.nvim",
-        event = "DeferredUIEnter",
+        event = "BufEnter",
         after = function()
             require("smart-splits").setup({
                 resize_mode = {

@@ -1,5 +1,13 @@
 return {
     {
+        "treesitter.nvim",
+        after = function()
+            local conf = require("modules.treesitter.config")
+            conf.nvim_treesitter()
+            conf.treesitter_init()
+        end,
+    },
+    {
         "chrisgrieser/nvim-various-textobjs",
         event = "DeferredUIEnter",
         keys = {
@@ -176,7 +184,6 @@ return {
     },
     {
         "hlargs.nvim",
-        event = "DeferredUIEnter",
         after = function()
             require("hlargs").setup({
                 color = "#ef9062",
@@ -233,6 +240,7 @@ return {
             end, {})
         end,
     },
+
     {
         "hiPairs",
         event = "DeferredUIEnter",

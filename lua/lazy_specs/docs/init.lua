@@ -2,14 +2,12 @@ local conf = require("modules.documentation.config")
 
 return {
 
-    {
-        "neogen",
-        opt = true,
-        after = conf.neogen,
-    },
+    -- {
+    --     "neogen",
+    --     after = conf.neogen,
+    -- },
     {
         "refgo.nvim",
-        opt = true,
         cmd = { "RefCopy", "RefGo" },
     },
 
@@ -26,13 +24,13 @@ return {
         opt = true,
     },
 
-    {
-        "updoc.nvim",
-        opt = true,
-        after = function()
-            require("updoc").setup()
-        end,
-    },
+    -- {
+    --     "updoc.nvim",
+    --     opt = true,
+    --     after = function()
+    --         require("updoc").setup()
+    --     end,
+    -- },
 
     {
         "browse.nvim",

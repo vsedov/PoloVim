@@ -3,7 +3,7 @@
 # List of Neovim plugins to install alongside their versions.
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
-"rocks.nvim" = "2.38.3"
+"rocks.nvim" = "2.40.0"
 "rocks-config.nvim" = "2.2.0"
 "rocks-lazy.nvim" = "scm"
 "lspkind.nvim" = "scm"
@@ -41,12 +41,11 @@ tiktoken_core = "0.2.2"
 "freeze-code.nvim" = "0.2.0"
 "fugit2.nvim" = "0.2.1"
 luarocks-build-rust-mlua = "0.2.2"
-neorg = "9.1.1"
 neorg-interim-ls = "1.2.0"
 neorg-se = "1.1.10"
-nvim-nio = "1.10.0"
+nvim-nio = "1.7.0"
 "image.nvim" = "1.3.0"
-"rocks-dev.nvim" = "1.5.0"
+"rocks-dev.nvim" = "1.7.0"
 "glow.nvim" = "0.2.0"
 toml = "0.4.0"
 luv = "1.48.0"
@@ -56,7 +55,6 @@ luasnip = "2.3.0"
 lzn-auto-require= "0.1.0"
 nvim-autopairs= "scm"
 telescope = "0.6.0"
-nvim-treesitter-textobjects = "scm"
 "telescope.nvim"= "scm"
 nvim-surround = "2.1.5"
 "rainbow-delimiters.nvim" = "0.6.1"
@@ -69,8 +67,29 @@ nvim-various-textobjs = "scm"
 "guess-indent.nvim" = "scm"
 "smart-splits.nvim" = "1.6.0"
 "dressing.nvim" = "2.2.2"
-"rocks-git.nvim" = "2.0.1"
+"rocks-git.nvim" = "2.2.0"
 "none-ls-extras.nvim" = "scm"
+"logging.nvim" = "1.1.0"
+nvim-ufo = "1.4.0"
+tree-sitter-toml = "scm"
+tree-sitter-python = "scm"
+tree-sitter-lua = "scm"
+tree-sitter-yaml = "scm"
+tree-sitter-bash = "scm"
+nvim-treesitter = "scm"
+"rocks-treesitter.nvim" = "1.1.2"
+
+[plugins.neorg ]
+version = "9.1.1"
+opt = true
+
+[plugins.nvim-treesitter-textobjects ]
+version = "scm"
+opt = true
+
+[plugins."sg.nvim"]
+version = "1.1.0"
+opt = true
 
 [plugins."lsp_signature.nvim" ]
 version = "0.3.1"
@@ -78,11 +97,6 @@ opt = true
 
 [plugins."render-markdown.nvim"]
 version = "6.3.0"
-opt = true
-
-[plugins.nvim-ufo ]
-version = "1.4.0"
-opt = true
 
 [plugins.promise-async ]
 version = "scm"
@@ -96,11 +110,11 @@ rev = "v1.0^{}"
 version = "2.0.3"
 opt = true
 
-[plugins."neo-tree.nvim" ]
-git = "nvim-neo-tree/neo-tree.nvim"
-rev = "3.26"
-branch = "main"
-opt = true
+# [plugins."neo-tree.nvim" ]
+# git = "nvim-neo-tree/neo-tree.nvim"
+# rev = "3.26"
+# branch = "main"
+# opt = true
 
 [plugins.cmp-buffer]
 git = "hrsh7th/cmp-buffer"
@@ -168,10 +182,6 @@ rev = "v2.0.3"
 git = "nvim-neorg/neorg-telescope"
 rev = "v1.2.3"
 
-[plugins.nvim-treesitter]
-git = "nvim-treesitter/nvim-treesitter"
-rev = "v0.9.2^{}"
-
 [plugins."arrow.nvim"]
 git = "otavioschwanck/arrow.nvim"
 rev = "fb8e2cf548f625f6e36cb44d3e65600656924234"
@@ -189,14 +199,9 @@ rev = "4a0df2f1b0f3d69e8f7e19afe464a7c3a7af89a2"
 git = "grapp-dev/nui-components.nvim"
 rev = "v1.5.2"
 
-[plugins."avante.nvim"]
-git = "yetone/avante.nvim"
-rev = "fc1bcda8220cb4b81648db86670e5428c7d477b0"
-opt = true
-
 [plugins."overseer.nvim"]
-git = "stevearc/overseer.nvim"
-rev = "v1.4.0"
+version = "1.4.0"
+opt = true
 
 [plugins."refgo.nvim"]
 git = "prichrd/refgo.nvim"
@@ -211,10 +216,6 @@ opt = true
 git = "romainl/vim-devdocs"
 rev = "85a98b86043ac6b4484663d75729e1b5bcebedbe"
 
-[plugins."updoc.nvim"]
-git = "loganswartz/updoc.nvim"
-rev = "1e6cb0c3b4a145e75374bd2b121389212c9ddbd2"
-
 [plugins."browse.nvim"]
 git = "lalitmee/browse.nvim"
 rev = "8292baa12ef4611532526e8a6f7a315848eceb74"
@@ -222,10 +223,6 @@ rev = "8292baa12ef4611532526e8a6f7a315848eceb74"
 [plugins."wtf.nvim"]
 git = "piersolenski/wtf.nvim"
 rev = "d75acc087b5183b0b3e000189518c5d799978e95"
-
-[plugins.neogen]
-git = "danymat/neogen"
-rev = "2.9.2"
 
 [plugins."compiler-explorer.nvim"]
 git = "krady21/compiler-explorer.nvim"
@@ -244,13 +241,9 @@ git = "zeioth/compiler.nvim"
 rev = "v3.3.8"
 opt = true
 
-[plugins."ai.vim"]
-git = "mikesoylu/ai.vim"
-rev = "26de0db6970762fe3db1cf3328b64b37dce8fa1b"
-
 [plugins."codecompanion.nvim"]
 git = "olimorris/codecompanion.nvim"
-rev = "v1.8.1"
+rev = "v1.8.2"
 
 [plugins."chatgpt.nvim"]
 git = "jackmort/chatgpt.nvim"
@@ -311,6 +304,7 @@ rev = "382ddb90a31313f0b2e059db50df0ca4dd2859d2"
 [plugins.nvim-fundo]
 git = "kevinhwang91/nvim-fundo"
 rev = "ac9c9372c4bf677721e24f144ef29d3a05c2b589"
+opt = true
 
 
 [plugins."term-edit.nvim"]
@@ -357,6 +351,7 @@ rev = "v0.3.0"
 [plugins."octo.nvim"]
 git = "pwntester/octo.nvim"
 rev = "0134169886958f3874f16eed7fe73d906a3e7e17"
+opt =true
 
 [plugins."smartyank.nvim"]
 git = "ibhagwan/smartyank.nvim"
@@ -385,7 +380,6 @@ rev = "rel_6.1"
 [plugins."img-clip.nvim"]
 git = "hakonharnes/img-clip.nvim"
 rev = "v0.5.0"
-opt = true
 
 [plugins."nvim-neoclip.lua"]
 git = "acksld/nvim-neoclip.lua"
@@ -452,10 +446,10 @@ rev = "v0.9.0"
 git = "vzze/calculator.nvim"
 rev = "1e417c69606318575082ffc283b501523c2ba4ab"
 
-
 [plugins."neominimap.nvim"]
 git = "isrothy/neominimap.nvim"
-rev = "v3.5.5"
+rev = "v3.6.0"
+opt = true
 
 [plugins."moody.nvim"]
 git = "svampkorg/moody.nvim"
@@ -464,10 +458,6 @@ rev = "189bd6e9bc858e1608d7b29839f6f4134d772bf3"
 [plugins."modes.nvim"]
 git = "mvllow/modes.nvim"
 rev = "v0.2.1"
-
-[plugins."lspmark.nvim"]
-git = "tristone13th/lspmark.nvim"
-opt = true
 
 [plugins."hunk.nvim"]
 git = "julienvincent/hunk.nvim"
@@ -514,18 +504,22 @@ opt = true
 [plugins.nvim-treesitter-textsubjects]
 git = "rrethy/nvim-treesitter-textsubjects"
 rev = "a8d2844bba925d9450ef7ab215f3b054028288ca"
+opt = true
 
 [plugins.nvim-treesitter-endwise]
 git = "rrethy/nvim-treesitter-endwise"
 rev = "8b34305ffc28bd75a22f5a0a9928ee726a85c9a6"
+opt = true
 
 [plugins."hlargs.nvim"]
 git = "m-demare/hlargs.nvim"
 rev = "cc0d9ee75e5ffba730393049119361b9e3a5b1b6"
+opt = true
 
 [plugins.hipairs]
 git = "yggdroot/hipairs"
 rev = "8272bf6979d0ee65a3fdbbb97eff3dda79b661b2"
+opt = true
 
 [plugins.ts-node-action]
 git = "ckolkey/ts-node-action"
@@ -534,10 +528,6 @@ rev = "6d3b60754fd87963d70eadaa2f77873b447eac26"
 [plugins."equal.operator"]
 git = "romgrk/equal.operator"
 rev = "5c4cb737db8ded6bf56bbf090fda2b81efa7028c"
-
-[plugins.vim-matchup]
-git = "andymass/vim-matchup"
-rev = "v0.7.3"
 
 [plugins.vim-kitty]
 git = "fladson/vim-kitty"
@@ -550,6 +540,7 @@ rev = "afc124a0976d56db43cc840e62757193ccab7856"
 [plugins."ns-textobject.nvim"]
 git = "xxiaoa/ns-textobject.nvim"
 rev = "6341bc16df9d07d5f9520b7ac0a84a55720c2302"
+opt = true
 
 [plugins.vim-dirtytalk]
 git = "psliwka/vim-dirtytalk"
@@ -622,9 +613,9 @@ rev = "v1.0.0"
 git = "dimeji-go/which-key.nvim"
 rev = "500806761020be505228c1d010f4c29c6c0824ac"
 
-[plugins."neo-tree-jj.nvim"]
-git = "cretezy/neo-tree-jj.nvim"
-rev = "c6534930c6f79893e12eafbb722ee23e6a83e80e"
+# [plugins."neo-tree-jj.nvim"]
+# git = "cretezy/neo-tree-jj.nvim"
+# rev = "c6534930c6f79893e12eafbb722ee23e6a83e80e"
 
 [plugins.vim-eunuch]
 git = "tpope/vim-eunuch"
@@ -646,6 +637,7 @@ rev = "v1.2^{}"
 [plugins.vim-illuminate]
 git = "rrethy/vim-illuminate"
 rev = "5eeb7951fc630682c322e88a9bbdae5c224ff0aa"
+opt = true
 
 [plugins."lasterisk.nvim"]
 git = "rapan931/lasterisk.nvim"
@@ -782,11 +774,6 @@ git = "zbirenbaum/copilot.lua"
 rev = "86537b286f18783f8b67bccd78a4ef4345679625"
 opt = true
 
-[plugins."sg.nvim"]
-git = "sourcegraph/sg.nvim"
-rev = "v1.1.0"
-opt = true
-
 [plugins."kanagawa-paper.nvim"]
 git = "sho-87/kanagawa-paper.nvim"
 rev = "v1.5.0"
@@ -801,6 +788,16 @@ opt = true
 
 [plugins."glance.nvim"]
 version = "scm"
+opt = true
+
+[plugins."exemplum.nvim"]
+git = "ntbbloodbath/exemplum.nvim"
+rev = "8469ba46c860d4e2f5d5a929b92afd2421503d23"
+opt = true
+
+[plugins."avante.nvim"]
+git = "yetone/avante.nvim"
+rev = "v0.0.2"
 opt = true
 
 [bundles.startup]
@@ -841,7 +838,7 @@ items = [
 items = [
   "dropbar.nvim",
   "heirline.nvim",
-  "neominimap.nvim",
+  # "neominimap.nvim",
   # "neo-tree.nvim",
 ]
 
@@ -855,8 +852,7 @@ items = [
 
 [bundles.treesitter]
 items = [
-"nvim-treesitter",
-"nvim-treesitter-textobjects",
+# "nvim-treesitter-textobjects",
 "rainbow-delimiters.nvim"
 ]
 
@@ -871,7 +867,7 @@ colorscheme = "kanagawa-paper"
 
 [treesitter]
 auto_highlight = "all"
-auto_install = "prompt"
+auto_install = true
 
 
 [rocks_lazy]

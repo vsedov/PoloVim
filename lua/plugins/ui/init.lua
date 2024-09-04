@@ -181,7 +181,7 @@ require("heirline").setup({
     },
 })
 
-rocks.safe_packadd({ "neo-tree-jj.nvim", "nvim-web-devicons", "nui.nvim" })
+-- rocks.safe_packadd({ "neo-tree-jj.nvim", "nvim-web-devicons", "nui.nvim" })
 rocks.packadd_with_after_dirs({
     "nvim-window-picker",
 })
@@ -273,7 +273,7 @@ local opts = {
     },
 }
 
-require("neo-tree").setup(opts)
+-- require("neo-tree").setup(opts)
 require("window-picker").setup({
     hint = "floating-big-letter",
     autoselect_one = true,
@@ -286,4 +286,4 @@ require("window-picker").setup({
     },
 })
 
-vim.keymap.set("n", "<leader>e", ":Neotree<cr>", { silent = true })
+vim.keymap.set("n", "<leader>e", ":Oil --float<cr>", { silent = true })
