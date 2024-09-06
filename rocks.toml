@@ -81,6 +81,7 @@ nvim-treesitter = "scm"
 tree-sitter-latex = "scm"
 tree-sitter-fish = "scm"
 tree-sitter-ini = "scm"
+"foldtext.nvim" = "1.0.0"
 
 [plugins.neorg ]
 version = "9.1.1"
@@ -203,8 +204,9 @@ git = "grapp-dev/nui-components.nvim"
 rev = "v1.5.2"
 
 [plugins."overseer.nvim"]
-version = "1.4.0"
-opt = true
+git = "stevearc/overseer.nvim"
+rev = "6271cab7ccc4ca840faa93f54440ffae3a3918bd"
+pin = true
 
 [plugins."refgo.nvim"]
 git = "prichrd/refgo.nvim"
@@ -246,7 +248,7 @@ opt = true
 
 [plugins."codecompanion.nvim"]
 git = "olimorris/codecompanion.nvim"
-rev = "v2.0.0"
+rev = "v2.2.0"
 
 [plugins."chatgpt.nvim"]
 git = "jackmort/chatgpt.nvim"
