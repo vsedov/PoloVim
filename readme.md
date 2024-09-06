@@ -40,7 +40,7 @@ MIT License. See [LICENSE](LICENSE) file.
 
 ---
 
-**Final Note**: This config is a constantly moving target. What works today might break tomorrow. Use at your own risk, or better yet, don't use it at all unless you're me.
+**Final Note**: This config is a constantly moving target. What works today might break tomorrow. Use at your own risk.
 
 
 
