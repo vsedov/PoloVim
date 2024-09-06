@@ -111,13 +111,6 @@ return {
         },
     },
     {
-        "garbage-day.nvim",
-        event = "LspAttach",
-        after = function()
-            require("garbage-day").setup({ aggresive_mode = false })
-        end,
-    },
-    {
         "lspsaga.nvim",
         event = "LspAttach",
         after = function()

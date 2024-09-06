@@ -98,7 +98,7 @@ function config.cool_sub()
 end
 
 function config.text_case()
-    require("telescope").load_extension("textcase")
+    -- require("telescope").load_extension("textcase")
 end
 
 function config.neoclip()

@@ -128,13 +128,10 @@ harpoon:setup({
         save_on_toggle = true,
         sync_on_ui_close = true,
         save_on_change = true,
-        enter_on_sendcmd = false,
+        enter_on_sendcmd = true,
         tmux_autoclose_windows = false,
         excluded_filetypes = { "harpoon", "alpha", "dashboard", "gitcommit" },
-        mark_branch = false,
-        key = function()
-            return vim.loop.cwd()
-        end,
+        mark_branch = true,
     },
     tmux = tmux,
     files = files,
@@ -144,9 +141,9 @@ harpoon:setup({
             require("yeet").execute(list_item.value)
         end,
     },
-    menu = {
-        width = vim.api.nvim_win_get_width(0) - 4,
-    },
+    -- menu = {
+    --     width = vim.api.nvim_win_get_width(0) - 4,
+    -- },
 })
 
 local titles = {

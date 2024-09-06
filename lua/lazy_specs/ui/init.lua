@@ -108,7 +108,7 @@ return {
     },
     {
         "hlchunk.nvim",
-        event = "DeferredUIEnter",
+        event = "BufWinEnter",
         after = function()
             require("hlchunk").setup({
                 indent = {

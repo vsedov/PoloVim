@@ -9,7 +9,7 @@ return {
     },
     {
         "chrisgrieser/nvim-various-textobjs",
-        event = "DeferredUIEnter",
+        event = "BufWinEnter",
         keys = {
             {
                 "aS",
@@ -116,7 +116,7 @@ return {
     },
     {
         "vim-matchup",
-        event = "DeferredUIEnter",
+        event = "BufWinEnter",
         keys = {
             {
                 "<leader><leader>w",
@@ -243,7 +243,7 @@ return {
 
     {
         "hiPairs",
-        event = "DeferredUIEnter",
+        event = "BufWinEnter",
         after = function()
             function setkey(k)
                 local function out(kk, v)
@@ -267,7 +267,7 @@ return {
     },
     {
         "guess-indent.nvim",
-        event = "DeferredUIEnter", -- "BufReadPost",
+        event = "BufWinEnter", -- "BufReadPost",
         cmd = "GuessIndent",
         after = function()
             require("guess-indent").setup({
@@ -288,7 +288,7 @@ return {
     },
     {
         "ns-textobject.nvim",
-        event = "DeferredUIEnter",
+        event = "BufWinEnter",
         after = function()
             require("ns-textobject").setup({
                 auto_mapping = {
