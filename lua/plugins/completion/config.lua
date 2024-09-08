@@ -26,10 +26,6 @@ function config.cmp()
     require("plugins.completion.cmp")
 end
 
-function config.snippet()
-    require("plugins.completion.snippets")
-end
-
 function config.snip_genie()
     local genie = require("SnippetGenie")
     genie.setup({
@@ -75,6 +71,7 @@ end
 function config.autopair()
     opts = {
         disable_filetype = { "TelescopePrompt", "spectre_panel" },
+
         disable_in_macro = true, -- disable when recording or executing a macro
         disable_in_visualblock = false, -- disable when insert after visual block mode
         disable_in_replace_mode = true,
@@ -107,6 +104,8 @@ function config.autopair()
     }
 
     require("nvim-autopairs").setup(opts)
+    vim.cmd("autocmd FileType guihua lua require('cmp').setup.buffer { enabled = false }")
+    vim.cmd("autocmd FileType guihua_rust lua require('cmp').setup.buffer { enabled = false }")
 end
 
 return config

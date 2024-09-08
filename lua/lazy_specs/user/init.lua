@@ -209,7 +209,7 @@ return {
         end,
         after = function()
             require("gx").setup({
-                open_browser_app = "waterfox", -- specify your browser app; default for macOS is "open", Linux "xdg-open" and Windows "powershell.exe"
+                open_browser_app = "zen-browser-optimized", -- specify your browser app; default for macOS is "open", Linux "xdg-open" and Windows "powershell.exe"
                 -- open_browser_args = { "--background" }, -- specify any arguments, such as --background for macOS' "open".
                 handlers = {
                     plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)

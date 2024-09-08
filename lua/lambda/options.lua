@@ -141,7 +141,7 @@ lambda.config.lsp = {
     ----------------------------------------------------------------------------------------------------
 
     lsp_sig = {
-        use_lsp_signature = false,
+        use_lsp_signature = true,
         use_floating_window = true,
         use_floating_window_above_cur_line = true,
         fix_pos = true,

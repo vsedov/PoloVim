@@ -127,8 +127,9 @@ return {
 
             local opts = {
                 ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-                provider = "claude", -- Recommend using Claude
+                provider = "perplexity", -- Recommend using Claude
                 vendors = {
+                    ---@type AvanteProvider
                     perplexity = {
                         endpoint = "https://api.perplexity.ai/chat/completions",
                         model = "llama-3.1-sonar-large-128k-online",
@@ -139,7 +140,7 @@ return {
                                 headers = {
                                     ["Accept"] = "application/json",
                                     ["Content-Type"] = "application/json",
-                                    ["Authorization"] = "Bearer " .. opts.api_key,
+                                    ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
                                 },
                                 body = {
                                     model = opts.model,
@@ -163,10 +164,10 @@ return {
                     },
                 },
                 behaviour = {
-                    auto_suggestions = true, -- Experimental stage
+                    -- auto_suggestions = true, -- Experimental stage
                     auto_set_highlight_group = true,
                     auto_set_keymaps = true,
-                    auto_apply_diff_after_generation = true,
+                    auto_apply_diff_after_generation = false,
                     support_paste_from_clipboard = true,
                 },
                 mappings = {

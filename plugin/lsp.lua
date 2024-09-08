@@ -25,6 +25,7 @@ local get_extra_binds = function()
             "gD",
             function()
                 require("definition-or-references").definition_or_references()
+
             end,
             desc = "Goto Def",
         },
@@ -34,7 +35,6 @@ local get_extra_binds = function()
             desc = "Glances peek_definition",
         },
 
-        { "gf", "<cmd>Lspsaga finder<CR>", desc = "Toggle Lspsaga finder" },
         {
             "gt",
             "<cmd>Glance type_definitions<CR>",
@@ -45,27 +45,6 @@ local get_extra_binds = function()
             "<cmd>Glance implementations<CR>",
             desc = "Glacne implementations",
         },
-        {
-            "gR",
-            "<cmd>Lspsaga rename ++project<CR>",
-            desc = "Toggle Lspsaga rename ++project",
-        },
-
-        {
-            "g]",
-            "<cmd>Lspsaga diagnostic_jump_prev<CR>",
-            desc = "Toggle Lspsaga diagnostic_jump_prev",
-        },
-        {
-            "g[",
-            "<cmd>Lspsaga diagnostic_jump_next<CR>",
-            desc = "Toggle Lspsaga diagnostic_jump_next",
-        },
-        -- {
-        --     "gW",
-        --     "<cmd>Lspsaga show_workspace_diagnostics<CR>",
-        --     desc = "Toggle Lspsaga show_workspace_diagnostics",
-        -- },
     }
     return binds
 end

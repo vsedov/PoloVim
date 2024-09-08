@@ -24,8 +24,18 @@ return {
     },
 
     {
-        "nvim-alt-substitute",
-        event = "CmdlineEnter",
+        "nvim-rip-substitute",
+        cmd = "RipSubstitute",
+        keys = {
+            {
+                "<leader>S",
+                function()
+                    require("rip-substitute").sub()
+                end,
+                mode = { "n", "x" },
+                desc = " rip substitute",
+            },
+        },
     },
 
     --  ──────────────────────────────────────────────────────────────────────

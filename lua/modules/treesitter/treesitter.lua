@@ -104,26 +104,6 @@ local treesitter_obj = function()
                 swap_previous = { ["]W"] = "@parameter.inner" },
             },
         },
-        -- ensure_installed = "maintained"
-        ensure_installed = {
-            "norg",
-            "vim",
-            "go",
-            "css",
-            "html",
-            "javascript",
-            "typescript",
-            "json",
-            "c",
-            "java",
-            "toml",
-            "diff",
-            "tsx",
-            "lua",
-            "cpp",
-            "python",
-            "rust",
-        },
     })
 
     -- print("loading ts")

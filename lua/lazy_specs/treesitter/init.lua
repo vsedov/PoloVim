@@ -3,12 +3,12 @@ return {
         "treesitter.nvim",
         after = function()
             local conf = require("modules.treesitter.config")
-            conf.nvim_treesitter()
             conf.treesitter_init()
+            conf.nvim_treesitter()
         end,
     },
     {
-        "chrisgrieser/nvim-various-textobjs",
+        "nvim-various-textobjs",
         event = "BufWinEnter",
         keys = {
             {
@@ -177,13 +177,19 @@ return {
     },
     {
         "nvim-treesitter-endwise",
-        ft = { "lua", "ruby", "vim" },
+        event = "BufWinEnter",
         after = function()
-            require("modules.treesitter.treesitter").endwise()
+            -- Requires nvim-treesitter installed
+            require("nvim-treesitter.configs").setup({
+                endwise = {
+                    enable = true,
+                },
+            })
         end,
     },
     {
         "hlargs.nvim",
+        event = "BufWinEnter",
         after = function()
             require("hlargs").setup({
                 color = "#ef9062",
@@ -242,7 +248,7 @@ return {
     },
 
     {
-        "hiPairs",
+        "hipairs",
         event = "BufWinEnter",
         after = function()
             function setkey(k)
@@ -267,7 +273,7 @@ return {
     },
     {
         "guess-indent.nvim",
-        event = "BufWinEnter", -- "BufReadPost",
+        event = "BufReadPost", -- "BufReadPost",
         cmd = "GuessIndent",
         after = function()
             require("guess-indent").setup({
@@ -287,22 +293,82 @@ return {
         end,
     },
     {
-        "ns-textobject.nvim",
-        event = "BufWinEnter",
+        "nvim-treesitter-textobjects",
+        event = "BufEnter",
         after = function()
-            require("ns-textobject").setup({
-                auto_mapping = {
-                    -- automatically mapping for nvim-surround's aliases
-                    aliases = true,
-                    -- for nvim-surround's surrounds
-                    surrounds = true,
-                },
-                disable_builtin_mapping = {
-                    enabled = true,
-                    -- list of char which shouldn't mapping by auto_mapping
-                    chars = { "b", "B", "t", "`", "'", '"', "{", "}", "(", ")", "[", "]", "<", ">" },
+            local enable = true
+            require("nvim-treesitter.configs").setup({
+                indent = { enable = true, disable = { "python" } },
+                textobjects = {
+                    -- syntax-aware textobjects
+                    enable = enable,
+                    disable = { "elm" },
+                    lsp_interop = {
+                        enable = enable,
+                        border = "single",
+                        peek_definition_code = {
+                            ["gl"] = "@function.outer",
+                            ["gK"] = "@class.outer",
+                        },
+                    },
+                    move = {
+                        enable = enable,
+                        set_jumps = true, -- whether to set jumps in the jumplist
+                        goto_next_start = {
+                            ["gnf"] = "@function.outer",
+                            ["gnif"] = "@function.inner",
+                            ["gnp"] = "@parameter.inner",
+                            ["gnc"] = "@call.outer",
+                            ["gnic"] = "@call.inner",
+                        },
+                        goto_next_end = {
+                            ["gnF"] = "@function.outer",
+                            ["gniF"] = "@function.inner",
+                            ["gnP"] = "@parameter.inner",
+                            ["gnC"] = "@call.outer",
+                            ["gniC"] = "@call.inner",
+                        },
+                        goto_previous_start = {
+                            ["gpf"] = "@function.outer",
+                            ["gpif"] = "@function.inner",
+                            ["gpp"] = "@parameter.inner",
+                            ["gpc"] = "@call.outer",
+                            ["gpic"] = "@call.inner",
+                        },
+                        goto_previous_end = {
+                            ["gpF"] = "@function.outer",
+                            ["gpiF"] = "@function.inner",
+                            ["gpP"] = "@parameter.inner",
+                            ["gpC"] = "@call.outer",
+                            ["gpiC"] = "@call.inner",
+                        },
+                    },
+                    select = {
+                        enable = true,
+                        include_surrounding_whitespace = true,
+
+                        keymaps = {
+                            ["af"] = { query = "@function.outer", desc = "ts: all function" },
+                            ["if"] = { query = "@function.inner", desc = "ts: inner function" },
+                            ["ac"] = { query = "@class.outer", desc = "ts: all class" },
+                            ["ic"] = { query = "@class.inner", desc = "ts: inner class" },
+                            ["aC"] = { query = "@conditional.outer", desc = "ts: all conditional" },
+                            ["iC"] = { query = "@conditional.inner", desc = "ts: inner conditional" },
+                            -- FIXME: this is unusable
+                            -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/issues/133 is resolved
+                            -- ['ax'] = '@comment.outer',
+                        },
+                    },
+                    swap = {
+                        enable = enable,
+                        swap_next = { ["[W"] = "@parameter.inner" },
+                        swap_previous = { ["]W"] = "@parameter.inner" },
+                    },
                 },
             })
+
+            -- print("loading ts")
+            vim.cmd([[syntax on]])
         end,
     },
 }

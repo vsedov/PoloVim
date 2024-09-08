@@ -5,27 +5,6 @@ function config.clangd()
 end
 
 function config.lsp_sig()
-    local cfg = {
-        bind = true,
-        doc_lines = 10,
-        floating_window = lambda.config.lsp.lsp_sig.use_floating_window, -- show hint in a floating window, set to false for virtual text only mode ]]
-        floating_window_above_cur_line = lambda.config.lsp.lsp_sig.use_floating_window_above_cur_line,
-        hint_enable = true, -- virtual hint enable
-        fix_pos = lambda.config.lsp.lsp_sig.fix_pos, -- set to true, the floating window will not auto-close until finish all parameters
-        hint_prefix = "🐼 ", -- Panda for parameter
-        auto_close_after = 15, -- close after 15 seconds
-        handler_opts = {
-            border = "single",
-        },
-        zindex = 1002,
-        timer_interval = 100,
-        log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-        padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
-        toggle_key = [[<M-x>]], -- toggle signature on and off in insert mode,  e.g. '<M-x>'
-        select_signature_key = [[<M-c>]], -- toggle signature on and off in insert mode,  e.g. '<M-x>'
-    }
-
-    require("lsp_signature").setup(cfg)
 end
 
 function config.hover()

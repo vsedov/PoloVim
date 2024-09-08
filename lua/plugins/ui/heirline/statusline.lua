@@ -850,7 +850,7 @@ return {
         { provider = "%=" },
         CodeCompanion,
         Overseer,
-        Dap,
+        -- Dap,
         FileType,
         FileEncoding,
         Session,
