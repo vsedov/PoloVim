@@ -57,48 +57,7 @@ local servers = {
     buf = true,
     grammarly = true,
     zls = true,
-    luau_lsp = function()
-        require("luau-lsp").setup({
-            sourcemap = {
-                enabled = true,
-                autogenerate = true, -- automatic generation when the server is attached
-                rojo_project_file = "default.project.json",
-            },
-            types = {
-                roblox = true,
-                roblox_security_level = "PluginSecurity",
-            },
-        })
-    end,
-    lua_ls = {
-        settings = {
-            Lua = {
-                IntelliSense = {
-                    traceLocalSet = true,
-                },
-                codeLens = { enable = false },
-                hint = {
-                    enable = false,
-                },
-                format = { enable = false },
-                diagnostics = {
-                    globals = {
-                        "vim",
-                        "P",
-                        "describe",
-                        "it",
-                        "before_each",
-                        "after_each",
-                        "packer_plugins",
-                        "pending",
-                    },
-                },
-                completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
-                workspace = { checkThirdParty = false },
-                telemetry = { enable = false },
-            },
-        },
-    },
+    luau_lsp = true
     ruff_ls = true,
     semgrep = true,
     harper_ls = true,

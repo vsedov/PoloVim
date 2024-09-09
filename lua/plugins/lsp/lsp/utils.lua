@@ -276,7 +276,7 @@ function M.repeatable_hover(hover, k)
 
                 R = {
                     function()
-                        vim.cmd.Lspsaga("IncRename ++project")
+                        vim.cmd("IncRename")
                     end,
                     { nowait = true, exit = true, desc = "Rename" },
                 },

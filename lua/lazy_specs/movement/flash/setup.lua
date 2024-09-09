@@ -105,7 +105,7 @@ local function opts()
                 label = { min_pattern_length = 3 },
             },
             char = {
-                enabled = true,
+                enabled = false,
                 keys = { "f", "f", "t", "t" },
             },
             treesitter = {
@@ -167,8 +167,7 @@ local function opts()
                     vim.api.nvim_win_call(match.win, function()
                         vim.api.nvim_win_set_cursor(match.win, match.pos)
                         lsp_utils.hover(function(err, result, ctx)
-                            vim.cmd("Lspsaga hover_doc")
-                            -- vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
+                            vim.lsp.handlers.hover(err, result, ctx, { focusable = true, focus = true })
                             vim.api.nvim_win_set_cursor(match.win, state.pos)
                         end)
                     end)

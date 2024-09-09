@@ -255,13 +255,13 @@ local function prepopulate(list)
 end
 
 harpoon:extend({
-    ADD = handler("ADD"),
-    REMOVE = function(cx)
-        notify("REMOVE", cx)
-        if cx.list.config.remove then
-            cx.list.config.remove(cx.item, cx.list)
-        end
-    end,
+    -- ADD = handler("ADD"),
+    -- REMOVE = function(cx)
+    --     notify("REMOVE", cx)
+    --     if cx.list.config.remove then
+    --         cx.list.config.remove(cx.item, cx.list)
+    --     end
+    -- end,
     UI_CREATE = function(cx)
         local win = cx.win_id
         vim.wo[win].cursorline = true
@@ -274,12 +274,23 @@ harpoon:extend({
             harpoon.ui:select_menu_item({ split = true })
         end, { buffer = cx.bufnr })
     end,
-    ---@param list HarpoonList
-    LIST_READ = function(list)
-        ---@diagnostic disable-next-line: undefined-field
-        if list.config.automated then
-            add_new_entries(list)
-        end
-    end,
-    LIST_CREATED = prepopulate,
+    -- ---@param list HarpoonList
+    -- LIST_READ = function(list)
+    --     ---@diagnostic disable-next-line: undefined-field
+    --     if list.config.automated then
+    --         add_new_entries(list)
+    --     end
+    -- end,
+    -- LIST_CREATED = prepopulate,
 })
+local harpoonEx = require("harpoonEx")
+-- load extension
+harpoon:extend(harpoonEx.extend())
+-- register keys
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<S-Tab>", function()
+    harpoonEx.next_harpoon(harpoon:list(), true)
+end, { desc = "Switch to previous buffer in Harpoon List" })
+vim.keymap.set("n", "<Tab>", function()
+    harpoonEx.next_harpoon(harpoon:list(), false)
+end, { desc = "Switch to next buffer in Harpoon List" })

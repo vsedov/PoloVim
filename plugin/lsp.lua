@@ -16,35 +16,271 @@ end
 
 local utils = require("modules.lsp.lsp.utils")
 
+local function fallback_fn(key)
+    return function()
+        fallback_keymap(key)
+    end
+end
+
+local double = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" }
+local single = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 ---@enum
+
 local get_extra_binds = function()
+    -- local util = require("navigator.util")
+    -- local remap = util.binding_remap
+
     local binds = {}
 
     binds = {
         {
-            "gD",
+            key = "gD",
             function()
                 require("definition-or-references").definition_or_references()
-
             end,
             desc = "Goto Def",
         },
         {
-            "gd",
+            key = "gd",
             "<cmd>Glance definitions<CR>",
             desc = "Glances peek_definition",
         },
 
         {
-            "gt",
+            key = "gt",
             "<cmd>Glance type_definitions<CR>",
             desc = "Glance type def",
         },
         {
-            "gT",
+            key = "gT",
             "<cmd>Glance implementations<CR>",
             desc = "Glacne implementations",
         },
+        {
+            key = "gr",
+            function()
+                require("navigator.reference").async_ref()
+            end,
+            desc = "async_ref",
+        },
+        {
+            key = "gR",
+            function()
+                require("navigator.reference").reference()
+            end,
+            desc = "reference",
+        }, -- reference deprecated
+        {
+            key = "<M-k>",
+            function()
+                vim.lsp.buf.signature_help()
+            end,
+            desc = "signature_help",
+            mode = "i",
+        },
+        {
+            key = "<c-k>",
+            function()
+                vim.lsp.buf.signature_help()
+            end,
+            desc = "signature_help",
+        },
+        {
+            key = "<Leader>g0",
+            function()
+                require("navigator.symbols").document_symbols()
+            end,
+            desc = "document_symbols",
+        },
+        {
+            key = "gW",
+            function()
+                require("navigator.workspace").workspace_symbol_live()
+            end,
+            desc = "workspace_symbol_live",
+        },
+        {
+            key = "<c-]>",
+            function()
+                require("navigator.definition").definition()
+            end,
+            desc = "definition",
+        },
+        {
+            key = ";gd",
+            function()
+                remap(require("navigator.definition").definition, "gd")
+            end,
+            desc = "definition",
+        },
+        -- { key = 'gD',            func = vim.lsp.buf.declaration,                                              desc = 'declaration',                                     fallback = fallback_fn('gD') }, -- fallback used
+        -- for lsp handler
+        {
+            key = "gp",
+            function()
+                remap(require("navigator.definition").definition_preview, "gp")
+            end,
+            desc = "definition_preview",
+        }, -- paste
+        {
+            key = "gP",
+            function()
+                remap(require("navigator.definition").type_definition_preview, "gP")
+            end,
+            desc = "type_definition_preview",
+        }, -- paste
+        {
+            key = "<Leader>gt",
+            function()
+                require("navigator.treesitter").buf_ts()
+            end,
+            desc = "buf_ts",
+        },
+        {
+            key = "<Leader>gT",
+            function()
+                require("navigator.treesitter").bufs_ts()
+            end,
+            desc = "bufs_ts",
+        },
+        -- { key = '<Leader>ct',    func = require('navigator.ctags').ctags,                                     desc = 'ctags' },
+        -- { key = '<Space>ca',     func = require('navigator.codeAction').code_action, desc = 'code_action',    mode = {'n', 'v'} },
+        -- { key = '<Leader>re', func = 'rename()' },
+        {
+            key = "<Space>rn",
+            function()
+                require("navigator.rename").rename()
+            end,
+            desc = "rename",
+        },
+        {
+            key = "<Leader>gi",
+            function()
+                vim.lsp.buf.incoming_calls()
+            end,
+            desc = "incoming_calls",
+        },
+        {
+            key = "<Leader>go",
+            function()
+                vim.lsp.buf.outgoing_calls()
+            end,
+            desc = "outgoing_calls",
+        },
+        {
+            key = "gi",
+            function()
+                vim.lsp.buf.implementation()
+            end,
+            desc = "implementation",
+            fallback = fallback_fn("gi"),
+        }, -- insert
+        {
+            key = "<Space>D",
+            function()
+                vim.lsp.buf.type_definition()
+            end,
+            desc = "type_definition",
+        },
+        {
+            key = "gG",
+            function()
+                require("navigator.diagnostics").show_buf_diagnostics()
+            end,
+            desc = "show_buf_diagnostics",
+        },
+        -- { key = '<Leader>dt',    func = require('navigator.diagnostics').toggle_diagnostics,                  desc = 'toggle_diagnostics' },
+        {
+            key = "]d",
+            function()
+                require("navigator.diagnostics").goto_next()
+            end,
+            desc = "next diagnostics error or fallback",
+        },
+        {
+            key = "[d",
+            function()
+                require("navigator.diagnostics").goto_prev()
+            end,
+            desc = "prev diagnostics error or fallback",
+        },
+        {
+            key = "]O",
+            function()
+                vim.diagnostic.set_loclist()
+            end,
+            desc = "diagnostics set loclist",
+        },
+        {
+            key = "]r",
+            function()
+                require("navigator.treesitter").goto_next_usage()
+            end,
+            desc = "goto_next_usage",
+        },
+        {
+            key = "[r",
+            function()
+                require("navigator.treesitter").goto_previous_usage()
+            end,
+            desc = "goto_previous_usage",
+        },
+        {
+            key = "<C-LeftMouse>",
+            function()
+                vim.lsp.buf.definition()
+            end,
+            desc = "definition",
+            fallback = fallback_fn("<C-LeftMouse>"),
+        },
+        {
+            key = "g<LeftMouse>",
+            function()
+                vim.lsp.buf.implementation()
+            end,
+            desc = "implementation",
+        },
+        -- { key = '<Leader>k',     func = require('navigator.dochighlight').hi_symbol,                          desc = 'hi_symbol' },
+        {
+            key = "<Space>wa",
+            function()
+                require("navigator.workspace").add_workspace_folder()
+            end,
+            desc = "add_workspace_folder",
+        },
+        {
+            key = "<Space>wr",
+            function()
+                require("navigator.workspace").remove_workspace_folder()
+            end,
+            desc = "remove_workspace_folder",
+        },
+        {
+            key = ";ff",
+            function()
+                vim.lsp.buf.format()
+            end,
+            desc = "format",
+            mode = { "n", "v", "x" },
+        },
+        {
+            key = "<Space>gm",
+            function()
+                require("navigator.formatting").range_format()
+            end,
+            mode = "n",
+            desc = "range format operator e.g gmip",
+        },
+        {
+            key = "<Space>wl",
+            function()
+                require("navigator.workspace").list_workspace_folders()
+            end,
+            desc = "list_workspace_folders",
+        },
+
+        -- { key = '<Space>la',     func = require('navigator.codelens').run_action, desc = 'run code lens action', mode = 'n'}
+        -- stylua: ignore end
     }
     return binds
 end
@@ -63,14 +299,24 @@ local function setup_lsp_binds(client, bufnr)
         extra_binds = "n",
     }
     for mode_name, mode_char in pairs(mappings) do
-        -- for key, remap in pairs(buffer_mappings[mode_name]) do
-        --     local opts = { buffer = bufnr, desc = remap[2], noremap = true, silent = true }
-        --     vim.keymap.set(mode_char, key, remap[1], opts)
-        -- end
+        for _, key_config in ipairs(buffer_mappings[mode_name]) do
+            local mode = key_config.mode or mode_char
+            local opts = {
+                buffer = bufnr,
+                desc = key_config.desc,
+                noremap = true,
+                silent = true,
+            }
+            local keye = key_config.key
+            local action = type(key_config[2]) == "function" and key_config[2] or key_config[1]
 
-        for _, key in ipairs(buffer_mappings[mode_name]) do
-            local opts = { buffer = bufnr, desc = key["desc"], noremap = true, silent = true }
-            vim.keymap.set(mode_char, key[1], key[2], opts)
+            if type(mode) == "table" then
+                for _, m in ipairs(mode) do
+                    vim.keymap.set(m, keye, action, opts)
+                end
+            else
+                vim.keymap.set(mode, keye, action, opts)
+            end
         end
     end
 end

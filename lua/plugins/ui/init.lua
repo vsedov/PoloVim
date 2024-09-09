@@ -280,10 +280,11 @@ require("window-picker").setup({
     include_current = true,
     filter_rules = {
         bo = {
-            filetype = { "neo-tree-popup", "quickfix", "edgy", "neo-tree" },
+            filetype = { "neo-tree-popup", "quickfix", "edgy", "neo-tree", "oil" },
             buftype = { "terminal", "quickfix", "nofile" },
         },
     },
 })
 
 vim.keymap.set("n", "<leader>e", ":Oil --float<cr>", { silent = true })
+require("auto-session").setup({})

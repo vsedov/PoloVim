@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local enhance_attach = require("modules.lsp.lsp.config").enhance_attach
+local enhance_attach = require("plugins.lsp.lsp.config").enhance_attach
 local servers = {
     tsserver = true,
     graphql = true,
@@ -33,7 +33,7 @@ local servers = {
                 usePlaceholders = true,
                 completeUnimported = true,
                 staticcheck = true,
-                directoryFilters = { "-node_modules" },
+                directoryFilters = { "-node_plugins" },
             },
         },
     },
@@ -57,19 +57,7 @@ local servers = {
     buf = true,
     grammarly = true,
     zls = true,
-    luau_lsp = function()
-        require("luau-lsp").setup({
-            sourcemap = {
-                enabled = true,
-                autogenerate = true, -- automatic generation when the server is attached
-                rojo_project_file = "default.project.json",
-            },
-            types = {
-                roblox = true,
-                roblox_security_level = "PluginSecurity",
-            },
-        })
-    end,
+    luau_lsp = true,
     lua_ls = {
         settings = {
             Lua = {
@@ -110,7 +98,7 @@ for _, server in ipairs(con) do
     else
         if
             vim.fn.filereadable(
-                vim.fn.expand("~/.config/nvim/lua/modules/lsp/lsp/providers/python/" .. server .. ".lua")
+                vim.fn.expand("~/.config/nvim/lua/plugins/lsp/lsp/providers/python/" .. server .. ".lua")
             ) == 0
         then
             if server == "basedpyright" then
@@ -123,18 +111,18 @@ for _, server in ipairs(con) do
                 }
             elseif server == "sourcery" then
                 if lambda.config.lsp.python.use_sourcery then
-                    servers[server] = require("modules.lsp.lsp.providers.python." .. server)
+                    servers[server] = require("plugins.lsp.lsp.providers.python." .. server)
                 end
             else
-                servers[server] = require("modules.lsp.lsp.providers.python." .. server)
+                servers[server] = require("plugins.lsp.lsp.providers.python." .. server)
             end
         else
-            servers[server] = require("modules.lsp.lsp.providers.python." .. server)
+            servers[server] = require("plugins.lsp.lsp.providers.python." .. server)
         end
     end
 end
 if lambda.config.lsp.latex == "texlab" then
-    servers["texlab"] = require("modules.lsp.lsp.providers.latex.texlab")
+    servers["texlab"] = require("plugins.lsp.lsp.providers.latex.texlab")
 else
     require("lspconfig").ltex.setup({})
 end

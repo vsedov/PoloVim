@@ -48,18 +48,10 @@ return {
         desc = "Go to definition on jump",
     },
     {
-        "<c-;>",
-        desc = "Hover",
-        function()
-            Flash.jump({ mode = "hover" })
-        end,
-    },
-    --  ──────────────────────────────────────────────────────────────────────
-    {
         "D",
         mode = { "n" },
         function()
-            vim.cmd.Lspsaga("show_cursor_diagnostics")
+            require("navigator.diagnostics").show_diagnostics()
         end,
         desc = "Show diagnostics at target, without changing cursor position",
     },
@@ -88,12 +80,7 @@ return {
         desc = "Search diagnostic with Google",
     },
     --  ──────────────────────────────────────────────────────────────────────
-    {
-        ";gr",
-        mode = { "n" },
-        lib.flash_references,
-        desc = "Flash Lsp References",
-    },
+    { ";gr", mode = { "n" }, lib.flash_references, desc = "Flash Lsp References" },
     {
         "dD",
         function()

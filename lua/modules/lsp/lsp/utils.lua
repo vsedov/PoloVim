@@ -258,27 +258,28 @@ function M.repeatable_hover(hover, k)
                 mode = { "n", "v" },
                 on_enter = function()
                     vim.bo.modifiable = false -- temporarily set `nomodifiable` while Hydra is active
-                    vim.cmd.Lspsaga("hover_doc")
+                    vim.lsp.buf.hover()
                 end,
 
                 ["<ESC>"] = {
                     function()
-                        vim.cmd.Lspsaga("hover_doc")
+                        vim.lsp.buf.hover()
                     end,
                     { exit = true },
                 },
                 K = {
                     function()
+                        vim.lsp.buf.hover()
                         -- hover()
                         -- vim.cmd.Lspsaga("hover_doc")
-                        require("hover").hover()
+                        -- require("hover").hover()
                     end,
                     { exit = false, desc = "Hover" },
                 },
 
                 R = {
                     function()
-                        vim.cmd.Lspsaga("rename ++project")
+                        vim.cmd("IncRename ")
                     end,
                     { nowait = true, exit = true, desc = "Rename" },
                 },

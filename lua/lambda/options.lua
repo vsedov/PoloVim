@@ -172,15 +172,15 @@ lambda.config.lsp = {
         use_sourcery = true,
         lint = {}, -- We use ruff_ls for linting and formating as well, both can handle it i think
         format = {
-            "black",
-            "isort",
+            -- "black",
+            -- "isort",
         },
         lsp = {
             "sourcery",
-            "ruff",
-            "jedi_language_server",
+            -- "ruff",
+            "pylsp",
             -- "basedpyright",
-            -- "pylsp",
+            -- "jedi_language_server",
             -- "pylyzer",
             -- "pylance",
             -- "python-language-server",

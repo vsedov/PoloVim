@@ -127,7 +127,7 @@ return {
 
             local opts = {
                 ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-                provider = "perplexity", -- Recommend using Claude
+                provider = "claude", -- Recommend using Claude
                 vendors = {
                     ---@type AvanteProvider
                     perplexity = {

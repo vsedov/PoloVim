@@ -3,6 +3,7 @@ local conf = require("plugins.lsp.config")
 return {
     {
         "none-ls.nvim",
+        event = "BufWinEnter",
         after = function()
             local null_ls = require("null-ls")
             local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
