@@ -1,24 +1,12 @@
-local rainbow_delimiters = require("rainbow-delimiters")
-
-
-vim.g.rainbow_delimiters = {
-
-    strategy = {
-        [""] = rainbow_delimiters.strategy["global"],
-    },
-    query = {
-        [""] = "rainbow-delimiters",
-    },
-}
-
 require("modules.treesitter.treesitter").treesitter()
 
-require("modules.treesitter.treesitter").endwise()
-
 require("modules.treesitter.treesitter").treesitter_obj()
+
 require("modules.treesitter.treesitter").textsubjects()
 
 require("modules.treesitter.treesitter").treesitter_ref()
+
+require("modules.treesitter.treesitter").endwise()
 
 require("nvim-treesitter.configs").setup({
     playground = {
@@ -28,6 +16,16 @@ require("nvim-treesitter.configs").setup({
         persist_queries = true, -- Whether the query persists across vim sessions
     },
 })
+local rainbow_delimiters = require("rainbow-delimiters")
+vim.g.rainbow_delimiters = {
+
+    strategy = {
+        [""] = rainbow_delimiters.strategy["global"],
+    },
+    query = {
+        [""] = "rainbow-delimiters",
+    },
+}
 
 require("hlargs").setup({
     color = "#ef9062",
@@ -115,5 +113,122 @@ require("guess-indent").setup({
         "nofile",
         "terminal",
         "prompt",
+    },
+})
+
+---@diagnostic disable: missing-fields
+local configs = require("nvim-treesitter.configs")
+configs.setup({
+    -- ensure_installed = 'all',
+    -- auto_install = false, -- Do not automatically install missing parsers when entering buffer
+    highlight = {
+        enable = true,
+    },
+    indent = {
+        enable = true,
+    },
+    matchup = {
+        enable = true, -- mandatory, false will disable the whole extension
+        disable = { "python" },
+    },
+    textobjects = {
+        select = {
+            enable = true,
+            -- Automatically jump forward to textobj, similar to targets.vim
+            lookahead = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                ["aC"] = "@call.outer",
+                ["iC"] = "@call.inner",
+                ["a#"] = "@comment.outer",
+                ["i#"] = "@comment.outer",
+                ["ai"] = "@conditional.outer",
+                ["ii"] = "@conditional.outer",
+                ["al"] = "@loop.outer",
+                ["il"] = "@loop.inner",
+                ["aP"] = "@parameter.outer",
+                ["iP"] = "@parameter.inner",
+            },
+            selection_modes = {
+                ["@parameter.outer"] = "v", -- charwise
+                ["@function.outer"] = "V", -- linewise
+                ["@class.outer"] = "<c-v>", -- blockwise
+            },
+        },
+        swap = {
+            enable = true,
+            swap_next = {
+                ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+                ["<leader>A"] = "@parameter.inner",
+            },
+        },
+        move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+                ["]m"] = "@function.outer",
+                ["]P"] = "@parameter.outer",
+            },
+            goto_next_end = {
+                ["]m"] = "@function.outer",
+                ["]P"] = "@parameter.outer",
+            },
+            goto_previous_start = {
+                ["[m"] = "@function.outer",
+                ["[P"] = "@parameter.outer",
+            },
+            goto_previous_end = {
+                ["[m"] = "@function.outer",
+                ["[P"] = "@parameter.outer",
+            },
+        },
+        lsp_interop = {
+            enable = true,
+            peek_definition_code = {
+                ["df"] = "@function.outer",
+                ["dF"] = "@class.outer",
+            },
+        },
+    },
+    incremental_selection = {
+        enable = false,
+    },
+    query_linter = {
+        enable = true,
+        use_virtual_text = true,
+        lint_events = { "BufWrite", "CursorHold" },
+    },
+})
+
+require("treesitter-context").setup({
+    max_lines = 3,
+})
+require("cmdline")({
+    window = {
+        matchFuzzy = true,
+        offset = 1, -- depending on 'cmdheight' you might need to offset
+        debounceMs = 10,
+    },
+
+    hl = {
+        default = "Pmenu",
+        selection = "PmenuSel",
+        directory = "Directory",
+        substr = "LineNr",
+    },
+
+    column = {
+        maxNumber = 6,
+        minWidth = 20,
+    },
+
+    binds = {
+        next = "<Tab>",
+        back = "<S-Tab>",
     },
 })

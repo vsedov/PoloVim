@@ -162,13 +162,14 @@ require("navigator").setup({
     mason = true, -- set to true if you would like use the lsp installed by williamboman/mason
     lsp = {
         enable = true, -- skip lsp setup, and only use treesitter in navigator.
-        disable_lsp = { "ruff", "ruff_lsp", "sourcery" },
+        disable_lsp = { "ruff", "ruff_lsp", "sourcery", "ts_ls", "ts_ls." },
         -- Use this if you are not using LSP servers, and only want to enable treesitter support.
         -- If you only want to prevent navigator from touching your LSP server configs,
         -- use `disable_lsp = "all"` instead.
         -- If disabled, make sure add require('navigator.lspclient.mapping').setup({bufnr=bufnr, client=client}) in your
         -- own on_attach
         code_action = { enable = false },
+
         code_lens_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
         document_highlight = true, -- LSP reference highlight,
         -- it might already supported by you setup, e.g. LunarVim

@@ -89,6 +89,7 @@ local servers = {
     },
     ruff_ls = true,
     semgrep = true,
+    ts_ls = true,
 }
 
 local con = lambda.config.lsp.python.lsp
