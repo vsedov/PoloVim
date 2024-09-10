@@ -77,7 +77,6 @@ vim.keymap.set("n", "cw", "ce", { remap = true })
 -- or the same in one mapping without `remap = true`
 vim.keymap.set("n", "cw", "<cmd>lua require('spider').motion('e')<CR>")
 local oil = require("oil")
-local oip = require("oil-image-preview")
 require("oil").setup({
     -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
     -- Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.

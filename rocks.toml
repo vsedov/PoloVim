@@ -1,4 +1,3 @@
-[rocks]
 
 [treesitter]
 auto_highlight = "all"
@@ -13,20 +12,18 @@ auto_install = "prompt"
 "rocks-lazy.nvim" = "scm"
 "lspkind.nvim" = "scm"
 nvim-notify = "3.13.5"
-cmp-git= "scm"
 friendly-snippets= "scm"
 nvim-lspconfig = "0.1.8"
 "mason-lspconfig.nvim" = "1.31.0"
 "mason.nvim" = "1.10.0"
-"better-escape.nvim" = "2.3.2"
-nvim-cmp = "scm"
-"actions-preview.nvim" = "scm"
-"inc-rename.nvim" = "scm"
-treesj = "scm"
-"dial.nvim" = "0.4.0"
+"better-escape.nvim" = {version="2.3.2", opt=true}
+"actions-preview.nvim" = {version="scm", opt = true}
+"inc-rename.nvim" = {version="scm", opt = true}
+treesj = {version = "scm", opt = true}
+"dial.nvim" = {version="0.4.0", opt =true}
 "comment-box.nvim" = "1.0.2"
-"comment.nvim" = "0.8.0"
-"flash.nvim" = "2.1.0"
+"comment.nvim" = {version="0.8.0", opt = true}
+"flash.nvim" = {version="2.1.0", opt=true}
 "edgy.nvim" = "1.10.2"
 "mini.visits" = "0.13.0"
 "dropbar.nvim" = "8.6.1"
@@ -54,7 +51,7 @@ nvim-surround = "2.1.5"
 "toggleterm.nvim" = "2.12.0"
 "yanky.nvim" = "2.0.0"
 "telescope-zf-native.nvim" = "1.0.0"
-cmp_luasnip = "scm"
+cmp_luasnip = {version="scm"}
 "substitute.nvim" = "2.0.0"
 nvim-various-textobjs = "scm"
 "guess-indent.nvim" = "scm"
@@ -69,7 +66,6 @@ nvim-ufo = "1.4.0"
 nvim-dap = "scm"
 "iswap.nvim" = "scm"
 "overseer.nvim"= "1.4.0"
-"care.nvim" = {version= "0.1.0", opt=true}
 tree-sitter-python = "scm"
 "navigator.lua" = "scm"
 tree-sitter-toml = "scm"
@@ -217,6 +213,15 @@ tree-sitter-mermaid = "scm"
 "rocks-git.nvim" = "2.2.0"
 nvim-treesitter-legacy-api = "0.9.2"
 "rocks-treesitter.nvim" = "1.1.2"
+tree-sitter-latex = "scm"
+
+[plugins."care.nvim" ]
+git = "max397574/care.nvim"
+rev = "e93b580034fe909661964e80512e408aed68aa1f"
+opt = true
+
+[plugins.nvim-cmp ]
+version = "scm"
 
 [plugins.neorg ]
 version = "9.1.1"
@@ -225,6 +230,7 @@ opt = true
 [plugins.nvim-treesitter-endwise]
 git = "rrethy/nvim-treesitter-endwise"
 rev = "8b34305ffc28bd75a22f5a0a9928ee726a85c9a6"
+opt = true
 
 
 [plugins."sg.nvim"]
@@ -236,6 +242,7 @@ version = "scm"
 
 [plugins."render-markdown.nvim"]
 version = "6.3.0"
+opt = true
 
 [plugins.promise-async ]
 version = "scm"
@@ -244,20 +251,11 @@ opt = true
 [plugins."cybu.nvim" ]
 git = "ghillb/cybu.nvim"
 rev = "v1.0^{}"
+opt = true
 
 [plugins.nvim-window-picker ]
 version = "2.0.3"
-opt = true
 
-# [plugins."neo-tree.nvim" ]
-# git = "nvim-neo-tree/neo-tree.nvim"
-# rev = "3.26"
-# branch = "main"
-# opt = true
-
-[plugins.cmp-buffer]
-git = "hrsh7th/cmp-buffer"
-rev = "3022dbc9166796b644a841a02de8dd1cc1d311fa"
 
 [plugins.cmp-path]
 git = "hrsh7th/cmp-path"
@@ -267,22 +265,18 @@ rev = "91ff86cd9c29299a64f968ebb45846c485725f23"
 git = "hrsh7th/cmp-nvim-lsp"
 rev = "39e2eda76828d88b773cc27a3f61d2ad782c922d"
 
-[plugins.cmp-omni]
-git = "hrsh7th/cmp-omni"
-rev = "4ef610bbd85a5ee4e97e09450c0daecbdc60de86"
-
 [plugins.cmp-vimtex]
 git = "micangl/cmp-vimtex"
 rev = "5283bf9108ef33d41e704027b9ef22437ce7a15b"
+
+[plugins.cmp-async-path]
+git = "felipelema/cmp-async-path"
+rev = "9d581eec5acf812316913565c135b0d1ee2c9a71"
 
 [plugins."neotab.nvim"]
 git = "kawre/neotab.nvim"
 rev = "6c6107dddaa051504e433608f59eca606138269b"
 
-[plugins.cmp-async-path]
-git = "felipelema/cmp-async-path"
-rev = "9d581eec5acf812316913565c135b0d1ee2c9a71"
-opt = true
 
 [plugins."garbage-day.nvim"]
 git = "zeioth/garbage-day.nvim"
@@ -827,18 +821,22 @@ rev = "90064eaeee596eb6ec1c476cf26ea0087861faed"
 [plugins."refactoring.nvim"]
 git = "theprimeagen/refactoring.nvim"
 rev = "c406fc5fb4d7ba5fce7b668637075fad6e75e9f8"
+opt = true
 
 [plugins."python-copy-reference.vim"]
 git = "ranelpadon/python-copy-reference.vim"
 rev = "8172d0ce83d730820d9497fd2e988046022d0b99"
+opt = true
 
 [plugins."direnv.vim"]
 git = "direnv/direnv.vim"
 rev = "ab2a7e08dd630060cd81d7946739ac7442a4f269"
+opt = true
 
 [plugins."oil-image-preview.nvim"]
 git = "mimikun/oil-image-preview.nvim"
 rev = "b66731111c206f085c2b65a895637d30d676cc05"
+opt = true
 
 [plugins.abstract-autocmds]
 git = "abstract-ide/abstract-autocmds"
@@ -859,10 +857,8 @@ rev = "13570f995be8993f4c55e988f89e5a7b8df37a17"
 [plugins."diagnostic-window.nvim"]
 git = "cseickel/diagnostic-window.nvim"
 rev = "2b4d9618382502740c7945c4023853ee524adc4c"
+opt = true
 
-[plugins.cmp]
-git = "petertriho/cmp-git"
-rev = "50d526dff0f6bc441b51fc269d9fdc99a50c76af"
 
 [plugins.cmp-nvim-lua]
 git = "hrsh7th/cmp-nvim-lua"
@@ -878,10 +874,6 @@ opt = true
 [plugins."kanagawa-paper.nvim"]
 git = "sho-87/kanagawa-paper.nvim"
 rev = "v1.5.0"
-
-[plugins."lspsaga.nvim"]
-version = "scm"
-opt = true
 
 [plugins."none-ls.nvim"]
 version = "scm"
@@ -903,7 +895,7 @@ opt = true
 
 [plugins.care-cmp]
 git = "max397574/care-cmp"
-rev = "94f2bda9039352d2dd450182f97ee75117eb985a"
+branch = "main"
 opt = true
 
 [plugins.nvim-rip-substitute]
@@ -925,6 +917,7 @@ rev = "v2.5.0"
 
 [plugins.neocord]
 git = "iogamaster/neocord"
+opt = true
 
 [plugins.nvim-treesitter-textobjects]
 git = "nvim-treesitter/nvim-treesitter-textobjects"
@@ -935,6 +928,11 @@ opt = true
 git = "rrethy/nvim-treesitter-textsubjects"
 opt = true
 
+[plugins.vim-matchup]
+git = "andymass/vim-matchup"
+rev = "8522c9b3ba6c92ac64a609fa792134ce6ba9c4bc"
+opt = true
+
 [bundles.startup]
 items = [
   "abstract-autocmds",
@@ -943,16 +941,14 @@ items = [
 [bundles.completion] # Create a bundle called `lsp`
 items = [
   "nvim-cmp",
+  # "care.nvim",
   # "care-cmp",
+  "cmp-path",
+  "cmp_luasnip",
   "luasnip",
   "cmp-async-path",
-  "cmp-path",
-  "cmp-omni",
-  "cmp-git",
-  "cmp_luasnip",
   "cmp-vimtex",
   "cmp-nvim-lsp",
-  "cmp-buffer",
   "friendly-snippets",
   "luasnip-snippets",
   "luasnip-latex-snippets.nvim",
@@ -988,14 +984,6 @@ items = [
 "oil.nvim"
 ]
 
-# [bundles.treesitter]
-# items = [
-# "nvim-treesitter-textobjects",
-# "rainbow-delimiters.nvim",
-# "hlargs.nvim",
-# "guess-indent.nvim"
-# ]
-
 [bundles.search]
 items = [
 "telescope.nvim"
@@ -1004,8 +992,6 @@ items = [
 [config]
 auto_setup = true
 colorscheme = "kanagawa-paper"
-
-
 
 [rocks_lazy]
 import = "lazy_specs"

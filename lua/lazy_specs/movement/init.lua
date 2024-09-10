@@ -48,7 +48,7 @@ return {
         },
     },
     {
-        "folke/flash.nvim",
+        "flash.nvim",
         event = "CursorMoved",
         load = function(name)
             rocks.safe_packadd({ name, "lasterisk.nvim", "vim-illuminate", "vim-repeat" })
