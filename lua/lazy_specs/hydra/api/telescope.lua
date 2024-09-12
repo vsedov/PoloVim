@@ -1,6 +1,5 @@
 local config = {
     Telescope = {
-        color = "teal",
         body = "<leader>f",
         mode = { "n" },
         g = {

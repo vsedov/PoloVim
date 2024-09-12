@@ -43,31 +43,33 @@ end
 
 local config = {
     Git = {
-        color = "pink",
         body = leader,
         position = "bottom-right",
-        on_enter = function()
-            if gitrepo then
-                vim.cmd("mkview")
-                vim.cmd("silent! %foldopen!")
-                -- vim.bo.modifiable = false
-                -- if vim.
-                require("gitsigns").toggle_signs(true)
-                require("gitsigns").toggle_linehl(true)
-                require("gitsigns").toggle_deleted(true)
-            end
-        end,
-        on_exit = function()
-            if gitrepo then
-                local cursor_pos = vim.api.nvim_win_get_cursor(0)
-                vim.cmd("loadview")
-                vim.api.nvim_win_set_cursor(0, cursor_pos)
-                vim.cmd("normal zv")
-                require("gitsigns").toggle_signs(true)
-                require("gitsigns").toggle_linehl(false)
-                require("gitsigns").toggle_deleted(false)
-            end
-        end,
+        -- funcs = {
+        --
+        --     on_enter = function()
+        --         if gitrepo then
+        --             vim.cmd("mkview")
+        --             vim.cmd("silent! %foldopen!")
+        --             -- vim.bo.modifiable = false
+        --             -- if vim.
+        --             require("gitsigns").toggle_signs(true)
+        --             require("gitsigns").toggle_linehl(true)
+        --             require("gitsigns").toggle_deleted(true)
+        --         end
+        --     end,
+        --     on_exit = function()
+        --         if gitrepo then
+        --             local cursor_pos = vim.api.nvim_win_get_cursor(0)
+        --             vim.cmd("loadview")
+        --             vim.api.nvim_win_set_cursor(0, cursor_pos)
+        --             vim.cmd("normal zv")
+        --             require("gitsigns").toggle_signs(true)
+        --             require("gitsigns").toggle_linehl(false)
+        --             require("gitsigns").toggle_deleted(false)
+        --         end
+        --     end,
+        --},
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },
         ["<cr>"] = { ":silent lua lambda.clever_tcd()<cr>:Neogit<cr>", { exit = true, desc = "NeoGit" } },

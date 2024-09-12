@@ -71,12 +71,12 @@ local gae_hint = [[
 hydra({
     hint = gaa_hint,
     config = {
-        color = "pink",
         invoke_on_body = true,
         hint = {
             position = "middle-right",
         },
     },
+
     name = "Change case",
     mode = "n",
     body = "<leader>ga",
@@ -114,7 +114,6 @@ hydra({
 hydra({
     hint = gae_hint,
     config = {
-        color = "pink",
         invoke_on_body = true,
         hint = {
             position = "middle-right",

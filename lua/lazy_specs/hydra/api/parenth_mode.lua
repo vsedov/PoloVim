@@ -15,7 +15,6 @@ local config = {}
 
 config = {
     Treesitter = {
-        color = "pink",
         body = leader,
         ["<ESC>"] = { nil, { exit = true } },
         J = {

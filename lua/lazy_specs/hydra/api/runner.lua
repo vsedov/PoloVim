@@ -13,10 +13,8 @@ vim.keymap.set("n", "<S-7>", "<cmd>CompilerToggleResults<cr>", { noremap = true,
 
 local config = {
     Runner = {
-        color = "amaranth",
         body = leader,
         mode = { "n" },
-        on_enter = function() end,
         ["<ESC>"] = { nil, { exit = true } },
         r = { cmd("CompilerOpen"), { desc = "Compiler Open", exit = true } },
         e = {

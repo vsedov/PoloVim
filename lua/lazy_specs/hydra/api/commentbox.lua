@@ -443,7 +443,6 @@ end
 
 local config = {
     Box = {
-        color = "red",
         body = leader,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },

@@ -267,7 +267,6 @@ end
 
 local config = {
     Buffer = {
-        color = "red",
         body = leader_key,
         mode = { "n" },
 

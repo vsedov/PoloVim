@@ -76,9 +76,6 @@ local config = {
     Octo = {
         body = leader,
         mode = { "n", "v" },
-        on_enter = function()
-            vim.cmd([[packadd octo.nvim]])
-        end,
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
 
         g = {

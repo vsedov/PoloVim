@@ -3,7 +3,6 @@ local bracket = { "d", "D", "E", "i", "p" }
 
 local config = {
     ["Docs/Test"] = {
-        color = "pink",
         body = leader,
         position = "bottom-right",
         mode = { "n", "v", "x", "o" },

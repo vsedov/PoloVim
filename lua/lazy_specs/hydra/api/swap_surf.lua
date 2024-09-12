@@ -1,7 +1,6 @@
 local leader = ";s"
 local config = {
     Swap = {
-        color = "pink",
         body = leader,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },

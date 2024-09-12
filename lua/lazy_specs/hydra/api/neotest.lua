@@ -39,7 +39,6 @@ local binds = {
 local config = {
     {
         Neotest = {
-            color = "pink",
             position = "bottom-right",
             body = leader,
             -- on_enter = function()

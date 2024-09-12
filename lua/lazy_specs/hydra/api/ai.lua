@@ -22,7 +22,6 @@ end
 local aiextra = {
     {
         AI = {
-            color = "red",
             mode = { "n", "v", "x" },
             ["<ESC>"] = { nil, { nowait = true, exit = true, desc = "exit" } },
 
@@ -426,7 +425,6 @@ local cody_visual_binds = { "w", "D", "r", "e", "f", "t" }
 
 local config = {
     AI = {
-        color = "red",
         body = leader,
         ["<ESC>"] = { nil, { exit = true } },
         mode = { "n", "v", "x" },
@@ -448,7 +446,6 @@ local config = {
 local internal_config = {
     {
         Cody = {
-            color = "red",
             mode = { "n", "v", "x" },
             position = "bottom-right",
             ["<ESC>"] = { nil, { exit = true } },
@@ -465,12 +462,8 @@ local internal_config = {
 local internal_copilot = {
     {
         Copilot = {
-            color = "red",
             mode = { "n", "v", "x" },
             position = "bottom-right",
-            on_enter = function()
-                vim.cmd([[silent UpdateRemotePlugins]])
-            end,
             ["<ESC>"] = { nil, { exit = true } },
         },
     },

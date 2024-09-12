@@ -7,7 +7,6 @@ end
 
 local config = {
     Sad = {
-        color = "teal",
         body = leader,
         mode = { "n", "x", "v" },
         ["<ESC>"] = { nil, { exit = true } },

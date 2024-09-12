@@ -50,7 +50,6 @@ end
 
 local config = {
     Browse = {
-        color = "red",
         body = leader,
         mode = { "n" },
         ["<ESC>"] = { nil, { exit = true } },

@@ -1,7 +1,6 @@
 local leader = "\\w"
 local Molten = {
     Molten = {
-        color = "pink",
         mode = { "n", "x", "v" },
         ["<ESC>"] = { nil, { desc = "Exit", exit = true } },
         ["<cr>"] = {
@@ -73,7 +72,6 @@ local core = {
 }
 local config = {
     Python = {
-        color = "red",
         body = leader,
         ["<ESC>"] = { nil, { exit = true } },
         mode = { "n", "v", "x" },

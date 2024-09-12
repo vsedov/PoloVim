@@ -4,7 +4,6 @@ local exit = { nil, { exit = true, desc = "EXIT" } }
 
 local config = {
     Genghis = {
-        color = "pink",
         body = leader,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },

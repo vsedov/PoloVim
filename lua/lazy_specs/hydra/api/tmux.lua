@@ -117,7 +117,6 @@ silent_binds = {
 local exit = { nil, { exit = true, desc = "EXIT" } }
 local config = {
     Tmux = {
-        color = "red",
         body = leader_key,
         mode = { "n", "v", "x", "o" },
         ["<ESC>"] = { nil, { exit = true } },

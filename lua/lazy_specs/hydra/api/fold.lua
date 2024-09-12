@@ -14,7 +14,6 @@ local function nN(char)
 end
 local config = {
     Fold = {
-        color = "pink",
         body = leader,
         mode = { "n" },
         ["<ESC>"] = { nil, { exit = true } },

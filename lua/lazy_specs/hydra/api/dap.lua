@@ -19,15 +19,9 @@ end
 
 local config = {
     Dap = {
-        color = "red",
         mode = { "n", "x" },
         body = "<leader>D",
         ["<ESC>"] = { nil, { exit = true } },
-        on_enter = function()
-            if require("dap").session() == nil then
-                require("dapui").open()
-            end
-        end,
         ["<tab>"] = {
             function()
                 require("dapui").toggle()

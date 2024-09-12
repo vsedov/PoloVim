@@ -29,7 +29,6 @@ Hydra({
                 noautocmd = true,
             },
         },
-        color = "pink",
     },
     mode = "n",
     on_enter = function()

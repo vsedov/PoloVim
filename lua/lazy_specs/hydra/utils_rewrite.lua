@@ -1,8 +1,6 @@
 local M = {}
 M.__index = M
 
---  TODO: (vsedov) (01:52:42 - 31/05/23): Need to rewrite this section here, could do with a nice
---  rewrite
 function M.new(config, module_name)
     local self = setmetatable({}, M)
     self.config = config or {}
@@ -29,13 +27,25 @@ function M.new(config, module_name)
     }
 
     self:buildHeads()
-    -- remove on_exit and on_enter from self.config
-    self.config[self.name].on_exit = nil
-    self.config[self.name].on_enter = nil
-    self.config[self.name].on_key = nil
+
+    -- Handle funcs if present
+    if self.config[self.name].funcs then
+        if type(self.config[self.name].funcs.on_enter) == "function" then
+            self.new_hydra.config.on_enter = self.config[self.name].funcs.on_enter
+        end
+        if type(self.config[self.name].funcs.on_exit) == "function" then
+            self.new_hydra.config.on_exit = self.config[self.name].funcs.on_exit
+        end
+        if type(self.config[self.name].funcs.on_key) == "function" then
+            self.new_hydra.config.on_key = self.config[self.name].funcs.on_key
+        end
+        -- Remove funcs from self.config to avoid processing them as heads
+        self.config[self.name].funcs = nil
+    end
 
     return self
 end
+
 function M:buildHeads()
     local mapping = {
         color = function(t, rhs)
@@ -47,9 +57,6 @@ function M:buildHeads()
         position = function(t, rhs)
             t.config.hint.position = rhs
         end,
-        -- border = function(t, rhs)
-        --     t.config.hint.border = rhs
-        -- end,
         mode = function(t, rhs)
             t.mode = rhs
         end,
@@ -58,15 +65,6 @@ function M:buildHeads()
         end,
         timeout = function(t, rhs)
             t.config.timeout = rhs
-        end,
-        on_key = function(t, rhs)
-            t.config.on_key = rhs
-        end,
-        on_enter = function(t, rhs)
-            t.config.on_enter = rhs
-        end,
-        on_exit = function(t, rhs)
-            t.config.on_exit = rhs
         end,
         foreign_keys = function(t, rhs)
             t.config.foreign_keys = rhs
@@ -85,18 +83,16 @@ function M:buildHeads()
     for _, spec in pairs(self.config) do
         for lhs, rhs in pairs(spec) do
             local action = mapping[lhs]
-
-            if action == nil then
-                -- table.insert(self.new_hydra.heads, { lhs, unpack(rhs) })
-                -- do not use unpack
-                table.insert(self.new_hydra.heads, { lhs, rhs[1], rhs[2] })
-            else
+            if action then
                 action(self.new_hydra, rhs)
+            elseif type(rhs) == "table" and #rhs >= 2 then
+                table.insert(self.new_hydra.heads, { lhs, rhs[1], rhs[2] })
+            elseif lhs ~= "funcs" then
+                print("Warning: Unexpected configuration for " .. lhs)
             end
         end
     end
 end
-
 function M:addToCoreTable(value)
     table.insert(self.core_table, value)
 end
