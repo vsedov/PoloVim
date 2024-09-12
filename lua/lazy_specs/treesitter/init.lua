@@ -183,18 +183,7 @@ return {
             },
         },
     },
-    {
-        "nvim-treesitter-endwise",
-        event = "BufEnter",
-        after = function()
-            -- Requires nvim-treesitter installed
-            require("nvim-treesitter.configs").setup({
-                endwise = {
-                    enable = true,
-                },
-            })
-        end,
-    },
+
     {
         "hlargs.nvim",
         event = "BufEnter",

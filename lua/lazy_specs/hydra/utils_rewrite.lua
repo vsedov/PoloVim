@@ -124,18 +124,21 @@ function M:auto_hint_generate(listofcoretables, bracket, cali, cal_v2, column)
     for x, y in pairs(self.config[self.name]) do
         local mapping = x
         local desc = ""
-        if type(y[1]) == "function" then
-            desc = y[2].desc
+        if type(y) == "function" then
         else
-            if type(y[2]) == "table" then
+            if type(y[1]) == "function" then
                 desc = y[2].desc
             else
-                desc = y[2]
+                if type(y[2]) == "table" then
+                    desc = y[2].desc
+                else
+                    desc = y[2]
+                end
             end
-        end
 
-        if desc then
-            updateContainer(mapping, desc)
+            if desc then
+                updateContainer(mapping, desc)
+            end
         end
     end
 

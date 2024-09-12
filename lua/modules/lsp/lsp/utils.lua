@@ -253,7 +253,6 @@ function M.repeatable_hover(hover, k)
 
         local config = {
             Lsp = {
-                color = "pink",
                 body = leader,
                 mode = { "n", "v" },
                 on_enter = function()
@@ -361,7 +360,8 @@ function M.repeatable_hover(hover, k)
             3,
             1,
         }
-        hover_hydra = require("modules.editor.hydra.make_hydra").make_hydra(main_config)
+        -- hover_hydra = require("pl.editor.hydra.make_hydra").make_hydra(main_config)
+        hover_hydra = require("lazy_specs.hydra.make_hydra").make_hydra(main_config)
 
         hover_hydra:activate()
     else

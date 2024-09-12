@@ -245,6 +245,7 @@ else
     o.backup = false
     o.undofile = true
     o.swapfile = false
+    o.autoread = true
     --}}}
     -----------------------------------------------------------------------------//
     -- Match and search {{{1

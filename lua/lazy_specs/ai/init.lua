@@ -90,7 +90,7 @@ return {
     },
     {
         "avante.nvim",
-        event = "BufEnter",
+        event = "BufWinEnter",
         keys = {
             {
                 "<leader>ip",
@@ -164,7 +164,7 @@ return {
                     },
                 },
                 behaviour = {
-                    -- auto_suggestions = true, -- Experimental stage
+                    auto_suggestions = false, -- Experimental stage
                     auto_set_highlight_group = true,
                     auto_set_keymaps = true,
                     auto_apply_diff_after_generation = false,
@@ -173,12 +173,19 @@ return {
                 mappings = {
                     diff = {
                         ours = "co",
+
                         theirs = "ct",
                         all_theirs = "ca",
                         both = "cb",
                         cursor = "cc",
                         next = "]x",
                         prev = "[x",
+                    },
+                    suggestion = {
+                        accept = "<c-l>",
+                        next = "<c-]>",
+                        prev = "<c-[>",
+                        dismiss = "<C-e>",
                     },
                     jump = {
                         next = "]]",

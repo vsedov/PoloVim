@@ -143,7 +143,7 @@ require("navigator").setup({
     -- this value prevent slow in large projects, e.g. found 100000 reference in a project
     transparency = 50, -- 0 ~ 100 blur the main window, 100: fully transparent, 0: opaque,  set to nil or 100 to disable it
 
-    lsp_signature_help = true, -- if you would like to hook ray-x/lsp_signature plugin in navigator
+    lsp_signature_help = false, -- if you would like to hook ray-x/lsp_signature plugin in navigator
     -- setup here. if it is nil, navigator will not init signature help
     signature_help_cfg = nil, -- if you would like to init ray-x/lsp_signature plugin in navigator, and pass in your own config to signature help
     icons = { -- refer to lua/navigator.lua for more icons config
@@ -201,25 +201,3 @@ require("navigator").setup({
         display_diagnostic_qf = false, -- always show quickfix if there are diagnostic errors, set to false if you want to ignore it
     },
 })
-local cfg = {
-    bind = true,
-    doc_lines = 10,
-    floating_window = lambda.config.lsp.lsp_sig.use_floating_window, -- show hint in a floating window, set to false for virtual text only mode ]]
-    floating_window_above_cur_line = lambda.config.lsp.lsp_sig.use_floating_window_above_cur_line,
-    hint_enable = true, -- virtual hint enable
-    fix_pos = lambda.config.lsp.lsp_sig.fix_pos, -- set to true, the floating window will not auto-close until finish all parameters
-    hint_prefix = "🐼 ", -- Panda for parameter
-    auto_close_after = 15, -- close after 15 seconds
-    cursorhold_update = false,
-    handler_opts = {
-        border = "single",
-    },
-    zindex = 1002,
-    timer_interval = 100,
-    log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
-    padding = " ", -- character to pad on left and right of signature can be ' ', or '|'  etc
-    toggle_key = [[<M-x>]], -- toggle signature on and off in insert mode,  e.g. '<M-x>'
-    select_signature_key = [[<M-c>]], -- toggle signature on and off in insert mode,  e.g. '<M-x>'
-}
-
-require("lsp_signature").setup(cfg)

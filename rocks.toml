@@ -6,24 +6,24 @@ auto_install = "prompt"
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
 "rocks.nvim" = "2.40.0"
-"rocks-config.nvim" = "2.2.0"
+"rocks-config.nvim" = "2.3.1"
 "heirline.nvim" = "scm"
 "nvim-spider" = "scm"
 "rocks-lazy.nvim" = "scm"
 "lspkind.nvim" = "scm"
 nvim-notify = "3.13.5"
 friendly-snippets= "scm"
-nvim-lspconfig = "0.1.8"
+nvim-lspconfig = "1.0.0"
 "mason-lspconfig.nvim" = "1.31.0"
 "mason.nvim" = "1.10.0"
-"better-escape.nvim" = {version="2.3.2", opt=true}
-"actions-preview.nvim" = {version="scm", opt = true}
-"inc-rename.nvim" = {version="scm", opt = true}
+"better-escape.nvim" = {version= "2.3.2", opt=true}
+"actions-preview.nvim" = {version= "scm", opt = true}
+"inc-rename.nvim" = {version= "scm", opt = true}
 treesj = {version = "scm", opt = true}
-"dial.nvim" = {version="0.4.0", opt =true}
+"dial.nvim" = {version= "0.4.0", opt =true}
 "comment-box.nvim" = "1.0.2"
-"comment.nvim" = {version="0.8.0", opt = true}
-"flash.nvim" = {version="2.1.0", opt=true}
+"comment.nvim" = {version= "0.8.0", opt = true}
+"flash.nvim" = {version= "2.1.0", opt=true}
 "edgy.nvim" = "1.10.2"
 "mini.visits" = "0.13.0"
 "dropbar.nvim" = "8.6.1"
@@ -31,7 +31,7 @@ treesj = {version = "scm", opt = true}
 "indent-blankline.nvim" = "3.7.2"
 nvim-web-devicons= "0.100"
 "nui.nvim" = "0.3.0"
-"oil.nvim" = "2.12.1"
+"oil.nvim" = "2.12.2"
 "bufdelete.nvim" = "scm"
 neorg-interim-ls = "1.2.1"
 neorg-se = "1.1.10"
@@ -42,7 +42,6 @@ nvim-nio = "1.10.0"
 toml = "0.4.0"
 luv = "1.48.0"
 luasnip = "2.3.0"
-"hydra.nvim" = "1.0.2"
 "plenary.nvim" = "scm"
 lzn-auto-require= "0.1.0"
 nvim-autopairs= "scm"
@@ -51,7 +50,7 @@ nvim-surround = "2.1.5"
 "toggleterm.nvim" = "2.12.0"
 "yanky.nvim" = "2.0.0"
 "telescope-zf-native.nvim" = "1.0.0"
-cmp_luasnip = {version="scm"}
+cmp_luasnip = {version= "scm" }
 "substitute.nvim" = "2.0.0"
 nvim-various-textobjs = "scm"
 "guess-indent.nvim" = "scm"
@@ -60,7 +59,7 @@ nvim-various-textobjs = "scm"
 "none-ls-extras.nvim" = "scm"
 "logging.nvim" = "1.1.0"
 nvim-ufo = "1.4.0"
-"yazi.nvim" = "6.0.7"
+"yazi.nvim" = "6.1.0"
 "telescope.nvim" = "scm"
 "sqlite.lua" = "1.2.2"
 nvim-dap = "scm"
@@ -214,22 +213,18 @@ tree-sitter-mermaid = "scm"
 nvim-treesitter-legacy-api = "0.9.2"
 "rocks-treesitter.nvim" = "1.1.2"
 tree-sitter-latex = "scm"
+"care.nvim" = "scm"
 
-[plugins."care.nvim" ]
-git = "max397574/care.nvim"
-rev = "e93b580034fe909661964e80512e408aed68aa1f"
-opt = true
+[plugins."hydra.nvim" ]
+git = "nvimtools/hydra.nvim"
+rev = "7f5341643107d05a8d7d4fdea00b29af28517380"
+
 
 [plugins.nvim-cmp ]
 version = "scm"
 
 [plugins.neorg ]
 version = "9.1.1"
-opt = true
-
-[plugins.nvim-treesitter-endwise]
-git = "rrethy/nvim-treesitter-endwise"
-rev = "8b34305ffc28bd75a22f5a0a9928ee726a85c9a6"
 opt = true
 
 
@@ -239,6 +234,7 @@ opt = true
 
 [plugins."lsp_signature.nvim" ]
 version = "scm"
+opt = true
 
 [plugins."render-markdown.nvim"]
 version = "6.3.0"
@@ -264,6 +260,7 @@ rev = "91ff86cd9c29299a64f968ebb45846c485725f23"
 [plugins.cmp-nvim-lsp ]
 git = "hrsh7th/cmp-nvim-lsp"
 rev = "39e2eda76828d88b773cc27a3f61d2ad782c922d"
+opt = true
 
 [plugins.cmp-vimtex]
 git = "micangl/cmp-vimtex"
@@ -271,7 +268,7 @@ rev = "5283bf9108ef33d41e704027b9ef22437ce7a15b"
 
 [plugins.cmp-async-path]
 git = "felipelema/cmp-async-path"
-rev = "9d581eec5acf812316913565c135b0d1ee2c9a71"
+opt = true
 
 [plugins."neotab.nvim"]
 git = "kawre/neotab.nvim"
@@ -372,7 +369,7 @@ opt = true
 
 [plugins."codecompanion.nvim"]
 git = "olimorris/codecompanion.nvim"
-rev = "v2.3.0"
+rev = "v2.6.6"
 
 [plugins."chatgpt.nvim"]
 git = "jackmort/chatgpt.nvim"
@@ -717,11 +714,12 @@ rev = "v1.3^{}"
 
 [plugins.harpoon]
 git = "stroiman/harpoon"
+rev = "f9a2ff215379fadf1e1e4f781ca2dc31413f1f40"
 branch = "harpoon2"
 
 [plugins."yeet.nvim"]
 git = "samharju/yeet.nvim"
-rev = "v1.2.0"
+rev = "v1.2.1"
 
 [plugins.vim-repeat]
 git = "tpope/vim-repeat"
@@ -895,8 +893,6 @@ opt = true
 
 [plugins.care-cmp]
 git = "max397574/care-cmp"
-branch = "main"
-opt = true
 
 [plugins.nvim-rip-substitute]
 git = "chrisgrieser/nvim-rip-substitute"
@@ -917,15 +913,18 @@ rev = "v2.5.0"
 
 [plugins.neocord]
 git = "iogamaster/neocord"
+rev = "aa7a58023166533da83ca7b11c0d2569e45d7381"
 opt = true
 
 [plugins.nvim-treesitter-textobjects]
 git = "nvim-treesitter/nvim-treesitter-textobjects"
-branch = "main"
+rev = "a34d063932adab24234e85f35f5d3529d34c1c4c"
 opt = true
+branch = "main"
 
 [plugins.nvim-treesitter-textsubjects]
 git = "rrethy/nvim-treesitter-textsubjects"
+rev = "a8d2844bba925d9450ef7ab215f3b054028288ca"
 opt = true
 
 [plugins.vim-matchup]
@@ -940,15 +939,15 @@ items = [
 
 [bundles.completion] # Create a bundle called `lsp`
 items = [
-  "nvim-cmp",
-  # "care.nvim",
-  # "care-cmp",
+  # "nvim-cmp",
+  "care.nvim",
+  "care-cmp",
   "cmp-path",
   "cmp_luasnip",
   "luasnip",
   "cmp-async-path",
-  "cmp-vimtex",
-  "cmp-nvim-lsp",
+  # "cmp-vimtex",
+  # "cmp-nvim-lsp",
   "friendly-snippets",
   "luasnip-snippets",
   "luasnip-latex-snippets.nvim",

@@ -1,5 +1,6 @@
 local config = {}
 
+
 function config.chatgpt()
     require("chatgpt").setup({
         max_line_length = 1000000,
