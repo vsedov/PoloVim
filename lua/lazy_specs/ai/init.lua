@@ -90,7 +90,7 @@ return {
     },
     {
         "avante.nvim",
-        event = "BufWinEnter",
+        event = "DeferredUIEnter",
         keys = {
             {
                 "<leader>ip",
@@ -126,54 +126,25 @@ return {
             rocks.safe_force_packadd({ "nvim-web-devicons", "plenary.nvim", "render-markdown.nvim" })
 
             local opts = {
-                ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
                 provider = "claude", -- Recommend using Claude
-                vendors = {
-                    ---@type AvanteProvider
-                    perplexity = {
-                        endpoint = "https://api.perplexity.ai/chat/completions",
-                        model = "llama-3.1-sonar-large-128k-online",
-                        api_key_name = "PERPLEXITY_API_KEY",
-                        parse_curl_args = function(opts, code_opts)
-                            return {
-                                url = opts.endpoint,
-                                headers = {
-                                    ["Accept"] = "application/json",
-                                    ["Content-Type"] = "application/json",
-                                    ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
-                                },
-                                body = {
-                                    model = opts.model,
-                                    messages = { -- you can make your own message, but this is very advanced
-                                        { role = "system", content = code_opts.system_prompt },
-                                        {
-                                            role = "user",
-                                            content = require("avante.providers.openai").get_user_message(code_opts),
-                                        },
-                                    },
-                                    temperature = 0,
-                                    max_tokens = 8192,
-                                    stream = true, -- this will be set by default.
-                                },
-                            }
-                        end,
-                        -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
-                        parse_response_data = function(data_stream, event_state, opts)
-                            require("avante.providers").openai.parse_response(data_stream, event_state, opts)
-                        end,
-                    },
+                auto_suggestions_provider = "claude", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
+                claude = {
+                    endpoint = "https://api.anthropic.com",
+                    model = "claude-3-5-sonnet-20240620",
+                    temperature = 0,
+                    max_tokens = 10096,
                 },
+
                 behaviour = {
-                    auto_suggestions = false, -- Experimental stage
+                    auto_suggestions = true, -- Experimental stage
                     auto_set_highlight_group = true,
                     auto_set_keymaps = true,
                     auto_apply_diff_after_generation = false,
-                    support_paste_from_clipboard = true,
+                    support_paste_from_clipboard = false,
                 },
                 mappings = {
                     diff = {
                         ours = "co",
-
                         theirs = "ct",
                         all_theirs = "ca",
                         both = "cb",
@@ -182,10 +153,11 @@ return {
                         prev = "[x",
                     },
                     suggestion = {
+                        -- Create another list
                         accept = "<c-l>",
                         next = "<c-]>",
                         prev = "<c-[>",
-                        dismiss = "<C-e>",
+                        dismiss = "<c-]>",
                     },
                     jump = {
                         next = "]]",
@@ -196,31 +168,12 @@ return {
                         insert = "<C-s>",
                     },
                 },
-                hints = { enabled = true },
-                windows = {
-                    wrap = true, -- similar to vim.o.wrap
-                    width = 45, -- default % based on available width
-                    sidebar_header = {
-                        align = "center", -- left, center, right for title
-                        rounded = true,
-                    },
-                },
-                highlights = {
-                    diff = {
-                        current = "DiffText",
-                        incoming = "DiffAdd",
-                    },
-                },
-                diff = {
-                    autojump = true,
-                    list_opener = "copen",
-                },
             }
             local opt2 = {
                 file_types = { "markdown", "Avante" },
             }
             require("render-markdown").setup(opt2)
-            require("avante").setup(opts)
+            require("avante").setup(opt)
 
             -- lambda.augroup("Avante", {
             --     {

@@ -2,7 +2,7 @@ local highlight, ui, k = lambda.highlight, lambda.ui, vim.keycode
 local api = vim.api
 local cmp = require("cmp")
 local types = require("cmp.types")
-local utils = require("modules.completion.cmp.utils")
+local utils = require("plugins.completion.cmp.utils")
 local border = lambda.style.border.type_0
 local cmp_window = {
     border = border,
@@ -35,7 +35,6 @@ local config = {
         completeopt = "menu,menuone,noselect",
     },
 
-    preselect = cmp.PreselectMode.Item, -- None | Item
     confirmation = { default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace },
     -- confirmation = {
     --     default_behavior = types.cmp.ConfirmBehavior.Replace, -- Item
@@ -47,8 +46,8 @@ local config = {
     experimental = {
         ghost_text = lambda.config.cmp.use_ghost,
     },
-    mapping = require("modules.completion.cmp.mappings"),
-    sources = require("modules.completion.cmp.sources"),
+    mapping = require("plugins.completion.cmp.mappings"),
+    sources = require("plugins.completion.cmp.sources"),
 
     enabled = function()
         if

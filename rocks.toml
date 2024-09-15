@@ -31,9 +31,8 @@ treesj = {version = "scm", opt = true}
 "indent-blankline.nvim" = "3.7.2"
 nvim-web-devicons= "0.100"
 "nui.nvim" = "0.3.0"
-"oil.nvim" = "2.12.2"
+"oil.nvim" = "scm"
 "bufdelete.nvim" = "scm"
-neorg-interim-ls = "1.2.1"
 neorg-se = "1.1.10"
 nvim-nio = "1.10.0"
 "image.nvim" = "1.3.0"
@@ -68,160 +67,13 @@ nvim-dap = "scm"
 tree-sitter-python = "scm"
 "navigator.lua" = "scm"
 tree-sitter-toml = "scm"
-tree-sitter-ada = "scm"
-tree-sitter-zig = "scm"
-tree-sitter-zathurarc = "scm"
-tree-sitter-yuck = "scm"
-tree-sitter-yang = "scm"
-tree-sitter-yaml = "scm"
-tree-sitter-xml = "scm"
-tree-sitter-xcompose = "scm"
-tree-sitter-wit = "scm"
-tree-sitter-wing = "scm"
-tree-sitter-wgsl_bevy = "scm"
-tree-sitter-wgsl = "scm"
-tree-sitter-vue = "scm"
-tree-sitter-vimdoc = "scm"
-tree-sitter-vim = "scm"
-tree-sitter-vhs = "scm"
-tree-sitter-vhdl = "scm"
-tree-sitter-verilog = "scm"
-tree-sitter-vento = "scm"
-tree-sitter-vala = "scm"
-tree-sitter-v = "scm"
-tree-sitter-uxntal = "scm"
-tree-sitter-usd = "scm"
-tree-sitter-unison = "scm"
-tree-sitter-ungrammar = "scm"
-tree-sitter-udev = "scm"
-tree-sitter-typst = "scm"
-tree-sitter-typoscript = "scm"
-tree-sitter-typespec = "scm"
-tree-sitter-typescript = "scm"
-tree-sitter-twig = "scm"
-tree-sitter-turtle = "scm"
-tree-sitter-tsx = "scm"
-tree-sitter-tsv = "scm"
-tree-sitter-todotxt = "scm"
-tree-sitter-tmux = "scm"
-tree-sitter-tlaplus = "scm"
-tree-sitter-tiger = "scm"
-tree-sitter-thrift = "scm"
-tree-sitter-textproto = "scm"
-tree-sitter-terraform = "scm"
-tree-sitter-templ = "scm"
-tree-sitter-teal = "scm"
-tree-sitter-tcl = "scm"
-tree-sitter-tact = "scm"
-tree-sitter-tablegen = "scm"
-tree-sitter-t32 = "scm"
-tree-sitter-systemverilog = "scm"
-tree-sitter-systemtap = "scm"
-tree-sitter-sxhkdrc = "scm"
-tree-sitter-swift = "scm"
-tree-sitter-svelte = "scm"
-tree-sitter-surface = "scm"
-tree-sitter-supercollider = "scm"
-tree-sitter-styled = "scm"
-tree-sitter-strace = "scm"
-tree-sitter-starlark = "scm"
-tree-sitter-ssh_config = "scm"
-tree-sitter-squirrel = "scm"
-tree-sitter-sql = "scm"
-tree-sitter-sparql = "scm"
-tree-sitter-sourcepawn = "scm"
-tree-sitter-sosl = "scm"
-tree-sitter-soql = "scm"
-tree-sitter-solidity = "scm"
-tree-sitter-snakemake = "scm"
-tree-sitter-smithy = "scm"
-tree-sitter-smali = "scm"
-tree-sitter-slint = "scm"
-tree-sitter-slang = "scm"
-tree-sitter-scss = "scm"
-tree-sitter-scheme = "scm"
-tree-sitter-scfg = "scm"
-tree-sitter-scala = "scm"
-tree-sitter-rust = "scm"
-tree-sitter-ruby = "scm"
-tree-sitter-rst = "scm"
-tree-sitter-ron = "scm"
-tree-sitter-roc = "scm"
-tree-sitter-robots = "scm"
-tree-sitter-robot = "scm"
-tree-sitter-rnoweb = "scm"
-tree-sitter-requirements = "scm"
-tree-sitter-rego = "scm"
-tree-sitter-regex = "scm"
-tree-sitter-readline = "scm"
-tree-sitter-re2c = "scm"
-tree-sitter-rbs = "scm"
-tree-sitter-rasi = "scm"
-tree-sitter-ralph = "scm"
-tree-sitter-racket = "scm"
-tree-sitter-r = "scm"
-tree-sitter-query = "scm"
-tree-sitter-qmljs = "scm"
-tree-sitter-qmldir = "scm"
-tree-sitter-ql = "scm"
-tree-sitter-pymanifest = "scm"
-tree-sitter-purescript = "scm"
-tree-sitter-puppet = "scm"
-tree-sitter-pug = "scm"
-tree-sitter-psv = "scm"
-tree-sitter-prql = "scm"
-tree-sitter-proto = "scm"
-tree-sitter-properties = "scm"
-tree-sitter-promql = "scm"
-tree-sitter-prolog = "scm"
-tree-sitter-problog = "scm"
-tree-sitter-prisma = "scm"
-tree-sitter-printf = "scm"
-tree-sitter-powershell = "scm"
-tree-sitter-pony = "scm"
-tree-sitter-poe_filter = "scm"
-tree-sitter-pod = "scm"
-tree-sitter-po = "scm"
-tree-sitter-pioasm = "scm"
-tree-sitter-phpdoc = "scm"
-tree-sitter-php_only = "scm"
-tree-sitter-php = "scm"
-tree-sitter-perl = "scm"
-tree-sitter-pem = "scm"
-tree-sitter-passwd = "scm"
-tree-sitter-pascal = "scm"
-tree-sitter-org = "scm"
-tree-sitter-odin = "scm"
-tree-sitter-ocamllex = "scm"
-tree-sitter-ocaml_interface = "scm"
-tree-sitter-ocaml = "scm"
-tree-sitter-objdump = "scm"
-tree-sitter-objc = "scm"
-tree-sitter-nqc = "scm"
-tree-sitter-nix = "scm"
-tree-sitter-ninja = "scm"
-tree-sitter-nim_format_string = "scm"
-tree-sitter-nim = "scm"
-tree-sitter-nickel = "scm"
-tree-sitter-nginx = "scm"
-tree-sitter-nasm = "scm"
-tree-sitter-muttrc = "scm"
-tree-sitter-mlir = "scm"
-tree-sitter-meson = "scm"
-tree-sitter-mermaid = "scm"
+tree-sitter-lua = "scm"
 "rocks-git.nvim" = "2.2.0"
 nvim-treesitter-legacy-api = "0.9.2"
 "rocks-treesitter.nvim" = "1.1.2"
 tree-sitter-latex = "scm"
-"care.nvim" = "scm"
-
-[plugins."hydra.nvim" ]
-git = "nvimtools/hydra.nvim"
-rev = "7f5341643107d05a8d7d4fdea00b29af28517380"
-
-
-[plugins.nvim-cmp ]
-version = "scm"
+neorg-interim-ls = "1.2.1"
+nvim-cmp = "scm"
 
 [plugins.neorg ]
 version = "9.1.1"
@@ -237,7 +89,7 @@ version = "scm"
 opt = true
 
 [plugins."render-markdown.nvim"]
-version = "6.3.0"
+version = "7.0.0"
 opt = true
 
 [plugins.promise-async ]
@@ -266,9 +118,7 @@ opt = true
 git = "micangl/cmp-vimtex"
 rev = "5283bf9108ef33d41e704027b9ef22437ce7a15b"
 
-[plugins.cmp-async-path]
-git = "felipelema/cmp-async-path"
-opt = true
+
 
 [plugins."neotab.nvim"]
 git = "kawre/neotab.nvim"
@@ -369,7 +219,7 @@ opt = true
 
 [plugins."codecompanion.nvim"]
 git = "olimorris/codecompanion.nvim"
-rev = "v2.6.6"
+rev = "v2.7.0"
 
 [plugins."chatgpt.nvim"]
 git = "jackmort/chatgpt.nvim"
@@ -808,9 +658,6 @@ rev = "4b91f28d91979f61a3e8aef1cee5b7c7f2c7beb8"
 git = "phenax/neorg-hop-extras"
 rev = "f349ab3e9a52d214f1af6122cd087218b2722c81"
 
-[plugins."neorg-roam.nvim"]
-git = "jarvismkennedy/neorg-roam.nvim"
-rev = "a81e6f1d914e62d0e4944b50448e3d74280d5140"
 
 [plugins.neorg-exec]
 git = "laher/neorg-exec"
@@ -888,11 +735,8 @@ opt = true
 
 [plugins."avante.nvim"]
 git = "yetone/avante.nvim"
-rev = "4a3b278a76e043935f4c6e8d66445f2f3a8a9d63"
+rev = "main"
 opt = true
-
-[plugins.care-cmp]
-git = "max397574/care-cmp"
 
 [plugins.nvim-rip-substitute]
 git = "chrisgrieser/nvim-rip-substitute"
@@ -902,6 +746,7 @@ opt = true
 [plugins."guihua.lua"]
 git = "ray-x/guihua.lua"
 rev = "v0.1^{}"
+
 
 [plugins.harpoonex]
 git = "mike-jl/harpoonex"
@@ -922,15 +767,28 @@ rev = "a34d063932adab24234e85f35f5d3529d34c1c4c"
 opt = true
 branch = "main"
 
-[plugins.nvim-treesitter-textsubjects]
-git = "rrethy/nvim-treesitter-textsubjects"
-rev = "a8d2844bba925d9450ef7ab215f3b054028288ca"
-opt = true
-
 [plugins.vim-matchup]
 git = "andymass/vim-matchup"
 rev = "8522c9b3ba6c92ac64a609fa792134ce6ba9c4bc"
 opt = true
+
+[plugins."multicursors.nvim"]
+git = "smoka7/multicursors.nvim"
+rev = "main"
+opt = true
+
+[plugins."hydra.nvim"]
+git = "nvimtools/hydra.nvim"
+rev = "main"
+opt = true
+
+[plugins.care-cmp]
+git = "max397574/care-cmp"
+rev = "main"
+
+[plugins."care.nvim"]
+git = "max397574/care.nvim"
+rev = "main"
 
 [bundles.startup]
 items = [
@@ -945,8 +803,7 @@ items = [
   "cmp-path",
   "cmp_luasnip",
   "luasnip",
-  "cmp-async-path",
-  # "cmp-vimtex",
+  "cmp-vimtex",
   # "cmp-nvim-lsp",
   "friendly-snippets",
   "luasnip-snippets",

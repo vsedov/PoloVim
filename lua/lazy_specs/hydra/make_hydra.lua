@@ -2,7 +2,7 @@ local M = require("lazy_specs.hydra.utils_rewrite")
 local hydra = require("hydra")
 
 local function debug_print(...)
-    print(string.format(...))
+    -- print(string.format(...))
 end
 
 M.process_nested_hydras = function(data, parent_config)

@@ -77,13 +77,7 @@ settings({
         end,
     },
     prompt = {
-        plugins = {
-            cmp = function(cmp)
-                cmp.setup.filetype("Prompt", {
-                    sources = {},
-                })
-            end,
-        },
+        plugins = {},
     },
     ["Neogit*"] = {
         wo = { winbar = "" },
@@ -115,19 +109,7 @@ settings({
             spelllang = "en_gb",
             list = false,
         },
-        plugins = {
-            cmp = function(cmp)
-                cmp.setup.filetype("NeogitCommitMessage", {
-                    sources = {
-                        { name = "luasnip", group_index = 1 },
-                        { name = "git", group_index = 1 },
-                        { name = "dictionary", group_index = 1 },
-                        { name = "spell", group_index = 1 },
-                        { name = "buffer", group_index = 2 },
-                    },
-                })
-            end,
-        },
+        plugins = {},
         function()
             vim.treesitter.language.register("gitcommit", "NeogitCommitMessage")
         end,
@@ -159,20 +141,6 @@ settings({
         },
 
         plugins = {
-            cmp = function(cmp)
-                cmp.setup.filetype("norg", {
-                    sources = {
-                        { name = "otter" },
-                        { name = "path", group_index = 1 },
-                        { name = "luasnip", group_index = 1 },
-                        { name = "neorg", group_index = 1 },
-                        { name = "dictionary", group_index = 1 },
-                        { name = "spell", group_index = 1 },
-                        { name = "emoji", group_index = 1 },
-                        { name = "buffer", group_index = 2 },
-                    },
-                })
-            end,
             ["nvim-surround"] = function(surround)
                 surround.buffer_setup({
                     surrounds = {

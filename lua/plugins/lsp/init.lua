@@ -162,7 +162,7 @@ require("navigator").setup({
     mason = true, -- set to true if you would like use the lsp installed by williamboman/mason
     lsp = {
         enable = true, -- skip lsp setup, and only use treesitter in navigator.
-        disable_lsp = { "ruff", "ruff_lsp", "sourcery", "ts_ls", "ts_ls." },
+        disable_lsp = { "pylsp", "ruff", "ruff_lsp", "sourcery", "ts_ls", "ts_ls.", "none_ls", "null_ls", "sourcery" },
         -- Use this if you are not using LSP servers, and only want to enable treesitter support.
         -- If you only want to prevent navigator from touching your LSP server configs,
         -- use `disable_lsp = "all"` instead.

@@ -7,6 +7,7 @@ conf.neotab()
 conf.autopair()
 
 -- conf.cmp()
+
 local labels = { "q", "w", "r", "t", "z", "i", "o" }
 
 require("care.config").setup({})
@@ -27,6 +28,7 @@ end)
 vim.keymap.set("i", "<CR>", function()
     require("care").api.complete()
 end)
+
 
 vim.keymap.set("i", "<c-f>", function()
     if require("care").api.doc_is_open() then

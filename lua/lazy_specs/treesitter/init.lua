@@ -102,27 +102,6 @@ return {
         end,
     },
     {
-        "nvim-treesitter-textsubjects",
-        event = "BufEnter",
-        after = function()
-            require("nvim-treesitter.configs").setup({
-                textsubjects = {
-                    enable = true,
-                    prev_selection = ",", -- (Optional) keymap to select the previous selection
-                    keymaps = {
-                        ["<c-;>"] = "textsubjects-smart",
-                        ["'"] = "textsubjects-container-outer",
-                        ["i;"] = "textsubjects-container-inner",
-                        ["i;"] = {
-                            "textsubjects-container-inner",
-                            desc = "Select inside containers (classes, functions, etc.)",
-                        },
-                    },
-                },
-            })
-        end,
-    },
-    {
         "vim-matchup",
         event = "BufEnter",
         keys = {

@@ -3,40 +3,6 @@
 -----------------------------------------------------------------------------//
 local enhance_attach = require("plugins.lsp.lsp.config").enhance_attach
 local servers = {
-    tsserver = true,
-    graphql = true,
-    jsonls = true,
-    bashls = true,
-    terraformls = true,
-    marksman = true,
-    gopls = {
-        settings = {
-            gopls = {
-                gofumpt = true,
-                codelenses = {
-                    generate = true,
-                    gc_details = false,
-                    test = true,
-                    tidy = true,
-                },
-                hints = {
-                    assignVariableTypes = true,
-                    compositeLiteralFields = true,
-                    constantValues = true,
-                    functionTypeParameters = true,
-                    parameterNames = true,
-                    rangeVariableTypes = true,
-                },
-                analyses = {
-                    unusedparams = true,
-                },
-                usePlaceholders = true,
-                completeUnimported = true,
-                staticcheck = true,
-                directoryFilters = { "-node_plugins" },
-            },
-        },
-    },
     yamlls = {
         settings = {
             yaml = {
@@ -54,10 +20,6 @@ local servers = {
             table.insert(new_config.cmd, new_rootdir .. "/.config.yaml")
         end,
     },
-    buf = true,
-    grammarly = true,
-    zls = true,
-    luau_lsp = true,
     lua_ls = {
         settings = {
             Lua = {
@@ -89,7 +51,6 @@ local servers = {
     },
     ruff_ls = true,
     semgrep = true,
-    ts_ls = true,
 }
 
 local con = lambda.config.lsp.python.lsp

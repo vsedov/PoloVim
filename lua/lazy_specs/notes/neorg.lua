@@ -28,11 +28,6 @@ end
 M.opts = {
     load = {
         ["core.defaults"] = {}, -- Load all the default modules
-        ["core.completion"] = {
-            config = {
-                engine = "nvim-cmp",
-            },
-        },
         ["core.latex.renderer"] = {},
         ["core.integrations.image"] = {},
         ["core.looking-glass"] = {}, -- Enable the looking_glass module
@@ -142,111 +137,11 @@ M.opts = {
             },
         },
         ["core.summary"] = {},
-        ["core.manoeuvre"] = {},
         ["core.ui.calendar"] = {},
         --  ──────────────────────────────────────────────────────────────────────
         ["core.presenter"] = {
             config = {
                 zen_mode = "zen-mode",
-            },
-        },
-
-        ["core.integrations.roam"] = {
-            -- default keymaps
-            config = {
-                keymaps = {
-                    select_prompt = "<C-n>",
-                    insert_link = "<leader>ni",
-                    find_note = "<leader>nf",
-                    capture_note = "<leader>nc",
-                    capture_index = "<leader>nl",
-                    capture_cancel = "<C-q>",
-                    capture_save = "<C-w>",
-                },
-                -- telescope theme
-
-                theme = "ivy",
-
-                capture_templates = {
-                    {
-                        name = "default",
-                        file = "${title}",
-                        lines = { "" },
-                    },
-                    {
-                        name = "New Fleeting Note",
-                        file = "${title}_${date}",
-                        title = "${title}",
-                        lines = { "", "* ${heading1}", "" },
-                    },
-                    {
-                        name = "Author Template",
-                        file = "${title}_${date}",
-                        lines = {
-                            "",
-                            "* {Title}",
-                            "",
-                            "** {Bio}",
-                            "",
-                            "** {Notes}",
-                            "",
-                            "** {Quotes}",
-                            "",
-                            "** {Questions}",
-                            "",
-                            "** {References}",
-                        },
-                    },
-
-                    {
-                        name = "Core Template",
-                        file = "${title}_${date}",
-                        lines = {
-                            "",
-                            "* Title",
-                            "",
-                            "** Notes",
-                            "",
-                            "** Questions",
-                            "",
-                            "===",
-                            "",
-                            "** Terms",
-                            "",
-                            "** References}",
-                        },
-                    },
-                    {
-                        name = "Pro Con",
-                        file = "$tool_{title}_${date}",
-                        lines = {
-                            "",
-                            "* Title",
-                            "",
-                            "** Usage ",
-                            "",
-                            "** Pros",
-                            "",
-                            "** Cons",
-                            "",
-                            "===",
-                            "",
-                            "** {References}",
-                        },
-                    },
-                },
-
-                substitutions = {
-                    title = function(metadata)
-                        return metadata.title
-                    end,
-                    date = function(metadata)
-                        return os.date("%Y-%m-%d")
-                    end,
-                    time = function(metadata)
-                        return os.date("%H:%M:%S")
-                    end,
-                },
             },
         },
     },
@@ -267,21 +162,21 @@ M.config = function(op)
     vim.keymap.set("n", "<leader>;", ":lua ToggleToc()<CR>", { noremap = true, silent = true })
     vim.keymap.set("n", "<leader>nt", ":Neorg mode traverse-heading <cr>", {})
     vim.keymap.set("n", "<leader>nT", ":Neorg mode norg <cr>", {})
-    -- vim.api.nvim_create_autocmd("LspAttach", {
-    --     callback = function(args)
-    --         local bufnr = args.buf
-    --         local client = vim.lsp.get_client_by_id(args.data.client_id)
-    --         if not client then
-    --             return
-    --         end
-    --
-    --         if client.server_capabilities.completionProvider then
-    --             vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-    --         end
-    --
-    --         local opts = { noremap = true, silent = true, buffer = bufnr }
-    --         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-    --     end,
-    -- })
+    vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+            local bufnr = args.buf
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if not client then
+                return
+            end
+
+            if client.server_capabilities.completionProvider then
+                vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+            end
+
+            local opts = { noremap = true, silent = true, buffer = bufnr }
+            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+        end,
+    })
 end
 return M

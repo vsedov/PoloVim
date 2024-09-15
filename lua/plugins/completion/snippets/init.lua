@@ -9,13 +9,13 @@ local d = ls.dynamic_node
 local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
-local utils = require("modules.completion.snippets.sniputils")
+local utils = require("plugins.completion.snippets.sniputils")
 local pipe = utils.pipe
 local no_backslash = utils.no_backslash
 local is_math = utils.is_math
 local not_math = utils.not_math
 
-require("modules.completion.snippets.luasnip")
+require("plugins.completion.snippets.luasnip")
 
 local parse = ls.parser.parse_snippet
 
@@ -50,7 +50,7 @@ refactor(${1:scope}): ${2:title}
 ${0}]]
 
 local snippets = {
-    all = require("modules.completion.snippets.all"),
+    all = require("plugins.completion.snippets.all"),
     help = {
         s({ trig = "con", wordTrig = true }, {
             i(1),
@@ -92,7 +92,7 @@ local snippets = {
             t("//Parameters: "),
             -- function, first parameter is the function, second the Placeholders
             -- whose text it gets as input.
-            f(require("modules.completion.snippets.sniputils").copy, 2),
+            f(require("plugins.completion.snippets.sniputils").copy, 2),
             t({ "", "function " }),
             -- Placeholder/Insert.
             i(1),
@@ -216,18 +216,18 @@ ls.add_snippets("cpp", snippets.cpp)
 ls.add_snippets("c", snippets.c)
 ls.add_snippets("gitcommit", snippets.gitcommit)
 
-require("modules.completion.snippets.choice_popup")
+require("plugins.completion.snippets.choice_popup")
 
-for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
+for _, snip in ipairs(require("plugins.completion.snippets.latex.tex")) do
     snip.condition = pipe({ is_math })
     snip.wordTrig = false
     ls.add_snippets("tex", { snip })
 end
-ls.add_snippets("tex", require("modules.completion.snippets.latex.tex_math"), { type = "autosnippets" })
+ls.add_snippets("tex", require("plugins.completion.snippets.latex.tex_math"), { type = "autosnippets" })
 
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 require("luasnip.loaders.from_vscode").lazy_load()
- -- snipmate format
+-- snipmate format
 require("luasnip.loaders.from_snipmate").load()
 
 -- lua format
