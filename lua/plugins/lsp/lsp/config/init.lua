@@ -3,7 +3,7 @@
 local M = {}
 
 function M.common_capabilities()
-    local capabilities = require("modules.lsp.lsp.config.capabilities")
+    local capabilities = require("plugins.lsp.lsp.config.capabilities")
     return capabilities
 end
 

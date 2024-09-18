@@ -1,4 +1,4 @@
-local utils = require("modules.editor.hydra.repl_utils")
+local utils = require("lazy_specs.hydra.repl_utils")
 local run_cmd_with_count = utils.run_cmd_with_count
 local ft_to_repl = utils.ft_to_repl
 

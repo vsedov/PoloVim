@@ -1,5 +1,3 @@
-local conf = require("modules.windows.config")
-
 return {
     {
         "vim-maximizer",
@@ -9,7 +7,6 @@ return {
     {
         "winshift.nvim",
         cmd = "WinShift",
-        after = conf.winshift,
     },
     {
         "wrapping.nvim",

@@ -1,5 +1,5 @@
 local leader = ";a"
-local visual_mode = require("modules.editor.hydra.hydra_utils").run_visual_or_normal
+local visual_mode = require("lazy_specs.hydra.hydra_utils").run_visual_or_normal
 get_visual_selection_rows = function()
     local start_row = math.min(vim.fn.getpos("v")[2], vim.fn.getpos(".")[2])
     local end_row = math.max(vim.fn.getpos("v")[2], vim.fn.getpos(".")[2])
@@ -464,6 +464,9 @@ local internal_copilot = {
         Copilot = {
             mode = { "n", "v", "x" },
             position = "bottom-right",
+            on_enter = function()
+                vim.cmd([[silent UpdateRemotePlugins]])
+            end,
             ["<ESC>"] = { nil, { exit = true } },
         },
     },

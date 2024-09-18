@@ -3,8 +3,32 @@ return {
         "treesitter.nvim",
         event = "BufEnter",
         after = function()
-            local conf = require("modules.treesitter.config")
-            conf.nvim_treesitter()
+            local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+            parser_configs.markdown.filetype_to_parsername = "octo"
+
+            require("nvim-treesitter.configs").setup({
+                autopairs = { enable = false },
+                matchup = {
+                    enable = lambda.config.treesitter.use_matchup,
+                    disable = { "latex", "tex", "bib" },
+                },
+                highlight = {
+                    enable = true, -- false will disable the whole extension
+                    additional_vim_regex_highlighting = lambda.config.treesitter.use_extra_highlight,
+                    disable = { "latex", "tex", "bib" },
+                },
+                incremental_selection = {
+                    enable = false,
+                    -- disable = {"elm"},
+                    keymaps = {
+                        -- mappings for incremental selection (visual mappings)
+                        init_selection = "gnn", -- maps in normal mode to init the node/scope selection
+                        scope_incremental = "gnN", -- increment to the upper scope (as defined in locals.scm)
+                        node_incremental = "<TAB>", -- increment to the upper named parent
+                        node_decremental = "<S-TAB>", -- decrement to the previous node
+                    },
+                },
+            })
         end,
     },
     {

@@ -2,7 +2,7 @@
 -- local labels = "¬"
 local labels = "sfnjklhodwembuyvrgtcxzSZFNJKLHODWEMBUYVRGTCXZ/?.,;#"
 local lib = require("lazy_specs.movement.flash.nav.lib")
-local lsp_utils = require("modules.lsp.lsp.utils")
+local lsp_utils = require("plugins.lsp.lsp.utils")
 
 local function opts()
     return {

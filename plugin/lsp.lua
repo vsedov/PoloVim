@@ -14,7 +14,7 @@ if vim.env.DEVELOPING then
     vim.lsp.set_log_level(L.DEBUG)
 end
 
-local utils = require("modules.lsp.lsp.utils")
+local utils = require("plugins.lsp.lsp.utils")
 
 local function fallback_fn(key)
     return function()
