@@ -1,5 +1,4 @@
-local opts = { move_cursor = true, keymaps = { visual = "s" } }
-require("nvim-surround").setup(opts)
+require("nvim-surround").setup({ move_cursor = true, keymaps = { visual = "s" } })
 
 -- surr*ound_words             ysiw)           (surround_words)
 -- *make strings               ys$"            "make strings"
@@ -60,6 +59,7 @@ vim.keymap.set({ "i", "n" }, "<C-y>", "<Plug>(dmacro-play-macro)")
 
 vim.g.wordmotion_prefix = ","
 vim.g.wordmotion_nomap = 1
+
 require("spider").setup({
     skipInsignificantPunctuation = true,
     consistentOperatorPending = false, -- see "Consistent Operator-pending Mode" in the README
@@ -73,10 +73,8 @@ vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<C
 vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
 vim.keymap.set("o", "w", "<cmd>lua require('spider').motion('w')<CR>")
 vim.keymap.set("n", "cw", "ce", { remap = true })
-
--- or the same in one mapping without `remap = true`
 vim.keymap.set("n", "cw", "<cmd>lua require('spider').motion('e')<CR>")
-local oil = require("oil")
+
 require("oil").setup({
     -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
     -- Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.

@@ -155,7 +155,7 @@ function M.show_codelens()
     --   false
     -- )
 
-    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
     local codelens = lsp.codelens
     for k, v in pairs(clients) do
         codelens.display(nil, 0, k)
@@ -455,23 +455,6 @@ M.format_on_save_toggle = function(dict)
     end
 end
 
--- vim.lsp.buf.cancel_formatting = function(bufnr)
---     vim.schedule(function()
---         bufnr = (bufnr == nil or bufnr == 0) and vim.api.nvim_get_current_buf() or bufnr
---         for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
---             for id, request in pairs(client.requests or {}) do
---                 if
---                     request.type == "pending"
---                     and request.bufnr == bufnr
---                     and request.method == "textDocument/formatting"
---                 then
---                     client.cancel_request(id)
---                 end
---             end
---         end
---     end)
--- end
-
 M.on_attach = function(on_attach, group)
     if type(group) == "string" then
         group = vim.api.nvim_create_augroup(group, { clear = true })
@@ -481,6 +464,8 @@ M.on_attach = function(on_attach, group)
         callback = function(args)
             local buffer = args.buf
             local client = vim.lsp.get_client_by_id(args.data.client_id)
+            require("navigator.lspclient.mapping").setup({ client = client, bufnr = bufnr }) -- setup navigator keymaps here,
+            require("navigator.dochighlight").documentHighlight(bufnr)
             on_attach(client, buffer)
         end,
     })

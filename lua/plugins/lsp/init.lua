@@ -1,5 +1,5 @@
-local conf = require("plugins.lsp.config")
 local config = lambda.config.lsp.null_ls
+
 require("lspconfig.ui.windows").default_options.border = lambda.style.border.type_0
 require("lspconfig")
 require("mason").setup({
@@ -14,12 +14,7 @@ require("mason-lspconfig").setup({
     handlers = {
         function(name)
             local config = require("plugins.lsp.lsp.mason.lsp_servers")(name)
-
             if config then
-                config.on_attach = function(client, bufnr)
-                    require("navigator.lspclient.mapping").setup({ client = client, bufnr = bufnr }) -- setup navigator keymaps here,
-                    require("navigator.dochighlight").documentHighlight(bufnr)
-                end
                 require("lspconfig")[name].setup(config)
             end
         end,
@@ -162,7 +157,7 @@ require("navigator").setup({
     mason = true, -- set to true if you would like use the lsp installed by williamboman/mason
     lsp = {
         enable = true, -- skip lsp setup, and only use treesitter in navigator.
-        disable_lsp = { "pylsp", "ruff", "ruff_lsp", "sourcery", "ts_ls", "ts_ls.", "none_ls", "null_ls", "sourcery" },
+        disable_lsp = { "ruff", "ruff_lsp", "sourcery", "ts_ls", "ts_ls.", "none_ls", "null_ls", "sourcery" },
         -- Use this if you are not using LSP servers, and only want to enable treesitter support.
         -- If you only want to prevent navigator from touching your LSP server configs,
         -- use `disable_lsp = "all"` instead.

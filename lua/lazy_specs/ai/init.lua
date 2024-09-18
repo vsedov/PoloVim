@@ -132,7 +132,7 @@ return {
                     endpoint = "https://api.anthropic.com",
                     model = "claude-3-5-sonnet-20240620",
                     temperature = 0,
-                    max_tokens = 10096,
+                    max_tokens = 4096,
                 },
 
                 behaviour = {
@@ -154,10 +154,11 @@ return {
                     },
                     suggestion = {
                         -- Create another list
-                        accept = "<c-l>",
-                        next = "<c-]>",
-                        prev = "<c-[>",
-                        dismiss = "<c-]>",
+                        accept = "<c-3>",
+
+                        next = "<c-1>",
+                        prev = "<c-2>",
+                        dismiss = "<c-e>",
                     },
                     jump = {
                         next = "]]",
