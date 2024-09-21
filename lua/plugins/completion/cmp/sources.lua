@@ -20,6 +20,10 @@ local plugins = {
         enable = true,
     },
     {
+        name = "cody",
+        enable = true,
+    },
+    {
         name = "buffer",
         options = {
             get_bufnrs = function()

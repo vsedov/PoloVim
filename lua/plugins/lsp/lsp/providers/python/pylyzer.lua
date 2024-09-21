@@ -1,4 +1,4 @@
-local py = require("modules.lsp.lsp.providers.python.utils.python_help")
+local py = require("plugins.lsp.lsp.providers.python.utils.python_help")
 local path = require("mason-core.path")
 local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not ok then

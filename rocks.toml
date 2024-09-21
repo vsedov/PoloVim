@@ -6,7 +6,7 @@ auto_install = "prompt"
 # If the plugin name contains a dot then you must add quotes to the key name!
 
 [plugins]
-"rocks.nvim" = "2.40.1"
+"rocks.nvim" = "2.40.2"
 "rocks-config.nvim" = "3.0.0"
 "heirline.nvim" = "scm"
 "nvim-spider" = "scm"
@@ -25,7 +25,7 @@ treesj = {version= "scm", opt = true}
 "comment-box.nvim" = "scm"
 "comment.nvim" = {version= "scm", opt = true}
 "flash.nvim" = {version= "scm", opt = true}
-"edgy.nvim" = "scm"
+"edgy.nvim" = "1.10.2"
 "mini.visits" = "scm"
 "dropbar.nvim" = "8.6.1"
 "fidget.nvim" = "1.4.1"
@@ -68,19 +68,16 @@ tree-sitter-python = "scm"
 "navigator.lua" = "scm"
 tree-sitter-toml = "scm"
 tree-sitter-lua = "scm"
-"rocks-git.nvim" = "2.3.0"
+"rocks-git.nvim" = "2.3.1"
 nvim-treesitter-legacy-api = "scm"
 "rocks-treesitter.nvim" = "scm"
 tree-sitter-latex = "scm"
 nvim-cmp = {version= "scm", opt=false}
+neorg-se = "1.1.10"
 
 [plugins.neorg-interim-ls ]
 version = "1.2.1"
 opt = true
-
-[plugins.neorg-se ]
-git = "benlubas/neorg-se"
-rev = "v1.1.9"
 
 [plugins.neorg ]
 version = "9.1.1"
@@ -92,7 +89,7 @@ opt = true
 version = "scm"
 
 [plugins."render-markdown.nvim"]
-version = "7.0.0"
+version = "7.1.0"
 opt = true
 
 [plugins.promise-async ]
@@ -115,7 +112,7 @@ rev = "91ff86cd9c29299a64f968ebb45846c485725f23"
 [plugins.cmp-nvim-lsp ]
 git = "hrsh7th/cmp-nvim-lsp"
 rev = "main"
-opt = true
+opt = false
 
 
 [plugins.cmp-vimtex]
@@ -405,7 +402,7 @@ rev = "1e417c69606318575082ffc283b501523c2ba4ab"
 
 [plugins."neominimap.nvim"]
 git = "isrothy/neominimap.nvim"
-rev = "v3.7.1"
+rev = "v3.7.2"
 opt = true
 
 [plugins."moody.nvim"]
@@ -418,7 +415,7 @@ rev = "v0.2.1"
 
 [plugins."hunk.nvim"]
 git = "julienvincent/hunk.nvim"
-rev = "v1.4.0"
+rev = "v1.5.0"
 
 [plugins."toggle-overlength.nvim"]
 git = "fouladi/toggle-overlength.nvim"
@@ -731,7 +728,7 @@ opt = true
 [plugins."avante.nvim"]
 git = "yetone/avante.nvim"
 rev = "main"
-opt = true
+build = "make"
 
 [plugins.nvim-rip-substitute]
 git = "chrisgrieser/nvim-rip-substitute"
@@ -777,14 +774,6 @@ git = "nvimtools/hydra.nvim"
 rev = "main"
 opt = true
 
-[plugins.care-cmp]
-git = "max397574/care-cmp"
-
-
-[plugins."care.nvim"]
-git = "max397574/care.nvim"
-rev = "main"
-
 [bundles.startup]
 items = [
   "abstract-autocmds",
@@ -793,12 +782,12 @@ items = [
 
 [bundles.completion] # Create a bundle called `lsp`
 items = [
-  # "nvim-cmp",
+  "nvim-cmp",
   "cmp-path",
   "cmp_luasnip",
   "luasnip",
   "cmp-vimtex",
-  # "cmp-nvim-lsp",
+  "cmp-nvim-lsp",
   "friendly-snippets",
   "luasnip-snippets",
   "luasnip-latex-snippets.nvim",
@@ -813,6 +802,7 @@ items = [
   "mason.nvim",
   "lsp-command",
   "navigator.lua",
+  "avante.nvim"
 ]
 
 [bundles.ui]

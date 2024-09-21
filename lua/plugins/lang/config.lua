@@ -160,7 +160,7 @@ function config.dap_config()
     local function find_debugpy_python_path()
         -- Return the path to the debugpy python executable if it is
         -- installed in $VIRTUAL_ENV, otherwise get it from Mason
-        if vim.env.VIRTUAL_ENV or require("modules.lsp.lsp.providers.python.utils.python_help").in_any_env() then
+        if vim.env.VIRTUAL_ENV or require("plugins.lsp.lsp.providers.python.utils.python_help").in_any_env() then
             return vim.fn.exepath("python3")
         end
 

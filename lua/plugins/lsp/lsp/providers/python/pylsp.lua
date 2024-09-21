@@ -37,7 +37,7 @@ return {
     end,
     on_new_config = function(client)
         client.config.settings.python.pythonPath = function()
-            if vim.env.VIRTUAL_ENV or require("modules.lsp.lsp.providers.python.utils.python_help").in_any_env() then
+            if vim.env.VIRTUAL_ENV or require("plugins.lsp.lsp.providers.python.utils.python_help").in_any_env() then
                 return vim.fn.exepath("python3")
             end
 

@@ -239,7 +239,7 @@ function M.repeatable_hover(hover, k)
     use_hydra = use_hydra or false
     if true then
         local leader = "K"
-        local utils = require("modules.lsp.lsp.utils")
+        local utils = require("plugins.lsp.lsp.utils")
         local mx = function(feedkeys, type)
             local type = type or "m"
             return function()
@@ -253,14 +253,8 @@ function M.repeatable_hover(hover, k)
 
         local config = {
             Lsp = {
-                color = "pink",
                 body = leader,
                 mode = { "n", "v" },
-                on_enter = function()
-                    vim.bo.modifiable = false -- temporarily set `nomodifiable` while Hydra is active
-                    vim.lsp.buf.hover()
-                end,
-
                 ["<ESC>"] = {
                     function()
                         vim.lsp.buf.hover()
@@ -353,12 +347,11 @@ function M.repeatable_hover(hover, k)
             "Lsp",
             { { "R", "T" }, { "d", "r", "f", "i", "t", "l" }, { "[", "]" } },
             { "K", "J", "D" },
-
             6,
             3,
             1,
         }
-        hover_hydra = require("modules.editor.hydra.make_hydra").make_hydra(main_config)
+        hover_hydra = require("lazy_specs.hydra.make_hydra").make_hydra(main_config)
 
         hover_hydra:activate()
     else

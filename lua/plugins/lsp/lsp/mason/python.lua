@@ -5,7 +5,7 @@ local path = require("mason-core.path")
 local util = require("lspconfig.util")
 local index = require("mason-registry.index")
 
-index["pylance"] = "modules.lsp.lsp.mason.python"
+index["pylance"] = "plugins.lsp.lsp.mason.python"
 
 local root_files = {
     "pyproject.toml",

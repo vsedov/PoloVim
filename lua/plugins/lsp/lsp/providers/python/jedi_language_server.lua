@@ -1,7 +1,7 @@
 -- Quick Note: I think this is a great language server that provides almost everything you would
 -- need thoughthere are a few isseus that are a bit annoying, and i hope that they get resolved
 -- soon
-local py = require("modules.lsp.lsp.providers.python.utils.python_help")
+local py = require("plugins.lsp.lsp.providers.python.utils.python_help")
 
 return {
     init_options = {

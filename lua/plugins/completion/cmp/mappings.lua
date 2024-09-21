@@ -4,6 +4,36 @@ local utils = require("plugins.completion.cmp.utils")
 local ai = lambda.config.ai
 local condium_cond = (ai.codeium.use_codeium and ai.codeium.use_codeium_cmp)
 local tabnine_cond = (ai.tabnine.use_tabnine and ai.tabnine.use_tabnine_cmp)
+local M = require("avante")
+
+-- Utils.safe_keymap_set("i", Config.mappings.suggestion.dismiss, function()
+--     local _, _, sg = M.get()
+--     if sg:is_visible() then
+--         sg:dismiss()
+--     end
+-- end, {
+--     desc = "avante: dismiss suggestion",
+--     noremap = true,
+--     silent = true,
+-- })
+--
+-- Utils.safe_keymap_set("i", Config.mappings.suggestion.next, function()
+--     local _, _, sg = M.get()
+--     sg:next()
+-- end, {
+--     desc = "avante: next suggestion",
+--     noremap = true,
+--     silent = true,
+-- })
+--
+-- Utils.safe_keymap_set("i", Config.mappings.suggestion.prev, function()
+--     local _, _, sg = M.get()
+--     sg:prev()
+-- end, {
+--     desc = "avante: previous suggestion",
+--     noremap = true,
+--     silent = true,
+-- })
 
 local function copilot(fallback)
     local suggestion = require("copilot.suggestion")
@@ -205,54 +235,33 @@ local mappings = {
         "i",
         "s",
     }),
+    ["<C-l>"] = cmp.mapping(function(fallback)
+        local _, _, sg = M.get()
+        sg:accept()
+        -- if lambda.config.ai.sell_your_soul and lambda.config.ai.copilot.use_cmp_trigger then
+        --     if lambda.config.ai.use_lua_copilot then
+        --         return copilot(fallback)
+        --     else
+        --     end
+        -- elseif lambda.config.ai.tabnine.enable and not lambda.config.ai.tabnine.use_tabnine_cmp then
+        --     if require("tabnine.keymaps").has_suggestion() then
+        --         return require("tabnine.keymaps").accept_suggestion()
+        --     elseif require("luasnip").jumpable(1) then
+        --         return require("luasnip").jump(1)
+        --     else
+        --         return "<tab>"
+        --     end
+        -- end
+    end, {
+        "i",
+        "s",
+    }),
 }
 
-if lambda.config.ai.sell_your_soul then
-    -- add this mapping to mappings
+-- add this mapping to mappings
 
-    local new_table = {
+local new_table = {}
 
-        ["<C-l>"] = cmp.mapping(function(fallback)
-            if lambda.config.ai.sell_your_soul and lambda.config.ai.copilot.use_cmp_trigger then
-                if lambda.config.ai.use_lua_copilot then
-                    return copilot(fallback)
-                else
-                end
-            elseif lambda.config.ai.tabnine.enable and not lambda.config.ai.tabnine.use_tabnine_cmp then
-                if require("tabnine.keymaps").has_suggestion() then
-                    return require("tabnine.keymaps").accept_suggestion()
-                elseif require("luasnip").jumpable(1) then
-                    return require("luasnip").jump(1)
-                else
-                    return "<tab>"
-                end
-            end
-        end, {
-            "i",
-            "s",
-        }),
-    }
-
-    vim.tbl_extend("force", mappings, new_table)
-end
-
-if lambda.config.ai.supermaven.enable then
-    local suggestion = require("supermaven-nvim.completion_preview")
-    local new_table = {
-        ["<C-l>"] = cmp.mapping(function(fallback)
-            if luasnip.expandable() then
-                luasnip.expand()
-            elseif suggestion.has_suggestion() then
-                suggestion.on_accept_suggestion()
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        }),
-    }
-    vim.tbl_extend("force", mappings, new_table)
-end
+vim.tbl_extend("force", mappings, new_table)
 
 return mappings

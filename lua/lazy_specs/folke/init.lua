@@ -24,9 +24,5 @@ return {
                 "General: [F]orce Close Edgy",
             },
         },
-        event = "BufWinEnter",
-        after = function()
-            require("lazy_specs.folke.config").edgy()
-        end,
     },
 }

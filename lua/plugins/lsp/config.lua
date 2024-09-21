@@ -1,7 +1,7 @@
 local config = {}
 
 function config.clangd()
-    require("modules.lsp.lsp.providers.c")
+    require("plugins.lsp.lsp.providers.c")
 end
 
 function config.lsp_sig()
