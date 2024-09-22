@@ -25,7 +25,6 @@ treesj = {version= "scm", opt = true}
 "comment-box.nvim" = "scm"
 "comment.nvim" = {version= "scm", opt = true}
 "flash.nvim" = {version= "scm", opt = true}
-"edgy.nvim" = "1.10.2"
 "mini.visits" = "scm"
 "dropbar.nvim" = "8.6.1"
 "fidget.nvim" = "1.4.1"
@@ -74,6 +73,7 @@ nvim-treesitter-legacy-api = "scm"
 tree-sitter-latex = "scm"
 nvim-cmp = {version= "scm", opt=false}
 neorg-se = "1.1.10"
+"trouble.nvim" = "3.6.0"
 
 [plugins.neorg-interim-ls ]
 version = "1.2.1"
@@ -739,11 +739,6 @@ opt = true
 git = "ray-x/guihua.lua"
 rev = "v0.1^{}"
 
-
-[plugins.harpoonex]
-git = "mike-jl/harpoonex"
-rev = "2a3f10ef31aecb8d1acdc3369ff2ed94b4fdb5ec"
-
 [plugins.auto-session]
 git = "rmagatti/auto-session"
 rev = "v2.5.0"
@@ -772,6 +767,10 @@ opt = true
 [plugins."hydra.nvim"]
 git = "nvimtools/hydra.nvim"
 rev = "main"
+opt = true
+
+[plugins."edgy.nvim"]
+version = "scm"
 opt = true
 
 [bundles.startup]

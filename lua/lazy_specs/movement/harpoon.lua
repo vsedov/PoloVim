@@ -283,9 +283,6 @@ harpoon:extend({
     -- end,
     -- LIST_CREATED = prepopulate,
 })
-local harpoonEx = require("harpoonEx")
--- load extension
-harpoon:extend(harpoonEx.extend())
 -- register keys
 -- Toggle previous & next buffers stored within Harpoon list
 -- vim.keymap.set("n", "<S-Tab>", function()

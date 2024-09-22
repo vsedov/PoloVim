@@ -119,20 +119,6 @@ return {
                 "overseer-quick-tasks",
             })
         end,
-        before = function()
-            local harpoon = require("harpoon")
-            local harpoonEx = require("harpoonEx")
-            -- check if nvim was started with no arguments or just a dir as argument
-            -- if so, try to select the first item in the harpoon list
-            if
-                (vim.fn.argc() == 0 or (vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1))
-                and vim.api.nvim_get_option_value("buftype", { buf = 0 }) == ""
-            then
-                vim.schedule(function()
-                    harpoonEx.next_harpoon(harpoon:list(), false)
-                end)
-            end
-        end,
         after = function()
             require("lazy_specs.movement.harpoon")
         end,

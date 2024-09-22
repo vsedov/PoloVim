@@ -317,7 +317,7 @@ function M.repeatable_hover(hover, k)
                 },
                 T = {
                     function()
-                        vim.cmd([[TroubleToggle]])
+                        vim.cmd([[Trouble diagnostics]])
                     end,
                     { nowait = true, exit = true, desc = "TroubleToggle" },
                 },

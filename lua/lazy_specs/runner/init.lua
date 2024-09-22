@@ -214,7 +214,7 @@ return {
             end, { nargs = "*", bang = true, bar = true, complete = "file" })
             lambda.command("OverseerDebugParser", 'lua require("overseer.parser.debug").start_debug_session()', {})
 
-            vim.keymap.set("n", "_W", function()
+            vim.keymap.set("n", ";wW", function()
                 local overseer = require("overseer")
                 local tasks = overseer.list_tasks({ recent_first = true })
                 if vim.tbl_isempty(tasks) then
@@ -237,8 +237,8 @@ return {
                 end
             end)
 
-            vim.keymap.set("n", "_k", "<cmd>OverseerTaskAction<cr>")
-            vim.keymap.set("n", "_w", "<cmd>OverseerToggle<cr>")
+            vim.keymap.set("n", ";wa", "<cmd>OverseerTaskAction<cr>")
+            vim.keymap.set("n", ";w<space>", "<cmd>OverseerToggle<cr>")
 
             vim.keymap.set("n", "<leader>>", "<cmd>OverseerQuickAction open<cr>")
             vim.keymap.set("n", "<leader><", "<cmd>OverseerQuickAction open here<cr>")
