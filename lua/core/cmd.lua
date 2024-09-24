@@ -395,3 +395,16 @@ layout_mamba
 export PYTHONPATH=$(pwd)
     ]])
 end, { desc = "python env , creates, layout env version and python path export" })
+
+lambda.command("RocksCount", function()
+    local rocks_api = require("rocks.api")
+    local plugins = vim.tbl_keys(rocks_api.get_rocks_toml().plugins)
+    local count = #plugins
+    local message = string.format("You have %d Plugins 🪨 installed.", count, count == 1 and "" or "s")
+
+    vim.notify(message, vim.log.levels.INFO, {
+        title = "Rocks Count",
+        icon = "🪨",
+        timeout = 3000,
+    })
+end, { desc = "Count installed rocks" })

@@ -147,7 +147,7 @@ local get_extra_binds = function()
         -- { key = '<Space>ca',     func = require('navigator.codeAction').code_action, desc = 'code_action',    mode = {'n', 'v'} },
         -- { key = '<Leader>re', func = 'rename()' },
         {
-            key = "<Space>rn",
+            key = "<Space>R",
             function()
                 require("navigator.rename").rename()
             end,
