@@ -165,22 +165,6 @@ local symbols = require("lspkind").symbol_map
 local lsp_kinds = lambda.style.lsp.highlights
 local icons = lambda.style.icons
 
-require("heirline").setup({
-    --winbar = require("modules.ui.heirline.winbar"),
-    statusline = require("plugins.ui.heirline.statusline"),
-    statuscolumn = require("plugins.ui.heirline.statuscolumn"),
-    opts = {
-        disable_winbar_cb = function(args)
-            local conditions = require("heirline.conditions")
-
-            return conditions.buffer_matches({
-                buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-                filetype = { "alpha", "codecompanion", "oil", "lspinfo", "toggleterm" },
-            }, args.buf)
-        end,
-    },
-})
-
 -- rocks.safe_packadd({ "neo-tree-jj.nvim", "nvim-web-devicons", "nui.nvim" })
 rocks.packadd_with_after_dirs({
     "nvim-window-picker",
@@ -280,11 +264,10 @@ require("window-picker").setup({
     include_current = true,
     filter_rules = {
         bo = {
-            filetype = { "neo-tree-popup", "quickfix", "edgy", "neo-tree", "oil" },
+            filetype = { "neo-tree-popup", "quickfix", "edgy", "neo-tree" },
             buftype = { "terminal", "quickfix", "nofile" },
         },
     },
 })
 
 vim.keymap.set("n", "<leader>e", ":Oil --float<cr>", { silent = true })
-require("auto-session").setup({})

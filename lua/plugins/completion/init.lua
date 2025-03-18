@@ -1,5 +1,48 @@
 local conf = require("plugins.completion.config")
-conf.cmp()
+local blink = {
+    keymap = { preset = "super-tab" },
+}
+require("blink.cmp").setup({
+
+    keymap = {
+        preset = "super-tab",
+    },
+    -- selection: expected one of: preselect, manual, auto_insert, got table: 0x7f83818b4e48
+
+    appearance = {
+        -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+        -- Useful for when your theme doesn't support blink.cmp
+        -- Will be removed in a future release
+        use_nvim_cmp_as_default = true,
+        -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = "mono",
+    },
+
+    sources = {
+        default = {
+            "lsp",
+            "path",
+            "snippets",
+            "buffer",
+        },
+    },
+    -- completion = {
+    --     accept = {
+    --         auto_brackets = {
+    --             enabled = true,
+    --         },
+    --     },
+    --     documentation = {
+    --         auto_show = true,
+    --         auto_show_delay_ms = 500,
+    --     },
+    -- },
+    -- signature = {
+    --     enabled = true,
+    -- },
+})
+
 conf.luasnip()
 require("luasnip-latex-snippets").setup()
 require("luasnip").config.setup({ enable_autosnippets = true })
@@ -7,53 +50,6 @@ require("luasnip").config.setup({ enable_autosnippets = true })
 conf.neotab()
 conf.autopair()
 
--- local labels = { "q", "w", "r", "t", "z", "i", "o" }
---
--- require("care.config").setup({})
---
--- -- Keymappings
--- for i, label in ipairs(labels) do
---     vim.keymap.set("i", "<c-" .. label .. ">", function()
---         require("care").api.select_visible(i)
---     end)
--- end
---
--- vim.keymap.set("i", "<c-n>", function()
---     vim.snippet.jump(1)
--- end)
--- vim.keymap.set("i", "<c-p>", function()
---     vim.snippet.jump(-1)
--- end)
--- vim.keymap.set("i", "<CR>", function()
---     require("care").api.complete()
--- end)
---
---
--- vim.keymap.set("i", "<c-f>", function()
---     if require("care").api.doc_is_open() then
---         require("care").api.scroll_docs(4)
---     elseif require("luasnip").choice_active() then
---         require("luasnip").change_choice(1)
---     else
---         vim.api.nvim_feedkeys(vim.keycode("<c-f>"), "n", false)
---     end
--- end)
---
--- vim.keymap.set("i", "<c-d>", function()
---     if require("care").api.doc_is_open() then
---         require("care").api.scroll_docs(-4)
---     elseif require("luasnip").choice_active() then
---         require("luasnip").change_choice(-1)
---     else
---         vim.api.nvim_feedkeys(vim.keycode("<c-f>"), "n", false)
---     end
--- end)
---
--- vim.keymap.set("i", "<cr>", "<Plug>(CareConfirm)")
--- vim.keymap.set("i", "<c-e>", "<Plug>(CareClose)")
--- vim.keymap.set("i", "<S-Tab>", "<Plug>(CareSelectPrev)")
--- vim.keymap.set("i", "<Tab>", "<Plug>(CareSelectNext)")
---
 -- -- or "<Plug>(neotab-out)"
 -- vim.keymap.set("i", "<c-k>", vim.lsp.buf.signature_help)
 -- vim.api.nvim_create_autocmd("CursorHoldI", {
@@ -64,4 +60,24 @@ conf.autopair()
 --     end,
 -- })
 -- Simple autocmd to close the signature help when leaving insert mode
--- Create asimple lopo that goes over all the files in the current directory
+vim.defer_fn(function()
+    require("mason").setup({
+        ui = {
+            border = lambda.style.border.type_0,
+            height = 0.8,
+        },
+    })
+
+    require("mason-lspconfig").setup({
+        automatic_installation = true,
+        handlers = {
+            function(name)
+                local config = require("plugins.lsp.lsp.mason.lsp_servers")(name)
+                if config then
+                    config.capabilities = require("blink.cmp").get_lsp_capabilities()
+                    require("lspconfig")[name].setup(config)
+                end
+            end,
+        },
+    })
+end, 100)

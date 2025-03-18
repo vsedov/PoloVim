@@ -410,39 +410,6 @@ user({
 })
 
 user({
-    "cbochs/portal.nvim",
-    dependencies = {
-        "ThePrimeagen/harpoon", -- Optional: provides the "harpoon" query item
-    },
-    opts = {
-        window_options = {
-            border = "rounded",
-            relative = "cursor",
-            height = 5,
-        },
-        select_first = true,
-    },
-    cmd = "Portal",
-    keys = {
-        {
-            "<C-i>",
-            function()
-                require("portal.builtin").jumplist.tunnel_forward()
-            end,
-            desc = "portal fwd",
-        },
-        {
-            "<C-o>",
-            function()
-                require("portal.builtin").jumplist.tunnel_backward()
-            end,
-            desc = "portal bwd",
-        },
-        -- TODO: use other queries?
-    },
-})
-
-user({
     "lopi-py/luau-lsp.nvim",
     ft = "lua",
     config = true,

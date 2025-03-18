@@ -100,8 +100,7 @@ return {
     },
     {
         "hydra.nvim",
-        -- event = "DeferredUIEnter",
-        priority = 400,
+        event = "DeferredUIEnter",
         after = function()
             require("lazy_specs.hydra.setup")
         end,
@@ -129,37 +128,5 @@ return {
         after = function()
             require("lazy_specs.movement.config").better_escape()
         end,
-    },
-    {
-        "portal.nvim",
-        after = function()
-            opts = {
-                window_options = {
-                    border = "rounded",
-                    relative = "cursor",
-                    height = 5,
-                },
-                select_first = true,
-            }
-            require("portal").setup(opts)
-        end,
-        cmd = "Portal",
-        keys = {
-            {
-                "<C-i>",
-                function()
-                    require("portal.builtin").jumplist.tunnel_forward()
-                end,
-                desc = "portal fwd",
-            },
-            {
-                "<C-o>",
-                function()
-                    require("portal.builtin").jumplist.tunnel_backward()
-                end,
-                desc = "portal bwd",
-            },
-            -- TODO: use other queries?
-        },
     },
 }

@@ -17,12 +17,7 @@ return {
                 fallback_severity = vim.diagnostic.severity.ERROR,
                 log_level = "warn",
                 notify_format = "[null-ls] %s",
-                on_init = nil,
-                on_exit = nil,
                 root_dir = require("null-ls.utils").root_pattern(".null-ls-root", "Makefile", ".git"),
-                should_attach = nil,
-                sources = nil,
-                temp_dir = nil,
                 update_in_insert = false,
                 -- formatting on save
                 on_attach = function(client, bufnr)

@@ -45,7 +45,6 @@ return {
         "open-handlers.nvim",
         after = function()
             local oh = require("open-handlers")
-
             oh.setup({
                 -- In order, each handler is tried.
                 -- The first handler to successfully open will be used.
@@ -54,65 +53,6 @@ return {
                     oh.commit, -- A builtin which handles git commits
                     oh.native, -- Default native handler. Should always be last
                 },
-            })
-        end,
-    },
-    {
-        "nvim-rgflow.lua",
-        keys = {
-            {
-                ";rG",
-                desc = "rgflow: open blank",
-            },
-            {
-                ";rg",
-                desc = "rgflow: open cword",
-            },
-            {
-                ";ro",
-                desc = "rgflow: open paste",
-            },
-            {
-                ";ra",
-                desc = "rgflow: open again",
-            },
-            {
-                ";rc",
-                desc = "rgflow: abort",
-            },
-            {
-                ";rO",
-                desc = "rgflow: print cmd",
-            },
-            {
-                ";r?",
-                desc = "rgflow: print status",
-            },
-        },
-        after = function()
-            require("rgflow").setup({
-                default_trigger_mappings = false,
-                default_ui_mappings = true,
-                default_quickfix_mappings = true,
-                mappings = {
-                    trigger = {
-                        -- Normal mode maps
-                        n = {
-                            [";rG"] = "open_blank", -- open UI - search pattern = blank
-                            [";rg"] = "open_cword", -- open UI - search pattern = <cword>
-                            [";ro"] = "open_paste", -- open UI - search pattern = First line of unnamed register as the search pattern
-                            [";ra"] = "open_again", -- open UI - search pattern = Previous search pattern
-                            [";rc"] = "abort", -- close UI / abort searching / abortadding results
-                            [";rO"] = "print_cmd", -- Print a version of last run rip grep that can be pasted into a shell
-                            [";r?"] = "print_status", -- Print info about the current state of rgflow (mostly useful for deving on rgflow)
-                        },
-                        -- Visual/select mode maps
-                        x = {
-                            [";rg"] = "open_visual", -- open UI - search pattern = current visual selection
-                        },
-                    },
-                },
-                cmd_flags = "--smart-case --fixed-strings --no-fixed-strings --no-ignore --ignore --max-columns 500",
             })
         end,
     },

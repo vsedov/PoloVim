@@ -176,7 +176,7 @@ lambda.config.lsp = {
             -- "isort",
         },
         lsp = {
-            "sourcery",
+            -- "sourcery",
             "ruff",
             "jedi_language_server",
             -- "pylsp",

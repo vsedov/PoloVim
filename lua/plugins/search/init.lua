@@ -29,7 +29,6 @@ local lga_actions = require("telescope-live-grep-args.actions")
 
 local plugins = {
     "telescope-live-grep-args.nvim",
-    "telescope-frecency.nvim",
     "telescope-file-browser.nvim",
     "telescope-bookmarks.nvim",
     "telescope-sg",

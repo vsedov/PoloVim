@@ -101,22 +101,12 @@ return {
             gitsigns.setup({
                 debug_mode = false,
                 max_file_length = 1000000000,
-                signs = {
-                    add = { hl = "GitSignsAdd", text = "▌" },
-                    change = { hl = "GitSignsChange", text = "▌" },
-                    delete = { hl = "GitSignsDelete", text = "▌" },
-                    topdelete = { hl = "GitSignsDelete", text = "▌" },
-                    changedelete = { hl = "GitSignsChange", text = "▌" },
-                },
                 on_attach = on_attach,
                 preview_config = {
                     border = lambda.style.border.type_0,
                 },
                 current_line_blame = not cwd:match("personal") and not cwd:match("nvim"),
                 current_line_blame_formatter = " : <author> | <author_time:%d-%m-%y> | <summary>",
-                current_line_blame_formatter_opts = {
-                    relative_time = true,
-                },
                 current_line_blame_opts = {
                     delay = 50,
                 },

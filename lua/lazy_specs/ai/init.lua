@@ -47,7 +47,7 @@ return {
 
     {
         "copilot.lua",
-        enabled = ai_conf.sell_your_soul and ai_conf.use_lua_copilot,
+        enabled = true,
         event = "InsertEnter",
         after = function()
             opts = {
@@ -75,17 +75,17 @@ return {
             require("copilot").setup(opts)
         end,
     },
-    {
-        "sg.nvim",
-        enabled = lambda.config.lsp.use_sg,
-        event = "DeferredUIEnter",
-        after = function()
-            require("sg").setup({
-                enable_cody = true,
-                accept_tos = true,
-                download_binaries = true,
-                on_attach = true,
-            })
-        end,
-    },
+    -- {
+    --     "sg.nvim",
+    --     enabled = lambda.config.lsp.use_sg,
+    --     event = "DeferredUIEnter",
+    --     after = function()
+    --         require("sg").setup({
+    --             enable_cody = true,
+    --             accept_tos = true,
+    --             download_binaries = true,
+    --             on_attach = true,
+    --         })
+    --     end,
+    -- },
 }
