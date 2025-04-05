@@ -2,46 +2,29 @@ local conf = require("plugins.completion.config")
 local blink = {
     keymap = { preset = "super-tab" },
 }
-require("blink.cmp").setup({
 
+require("blink.cmp").setup({
+    fuzzy = {
+        implementation = "lua",
+        prebuilt_binaries = {
+            download = false,
+        },
+    },
     keymap = {
         preset = "super-tab",
     },
-    -- selection: expected one of: preselect, manual, auto_insert, got table: 0x7f83818b4e48
-
-    appearance = {
-        -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-        -- Useful for when your theme doesn't support blink.cmp
-        -- Will be removed in a future release
-        use_nvim_cmp_as_default = true,
-        -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- Adjusts spacing to ensure icons are aligned
-        nerd_font_variant = "mono",
-    },
-
-    sources = {
-        default = {
-            "lsp",
-            "path",
-            "snippets",
-            "buffer",
+    completion = {
+        list = {
+            selection = {
+                preselect = function(ctx)
+                    return not require("blink.cmp").snippet_active({ direction = 1 })
+                end,
+            },
         },
     },
-    -- completion = {
-    --     accept = {
-    --         auto_brackets = {
-    --             enabled = true,
-    --         },
-    --     },
-    --     documentation = {
-    --         auto_show = true,
-    --         auto_show_delay_ms = 500,
-    --     },
-    -- },
-    -- signature = {
-    --     enabled = true,
-    -- },
+    signature = { enabled = true },
 })
+require("blink.cmp.fuzzy").set_implementation("rust")
 
 conf.luasnip()
 require("luasnip-latex-snippets").setup()
