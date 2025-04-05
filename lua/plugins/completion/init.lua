@@ -2,23 +2,32 @@ local conf = require("plugins.completion.config")
 local blink = {
     keymap = { preset = "super-tab" },
 }
-
 require("blink.cmp").setup({
     fuzzy = {
         implementation = "lua",
         prebuilt_binaries = {
-            download = false,
+            download = true,
         },
     },
     keymap = {
         preset = "super-tab",
     },
     completion = {
-        list = {
-            selection = {
-                preselect = function(ctx)
-                    return not require("blink.cmp").snippet_active({ direction = 1 })
-                end,
+        menu = {
+            draw = {
+                -- We don't need label_description now because label and label_description are already
+                -- combined together in label by colorful-menu.nvim.
+                columns = { { "kind_icon" }, { "label", gap = 1 } },
+                components = {
+                    label = {
+                        text = function(ctx)
+                            return require("colorful-menu").blink_components_text(ctx)
+                        end,
+                        highlight = function(ctx)
+                            return require("colorful-menu").blink_components_highlight(ctx)
+                        end,
+                    },
+                },
             },
         },
     },
@@ -43,24 +52,3 @@ conf.autopair()
 --     end,
 -- })
 -- Simple autocmd to close the signature help when leaving insert mode
-vim.defer_fn(function()
-    require("mason").setup({
-        ui = {
-            border = lambda.style.border.type_0,
-            height = 0.8,
-        },
-    })
-
-    require("mason-lspconfig").setup({
-        automatic_installation = true,
-        handlers = {
-            function(name)
-                local config = require("plugins.lsp.lsp.mason.lsp_servers")(name)
-                if config then
-                    config.capabilities = require("blink.cmp").get_lsp_capabilities()
-                    require("lspconfig")[name].setup(config)
-                end
-            end,
-        },
-    })
-end, 100)

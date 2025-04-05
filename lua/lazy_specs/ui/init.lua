@@ -106,36 +106,6 @@ return {
             require("fold-cycle").setup()
         end,
     },
-    {
-        "hlchunk.nvim",
-        event = "BufWinEnter",
-        after = function()
-            require("hlchunk").setup({
-                indent = {
-                    chars = { "│", "¦", "┆", "┊" }, -- more code can be found in https://unicodeplus.com/
-                },
-                chunk = {
-                    enable = true,
-                    use_treesitter = true,
-                    notify = true, -- notify if some situation(like disable chunk mod double time)
-                    exclude_filetypes = {
-                        glowpreview = true,
-                        harpoon = true,
-                        aerial = true,
-                        dropbar_menu = true,
-                        dashboard = true,
-                        sagaoutline = true,
-                        oil_preview = true,
-                        oil = true,
-                        ["neo-tree"] = true,
-                    },
-                },
-                blank = {
-                    enable = false,
-                },
-            })
-        end,
-    },
     -- {
     --     "onedarkpro.nvim",
     --     -- event = "BufEnter",

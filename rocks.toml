@@ -550,10 +550,6 @@ rev = "d2e4cfd67cf59166f9ffa0bd3bc90899ffc653e7"
 git = "lewis6991/fileline.nvim"
 rev = "c116aa8dd7aa7e1db6938f872285e598dc9ee00b"
 
-[plugins."hlchunk.nvim"]
-version = "1.3.0"
-opt = true
-
 [plugins."definition-or-references.nvim"]
 git = "kostkabrukowa/definition-or-references.nvim"
 rev = "13570f995be8993f4c55e988f89e5a7b8df37a17"
@@ -610,15 +606,23 @@ rev = "v1.1.1"
 
 [plugins."blink.compat"]
 git = "saghen/blink.compat"
-rev = "v2.5.0"
-
-[plugins.vim-matchup]
-git = "andymass/vim-matchup"
-rev = "v0.7.3"
+rev = "main"
 
 [plugins.nvim-treesitter]
 git = "nvim-treesitter/nvim-treesitter"
 rev = "v0.9.3"
+
+[plugins."python.nvim"]
+git = "joshzcold/python.nvim"
+rev = "74125ac59a679458521ef3b53e18e7010744d93d"
+
+[plugins."python-import.nvim"]
+git = "kiyoon/python-import.nvim"
+rev = "v0.1.0"
+
+[plugins."colorful-menu.nvim"]
+git = "xzbdmw/colorful-menu.nvim"
+rev = "f80feb8a6706f965321aff24d0ed3849f02a7f77"
 #
 [bundles.startup]
 items = [

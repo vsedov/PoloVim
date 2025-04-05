@@ -18,15 +18,6 @@ local prompts = {
 }
 
 return {
-
-    {
-        "ChatGPT.nvim",
-        cmd = { "ChatGPT", "ChatGPTRun", "ChatGPTActAs", "ChatGPTCompleteCode", "ChatGPTEditWithInstructions" },
-        after = function()
-            conf.chatgpt()
-        end,
-    },
-
     -- <C-c> to close chat window.
     -- <C-u> scroll up chat window.
     -- <C-d> scroll down chat window.

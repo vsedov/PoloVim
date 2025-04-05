@@ -1,0 +1,17 @@
+package = "nvim"
+version = "0.1.0"
+lua = ">=5.1"
+
+[description]
+summary = ""
+maintainer = "viv"
+license = "*** enter a license ***"
+labels = [ "" ]
+
+[dependencies]
+neorg = "9.3.0-1"
+# Add your dependencies here
+# `busted = ">=2.0"`
+
+[build]
+type = "builtin"
