@@ -107,42 +107,6 @@ movement({
     -- end
 })
 
--- movement({
---     "crusj/bookmarks.nvim",
---     branch = "main",
---     dependencies = {
---         "nvim-tree/nvim-web-devicons",
---         "nvim-treesitter/nvim-treesitter",
---     },
---     keys = {
---         "<tab><tab>",
---         "\\a",
---         "\\o",
---     },
---     config = conf.bookmark,
--- })
---
---------------------------------
-movement({
-    "0x00-ketsu/easymark.nvim",
-    modules = "easymark",
-    config = conf.easymark,
-})
-
-movement({
-    "phaazon/hop.nvim",
-    config = conf.hop,
-    lazy = true,
-    keys = {
-        "<leader><leader>s",
-        "<leader><leader>j",
-        "<leader><leader>k",
-        "<leader><leader>w",
-        "<leader><leader>l",
-        "g/",
-        "g,",
-    },
-})
 
 movement({
     "booperlv/nvim-gomove",

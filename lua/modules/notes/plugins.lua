@@ -1,11 +1,11 @@
 local conf = require("modules.notes.config")
 local notes = require("core.pack").package
 
-notes({
-    "nvim-neorg/neorg",
-    config = conf.norg,
-    event = "BufEnter",
-})
+-- notes({
+--     "nvim-neorg/neorg",
+--     config = conf.norg,
+--     event = "BufEnter",
+-- })
 
 notes({
     "AckslD/nvim-FeMaco.lua",

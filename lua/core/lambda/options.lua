@@ -77,7 +77,6 @@ lambda.config.colourscheme = {
                 -- "kanagawa.nvim",
                 -- "oh-lucy.nvim",
                 "catppuccin",
-                "mellifluous.nvim",
                 -- "nvim-tundra",
                 -- "tokyonight.nvim", -- allot
                 -- "rose", -- TSMethod'

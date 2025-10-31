@@ -16,15 +16,15 @@ lsp({
     config = conf.mason_setup,
 })
 
-lsp({
-    "jose-elias-alvarez/null-ls.nvim",
-    event = "VeryLazy",
-    dependencies = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
-    config = function()
-        require("modules.lsp.lsp.null-ls").setup()
-        -- require("typos").setup()
-    end,
-})
+-- lsp({
+--     "jose-elias-alvarez/null-ls.nvim",
+--     event = "VeryLazy",
+--     dependencies = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
+--     config = function()
+--         require("modules.lsp.lsp.null-ls").setup()
+--         -- require("typos").setup()
+--     end,
+-- })
 
 lsp({
     "jayp0521/mason-null-ls.nvim",
@@ -105,11 +105,6 @@ lsp({ "smjonas/inc-rename.nvim", event = "BufEnter", config = conf.rename })
 -- lsp({ "SmiteshP/nvim-navic", event = "BufEnter", after = "nvim-lspconfig", config = conf.navic })
 
 lsp({ "cseickel/diagnostic-window.nvim", cmd = "DiagWindowShow", dependencies = { "MunifTanjim/nui.nvim" } })
-lsp({
-    "liuchengxu/vista.vim",
-    cmd = { "Vista" },
-    config = conf.vista,
-})
 
 lsp({
     "barreiroleo/ltex-extra.nvim",

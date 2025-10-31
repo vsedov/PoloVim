@@ -86,12 +86,6 @@ tools({
     end,
 })
 
-tools({
-    "wakatime/vim-wakatime",
-    lazy = true,
-})
-
-tools({ "ilAYAli/scMRU.nvim", cmd = { "MruRepos", "Mru", "Mfu", "MruAdd", "MruDel" }, module = "mru" })
 
 -- need quick fix  :vimgrep /\w\+/j % | copen
 tools({

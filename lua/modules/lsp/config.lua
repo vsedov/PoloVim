@@ -1,10 +1,10 @@
 local config = {}
 function config.nvim_lsp_setup()
-    require("modules.lsp.lsp.config").setup()
+    -- require("modules.lsp.lsp.config").setup()
 end
 
 function config.nvim_lsp()
-    require("modules.lsp.lsp")
+    -- require("modules.lsp.lsp")
 end
 
 function config.clangd()
