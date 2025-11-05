@@ -41,7 +41,6 @@ local function diffmaster()
 end
 
 if gitrepo then
-    require("lazy").load({ plugins = { "vgit.nvim", "gitsigns.nvim", "vim-fugitive" } })
 
     local hint = [[
  ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔ ^^^^

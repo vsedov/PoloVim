@@ -30,6 +30,7 @@ function config.mason_setup()
             local conf = get_config(name)
             if conf then
                 require("lspconfig")[name].setup(conf)
+
             end
         end,
     })

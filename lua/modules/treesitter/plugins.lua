@@ -132,6 +132,6 @@ ts({
     lazy = true,
     ft = { "python", "lua" },
     config = function()
-        require("various-textobjs").setup({ useDefaultKeymaps = true })
+        require("various-textobjs").setup()
     end,
 })

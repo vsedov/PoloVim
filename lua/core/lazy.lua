@@ -66,17 +66,8 @@ function Lazyload()
             end
         end
     end
-    if load_lsp then
-        vim.defer_fn(function()
-            loader({ plugins = { "lspsaga.nvim" } })
-            if condition() then
-                loader({ plugins = { "lsp_signature.nvim" } })
-            end
-        end, 60)
-    end
-
-    -- local bytes = vim.fn.wordcount()['bytes']
     if load_ts_plugins then
+
         loader({ plugins = { "refactoring.nvim" } })
     end
 

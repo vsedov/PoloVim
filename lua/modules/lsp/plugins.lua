@@ -54,14 +54,6 @@ lsp({ "folke/neodev.nvim", ft = "lua", lazy = true, dependencies = "neovim/nvim-
 lsp({ "lewis6991/hover.nvim", modules = "hover", config = conf.hover })
 
 lsp({
-    "glepnir/lspsaga.nvim",
-    cmd = { "Lspsaga", "LSoutlineToggle" },
-    lazy = true,
-    config = conf.saga,
-    dependencies = "neovim/nvim-lspconfig",
-})
-
-lsp({
     "ray-x/lsp_signature.nvim",
     init = function()
         lambda.lazy_load({

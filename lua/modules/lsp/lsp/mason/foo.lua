@@ -1,5 +1,6 @@
 local Pkg = require("mason-core.package")
-local configs = require("lspconfig.configs")
+local configs = vim.lsp.config
+
 local lsp_util = require("vim.lsp.util")
 local path = require("mason-core.path")
 local util = require("lspconfig.util")

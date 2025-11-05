@@ -90,7 +90,6 @@ ui({
 
 ui({
     "lukas-reineke/indent-blankline.nvim",
-    branch = "develop",
     lazy = true,
     config = conf.blankline,
 }) -- after="nvim-treesitter",

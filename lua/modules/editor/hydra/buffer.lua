@@ -1,4 +1,5 @@
 local Hydra = require("hydra")
+
 local reach_options = {
     handle = "dynamic",
     show_current = true,
@@ -8,36 +9,25 @@ local reach_options = {
 }
 
 local buffer_config = function()
-    local hint
-    local config
-    local three = require("three")
-    -- Keymaps for bufferline
-
-    local function buffer_move()
-        vim.ui.input({ prompt = "Move buffer to:" }, function(idx)
-            idx = idx and tonumber(idx)
-            if idx then
-                three.move_buffer(idx)
-            end
-        end)
+    local function smart_close()
+        -- Prefer close-buffers.nvim if available, otherwise plain :bdelete
+        local ok = pcall(vim.cmd, "BDelete this")
+        if not ok then
+            vim.cmd("bdelete")
+        end
     end
 
-    vim.api.nvim_create_user_command("ProjectDelete", function()
-        three.remove_project()
-    end, {})
-
-    hint = [[
+    local hint = [[
   ^^^^                Bufferline                  ^^^^
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
    _l_: next                _h_: prev
-   _p_: three pin           _c_: BufferLinePick
-   _H_: Move Next           _L_: Move Prev
-   _D_: Pick Close          _q_: Smart Close
-   _m_: Three Move          _Q_: Close Buffer
-   _ot_: Sort Tabs          _od_: Sort Dir
-   _or_: Sort relative dir  _b_:  Buffer Jump
-   _tl_: next               _th_: prev
-   
+   _H_: move left           _L_: move right
+   _p_: toggle pin          _c_: pick buffer
+   _D_: pick & close
+
+   _ot_: sort by tabs       _od_: sort by dir
+   _or_: sort by rel dir    _b_: Telescope buffers
+
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^               BufferJumper                 ^^^^
   ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
@@ -45,23 +35,24 @@ local buffer_config = function()
         _1_: Jump 1    _2_: Jump 2    _3_: Jump 3
         _4_: Jump 4    _5_: Jump 5    _6_: Jump 6
         _7_: Jump 7    _8_: Jump 8    _9_: Jump 9
-                     _0_: Jump 0
+                     _0_: Jump 10
                      _#_: last buffer
 
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^                  Tabs                      ^^^^
   ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
 
-    _[_: tabn                        _]_: tabp
-    _n_: $tabnew                     _C_: tabclose
-    _>_: +tabmove                    _<_: -tabmove
-                    _P_: tabonly
+    _[_: prev tab                    _]_: next tab
+    _n_: new tab                     _C_: close tab
+    _>_: move right                  _<_: move left
+                    _P_: tab only
 
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^                   Delete                   ^^^^
   ^^^^▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁^^^^
 
    _qh_: Del Hidden _qn_: Del NameLess _qt_: Del This
+   _d_: Bwipeout    _q_: Smart Close   _Q_: Force Close
 
   ^^^^▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔^^^^
   ^^^^                   Reacher                  ^^^^
@@ -69,11 +60,12 @@ local buffer_config = function()
 
     _S_: ReachOpen buffers   _s_: ReachOpen Tabs
 
-   _d_: Bwipeout
+   _<Esc>_: Quit
 ]]
-    config = {
+
+    local config = {
+        name = "Buffer / Tab management",
         hint = hint,
-        name = "Buffer management",
         mode = "n",
         color = "teal",
         body = "<leader>b",
@@ -82,75 +74,73 @@ local buffer_config = function()
             invoke_on_body = true,
         },
         heads = {
+            ------------------------------------------------------------------ Bufferline nav
+            { "l", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" } },
+            { "h", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
 
-            { "[", three.wrap(three.next_tab, { wrap = true }, { desc = "[G]oto next [T]ab" }) },
-            { "]", three.wrap(three.prev_tab, { wrap = true }, { desc = "[G]oto prev [T]ab" }) },
+            { "H", "<Cmd>BufferLineMovePrev<CR>",  { desc = "Move buffer left" } },
+            { "L", "<Cmd>BufferLineMoveNext<CR>",  { desc = "Move buffer right" } },
 
-            { "n", ":$tabnew<CR>", { desc = "Pin buffer" } },
-            { "C", ":tabclose<CR>", { desc = "Pin buffer" } },
-            { ">", ":+tabmove<CR>", { desc = "Move Next" } },
-            { "<", ":-tabmove<CR>", { desc = "Move Prev" } },
-            { "P", "<Cmd>tabonly<CR>", { desc = "Pick buffer to close", exit = true } },
+            { "p", "<Cmd>BufferLineTogglePin<CR>", { desc = "Toggle pin" } },
+            { "c", "<Cmd>BufferLinePick<CR>",      { desc = "Pick buffer" } },
+            { "D", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick & close", exit = true } },
 
-            { "S", ":ReachOpen buffers<CR>", { desc = "Next buffer" } },
-            { "s", ":ReachOpen tabpages<CR>", { desc = "Next buffer" } },
+            ------------------------------------------------------------------ Sorting
+            { "ot", "<Cmd>BufferLineSortByTabs<CR>",              { desc = "Sort by tabs", exit = true } },
+            { "od", "<Cmd>BufferLineSortByDirectory<CR>",         { desc = "Sort by directory", exit = true } },
+            { "or", "<Cmd>BufferLineSortByRelativeDirectory<CR>", { desc = "Sort by relative dir", exit = true } },
 
-            { "c", "<Cmd>BufferLinePick<CR>", { desc = "Pin buffer" } },
+            ------------------------------------------------------------------ Jump / buffer index
+            { "1", "<Cmd>BufferLineGoToBuffer 1<CR>", { desc = "Go to buffer 1" } },
+            { "2", "<Cmd>BufferLineGoToBuffer 2<CR>", { desc = "Go to buffer 2" } },
+            { "3", "<Cmd>BufferLineGoToBuffer 3<CR>", { desc = "Go to buffer 3" } },
+            { "4", "<Cmd>BufferLineGoToBuffer 4<CR>", { desc = "Go to buffer 4" } },
+            { "5", "<Cmd>BufferLineGoToBuffer 5<CR>", { desc = "Go to buffer 5" } },
+            { "6", "<Cmd>BufferLineGoToBuffer 6<CR>", { desc = "Go to buffer 6" } },
+            { "7", "<Cmd>BufferLineGoToBuffer 7<CR>", { desc = "Go to buffer 7" } },
+            { "8", "<Cmd>BufferLineGoToBuffer 8<CR>", { desc = "Go to buffer 8" } },
+            { "9", "<Cmd>BufferLineGoToBuffer 9<CR>", { desc = "Go to buffer 9" } },
+            { "0", "<Cmd>BufferLineGoToBuffer 10<CR>", { desc = "Go to buffer 10" } },
 
-            { "H", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Next" } },
-            { "L", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Prev" } },
-            { "D", "<Cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close", exit = true } },
-            { "ot", "<Cmd>BufferLineSortByTabs<CR>", { desc = "Sort by tabs", exit = true } },
-            { "od", "<Cmd>BufferLineSortByDirectory<CR>", { desc = "Sort by dir", exit = true } },
-            {
-                "or",
-                "<Cmd>BufferLineSortByRelativeDirectory<CR>",
-                { desc = "Sort by relative dir ", exit = true },
-            },
+            { "#", "<Cmd>b#<CR>", { desc = "Alternate buffer" } },
 
-            { "d", "<Cmd>Bwipeout<CR>", { desc = "delete buffer" } },
-            { "<Esc>", nil, { exit = true, desc = "Quit" } },
-            {
-                "b",
+            { "b", "<Cmd>Telescope buffers<CR>", { desc = "Telescope buffers", exit = true } },
 
-                ":Telescope buffers<CR>",
-                { exit = true },
-            },
+            ------------------------------------------------------------------ Tabs
+            { "[", "<Cmd>tabprevious<CR>", { desc = "Prev tab" } },
+            { "]", "<Cmd>tabnext<CR>",     { desc = "Next tab" } },
 
-            { "qh", "<cmd>BDelete hidden<CR>" },
-            { "qn", "<cmd>BDelete! nameless<CR>" },
-            { "qt", "<cmd>BDelete! this<CR>" },
+            { "n", "<Cmd>$tabnew<CR>",     { desc = "New tab" } },
+            { "C", "<Cmd>tabclose<CR>",    { desc = "Close tab" } },
 
-            { "tl", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" } },
-            { "th", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Prev buffer" } },
+            { ">", "<Cmd>+tabmove<CR>",    { desc = "Move tab right" } },
+            { "<", "<Cmd>-tabmove<CR>",    { desc = "Move tab left" } },
 
-            { "l", three.wrap(three.next, { wrap = true }, { desc = "[G]oto next [B]uffer" }) },
-            { "h", three.wrap(three.prev, { wrap = true }, { desc = "[G]oto prev [B]uffer" }) },
+            { "P", "<Cmd>tabonly<CR>",     { desc = "Tab only", exit = true } },
 
-            { "p", "<cmd>BufferLineTogglePin<cr>", { desc = "Pin buffer" } },
+            ------------------------------------------------------------------ Delete / close
+            { "qh", "<Cmd>BDelete hidden<CR>",    { desc = "Delete hidden buffers" } },
+            { "qn", "<Cmd>BDelete! nameless<CR>", { desc = "Delete nameless buffers" } },
+            { "qt", "<Cmd>BDelete! this<CR>",     { desc = "Delete this buffer" } },
 
-            { "q", three.smart_close, { desc = "[C]lose window or buffer" } },
-            { "Q", three.close_buffer, { desc = "[B]uffer [C]lose" } },
+            { "d", "<Cmd>Bwipeout<CR>",           { desc = "Wipeout buffer" } },
 
-            { "H", three.hide_buffer, { desc = "[B]uffer [H]ide" } },
+            { "q", function() smart_close() end,  { desc = "Smart close", exit = true } },
+            { "Q", "<Cmd>BDelete! this<CR>",      { desc = "Force close buffer", exit = true } },
 
-            { "m", buffer_move, { desc = "[B]uffer [M]ove" } },
+            ------------------------------------------------------------------ Reacher
+            { "S", ":ReachOpen buffers<CR>",   { desc = "Reach: buffers", exit = true } },
+            { "s", ":ReachOpen tabpages<CR>",  { desc = "Reach: tabs", exit = true } },
 
-            { "1", three.wrap(three.jump_to, 1), { desc = "Jump to buffer 1" } },
-            { "2", three.wrap(three.jump_to, 2), { desc = "Jump to buffer 2" } },
-            { "3", three.wrap(three.jump_to, 3), { desc = "Jump to buffer 3" } },
-            { "4", three.wrap(three.jump_to, 4), { desc = "Jump to buffer 4" } },
-            { "5", three.wrap(three.jump_to, 5), { desc = "Jump to buffer 5" } },
-            { "6", three.wrap(three.jump_to, 6), { desc = "Jump to buffer 6" } },
-            { "7", three.wrap(three.jump_to, 7), { desc = "Jump to buffer 7" } },
-            { "8", three.wrap(three.jump_to, 8), { desc = "Jump to buffer 8" } },
-            { "9", three.wrap(three.jump_to, 9), { desc = "Jump to buffer 9" } },
-            { "0", three.wrap(three.jump_to, 10), { desc = "Jump to buffer 10" } },
-            { "#", three.wrap(three.next, { delta = 100 }), { desc = "Jump to last buffer" } },
+            ------------------------------------------------------------------ Misc
+            { "<Esc>", nil, { exit = true, desc = "Quit Hydra" } },
         },
     }
+
     Hydra(config)
 end
+
 return {
     buffer = buffer_config,
 }
+

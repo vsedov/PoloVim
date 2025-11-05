@@ -28,7 +28,6 @@ lang({
         { "g?o", mode = "x" },
         { "g?O", mode = "x" },
     },
-    module = "debugprint",
     cmd = "DeleteDebugPrints",
     config = conf.debugprint,
 })

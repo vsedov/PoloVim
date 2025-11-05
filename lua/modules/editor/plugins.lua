@@ -116,7 +116,7 @@ editor({
 })
 
 editor({
-    "anuvyklack/hydra.nvim",
+    "nvimtools/hydra.nvim",
     dependencies = "anuvyklack/keymap-layer.nvim",
     config = conf.hydra,
     event = "VeryLazy",
