@@ -1,32 +1,63 @@
 local api = vim.api
--- default sources
-local sources = {
-    { name = "nvim_lsp", priority = 9 },
-    { name = "luasnip", priority = 8 },
-    { name = "neorg", priority = 6 },
-    -- { name = "nvim_lsp_signature_help", priority = 10 },
+local ai = lambda.config.ai
+local condium_cond = (ai.codeium.use_codeium and ai.codeium.use_codeium_cmp)
 
-    { name = "path" },
-    --  REVISIT: (vsedov) (07:34:00 - 11/11/22): Why do i need this ?
-    -- {
-    --     name = "buffer",
-    --     options = {
-    --         get_bufnrs = function()
-    --             return vim.api.nvim_list_bufs()
-    --         end,
-    --     },
-    -- },
-    { name = "nvim_lua" },
+local plugins = {
+    { name = "vimtex", enable = true },
+    {
+        name = "luasnip",
+        enable = lambda.config.cmp.luasnip.luasnip.enable,
+        -- priority = lambda.config.cmp.luasnip.luasnip.priority,
+    },
+
+    {
+        name = "neorg",
+        enable = true,
+    },
+    {
+        name = "cody",
+        enable = true,
+    },
+    {
+        name = "buffer",
+        options = {
+            get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+            end,
+        },
+        enable = false,
+        group_index = 2,
+    },
+    { name = "spell", group_index = 2 },
+    {
+        name = "nvim_lsp",
+        enable = true,
+        priority = 10,
+    },
+
+    {
+        name = "path",
+        enable = true,
+    },
+    {
+        name = "nvim_lua",
+        enable = true,
+    },
+    {
+        name = "cmp_overseer",
+        enable = true,
+    },
 }
+
 local filetype = {
     sql = function()
-        table.insert(sources, { name = "vim-dadbod-completion" })
+        table.insert(plugins, { name = "vim-dadbod-completion" })
     end,
     norg = function()
-        table.insert(sources, { name = "latex_symbols" })
+        table.insert(plugins, { name = "latex_symbols" })
     end,
     markdown = function()
-        table.insert(sources, { name = "latex_symbols" })
+        table.insert(plugins, { name = "latex_symbols" })
     end,
 }
 
@@ -34,10 +65,20 @@ if filetype[vim.bo.ft] then
     filetype[vim.bo.ft]()
 end
 
-for _, source in pairs(require("modules.completion.cmp.options")) do
-    if source.enable then
-        table.insert(sources, source.options)
+local function apply_options(t)
+    local ret = {}
+    for _, plugin in ipairs(t) do
+        local plugin_entry = {
+            name = plugin.name,
+        }
+        if plugin.enable then
+            if plugin.options then
+                plugin_entry.options = plugin.options
+            end
+            table.insert(ret, plugin_entry)
+        end
     end
+    return ret
 end
 
-return sources
+return apply_options(plugins)

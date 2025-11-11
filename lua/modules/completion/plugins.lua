@@ -7,17 +7,11 @@ completion({
     event = { "InsertEnter", "CmdLineEnter", "InsertCharPre" }, -- InsertCharPre Due to luasnip
     after = { "LuaSnip" }, -- "nvim-snippy",
     dependencies = {
-        {
-            "tzachar/cmp-tabnine",
-            build = "./install.sh",
-            ft = { "python", "lua" },
-            config = conf.tabnine,
-            lazy = true,
-        },
         -- { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp", lazy = true },
         { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp", lazy = true },
         { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", lazy = true },
         { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp", lazy = true },
+    
         { "kdheepak/cmp-latex-symbols", after = "nvim-cmp", lazy = true },
         { "hrsh7th/cmp-buffer", after = "nvim-cmp", lazy = true },
         { "hrsh7th/cmp-path", after = "nvim-cmp", lazy = true },

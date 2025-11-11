@@ -89,25 +89,7 @@ function config.catppuccin()
 end
 
 function config.kanagawa()
-    require("kanagawa").setup({
-        undercurl = true, -- enable undercurls
-        commentStyle = { italic = true },
-        functionStyle = { italic = true },
-        keywordStyle = { italic = true },
-        statementStyle = { bold = true },
-        globalStatus = true,
-        typeStyle = {},
-        variablebuiltinStyle = { italic = true },
-        specialReturn = true, -- special highlight for the return keyword
-        specialException = true, -- special highlight for exception handling keywords
-        transparent = false, -- do not set background color
-        dimInactive = lambda.config.colourscheme.dim_background, -- dim inactive window `:h hl-NormalNC` -- Kinda messes with things
-        colors = {},
-        overrides = {
-            Pmenu = { fg = "NONE", bg = "NONE" },
-            normalfloat = { bg = "NONE" },
-        },
-    })
+    require("kanagawa").setup()
 
     -- setup_colorscheme("kanagawa", lambda.config.colourscheme.use_cmd)
     vim.cmd.colorscheme("kanagawa")

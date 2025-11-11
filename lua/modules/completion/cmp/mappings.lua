@@ -1,21 +1,155 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local utils = require("modules.completion.cmp.utils")
+local ai = lambda.config.ai
+local condium_cond = (ai.codeium.use_codeium and ai.codeium.use_codeium_cmp)
+
+-- Utils.safe_keymap_set("i", Config.mappings.suggestion.dismiss, function()
+--     local _, _, sg = M.get()
+--     if sg:is_visible() then
+--         sg:dismiss()
+--     end
+
+-- end, {
+--     desc = "avante: dismiss suggestion",
+--     noremap = true,
+--     silent = true,
+-- })
+--
+-- Utils.safe_keymap_set("i", Config.mappings.suggestion.next, function()
+--     local _, _, sg = M.get()
+--     sg:next()
+-- end, {
+--     desc = "avante: next suggestion",
+--     noremap = true,
+--     silent = true,
+-- })
+--
+-- Utils.safe_keymap_set("i", Config.mappings.suggestion.prev, function()
+--     local _, _, sg = M.get()
+--     sg:prev()
+-- end, {
+--     desc = "avante: previous suggestion",
+--     noremap = true,
+--     silent = true,
+-- })
+
+local function copilot(fallback)
+    local suggestion = require("copilot.suggestion")
+    if suggestion.is_visible() then
+        return suggestion.accept()
+    elseif require("luasnip").jumpable(1) then
+        return require("luasnip").jump(1)
+    else
+        fallback()
+    end
+end
+
+local function t(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+local feedkeys = vim.api.nvim_feedkeys
+
+local function double_mapping(invisible, visible)
+    return function()
+        if cmp.visible() then
+            visible()
+        else
+            invisible()
+        end
+    end, {
+        "i",
+        "s",
+        "c",
+    }
+end
+
+local function autocomplete()
+    cmp.complete({ reason = cmp.ContextReason.Auto })
+end
+
+local function complete_or(mapping)
+    return double_mapping(cmp.complete, mapping)
+end
+local check_backspace = function()
+    local col = vim.fn.col(".") - 1
+    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
+end
+local function next_item()
+    if cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+    elseif require("luasnip").choice_active() then
+        feedkeys(t("<Plug>luasnip-next-choice"), "", false)
+    else
+        autocomplete()
+    end
+end
+
+local function prev_item()
+    if cmp.visible() then
+        -- key mappings for Alt+number to select, have to press enter after to confirm though
+        for i = 0, 9, 1 do
+            local key = table.concat({ "<M-", i, ">" })
+            keys[key] = function(fallback)
+                if cmp.visible() and #cmp.get_entries() > i then
+                    return cmp.select_nth(i + 1)
+                end
+
+                return fallback()
+            end
+        end
+        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+    elseif require("luasnip").choice_active() then
+        feedkeys(t("<Plug>luasnip-prev-choice"), "", false)
+    else
+        autocomplete()
+    end
+end
 local mappings = {
 
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<M-d>"] = cmp.mapping({
+        c = cmp.mapping.scroll_docs(-4),
+        i = function()
+            if not require("noice.lsp").scroll(-4) then
+                cmp.scroll_docs(-4)
+            end
+        end,
+        s = function()
+            if not require("noice.lsp").scroll(-4) then
+                cmp.scroll_docs(-4)
+            end
+        end,
+    }),
+    ["<M-u>"] = cmp.mapping({
+        c = cmp.mapping.scroll_docs(4),
+        i = function()
+            if not require("noice.lsp").scroll(4) then
+                cmp.scroll_docs(4)
+            end
+        end,
+        s = function()
+            if not require("noice.lsp").scroll(4) then
+                cmp.scroll_docs(4)
+            end
+        end,
+    }),
+    ["<M-k>"] = cmp.mapping({
+        i = prev_item,
+        c = complete_or(cmp.select_prev_item),
+    }),
+    ["<M-j>"] = cmp.mapping({
+        i = next_item,
+        c = complete_or(cmp.select_next_item),
+    }),
+    -- ──────────────────────────────────────────────────────────────────────
+
     ["<C-e>"] = cmp.mapping({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
     }),
 
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-    ["<C-' '>"] = cmp.mapping.confirm({ select = true }),
-
     ["<CR>"] = cmp.mapping.confirm({
-        select = false,
-        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
     }),
 
     ["<C-f>"] = cmp.mapping(function(fallback)
@@ -42,89 +176,80 @@ local mappings = {
         "i",
         "s",
     }),
-    -- ["<BS>"] = cmp.mapping(function(_fallback)
-    --     local keys = utils.smart_bs()
-    --     vim.api.nvim_feedkeys(keys, "nt", true)
-    -- end, { "i", "s" }),
 
-    ["<Tab>"] = cmp.mapping(function(core, fallback)
+    ["<Tab>"] = function(fallback)
         if cmp.visible() then
             cmp.select_next_item()
-        elseif luasnip.expandable() then
-            luasnip.expand()
-        elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-        elseif not utils.check_backspace() then
-            cmp.mapping.complete()(core, fallback)
-        elseif utils.has_words_before() then
-            cmp.complete()
+        elseif luasnip.jumpable(1) then
+            luasnip.jump(1)
         else
-            utils.smart_tab()
-            -- vim.cmd(":>")
+            require("neotab").tabout()
+            -- fallback()
         end
-    end, {
-        "i",
-        "s",
-        "c",
+    end,
+    ["<c-a>"] = cmp.mapping.complete({
+        config = {
+            sources = {
+                { name = "cody", enable = true },
+                {
+                    name = "codeium",
+                    enable = condium_cond,
+                },
+            },
+        },
     }),
-    -- Avoid full fallback as it acts retardedly
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
+
+    ["<S-Tab>"] = function(fallback)
         if cmp.visible() then
             cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
             luasnip.jump(-1)
         else
-            -- utils.smart_bs()
-            vim.cmd(":<")
+            fallback()
+        end
+    end,
+
+    ["<C-k>"] = cmp.mapping(function(fallback)
+        if luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+        else
+            fallback()
         end
     end, {
         "i",
         "s",
-        "c",
     }),
 
-    -- ["<C-j>"] = cmp.mapping(function(fallback)
-    --     if luasnip.jumpable(-1) then
-    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-    --     else
-    --         fallback()
-    --     end
-    -- end, {
-    --     "i",
-    --     "s",
-    -- }),
-
-    -- ["<C-k>"] = cmp.mapping(function(fallback)
-    --     if luasnip.expand_or_jumpable() then
-    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-    --     else
-    --         fallback()
-    --     end
-    -- end, {
-    --     "i",
-    --     "s",
-    -- }),
-    ["<C-l>"] = cmp.mapping(function(fallback)
-        if lambda.config.sell_your_soul then
-            local copilot_keys = vim.fn["copilot#Accept"]("")
-            if copilot_keys ~= "" then
-                vim.api.nvim_feedkeys(copilot_keys, "i", true)
-            else
-                fallback()
-            end
+    ["<C-j>"] = cmp.mapping(function(fallback)
+        if luasnip.jumpable(-1) then
+            luasnip.jump(-1)
         else
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-            else
-                fallback()
-            end
+            fallback()
         end
+    end, {
+        "i",
+        "s",
+    }),
+    ["<C-l>"] = cmp.mapping(function(fallback)
+            if true  then
+                return copilot(fallback)
+            elseif require("luasnip").jumpable(1) then
+                return require("luasnip").jump(1)
+            else
+                return "<tab>"
+
+            end
+
     end, {
         "i",
         "s",
     }),
 }
+
+-- add this mapping to mappings
+
+local new_table = {}
+
+vim.tbl_extend("force", mappings, new_table)
 
 return mappings

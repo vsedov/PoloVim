@@ -59,51 +59,12 @@ ui({
     lazy = true,
 })
 ui({
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "main",
-    dependencies = {
-        "MunifTanjim/nui.nvim",
-        {
-            -- only needed if you want to use the "open_window_picker" command
-            "s1n7ax/nvim-window-picker",
-            lazy = true,
-            config = function()
-                require("window-picker").setup({
-                    autoselect_one = true,
-                    include_current = true,
-                    filter_rules = {
-                        -- filter using buffer options
-                        bo = {
-                            -- if the file type is one of following, the window will be ignored
-                            filetype = { "neo-tree", "neo-tree-popup", "notify", "quickfix" },
-                            buftype = { "terminal", "quickfix", "nofile" },
-                        },
-                    },
-                    other_win_hl_color = require("utils.ui.highlights").get("Visual", "bg"),
-                })
-            end,
-        },
-    },
-    cmd = { "Neotree", "NeoTreeShow", "NeoTreeFocus", "NeoTreeFocusToggle" },
-    config = conf.neo_tree,
-})
-
-ui({
     "lukas-reineke/indent-blankline.nvim",
     lazy = true,
     config = conf.blankline,
 }) -- after="nvim-treesitter",
 
-ui({
-    "xiyaowong/nvim-transparent",
-    cmd = { "TransparentEnable", "TransparentDisable", "TransparentToggle" },
-    config = conf.transparent,
-})
 
-ui({
-    "kevinhwang91/promise-async",
-    lazy = true,
-})
 ui({
     "kevinhwang91/nvim-ufo",
     lazy = true,
@@ -156,17 +117,6 @@ ui({
 })
 
 ui({
-    "folke/noice.nvim",
-    lazy = not lambda.config.ui.noice.enable,
-    dependencies = {
-        "nui.nvim",
-        "nvim-notify",
-        "hrsh7th/nvim-cmp",
-    },
-    config = conf.noice,
-})
-
-ui({
     "RRethy/vim-illuminate",
     lazy = true,
     init = function()
@@ -209,33 +159,3 @@ ui({
     end,
 })
 
-ui({
-    "samuzora/pet.nvim",
-    lazy = true,
-    config = function()
-        require("pet-nvim")
-    end,
-})
-
-ui({
-    "tamton-aquib/duck.nvim",
-    cmd = {
-        "DuckUse",
-        "DuckStop",
-    },
-    config = function()
-        require("duck").setup({
-            height = 5,
-            width = 5,
-        })
-        lambda.command("DuckUse", function()
-            require("duck").hatch("🐼")
-        end, {})
-        lambda.command("DuckStop", function()
-            require("duck").cook()
-        end, {})
-    end,
-})
-
--- True emotional Support
-ui({ "rtakasuke/vim-neko", cmd = "Neko", lazy = true })

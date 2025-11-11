@@ -1,12 +1,4 @@
 return {
-    use_tabnine = {
-        enable = lambda.config.cmp.tabnine.use_tabnine,
-        options = {
-            name = "cmp_tabnine",
-            keyword_length = 0,
-            priority = lambda.config.cmp.tabnine.tabnine_priority, -- Make tabnine have the same priority as lsp
-        },
-    },
     use_rg = {
         enable = lambda.config.cmp.use_rg,
         options = {

@@ -13,10 +13,8 @@ if fsize > 1024 * 1024 then
 end
 local function load_colourscheme()
     math.randomseed(os.clock() * 100000000000)
-    local theme = lambda.config.colourscheme.themes.dark.core_themes
-
-    local rand = math.random(#theme)
-    loader({ plugins = { theme[rand] } })
+    local theme = "kanagawa.nvim"
+    loader({ plugins = { theme } })
 
     -- loader("rose") -- Forceuflly load rosepine
 end
@@ -90,9 +88,6 @@ end
 
 local lazy_timer = 30
 
-vim.defer_fn(function()
-    vim.cmd([[doautocmd User LoadLazyPlugin]])
-end, lazy_timer)
 
 vim.cmd([[autocmd User LoadLazyPlugin lua Lazyload()]])
 

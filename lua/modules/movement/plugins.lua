@@ -7,7 +7,6 @@ movement({
     "ggandor/lightspeed.nvim",
     dependencies = { "tpope/vim-repeat" },
     event = "VeryLazy",
-
     config = conf.lightspeed,
 })
 

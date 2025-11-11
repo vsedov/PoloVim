@@ -7,23 +7,6 @@ local f = ls.function_node
 local c = ls.choice_node
 local fmt = require("luasnip.extras.fmt").fmt
 
--- For some reason, this just doesnt work
-if vim.bo.filetype ~= "tex" then
-    local all_a = {
-        s({ trig = ":td:", name = "TODO" }, {
-            c(1, {
-                t(string.format(vim.bo.commentstring:gsub("%%s", " TODO(vsedov): "))),
-                t(string.format(vim.bo.commentstring:gsub("%%s", " FIXME(vsedov): "))),
-                t(string.format(vim.bo.commentstring:gsub("%%s", " HACK(vsedov): "))),
-                t(string.format(vim.bo.commentstring:gsub("%%s", " BUG(vsedov): "))),
-            }),
-            i(0),
-        }),
-    }
-
-    ls.add_snippets("all", all_a, { type = "autosnippets" })
-end
-
 local function char_count_same(c1, c2)
     local line = vim.api.nvim_get_current_line()
     -- '%'-escape chars to force explicit match (gsub accepts patterns).
@@ -61,21 +44,6 @@ local function pair(pair_begin, pair_end, expand_func, ...)
     }, {
         condition = part(expand_func, part(..., pair_begin, pair_end)),
     })
-end
-
-local iterator = function(delim)
-    local rec_ls
-    rec_ls = function()
-        return sn(nil, {
-            c(1, {
-                -- important!! Having the sn(...) as the first choice will cause infinite recursion.
-                t({ "" }),
-                -- The same dynamicNode as in the snippet (also note: self reference).
-                sn(nil, { t({ "", delim }), i(1), d(2, rec_ls, {}) }),
-            }),
-        })
-    end
-    return rec_ls
 end
 
 local all = {
@@ -140,22 +108,5 @@ local all = {
         })
     ),
 }
-
-if lambda.config.use_luasnip_brackets then
-    local extensions = {
-        pair("(", ")", neg, char_count_same),
-        pair("{", "}", neg, char_count_same),
-        pair("[", "]", neg, char_count_same),
-        pair("<", ">", neg, char_count_same),
-        pair("'", "'", neg, even_count),
-        pair('"', '"', neg, even_count),
-        pair("`", "`", neg, even_count),
-    }
-    -- table.insert(all, extensions)
-    for _, y in ipairs(extensions) do
-        table.insert(all, y)
-    end
-    -- ls.add_snippets("all", extensions, { type = "autosnippets" })
-end
 
 return all

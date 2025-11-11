@@ -1,27 +1,35 @@
 local cmp = require("cmp")
-cmp.setup(require("modules.completion.cmp.config"))
-local search_sources = {
-    view = { entries = { name = "custom", selection_order = "near_cursor" } },
-    sources = cmp.config.sources({
-        { name = "nvim_lsp_document_symbol" },
-    }, {
-        { name = "buffer" },
-    }),
-}
 
-cmp.setup.cmdline("/", search_sources)
-cmp.setup.cmdline("?", search_sources)
--- Regex that triggers on : but not on :q or :w
-regex = [[^[:blank:]*(:)[^qw]$]]
-cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({
-        { name = "cmdline", keyword_pattern = [=[^[:blank:]*(:)[^qw]$]=] },
-        { name = "cmdline_history" },
-        { name = "path" },
-    }),
+cmp.setup(require("modules.completion.cmp.config"))
+
+
+lambda.highlight.plugin("Cmp", {
+    { CmpItemKindVariable = { link = "Variable" } },
+    { CmpItemAbbrMatchFuzzy = { inherit = "comment", italic = true } },
+    { CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" } },
+    { CmpItemMenu = { inherit = "Comment", italic = true } },
 })
 
--- regex that ignore :q and :w
-
 require("modules.completion.cmp.extra")
-require("modules.completion.cmp.ui_overwrite")
+
+vim.api.nvim_create_autocmd("CmdWinEnter", {
+    callback = function()
+        require("cmp").close()
+    end,
+})
+
+cmp.setup.filetype({ "markdown", "pandoc", "text", "latex" }, {
+    sources = {
+        {
+            name = "nvim_lsp",
+            keyword_length = 8,
+            group_index = 1,
+            max_item_count = 20,
+        },
+        { name = "luasnip" },
+        { name = "path" },
+        { name = "buffer" },
+        { name = "dictionary", keyword_length = 2 },
+        { name = "latex_symbols" },
+    },
+})

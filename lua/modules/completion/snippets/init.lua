@@ -6,18 +6,6 @@ local i = ls.insert_node
 local f = ls.function_node
 local c = ls.choice_node
 local d = ls.dynamic_node
--- local r = ls.restore_node
--- local isn = ls.indent_snippet_node
--- local events = require("luasnip.util.events")
--- local ai = require("luasnip.nodes.absolute_indexer")
--- local types = require("luasnip.util.types")
--- local util = require("luasnip.util.util")
--- local l = require("luasnip.extras").lambda
--- local p = require("luasnip.extras").partial
--- local rep = require("luasnip.extras").rep
--- local m = require("luasnip.extras").match
--- local n = require("luasnip.extras").nonempty
--- local dl = require("luasnip.extras").dynamic_lambda
 local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
@@ -26,22 +14,12 @@ local pipe = utils.pipe
 local no_backslash = utils.no_backslash
 local is_math = utils.is_math
 local not_math = utils.not_math
--- -- prevent loading twice .
+
 require("modules.completion.snippets.luasnip")
 
 local parse = ls.parser.parse_snippet
 
 local gitcommmit_stylua = [[chore: autoformat with stylua]]
-
-local public_string = [[
-public String ${1:function_name}(${2:parameters}) {
-  ${0}
-}]]
-
-local public_void = [[
-public void ${1:function_name}(${2:parameters}) {
-  ${0}
-}]]
 
 local gitcommit_fix = [[
 fix(${1:scope}): ${2:title}
@@ -73,11 +51,6 @@ ${0}]]
 
 local snippets = {
     all = require("modules.completion.snippets.all"),
-    lua = require("modules.completion.snippets.lua"),
-    python = require("modules.completion.snippets.python"),
-    norg = require("modules.completion.snippets.norg_snip"),
-    toml = require("modules.completion.snippets.toml"),
-
     help = {
         s({ trig = "con", wordTrig = true }, {
             i(1),
@@ -88,43 +61,6 @@ local snippets = {
             i(2),
             t({ "|" }),
             i(0),
-        }),
-    },
-    java = {
-        parse({ trig = "pus" }, public_string),
-        parse({ trig = "puv" }, public_void),
-        -- Very long example for a java class.
-        s("fn", {
-            d(6, utils.jdocsnip, { 2, 4, 5 }),
-            t({ "", "" }),
-            c(1, {
-                t("public "),
-                t("private "),
-            }),
-            c(2, {
-                t("void"),
-                t("char"),
-                t("int"),
-                t("double"),
-                t("boolean"),
-                t("float"),
-                i(nil, ""),
-            }),
-            t(" "),
-            i(3, "myFunc"),
-            t("("),
-            i(4),
-            t(")"),
-            c(5, {
-                t(""),
-                sn(nil, {
-                    t({ "", " throws " }),
-                    i(1),
-                }),
-            }),
-            t({ " {", "\t" }),
-            i(0),
-            t({ "", "}" }),
         }),
     },
     cpp = {
@@ -211,16 +147,69 @@ local snippets = {
         parse({ trig = "cleanup" }, gitcommit_cleanup),
         parse({ trig = "fix" }, gitcommit_fix),
         parse({ trig = "stylua" }, gitcommmit_stylua),
+        s(
+            "cc",
+            fmt("{type}({module}): {message}", {
+                type = c(1, {
+                    t("feat"),
+                    t("fix"),
+                    t("docs"),
+                    t("style"),
+                    t("refactor"),
+                    t("perf"),
+                    t("test"),
+                    t("build"),
+                    t("ci"),
+                    t("chore"),
+                    t("revert"),
+                }),
+                module = i(2, "module"),
+                message = i(3, "message"),
+            })
+        ),
     },
 
     tex = {},
 }
+local exp_generator = function(get_bufnr_fn)
+    return function(modifier)
+        return f(function()
+            local filename = vim.api.nvim_buf_get_name(get_bufnr_fn())
 
+            return vim.fn.fnamemodify(filename, modifier)
+        end)
+    end
+end
+local insert_exp = exp_generator(function()
+    return vim.api.nvim_get_current_buf()
+end)
+local fine_cmdline_exp = exp_generator(function()
+    return require("vimrc.plugins.fine-cmdline").get_related_bufnr()
+end)
+
+ls.add_snippets("all", {
+    s(
+        "exp",
+        c(1, {
+            insert_exp(":t"),
+            insert_exp(":t:r"),
+            insert_exp(":p"),
+            insert_exp(":h"),
+        })
+    ),
+})
+ls.add_snippets("fine-cmdline", {
+    s(
+        "exp",
+        c(1, {
+            fine_cmdline_exp(":t"),
+            fine_cmdline_exp(":t:r"),
+            fine_cmdline_exp(":p"),
+            fine_cmdline_exp(":h"),
+        })
+    ),
+})
 ls.add_snippets("all", snippets.all)
-ls.add_snippets("lua", snippets.lua)
-ls.add_snippets("python", snippets.python)
-ls.add_snippets("norg", snippets.norg)
-ls.add_snippets("toml", snippets.toml)
 ls.add_snippets("help", snippets.help)
 ls.add_snippets("java", snippets.java)
 ls.add_snippets("cpp", snippets.cpp)
@@ -236,7 +225,10 @@ for _, snip in ipairs(require("modules.completion.snippets.latex.tex")) do
 end
 ls.add_snippets("tex", require("modules.completion.snippets.latex.tex_math"), { type = "autosnippets" })
 
--- HACK: For some reason you have to load it twice
-require("luasnip/loaders/from_vscode").load({
-    paths = { "~/.local/share/nvim/site/pack/packer/opt/friendly-snippets" },
-})
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+require("luasnip.loaders.from_vscode").lazy_load()
+-- snipmate format
+require("luasnip.loaders.from_snipmate").load()
+
+-- lua format
+require("luasnip.loaders.from_lua").load()

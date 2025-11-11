@@ -5,51 +5,42 @@ lsp({
     "neovim/nvim-lspconfig",
     lazy = true,
     event = "BufEnter",
-    init = conf.nvim_lsp_setup,
-    config = conf.nvim_lsp,
+  config = function()
+    local config = lambda.config.lsp.null_ls
+
+    require("lspconfig.ui.windows").default_options.border = lambda.style.border.type_0
+
+    require("mason").setup({
+        ui = {
+            border = lambda.style.border.type_0,
+            height = 0.8,
+        },
+    })
+
+    require("mason-lspconfig").setup({
+        automatic_installation = true,
+        handlers = {
+            function(name)
+                local config = require("modules.lsp.lsp.mason.lsp_servers")(name)
+                if config then
+                    config.capabilities = require("blink.cmp").get_lsp_capabilities()
+                    require("lspconfig")[name].setup(config)
+                end
+            end,
+        },
+    })
+    require("lspconfig")
+  end
 })
 
 lsp({
     "williamboman/mason.nvim",
-
     dependencies = { "neovim/nvim-lspconfig", "williamboman/mason-lspconfig.nvim" },
-    config = conf.mason_setup,
-})
-
--- lsp({
---     "jose-elias-alvarez/null-ls.nvim",
---     event = "VeryLazy",
---     dependencies = { "nvim-lua/plenary.nvim", "poljar/typos.nvim" },
---     config = function()
---         require("modules.lsp.lsp.null-ls").setup()
---         -- require("typos").setup()
---     end,
--- })
-
-lsp({
-    "jayp0521/mason-null-ls.nvim",
-    lazy = true,
-    dependencies = {
-        "williamboman/mason.nvim",
-        "jose-elias-alvarez/null-ls.nvim",
-    },
-    config = function()
-        require("mason-null-ls").setup({
-            automatic_installation = false,
-        })
-    end,
 })
 
 lsp({ "ii14/lsp-command", lazy = true, event = "BufEnter" })
-lsp({
-    "p00f/clangd_extensions.nvim",
-    lazy = true,
-    ft = { "c", "cpp" },
-    dependencies = "nvim-lspconfig",
-    config = conf.clangd,
-})
 
-lsp({ "folke/neodev.nvim", ft = "lua", lazy = true, dependencies = "neovim/nvim-lspconfig", config = conf.luadev })
+
 
 lsp({ "lewis6991/hover.nvim", modules = "hover", config = conf.hover })
 

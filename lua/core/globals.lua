@@ -1,7 +1,7 @@
 _G = _G or {}
 _G.lambda = {}
-require("core.lambda")
-
+-- require("core.lambda")
+require("lambda")
 P = vim.pretty_print
 
 _G.dump = function(...)
