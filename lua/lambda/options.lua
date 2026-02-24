@@ -9,11 +9,8 @@ local use_noice = false -- completely disabled this
 local use_codium = false -- Want to see what this would be like without codeium, ; but just the lsp support
 local use_codium_cmp = false
 -- ──────────────────────────────────────────────────────────────────────
-local use_tabnine = false
--- i mean i pay for this so why in the blue green fuck am i not using this ?
-local use_tabnine_cmp = false
 -- ──────────────────────────────────────────────────────────────────────
-local use_copilot = false -- We really do sell our souls for this thing eh going to use claude now fuck copilot
+local use_copilot = true -- We really do sell our souls for this thing eh going to use claude now fuck copilot
 -- ──────────────────────────────────────────────────────────────────────
 local use_supermaven = false
 -- ──────────────────────────────────────────────────────────────────────
@@ -40,9 +37,6 @@ lambda.config.custom = {
 lambda.config.ai = {
     model = "gpt-4o",
     codeium = {
-        use_codeium = use_codium,
-        use_codeium_cmp = use_codium_cmp,
-        use_codium_insert = not use_codium_cmp,
         cmp = {
             codium_priority = 10,
         },
@@ -317,7 +311,7 @@ lambda.config.folke = {
     },
 }
 
-if not use_noice then
+if use_noice then
     lambda.config.folke.noice.enable = true
     lambda.config.folke.noice.lsp.use_noice_signature = true
     lambda.config.folke.noice.lsp.use_noice_hover = true

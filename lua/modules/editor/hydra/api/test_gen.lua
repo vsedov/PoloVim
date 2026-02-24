@@ -1,0 +1,3 @@
+-- TODO: test generation hydra (currently a placeholder)
+-- This file was previously a duplicate of genghis.lua which caused a body conflict on ";\"
+-- Add test generation commands here when needed

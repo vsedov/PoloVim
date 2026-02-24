@@ -2,7 +2,7 @@ vim.cmd([[
     if exists('g:no_vim_conceal') || !has('conceal') || &enc != 'utf-8'
         finish
     endif
-    
+
     " math related
     syntax match pyOperator " / " conceal cchar=÷
     syntax match pyOperator " \* " conceal cchar=×
@@ -19,4 +19,5 @@ vim.cmd([[
     hi link pyKeyword Keyword
     hi! link Conceal Operator
     setlocal conceallevel=2
+    setlocal syntax=python
 ]])

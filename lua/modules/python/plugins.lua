@@ -6,10 +6,3 @@ python({
     lazy = true,
     ft = { "python", "julia" },
 })
-
-
-python({
-    "wookayin/vim-python-enhanced-syntax",
-    ft = "python",
-})
-

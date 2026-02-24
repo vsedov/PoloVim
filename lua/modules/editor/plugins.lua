@@ -1,6 +1,7 @@
 local conf = require("modules.editor.config")
 local editor = require("core.pack").package
 
+
 editor({ "nvim-lua/plenary.nvim", module = "plenary" })
 editor({ "rainbowhxch/accelerated-jk.nvim", keys = {
     "j",
@@ -60,6 +61,8 @@ require("oil").setup({
     default_file_explorer = true,
     -- Id is automatically added at the beginning, and name at the end
     -- See :help oil-columns
+
+
     columns = {
         "icon",
         "permissions",

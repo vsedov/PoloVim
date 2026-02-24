@@ -1,0 +1,36 @@
+@document.meta
+title: readme
+description:
+authors: viv
+categories:
+created: 2023-07-23
+updated: 2023-07-23
+version: 1.1.1
+@end
+
+* Schema
+  @code lua
+  local leader bind = ""
+  local config = {
+    NAME = {
+      color,
+      body = leader_bind,
+      on_key [OPTIONAL],
+      on_enter [OPTIONAL],
+      on_exit [OPTIONAL],
+      mode [OPTIONAL],
+      Binds
+    }
+  }
+  bracket is top level binds, the very first item on the column
+  return {
+    config,
+    NAME,
+    EVERYTHING BELOW BRACKET,
+    BRACKET
+    6, optional params to control hydra split
+    3, optional params to control hydra split
+  }
+  @end
+
+  This can be used in any application/plugin.

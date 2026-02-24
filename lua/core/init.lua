@@ -46,14 +46,10 @@ local disable_distribution_plugins = function()
     vim.g.loaded_netrwFileHandlers = 1
     vim.g.matchup_matchparen_enabled = 1
     vim.g.load_black = 1
-    vim.g.loaded_node_provider = 1
     -- vim.g.loaded_ruby_provider = 0
     -- vim.g.loaded_perl_provider = 0
 end
 local file_type = function()
-    if not vim.filetype then
-        return
-    end
 
     vim.filetype.add({
         extension = {
@@ -94,6 +90,7 @@ local load_core = function()
     require("core.globals")
 
     local pack = require("core.pack")
+    file_type()
     createdir()
     disable_distribution_plugins()
     leader_map()
@@ -102,7 +99,6 @@ local load_core = function()
     require("core.autocmd")
     require("core.autocmd_optional")
     require("keymap")
-    file_type()
     require("core.pack"):boot_strap()
     require("core.lazy")
 end

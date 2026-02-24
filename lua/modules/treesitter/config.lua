@@ -16,16 +16,10 @@ function config.treesitter_ref()
 end
 
 function config.tsubject()
-    require("nvim-treesitter.configs").setup({
-        textsubjects = {
-            enable = true,
-            keymaps = { ["\\l"] = "textsubjects-smart", ["\\k"] = "textsubjects-container-outer" },
-        },
-    })
 end
 
 function config.playground()
-    require("nvim-treesitter.configs").setup({
+    require("nvim-treesitter.config").setup({
         playground = {
             enable = true,
             disable = {},
@@ -100,7 +94,7 @@ end
 function config.matchup()
     vim.keymap.set("n", "\\w", "<cmd>MatchupWhereAmI??<cr>", { noremap = true })
 
-    require("nvim-treesitter.configs").setup({
+    require("nvim-treesitter.config").setup({
         matchup = {
             enable = true,
         },
@@ -131,7 +125,7 @@ end
 function config.indent()
     local tm_fts = { "lua", "javascript", "python" } -- or any other langs
 
-    require("nvim-treesitter.configs").setup({
+    require("nvim-treesitter.config").setup({
         yati = {
 
             default_fallback = function(lnum, computed, bufnr)

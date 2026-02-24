@@ -138,6 +138,7 @@ tools({
     end,
 })
 
+
 tools({
     "jbyuki/nabla.nvim",
     keys = { "<localleader>s" },

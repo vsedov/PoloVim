@@ -11,7 +11,7 @@ movement({
 })
 
 movement({
-    "ggandor/leap.nvim",
+    url = "https://codeberg.org/andyg/leap.nvim",
     event = "VeryLazy",
 
     dependencies = { "tpope/vim-repeat" },
@@ -87,7 +87,7 @@ movement({
     -- after = "lightspeed.nvim",
     config = conf.grapple,
 })
-movement({ "ThePrimeagen/harpoon", module = "harpoon", lazy = true, config = conf.harpoon })
+movement({ "ThePrimeagen/harpoon",branch="harpoon2", module = "harpoon", lazy = true, config = conf.harpoon })
 movement({ "gaborvecsei/memento.nvim", lazy = true, module = "memento", after = "harpoon" })
 
 --------------------------------

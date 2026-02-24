@@ -157,7 +157,8 @@ function config.dial()
 end
 
 function config.hydra()
-    require("modules.editor.hydra")
+  -- require("modules.editor.hydra").setup()
+  require("modules.editor.hydra.setup")
 end
 
 function config.venn()
@@ -260,3 +261,4 @@ function config.smart_q()
 end
 
 return config
+

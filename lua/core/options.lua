@@ -151,7 +151,6 @@ o.pumblend = 3 -- Make popup window translucent
 o.conceallevel = 2
 o.breakindentopt = "sbr"
 o.linebreak = true -- lines wrap at words rather than random characters
-o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = "yes:3"
 o.ruler = false
 -- if lambda.config.ui.noice.enable then
@@ -296,7 +295,7 @@ if lambda.executable("nvr") then
     vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end
 
-vim.cmd([[syntax off]])
+vim.cmd([[syntax on]])
 vim.cmd([[set viminfo-=:42 | set viminfo+=:1000]])
 
 -- vim:foldmethod=marker

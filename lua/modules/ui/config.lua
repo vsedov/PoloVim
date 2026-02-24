@@ -380,30 +380,6 @@ function config.ufo()
 end
 
 function config.fold_focus()
-    local foldcus = require("foldcus")
-    local NS = { noremap = true, silent = true }
-
-    -- Fold multiline comments longer than or equal to 4 lines
-    vim.keymap.set("n", "z;", function()
-        foldcus.fold(4)
-    end, NS)
-
-    -- Fold multiline comments longer than or equal to the number of lines specified by args
-    -- e.g. Foldcus 4
-    vim.api.nvim_create_user_command("Foldcus", function(args)
-        foldcus.fold(tonumber(args.args))
-    end, { nargs = "*" })
-
-    -- Delete folds of multiline comments longer than or equal to 4 lines
-    vim.keymap.set("n", "z'", function()
-        foldcus.unfold(4)
-    end, NS)
-
-    -- Delete folds of multiline comments longer than or equal to the number of lines specified by args
-    -- e.g. Unfoldcus 4
-    vim.api.nvim_create_user_command("Unfoldcus", function(args)
-        foldcus.unfold(tonumber(args.args))
-    end, { nargs = "*" })
 end
 function config.blankline()
     vim.opt.termguicolors = true

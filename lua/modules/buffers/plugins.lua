@@ -1,4 +1,5 @@
 local buffer = require("core.pack").package
+
 local conf = require("modules.buffers.config")
 
 buffer({

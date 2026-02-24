@@ -2,11 +2,99 @@
 --  causing the error here, and its quite important that i figure this one out .
 local conf = require("modules.treesitter.config")
 local ts = require("core.pack").package
-ts({ "nvim-treesitter/nvim-treesitter", config = conf.nvim_treesitter })
+ts({
+  'nvim-treesitter/nvim-treesitter',
+  lazy = false,
+  build = ':TSUpdate',
+  config = function()
+      require('nvim-treesitter').setup {
+        -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+        install_dir = vim.fn.stdpath('data') .. '/site',
+        ensure_installed = {
+          "python", "lua", "vim", "vimdoc",
+          "javascript", "typescript", "json",
+          "c", "cpp", "rust",
+          "yaml", "toml", "html", "css", "bash",
+          "go", "java", "dart",
+        },
+      }
+    require("nvim-treesitter.config").setup({
+        indent = { enable = true, disable = { "python" } },
+        textobjects = {
+            -- syntax-aware textobjects
+            enable = enable,
+            disable = { "elm" },
+            lsp_interop = {
+                enable = enable,
+                border = "single",
+                peek_definition_code = {
+                    ["gl"] = "@function.outer",
+                    ["gk"] = "@class.outer",
+                },
+            },
+            move = {
+                enable = enable,
+                set_jumps = true, -- whether to set jumps in the jumplist
+                goto_next_start = {
+                    ["gnf"] = "@function.outer",
+                    ["gnif"] = "@function.inner",
+                    ["gnp"] = "@parameter.inner",
+                    ["gnc"] = "@call.outer",
+                    ["gnic"] = "@call.inner",
+                },
+                goto_next_end = {
+                    ["gnF"] = "@function.outer",
+                    ["gniF"] = "@function.inner",
+                    ["gnP"] = "@parameter.inner",
+                    ["gnC"] = "@call.outer",
+                    ["gniC"] = "@call.inner",
+                },
+                goto_previous_start = {
+                    ["gpf"] = "@function.outer",
+                    ["gpif"] = "@function.inner",
+                    ["gpp"] = "@parameter.inner",
+                    ["gpc"] = "@call.outer",
+                    ["gpic"] = "@call.inner",
+                },
+                goto_previous_end = {
+                    ["gpF"] = "@function.outer",
+                    ["gpiF"] = "@function.inner",
+                    ["gpP"] = "@parameter.inner",
+                    ["gpC"] = "@call.outer",
+                    ["gpiC"] = "@call.inner",
+                },
+            },
+            select = {
+                enable = true,
+                include_surrounding_whitespace = true,
+                keymaps = {
+                    ["af"] = { query = "@function.outer", desc = "ts: all function" },
+                    ["if"] = { query = "@function.inner", desc = "ts: inner function" },
+                    ["ac"] = { query = "@class.outer", desc = "ts: all class" },
+                    ["ic"] = { query = "@class.inner", desc = "ts: inner class" },
+                    ["aC"] = { query = "@conditional.outer", desc = "ts: all conditional" },
+                    ["iC"] = { query = "@conditional.inner", desc = "ts: inner conditional" },
+                    -- ['ax'] = '@comment.outer',
+                },
+            },
+            swap = {
+                enable = enable,
+                swap_next = { ["<leader>a"] = "@parameter.inner" },
+                swap_previous = { ["<leader>A"] = "@parameter.inner" },
+            },
+        },
+    })
+
+    -- print("loading ts")
+    vim.cmd([[syntax on]])
+
+
+  end
+})
 
 ts({
     "nvim-treesitter/nvim-treesitter-textobjects",
-    after = "nvim-treesitter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = conf.treesitter_obj,
     lazy = true,
 })
@@ -15,20 +103,17 @@ ts({
     "RRethy/nvim-treesitter-textsubjects",
     ft = { "lua", "rust", "go", "python", "javascript" },
     lazy = true,
-    config = conf.tsubject,
 })
 
 ts({
     "RRethy/nvim-treesitter-endwise",
     ft = { "lua", "ruby", "vim" },
     lazy = true,
-    config = conf.endwise,
 })
 
 ts({
     "nvim-treesitter/nvim-treesitter-refactor",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects" },
-    config = conf.treesitter_ref, -- let the last loaded config treesitter
     lazy = true,
 })
 
@@ -53,7 +138,6 @@ ts({
         "zig",
     },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = conf.hlargs,
 })
 
 ts({
@@ -73,25 +157,9 @@ ts({
 
 ts({
     "Yggdroot/hiPairs",
-    lazy = not lambda.config.use_hiPairs,
-    config = conf.hi_pairs,
+    lazy = not lambda.config.treesitter.hipairs,
 })
 
-ts({
-    "yioneko/nvim-yati",
-    lazy = true,
-    dependencies = { "nvim-treesitter/nvim-treesitter", "yioneko/vim-tmindent" },
-    event = "VeryLazy",
-    config = conf.indent,
-})
-
--- -- Packer
-ts({
-    "folke/paint.nvim",
-    ft = "lua",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = conf.paint,
-})
 
 ts({
     -- It uses hydra
